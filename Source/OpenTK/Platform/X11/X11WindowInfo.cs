@@ -1,11 +1,38 @@
-﻿using System;
+﻿#region License
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2009 the Open Toolkit library.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace OpenTK.Platform.X11
 {
     /// <summary>Describes an X11 window.</summary>
-    internal sealed class X11WindowInfo : IWindowInfo
+    public sealed class X11WindowInfo : IWindowInfo
     {
         IntPtr handle, rootWindow, display;
         X11WindowInfo parent;
@@ -58,18 +85,18 @@ namespace OpenTK.Platform.X11
         public IntPtr Display { get { return display; } set { display = value; } }
         /// <summary>Gets or sets the X11 screen.</summary>
         public int Screen { get { return screen; } set { screen = value; } }
-                        //{ get { return Functions.XRRRootToScreen(display, rootWindow); } set { } }
-        //public int Screen { get { return screen; } set { screen = value; } }
         /// <summary>Gets or sets the X11 VisualInfo.</summary>
         public XVisualInfo VisualInfo { get { return visualInfo; } set { visualInfo = value; } }
         /// <summary>Gets or sets the X11 EventMask.</summary>
         public EventMask EventMask { get { return eventMask; } set { eventMask = value; } }
-        //public IntPtr TopLevelWindow { get { return topLevelWindow; } set { topLevelWindow = value; } }
 
         #endregion
 
         #region --- IDisposable Members ---
 
+        /// <summary>
+        /// Disposes of this X11WindowInfo instance.
+        /// </summary>
         public void Dispose()
         {
         }
@@ -113,6 +140,5 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
-
     }
 }
