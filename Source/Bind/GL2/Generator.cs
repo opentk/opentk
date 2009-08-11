@@ -314,6 +314,9 @@ namespace Bind.GL2
             Console.WriteLine("Reading opengl types.");
             Dictionary<string, string> GLTypes = new Dictionary<string, string>();
 
+            if (specFile == null)
+                return GLTypes;
+
             do
             {
                 string line = specFile.ReadLine();
