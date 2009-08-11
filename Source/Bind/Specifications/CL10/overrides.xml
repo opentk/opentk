@@ -10,6 +10,10 @@
   
   <enum name="DeviceType"><name>DeviceTypeFlags</name></enum>
 
+  <function name="CreateContextFromType" extension="Core">
+    <param name="errcode_ret"><type>ErrorCode</type></param>
+  </function>
+
   <enum name="CommandQueuePropertiesFlags"><name>CommandQueueFlags</name></enum>
   <enum name="CommandQueueProperties"><name>CommandQueueFlags</name></enum>
 
@@ -17,10 +21,14 @@
     <param name="errcode_ret"><type>ErrorCode</type></param>
   </function>
 
+  <function name="CreateContextFromType" extension="Core">
+    <param name="errcode_ret"><type>ErrorCode</type></param>
+  </function>
+
   <function name="CreateCommandQueue" extension="Core">
     <param name="errcode_ret"><type>ErrorCode</type></param>
   </function>
-  
+
   <function name="CreateKernel" extension="Core">
     <param name="errcode_ret"><type>ErrorCode</type></param>
   </function>
