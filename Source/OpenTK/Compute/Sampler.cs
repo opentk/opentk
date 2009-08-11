@@ -30,38 +30,5 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Compute
 {
-    using cl_context = IntPtr;
-    using cl_sampler = IntPtr;
-
-    #region Flat API
-
-    partial class CL
-    {
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clCreateSampler")]
-        public static extern cl_sampler CreateSampler(cl_context context,
-            bool normalized_coords,
-            AddressingMode addressing_mode,
-            FilterMode filter_mode,
-            out int errcode_ret);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clRetainSampler")]
-        public static extern int RetainSampler(cl_sampler sampler);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clReleaseSampler")]
-        public static extern int ReleaseSampler(cl_sampler sampler);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clGetSamplerInfo")]
-        public static extern int GetSamplerInfo(cl_sampler sampler,
-            SamplerInfo param_name,
-            IntPtr param_value_size,
-            IntPtr param_value,
-            out IntPtr param_value_size_ret);
-    }
-
-    #endregion
 
 }
