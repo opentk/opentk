@@ -320,190 +320,190 @@
   </enum>
   <function name="ActiveTexture" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="texture" />
+    <param type="GLenum" name="texture" flow="in" />
   </function>
   <function name="AlphaFunc" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="func" />
-    <param type="GLclampf" name="ref" />
+    <param type="GLenum" name="func" flow="in" />
+    <param type="GLclampf" name="ref" flow="in" />
   </function>
   <function name="AlphaFuncx" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="func" />
-    <param type="GLclampx" name="ref" />
+    <param type="GLenum" name="func" flow="in" />
+    <param type="GLclampx" name="ref" flow="in" />
   </function>
   <function name="BindTexture" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLuint" name="texture" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLuint" name="texture" flow="in" />
   </function>
   <function name="BlendFunc" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="sfactor" />
-    <param type="GLenum" name="dfactor" />
+    <param type="GLenum" name="sfactor" flow="in" />
+    <param type="GLenum" name="dfactor" flow="in" />
   </function>
   <function name="Clear" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLbitfield" name="mask" />
+    <param type="GLbitfield" name="mask" flow="in" />
   </function>
   <function name="ClearColor" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLclampf" name="red" />
-    <param type="GLclampf" name="green" />
-    <param type="GLclampf" name="blue" />
-    <param type="GLclampf" name="alpha" />
+    <param type="GLclampf" name="red" flow="in" />
+    <param type="GLclampf" name="green" flow="in" />
+    <param type="GLclampf" name="blue" flow="in" />
+    <param type="GLclampf" name="alpha" flow="in" />
   </function>
   <function name="ClearColorx" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLclampx" name="red" />
-    <param type="GLclampx" name="green" />
-    <param type="GLclampx" name="blue" />
-    <param type="GLclampx" name="alpha" />
+    <param type="GLclampx" name="red" flow="in" />
+    <param type="GLclampx" name="green" flow="in" />
+    <param type="GLclampx" name="blue" flow="in" />
+    <param type="GLclampx" name="alpha" flow="in" />
   </function>
   <function name="ClearDepthf" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLclampf" name="depth" />
+    <param type="GLclampf" name="depth" flow="in" />
   </function>
   <function name="ClearDepthx" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLclampx" name="depth" />
+    <param type="GLclampx" name="depth" flow="in" />
   </function>
   <function name="ClearStencil" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLint" name="s" />
+    <param type="GLint" name="s" flow="in" />
   </function>
   <function name="ClientActiveTexture" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="texture" />
+    <param type="GLenum" name="texture" flow="in" />
   </function>
   <function name="Color4f" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfloat" name="red" />
-    <param type="GLfloat" name="green" />
-    <param type="GLfloat" name="blue" />
-    <param type="GLfloat" name="alpha" />
+    <param type="GLfloat" name="red" flow="in" />
+    <param type="GLfloat" name="green" flow="in" />
+    <param type="GLfloat" name="blue" flow="in" />
+    <param type="GLfloat" name="alpha" flow="in" />
   </function>
   <function name="Color4x" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfixed" name="red" />
-    <param type="GLfixed" name="green" />
-    <param type="GLfixed" name="blue" />
-    <param type="GLfixed" name="alpha" />
+    <param type="GLfixed" name="red" flow="in" />
+    <param type="GLfixed" name="green" flow="in" />
+    <param type="GLfixed" name="blue" flow="in" />
+    <param type="GLfixed" name="alpha" flow="in" />
   </function>
   <function name="ColorMask" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLboolean" name="red" />
-    <param type="GLboolean" name="green" />
-    <param type="GLboolean" name="blue" />
-    <param type="GLboolean" name="alpha" />
+    <param type="GLboolean" name="red" flow="in" />
+    <param type="GLboolean" name="green" flow="in" />
+    <param type="GLboolean" name="blue" flow="in" />
+    <param type="GLboolean" name="alpha" flow="in" />
   </function>
   <function name="ColorPointer" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLint" name="size" />
-    <param type="GLenum" name="type" />
-    <param type="GLsizei" name="stride" />
-    <param type="GLvoid*" name="pointer" />
+    <param type="GLint" name="size" flow="in" />
+    <param type="GLenum" name="type" flow="in" />
+    <param type="GLsizei" name="stride" flow="in" />
+    <param type="GLvoid*" name="pointer" flow="in" />
   </function>
   <function name="CompressedTexImage2D" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLint" name="level" />
-    <param type="GLenum" name="internalformat" />
-    <param type="GLsizei" name="width" />
-    <param type="GLsizei" name="height" />
-    <param type="GLint" name="border" />
-    <param type="GLsizei" name="imageSize" />
-    <param type="GLvoid*" name="data" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLint" name="level" flow="in" />
+    <param type="GLenum" name="internalformat" flow="in" />
+    <param type="GLsizei" name="width" flow="in" />
+    <param type="GLsizei" name="height" flow="in" />
+    <param type="GLint" name="border" flow="in" />
+    <param type="GLsizei" name="imageSize" flow="in" />
+    <param type="GLvoid*" name="data" flow="in" />
   </function>
   <function name="CompressedTexSubImage2D" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLint" name="level" />
-    <param type="GLint" name="xoffset" />
-    <param type="GLint" name="yoffset" />
-    <param type="GLsizei" name="width" />
-    <param type="GLsizei" name="height" />
-    <param type="GLenum" name="format" />
-    <param type="GLsizei" name="imageSize" />
-    <param type="GLvoid*" name="data" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLint" name="level" flow="in" />
+    <param type="GLint" name="xoffset" flow="in" />
+    <param type="GLint" name="yoffset" flow="in" />
+    <param type="GLsizei" name="width" flow="in" />
+    <param type="GLsizei" name="height" flow="in" />
+    <param type="GLenum" name="format" flow="in" />
+    <param type="GLsizei" name="imageSize" flow="in" />
+    <param type="GLvoid*" name="data" flow="in" />
   </function>
   <function name="CopyTexImage2D" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLint" name="level" />
-    <param type="GLenum" name="internalformat" />
-    <param type="GLint" name="x" />
-    <param type="GLint" name="y" />
-    <param type="GLsizei" name="width" />
-    <param type="GLsizei" name="height" />
-    <param type="GLint" name="border" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLint" name="level" flow="in" />
+    <param type="GLenum" name="internalformat" flow="in" />
+    <param type="GLint" name="x" flow="in" />
+    <param type="GLint" name="y" flow="in" />
+    <param type="GLsizei" name="width" flow="in" />
+    <param type="GLsizei" name="height" flow="in" />
+    <param type="GLint" name="border" flow="in" />
   </function>
   <function name="CopyTexSubImage2D" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLint" name="level" />
-    <param type="GLint" name="xoffset" />
-    <param type="GLint" name="yoffset" />
-    <param type="GLint" name="x" />
-    <param type="GLint" name="y" />
-    <param type="GLsizei" name="width" />
-    <param type="GLsizei" name="height" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLint" name="level" flow="in" />
+    <param type="GLint" name="xoffset" flow="in" />
+    <param type="GLint" name="yoffset" flow="in" />
+    <param type="GLint" name="x" flow="in" />
+    <param type="GLint" name="y" flow="in" />
+    <param type="GLsizei" name="width" flow="in" />
+    <param type="GLsizei" name="height" flow="in" />
   </function>
   <function name="CullFace" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="mode" />
+    <param type="GLenum" name="mode" flow="in" />
   </function>
   <function name="DeleteTextures" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLsizei" name="n" />
-    <param type="GLuint*" name="textures" />
+    <param type="GLsizei" name="n" flow="in" />
+    <param type="GLuint*" name="textures" flow="in" />
   </function>
   <function name="DepthFunc" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="func" />
+    <param type="GLenum" name="func" flow="in" />
   </function>
   <function name="DepthMask" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLboolean" name="flag" />
+    <param type="GLboolean" name="flag" flow="in" />
   </function>
   <function name="DepthRangef" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLclampf" name="zNear" />
-    <param type="GLclampf" name="zFar" />
+    <param type="GLclampf" name="zNear" flow="in" />
+    <param type="GLclampf" name="zFar" flow="in" />
   </function>
   <function name="DepthRangex" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLclampx" name="zNear" />
-    <param type="GLclampx" name="zFar" />
+    <param type="GLclampx" name="zNear" flow="in" />
+    <param type="GLclampx" name="zFar" flow="in" />
   </function>
   <function name="Disable" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="cap" />
+    <param type="GLenum" name="cap" flow="in" />
   </function>
   <function name="DisableClientState" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="array" />
+    <param type="GLenum" name="array" flow="in" />
   </function>
   <function name="DrawArrays" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="mode" />
-    <param type="GLint" name="first" />
-    <param type="GLsizei" name="count" />
+    <param type="GLenum" name="mode" flow="in" />
+    <param type="GLint" name="first" flow="in" />
+    <param type="GLsizei" name="count" flow="in" />
   </function>
   <function name="DrawElements" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="mode" />
-    <param type="GLsizei" name="count" />
-    <param type="GLenum" name="type" />
-    <param type="GLvoid*" name="indices" />
+    <param type="GLenum" name="mode" flow="in" />
+    <param type="GLsizei" name="count" flow="in" />
+    <param type="GLenum" name="type" flow="in" />
+    <param type="GLvoid*" name="indices" flow="in" />
   </function>
   <function name="Enable" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="cap" />
+    <param type="GLenum" name="cap" flow="in" />
   </function>
   <function name="EnableClientState" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="array" />
+    <param type="GLenum" name="array" flow="in" />
   </function>
   <function name="Finish" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
@@ -513,245 +513,245 @@
   </function>
   <function name="Fogf" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfloat" name="param" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfloat" name="param" flow="in" />
   </function>
   <function name="Fogfv" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfloat*" name="params" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfloat*" name="params" flow="in" />
   </function>
   <function name="Fogx" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfixed" name="param" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfixed" name="param" flow="in" />
   </function>
   <function name="Fogxv" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfixed*" name="params" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfixed*" name="params" flow="in" />
   </function>
   <function name="FrontFace" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="mode" />
+    <param type="GLenum" name="mode" flow="in" />
   </function>
   <function name="Frustumf" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfloat" name="left" />
-    <param type="GLfloat" name="right" />
-    <param type="GLfloat" name="bottom" />
-    <param type="GLfloat" name="top" />
-    <param type="GLfloat" name="zNear" />
-    <param type="GLfloat" name="zFar" />
+    <param type="GLfloat" name="left" flow="in" />
+    <param type="GLfloat" name="right" flow="in" />
+    <param type="GLfloat" name="bottom" flow="in" />
+    <param type="GLfloat" name="top" flow="in" />
+    <param type="GLfloat" name="zNear" flow="in" />
+    <param type="GLfloat" name="zFar" flow="in" />
   </function>
   <function name="Frustumx" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfixed" name="left" />
-    <param type="GLfixed" name="right" />
-    <param type="GLfixed" name="bottom" />
-    <param type="GLfixed" name="top" />
-    <param type="GLfixed" name="zNear" />
-    <param type="GLfixed" name="zFar" />
+    <param type="GLfixed" name="left" flow="in" />
+    <param type="GLfixed" name="right" flow="in" />
+    <param type="GLfixed" name="bottom" flow="in" />
+    <param type="GLfixed" name="top" flow="in" />
+    <param type="GLfixed" name="zNear" flow="in" />
+    <param type="GLfixed" name="zFar" flow="in" />
   </function>
   <function name="GenTextures" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLsizei" name="n" />
-    <param type="GLuint*" name="textures" />
+    <param type="GLsizei" name="n" flow="in" />
+    <param type="GLuint*" name="textures" flow="in" />
   </function>
   <function name="GetError" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="GLenum" />
   </function>
   <function name="GetIntegerv" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="pname" />
-    <param type="GLint*" name="params" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLint*" name="params" flow="in" />
   </function>
   <function name="GetString" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="GLubyte*" />
-    <param type="GLenum" name="name" />
+    <param type="GLenum" name="name" flow="in" />
   </function>
   <function name="Hint" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLenum" name="mode" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLenum" name="mode" flow="in" />
   </function>
   <function name="Lightf" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="light" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfloat" name="param" />
+    <param type="GLenum" name="light" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfloat" name="param" flow="in" />
   </function>
   <function name="Lightfv" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="light" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfloat*" name="params" />
+    <param type="GLenum" name="light" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfloat*" name="params" flow="in" />
   </function>
   <function name="LightModelf" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfloat" name="param" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfloat" name="param" flow="in" />
   </function>
   <function name="LightModelfv" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfloat*" name="params" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfloat*" name="params" flow="in" />
   </function>
   <function name="LightModelx" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfixed" name="param" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfixed" name="param" flow="in" />
   </function>
   <function name="LightModelxv" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfixed*" name="params" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfixed*" name="params" flow="in" />
   </function>
   <function name="Lightx" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="light" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfixed" name="param" />
+    <param type="GLenum" name="light" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfixed" name="param" flow="in" />
   </function>
   <function name="Lightxv" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="light" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfixed*" name="params" />
+    <param type="GLenum" name="light" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfixed*" name="params" flow="in" />
   </function>
   <function name="LineWidth" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfloat" name="width" />
+    <param type="GLfloat" name="width" flow="in" />
   </function>
   <function name="LineWidthx" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfixed" name="width" />
+    <param type="GLfixed" name="width" flow="in" />
   </function>
   <function name="LoadIdentity" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
   </function>
   <function name="LoadMatrixf" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfloat*" name="m" />
+    <param type="GLfloat*" name="m" flow="in" />
   </function>
   <function name="LoadMatrixx" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfixed*" name="m" />
+    <param type="GLfixed*" name="m" flow="in" />
   </function>
   <function name="LogicOp" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="opcode" />
+    <param type="GLenum" name="opcode" flow="in" />
   </function>
   <function name="Materialf" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="face" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfloat" name="param" />
+    <param type="GLenum" name="face" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfloat" name="param" flow="in" />
   </function>
   <function name="Materialfv" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="face" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfloat*" name="params" />
+    <param type="GLenum" name="face" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfloat*" name="params" flow="in" />
   </function>
   <function name="Materialx" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="face" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfixed" name="param" />
+    <param type="GLenum" name="face" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfixed" name="param" flow="in" />
   </function>
   <function name="Materialxv" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="face" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfixed*" name="params" />
+    <param type="GLenum" name="face" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfixed*" name="params" flow="in" />
   </function>
   <function name="MatrixMode" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="mode" />
+    <param type="GLenum" name="mode" flow="in" />
   </function>
   <function name="MultiTexCoord4f" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLfloat" name="s" />
-    <param type="GLfloat" name="t" />
-    <param type="GLfloat" name="r" />
-    <param type="GLfloat" name="q" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLfloat" name="s" flow="in" />
+    <param type="GLfloat" name="t" flow="in" />
+    <param type="GLfloat" name="r" flow="in" />
+    <param type="GLfloat" name="q" flow="in" />
   </function>
   <function name="MultiTexCoord4x" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLfixed" name="s" />
-    <param type="GLfixed" name="t" />
-    <param type="GLfixed" name="r" />
-    <param type="GLfixed" name="q" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLfixed" name="s" flow="in" />
+    <param type="GLfixed" name="t" flow="in" />
+    <param type="GLfixed" name="r" flow="in" />
+    <param type="GLfixed" name="q" flow="in" />
   </function>
   <function name="MultMatrixf" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfloat*" name="m" />
+    <param type="GLfloat*" name="m" flow="in" />
   </function>
   <function name="MultMatrixx" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfixed*" name="m" />
+    <param type="GLfixed*" name="m" flow="in" />
   </function>
   <function name="Normal3f" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfloat" name="nx" />
-    <param type="GLfloat" name="ny" />
-    <param type="GLfloat" name="nz" />
+    <param type="GLfloat" name="nx" flow="in" />
+    <param type="GLfloat" name="ny" flow="in" />
+    <param type="GLfloat" name="nz" flow="in" />
   </function>
   <function name="Normal3x" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfixed" name="nx" />
-    <param type="GLfixed" name="ny" />
-    <param type="GLfixed" name="nz" />
+    <param type="GLfixed" name="nx" flow="in" />
+    <param type="GLfixed" name="ny" flow="in" />
+    <param type="GLfixed" name="nz" flow="in" />
   </function>
   <function name="NormalPointer" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="type" />
-    <param type="GLsizei" name="stride" />
-    <param type="GLvoid*" name="pointer" />
+    <param type="GLenum" name="type" flow="in" />
+    <param type="GLsizei" name="stride" flow="in" />
+    <param type="GLvoid*" name="pointer" flow="in" />
   </function>
   <function name="Orthof" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfloat" name="left" />
-    <param type="GLfloat" name="right" />
-    <param type="GLfloat" name="bottom" />
-    <param type="GLfloat" name="top" />
-    <param type="GLfloat" name="zNear" />
-    <param type="GLfloat" name="zFar" />
+    <param type="GLfloat" name="left" flow="in" />
+    <param type="GLfloat" name="right" flow="in" />
+    <param type="GLfloat" name="bottom" flow="in" />
+    <param type="GLfloat" name="top" flow="in" />
+    <param type="GLfloat" name="zNear" flow="in" />
+    <param type="GLfloat" name="zFar" flow="in" />
   </function>
   <function name="Orthox" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfixed" name="left" />
-    <param type="GLfixed" name="right" />
-    <param type="GLfixed" name="bottom" />
-    <param type="GLfixed" name="top" />
-    <param type="GLfixed" name="zNear" />
-    <param type="GLfixed" name="zFar" />
+    <param type="GLfixed" name="left" flow="in" />
+    <param type="GLfixed" name="right" flow="in" />
+    <param type="GLfixed" name="bottom" flow="in" />
+    <param type="GLfixed" name="top" flow="in" />
+    <param type="GLfixed" name="zNear" flow="in" />
+    <param type="GLfixed" name="zFar" flow="in" />
   </function>
   <function name="PixelStorei" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="pname" />
-    <param type="GLint" name="param" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLint" name="param" flow="in" />
   </function>
   <function name="PointSize" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfloat" name="size" />
+    <param type="GLfloat" name="size" flow="in" />
   </function>
   <function name="PointSizex" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfixed" name="size" />
+    <param type="GLfixed" name="size" flow="in" />
   </function>
   <function name="PolygonOffset" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfloat" name="factor" />
-    <param type="GLfloat" name="units" />
+    <param type="GLfloat" name="factor" flow="in" />
+    <param type="GLfloat" name="units" flow="in" />
   </function>
   <function name="PolygonOffsetx" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfixed" name="factor" />
-    <param type="GLfixed" name="units" />
+    <param type="GLfixed" name="factor" flow="in" />
+    <param type="GLfixed" name="units" flow="in" />
   </function>
   <function name="PopMatrix" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
@@ -761,168 +761,168 @@
   </function>
   <function name="ReadPixels" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLint" name="x" />
-    <param type="GLint" name="y" />
-    <param type="GLsizei" name="width" />
-    <param type="GLsizei" name="height" />
-    <param type="GLenum" name="format" />
-    <param type="GLenum" name="type" />
-    <param type="GLvoid*" name="pixels" />
+    <param type="GLint" name="x" flow="in" />
+    <param type="GLint" name="y" flow="in" />
+    <param type="GLsizei" name="width" flow="in" />
+    <param type="GLsizei" name="height" flow="in" />
+    <param type="GLenum" name="format" flow="in" />
+    <param type="GLenum" name="type" flow="in" />
+    <param type="GLvoid*" name="pixels" flow="in" />
   </function>
   <function name="Rotatef" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfloat" name="angle" />
-    <param type="GLfloat" name="x" />
-    <param type="GLfloat" name="y" />
-    <param type="GLfloat" name="z" />
+    <param type="GLfloat" name="angle" flow="in" />
+    <param type="GLfloat" name="x" flow="in" />
+    <param type="GLfloat" name="y" flow="in" />
+    <param type="GLfloat" name="z" flow="in" />
   </function>
   <function name="Rotatex" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfixed" name="angle" />
-    <param type="GLfixed" name="x" />
-    <param type="GLfixed" name="y" />
-    <param type="GLfixed" name="z" />
+    <param type="GLfixed" name="angle" flow="in" />
+    <param type="GLfixed" name="x" flow="in" />
+    <param type="GLfixed" name="y" flow="in" />
+    <param type="GLfixed" name="z" flow="in" />
   </function>
   <function name="SampleCoverage" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLclampf" name="value" />
-    <param type="GLboolean" name="invert" />
+    <param type="GLclampf" name="value" flow="in" />
+    <param type="GLboolean" name="invert" flow="in" />
   </function>
   <function name="SampleCoveragex" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLclampx" name="value" />
-    <param type="GLboolean" name="invert" />
+    <param type="GLclampx" name="value" flow="in" />
+    <param type="GLboolean" name="invert" flow="in" />
   </function>
   <function name="Scalef" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfloat" name="x" />
-    <param type="GLfloat" name="y" />
-    <param type="GLfloat" name="z" />
+    <param type="GLfloat" name="x" flow="in" />
+    <param type="GLfloat" name="y" flow="in" />
+    <param type="GLfloat" name="z" flow="in" />
   </function>
   <function name="Scalex" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfixed" name="x" />
-    <param type="GLfixed" name="y" />
-    <param type="GLfixed" name="z" />
+    <param type="GLfixed" name="x" flow="in" />
+    <param type="GLfixed" name="y" flow="in" />
+    <param type="GLfixed" name="z" flow="in" />
   </function>
   <function name="Scissor" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLint" name="x" />
-    <param type="GLint" name="y" />
-    <param type="GLsizei" name="width" />
-    <param type="GLsizei" name="height" />
+    <param type="GLint" name="x" flow="in" />
+    <param type="GLint" name="y" flow="in" />
+    <param type="GLsizei" name="width" flow="in" />
+    <param type="GLsizei" name="height" flow="in" />
   </function>
   <function name="ShadeModel" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="mode" />
+    <param type="GLenum" name="mode" flow="in" />
   </function>
   <function name="StencilFunc" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="func" />
-    <param type="GLint" name="ref" />
-    <param type="GLuint" name="mask" />
+    <param type="GLenum" name="func" flow="in" />
+    <param type="GLint" name="ref" flow="in" />
+    <param type="GLuint" name="mask" flow="in" />
   </function>
   <function name="StencilMask" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLuint" name="mask" />
+    <param type="GLuint" name="mask" flow="in" />
   </function>
   <function name="StencilOp" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="fail" />
-    <param type="GLenum" name="zfail" />
-    <param type="GLenum" name="zpass" />
+    <param type="GLenum" name="fail" flow="in" />
+    <param type="GLenum" name="zfail" flow="in" />
+    <param type="GLenum" name="zpass" flow="in" />
   </function>
   <function name="TexCoordPointer" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLint" name="size" />
-    <param type="GLenum" name="type" />
-    <param type="GLsizei" name="stride" />
-    <param type="GLvoid*" name="pointer" />
+    <param type="GLint" name="size" flow="in" />
+    <param type="GLenum" name="type" flow="in" />
+    <param type="GLsizei" name="stride" flow="in" />
+    <param type="GLvoid*" name="pointer" flow="in" />
   </function>
   <function name="TexEnvf" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfloat" name="param" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfloat" name="param" flow="in" />
   </function>
   <function name="TexEnvfv" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfloat*" name="params" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfloat*" name="params" flow="in" />
   </function>
   <function name="TexEnvx" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfixed" name="param" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfixed" name="param" flow="in" />
   </function>
   <function name="TexEnvxv" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfixed*" name="params" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfixed*" name="params" flow="in" />
   </function>
   <function name="TexImage2D" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLint" name="level" />
-    <param type="GLint" name="internalformat" />
-    <param type="GLsizei" name="width" />
-    <param type="GLsizei" name="height" />
-    <param type="GLint" name="border" />
-    <param type="GLenum" name="format" />
-    <param type="GLenum" name="type" />
-    <param type="GLvoid*" name="pixels" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLint" name="level" flow="in" />
+    <param type="GLint" name="internalformat" flow="in" />
+    <param type="GLsizei" name="width" flow="in" />
+    <param type="GLsizei" name="height" flow="in" />
+    <param type="GLint" name="border" flow="in" />
+    <param type="GLenum" name="format" flow="in" />
+    <param type="GLenum" name="type" flow="in" />
+    <param type="GLvoid*" name="pixels" flow="in" />
   </function>
   <function name="TexParameterf" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfloat" name="param" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfloat" name="param" flow="in" />
   </function>
   <function name="TexParameterx" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLenum" name="pname" />
-    <param type="GLfixed" name="param" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLfixed" name="param" flow="in" />
   </function>
   <function name="TexSubImage2D" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLenum" name="target" />
-    <param type="GLint" name="level" />
-    <param type="GLint" name="xoffset" />
-    <param type="GLint" name="yoffset" />
-    <param type="GLsizei" name="width" />
-    <param type="GLsizei" name="height" />
-    <param type="GLenum" name="format" />
-    <param type="GLenum" name="type" />
-    <param type="GLvoid*" name="pixels" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLint" name="level" flow="in" />
+    <param type="GLint" name="xoffset" flow="in" />
+    <param type="GLint" name="yoffset" flow="in" />
+    <param type="GLsizei" name="width" flow="in" />
+    <param type="GLsizei" name="height" flow="in" />
+    <param type="GLenum" name="format" flow="in" />
+    <param type="GLenum" name="type" flow="in" />
+    <param type="GLvoid*" name="pixels" flow="in" />
   </function>
   <function name="Translatef" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfloat" name="x" />
-    <param type="GLfloat" name="y" />
-    <param type="GLfloat" name="z" />
+    <param type="GLfloat" name="x" flow="in" />
+    <param type="GLfloat" name="y" flow="in" />
+    <param type="GLfloat" name="z" flow="in" />
   </function>
   <function name="Translatex" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLfixed" name="x" />
-    <param type="GLfixed" name="y" />
-    <param type="GLfixed" name="z" />
+    <param type="GLfixed" name="x" flow="in" />
+    <param type="GLfixed" name="y" flow="in" />
+    <param type="GLfixed" name="z" flow="in" />
   </function>
   <function name="VertexPointer" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLint" name="size" />
-    <param type="GLenum" name="type" />
-    <param type="GLsizei" name="stride" />
-    <param type="GLvoid*" name="pointer" />
+    <param type="GLint" name="size" flow="in" />
+    <param type="GLenum" name="type" flow="in" />
+    <param type="GLsizei" name="stride" flow="in" />
+    <param type="GLvoid*" name="pointer" flow="in" />
   </function>
   <function name="Viewport" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
-    <param type="GLint" name="x" />
-    <param type="GLint" name="y" />
-    <param type="GLsizei" name="width" />
-    <param type="GLsizei" name="height" />
+    <param type="GLint" name="x" flow="in" />
+    <param type="GLint" name="y" flow="in" />
+    <param type="GLsizei" name="width" flow="in" />
+    <param type="GLsizei" name="height" flow="in" />
   </function>
 </signatures>
