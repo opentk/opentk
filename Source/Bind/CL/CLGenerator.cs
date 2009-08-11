@@ -15,7 +15,7 @@ namespace Bind.CL
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            glTypemap = "GL2/gl.tm";
+            glTypemap = null;
             csTypemap = "csharp.tm";
             
             enumSpec = name + "/signatures.xml";

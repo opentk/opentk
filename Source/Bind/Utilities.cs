@@ -76,6 +76,9 @@ namespace Bind
 
         internal static StreamReader OpenSpecFile(string folder, string file)
         {
+            if (String.IsNullOrEmpty(folder) || String.IsNullOrEmpty(file))
+                return null;
+
             Console.WriteLine(folder);
             Console.WriteLine(file);
             string path = Path.Combine(folder, file);
