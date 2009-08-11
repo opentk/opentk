@@ -246,49 +246,52 @@ namespace Bind.Structures
 
             if (Parameters.HasPointerParameters)
             {
+                Function _this = new Function(this);
                 // Array overloads
-                foreach (Parameter p in this.Parameters)
+                foreach (Parameter p in _this.Parameters)
                 {
                     if (p.WrapperType == WrapperTypes.ArrayParameter && p.ElementCount != 1)
                     {
                         p.Reference = false;
-                        p.Array = 1;
-                        p.Pointer = 0;
+                        p.Array++;
+                        p.Pointer--;
                     }
                 }
-                f = new Function(this);
+                f = new Function(_this);
                 f.CreateBody(false);
                 wrappers.Add(f);
                 new Function(f).WrapVoidPointers(wrappers);
 
+                _this = new Function(this);
                 // Reference overloads
-                foreach (Parameter p in this.Parameters)
+                foreach (Parameter p in _this.Parameters)
                 {
                     if (p.WrapperType == WrapperTypes.ArrayParameter)
                     {
                         p.Reference = true;
-                        p.Array = 0;
-                        p.Pointer = 0;
+                        p.Array--;
+                        p.Pointer--;
                     }
                 }
-                f = new Function(this);
+                f = new Function(_this);
                 f.CreateBody(false);
                 wrappers.Add(f);
                 new Function(f).WrapVoidPointers(wrappers);
 
+                _this = this;
                 // Pointer overloads
                 // Should be last to work around Intellisense bug, where
                 // array overloads are not reported if there is a pointer overload.
-                foreach (Parameter p in this.Parameters)
+                foreach (Parameter p in _this.Parameters)
                 {
                     if (p.WrapperType == WrapperTypes.ArrayParameter)
                     {
                         p.Reference = false;
-                        p.Array = 0;
-                        p.Pointer++;
+                        //p.Array--;
+                        //p.Pointer++;
                     }
                 }
-                f = new Function(this);
+                f = new Function(_this);
                 f.CreateBody(false);
                 wrappers.Add(f);
                 new Function(f).WrapVoidPointers(wrappers);
@@ -391,12 +394,12 @@ namespace Bind.Structures
         readonly List<string> fixed_statements = new List<string>();
         readonly List<string> assign_statements = new List<string>();
 
+        // For example, if parameter foo has indirection level = 1, then it
+        // is consumed as 'foo*' in the fixed_statements and the call string.
+        string[] indirection_levels = new string[] { "", "*", "**", "***", "****" };
+
         public void CreateBody(bool wantCLSCompliance)
         {
-            if (this.Name.Contains("NewList"))
-            {
-            }
-
             Function f = new Function(this);
 
             f.Body.Clear();
@@ -436,10 +439,11 @@ namespace Bind.Structures
                     {
                         // A fixed statement is issued for all non-generic pointers, arrays and references.
                         fixed_statements.Add(String.Format(
-                            "fixed ({0}* {1} = {2})",
+                            "fixed ({0}{3} {1} = {2})",
                             wantCLSCompliance && !p.CLSCompliant ? p.GetCLSCompliantType() : p.CurrentType,
                             p.Name + "_ptr",
-                            p.Array > 0 ? p.Name : "&" + p.Name));
+                            p.Array > 0 ? p.Name : "&" + p.Name,
+                            indirection_levels[p.IndirectionLevel]));
 
                         if (p.Flow == FlowDirection.Out && p.Array == 0)  // Fixed Arrays of blittable types don't need explicit assignment.
                         {
@@ -459,14 +463,17 @@ namespace Bind.Structures
             // See OpenTK.Graphics.ErrorHelper for more information.
             // Make sure that no error checking is added to the GetError function,
             // as that would cause infinite recursion!
-            if (f.TrimmedName != "GetError")
+            if ((Settings.Compatibility & Settings.Legacy.NoDebugHelpers) == 0)
             {
-                f.Body.Add("#if DEBUG");
-                f.Body.Add("using (new ErrorHelper(GraphicsContext.CurrentContext))");
-                f.Body.Add("{");
-                if (f.TrimmedName == "Begin")
-                    f.Body.Add("GraphicsContext.CurrentContext.ErrorChecking = false;");
-                f.Body.Add("#endif");
+                if (f.TrimmedName != "GetError")
+                {
+                    f.Body.Add("#if DEBUG");
+                    f.Body.Add("using (new ErrorHelper(GraphicsContext.CurrentContext))");
+                    f.Body.Add("{");
+                    if (f.TrimmedName == "Begin")
+                        f.Body.Add("GraphicsContext.CurrentContext.ErrorChecking = false;");
+                    f.Body.Add("#endif");
+                }
             }
 
             if (!f.Unsafe && fixed_statements.Count > 0)
@@ -513,6 +520,8 @@ namespace Bind.Structures
             }
             else
             {
+                //if (Name == "EnqueueCopyBufferToImage")
+                //    Debugger.Break();
                 // Call function and return
                 if (f.ReturnType.CurrentType.ToLower().Contains("void"))
                     f.Body.Add(String.Format("{0};", f.CallString()));
@@ -551,13 +560,16 @@ namespace Bind.Structures
                 f.Body.Add("}");
             }
 
-            if (f.TrimmedName != "GetError")
+            if ((Settings.Compatibility & Settings.Legacy.NoDebugHelpers) == 0)
             {
-                f.Body.Add("#if DEBUG");
-                if (f.TrimmedName == "End")
-                    f.Body.Add("GraphicsContext.CurrentContext.ErrorChecking = true;");
-                f.Body.Add("}");
-                f.Body.Add("#endif");
+                if (f.TrimmedName != "GetError")
+                {
+                    f.Body.Add("#if DEBUG");
+                    if (f.TrimmedName == "End")
+                        f.Body.Add("GraphicsContext.CurrentContext.ErrorChecking = true;");
+                    f.Body.Add("}");
+                    f.Body.Add("#endif");
+                }
             }
 
             this.Body = f.Body;
@@ -569,7 +581,12 @@ namespace Bind.Structures
 
         public int CompareTo(Function other)
         {
-            return Name.CompareTo(other.Name);
+            int ret = Name.CompareTo(other.Name);
+            if (ret == 0)
+                ret = Parameters.ToString().CompareTo(other.Parameters.ToString());
+            if (ret == 0)
+                ret = ReturnType.ToString().CompareTo(other.ReturnType.ToString());
+            return ret;
         }
 
         #endregion
