@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OpenGL binding generator")]
-[assembly: AssemblyDescription("Generates OpenGL bindings for C# from the C OpenGL headers")]
+[assembly: AssemblyTitle("OpenTK binding generator")]
+[assembly: AssemblyDescription("Generates OpenGL and OpenCL bindings for C#")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("OpenTK.OpenGL.Bind")]
-[assembly: AssemblyCopyright("Copyright ©  2006-2008 the OpenTK team")]
+[assembly: AssemblyCopyright("Copyright ©  2006-2009 the OpenTK team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.9.9.12")]
-[assembly: AssemblyFileVersion("0.9.9.12")]
+[assembly: AssemblyVersion("0.9.9.13")]
+[assembly: AssemblyFileVersion("0.9.9.13")]
