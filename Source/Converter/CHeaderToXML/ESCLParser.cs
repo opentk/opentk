@@ -40,7 +40,7 @@ namespace CHeaderToXML
     {
         Regex extensions = new Regex("(ARB|EXT|AMD|NV|OES|QCOM)", RegexOptions.RightToLeft | RegexOptions.Compiled);
         Regex array_size = new Regex(@"\[.+\]", RegexOptions.RightToLeft | RegexOptions.Compiled);
-        Regex EnumToken  = new Regex(@"^#define \w+\s+\w+$", RegexOptions.Compiled);
+        Regex EnumToken  = new Regex(@"^#define \w+\s+\(?-?\w+\s?<?<?\s?-?\w*\)?$", RegexOptions.Compiled);
 
         public ESCLParser()
         {
@@ -99,7 +99,13 @@ namespace CHeaderToXML
 
                 Func<string, string> translate_name = name =>
                 {
+                    if (String.IsNullOrEmpty(name))
+                        return name;
+
                     // Patch some names that are known to be problematic
+                    if (name.EndsWith("FlagsFlags"))
+                        name = name.Replace("FlagsFlags", "Flags");
+
                     switch (name)
                     {
                         case "OpenGLEScoreversions":
@@ -137,13 +143,18 @@ namespace CHeaderToXML
                         acc.Add(new XElement("enum", new XAttribute("name", "Unknown")));
 
                     var tokens = split(line);
+                    // Some constants are defined bitshifts, e.g. (1 << 2). If a constant contains parentheses
+                    // we assume it is a bitshift. Otherwise, we assume it is single value, separated by space
+                    // (e.g. 0xdeadbeef).
+                    if (line.Contains("("))
+                        tokens[2] = "(" + line.Split('(')[1];
 
                     // Check whether this is an include guard (e.g. #define __OPENCL_CL_H)
                     if (tokens[1].StartsWith("__"))
                         return acc;
 
                     acc[acc.Count - 1].Add(new XElement("token",
-                        new XAttribute("name", tokens[1].Substring(Prefix.Length + 1)),   // removes prefix
+                        new XAttribute("name", tokens[1].Substring(Prefix.Length + 1)),   // remove prefix
                         new XAttribute("value", tokens[2])));
                 }
                 return acc;
@@ -191,7 +202,8 @@ namespace CHeaderToXML
                             from item in line.Split("()".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[1].Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
                             let tokens = item.Trim().Split(' ')
                             let param_name = (tokens.Last().Trim() != "*/" ? tokens.Last() : tokens[tokens.Length - 2]).Trim()
-                            let param_type = (tokens.First().Trim() != "const" ? tokens.First().Trim() : tokens.Skip(1).First().Trim())
+                            //let param_type = (tokens.First().Trim() != "const" ? tokens.First().Trim() : tokens.Skip(1).First().Trim())
+                            let param_type = (from t in tokens where t.Trim() != "const" && t.Trim() != "unsigned" select t).First().Trim()
                             let has_array_size = array_size.IsMatch(param_name)
                             let indirection_level =
                                 (from c in param_name where c == '*' select c).Count() +
@@ -204,9 +216,11 @@ namespace CHeaderToXML
                             where tokens.Length > 1
                             select new
                             {
-                                Name = (has_array_size ? array_size.Replace(param_name, "") : param_name).Replace("*", ""),
-                                Type = param_type.Replace("*", "") + String.Join("", pointers, 0, indirection_level),
-                                Count = has_array_size ? Int32.Parse(array_size.Match(param_name).Value.Trim('[', ']')) : 0
+                                Name = (has_array_size ? array_size.Replace(param_name, "") : param_name).Replace("*", ""), // Pointers are placed into the parameter Type, not Name
+                                Type = (tokens.Contains("unsigned") && !param_type.StartsWith("byte") ? "u" : "") +    // Make sure we don't ignore the unsigned part of unsigned parameters (e.g. unsigned int -> uint)
+                                    param_type.Replace("*", "") + String.Join("", pointers, 0, indirection_level),  // Normalize pointer indirection level (place as many asterisks as in indirection_level variable)
+                                Count = has_array_size ? Int32.Parse(array_size.Match(param_name).Value.Trim('[', ']')) : 0,
+                                Flow = param_name.EndsWith("ret") ? "out" : "in"
                             }
                     };
 
@@ -222,6 +236,7 @@ namespace CHeaderToXML
                     var param = new XElement("param", new XAttribute("type", p.Type), new XAttribute("name", p.Name));
                     if (p.Count > 0)
                         param.Add(new XAttribute("count", p.Count));
+                    param.Add(new XAttribute("flow", p.Flow));
                     func.Add(param);
                 }
 
