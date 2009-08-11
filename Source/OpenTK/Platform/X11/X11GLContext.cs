@@ -154,8 +154,8 @@ namespace OpenTK.Platform.X11
         XVisualInfo SelectVisual(GraphicsMode mode, X11WindowInfo currentWindow)
         {
             XVisualInfo info = new XVisualInfo();
-            info.visualid = (IntPtr)mode.Index;
-            info.screen = currentWindow.Screen;
+            info.VisualID = (IntPtr)mode.Index;
+            info.Screen = currentWindow.Screen;
             int items;
             
             lock (API.Lock)

@@ -834,7 +834,7 @@ namespace OpenTK.Platform.X11
         XK_Hyper_R = 0xFFEE,
     }
 
-
+#pragma warning disable 1591
 
     [Flags]
     public enum EventMask
@@ -866,6 +866,8 @@ namespace OpenTK.Platform.X11
         ColormapChangeMask = 1 << 23,
         OwnerGrabButtonMask = 1 << 24
     }
+
+#pragma warning restore 1591
 
     internal enum GrabMode
     {

@@ -70,7 +70,7 @@ namespace OpenTK.Platform.X11
             Glx.GetConfig(display, ref info, GLXAttribute.STEREO, out st);
             stereo = st != 0;
             
-            gfx = new GraphicsMode(info.visualid, new ColorFormat(r, g, b, a), depth, stencil, samples,
+            gfx = new GraphicsMode(info.VisualID, new ColorFormat(r, g, b, a), depth, stencil, samples,
                                    new ColorFormat(ar, ag, ab, aa), buffers, stereo);
 
             Functions.XFree(visual);
