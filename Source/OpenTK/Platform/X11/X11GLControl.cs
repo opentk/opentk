@@ -30,16 +30,16 @@ namespace OpenTK.Platform.X11
             X11WindowInfo window = (X11WindowInfo)this.WindowInfo;
 
             XVisualInfo info = new XVisualInfo();
-            info.visualid = mode.Index;
+            info.VisualID = mode.Index;
             int dummy;
             window.VisualInfo = (XVisualInfo)Marshal.PtrToStructure(
                 Functions.XGetVisualInfo(window.Display, XVisualInfoMask.ID, ref info, out dummy), typeof(XVisualInfo));
 
             Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
             xplatui.GetField("CustomVisual", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
-                .SetValue(null, window.VisualInfo.visual);
+                .SetValue(null, window.VisualInfo.Visual);
             xplatui.GetField("CustomColormap", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
-                .SetValue(null, Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0));
+                .SetValue(null, Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.Visual, 0));
         }
 
         #region --- IGLControl Members ---

@@ -586,26 +586,30 @@ XF86VidModeGetGammaRampSize(
 
     #region internal class XVisualInfo
 
+#pragma warning disable 1591
+
     [StructLayout(LayoutKind.Sequential)]
     public struct XVisualInfo
     {
-        public IntPtr visual;
-        public VisualID visualid;
-        public int screen;
-        public int depth;
-        public XVisualClass @class;
-        public long redMask;
-        public long greenMask;
+        public IntPtr Visual;
+        public VisualID VisualID;
+        public int Screen;
+        public int Depth;
+        public XVisualClass Class;
+        public long RedMask;
+        public long GreenMask;
         public long blueMask;
-        public int colormap_size;
-        public int bits_per_rgb;
+        public int ColormapSize;
+        public int BitsPerRgb;
 
         public override string ToString()
         {
             return String.Format("id ({0}), screen ({1}), depth ({2}), class ({3})",
-                visualid, screen, depth, @class);
+                VisualID, Screen, Depth, Class);
         }
     }
+
+#pragma warning restore 1591
 
     #endregion
 
@@ -1254,6 +1258,8 @@ XF86VidModeGetGammaRampSize(
 
     #endregion
 
+#pragma warning disable 1591
+
     public enum XVisualClass : int
     {
         StaticGray = 0,
@@ -1263,6 +1269,8 @@ XF86VidModeGetGammaRampSize(
         TrueColor = 4,
         DirectColor = 5,
     }
+
+#pragma warning restore 1591
 
     [Flags]
     internal enum XVisualInfoMask
