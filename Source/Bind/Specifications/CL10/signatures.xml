@@ -340,6 +340,9 @@
     <param type="cl_uint" name="num_devices" flow="in" />
     <param type="cl_device_id*" name="device_list" flow="in" />
     <param type="char*" name="options" flow="in" />
+    <param type="cl_program" name="program" flow="in" />
+    <param type="void*" name="user_data" flow="in" />
+    <param type="void*" name="user_data" flow="in" />
   </function>
   <function name="CreateBuffer" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_mem" />
@@ -361,11 +364,17 @@
     <param type="cl_context_properties*" name="properties" flow="in" />
     <param type="cl_uint" name="num_devices" flow="in" />
     <param type="cl_device_id*" name="devices" flow="in" />
+    <param type="IntPtr" name="pfn_notify" flow="in" />
+    <param type="void*" name="user_data" flow="in" />
+    <param type="cl_int*" name="errcode_ret" flow="out" />
   </function>
   <function name="CreateContextFromType" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_context" />
     <param type="cl_context_properties*" name="properties" flow="in" />
     <param type="cl_device_type" name="device_type" flow="in" />
+    <param type="IntPtr" name="pfn_notify" flow="in" />
+    <param type="void*" name="user_data" flow="in" />
+    <param type="cl_int*" name="errcode_ret" flow="out" />
   </function>
   <function name="CreateImage2D" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_mem" />
@@ -410,7 +419,7 @@
     <param type="cl_uint" name="num_devices" flow="in" />
     <param type="cl_device_id*" name="device_list" flow="in" />
     <param type="size_t*" name="lengths" flow="in" />
-    <param type="uchar**" name="binaries" flow="in" />
+    <param type="uchar" name="char" flow="in" />
     <param type="cl_int*" name="binary_status" flow="in" />
     <param type="cl_int*" name="errcode_ret" flow="out" />
   </function>
@@ -518,6 +527,14 @@
   <function name="EnqueueNativeKernel" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_command_queue" name="command_queue" flow="in" />
+    <param type="void*" name="args" flow="in" />
+    <param type="size_t" name="cb_args" flow="in" />
+    <param type="cl_uint" name="num_mem_objects" flow="in" />
+    <param type="cl_mem*" name="mem_list" flow="in" />
+    <param type="void**" name="args_mem_loc" flow="in" />
+    <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+    <param type="cl_event*" name="event_wait_list" flow="in" />
+    <param type="cl_event*" name="event" flow="in" />
   </function>
   <function name="EnqueueNDRangeKernel" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
