@@ -124,7 +124,7 @@ namespace OpenTK.Platform.X11
             
             lock (API.Lock)
             {
-                info.visualid = mode.Index;
+                info.VisualID = mode.Index;
                 int dummy;
                 window.VisualInfo = (XVisualInfo)Marshal.PtrToStructure(
                     Functions.XGetVisualInfo(window.Display, XVisualInfoMask.ID, ref info, out dummy), typeof(XVisualInfo));
@@ -135,7 +135,7 @@ namespace OpenTK.Platform.X11
                 XSetWindowAttributes attributes = new XSetWindowAttributes();
                 attributes.background_pixel = IntPtr.Zero;
                 attributes.border_pixel = IntPtr.Zero;
-                attributes.colormap = Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0/*AllocNone*/);
+                attributes.colormap = Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.Visual, 0/*AllocNone*/);
                 window.EventMask = EventMask.StructureNotifyMask | EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
                                    EventMask.KeyReleaseMask | EventMask.KeyPressMask |
                                    EventMask.PointerMotionMask | EventMask.FocusChangeMask |
@@ -146,8 +146,8 @@ namespace OpenTK.Platform.X11
                     (uint)SetWindowValuemask.BackPixel | (uint)SetWindowValuemask.BorderPixel;
 
                 window.WindowHandle = Functions.XCreateWindow(window.Display, window.RootWindow,
-                    x, y, width, height, 0, window.VisualInfo.depth/*(int)CreateWindowArgs.CopyFromParent*/,
-                    (int)CreateWindowArgs.InputOutput, window.VisualInfo.visual, (UIntPtr)mask, ref attributes);
+                    x, y, width, height, 0, window.VisualInfo.Depth/*(int)CreateWindowArgs.CopyFromParent*/,
+                    (int)CreateWindowArgs.InputOutput, window.VisualInfo.Visual, (UIntPtr)mask, ref attributes);
 
                 if (window.WindowHandle == IntPtr.Zero)
                     throw new ApplicationException("XCreateWindow call failed (returned 0).");
