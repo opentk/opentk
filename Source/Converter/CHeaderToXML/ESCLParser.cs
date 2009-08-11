@@ -199,10 +199,10 @@ namespace CHeaderToXML
                 // The second part (before the '|') matches parameters of the following formats:
                 // '[return type] [parameter name]', '[return type] * [parameter name]', 'const [return type]* [parameter name]'
                 // where [parameter name] can either be inside comments (/* ... */) or not.
-                var get_param = new Regex(@"(\w+\s\(\*\w+\)\s*\(.*\)\s*(/\*.*?\*/|\w+) | (const\s)?\w+\s*\**\s*(/\*.*?\*/|\w+(\[.*?\])?)),?", RegexOptions.IgnorePatternWhitespace);
+                var get_param = new Regex(@"(\w+\s\(\*\w+\)\s*\(.*\)\s*(/\*.*?\*/|\w+)? | (const\s)?\w+\s*\**\s*(/\*.*?\*/|\w+(\[.*?\])?)),?", RegexOptions.IgnorePatternWhitespace);
 
-#if false
-                if (funcname == "CreateContextFromType")
+#if true
+                if (funcname == "EnqueueNativeKernel")
                     Debugger.Break();
                 var ars = get_param.Matches(paramaters_string).OfType<Match>().Select(m => m.Captures[0].Value.TrimEnd(','));
 #endif
@@ -219,8 +219,10 @@ namespace CHeaderToXML
                             from item in get_param.Matches(paramaters_string).OfType<Match>().Select(m => m.Captures[0].Value.TrimEnd(','))
                                 //paramaters_string.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
                             let tokens = item.Trim().Split(' ')
-                            let param_name = (tokens.Last().Trim() != "*/" ? tokens.Last() : tokens[tokens.Length - 2]).Trim()
-                            let is_function_pointer = param_name.StartsWith("pfn")
+                            let is_function_pointer = item.Contains("(*") // This only occurs in function pointers, e.g. void (*pfn_notify)() or void (*user_func)()
+                            let param_name =
+                                is_function_pointer ? tokens[1].TrimStart('(', '*').Split(')')[0] :
+                                (tokens.Last().Trim() != "*/" ? tokens.Last() : tokens[tokens.Length - 2]).Trim()
                             let param_type =
                                 is_function_pointer ? "IntPtr" :
                                 (from t in tokens where t.Trim() != "const" && t.Trim() != "unsigned" select t).First().Trim()
