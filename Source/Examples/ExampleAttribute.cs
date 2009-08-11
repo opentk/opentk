@@ -50,9 +50,10 @@ namespace Examples
 
     public enum ExampleCategory
     {
-        Default = 0,
-        OpenTK = Default,
+        OpenTK = 0,
         OpenGL,
         OpenAL,
+        OpenCL,
+        OpenGLES
     }
 }

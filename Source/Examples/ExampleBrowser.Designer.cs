@@ -161,6 +161,7 @@
             this.imageListSampleCategories.Images.SetKeyName(16, "Test.jpg");
             this.imageListSampleCategories.Images.SetKeyName(17, "Fonts.jpg");
             this.imageListSampleCategories.Images.SetKeyName(18, "OpenTK.jpg");
+            this.imageListSampleCategories.Images.SetKeyName(19, "OpenCL.png");
             // 
             // tabControlSample
             // 
@@ -187,7 +188,6 @@
             // 
             // richTextBoxDescription
             // 
-            this.richTextBoxDescription.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.richTextBoxDescription.ContextMenuStrip = this.contextMenuStripDescription;
             this.richTextBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxDescription.Location = new System.Drawing.Point(3, 3);
@@ -226,7 +226,6 @@
             // richTextBoxSource
             // 
             this.richTextBoxSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(242)))), ((int)(((byte)(240)))));
-            this.richTextBoxSource.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.richTextBoxSource.ContextMenuStrip = this.contextMenuStripSource;
             this.richTextBoxSource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxSource.Location = new System.Drawing.Point(3, 3);
@@ -265,7 +264,6 @@
             // textBoxOutput
             // 
             this.textBoxOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(242)))), ((int)(((byte)(240)))));
-            this.textBoxOutput.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.textBoxOutput.ContextMenuStrip = this.contextMenuStripOutput;
             this.textBoxOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxOutput.Location = new System.Drawing.Point(3, 3);
