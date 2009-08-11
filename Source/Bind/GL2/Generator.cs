@@ -70,7 +70,7 @@ namespace Bind.GL2
 
             Bind.Structures.Type.Initialize(glTypemap, csTypemap);
             Bind.Structures.Enum.Initialize(enumSpec, enumSpecExt);
-            Bind.Structures.Enum.GLEnums.Translate();
+            Bind.Structures.Enum.GLEnums.Translate(new XPathDocument(Path.Combine(Settings.InputPath, functionOverridesFile)));
             Bind.Structures.Function.Initialize();
             Bind.Structures.Delegate.Initialize(glSpec, glSpecExt);
 
@@ -242,35 +242,6 @@ namespace Bind.GL2
                             }
 
                             c.Name = words[0];
-
-                            uint number;
-                            // Trim the unsigned or long specifiers used in C constants ('u' or 'ull').
-                            if (words[2].ToLower().StartsWith("0x"))
-                            {
-                                if (words[2].ToLower().EndsWith("ull"))
-                                    words[2] = words[2].Substring(0, words[2].Length - 3);
-                                if (words[2].ToLower().EndsWith("u"))
-                                    words[2] = words[2].Substring(0, words[2].Length - 1);
-                            }
-                            if (UInt32.TryParse(words[2].Replace("0x", String.Empty), System.Globalization.NumberStyles.AllowHexSpecifier, null, out number))
-                            {
-                                // The value is a number, check if it should be unchecked.
-                                if (number > 0x7FFFFFFF)
-                                    c.Unchecked = true;
-                            }
-                            else
-                            {
-                                // The value is not a number. Strip the prefix.
-                                if (words[2].StartsWith(Settings.ConstantPrefix))
-                                    words[2] = words[2].Substring(Settings.ConstantPrefix.Length);
-
-                                // If the name now starts with a digit (doesn't matter whether we
-                                // stripped "GL_" above), add a "GL_" prefix.
-                                // (e.g. GL_4_BYTES).
-                                if (Char.IsDigit(words[2][0]))
-                                    words[2] = Settings.ConstantPrefix + words[2];
-                            }
-
                             c.Value = words[2];
                         }
                         else if (words[0] == "use")

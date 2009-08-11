@@ -97,6 +97,8 @@ namespace Bind.ES
             Bind.Structures.Enum all = new Bind.Structures.Enum(Settings.CompleteEnumName); 
             XPathDocument doc = new XPathDocument(specFile);
             XPathNavigator nav = doc.CreateNavigator().SelectSingleNode("/signatures");
+
+            XPathDocument overrides = new XPathDocument(new StreamReader(Path.Combine(Settings.InputPath, functionOverridesFile)));
             
             foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
             {
@@ -115,7 +117,7 @@ namespace Bind.ES
             }
 
             Utilities.Merge(enums, all);
-            enums.Translate();
+            enums.Translate(overrides);
             return enums;
         }
     }

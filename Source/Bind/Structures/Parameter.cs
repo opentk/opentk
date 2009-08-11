@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.Xml.XPath;
 
 namespace Bind.Structures
 {
@@ -280,11 +281,11 @@ namespace Bind.Structures
 
         #endregion
 
-        #region override public void Translate(string category)
+        #region override public void Translate(XPathNavigator overrides, string category)
 
-        override public void Translate(string category)
+        override public void Translate(XPathNavigator overrides, string category)
         {
-            base.Translate(category);
+            base.Translate(overrides, category);
 
             // Find out the necessary wrapper types.
             if (Pointer != 0)/* || CurrentType == "IntPtr")*/
@@ -589,13 +590,19 @@ namespace Bind.Structures
                             sb.Append(String.Format("({0}{1})",
                                 p.CurrentType, (p.Array > 0) ? "[]" : ""));
                         }
-                        else if (p.Pointer != 0 || p.Array > 0 || p.Reference)
+                        else if (p.IndirectionLevel != 0)
                         {
                             if (((Settings.Compatibility & Settings.Legacy.TurnVoidPointersToIntPtr) != Settings.Legacy.None) &&
                                 p.Pointer != 0 && p.CurrentType.Contains("void"))
                                 sb.Append("(IntPtr)");
-                            else 
-                                sb.Append(String.Format("({0}*)", p.CurrentType));
+                            else
+                            {
+                                sb.Append("(");
+                                sb.Append(p.CurrentType);
+                                for (int i = 0; i < p.IndirectionLevel; i++)
+                                    sb.Append("*");
+                                sb.Append(")");
+                            }
                         }
                         else
                         {
