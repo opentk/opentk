@@ -362,18 +362,18 @@ namespace OpenTK.Compute.CL10
         Queued = ((int)0X3),
     }
 
+    public enum CommandQueueFlags
+    {
+        QueueOutOfOrderExecModeEnable = ((int)(1 << 0)),
+        QueueProfilingEnable = ((int)(1 << 1)),
+    }
+
     public enum CommandQueueInfo
     {
         QueueContext = ((int)0X1090),
         QueueDevice = ((int)0X1091),
         QueueReferenceCount = ((int)0X1092),
         QueueProperties = ((int)0X1093),
-    }
-
-    public enum CommandQueuePropertiesFlags
-    {
-        QueueOutOfOrderExecModeEnable = ((int)(1 << 0)),
-        QueueProfilingEnable = ((int)(1 << 1)),
     }
 
     public enum CommandType

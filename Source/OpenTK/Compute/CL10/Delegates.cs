@@ -38,19 +38,19 @@ namespace OpenTK.Compute.CL10
         internal static partial class Delegates
         {
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int BuildProgram(IntPtr program, uint num_devices, IntPtr* device_list, String options);
+            internal unsafe delegate int BuildProgram(IntPtr program, uint num_devices, IntPtr* device_list, String options, IntPtr pfn_notify, IntPtr user_data);
             internal unsafe static BuildProgram clBuildProgram;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate IntPtr CreateBuffer(IntPtr context, MemFlags flags, IntPtr size, IntPtr host_ptr, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             internal unsafe static CreateBuffer clCreateBuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateCommandQueue(IntPtr context, IntPtr device, CommandQueueProperties properties, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal unsafe delegate IntPtr CreateCommandQueue(IntPtr context, IntPtr device, CommandQueueFlags properties, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             internal unsafe static CreateCommandQueue clCreateCommandQueue;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateContext(ContextProperties* properties, uint num_devices, IntPtr* devices);
+            internal unsafe delegate IntPtr CreateContext(ContextProperties* properties, uint num_devices, IntPtr* devices, IntPtr pfn_notify, IntPtr user_data, [Out] int* errcode_ret);
             internal unsafe static CreateContext clCreateContext;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateContextFromType(ContextProperties* properties, DeviceTypeFlags device_type);
+            internal unsafe delegate IntPtr CreateContextFromType(ContextProperties* properties, DeviceTypeFlags device_type, IntPtr pfn_notify, IntPtr user_data, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             internal unsafe static CreateContextFromType clCreateContextFromType;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate IntPtr CreateImage2D(IntPtr context, MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, IntPtr host_ptr, [Out] int* errcode_ret);
@@ -65,7 +65,7 @@ namespace OpenTK.Compute.CL10
             internal unsafe delegate int CreateKernelsInProgram(IntPtr program, uint num_kernels, IntPtr* kernels, [Out] uint* num_kernels_ret);
             internal unsafe static CreateKernelsInProgram clCreateKernelsInProgram;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateProgramWithBinary(IntPtr context, uint num_devices, IntPtr* device_list, IntPtr* lengths, String binaries, int* binary_status, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal unsafe delegate IntPtr CreateProgramWithBinary(IntPtr context, uint num_devices, IntPtr* device_list, IntPtr* lengths, byte @char, int* binary_status, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             internal unsafe static CreateProgramWithBinary clCreateProgramWithBinary;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate IntPtr CreateProgramWithSource(IntPtr context, uint count, String[] strings, IntPtr* lengths, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
@@ -98,8 +98,8 @@ namespace OpenTK.Compute.CL10
             internal unsafe delegate int EnqueueMarker(IntPtr command_queue, IntPtr* @event);
             internal unsafe static EnqueueMarker clEnqueueMarker;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate int EnqueueNativeKernel(IntPtr command_queue);
-            internal static EnqueueNativeKernel clEnqueueNativeKernel;
+            internal unsafe delegate int EnqueueNativeKernel(IntPtr command_queue, IntPtr user_func, IntPtr args, IntPtr cb_args, uint num_mem_objects, IntPtr* mem_list, IntPtr args_mem_loc, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event);
+            internal unsafe static EnqueueNativeKernel clEnqueueNativeKernel;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate int EnqueueNDRangeKernel(IntPtr command_queue, IntPtr kernel, uint work_dim, IntPtr* global_work_offset, IntPtr* global_work_size, IntPtr* local_work_size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event);
             internal unsafe static EnqueueNDRangeKernel clEnqueueNDRangeKernel;
@@ -221,7 +221,7 @@ namespace OpenTK.Compute.CL10
             internal delegate int RetainSampler(IntPtr sampler);
             internal static RetainSampler clRetainSampler;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int SetCommandQueueProperty(IntPtr command_queue, CommandQueueProperties properties, bool enable, CommandQueueProperties* old_properties);
+            internal unsafe delegate int SetCommandQueueProperty(IntPtr command_queue, CommandQueueFlags properties, bool enable, CommandQueueFlags* old_properties);
             internal unsafe static SetCommandQueueProperty clSetCommandQueueProperty;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate int SetKernelArg(IntPtr kernel, uint arg_index, IntPtr arg_size, IntPtr arg_value);

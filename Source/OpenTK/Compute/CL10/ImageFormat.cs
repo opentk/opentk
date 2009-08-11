@@ -28,26 +28,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Compute.CL10
 {
-    struct ErrorHelper : IDisposable
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ImageFormat
     {
-        #region Constructors
+        ChannelOrder image_channel_order;
+        ChannelType image_channel_data_type;
 
-        public ErrorHelper(IntPtr context)
-        {
-        }
+        public ChannelOrder ChannelOrder { get { return image_channel_order; } set { image_channel_order = value; } }
 
-        #endregion
-
-        #region IDisposable Members
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
+        public ChannelType ChannelType { get { return image_channel_data_type; } set { image_channel_data_type = value; } }
     }
 }
