@@ -587,7 +587,7 @@ XF86VidModeGetGammaRampSize(
     #region internal class XVisualInfo
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XVisualInfo
+    public struct XVisualInfo
     {
         public IntPtr visual;
         public VisualID visualid;
@@ -1254,7 +1254,7 @@ XF86VidModeGetGammaRampSize(
 
     #endregion
 
-    internal enum XVisualClass : int
+    public enum XVisualClass : int
     {
         StaticGray = 0,
         GrayScale = 1,
