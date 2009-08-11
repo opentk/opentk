@@ -190,18 +190,19 @@ namespace CHeaderToXML
                 string funcname = null;
                 GetFunctionNameAndType(words, out funcname, out rettype);
 
-                if (funcname == "BufferData")
+                if (funcname == "CreateContextFromType")
                     Debugger.Break();
 
                 var paramaters_string = Regex.Match(line, @"\(.*\)").Captures[0].Value.TrimStart('(').TrimEnd(')');
 
-                // This regex matches function parameters. The first part (before the '|') matches parameters of the following formats:
-                // '[return type] [parameter name]', '[return type] * [parameter name]', 'const [return type]* [parameter name]'
-                // where [parameter name] can either be inside comments (/* ... */) or not.
-                // The second part matches functions pointers in the following format:
+                // This regex matches function parameters.
+                // The first part matches functions pointers in the following format:
                 // '[return type] (*[function pointer name])([parameter list]) [parameter name]
                 // where [parameter name] may or may not be in comments.
-                var get_param = new Regex(@"((const\s)?\w+\s*\**\s*(/\*.*?\*/|\w+(\[.*?\])?)   |   \w+\s\(\*\w+\)\(.*\)\s*(/\*.*?\*/|\w+)),?", RegexOptions.IgnorePatternWhitespace);
+                // The second part (before the '|') matches parameters of the following formats:
+                // '[return type] [parameter name]', '[return type] * [parameter name]', 'const [return type]* [parameter name]'
+                // where [parameter name] can either be inside comments (/* ... */) or not.
+                var get_param = new Regex(@"(\w+\s\(\*\w+\)\s*\(.*\)\s*(/\*.*?\*/|\w+) | (const\s)?\w+\s*\**\s*(/\*.*?\*/|\w+(\[.*?\])?)),?", RegexOptions.IgnorePatternWhitespace);
 
                 var ars = get_param.Matches(paramaters_string).OfType<Match>().Select(m => m.Captures[0].Value.TrimEnd(','));
 
