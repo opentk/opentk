@@ -1,4 +1,31 @@
-﻿using System;
+﻿#region License
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2009 the Open Toolkit library.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
@@ -7,7 +34,7 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Platform.Windows
 {
     /// <summary>Describes a win32 window.</summary>
-    internal sealed class WinWindowInfo : IWindowInfo
+    public sealed class WinWindowInfo : IWindowInfo
     {
         IntPtr handle, dc;
         WinWindowInfo parent;
@@ -15,11 +42,19 @@ namespace OpenTK.Platform.Windows
 
         #region --- Constructors ---
 
-        internal WinWindowInfo()
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        public WinWindowInfo()
         {
         }
 
-        internal WinWindowInfo(IntPtr handle, WinWindowInfo parent)
+        /// <summary>
+        /// Constructs a new instance with the specified window handle and paren.t
+        /// </summary>
+        /// <param name="handle">The window handle for this instance.</param>
+        /// <param name="parent">The parent window of this instance (may be null).</param>
+        public WinWindowInfo(IntPtr handle, WinWindowInfo parent)
         {
             this.handle = handle;
             this.parent = parent;
@@ -29,8 +64,19 @@ namespace OpenTK.Platform.Windows
 
         #region --- Public Methods ---
 
+        /// <summary>
+        /// Gets or sets the handle of the window.
+        /// </summary>
         public IntPtr WindowHandle { get { return handle; } set { handle = value; } }
+
+        /// <summary>
+        /// Gets or sets the Parent of the window (may be null).
+        /// </summary>
         public WinWindowInfo Parent { get { return parent; } set { parent = value; } }
+
+        /// <summary>
+        /// Gets the device context for this window instance.
+        /// </summary>
         public IntPtr DeviceContext
         {
             get
@@ -40,7 +86,6 @@ namespace OpenTK.Platform.Windows
                     //dc = Functions.GetWindowDC(this.WindowHandle);
                 return dc;
             }
-            //set { dc = value; }
         }
 
         #region public override string ToString()
