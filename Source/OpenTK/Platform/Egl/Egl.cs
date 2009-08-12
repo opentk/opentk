@@ -32,13 +32,20 @@ using System.Text;
 
 namespace OpenTK.Platform.Egl
 {
+    // Note: the Workaround structs declared in each type below work around
+    // gmcs 2.4.2 bug #530270 (https://bugzilla.novell.com/show_bug.cgi?id=530270).
+    // They don't cause any change in functionality other than make the compiler happy.
+    
     struct EGLNativeDisplayType
     {
-        public readonly Compute.Handle<EGLNativeDisplayType> Handle;
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public struct Workaround { }
+
+        public readonly Compute.Handle<Workaround> Handle;
 
         public EGLNativeDisplayType(IntPtr handle)
         {
-            Handle = new Compute.Handle<EGLNativeDisplayType>(handle);
+            Handle = new Compute.Handle<Workaround>(handle);
         }
 
         public static readonly EGLNativeDisplayType Default = new EGLNativeDisplayType();
@@ -46,31 +53,40 @@ namespace OpenTK.Platform.Egl
 
     struct EGLNativePixmapType
     {
-       public readonly Compute.Handle<EGLNativePixmapType> Handle;
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public struct Workaround { }
+        
+       public readonly Compute.Handle<Workaround> Handle;
 
         public EGLNativePixmapType(IntPtr handle)
         {
-            Handle = new Compute.Handle<EGLNativePixmapType>(handle);
+            Handle = new Compute.Handle<Workaround>(handle);
         }
     }
 
     struct EGLConfig
     {
-       public readonly Compute.Handle<EGLConfig> Handle;
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public struct Workaround { }
+        
+       public readonly Compute.Handle<Workaround> Handle;
 
         public EGLConfig(IntPtr handle)
         {
-            Handle = new Compute.Handle<EGLConfig>(handle);
+            Handle = new Compute.Handle<Workaround>(handle);
         }
     }
 
     struct EGLContext
     {
-        public readonly Compute.Handle<EGLContext> Handle;
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public struct Workaround { }
+
+        public readonly Compute.Handle<Workaround> Handle;
 
         public EGLContext(IntPtr handle)
         {
-            Handle = new Compute.Handle<EGLContext>(handle);
+            Handle = new Compute.Handle<Workaround>(handle);
         }
 
         public static readonly EGLContext None;
@@ -78,11 +94,14 @@ namespace OpenTK.Platform.Egl
 
     struct EGLDisplay
     {
-        public readonly Compute.Handle<EGLDisplay> Handle;
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public struct Workaround { }
+
+        public readonly Compute.Handle<Workaround> Handle;
 
         public EGLDisplay(IntPtr handle)
         {
-            Handle = new Compute.Handle<EGLDisplay>(handle);
+            Handle = new Compute.Handle<Workaround>(handle);
         }
 
         public static readonly EGLDisplay Null;
@@ -90,11 +109,14 @@ namespace OpenTK.Platform.Egl
 
     struct EGLSurface
     {
-        public readonly Compute.Handle<EGLSurface> Handle;
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public struct Workaround { }
+
+        public readonly Compute.Handle<Workaround> Handle;
 
         public EGLSurface(IntPtr handle)
         {
-            Handle = new Compute.Handle<EGLSurface>(handle);
+            Handle = new Compute.Handle<Workaround>(handle);
         }
 
         public static readonly EGLSurface None;
@@ -102,11 +124,14 @@ namespace OpenTK.Platform.Egl
 
     struct EGLClientBuffer
     {
-        public readonly Compute.Handle<EGLClientBuffer> Handle;
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public struct Workaround { }
+
+        public readonly Compute.Handle<Workaround> Handle;
 
         public EGLClientBuffer(IntPtr handle)
         {
-            Handle = new Compute.Handle<EGLClientBuffer>(handle);
+            Handle = new Compute.Handle<Workaround>(handle);
         }
     }
 
