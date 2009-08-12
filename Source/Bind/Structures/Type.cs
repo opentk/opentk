@@ -180,7 +180,26 @@ namespace Bind.Structures
         {
             get
             {
-                bool compliant = !(CurrentType.Contains("UInt") || CurrentType.Contains("SByte"));
+                bool compliant = true;
+                
+                switch (CurrentType.ToLower())
+                {
+                    case "sbyte":
+                    case "ushort":
+                    case "uint":
+                    case "ulong":
+                    case "uintptr":
+                         compliant = false;
+                        break;
+                
+                    default:
+                        compliant = Pointer == 0;
+                       break;
+                }
+
+                return compliant;
+                
+                /*
                 if (Pointer != 0)
                 {
                     compliant &= CurrentType.Contains("IntPtr");    // IntPtr's are CLSCompliant.
@@ -188,6 +207,7 @@ namespace Bind.Structures
                     compliant |= (Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None;
                 }
                 return compliant;
+                */
                 //return compliant && (!Pointer || CurrentType.Contains("IntPtr"));
                 //return compliant && !(Pointer && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) == Settings.Legacy.None));
                 
