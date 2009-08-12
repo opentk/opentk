@@ -82,7 +82,7 @@ namespace Bind
                                     mode = GeneratorMode.ES11;
                                 else if (arg == "es20")
                                     mode = GeneratorMode.ES20;
-                                else if (arg == "cl10")
+                                else if (arg=="cl" || arg == "cl10")
                                     mode = GeneratorMode.CL10;
                                 else
                                     throw new NotImplementedException();
