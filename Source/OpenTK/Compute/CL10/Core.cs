@@ -43,37 +43,37 @@ namespace OpenTK.Compute.CL10
             internal extern static unsafe int BuildProgram(IntPtr program, uint num_devices, IntPtr* device_list, String options, IntPtr pfn_notify, IntPtr user_data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateBuffer", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateBuffer(IntPtr context, MemFlags flags, IntPtr size, IntPtr host_ptr, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal extern static unsafe IntPtr CreateBuffer(IntPtr context, MemFlags flags, IntPtr size, IntPtr host_ptr, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateCommandQueue", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateCommandQueue(IntPtr context, IntPtr device, CommandQueueFlags properties, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal extern static unsafe IntPtr CreateCommandQueue(IntPtr context, IntPtr device, CommandQueueFlags properties, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateContext", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateContext(ContextProperties* properties, uint num_devices, IntPtr* devices, IntPtr pfn_notify, IntPtr user_data, [Out] int* errcode_ret);
+            internal extern static unsafe IntPtr CreateContext(ContextProperties* properties, uint num_devices, IntPtr* devices, IntPtr pfn_notify, IntPtr user_data, [OutAttribute] int* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateContextFromType", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateContextFromType(ContextProperties* properties, DeviceTypeFlags device_type, IntPtr pfn_notify, IntPtr user_data, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal extern static unsafe IntPtr CreateContextFromType(ContextProperties* properties, DeviceTypeFlags device_type, IntPtr pfn_notify, IntPtr user_data, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateImage2D", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateImage2D(IntPtr context, MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, IntPtr host_ptr, [Out] int* errcode_ret);
+            internal extern static unsafe IntPtr CreateImage2D(IntPtr context, MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, IntPtr host_ptr, [OutAttribute] int* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateImage3D", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateImage3D(IntPtr context, MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr host_ptr, [Out] int* errcode_ret);
+            internal extern static unsafe IntPtr CreateImage3D(IntPtr context, MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr host_ptr, [OutAttribute] int* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateKernel", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateKernel(IntPtr program, String kernel_name, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal extern static unsafe IntPtr CreateKernel(IntPtr program, String kernel_name, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateKernelsInProgram", ExactSpelling = true)]
-            internal extern static unsafe int CreateKernelsInProgram(IntPtr program, uint num_kernels, IntPtr* kernels, [Out] uint* num_kernels_ret);
+            internal extern static unsafe int CreateKernelsInProgram(IntPtr program, uint num_kernels, IntPtr* kernels, [OutAttribute] uint* num_kernels_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateProgramWithBinary", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateProgramWithBinary(IntPtr context, uint num_devices, IntPtr* device_list, IntPtr* lengths, byte @char, int* binary_status, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal extern static unsafe IntPtr CreateProgramWithBinary(IntPtr context, uint num_devices, IntPtr* device_list, IntPtr* lengths, byte @char, int* binary_status, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateProgramWithSource", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateProgramWithSource(IntPtr context, uint count, String[] strings, IntPtr* lengths, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal extern static unsafe IntPtr CreateProgramWithSource(IntPtr context, uint count, String[] strings, IntPtr* lengths, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateSampler", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateSampler(IntPtr context, bool normalized_coords, AddressingMode addressing_mode, FilterMode filter_mode, [Out] int* errcode_ret);
+            internal extern static unsafe IntPtr CreateSampler(IntPtr context, bool normalized_coords, AddressingMode addressing_mode, FilterMode filter_mode, [OutAttribute] int* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clEnqueueBarrier", ExactSpelling = true)]
             internal extern static int EnqueueBarrier(IntPtr command_queue);
@@ -91,10 +91,10 @@ namespace OpenTK.Compute.CL10
             internal extern static unsafe int EnqueueCopyImageToBuffer(IntPtr command_queue, IntPtr src_image, IntPtr dst_buffer, IntPtr** src_origin, IntPtr** region, IntPtr dst_offset, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clEnqueueMapBuffer", ExactSpelling = true)]
-            internal extern static unsafe IntPtr EnqueueMapBuffer(IntPtr command_queue, IntPtr buffer, bool blocking_map, MapFlags map_flags, IntPtr offset, IntPtr cb, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, [Out] int* errcode_ret);
+            internal extern static unsafe IntPtr EnqueueMapBuffer(IntPtr command_queue, IntPtr buffer, bool blocking_map, MapFlags map_flags, IntPtr offset, IntPtr cb, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, [OutAttribute] int* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clEnqueueMapImage", ExactSpelling = true)]
-            internal extern static unsafe IntPtr EnqueueMapImage(IntPtr command_queue, IntPtr image, bool blocking_map, MapFlags map_flags, IntPtr** origin, IntPtr** region, IntPtr* image_row_pitch, IntPtr* image_slice_pitch, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, [Out] int* errcode_ret);
+            internal extern static unsafe IntPtr EnqueueMapImage(IntPtr command_queue, IntPtr image, bool blocking_map, MapFlags map_flags, IntPtr** origin, IntPtr** region, IntPtr* image_row_pitch, IntPtr* image_slice_pitch, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, [OutAttribute] int* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clEnqueueMarker", ExactSpelling = true)]
             internal extern static unsafe int EnqueueMarker(IntPtr command_queue, IntPtr* @event);
@@ -133,49 +133,49 @@ namespace OpenTK.Compute.CL10
             internal extern static int Flush(IntPtr command_queue);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetCommandQueueInfo", ExactSpelling = true)]
-            internal extern static unsafe int GetCommandQueueInfo(IntPtr command_queue, CommandQueueInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal extern static unsafe int GetCommandQueueInfo(IntPtr command_queue, CommandQueueInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetContextInfo", ExactSpelling = true)]
-            internal extern static unsafe int GetContextInfo(IntPtr context, ContextInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal extern static unsafe int GetContextInfo(IntPtr context, ContextInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetDeviceIDs", ExactSpelling = true)]
             internal extern static unsafe int GetDeviceIDs(IntPtr platform, DeviceTypeFlags device_type, uint num_entries, IntPtr* devices, uint* num_devices);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetDeviceInfo", ExactSpelling = true)]
-            internal extern static unsafe int GetDeviceInfo(IntPtr device, DeviceInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal extern static unsafe int GetDeviceInfo(IntPtr device, DeviceInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetEventInfo", ExactSpelling = true)]
-            internal extern static unsafe int GetEventInfo(IntPtr @event, EventInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal extern static unsafe int GetEventInfo(IntPtr @event, EventInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetEventProfilingInfo", ExactSpelling = true)]
-            internal extern static unsafe int GetEventProfilingInfo(IntPtr @event, ProfilingInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal extern static unsafe int GetEventProfilingInfo(IntPtr @event, ProfilingInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetImageInfo", ExactSpelling = true)]
-            internal extern static unsafe int GetImageInfo(IntPtr image, ImageInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal extern static unsafe int GetImageInfo(IntPtr image, ImageInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetKernelInfo", ExactSpelling = true)]
-            internal extern static unsafe int GetKernelInfo(IntPtr kernel, KernelInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal extern static unsafe int GetKernelInfo(IntPtr kernel, KernelInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetKernelWorkGroupInfo", ExactSpelling = true)]
-            internal extern static unsafe int GetKernelWorkGroupInfo(IntPtr kernel, IntPtr device, KernelWorkGroupInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal extern static unsafe int GetKernelWorkGroupInfo(IntPtr kernel, IntPtr device, KernelWorkGroupInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetMemObjectInfo", ExactSpelling = true)]
-            internal extern static unsafe int GetMemObjectInfo(IntPtr memobj, MemInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal extern static unsafe int GetMemObjectInfo(IntPtr memobj, MemInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetPlatformIDs", ExactSpelling = true)]
             internal extern static unsafe int GetPlatformIDs(uint num_entries, IntPtr* platforms, uint* num_platforms);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetPlatformInfo", ExactSpelling = true)]
-            internal extern static unsafe int GetPlatformInfo(IntPtr platform, PlatformInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal extern static unsafe int GetPlatformInfo(IntPtr platform, PlatformInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetProgramBuildInfo", ExactSpelling = true)]
-            internal extern static unsafe int GetProgramBuildInfo(IntPtr program, IntPtr device, ProgramBuildInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal extern static unsafe int GetProgramBuildInfo(IntPtr program, IntPtr device, ProgramBuildInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetProgramInfo", ExactSpelling = true)]
-            internal extern static unsafe int GetProgramInfo(IntPtr program, ProgramInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal extern static unsafe int GetProgramInfo(IntPtr program, ProgramInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetSamplerInfo", ExactSpelling = true)]
-            internal extern static unsafe int GetSamplerInfo(IntPtr sampler, SamplerInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal extern static unsafe int GetSamplerInfo(IntPtr sampler, SamplerInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clGetSupportedImageFormats", ExactSpelling = true)]
             internal extern static unsafe int GetSupportedImageFormats(IntPtr context, MemFlags flags, MemObjectType image_type, uint num_entries, ImageFormat* image_formats, uint* num_image_formats);

@@ -41,37 +41,37 @@ namespace OpenTK.Compute.CL10
             internal unsafe delegate int BuildProgram(IntPtr program, uint num_devices, IntPtr* device_list, String options, IntPtr pfn_notify, IntPtr user_data);
             internal unsafe static BuildProgram clBuildProgram;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateBuffer(IntPtr context, MemFlags flags, IntPtr size, IntPtr host_ptr, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal unsafe delegate IntPtr CreateBuffer(IntPtr context, MemFlags flags, IntPtr size, IntPtr host_ptr, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             internal unsafe static CreateBuffer clCreateBuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateCommandQueue(IntPtr context, IntPtr device, CommandQueueFlags properties, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal unsafe delegate IntPtr CreateCommandQueue(IntPtr context, IntPtr device, CommandQueueFlags properties, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             internal unsafe static CreateCommandQueue clCreateCommandQueue;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateContext(ContextProperties* properties, uint num_devices, IntPtr* devices, IntPtr pfn_notify, IntPtr user_data, [Out] int* errcode_ret);
+            internal unsafe delegate IntPtr CreateContext(ContextProperties* properties, uint num_devices, IntPtr* devices, IntPtr pfn_notify, IntPtr user_data, [OutAttribute] int* errcode_ret);
             internal unsafe static CreateContext clCreateContext;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateContextFromType(ContextProperties* properties, DeviceTypeFlags device_type, IntPtr pfn_notify, IntPtr user_data, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal unsafe delegate IntPtr CreateContextFromType(ContextProperties* properties, DeviceTypeFlags device_type, IntPtr pfn_notify, IntPtr user_data, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             internal unsafe static CreateContextFromType clCreateContextFromType;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateImage2D(IntPtr context, MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, IntPtr host_ptr, [Out] int* errcode_ret);
+            internal unsafe delegate IntPtr CreateImage2D(IntPtr context, MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, IntPtr host_ptr, [OutAttribute] int* errcode_ret);
             internal unsafe static CreateImage2D clCreateImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateImage3D(IntPtr context, MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr host_ptr, [Out] int* errcode_ret);
+            internal unsafe delegate IntPtr CreateImage3D(IntPtr context, MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_depth, IntPtr image_row_pitch, IntPtr image_slice_pitch, IntPtr host_ptr, [OutAttribute] int* errcode_ret);
             internal unsafe static CreateImage3D clCreateImage3D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateKernel(IntPtr program, String kernel_name, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal unsafe delegate IntPtr CreateKernel(IntPtr program, String kernel_name, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             internal unsafe static CreateKernel clCreateKernel;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int CreateKernelsInProgram(IntPtr program, uint num_kernels, IntPtr* kernels, [Out] uint* num_kernels_ret);
+            internal unsafe delegate int CreateKernelsInProgram(IntPtr program, uint num_kernels, IntPtr* kernels, [OutAttribute] uint* num_kernels_ret);
             internal unsafe static CreateKernelsInProgram clCreateKernelsInProgram;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateProgramWithBinary(IntPtr context, uint num_devices, IntPtr* device_list, IntPtr* lengths, byte @char, int* binary_status, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal unsafe delegate IntPtr CreateProgramWithBinary(IntPtr context, uint num_devices, IntPtr* device_list, IntPtr* lengths, byte @char, int* binary_status, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             internal unsafe static CreateProgramWithBinary clCreateProgramWithBinary;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateProgramWithSource(IntPtr context, uint count, String[] strings, IntPtr* lengths, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal unsafe delegate IntPtr CreateProgramWithSource(IntPtr context, uint count, String[] strings, IntPtr* lengths, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             internal unsafe static CreateProgramWithSource clCreateProgramWithSource;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateSampler(IntPtr context, bool normalized_coords, AddressingMode addressing_mode, FilterMode filter_mode, [Out] int* errcode_ret);
+            internal unsafe delegate IntPtr CreateSampler(IntPtr context, bool normalized_coords, AddressingMode addressing_mode, FilterMode filter_mode, [OutAttribute] int* errcode_ret);
             internal unsafe static CreateSampler clCreateSampler;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate int EnqueueBarrier(IntPtr command_queue);
@@ -89,10 +89,10 @@ namespace OpenTK.Compute.CL10
             internal unsafe delegate int EnqueueCopyImageToBuffer(IntPtr command_queue, IntPtr src_image, IntPtr dst_buffer, IntPtr** src_origin, IntPtr** region, IntPtr dst_offset, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event);
             internal unsafe static EnqueueCopyImageToBuffer clEnqueueCopyImageToBuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr EnqueueMapBuffer(IntPtr command_queue, IntPtr buffer, bool blocking_map, MapFlags map_flags, IntPtr offset, IntPtr cb, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, [Out] int* errcode_ret);
+            internal unsafe delegate IntPtr EnqueueMapBuffer(IntPtr command_queue, IntPtr buffer, bool blocking_map, MapFlags map_flags, IntPtr offset, IntPtr cb, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, [OutAttribute] int* errcode_ret);
             internal unsafe static EnqueueMapBuffer clEnqueueMapBuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr EnqueueMapImage(IntPtr command_queue, IntPtr image, bool blocking_map, MapFlags map_flags, IntPtr** origin, IntPtr** region, IntPtr* image_row_pitch, IntPtr* image_slice_pitch, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, [Out] int* errcode_ret);
+            internal unsafe delegate IntPtr EnqueueMapImage(IntPtr command_queue, IntPtr image, bool blocking_map, MapFlags map_flags, IntPtr** origin, IntPtr** region, IntPtr* image_row_pitch, IntPtr* image_slice_pitch, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, [OutAttribute] int* errcode_ret);
             internal unsafe static EnqueueMapImage clEnqueueMapImage;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate int EnqueueMarker(IntPtr command_queue, IntPtr* @event);
@@ -131,49 +131,49 @@ namespace OpenTK.Compute.CL10
             internal delegate int Flush(IntPtr command_queue);
             internal static Flush clFlush;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int GetCommandQueueInfo(IntPtr command_queue, CommandQueueInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal unsafe delegate int GetCommandQueueInfo(IntPtr command_queue, CommandQueueInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             internal unsafe static GetCommandQueueInfo clGetCommandQueueInfo;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int GetContextInfo(IntPtr context, ContextInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal unsafe delegate int GetContextInfo(IntPtr context, ContextInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             internal unsafe static GetContextInfo clGetContextInfo;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate int GetDeviceIDs(IntPtr platform, DeviceTypeFlags device_type, uint num_entries, IntPtr* devices, uint* num_devices);
             internal unsafe static GetDeviceIDs clGetDeviceIDs;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int GetDeviceInfo(IntPtr device, DeviceInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal unsafe delegate int GetDeviceInfo(IntPtr device, DeviceInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             internal unsafe static GetDeviceInfo clGetDeviceInfo;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int GetEventInfo(IntPtr @event, EventInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal unsafe delegate int GetEventInfo(IntPtr @event, EventInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             internal unsafe static GetEventInfo clGetEventInfo;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int GetEventProfilingInfo(IntPtr @event, ProfilingInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal unsafe delegate int GetEventProfilingInfo(IntPtr @event, ProfilingInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             internal unsafe static GetEventProfilingInfo clGetEventProfilingInfo;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int GetImageInfo(IntPtr image, ImageInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal unsafe delegate int GetImageInfo(IntPtr image, ImageInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             internal unsafe static GetImageInfo clGetImageInfo;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int GetKernelInfo(IntPtr kernel, KernelInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal unsafe delegate int GetKernelInfo(IntPtr kernel, KernelInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             internal unsafe static GetKernelInfo clGetKernelInfo;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int GetKernelWorkGroupInfo(IntPtr kernel, IntPtr device, KernelWorkGroupInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal unsafe delegate int GetKernelWorkGroupInfo(IntPtr kernel, IntPtr device, KernelWorkGroupInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             internal unsafe static GetKernelWorkGroupInfo clGetKernelWorkGroupInfo;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int GetMemObjectInfo(IntPtr memobj, MemInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal unsafe delegate int GetMemObjectInfo(IntPtr memobj, MemInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             internal unsafe static GetMemObjectInfo clGetMemObjectInfo;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate int GetPlatformIDs(uint num_entries, IntPtr* platforms, uint* num_platforms);
             internal unsafe static GetPlatformIDs clGetPlatformIDs;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int GetPlatformInfo(IntPtr platform, PlatformInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal unsafe delegate int GetPlatformInfo(IntPtr platform, PlatformInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             internal unsafe static GetPlatformInfo clGetPlatformInfo;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int GetProgramBuildInfo(IntPtr program, IntPtr device, ProgramBuildInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal unsafe delegate int GetProgramBuildInfo(IntPtr program, IntPtr device, ProgramBuildInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             internal unsafe static GetProgramBuildInfo clGetProgramBuildInfo;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int GetProgramInfo(IntPtr program, ProgramInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal unsafe delegate int GetProgramInfo(IntPtr program, ProgramInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             internal unsafe static GetProgramInfo clGetProgramInfo;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int GetSamplerInfo(IntPtr sampler, SamplerInfo param_name, IntPtr param_value_size, IntPtr param_value, [Out] IntPtr* param_value_size_ret);
+            internal unsafe delegate int GetSamplerInfo(IntPtr sampler, SamplerInfo param_name, IntPtr param_value_size, IntPtr param_value, [OutAttribute] IntPtr* param_value_size_ret);
             internal unsafe static GetSamplerInfo clGetSamplerInfo;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate int GetSupportedImageFormats(IntPtr context, MemFlags flags, MemObjectType image_type, uint num_entries, ImageFormat* image_formats, uint* num_image_formats);
