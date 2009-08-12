@@ -57,9 +57,9 @@ namespace Bind
             {
                 for (int i = indent_level; i > 0; i--)
                     base.Write("    ");
-
-                base.WriteLine(value);
             }
+            
+            base.WriteLine(value);
         }
 
         public void Write(Bind.Structures.Enum e)
