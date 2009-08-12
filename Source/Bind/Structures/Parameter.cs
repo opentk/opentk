@@ -224,9 +224,9 @@ namespace Bind.Structures
                 StringBuilder sb = new StringBuilder();
 
                 if (Flow == FlowDirection.Out)
-                    sb.Append("[Out] ");
+                    sb.Append("[OutAttribute] ");
                 else if (Flow == FlowDirection.Undefined)
-                    sb.Append("[In, Out] ");
+                    sb.Append("[InAttribute, OutAttribute] ");
 
                 if (Reference)
                 {
