@@ -52,6 +52,10 @@ namespace OpenTK.Graphics
         /// do not support functionality marked as deprecated in the current GraphicsContextVersion.
         /// </summary>
         /// <remarks>Forward-compatible contexts are defined only for OpenGL versions 3.0 and later.</remarks>
-        ForwardCompatible = 0x0002
+        ForwardCompatible = 0x0002,
+        /// <summary>
+        /// Indicates that this GraphicsContext is targeting OpenGL|ES.
+        /// </summary>
+        Embedded = 0x0004
     }
 }
