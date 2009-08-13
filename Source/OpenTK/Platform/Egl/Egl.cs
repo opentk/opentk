@@ -403,6 +403,17 @@ namespace OpenTK.Platform.Egl
         [return: MarshalAsAttribute(UnmanagedType.I1)]
         public static extern bool CopyBuffers(EGLDisplay dpy, EGLSurface surface, EGLNativePixmapType target);
 
+        // Returns true if Egl drivers exist on the system.
+        public static bool IsSupported
+        {
+            get
+            {
+                try { GetCurrentContext(); }
+                catch (Exception) { return false;  }
+                return true;
+            }
+        }
+
     }
 #pragma warning restore 0169
 }
