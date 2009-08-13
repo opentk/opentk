@@ -37,7 +37,7 @@ namespace OpenTK.Platform
     {
         #region Fields
 
-        static IPlatformFactory implementation;
+        static IPlatformFactory default_implementation, embedded_implementation;
 
         #endregion
 
@@ -45,10 +45,21 @@ namespace OpenTK.Platform
 
         static Factory()
         {
-            if (Configuration.RunningOnWindows) implementation = new Windows.WinFactory();
-            else if (Configuration.RunningOnX11) implementation = new X11.X11Factory();
-            else if (Configuration.RunningOnMacOS) implementation = new MacOS.MacOSFactory();
-            else implementation = new UnsupportedPlatform();
+            if (Configuration.RunningOnWindows) Default = new Windows.WinFactory();
+            else if (Configuration.RunningOnX11) Default = new X11.X11Factory();
+            else if (Configuration.RunningOnMacOS) Default = new MacOS.MacOSFactory();
+            else Default = new UnsupportedPlatform();
+
+            if (Egl.Egl.IsSupported)
+            {
+                if (Configuration.RunningOnWindows) Embedded = new Egl.EglWinPlatformFactory();
+                else if (Configuration.RunningOnX11) Embedded = new Egl.EglX11PlatformFactory();
+                else if (Configuration.RunningOnMacOS) Embedded = new Egl.EglMacPlatformFactory();
+                else Embedded = new UnsupportedPlatform();
+            }
+
+            if (Default is UnsupportedPlatform && !(Embedded is UnsupportedPlatform))
+                Default = Embedded;
         }
 
         #endregion
@@ -57,7 +68,14 @@ namespace OpenTK.Platform
 
         public static IPlatformFactory Default
         {
-            get { return implementation; }
+            get { return default_implementation; }
+            private set { default_implementation = value; }
+        }
+
+        public static IPlatformFactory Embedded
+        {
+            get { return embedded_implementation; }
+            private set { embedded_implementation = value; }
         }
 
         #endregion
@@ -67,37 +85,37 @@ namespace OpenTK.Platform
         public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
             GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
-            return implementation.CreateNativeWindow(x, y, width, height, title, mode, options, device);
+            return default_implementation.CreateNativeWindow(x, y, width, height, title, mode, options, device);
         }
 
         public IGLControl CreateGLControl(GraphicsMode mode, GLControl owner)
         {
-            return implementation.CreateGLControl(mode, owner);
+            return default_implementation.CreateGLControl(mode, owner);
         }
 
         public IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
-            return implementation.CreateDisplayDeviceDriver();
+            return default_implementation.CreateDisplayDeviceDriver();
         }
 
         public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            return implementation.CreateGLContext(mode, window, shareContext, directRendering, major, minor, flags);
+            return default_implementation.CreateGLContext(mode, window, shareContext, directRendering, major, minor, flags);
         }
 
         public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
-            return implementation.CreateGetCurrentGraphicsContext();
+            return default_implementation.CreateGetCurrentGraphicsContext();
         }
 
         public IGraphicsMode CreateGraphicsMode()
         {
-            return implementation.CreateGraphicsMode();
+            return default_implementation.CreateGraphicsMode();
         }
         
         public OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
         {
-            return implementation.CreateKeyboardDriver();
+            return default_implementation.CreateKeyboardDriver();
         }
 
         class UnsupportedPlatform : IPlatformFactory

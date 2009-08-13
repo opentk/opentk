@@ -97,6 +97,8 @@ namespace OpenTK.Graphics
                 Debug.Indent();
                 Debug.Print("GraphicsMode: {0}", mode);
                 Debug.Print("IWindowInfo: {0}", window);
+                Debug.Print("GraphicsContextFlags: {0}", flags);
+                Debug.Print("Requested version: {0}.{1}", major, minor);
 
                 IGraphicsContext shareContext = null;
                 if (GraphicsContext.ShareContexts)
@@ -116,7 +118,11 @@ namespace OpenTK.Graphics
                 if (designMode)
                     implementation = new Platform.Dummy.DummyGLContext();
                 else
-                    implementation = Factory.Default.CreateGLContext(mode, window, shareContext, DirectRendering, major, minor, flags);
+                    switch ((int)(flags & GraphicsContextFlags.Embedded))
+                    {
+                        case 0: implementation = Factory.Default.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags); break;
+                        case 1: implementation = Factory.Embedded.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags); break;
+                    }
 
                 lock (context_lock)
                 {
