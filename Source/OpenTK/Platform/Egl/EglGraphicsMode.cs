@@ -39,7 +39,23 @@ namespace OpenTK.Platform.Egl
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers, bool stereo)
         {
             EGLConfig[] configs = new EGLConfig[1];
-            int[] attribList = new int[]             {                 Egl.SURFACE_TYPE, Egl.WINDOW_BIT,                Egl.RED_SIZE, color.Red,                 Egl.GREEN_SIZE, color.Green,                 Egl.BLUE_SIZE, color.Blue,                Egl.ALPHA_SIZE, color.Alpha,                Egl.DEPTH_SIZE, depth > 0 ? depth : Egl.DONT_CARE,                Egl.STENCIL_SIZE, stencil > 0 ? stencil : Egl.DONT_CARE,                Egl.SAMPLE_BUFFERS, samples > 0 ? 1 : 0,                Egl.SAMPLES, samples > 0 ? samples : 0,                Egl.NONE, Egl.NONE             };
+            int[] attribList = new int[] 
+            { 
+                Egl.SURFACE_TYPE, Egl.WINDOW_BIT,
+
+                Egl.RED_SIZE, color.Red, 
+                Egl.GREEN_SIZE, color.Green, 
+                Egl.BLUE_SIZE, color.Blue,
+                Egl.ALPHA_SIZE, color.Alpha,
+
+                Egl.DEPTH_SIZE, depth > 0 ? depth : Egl.DONT_CARE,
+                Egl.STENCIL_SIZE, stencil > 0 ? stencil : Egl.DONT_CARE,
+
+                Egl.SAMPLE_BUFFERS, samples > 0 ? 1 : 0,
+                Egl.SAMPLES, samples > 0 ? samples : 0,
+
+                Egl.NONE, Egl.NONE 
+            };
 
             // Todo: what if we don't wish to use the default display?
             EGLDisplay display = Egl.GetDisplay(EGLNativeDisplayType.Default);
