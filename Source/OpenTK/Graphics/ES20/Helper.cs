@@ -9,6 +9,6 @@ namespace OpenTK.Graphics.ES20
     /// </summary>
     public static partial class ES
     {
-        const string Library = "libGLES.dll";
+        const string Library = "libGLESv2.dll";
     }
 }
