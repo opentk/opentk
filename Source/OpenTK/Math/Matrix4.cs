@@ -761,7 +761,7 @@ namespace OpenTK
         /// <param name="eye">Eye (camera) position in world space</param>
         /// <param name="target">Target position in world space</param>
         /// <param name="up">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
-        /// <returns>A Matrix that transforms world space to camera space</returns>
+        /// <returns>A Matrix4 that transforms world space to camera space</returns>
         public static Matrix4 LookAt(Vector3 eye, Vector3 target, Vector3 up)
         {
             Vector3 z = Vector3.Normalize(eye - target);
@@ -776,6 +776,24 @@ namespace OpenTK
             Matrix4 trans = Matrix4.CreateTranslation(-eye);
 
             return trans * rot;
+        }
+
+        /// <summary>
+        /// Build a world space to camera space matrix
+        /// </summary>
+        /// <param name="eyeX">Eye (camera) position in world space</param>
+        /// <param name="eyeY">Eye (camera) position in world space</param>
+        /// <param name="eyeZ">Eye (camera) position in world space</param>
+        /// <param name="targetX">Target position in world space</param>
+        /// <param name="targetY">Target position in world space</param>
+        /// <param name="targetZ">Target position in world space</param>
+        /// <param name="upX">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
+        /// <param name="upY">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
+        /// <param name="upZ">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
+        /// <returns>A Matrix4 that transforms world space to camera space</returns>
+        public static Matrix4 LookAt(float eyeX, float eyeY, float eyeZ, float targetX, float targetY, float targetZ, float upX, float upY, float upZ)
+        {
+            return LookAt(new Vector3(eyeX, eyeY, eyeZ), new Vector3(targetX, targetY, targetZ), new Vector3(upX, upY, upZ));
         }
 
         /// <summary>

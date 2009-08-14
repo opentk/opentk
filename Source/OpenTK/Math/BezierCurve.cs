@@ -207,7 +207,7 @@ namespace OpenTK
 
             foreach (Vector2 pt in points)
             {
-                temp = (float)Functions.BinomialCoefficient(points.Count - 1, i) * (float)(System.Math.Pow(t, i) *
+                temp = (float)MathHelper.BinomialCoefficient(points.Count - 1, i) * (float)(System.Math.Pow(t, i) *
                         System.Math.Pow(c, (points.Count - 1) - i));
 
                 r.X += temp * pt.X;
@@ -243,7 +243,7 @@ namespace OpenTK
 
             foreach (Vector2 pt in points)
             {
-                temp = (float)Functions.BinomialCoefficient(points.Count - 2, i) * (float)(System.Math.Pow(t, i) *
+                temp = (float)MathHelper.BinomialCoefficient(points.Count - 2, i) * (float)(System.Math.Pow(t, i) *
                         System.Math.Pow(c, (points.Count - 2) - i));
 
                 r.X += temp * pt.X;

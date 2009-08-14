@@ -629,6 +629,24 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Build a world space to camera space matrix
+        /// </summary>
+        /// <param name="eyeX">Eye (camera) position in world space</param>
+        /// <param name="eyeY">Eye (camera) position in world space</param>
+        /// <param name="eyeZ">Eye (camera) position in world space</param>
+        /// <param name="targetX">Target position in world space</param>
+        /// <param name="targetY">Target position in world space</param>
+        /// <param name="targetZ">Target position in world space</param>
+        /// <param name="upX">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
+        /// <param name="upY">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
+        /// <param name="upZ">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
+        /// <returns>A Matrix4 that transforms world space to camera space</returns>
+        public static Matrix4d LookAt(double eyeX, double eyeY, double eyeZ, double targetX, double targetY, double targetZ, double upX, double upY, double upZ)
+        {
+            return LookAt(new Vector3d(eyeX, eyeY, eyeZ), new Vector3d(targetX, targetY, targetZ), new Vector3d(upX, upY, upZ));
+        }
+
+        /// <summary>
         /// Build a projection matrix
         /// </summary>
         /// <param name="left">Left edge of the view frustum</param>
