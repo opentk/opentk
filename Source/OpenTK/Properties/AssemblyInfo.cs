@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("The Open Toolkit Library")]
 [assembly: AssemblyDescription("Open source game development toolkit for .Net/Mono.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("The Open Toolkit Library")]
 [assembly: AssemblyProduct("The Open Toolkit Library")]
 [assembly: AssemblyCopyright("Copyright ©  2006-2009 the Open Toolkit team")]
 [assembly: AssemblyTrademark("OpenTK")]

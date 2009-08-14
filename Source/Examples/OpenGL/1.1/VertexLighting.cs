@@ -10,7 +10,7 @@ using System.Text;
 using System.Drawing;
 
 using OpenTK;
-using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using Examples.Shapes;
 
 namespace Examples.Tutorial
@@ -83,11 +83,10 @@ namespace Examples.Tutorial
 
             GL.Viewport(0, 0, Width, Height);
 
-            double ratio = Width / (double)Height;
-
+            float aspect_ratio = Width / (float)Height;
+            Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(45, aspect_ratio, 1, 64);
             GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            Glu.Perspective(45.0, ratio, 1.0, 64.0);
+            GL.LoadMatrix(ref perpective);
         }
 
         #endregion
@@ -141,11 +140,10 @@ namespace Examples.Tutorial
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+            Matrix4 lookat = Matrix4.LookAt(0, 0, -7.5f + zoom, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            Glu.LookAt(0.0, 0.0, -7.5 + zoom,
-                       0.0, 0.0, 0.0, 
-                       0.0, 1.0, 0.0);
+            GL.LoadMatrix(ref lookat);
+
             GL.Rotate(x_angle, 0.0f, 1.0f, 0.0f);
 
             GL.Begin(BeginMode.Triangles);

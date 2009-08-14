@@ -31,6 +31,7 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Diagnostics;
+using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.Graphics
 {
@@ -136,7 +137,7 @@ namespace OpenTK.Graphics
                 GL.TexSubImage2D(TextureTarget.Texture2D, mipLevel,
                     target.Left, target.Top,
                     target.Width, target.Height,
-                    OpenTK.Graphics.PixelFormat.Bgra,
+                    OpenTK.Graphics.OpenGL.PixelFormat.Bgra,
                     PixelType.UnsignedByte, data.Scan0);
             }
             finally
@@ -158,7 +159,7 @@ namespace OpenTK.Graphics
 
             TextureRegion2D<int> region = new TextureRegion2D<int>(rect);
 
-            GL.GetTexImage(TextureTarget.Texture2D, mipLevel, PixelFormat.Bgra, PixelType.UnsignedByte, region.Data);
+            GL.GetTexImage(TextureTarget.Texture2D, mipLevel, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, region.Data);
 
             return region;
         }
@@ -222,7 +223,7 @@ namespace OpenTK.Graphics
             SetDefaultTextureParameters(id);
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat, Width, Height, 0,
-                OpenTK.Graphics.PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
+                OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
 
             return id;
         }

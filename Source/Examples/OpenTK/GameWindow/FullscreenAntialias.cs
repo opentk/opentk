@@ -31,6 +31,7 @@ using System.Text;
 
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using System.Drawing;
 

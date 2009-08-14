@@ -28,6 +28,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+
+using OpenTK.Graphics;
 using OpenTK.Platform.Windows;
 
 namespace OpenTK.Platform.Egl
@@ -35,14 +37,14 @@ namespace OpenTK.Platform.Egl
     // EGL factory for the Windows platform.
     class EglWinPlatformFactory : WinFactory
     {
-        public override OpenTK.Graphics.IGraphicsContext CreateGLContext(OpenTK.Graphics.GraphicsMode mode, IWindowInfo window, OpenTK.Graphics.IGraphicsContext shareContext, bool directRendering, int major, int minor, OpenTK.Graphics.GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             WinWindowInfo win_win = (WinWindowInfo)window;
             EglWindowInfo egl_win = new OpenTK.Platform.Egl.EglWindowInfo(win_win.WindowHandle, new EGLDisplay(win_win.DeviceContext));
             return new EglContext(mode, egl_win, shareContext, major, minor, flags);
         }
 
-        public override OpenTK.Graphics.IGraphicsMode CreateGraphicsMode()
+        public override IGraphicsMode CreateGraphicsMode()
         {
             return new EglGraphicsMode();
         }

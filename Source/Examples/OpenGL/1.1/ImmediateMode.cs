@@ -69,17 +69,9 @@ namespace Examples.Tutorial
 
             double aspect_ratio = Width / (double)Height;
 
+            OpenTK.Matrix4 perspective = OpenTK.Matrix4.CreatePerspectiveFieldOfView(45, (float)aspect_ratio, 1, 64);
             GL.MatrixMode(MatrixMode.Projection);
-            if (Keyboard[OpenTK.Input.Key.Space])
-            {
-               OpenTK.Matrix4 perspective = OpenTK.Matrix4.Perspective(45, (float)aspect_ratio, 1, 64);
-                GL.LoadMatrix(ref perspective);
-            }
-            else
-            {
-                GL.LoadIdentity();
-                Glu.Perspective(45, (float)aspect_ratio, 1, 64);
-            }
+            GL.LoadMatrix(ref perspective);
         }
 
         #endregion
@@ -113,11 +105,9 @@ namespace Examples.Tutorial
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+            Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            Glu.LookAt(0.0, 5.0, 5.0,
-                       0.0, 0.0, 0.0,
-                       0.0, 1.0, 0.0);
+            GL.LoadMatrix(ref lookat);
             
             angle += rotation_speed * (float)e.Time;
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);

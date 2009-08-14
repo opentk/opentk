@@ -178,9 +178,6 @@
   <data name="StreamingPlayback" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\OpenAL\1.1\StreamingPlayback.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="Tessellation" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OpenGL\GLU\Tessellation.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="TestAudioContext" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\OpenAL\Test\TestAudioContext.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

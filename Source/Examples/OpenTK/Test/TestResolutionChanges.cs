@@ -11,9 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
-
-using OpenTK.Graphics;
 using System.Threading;
+
+using OpenTK;
 
 namespace Examples.Tests
 {

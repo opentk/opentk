@@ -16,7 +16,6 @@ using System.Windows.Forms;
 
 using OpenTK.Platform;
 using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
 
 namespace OpenTK
@@ -270,17 +269,19 @@ namespace OpenTK
         /// <exception cref="OpenTK.Graphics.GraphicsContextException">
         /// Occurs when no OpenTK.Graphics.GraphicsContext is current in the calling thread.
         /// </exception>
+        [Obsolete]
         public Bitmap GrabScreenshot()
         {
-            Bitmap bmp = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
-            System.Drawing.Imaging.BitmapData data = 
-                bmp.LockBits(this.ClientRectangle, System.Drawing.Imaging.ImageLockMode.WriteOnly,
-                             System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            GL.ReadPixels(0, 0, this.ClientSize.Width, this.ClientSize.Height, PixelFormat.Bgr, PixelType.UnsignedByte,
-                          data.Scan0);
-            bmp.UnlockBits(data);
-            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            return bmp;
+            throw new NotImplementedException();
+            //Bitmap bmp = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
+            //System.Drawing.Imaging.BitmapData data = 
+            //    bmp.LockBits(this.ClientRectangle, System.Drawing.Imaging.ImageLockMode.WriteOnly,
+            //                 System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            //GL.ReadPixels(0, 0, this.ClientSize.Width, this.ClientSize.Height, PixelFormat.Bgr, PixelType.UnsignedByte,
+            //              data.Scan0);
+            //bmp.UnlockBits(data);
+            //bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            //return bmp;
         }
 
         #endregion

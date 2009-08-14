@@ -37,7 +37,7 @@ using System.Windows.Forms;
 using System.Threading;
 
 using OpenTK;
-using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 #endregion --- Using Directives ---
 
@@ -147,12 +147,9 @@ namespace Examples.Tutorial
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            Matrix4 lookat = Matrix4.LookAt(0, 0, 16, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            Glu.LookAt(
-                0.0, 0.0, 16.0,
-                0.0, 0.0, 0.0,
-                0.0, 1.0, 0.0);
+            GL.LoadMatrix(ref lookat);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.CallLists(num_lists, ListNameType.Int, lists);

@@ -178,7 +178,7 @@ namespace Examples
 
             if (available_samples * SampleToByte > buffer.Length * BlittableValueType.StrideOf(buffer))
             {
-                buffer = new short[OpenTK.Functions.NextPowerOfTwo(
+                buffer = new short[MathHelper.NextPowerOfTwo(
                     (int)(available_samples * SampleToByte / (double)BlittableValueType.StrideOf(buffer) + 0.5))];
             }
 

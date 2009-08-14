@@ -11,11 +11,10 @@ using System.Drawing;
 using System.Threading;
 
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
 using OpenTK.Input;
 using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL.Enums;
+using OpenTK.Graphics.OpenGL;
 
 namespace Examples.Tutorial
 {
@@ -90,11 +89,11 @@ namespace Examples.Tutorial
 
             GL.Viewport(0, 0, Width, Height);
 
-            double ratio = Width / (double)Height;
+            double aspect_ratio = Width / (double)Height;
 
+            OpenTK.Matrix4 perspective = OpenTK.Matrix4.CreatePerspectiveFieldOfView(45, (float)aspect_ratio, 1, 64);
             GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            Glu.Perspective(45.0, ratio, 1.0, 64.0);
+            GL.LoadMatrix(ref perspective);
         }
 
         #endregion
@@ -147,13 +146,9 @@ namespace Examples.Tutorial
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+            Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            Glu.LookAt(
-                0.0, 5.0, 5.0,
-                0.0, 0.0, 0.0,
-                0.0, 1.0, 0.0
-            );
+            GL.LoadMatrix(ref lookat);
 
             angle += rotation_speed * (float)e.Time;
 

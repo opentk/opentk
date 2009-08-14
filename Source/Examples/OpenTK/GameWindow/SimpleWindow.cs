@@ -11,7 +11,7 @@ using System.Drawing;
 using System.Diagnostics;
 
 using OpenTK;
-using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 
 namespace Examples.Tutorial
