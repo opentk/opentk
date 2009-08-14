@@ -30,6 +30,7 @@ namespace OpenTK.Math
     // Todo: Remove this warning when the code goes public.
     #pragma warning disable 3019
 #if false
+    [Obsolete("OpenTK.Math functions have been moved to the root OpenTK namespace (reason: XNA compatibility")]
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix3d : IEquatable<Matrix3d>
@@ -219,7 +220,7 @@ namespace OpenTK.Math
 
         #endregion
 
-        #region Constructors
+    #region Constructors
 
         /// <summary>Constructs left matrix with the same components as the given matrix.</summary>
         /// <param name="vector">The matrix whose components to copy.</param>
@@ -318,7 +319,7 @@ namespace OpenTK.Math
 
         #endregion
 
-        #region Equality
+    #region Equality
 
         /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
         /// <param name="matrix">The OpenTK.Matrix3d structure to compare with.</param>
@@ -412,7 +413,7 @@ namespace OpenTK.Math
 
         #endregion
 
-        #region Arithmetic Operators
+    #region Arithmetic Operators
 
 
         /// <summary>Add left matrix to this matrix.</summary>
@@ -624,7 +625,7 @@ namespace OpenTK.Math
 
         #endregion
 
-        #region Functions
+    #region Functions
 
         public double Determinant
         {
@@ -667,7 +668,7 @@ namespace OpenTK.Math
 
         #endregion
 
-        #region Transformation Functions
+    #region Transformation Functions
 
         public void Transform(ref Vector3d vector)
         {
@@ -772,7 +773,7 @@ namespace OpenTK.Math
 
         #endregion
 
-        #region Constants
+    #region Constants
 
         /// <summary>The identity matrix.</summary>
         public static readonly Matrix3d Identity = new Matrix3d
@@ -792,7 +793,7 @@ namespace OpenTK.Math
 
         #endregion
 
-        #region HashCode
+    #region HashCode
 
         /// <summary>Returns the hash code for this instance.</summary>
         /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
@@ -806,7 +807,7 @@ namespace OpenTK.Math
 
         #endregion
 
-        #region String
+    #region String
 
         /// <summary>Returns the fully qualified type name of this instance.</summary>
         /// <returns>A System.String containing left fully qualified type name.</returns>
@@ -824,5 +825,5 @@ namespace OpenTK.Math
         #endregion
     }
 #endif
-    #pragma warning restore 3019
+#pragma warning restore 3019
 }

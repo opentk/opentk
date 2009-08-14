@@ -30,6 +30,7 @@ namespace OpenTK.Math
     /// <summary>
     /// Represents a 4x4 Matrix with double-precision components.
     /// </summary>
+    [Obsolete("OpenTK.Math functions have been moved to the root OpenTK namespace (reason: XNA compatibility")]
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix4d : IEquatable<Matrix4d>
