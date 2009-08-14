@@ -7,7 +7,6 @@
       <Options>
         <CompilerDefines>DEBUG;TRACE;</CompilerDefines>
         <OptimizeCode>false</OptimizeCode>
-        <!--<OutputPath>../../Binaries/Debug/Libraries</OutputPath>-->
         <DebugInformation>true</DebugInformation>
       </Options>
     </Configuration>
@@ -16,7 +15,6 @@
       <Options>
         <CompilerDefines>TRACE;</CompilerDefines>
         <OptimizeCode>true</OptimizeCode>
-        <!--<OutputPath>../../Binaries/Release/Libraries</OutputPath>-->
         <DebugInformation>false</DebugInformation>
       </Options>
     </Configuration>
@@ -141,6 +139,38 @@
 
     </Project>
 
+    <Project name="OpenTK.Compatibility" path="../Source/Compatibility" language="C#" type="Library">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/Debug</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+          <XmlDocFile>OpenTK.Compatibility.xml</XmlDocFile>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/Release</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+          <XmlDocFile>OpenTK.Compatibility.xml</XmlDocFile>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK"/>
+      <Reference name="OpenTK.Utilities"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+      <Reference name="System.Xml"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
     <Project name="Examples" path="../Source/Examples" language="C#" type="WinExe" startupObject="Examples.Program">
 
       <Configuration name="Debug">
@@ -159,6 +189,7 @@
 
       <Reference name="OpenTK" localCopy="true"/>
       <Reference name="OpenTK.Utilities" localCopy="true"/>
+      <Reference name="OpenTK.Compatibility" localCopy="true"/>
       <Reference name="System"/>
       <Reference name="System.Drawing"/>
       <Reference name="System.Windows.Forms"/>
