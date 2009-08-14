@@ -118,10 +118,10 @@ namespace OpenTK.Graphics
                 if (designMode)
                     implementation = new Platform.Dummy.DummyGLContext();
                 else
-                    switch ((int)(flags & GraphicsContextFlags.Embedded))
+                    switch ((flags & GraphicsContextFlags.Embedded) == GraphicsContextFlags.Embedded)
                     {
-                        case 0: implementation = Factory.Default.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags); break;
-                        case 1: implementation = Factory.Embedded.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags); break;
+                        case false: implementation = Factory.Default.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags); break;
+                        case true: implementation = Factory.Embedded.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags); break;
                     }
 
                 lock (context_lock)
