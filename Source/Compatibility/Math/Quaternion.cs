@@ -32,6 +32,7 @@ namespace OpenTK.Math
     /// <summary>
     /// Represents a Quaternion.
     /// </summary>
+    [Obsolete("OpenTK.Math functions have been moved to the root OpenTK namespace (reason: XNA compatibility")]
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Quaternion : IEquatable<Quaternion>

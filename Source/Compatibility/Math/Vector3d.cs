@@ -31,6 +31,7 @@ namespace OpenTK.Math
     /// <summary>
     /// Represents a 3D vector using three double-precision floating-point numbers.
     /// </summary>
+    [Obsolete("OpenTK.Math functions have been moved to the root OpenTK namespace (reason: XNA compatibility")]
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector3d : IEquatable<Vector3d>

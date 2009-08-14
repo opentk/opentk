@@ -32,6 +32,7 @@ namespace OpenTK.Math
     /// <remarks>
     /// The Vector4 structure is suitable for interoperation with unmanaged code requiring four consecutive floats.
     /// </remarks>
+    [Obsolete("OpenTK.Math functions have been moved to the root OpenTK namespace (reason: XNA compatibility")]
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector4 : IEquatable<Vector4>

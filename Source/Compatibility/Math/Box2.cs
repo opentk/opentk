@@ -14,6 +14,7 @@ namespace OpenTK.Math
     /// <summary>
     /// Defines a 2d box (rectangle).
     /// </summary>
+    [Obsolete("OpenTK.Math functions have been moved to the root OpenTK namespace (reason: XNA compatibility")]
     [StructLayout(LayoutKind.Sequential)]
     public struct Box2
     {

@@ -75,6 +75,7 @@ namespace OpenTK.Math
     /// but must not lead to GL interruption or termination. Providing a denormalized number or negative zero to GL must yield
     /// predictable results.
     /// </remarks>
+    [Obsolete("OpenTK.Math functions have been moved to the root OpenTK namespace (reason: XNA compatibility")]
     [Serializable, StructLayout(LayoutKind.Sequential)]
     public struct Half : ISerializable, IComparable<Half>, IFormattable, IEquatable<Half>
     {
