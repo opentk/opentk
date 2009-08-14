@@ -215,7 +215,7 @@ namespace OpenTK
         {
             get
             {
-                return 1.0f /OpenTK.Functions.InverseSqrtFast(X * X + Y * Y + Z * Z);
+                return 1.0f / MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z);
             }
         }
 
@@ -264,7 +264,7 @@ namespace OpenTK
         /// </summary>
         public void NormalizeFast()
         {
-            float scale = Functions.InverseSqrtFast(X * X + Y * Y + Z * Z);
+            float scale = MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z);
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -637,7 +637,7 @@ namespace OpenTK
         /// <returns>The normalized vector</returns>
         public static Vector3 NormalizeFast(Vector3 vec)
         {
-            float scale = Functions.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z);
+            float scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z);
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -651,7 +651,7 @@ namespace OpenTK
         /// <param name="result">The normalized vector</param>
         public static void NormalizeFast(ref Vector3 vec, out Vector3 result)
         {
-            float scale = Functions.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z);
+            float scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z);
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
