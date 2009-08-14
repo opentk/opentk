@@ -218,13 +218,16 @@ namespace Examples.Tutorial
         protected override void OnResize(EventArgs e)
         {
             GL.Viewport(0, 0, Width, Height);
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            Glu.Perspective(60.0, Width / (double)Height, 1.0, 5.0);
+            
+            double aspect_ratio = Width / (double)Height;
 
+            OpenTK.Matrix4 perspective = OpenTK.Matrix4.CreatePerspectiveFieldOfView(45, (float)aspect_ratio, 1, 64);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref perspective);
+
+            Matrix4 lookat = Matrix4.LookAt(0, 0, 3, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            Glu.LookAt(0.0, 0.0, 3.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+            GL.LoadMatrix(ref lookat);
 
             base.OnResize(e);
         }
@@ -232,12 +235,6 @@ namespace Examples.Tutorial
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-
-            if (Keyboard[Key.Space])
-            {
-                ErrorCode err = GL.GetError();
-                Console.WriteLine(err + "  " + Glu.ErrorString((GluErrorCode)err));
-            }
 
             if (Keyboard[Key.Escape])
                 this.Exit();

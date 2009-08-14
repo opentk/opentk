@@ -17,7 +17,6 @@ namespace OpenTK.Platform.MacOS
 {
     using Carbon;
     using Graphics;
-    using Graphics.OpenGL;
 
     using AGLRendererInfo = IntPtr;
     using AGLPixelFormat = IntPtr;
@@ -412,8 +411,7 @@ namespace OpenTK.Platform.MacOS
 
         void IGraphicsContextInternal.LoadAll()
         {
-            GL.LoadAll();
-            Glu.LoadAll();
+            OpenTK.Graphics.OpenGL.GL.LoadAll();
         }
 
         ContextHandle IGraphicsContextInternal.Context

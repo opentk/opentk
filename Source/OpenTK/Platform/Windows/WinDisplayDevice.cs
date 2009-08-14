@@ -19,8 +19,8 @@ namespace OpenTK.Platform.Windows
     internal class WinDisplayDeviceDriver : IDisplayDeviceDriver
     {
         static object display_lock = new object();
-        static Dictionary<OpenTK.Graphics.DisplayDevice, string> available_device_names =
-            new Dictionary<OpenTK.Graphics.DisplayDevice, string>();    // Needed for ChangeDisplaySettingsEx
+        static Dictionary<DisplayDevice, string> available_device_names =
+            new Dictionary<DisplayDevice, string>();    // Needed for ChangeDisplaySettingsEx
 
         #region --- Constructors ---
 
@@ -35,7 +35,7 @@ namespace OpenTK.Platform.Windows
                 // and construct the device when every needed detail is available.
                 // The main DisplayDevice constructor adds the newly constructed device
                 // to the list of available devices.
-                OpenTK.Graphics.DisplayDevice opentk_dev;
+                DisplayDevice opentk_dev;
                 DisplayResolution opentk_dev_current_res = null;
                 List<DisplayResolution> opentk_dev_available_res = new List<DisplayResolution>();
                 bool opentk_dev_primary = false;
@@ -78,7 +78,7 @@ namespace OpenTK.Platform.Windows
                     // Construct the OpenTK DisplayDevice through the accumulated parameters.
                     // The constructor will automatically add the DisplayDevice to the list
                     // of available devices.
-                    opentk_dev = new OpenTK.Graphics.DisplayDevice(
+                    opentk_dev = new DisplayDevice(
                         opentk_dev_current_res,
                         opentk_dev_primary,
                         opentk_dev_available_res);
@@ -98,7 +98,7 @@ namespace OpenTK.Platform.Windows
 
         #region public bool TryChangeResolution(OpenTK.Graphics.DisplayDevice device, DisplayResolution resolution)
 
-        public bool TryChangeResolution(OpenTK.Graphics.DisplayDevice device, DisplayResolution resolution)
+        public bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
             DeviceMode mode = null;
 
@@ -124,7 +124,7 @@ namespace OpenTK.Platform.Windows
 
         #region public TryRestoreResolution TryRestoreResolution(OpenTK.Graphics.DisplayDevice device)
 
-        public bool TryRestoreResolution(OpenTK.Graphics.DisplayDevice device)
+        public bool TryRestoreResolution(DisplayDevice device)
         {
             return TryChangeResolution(device, null);
         }

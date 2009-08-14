@@ -20,7 +20,7 @@ namespace OpenTK.Platform.MacOS
 
         #region IGLControl Members
 
-        public OpenTK.Graphics.GraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
+        public GraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
             return new GraphicsContext(mode, WindowInfo, major, minor, flags);
         }

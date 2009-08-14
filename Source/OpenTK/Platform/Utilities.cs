@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Diagnostics;
+using OpenTK.Graphics;
 
 #endregion
 
@@ -225,14 +226,14 @@ namespace OpenTK.Platform
         /// <param name="minor">The minor OpenGL version number for this IGraphicsContext.</param>
         /// <param name="flags">A bitwise collection of GraphicsContextFlags with specific options for this IGraphicsContext.</param>
         /// <returns>A new IGraphicsContext instance.</returns>
-        public static Graphics.IGraphicsContext CreateGraphicsContext(
-            Graphics.GraphicsMode mode, IWindowInfo window,
-            int major, int minor, Graphics.GraphicsContextFlags flags)
+        public static IGraphicsContext CreateGraphicsContext(
+            GraphicsMode mode, IWindowInfo window,
+            int major, int minor, GraphicsContextFlags flags)
         {
-            Graphics.GraphicsContext context = new Graphics.GraphicsContext(mode, window, major, minor, flags);
+            GraphicsContext context = new GraphicsContext(mode, window, major, minor, flags);
             context.MakeCurrent(window);
 
-            (context as OpenTK.Graphics.IGraphicsContextInternal).LoadAll();
+            (context as IGraphicsContextInternal).LoadAll();
 
             return context;
         }
@@ -245,8 +246,8 @@ namespace OpenTK.Platform
         /// <param name="context">A new IGraphicsContext instance.</param>
         /// <param name="info">An IWindowInfo instance for the specified cntrl.</param>
         [Obsolete("Create the IWindowInfo object first by calling CreateWindowInfo, then use the CreateGraphicsContext overload which takes major, minor and flags parameters.")]
-        public static void CreateGraphicsContext(Graphics.GraphicsMode mode, Control cntrl,
-            out Graphics.IGraphicsContext context, out IWindowInfo info)
+        public static void CreateGraphicsContext(GraphicsMode mode, Control cntrl,
+            out IGraphicsContext context, out IWindowInfo info)
         {
             CreateGraphicsContext(mode, cntrl.Handle, out context, out info);
         }
@@ -259,15 +260,15 @@ namespace OpenTK.Platform
         /// <param name="context">A new IGraphicsContext instance.</param>
         /// <param name="info">An IWindowInfo instance for the specified ctrl.</param>
         [Obsolete("Create the IWindowInfo object first by calling CreateWindowInfo, then use the CreateGraphicsContext overload which takes major, minor and flags parameters.")]
-        public static void CreateGraphicsContext(Graphics.GraphicsMode mode, IntPtr cntrlHandle,
-            out Graphics.IGraphicsContext context, out IWindowInfo info)
+        public static void CreateGraphicsContext(GraphicsMode mode, IntPtr cntrlHandle,
+            out IGraphicsContext context, out IWindowInfo info)
         {
             info = CreateWindowInfo(mode, cntrlHandle);
 
-            context = new Graphics.GraphicsContext(mode, info);
+            context = new GraphicsContext(mode, info);
             context.MakeCurrent(info);
 
-            (context as OpenTK.Graphics.IGraphicsContextInternal).LoadAll();
+            (context as IGraphicsContextInternal).LoadAll();
         }
 
         #region --- CreateWindowInfo ---
@@ -280,7 +281,7 @@ namespace OpenTK.Platform
         /// <param name="mode">The desired GraphicsMode for this window.</param>
         /// <param name="cntrl">A <see cref="System.Windows.Forms.Control"/> to get the IWindowInfo from.</param>
         /// <returns></returns>
-        public static IWindowInfo CreateWindowInfo(Graphics.GraphicsMode mode, Control cntrl)
+        public static IWindowInfo CreateWindowInfo(GraphicsMode mode, Control cntrl)
         {
             return CreateWindowInfo(mode, cntrl.Handle);
         }
@@ -291,7 +292,7 @@ namespace OpenTK.Platform
         /// <param name="mode">The desired GraphicsMode for this window.</param>
         /// <param name="controlHandle">The handle to the control, obtained from Control.Handle.</param>
         /// <returns></returns>
-        public static IWindowInfo CreateWindowInfo(Graphics.GraphicsMode mode, IntPtr controlHandle)
+        public static IWindowInfo CreateWindowInfo(GraphicsMode mode, IntPtr controlHandle)
         {
             if (Configuration.RunningOnWindows) return CreateWinWindowInfo(controlHandle);
             else if (Configuration.RunningOnX11) return CreateX11WindowInfo(mode, controlHandle);
@@ -304,7 +305,7 @@ namespace OpenTK.Platform
 
         #region --- X11 Platform-specific implementation ---
 
-        private static IWindowInfo CreateX11WindowInfo(Graphics.GraphicsMode mode, IntPtr controlHandle)
+        private static IWindowInfo CreateX11WindowInfo(GraphicsMode mode, IntPtr controlHandle)
         {
             Platform.X11.X11WindowInfo window = new OpenTK.Platform.X11.X11WindowInfo();
 

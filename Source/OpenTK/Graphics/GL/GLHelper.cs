@@ -19,13 +19,7 @@ using System.Reflection.Emit;
 
 #endregion
 
-// Add a dummy namespace to keep old code compiling.
-namespace OpenTK.Graphics.OpenGL.Enums
-{
-    internal static class Dummy { }
-}
-
-namespace OpenTK.Graphics
+namespace OpenTK.Graphics.OpenGL
 {
     /// <summary>
     /// OpenGL bindings for .NET, implementing OpenGL 3.1, plus extensions.
@@ -967,7 +961,7 @@ namespace OpenTK.Graphics
             unsafe
             {
                 int length;
-                GL.GetProgram(program, OpenTK.Graphics.ProgramParameter.InfoLogLength, out length);                if (length == 0)
+                GL.GetProgram(program, OpenTK.Graphics.OpenGL.ProgramParameter.InfoLogLength, out length); if (length == 0)
                 {
                     info = String.Empty;
                     return;

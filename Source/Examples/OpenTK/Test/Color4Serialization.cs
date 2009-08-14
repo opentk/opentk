@@ -28,6 +28,8 @@
 using System;
 using System.IO;
 using System.Xml.Serialization;
+
+using OpenTK;
 using OpenTK.Graphics;
 
 namespace Examples.Tests

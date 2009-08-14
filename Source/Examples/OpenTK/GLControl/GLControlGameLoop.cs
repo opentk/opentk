@@ -16,8 +16,9 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
 
-using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Platform;
+using OpenTK;
 
 #endregion
 
@@ -104,12 +105,10 @@ namespace Examples.WinForms
 
             GL.Viewport(0, 0, c.ClientSize.Width, c.ClientSize.Height);
 
-            double ratio = 0.0;
-            ratio = c.ClientSize.Width / (double)c.ClientSize.Height;
-
+            float aspect_ratio = Width / (float)Height;
+            Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(45, aspect_ratio, 1, 64);
             GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            Glu.Perspective(45.0, ratio, 1.0, 64.0);
+            GL.LoadMatrix(ref perpective);
         }
 
         #endregion
@@ -141,13 +140,10 @@ namespace Examples.WinForms
 
         private void Render()
         {
+            Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            Glu.LookAt(
-                0.0, 5.0, 5.0,
-                0.0, 0.0, 0.0,
-                0.0, 1.0, 0.0
-            );
+            GL.LoadMatrix(ref lookat);
+
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
             angle += 0.5f;
 
