@@ -57,6 +57,7 @@ namespace OpenTK.Platform
                 else if (Configuration.RunningOnMacOS) Embedded = new Egl.EglMacPlatformFactory();
                 else Embedded = new UnsupportedPlatform();
             }
+            else Embedded = new UnsupportedPlatform();
 
             if (Default is UnsupportedPlatform && !(Embedded is UnsupportedPlatform))
                 Default = Embedded;
