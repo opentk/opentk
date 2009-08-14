@@ -75,8 +75,6 @@ namespace OpenTK.Platform.Egl
             int d, s;
             Egl.GetConfigAttrib(display, active_config, Egl.DEPTH_SIZE, out d);
             Egl.GetConfigAttrib(display, active_config, Egl.STENCIL_SIZE, out s);
-            Egl.GetConfigAttrib(display, active_config, Egl.BLUE_SIZE, out b);
-            Egl.GetConfigAttrib(display, active_config, Egl.ALPHA_SIZE, out a);
             int sample_buffers;
             Egl.GetConfigAttrib(display, active_config, Egl.SAMPLES, out sample_buffers);
             Egl.GetConfigAttrib(display, active_config, Egl.SAMPLES, out samples);
