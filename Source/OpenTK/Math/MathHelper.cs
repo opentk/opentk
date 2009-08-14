@@ -17,8 +17,7 @@ namespace OpenTK
     /// <summary>
     /// Contains mathematical functions for the OpenTK.Math toolkit.
     /// </summary>
-    [Obsolete("Use OpenTK.MathHelper instead.")]
-    public static class Functions
+    public static class MathHelper
     {
         #region NextPowerOfTwo
 
