@@ -17,6 +17,7 @@ namespace OpenTK.Math
     /// <summary>
     /// Represents a bezier curve with as many points as you want.
     /// </summary>
+    [Obsolete("OpenTK.Math functions have been moved to the root OpenTK namespace (reason: XNA compatibility")]
     [Serializable]
     public struct BezierCurve
     {

@@ -33,6 +33,7 @@ namespace OpenTK.Math
     /// <summary>
     /// 3-component Vector of the Half type. Occupies 6 Byte total.
     /// </summary>
+    [Obsolete("OpenTK.Math functions have been moved to the root OpenTK namespace (reason: XNA compatibility")]
     [Serializable, StructLayout(LayoutKind.Sequential)]
     public struct Vector3h : ISerializable, IEquatable<Vector3h>
     {

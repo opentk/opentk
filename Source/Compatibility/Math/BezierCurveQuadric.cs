@@ -17,6 +17,7 @@ namespace OpenTK.Math
     /// <summary>
     /// Represents a quadric bezier curve with two anchor and one control point.
     /// </summary>
+    [Obsolete("OpenTK.Math functions have been moved to the root OpenTK namespace (reason: XNA compatibility")]
     [Serializable]
     public struct BezierCurveQuadric
     {

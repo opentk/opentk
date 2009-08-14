@@ -17,6 +17,7 @@ namespace OpenTK.Math
     /// <summary>
     /// Contains mathematical functions for the OpenTK.Math toolkit.
     /// </summary>
+    [Obsolete("OpenTK.Math functions have been moved to the root OpenTK namespace (reason: XNA compatibility")]
     public static class Functions
     {
         #region public static long NextPowerOfTwo(long n)
