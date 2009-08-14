@@ -13,8 +13,8 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
-using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 #endregion
 
@@ -254,7 +254,6 @@ namespace OpenTK.Platform.Windows
         {
             Wgl.LoadAll();
             GL.LoadAll();
-            Glu.LoadAll();
 
             vsync_supported = Wgl.Arb.SupportsExtension(this, "WGL_EXT_swap_control") &&
                 Wgl.Load("wglGetSwapIntervalEXT") && Wgl.Load("wglSwapIntervalEXT");

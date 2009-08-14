@@ -17,6 +17,7 @@ using System.IO;
 
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 namespace Examples.Tutorial
 {
@@ -160,7 +161,7 @@ namespace Examples.Tutorial
             {
                 BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly,
                                                   System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-                GL.TexImage1D(TextureTarget.Texture1D, 0, PixelInternalFormat.Rgb8, data.Width, 0, OpenTK.Graphics.PixelFormat.Bgr,
+                GL.TexImage1D(TextureTarget.Texture1D, 0, PixelInternalFormat.Rgb8, data.Width, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr,
                               PixelType.UnsignedByte, data.Scan0);
                 bitmap.UnlockBits(data);
             }
@@ -180,8 +181,8 @@ namespace Examples.Tutorial
                                  System.Drawing.Imaging.ImageLockMode.WriteOnly,
                                  System.Drawing.Imaging.PixelFormat.Format24bppRgb);
                 GL.ReadPixels(0, 0, this.Width, this.Height,
-                              OpenTK.Graphics.PixelFormat.Bgr,
-                              OpenTK.Graphics.PixelType.UnsignedByte,
+                              OpenTK.Graphics.OpenGL.PixelFormat.Bgr,
+                              OpenTK.Graphics.OpenGL.PixelType.UnsignedByte,
                               data.Scan0);
                 bmp.UnlockBits(data);
                 bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);

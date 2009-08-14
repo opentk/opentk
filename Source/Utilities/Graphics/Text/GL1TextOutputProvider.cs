@@ -25,10 +25,11 @@
 //
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-using System;
+using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.Graphics.Text
 {

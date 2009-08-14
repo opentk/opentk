@@ -605,14 +605,14 @@ namespace OpenTK.Platform.MacOS
 
         #region INativeGLWindow Members
 
-        public void CreateWindow(int width, int height, OpenTK.Graphics.GraphicsMode mode, int major, int minor, GraphicsContextFlags flags, out OpenTK.Graphics.IGraphicsContext context)
+        public void CreateWindow(int width, int height, GraphicsMode mode, int major, int minor, GraphicsContextFlags flags, out IGraphicsContext context)
         {
             Rect r = new Rect(0, 0, (short)width, (short)height);
             CreateNativeWindow(mWindowClass, mWindowAttrib, r);
 
             Show();
 
-            this.context = new Graphics.GraphicsContext(mode, window, major, minor, flags);
+            this.context = new GraphicsContext(mode, window, major, minor, flags);
             this.context.MakeCurrent(window);
 
             context = this.context;

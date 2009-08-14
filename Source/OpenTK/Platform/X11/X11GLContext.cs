@@ -327,8 +327,7 @@ namespace OpenTK.Platform.X11
 
         void IGraphicsContextInternal.LoadAll()
         {
-            GL.LoadAll();
-            Glu.LoadAll();
+            OpenTK.Graphics.OpenGL.GL.LoadAll();
             Glx.LoadAll();
             vsync_supported = this.GetAddress("glXSwapIntervalSGI") != IntPtr.Zero;
             Debug.Print("Context supports vsync: {0}.", vsync_supported);

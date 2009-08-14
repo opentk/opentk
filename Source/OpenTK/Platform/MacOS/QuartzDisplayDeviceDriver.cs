@@ -91,7 +91,7 @@ namespace OpenTK.Platform.MacOS
 
                     }
 
-                    OpenTK.Graphics.DisplayDevice opentk_dev =
+                    DisplayDevice opentk_dev =
                         new DisplayDevice(opentk_dev_current_res, primary, opentk_dev_available_res);
 
                     displayMap.Add(opentk_dev, currentDisplay);

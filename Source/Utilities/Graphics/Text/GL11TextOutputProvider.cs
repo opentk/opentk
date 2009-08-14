@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.Graphics.Text
 {

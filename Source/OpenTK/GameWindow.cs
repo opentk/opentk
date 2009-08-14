@@ -824,12 +824,6 @@ namespace OpenTK
         /// <param name="e"></param>
         private void OnLoadInternal(EventArgs e)
         {
-            Debug.Print("{0}.Load", this.GetType().Name);
-            Debug.WriteLine(String.Format("OpenGL driver information: {0}, {1}, {2}",
-                GL.GetString(StringName.Renderer),
-                GL.GetString(StringName.Vendor),
-                GL.GetString(StringName.Version)));
-
             OnResizeInternal(EventArgs.Empty);
             Load(this, e);
             OnLoad(e);

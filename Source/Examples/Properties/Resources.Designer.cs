@@ -135,12 +135,13 @@ namespace Examples.Properties {
         ///using System.Reflection;
         ///
         ///using OpenTK;
-        ///using OpenTK.Graphics.OpenGL;
-        ///using OpenTK.Graphics.OpenGL.Enums;
         ///using OpenTK.Graphics;
+        ///using OpenTK.Graphics.OpenGL;
         ///using System.Text.RegularExpressions;
         ///
-        ///names [rest of string was truncated]&quot;;.
+        ///namespace Examples.WinForms
+        ///{
+        ///    [Examp [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Extensions {
             get {
@@ -619,34 +620,6 @@ namespace Examples.Properties {
         ///#endregion
         ///
         ///using System;
-        ///using System.Diagnostics;
-        ///using System.Runtime.InteropServices;
-        ///
-        ///using OpenTK;
-        ///using OpenTK.Graphics;
-        ///using OpenTK.Input;
-        ///
-        ///namespace Examples
-        ///{
-        ///    [Example(&quot;GLU Tesselation Functions Test&quot;, ExampleCategory.OpenGL, &quot;GLU&quot;, Visible = false)]
-        ///    public [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string Tessellation {
-            get {
-                return ResourceManager.GetString("Tessellation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to #region --- License ---
-        ////* Licensed under the MIT/X11 license.
-        /// * Copyright (c) 2006-2008 the OpenTK Team.
-        /// * This notice may not be removed from any source distribution.
-        /// * See license.txt for licensing details.
-        /// */
-        ///#endregion
-        ///
-        ///using System;
         ///
         ///using OpenTK.Audio;
         ///
@@ -681,13 +654,13 @@ namespace Examples.Properties {
         ///using System.Text;
         ///using System.Windows.Forms;
         ///using System.Diagnostics;
-        ///
-        ///using OpenTK.Graphics;
         ///using System.Threading;
+        ///
+        ///using OpenTK;
         ///
         ///namespace Examples.Tests
         ///{
-        ///    [Example(&quot;Test Resolution Changes&quot;, ExampleCategory.OpenTK, &quot;Test&quot;, Docum [rest of string was truncated]&quot;;.
+        ///    [Example(&quot;Test Resolution Changes&quot;, ExampleCategory.OpenTK, &quot;Test&quot;, Documentation= [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TestResolutionChanges {
             get {
@@ -714,12 +687,13 @@ namespace Examples.Properties {
         ///using OpenTK;
         ///using OpenTK.Graphics.OpenGL;
         ///using OpenTK.Graphics;
-        ///using OpenTK.Graphics.OpenGL.Enums;
         ///
         ///namespace Examples.Tutorial
         ///{
         ///    /// &lt;summary&gt;
-        ///    /// Demonstrates simple OpenGL Texturing. [rest of string was truncated]&quot;;.
+        ///    /// Demonstrates simple OpenGL Texturing.
+        ///    /// &lt;/summary&gt;
+        ///    [Example(&quot;T [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Textures {
             get {
@@ -741,16 +715,15 @@ namespace Examples.Properties {
         ///using System.Threading;
         ///
         ///using OpenTK;
-        ///using OpenTK.Graphics.OpenGL;
         ///using System.Diagnostics;
         ///using OpenTK.Input;
         ///using OpenTK.Graphics;
-        ///using OpenTK.Graphics.OpenGL.Enums;
+        ///using OpenTK.Graphics.OpenGL;
         ///
         ///namespace Examples.Tutorial
         ///{
         ///    /// &lt;summary&gt;
-        ///    /// Demonstrates Vertex Arrays (in system memo [rest of string was truncated]&quot;;.
+        ///    /// Demonstrates Vertex Arrays (in system memory).  Example is incomplete (document [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string VertexArrays {
             get {

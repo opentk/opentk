@@ -14,6 +14,7 @@ using System.Threading;
 
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Platform;
 
 #endregion
@@ -76,11 +77,10 @@ namespace Examples.Tutorial
         {
             GL.Viewport(0, 0, Width, Height);
 
-            double ratio = Width / (double)Height;
-
+            float aspect_ratio = Width / (float)Height;
+            Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(45, aspect_ratio, 1, 64);
             GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            Glu.Perspective(45.0, ratio, 1.0, 64.0);
+            GL.LoadMatrix(ref perpective);
         }
 
         #endregion
@@ -110,11 +110,9 @@ namespace Examples.Tutorial
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+            Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            Glu.LookAt(0.0, 5.0, 5.0,
-                       0.0, 0.0, 0.0,
-                       0.0, 1.0, 0.0);
+            GL.LoadMatrix(ref lookat);
 
             GL.Color4(System.Drawing.Color.Black);
             Draw(vbo[0]);

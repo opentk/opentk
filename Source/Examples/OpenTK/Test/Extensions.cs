@@ -15,9 +15,8 @@ using System.Threading;
 using System.Reflection;
 
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Graphics.OpenGL.Enums;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using System.Text.RegularExpressions;
 
 namespace Examples.WinForms

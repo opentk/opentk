@@ -13,13 +13,13 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
-using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Platform;
 
 namespace OpenTK.Graphics
 {
     using Graphics = System.Drawing.Graphics;
-    using PixelFormat = OpenTK.Graphics.PixelFormat;
+    using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
     using System.Text.RegularExpressions;
 
     [Obsolete("Use System.Drawing.Font instead")]
@@ -382,7 +382,7 @@ namespace OpenTK.Graphics
             }
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Alpha, texture_width, texture_height, 0,
-                OpenTK.Graphics.PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
+                OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
         }
 
         #endregion
@@ -426,7 +426,7 @@ namespace OpenTK.Graphics
                 GL.PixelStore(PixelStoreParameter.UnpackRowLength, bmp.Width);
                 GL.TexSubImage2D(TextureTarget.Texture2D, 0, (int)rect.Left, (int)rect.Top,
                     rect.Width, rect.Height,
-                    OpenTK.Graphics.PixelFormat.Rgba,
+                    OpenTK.Graphics.OpenGL.PixelFormat.Rgba,
                     PixelType.UnsignedByte, bitmap_data.Scan0);
             }
             finally
