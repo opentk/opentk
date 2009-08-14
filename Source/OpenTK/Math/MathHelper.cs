@@ -15,10 +15,80 @@ using System.Text;
 namespace OpenTK
 {
     /// <summary>
-    /// Contains mathematical functions for the OpenTK.Math toolkit.
+    /// Contains common mathematical functions and constants.
     /// </summary>
     public static class MathHelper
     {
+        #region Fields
+
+        /// <summary>
+        /// Defines the value of Pi as a <see cref="System.Single"/>.
+        /// </summary>
+        public const float Pi = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382f;
+
+        /// <summary>
+        /// Defines the value of Pi divided by two as a <see cref="System.Single"/>.
+        /// </summary>
+        public const float PiOver2 = Pi / 2;
+
+        /// <summary>
+        /// Defines the value of Pi divided by three as a <see cref="System.Single"/>.
+        /// </summary>
+        public const float PiOver3 = Pi / 3;
+
+        /// <summary>
+        /// Definesthe value of  Pi divided by four as a <see cref="System.Single"/>.
+        /// </summary>
+        public const float PiOver4 = Pi / 4;
+
+        /// <summary>
+        /// Defines the value of Pi divided by six as a <see cref="System.Single"/>.
+        /// </summary>
+        public const float PiOver6 = Pi / 6;
+
+        /// <summary>
+        /// Defines the value of Pi multiplied by two as a <see cref="System.Single"/>.
+        /// </summary>
+        public const float TwoPi = 2 * Pi;
+
+        /// <summary>
+        /// Defines the value of Pi multiplied by 3 and divided by two as a <see cref="System.Single"/>.
+        /// </summary>
+        public const float ThreePiOver2 = 3 * Pi / 2;
+
+        /// <summary>
+        /// Defines the value of E as a <see cref="System.Single"/>.
+        /// </summary>
+        public const float E = 2.71828182845904523536f;
+
+        /// <summary>
+        /// Defines the base-10 logarithm of E.
+        /// </summary>
+        public const float Log10E = 0.434294482f;
+
+        /// <summary>
+        /// Defines the base-2 logarithm of E.
+        /// </summary>
+        public const float Log2E = 1.442695041f;
+
+        [Obsolete]
+        public static readonly float PIF = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382f;
+        [Obsolete]
+        public static readonly float RTODF = 180.0f / PIF;
+        [Obsolete]
+        public static readonly float DTORF = PIF / 180.0f;
+
+        [Obsolete]
+        public static readonly double PI = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382d;
+        [Obsolete]
+        public static readonly double RTOD = 180.0d / PIF;
+        [Obsolete]
+        public static readonly double DTOR = PIF / 180.0d;
+
+        #endregion
+
+        #region Public Members
+
         #region NextPowerOfTwo
 
         /// <summary>
@@ -182,16 +252,13 @@ namespace OpenTK
 
         #endregion
 
-        public static readonly float PIF = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382f;
-        public static readonly float RTODF = 180.0f / PIF;
-        public static readonly float DTORF = PIF / 180.0f;
-
-        public static readonly double PI = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382d;
-        public static readonly double RTOD = 180.0d / PIF;
-        public static readonly double DTOR = PIF / 180.0d;
-
         #region Swap
 
+        /// <summary>
+        /// Swaps two double values.
+        /// </summary>
+        /// <param name="a">The first value.</param>
+        /// <param name="b">The second value.</param>
         public static void Swap(ref double a, ref double b)
         {
             double temp = a;
@@ -199,6 +266,11 @@ namespace OpenTK
             b = temp;
         }
 
+        /// <summary>
+        /// Swaps two float values.
+        /// </summary>
+        /// <param name="a">The first value.</param>
+        /// <param name="b">The second value.</param>
         public static void Swap(ref float a, ref float b)
         {
             float temp = a;
@@ -207,128 +279,7 @@ namespace OpenTK
         }
 
         #endregion
-    }
-
-#if false
-    public static partial class Math
-    {
-    #region --- Vectors ---
-
-    #region --- Addition ---
-
-        /// <summary>
-        /// Adds the given Vector2 to the current Vector3.
-        /// </summary>
-        /// <param name="right">The right operand of the addition.</param>
-        /// <returns>A new Vector3 containing the result of the addition.</returns>
-        public static Vector2 Add(Vector2 left, Vector2 right)
-        {
-            return new Vector2(left).Add(right);
-        }
-
-        /// <summary>
-        /// Adds the given Vector3 to the current Vector3.
-        /// </summary>
-        /// <param name="right">The right operand of the addition.</param>
-        /// <returns>A new Vector3 containing the result of the addition.</returns>
-        public static Vector3 Add(Vector2 left, Vector3 right)
-        {
-            return new Vector3(left).Add(right);
-        }
-
-        /// <summary>
-        /// Adds the given Vector4 to the current Vector3. W-coordinate remains unaffected.
-        /// </summary>
-        /// <param name="right">The right operand of the addition.</param>
-        /// <returns>A new Vector4 containing the result of the addition.</returns>
-        public static Vector4 Add(Vector2 left, Vector4 right)
-        {
-            return new Vector4(left).Add(right);
-        }
-
-        /// <summary>
-        /// Adds the given Vector2 to the current Vector3.
-        /// </summary>
-        /// <param name="right">The right operand of the addition.</param>
-        /// <returns>A new Vector3 containing the result of the addition.</returns>
-        public static Vector3 Add(Vector3 left, Vector2 right)
-        {
-            return new Vector3(left).Add(right);
-        }
-
-        /// <summary>
-        /// Adds the given Vector3 to the current Vector3.
-        /// </summary>
-        /// <param name="right">The right operand of the addition.</param>
-        /// <returns>A new Vector3 containing the result of the addition.</returns>
-        public static Vector3 Add(Vector3 left, Vector3 right)
-        {
-            return new Vector3(left).Add(right);
-        }
-
-        /// <summary>
-        /// Adds the given Vector4 to the current Vector3. W-coordinate remains unaffected.
-        /// </summary>
-        /// <param name="right">The right operand of the addition.</param>
-        /// <returns>A new Vector4 containing the result of the addition.</returns>
-        public static Vector4 Add(Vector3 left, Vector4 right)
-        {
-            return new Vector4(left).Add(right);
-        }
-
-        /// <summary>
-        /// Adds the given Vector2 to the current Vector3.
-        /// </summary>
-        /// <param name="right">The right operand of the addition.</param>
-        /// <returns>A new Vector3 containing the result of the addition.</returns>
-        public static Vector4 Add(Vector4 left, Vector2 right)
-        {
-            return new Vector4(left).Add(right);
-        }
-
-        /// <summary>
-        /// Adds the given Vector3 to the current Vector3.
-        /// </summary>
-        /// <param name="right">The right operand of the addition.</param>
-        /// <returns>A new Vector3 containing the result of the addition.</returns>
-        public static Vector4 Add(Vector4 left, Vector3 right)
-        {
-            return new Vector4(left).Add(right);
-        }
-
-        /// <summary>
-        /// Adds the given Vector4 to the current Vector3. W-coordinate remains unaffected.
-        /// </summary>
-        /// <param name="right">The right operand of the addition.</param>
-        /// <returns>A new Vector4 containing the result of the addition.</returns>
-        public static Vector4 Add(Vector4 left, Vector4 right)
-        {
-            return new Vector4(left).Add(right);
-        }
-
-        #endregion
-
-    #region --- Subtraction ---
-
-
-
-        #endregion
-
-    #region --- Cross ---
-
-        /// <summary>
-        /// Computes the cross product between the current and the given Vector3. The current Vector3 is set to the result of the computation.
-        /// </summary>
-        /// <param name="right">The right operand of the cross product</param>
-        /// <returns>The current </returns>
-        public static Vector3 Cross(Vector3 left, Vector3 right)
-        {
-            return new Vector3(left).Cross(right);
-        }
-
-        #endregion
 
         #endregion
     }
-#endif
 }
