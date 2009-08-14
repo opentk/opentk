@@ -189,7 +189,6 @@
 
       <Reference name="OpenTK" localCopy="true"/>
       <Reference name="OpenTK.Utilities" localCopy="true"/>
-      <Reference name="OpenTK.Compatibility" localCopy="true"/>
       <Reference name="System"/>
       <Reference name="System.Drawing"/>
       <Reference name="System.Windows.Forms"/>
