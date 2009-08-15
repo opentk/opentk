@@ -29,14 +29,15 @@ using System;
 
 using OpenTK.Graphics;
 using System.Diagnostics;
+using OpenTK.Platform.Windows;
 
 namespace OpenTK.Platform.Egl
 {
-    class EglContext : IGraphicsContext
+    class EglContext : IGraphicsContext, IGraphicsContextInternal
     {
         #region Fields
 
-        EglWindowInfo window;
+        EglWindowInfo WindowInfo;
         EGLContext context;
         GraphicsMode mode;
         bool vsync = true;   // Default vsync value is defined as 1 (true) in EGL.
@@ -56,14 +57,23 @@ namespace OpenTK.Platform.Egl
 
             EglContext shared = (EglContext)sharedContext;
 
-            Egl.Initialize(window.Display, out major, out minor);
+            int dummy_major, dummy_minor;
+            if (!Egl.Initialize(window.Display, out dummy_major, out dummy_minor))
+                throw new GraphicsContextException(String.Format("Failed to initialize EGL, error {0}.", Egl.GetError()));
 
-            EGLConfig config = new EGLConfig(mode.Index);
+            WindowInfo = window;
+
+            mode = new EglGraphicsMode().SelectGraphicsMode(mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples, mode.AccumulatorFormat, mode.Buffers, mode.Stereo);
+            if (!mode.Index.HasValue)
+                throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
+            EGLConfig config = new EGLConfig(mode.Index.Value);
 
             if (window.Surface.Handle == EGLSurface.None.Handle)
                 window.CreateWindowSurface(config);
 
-            context = Egl.CreateContext(window.Display, config, shared.context, null);
+            int[] attrib_list = new int[] { Egl.CONTEXT_CLIENT_VERSION, major, Egl.NONE };
+            context = Egl.CreateContext(window.Display, config, shared != null ? shared.context : EGLContext.None, attrib_list);
+
             MakeCurrent(window);
         }
 
@@ -73,14 +83,18 @@ namespace OpenTK.Platform.Egl
 
         public void SwapBuffers()
         {
-            Egl.SwapBuffers(window.Display, window.Surface);
+            Egl.SwapBuffers(WindowInfo.Display, WindowInfo.Surface);
         }
 
         public void MakeCurrent(IWindowInfo window)
         {
-            EglWindowInfo egl = (EglWindowInfo)window;
-            Egl.MakeCurrent(egl.Display, egl.Surface, egl.Surface, context);
-            this.window = egl;
+            // Ignore 'window', unless it actually is an EGL window. In other words,
+            // trying to make the EglContext current on a non-EGL window will do,
+            // nothing (the EglContext will remain current on the previous EGL window
+            // or the window it was constructed on (which may not be EGL)).
+            if (window is EglWindowInfo)
+                WindowInfo = (EglWindowInfo)window;
+            Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, context);
         }
 
         public bool IsCurrent
@@ -100,10 +114,10 @@ namespace OpenTK.Platform.Egl
             }
             set
             {
-                if (Egl.SwapInterval(window.Display, value ? 1 : 0))
+                if (Egl.SwapInterval(WindowInfo.Display, value ? 1 : 0))
                     vsync = value;
                 else
-                    Debug.Print("[Warning] Egl.SwapInterval({0}, {1}) failed.", window.Display, value);
+                    Debug.Print("[Warning] Egl.SwapInterval({0}, {1}) failed.", WindowInfo.Display, value);
             }
         }
 
@@ -147,8 +161,8 @@ namespace OpenTK.Platform.Egl
             {
                 if (manual)
                 {
-                    Egl.MakeCurrent(window.Display, window.Surface, window.Surface, EGLContext.None);
-                    Egl.DestroyContext(window.Display, context);
+                    Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, EGLContext.None);
+                    Egl.DestroyContext(WindowInfo.Display, context);
                 }
                 else
                 {
@@ -161,6 +175,43 @@ namespace OpenTK.Platform.Egl
         ~EglContext()
         {
             Dispose(false);
+        }
+
+        #endregion
+
+        #region IGraphicsContextInternal Members
+
+        public IGraphicsContext Implementation
+        {
+            get { return this; }
+        }
+
+        public void LoadAll()
+        {
+            // Todo: enable those
+            //OpenTK.Graphics.ES10.ES.LoadAll();
+            OpenTK.Graphics.ES11.GL.LoadAll();
+            //OpenTK.Graphics.ES20.ES.LoadAll();
+        }
+
+        public ContextHandle Context
+        {
+            get { return new ContextHandle(context.Handle.Value); }
+        }
+
+        public void RegisterForDisposal(IDisposable resource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DisposeResources()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IntPtr GetAddress(string function)
+        {
+            return Egl.GetProcAddress(function);
         }
 
         #endregion

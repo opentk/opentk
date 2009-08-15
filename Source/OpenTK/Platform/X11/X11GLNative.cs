@@ -124,7 +124,10 @@ namespace OpenTK.Platform.X11
             
             lock (API.Lock)
             {
-                info.VisualID = mode.Index;
+                if (!mode.Index.HasValue)
+                    throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
+
+                info.VisualID = mode.Index.Value;
                 int dummy;
                 window.VisualInfo = (XVisualInfo)Marshal.PtrToStructure(
                     Functions.XGetVisualInfo(window.Display, XVisualInfoMask.ID, ref info, out dummy), typeof(XVisualInfo));

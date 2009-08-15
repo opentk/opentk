@@ -429,9 +429,26 @@ namespace OpenTK.Platform.MacOS
             throw new Exception("The method or operation is not implemented.");
         }
 
+        private const string Library = "libdl.dylib";
+
+        [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
+        private static extern bool NSIsSymbolNameDefined(string s);
+        [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
+        private static extern IntPtr NSLookupAndBindSymbol(string s);
+        [DllImport(Library, EntryPoint = "NSAddressOfSymbol")]
+        private static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
+
         IntPtr IGraphicsContextInternal.GetAddress(string function)
         {
-            throw new Exception("The method or operation is not implemented.");
+            string fname = "_" + function;
+            if (!NSIsSymbolNameDefined(fname))
+                return IntPtr.Zero;
+
+            IntPtr symbol = NSLookupAndBindSymbol(fname);
+            if (symbol != IntPtr.Zero)
+                symbol = NSAddressOfSymbol(symbol);
+
+            return symbol;
         }
 
         #endregion
