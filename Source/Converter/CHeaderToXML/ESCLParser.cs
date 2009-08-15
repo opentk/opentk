@@ -153,6 +153,15 @@ namespace CHeaderToXML
                     if (tokens[1].StartsWith("__"))
                         return acc;
 
+                    // Check whether this is a known header define like WIN32_LEAN_AND_MEAN
+                    switch (tokens[1])
+                    {
+                        case "WIN32_LEAN_AND_MEAN":
+                        case "APIENTRY":
+                        case "GLAPI":
+                            return acc;
+                    }
+
                     acc[acc.Count - 1].Add(new XElement("token",
                         new XAttribute("name", tokens[1].Substring(Prefix.Length + 1)),   // remove prefix
                         new XAttribute("value", tokens[2])));
