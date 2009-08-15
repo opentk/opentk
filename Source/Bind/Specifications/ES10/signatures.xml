@@ -314,10 +314,6 @@
     <token name="CLAMP_TO_EDGE" value="0x812F" />
     <token name="REPEAT" value="0x2901" />
   </enum>
-  <enum name="Unknown">
-    <token name="32_LEAN_AND_MEAN" value="1" />
-    <token name="PI" value="extern" />
-  </enum>
   <function name="ActiveTexture" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void" />
     <param type="GLenum" name="texture" flow="in" />
