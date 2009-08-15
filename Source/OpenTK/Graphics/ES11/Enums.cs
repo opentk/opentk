@@ -411,8 +411,8 @@ namespace OpenTK.Graphics.ES11
         BufferSize = ((int)0X8764),
         BufferUsage = ((int)0X8765),
         AtcRgbaInterpolatedAlphaAmd = ((int)0X87ee),
-        3DcXAmd = ((int)0X87f9),
-        3DcXyAmd = ((int)0X87fa),
+        GL_3DcXAmd = ((int)0X87f9),
+        GL_3DcXyAmd = ((int)0X87fa),
         BlendEquationAlphaOes = ((int)0X883d),
         MatrixPaletteOes = ((int)0X8840),
         MaxPaletteMatricesOes = ((int)0X8842),
@@ -572,8 +572,8 @@ namespace OpenTK.Graphics.ES11
 
     public enum Amdcompressed3Dctexture
     {
-        3DcXAmd = ((int)0X87f9),
-        3DcXyAmd = ((int)0X87fa),
+        GL_3DcXAmd = ((int)0X87f9),
+        GL_3DcXyAmd = ((int)0X87fa),
         AmdCompressed3DcTexture = ((int)1),
     }
 

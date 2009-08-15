@@ -266,13 +266,11 @@ namespace OpenTK.Graphics.ES10
         Palette8Rgb5A1Oes = ((int)0X8b99),
         ImplementationColorReadTypeOes = ((int)0X8b9a),
         ImplementationColorReadFormatOes = ((int)0X8b9b),
-        32LeanAndMean = ((int)1),
         OesCompressedPalettedTexture = ((int)1),
         OesReadFormat = ((int)1),
         OesVersion10 = ((int)1),
         One = ((int)1),
         True = ((int)1),
-        Pi = ((int)Extern),
     }
 
     public enum AlphaFunction
@@ -664,12 +662,6 @@ namespace OpenTK.Graphics.ES10
     {
         Repeat = ((int)0X2901),
         ClampToEdge = ((int)0X812f),
-    }
-
-    public enum Unknown
-    {
-        32LeanAndMean = ((int)1),
-        Pi = ((int)Extern),
     }
 
 }

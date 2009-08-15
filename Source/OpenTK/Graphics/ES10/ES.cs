@@ -34,7 +34,7 @@ namespace OpenTK.Graphics.ES10
     #pragma warning disable 1572
     #pragma warning disable 1573
 
-    static partial class GL
+    partial class GL
     {
 
         
