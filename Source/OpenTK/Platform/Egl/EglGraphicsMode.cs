@@ -41,29 +41,38 @@ namespace OpenTK.Platform.Egl
             EGLConfig[] configs = new EGLConfig[1];
             int[] attribList = new int[] 
             { 
-                Egl.SURFACE_TYPE, Egl.WINDOW_BIT,
+                //Egl.SURFACE_TYPE, Egl.WINDOW_BIT,
 
                 Egl.RED_SIZE, color.Red, 
                 Egl.GREEN_SIZE, color.Green, 
                 Egl.BLUE_SIZE, color.Blue,
                 Egl.ALPHA_SIZE, color.Alpha,
 
-                Egl.DEPTH_SIZE, depth > 0 ? depth : Egl.DONT_CARE,
-                Egl.STENCIL_SIZE, stencil > 0 ? stencil : Egl.DONT_CARE,
+                Egl.DEPTH_SIZE, depth > 0 ? depth : 0,
+                Egl.STENCIL_SIZE, stencil > 0 ? stencil : 0,
 
-                Egl.SAMPLE_BUFFERS, samples > 0 ? 1 : 0,
+                //Egl.SAMPLE_BUFFERS, samples > 0 ? 1 : 0,
                 Egl.SAMPLES, samples > 0 ? samples : 0,
 
-                Egl.NONE, Egl.NONE 
+                Egl.NONE,
             };
 
             // Todo: what if we don't wish to use the default display?
             EGLDisplay display = Egl.GetDisplay(EGLNativeDisplayType.Default);
+            int major, minor;
+            if (!Egl.Initialize(display, out major, out minor))
+                throw new GraphicsModeException(String.Format("Failed to initialize display connection, error {0}", Egl.GetError()));
 
             int num_configs;
-            Egl.GetConfigs(display, configs, configs.Length, out num_configs);
-            if (num_configs == 0)
-                throw new NotSupportedException("The requested GraphicsMode is not supported.");
+            if (!Egl.GetConfigs(display, null, 0, out num_configs))
+            {
+                throw new GraphicsModeException(String.Format("Failed to retrieve GraphicsMode configurations, error {0}", Egl.GetError()));
+            }
+
+            if (!Egl.ChooseConfig(display, attribList, configs, configs.Length, out num_configs))
+            {
+                throw new GraphicsModeException(String.Format("Failed to retrieve GraphicsMode, error {0}", Egl.GetError()));
+            }
 
             // See what we really got
             EGLConfig active_config = configs[0];
@@ -79,7 +88,7 @@ namespace OpenTK.Platform.Egl
             Egl.GetConfigAttrib(display, active_config, Egl.SAMPLES, out sample_buffers);
             Egl.GetConfigAttrib(display, active_config, Egl.SAMPLES, out samples);
 
-            return new GraphicsMode(active_config.Handle.Value, new ColorFormat(r, g, b, a), depth, stencil, sample_buffers > 0 ? samples : 0, 0, 2, false);
+            return new GraphicsMode(active_config.Handle.Value, new ColorFormat(r, g, b, a), d, s, sample_buffers > 0 ? samples : 0, 0, 2, false);
         }
 
         #endregion

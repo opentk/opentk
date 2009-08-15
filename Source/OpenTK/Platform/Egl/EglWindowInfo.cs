@@ -29,6 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Egl
 {
@@ -72,6 +73,9 @@ namespace OpenTK.Platform.Egl
         public void CreateWindowSurface(EGLConfig config)
         {
             Surface = Egl.CreateWindowSurface(Display, config, Handle, null);
+            int error = Egl.GetError();
+            if (error != Egl.SUCCESS)
+                throw new GraphicsContextException(String.Format("[Error] Failed to create EGL window surface, error {0}.", error));
         }
 
         //public void CreatePixmapSurface(EGLConfig config)
