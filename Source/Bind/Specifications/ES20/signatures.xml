@@ -1446,27 +1446,35 @@
   </function>
   <function name="DeleteFencesNV" extension="NV" profile="" category="2.0" version="2.0">
     <returns type="void" />
-    <param type="GLuint**" name="" flow="in" />
+    <param type="GLsizei" name="n" flow="in" />
+    <param type="GLuint*" name="fences" flow="in" />
   </function>
   <function name="FinishFenceNV" extension="NV" profile="" category="2.0" version="2.0">
     <returns type="void" />
+    <param type="GLuint" name="fence" flow="in" />
   </function>
   <function name="GenFencesNV" extension="NV" profile="" category="2.0" version="2.0">
     <returns type="void" />
-    <param type="GLuint**" name="" flow="in" />
+    <param type="GLsizei" name="n" flow="in" />
+    <param type="GLuint*" name="fences" flow="in" />
   </function>
   <function name="GetFenceivNV" extension="NV" profile="" category="2.0" version="2.0">
     <returns type="void" />
-    <param type="GLint**" name="" flow="in" />
+    <param type="GLuint" name="fence" flow="in" />
+    <param type="GLint*" name="params" flow="in" />
   </function>
   <function name="IsFenceNV" extension="NV" profile="" category="2.0" version="2.0">
     <returns type="GLboolean" />
+    <param type="GLuint" name="fence" flow="in" />
   </function>
   <function name="SetFenceNV" extension="NV" profile="" category="2.0" version="2.0">
     <returns type="void" />
+    <param type="GLuint" name="fence" flow="in" />
+    <param type="GLenum" name="condition" flow="in" />
   </function>
   <function name="TestFenceNV" extension="NV" profile="" category="2.0" version="2.0">
     <returns type="GLboolean" />
+    <param type="GLuint" name="fence" flow="in" />
   </function>
   <function name="CompressedTexImage3DOES" extension="OES" profile="" category="2.0" version="2.0">
     <returns type="void" />
