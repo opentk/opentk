@@ -46,7 +46,7 @@ namespace Bind.Structures
             set 
             {
                 if (!String.IsNullOrEmpty(value))
-                    _name = Translate(value.Trim());
+                    _name = Translate(value.Trim(), false);
                 else _name = value;
                 
                 PreviousName = value;
@@ -105,7 +105,7 @@ namespace Bind.Structures
                     }
                 }
 
-                _value = Translate(value);
+                _value = Translate(value, true);
             }
         }
 
@@ -166,9 +166,9 @@ namespace Bind.Structures
 
         #endregion
 
-        #region public static string Translate(string s)
+        #region Translate
 
-        public static string Translate(string s)
+        public static string Translate(string s, bool isValue)
         {
             translator.Remove(0, translator.Length);
 
@@ -177,6 +177,9 @@ namespace Bind.Structures
             {
                 bool next_char_uppercase = true;
                 bool is_after_digit = false;
+
+                if (!isValue && Char.IsDigit(s[0]))
+                    translator.Insert(0, Settings.ConstantPrefix);
 
                 foreach (char c in s)
                 {
