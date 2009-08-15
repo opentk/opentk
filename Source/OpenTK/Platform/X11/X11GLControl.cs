@@ -24,13 +24,16 @@ namespace OpenTK.Platform.X11
 
         internal X11GLControl(GraphicsMode mode, Control control)
         {
+            if (!mode.Index.HasValue)
+                throw new GraphicsModeException("Invalid GraphicsMode.");
+
             this.mode = mode;
             this.control = control;
 
             X11WindowInfo window = (X11WindowInfo)this.WindowInfo;
-
             XVisualInfo info = new XVisualInfo();
-            info.VisualID = mode.Index;
+            
+            info.VisualID = mode.Index.Value;
             int dummy;
             window.VisualInfo = (XVisualInfo)Marshal.PtrToStructure(
                 Functions.XGetVisualInfo(window.Display, XVisualInfoMask.ID, ref info, out dummy), typeof(XVisualInfo));

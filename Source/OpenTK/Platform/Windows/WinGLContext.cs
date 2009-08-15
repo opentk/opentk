@@ -314,15 +314,16 @@ namespace OpenTK.Platform.Windows
 
         void SetGraphicsModePFD(GraphicsMode mode, WinWindowInfo window)
         {
-            if (mode.Index == IntPtr.Zero) throw new ArgumentException(
-                "mode", "The Index (pixel format) of the GraphicsMode is not set.");
+            if (!mode.Index.HasValue)
+                throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
+
             if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
 
             PixelFormatDescriptor pfd = new PixelFormatDescriptor();
-            Functions.DescribePixelFormat(window.DeviceContext, (int)mode.Index,
+            Functions.DescribePixelFormat(window.DeviceContext, (int)mode.Index.Value,
                 API.PixelFormatDescriptorSize, ref pfd);
             Debug.WriteLine(mode.Index.ToString());
-            if (!Functions.SetPixelFormat(window.DeviceContext, (int)mode.Index, ref pfd))
+            if (!Functions.SetPixelFormat(window.DeviceContext, (int)mode.Index.Value, ref pfd))
                 throw new GraphicsContextException(String.Format(
                     "Requested GraphicsMode not available. SetPixelFormat error: {0}", Marshal.GetLastWin32Error()));
         }
