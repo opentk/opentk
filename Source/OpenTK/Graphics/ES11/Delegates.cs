@@ -629,7 +629,7 @@ namespace OpenTK.Graphics.ES11
             internal delegate void PushMatrix();
             internal static PushMatrix glPushMatrix;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate UInt32 QueryMatrixxOES(int* mantissa, Int32* exponent);
+            internal unsafe delegate Int32 QueryMatrixxOES(int* mantissa, Int32* exponent);
             internal unsafe static QueryMatrixxOES glQueryMatrixxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, IntPtr pixels);
