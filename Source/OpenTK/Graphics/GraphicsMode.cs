@@ -19,7 +19,7 @@ namespace OpenTK.Graphics
         ColorFormat color_format, accumulator_format;
         int depth, stencil, buffers, samples;
         bool stereo;
-        IntPtr index;  // The id of the pixel format or visual.
+        IntPtr? index;  // The id of the pixel format or visual.
 
         static GraphicsMode defaultMode;
         static IGraphicsMode implementation;
@@ -53,36 +53,14 @@ namespace OpenTK.Graphics
             if (buffers <= 0) throw new ArgumentOutOfRangeException("buffers", "Must be greater than zero.");
             if (samples < 0) throw new ArgumentOutOfRangeException("samples", "Must be greater than, or equal to zero.");
 
-            // This method will search for the closest 
-
-            if (index == IntPtr.Zero)
-            {
-                GraphicsMode mode;
-                lock (mode_selection_lock)
-                {
-                    mode = implementation.SelectGraphicsMode(color, depth, stencil, samples, accum, buffers, stereo);
-                }
-
-                this.Index = mode.Index;
-                this.ColorFormat = mode.ColorFormat;
-                this.Depth = mode.Depth;
-                this.Stencil = mode.Stencil;
-                this.Samples = mode.Samples;
-                this.AccumulatorFormat = mode.AccumulatorFormat;
-                this.Buffers = mode.Buffers;
-                this.Stereo = mode.Stereo;
-            }
-            else
-            {
-                this.Index = index;
-                this.ColorFormat = color;
-                this.Depth = depth;
-                this.Stencil = stencil;
-                this.Samples = samples;
-                this.AccumulatorFormat = accum;
-                this.Buffers = buffers;
-                this.Stereo = stereo;
-            }
+            this.Index = index;
+            this.ColorFormat = color;
+            this.Depth = depth;
+            this.Stencil = stencil;
+            this.Samples = samples;
+            this.AccumulatorFormat = accum;
+            this.Buffers = buffers;
+            this.Stereo = stereo;
         }
 
         #endregion
@@ -311,7 +289,28 @@ namespace OpenTK.Graphics
 
         internal IntPtr Index
         {
-            get { return index; }
+            get
+            {
+                if (index == null)
+                {
+                    GraphicsMode mode;
+                    lock (mode_selection_lock)
+                    {
+                        mode = implementation.SelectGraphicsMode(ColorFormat, Depth, Stencil, Samples, AccumulatorFormat, Buffers, Stereo);
+                    }
+
+                    Index = mode.Index;
+                    ColorFormat = mode.ColorFormat;
+                    Depth = mode.Depth;
+                    Stencil = mode.Stencil;
+                    Samples = mode.Samples;
+                    AccumulatorFormat = mode.AccumulatorFormat;
+                    Buffers = mode.Buffers;
+                    Stereo = mode.Stereo;
+                }
+
+                return index.Value;
+            }
             set { index = value; }
         }
 
