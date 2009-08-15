@@ -29,6 +29,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Text;
+using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Egl
 {
@@ -292,7 +293,7 @@ namespace OpenTK.Platform.Egl
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglChooseConfig")]
         [return: MarshalAsAttribute(UnmanagedType.I1)]
-        public static extern bool ChooseConfig(EGLDisplay dpy, int[] attrib_list, EGLConfig[] configs, int config_size, out int num_config);
+        public static extern bool ChooseConfig(EGLDisplay dpy, int[] attrib_list, [In, Out] EGLConfig[] configs, int config_size, out int num_config);
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetConfigAttrib")]
         [return: MarshalAsAttribute(UnmanagedType.I1)]
@@ -362,8 +363,9 @@ namespace OpenTK.Platform.Egl
         public static EGLContext CreateContext(EGLDisplay dpy, EGLConfig config, EGLContext share_context, int[] attrib_list)
         {
             IntPtr ptr = eglCreateContext(dpy, config, share_context, attrib_list);
-            EGLContext ret = new EGLContext(ptr);
-            return ret;
+            if (ptr == EGLContext.None.Handle.Value)
+                throw new GraphicsContextException(String.Format("Failed to create EGL context, error: {0}.", Egl.GetError()));
+            return new EGLContext(ptr);
         }
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglDestroyContext")]
@@ -402,6 +404,9 @@ namespace OpenTK.Platform.Egl
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglCopyBuffers")]
         [return: MarshalAsAttribute(UnmanagedType.I1)]
         public static extern bool CopyBuffers(EGLDisplay dpy, EGLSurface surface, EGLNativePixmapType target);
+
+        [DllImportAttribute("libEGL.dll", EntryPoint = "eglCopyBuffers")]
+        public static extern IntPtr GetProcAddress(string funcname);
 
         // Returns true if Egl drivers exist on the system.
         public static bool IsSupported
