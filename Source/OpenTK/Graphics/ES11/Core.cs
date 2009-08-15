@@ -631,7 +631,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static void PushMatrix();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glQueryMatrixxOES", ExactSpelling = true)]
-            internal extern static unsafe UInt32 QueryMatrixxOES(int* mantissa, Int32* exponent);
+            internal extern static unsafe Int32 QueryMatrixxOES(int* mantissa, Int32* exponent);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glReadPixels", ExactSpelling = true)]
             internal extern static void ReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, IntPtr pixels);
