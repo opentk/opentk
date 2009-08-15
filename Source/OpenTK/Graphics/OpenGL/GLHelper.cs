@@ -22,11 +22,11 @@ using System.Reflection.Emit;
 namespace OpenTK.Graphics.OpenGL
 {
     /// <summary>
-    /// OpenGL bindings for .NET, implementing OpenGL 3.1, plus extensions.
+    /// OpenGL bindings for .NET, implementing the full OpenGL API, including extensions.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// This class contains all OpenGL enums and functions defined in the 3.1 specification.
+    /// This class contains all OpenGL enums and functions defined in the latest OpenGL specification.
     /// The official .spec files can be found at: http://opengl.org/registry/.
     /// </para>
     /// <para> A valid OpenGL context must be created before calling any OpenGL function.</para>
