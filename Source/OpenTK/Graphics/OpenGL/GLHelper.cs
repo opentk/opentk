@@ -52,9 +52,6 @@ namespace OpenTK.Graphics.OpenGL
     /// <seealso cref="GL.Load"/>
     public static partial class GL
     {
-        delegate void VoidGLDelegate(object @class, object[] parameters);
-        delegate object ObjectGLDelegate(object @class, object[] parameters);
-
         #region --- Fields ---
 
         internal const string Library = "opengl32.dll";
@@ -69,6 +66,8 @@ namespace OpenTK.Graphics.OpenGL
         private static Type delegatesClass;
         private static Type importsClass;
 
+        readonly static SortedList<string, MethodInfo> FunctionMap = new SortedList<string, MethodInfo>();
+
         #endregion
 
         #region --- Constructor ---
@@ -78,23 +77,12 @@ namespace OpenTK.Graphics.OpenGL
             glClass = typeof(GL);
             delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
             importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
-        }
 
-        #endregion
-
-        #region --- Imports ---
-
-        internal static partial class Imports
-        {
-            internal static SortedList<string, MethodInfo> FunctionMap;  // This is faster than either Dictionary or SortedDictionary
-            static Imports()
+            MethodInfo[] methods = importsClass.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
+            FunctionMap = new SortedList<string, MethodInfo>(methods.Length);
+            foreach (MethodInfo m in methods)
             {
-                MethodInfo[] methods = importsClass.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
-                FunctionMap = new SortedList<string, MethodInfo>(methods.Length);
-                foreach (MethodInfo m in methods)
-                {
-                    FunctionMap.Add(m.Name, m);
-                }
+                FunctionMap.Add(m.Name, m);
             }
         }
 
@@ -188,13 +176,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </remarks>
         public static void LoadAll()
         {
-            //TODO: Route GameWindow context creation through GraphicsContext.
-            //if (GraphicsContext.CurrentContext == null)
-            //    throw new InvalidOperationException("You must create an OpenGL context before using the GL class.");
-            if (GraphicsContext.CurrentContext != null)
-                OpenTK.Platform.Utilities.LoadExtensions(glClass);
-            else
-                throw new InvalidOperationException("No GraphicsContext available in the calling thread.");
+            if (GraphicsContext.CurrentContext == null)
+                throw new GraphicsContextMissingException();
+
+            OpenTK.Platform.Utilities.LoadExtensions(glClass);
         }
 
         #endregion
@@ -258,7 +243,7 @@ namespace OpenTK.Graphics.OpenGL
             MethodInfo m;
             return
                 GetExtensionDelegate(name, signature) ??
-                (Imports.FunctionMap.TryGetValue((name.Substring(2)), out m) ?
+                (FunctionMap.TryGetValue((name.Substring(2)), out m) ?
                 Delegate.CreateDelegate(signature, m) : null);
         }
 
@@ -468,65 +453,7 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #endregion
-
-        #region --- GetProcAddress ---
-
-        private static IGetProcAddress getProcAddress;
-
-        internal interface IGetProcAddress
-        {
-            IntPtr GetProcAddress(string function);
-        }
-
-        internal class GetProcAddressWindows : IGetProcAddress
-        {
-            [System.Runtime.InteropServices.DllImport(Library, EntryPoint = "wglGetProcAddress", ExactSpelling = true)]
-            private static extern IntPtr wglGetProcAddress(String lpszProc);
-
-            public IntPtr GetProcAddress(string function)
-            {
-                return wglGetProcAddress(function);
-            }
-        }
-
-        internal class GetProcAddressX11 : IGetProcAddress
-        {
-            [DllImport(Library, EntryPoint = "glXGetProcAddress")]
-            private static extern IntPtr glxGetProcAddress([MarshalAs(UnmanagedType.LPTStr)] string procName);
-
-            public IntPtr GetProcAddress(string function)
-            {
-                return glxGetProcAddress(function);
-            }
-        }
-
-        internal class GetProcAddressOSX : IGetProcAddress
-        {
-            private const string Library = "libdl.dylib";
-
-            [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
-            private static extern bool NSIsSymbolNameDefined(string s);
-            [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
-            private static extern IntPtr NSLookupAndBindSymbol(string s);
-            [DllImport(Library, EntryPoint = "NSAddressOfSymbol")]
-            private static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
-
-            public IntPtr GetProcAddress(string function)
-            {
-                string fname = "_" + function;
-                if (!NSIsSymbolNameDefined(fname))
-                    return IntPtr.Zero;
-
-                IntPtr symbol = NSLookupAndBindSymbol(fname);
-                if (symbol != IntPtr.Zero)
-                    symbol = NSAddressOfSymbol(symbol);
-
-                return symbol;
-            }
-        }
-
-        #region private static IntPtr GetAddress(string function)
+        #region GetAddress
 
         /// <summary>
         /// Retrieves the entry point for a dynamically exported OpenGL function.
@@ -548,28 +475,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </remarks>
         private static IntPtr GetAddress(string function)
         {
-            if (getProcAddress == null)
-            {
-                if (Configuration.RunningOnWindows)
-                {
-                    getProcAddress = new GetProcAddressWindows();
-                }
-                else if (Configuration.RunningOnMacOS)
-                {
-                    getProcAddress = new GetProcAddressOSX();
-                }
-                else if (Configuration.RunningOnX11)
-                {
-                    getProcAddress = new GetProcAddressX11();
-                }
-                else
-                {
-                    throw new PlatformNotSupportedException(
-                        "Extension loading is only supported under Mac OS X, X11 and Windows. We are sorry for the inconvience.");
-                }
-            }
-
-            return getProcAddress.GetProcAddress(function);
+            return (GraphicsContext.CurrentContext as IGraphicsContextInternal).GetAddress(function);
         }
 
         #endregion
