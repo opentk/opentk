@@ -14,7 +14,9 @@ namespace OpenTK.Graphics
 {
     internal interface IGraphicsMode
     {
+        // Creates a temporary OpenGL context (if necessary) and finds the mode which closest matches
+        // the specified parameters.
         GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers,
-                                        bool stereo);
+            bool stereo);
     }
 }
