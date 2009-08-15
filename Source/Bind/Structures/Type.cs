@@ -189,6 +189,9 @@ namespace Bind.Structures
                     case "uint":
                     case "ulong":
                     case "uintptr":
+                    case "uint16":
+                    case "uint32":
+                    case "uint64":
                          compliant = false;
                         break;
                 
