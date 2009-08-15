@@ -241,10 +241,10 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void DrawTexxvOES(int* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEGLImageTargetRenderbufferStorageOES", ExactSpelling = true)]
-            internal extern static void EGLImageTargetRenderbufferStorageOES(OpenTK.Graphics.ES11.All target, GLeglImageOES image);
+            internal extern static void EGLImageTargetRenderbufferStorageOES(OpenTK.Graphics.ES11.All target, IntPtr image);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEGLImageTargetTexture2DOES", ExactSpelling = true)]
-            internal extern static void EGLImageTargetTexture2DOES(OpenTK.Graphics.ES11.All target, GLeglImageOES image);
+            internal extern static void EGLImageTargetTexture2DOES(OpenTK.Graphics.ES11.All target, IntPtr image);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEnable", ExactSpelling = true)]
             internal extern static void Enable(OpenTK.Graphics.ES11.All cap);

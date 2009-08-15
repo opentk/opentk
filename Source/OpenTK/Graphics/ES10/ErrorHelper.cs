@@ -80,7 +80,7 @@ namespace OpenTK.Graphics.ES10
         {
             if (Context.ErrorChecking)
             {
-                while ((ErrorCode)ES.GetError() != ErrorCode.NoError)
+                while ((ErrorCode)GL.GetError() != ErrorCode.NoError)
                 { }
             }
         }
@@ -96,7 +96,7 @@ namespace OpenTK.Graphics.ES10
                 ErrorCode error;
                 do
                 {
-                    error = (ErrorCode)ES.GetError();
+                    error = (ErrorCode)GL.GetError();
                     error_list.Add(error);
                 } while (error != ErrorCode.NoError);
 

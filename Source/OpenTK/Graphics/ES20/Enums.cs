@@ -261,8 +261,8 @@ namespace OpenTK.Graphics.ES20
         BufferSize = ((int)0X8764),
         BufferUsage = ((int)0X8765),
         AtcRgbaInterpolatedAlphaAmd = ((int)0X87ee),
-        3DcXAmd = ((int)0X87f9),
-        3DcXyAmd = ((int)0X87fa),
+        GL_3DcXAmd = ((int)0X87f9),
+        GL_3DcXyAmd = ((int)0X87fa),
         NumProgramBinaryFormatsOes = ((int)0X87fe),
         ProgramBinaryFormatsOes = ((int)0X87ff),
         StencilBackFunc = ((int)0X8800),
@@ -439,8 +439,8 @@ namespace OpenTK.Graphics.ES20
 
     public enum Amdcompressed3Dctexture
     {
-        3DcXAmd = ((int)0X87f9),
-        3DcXyAmd = ((int)0X87fa),
+        GL_3DcXAmd = ((int)0X87f9),
+        GL_3DcXyAmd = ((int)0X87fa),
         AmdCompressed3DcTexture = ((int)1),
     }
 

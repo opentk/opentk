@@ -139,7 +139,7 @@ namespace OpenTK.Graphics.ES20
             internal extern static unsafe void DeleteBuffers(Int32 n, UInt32* buffers);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteFencesNV", ExactSpelling = true)]
-            internal extern static unsafe void DeleteFencesNV(UInt32**);
+            internal extern static unsafe void DeleteFencesNV(Int32 n, UInt32* fences);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteFramebuffers", ExactSpelling = true)]
             internal extern static unsafe void DeleteFramebuffers(Int32 n, UInt32* framebuffers);
@@ -187,10 +187,10 @@ namespace OpenTK.Graphics.ES20
             internal extern static void DrawElements(OpenTK.Graphics.ES20.All mode, Int32 count, OpenTK.Graphics.ES20.All type, IntPtr indices);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEGLImageTargetRenderbufferStorageOES", ExactSpelling = true)]
-            internal extern static void EGLImageTargetRenderbufferStorageOES(OpenTK.Graphics.ES20.All target, GLeglImageOES image);
+            internal extern static void EGLImageTargetRenderbufferStorageOES(OpenTK.Graphics.ES20.All target, IntPtr image);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEGLImageTargetTexture2DOES", ExactSpelling = true)]
-            internal extern static void EGLImageTargetTexture2DOES(OpenTK.Graphics.ES20.All target, GLeglImageOES image);
+            internal extern static void EGLImageTargetTexture2DOES(OpenTK.Graphics.ES20.All target, IntPtr image);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEnable", ExactSpelling = true)]
             internal extern static void Enable(OpenTK.Graphics.ES20.All cap);
@@ -208,7 +208,7 @@ namespace OpenTK.Graphics.ES20
             internal extern static void Finish();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFinishFenceNV", ExactSpelling = true)]
-            internal extern static void FinishFenceNV();
+            internal extern static void FinishFenceNV(UInt32 fence);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFlush", ExactSpelling = true)]
             internal extern static void Flush();
@@ -232,7 +232,7 @@ namespace OpenTK.Graphics.ES20
             internal extern static void GenerateMipmap(OpenTK.Graphics.ES20.All target);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenFencesNV", ExactSpelling = true)]
-            internal extern static unsafe void GenFencesNV(UInt32**);
+            internal extern static unsafe void GenFencesNV(Int32 n, UInt32* fences);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenFramebuffers", ExactSpelling = true)]
             internal extern static unsafe void GenFramebuffers(Int32 n, UInt32* framebuffers);
@@ -277,7 +277,7 @@ namespace OpenTK.Graphics.ES20
             internal extern static OpenTK.Graphics.ES20.All GetError();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFenceivNV", ExactSpelling = true)]
-            internal extern static unsafe void GetFenceivNV(Int32**);
+            internal extern static unsafe void GetFenceivNV(UInt32 fence, Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFloatv", ExactSpelling = true)]
             internal extern static unsafe void GetFloatv(OpenTK.Graphics.ES20.All pname, Single* @params);
@@ -367,7 +367,7 @@ namespace OpenTK.Graphics.ES20
             internal extern static bool IsEnabled(OpenTK.Graphics.ES20.All cap);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsFenceNV", ExactSpelling = true)]
-            internal extern static bool IsFenceNV();
+            internal extern static bool IsFenceNV(UInt32 fence);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsFramebuffer", ExactSpelling = true)]
             internal extern static bool IsFramebuffer(UInt32 framebuffer);
@@ -421,7 +421,7 @@ namespace OpenTK.Graphics.ES20
             internal extern static unsafe void SelectPerfMonitorCountersAMD(UInt32 monitor, bool enable, UInt32 group, Int32 numCounters, UInt32* countersList);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSetFenceNV", ExactSpelling = true)]
-            internal extern static void SetFenceNV();
+            internal extern static void SetFenceNV(UInt32 fence, OpenTK.Graphics.ES20.All condition);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glShaderBinary", ExactSpelling = true)]
             internal extern static unsafe void ShaderBinary(Int32 n, UInt32* shaders, OpenTK.Graphics.ES20.All binaryformat, IntPtr binary, Int32 length);
@@ -448,7 +448,7 @@ namespace OpenTK.Graphics.ES20
             internal extern static void StencilOpSeparate(OpenTK.Graphics.ES20.All face, OpenTK.Graphics.ES20.All fail, OpenTK.Graphics.ES20.All zfail, OpenTK.Graphics.ES20.All zpass);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTestFenceNV", ExactSpelling = true)]
-            internal extern static bool TestFenceNV();
+            internal extern static bool TestFenceNV(UInt32 fence);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexImage2D", ExactSpelling = true)]
             internal extern static void TexImage2D(OpenTK.Graphics.ES20.All target, Int32 level, OpenTK.Graphics.ES20.All internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, IntPtr pixels);
