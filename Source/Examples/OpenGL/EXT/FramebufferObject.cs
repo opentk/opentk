@@ -221,7 +221,7 @@ namespace Examples.Tutorial
             
             double aspect_ratio = Width / (double)Height;
 
-            OpenTK.Matrix4 perspective = OpenTK.Matrix4.CreatePerspectiveFieldOfView(45, (float)aspect_ratio, 1, 64);
+            OpenTK.Matrix4 perspective = OpenTK.Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)aspect_ratio, 1, 64);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref perspective);
 
