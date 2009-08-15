@@ -322,7 +322,11 @@ namespace OpenTK.Platform
 
             // get the X11 Visual info for the display.
             Platform.X11.XVisualInfo info = new Platform.X11.XVisualInfo();
-            info.VisualID = mode.Index;
+
+            if (!mode.Index.HasValue)
+                throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
+
+            info.VisualID = mode.Index.Value;
             int dummy;
             window.VisualInfo = (Platform.X11.XVisualInfo)Marshal.PtrToStructure(
                 Platform.X11.Functions.XGetVisualInfo(window.Display, Platform.X11.XVisualInfoMask.ID,
