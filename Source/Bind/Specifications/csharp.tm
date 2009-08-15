@@ -94,6 +94,7 @@ VLNode            IntPtr
 # OpenGL|ES types.
 GLclampx, int
 GLfixed, int
+GLeglImageOES, IntPtr
 
 
 # OpenCL types.
