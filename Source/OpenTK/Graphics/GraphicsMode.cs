@@ -19,7 +19,7 @@ namespace OpenTK.Graphics
         ColorFormat color_format, accumulator_format;
         int depth, stencil, buffers, samples;
         bool stereo;
-        IntPtr? index;  // The id of the pixel format or visual.
+        IntPtr? index = null;  // The id of the pixel format or visual.
 
         static GraphicsMode defaultMode;
         static IGraphicsMode implementation;
@@ -43,9 +43,9 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region internal GraphicsMode((IntPtr index, ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers, bool stereo)
+        #region internal GraphicsMode(IntPtr? index, ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers, bool stereo)
 
-        internal GraphicsMode(IntPtr index, ColorFormat color, int depth, int stencil, int samples, ColorFormat accum,
+        internal GraphicsMode(IntPtr? index, ColorFormat color, int depth, int stencil, int samples, ColorFormat accum,
                               int buffers, bool stereo)
         {
             if (depth < 0) throw new ArgumentOutOfRangeException("depth", "Must be greater than, or equal to zero.");
@@ -160,7 +160,7 @@ namespace OpenTK.Graphics
         /// <param name="stereo">Set to true for a GraphicsMode with stereographic capabilities.</param>
         /// <param name="buffers">The number of render buffers. Typical values include one (single-), two (double-) or three (triple-buffering).</param>
         public GraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers, bool stereo)
-            : this(IntPtr.Zero, color, depth, stencil, samples, accum, buffers, stereo) { }
+            : this(null, color, depth, stencil, samples, accum, buffers, stereo) { }
 
         #endregion
 
@@ -287,7 +287,7 @@ namespace OpenTK.Graphics
 
         #region internal IntPtr Index
 
-        internal IntPtr Index
+        internal IntPtr? Index
         {
             get
             {
@@ -309,7 +309,7 @@ namespace OpenTK.Graphics
                     Stereo = mode.Stereo;
                 }
 
-                return index.Value;
+                return index;
             }
             set { index = value; }
         }
