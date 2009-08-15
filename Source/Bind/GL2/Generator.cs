@@ -642,7 +642,7 @@ namespace Bind.GL2
             sw.WriteLine("#pragma warning disable 1573");   // Missing param comments
 
             sw.WriteLine();
-            sw.WriteLine("static partial class {0}", Settings.OutputClass);
+            sw.WriteLine("partial class {0}", Settings.OutputClass);
             sw.WriteLine("{");
 
             sw.Indent();
