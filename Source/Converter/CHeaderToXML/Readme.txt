@@ -15,7 +15,7 @@ Despite what the help says, all three parameters are necessary at the moment.
 
 [Known issues]
 
-None at the moment.
+OpenGL|ES 2.0: gl*Fence[s|iv]?NV fail to define parameters names. These have been added by hand (take care when updating the header file).
 
 
 [Support]
