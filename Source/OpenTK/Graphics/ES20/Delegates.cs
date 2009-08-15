@@ -125,10 +125,10 @@ namespace OpenTK.Graphics.ES20
             internal delegate void CopyTexSubImage3DOES(OpenTK.Graphics.ES20.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
             internal static CopyTexSubImage3DOES glCopyTexSubImage3DOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate UInt32 CreateProgram();
+            internal delegate Int32 CreateProgram();
             internal static CreateProgram glCreateProgram;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate UInt32 CreateShader(OpenTK.Graphics.ES20.All type);
+            internal delegate Int32 CreateShader(OpenTK.Graphics.ES20.All type);
             internal static CreateShader glCreateShader;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void CullFace(OpenTK.Graphics.ES20.All mode);

@@ -127,10 +127,10 @@ namespace OpenTK.Graphics.ES20
             internal extern static void CopyTexSubImage3DOES(OpenTK.Graphics.ES20.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCreateProgram", ExactSpelling = true)]
-            internal extern static UInt32 CreateProgram();
+            internal extern static Int32 CreateProgram();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCreateShader", ExactSpelling = true)]
-            internal extern static UInt32 CreateShader(OpenTK.Graphics.ES20.All type);
+            internal extern static Int32 CreateShader(OpenTK.Graphics.ES20.All type);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCullFace", ExactSpelling = true)]
             internal extern static void CullFace(OpenTK.Graphics.ES20.All mode);
