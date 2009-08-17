@@ -197,6 +197,16 @@ namespace OpenTK
         event EventHandler<EventArgs> FocusedChanged;
 
         /// <summary>
+        /// Occurs when the <see cref="WindowBorder"/> property of the window changes.
+        /// </summary>
+        event EventHandler<EventArgs> WindowBorderChanged;
+
+        /// <summary>
+        /// Occurs when the <see cref="WindowState"/> property of the window changes.
+        /// </summary>
+        event EventHandler<EventArgs> WindowStateChanged;
+
+        /// <summary>
         /// Occurs whenever a character is typed.
         /// </summary>
         event EventHandler<KeyPressEventArgs> KeyPress;
