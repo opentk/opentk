@@ -4,10 +4,6 @@
  */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Bind
 {
     interface IBind : ISpecReader, ISpecWriter

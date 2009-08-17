@@ -25,8 +25,6 @@
 //
 #endregion
 
-using System;
-
 namespace Bind.Structures
 {
         /// <summary>
