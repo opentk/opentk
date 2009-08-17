@@ -50,7 +50,10 @@ namespace Examples.Tutorial
         {
             base.OnLoad(e);
 
-            if (!GL.SupportsExtension("VERSION_1_5"))
+            string version = GL.GetString(StringName.Version);
+            int major = (int)version[0];
+            int minor = (int)version[2];
+            if (major <= 1 && minor < 5)
             {
                 System.Windows.Forms.MessageBox.Show("You need at least OpenGL 1.5 to run this example. Aborting.", "VBOs not supported",
                     System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Exclamation);
