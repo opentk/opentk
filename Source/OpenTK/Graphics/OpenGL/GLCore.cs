@@ -35,7 +35,7 @@ namespace OpenTK.Graphics.OpenGL
     partial class GL
     {
 
-        internal static partial class Imports
+        internal static partial class Core
         {
 
             [System.Security.SuppressUnmanagedCodeSecurity()]
