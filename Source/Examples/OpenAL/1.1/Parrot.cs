@@ -34,8 +34,9 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-using OpenTK.Audio;
 using OpenTK;
+using OpenTK.Audio;
+using OpenTK.Audio.OpenAL;
 
 namespace Examples
 {
