@@ -7,7 +7,7 @@ namespace OpenTK.Graphics.ES10
     /// <summary>
     /// Provides access to OpenGL ES 1.0 methods.
     /// </summary>
-    public static partial class GL
+    public sealed partial class GL : BindingsBase
     {
         const string Library = "libGLES.dll";
     }
