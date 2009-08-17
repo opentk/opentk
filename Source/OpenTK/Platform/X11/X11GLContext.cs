@@ -18,7 +18,7 @@ namespace OpenTK.Platform.X11
     /// Provides methods to create and control an opengl context on the X11 platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class X11GLContext : IGraphicsContext, IGraphicsContextInternal
+    internal sealed class X11GLContext : DesktopGraphicsContext
     {
         ContextHandle context;
         X11WindowInfo currentWindow;
@@ -183,12 +183,10 @@ namespace OpenTK.Platform.X11
 
         #region --- IGraphicsContext Members ---
 
-        #region public void SwapBuffers()
+        #region SwapBuffers()
 
-        public void SwapBuffers()
+        public override void SwapBuffers()
         {
-            //if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
-            //X11WindowInfo w = (X11WindowInfo)window;
             if (currentWindow.Display == IntPtr.Zero || currentWindow.WindowHandle == IntPtr.Zero)
                 throw new InvalidOperationException(
                     String.Format("Window is invalid. Display ({0}), Handle ({1}).", currentWindow.Display, currentWindow.WindowHandle));
@@ -197,9 +195,9 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region public void MakeCurrent(IWindowInfo window)
+        #region MakeCurrent
 
-        public void MakeCurrent(IWindowInfo window)
+        public override void MakeCurrent(IWindowInfo window)
         {
             if (window == null)
             {
@@ -227,25 +225,18 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region public bool IsCurrent
+        #region IsCurrent
 
-        public bool IsCurrent
+        public override bool IsCurrent
         {
             get { return Glx.GetCurrentContext() == this.context.Handle; }
-            //set
-            //{
-            //    if (value)
-            //        Glx.MakeCurrent(window.Display, window.Handle, context);
-            //    else
-            //        Glx.MakeCurrent(window.Handle, IntPtr.Zero, IntPtr.Zero);
-            //}
         }
 
         #endregion
 
-        #region public bool VSync
+        #region VSync
 
-        public bool VSync
+        public override bool VSync
         {
             get
             {
@@ -265,82 +256,27 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        [Obsolete]
-        public event DestroyEvent<IGraphicsContext> Destroy;
+        #region GetAddress
 
-        #region public IntPtr GetAddress(string function)
-
-        public IntPtr GetAddress(string function)
+        public override IntPtr GetAddress(string function)
         {
             return Glx.GetProcAddress(function);
         }
 
         #endregion
 
-        #region public void Update
-        public void Update(IWindowInfo window)
-        {
-        }
-        #endregion
-
-        #region public DisplayMode Mode
-
-        GraphicsMode IGraphicsContext.GraphicsMode
-        {
-            get { return graphics_mode; }
-        }
-
-        #endregion
-
-        [Obsolete]
-        public void RegisterForDisposal(IDisposable resource)
-        {
-            throw new NotSupportedException("Use OpenTK.GraphicsContext instead.");
-        }
-
-        [Obsolete]
-        public void DisposeResources()
-        {
-            throw new NotSupportedException("Use OpenTK.GraphicsContext instead.");
-        }
-
-        public bool ErrorChecking
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
         #endregion
 
         #region --- IGLContextInternal Members ---
 
-        #region Implementation
+        #region LoadAll
 
-        IGraphicsContext IGraphicsContextInternal.Implementation
+        public override void LoadAll()
         {
-            get { return this; }
-        }
-
-        #endregion
-
-        #region void LoadAll()
-
-        void IGraphicsContextInternal.LoadAll()
-        {
-            OpenTK.Graphics.OpenGL.GL.LoadAll();
+            new OpenTK.Graphics.OpenGL.GL().LoadAll();
             Glx.LoadAll();
             vsync_supported = this.GetAddress("glXSwapIntervalSGI") != IntPtr.Zero;
             Debug.Print("Context supports vsync: {0}.", vsync_supported);
-        }
-
-        #endregion
-
-        #region ContextHandle IGLContextInternal.Context
-
-        ContextHandle IGraphicsContextInternal.Context
-        {
-            get { return context; }
-            /*private set { context = value; }*/
         }
 
         #endregion
@@ -353,19 +289,9 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region --- Methods ---
-
-        void OnDestroy()
-        {
-            if (Destroy != null)
-                Destroy(this, EventArgs.Empty);
-        }
-
-        #endregion
-
         #region --- IDisposable Members ---
 
-        public void Dispose()
+        public override void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);

@@ -17,45 +17,41 @@ namespace OpenTK.Platform.Dummy
     /// An empty IGraphicsContext implementation to be used inside the Visual Studio designer.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class DummyGLContext : IGraphicsContext, IGraphicsContextInternal
+    internal sealed class DummyGLContext : DesktopGraphicsContext
     {
         // This mode is not real. To receive a real mode we'd have to create a temporary context, which is not desirable!
-        GraphicsMode format = new GraphicsMode(new IntPtr(2), 32, 16, 0, 0, 0, 2, false);
         bool vsync;
-        ContextHandle handle;
         static int handle_count;
 
         #region --- Constructors ---
 
         public DummyGLContext()
         {
-            this.handle = new ContextHandle(new IntPtr(++handle_count));
+            Handle = new ContextHandle(new IntPtr(++handle_count));
+            Mode = new GraphicsMode(new IntPtr(2), 32, 16, 0, 0, 0, 2, false);
         }
         
         public DummyGLContext(ContextHandle handle)
         {
-            this.handle = handle;
+            Handle = handle;
         }
 
         #endregion
 
         #region --- IGraphicsContext Members ---
 
-        public IntPtr Context { get { return (IntPtr)handle_count; } }
-        public GraphicsMode GraphicsMode { get { return format; } }
-
         public void CreateContext(bool direct, IGraphicsContext source)
         {
-            if (handle == ContextHandle.Zero)
+            if (Handle == ContextHandle.Zero)
             {
                 ++handle_count;
-                handle = new ContextHandle((IntPtr)handle_count);
+                Handle = new ContextHandle((IntPtr)handle_count);
             }
         }
 
-        public void SwapBuffers() { }
-        public void MakeCurrent(IWindowInfo info) { }
-        public bool IsCurrent { get { return true; } set { } }
+        public override void SwapBuffers() { }
+        public override void MakeCurrent(IWindowInfo info) { }
+        public override bool IsCurrent { get { return true; } }
 
         [Obsolete]
         public event DestroyEvent<IGraphicsContext> Destroy;
@@ -74,44 +70,26 @@ namespace OpenTK.Platform.Dummy
             throw new NotImplementedException("Use the general GraphicsContext class instead.");
         }
 
-        public IntPtr GetAddress(string function) { return IntPtr.Zero; }
-        //public IEnumerable<DisplayMode> GetDisplayModes() { return null; }
+        public override IntPtr GetAddress(string function) { return IntPtr.Zero; }
 
-        public bool VSync { get { return vsync; } set { vsync = value; } }
+        public override bool VSync { get { return vsync; } set { vsync = value; } }
 
-        public void Update(IWindowInfo window)
+        public override void Update(IWindowInfo window)
+        { }
+
+        #endregion
+
+        #region IGraphicsContextInternal Members
+
+        public override void LoadAll()
         {
-        }
-
-        public bool ErrorChecking
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
         }
 
         #endregion
 
         #region --- IDisposable Members ---
 
-        public void Dispose() { }
-
-        #endregion
-
-        #region IGraphicsContextInternal Members
-
-        IGraphicsContext IGraphicsContextInternal.Implementation
-        {
-            get { return this; }
-        }
-
-        void IGraphicsContextInternal.LoadAll()
-        {
-        }
-
-        ContextHandle IGraphicsContextInternal.Context
-        {
-            get { return handle; }
-        }
+        public override void Dispose() { }
 
         #endregion
     }

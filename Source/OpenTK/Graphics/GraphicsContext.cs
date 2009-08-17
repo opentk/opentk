@@ -244,26 +244,6 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region --- Private Members ---
-
-        #region void ContextDestroyed(IGraphicsContext context, EventArgs e)
-
-        /// <summary>
-        /// Handles the Destroy event.
-        /// </summary>
-        /// <param name="context">The OpenTK.Platform.IGraphicsContext that was destroyed.</param>
-        /// <param name="e">Not used.</param>
-        [Obsolete]
-        void ContextDestroyed(IGraphicsContext context, EventArgs e)
-        {
-            this.Destroy -= ContextDestroyed;
-            //available_contexts.Remove(((IGraphicsContextInternal)this).Context);
-        }
-
-        #endregion
-
-        #endregion
-
         #region --- IGraphicsContext Members ---
 
         /// <summary>
@@ -295,16 +275,10 @@ namespace OpenTK.Graphics
         /// </remarks>
         void CreateContext(bool direct, IGraphicsContext source)
         {
-            this.Destroy += ContextDestroyed;
-
             lock (context_lock)
             {
                 available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
             }
-
-            //OpenTK.Graphics.OpenGL.GL.Clear(OpenTK.Graphics.OpenGL.ClearBufferMask.ColorBufferBit);
-            //if (StaticGetCurrentContext == null)
-            //    StaticGetCurrentContext = implementation.GetCurrentContext;
         }
 
         /// <summary>
@@ -333,17 +307,6 @@ namespace OpenTK.Graphics
         public bool IsCurrent
         {
             get { return implementation.IsCurrent; }
-            //set { implementation.IsCurrent = value; }
-        }
-
-        /// <summary>
-        /// Raised when a Context is destroyed.
-        /// </summary>
-        [Obsolete]
-        public event DestroyEvent<IGraphicsContext> Destroy
-        {
-            add { implementation.Destroy += value; }
-            remove { implementation.Destroy -= value; }
         }
 
         /// <summary>
@@ -380,8 +343,14 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Loads all OpenGL extensions.
         /// </summary>
+        /// <exception cref="OpenTK.Graphics.GraphicsContextException">
+        /// Occurs when this instance is not the current GraphicsContext on the calling thread.
+        /// </exception>
         void IGraphicsContextInternal.LoadAll()
         {
+            if (GraphicsContext.CurrentContext != this)
+                throw new GraphicsContextException();
+
             (implementation as IGraphicsContextInternal).LoadAll();
         }
 
@@ -399,27 +368,6 @@ namespace OpenTK.Graphics
         public GraphicsMode GraphicsMode
         {
             get { return (implementation as IGraphicsContext).GraphicsMode; }
-        }
-
-        /// <summary>
-        /// Registers an OpenGL resource for disposal.
-        /// </summary>
-        /// <param name="resource">The OpenGL resource to dispose.</param>
-        void IGraphicsContextInternal.RegisterForDisposal(IDisposable resource)
-        {
-            GC.KeepAlive(resource);
-            dispose_queue.Add(resource);
-        }
-
-        /// <summary>
-        /// Disposes all registered OpenGL resources.
-        /// </summary>
-        void IGraphicsContextInternal.DisposeResources()
-        {
-            foreach (IDisposable resource in dispose_queue)
-                resource.Dispose();
-
-            dispose_queue.Clear();
         }
 
         /// <summary>
