@@ -38,7 +38,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Examples.WinForms
 {
-    [Example("Font rendering (basic)", ExampleCategory.OpenTK, "Fonts", Difficulty = 1, Documentation = "FontRenderingBasic")]
+    [Example("Font rendering (basic)", ExampleCategory.OpenTK, "Fonts", Difficulty = 1, Documentation = "FontRenderingBasic", Visible=false)]
     public partial class FontRenderingBasic : Form
     {
         #region Fields
@@ -46,7 +46,7 @@ namespace Examples.WinForms
         float[] sizes = new float[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 24 };
         List<Font> fonts = new List<Font>();
 
-        TextPrinter printer = new TextPrinter();
+        //TextPrinter printer = new TextPrinter();
 
         #endregion
 
@@ -70,7 +70,7 @@ namespace Examples.WinForms
 
         void UpdateFontList(Font base_font)
         {
-            printer.Clear();
+            //printer.Clear();
 
             foreach (Font font in fonts)
                 font.Dispose();
@@ -116,7 +116,7 @@ namespace Examples.WinForms
 
             foreach (Font font in fonts)
             {
-                printer.Print(textBox1.Text, font, Color.White);
+                //printer.Print(textBox1.Text, font, Color.White);
                 GL.Translate(0, font.Height + 5, 0);
             }
 
