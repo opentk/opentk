@@ -16,8 +16,8 @@ namespace Bind
         static Settings() { }
 
         public const string DefaultInputPath = "../../Source/Bind/Specifications";
-        public const string DefaultOutputPath = "../../Source/OpenTK/Graphics/GL";
-        public const string DefaultOutputNamespace = "OpenTK.Graphics";
+        public const string DefaultOutputPath = "../../Source/OpenTK/Graphics/OpenGL";
+        public const string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
         public const string DefaultDocPath = "../../Source/Bind/Specifications/Docs";
         public const string DefaultDocFile = "ToInlineDocs.xslt";
         public const string DefaultLicenseFile = "License.txt";
@@ -81,7 +81,7 @@ namespace Bind
         public static string EnumsNamespace = null;// = "Enums";
 
         public static string DelegatesClass = "Delegates";
-        public static string ImportsClass = "Imports";
+        public static string ImportsClass = "Core";
 
         public static Legacy Compatibility = Legacy.NoDropMultipleTokens;
 
