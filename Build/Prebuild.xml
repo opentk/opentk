@@ -108,7 +108,7 @@
       </Files>
 
     </Project>
-
+<!--
     <Project name="OpenTK.Utilities" path="../Source/Utilities" language="C#" type="Library">
 
       <Configuration name="Debug">
@@ -138,7 +138,7 @@
       </Files>
 
     </Project>
-
+-->
     <Project name="OpenTK.Compatibility" path="../Source/Compatibility" language="C#" type="Library">
 
       <Configuration name="Debug">
