@@ -6,12 +6,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using Bind.Structures;
 using System.Diagnostics;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml.XPath;
+using Bind.Structures;
 
 namespace Bind.GL2
 {

@@ -5,14 +5,8 @@
 #endregion
 
 using System;
-using System.Text;
-using System.IO;
-using System.Security;
-using System.Security.Permissions;
-using System.Threading;
-using System.Collections.Generic;
-using System.CodeDom;
 using System.Diagnostics;
+using System.Security;
 
 namespace Bind
 {

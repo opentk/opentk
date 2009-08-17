@@ -6,10 +6,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using Bind.Structures;
 using System.Text.RegularExpressions;
+using Bind.Structures;
 
 namespace Bind
 {
