@@ -54,10 +54,6 @@ namespace Examples.Tutorial
         float UniformOffsetX = 1.8f; // fractal horizontal offset
         float UniformOffsetY = 1.8f; // fractal vertical offset
 
-        // Text drawing (for fps)
-        TextPrinter printer = new TextPrinter();
-        Font font = new Font(FontFamily.GenericSansSerif, 16.0f);
-
         #endregion private Fields
 
         #region OnLoad
@@ -69,7 +65,10 @@ namespace Examples.Tutorial
         public override void OnLoad(EventArgs e)
         {
             // Check for necessary capabilities:
-            if (!GL.SupportsExtension("VERSION_2_0"))
+            string version = GL.GetString(StringName.Version);
+            int major = (int)version[0];
+            int minor = (int)version[2];
+            if (major < 2)
             {
                 MessageBox.Show("You need at least OpenGL 2.0 to run this example. Aborting.",
                                  "GLSL not supported", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -289,12 +288,6 @@ namespace Examples.Tutorial
                 GL.Vertex2(-1.0f, 1.0f);
             }
             GL.End();
-
-            // Then, render the fps:
-            GL.UseProgram(0);
-            printer.Begin();
-            printer.Print((1 / e.Time).ToString("F2"), font, Color.PaleGoldenrod, RectangleF.Empty, TextPrinterOptions.NoCache);
-            printer.End();
 
             SwapBuffers();
         }
