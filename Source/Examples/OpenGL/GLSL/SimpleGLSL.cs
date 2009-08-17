@@ -61,7 +61,10 @@ namespace Examples.Tutorial
         public override void OnLoad(EventArgs e)
         {
             // Check for necessary capabilities:
-            if (!GL.SupportsExtension("VERSION_2_0"))
+            string version = GL.GetString(StringName.Version);
+            int major = (int)version[0];
+            int minor = (int)version[2];
+            if (major < 2)
             {
                 MessageBox.Show("You need at least OpenGL 2.0 to run this example. Aborting.", "GLSL not supported",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
