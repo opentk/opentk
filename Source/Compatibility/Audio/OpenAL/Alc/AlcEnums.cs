@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.Audio
 {
     /// <summary>
     /// Defines available context attributes.

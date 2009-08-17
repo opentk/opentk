@@ -13,6 +13,7 @@ using System.Threading;
 using System.ComponentModel;
 
 using OpenTK.Audio;
+using OpenTK.Audio.OpenAL;
 
 namespace Examples.OpenAL
 {
@@ -30,7 +31,6 @@ namespace Examples.OpenAL
         public static void Main()
         {
             using (AudioContext context = new AudioContext())
-            using (AudioReader sound = new AudioReader(filename))
             {
                 int source = AL.GenSource();
                 int[] buffers = AL.GenBuffers(buffer_count);
@@ -40,8 +40,8 @@ namespace Examples.OpenAL
 
                 Console.Write("Playing");
 
-                foreach (int buffer in buffers)
-                    AL.BufferData(buffer, sound.ReadSamples(buffer_size));
+                //foreach (int buffer in buffers)
+                //    AL.BufferData(buffer, sound.ReadSamples(buffer_size));
                 AL.SourceQueueBuffers(source, buffers.Length, buffers);
                 AL.SourcePlay(source);
 
@@ -59,17 +59,17 @@ namespace Examples.OpenAL
                     while (processed_count == 0);
 
                     Console.WriteLine(processed_count);
-                    while (processed_count > 0)
-                    {
-                        int buffer = AL.SourceUnqueueBuffer(source);
-                        if (buffer != 0 && !sound.EndOfFile)
-                        {
-                            Console.WriteLine("    " + buffer.ToString());
-                            AL.BufferData(buffer, sound.ReadSamples(buffer_size));
-                            AL.SourceQueueBuffer(source, buffer);
-                        }
-                        --processed_count;
-                    }
+                    //while (processed_count > 0)
+                    //{
+                    //    int buffer = AL.SourceUnqueueBuffer(source);
+                    //    if (buffer != 0 && !sound.EndOfFile)
+                    //    {
+                    //        Console.WriteLine("    " + buffer.ToString());
+                    //        AL.BufferData(buffer, sound.ReadSamples(buffer_size));
+                    //        AL.SourceQueueBuffer(source, buffer);
+                    //    }
+                    //    --processed_count;
+                    //}
 
                     AL.GetSource(source, ALGetSourcei.BuffersQueued, out queued_count);
                     if (queued_count > 0)

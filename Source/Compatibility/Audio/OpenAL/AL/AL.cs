@@ -63,7 +63,7 @@ typedef void ALvoid;
  * void
 */
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.Audio
 {
     public static partial class AL
     {
@@ -1446,6 +1446,34 @@ namespace OpenTK.Audio.OpenAL
             GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
             try { BufferData(bid, format, handle.AddrOfPinnedObject(), size, freq); }
             finally { handle.Free(); }
+        }
+
+        /// <summary>This function fills a buffer with audio buffer (PCM format).</summary>
+        /// <param name="bid">Buffer Handle/Name to be filled with buffer.</param>
+        /// <param name="buffer">A SoundData object containing the buffer to upload.</param>
+        [CLSCompliant(false)]
+        [Obsolete("Use BufferData<TBuffer> instead.")]
+        public static void BufferData(uint bid, SoundData buffer)
+        {
+            unsafe
+            {
+                fixed (byte* data_ptr = &buffer.Data[0])
+                    BufferData(bid, buffer.SoundFormat.SampleFormatAsOpenALFormat, (IntPtr)data_ptr, buffer.Data.Length,
+                               buffer.SoundFormat.SampleRate);
+            }
+        }
+
+        /// <summary>This function fills a buffer with audio buffer (PCM format).</summary>
+        /// <param name="bid">Buffer Handle/Name to be filled with buffer.</param>
+        /// <param name="data">A SoundData object containing the buffer to upload.</param>
+        public static void BufferData(int bid, SoundData data)
+        {
+            unsafe
+            {
+                fixed (byte* data_ptr = &data.Data[0])
+                    BufferData(bid, data.SoundFormat.SampleFormatAsOpenALFormat, (IntPtr)data_ptr, data.Data.Length,
+                               data.SoundFormat.SampleRate);
+            }
         }
 
         #endregion BufferData

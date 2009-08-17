@@ -29,6 +29,7 @@ using System;
 using System.Threading;
 using System.IO;
 using OpenTK.Audio;
+using OpenTK.Audio.OpenAL;
 
 namespace Examples
 {
@@ -40,7 +41,6 @@ namespace Examples
         public static void Main()
         {
             using (AudioContext context = new AudioContext())
-            using (AudioReader sound = new AudioReader(filename))
             {
                 Console.WriteLine("Testing WaveReader({0}).ReadToEnd()", filename);
 
@@ -65,7 +65,9 @@ namespace Examples
 
                 efx.AuxiliaryEffectSlot(slot, EfxAuxiliaryi.EffectslotEffect, effect);
 
-                AL.BufferData(buffer, sound.ReadToEnd());
+                int channels, bits, rate;
+                byte[] data = Playback.LoadWave(File.Open(filename, FileMode.Open), out channels, out bits, out rate);
+                AL.BufferData(buffer, Playback.GetSoundFormat(channels, bits), data, data.Length, rate);
 
                 AL.Source(source, ALSourcef.ConeOuterGain, 1.0f);
                 AL.Source(source, ALSourcei.Buffer, buffer);
