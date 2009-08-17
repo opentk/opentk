@@ -7,12 +7,13 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 
 using OpenTK.Audio;
+using OpenTK.Audio.OpenAL;
 
 using AlContext = System.IntPtr;
 using AlDevice = System.IntPtr;
-using System.Diagnostics;
 
 namespace Examples
 {

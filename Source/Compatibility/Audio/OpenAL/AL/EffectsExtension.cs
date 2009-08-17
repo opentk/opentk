@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.Audio
 {
     /// <summary>
     /// Provides access to the OpenAL effects extension.

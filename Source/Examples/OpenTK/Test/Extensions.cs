@@ -69,13 +69,15 @@ namespace Examples.WinForms
 
         void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
+            Type delegates = typeof(GL).GetNestedType("Delegates", BindingFlags.NonPublic | BindingFlags.Static);
+
             foreach (Function f in LoadFunctionsFromType(typeof(GL)))
             {
                 // Only show a function as supported when all relevant overloads are supported.
                 if (!functions.ContainsKey(f))
-                    functions.Add(f, GL.SupportsFunction(f.EntryPoint));
+                    functions.Add(f, (bool)delegates.GetField(f.EntryPoint).GetValue(null));
                 else
-                    functions[f] &= GL.SupportsFunction(f.EntryPoint);
+                    functions[f] &= (bool)delegates.GetField(f.EntryPoint).GetValue(null);
             }
 
             // Count supported functions using the delegates directly.
