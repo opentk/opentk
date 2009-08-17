@@ -797,6 +797,9 @@ namespace OpenTK.Platform.Windows
                         break;
                 }
 
+                if (WindowStateChanged != null)
+                    WindowStateChanged(this, EventArgs.Empty);
+
                 if (command != 0)
                     Functions.ShowWindow(window.WindowHandle, command);
             }
@@ -849,6 +852,9 @@ namespace OpenTK.Platform.Windows
                     SetWindowPosFlags.FRAMECHANGED);
 
                 Visible = true;
+
+                if (WindowBorderChanged != null)
+                    WindowBorderChanged(this, EventArgs.Empty);
             }
         }
 
@@ -906,6 +912,10 @@ namespace OpenTK.Platform.Windows
         public event EventHandler<EventArgs> WindowInfoChanged;
 
         public event EventHandler<EventArgs> FocusedChanged;
+
+        public event EventHandler<EventArgs> WindowBorderChanged;
+
+        public event EventHandler<EventArgs> WindowStateChanged;
 
         public event EventHandler<KeyPressEventArgs> KeyPress;
         
