@@ -108,37 +108,7 @@
       </Files>
 
     </Project>
-<!--
-    <Project name="OpenTK.Utilities" path="../Source/Utilities" language="C#" type="Library">
 
-      <Configuration name="Debug">
-        <Options>
-          <OutputPath>../../Binaries/Debug</OutputPath>
-          <AllowUnsafe>true</AllowUnsafe>
-          <XmlDocFile>OpenTK.Utilities.xml</XmlDocFile>
-        </Options>
-      </Configuration>
-
-      <Configuration name="Release">
-        <Options>
-          <OutputPath>../../Binaries/Release</OutputPath>
-          <AllowUnsafe>true</AllowUnsafe>
-          <XmlDocFile>OpenTK.Utilities.xml</XmlDocFile>
-        </Options>
-      </Configuration>
-
-      <Reference name="OpenTK"/>
-      <Reference name="System"/>
-      <Reference name="System.Drawing"/>
-      <Reference name="System.Windows.Forms"/>
-      <Reference name="System.Data"/>
-
-      <Files>
-        <Match path="." pattern="*.cs" recurse="true"/>
-      </Files>
-
-    </Project>
--->
     <Project name="OpenTK.Compatibility" path="../Source/Compatibility" language="C#" type="Library">
 
       <Configuration name="Debug">
@@ -158,7 +128,6 @@
       </Configuration>
 
       <Reference name="OpenTK"/>
-      <Reference name="OpenTK.Utilities"/>
       <Reference name="System"/>
       <Reference name="System.Drawing"/>
       <Reference name="System.Windows.Forms"/>
@@ -188,7 +157,6 @@
       </Configuration>
 
       <Reference name="OpenTK" localCopy="true"/>
-      <Reference name="OpenTK.Utilities" localCopy="true"/>
       <Reference name="System"/>
       <Reference name="System.Drawing"/>
       <Reference name="System.Windows.Forms"/>
