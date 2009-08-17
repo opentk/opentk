@@ -516,7 +516,7 @@ namespace OpenTK.Platform.X11
 
         #region INativeWindow Members
 
-                #region ProcessEvents
+        #region ProcessEvents
 
         public void ProcessEvents()
         {
@@ -839,6 +839,181 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region WindowState
+
+        public OpenTK.WindowState WindowState
+        {
+            get
+            {
+                IntPtr actual_atom;
+                int actual_format;
+                IntPtr nitems;
+                IntPtr bytes_after;
+                IntPtr prop = IntPtr.Zero;
+                IntPtr atom;
+                //XWindowAttributes attributes;
+                bool fullscreen = false;
+                int maximized = 0;
+                bool minimized = false;
+
+                Functions.XGetWindowProperty(window.Display, window.WindowHandle,
+                             _atom_net_wm_state, IntPtr.Zero, new IntPtr(256), false,
+                             IntPtr.Zero, out actual_atom, out actual_format, out nitems, out bytes_after, ref prop);
+
+                if ((long)nitems > 0 && prop != IntPtr.Zero)
+                {
+                    for (int i = 0; i < (long)nitems; i++)
+                    {
+                        atom = (IntPtr)Marshal.ReadIntPtr(prop, i * IntPtr.Size);
+
+                        if (atom == _atom_net_wm_state_maximized_horizontal ||
+                            atom == _atom_net_wm_state_maximized_vertical)
+                            maximized++;
+                        else if (atom == _atom_net_wm_state_minimized)
+                            minimized = true;
+                        else if (atom == _atom_net_wm_state_fullscreen)
+                            fullscreen = true;
+                    }
+                    Functions.XFree(prop);
+                }
+
+                if (minimized)
+                    return OpenTK.WindowState.Minimized;
+                else if (maximized == 2)
+                    return OpenTK.WindowState.Maximized;
+                else if (fullscreen)
+                    return OpenTK.WindowState.Fullscreen;
+                /*
+                                attributes = new XWindowAttributes();
+                                Functions.XGetWindowAttributes(window.Display, window.WindowHandle, ref attributes);
+                                if (attributes.map_state == MapState.IsUnmapped)
+                                    return (OpenTK.WindowState)(-1);
+                */
+                return OpenTK.WindowState.Normal;
+            }
+            set
+            {
+                OpenTK.WindowState current_state = this.WindowState;
+
+                if (current_state == value)
+                    return;
+
+                Debug.Print("GameWindow {0} changing WindowState from {1} to {2}.", window.WindowHandle.ToString(),
+                            current_state.ToString(), value.ToString());
+
+                if (current_state == OpenTK.WindowState.Minimized)
+                    Functions.XMapWindow(window.Display, window.WindowHandle);
+                else if (current_state == OpenTK.WindowState.Fullscreen)
+                    Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_remove,
+                                              _atom_net_wm_state_fullscreen,
+                                               IntPtr.Zero);
+                else if (current_state == OpenTK.WindowState.Maximized)
+                    Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_toggle,
+                                              _atom_net_wm_state_maximized_horizontal,
+                                              _atom_net_wm_state_maximized_vertical);
+
+                Functions.XSync(window.Display, false);
+
+                // We can't resize the window if its border is fixed, so make it resizable first.
+                bool temporary_resizable = false;
+                WindowBorder previous_state = WindowBorder;
+                if (WindowBorder != WindowBorder.Resizable)
+                {
+                    temporary_resizable = true;
+                    WindowBorder = WindowBorder.Resizable;
+                }
+
+                switch (value)
+                {
+                    case OpenTK.WindowState.Normal:
+                        Functions.XRaiseWindow(window.Display, window.WindowHandle);
+
+                        break;
+
+                    case OpenTK.WindowState.Maximized:
+                        Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_add,
+                                                  _atom_net_wm_state_maximized_horizontal,
+                                                  _atom_net_wm_state_maximized_vertical);
+                        Functions.XRaiseWindow(window.Display, window.WindowHandle);
+
+                        break;
+
+                    case OpenTK.WindowState.Minimized:
+                        // Todo: multiscreen support
+                        Functions.XIconifyWindow(window.Display, window.WindowHandle, window.Screen);
+
+                        break;
+
+                    case OpenTK.WindowState.Fullscreen:
+                        //_previous_window_border = this.WindowBorder;
+                        //this.WindowBorder = WindowBorder.Hidden;
+                        Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_add,
+                                                  _atom_net_wm_state_fullscreen, IntPtr.Zero);
+                        Functions.XRaiseWindow(window.Display, window.WindowHandle);
+
+                        break;
+                }
+
+                if (temporary_resizable)
+                    WindowBorder = previous_state;
+
+                if (WindowStateChanged != null)
+                    WindowStateChanged(this, EventArgs.Empty);
+            }
+        }
+
+        #endregion
+
+        #region WindowBorder
+
+        public OpenTK.WindowBorder WindowBorder
+        {
+            get
+            {
+                if (IsWindowBorderHidden)
+                    return WindowBorder.Hidden;
+
+                if (IsWindowBorderResizable)
+                    return WindowBorder.Resizable;
+                else
+                    return WindowBorder.Fixed;
+            }
+            set
+            {
+                if (WindowBorder == value)
+                    return;
+
+                if (WindowBorder == WindowBorder.Hidden)
+                    EnableWindowDecorations();
+
+                switch (value)
+                {
+                    case WindowBorder.Fixed:
+                        Debug.Print("Making WindowBorder fixed.");
+                        SetWindowMinMax((short)Width, (short)Height, (short)Width, (short)Height);
+
+                        break;
+
+                    case WindowBorder.Resizable:
+                        Debug.Print("Making WindowBorder resizable.");
+                        SetWindowMinMax(_min_width, _min_height, -1, -1);
+
+                        break;
+
+                    case WindowBorder.Hidden:
+                        Debug.Print("Making WindowBorder hidden.");
+                        DisableWindowDecorations();
+
+                        break;
+                }
+
+                if (WindowBorderChanged != null)
+                    WindowBorderChanged(this, EventArgs.Empty);
+            }
+        }
+
+        #endregion
+
         #region Events
 
         public event EventHandler<EventArgs> Load;
@@ -862,6 +1037,10 @@ namespace OpenTK.Platform.X11
         public event EventHandler<EventArgs> VisibleChanged;
 
         public event EventHandler<EventArgs> FocusedChanged;
+
+        public event EventHandler<EventArgs> WindowBorderChanged;
+
+        public event EventHandler<EventArgs> WindowStateChanged;
 
         public event EventHandler<KeyPressEventArgs> KeyPress;
         
@@ -1128,175 +1307,6 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region publicOpenTK.WindowState WindowState
-
-        public OpenTK.WindowState WindowState
-        {
-            get
-            {
-                IntPtr actual_atom;
-                int actual_format;
-                IntPtr nitems;
-                IntPtr bytes_after;
-                IntPtr prop = IntPtr.Zero;
-                IntPtr atom;
-                //XWindowAttributes attributes;
-                bool fullscreen = false;
-                int maximized = 0;
-                bool minimized = false;
-                
-                Functions.XGetWindowProperty(window.Display, window.WindowHandle,
-                             _atom_net_wm_state, IntPtr.Zero, new IntPtr (256), false,
-                             IntPtr.Zero, out actual_atom, out actual_format, out nitems, out bytes_after, ref prop);
-
-                if ((long)nitems > 0 && prop != IntPtr.Zero)
-                {
-                    for (int i = 0; i < (long)nitems; i++)
-                    {
-                        atom = (IntPtr)Marshal.ReadIntPtr(prop, i * IntPtr.Size);
-                        
-                        if (atom == _atom_net_wm_state_maximized_horizontal ||
-                            atom == _atom_net_wm_state_maximized_vertical)
-                            maximized++;
-                        else if (atom == _atom_net_wm_state_minimized)
-                            minimized = true;
-                        else if (atom == _atom_net_wm_state_fullscreen)
-                            fullscreen = true;
-                    }
-                    Functions.XFree(prop);
-                }
-
-                if (minimized)
-                    return OpenTK.WindowState.Minimized;
-                else if (maximized == 2)
-                    return OpenTK.WindowState.Maximized;
-                else if (fullscreen)
-                    return OpenTK.WindowState.Fullscreen;
-/*
-                attributes = new XWindowAttributes();
-                Functions.XGetWindowAttributes(window.Display, window.WindowHandle, ref attributes);
-                if (attributes.map_state == MapState.IsUnmapped)
-                    return (OpenTK.WindowState)(-1);
-*/
-                return OpenTK.WindowState.Normal; 
-            }
-            set
-            {
-                OpenTK.WindowState current_state = this.WindowState;
-                
-                if (current_state == value)
-                    return;
-                
-                Debug.Print("GameWindow {0} changing WindowState from {1} to {2}.", window.WindowHandle.ToString(),
-                            current_state.ToString(), value.ToString());
-                
-                if (current_state == OpenTK.WindowState.Minimized)
-                    Functions.XMapWindow(window.Display, window.WindowHandle);
-                else if (current_state == OpenTK.WindowState.Fullscreen)
-                    Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_remove,
-                                              _atom_net_wm_state_fullscreen,
-                                               IntPtr.Zero);
-                else if (current_state == OpenTK.WindowState.Maximized)
-                    Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_toggle,
-                                              _atom_net_wm_state_maximized_horizontal,
-                                              _atom_net_wm_state_maximized_vertical);
-                
-                Functions.XSync(window.Display, false);                
-                
-                // We can't resize the window if its border is fixed, so make it resizable first.
-                bool temporary_resizable = false;
-                WindowBorder previous_state = WindowBorder;
-                if (WindowBorder != WindowBorder.Resizable)
-                {
-                    temporary_resizable = true;
-                    WindowBorder = WindowBorder.Resizable;
-                }
-
-                switch (value)
-                {
-                    case OpenTK.WindowState.Normal:
-                        Functions.XRaiseWindow(window.Display, window.WindowHandle);
-                        
-                        break;
-                        
-                    case OpenTK.WindowState.Maximized:
-                        Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_add,
-                                                  _atom_net_wm_state_maximized_horizontal,
-                                                  _atom_net_wm_state_maximized_vertical);
-                        Functions.XRaiseWindow(window.Display, window.WindowHandle);
-
-                        break;
-
-                    case OpenTK.WindowState.Minimized:
-                        // Todo: multiscreen support
-                        Functions.XIconifyWindow(window.Display, window.WindowHandle, window.Screen);
-                        
-                        break;
-
-                    case OpenTK.WindowState.Fullscreen:
-                        //_previous_window_border = this.WindowBorder;
-                        //this.WindowBorder = WindowBorder.Hidden;
-                        Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_add,
-                                                  _atom_net_wm_state_fullscreen, IntPtr.Zero);
-                        Functions.XRaiseWindow(window.Display, window.WindowHandle);
-                        
-                        break;
-                }
-                
-                if (temporary_resizable)
-                    WindowBorder = previous_state;
-            }
-        }
-
-        #endregion
-
-        #region public OpenTK.WindowBorder WindowBorder
-
-        public OpenTK.WindowBorder WindowBorder
-        {
-            get
-            {
-                if (IsWindowBorderHidden)
-                    return WindowBorder.Hidden;
-                
-                if (IsWindowBorderResizable)
-                    return WindowBorder.Resizable;
-                else
-                    return WindowBorder.Fixed;
-            }
-            set
-            {
-                if (WindowBorder == value)
-                    return;
-                
-                if (WindowBorder == WindowBorder.Hidden)
-                    EnableWindowDecorations();
-                
-                switch (value)
-                {
-                    case WindowBorder.Fixed:
-                        Debug.Print("Making WindowBorder fixed.");
-                        SetWindowMinMax((short)Width, (short)Height, (short)Width, (short)Height);
-
-                        break;
-                        
-                    case WindowBorder.Resizable:
-                        Debug.Print("Making WindowBorder resizable.");
-                        SetWindowMinMax(_min_width, _min_height, -1, -1);
-                        
-                        break;
-                        
-                    case WindowBorder.Hidden:
-                        Debug.Print("Making WindowBorder hidden.");
-                        DisableWindowDecorations();
-
-                        break;
-                }
-            }
-        }
-
-        #endregion
-        
         #endregion
 
         #region IDisposable Members

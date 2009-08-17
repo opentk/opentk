@@ -678,103 +678,6 @@ namespace OpenTK.Platform.MacOS
 
         #endregion
 
-        #region INativeGLWindow Members
-
-        public WindowState WindowState
-        {
-            get
-            {
-                if (windowState == WindowState.Fullscreen)
-                    return WindowState.Fullscreen;
-
-                if (Carbon.API.IsWindowCollapsed(window.WindowRef))
-                    return WindowState.Minimized;
-
-
-                if (Carbon.API.IsWindowInStandardState(window.WindowRef))
-                {
-                    return WindowState.Maximized;
-                }
-
-                return WindowState.Normal;
-            }
-            set
-            {
-                if (value == WindowState)
-                    return;
-
-                Debug.Print("Switching window state from {0} to {1}", WindowState, value);
-
-                if (WindowState == WindowState.Fullscreen)
-                {
-                    UnsetFullscreen();
-                }
-                if (WindowState == WindowState.Minimized)
-                {
-                    API.CollapseWindow(window.WindowRef, false);
-                }
-                Point idealSize;
-
-                switch (value)
-                {
-                    case WindowState.Fullscreen:
-                        SetFullscreen();
-
-                        break;
-
-                    case WindowState.Maximized:
-                        // hack because mac os has no concept of maximized. Instead windows are "zoomed" 
-                        // meaning they are maximized up to their reported ideal size.  So we report a 
-                        // large ideal size.
-                        idealSize = new Point(9000, 9000);
-                        API.ZoomWindowIdeal(window.WindowRef, WindowPartCode.inZoomOut, ref idealSize);
-                        break;
-
-                    case WindowState.Normal:
-                        if (WindowState == WindowState.Maximized)
-                        {
-                            idealSize = new Point();
-                            API.ZoomWindowIdeal(window.WindowRef, WindowPartCode.inZoomIn, ref idealSize);
-                        }
-                        break;
-
-                    case WindowState.Minimized:
-                        API.CollapseWindow(window.WindowRef, true);
-
-                        break;
-                }
-
-                windowState = value;
-
-                OnResize();
-            }
-        }
-
-        public WindowBorder WindowBorder
-        {
-            get
-            {
-                return windowBorder;
-            }
-            set
-            {
-                windowBorder = value;
-
-                if (windowBorder == WindowBorder.Resizable)
-                {
-                    API.ChangeWindowAttributes(window.WindowRef, WindowAttributes.Resizable | WindowAttributes.FullZoom,
-                                               WindowAttributes.NoAttributes);
-                }
-                else if (windowBorder == WindowBorder.Fixed)
-                {
-                    API.ChangeWindowAttributes(window.WindowRef, WindowAttributes.NoAttributes,
-                                               WindowAttributes.Resizable | WindowAttributes.FullZoom);
-                }
-            }
-        }
-
-        #endregion
-
         #region INativeWindow Members
 
         public string Title
@@ -799,18 +702,6 @@ namespace OpenTK.Platform.MacOS
                     Show();
                 else
                     Hide();
-            }
-        }
-
-        public System.Drawing.Icon Icon
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
             }
         }
 
@@ -921,6 +812,108 @@ namespace OpenTK.Platform.MacOS
             throw new NotImplementedException();
         }
 
+        public WindowState WindowState
+        {
+            get
+            {
+                if (windowState == WindowState.Fullscreen)
+                    return WindowState.Fullscreen;
+
+                if (Carbon.API.IsWindowCollapsed(window.WindowRef))
+                    return WindowState.Minimized;
+
+
+                if (Carbon.API.IsWindowInStandardState(window.WindowRef))
+                {
+                    return WindowState.Maximized;
+                }
+
+                return WindowState.Normal;
+            }
+            set
+            {
+                if (value == WindowState)
+                    return;
+
+                Debug.Print("Switching window state from {0} to {1}", WindowState, value);
+
+                if (WindowState == WindowState.Fullscreen)
+                {
+                    UnsetFullscreen();
+                }
+                if (WindowState == WindowState.Minimized)
+                {
+                    API.CollapseWindow(window.WindowRef, false);
+                }
+                Point idealSize;
+
+                switch (value)
+                {
+                    case WindowState.Fullscreen:
+                        SetFullscreen();
+
+                        break;
+
+                    case WindowState.Maximized:
+                        // hack because mac os has no concept of maximized. Instead windows are "zoomed" 
+                        // meaning they are maximized up to their reported ideal size.  So we report a 
+                        // large ideal size.
+                        idealSize = new Point(9000, 9000);
+                        API.ZoomWindowIdeal(window.WindowRef, WindowPartCode.inZoomOut, ref idealSize);
+                        break;
+
+                    case WindowState.Normal:
+                        if (WindowState == WindowState.Maximized)
+                        {
+                            idealSize = new Point();
+                            API.ZoomWindowIdeal(window.WindowRef, WindowPartCode.inZoomIn, ref idealSize);
+                        }
+                        break;
+
+                    case WindowState.Minimized:
+                        API.CollapseWindow(window.WindowRef, true);
+
+                        break;
+                }
+
+                windowState = value;
+
+                if (WindowStateChanged != null)
+                    WindowStateChanged(this, EventArgs.Empty);
+
+                OnResize();
+            }
+        }
+
+        public WindowBorder WindowBorder
+        {
+            get
+            {
+                return windowBorder;
+            }
+            set
+            {
+                if (windowBorder != value)
+                {
+                    windowBorder = value;
+
+                    if (windowBorder == WindowBorder.Resizable)
+                    {
+                        API.ChangeWindowAttributes(window.WindowRef, WindowAttributes.Resizable | WindowAttributes.FullZoom,
+                                                   WindowAttributes.NoAttributes);
+                    }
+                    else if (windowBorder == WindowBorder.Fixed)
+                    {
+                        API.ChangeWindowAttributes(window.WindowRef, WindowAttributes.NoAttributes,
+                                                   WindowAttributes.Resizable | WindowAttributes.FullZoom);
+                    }
+
+                    if (WindowBorderChanged != null)
+                        WindowBorderChanged(this, EventArgs.Empty);
+                }
+            }
+        }
+
         public event EventHandler<EventArgs> Idle;
 
         public event EventHandler<EventArgs> Load;
@@ -948,6 +941,10 @@ namespace OpenTK.Platform.MacOS
         public event EventHandler<EventArgs> WindowInfoChanged;
 
         public event EventHandler<EventArgs> FocusedChanged;
+
+        public event EventHandler<EventArgs> WindowBorderChanged;
+
+        public event EventHandler<EventArgs> WindowStateChanged;
 
         public event EventHandler<KeyPressEventArgs> KeyPress;
 

@@ -240,6 +240,8 @@ namespace OpenTK
                 glWindow.Closing += delegate(object sender, CancelEventArgs e) { OnClosingInternal(e); };
                 glWindow.Closed += delegate(object sender, EventArgs e) { OnClosedInternal(e); };
                 //glWindow.WindowInfoChanged += delegate(object sender, EventArgs e) { OnWindowInfoChangedInternal(e); };
+                glWindow.WindowBorderChanged += delegate(object sender, EventArgs e) { OnWindowBorderChangedInternal(e); };
+                glWindow.WindowStateChanged += delegate(object sender, EventArgs e) { OnWindowStateChangedInternal(e); };
             }
             catch (Exception e)
             {
@@ -379,6 +381,28 @@ namespace OpenTK
 
         #endregion
 
+        #region OnWindowBorderChangedInternal
+
+        void OnWindowBorderChangedInternal(EventArgs e)
+        {
+            OnWindowBorderChanged(e);
+
+            WindowBorderChanged(this, EventArgs.Empty);
+        }
+
+        #endregion
+
+        #region OnWindowStateChangedInternal
+
+        void OnWindowStateChangedInternal(EventArgs e)
+        {
+            OnWindowStateChanged(e);
+
+            WindowStateChanged(this, e);
+        }
+
+        #endregion
+
         #region OnUpdateFrameInternal
 
         private void OnUpdateFrameInternal(FrameEventArgs e)
@@ -454,6 +478,20 @@ namespace OpenTK
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnWindowInfoChanged(EventArgs e)
+        { }
+
+        /// <summary>
+        /// Called when the WindowBorder for this GameWindow has changed.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        protected virtual void OnWindowBorderChanged(EventArgs e)
+        { }
+        
+        /// <summary>
+        /// Called when the WindowState for this GameWindow has changed.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        protected virtual void OnWindowStateChanged(EventArgs e)
         { }
 
         #endregion
@@ -1439,6 +1477,16 @@ namespace OpenTK
         /// Occurs when the <see cref="Focused"/> property of the window changes.
         /// </summary>
         public event EventHandler<EventArgs> FocusedChanged = delegate { };
+
+        /// <summary>
+        /// Occurs when the <see cref="WindowBorder"/> property of the window changes.
+        /// </summary>
+        public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
+
+        /// <summary>
+        /// Occurs when the <see cref="WindowState"/> property of the window changes.
+        /// </summary>
+        public event EventHandler<EventArgs> WindowStateChanged = delegate { };
 
         /// <summary>
         /// Occurs whenever a character is typed.
