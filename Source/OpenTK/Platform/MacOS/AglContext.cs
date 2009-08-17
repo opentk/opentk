@@ -23,10 +23,8 @@ namespace OpenTK.Platform.MacOS
     using AGLContext = IntPtr;
     using AGLPbuffer = IntPtr;
 
-    class AglContext : IGraphicsContext, IGraphicsContextInternal 
+    class AglContext : DesktopGraphicsContext 
     {
-        IntPtr contextRef;
-
         bool mVSync = false;
         // Todo: keep track of which display adapter was specified when the context was created.
         // IntPtr displayID;
@@ -44,7 +42,7 @@ namespace OpenTK.Platform.MacOS
             this.carbonWindow = (CarbonWindowInfo)window;
 
             if (shareContext is AglContext)
-                shareContextRef = ((AglContext)shareContext).contextRef;
+                shareContextRef = ((AglContext)shareContext).Handle.Handle;
             
             CreateContext(mode, carbonWindow, shareContextRef, true);
         }
@@ -150,7 +148,7 @@ namespace OpenTK.Platform.MacOS
             
             
             // create the context and share it with the share reference.
-            this.contextRef = Agl.aglCreateContext(myAGLPixelFormat, shareContextRef);
+            Handle = new ContextHandle( Agl.aglCreateContext(myAGLPixelFormat, shareContextRef));
             MyAGLReportError("aglCreateContext");
 
             // Free the pixel format from memory.
@@ -165,7 +163,7 @@ namespace OpenTK.Platform.MacOS
             
             MakeCurrent(carbonWindow);
 
-            Debug.Print("context: {0}", contextRef);
+            Debug.Print("context: {0}", Handle.Handle);
         }
 
         void SetBufferRect(CarbonWindowInfo carbonWindow)
@@ -200,10 +198,10 @@ namespace OpenTK.Platform.MacOS
             glrect[2] = rect.Width;
             glrect[3] = rect.Height;
 
-            Agl.aglSetInteger(contextRef, Agl.ParameterNames.AGL_BUFFER_RECT, glrect);
+            Agl.aglSetInteger(Handle.Handle, Agl.ParameterNames.AGL_BUFFER_RECT, glrect);
             MyAGLReportError("aglSetInteger");
 
-            Agl.aglEnable(contextRef, Agl.ParameterNames.AGL_BUFFER_RECT);
+            Agl.aglEnable(Handle.Handle, Agl.ParameterNames.AGL_BUFFER_RECT);
             MyAGLReportError("aglEnable");
   
         }
@@ -211,7 +209,7 @@ namespace OpenTK.Platform.MacOS
         {
             IntPtr windowPort = GetWindowPortForWindowInfo(carbonWindow);
 
-            Agl.aglSetDrawable(contextRef, windowPort);
+            Agl.aglSetDrawable(Handle.Handle, windowPort);
 
             MyAGLReportError("aglSetDrawable");
         
@@ -236,8 +234,8 @@ namespace OpenTK.Platform.MacOS
 
             SetDrawable(carbonWindow);
             SetBufferRect(carbonWindow);
-            
-            Agl.aglUpdateContext(contextRef);
+
+            Agl.aglUpdateContext(Handle.Handle);
         }
 
         void MyAGLReportError(string function)
@@ -254,7 +252,7 @@ namespace OpenTK.Platform.MacOS
 
         internal void SetFullScreen(CarbonWindowInfo info)
         {
-            Agl.aglSetFullScreen(contextRef, 0, 0, 0, 0);
+            Agl.aglSetFullScreen(Handle.Handle, 0, 0, 0, 0);
 
             // This is a weird hack to workaround a bug where the first time a context
             // is made fullscreen, we just end up with a blank screen.  So we undo it as fullscreen
@@ -268,7 +266,7 @@ namespace OpenTK.Platform.MacOS
         }
         internal void UnsetFullScreen(CarbonWindowInfo windowInfo)
         {
-            Agl.aglSetDrawable(contextRef, IntPtr.Zero);
+            Agl.aglSetDrawable(Handle.Handle, IntPtr.Zero);
             SetDrawable(windowInfo);
         }
 
@@ -276,7 +274,7 @@ namespace OpenTK.Platform.MacOS
         #region IGraphicsContext Members
 
         bool firstSwap = false;
-        public void SwapBuffers()
+        public override void SwapBuffers()
         {
             // this is part of the hack to avoid dropping the first frame when
             // using multiple GLControls.
@@ -286,41 +284,27 @@ namespace OpenTK.Platform.MacOS
                 firstSwap = true;
                 SetDrawable(carbonWindow); 
                 Update(carbonWindow);    
-            }       
+            }
 
-            Agl.aglSwapBuffers(contextRef);  
+            Agl.aglSwapBuffers(Handle.Handle);  
             MyAGLReportError("aglSwapBuffers");       
         }
         
-        public void MakeCurrent(IWindowInfo window)
+        public override void MakeCurrent(IWindowInfo window)
         {
-            if (Agl.aglSetCurrentContext(contextRef) == false)
+            if (Agl.aglSetCurrentContext(Handle.Handle) == false)
                 MyAGLReportError("aglSetCurrentContext");
         }
 
-        public bool IsCurrent
+        public override bool IsCurrent
         {
             get
             {
-                return (contextRef == Agl.aglGetCurrentContext());
+                return (Handle.Handle == Agl.aglGetCurrentContext());
             }
         }
 
-        [Obsolete]
-        public event DestroyEvent<IGraphicsContext> Destroy;
-
-        [Obsolete]
-        void OnDestroy()
-        {
-
-            if (Destroy != null)
-            {
-                Debug.Print("Destroy handlers: {0}", Destroy.GetInvocationList().Length);
-                Destroy(this, EventArgs.Empty);
-            }
-        }
-
-        public bool VSync
+        public override bool VSync
         {
             get
             {
@@ -330,21 +314,10 @@ namespace OpenTK.Platform.MacOS
             {
                 int intVal = value ? 1 : 0;
 
-                Agl.aglSetInteger(this.contextRef, Agl.ParameterNames.AGL_SWAP_INTERVAL, ref intVal);
+                Agl.aglSetInteger(Handle.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, ref intVal);
 
                 mVSync = value;
             }
-        }
-        
-        GraphicsMode IGraphicsContext.GraphicsMode
-        {
-            get { return graphics_mode; }
-        }
-
-        public bool ErrorChecking
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
         }
 
         #endregion
@@ -355,7 +328,7 @@ namespace OpenTK.Platform.MacOS
             Dispose(false);
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             Dispose(true);
         }
@@ -363,10 +336,9 @@ namespace OpenTK.Platform.MacOS
         void Dispose(bool disposing)
         {
             
-            if (contextRef == IntPtr.Zero)
+            if (Handle.Handle == IntPtr.Zero)
                 return;
 
-            OnDestroy();
             Debug.Print("Disposing of AGL context.");
 
             try
@@ -379,13 +351,13 @@ namespace OpenTK.Platform.MacOS
             }
 
             Agl.aglSetCurrentContext(IntPtr.Zero);
-            Agl.aglSetDrawable(contextRef, IntPtr.Zero);
+            Agl.aglSetDrawable(Handle.Handle, IntPtr.Zero);
 
-            Debug.Print("Set drawable to null for context {0}.", contextRef);
+            Debug.Print("Set drawable to null for context {0}.", Handle.Handle);
 
-            if (Agl.aglDestroyContext(contextRef) == true)
+            if (Agl.aglDestroyContext(Handle.Handle) == true)
             {
-                contextRef = IntPtr.Zero;
+                Handle = ContextHandle.Zero;
                 return;
             }
 
@@ -404,32 +376,12 @@ namespace OpenTK.Platform.MacOS
 
         #region IGraphicsContextInternal Members
 
-        IGraphicsContext IGraphicsContextInternal.Implementation
+        public override void LoadAll()
         {
-            get { return this; }
+            new OpenTK.Graphics.OpenGL.GL().LoadAll();
         }
 
-        void IGraphicsContextInternal.LoadAll()
-        {
-            OpenTK.Graphics.OpenGL.GL.LoadAll();
-        }
-
-        ContextHandle IGraphicsContextInternal.Context
-        {
-            get { return (ContextHandle)contextRef; }
-        }
-
-        void IGraphicsContextInternal.RegisterForDisposal(IDisposable resource)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        void IGraphicsContextInternal.DisposeResources()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        private const string Library = "libdl.dylib";
+         private const string Library = "libdl.dylib";
 
         [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
         private static extern bool NSIsSymbolNameDefined(string s);
@@ -438,7 +390,7 @@ namespace OpenTK.Platform.MacOS
         [DllImport(Library, EntryPoint = "NSAddressOfSymbol")]
         private static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
 
-        IntPtr IGraphicsContextInternal.GetAddress(string function)
+        public override IntPtr GetAddress(string function)
         {
             string fname = "_" + function;
             if (!NSIsSymbolNameDefined(fname))

@@ -33,12 +33,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets or sets a System.Boolean indicating whether the GraphicsContext is current in the calling thread.
         /// </summary>
-        bool IsCurrent { get; /*set;*/  }
-
-        /// <summary>
-        /// Raised when a Context is destroyed.
-        /// </summary>
-        event DestroyEvent<IGraphicsContext> Destroy;
+        bool IsCurrent { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether VSyncing is enabled.
@@ -90,25 +85,6 @@ namespace OpenTK.Graphics
         /// Gets a handle to the OpenGL rendering context.
         /// </summary>
         ContextHandle Context { get; }
-
-        /// <summary>
-        /// Registers an OpenGL resource for disposal.
-        /// </summary>
-        /// <param name="resource">The OpenGL resource to dispose.</param>
-        /// <remarks>
-        /// You may not destroy OpenGL resources in finalizers, since they run in
-        /// a different thread. To avoid this problem, use this method to register
-        /// a resource for disposal during the finalizer call, and call DisposeResources()
-        /// from the main thread to dispose it.
-        /// </remarks>
-        [Obsolete]
-        void RegisterForDisposal(IDisposable resource);
-
-        /// <summary>
-        /// Disposes all registered OpenGL resources.
-        /// </summary>
-        [Obsolete]
-        void DisposeResources();
 
         /// <summary>
         /// Gets the address of an OpenGL extension function.
