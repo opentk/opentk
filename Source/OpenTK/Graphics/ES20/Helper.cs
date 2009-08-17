@@ -7,7 +7,7 @@ namespace OpenTK.Graphics.ES20
     /// <summary>
     /// Provides access to OpenGL ES 2.0 methods.
     /// </summary>
-    public static partial class GL
+    public sealed partial class GL : BindingsBase
     {
         const string Library = "libGLESv2.dll";
     }
