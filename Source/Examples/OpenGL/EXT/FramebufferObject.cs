@@ -26,7 +26,6 @@ namespace Examples.Tutorial
         }
 
         Font sans = new Font(System.Drawing.FontFamily.GenericSansSerif, 16.0f);
-        ITextPrinter text = new TextPrinter();
         
         uint ColorTexture;
         uint DepthTexture;
@@ -55,7 +54,7 @@ namespace Examples.Tutorial
 
         public override void OnLoad(EventArgs e)
         {
-            if (!GL.SupportsExtension("EXT_framebuffer_object"))
+            if (!GL.GetString(StringName.Extensions).Contains("EXT_framebuffer_object"))
             {
                 System.Windows.Forms.MessageBox.Show(
                      "Your video card does not support Framebuffer Objects. Please update your drivers.",
@@ -244,10 +243,6 @@ namespace Examples.Tutorial
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             
-            text.Begin();
-            text.Print((1.0 / e.Time).ToString("F2"), sans, Color.White);
-            text.End();
-
             GL.PushMatrix();
             {
                 // Draw the Color Texture
