@@ -46,10 +46,6 @@ namespace OpenTK.Graphics.OpenGL
     /// </para>
     /// </remarks>
     /// <see href="http://opengl.org/registry/"/>
-    /// <seealso cref="GL.SupportsExtension"/>
-    /// <seealso cref="GL.GetDelegate(string)"/>
-    /// <seealso cref="GL.LoadAll"/>
-    /// <seealso cref="GL.Load"/>
     public sealed partial class GL : BindingsBase
     {
         #region --- Fields ---
@@ -363,35 +359,6 @@ namespace OpenTK.Graphics.OpenGL
         private static IntPtr GetAddress(string function)
         {
             return (GraphicsContext.CurrentContext as IGraphicsContextInternal).GetAddress(function);
-        }
-
-        #endregion
-
-        #region internal static Delegate GetExtensionDelegate(string name, Type signature)
-
-        /// <summary>
-        /// Creates a System.Delegate that can be used to call a dynamically exported OpenGL function.
-        /// </summary>
-        /// <param name="name">The name of the OpenGL function (eg. "glNewList")</param>
-        /// <param name="signature">The signature of the OpenGL function.</param>
-        /// <returns>
-        /// A System.Delegate that can be used to call this OpenGL function or null
-        /// if the function is not available in the current OpenGL context.
-        /// </returns>
-        internal static Delegate GetExtensionDelegate(string name, Type signature)
-        {
-            IntPtr address = GetAddress(name);
-
-            if (address == IntPtr.Zero ||
-                address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
-                address == new IntPtr(2))       // 1 or 2 instead of IntPtr.Zero for some extensions.
-            {
-                return null;
-            }
-            else
-            {
-                return Marshal.GetDelegateForFunctionPointer(address, signature);
-            }
         }
 
         #endregion
