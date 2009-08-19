@@ -44,14 +44,7 @@ namespace Examples.Tutorial
     [Example("Immediate mode", ExampleCategory.OpenGLES, "2.0", Documentation = "SimpleES20Window")]
     public class SimpleES20Window : GameWindow
     {
-        #region --- Fields ---
-
-        float rotation_speed = 3.0f;
-        float angle;
-
-        #endregion
-
-        #region --- Constructor ---
+        #region Constructor
 
         public SimpleES20Window()
             : base(800, 600, new GraphicsMode(16, 16), "", GameWindowFlags.Default, DisplayDevice.Default, 2, 0, GraphicsContextFlags.Embedded)
