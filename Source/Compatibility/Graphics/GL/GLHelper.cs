@@ -79,6 +79,8 @@ namespace OpenTK.Graphics
             glClass = typeof(GL);
             delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
             importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
+
+            LoadAll();   // Ensure this class is loaded, since it is no longer visible to the GraphicsContext.LoadAll() method.
         }
 
         #endregion
