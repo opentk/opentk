@@ -104,6 +104,7 @@
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
+        <Match path="." pattern="*.resx" recurse="true" buildAction="EmbeddedResource"/>
         <Match path="." pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
       </Files>
 
@@ -116,6 +117,7 @@
           <OutputPath>../../Binaries/Debug</OutputPath>
           <AllowUnsafe>true</AllowUnsafe>
           <XmlDocFile>OpenTK.Compatibility.xml</XmlDocFile>
+          <SuppressWarnings>1591</SuppressWarnings>
         </Options>
       </Configuration>
 
@@ -124,6 +126,41 @@
           <OutputPath>../../Binaries/Release</OutputPath>
           <AllowUnsafe>true</AllowUnsafe>
           <XmlDocFile>OpenTK.Compatibility.xml</XmlDocFile>
+          <SuppressWarnings>1591</SuppressWarnings>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK"/>
+      <Reference name="OpenTK.GLControl"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+      <Reference name="System.Xml"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+        <Match path="." pattern="*.resx" recurse="true" buildAction="EmbeddedResource"/>
+        <Match path="." pattern="OpenTK.Compatibility.dll.config" buildAction="None" copyToOutput="Always"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK.GLControl" path="../Source/GLControl" language="C#" type="Library">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/Debug</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+          <XmlDocFile>OpenTK.GLControl.xml</XmlDocFile>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/Release</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+          <XmlDocFile>OpenTK.GLControl.xml</XmlDocFile>
         </Options>
       </Configuration>
 
@@ -157,6 +194,7 @@
       </Configuration>
 
       <Reference name="OpenTK" localCopy="true"/>
+      <Reference name="OpenTK.GLControl" localCopy="true"/>
       <Reference name="System"/>
       <Reference name="System.Drawing"/>
       <Reference name="System.Windows.Forms"/>
@@ -171,7 +209,7 @@
         <Match path="./Data" pattern="*.txt" recurse="true" buildAction="None" copyToOutput="Always"/>
         <Match path="./Data" pattern="*.glsl" recurse="true" buildAction="None" copyToOutput="Always"/>
         <Match path="../OpenTK" pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
-        <Match path="../Utilities" pattern="OpenTK.Utilities.dll.config" buildAction="None" copyToOutput="Always"/>
+        <Match path="../OpenTK" pattern="OpenTK.Compatibility.dll.config" buildAction="None" copyToOutput="Always"/>
       </Files>
 
     </Project>
