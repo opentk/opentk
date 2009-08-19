@@ -118,18 +118,6 @@ namespace OpenTK.Platform.Egl
             }
         }
 
-        // Todo: implement this!
-        public bool ErrorChecking
-        {
-            get
-            {
-                return false;
-            }
-            set
-            {
-            }
-        }
-
         #endregion
 
         #region IGraphicsContextInternal Members
