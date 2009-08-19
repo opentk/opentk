@@ -279,7 +279,7 @@ namespace OpenTK.Math
         /// </summary>
         /// <param name="left">The left instance.</param>
         /// <param name="right">The right instance.</param>
-        /// <returns>The result of the operation.</returns>
+        /// <param name="result">The result of the operation.</param>
         public static void Sub(ref Quaternion left, ref Quaternion right, out Quaternion result)
         {
             result = new Quaternion(

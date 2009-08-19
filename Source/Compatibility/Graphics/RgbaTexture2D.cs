@@ -32,6 +32,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.Graphics
 {
+    [Obsolete]
     class RgbaTexture2D : Texture2D
     {
         public RgbaTexture2D(int width, int height)

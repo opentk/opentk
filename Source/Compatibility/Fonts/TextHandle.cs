@@ -35,6 +35,7 @@ namespace OpenTK.Graphics
         }
 
         private int handle;
+        [CLSCompliant(false)]
         protected TextureFont font;
         protected bool disposed;
 

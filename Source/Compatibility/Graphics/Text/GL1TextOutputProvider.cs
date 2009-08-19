@@ -33,6 +33,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.Graphics.Text
 {
+    [Obsolete]
     abstract class GL1TextOutputProvider : ITextOutputProvider
     {
         #region Fields

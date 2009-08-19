@@ -42,6 +42,7 @@ namespace OpenTK.Graphics
     //
     // Make sure that no error checking is added to the GetError function,
     // as that would cause infinite recursion!
+    [Obsolete]
     struct ErrorHelper : IDisposable
     {
         #region Fields

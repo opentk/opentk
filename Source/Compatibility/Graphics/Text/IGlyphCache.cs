@@ -29,6 +29,7 @@ using System;
 
 namespace OpenTK.Graphics.Text
 {
+    [Obsolete]
     interface IGlyphCache : IDisposable
     {
         void Add(Glyph glyph, IGlyphRasterizer rasterizer, TextQuality quality);
