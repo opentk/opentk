@@ -43,11 +43,6 @@ namespace OpenTK.Platform.Windows
             return new WinGLNative(x, y, width, height, title, options, device);
         }
 
-        public virtual IGLControl CreateGLControl(GraphicsMode mode, GLControl owner)
-        {
-            return new WinGLControl(mode, owner);
-        }
-
         public virtual IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new WinDisplayDeviceDriver();

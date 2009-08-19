@@ -263,7 +263,7 @@ namespace OpenTK.Platform
         public static void CreateGraphicsContext(GraphicsMode mode, IntPtr cntrlHandle,
             out IGraphicsContext context, out IWindowInfo info)
         {
-            info = CreateWindowInfo(mode, cntrlHandle);
+            info = CreateWindowInfo(mode, cntrlHandle, true);
 
             context = new GraphicsContext(mode, info);
             context.MakeCurrent(info);
@@ -275,28 +275,17 @@ namespace OpenTK.Platform
 
         /// <summary>
         /// Creates an object which implements the IWindowInfo interface for the platform
-        /// currently running on.  This will create a handle for the control, so it is not
-        /// recommended that this be called in the constructor of a custom control.
-        /// </summary>
-        /// <param name="mode">The desired GraphicsMode for this window.</param>
-        /// <param name="cntrl">A <see cref="System.Windows.Forms.Control"/> to get the IWindowInfo from.</param>
-        /// <returns></returns>
-        public static IWindowInfo CreateWindowInfo(GraphicsMode mode, Control cntrl)
-        {
-            return CreateWindowInfo(mode, cntrl.Handle);
-        }
-        /// <summary>
-        /// Creates an object which implements the IWindowInfo interface for the platform
         /// currently running on.  
         /// </summary>
         /// <param name="mode">The desired GraphicsMode for this window.</param>
         /// <param name="controlHandle">The handle to the control, obtained from Control.Handle.</param>
+        /// <param name="isControl">Set to true if this is a Windows.Forms control.</param>
         /// <returns></returns>
-        public static IWindowInfo CreateWindowInfo(GraphicsMode mode, IntPtr controlHandle)
+        public static IWindowInfo CreateWindowInfo(GraphicsMode mode, IntPtr controlHandle, bool isControl)
         {
             if (Configuration.RunningOnWindows) return CreateWinWindowInfo(controlHandle);
-            else if (Configuration.RunningOnX11) return CreateX11WindowInfo(mode, controlHandle);
-            else if (Configuration.RunningOnMacOS) return CreateMacOSCarbonWindowInfo(controlHandle);
+            else if (Configuration.RunningOnX11) return CreateX11WindowInfo(mode, controlHandle, isControl);
+            else if (Configuration.RunningOnMacOS) return CreateMacOSCarbonWindowInfo(controlHandle, isControl);
             else
                 throw new PlatformNotSupportedException("Refer to http://www.opentk.com for more information.");
         }
@@ -305,37 +294,42 @@ namespace OpenTK.Platform
 
         #region --- X11 Platform-specific implementation ---
 
-        private static IWindowInfo CreateX11WindowInfo(GraphicsMode mode, IntPtr controlHandle)
+        private static IWindowInfo CreateX11WindowInfo(GraphicsMode mode, IntPtr controlHandle, bool isControl)
         {
             Platform.X11.X11WindowInfo window = new OpenTK.Platform.X11.X11WindowInfo();
-
-            Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
-            if (xplatui == null) throw new PlatformNotSupportedException(
-                    "System.Windows.Forms.XplatUIX11 missing. Unsupported platform or Mono runtime version, aborting.");
-
             window.WindowHandle = controlHandle;
 
-            // get the required handles from the X11 API.
-            window.Display = (IntPtr)GetStaticFieldValue(xplatui, "DisplayHandle");
-            window.RootWindow = (IntPtr)GetStaticFieldValue(xplatui, "RootWindow");
-            window.Screen = (int)GetStaticFieldValue(xplatui, "ScreenNo");
+            if (isControl)
+            {
+                Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+                if (xplatui == null) throw new PlatformNotSupportedException(
+                        "System.Windows.Forms.XplatUIX11 missing. Unsupported platform or Mono runtime version, aborting.");
 
-            // get the X11 Visual info for the display.
-            Platform.X11.XVisualInfo info = new Platform.X11.XVisualInfo();
+                // get the required handles from the X11 API.
+                window.Display = (IntPtr)GetStaticFieldValue(xplatui, "DisplayHandle");
+                window.RootWindow = (IntPtr)GetStaticFieldValue(xplatui, "RootWindow");
+                window.Screen = (int)GetStaticFieldValue(xplatui, "ScreenNo");
 
-            if (!mode.Index.HasValue)
-                throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
+                // get the X11 Visual info for the display.
+                Platform.X11.XVisualInfo info = new Platform.X11.XVisualInfo();
 
-            info.VisualID = mode.Index.Value;
-            int dummy;
-            window.VisualInfo = (Platform.X11.XVisualInfo)Marshal.PtrToStructure(
-                Platform.X11.Functions.XGetVisualInfo(window.Display, Platform.X11.XVisualInfoMask.ID,
-                                         ref info, out dummy), typeof(Platform.X11.XVisualInfo));
+                if (!mode.Index.HasValue)
+                    throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
 
-            // set the X11 colormap.
-            SetStaticFieldValue(xplatui, "CustomVisual", window.VisualInfo.Visual);
-            SetStaticFieldValue(xplatui, "CustomColormap",
-                Platform.X11.Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.Visual, 0));
+                info.VisualID = mode.Index.Value;
+                int dummy;
+                window.VisualInfo = (Platform.X11.XVisualInfo)Marshal.PtrToStructure(
+                    Platform.X11.Functions.XGetVisualInfo(window.Display, Platform.X11.XVisualInfoMask.ID,
+                                             ref info, out dummy), typeof(Platform.X11.XVisualInfo));
+
+                // set the X11 colormap.
+                SetStaticFieldValue(xplatui, "CustomVisual", window.VisualInfo.Visual);
+                SetStaticFieldValue(xplatui, "CustomColormap",
+                    Platform.X11.Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.Visual, 0));
+            }
+            else
+            {
+            }
 
             return window;
         }
@@ -351,9 +345,9 @@ namespace OpenTK.Platform
         #endregion
         #region --- Mac OS X Platform-specific implementation ---
 
-        private static IWindowInfo CreateMacOSCarbonWindowInfo(IntPtr controlHandle)
+        private static IWindowInfo CreateMacOSCarbonWindowInfo(IntPtr controlHandle, bool isControl)
         {
-            return new OpenTK.Platform.MacOS.CarbonWindowInfo(controlHandle, false, true);
+            return new OpenTK.Platform.MacOS.CarbonWindowInfo(controlHandle, false, isControl);
         }
 
         #endregion

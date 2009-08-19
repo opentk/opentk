@@ -42,11 +42,6 @@ namespace OpenTK.Platform.MacOS
             return new CarbonGLNative(x, y, width, height, title, mode, options, device);
         }
 
-        public virtual IGLControl CreateGLControl(GraphicsMode mode, GLControl owner)
-        {
-            return new CarbonGLControl(mode, owner);
-        }
-
         public virtual IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new QuartzDisplayDeviceDriver();

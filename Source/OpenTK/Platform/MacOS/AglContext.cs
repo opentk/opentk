@@ -228,7 +228,7 @@ namespace OpenTK.Platform.MacOS
                 windowPort = API.GetWindowPort(carbonWindow.WindowRef);
             return windowPort;
         }
-        public void Update(IWindowInfo window)      
+        public override void Update(IWindowInfo window)      
         {
             CarbonWindowInfo carbonWindow = (CarbonWindowInfo)window;
 
