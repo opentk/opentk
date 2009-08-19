@@ -7,6 +7,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.Graphics.Text
 {
+    [Obsolete]
     sealed class GL12TextOutputProvider : GL1TextOutputProvider
     {
         #region Fields

@@ -34,6 +34,7 @@ using System.Diagnostics;
 
 namespace OpenTK.Graphics
 {
+    [Obsolete]
     abstract class Texture2D :  IGraphicsResource, IEquatable<Texture2D>
     {
         #region Fields

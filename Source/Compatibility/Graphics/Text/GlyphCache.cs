@@ -31,6 +31,7 @@ using System.Drawing;
 
 namespace OpenTK.Graphics.Text
 {
+    [Obsolete]
     abstract class GlyphCache : IGlyphCache
     {
         #region IGlyphCache Members
@@ -48,6 +49,7 @@ namespace OpenTK.Graphics.Text
         #endregion
     }
 
+    [Obsolete]
     sealed class GlyphCache<T> : GlyphCache where T : Texture2D
     {
         #region Fields
