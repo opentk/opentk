@@ -15,11 +15,6 @@ namespace OpenTK.Platform.X11
             return new X11GLNative(x, y, width, height, title, mode, options, device);
         }
 
-        public virtual IGLControl CreateGLControl(GraphicsMode mode, GLControl owner)
-        {
-            return new X11GLControl(mode, owner);
-        }
-
         public virtual IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new X11XrandrDisplayDevice();
