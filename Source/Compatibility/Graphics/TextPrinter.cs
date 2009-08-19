@@ -25,6 +25,7 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Provides methods to perform layout and print hardware accelerated text.
     /// </summary>
+    [Obsolete]
     public sealed class TextPrinter : ITextPrinter
     {
         #region Fields

@@ -15,6 +15,7 @@ namespace OpenTK.Graphics
     /// Defines the interface for TextPrinter implementations.
     /// </summary>
     [Obsolete("Use ITextOutputProvider instead")]
+    [CLSCompliant(false)]
     public interface ITextPrinterImplementation
     {
         /// <summary>

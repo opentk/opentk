@@ -32,6 +32,7 @@ using System.Drawing;
 
 namespace OpenTK.Graphics.Text
 {
+    [Obsolete]
     struct CachedGlyphInfo
     {
         public readonly Texture2D Texture;

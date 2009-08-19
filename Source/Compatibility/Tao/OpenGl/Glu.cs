@@ -32743,7 +32743,7 @@ namespace Tao.OpenGl
         ///     </para>
         ///     <para>
         ///         <b>gluGetString</b> is an initialization routine.  Calling it after a
-        ///         <see cref="Gl.glNewList" /> results in undefined behavior.
+        ///         <see cref="Gl.glNewList(int, int)" /> results in undefined behavior.
         ///     </para>
         ///     <para>
         ///         <b>ERRORS</b>

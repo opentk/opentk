@@ -43,11 +43,9 @@ namespace Tao.Platform.Windows
     ///     OpenGL applications. Relies on OpenTK.GLControl for cross-platform compatibility.
     /// </summary>
     [Obsolete("Use OpenTK.GLControl instead.")]
-    public class SimpleOpenGlControl : OpenTK.GLControl
+    public partial class SimpleOpenGlControl : OpenTK.GLControl
     {
         #region Fields
-
-        private IContainer components;                                      // Required for designer support
 
         private bool autoCheckErrors = false;                               // Should we provide glGetError()?
         private bool autoFinish = false;                                    // Should we provide a glFinish()?
@@ -425,23 +423,6 @@ namespace Tao.Platform.Windows
 
         #endregion
 
-        #region InitializeComponent
-
-        /// <summary>
-        ///     Required for designer support.
-        /// </summary>
-        private void InitializeComponent()
-        {
-            this.components = new System.ComponentModel.Container();
-            // 
-            // SimpleOpenGlControl
-            // 
-            this.BackColor = System.Drawing.Color.Black;
-            this.Size = new System.Drawing.Size(50, 50);
-        }
-
-        #endregion
-
         #region InitializeStyles
 
         /// <summary>
@@ -457,29 +438,6 @@ namespace Tao.Platform.Windows
         }
 
         #endregion
-
-        #endregion
-
-        #region IDisposable Members
-
-        #region Dispose(bool disposing)
-        /// <summary>
-        ///     Disposes the control.
-        /// </summary>
-        /// <param name="disposing">Was the disposed manually called?</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
-            }
-            DestroyContexts();
-            base.Dispose(disposing);
-        }
-        #endregion Dispose(bool disposing)
 
         #endregion
     }

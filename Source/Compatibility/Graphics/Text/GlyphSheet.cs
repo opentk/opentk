@@ -32,6 +32,7 @@ using System.Drawing;
 
 namespace OpenTK.Graphics.Text
 {
+    [Obsolete]
     class GlyphSheet<T> : IDisposable where T : Texture2D
     {
         #region Fields

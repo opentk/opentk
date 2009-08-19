@@ -37,6 +37,7 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Encapsulates an OpenGL texture.
     /// </summary>
+    [Obsolete]
     class AlphaTexture2D : Texture2D
     {
         #region Constructors
