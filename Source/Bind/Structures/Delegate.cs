@@ -26,7 +26,7 @@ namespace Bind.Structures
         bool? cls_compliance_overriden;
 
         protected static Regex endings = new Regex(@"((((d|f|fi)|u?[isb])_?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
-        protected static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flag|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+        protected static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flag|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs)", RegexOptions.Compiled | RegexOptions.RightToLeft);
 
         // Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
         // a 'type' and a 'ref type' (such overloads are not CLS Compliant).
