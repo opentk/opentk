@@ -210,12 +210,6 @@ namespace CHeaderToXML
                 // where [parameter name] can either be inside comments (/* ... */) or not.
                 var get_param = new Regex(@"(\w+\s\(\*\w+\)\s*\(.*\)\s*(/\*.*?\*/|\w+)? | (const\s)?\w+\s*\**\s*(/\*.*?\*/|\w+(\[.*?\])?)),?", RegexOptions.IgnorePatternWhitespace);
 
-#if true
-                if (funcname == "EnqueueNativeKernel")
-                    Debugger.Break();
-                var ars = get_param.Matches(paramaters_string).OfType<Match>().Select(m => m.Captures[0].Value.TrimEnd(','));
-#endif
-
                 var fun =
                     new
                     {
