@@ -271,28 +271,7 @@ namespace OpenTK
         /// </remarks>
         public virtual void Exit()
         {
-            lock (exit_lock)
-            {
-                EnsureUndisposed();
-
-                if (!IsExiting && Exists)
-                {
-                    CancelEventArgs e = new CancelEventArgs();
-                    OnClosing(e);
-                    if (e.Cancel)
-                        return;
-
-                    isExiting = true;
-
-                    if (HasMainLoop)
-                    {
-                        if (main_loop_thread_id == Thread.CurrentThread.ManagedThreadId)
-                            ExitInternal();
-                        else
-                            ExitAsync();
-                    }
-                }
-            }
+            Close();
         }
 
         #endregion
@@ -410,7 +389,7 @@ namespace OpenTK
                 OnLoadInternal(EventArgs.Empty);
 
                 Debug.Print("Entering main loop.");
-                while (!IsExiting && HasMainLoop)
+                while (!IsExiting && Exists && HasMainLoop)
                 {
                     ProcessEvents();
 
@@ -486,10 +465,6 @@ namespace OpenTK
                         }
                     }
                 }
-            }
-            catch (GameWindowExitException)
-            {
-                Debug.WriteLine("GameWindowExitException caught - exiting main loop.");
             }
             finally
             {
@@ -976,19 +951,6 @@ namespace OpenTK
 
         #endregion
 
-        #region ExitInternal
-
-        // Stops the main loop, if one exists.
-        void ExitInternal()
-        {
-            if (HasMainLoop)
-            {
-                throw new GameWindowExitException();
-            }
-        }
-
-        #endregion
-
         #endregion
 
         #region Properties
@@ -1115,24 +1077,4 @@ namespace OpenTK
     }
 
     #endregion
-
-    #region --- GameWindow Exceptions ---
-
-    [DebuggerNonUserCode]
-    class GameWindowExitException : ApplicationException
-    {
-        public override string Message
-        {
-            get
-            {
-                return
-@"This exception is a normal part of the GameWindow shutdown process and is completely harmless. While this warning will never be seen by end-users, Visual Studio reminds you that an exception is leaving your code unhandled, which can sometimes be a security breach.
-You can disable this warning for this specific exception: select Debug->Exceptions from the menu bar and click ""Add"". Choose ""Common Language Runtime Exceptions"", type ""OpenTK.GameWindowExitException"" in the box below and click ""Ok"". Deselecting the ""User-unhandled"" checkbox from the newly created exception will disable this warning.
-Alternatively, you can disable the ""Just my code"" debugging mode (""Tools->Options->Debugging->General"" and untick ""Enable Just my code (Managed only)"". This has the sideffect that it will allow you to step into OpenTK code if an error happens. Please, do this only if you are confident in your debugging skills.";
-            }
-        }
-    }
-
-    #endregion
-
 }
