@@ -85,8 +85,8 @@ namespace Examples
         {
             if (show_warning)
             {
-                MessageBox.Show("The new Sample Browser is not complete. Please report any issues at http://www.opentk.com/project/issues.",
-                    "Work in Progress", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("The new Sample Browser is not complete. Please report any issues at http://www.opentk.com/project/issues.",
+                //    "Work in Progress", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 show_warning = false;
             }
         }
