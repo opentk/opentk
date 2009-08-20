@@ -143,11 +143,12 @@ namespace OpenTK
         #region Close
 
         /// <summary>
-        /// Closes the NativeWindow. Equivalent to calling <see cref="OpenTK.NativeWindow.Dispose()"/>.
+        /// Closes the NativeWindow.
         /// </summary>
         public void Close()
         {
-            Dispose();
+            EnsureUndisposed();
+            implementation.Close();
         }
 
         #endregion
@@ -617,9 +618,13 @@ namespace OpenTK
         /// </summary>
         public void Dispose()
         {
-            implementation.Dispose();
-            disposed = true;
-            GC.SuppressFinalize(this);
+            if (!disposed)
+            {
+                implementation.Dispose();
+                GC.SuppressFinalize(this);
+
+                disposed = true;
+            }
         }
 
         #endregion
@@ -787,7 +792,7 @@ namespace OpenTK
 
             if (Closing != null) Closing(this, e);
 
-            if (!e.Cancel) Close();
+            //if (!e.Cancel) Close();
         }
 
         #endregion
@@ -878,7 +883,7 @@ namespace OpenTK
         {
             OnWindowBorderChanged(e);
 
-            if (WindowBorderChanged != null) WindowBorderChanged(this, e); // TODO: This was raised with EventArgs.Empty. Special reason?
+            if (WindowBorderChanged != null) WindowBorderChanged(this, e); // TODO: This was closed with EventArgs.Empty. Special reason?
         }
 
         #endregion
