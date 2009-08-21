@@ -7,13 +7,15 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using Bind.Structures;
+using Enum=Bind.Structures.Enum;
 
 namespace Bind
 {
     class BindStreamWriter : StreamWriter
     {
         int indent_level = 0;
-        Regex splitLines = new Regex(System.Environment.NewLine, RegexOptions.Compiled);
+        Regex splitLines = new Regex(Environment.NewLine, RegexOptions.Compiled);
         //Regex splitLines = new Regex("(\r\n|\n\r|\n|\r)", RegexOptions.Compiled);
 
         public BindStreamWriter(string file)
@@ -59,13 +61,13 @@ namespace Bind
             base.WriteLine(value);
         }
 
-        public void Write(Bind.Structures.Enum e)
+        public void Write(Enum e)
         {
             foreach (string s in splitLines.Split(e.ToString()))
                 WriteLine(s.TrimEnd('\r', '\n'));
         }
 
-        public void Write(Bind.Structures.Function f)
+        public void Write(Function f)
         {
             foreach (string s in splitLines.Split(f.ToString()))
                 WriteLine(s);

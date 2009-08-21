@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.XPath;
+using Bind.GL2;
 using Bind.Structures;
+using Delegate=Bind.Structures.Delegate;
+using Enum=Bind.Structures.Enum;
 
 namespace Bind.ES
 {
-    class ESGenerator : Bind.GL2.Generator
+    class ESGenerator : Generator
     {
         public ESGenerator(string name)
         {
@@ -34,7 +37,7 @@ namespace Bind.ES
             Settings.OutputPath = Path.Combine(Directory.GetParent(Settings.OutputPath).FullName, name);
         }
 
-        public override Bind.Structures.DelegateCollection ReadDelegates(System.IO.StreamReader specFile)
+        public override DelegateCollection ReadDelegates(StreamReader specFile)
         {
             DelegateCollection delegates = new DelegateCollection();
 
@@ -44,7 +47,7 @@ namespace Bind.ES
 
             foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
             {
-                Bind.Structures.Delegate d = new Bind.Structures.Delegate();
+                Delegate d = new Delegate();
                 d.Name = node.GetAttribute("name", String.Empty);
                 //d.Extension = node.GetAttribute("extension");
                 d.Version = node.GetAttribute("version", String.Empty);
@@ -89,10 +92,10 @@ namespace Bind.ES
             return base.ReadCSTypeMap(specFile);
         }
 
-        public override Bind.Structures.EnumCollection ReadEnums(StreamReader specFile)
+        public override EnumCollection ReadEnums(StreamReader specFile)
         {
             EnumCollection enums = new EnumCollection();
-            Bind.Structures.Enum all = new Bind.Structures.Enum(Settings.CompleteEnumName); 
+            Enum all = new Enum(Settings.CompleteEnumName); 
             XPathDocument doc = new XPathDocument(specFile);
             XPathNavigator nav = doc.CreateNavigator().SelectSingleNode("/signatures");
 
@@ -100,7 +103,7 @@ namespace Bind.ES
             
             foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
             {
-                Bind.Structures.Enum e = new Bind.Structures.Enum(node.GetAttribute("name", String.Empty));
+                Enum e = new Enum(node.GetAttribute("name", String.Empty));
                 if (String.IsNullOrEmpty(e.Name))
                     throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
 
