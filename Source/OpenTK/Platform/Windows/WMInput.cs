@@ -15,7 +15,7 @@ using System.Diagnostics;
 namespace OpenTK.Platform.Windows
 {
     // Input driver for legacy (pre XP) Windows platforms.
-    sealed class WMInput : NativeWindow, IInputDriver
+    sealed class WMInput : System.Windows.Forms.NativeWindow, IInputDriver
     {
         #region --- Fields ---
 
