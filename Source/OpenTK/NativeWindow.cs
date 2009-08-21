@@ -11,7 +11,7 @@ namespace OpenTK
     /// <summary>
     /// Instances of this class implement the <see cref="OpenTK.INativeWindow"/> interface on the current platform.
     /// </summary>
-    public class NativeWindow0 : INativeWindow
+    public class NativeWindow : INativeWindow
     {
         #region --- Fields ---
 
@@ -26,7 +26,7 @@ namespace OpenTK
         #region NativeWindow()
 
         /// <summary>Constructs a new NativeWindow with default attributes without enabling events.</summary>
-        public NativeWindow0()
+        public NativeWindow()
             : this(640, 480, "OpenTK Native Window", GameWindowFlags.Default, GraphicsMode.Default, DisplayDevice.Default, false) { }
 
         #endregion
@@ -35,7 +35,7 @@ namespace OpenTK
 
         /// <summary>Constructs a new NativeWindow with default attributes.</summary>
         /// <param name="enableEvents">Indicates to enable event processing as part of the NativeWindow construction.</param>
-        public NativeWindow0(bool enableEvents)
+        public NativeWindow(bool enableEvents)
             : this(640, 480, "OpenTK Native Window", GameWindowFlags.Default, GraphicsMode.Default, DisplayDevice.Default, enableEvents) { }
 
         #endregion
@@ -53,7 +53,7 @@ namespace OpenTK
         /// <param name="device">The OpenTK.Graphics.DisplayDevice to construct the NativeWindow in.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">If width or height is less than 1.</exception>
         /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
-        public NativeWindow0(int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
+        public NativeWindow(int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
             : this(width, height, title, options, mode, device, false) { }
 
         #endregion
@@ -70,7 +70,7 @@ namespace OpenTK
         /// <param name="enableEvents">Indicates to enable event processing as part of the NativeWindow construction.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">If width or height is less than 1.</exception>
         /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
-        public NativeWindow0(int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device, bool enableEvents)
+        public NativeWindow(int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device, bool enableEvents)
             : this(device.Bounds.Left + (device.Bounds.Width - width) / 2,
                    device.Bounds.Top + (device.Bounds.Height - height) / 2,
                    width, height, title, options, mode, device, enableEvents) { }
@@ -90,7 +90,7 @@ namespace OpenTK
         /// <param name="device">The OpenTK.Graphics.DisplayDevice to construct the NativeWindow in.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">If width or height is less than 1.</exception>
         /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
-        public NativeWindow0(int x, int y, int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
+        public NativeWindow(int x, int y, int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
             : this(x, y, width, height, title, options, mode, device, false) { }
 
         #endregion
@@ -109,7 +109,7 @@ namespace OpenTK
         /// <param name="enableEvents">Indicates to enable event processing as part of the NativeWindow construction.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">If width or height is less than 1.</exception>
         /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
-        public NativeWindow0(int x, int y, int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device, bool enableEvents)
+        public NativeWindow(int x, int y, int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device, bool enableEvents)
         {
             // TODO: Should a constraint be added for the position?
             if (width < 1)
