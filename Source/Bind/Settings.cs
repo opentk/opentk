@@ -57,7 +57,7 @@ namespace Bind
         {
             get
             {
-                if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
+                if ((Compatibility & Legacy.NestedEnums) != Legacy.None)
                     return OutputNamespace + "." + OutputClass + "." + NestedEnumsClass;
                 else
                     return String.IsNullOrEmpty(EnumsNamespace) ? OutputNamespace : OutputNamespace + "." + EnumsNamespace;
@@ -68,7 +68,7 @@ namespace Bind
         {
             get
             {
-                if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
+                if ((Compatibility & Legacy.NestedEnums) != Legacy.None)
                     return OutputNamespace + "." + GLClass + "." + NestedEnumsClass;
                 else
                     return OutputNamespace + "." + EnumsNamespace;
@@ -143,8 +143,8 @@ namespace Bind
         /// <summary>True if multiple tokens should be dropped (e.g. FooARB, FooEXT and FooSGI).</summary>
         public static bool DropMultipleTokens
         { 
-            get { return (Settings.Compatibility & Legacy.NoDropMultipleTokens) == Legacy.None; } 
-            set { if (value) Settings.Compatibility |= Legacy.NoDropMultipleTokens; else Settings.Compatibility &= ~Legacy.NoDropMultipleTokens; }
+            get { return (Compatibility & Legacy.NoDropMultipleTokens) == Legacy.None; } 
+            set { if (value) Compatibility |= Legacy.NoDropMultipleTokens; else Compatibility &= ~Legacy.NoDropMultipleTokens; }
         }
         
         public static string WindowsGDI = "OpenTK.Platform.Windows.API";

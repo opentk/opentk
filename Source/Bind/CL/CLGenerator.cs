@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.XPath;
+using Bind.GL2;
 using Bind.Structures;
+using Delegate=Bind.Structures.Delegate;
+using Enum=Bind.Structures.Enum;
 
 namespace Bind.CL
 {
-    class CLGenerator : Bind.GL2.Generator
+    class CLGenerator : Generator
     {
         public CLGenerator(string name)
         {
@@ -41,7 +44,7 @@ namespace Bind.CL
             Settings.Compatibility |= Settings.Legacy.NoDebugHelpers;
         }
 
-        public override Bind.Structures.DelegateCollection ReadDelegates(System.IO.StreamReader specFile)
+        public override DelegateCollection ReadDelegates(StreamReader specFile)
         {
             DelegateCollection delegates = new DelegateCollection();
 
@@ -51,7 +54,7 @@ namespace Bind.CL
 
             foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
             {
-                Bind.Structures.Delegate d = new Bind.Structures.Delegate();
+                Delegate d = new Delegate();
                 d.Name = node.GetAttribute("name", String.Empty);
                 //d.Extension = node.GetAttribute("extension");
                 d.Version = node.GetAttribute("version", String.Empty);
@@ -96,18 +99,18 @@ namespace Bind.CL
             return base.ReadCSTypeMap(specFile);
         }
 
-        public override Bind.Structures.EnumCollection ReadEnums(StreamReader specFile)
+        public override EnumCollection ReadEnums(StreamReader specFile)
         {
             XPathDocument overrides = new XPathDocument(new StreamReader(Path.Combine(Settings.InputPath, functionOverridesFile)));
 
             EnumCollection enums = new EnumCollection();
-            Bind.Structures.Enum all = new Bind.Structures.Enum(Settings.CompleteEnumName); 
+            Enum all = new Enum(Settings.CompleteEnumName); 
             XPathDocument doc = new XPathDocument(specFile);
             XPathNavigator nav = doc.CreateNavigator().SelectSingleNode("/signatures");
             
             foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
             {
-                Bind.Structures.Enum e = new Bind.Structures.Enum(node.GetAttribute("name", String.Empty));
+                Enum e = new Enum(node.GetAttribute("name", String.Empty));
                 if (String.IsNullOrEmpty(e.Name))
                     throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
 

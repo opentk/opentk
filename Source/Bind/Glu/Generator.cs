@@ -5,10 +5,11 @@
 #endregion
 
 using System.Diagnostics;
+using Bind.Structures;
 
 namespace Bind.Glu
 {
-    class Generator : Bind.GL2.Generator
+    class Generator : GL2.Generator
     {
         string enumSpecAux = null;// = "GL2\\enum.spec";
 
@@ -50,19 +51,19 @@ namespace Bind.Glu
 
         public override void Process()
         {
-            Bind.Structures.Type.Initialize(glTypemap, csTypemap);
-            Bind.Structures.Enum.Initialize(enumSpec, enumSpecExt, enumSpecAux);
-            Bind.Structures.Function.Initialize();
-            Bind.Structures.Delegate.Initialize(glSpec, glSpecExt);
+            Type.Initialize(glTypemap, csTypemap);
+            Enum.Initialize(enumSpec, enumSpecExt, enumSpecAux);
+            Function.Initialize();
+            Delegate.Initialize(glSpec, glSpecExt);
 
             // Process enums and delegates - create wrappers.
             Trace.WriteLine("Processing specs, please wait...");
             //this.Translate();
 
             this.WriteBindings(
-                Bind.Structures.Delegate.Delegates,
-                Bind.Structures.Function.Wrappers,
-                Bind.Structures.Enum.GLEnums);
+                Delegate.Delegates,
+                Function.Wrappers,
+                Enum.GLEnums);
         }
     }
 }

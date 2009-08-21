@@ -686,27 +686,27 @@ namespace Bind.Structures
         /// <param name="f">The Function to add.</param>
         public void AddChecked(Function f)
         {
-            if (Bind.Structures.Function.Wrappers.ContainsKey(f.Extension))
+            if (Function.Wrappers.ContainsKey(f.Extension))
             {
-                int index = Bind.Structures.Function.Wrappers[f.Extension].IndexOf(f);
+                int index = Function.Wrappers[f.Extension].IndexOf(f);
                 if (index == -1)
                 {
-                    Bind.Structures.Function.Wrappers.Add(f);
+                    Function.Wrappers.Add(f);
                 }
                 else
                 {
-                    Function existing = Bind.Structures.Function.Wrappers[f.Extension][index];
+                    Function existing = Function.Wrappers[f.Extension][index];
                     if ((existing.Parameters.HasUnsignedParameters && !unsignedFunctions.IsMatch(existing.Name) && unsignedFunctions.IsMatch(f.Name)) ||
                         (!existing.Parameters.HasUnsignedParameters && unsignedFunctions.IsMatch(existing.Name) && !unsignedFunctions.IsMatch(f.Name)))
                     {
-                        Bind.Structures.Function.Wrappers[f.Extension].RemoveAt(index);
-                        Bind.Structures.Function.Wrappers[f.Extension].Add(f);
+                        Function.Wrappers[f.Extension].RemoveAt(index);
+                        Function.Wrappers[f.Extension].Add(f);
                     }
                 }
             }
             else
             {
-                Bind.Structures.Function.Wrappers.Add(f);
+                Function.Wrappers.Add(f);
             }
         }
     }

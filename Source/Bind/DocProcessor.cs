@@ -11,7 +11,7 @@ namespace Bind
         static readonly Regex remove_mathml = new Regex(@"<(mml:math)[^>]*?>(?:.|\n)*?</\s*\1\s*>",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
 
-        static readonly XslCompiledTransform xslt = new System.Xml.Xsl.XslCompiledTransform();
+        static readonly XslCompiledTransform xslt = new XslCompiledTransform();
         static readonly XmlReaderSettings settings = new XmlReaderSettings();
 
         public DocProcessor(string transform_file)
