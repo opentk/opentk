@@ -5,10 +5,11 @@
 #endregion
 
 using System.Diagnostics;
+using Bind.Structures;
 
 namespace Bind.Wgl
 {
-    class Generator : Bind.GL2.Generator
+    class Generator : GL2.Generator
     {
         #region --- Constructors ---
 
@@ -46,19 +47,19 @@ namespace Bind.Wgl
 
         public override void Process()
         {
-            Bind.Structures.Type.Initialize(glTypemap, csTypemap);
-            Bind.Structures.Enum.Initialize(enumSpec, enumSpecExt);
-            Bind.Structures.Function.Initialize();
-            Bind.Structures.Delegate.Initialize(glSpec, glSpecExt);
+            Type.Initialize(glTypemap, csTypemap);
+            Enum.Initialize(enumSpec, enumSpecExt);
+            Function.Initialize();
+            Delegate.Initialize(glSpec, glSpecExt);
             
             // Process enums and delegates - create wrappers.
             Trace.WriteLine("Processing specs, please wait...");
             //this.Translate();
 
             this.WriteBindings(
-            	Bind.Structures.Delegate.Delegates,
-            	Bind.Structures.Function.Wrappers,
-            	Bind.Structures.Enum.GLEnums);
+            	Delegate.Delegates,
+            	Function.Wrappers,
+            	Enum.GLEnums);
         }
     }
 }

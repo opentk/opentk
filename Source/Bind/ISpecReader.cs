@@ -6,13 +6,14 @@
 
 using System.Collections.Generic;
 using System.IO;
+using Bind.Structures;
 
 namespace Bind
 {
     interface ISpecReader
     {
-        Bind.Structures.DelegateCollection ReadDelegates(StreamReader specFile);
-        Bind.Structures.EnumCollection ReadEnums(StreamReader specFile);
+        DelegateCollection ReadDelegates(StreamReader specFile);
+        EnumCollection ReadEnums(StreamReader specFile);
         Dictionary<string, string> ReadTypeMap(StreamReader specFile);
         Dictionary<string, string> ReadCSTypeMap(StreamReader specFile);
     }

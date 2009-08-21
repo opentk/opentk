@@ -6,7 +6,11 @@
 
 using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Security;
+using Bind.CL;
+using Bind.ES;
+using Bind.GL2;
 
 namespace Bind
 {
@@ -40,7 +44,7 @@ namespace Bind
             Trace.AutoFlush = true;
 
             Console.WriteLine("OpenGL binding generator {0} for OpenTK.",
-                System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+                Assembly.GetExecutingAssembly().GetName().Version.ToString());
             Console.WriteLine("For comments, bugs and suggestions visit http://opentk.sourceforge.net");
             //Console.WriteLine(" - the OpenTK team ;-)");
             Console.WriteLine();
@@ -122,40 +126,40 @@ namespace Bind
 
             try
             {
-                long ticks = System.DateTime.Now.Ticks;
+                long ticks = DateTime.Now.Ticks;
 
                 switch (mode)
                 {
                     case GeneratorMode.GL2:
-                        Generator = new Bind.GL2.Generator();
+                        Generator = new Generator();
                         break;
 
                     case GeneratorMode.ES10:
-                        Generator = new Bind.ES.ESGenerator("ES10");
+                        Generator = new ESGenerator("ES10");
                         break;
                     
                     case GeneratorMode.ES11:
-                        Generator = new Bind.ES.ESGenerator("ES11");
+                        Generator = new ESGenerator("ES11");
                         break;
                     
                     case GeneratorMode.ES20:
-                        Generator = new Bind.ES.ESGenerator("ES20");
+                        Generator = new ESGenerator("ES20");
                         break;
 
                     case GeneratorMode.CL10:
-                        Generator = new Bind.CL.CLGenerator("CL10");
+                        Generator = new CLGenerator("CL10");
                         break;
                     
                     case GeneratorMode.Wgl:
-                        Generator = new Bind.Wgl.Generator();
+                        Generator = new Wgl.Generator();
                         break;
 
                     case GeneratorMode.Glu:
-                        Generator = new Bind.Glu.Generator();
+                        Generator = new Glu.Generator();
                         break;
 
                     case GeneratorMode.Glx:
-                        Generator = new Bind.Glx.Generator();
+                        Generator = new Glx.Generator();
                         break;
 
                     case GeneratorMode.GL3:
@@ -170,7 +174,7 @@ namespace Bind
 
                 Generator.Process();
 
-                ticks = System.DateTime.Now.Ticks - ticks;
+                ticks = DateTime.Now.Ticks - ticks;
 
                 Console.WriteLine();
                 Console.WriteLine("Bindings generated in {0} seconds.", ticks / (double)10000000.0);

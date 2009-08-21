@@ -28,14 +28,14 @@ namespace Bind.Structures
                 {
                     using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, glTypes))
                     {
-                        GLTypes = Bind.MainClass.Generator.ReadTypeMap(sr);
+                        GLTypes = MainClass.Generator.ReadTypeMap(sr);
                     }
                 }
                 if (CSTypes == null)
                 {
                     using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, csTypes))
                     {
-                        CSTypes = Bind.MainClass.Generator.ReadCSTypeMap(sr);
+                        CSTypes = MainClass.Generator.ReadCSTypeMap(sr);
                     }
                 }
                 typesLoaded = true;
@@ -378,8 +378,8 @@ namespace Bind.Structures
             }
 
             CurrentType =
-                Bind.Structures.Type.CSTypes.ContainsKey(CurrentType) ?
-                Bind.Structures.Type.CSTypes[CurrentType] : CurrentType;
+                CSTypes.ContainsKey(CurrentType) ?
+                CSTypes[CurrentType] : CurrentType;
 
             // Make sure that enum parameters follow enum overrides, i.e.
             // if enum ErrorCodes is overriden to ErrorCode, then parameters

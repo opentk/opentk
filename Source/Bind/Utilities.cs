@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using Bind.Structures;
+using Delegate=Bind.Structures.Delegate;
+using Enum=Bind.Structures.Enum;
 
 namespace Bind
 {
@@ -125,7 +127,7 @@ namespace Bind
         /// </summary>
         /// <param name="enums"></param>
         /// <param name="t"></param>
-        internal static void Merge(EnumCollection enums, Bind.Structures.Enum t)
+        internal static void Merge(EnumCollection enums, Enum t)
         {
             if (!enums.ContainsKey(t.Name))
             {
@@ -133,8 +135,8 @@ namespace Bind
             }
             else
             {
-                Bind.Structures.Enum e = enums[t.Name];
-                foreach (Bind.Structures.Constant c in t.ConstantCollection.Values)
+                Enum e = enums[t.Name];
+                foreach (Constant c in t.ConstantCollection.Values)
                 {
                     Merge(e, c);
                 }
@@ -153,7 +155,7 @@ namespace Bind
         /// <param name="s"></param>
         /// <param name="t"></param>
         /// <returns></returns>
-        internal static Bind.Structures.Enum Merge(Bind.Structures.Enum s, Bind.Structures.Constant t)
+        internal static Enum Merge(Enum s, Constant t)
         {
             if (!s.ConstantCollection.ContainsKey(t.Name))
             {
@@ -184,7 +186,7 @@ namespace Bind
         /// </summary>
         /// <param name="enums"></param>
         /// <param name="t"></param>
-        internal static void Merge(DelegateCollection delegates, Bind.Structures.Delegate t)
+        internal static void Merge(DelegateCollection delegates, Delegate t)
         {
             if (!delegates.ContainsKey(t.Name))
             {

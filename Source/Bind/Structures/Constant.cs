@@ -5,6 +5,8 @@
 #endregion
 
 using System;
+using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 
 namespace Bind.Structures
@@ -73,7 +75,7 @@ namespace Bind.Structures
                 {
                     value = value.Trim();
 
-                    if (value.ToLower() == " 0xffffffffffffffff") System.Diagnostics.Debugger.Break();
+                    if (value.ToLower() == " 0xffffffffffffffff") Debugger.Break();
                     // Check whether this value is a number and make sure the Unchecked property is set correctly.
                     ulong number;
                     if (value.ToLower().StartsWith("0x"))
@@ -84,7 +86,7 @@ namespace Bind.Structures
                         if (value.ToLower().EndsWith("u"))
                             value = value.Substring(0, value.Length - 1);
                     }
-                    if (UInt64.TryParse(value.ToLower().Replace("0x", String.Empty), System.Globalization.NumberStyles.AllowHexSpecifier, null, out number))
+                    if (UInt64.TryParse(value.ToLower().Replace("0x", String.Empty), NumberStyles.AllowHexSpecifier, null, out number))
                     {
                         // The value is a number, check if it should be unchecked.
                         if (number > 0x7FFFFFFF)

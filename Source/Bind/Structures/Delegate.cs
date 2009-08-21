@@ -42,14 +42,14 @@ namespace Bind.Structures
             {
                 using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, glSpec))
                 {
-                    Delegates = Bind.MainClass.Generator.ReadDelegates(sr);
+                    Delegates = MainClass.Generator.ReadDelegates(sr);
                 }
 
                 if (!String.IsNullOrEmpty(glSpecExt))
                 {
                     using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, glSpecExt))
                     {
-                        foreach (Delegate d in Bind.MainClass.Generator.ReadDelegates(sr).Values)
+                        foreach (Delegate d in MainClass.Generator.ReadDelegates(sr).Values)
                         {
                             Utilities.Merge(Delegates, d);
                         }
@@ -436,7 +436,7 @@ namespace Bind.Structures
             // to avoid redefinitions.
             foreach (Function f in wrappers)
             {
-                Bind.Structures.Function.Wrappers.AddChecked(f);
+                Function.Wrappers.AddChecked(f);
 
                 if (!f.CLSCompliant)
                 {
@@ -454,7 +454,7 @@ namespace Bind.Structures
                     }
 
                     if (somethingChanged)
-                        Bind.Structures.Function.Wrappers.AddChecked(cls);
+                        Function.Wrappers.AddChecked(cls);
                 }
             }
         }

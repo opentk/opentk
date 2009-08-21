@@ -30,9 +30,9 @@ namespace Bind.Structures
             Initialize(enumFile, enumextFile);
 
             if (!String.IsNullOrEmpty(auxFile))
-                using (System.IO.StreamReader sr = new System.IO.StreamReader(Path.Combine(Settings.InputPath, auxFile)))
+                using (StreamReader sr = new StreamReader(Path.Combine(Settings.InputPath, auxFile)))
                 {
-                    AuxEnums = Bind.MainClass.Generator.ReadEnums(sr);
+                    AuxEnums = MainClass.Generator.ReadEnums(sr);
                 }
         }
 
@@ -44,7 +44,7 @@ namespace Bind.Structures
                 {
                     using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, enumFile))
                     {
-                        GLEnums = Bind.MainClass.Generator.ReadEnums(sr);
+                        GLEnums = MainClass.Generator.ReadEnums(sr);
                     }
                 }
 
@@ -52,7 +52,7 @@ namespace Bind.Structures
                 {
                     using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, enumextFile))
                     {
-                        foreach (Bind.Structures.Enum e in Bind.MainClass.Generator.ReadEnums(sr).Values)
+                        foreach (Enum e in MainClass.Generator.ReadEnums(sr).Values)
                         {
                             //enums.Add(e.Name, e);
                             Utilities.Merge(GLEnums, e);

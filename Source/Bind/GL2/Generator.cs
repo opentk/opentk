@@ -11,6 +11,9 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml.XPath;
 using Bind.Structures;
+using Delegate=Bind.Structures.Delegate;
+using Enum=Bind.Structures.Enum;
+using Type=Bind.Structures.Type;
 
 namespace Bind.GL2
 {
@@ -67,16 +70,16 @@ namespace Bind.GL2
             //    new Regex(@"(Coord1|Attrib(I?)1(u?)|Stream1|Uniform2(u?)|(Point|Convolution|Transform|Sprite|List|Combiner|Tex)Parameter|Fog(Coord)?.*|VertexWeight|(Fragment)?Light(Model)?|Material|ReplacementCodeu?b?|Tex(Gen|Env)|Indexu?|TextureParameter.v)",
             //    RegexOptions.Compiled);
 
-            Bind.Structures.Type.Initialize(glTypemap, csTypemap);
-            Bind.Structures.Enum.Initialize(enumSpec, enumSpecExt);
-            Bind.Structures.Enum.GLEnums.Translate(new XPathDocument(Path.Combine(Settings.InputPath, functionOverridesFile)));
-            Bind.Structures.Function.Initialize();
-            Bind.Structures.Delegate.Initialize(glSpec, glSpecExt);
+            Type.Initialize(glTypemap, csTypemap);
+            Enum.Initialize(enumSpec, enumSpecExt);
+            Enum.GLEnums.Translate(new XPathDocument(Path.Combine(Settings.InputPath, functionOverridesFile)));
+            Function.Initialize();
+            Delegate.Initialize(glSpec, glSpecExt);
 
             this.WriteBindings(
-                Bind.Structures.Delegate.Delegates,
-                Bind.Structures.Function.Wrappers,
-                Bind.Structures.Enum.GLEnums);
+                Delegate.Delegates,
+                Function.Wrappers,
+                Enum.GLEnums);
         }
 
         #endregion
@@ -112,7 +115,7 @@ namespace Bind.GL2
                 {
                     // Get next OpenGL function
 
-                    Bind.Structures.Delegate d = new Bind.Structures.Delegate();
+                    Delegate d = new Delegate();
 
                     // Get function name:
                     d.Name = line.Split(Utilities.Separators, StringSplitOptions.RemoveEmptyEntries)[0];
@@ -184,7 +187,7 @@ namespace Bind.GL2
             EnumCollection enums = new EnumCollection();
 
             // complete_enum contains all opengl enumerants.
-            Bind.Structures.Enum complete_enum = new Bind.Structures.Enum();
+            Enum complete_enum = new Enum();
             complete_enum.Name = Settings.CompleteEnumName;
 
             do
@@ -203,7 +206,7 @@ namespace Bind.GL2
                         continue;
 
                     // Declare a new enumerant
-                    Bind.Structures.Enum e = new Bind.Structures.Enum();
+                    Enum e = new Enum();
                     e.Name = Char.IsDigit(words[0][0]) ? Settings.ConstantPrefix + words[0] : words[0];
 
                     // And fill in the values for this enumerant
@@ -393,7 +396,7 @@ namespace Bind.GL2
 
         #region private string NextValidLine(StreamReader sr)
 
-        private string NextValidLine(System.IO.StreamReader sr)
+        private string NextValidLine(StreamReader sr)
         {
             string line;
 
@@ -471,7 +474,7 @@ namespace Bind.GL2
                 sw.WriteLine("{");
 
                 sw.Indent();
-                WriteEnums(sw, Bind.Structures.Enum.GLEnums);
+                WriteEnums(sw, Enum.GLEnums);
                 sw.Unindent();
 
                 if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
@@ -495,7 +498,7 @@ namespace Bind.GL2
                 sw.WriteLine("using System.Runtime.InteropServices;");
 
                 sw.WriteLine("#pragma warning disable 0649");
-                WriteDelegates(sw, Bind.Structures.Delegate.Delegates);
+                WriteDelegates(sw, Delegate.Delegates);
 
                 sw.Unindent();
                 sw.WriteLine("}");
@@ -512,7 +515,7 @@ namespace Bind.GL2
                 sw.WriteLine("using System;");
                 sw.WriteLine("using System.Runtime.InteropServices;");
 
-                WriteImports(sw, Bind.Structures.Delegate.Delegates);
+                WriteImports(sw, Delegate.Delegates);
 
                 sw.Unindent();
                 sw.WriteLine("}");
@@ -529,7 +532,7 @@ namespace Bind.GL2
                 sw.WriteLine("using System;");
                 sw.WriteLine("using System.Runtime.InteropServices;");
 
-                WriteWrappers(sw, Bind.Structures.Function.Wrappers, Bind.Structures.Type.CSTypes);
+                WriteWrappers(sw, Function.Wrappers, Type.CSTypes);
 
                 sw.Unindent();
                 sw.WriteLine("}");
@@ -571,7 +574,7 @@ namespace Bind.GL2
             sw.WriteLine("{");
             sw.Indent();
 
-            foreach (Bind.Structures.Delegate d in delegates.Values)
+            foreach (Delegate d in delegates.Values)
             {
                 sw.WriteLine("[System.Security.SuppressUnmanagedCodeSecurity()]");
                 sw.WriteLine("internal {0};", d.ToString());
@@ -609,7 +612,7 @@ namespace Bind.GL2
             sw.Indent();
             //sw.WriteLine("static {0}() {1} {2}", Settings.ImportsClass, "{", "}");    // Disable BeforeFieldInit
             sw.WriteLine();
-            foreach (Bind.Structures.Delegate d in delegates.Values)
+            foreach (Delegate d in delegates.Values)
             {
                 sw.WriteLine("[System.Security.SuppressUnmanagedCodeSecurity()]");
                 sw.WriteLine(
@@ -753,7 +756,7 @@ namespace Bind.GL2
                     sw.Indent();
                 }
 
-                foreach (Bind.Structures.Enum @enum in enums.Values)
+                foreach (Enum @enum in enums.Values)
                 {
                     sw.Write(@enum);
                     sw.WriteLine();
@@ -769,7 +772,7 @@ namespace Bind.GL2
             else
             {
                 // Tao legacy mode: dump all enums as constants in GLClass.
-                foreach (Bind.Structures.Constant c in enums[Settings.CompleteEnumName].ConstantCollection.Values)
+                foreach (Constant c in enums[Settings.CompleteEnumName].ConstantCollection.Values)
                 {
                     // Print constants avoiding circular definitions
                     if (c.Name != c.Value)
