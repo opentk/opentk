@@ -72,11 +72,11 @@ namespace Bind.Structures
 
         public Delegate(Delegate d)
         {
-            this.Category = d.Category;
-            this.Name = d.Name;
-            this.Parameters = new ParameterCollection(d.Parameters);
-            this.ReturnType = new Type(d.ReturnType);
-            this.Version = d.Version;
+            Category = d.Category;
+            Name = d.Name;
+            Parameters = new ParameterCollection(d.Parameters);
+            ReturnType = new Type(d.ReturnType);
+            Version = d.Version;
             //this.Version = !String.IsNullOrEmpty(d.Version) ? new string(d.Version.ToCharArray()) : "";
         }
 
@@ -525,7 +525,7 @@ namespace Bind.Structures
                 }
             }
 
-            ReturnType.Translate(overrides, this.Category);
+            ReturnType.Translate(overrides, Category);
 
             if (ReturnType.CurrentType.ToLower().Contains("void") && ReturnType.Pointer != 0)
             {
@@ -581,7 +581,7 @@ namespace Bind.Structures
                     }
                 }
 
-                Parameters[i].Translate(overrides, this.Category);
+                Parameters[i].Translate(overrides, Category);
                 if (Parameters[i].CurrentType == "UInt16" && Name.Contains("LineStipple"))
                     Parameters[i].WrapperType = WrapperTypes.UncheckedParameter;
 
@@ -627,9 +627,9 @@ namespace Bind.Structures
     {
         public void Add(Delegate d)
         {
-            if (!this.ContainsKey(d.Name))
+            if (!ContainsKey(d.Name))
             {
-                this.Add(d.Name, d);
+                Add(d.Name, d);
             }
             else
             {

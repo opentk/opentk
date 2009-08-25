@@ -54,7 +54,7 @@ namespace Bind.Structures
         public Function(Function f)
             : this((Delegate)f)
         {
-            this.Body = new FunctionBody(f.Body);
+            Body = new FunctionBody(f.Body);
         }
 
         #endregion
@@ -73,7 +73,7 @@ namespace Bind.Structures
 
         public void TurnVoidPointersToIntPtr()
         {
-            foreach (Parameter p in this.Parameters)
+            foreach (Parameter p in Parameters)
             {
                 if (p.Pointer != 0 && p.CurrentType == "void")
                 {
@@ -230,9 +230,9 @@ namespace Bind.Structures
         public bool Equals(Function other)
         {
             return
-                !String.IsNullOrEmpty(this.TrimmedName) && !String.IsNullOrEmpty(other.TrimmedName) &&
-                this.TrimmedName == other.TrimmedName &&
-                this.Parameters.ToString(true) == other.Parameters.ToString(true);
+                !String.IsNullOrEmpty(TrimmedName) && !String.IsNullOrEmpty(other.TrimmedName) &&
+                TrimmedName == other.TrimmedName &&
+                Parameters.ToString(true) == other.Parameters.ToString(true);
         }
 
         #endregion
@@ -571,7 +571,7 @@ namespace Bind.Structures
                 }
             }
 
-            this.Body = f.Body;
+            Body = f.Body;
         }
 
         #endregion
@@ -603,7 +603,7 @@ namespace Bind.Structures
         {
             foreach (string s in fb)
             {
-                this.Add(s);
+                Add(s);
             }
         }
 
@@ -629,16 +629,16 @@ namespace Bind.Structures
         {
             foreach (string t in collection)
             {
-                this.Add(t);
+                Add(t);
             }
         }
 
         public override string ToString()
         {
-            if (this.Count == 0)
+            if (Count == 0)
                 return String.Empty;
 
-            StringBuilder sb = new StringBuilder(this.Count);
+            StringBuilder sb = new StringBuilder(Count);
 
             sb.AppendLine("{");
             foreach (string s in this)
@@ -661,9 +661,9 @@ namespace Bind.Structures
 
         public void Add(Function f)
         {
-            if (!this.ContainsKey(f.Extension))
+            if (!ContainsKey(f.Extension))
             {
-                this.Add(f.Extension, new List<Function>());
+                Add(f.Extension, new List<Function>());
                 this[f.Extension].Add(f);
             }
             else
@@ -676,7 +676,7 @@ namespace Bind.Structures
         {
             foreach (Function f in functions)
             {
-                this.Add(f);
+                Add(f);
             }
         }
 
