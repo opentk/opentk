@@ -11,19 +11,21 @@ namespace Bind.ES
 {
     class ESGenerator : Generator
     {
-        public ESGenerator(string name)
+        public ESGenerator(string nsName, string dirName)
         {
-            if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+            if (String.IsNullOrEmpty(nsName))
+                throw new ArgumentNullException("nsName");
+            if (dirName == null)
+                dirName = nsName;
 
             glTypemap = "GL2/gl.tm";
             csTypemap = "csharp.tm";
-            
-            enumSpec = name + "/signatures.xml";
+
+            enumSpec = dirName + "/signatures.xml";
             enumSpecExt = String.Empty;
-            glSpec = name + "/signatures.xml";
+            glSpec = dirName  + "/signatures.xml";
             glSpecExt = String.Empty;
-            functionOverridesFile = name + "/overrides.xml";
+            functionOverridesFile = dirName + "/overrides.xml";
 
             importsFile = "Core.cs";
             delegatesFile = "Delegates.cs";
@@ -33,8 +35,8 @@ namespace Bind.ES
             Settings.DelegatesClass = "Delegates";
 
             Settings.OutputClass = "ES";
-            Settings.OutputNamespace = "OpenTK.Graphics." + name;
-            Settings.OutputPath = Path.Combine(Directory.GetParent(Settings.OutputPath).FullName, name);
+            Settings.OutputNamespace = "OpenTK.Graphics." + nsName;
+            Settings.OutputPath = Path.Combine(Settings.OutputPath, dirName);
         }
 
         public override DelegateCollection ReadDelegates(StreamReader specFile)
@@ -42,7 +44,7 @@ namespace Bind.ES
             DelegateCollection delegates = new DelegateCollection();
 
             XPathDocument overrides = new XPathDocument(new StreamReader(Path.Combine(Settings.InputPath, functionOverridesFile)));
-            
+
             XPathNavigator nav = new XPathDocument(specFile).CreateNavigator().SelectSingleNode("/signatures");
 
             foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
