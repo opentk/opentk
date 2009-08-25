@@ -12,6 +12,8 @@ using System.Text;
 using System.IO;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Reflection;
+using OpenTK.Build.Properties;
 
 #endregion
 
@@ -21,49 +23,29 @@ namespace OpenTK.Build
     {
         static string RootPath;
         static string SourcePath;
-        static string ToolPath = "Build";
-        static string PrebuildPath = Path.Combine(ToolPath, "Prebuild.exe");
-        static string BinPath;
-        static string ExePath;
-        static string LibPath;
-        static string ExamplePath;
-        static string DataSourcePath;
-        static string DataPath;
 
-        static string PrebuildXml = Path.Combine(ToolPath, "Prebuild.xml");
+        const string bindings = "Generator.Prebuild.xml";
+        const string opentk = "OpenTK.Prebuild.xml";
+        const string quickstart = "QuickStart.Prebuild.xml";
 
-        static Regex DataFiles = new Regex(@"^.*\.(bmp|png|jpg|txt|glsl|wav|ogg)$",
-                                           RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-        enum BuildMode
-        {
-            Default = 0,
-            Release = 0,
-            Debug
-        }
+        static readonly Assembly Prebuild = Assembly.Load(Resources.Prebuild);
 
         enum BuildTarget
         {
-            Default = 0,
-            Net = 0,
-            Mono,
             VS2005,
-            SharpDevelop,
-            SharpDevelop2,
-            MonoDevelop,
+            VS2008,
+            Mono,
+            Net,
             Clean,
             DistClean,
-            SVNClean
         }
 
-        static BuildMode mode = BuildMode.Default;
-        static BuildTarget target = BuildTarget.Default;
+        static BuildTarget target = BuildTarget.VS2005;
 
         static void PrintUsage()
         {
-            Console.WriteLine("Usage: Build.exe BuildTarget [BuildMode]");
-            Console.WriteLine("\tBuildTarget: vs (recommended) or one of clean/distclean/mono/net");
-            Console.WriteLine("\tBuildMode: debug/release");
+            Console.WriteLine("Usage: Build.exe target");
+            Console.WriteLine("    target: one of vs, vs9, clean, distclean");
         }
 
         static void Main(string[] args)
@@ -77,20 +59,14 @@ namespace OpenTK.Build
                 args[0] = Console.ReadLine();
                 if (args[0] == String.Empty)
                     args[0] = "vs";
-
-                if (args[0] != "vs")
-                {
-                    Console.Write("Select build mode (optional): ");
-                    args[1] = Console.ReadLine();
-                    if (args[1] == String.Empty)
-                        args[1] = "release";
-                }
             }
 
-            RootPath = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
-            Directory.SetCurrentDirectory(RootPath);
+            RootPath = Directory.GetCurrentDirectory();
             SourcePath = Path.Combine(RootPath, "Source");
-            DataSourcePath = Path.Combine(SourcePath, Path.Combine("Examples", "Data"));
+
+            File.WriteAllText(bindings, Resources.Generator);
+            File.WriteAllText(opentk, Resources.OpenTK);
+            File.WriteAllText(quickstart, Resources.QuickStart);
 
             // Workaroung for nant on x64 windows (safe for other platforms too, as this affects only the current process).
             Environment.SetEnvironmentVariable("CommonProgramFiles(x86)", String.Empty, EnvironmentVariableTarget.Process);
@@ -101,45 +77,28 @@ namespace OpenTK.Build
                 string arg = s.ToLower().Trim();
                 switch (arg)
                 {
-                    case "debug":
-                    case "d":
-                        mode = BuildMode.Debug;
-                        break;
-
-                    case "release":
-                    case "r":
-                        mode = BuildMode.Release;
+                    case "":
                         break;
 
                     case "mono":
+                    case "xbuild":
                         target = BuildTarget.Mono;
                         break;
 
                     case "net":
+                    case "msbuild":
                         target = BuildTarget.Net;
                         break;
 
-                    case "monodev":
-                    case "monodevelop":
-                    case "md":
-                        target = BuildTarget.MonoDevelop;
-                        break;
-
-                    case "sharpdev2":
-                    case "sharpdevelop2":
-                    case "sd2":
-                        target = BuildTarget.SharpDevelop2;
-                        break;
-
-                    case "sharpdev":
-                    case "sharpdevelop":
-                    case "sd":
-                        target = BuildTarget.SharpDevelop;
-                        break;
-
                     case "vs2005":
+                    case "vs8":
                     case "vs":
                         target = BuildTarget.VS2005;
+                        break;
+
+                    case "vs2008":
+                    case "vs9":
+                        target = BuildTarget.VS2008;
                         break;
 
                     case "clean":
@@ -150,9 +109,6 @@ namespace OpenTK.Build
                         target = BuildTarget.DistClean;
                         break;
 
-                    case "":
-                        break;
-
                     default:
                         Console.WriteLine("Unknown command: {0}", s);
                         PrintUsage();
@@ -160,72 +116,62 @@ namespace OpenTK.Build
                 }
             }
 
-            BinPath = Path.Combine("Binaries", mode == BuildMode.Debug ? "Debug" : "Release");
-            ExePath = Path.Combine(BinPath, "Exe");
-            LibPath = Path.Combine(BinPath, "Libraries");
-            ExamplePath = Path.Combine(BinPath, "Examples");
-            DataPath = Path.Combine(ExamplePath, "Data");
-
             switch (target)
             {
-                case BuildTarget.Mono:
-                    Console.WriteLine("Building OpenTK using Mono.");
-                    ExecuteProcess(PrebuildPath, "/target nant /file " + PrebuildXml);
-                    Console.WriteLine();
-                    ExecuteProcess(
-                        "nant",
-                        "-buildfile:./Build/OpenTK.build -t:mono-2.0 " + (mode == BuildMode.Debug ? "build-debug" : "build-release"));
-                    CopyBinaries();
-                    break;
+                //case BuildTarget.Mono:
+                //    Console.WriteLine("Building OpenTK using Mono/XBuild.");
+                //    ExecuteProcess(PrebuildPath, "/target nant /file " + PrebuildXml);
+                //    Console.WriteLine();
+                //    ExecuteProcess(
+                //        "nant",
+                //        "-buildfile:./Build/OpenTK.build -t:mono-2.0 " + (mode == BuildMode.Debug ? "build-debug" : "build-release"));
+                //    CopyBinaries();
+                //    break;
 
-                case BuildTarget.Net:
-                    Console.WriteLine("Building OpenTK using .Net");
-                    ExecuteProcess(PrebuildPath, "/target nant /file " + PrebuildXml);
-                    Console.WriteLine();
-                    ExecuteProcess(
-                        "nant",
-                        "-buildfile:./Build/OpenTK.build -t:net-2.0 " + (mode == BuildMode.Debug ? "build-debug" : "build-release"));
-                    CopyBinaries();
-                    break;
-
-                case BuildTarget.MonoDevelop:
-                    Console.WriteLine("Creating MonoDevelop project files");
-                    ExecuteProcess(PrebuildPath, "/target monodev /file " + PrebuildXml);
-                    break;
-
-                case BuildTarget.SharpDevelop:
-                    Console.WriteLine("Creating SharpDevelop project files");
-                    ExecuteProcess(PrebuildPath, "/target sharpdev /file " + PrebuildXml);
-                    break;
-
-                case BuildTarget.SharpDevelop2:
-                    Console.WriteLine("Creating SharpDevelop project files");
-                    ExecuteProcess(PrebuildPath, "/target sharpdev2 /file " + PrebuildXml);
-                    break;
+                //case BuildTarget.Net:
+                //    Console.WriteLine("Building OpenTK using .Net");
+                //    ExecuteProcess(PrebuildPath, "/target nant /file " + PrebuildXml);
+                //    Console.WriteLine();
+                //    ExecuteProcess(
+                //        "nant",
+                //        "-buildfile:./Build/OpenTK.build -t:net-2.0 " + (mode == BuildMode.Debug ? "build-debug" : "build-release"));
+                //    CopyBinaries();
+                //    break;
 
                 case BuildTarget.VS2005:
                     Console.WriteLine("Creating VS2005 project files");
-                    ExecuteProcess(PrebuildPath, "/target vs2005 /file " + PrebuildXml);
+                    ExecutePrebuild("/target", "vs2008", "/file", bindings);
+                    ExecutePrebuild("/target", "vs2005", "/file", opentk);
+                    ExecutePrebuild("/target", "vs2005", "/file", quickstart);
                     break;
 
+                case BuildTarget.VS2008:
+                    Console.WriteLine("Creating VS2008 project files");
+                    ExecutePrebuild("/target", "vs2008", "/file", bindings);
+                    ExecutePrebuild("/target", "vs2008", "/file", opentk);
+                    ExecutePrebuild("/target", "vs2008", "/file", quickstart);
+                    break;
+                
                 case BuildTarget.Clean:
                     Console.WriteLine("Cleaning intermediate object files.");
-                    ExecuteProcess(PrebuildPath, "/clean /yes /file " + PrebuildXml);
+                    ExecutePrebuild("/clean", "/yes", "/file", bindings);
+                    ExecutePrebuild("/clean", "/yes", "/file", opentk);
+                    ExecutePrebuild("/clean", "/yes", "/file", quickstart);
                     DeleteDirectories(RootPath, "obj");
                     break;
 
                 case BuildTarget.DistClean:
                     Console.WriteLine("Cleaning intermediate and final object files.");
-                    ExecuteProcess(PrebuildPath, "/clean /yes /file " + PrebuildXml);
+                    ExecutePrebuild("/clean", "/yes", "/file", bindings);
+                    ExecutePrebuild("/clean", "/yes", "/file", opentk);
+                    ExecutePrebuild("/clean", "/yes", "/file", quickstart); 
                     DeleteDirectories(RootPath, "obj");
                     DeleteDirectories(RootPath, "bin");
-                    if (Directory.Exists(RootPath + "Binaries"))
-                        Directory.Delete(RootPath + "Binaries", true);
-                    break;
 
-                case BuildTarget.SVNClean:
-                    Console.WriteLine("Deleting svn directories.");
-                    DeleteDirectories(RootPath, ".svn");
+                    string binaries_path = Path.Combine(RootPath, "Binaries");
+                    if (Directory.Exists(binaries_path))
+                        Directory.Delete(binaries_path, true);
+
                     break;
 
                 default:
@@ -234,8 +180,18 @@ namespace OpenTK.Build
                     return;
             }
 
-            //Console.WriteLine("Press any key to continue...");
-            //Console.ReadKey(true);
+            // Wait until Prebuild releases the input files.
+            System.Threading.Thread.Sleep(1000);
+
+            File.Delete(bindings);
+            File.Delete(opentk);
+            File.Delete(quickstart);
+
+            if (Debugger.IsAttached)
+            {
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey(true);
+            }
         }
 
         static void DeleteDirectories(string root_path, string search)
@@ -246,62 +202,6 @@ namespace OpenTK.Build
             foreach (string m in matches)
             {
                 Directory.Delete(m, true);
-            }
-        }
-
-        static void CopyBinaries()
-        {
-            List<string> example_matches = new List<string>();
-            List<string> exe_matches = new List<string>();
-            List<string> dll_matches = new List<string>();
-            List<string> dll_config_matches = new List<string>();
-            
-            Directory.CreateDirectory(BinPath);
-            Directory.CreateDirectory(ExePath);
-            Directory.CreateDirectory(LibPath);
-            Directory.CreateDirectory(ExamplePath);
-            Directory.CreateDirectory(DataPath);
-
-            // Move the libraries and the config files.
-            FindFiles(SourcePath, "*.dll", dll_matches);
-            FindFiles(SourcePath, "OpenTK.pdb", dll_matches);
-            FindFiles(SourcePath, "OpenTK.dll.mdb", dll_matches);
-            foreach (string m in dll_matches)
-            {
-                File.Delete(Path.Combine(LibPath, Path.GetFileName(m)));
-                File.Copy(m, Path.Combine(LibPath, Path.GetFileName(m)));
-                File.Delete(Path.Combine(ExamplePath, Path.GetFileName(m)));
-                File.Copy(m, Path.Combine(ExamplePath, Path.GetFileName(m)));
-            }
-
-            FindFiles(SourcePath, "*.dll.config", dll_config_matches);
-            foreach (string m in dll_config_matches)
-            {
-                File.Delete(Path.Combine(LibPath, Path.GetFileName(m)));
-                File.Copy(m, Path.Combine(LibPath, Path.GetFileName(m)));
-                File.Delete(Path.Combine(ExamplePath, Path.GetFileName(m)));
-                File.Copy(m, Path.Combine(ExamplePath, Path.GetFileName(m)));
-            }
-
-            // Then the examples.
-            FindFiles(Path.Combine(SourcePath, "Examples"), "*.exe", example_matches);
-            FindFiles(SourcePath, "Examples.pdb", example_matches);
-            FindFiles(SourcePath, "Examples.exe.mdb", example_matches);
-            foreach (string m in example_matches)
-            {
-                File.Delete(Path.Combine(ExamplePath, Path.GetFileName(m)));
-                File.Move(m, Path.Combine(ExamplePath, Path.GetFileName(m)));
-            }
-
-            // Copy example data.
-            FileCopy(DataSourcePath, DataPath, DataFiles);
-
-            // Then the rest of the exes.
-            FindFiles(SourcePath, "*.exe", exe_matches);
-            foreach (string m in exe_matches)
-            {
-                File.Delete(Path.Combine(ExePath, Path.GetFileName(m)));
-                File.Move(m, Path.Combine(ExePath, Path.GetFileName(m)));
             }
         }
 
@@ -339,7 +239,7 @@ namespace OpenTK.Build
                 Console.WriteLine(e.Message);
             }
         }
-        
+
         static void ExecuteProcess(string path, string args)
         {
             ProcessStartInfo sinfo = new ProcessStartInfo();
@@ -419,6 +319,11 @@ namespace OpenTK.Build
                 if (!name.StartsWith("."))
                     FileCopy(dir, Path.Combine(destdir, name), match);
             }
+        }
+
+        static void ExecutePrebuild(params string[] options)
+        {
+            Prebuild.EntryPoint.Invoke(null, new object[] { options });
         }
     }
 }
