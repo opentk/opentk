@@ -54,13 +54,13 @@ namespace Bind.Structures
         {
             if (t != null)
             {
-                this.CurrentType = t.CurrentType;
-                this.PreviousType = t.PreviousType;
-                this.WrapperType = t.WrapperType;
-                this.Array = t.Array;
-                this.Pointer = t.Pointer;
-                this.Reference = t.Reference;
-                this.ElementCount = t.ElementCount;
+                CurrentType = t.CurrentType;
+                PreviousType = t.PreviousType;
+                WrapperType = t.WrapperType;
+                Array = t.Array;
+                Pointer = t.Pointer;
+                Reference = t.Reference;
+                ElementCount = t.ElementCount;
             }
         }
         

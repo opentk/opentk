@@ -41,12 +41,12 @@ namespace Bind.Structures
             if (p == null)
                 return;
 
-            this.Name = p.Name;
-            this.Unchecked = p.Unchecked;
-            this.UnmanagedType = p.UnmanagedType;
-            this.Generic = p.Generic;
-            this.Flow = p.Flow;
-            this.cache = p.cache;
+            Name = p.Name;
+            Unchecked = p.Unchecked;
+            UnmanagedType = p.UnmanagedType;
+            Generic = p.Generic;
+            Flow = p.Flow;
+            cache = p.cache;
             //this.rebuild = false;
         }
 
@@ -381,7 +381,7 @@ namespace Bind.Structures
         {
             foreach (Parameter p in pc)
             {
-                this.Add(new Parameter(p));
+                Add(new Parameter(p));
             }
         }
 
@@ -531,7 +531,7 @@ namespace Bind.Structures
 
             StringBuilder sb = new StringBuilder();
             sb.Append("(");
-            if (this.Count > 0)
+            if (Count > 0)
             {
                 foreach (Parameter p in this)
                 {
@@ -576,7 +576,7 @@ namespace Bind.Structures
 
             sb.Append("(");
 
-            if (this.Count > 0)
+            if (Count > 0)
             {
                 foreach (Parameter p in this)
                 {
