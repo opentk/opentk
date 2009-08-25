@@ -76,7 +76,7 @@ namespace Bind.GL2
             Function.Initialize();
             Delegate.Initialize(glSpec, glSpecExt);
 
-            this.WriteBindings(
+            WriteBindings(
                 Delegate.Delegates,
                 Function.Wrappers,
                 Enum.GLEnums);

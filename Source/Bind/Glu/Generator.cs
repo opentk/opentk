@@ -60,7 +60,7 @@ namespace Bind.Glu
             Trace.WriteLine("Processing specs, please wait...");
             //this.Translate();
 
-            this.WriteBindings(
+            WriteBindings(
                 Delegate.Delegates,
                 Function.Wrappers,
                 Enum.GLEnums);

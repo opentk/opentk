@@ -224,7 +224,7 @@ namespace Bind.Structures
             // Translate enum names.
             {
                 List<string> keys_to_update = new List<string>();
-                foreach (Enum e in this.Values)
+                foreach (Enum e in Values)
                 {
                     string name = e.Name;
 
@@ -249,14 +249,14 @@ namespace Bind.Structures
                 foreach (string name in keys_to_update)
                 {
                     Enum e = this[name];
-                    this.Remove(name);
-                    this.Add(e.Name, e);
+                    Remove(name);
+                    Add(e.Name, e);
                 }
 
                 keys_to_update = null;
             }
 
-            foreach (Enum e in this.Values)
+            foreach (Enum e in Values)
             {
                 XPathNavigator enum_override = overrides.CreateNavigator().SelectSingleNode(String.Format(path, e.Name));
                 foreach (Constant c in e.ConstantCollection.Values)
@@ -283,7 +283,7 @@ namespace Bind.Structures
                     // In this case try searching all enums for the correct constant to alias (stupid opengl specs).
                     if (String.IsNullOrEmpty(c.Reference) && !Char.IsDigit(c.Value[0]))
                     {
-                        foreach (Enum @enum in this.Values)
+                        foreach (Enum @enum in Values)
                         {
                             // Skip generic GLenum
                             if (@enum.Name == "GLenum")
@@ -299,7 +299,7 @@ namespace Bind.Structures
                 }
             }
 
-            foreach (Enum e in this.Values)
+            foreach (Enum e in Values)
             {
             restart:
                 foreach (Constant c in e.ConstantCollection.Values)
@@ -320,7 +320,7 @@ namespace Bind.Structures
 
                 List<Constant> removed_tokens = new List<Constant>();
 
-                foreach (Enum e in this.Values)
+                foreach (Enum e in Values)
                 {
                     if (e.Name == "All")
                         continue;
