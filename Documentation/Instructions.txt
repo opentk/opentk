@@ -1,0 +1,21 @@
+=== Installation ===
+
+OpenTK does not require installation. Simply decompress the archive to a folder of your choice.
+
+
+=== Usage ===
+
+To use OpenTK, simply add "OpenTK.dll" as a reference to your project. You can find this file under "Binaries/OpenTK".
+
+Additionally, you should add "OpenTK.dll.config" to your project and set it to be copied to your output directory. Without OpenTK.dll.config, your application will not function correctly on Linux or MacOS.
+
+For more details, refer to "http://www.opentk.com/doc".
+
+
+=== Build instructions ===
+
+If you are using a fresh SVN checkout execute Build.exe to generate OpenTK.sln (simply press enter when prompted).
+
+You can build OpenTK.sln using Visual Studio 2005+, SharpDevelop 2.0+, MonoDevelop 2.0+. Additionally, you can use msbuild 9+ (.Net) or xbuild 2.4.2 (Mono) to build OpenTK.sln from the commandline.
+
+The resulting binaries will be placed into the Binaries/OpenTK/[Release|Debug] folders.
