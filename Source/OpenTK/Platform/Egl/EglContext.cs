@@ -33,7 +33,7 @@ using OpenTK.Platform.Windows;
 
 namespace OpenTK.Platform.Egl
 {
-    class EglContext : GraphicsContextBase
+    class EglContext : EmbeddedGraphicsContext
     {
         #region Fields
 
@@ -121,13 +121,6 @@ namespace OpenTK.Platform.Egl
         #endregion
 
         #region IGraphicsContextInternal Members
-
-        public override void LoadAll()
-        {
-            new OpenTK.Graphics.ES10.GL().LoadAll();
-            new OpenTK.Graphics.ES11.GL().LoadAll();
-            new OpenTK.Graphics.ES20.GL().LoadAll();
-        }
 
         public override IntPtr GetAddress(string function)
         {
