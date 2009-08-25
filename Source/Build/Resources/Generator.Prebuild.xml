@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Prebuild xmlns="http://dnpb.sourceforge.net/schemas/prebuild-1.7.xsd">
+
+  <Solution name="Generator">
+
+    <Configuration name="Debug">
+      <Options>
+        <CompilerDefines>DEBUG;TRACE;</CompilerDefines>
+        <OptimizeCode>false</OptimizeCode>
+        <DebugInformation>true</DebugInformation>
+      </Options>
+    </Configuration>
+
+    <Configuration name="Release">
+      <Options>
+        <CompilerDefines>TRACE;</CompilerDefines>
+        <OptimizeCode>true</OptimizeCode>
+        <DebugInformation>false</DebugInformation>
+      </Options>
+    </Configuration>
+
+    <Project name="Bind" path="Source/Bind" language="C#" type="Exe">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/Generator/Debug</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/Generator/Release</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="System"/>
+      <Reference name="System.Xml"/>
+      <Reference name="System.Core"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+        <Match path="." pattern="*.spec" recurse="true" buildAction="None"/>
+        <Match path="." pattern="*.tm" recurse="true" buildAction="None"/>
+        <Match path="." pattern="*.xml" recurse="true" buildAction="None"/>
+        <Match path="." pattern="*.xslt" recurse="true" buildAction="None"/>
+        <Match path="." pattern="*.txt" recurse="true" buildAction="None"/>
+      </Files>
+
+    </Project>
+
+    <Project name="Convert" path="Source/Converter" language="C#" type="Exe">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/Generator/Debug</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/Generator/Release</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="System"/>
+      <Reference name="System.Xml"/>
+      <Reference name="System.Core"/>
+      <Reference name="System.Xml.Linq"/>
+      
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+        <Match path="." pattern="*.h" recurse="true" buildAction="None"/>
+        <Match path="." pattern="*.spec" recurse="true" buildAction="None"/>
+        <Match path="." pattern="*.tm" recurse="true" buildAction="None"/>
+        <Match path="." pattern="*.xml" recurse="true" buildAction="None"/>
+        <Match path="." pattern="*.xslt" recurse="true" buildAction="None"/>
+        <Match path="." pattern="*.txt" recurse="true" buildAction="None"/>
+      </Files>
+
+    </Project>
+
+  </Solution>
+  
+</Prebuild>

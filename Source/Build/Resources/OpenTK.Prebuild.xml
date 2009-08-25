@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Prebuild xmlns="http://dnpb.sourceforge.net/schemas/prebuild-1.7.xsd">
+
+  <Solution name="OpenTK">
+
+    <Configuration name="Debug">
+      <Options>
+        <CompilerDefines>DEBUG;TRACE;</CompilerDefines>
+        <OptimizeCode>false</OptimizeCode>
+        <DebugInformation>true</DebugInformation>
+      </Options>
+    </Configuration>
+
+    <Configuration name="Release">
+      <Options>
+        <CompilerDefines>TRACE;</CompilerDefines>
+        <OptimizeCode>true</OptimizeCode>
+        <DebugInformation>false</DebugInformation>
+      </Options>
+    </Configuration>
+
+    <Files>
+      <File>Documentation/Todo.txt</File>
+      <File>Documentation/Release.txt</File>
+      <File>Documentation/Changelog.txt</File>
+      <File>Documentation/License.txt</File>
+      <File>Build/Instructions.txt</File>
+      <File>Build/Prebuild.xml</File>
+    </Files>
+
+    <Project name="OpenTK" path="Source/OpenTK" language="C#" type="Library">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/OpenTK/Debug</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+          <XmlDocFile>OpenTK.xml</XmlDocFile>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/OpenTK/Release</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+          <XmlDocFile>OpenTK.xml</XmlDocFile>
+        </Options>
+      </Configuration>
+
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+      <Reference name="System.Xml"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+        <Match path="." pattern="*.resx" recurse="true" buildAction="EmbeddedResource"/>
+        <Match path="." pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK.Build" path="Source/Build" language="C#" type="Exe" assemblyName="Build">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/OpenTK/Debug</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/OpenTK/Release</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="System"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+        <Match path="." pattern="*.resx" recurse="true" buildAction="EmbeddedResource"/>
+        <Match path="Resources" pattern="*.*" buildAction="Content"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK.Compatibility" path="Source/Compatibility" language="C#" type="Library">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/OpenTK/Debug</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+          <XmlDocFile>OpenTK.Compatibility.xml</XmlDocFile>
+          <SuppressWarnings>1591</SuppressWarnings>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/OpenTK/Release</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+          <XmlDocFile>OpenTK.Compatibility.xml</XmlDocFile>
+          <SuppressWarnings>1591</SuppressWarnings>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK"/>
+      <Reference name="OpenTK.GLControl"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+      <Reference name="System.Xml"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+        <Match path="." pattern="*.resx" recurse="true" buildAction="EmbeddedResource"/>
+        <Match path="." pattern="OpenTK.Compatibility.dll.config" buildAction="None" copyToOutput="Always"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK.Examples" path="Source/Examples" language="C#" type="WinExe" startupObject="Examples.Program" assemblyName="Examples">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/OpenTK/Debug</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/OpenTK/Release</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK" localCopy="true"/>
+      <Reference name="OpenTK.GLControl" localCopy="true"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+      <Reference name="System.Xml"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+        <Match path="." pattern="*.rtf" recurse="true" buildAction="EmbeddedResource" />
+        <Match path="." pattern="*.resx" recurse="true" buildAction="EmbeddedResource"/>
+        <Match path="../Examples/Data" pattern="^.*\.(bmp|png|jpg|txt|glsl|wav|ogg)$" useRegex="true" recurse="true" buildAction="None" copyToOutput="Always"/>
+        <Match path="./Data" pattern="*.txt" recurse="true" buildAction="None" copyToOutput="Always"/>
+        <Match path="./Data" pattern="*.glsl" recurse="true" buildAction="None" copyToOutput="Always"/>
+        <Match path="../OpenTK" pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
+        <Match path="../OpenTK" pattern="OpenTK.Compatibility.dll.config" buildAction="None" copyToOutput="Always"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK.GLControl" path="Source/GLControl" language="C#" type="Library">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/OpenTK/Debug</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+          <XmlDocFile>OpenTK.GLControl.xml</XmlDocFile>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/OpenTK/Release</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+          <XmlDocFile>OpenTK.GLControl.xml</XmlDocFile>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+      <Reference name="System.Xml"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
+  </Solution>
+
+</Prebuild>
