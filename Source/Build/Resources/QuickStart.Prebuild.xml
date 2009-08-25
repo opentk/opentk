@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Prebuild xmlns="http://dnpb.sourceforge.net/schemas/prebuild-1.7.xsd">
+
+  <Solution name="QuickStart">
+
+    <Configuration name="Debug">
+      <Options>
+        <CompilerDefines>DEBUG;TRACE;</CompilerDefines>
+        <OptimizeCode>false</OptimizeCode>
+        <DebugInformation>true</DebugInformation>
+      </Options>
+    </Configuration>
+
+    <Configuration name="Release">
+      <Options>
+        <CompilerDefines>TRACE;</CompilerDefines>
+        <OptimizeCode>true</OptimizeCode>
+        <DebugInformation>false</DebugInformation>
+      </Options>
+    </Configuration>
+
+    <Project name="QuickStart" path="Source/QuickStart" language="C#" type="WinExe">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/QuickStart/Debug</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/QuickStart/Release</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="OpenTK" localCopy="true"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+        <Match path="../../Binaries/OpenTK/Release" pattern="OpenTK.dll" buildAction="None"/>
+        <Match path="../../Binaries/OpenTK/Release" pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
+      </Files>
+
+    </Project>
+
+  </Solution>
+  
+</Prebuild>
