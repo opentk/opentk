@@ -31,7 +31,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Reflection;
 using System.Windows.Forms;
-using Examples.Properties;
+using OpenTK.Examples.Properties;
 
 namespace Examples
 {
