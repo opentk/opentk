@@ -55,6 +55,7 @@ namespace Examples.Tutorial
                      "EXT_geometry_shader4 not supported",
                      System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Exclamation);
                 Exit();
+                throw new NotSupportedException();
             }
 
             // create a shader object.
@@ -126,27 +127,27 @@ namespace Examples.Tutorial
             GL.AttachShader(shaderProgram, frag);
             GL.AttachShader(shaderProgram, vert);
             GL.AttachShader(shaderProgram, geom);
+
+            // Set the input type of the primitives we are going to feed the geometry shader, this should be the same as
+            // the primitive type given to GL.Begin. If the types do not match a GL error will occur (todo: verify GL_INVALID_ENUM, on glBegin)
+            GL.Ext.ProgramParameter(shaderProgram, ExtGeometryShader4.GeometryInputTypeExt, (int)BeginMode.Lines);
+            // Set the output type of the geometry shader. Becasue we input Lines we will output LineStrip(s).
+            GL.Ext.ProgramParameter(shaderProgram, ExtGeometryShader4.GeometryOutputTypeExt, (int)BeginMode.LineStrip);
+
+            // We must tell the shader program how much vertices the geometry shader will output (at most).
+            // One simple way is to query the maximum and use that.
+            // NOTE: Make sure that the number of vertices * sum(components of active varyings) does not
+            // exceed MaxGeometryTotalOutputComponents.
+            GL.Ext.ProgramParameter(shaderProgram, ExtGeometryShader4.GeometryVerticesOutExt, 50);
+
+            // NOTE: calls to ProgramParameter do not take effect until you call LinkProgram.
             GL.LinkProgram(shaderProgram);
 
             // output link info log.
             string info;
             GL.GetProgramInfoLog(shaderProgram, out info);
             Debug.WriteLine(info);
-
-            // Set the input type of the primitives we are going to feed the geometry shader, this should be the same as
-            // the primitive type given to GL.Begin. If the types do not match a GL error will occur (todo: verify GL_INVALID_ENUM, on glBegin)
-            GL.Ext.ProgramParameter(shaderProgram, ExtGeometryShader4.GeometryInputTypeExt, (int)All.Lines);
-            // Set the output type of the geometry shader. Becasue we input Lines we will output LineStrip(s).
-            GL.Ext.ProgramParameter(shaderProgram, ExtGeometryShader4.GeometryOutputTypeExt, (int)All.LineStrip);
-
-            // We must tell the shader program how much vertices the geometry shader will output (at most).
-            // The simple way is to query the maximum and use that.
-            int tmp;
-            // Get the maximum amount of vertices into tmp.
-            GL.GetInteger((GetPName)ExtGeometryShader4.MaxGeometryOutputVerticesExt, out tmp);
-            // And feed amount that to the shader program. (0x0400 on a HD3850, with catalyst 9.8)
-            GL.Ext.ProgramParameter(shaderProgram, ExtGeometryShader4.GeometryVerticesOutExt, tmp);
-
+            
             // Set clearcolor and bind the shader program.
             GL.ClearColor(0.1f, 0.1f, 0.1f, 0.1f);
             GL.UseProgram(shaderProgram);
@@ -200,7 +201,7 @@ namespace Examples.Tutorial
         /// <param name="e">resize event args</param>
         protected override void OnResize(EventArgs e)
         {
-            GL.Viewport(0, 0, Width, Height);
+            GL.Viewport(ClientRectangle);
 
             // Set projection matrix
             GL.MatrixMode(MatrixMode.Projection);
@@ -209,8 +210,8 @@ namespace Examples.Tutorial
 
             // Set selector state back to matrix mode
             GL.MatrixMode(MatrixMode.Modelview);
-            base.OnResize(e);
 
+            base.OnResize(e);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
