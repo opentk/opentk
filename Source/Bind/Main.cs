@@ -6,6 +6,8 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Security;
 using Bind.CL;
@@ -49,6 +51,8 @@ namespace Bind
             //Console.WriteLine(" - the OpenTK team ;-)");
             Console.WriteLine();
 
+            string dirName =  null;
+
             try
             {
                 foreach (string a in arguments)
@@ -64,11 +68,11 @@ namespace Bind
                                 return;
                             case "in":
                             case "input":
-                                Settings.InputPath = b[1];
+                                Settings.InputPath = string.Join(Path.DirectorySeparatorChar.ToString(), b.Skip(1).ToArray());
                                 break;
                             case "out":
                             case "output":
-                                Settings.OutputPath = b[1];
+                                Settings.OutputPath = string.Join(Path.DirectorySeparatorChar.ToString(), b.Skip(1).ToArray());
                                 break;
                             case "mode":
                                 string arg = b[1].ToLower();
@@ -84,6 +88,8 @@ namespace Bind
                                     mode = GeneratorMode.CL10;
                                 else
                                     throw new NotImplementedException();
+                                if (b.Length > 1)
+                                    dirName = b[2];
                                 break;
                             case "namespace":
                             case "ns":
@@ -104,6 +110,7 @@ namespace Bind
                                 //Settings.Compatibility |= b[1].ToLower().Contains("novoid") ? Settings.Legacy.TurnVoidPointersToIntPtr : Settings.Legacy.None;
                                 Settings.Compatibility |= b[1].ToLower().Contains("permutations") ? Settings.Legacy.GenerateAllPermutations : Settings.Legacy.None;
                                 Settings.Compatibility |= b[1].ToLower().Contains("enums_in_class") ? Settings.Legacy.NestedEnums : Settings.Legacy.None;
+                                Settings.Compatibility |= b[1].ToLower().Contains("nodocs") ? Settings.Legacy.NoDocumentation : Settings.Legacy.None;
                                 break;
                             default:
                                 throw new ArgumentException(
@@ -135,15 +142,15 @@ namespace Bind
                         break;
 
                     case GeneratorMode.ES10:
-                        Generator = new ESGenerator("ES10");
+                        Generator = new ESGenerator("ES10", dirName);
                         break;
                     
                     case GeneratorMode.ES11:
-                        Generator = new ESGenerator("ES11");
+                        Generator = new ESGenerator("ES11", dirName);
                         break;
                     
                     case GeneratorMode.ES20:
-                        Generator = new ESGenerator("ES20");
+                        Generator = new ESGenerator("ES20", dirName);
                         break;
 
                     case GeneratorMode.CL10:
@@ -164,12 +171,12 @@ namespace Bind
 
                     case GeneratorMode.GL3:
                         throw new NotImplementedException(String.Format("Mode {0} not implemented.", mode));
-                    
+
                     case GeneratorMode.Unknown:
                     default:
                         Console.WriteLine("Please specify a generator mode (use '-mode:gl2/gl3/glu/wgl/glx])'");
                         return;
-                        
+
                 }
 
                 Generator.Process();
@@ -189,11 +196,6 @@ namespace Bind
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine("The requested functionality is not implemented yet.");
-            }
-            finally
-            {
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey(true);
             }
         }
 
