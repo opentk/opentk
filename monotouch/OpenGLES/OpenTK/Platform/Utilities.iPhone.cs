@@ -14,6 +14,8 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Diagnostics;
 
+using MonoTouch.OpenGLES;
+
 using OpenTK.Graphics;
 
 #endregion
@@ -44,6 +46,18 @@ namespace OpenTK.Platform
             (context as IGraphicsContextInternal).LoadAll();
 
             return context;
+        }
+
+        public static IGraphicsContext CreateGraphicsContext(EAGLRenderingAPI version)
+        {
+            int major = 0, minor = 0;
+            switch (version) {
+                case EAGLRenderingAPI.OpenGLES1: major = 1; minor = 1; break;
+                case EAGLRenderingAPI.OpenGLES2: major = 2; minor = 0; break;
+                default:
+                    throw new ArgumentException("Unsupported EAGLRenderingAPI version: " + version);
+            }
+            return CreateGraphicsContext(null, null, major, minor, GraphicsContextFlags.Embedded);
         }
     }
 }
