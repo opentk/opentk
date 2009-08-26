@@ -14,6 +14,8 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Diagnostics;
 
+using OpenTK.Graphics;
+
 #endregion
 
 namespace OpenTK.Platform
@@ -23,122 +25,25 @@ namespace OpenTK.Platform
     /// </summary>
     public static class Utilities
     {
-        #region internal static void LoadExtensions(Type type)
-
-        delegate Delegate LoadDelegateFunction(string name, Type signature);
-
-        /// <internal />
-        /// <summary>Loads all extensions for the specified class. This function is intended
-        /// for OpenGL, Wgl, Glx, OpenAL etc.</summary>
-        /// <param name="type">The class to load extensions for.</param>
-        /// <remarks>
-        /// <para>The Type must contain a nested class called "Delegates".</para>
-        /// <para>
-        /// The Type must also implement a static function called LoadDelegate with the
-        /// following signature:
-        /// <code>static Delegate LoadDelegate(string name, Type signature)</code>
-        /// </para>
-        /// <para>This function allocates memory.</para>
-        /// </remarks>
-        internal static void LoadExtensions(Type type)
+        /// <summary>
+        /// Creates an IGraphicsContext instance for the specified window.
+        /// </summary>
+        /// <param name="mode">The GraphicsMode for the GraphicsContext.</param>
+        /// <param name="window">An IWindowInfo instance describing the parent window for this IGraphicsContext.</param>
+        /// <param name="major">The major OpenGL version number for this IGraphicsContext.</param>
+        /// <param name="minor">The minor OpenGL version number for this IGraphicsContext.</param>
+        /// <param name="flags">A bitwise collection of GraphicsContextFlags with specific options for this IGraphicsContext.</param>
+        /// <returns>A new IGraphicsContext instance.</returns>
+        public static IGraphicsContext CreateGraphicsContext(
+            GraphicsMode mode, IWindowInfo window,
+            int major, int minor, GraphicsContextFlags flags)
         {
-            // Using reflection is more than 3 times faster than directly loading delegates on the first
-            // run, probably due to code generation overhead. Subsequent runs are faster with direct loading
-            // than with reflection, but the first time is more significant.
+            GraphicsContext context = new GraphicsContext(mode, window, major, minor, flags);
+            context.MakeCurrent(window);
 
-            int supported = 0;
-            Type extensions_class = type.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-            if (extensions_class == null)
-                throw new InvalidOperationException("The specified type does not have any loadable extensions.");
+            (context as IGraphicsContextInternal).LoadAll();
 
-            FieldInfo[] delegates = extensions_class.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-            if (delegates == null)
-                throw new InvalidOperationException("The specified type does not have any loadable extensions.");
-
-            MethodInfo load_delegate_method_info = type.GetMethod("LoadDelegate", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-            if (load_delegate_method_info == null)
-                throw new InvalidOperationException(type.ToString() + " does not contain a static LoadDelegate method.");
-            LoadDelegateFunction LoadDelegate = (LoadDelegateFunction)Delegate.CreateDelegate(
-                typeof(LoadDelegateFunction), load_delegate_method_info);
-
-#if !MINIMAL
-            Debug.Write("Load extensions for " + type.ToString() + "... ");
-#endif
-
-            foreach (FieldInfo f in delegates)
-            {
-                Delegate d = LoadDelegate(f.Name, f.FieldType);
-                if (d != null)
-                    ++supported;
-
-                f.SetValue(null, d);
-            }
-
-            FieldInfo rebuildExtensionList = type.GetField("rebuildExtensionList", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-            if (rebuildExtensionList != null)
-                rebuildExtensionList.SetValue(null, true);
+            return context;
         }
-
-        #endregion
-
-        #region internal static bool TryLoadExtension(Type type, string extension)
-
-        /// <internal />
-        /// <summary>Loads the specified extension for the specified class. This function is intended
-        /// for OpenGL, Wgl, Glx, OpenAL etc.</summary>
-        /// <param name="type">The class to load extensions for.</param>
-        /// <param name="extension">The extension to load.</param>
-        /// <remarks>
-        /// <para>The Type must contain a nested class called "Delegates".</para>
-        /// <para>
-        /// The Type must also implement a static function called LoadDelegate with the
-        /// following signature:
-        /// <code>static Delegate LoadDelegate(string name, Type signature)</code>
-        /// </para>
-        /// <para>This function allocates memory.</para>
-        /// </remarks>
-        internal static bool TryLoadExtension(Type type, string extension)
-        {
-            Type extensions_class = type.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-            if (extensions_class == null)
-            {
-#if !MINIMAL
-                Debug.Print(type.ToString(), " does not contain extensions.");
-#endif
-                return false;
-            }
-
-            LoadDelegateFunction LoadDelegate = (LoadDelegateFunction)Delegate.CreateDelegate(typeof(LoadDelegateFunction),
-                type.GetMethod("LoadDelegate", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public));
-            if (LoadDelegate == null)
-            {
-#if !MINIMAL
-                Debug.Print(type.ToString(), " does not contain a static LoadDelegate method.");
-#endif
-                return false;
-            }
-
-            FieldInfo f = extensions_class.GetField(extension, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-            if (f == null)
-            {
-#if !MINIMAL
-                Debug.Print("Extension \"", extension, "\" not found in ", type.ToString());
-#endif
-                return false;
-            }
-
-            Delegate old = f.GetValue(null) as Delegate;
-            Delegate @new = LoadDelegate(f.Name, f.FieldType);
-            if ((old != null ? old.Target : null) != (@new != null ? @new.Target : null))
-            {
-                f.SetValue(null, @new);
-                FieldInfo rebuildExtensionList = type.GetField("rebuildExtensionList", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-                if (rebuildExtensionList != null)
-                    rebuildExtensionList.SetValue(null, true);
-            }
-            return @new != null;
-        }
-
-        #endregion
     }
 }
