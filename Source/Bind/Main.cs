@@ -88,7 +88,7 @@ namespace Bind
                                     mode = GeneratorMode.CL10;
                                 else
                                     throw new NotImplementedException();
-                                if (b.Length > 1)
+                                if (b.Length > 2)
                                     dirName = b[2];
                                 break;
                             case "namespace":
