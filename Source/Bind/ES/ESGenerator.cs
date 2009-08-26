@@ -34,7 +34,7 @@ namespace Bind.ES
             Settings.ImportsClass = "Core";
             Settings.DelegatesClass = "Delegates";
 
-            Settings.OutputClass = "ES";
+            Settings.OutputClass = "GL";
             Settings.OutputNamespace = "OpenTK.Graphics." + nsName;
             Settings.OutputPath = Path.Combine(Settings.OutputPath, dirName);
         }
