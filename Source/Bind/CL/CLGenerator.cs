@@ -38,7 +38,7 @@ namespace Bind.CL
 
             Settings.OutputClass = "CL";
             Settings.OutputNamespace = "OpenTK.Compute." + name;
-            Settings.OutputPath = Path.Combine("../../Source/OpenTK/Compute", name);
+            Settings.OutputPath = Path.Combine("../../../Source/OpenTK/Compute", name);
 
             //Settings.Compatibility &= ~Settings.Legacy.TurnVoidPointersToIntPtr;
             Settings.Compatibility |= Settings.Legacy.NoDebugHelpers;
