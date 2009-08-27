@@ -51,7 +51,8 @@ namespace OpenTK.Platform.iPhoneOS {
 
         public void SwapBuffers()
         {
-            throw new NotSupportedException();
+            if (!EAGLContext.PresentRenderBuffer((uint) All.RenderbufferOes))
+                throw new InvalidOperationException ("EAGLContext.PresentRenderbuffer failed.");
         }
 
         public void MakeCurrent(IWindowInfo window)
