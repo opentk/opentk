@@ -20,18 +20,88 @@ using MonoTouch.ObjCRuntime;
 
 using OpenTK;
 using OpenTK.Graphics;
-using OpenTK.Graphics.ES11;
 using OpenTK.Platform;
 using OpenTK.Platform.iPhoneOS;
 
+using All  = OpenTK.Graphics.ES11.All;
+using ES11 = OpenTK.Graphics.ES11;
+using ES20 = OpenTK.Graphics.ES20;
+
 namespace OpenTK.Platform.iPhoneOS
 {
+    sealed class GLCalls {
+        public delegate void glBindFramebuffer(All target, int framebuffer);
+        public delegate void glBindRenderbuffer(All target, int renderbuffer);
+        public delegate void glDeleteFramebuffers(int n, ref int framebuffers);
+        public delegate void glDeleteRenderbuffers(int n, ref int renderbuffers);
+        public delegate void glFramebufferRenderbuffer(All target, All attachment, All renderbuffertarget, int renderbuffer);
+        public delegate void glGenFramebuffers(int n, ref int framebuffers);
+        public delegate void glGenRenderbuffers(int n, ref int renderbuffers);
+        public delegate void glGetInteger(All name, ref int value);
+        public delegate void glScissor(int x, int y, int width, int height);
+        public delegate void glViewport(int x, int y, int width, int height);
+
+        public glBindFramebuffer BindFramebuffer;
+        public glBindRenderbuffer BindRenderbuffer;
+        public glDeleteFramebuffers DeleteFramebuffers;
+        public glDeleteRenderbuffers DeleteRenderbuffers;
+        public glFramebufferRenderbuffer FramebufferRenderbuffer;
+        public glGenFramebuffers GenFramebuffers;
+        public glGenRenderbuffers GenRenderbuffers;
+        public glGetInteger GetInteger;
+        public glScissor Scissor;
+        public glViewport Viewport;
+
+        public static GLCalls GetGLCalls(EAGLRenderingAPI api)
+        {
+            switch (api) {
+                case EAGLRenderingAPI.OpenGLES1: return CreateES1();
+                case EAGLRenderingAPI.OpenGLES2: return CreateES2();
+            }
+            throw new ArgumentException("api");
+        }
+
+        static GLCalls CreateES1()
+        {
+            return new GLCalls() {
+                BindFramebuffer         = (t, f)              => ES11.GL.Oes.BindFramebuffer(t, f),
+                BindRenderbuffer        = (t, r)              => ES11.GL.Oes.BindRenderbuffer(t, r),
+                DeleteFramebuffers      = (int n, ref int f)  => ES11.GL.Oes.DeleteFramebuffers(n, ref f),
+                DeleteRenderbuffers     = (int n, ref int r)  => ES11.GL.Oes.DeleteRenderbuffers(n, ref r),
+                FramebufferRenderbuffer = (t, a, rt, rb)      => ES11.GL.Oes.FramebufferRenderbuffer(t, a, rt, rb),
+                GenFramebuffers         = (int n, ref int f)  => ES11.GL.Oes.GenFramebuffers(n, ref f),
+                GenRenderbuffers        = (int n, ref int r)  => ES11.GL.Oes.GenRenderbuffers(n, ref r),
+                GetInteger              = (All n, ref int v)  => ES11.GL.GetInteger(n, ref v),
+                Scissor                 = (x, y, w, h)        => ES11.GL.Scissor(x, y, w, h),
+                Viewport                = (x, y, w, h)        => ES11.GL.Viewport(x, y, w, h),
+            };
+        }
+
+        static GLCalls CreateES2()
+        {
+            return new GLCalls() {
+                BindFramebuffer         = (t, f)              => ES20.GL.BindFramebuffer((ES20.All) t, f),
+                BindRenderbuffer        = (t, r)              => ES20.GL.BindRenderbuffer((ES20.All) t, r),
+                DeleteFramebuffers      = (int n, ref int f)  => ES20.GL.DeleteFramebuffers(n, ref f),
+                DeleteRenderbuffers     = (int n, ref int r)  => ES20.GL.DeleteRenderbuffers(n, ref r),
+                FramebufferRenderbuffer = (t, a, rt, rb)      => ES20.GL.FramebufferRenderbuffer((ES20.All) t, (ES20.All) a, (ES20.All) rt, rb),
+                GenFramebuffers         = (int n, ref int f)  => ES20.GL.GenFramebuffers(n, ref f),
+                GenRenderbuffers        = (int n, ref int r)  => ES20.GL.GenRenderbuffers(n, ref r),
+                GetInteger              = (All n, ref int v)  => ES20.GL.GetInteger((ES20.All) n, ref v),
+                Scissor                 = (x, y, w, h)        => ES20.GL.Scissor(x, y, w, h),
+                Viewport                = (x, y, w, h)        => ES20.GL.Viewport(x, y, w, h),
+            };
+        }
+    }
+
     public class iPhoneOSGameView : UIView, IGameWindow
     {
         bool disposed;
         bool hasBeenCurrent;
 
         int framebuffer, renderbuffer;
+
+        GLCalls gl;
 
         [Export("initWithCoder:")]
         public iPhoneOSGameView(NSCoder coder)
@@ -56,6 +126,13 @@ namespace OpenTK.Platform.iPhoneOS
             if (disposed)
                 throw new ObjectDisposedException("");
         }
+
+        void AssertContext()
+        {
+            if (GraphicsContext == null)
+                throw new InvalidOperationException("Operation requires a GraphicsContext, which hasn't been created yet.");
+        }
+
         EAGLRenderingAPI api;
         public EAGLRenderingAPI ContextRenderingApi {
             get {
@@ -314,24 +391,25 @@ namespace OpenTK.Platform.iPhoneOS
             ConfigureLayer(eaglLayer);
 
             GraphicsContext = Utilities.CreateGraphicsContext(ContextRenderingApi);
+            gl = GLCalls.GetGLCalls(ContextRenderingApi);
 
             int oldFramebuffer = 0, oldRenderbuffer = 0;
-            GL.GetInteger(All.FramebufferBindingOes, ref oldFramebuffer);
-            GL.GetInteger(All.RenderbufferBindingOes, ref oldRenderbuffer);
+            gl.GetInteger(All.FramebufferBindingOes, ref oldFramebuffer);
+            gl.GetInteger(All.RenderbufferBindingOes, ref oldRenderbuffer);
 
-            GL.Oes.GenRenderbuffers(1, ref renderbuffer);
-            GL.Oes.BindRenderbuffer(All.RenderbufferOes, renderbuffer);
+            gl.GenRenderbuffers(1, ref renderbuffer);
+            gl.BindRenderbuffer(All.RenderbufferOes, renderbuffer);
 
             if (!EAGLContext.RenderBufferStorage((uint) All.RenderbufferOes, eaglLayer)) {
-                GL.Oes.DeleteRenderbuffers(1, ref renderbuffer);
+                gl.DeleteRenderbuffers(1, ref renderbuffer);
                 renderbuffer = 0;
-                GL.Oes.BindRenderbuffer(All.RenderbufferBindingOes, oldRenderbuffer);
+                gl.BindRenderbuffer(All.RenderbufferBindingOes, oldRenderbuffer);
                 throw new InvalidOperationException("Error with EAGLContext.RenderBufferStorage!");
             }
 
-            GL.Oes.GenFramebuffers (1, ref framebuffer);
-            GL.Oes.BindFramebuffer (All.FramebufferOes, framebuffer);
-            GL.Oes.FramebufferRenderbuffer (All.FramebufferOes, All.ColorAttachment0Oes, All.RenderbufferOes, renderbuffer);
+            gl.GenFramebuffers (1, ref framebuffer);
+            gl.BindFramebuffer (All.FramebufferOes, framebuffer);
+            gl.FramebufferRenderbuffer (All.FramebufferOes, All.ColorAttachment0Oes, All.RenderbufferOes, renderbuffer);
 
             Size newSize = new Size(
                     (int) Math.Round(eaglLayer.Bounds.Size.Width), 
@@ -339,12 +417,12 @@ namespace OpenTK.Platform.iPhoneOS
             Size = newSize;
 
             if (!hasBeenCurrent) {
-                GL.Viewport(0, 0, newSize.Width, newSize.Height);
-                GL.Scissor(0, 0, newSize.Width, newSize.Height);
+                gl.Viewport(0, 0, newSize.Width, newSize.Height);
+                gl.Scissor(0, 0, newSize.Width, newSize.Height);
                 hasBeenCurrent = true;
             }
             else
-                GL.Oes.BindFramebuffer(All.FramebufferOes, oldFramebuffer);
+                gl.BindFramebuffer(All.FramebufferOes, oldFramebuffer);
         }
 
         protected virtual void ConfigureLayer(CAEAGLLayer eaglLayer)
@@ -354,12 +432,13 @@ namespace OpenTK.Platform.iPhoneOS
         protected virtual void DestroyFrameBuffer()
         {
             AssertValid();
+            AssertContext();
             EAGLContext oldContext = EAGLContext.CurrentContext;
             if (!GraphicsContext.IsCurrent)
                 MakeCurrent();
 
-            GL.Oes.DeleteFramebuffers (1, ref framebuffer);
-            GL.Oes.DeleteRenderbuffers (1, ref renderbuffer);
+            gl.DeleteFramebuffers (1, ref framebuffer);
+            gl.DeleteRenderbuffers (1, ref renderbuffer);
             framebuffer = renderbuffer = 0;
 
             if (oldContext != EAGLContext)
@@ -369,6 +448,7 @@ namespace OpenTK.Platform.iPhoneOS
 
             EAGLContext.Dispose();
             GraphicsContext = null;
+            gl = null;
         }
 
         public virtual void Close()
@@ -435,13 +515,15 @@ namespace OpenTK.Platform.iPhoneOS
         public virtual void MakeCurrent()
         {
             AssertValid();
+            AssertContext();
             GraphicsContext.MakeCurrent(WindowInfo);
         }
 
         public virtual void SwapBuffers()
         {
             AssertValid();
-            GL.Oes.BindRenderbuffer(All.RenderbufferOes, renderbuffer);
+            AssertContext();
+            gl.BindRenderbuffer(All.RenderbufferOes, renderbuffer);
             GraphicsContext.SwapBuffers();
         }
 
@@ -502,7 +584,7 @@ namespace OpenTK.Platform.iPhoneOS
             OnUpdateFrame(updateEventArgs);
             prevUpdateTime = curUpdateTime;
 
-            GL.Oes.BindFramebuffer(All.FramebufferOes, framebuffer);
+            gl.BindFramebuffer(All.FramebufferOes, framebuffer);
 
             var curRenderTime = DateTime.Now;
             if (prevRenderTime.Ticks == 0)
