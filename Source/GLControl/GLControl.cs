@@ -123,7 +123,8 @@ namespace OpenTK
             
             Context = implementation.CreateContext(major, minor, flags);
             MakeCurrent();
-            ((IGraphicsContextInternal)this.Context).LoadAll();
+            if (!DesignMode)
+                ((IGraphicsContextInternal)Context).LoadAll();
 
             base.OnHandleCreated(e);
         }
