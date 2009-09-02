@@ -128,7 +128,6 @@ namespace OpenTK.Graphics
                 {
                     available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
                 }
-                //(implementation as IGraphicsContextInternal).LoadAll();
             }
             finally
             {
@@ -171,7 +170,7 @@ namespace OpenTK.Graphics
         #region public static void Assert()
 
         /// <summary>
-        /// Checks if a GraphicsContext exists in the calling thread and throws a GraphicsContextException if it doesn't.
+        /// Checks if a GraphicsContext exists in the calling thread and throws a GraphicsContextMissingException if it doesn't.
         /// </summary>
         /// <exception cref="GraphicsContextMissingException">Generated when no GraphicsContext is current in the calling thread.</exception>
         public static void Assert()
