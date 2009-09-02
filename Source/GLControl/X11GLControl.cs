@@ -29,15 +29,18 @@ namespace OpenTK
         #region Fields
 
         GraphicsMode mode;
-        Control control;
         IWindowInfo window_info;
 
         #endregion
 
         internal X11GLControl(GraphicsMode mode, Control control)
         {
+            if (mode == null)
+                throw new ArgumentNullException("mode");
+            if (control == null)
+                throw new ArgumentNullException("control");
+            
             this.mode = mode;
-            this.control = control;
 
             window_info = Utilities.CreateWindowInfo(mode, control.Handle, true);
         }
