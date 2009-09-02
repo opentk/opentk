@@ -29,11 +29,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Threading;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using OpenTK.Platform;
-using System.Drawing;
 
 namespace OpenTK
 {
@@ -69,16 +69,20 @@ namespace OpenTK
     /// parameters that
     /// specify the logic update rate, and the render update rate.
     /// </remarks>
-    public class GameWindow : IGameWindow
+    public class GameWindow : NativeWindow, IGameWindow, IDisposable
     {
         #region --- Fields ---
 
-        INativeWindow glWindow;
-        //DisplayMode mode;
+        //DisplayMode mode; // TODO: Removable?
 
-        bool isExiting = false;
+        object exit_lock = new object();
+
+        IGraphicsContext glContext;
+
         bool hasMainLoop;
-        bool disposed;
+        bool isExiting = false;
+
+        int main_loop_thread_id;
 
         double update_period, render_period;
         double target_update_period, target_render_period;
@@ -89,18 +93,13 @@ namespace OpenTK
 
         //InputDriver input_driver;
 
-        IGraphicsContext glContext;
-
-        int main_loop_thread_id;
-        object exit_lock = new object();
-
         #endregion
 
         #region --- Contructors ---
 
         #region public GameWindow()
 
-        /// <summary>Constructs a new GameWindow with sensible default attributes..</summary>
+        /// <summary>Constructs a new GameWindow with sensible default attributes.</summary>
         public GameWindow()
             : this(640, 480, GraphicsMode.Default, "OpenTK Game Window", 0, DisplayDevice.Default) { }
 
@@ -169,7 +168,7 @@ namespace OpenTK
 
         #region public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags)
 
-                /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
         /// <param name="height">The height of the GameWindow in pixels.</param>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
@@ -200,305 +199,68 @@ namespace OpenTK
         /// <param name="flags">The GraphicsContextFlags version for the OpenGL GraphicsContext.</param>
         /// <param name="sharedContext">An IGraphicsContext to share resources with.</param>
         public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device,
-            int major, int minor, GraphicsContextFlags flags, IGraphicsContext sharedContext)
+                          int major, int minor, GraphicsContextFlags flags, IGraphicsContext sharedContext)
+            : base(width, height, title, options,
+                   mode == null ? GraphicsMode.Default : mode,
+                   device == null ? DisplayDevice.Default : device)
         {
-            if (width <= 0)
-                throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
-            if (height <= 0)
-                throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
-            if (mode == null)
-                mode = GraphicsMode.Default;
-            if (device == null)
-                device = DisplayDevice.Default;
-
             try
             {
-                Rectangle window_bounds = new Rectangle();
-                window_bounds.X = device.Bounds.Left + (device.Bounds.Width - width) / 2;
-                window_bounds.Y = device.Bounds.Top + (device.Bounds.Height - height) / 2;
-                window_bounds.Width = width;
-                window_bounds.Height = height;
-                glWindow = Platform.Factory.Default.CreateNativeWindow(
-                    window_bounds.X, window_bounds.Y,
-                    window_bounds.Width, window_bounds.Height,
-                    title, mode, options, device);
-
-                glContext = new GraphicsContext(mode, glWindow.WindowInfo, major, minor, flags);
-                glContext.MakeCurrent(this.WindowInfo);
+                glContext = new GraphicsContext(mode == null ? GraphicsMode.Default : mode, WindowInfo, major, minor, flags);
+                glContext.MakeCurrent(WindowInfo);
                 (glContext as IGraphicsContextInternal).LoadAll();
 
-                if ((options & GameWindowFlags.Fullscreen) != 0)
-                {
-                    device.ChangeResolution(width, height, mode.ColorFormat.BitsPerPixel, 0);
-                    this.WindowState = WindowState.Fullscreen;
-                }
+                VSync = VSyncMode.On;
 
-                this.VSync = VSyncMode.On;
-                
-                glWindow.Move += delegate(object sender, EventArgs e) { OnMoveInternal(e); };
-                glWindow.Resize += delegate(object sender, EventArgs e) { OnResizeInternal(e); };
-                glWindow.Closing += delegate(object sender, CancelEventArgs e) { OnClosingInternal(e); };
-                glWindow.Closed += delegate(object sender, EventArgs e) { OnClosedInternal(e); };
                 //glWindow.WindowInfoChanged += delegate(object sender, EventArgs e) { OnWindowInfoChangedInternal(e); };
-                glWindow.WindowBorderChanged += delegate(object sender, EventArgs e) { OnWindowBorderChangedInternal(e); };
-                glWindow.WindowStateChanged += delegate(object sender, EventArgs e) { OnWindowStateChangedInternal(e); };
+                EnableEvents();
             }
             catch (Exception e)
             {
                 Debug.Print(e.ToString());
-                if (glWindow != null)
-                    glWindow.Dispose();
+                base.Dispose();
                 throw;
             }
         }
 
         #endregion
- 
-        #endregion
-
-        #region --- Private Methods ---
-
-        #region void ExitInternal()
-
-        // Stops the main loop, if one exists.
-        void ExitInternal()
-        {
-            if (HasMainLoop)
-            {
-                throw new GameWindowExitException();
-            }
-        }
-
-        #region void ExitAsync()
-
-        // Gracefully exits the GameWindow. May be called from any thread.
-        void ExitAsync()
-        {
-            HasMainLoop = false;
-            isExiting = true;
-            //UpdateFrame += delegate
-            //{
-            //    ExitInternal();
-            //};
-        }
-
-        #endregion
-
-        #endregion
-
-        #region bool MustResize
-
-        bool MustResize
-        {
-            get { return glWindow.Width != this.Width || glWindow.Height != this.Height; }
-        }
-
-        #endregion
-
-        #region bool HasMainLoop
-
-        bool HasMainLoop
-        {
-            get { return hasMainLoop; }
-            set { hasMainLoop = value; }
-        }
-
-        #endregion
-
-        #region OnMoveInternal
-
-        // Calls OnMove and raises the Move event.
-        void OnMoveInternal(EventArgs e)
-        {
-            if (disposed)
-                throw new ObjectDisposedException(this.GetType().Name);
-
-            if (!this.Exists || this.IsExiting)
-                return;
-
-            OnMove(e);
-
-            if (Move != null)
-                Move(this, e);
-        }
-        
-        #endregion
-
-        #region OnResizeInternal
-
-        // Calls OnResize and raises the Resize event.
-        void OnResizeInternal(EventArgs e)
-        {
-            if (disposed)
-                throw new ObjectDisposedException(this.GetType().Name);
-
-            if (!this.Exists || this.IsExiting)
-                return;
-
-            OnResize(e);
-
-            if (Resize != null)
-                Resize(this, e);
-        }
-
-        #endregion
-
-        #region OnClosingInternal
-
-        void OnClosingInternal(CancelEventArgs e)
-        {
-            OnClosing(e);
-
-            if (Closing != null)
-                Closing(this, e);
-
-            if (!e.Cancel)
-                ExitAsync();
-        }
-
-        #endregion
-
-        #region OnClosedInternal
-
-        void OnClosedInternal(EventArgs e)
-        {
-            OnClosed(e);
-
-            if (Closed != null)
-                Closed(this, e);
-        }
-
-        #endregion
-
-        #region OnWindowInfoChangedInternal
-
-        void OnWindowInfoChangedInternal(EventArgs e)
-        {
-            glContext.MakeCurrent(WindowInfo);
-
-            OnWindowInfoChanged(e);
-        }
-
-        #endregion
-
-        #region OnWindowBorderChangedInternal
-
-        void OnWindowBorderChangedInternal(EventArgs e)
-        {
-            OnWindowBorderChanged(e);
-
-            WindowBorderChanged(this, EventArgs.Empty);
-        }
-
-        #endregion
-
-        #region OnWindowStateChangedInternal
-
-        void OnWindowStateChangedInternal(EventArgs e)
-        {
-            OnWindowStateChanged(e);
-
-            WindowStateChanged(this, e);
-        }
-
-        #endregion
-
-        #region OnUpdateFrameInternal
-
-        private void OnUpdateFrameInternal(FrameEventArgs e)
-        {
-            if (disposed)
-                throw new ObjectDisposedException(this.GetType().Name);
-
-            if (!this.Exists || this.IsExiting)
-                return;
-
-            if (UpdateFrame != null)
-                UpdateFrame(this, e);
-
-            OnUpdateFrame(e);
-        }
-
-        #endregion
-
-        #region OnRenderFrameInternal
-
-        private void OnRenderFrameInternal(FrameEventArgs e)
-        {
-            if (disposed)
-                throw new ObjectDisposedException(this.GetType().Name);
-
-            if (!this.Exists || this.IsExiting)
-                return;
-
-            if (RenderFrame != null)
-                RenderFrame(this, e);
-
-            OnRenderFrame(e);
-        }
-
-        #endregion
-
-        #endregion
-
-        #region --- Protected Members ---
-
-        /// <summary>
-        /// Called when the GameWindow is moved.
-        /// </summary>
-        /// <param name="e">Not used.</param>
-        protected virtual void OnMove(EventArgs e)
-        { }
-        
-        /// <summary>
-        /// Called when the GameWindow is resized.
-        /// </summary>
-        /// <param name="e">Not used.</param>
-        protected virtual void OnResize(EventArgs e)
-        { }
-
-        /// <summary>
-        /// Called when the GameWindow is about to close.
-        /// </summary>
-        /// <param name="e">
-        /// The <see cref="System.ComponentModel.CancelEventArgs" /> for this event.
-        /// Set e.Cancel to true in order to stop the GameWindow from closing.</param>
-        protected virtual void OnClosing(CancelEventArgs e)
-        { }
-
-        /// <summary>
-        /// Called when the GameWindow has closed.
-        /// </summary>
-        /// <param name="e">Not used.</param>
-        protected virtual void OnClosed(EventArgs e)
-        { }
-
-        /// <summary>
-        /// Called when the WindowInfo for this GameWindow has changed.
-        /// </summary>
-        /// <param name="e">Not used.</param>
-        protected virtual void OnWindowInfoChanged(EventArgs e)
-        { }
-
-        /// <summary>
-        /// Called when the WindowBorder for this GameWindow has changed.
-        /// </summary>
-        /// <param name="e">Not used.</param>
-        protected virtual void OnWindowBorderChanged(EventArgs e)
-        { }
-        
-        /// <summary>
-        /// Called when the WindowState for this GameWindow has changed.
-        /// </summary>
-        /// <param name="e">Not used.</param>
-        protected virtual void OnWindowStateChanged(EventArgs e)
-        { }
 
         #endregion
 
         #region --- Public Members ---
 
-        #region public virtual void Exit()
+        #region Methods
+
+        #region Dispose
+
+        /// <summary>
+        /// Disposes of the GameWindow, releasing all resources consumed by it.
+        /// </summary>
+        public new void Dispose()
+        {
+            try
+            {
+                Dispose(true);
+            }
+            finally
+            {
+                if (!IsDisposed())
+                {
+                    if (glContext != null)
+                    {
+                        glContext.Dispose();
+                        glContext = null;
+                    }
+
+                    base.Dispose();
+                }
+            }
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        #region Exit
 
         /// <summary>
         /// Gracefully exits the GameWindow. May be called from any thread.
@@ -509,110 +271,48 @@ namespace OpenTK
         /// </remarks>
         public virtual void Exit()
         {
-            lock (exit_lock)
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                if (!IsExiting && Exists)
-                {
-                    CancelEventArgs e = new CancelEventArgs();
-                    OnClosingInternal(e);
-                    if (e.Cancel)
-                        return;
-
-                    isExiting = true;
-                    
-                    if (HasMainLoop)
-                    {
-                        if (main_loop_thread_id == Thread.CurrentThread.ManagedThreadId)
-                            ExitInternal();
-                        else
-                            ExitAsync();
-                    }
-                }
-            }
+            Close();
         }
 
         #endregion
 
-        #region public IGraphicsContext Context
+        #region MakeCurrent
 
         /// <summary>
-        /// Returns the opengl IGraphicsContext associated with the current GameWindow.
+        /// Makes the GraphicsContext current on the calling thread.
         /// </summary>
-        public IGraphicsContext Context
+        public void MakeCurrent()
         {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-                return glContext;
-            }
+            EnsureUndisposed();
+            Context.MakeCurrent(WindowInfo);
         }
 
         #endregion
 
-        #region public bool Exists
+        #region OnLoad
 
         /// <summary>
-        /// Gets a value indicating whether a render window exists.
+        /// Occurs after establishing an OpenGL context, but before entering the main loop.
+        /// Override to load resources that should be maintained for the lifetime of the application.
         /// </summary>
-        public bool Exists
+        /// <param name="e">Not used.</param>
+        public virtual void OnLoad(EventArgs e)
         {
-            get { return glWindow == null ? false : glWindow.Exists; }
+            EnsureUndisposed(); //if (disposed) throw new ObjectDisposedException("GameWindow"); // What is the exact purpose?
         }
 
         #endregion
 
-        #region public string Text
+        #region OnUnload
 
         /// <summary>
-        /// Gets or sets the GameWindow title.
+        /// Occurs after after calling GameWindow.Exit, but before destroying the OpenGL context.
+        /// Override to unload application resources.
         /// </summary>
-        public string Title
+        /// <param name="e">Not used.</param>
+        public virtual void OnUnload(EventArgs e)
         {
-            get
-            {
-                if (disposed) throw new ObjectDisposedException(this.GetType().Name);
-                return glWindow.Title;
-            }
-            set
-            {
-                if (disposed) throw new ObjectDisposedException(this.GetType().Name);
-                glWindow.Title = value;
-            }
-        }
-
-        #endregion
-
-        #region public bool Visible
-#if false
-        /// <summary>
-        /// TODO: This property is not implemented
-        /// Gets or sets a value indicating whether the GameWindow is visible.
-        /// </summary>
-        public bool Visible
-        {
-            get
-            {
-                throw new NotImplementedException();
-                //return glWindow.Visible;
-            }
-            set
-            {
-                throw new NotImplementedException();
-                //glWindow.Visible = value;
-            }
-        }
-#endif
-        #endregion
-
-        #region public IWindowInfo WindowInfo
-
-        public IWindowInfo WindowInfo
-        {
-            get { if (disposed) throw new ObjectDisposedException("GameWindow"); return glWindow.WindowInfo; }
+            EnsureUndisposed(); //if (disposed) throw new ObjectDisposedException("GameWindow"); // What is the exact purpose?
         }
 
         #endregion
@@ -625,7 +325,6 @@ namespace OpenTK
         /// <seealso cref="Run(double)"/>
         public void Run()
         {
-            if (disposed) throw new ObjectDisposedException(this.GetType().Name);
             Run(0.0, 0.0);
         }
 
@@ -639,9 +338,6 @@ namespace OpenTK
         /// </summary>
         public void Run(double updateRate)
         {
-            if (disposed)
-                throw new ObjectDisposedException(this.GetType().Name);
-            
             Run(updateRate, 0.0);
         }
 
@@ -652,19 +348,25 @@ namespace OpenTK
         /// <summary>
         /// Enters the game loop of the GameWindow updating and rendering at the specified frequency.
         /// </summary>
+        /// <remarks>
+        /// When overriding the default game loop you should call ProcessEvents()
+        /// to ensure that your GameWindow responds to operating system events.
+        /// <para>
+        /// Once ProcessEvents() returns, it is time to call update and render the next frame.
+        /// </para>
+        /// </remarks>
         /// <param name="updates_per_second">The frequency of UpdateFrame events.</param>
         /// <param name="frames_per_second">The frequency of RenderFrame events.</param>
         public void Run(double updates_per_second, double frames_per_second)
         {
-            if (disposed)
-                throw new ObjectDisposedException(this.GetType().Name);
+            EnsureUndisposed();
 
             try
             {
                 // Necessary to be here, otherwise Exit() wouldn't work correctly when called inside OnLoad().
                 hasMainLoop = true;
                 main_loop_thread_id = Thread.CurrentThread.ManagedThreadId;
-                
+
                 if (updates_per_second < 0.0 || updates_per_second > 200.0)
                     throw new ArgumentOutOfRangeException("updates_per_second", updates_per_second,
                                                           "Parameter should be inside the range [0.0, 200.0]");
@@ -685,10 +387,9 @@ namespace OpenTK
                 render_watch.Reset();
 
                 OnLoadInternal(EventArgs.Empty);
-                OnResizeInternal(EventArgs.Empty);
 
                 Debug.Print("Entering main loop.");
-                while (!IsExiting && HasMainLoop)
+                while (!IsExiting && Exists && HasMainLoop)
                 {
                     ProcessEvents();
 
@@ -765,10 +466,6 @@ namespace OpenTK
                     }
                 }
             }
-            catch (GameWindowExitException)
-            {
-                Debug.WriteLine("GameWindowExitException caught - exiting main loop.");
-            }
             finally
             {
                 Debug.Print("Restoring priority.");
@@ -778,136 +475,48 @@ namespace OpenTK
 
                 if (Exists)
                 {
-                    glContext.Dispose();
-                    glContext = null;
-                    
-                    glWindow.Dispose();
-                    while (this.Exists)
-                        this.ProcessEvents();
-                    glWindow = null;
+                    Dispose();
+                    //while (this.Exists) ProcessEvents(); // TODO: Should similar behaviour be retained, possibly on native window level?
                 }
             }
         }
 
         #endregion
 
-        #region public void ProcessEvents()
+        #region SwapBuffers
 
         /// <summary>
-        /// Processes operating system events until the GameWindow becomes idle.
+        /// Swaps the front and back buffer, presenting the rendered scene to the user.
         /// </summary>
-        /// <remarks>
-        /// When overriding the default GameWindow game loop (provided by the Run() function)
-        /// you should call ProcessEvents() to ensure that your GameWindow responds to
-        /// operating system events.
-        /// <para>
-        /// Once ProcessEvents() returns, it is time to call update and render the next frame.
-        /// </para>
-        /// </remarks>
-        public void ProcessEvents()
+        public void SwapBuffers()
         {
-            if (disposed)
-                throw new ObjectDisposedException(this.GetType().Name);
-            
-            glWindow.ProcessEvents();
+            EnsureUndisposed();
+            this.Context.SwapBuffers();
         }
 
         #endregion
 
-        #region OnRenderFrame
-
-        /// <summary>
-        /// Override in derived classes to render a frame.
-        /// </summary>
-        /// <param name="e">Contains information necessary for frame rendering.</param>
-        /// <remarks>
-        /// The base implementation (base.OnRenderFrame) is empty, there is no need to call it.
-        /// </remarks>
-        protected virtual void OnRenderFrame(FrameEventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Occurs when it is time to render a frame.
-        /// </summary>
-        public event EventHandler<FrameEventArgs> RenderFrame;
-
         #endregion
 
-        #region OnUpdateFrame
+        #region Properties
+
+        #region Context
 
         /// <summary>
-        /// Override in derived classes to update a frame.
+        /// Returns the opengl IGraphicsContext associated with the current GameWindow.
         /// </summary>
-        /// <param name="e">Contains information necessary for frame updating.</param>
-        /// <remarks>
-        /// The base implementation (base.OnUpdateFrame) is empty, there is no need to call it.
-        /// </remarks>
-        protected virtual void OnUpdateFrame(FrameEventArgs e)
+        public IGraphicsContext Context
         {
-        }
-
-        /// <summary>
-        /// Occurs when it is time to update a frame.
-        /// </summary>
-        public event EventHandler<FrameEventArgs> UpdateFrame;
-
-        #endregion
-
-        #region OnLoad
-
-        /// <summary>
-        /// Raises the Load event, and calls the user's OnLoad override.
-        /// </summary>
-        /// <param name="e"></param>
-        private void OnLoadInternal(EventArgs e)
-        {
-            OnResizeInternal(EventArgs.Empty);
-            Load(this, e);
-            OnLoad(e);
-        }
-
-        /// <summary>
-        /// Occurs after establishing an OpenGL context, but before entering the main loop.
-        /// Override to load resources that should be maintained for the lifetime of the application.
-        /// </summary>
-        /// <param name="e">Not used.</param>
-        public virtual void OnLoad(EventArgs e)
-        {
-            if (disposed) throw new ObjectDisposedException("GameWindow");
-        }
-
-        #endregion
-
-        #region OnUnload
-
-        /// <summary>
-        /// Raises the Unload event, and calls the user's OnUnload override.
-        /// </summary>
-        /// <param name="e"></param>
-        private void OnUnloadInternal(EventArgs e)
-        {
-            if (this.Unload != null)
+            get
             {
-                this.Unload(this, e);
+                EnsureUndisposed();
+                return glContext;
             }
-
-            OnUnload(e);
-        }
-
-        /// <summary>
-        /// Occurs after after calling GameWindow.Exit, but before destroying the OpenGL context.
-        /// Override to unload application resources.
-        /// </summary>
-        /// <param name="e">Not used.</param>
-        public virtual void OnUnload(EventArgs e)
-        {
-            if (disposed) throw new ObjectDisposedException("GameWindow");
         }
 
         #endregion
 
-        #region public bool IsExiting
+        #region IsExiting
 
         /// <summary>
         /// Gets a value indicating whether the shutdown sequence has been initiated
@@ -919,53 +528,14 @@ namespace OpenTK
         {
             get
             {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
+                EnsureUndisposed();
                 return isExiting;
             }
         }
 
         #endregion
 
-        #region public Keyboard Keyboard
-
-        /// <summary>
-        /// Gets the primary Keyboard device, or null if no Keyboard exists.
-        /// </summary>
-        [Obsolete]
-        public KeyboardDevice Keyboard
-        {
-            get
-            {
-                if (InputDriver.Keyboard.Count > 0)
-                    return InputDriver.Keyboard[0];
-                else
-                    return null;
-            }
-        }
-
-        #endregion
-
-        #region public Mouse Mouse
-
-        /// <summary>
-        /// Gets the primary Mouse device, or null if no Mouse exists.
-        /// </summary>
-        [Obsolete]
-        public MouseDevice Mouse
-        {
-            get
-            {
-                if (InputDriver.Mouse.Count > 0)
-                    return InputDriver.Mouse[0];
-                else
-                    return null;
-            }
-        }
-
-        #endregion
-
-        #region public IList<JoystickDevice> Joysticks
+        #region Joysticks
 
         /// <summary>
         /// Gets a readonly IList containing all available OpenTK.Input.JoystickDevices.
@@ -978,522 +548,29 @@ namespace OpenTK
 
         #endregion
 
-        #region public VSyncMode VSync
+        #region Keyboard
 
         /// <summary>
-        /// Gets or sets the VSyncMode.
-        /// </summary>
-        public VSyncMode VSync
-        {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException("GameWindow");
-                
-                GraphicsContext.Assert();
-
-                return vsync;
-            }
-            set
-            {
-                if (disposed)
-                    throw new ObjectDisposedException("GameWindow");
-                
-                GraphicsContext.Assert();
-                
-                if (value == VSyncMode.Off)
-                    Context.VSync = false;
-                else
-                    Context.VSync = true;
-
-                vsync = value;
-            }
-        }
-
-        #endregion
-
-        #region MakeCurrent
-
-        /// <summary>
-        /// Makes the GraphicsContext current on the calling thread.
-        /// </summary>
-        public void MakeCurrent()
-        {
-            if (disposed)
-                throw new ObjectDisposedException(this.GetType().Name);
-
-            Context.MakeCurrent(WindowInfo);
-        }
-        
-        #endregion
-
-        #region public void SwapBuffers()
-
-        /// <summary>
-        /// Swaps the front and back buffer, presenting the rendered scene to the user.
-        /// </summary>
-        public void SwapBuffers()
-        {
-            if (disposed)
-                throw new ObjectDisposedException(this.GetType().Name);
-
-            this.Context.SwapBuffers();
-        }
-
-        #endregion
-
-        #region public WindowState WindowState
-
-        /// <summary>
-        /// Gets or states the state of the GameWindow.
-        /// </summary>
-        public WindowState WindowState
-        {
-            get
-            {
-                return glWindow.WindowState;
-            }
-            set
-            {
-                glWindow.WindowState = value;
-            }
-        }
-
-        #endregion
-
-        #region public WindowBorder WindowBorder
-
-        /// <summary>
-        /// Gets or states the border of the GameWindow.
-        /// </summary>
-        public WindowBorder WindowBorder
-        {
-            get
-            {
-                return glWindow.WindowBorder;
-            }
-            set
-            {
-                glWindow.WindowBorder = value;
-            }
-        }
-
-        #endregion
-
-        #endregion
-
-        #region --- INativeWindow Members ---
-
-        #region Focused
-
-        /// <summary>
-        /// Gets a System.Boolean that indicates whether this GameWindow has input focus.
-        /// </summary>
-        public bool Focused
-        {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                return glWindow.Focused;
-            }
-        }
-
-        #endregion
-
-        #region Visible
-
-        /// <summary>
-        /// Gets or sets a System.Boolean that indicates whether this GameWindow is visible.
-        /// </summary>
-        public bool Visible
-        {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                return glWindow.Visible;
-            }
-            set
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                glWindow.Visible = value;
-            }
-        }
-
-        #endregion
-
-        #region Bounds
-
-        /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Rectangle"/> structure the contains the external bounds of this window, in screen coordinates.
-        /// External bounds include the title bar, borders and drawing area of the window.
-        /// </summary>
-        public Rectangle Bounds
-        {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                return glWindow.Bounds;
-            }
-            set
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                glWindow.Bounds = value;
-            }
-        }
-
-        #endregion
-
-        #region Location
-        
-        /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Point"/> structure that contains the location of this window on the desktop.
-        /// </summary>
-        public Point Location
-        {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                return glWindow.Location;
-            }
-            set
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                glWindow.Location = value;
-            }
-        }
-
-        #endregion
-
-        #region Size
-        
-        /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Size"/> structure that contains the external size of this window.
-        /// </summary>
-        public Size Size
-        {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                return glWindow.Size;
-            }
-            set
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                glWindow.Size = value;
-            }
-        }
-
-        #endregion
-
-        #region X
-
-        /// <summary>
-        /// Gets or sets the horizontal location of this window on the desktop.
-        /// </summary>
-        public int X
-        {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                return glWindow.X;
-            }
-            set
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                glWindow.X = value;
-            }
-        }
-
-        #endregion
-
-        #region Y
-
-        /// <summary>
-        /// Gets or sets the vertical location of this window on the desktop.
-        /// </summary>
-        public int Y
-        {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                return glWindow.Y;
-            }
-            set
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                glWindow.Y = value;
-            }
-        }
-
-        #endregion
-
-        #region Width
-
-        /// <summary>
-        /// Gets or sets the external width of this window.
-        /// </summary>
-        public int Width
-        {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                return glWindow.Width;
-            }
-            set
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                glWindow.Width = value;
-            }
-        }
-
-        #endregion
-
-        #region Height
-
-        /// <summary>
-        /// Gets or sets the external height of this window.
-        /// </summary>
-        public int Height
-        {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                return glWindow.Height;
-            }
-            set
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                glWindow.Height = value;
-            }
-        }
-
-        #endregion
-
-        #region ClientRectangle
-
-        /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Rectangle"/> structure that contains the internal bounds of this window, in client coordinates.
-        /// The internal bounds include the drawing area of the window, but exclude the titlebar and window borders.
-        /// </summary>
-        public Rectangle ClientRectangle
-        {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                return glWindow.ClientRectangle;
-            }
-            set
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                glWindow.ClientRectangle = value;
-            }
-        }
-
-        #endregion
-
-        #region ClientSize
-        
-        /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Size"/> structure that contains the internal size this window.
-        /// </summary>
-        public Size ClientSize
-        {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name); 
-                
-                return glWindow.ClientSize;
-            }
-            set
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                glWindow.ClientSize = value;
-            }
-        }
-
-        #endregion
-
-        #region InputDriver
-
-        /// <summary>
-        /// This property is deprecated.
+        /// Gets the primary Keyboard device, or null if no Keyboard exists.
         /// </summary>
         [Obsolete]
-        public IInputDriver InputDriver
+        public KeyboardDevice Keyboard
         {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                return glWindow.InputDriver;
-            }
+            get { return InputDriver.Keyboard.Count > 0 ? InputDriver.Keyboard[0] : null; }
         }
 
         #endregion
 
-        #region Close
+        #region Mouse
 
         /// <summary>
-        /// Closes the GameWindow. Equivalent to calling <see cref="OpenTK.GameWindow.Exit()"/>.
+        /// Gets the primary Mouse device, or null if no Mouse exists.
         /// </summary>
-        public void Close()
+        [Obsolete]
+        public MouseDevice Mouse
         {
-            Exit();
+            get { return InputDriver.Mouse.Count > 0 ? InputDriver.Mouse[0] : null; }
         }
-
-        #endregion
-
-        #region PointToClient
-
-        /// <summary>
-        /// Transforms the specified point from screen to client coordinates. 
-        /// </summary>
-        /// <param name="point">
-        /// A <see cref="System.Drawing.Point"/> to transform.
-        /// </param>
-        /// <returns>
-        /// The point transformed to client coordinates.
-        /// </returns>
-        public System.Drawing.Point PointToClient(System.Drawing.Point point)
-        {
-            return glWindow.PointToClient(point);
-        }
-
-        #endregion
-
-        #region PointToScreen
-
-        /// <summary>
-        /// Transforms the specified point from client to screen coordinates. 
-        /// </summary>
-        /// <param name="point">
-        /// A <see cref="System.Drawing.Point"/> to transform.
-        /// </param>
-        /// <returns>
-        /// The point transformed to screen coordinates.
-        /// </returns>
-        public System.Drawing.Point PointToScreen(System.Drawing.Point point)
-        {
-            // Here we use the fact that PointToClient just translates the point, and PointToScreen
-            // should perform the inverse operation.
-            System.Drawing.Point trans = PointToClient(System.Drawing.Point.Empty);
-            point.X -= trans.X;
-            point.Y -= trans.Y;
-            return point;
-        }
-
-        #endregion
-
-        #region Events
-
-        /// <summary>
-        /// Occurs before the window is displayed for the first time.
-        /// </summary>
-        public event EventHandler<EventArgs> Load = delegate { };
-
-        /// <summary>
-        /// Occurs before the window is destroyed. 
-        /// </summary>
-        public event EventHandler<EventArgs> Unload = delegate { };
-
-        /// <summary>
-        /// Occurs whenever the window is moved. 
-        /// </summary>
-        public event EventHandler<EventArgs> Move = delegate { };
-
-        /// <summary>
-        /// Occurs whenever the window is resized. 
-        /// </summary>
-        public event EventHandler<EventArgs> Resize = delegate { };
-
-       /// <summary>
-        /// Occurs when the window is about to close. 
-        /// </summary>
-        public event EventHandler<CancelEventArgs> Closing = delegate { };
-
-        /// <summary>
-        /// Occurs after the window has closed. 
-        /// </summary>
-        public event EventHandler<EventArgs> Closed = delegate { };
-
-        /// <summary>
-        /// Occurs when the window is disposed. 
-        /// </summary>
-        public event EventHandler<EventArgs> Disposed = delegate { };
-
-        /// <summary>
-        /// Occurs when the <see cref="Title"/> property of the window changes.
-        /// </summary>
-        public event EventHandler<EventArgs> TitleChanged = delegate { };
-
-        /// <summary>
-        /// Occurs when the <see cref="Visible"/> property of the window changes.
-        /// </summary>
-        public event EventHandler<EventArgs> VisibleChanged = delegate { };
-
-        /// <summary>
-        /// Occurs when the <see cref="Focused"/> property of the window changes.
-        /// </summary>
-        public event EventHandler<EventArgs> FocusedChanged = delegate { };
-
-        /// <summary>
-        /// Occurs when the <see cref="WindowBorder"/> property of the window changes.
-        /// </summary>
-        public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
-
-        /// <summary>
-        /// Occurs when the <see cref="WindowState"/> property of the window changes.
-        /// </summary>
-        public event EventHandler<EventArgs> WindowStateChanged = delegate { };
-
-        /// <summary>
-        /// Occurs whenever a character is typed.
-        /// </summary>
-        public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
-        
-        #endregion
 
         #endregion
 
@@ -1511,7 +588,97 @@ namespace OpenTK
 
         //#endregion
 
-        #region public double TargetRenderPeriod
+        #region RenderFrequency
+
+        /// <summary>
+        /// Gets a double representing the actual frequency of RenderFrame events, in Herz (i.e. FPS or Frames Per Second).
+        /// </summary>
+        public double RenderFrequency
+        {
+            get
+            {
+                EnsureUndisposed();
+                if (render_period == 0.0)
+                    return 1.0;
+                return 1.0 / render_period;
+            }
+        }
+
+        #endregion
+
+        #region RenderPeriod
+
+        /// <summary>
+        /// Gets a double representing the period of RenderFrame events, in seconds.
+        /// </summary>
+        public double RenderPeriod
+        {
+            get
+            {
+                EnsureUndisposed();
+                return render_period;
+            }
+        }
+
+        #endregion
+
+        #region RenderTime
+
+        /// <summary>
+        /// Gets a double representing the time spent in the RenderFrame function, in seconds.
+        /// </summary>
+        public double RenderTime
+        {
+            get
+            {
+                EnsureUndisposed();
+                return render_time;
+            }
+            protected set
+            {
+                EnsureUndisposed();
+                render_time = value;
+            }
+        }
+
+        #endregion
+
+        #region TargetRenderFrequency
+
+        /// <summary>
+        /// Gets or sets a double representing the target render frequency, in Herz.
+        /// </summary>
+        /// <remarks>
+        /// <para>A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
+        /// <para>Values lower than 1.0Hz are clamped to 1.0Hz. Values higher than 200.0Hz are clamped to 200.0Hz.</para>
+        /// </remarks>
+        public double TargetRenderFrequency
+        {
+            get
+            {
+                EnsureUndisposed();
+                if (TargetRenderPeriod == 0.0)
+                    return 0.0;
+                return 1.0 / TargetRenderPeriod;
+            }
+            set
+            {
+                EnsureUndisposed();
+                if (value < 1.0)
+                {
+                    TargetRenderPeriod = 0.0;
+                }
+                else if (value <= 200.0)
+                {
+                    TargetRenderPeriod = 1.0 / value;
+                }
+                else Debug.Print("Target render frequency clamped to 200.0Hz."); // TODO: Where is it actually performed?
+            }
+        }
+
+        #endregion
+
+        #region TargetRenderPeriod
 
         /// <summary>
         /// Gets or sets a double representing the target render period, in seconds.
@@ -1524,12 +691,12 @@ namespace OpenTK
         {
             get
             {
-                if (disposed) throw new ObjectDisposedException("GameWindow");
+                EnsureUndisposed();
                 return target_render_period;
             }
             set
             {
-                if (disposed) throw new ObjectDisposedException("GameWindow");
+                EnsureUndisposed();
                 if (value <= 0.005)
                 {
                     target_render_period = 0.0;
@@ -1544,75 +711,7 @@ namespace OpenTK
 
         #endregion
 
-        #region public double TargetRenderFrequency
-
-        /// <summary>
-        /// Gets or sets a double representing the target render frequency, in Herz.
-        /// </summary>
-        /// <remarks>
-        /// <para>A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
-        /// <para>Values lower than 1.0Hz are clamped to 1.0Hz. Values higher than 200.0Hz are clamped to 200.0Hz.</para>
-        /// </remarks>
-        public double TargetRenderFrequency
-        {
-            get
-            {
-                if (disposed) throw new ObjectDisposedException("GameWindow");
-                if (TargetRenderPeriod == 0.0)
-                    return 0.0;
-                return 1.0 / TargetRenderPeriod;
-            }
-            set
-            {
-                if (disposed) throw new ObjectDisposedException("GameWindow");
-                if (value < 1.0)
-                {
-                    TargetRenderPeriod = 0.0;
-                }
-                else if (value <= 200.0)
-                {
-                    TargetRenderPeriod = 1.0 / value;
-                }
-                else Debug.Print("Target render frequency clamped to 200.0Hz.");
-            }
-        }
-
-        #endregion
-
-        #region public double TargetUpdatePeriod
-
-        /// <summary>
-        /// Gets or sets a double representing the target update period, in seconds.
-        /// </summary>
-        /// <remarks>
-        /// <para>A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
-        /// <para>Values lower than 0.005 seconds (200Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped to 1.0.</para>
-        /// </remarks>
-        public double TargetUpdatePeriod
-        {
-            get
-            {
-                if (disposed) throw new ObjectDisposedException("GameWindow");
-                return target_update_period;
-            }
-            set
-            {
-                if (disposed) throw new ObjectDisposedException("GameWindow");
-                if (value <= 0.005)
-                {
-                    target_update_period = 0.0;
-                }
-                else if (value <= 1.0)
-                {
-                    target_update_period = value;
-                }
-                else Debug.Print("Target update period clamped to 1.0 seconds.");
-            }
-        }
-
-        #endregion
-
-        #region public double TargetUpdateFrequency
+        #region TargetUpdateFrequency
 
         /// <summary>
         /// Gets or sets a double representing the target update frequency, in Herz.
@@ -1625,14 +724,14 @@ namespace OpenTK
         {
             get
             {
-                if (disposed) throw new ObjectDisposedException("GameWindow");
+                EnsureUndisposed();
                 if (TargetUpdatePeriod == 0.0)
                     return 0.0;
                 return 1.0 / TargetUpdatePeriod;
             }
             set
             {
-                if (disposed) throw new ObjectDisposedException("GameWindow");
+                EnsureUndisposed();
                 if (value < 1.0)
                 {
                     TargetUpdatePeriod = 0.0;
@@ -1641,47 +740,46 @@ namespace OpenTK
                 {
                     TargetUpdatePeriod = 1.0 / value;
                 }
-                else Debug.Print("Target update frequency clamped to 200.0Hz.");
+                else Debug.Print("Target update frequency clamped to 200.0Hz."); // TODO: Where is it actually performed?
             }
         }
 
         #endregion
 
-        #region public double RenderFrequency
+        #region TargetUpdatePeriod
 
         /// <summary>
-        /// Gets a double representing the actual frequency of RenderFrame events, in Herz (i.e. FPS or Frames Per Second).
+        /// Gets or sets a double representing the target update period, in seconds.
         /// </summary>
-        public double RenderFrequency
+        /// <remarks>
+        /// <para>A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
+        /// <para>Values lower than 0.005 seconds (200Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped to 1.0.</para>
+        /// </remarks>
+        public double TargetUpdatePeriod
         {
             get
             {
-                if (disposed) throw new ObjectDisposedException("GameWindow");
-                if (render_period == 0.0)
-                    return 1.0;
-                return 1.0 / render_period;
+                EnsureUndisposed();
+                return target_update_period;
             }
-        }
-
-        #endregion
-
-        #region public double RenderPeriod
-
-        /// <summary>
-        /// Gets a double representing the period of RenderFrame events, in seconds.
-        /// </summary>
-        public double RenderPeriod
-        {
-            get
+            set
             {
-                if (disposed) throw new ObjectDisposedException("GameWindow");
-                return render_period;
+                EnsureUndisposed();
+                if (value <= 0.005)
+                {
+                    target_update_period = 0.0;
+                }
+                else if (value <= 1.0)
+                {
+                    target_update_period = value;
+                }
+                else Debug.Print("Target update period clamped to 1.0 seconds."); // TODO: Where is it actually performed?
             }
         }
 
         #endregion
 
-        #region public double UpdateFrequency
+        #region UpdateFrequency
 
         /// <summary>
         /// Gets a double representing the frequency of UpdateFrame events, in Herz.
@@ -1690,7 +788,7 @@ namespace OpenTK
         {
             get
             {
-                if (disposed) throw new ObjectDisposedException("GameWindow");
+                EnsureUndisposed();
                 if (update_period == 0.0)
                     return 1.0;
                 return 1.0 / update_period;
@@ -1699,7 +797,7 @@ namespace OpenTK
 
         #endregion
 
-        #region public double UpdatePeriod
+        #region UpdatePeriod
 
         /// <summary>
         /// Gets a double representing the period of UpdateFrame events, in seconds.
@@ -1708,87 +806,245 @@ namespace OpenTK
         {
             get
             {
-                if (disposed) throw new ObjectDisposedException("GameWindow");
+                EnsureUndisposed();
                 return update_period;
             }
         }
 
         #endregion
 
-        #region public double RenderTime
-
-        /// <summary>
-        /// Gets a double representing the time spent in the RenderFrame function, in seconds.
-        /// </summary>
-        public double RenderTime
-        {
-            get { if (disposed) throw new ObjectDisposedException("GameWindow"); return render_time; }
-            protected set { if (disposed) throw new ObjectDisposedException("GameWindow"); render_time = value; }
-        }
-
-        #endregion
-
-        #region public double RenderTime
+        #region UpdateTime
 
         /// <summary>
         /// Gets a double representing the time spent in the UpdateFrame function, in seconds.
         /// </summary>
         public double UpdateTime
         {
-            get { if (disposed) throw new ObjectDisposedException("GameWindow"); return update_time; }
+            get
+            {
+                EnsureUndisposed();
+                return update_time;
+            }
         }
 
         #endregion
 
         #endregion
 
-        #region --- IDisposable Members ---
+        #region VSync
 
         /// <summary>
-        /// Disposes of the GameWindow, releasing all resources consumed by it.
+        /// Gets or sets the VSyncMode.
         /// </summary>
-        public void Dispose()
+        public VSyncMode VSync
         {
-            try
+            get
             {
-                Dispose(true);
+                EnsureUndisposed();
+                GraphicsContext.Assert();
+                return vsync;
             }
-            finally
+            set
             {
-                DisposeInternal(true);
+                EnsureUndisposed();
+                GraphicsContext.Assert();
+                Context.VSync = (vsync = value) != VSyncMode.Off;
             }
-            GC.SuppressFinalize(this);
         }
 
-        private void DisposeInternal(bool manual)
-        {
-            if (!disposed)
-            {
-                if (manual)
-                {
-                    if (glContext != null)
-                    {
-                        glContext.Dispose();
-                        glContext = null;
-                    }
+        #endregion
 
-                    if (glWindow != null)
-                    {
-                        glWindow.Dispose();
-                        glWindow = null;
-                    }
-                }
-                disposed = true;
-            }
-        }
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Occurs before the window is displayed for the first time.
+        /// </summary>
+        public event EventHandler<EventArgs> Load;
+
+        /// <summary>
+        /// Occurs when it is time to render a frame.
+        /// </summary>
+        public event EventHandler<FrameEventArgs> RenderFrame;
+
+        /// <summary>
+        /// Occurs before the window is destroyed.
+        /// </summary>
+        public event EventHandler<EventArgs> Unload;
+
+        /// <summary>
+        /// Occurs when it is time to update a frame.
+        /// </summary>
+        public event EventHandler<FrameEventArgs> UpdateFrame;
+
+        #endregion
+
+        #endregion
+
+        #region --- Protected Members ---
+
+        #region Dispose
 
         /// <summary>
         /// Override to add custom cleanup logic.
         /// </summary>
         /// <param name="manual">True, if this method was called by the application; false if this was called by the finalizer thread.</param>
-        protected virtual void Dispose(bool manual)
+        protected virtual void Dispose(bool manual) { }
+
+        #endregion
+
+        #region OnRenderFrame
+
+        /// <summary>
+        /// Override in derived classes to render a frame.
+        /// </summary>
+        /// <param name="e">Contains information necessary for frame rendering.</param>
+        /// <remarks>
+        /// The base implementation (base.OnRenderFrame) is empty, there is no need to call it.
+        /// </remarks>
+        protected virtual void OnRenderFrame(FrameEventArgs e) { }
+
+        #endregion
+
+        #region OnUpdateFrame
+
+        /// <summary>
+        /// Override in derived classes to update a frame.
+        /// </summary>
+        /// <param name="e">Contains information necessary for frame updating.</param>
+        /// <remarks>
+        /// The base implementation (base.OnUpdateFrame) is empty, there is no need to call it.
+        /// </remarks>
+        protected virtual void OnUpdateFrame(FrameEventArgs e) { }
+
+        #endregion
+
+        #region OnWindowInfoChanged
+
+        /// <summary>
+        /// Called when the WindowInfo for this GameWindow has changed.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        protected virtual void OnWindowInfoChanged(EventArgs e) { }
+
+        #endregion
+
+        #endregion
+
+        #region --- Assembly Members ---
+
+        #region Methods
+
+        #region ExitAsync
+
+        // Gracefully exits the GameWindow. May be called from any thread.
+        void ExitAsync()
         {
+            HasMainLoop = false;
+            isExiting = true;
+            //UpdateFrame += delegate
+            //{
+            //    ExitInternal();
+            //};
         }
+
+        #endregion
+
+        #endregion
+
+        #region Properties
+
+        #region HasMainLoop
+
+        bool HasMainLoop
+        {
+            get { return hasMainLoop; }
+            set { hasMainLoop = value; }
+        }
+
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region --- Private Members ---
+
+        #region OnLoadInternal
+
+        /// <summary>
+        /// Raises the Load event, and calls the user's OnLoad override.
+        /// </summary>
+        /// <param name="e">The event data.</param>
+        private void OnLoadInternal(EventArgs e)
+        {
+            OnResize(EventArgs.Empty);
+
+            if (Load != null) Load(this, e);
+
+            OnLoad(e);
+        }
+
+        #endregion
+
+        #region OnRenderFrameInternal
+
+        private void OnRenderFrameInternal(FrameEventArgs e)
+        {
+            EnsureUndisposed();
+
+            if (!this.Exists || this.IsExiting) return; // TODO: Redundant because of EnsureUndisposed.
+
+            if (RenderFrame != null) RenderFrame(this, e);
+
+            OnRenderFrame(e);
+        }
+
+        #endregion
+
+        #region OnUnloadInternal
+
+        /// <summary>
+        /// Raises the Unload event, and calls the user's OnUnload override.
+        /// </summary>
+        /// <param name="e">The event data.</param>
+        private void OnUnloadInternal(EventArgs e)
+        {
+            if (Unload != null) Unload(this, e);
+
+            OnUnload(e);
+        }
+
+        #endregion
+
+        #region OnUpdateFrameInternal
+
+        private void OnUpdateFrameInternal(FrameEventArgs e)
+        {
+            EnsureUndisposed();
+
+            if (!this.Exists || this.IsExiting) return; // TODO: Redundant because of EnsureUndisposed.
+
+            if (UpdateFrame != null) UpdateFrame(this, e);
+
+            OnUpdateFrame(e);
+        }
+
+        #endregion
+
+        #region OnWindowInfoChangedInternal
+
+        private void OnWindowInfoChangedInternal(EventArgs e)
+        {
+            glContext.MakeCurrent(WindowInfo);
+
+            OnWindowInfoChanged(e);
+        }
+
+        #endregion
+
+        #endregion
 
         ///// <summary>Finalizes unmanaged resources consumed by the GameWindow.</summary>
         //~GameWindow()
@@ -1797,7 +1053,6 @@ namespace OpenTK
         //    DisposeInternal(false);
         //}
 
-        #endregion
     }
 
     #region public enum VSyncMode
@@ -1822,24 +1077,4 @@ namespace OpenTK
     }
 
     #endregion
-
-    #region --- GameWindow Exceptions ---
-
-    [DebuggerNonUserCode]
-    class GameWindowExitException : ApplicationException
-    {
-        public override string Message
-        {
-            get
-            {
-                return
-@"This exception is a normal part of the GameWindow shutdown process and is completely harmless. While this warning will never be seen by end-users, Visual Studio reminds you that an exception is leaving your code unhandled, which can sometimes be a security breach.
-You can disable this warning for this specific exception: select Debug->Exceptions from the menu bar and click ""Add"". Choose ""Common Language Runtime Exceptions"", type ""OpenTK.GameWindowExitException"" in the box below and click ""Ok"". Deselecting the ""User-unhandled"" checkbox from the newly created exception will disable this warning.
-Alternatively, you can disable the ""Just my code"" debugging mode (""Tools->Options->Debugging->General"" and untick ""Enable Just my code (Managed only)"". This has the sideffect that it will allow you to step into OpenTK code if an error happens. Please, do this only if you are confident in your debugging skills.";
-            }
-        }
-    }
-
-    #endregion
-
 }
