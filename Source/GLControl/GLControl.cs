@@ -88,8 +88,6 @@ namespace OpenTK
             this.major = major;
             this.minor = minor;
             this.flags = flags;
-
-            this.CreateControl();
         }
 
         #endregion
