@@ -19,7 +19,7 @@ using OpenTK.Input;
 namespace OpenTK.Platform.Windows
 {
     // Not complete.
-    sealed class WinRawInput : NativeWindow, IInputDriver
+    sealed class WinRawInput : System.Windows.Forms.NativeWindow, IInputDriver
     {
         // Input event data.
         RawInput data = new RawInput();
