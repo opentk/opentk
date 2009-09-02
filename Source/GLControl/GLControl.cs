@@ -48,7 +48,6 @@ namespace OpenTK
         IGraphicsContext context;
         IGLControl implementation;
         GraphicsMode format;
-        IWindowInfo window_info;
         int major, minor;
         GraphicsContextFlags flags;
 
@@ -90,21 +89,24 @@ namespace OpenTK
             this.minor = minor;
             this.flags = flags;
 
-            // On Windows, you first need to create the window, then set the pixel format.
-            // On X11, you first need to select the visual, then create the window.
-            // On OSX, the pixel format needs to be selected before the GL context.
-            // Right now, pixel formats/visuals are selected during context creation. In the future,
-            // it would be better to decouple selection from context creation, which will allow us
-            // to clean up this hacky code. The best option is to do this along with multisampling
-            // support.
-            if (DesignMode)
-                implementation = new DummyGLControl();
-            else
-                implementation = new GLControlFactory().CreateGLControl(mode, this);
-
             this.CreateControl();
         }
 
+        #endregion
+
+        #region --- Private  Methods ---
+
+        IGLControl Implementation
+        {
+            get
+            {
+                if (implementation == null)
+                    CreateControl();
+
+                return implementation;
+            }
+        }
+        
         #endregion
 
         #region --- Protected Methods ---
@@ -113,27 +115,38 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected override void OnHandleCreated(EventArgs e)
         {
-            base.OnHandleCreated(e);
-
-            this.Context = implementation.CreateContext(major, minor, flags);
-
-            this.window_info = implementation.WindowInfo;
-            this.MakeCurrent();
+            if (implementation == null)
+            {
+                if (DesignMode)
+                    implementation = new DummyGLControl();
+                else
+                    implementation = new GLControlFactory().CreateGLControl(format, this);
+            }
+            
+            Context = implementation.CreateContext(major, minor, flags);
+            MakeCurrent();
             ((IGraphicsContextInternal)this.Context).LoadAll();
+
+            base.OnHandleCreated(e);
         }
 
         /// <summary>Raises the HandleDestroyed event.</summary>
         /// <param name="e">Not used.</param>
         protected override void OnHandleDestroyed(EventArgs e)
         {
-            base.OnHandleDestroyed(e);
-            if (this.Context != null)
+            if (Context != null)
             {
-                this.Context.Dispose();
-                this.Context = null;
+                Context.Dispose();
+                Context = null;
             }
-            this.window_info.Dispose();
-            this.window_info = null;
+
+            if (implementation != null)
+            {
+                implementation.WindowInfo.Dispose();
+                implementation = null;
+            }
+                
+            base.OnHandleDestroyed(e);
         }
 
         /// <summary>
@@ -155,7 +168,7 @@ namespace OpenTK
         protected override void OnResize(EventArgs e)
         {
             if (context != null)
-                context.Update(window_info);
+                context.Update(Implementation.WindowInfo);
 
             base.OnResize(e);
         }
@@ -167,7 +180,7 @@ namespace OpenTK
         protected override void OnParentChanged(EventArgs e)
         {
             if (context != null)
-                context.Update(window_info);
+                context.Update(Implementation.WindowInfo);
 
             base.OnParentChanged(e);
         }
@@ -196,7 +209,7 @@ namespace OpenTK
         /// </summary>
         public void MakeCurrent()
         {
-            this.Context.MakeCurrent(this.window_info);
+            Context.MakeCurrent(Implementation.WindowInfo);
         }
 
         #endregion
@@ -209,7 +222,7 @@ namespace OpenTK
         [Browsable(false)]
         public bool IsIdle
         {
-            get { return implementation.IsIdle; }
+            get { return Implementation.IsIdle; }
         }
 
         #endregion
