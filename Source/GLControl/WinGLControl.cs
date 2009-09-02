@@ -113,21 +113,7 @@ namespace OpenTK
         {
             this.mode = mode;
 
-            control.HandleCreated += delegate(object sender, EventArgs e)
-            {
-                if (window_info != null)
-                    window_info.Dispose();
-                window_info = Utilities.CreateWindowInfo(mode, ((Control)sender).Handle, true);
-            };
-
-            control.HandleDestroyed += delegate(object sender, EventArgs e)
-            {
-                if (window_info != null)
-                {
-                    window_info.Dispose();
-                    window_info = null;
-                }
-            };
+            window_info = Utilities.CreateWindowInfo(mode, control.Handle, true);
         }
 
         #endregion
