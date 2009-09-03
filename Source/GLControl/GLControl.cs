@@ -98,11 +98,22 @@ namespace OpenTK
         {
             get
             {
-                if (implementation == null)
-                    CreateControl();
+                ValidateState();
 
                 return implementation;
             }
+        }
+
+        void ValidateState()
+        {
+            if (IsDisposed)
+                throw new ObjectDisposedException(GetType().Name);
+
+            if (!IsHandleCreated)
+                CreateControl();
+            
+            if (implementation == null || context == null || context.IsDisposed)
+                RecreateHandle();
         }
         
         #endregion
@@ -113,16 +124,20 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected override void OnHandleCreated(EventArgs e)
         {
-            if (implementation == null)
-            {
-                if (DesignMode)
-                    implementation = new DummyGLControl();
-                else
-                    implementation = new GLControlFactory().CreateGLControl(format, this);
-            }
+            if (context != null)
+                context.Dispose();
+
+            if (implementation != null)
+                implementation.WindowInfo.Dispose();
             
-            Context = implementation.CreateContext(major, minor, flags);
+            if (DesignMode)
+                implementation = new DummyGLControl();
+            else
+                implementation = new GLControlFactory().CreateGLControl(format, this);
+
+            context = implementation.CreateContext(major, minor, flags);
             MakeCurrent();
+
             if (!DesignMode)
                 ((IGraphicsContextInternal)Context).LoadAll();
 
@@ -133,10 +148,10 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected override void OnHandleDestroyed(EventArgs e)
         {
-            if (Context != null)
+            if (context != null)
             {
-                Context.Dispose();
-                Context = null;
+                context.Dispose();
+                context = null;
             }
 
             if (implementation != null)
@@ -154,6 +169,8 @@ namespace OpenTK
         /// <param name="e">A System.Windows.Forms.PaintEventArgs that contains the event data.</param>
         protected override void OnPaint(PaintEventArgs e)
         {
+            ValidateState();
+            
             if (DesignMode)
                 e.Graphics.Clear(BackColor);
 
@@ -195,6 +212,7 @@ namespace OpenTK
         /// </summary>
         public void SwapBuffers()
         {
+            ValidateState();
             Context.SwapBuffers();
         }
 
@@ -208,6 +226,7 @@ namespace OpenTK
         /// </summary>
         public void MakeCurrent()
         {
+            ValidateState();
             Context.MakeCurrent(Implementation.WindowInfo);
         }
 
@@ -221,7 +240,11 @@ namespace OpenTK
         [Browsable(false)]
         public bool IsIdle
         {
-            get { return Implementation.IsIdle; }
+            get
+            {
+                ValidateState();
+                return Implementation.IsIdle;
+            }
         }
 
         #endregion
@@ -234,7 +257,11 @@ namespace OpenTK
         [Browsable(false)]
         public IGraphicsContext Context
         {
-            get { return context; }
+            get
+            {
+                ValidateState();
+                return context;
+            }
             private set { context = value; }
         }
 
@@ -250,7 +277,8 @@ namespace OpenTK
         {
             get
             {
-                return this.ClientSize.Width / (float)this.ClientSize.Height;
+                ValidateState();
+                return ClientSize.Width / (float)ClientSize.Height;
             }
         }
 
@@ -266,14 +294,13 @@ namespace OpenTK
         {
             get
             {
-                if (Context != null)
-                    return Context.VSync;
-                return false;
+                ValidateState();
+                return Context.VSync;
             }
             set
             {
-                if (Context != null)
-                    Context.VSync = value;
+                ValidateState();
+                Context.VSync = value;
             }
         }
 
@@ -289,7 +316,11 @@ namespace OpenTK
         /// </remarks>
         public GraphicsMode GraphicsMode
         {
-            get { return Context.GraphicsMode; }
+            get
+            {
+                ValidateState();
+                return Context.GraphicsMode;
+            }
         }
 
         #endregion
@@ -304,6 +335,8 @@ namespace OpenTK
         [Obsolete("This method will be removed. Please provide your own code to capture framebuffer contents.")]
         public Bitmap GrabScreenshot()
         {
+            ValidateState();
+            
             Bitmap bmp = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
             System.Drawing.Imaging.BitmapData data =
                 bmp.LockBits(this.ClientRectangle, System.Drawing.Imaging.ImageLockMode.WriteOnly,
