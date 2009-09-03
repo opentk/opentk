@@ -34,7 +34,7 @@ namespace OpenTK.Graphics
 
     partial class GL
     {
-
+        [Obsolete]
         internal static partial class Imports
         {
 
