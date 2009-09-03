@@ -301,11 +301,21 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Gets a System.Boolean indicating whether this Context is current in the calling thread.
+        /// Gets a <see cref="System.Boolean"/> indicating whether this instance is current in the calling thread.
         /// </summary>
         public bool IsCurrent
         {
             get { return implementation.IsCurrent; }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="System.Boolean"/> indicating whether this instance has been disposed.
+        /// It is an error to access any instance methods if this property returns true.
+        /// </summary>
+        public bool IsDisposed
+        {
+            get { return disposed && implementation.IsDisposed; }
+            private set { disposed = value; }
         }
 
         /// <summary>
@@ -397,7 +407,7 @@ namespace OpenTK.Graphics
 
         void Dispose(bool manual)
         {
-            if (!disposed)
+            if (!IsDisposed)
             {
                 Debug.Print("Disposing context {0}.", (this as IGraphicsContextInternal).Context.ToString());
                 lock (context_lock)
@@ -410,7 +420,7 @@ namespace OpenTK.Graphics
                     if (implementation != null)
                         implementation.Dispose();
                 }
-                disposed = true;
+                IsDisposed = true;
             }
         }
 

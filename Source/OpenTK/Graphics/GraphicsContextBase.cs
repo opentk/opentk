@@ -37,6 +37,8 @@ namespace OpenTK.Graphics
     {
         #region Fields
 
+        bool disposed;
+        
         protected ContextHandle Handle;
         protected GraphicsMode Mode;
 
@@ -50,6 +52,12 @@ namespace OpenTK.Graphics
 
         public abstract bool IsCurrent { get; }
 
+        public bool IsDisposed
+        {
+            get { return disposed; }
+            protected set { disposed = value; }
+        }
+        
         public abstract bool VSync { get; set; }
 
         public virtual void Update(IWindowInfo window) { }
