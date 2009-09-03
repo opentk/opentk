@@ -403,7 +403,7 @@ namespace OpenTK.Examples.Properties {
         ///using OpenTK;
         ///using OpenTK.Graphics;
         ///using OpenTK.Graphics.OpenGL;
-        ///        /// [rest of string was truncated]&quot;;.
+        ///        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string JuliaSetFractal {
             get {
