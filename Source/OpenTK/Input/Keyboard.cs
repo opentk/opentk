@@ -19,6 +19,7 @@ namespace OpenTK.Input
 
         static Keyboard()
         {
+            throw new NotImplementedException();
             //driver = Platform.Factory.Default.CreateKeyboardDriver();
         }
 
@@ -32,7 +33,7 @@ namespace OpenTK.Input
         /// <returns>A <see cref="OpenTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
         public static KeyboardState GetState()
         {
-            throw new NotImplementedException();
+            return new KeyboardState();
         }
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace OpenTK.Input
         /// <returns>A <see cref="OpenTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
         public static KeyboardState GetState(int index)
         {
-            throw new NotImplementedException();
+            return new KeyboardState();
         }
 
         #endregion
