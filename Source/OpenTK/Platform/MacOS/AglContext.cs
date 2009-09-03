@@ -335,8 +335,7 @@ namespace OpenTK.Platform.MacOS
 
         void Dispose(bool disposing)
         {
-            
-            if (Handle.Handle == IntPtr.Zero)
+            if (IsDisposed || Handle.Handle == IntPtr.Zero)
                 return;
 
             Debug.Print("Disposing of AGL context.");
@@ -370,6 +369,8 @@ namespace OpenTK.Platform.MacOS
             {
                 throw new MacOSException((OSStatus)Agl.GetError(), Agl.ErrorString(Agl.GetError()));
             }
+
+            IsDisposed = true;
         }
 
         #endregion

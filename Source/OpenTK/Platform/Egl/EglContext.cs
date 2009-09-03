@@ -40,7 +40,6 @@ namespace OpenTK.Platform.Egl
         EglWindowInfo WindowInfo;
         EGLContext HandleAsEGLContext { get { return new EGLContext(Handle.Handle); } set { Handle = new ContextHandle(value.Handle.Value); } }
         bool vsync = true;   // Default vsync value is defined as 1 (true) in EGL.
-        bool disposed = false;
 
         #endregion
 
@@ -141,7 +140,7 @@ namespace OpenTK.Platform.Egl
         // thread?
         void Dispose(bool manual)
         {
-            if (!disposed)
+            if (!IsDisposed)
             {
                 if (manual)
                 {
@@ -152,7 +151,7 @@ namespace OpenTK.Platform.Egl
                 {
                     Debug.Print("[Warning] {0}:{1} was not disposed.", this.GetType().Name, HandleAsEGLContext.Handle);
                 }
-                disposed = true;
+                IsDisposed = true;
             }
         }
 

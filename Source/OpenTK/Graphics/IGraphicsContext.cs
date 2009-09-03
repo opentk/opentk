@@ -31,9 +31,15 @@ namespace OpenTK.Graphics
         void MakeCurrent(IWindowInfo window);
 
         /// <summary>
-        /// Gets or sets a System.Boolean indicating whether the GraphicsContext is current in the calling thread.
+        /// Gets a <see cref="System.Boolean"/> indicating whether this instance is current in the calling thread.
         /// </summary>
         bool IsCurrent { get; }
+
+        /// <summary>
+        /// Gets a <see cref="System.Boolean"/> indicating whether this instance has been disposed.
+        /// It is an error to access any instance methods if this property returns true.
+        /// </summary>
+        bool IsDisposed { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether VSyncing is enabled.
