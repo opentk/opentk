@@ -26,8 +26,6 @@ namespace OpenTK.Platform.X11
         bool glx_loaded;
         GraphicsMode graphics_mode;
 
-        bool disposed;
-
         #region --- Constructors ---
 
         public X11GLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shared, bool direct,
@@ -298,7 +296,7 @@ namespace OpenTK.Platform.X11
 
         private void Dispose(bool manuallyCalled)
         {
-            if (!disposed)
+            if (!IsDisposed)
             {
                 if (manuallyCalled)
                 {
@@ -312,7 +310,7 @@ namespace OpenTK.Platform.X11
                 {
                     Debug.Print("[Warning] {0} leaked.", this.GetType().Name);
                 }
-                disposed = true;
+                IsDisposed = true;
             }
         }
 

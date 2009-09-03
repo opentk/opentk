@@ -32,8 +32,6 @@ namespace OpenTK.Platform.Windows
 
         bool vsync_supported;
 
-        bool disposed;
-
         #region --- Contructors ---
 
         static WinGLContext()
@@ -305,7 +303,7 @@ namespace OpenTK.Platform.Windows
 
         private void Dispose(bool calledManually)
         {
-            if (!disposed)
+            if (!IsDisposed)
             {
                 if (calledManually)
                 {
@@ -316,7 +314,7 @@ namespace OpenTK.Platform.Windows
                     Debug.Print("[Warning] OpenGL context {0} leaked. Did you forget to call IGraphicsContext.Dispose()?",
                         Handle.Handle);
                 }
-                disposed = true;
+                IsDisposed = true;
             }
         }
 
