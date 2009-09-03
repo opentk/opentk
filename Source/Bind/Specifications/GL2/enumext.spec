@@ -7122,6 +7122,26 @@ DrawBufferMode enum:
 	use ARB_framebuffer_object	    COLOR_ATTACHMENT13
 	use ARB_framebuffer_object	    COLOR_ATTACHMENT14
 	use ARB_framebuffer_object	    COLOR_ATTACHMENT15
+    
+# These tokens are only valid when the current FramebufferBinding is non-zero
+# See page 182 of the 3.1 specs.
+ReadBufferMode enum:
+    use ARB_framebuffer_object      COLOR_ATTACHMENT0
+    use ARB_framebuffer_object      COLOR_ATTACHMENT1
+    use ARB_framebuffer_object      COLOR_ATTACHMENT2
+    use ARB_framebuffer_object      COLOR_ATTACHMENT3
+    use ARB_framebuffer_object      COLOR_ATTACHMENT4
+    use ARB_framebuffer_object      COLOR_ATTACHMENT5
+    use ARB_framebuffer_object      COLOR_ATTACHMENT6
+    use ARB_framebuffer_object      COLOR_ATTACHMENT7
+    use ARB_framebuffer_object      COLOR_ATTACHMENT8
+    use ARB_framebuffer_object      COLOR_ATTACHMENT9
+    use ARB_framebuffer_object      COLOR_ATTACHMENT10
+    use ARB_framebuffer_object      COLOR_ATTACHMENT11
+    use ARB_framebuffer_object      COLOR_ATTACHMENT12
+    use ARB_framebuffer_object      COLOR_ATTACHMENT13
+    use ARB_framebuffer_object      COLOR_ATTACHMENT14
+    use ARB_framebuffer_object      COLOR_ATTACHMENT15
 
 FramebufferAttachmentObjectType enum:
 	NONE													= 0
