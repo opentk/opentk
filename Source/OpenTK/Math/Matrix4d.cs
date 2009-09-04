@@ -97,10 +97,10 @@ namespace OpenTK
         /// <param name="m32">Third item of the fourth row.</param>
         /// <param name="m33">Fourth item of the fourth row.</param>
         public Matrix4d(
-            float m00, float m01, float m02, float m03,
-            float m10, float m11, float m12, float m13,
-            float m20, float m21, float m22, float m23,
-            float m30, float m31, float m32, float m33)
+            double m00, double m01, double m02, double m03,
+            double m10, double m11, double m12, double m13,
+            double m20, double m21, double m22, double m23,
+            double m30, double m31, double m32, double m33)
         {
             Row0 = new Vector4d(m00, m01, m02, m03);
             Row1 = new Vector4d(m10, m11, m12, m13);
@@ -300,6 +300,131 @@ namespace OpenTK
         #endregion
 
         #region Static
+
+        #region CreateFromAxisAngle
+
+        /// <summary>
+        /// Build a rotation matrix from the specified axis/angle rotation.
+        /// </summary>
+        /// <param name="axis">The axis to rotate about.</param>
+        /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
+        /// <param name="result">A matrix instance.</param>
+        public static void CreateFromAxisAngle(Vector3d axis, double angle, out Matrix4d result)
+        {
+            double cos = System.Math.Cos(-angle);
+            double sin = System.Math.Sin(-angle);
+            double t = 1.0f - cos;
+
+            axis.Normalize();
+
+            result = new Matrix4d(t * axis.X * axis.X + cos, t * axis.X * axis.Y - sin * axis.Z, t * axis.X * axis.Z + sin * axis.Y, 0.0f,
+                                 t * axis.X * axis.Y + sin * axis.Z, t * axis.Y * axis.Y + cos, t * axis.Y * axis.Z - sin * axis.X, 0.0f,
+                                 t * axis.X * axis.Z - sin * axis.Y, t * axis.Y * axis.Z + sin * axis.X, t * axis.Z * axis.Z + cos, 0.0f,
+                                 0, 0, 0, 1);
+        }
+
+        /// <summary>
+        /// Build a rotation matrix from the specified axis/angle rotation.
+        /// </summary>
+        /// <param name="axis">The axis to rotate about.</param>
+        /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
+        /// <returns>A matrix instance.</returns>
+        public static Matrix4d CreateFromAxisAngle(Vector3d axis, double angle)
+        {
+            Matrix4d result;
+            CreateFromAxisAngle(axis, angle, out result);
+            return result;
+        }
+
+        #endregion
+
+        #region CreateRotation[XYZ]
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the x-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <param name="result">The resulting Matrix4 instance.</param>
+        public static void CreateRotationX(double angle, out Matrix4d result)
+        {
+            double cos = System.Math.Cos(angle);
+            double sin = System.Math.Sin(angle);
+
+            result.Row0 = Vector4d.UnitX;
+            result.Row1 = new Vector4d(0, cos, sin, 0);
+            result.Row2 = new Vector4d(0, -sin, cos, 0);
+            result.Row3 = Vector4d.UnitW;
+        }
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the x-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <returns>The resulting Matrix4 instance.</returns>
+        public static Matrix4d CreateRotationX(double angle)
+        {
+            Matrix4d result;
+            CreateRotationX(angle, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the y-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <param name="result">The resulting Matrix4 instance.</param>
+        public static void CreateRotationY(double angle, out Matrix4d result)
+        {
+            double cos = System.Math.Cos(angle);
+            double sin = System.Math.Sin(angle);
+
+            result.Row0 = new Vector4d(cos, 0, -sin, 0);
+            result.Row1 = Vector4d.UnitY;
+            result.Row2 = new Vector4d(sin, 0, cos, 0);
+            result.Row3 = Vector4d.UnitW;
+        }
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the y-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <returns>The resulting Matrix4 instance.</returns>
+        public static Matrix4d CreateRotationY(double angle)
+        {
+            Matrix4d result;
+            CreateRotationY(angle, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the z-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <param name="result">The resulting Matrix4 instance.</param>
+        public static void CreateRotationZ(double angle, out Matrix4d result)
+        {
+            double cos = System.Math.Cos(angle);
+            double sin = System.Math.Sin(angle);
+
+            result.Row0 = new Vector4d(cos, sin, 0, 0);
+            result.Row1 = new Vector4d(-sin, cos, 0, 0);
+            result.Row2 = Vector4d.UnitZ;
+            result.Row3 = Vector4d.UnitW;
+        }
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the z-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <returns>The resulting Matrix4 instance.</returns>
+        public static Matrix4d CreateRotationZ(double angle)
+        {
+            Matrix4d result;
+            CreateRotationZ(angle, out result);
+            return result;
+        }
+
+        #endregion
 
         #region CreateTranslation
 
