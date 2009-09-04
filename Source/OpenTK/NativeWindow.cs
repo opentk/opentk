@@ -244,7 +244,7 @@ namespace OpenTK
         {
             get
             {
-                return disposed ? false : implementation.Exists; // TODO: Should disposed be ignored instead?
+                return IsDisposed ? false : implementation.Exists; // TODO: Should disposed be ignored instead?
             }
         }
 
@@ -577,7 +577,7 @@ namespace OpenTK
         /// </summary>
         public virtual void Dispose()
         {
-            if (!disposed)
+            if (!IsDisposed)
             {
                 if ((options & GameWindowFlags.Fullscreen) != 0)
                 {
@@ -587,7 +587,7 @@ namespace OpenTK
                 implementation.Dispose();
                 GC.SuppressFinalize(this);
 
-                disposed = true;
+                IsDisposed = true;
             }
         }
 
@@ -609,16 +609,21 @@ namespace OpenTK
         /// </exception>
         protected void EnsureUndisposed()
         {
-            if (disposed) throw new ObjectDisposedException(GetType().Name);
+            if (IsDisposed) throw new ObjectDisposedException(GetType().Name);
         }
 
         #endregion
 
         #region IsDisposed
 
-        protected bool IsDisposed() //TODO: Could be a property but with a different name than the variable because of the event. Alternatively the disposed variable could be renamed too.
+        /// <summary>
+        /// Gets or sets a <see cref="System.Boolean"/>, which indicates whether
+        /// this instance has been disposed.
+        /// </summary>
+        protected bool IsDisposed
         {
-            return disposed;
+            get { return disposed; }
+            set { disposed = value; }
         }
 
         #endregion
