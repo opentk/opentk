@@ -34,9 +34,9 @@ namespace Examples.Tests
             WindowStateChanged += WindowBorderOrStateChangedHandler;
         }
 
-        void KeyUpHandler(KeyboardDevice sender, Key key)
+        void KeyUpHandler(object sender, KeyboardKeyEventArgs e)
         {
-            switch (key)
+            switch (e.Key)
             {
                 case OpenTK.Input.Key.Escape: this.Exit(); break;
 

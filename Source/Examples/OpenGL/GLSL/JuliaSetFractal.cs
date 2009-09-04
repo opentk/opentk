@@ -18,6 +18,7 @@ using System.IO;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
 
 namespace Examples.Tutorial
 {
@@ -170,9 +171,9 @@ namespace Examples.Tutorial
         }
 
         int i = 0;
-        void KeyUp(OpenTK.Input.KeyboardDevice sender, OpenTK.Input.Key e)
+        void KeyUp(object sender, KeyboardKeyEventArgs e)
         {
-            if (e == OpenTK.Input.Key.F12)
+            if (e.Key == Key.F12)
             {
                 Bitmap bmp = new Bitmap(this.Width, this.Height);
                 System.Drawing.Imaging.BitmapData data = 

@@ -69,10 +69,11 @@ namespace Examples.Tutorial
         public SimpleGeometryShader2()
             : base(800, 600)
         {
-            Keyboard.KeyDown += new KeyDownEvent(Keyboard_KeyDown);
+            Keyboard.KeyDown += Keyboard_KeyDown;
         }
 
-        enum ViewMode {
+        enum ViewMode
+        {
             CubemapCross,
             Scene,
         }
@@ -110,8 +111,10 @@ namespace Examples.Tutorial
 
         #region keyboard handler
 
-        void Keyboard_KeyDown(KeyboardDevice sender, Key key) {
-            switch (key) {
+        void Keyboard_KeyDown(object sender, KeyboardKeyEventArgs e)
+        {
+            switch (e.Key)
+            {
                 case Key.F1:
                     switchToMode(ViewMode.CubemapCross);
                     break;
@@ -139,7 +142,8 @@ namespace Examples.Tutorial
 
         #region init methods
 
-        void initShaderProgramBox() {
+        void initShaderProgramBox()
+        {
             // create a program object.
             shaderProgramBox = GL.CreateProgram();
             // create shader objects.
@@ -192,7 +196,8 @@ namespace Examples.Tutorial
                 GL.DeleteShader(vert);
         }
 
-        void initShaderProgramSphere() {
+        void initShaderProgramSphere()
+        {
             // create a program object.
             shaderProgramSphere = GL.CreateProgram();
             // create shader objects.
@@ -245,7 +250,8 @@ namespace Examples.Tutorial
                 GL.DeleteShader(vert);
         }
 
-        void initShaderProgramCubemap() {
+        void initShaderProgramCubemap()
+        {
             // create a program object.
             shaderProgramCubemap = GL.CreateProgram();
             // create shader objects.
@@ -393,7 +399,8 @@ namespace Examples.Tutorial
         /// </summary>
         /// <param name="shader">A shader object, gotten from GL.CreateShader.</param>
         /// <param name="source">The GLSL source to compile.</param>
-        void compileShader(int shader, string source) {
+        void compileShader(int shader, string source)
+        {
             GL.ShaderSource(shader, source);
             GL.CompileShader(shader);
 
@@ -403,13 +410,15 @@ namespace Examples.Tutorial
 
             int compileResult;
             GL.GetShader(shader, ShaderParameter.CompileStatus, out compileResult);
-            if (compileResult != 1) {
+            if (compileResult != 1)
+            {
                 Debug.WriteLine("Compile Error!");
                 Debug.WriteLine(source);
             }
         }
 
-        void initTextureCube() {
+        void initTextureCube()
+        {
             textureCubeColor = GL.GenTexture();
             GL.BindTexture(TextureTarget.TextureCubeMap, textureCubeColor);
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
@@ -424,7 +433,8 @@ namespace Examples.Tutorial
                 TextureTarget.TextureCubeMapNegativeY,
                 TextureTarget.TextureCubeMapPositiveZ,
                 TextureTarget.TextureCubeMapNegativeZ,
-            }) {
+            })
+            {
                 GL.TexImage2D(target, 0, PixelInternalFormat.Rgba8, 512, 512, 0, PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
             }
 
@@ -458,53 +468,65 @@ namespace Examples.Tutorial
 
             #region Test for Error
             FramebufferErrorCode e = GL.Ext.CheckFramebufferStatus(FramebufferTarget.FramebufferExt);
-            switch (e) {
-                case FramebufferErrorCode.FramebufferCompleteExt: {
+            switch (e)
+            {
+                case FramebufferErrorCode.FramebufferCompleteExt:
+                    {
                         Console.WriteLine("FBO: The framebuffer is complete and valid for rendering.");
                         break;
                     }
-                case FramebufferErrorCode.FramebufferIncompleteAttachmentExt: {
+                case FramebufferErrorCode.FramebufferIncompleteAttachmentExt:
+                    {
                         Console.WriteLine("FBO: One or more attachment points are not framebuffer attachment complete. This could mean there’s no texture attached or the format isn’t renderable. For color textures this means the base format must be RGB or RGBA and for depth textures it must be a DEPTH_COMPONENT format. Other causes of this error are that the width or height is zero or the z-offset is out of range in case of render to volume.");
                         break;
                     }
-                case FramebufferErrorCode.FramebufferIncompleteMissingAttachmentExt: {
+                case FramebufferErrorCode.FramebufferIncompleteMissingAttachmentExt:
+                    {
                         Console.WriteLine("FBO: There are no attachments.");
                         break;
                     }
-/*               case  FramebufferErrorCode.GL_FRAMEBUFFER_INCOMPLETE_DUPLICATE_ATTACHMENT_EXT: 
-                     {
-                         Console.WriteLine("FBO: An object has been attached to more than one attachment point.");
-                         break;
-                     }*/
-                case FramebufferErrorCode.FramebufferIncompleteDimensionsExt: {
+                /*               case  FramebufferErrorCode.GL_FRAMEBUFFER_INCOMPLETE_DUPLICATE_ATTACHMENT_EXT: 
+                                     {
+                                         Console.WriteLine("FBO: An object has been attached to more than one attachment point.");
+                                         break;
+                                     }*/
+                case FramebufferErrorCode.FramebufferIncompleteDimensionsExt:
+                    {
                         Console.WriteLine("FBO: Attachments are of different size. All attachments must have the same width and height.");
                         break;
                     }
-                case FramebufferErrorCode.FramebufferIncompleteFormatsExt: {
+                case FramebufferErrorCode.FramebufferIncompleteFormatsExt:
+                    {
                         Console.WriteLine("FBO: The color attachments have different format. All color attachments must have the same format.");
                         break;
                     }
-                case FramebufferErrorCode.FramebufferIncompleteDrawBufferExt: {
+                case FramebufferErrorCode.FramebufferIncompleteDrawBufferExt:
+                    {
                         Console.WriteLine("FBO: An attachment point referenced by GL.DrawBuffers() doesn’t have an attachment.");
                         break;
                     }
-                case FramebufferErrorCode.FramebufferIncompleteReadBufferExt: {
+                case FramebufferErrorCode.FramebufferIncompleteReadBufferExt:
+                    {
                         Console.WriteLine("FBO: The attachment point referenced by GL.ReadBuffers() doesn’t have an attachment.");
                         break;
                     }
-                case FramebufferErrorCode.FramebufferUnsupportedExt: {
+                case FramebufferErrorCode.FramebufferUnsupportedExt:
+                    {
                         Console.WriteLine("FBO: This particular FBO configuration is not supported by the implementation.");
                         break;
                     }
-                case (FramebufferErrorCode)All.FramebufferIncompleteLayerTargetsExt: {
+                case (FramebufferErrorCode)All.FramebufferIncompleteLayerTargetsExt:
+                    {
                         Console.WriteLine("FBO: Framebuffer Incomplete Layer Targets.");
                         break;
                     }
-                case (FramebufferErrorCode)All.FramebufferIncompleteLayerCountExt: {
+                case (FramebufferErrorCode)All.FramebufferIncompleteLayerCountExt:
+                    {
                         Console.WriteLine("FBO: Framebuffer Incomplete Layer Count.");
                         break;
                     }
-                default: {
+                default:
+                    {
                         Console.WriteLine("FBO: Status unknown. (yes, this is really bad.)");
                         break;
                     }
@@ -528,7 +550,8 @@ namespace Examples.Tutorial
             GL.Ext.BindFramebuffer(FramebufferTarget.FramebufferExt, 0); // disable rendering into the FBO
         }
 
-        void initVBOCube() {
+        void initVBOCube()
+        {
             GL.GenBuffers(1, out vboCube);
             // vertex 3 floats
             // normal 3 floats
@@ -540,11 +563,12 @@ namespace Examples.Tutorial
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
 
-        void initVBOSpere() {
+        void initVBOSpere()
+        {
             VertexPositionNormalTexture[] sphereVertices = CalculateSphereVertices(1, 1, 16, 16);
             ushort[] sphereElements = CalculateSphereElements(1, 1, 16, 16);
             sphereElementCount = sphereElements.Length;
-            
+
             GL.GenBuffers(1, out vboSphere);
             GL.BindBuffer(BufferTarget.ArrayBuffer, vboSphere);
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(BlittableValueType.StrideOf(sphereVertices) * sphereVertices.Length), sphereVertices, BufferUsageHint.StaticDraw);
@@ -560,29 +584,33 @@ namespace Examples.Tutorial
 
         #region perspective
 
-        void setOrtho() {
+        void setOrtho()
+        {
             OpenTK.Matrix4 proj;
             proj = OpenTK.Matrix4.CreateOrthographicOffCenter(-1, 1, -1, 1, 1, -1);
             GL.LoadMatrix(ref proj);
         }
 
-        void setPerspective() {
+        void setPerspective()
+        {
             OpenTK.Matrix4 proj;
             proj = OpenTK.Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Width / (float)Height, 0.1f, 200f);
             GL.LoadMatrix(ref proj);
         }
 
-        void switchToMode(ViewMode m) {
+        void switchToMode(ViewMode m)
+        {
             mode = m;
             // force update of projection matrix by calling OnResize
             this.OnResize(EventArgs.Empty);
         }
 
-        #endregion 
+        #endregion
 
         #region render methods
 
-        void drawCubemapCross() {
+        void drawCubemapCross()
+        {
             GL.ClearColor(0.1f, 0.1f, 0.1f, 0.1f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -672,7 +700,7 @@ namespace Examples.Tutorial
             GL.Vertex2(+0.0f, -1.0f);
             GL.TexCoord3(-1.0f, -1.0f, -1.0f);
             GL.Vertex2(-0.5f, -1.0f);
-            
+
             GL.End();
             GL.PopMatrix();
 
@@ -680,7 +708,8 @@ namespace Examples.Tutorial
             GL.PopAttrib();
         }
 
-        void renderCubeVBO() {
+        void renderCubeVBO()
+        {
             GL.EnableClientState(EnableCap.VertexArray);
             GL.EnableClientState(EnableCap.NormalArray);
             GL.EnableClientState(EnableCap.TextureCoordArray);
@@ -699,7 +728,8 @@ namespace Examples.Tutorial
             GL.DisableClientState(EnableCap.TextureCoordArray);
         }
 
-        void renderSphereVBO() {
+        void renderSphereVBO()
+        {
             GL.EnableClientState(EnableCap.VertexArray);
             GL.EnableClientState(EnableCap.NormalArray);
             GL.EnableClientState(EnableCap.TextureCoordArray);
@@ -712,7 +742,7 @@ namespace Examples.Tutorial
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboSphere);
             GL.DrawElements(BeginMode.Triangles, 16 * 16 * 6, DrawElementsType.UnsignedShort, IntPtr.Zero);
-            
+
             //GL.Arb.DrawArraysInstanced(BeginMode.Triangles, 0, cubeData.Length/8, 1);
             //GL.DrawArrays(BeginMode.Triangles, 0, sphereData.Length / (vboSphereStride / sizeof(float)));
 
@@ -721,7 +751,8 @@ namespace Examples.Tutorial
             GL.DisableClientState(EnableCap.TextureCoordArray);
         }
 
-        void renderCubemap() {
+        void renderCubemap()
+        {
             GL.Disable(EnableCap.DepthTest);
 
             // draw onto cubemap FBO using geometry shader
@@ -733,7 +764,8 @@ namespace Examples.Tutorial
 
                 // clear all cubemap faces to blue
                 GL.ClearColor(0f, 0f, 1f, 0f);
-                for (int i = 0; i < 6; i++) {
+                for (int i = 0; i < 6; i++)
+                {
                     GL.Ext.FramebufferTexture2D(FramebufferTarget.FramebufferExt, FramebufferAttachment.ColorAttachment0, TextureTarget.TextureCubeMapPositiveX + i, textureCubeColor, 0);
                     //todo select depth renderbuffer face and trun depth_test on again
                     GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -742,7 +774,7 @@ namespace Examples.Tutorial
                 // Create 6 ModelViewProjection matrices, one to look in each direction
                 // proj with 90 degrees (1/2 pi) fov
                 // translate negative to place cam insize sphere
-                Matrix4 model =  Matrix4.Scale(-1) * Matrix4.CreateTranslation(spherePos);
+                Matrix4 model = Matrix4.Scale(-1) * Matrix4.CreateTranslation(spherePos);
                 Matrix4 proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, 1, 0.1f, 100f);
 
                 Matrix4[] m = new Matrix4[6];
@@ -769,7 +801,8 @@ namespace Examples.Tutorial
             GL.Enable(EnableCap.DepthTest);
         }
 
-        void renderScene() {
+        void renderScene()
+        {
             GL.MatrixMode(MatrixMode.Projection);
             GL.PushMatrix();
             setPerspective();
@@ -794,7 +827,7 @@ namespace Examples.Tutorial
             GL.MatrixMode(MatrixMode.Modelview);
             GL.PopMatrix();
         }
-        
+
         #endregion
 
         #region overrides
@@ -852,7 +885,8 @@ namespace Examples.Tutorial
 
             // Set projection matrix
             GL.MatrixMode(MatrixMode.Projection);
-            switch (mode) {
+            switch (mode)
+            {
                 case ViewMode.CubemapCross:
                     setOrtho();
                     break;
@@ -877,8 +911,8 @@ namespace Examples.Tutorial
             // elapsed time in ms since last start
             double elapsed = (DateTime.Now - startTime).TotalMilliseconds;
 
-            spherePos.X = (float)Math.Sin(elapsed/5000) * 3;
-            spherePos.Z = (float)Math.Cos(elapsed/5000) * 3;
+            spherePos.X = (float)Math.Sin(elapsed / 5000) * 3;
+            spherePos.Z = (float)Math.Cos(elapsed / 5000) * 3;
             eyePos.X = (float)Math.Cos(elapsed / 3000) * 8;
             eyePos.Z = (float)Math.Sin(elapsed / 2000) * 8;
 
@@ -892,11 +926,13 @@ namespace Examples.Tutorial
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            if (mode == ViewMode.CubemapCross) {
+            if (mode == ViewMode.CubemapCross)
+            {
                 renderCubemap();
                 drawCubemapCross();
             }
-            if (mode == ViewMode.Scene) {
+            if (mode == ViewMode.Scene)
+            {
                 renderCubemap();
                 GL.ClearColor(0.1f, 0.1f, 0.1f, 0.1f);
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -980,16 +1016,16 @@ namespace Examples.Tutorial
         static VertexPositionNormalTexture[] CalculateSphereVertices(float radius, float height, byte segments, byte rings)
         {
             var data = new VertexPositionNormalTexture[segments * rings];
- 
+
             int i = 0;
- 
+
             for (double y = 0; y < rings; y++)
             {
                 double phi = (y / (rings - 1)) * Math.PI;
-                for (double x = 0; x < segments; x++)  
+                for (double x = 0; x < segments; x++)
                 {
                     double theta = (x / (segments - 1)) * 2 * Math.PI;
- 
+
                     Vector3 v = new Vector3()
                     {
                         X = (float)(radius * Math.Sin(phi) * Math.Cos(theta)),
@@ -1006,19 +1042,19 @@ namespace Examples.Tutorial
                     data[i] = new VertexPositionNormalTexture() { Position = v, Normal = n, Texture = uv };
                     i++;
                 }
- 
-            }  
- 
+
+            }
+
             return data;
         }
- 
+
         static ushort[] CalculateSphereElements(float radius, float height, byte segments, byte rings)
         {
             var num_vertices = segments * rings;
             var data = new ushort[num_vertices * 6];
- 
+
             ushort i = 0;
- 
+
             for (byte y = 0; y < rings - 1; y++)
             {
                 for (byte x = 0; x < segments - 1; x++)
@@ -1026,18 +1062,18 @@ namespace Examples.Tutorial
                     data[i++] = (ushort)((y + 0) * segments + x);
                     data[i++] = (ushort)((y + 1) * segments + x);
                     data[i++] = (ushort)((y + 1) * segments + x + 1);
- 
+
                     data[i++] = (ushort)((y + 1) * segments + x + 1);
                     data[i++] = (ushort)((y + 0) * segments + x + 1);
                     data[i++] = (ushort)((y + 0) * segments + x);
                 }
             }
- 
+
             // Verify that we don't access any vertices out of bounds:
             foreach (int index in data)
                 if (index >= segments * rings)
                     throw new IndexOutOfRangeException();
- 
+
             return data;
         }
 
