@@ -211,7 +211,7 @@ namespace OpenTK
         /// <param name="height">The new height of the DisplayDevice.</param>
         /// <param name="bitsPerPixel">The new bits per pixel of the DisplayDevice.</param>
         /// <param name="refreshRate">The new refresh rate of the DisplayDevice.</param>
-        /// <exception cref="GraphicsModeException">Thrown if the requested resolution could not be set.</exception>
+        /// <exception cref="Graphics.GraphicsModeException">Thrown if the requested resolution could not be set.</exception>
         public void ChangeResolution(int width, int height, int bitsPerPixel, float refreshRate)
         {
             this.ChangeResolution(this.SelectResolution(width, height, bitsPerPixel, refreshRate));
@@ -222,7 +222,7 @@ namespace OpenTK
         #region public void RestoreResolution()
 
         /// <summary>Restores the original resolution of the DisplayDevice.</summary>
-        /// <exception cref="GraphicsModeException">Thrown if the original resolution could not be restored.</exception>
+        /// <exception cref="Graphics.GraphicsModeException">Thrown if the original resolution could not be restored.</exception>
         public void RestoreResolution()
         {
             if (original_resolution != null)
