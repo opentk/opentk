@@ -113,7 +113,7 @@ namespace OpenTK
         {
             this.mode = mode;
 
-            window_info = Utilities.CreateWindowInfo(mode, control.Handle, true);
+            window_info = Utilities.CreateWindowsWindowInfo(control.Handle);
         }
 
         #endregion

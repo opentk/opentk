@@ -586,10 +586,8 @@ XF86VidModeGetGammaRampSize(
 
     #region internal class XVisualInfo
 
-#pragma warning disable 1591
-
     [StructLayout(LayoutKind.Sequential)]
-    public struct XVisualInfo
+    struct XVisualInfo
     {
         public IntPtr Visual;
         public VisualID VisualID;
@@ -608,8 +606,6 @@ XF86VidModeGetGammaRampSize(
                 VisualID, Screen, Depth, Class);
         }
     }
-
-#pragma warning restore 1591
 
     #endregion
 

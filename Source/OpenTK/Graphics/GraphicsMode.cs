@@ -168,6 +168,40 @@ namespace OpenTK.Graphics
 
         #region --- Public Methods ---
 
+        #region public IntPtr Index
+
+        /// <summary>
+        /// Gets a nullable <see cref="System.IntPtr"/> value, indicating the platform-specific index for this GraphicsMode.
+        /// </summary>
+        public IntPtr? Index
+        {
+            get
+            {
+                if (index == null)
+                {
+                    GraphicsMode mode;
+                    lock (mode_selection_lock)
+                    {
+                        mode = implementation.SelectGraphicsMode(ColorFormat, Depth, Stencil, Samples, AccumulatorFormat, Buffers, Stereo);
+                    }
+
+                    Index = mode.Index;
+                    ColorFormat = mode.ColorFormat;
+                    Depth = mode.Depth;
+                    Stencil = mode.Stencil;
+                    Samples = mode.Samples;
+                    AccumulatorFormat = mode.AccumulatorFormat;
+                    Buffers = mode.Buffers;
+                    Stereo = mode.Stereo;
+                }
+
+                return index;
+            }
+            set { index = value; }
+        }
+
+        #endregion
+
         #region public int ColorFormat
 
         /// <summary>
@@ -277,41 +311,6 @@ namespace OpenTK.Graphics
                 }
                 return defaultMode;
             }
-        }
-
-        #endregion
-
-        #endregion
-
-        #region --- Internal Methods ---
-
-        #region internal IntPtr Index
-
-        internal IntPtr? Index
-        {
-            get
-            {
-                if (index == null)
-                {
-                    GraphicsMode mode;
-                    lock (mode_selection_lock)
-                    {
-                        mode = implementation.SelectGraphicsMode(ColorFormat, Depth, Stencil, Samples, AccumulatorFormat, Buffers, Stereo);
-                    }
-
-                    Index = mode.Index;
-                    ColorFormat = mode.ColorFormat;
-                    Depth = mode.Depth;
-                    Stencil = mode.Stencil;
-                    Samples = mode.Samples;
-                    AccumulatorFormat = mode.AccumulatorFormat;
-                    Buffers = mode.Buffers;
-                    Stereo = mode.Stereo;
-                }
-
-                return index;
-            }
-            set { index = value; }
         }
 
         #endregion
