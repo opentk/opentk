@@ -141,12 +141,18 @@ namespace OpenTK.Input
 
         #region --- IInputDevice Members ---
 
+        /// <summary>
+        /// Gets a <see cref="System.String"/> which describes this instance.
+        /// </summary>
         public string Description
         {
             get { return description; }
             internal set { description = value; }
         }
 
+        /// <summary>
+        /// Gets the <see cref="InputDeviceType"/> for this instance.
+        /// </summary>
         public InputDeviceType DeviceType
         {
             get { return InputDeviceType.Keyboard; }

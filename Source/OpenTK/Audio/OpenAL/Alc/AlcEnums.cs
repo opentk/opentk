@@ -89,7 +89,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     /// <summary>
-    /// Defines available parameters for <see cref="OpenTK.Audio.Alc.GetString(IntPtr, AlcGetStringList)"/>.
+    /// Defines available parameters for <see cref="Alc.GetString(IntPtr, AlcGetStringList)"/>.
     /// </summary>
     public enum AlcGetStringList : int
     {
@@ -104,7 +104,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     /// <summary>
-    /// Defines available parameters for <see cref="OpenTK.Audio.Alc.GetInteger(IntPtr, AlcGetInteger, int, out int)"/>.
+    /// Defines available parameters for <see cref="Alc.GetInteger(IntPtr, AlcGetInteger, int, out int)"/>.
     /// </summary>
     public enum AlcGetInteger : int
     {
