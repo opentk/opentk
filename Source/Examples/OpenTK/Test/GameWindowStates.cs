@@ -21,7 +21,7 @@ namespace Examples.Tests
     public class GameWindowStates : GameWindow
     {
         readonly Font TextFont = new Font(FontFamily.GenericSansSerif, 16);
-        readonly Bitmap TextBitmap = new Bitmap(512, 512);
+        readonly Bitmap TextBitmap = new Bitmap(1024, 256);
         int texture;
         
         public GameWindowStates()
