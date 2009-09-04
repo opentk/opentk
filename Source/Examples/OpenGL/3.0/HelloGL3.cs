@@ -190,7 +190,7 @@ void main(void)
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            Matrix4 rotation = Matrix4.RotateY((float)e.Time);
+            Matrix4 rotation = Matrix4.CreateRotationY((float)e.Time);
             Matrix4.Mult(ref rotation, ref modelviewMatrix, out modelviewMatrix);
             GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
             
