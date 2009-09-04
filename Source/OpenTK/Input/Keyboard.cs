@@ -38,7 +38,7 @@ namespace OpenTK.Input
     {
         #region Fields
 
-        static IKeyboardDriver driver;
+        //static IKeyboardDriver driver;
 
         #endregion
 
