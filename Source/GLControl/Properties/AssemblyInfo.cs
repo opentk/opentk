@@ -36,3 +36,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: System.CLSCompliant(true)]
+
+#if SIGN_ASSEMBLY
+[assembly: AssemblyKeyFile(@"../../../OpenTK.snk")]
+[assembly: System.Security.AllowPartiallyTrustedCallersAttribute]
+#endif
