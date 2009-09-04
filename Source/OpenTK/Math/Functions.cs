@@ -183,16 +183,47 @@ namespace OpenTK
 
         #endregion
 
+        #region Mathematical constants
+
+        /// <summary>
+        /// Obsolete. Do not use.
+        /// </summary>
         public static readonly float PIF = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382f;
+
+        /// <summary>
+        /// Obsolete. Do not use.
+        /// </summary>
         public static readonly float RTODF = 180.0f / PIF;
+
+        /// <summary>
+        /// Obsolete. Do not use.
+        /// </summary>
         public static readonly float DTORF = PIF / 180.0f;
 
+        /// <summary>
+        /// Obsolete. Do not use.
+        /// </summary>
         public static readonly double PI = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382d;
+
+        /// <summary>
+        /// Obsolete. Do not use.
+        /// </summary>
         public static readonly double RTOD = 180.0d / PIF;
+
+        /// <summary>
+        /// Obsolete. Do not use.
+        /// </summary>
         public static readonly double DTOR = PIF / 180.0d;
+
+        #endregion
 
         #region Swap
 
+        /// <summary>
+        /// Swaps two float values.
+        /// </summary>
+        /// <param name="a">The first value.</param>
+        /// <param name="b">The second value.</param>
         public static void Swap(ref double a, ref double b)
         {
             double temp = a;
@@ -200,6 +231,11 @@ namespace OpenTK
             b = temp;
         }
 
+        /// <summary>
+        /// Swaps two float values.
+        /// </summary>
+        /// <param name="a">The first value.</param>
+        /// <param name="b">The second value.</param>
         public static void Swap(ref float a, ref float b)
         {
             float temp = a;

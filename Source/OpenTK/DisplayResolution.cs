@@ -177,6 +177,12 @@ namespace OpenTK
 
         #region --- Operator Overloads ---
 
+        /// <summary>
+        /// Compares two instances for equality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left equals right; false otherwise.</returns>
         public static bool operator== (DisplayResolution left, DisplayResolution right)
         {
             if (((object)left) == null && ((object)right) == null)
@@ -187,6 +193,12 @@ namespace OpenTK
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left does not equal right; false otherwise.</returns>
         public static bool operator !=(DisplayResolution left, DisplayResolution right)
         {
             return !(left == right);

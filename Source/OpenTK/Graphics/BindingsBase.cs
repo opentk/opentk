@@ -161,16 +161,7 @@ namespace OpenTK.Graphics
 
         #region LoadDelegate
 
-        /// <summary>
-        /// Tries to load the specified core or extension function.
-        /// </summary>
-        /// <param name="function">The name of the function (i.e. glShaderSource)</param>
-        /// <returns>True if the function was found and reloaded, false otherwise.</returns>
-        /// <remarks>
-        /// <para>
-        /// Use this function if you require greater granularity when loading entry points.
-        /// </para>
-        /// </remarks>
+        // Tries to load the specified core or extension function.
         Delegate LoadDelegate(string name, Type signature)
         {
             MethodInfo m;

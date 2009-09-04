@@ -82,6 +82,10 @@ namespace OpenTK.Audio
 
         #region public AudioContext(string device)
 
+        /// <summary>
+        /// Constructs a new AudioContext instance.
+        /// </summary>
+        /// <param name="device">The device name that will host this instance.</param>
         public AudioContext(string device) : this(device, 0, 0, false, true, MaxAuxiliarySends.UseDriverDefault) { }
 
         #endregion

@@ -121,11 +121,14 @@ namespace OpenTK
         /// </summary>
         Size ClientSize { get; set; }
 
+        /// <summary>
+        /// This property is deprecated and should not be used.
+        /// </summary>
         [Obsolete]
         OpenTK.Input.IInputDriver InputDriver { get; }
 
         /// <summary>
-        /// Closes this window. Equivalent to <see cref="INativeWindow.Dispose()"/>.
+        /// Closes this window.
         /// </summary>
         void Close();
         
