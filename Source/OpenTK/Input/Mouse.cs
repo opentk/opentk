@@ -38,7 +38,7 @@ namespace OpenTK.Input
     {
         #region Fields
 
-        static IMouseDriver driver;
+        //static IMouseDriver driver;
 
         #endregion
 
