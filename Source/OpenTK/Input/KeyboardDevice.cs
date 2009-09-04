@@ -26,6 +26,7 @@ namespace OpenTK.Input
         private int numKeys, numFKeys, numLeds;
         private IntPtr devID;
         private bool repeat;
+        private KeyboardKeyEventArgs args = new KeyboardKeyEventArgs();
 
         #region --- Constructors ---
 
@@ -50,9 +51,15 @@ namespace OpenTK.Input
                     keys[(int)key] = value;
 
                     if (value && KeyDown != null)
-                        KeyDown(this, key);
+                    {
+                        args.Key = key;
+                        KeyDown(this, args);
+                    }
                     else if (!value && KeyUp != null)
-                        KeyUp(this, key);
+                    {
+                        args.Key = key;
+                        KeyUp(this, args);
+                    }
                 }
             }
         }
@@ -119,21 +126,21 @@ namespace OpenTK.Input
 
         #endregion
 
-        #region public event KeyDownEvent KeyDown;
+        #region KeyDown
 
         /// <summary>
         /// Occurs when a key is pressed.
         /// </summary>
-        public event KeyDownEvent KeyDown;
+        public event EventHandler<KeyboardKeyEventArgs> KeyDown;
 
         #endregion
 
-        #region public event KeyUpEvent KeyUp;
+        #region KeyUp
 
         /// <summary>
         /// Occurs when a key is released.
         /// </summary>
-        public event KeyUpEvent KeyUp;
+        public event EventHandler<KeyboardKeyEventArgs> KeyUp;
 
         #endregion
 
@@ -198,9 +205,4 @@ namespace OpenTK.Input
 
         #endregion
     }
-
-    [Obsolete]
-    public delegate void KeyDownEvent(KeyboardDevice sender, Key key);
-    [Obsolete]
-    public delegate void KeyUpEvent(KeyboardDevice sender, Key key);
 }

@@ -43,12 +43,12 @@ namespace Examples
         public FullscreenAntialias()
             : base(800, 600, new GraphicsMode(32, 0, 0, 4))
         {
-            Keyboard.KeyDown += delegate(KeyboardDevice sender, Key key)
+            Keyboard.KeyDown += delegate(object sender, KeyboardKeyEventArgs e)
             {
-                if (sender[Key.Escape])
+                if (e.Key == Key.Escape)
                     this.Exit();
 
-                if ((sender[Key.AltLeft] || sender[Key.AltRight]) && (sender[Key.Enter] || sender[Key.KeypadEnter]))
+                if ((e.Key == Key.AltLeft || e.Key == Key.AltRight) && (e.Key == Key.Enter || e.Key == Key.KeypadEnter))
                     if (this.WindowState == WindowState.Fullscreen)
                         this.WindowState = WindowState.Normal;
                     else
