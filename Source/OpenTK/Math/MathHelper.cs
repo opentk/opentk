@@ -71,20 +71,6 @@ namespace OpenTK
         /// </summary>
         public const float Log2E = 1.442695041f;
 
-        [Obsolete]
-        public static readonly float PIF = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382f;
-        [Obsolete]
-        public static readonly float RTODF = 180.0f / PIF;
-        [Obsolete]
-        public static readonly float DTORF = PIF / 180.0f;
-
-        [Obsolete]
-        public static readonly double PI = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382d;
-        [Obsolete]
-        public static readonly double RTOD = 180.0d / PIF;
-        [Obsolete]
-        public static readonly double DTOR = PIF / 180.0d;
-
         #endregion
 
         #region Public Members
