@@ -5,7 +5,7 @@
 
     <Configuration name="Debug">
       <Options>
-        <CompilerDefines>DEBUG;TRACE;</CompilerDefines>
+        <CompilerDefines>DEBUG;TRACE;{0}</CompilerDefines>
         <OptimizeCode>false</OptimizeCode>
         <DebugInformation>true</DebugInformation>
       </Options>
@@ -13,7 +13,7 @@
 
     <Configuration name="Release">
       <Options>
-        <CompilerDefines>TRACE;</CompilerDefines>
+        <CompilerDefines>TRACE;{0}</CompilerDefines>
         <OptimizeCode>true</OptimizeCode>
         <DebugInformation>false</DebugInformation>
       </Options>
