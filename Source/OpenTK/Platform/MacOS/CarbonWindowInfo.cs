@@ -35,7 +35,7 @@ namespace OpenTK.Platform.MacOS
     /// <summary>
     /// Describes a Carbon window.
     /// </summary>
-    public sealed class CarbonWindowInfo : IWindowInfo 
+    sealed class CarbonWindowInfo : IWindowInfo 
     {
         IntPtr windowRef;
         bool ownHandle = false;
