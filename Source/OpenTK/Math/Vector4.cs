@@ -847,6 +847,12 @@ namespace OpenTK
 
         #region Operators
 
+        /// <summary>
+        /// Adds two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>The result of the calculation.</returns>
         public static Vector4 operator +(Vector4 left, Vector4 right)
         {
             left.X += right.X;
@@ -856,6 +862,12 @@ namespace OpenTK
             return left;
         }
 
+        /// <summary>
+        /// Subtracts two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>The result of the calculation.</returns>
         public static Vector4 operator -(Vector4 left, Vector4 right)
         {
             left.X -= right.X;
@@ -865,6 +877,11 @@ namespace OpenTK
             return left;
         }
 
+        /// <summary>
+        /// Negates an instance.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
         public static Vector4 operator -(Vector4 vec)
         {
             vec.X = -vec.X;
@@ -874,27 +891,45 @@ namespace OpenTK
             return vec;
         }
 
-        public static Vector4 operator *(Vector4 vec, float f)
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <returns>The result of the calculation.</returns>
+        public static Vector4 operator *(Vector4 vec, float scale)
         {
-            vec.X *= f;
-            vec.Y *= f;
-            vec.Z *= f;
-            vec.W *= f;
+            vec.X *= scale;
+            vec.Y *= scale;
+            vec.Z *= scale;
+            vec.W *= scale;
             return vec;
         }
 
-        public static Vector4 operator *(float f, Vector4 vec)
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="scale">The scalar.</param>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        public static Vector4 operator *(float scale, Vector4 vec)
         {
-            vec.X *= f;
-            vec.Y *= f;
-            vec.Z *= f;
-            vec.W *= f;
+            vec.X *= scale;
+            vec.Y *= scale;
+            vec.Z *= scale;
+            vec.W *= scale;
             return vec;
         }
 
-        public static Vector4 operator /(Vector4 vec, float f)
+        /// <summary>
+        /// Divides an instance by a scalar.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <returns>The result of the calculation.</returns>
+        public static Vector4 operator /(Vector4 vec, float scale)
         {
-            float mult = 1.0f / f;
+            float mult = 1.0f / scale;
             vec.X *= mult;
             vec.Y *= mult;
             vec.Z *= mult;
@@ -902,22 +937,44 @@ namespace OpenTK
             return vec;
         }
 
+        /// <summary>
+        /// Compares two instances for equality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left equals right; false otherwise.</returns>
         public static bool operator ==(Vector4 left, Vector4 right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left does not equa lright; false otherwise.</returns>
         public static bool operator !=(Vector4 left, Vector4 right)
         {
             return !left.Equals(right);
         }
 
+        /// <summary>
+        /// Returns a pointer to the first element of the specified instance.
+        /// </summary>
+        /// <param name="v">The instance.</param>
+        /// <returns>A pointer to the first element of v.</returns>
         [CLSCompliant(false)]
         unsafe public static explicit operator float*(Vector4 v)
         {
             return &v.X;
         }
 
+        /// <summary>
+        /// Returns a pointer to the first element of the specified instance.
+        /// </summary>
+        /// <param name="v">The instance.</param>
+        /// <returns>A pointer to the first element of v.</returns>
         public static explicit operator IntPtr(Vector4 v)
         {
             unsafe

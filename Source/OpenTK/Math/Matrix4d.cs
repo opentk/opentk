@@ -249,6 +249,9 @@ namespace OpenTK
 
         #region public void Invert()
 
+        /// <summary>
+        /// Converts this instance into its inverse.
+        /// </summary>
         public void Invert()
         {
             this = Matrix4d.Invert(this);
@@ -258,6 +261,9 @@ namespace OpenTK
 
         #region public void Transpose()
 
+        /// <summary>
+        /// Converts this instance into its transpose.
+        /// </summary>
         public void Transpose()
         {
             this = Matrix4d.Transpose(this);
@@ -981,11 +987,23 @@ namespace OpenTK
             return Matrix4d.Mult(left, right);
         }
 
+        /// <summary>
+        /// Compares two instances for equality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left equals right; false otherwise.</returns>
         public static bool operator ==(Matrix4d left, Matrix4d right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left does not equal right; false otherwise.</returns>
         public static bool operator !=(Matrix4d left, Matrix4d right)
         {
             return !left.Equals(right);
