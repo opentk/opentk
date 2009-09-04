@@ -48,6 +48,9 @@ namespace OpenTK.Input
         readonly bool[] button_state = new bool[Enum.GetValues(typeof(MouseButton)).Length];
         int wheel, last_wheel;
         Point pos = new Point(), last_pos = new Point();
+        MouseMoveEventArgs move_args = new MouseMoveEventArgs();
+        MouseButtonEventArgs button_args = new MouseButtonEventArgs();
+        MouseWheelEventArgs wheel_args = new MouseWheelEventArgs();
 #if COMPAT_REV1519
         int wheel_last_accessed = 0;
         Point pos_last_accessed = new Point();
@@ -136,16 +139,14 @@ namespace OpenTK.Input
             internal set
             {
                 wheel = value;
-                if (WheelChanged != null)
-                    WheelChanged(
-                        this,
-                        new MouseWheelEventArgs(
-                            pos.X,
-                            pos.Y,
-                            wheel,
-                            wheel - last_wheel
-                        )
-                    );
+
+                wheel_args.X = pos.X;
+                wheel_args.Y = pos.Y;
+                wheel_args.Value = wheel;
+                wheel_args.Delta = wheel - last_wheel;
+                
+                WheelChanged(this, wheel_args );
+                
                 last_wheel = wheel;
             }
         }
@@ -194,11 +195,14 @@ namespace OpenTK.Input
                 bool previous_state = button_state[(int)button];
                 button_state[(int)button] = value;
 
-                MouseButtonEventArgs e = new MouseButtonEventArgs(pos.X, pos.Y, button, value);
+                button_args.X = pos.X;
+                button_args.Y = pos.Y;
+                button_args.Button = button;
+                button_args.IsPressed = value;
                 if (value && !previous_state)
-                    ButtonDown(this, e);
+                    ButtonDown(this, button_args);
                 else if (!value && previous_state)
-                    ButtonUp(this, e);
+                    ButtonUp(this, button_args);
             }
         }
 
@@ -218,7 +222,11 @@ namespace OpenTK.Input
             set
             {
                 pos = value;
-                Move(this, new MouseMoveEventArgs(pos.X, pos.Y, pos.X - last_pos.X, pos.Y - last_pos.Y));
+                move_args.X = pos.X;
+                move_args.Y = pos.Y;
+                move_args.XDelta = pos.X - last_pos.X;
+                move_args.YDelta = pos.Y - last_pos.Y;
+                Move(this, move_args);
                 last_pos = pos;
             }
         }
@@ -232,31 +240,38 @@ namespace OpenTK.Input
         /// <summary>
         /// Occurs when the mouse's position is moved.
         /// </summary>
-        public event MouseMoveEventHandler Move = delegate(object sender, MouseMoveEventArgs e) { };
+        public event EventHandler<MouseMoveEventArgs> Move = delegate { };
 
         /// <summary>
         /// Occurs when a button is pressed.
         /// </summary>
-        public event MouseButtonEventHandler ButtonDown = delegate(object sender, MouseButtonEventArgs e) { };
+        public event EventHandler<MouseButtonEventArgs> ButtonDown = delegate { };
 
         /// <summary>
         /// Occurs when a button is released.
         /// </summary>
-        public event MouseButtonEventHandler ButtonUp = delegate(object sender, MouseButtonEventArgs e) { };
+        public event EventHandler<MouseButtonEventArgs> ButtonUp = delegate { };
 
         /// <summary>
         /// Occurs when one of the mouse wheels is moved.
         /// </summary>
-        public event MouseWheelEventHandler WheelChanged = delegate(object sender, MouseWheelEventArgs e) { };
+        public event EventHandler<MouseWheelEventArgs> WheelChanged = delegate { };
 
         #region --- Overrides ---
 
+        /// <summary>
+        /// Calculates the hash code for this instance.
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
-            //return base.GetHashCode();
             return (int)(numButtons ^ numWheels ^ id.GetHashCode() ^ description.GetHashCode());
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that describes this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.String"/> that describes this instance.</returns>
         public override string ToString()
         {
             return String.Format("ID: {0} ({1}). Buttons: {2}, Wheels: {3}",
@@ -332,11 +347,89 @@ namespace OpenTK.Input
 
     #region Event Arguments
 
-    public struct MouseMoveEventArgs
+    /// <summary>
+    /// Defines the event data for <see cref="MouseDevice"/> events.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Do not cache instances of this type outside their event handler.
+    /// If necessary, you can clone an instance using the 
+    /// <see cref="MouseEventArgs(MouseEventArgs)"/> constructor.
+    /// </para>
+    /// </remarks>
+    public class MouseEventArgs : EventArgs
     {
         #region Fields
 
         int x, y;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        public MouseEventArgs()
+        {
+        }
+
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="x">The X position.</param>
+        /// <param name="y">The Y position.</param>
+        public MouseEventArgs(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="args">The <see cref="MouseEventArgs"/> instance to clone.</param>
+        public MouseEventArgs(MouseEventArgs args)
+            : this(args.x, args.y)
+        {
+        }
+
+        #endregion
+
+        #region Public Members
+
+        /// <summary>
+        /// Gets the X position of the mouse for the event.
+        /// </summary>
+        public int X { get { return x; } internal set { x = value; } }
+
+        /// <summary>
+        /// Gets the Y position of the mouse for the event.
+        /// </summary>
+        public int Y { get { return y; } internal set { y = value; } }
+
+        /// <summary>
+        /// Gets a System.Drawing.Points representing the location of the mouse for the event.
+        /// </summary>
+        public Point Position { get { return new Point(x, y); } }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Defines the event data for <see cref="MouseDevice.Move"/> events.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Do not cache instances of this type outside their event handler.
+    /// If necessary, you can clone an instance using the 
+    /// <see cref="MouseMoveEventArgs(MouseMoveEventArgs)"/> constructor.
+    /// </para>
+    /// </remarks>
+    public class MouseMoveEventArgs : MouseEventArgs
+    {
+        #region Fields
+
         int x_delta, y_delta;
 
         #endregion
@@ -344,18 +437,31 @@ namespace OpenTK.Input
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> class.
+        /// Constructs a new <see cref="MouseMoveEventArgs"/> instance.
+        /// </summary>
+        public MouseMoveEventArgs() { }
+
+        /// <summary>
+        /// Constructs a new <see cref="MouseMoveEventArgs"/> instance.
         /// </summary>
         /// <param name="x">The X position.</param>
         /// <param name="y">The Y position.</param>
         /// <param name="xDelta">The change in X position produced by this event.</param>
         /// <param name="yDelta">The change in Y position produced by this event.</param>
         public MouseMoveEventArgs(int x, int y, int xDelta, int yDelta)
+            : base(x, y)
         {
-            this.x = x;
-            this.y = y;
-            this.x_delta = xDelta;
-            this.y_delta = yDelta;
+            XDelta = xDelta;
+            YDelta = yDelta;
+        }
+
+        /// <summary>
+        /// Constructs a new <see cref="MouseMoveEventArgs"/> instance.
+        /// </summary>
+        /// <param name="args">The <see cref="MouseMoveEventArgs"/> instance to clone.</param>
+        public MouseMoveEventArgs(MouseMoveEventArgs args)
+            : this(args.X, args.Y, args.XDelta, args.YDelta)
+        {
         }
 
         #endregion
@@ -363,61 +469,65 @@ namespace OpenTK.Input
         #region Public Members
 
         /// <summary>
-        /// Gets the X position of the mouse for the event.
-        /// </summary>
-        public int X { get { return x; } }
-
-        /// <summary>
-        /// Gets the Y position of the mouse for the event.
-        /// </summary>
-        public int Y { get { return y; } }
-
-        /// <summary>
-        /// Gets a System.Drawing.Points representing the location of the mouse for the event.
-        /// </summary>
-        public Point Position { get { return new Point(x, y); } }
-
-        /// <summary>
         /// Gets the change in X position produced by this event.
         /// </summary>
-        public int XDelta { get { return x_delta; } }
+        public int XDelta { get { return x_delta; } internal set { x_delta = value; } }
 
         /// <summary>
         /// Gets the change in Y position produced by this event.
         /// </summary>
-        public int YDelta { get { return y_delta; } }
+        public int YDelta { get { return y_delta; } internal set { y_delta = value; } }
 
         #endregion
     }
 
     /// <summary>
-    /// Provides data for the <see cref="MouseDevice.ButtonDown"/> and <see cref="MouseDevice.ButtonUp"/> events.
+    /// Defines the event data for <see cref="MouseDevice.ButtonDown"/> and <see cref="MouseDevice.ButtonUp"/> events.
     /// </summary>
-    public struct MouseButtonEventArgs
+    /// <remarks>
+    /// <para>
+    /// Do not cache instances of this type outside their event handler.
+    /// If necessary, you can clone an instance using the 
+    /// <see cref="MouseButtonEventArgs(MouseButtonEventArgs)"/> constructor.
+    /// </para>
+    /// </remarks>
+    public class MouseButtonEventArgs : MouseEventArgs
     {
         #region Fields
 
         MouseButton button;
         bool pressed;
-        int x, y;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MouseButtonEventArgs"/> class.
+        /// Constructs a new <see cref="MouseButtonEventArgs"/> instance.
+        /// </summary>
+        public MouseButtonEventArgs() { }
+
+        /// <summary>
+        /// Constructs a new <see cref="MouseButtonEventArgs"/> instance.
         /// </summary>
         /// <param name="x">The X position.</param>
         /// <param name="y">The Y position.</param>
         /// <param name="button">The mouse button for the event.</param>
         /// <param name="pressed">The current state of the button.</param>
-        internal MouseButtonEventArgs(int x, int y, MouseButton button, bool pressed)
+        public MouseButtonEventArgs(int x, int y, MouseButton button, bool pressed)
+            : base(x, y)
         {
-            this.x = x;
-            this.y = y;
             this.button = button;
             this.pressed = pressed;
+        }
+
+        /// <summary>
+        /// Constructs a new <see cref="MouseButtonEventArgs"/> instance.
+        /// </summary>
+        /// <param name="args">The <see cref="MouseButtonEventArgs"/> instance to clone.</param>
+        public MouseButtonEventArgs(MouseButtonEventArgs args)
+            : this(args.X, args.Y, args.Button, args.IsPressed)
+        {
         }
 
         #endregion
@@ -425,61 +535,65 @@ namespace OpenTK.Input
         #region Public Members
 
         /// <summary>
-        /// Gets the X position of the mouse for the event.
-        /// </summary>
-        public int X { get { return x; } }
-
-        /// <summary>
-        /// Gets the Y position of the mouse for the event.
-        /// </summary>
-        public int Y { get { return y; } }
-
-        /// <summary>
-        /// Gets a System.Drawing.Points representing the location of the mouse for the event.
-        /// </summary>
-        public Point Position { get { return new Point(x, y); } }
-
-        /// <summary>
         /// The mouse button for the event.
         /// </summary>
-        public MouseButton Button { get { return this.button; } }
+        public MouseButton Button { get { return button; } internal set { button = value; } }
 
         /// <summary>
         /// Gets a System.Boolean representing the state of the mouse button for the event.
         /// </summary>
-        public bool IsPressed { get { return pressed; } }
+        public bool IsPressed { get { return pressed; } internal set { pressed = value; } }
 
         #endregion
     }
 
     /// <summary>
-    /// Provides data for the <see cref="MouseDevice.WheelChanged"/> event.
+    /// Defines the event data for <see cref="MouseDevice.WheelChanged"/> events.
     /// </summary>
-    public struct MouseWheelEventArgs
+    /// <remarks>
+    /// <para>
+    /// Do not cache instances of this type outside their event handler.
+    /// If necessary, you can clone an instance using the 
+    /// <see cref="MouseWheelEventArgs(MouseWheelEventArgs)"/> constructor.
+    /// </para>
+    /// </remarks>
+    public class MouseWheelEventArgs : MouseEventArgs
     {
         #region Fields
 
         int value;
         int delta;
-        int x, y;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MouseWheelEventArgs"/> class.
+        /// Constructs a new <see cref="MouseWheelEventArgs"/> instance.
+        /// </summary>
+        public MouseWheelEventArgs() { }
+
+        /// <summary>
+        /// Constructs a new <see cref="MouseWheelEventArgs"/> instance.
         /// </summary>
         /// <param name="x">The X position.</param>
         /// <param name="y">The Y position.</param>
         /// <param name="value">The value of the wheel.</param>
         /// <param name="delta">The change in value of the wheel for this event.</param>
         public MouseWheelEventArgs(int x, int y, int value, int delta)
+            : base(x, y)
         {
-            this.x = x;
-            this.y = y;
             this.value = value;
             this.delta = delta;
+        }
+
+        /// <summary>
+        /// Constructs a new <see cref="MouseWheelEventArgs"/> instance.
+        /// </summary>
+        /// <param name="args">The <see cref="MouseWheelEventArgs"/> instance to clone.</param>
+        public MouseWheelEventArgs(MouseWheelEventArgs args)
+            : this(args.X, args.Y, args.Value, args.Delta)
+        {
         }
 
         #endregion
@@ -487,57 +601,17 @@ namespace OpenTK.Input
         #region Public Members
 
         /// <summary>
-        /// Gets the X position of the mouse for the event.
+        /// Gets the value of the wheel.
         /// </summary>
-        public int X { get { return x; } }
+        public int Value { get { return this.value; } internal set { this.value = value; } }
 
         /// <summary>
-        /// Gets the Y position of the mouse for the event.
+        /// Gets the change in value of the wheel for this event.
         /// </summary>
-        public int Y { get { return y; } }
-
-        /// <summary>
-        /// Gets a System.Drawing.Points representing the location of the mouse for the event.
-        /// </summary>
-        public Point Position { get { return new Point(x, y); } }
-
-        /// <summary>
-        /// The value of the wheel.
-        /// </summary>
-        public int Value { get { return value; } }
-
-        /// <summary>
-        /// The change in value of the wheel for this event.
-        /// </summary>
-        public int Delta { get { return delta; } }
+        public int Delta { get { return delta; } internal set { delta = value; } }
 
         #endregion
     }
-
-    #endregion
-
-    #region Event Handlers
-
-    /// <summary>
-    /// Defines a <see cref="MouseDevice.Move"/> event.
-    /// </summary>
-    /// <param name="sender">The MouseDevice that generated this event.</param>
-    /// <param name="e">A <see cref="MouseMoveEventArgs"/> that contains the event data.</param>
-    public delegate void MouseMoveEventHandler(object sender, MouseMoveEventArgs e);
-
-    /// <summary>
-    /// Defines a <see cref="MouseDevice.WheelChanged"/> event.
-    /// </summary>
-    /// <param name="sender">The MouseDevice that generated this event.</param>
-    /// <param name="e">A <see>MouseWheelEventArgs</see> that contains the event data.</param>
-    public delegate void MouseWheelEventHandler(object sender, MouseWheelEventArgs e);
-
-    /// <summary>
-    /// Defines the <see cref="MouseDevice.ButtonDown"/> and <see cref="MouseDevice.ButtonUp"/> events.
-    /// </summary>
-    /// <param name="sender">The MouseDevice that generated this event.</param>
-    /// <param name="e">A <see cref="MouseButtonEventArgs"/> that contains the event data.</param>
-    public delegate void MouseButtonEventHandler(object sender, MouseButtonEventArgs e);
 
     #endregion
 }
