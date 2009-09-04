@@ -1221,21 +1221,6 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region OnCreate
-
-        public event CreateEvent Create;
-
-        private void OnCreate(EventArgs e)
-        {
-            if (this.Create != null)
-            {
-                Debug.Print("Create event fired from window: {0}", window.ToString());
-                this.Create(this, e);
-            }
-        }
-
-        #endregion
-
         public void Close() { Exit(); }
 
         #region public void Exit()
@@ -1256,19 +1241,6 @@ namespace OpenTK.Platform.X11
         {
             Debug.WriteLine("X11GLNative shutdown sequence initiated.");
             Functions.XDestroyWindow(window.Display, window.WindowHandle);
-        }
-
-        #endregion
-
-        #region OnDestroy
-
-        public event DestroyEvent Destroy;
-
-        private void OnDestroy(EventArgs e)
-        {
-            Debug.Print("Destroy event fired from window: {0}", window.ToString());
-            if (this.Destroy != null)
-                this.Destroy(this, e);
         }
 
         #endregion
