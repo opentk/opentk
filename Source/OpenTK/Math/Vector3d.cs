@@ -1019,6 +1019,12 @@ namespace OpenTK
 
         #region Operators
 
+        /// <summary>
+        /// Adds two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>The result of the calculation.</returns>
         public static Vector3d operator +(Vector3d left, Vector3d right)
         {
             left.X += right.X;
@@ -1027,6 +1033,12 @@ namespace OpenTK
             return left;
         }
 
+        /// <summary>
+        /// Subtracts two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>The result of the calculation.</returns>
         public static Vector3d operator -(Vector3d left, Vector3d right)
         {
             left.X -= right.X;
@@ -1035,6 +1047,11 @@ namespace OpenTK
             return left;
         }
 
+        /// <summary>
+        /// Negates an instance.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
         public static Vector3d operator -(Vector3d vec)
         {
             vec.X = -vec.X;
@@ -1043,36 +1060,66 @@ namespace OpenTK
             return vec;
         }
 
-        public static Vector3d operator *(Vector3d vec, double f)
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <returns>The result of the calculation.</returns>
+        public static Vector3d operator *(Vector3d vec, double scale)
         {
-            vec.X *= f;
-            vec.Y *= f;
-            vec.Z *= f;
+            vec.X *= scale;
+            vec.Y *= scale;
+            vec.Z *= scale;
             return vec;
         }
 
-        public static Vector3d operator *(double f, Vector3d vec)
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="scale">The scalar.</param>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        public static Vector3d operator *(double scale, Vector3d vec)
         {
-            vec.X *= f;
-            vec.Y *= f;
-            vec.Z *= f;
+            vec.X *= scale;
+            vec.Y *= scale;
+            vec.Z *= scale;
             return vec;
         }
 
-        public static Vector3d operator /(Vector3d vec, double f)
+        /// <summary>
+        /// Divides an instance by a scalar.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <returns>The result of the calculation.</returns>
+        public static Vector3d operator /(Vector3d vec, double scale)
         {
-            double mult = 1.0f / f;
+            double mult = 1 / scale;
             vec.X *= mult;
             vec.Y *= mult;
             vec.Z *= mult;
             return vec;
         }
 
+        /// <summary>
+        /// Compares two instances for equality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left equals right; false otherwise.</returns>
         public static bool operator ==(Vector3d left, Vector3d right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left does not equa lright; false otherwise.</returns>
         public static bool operator !=(Vector3d left, Vector3d right)
         {
             return !left.Equals(right);

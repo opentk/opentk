@@ -278,7 +278,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="left">The left instance.</param>
         /// <param name="right">The right instance.</param>
-        /// <returns>The result of the operation.</returns>
+        /// <param name="result">The result of the operation.</param>
         public static void Sub(ref Quaterniond left, ref Quaterniond right, out Quaterniond result)
         {
             result = new Quaterniond(
@@ -290,6 +290,12 @@ namespace OpenTK
 
         #region Mult
 
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>A new instance containing the result of the calculation.</returns>
         public static Quaterniond Mult(Quaterniond left, Quaterniond right)
         {
             return new Quaterniond(
@@ -297,6 +303,12 @@ namespace OpenTK
                 left.W * right.W - Vector3d.Dot(left.Xyz, right.Xyz));
         }
 
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <param name="result">A new instance containing the result of the calculation.</param>
         public static void Mult(ref Quaterniond left, ref Quaterniond right, out Quaterniond result)
         {
             result = new Quaterniond(
@@ -488,6 +500,12 @@ namespace OpenTK
                 
         #region Operators
 
+        /// <summary>
+        /// Adds two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>The result of the calculation.</returns>
         public static Quaterniond operator +(Quaterniond left, Quaterniond right)
         {
             left.Xyz += right.Xyz;
@@ -495,6 +513,12 @@ namespace OpenTK
             return left;
         }
 
+        /// <summary>
+        /// Subtracts two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>The result of the calculation.</returns>
         public static Quaterniond operator -(Quaterniond left, Quaterniond right)
         {
             left.Xyz -= right.Xyz;
@@ -502,6 +526,12 @@ namespace OpenTK
             return left;
         }
 
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>The result of the calculation.</returns>
         public static Quaterniond operator *(Quaterniond left, Quaterniond right)
         {
             double w = left.W * right.W - Vector3d.Dot(left.Xyz, right.Xyz);
@@ -510,11 +540,23 @@ namespace OpenTK
             return left;
         }
 
+        /// <summary>
+        /// Compares two instances for equality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left equals right; false otherwise.</returns>
         public static bool operator ==(Quaterniond left, Quaterniond right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left does not equal right; false otherwise.</returns>
         public static bool operator !=(Quaterniond left, Quaterniond right)
         {
             return !left.Equals(right);

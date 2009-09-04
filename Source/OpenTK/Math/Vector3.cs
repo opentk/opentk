@@ -1022,6 +1022,12 @@ namespace OpenTK
 
         #region Operators
 
+        /// <summary>
+        /// Adds two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>The result of the calculation.</returns>
         public static Vector3 operator +(Vector3 left, Vector3 right)
         {
             left.X += right.X;
@@ -1030,6 +1036,12 @@ namespace OpenTK
             return left;
         }
 
+        /// <summary>
+        /// Subtracts two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>The result of the calculation.</returns>
         public static Vector3 operator -(Vector3 left, Vector3 right)
         {
             left.X -= right.X;
@@ -1038,6 +1050,11 @@ namespace OpenTK
             return left;
         }
 
+        /// <summary>
+        /// Negates an instance.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
         public static Vector3 operator -(Vector3 vec)
         {
             vec.X = -vec.X;
@@ -1046,36 +1063,66 @@ namespace OpenTK
             return vec;
         }
 
-        public static Vector3 operator *(Vector3 vec, float f)
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <returns>The result of the calculation.</returns>
+        public static Vector3 operator *(Vector3 vec, float scale)
         {
-            vec.X *= f;
-            vec.Y *= f;
-            vec.Z *= f;
+            vec.X *= scale;
+            vec.Y *= scale;
+            vec.Z *= scale;
             return vec;
         }
 
-        public static Vector3 operator *(float f, Vector3 vec)
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="scale">The scalar.</param>
+        /// <param name="vec">The instance.</param>
+        /// <returns>The result of the calculation.</returns>
+        public static Vector3 operator *(float scale, Vector3 vec)
         {
-            vec.X *= f;
-            vec.Y *= f;
-            vec.Z *= f;
+            vec.X *= scale;
+            vec.Y *= scale;
+            vec.Z *= scale;
             return vec;
         }
 
-        public static Vector3 operator /(Vector3 vec, float f)
+        /// <summary>
+        /// Divides an instance by a scalar.
+        /// </summary>
+        /// <param name="vec">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <returns>The result of the calculation.</returns>
+        public static Vector3 operator /(Vector3 vec, float scale)
         {
-            float mult = 1.0f / f;
+            float mult = 1.0f / scale;
             vec.X *= mult;
             vec.Y *= mult;
             vec.Z *= mult;
             return vec;
         }
 
+        /// <summary>
+        /// Compares two instances for equality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left equals right; false otherwise.</returns>
         public static bool operator ==(Vector3 left, Vector3 right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left does not equa lright; false otherwise.</returns>
         public static bool operator !=(Vector3 left, Vector3 right)
         {
             return !left.Equals(right);
