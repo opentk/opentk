@@ -112,6 +112,7 @@ namespace OpenTK.Platform.Egl
                 if (manual)
                 {
                     DestroySurface();
+                    disposed = true;
                 }
                 else
                 {
