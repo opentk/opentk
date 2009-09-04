@@ -24,7 +24,7 @@ namespace Examples.Tutorial
     {
         public SimpleWindow() : base(800, 600)
         {
-            Keyboard.KeyDown += new OpenTK.Input.KeyDownEvent(Keyboard_KeyDown);
+            Keyboard.KeyDown += Keyboard_KeyDown;
         }
 
         #region Keyboard_KeyDown
@@ -33,13 +33,13 @@ namespace Examples.Tutorial
         /// Occurs when a key is pressed.
         /// </summary>
         /// <param name="sender">The KeyboardDevice which generated this event.</param>
-        /// <param name="key">The key that was pressed.</param>
-        void Keyboard_KeyDown(KeyboardDevice sender, Key key)
+        /// <param name="e">The key that was pressed.</param>
+        void Keyboard_KeyDown(object sender, KeyboardKeyEventArgs e)
         {
-            if (sender[Key.Escape])
+            if (e.Key == Key.Escape)
                 this.Exit();
 
-            if ((sender[Key.AltLeft] || sender[Key.AltRight]) && (sender[Key.Enter] || sender[Key.KeypadEnter]))
+            if ((e.Key == Key.AltLeft || e.Key == Key.AltRight) && (e.Key == Key.Enter || e.Key == Key.KeypadEnter))
                 if (this.WindowState == WindowState.Fullscreen)
                     this.WindowState = WindowState.Normal;
                 else

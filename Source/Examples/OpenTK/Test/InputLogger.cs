@@ -277,12 +277,12 @@ namespace Examples.Tests
             this.BeginInvoke(ControlLogMouseKeyUp, hidden, this, sender, e);
         }
 
-        void LogKeyDown(KeyboardDevice sender, Key key)
+        void LogKeyDown(object sender, KeyboardKeyEventArgs key)
         {
             this.BeginInvoke(ControlLogKeyboardDown, hidden, this, sender, key);
         }
 
-        void LogKeyUp(KeyboardDevice sender, Key key)
+        void LogKeyUp(object sender, KeyboardKeyEventArgs key)
         {
             this.BeginInvoke(ControlLogKeyboardUp, hidden, this, sender, key);
         }

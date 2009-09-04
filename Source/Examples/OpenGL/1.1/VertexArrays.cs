@@ -38,13 +38,13 @@ namespace Examples.Tutorial
             : base(800, 600)
         {
             //this.VSync = VSyncMode.On;
-            this.Keyboard.KeyUp += new KeyUpEvent(Keyboard_KeyUp);
+            this.Keyboard.KeyUp += Keyboard_KeyUp;
         }
 
-        void Keyboard_KeyUp(KeyboardDevice sender, Key key)
+        void Keyboard_KeyUp(object sender, KeyboardKeyEventArgs e)
         {
             // F4 cycles between available VSync modes.
-            if (key == Key.F4)
+            if (e.Key == Key.F4)
             {
                 if (this.VSync == VSyncMode.Off)
                     this.VSync = VSyncMode.On;
