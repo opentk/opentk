@@ -533,7 +533,6 @@ namespace OpenTK
         /// <summary>
         /// Gets a readonly IList containing all available OpenTK.Input.JoystickDevices.
         /// </summary>
-        [Obsolete]
         public IList<JoystickDevice> Joysticks
         {
             get { return InputDriver.Joysticks; }
@@ -546,7 +545,6 @@ namespace OpenTK
         /// <summary>
         /// Gets the primary Keyboard device, or null if no Keyboard exists.
         /// </summary>
-        [Obsolete]
         public KeyboardDevice Keyboard
         {
             get { return InputDriver.Keyboard.Count > 0 ? InputDriver.Keyboard[0] : null; }
@@ -559,7 +557,6 @@ namespace OpenTK
         /// <summary>
         /// Gets the primary Mouse device, or null if no Mouse exists.
         /// </summary>
-        [Obsolete]
         public MouseDevice Mouse
         {
             get { return InputDriver.Mouse.Count > 0 ? InputDriver.Mouse[0] : null; }
