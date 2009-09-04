@@ -53,23 +53,6 @@ namespace OpenTK.Platform.Dummy
         public override void MakeCurrent(IWindowInfo info) { }
         public override bool IsCurrent { get { return true; } }
 
-        [Obsolete]
-        public event DestroyEvent<IGraphicsContext> Destroy;
-        [Obsolete]
-        void OnDestroy() { if (Destroy != null) Destroy(this, EventArgs.Empty); }
-
-        [Obsolete]
-        public void RegisterForDisposal(IDisposable resource)
-        {
-            throw new NotImplementedException("Use the general GraphicsContext class instead.");
-        }
-
-        [Obsolete]
-        public void DisposeResources()
-        {
-            throw new NotImplementedException("Use the general GraphicsContext class instead.");
-        }
-
         public override IntPtr GetAddress(string function) { return IntPtr.Zero; }
 
         public override bool VSync { get { return vsync; } set { vsync = value; } }

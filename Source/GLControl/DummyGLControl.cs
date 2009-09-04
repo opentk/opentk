@@ -47,7 +47,7 @@ namespace OpenTK
 
         public IWindowInfo WindowInfo
         {
-            get { return Utilities.CreateWindowInfo(null, IntPtr.Zero, true); }
+            get { return Utilities.CreateDummyWindowInfo(); }
         }
 
         #endregion

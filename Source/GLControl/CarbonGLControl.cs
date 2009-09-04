@@ -68,7 +68,7 @@ namespace OpenTK
         {
             get
             {
-                return Utilities.CreateWindowInfo(mode, control.Handle, true);
+                return Utilities.CreateDummyWindowInfo();
             }
         }
 
