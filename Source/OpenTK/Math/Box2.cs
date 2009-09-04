@@ -87,6 +87,10 @@ namespace OpenTK
         /// </summary>
         public float Height { get { return (float)System.Math.Abs(Bottom - Top); } }
 
+        /// <summary>
+        /// Returns a <see cref="System.String"/> describing the current instance.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return String.Format("({0},{1})-({2},{3})", Left, Top, Right, Bottom);
