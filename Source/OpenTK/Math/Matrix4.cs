@@ -309,6 +309,94 @@ namespace OpenTK
         
         #endregion
 
+        #region CreateRotation[XYZ]
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the x-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <param name="result">The resulting Matrix4 instance.</param>
+        public static void CreateRotationX(float angle, out Matrix4 result)
+        {
+            float cos = (float)System.Math.Cos(angle);
+            float sin = (float)System.Math.Sin(angle);
+
+            result.Row0 = Vector4.UnitX;
+            result.Row1 = new Vector4(0.0f, cos, sin, 0.0f);
+            result.Row2 = new Vector4(0.0f, -sin, cos, 0.0f);
+            result.Row3 = Vector4.UnitW;
+        }
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the x-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <returns>The resulting Matrix4 instance.</returns>
+        public static Matrix4 CreateRotationX(float angle)
+        {
+            Matrix4 result;
+            CreateRotationX(angle, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the y-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <param name="result">The resulting Matrix4 instance.</param>
+        public static void CreateRotationY(float angle, out Matrix4 result)
+        {
+            float cos = (float)System.Math.Cos(angle);
+            float sin = (float)System.Math.Sin(angle);
+
+            result.Row0 = new Vector4(cos, 0.0f, -sin, 0.0f);
+            result.Row1 = Vector4.UnitY;
+            result.Row2 = new Vector4(sin, 0.0f, cos, 0.0f);
+            result.Row3 = Vector4.UnitW;
+        }
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the y-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <returns>The resulting Matrix4 instance.</returns>
+        public static Matrix4 CreateRotationY(float angle)
+        {
+            Matrix4 result;
+            CreateRotationY(angle, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the z-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <param name="result">The resulting Matrix4 instance.</param>
+        public static void CreateRotationZ(float angle, out Matrix4 result)
+        {
+            float cos = (float)System.Math.Cos(angle);
+            float sin = (float)System.Math.Sin(angle);
+
+            result.Row0 = new Vector4(cos, sin, 0.0f, 0.0f);
+            result.Row1 = new Vector4(-sin, cos, 0.0f, 0.0f);
+            result.Row2 = Vector4.UnitZ;
+            result.Row3 = Vector4.UnitW;
+        }
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the z-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <returns>The resulting Matrix4 instance.</returns>
+        public static Matrix4 CreateRotationZ(float angle)
+        {
+            Matrix4 result;
+            CreateRotationZ(angle, out result);
+            return result;
+        }
+
+        #endregion
+
         #region CreateTranslation
 
         /// <summary>
