@@ -66,9 +66,6 @@ namespace OpenTK.Graphics
         bool ErrorChecking { get; set; }
     }
 
-    [Obsolete]
-    public delegate void DestroyEvent<T>(T sender, EventArgs e);
-
     // Functions for internal use by OpenTK.
     // TODO: RegisterForDisposal/DisposeResources for 0.3.15 (GC & OpenGL)
     // TODO: Remove or move GetDisplayModes to another class.

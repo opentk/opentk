@@ -65,6 +65,9 @@ typedef void ALvoid;
 
 namespace OpenTK.Audio.OpenAL
 {
+    /// <summary>
+    /// Provides access to the OpenAL 1.1 flat API.
+    /// </summary>
     public static partial class AL
     {
 

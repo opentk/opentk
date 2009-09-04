@@ -42,7 +42,6 @@ namespace OpenTK.Input
         // Todo: The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
         // Need to add a workaround using either ExplicitLayout or another trick.
         //unsafe fixed int Keys[NumKeys];
-        readonly int[] Keys;
 
         #endregion
 
