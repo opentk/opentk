@@ -22,11 +22,31 @@ namespace OpenTK.Build
     class Project
     {
         static string RootPath;
-        static string SourcePath;
 
         const string bindings = "Generator.Prebuild.xml";
         const string opentk = "OpenTK.Prebuild.xml";
         const string quickstart = "QuickStart.Prebuild.xml";
+
+        const string keyfile = "OpenTK.snk";
+
+        const string Usage =  @"Usage: Build.exe target
+    target: one of vs, vs9, clean, distclean, help";
+
+        const string Help = Usage + @"
+
+Available targets:
+    vs:        Create Visual Studio 2005 project files.
+    vs9:       Create Visual Studio 2008 project files.
+    clean:     Delete intermediate files but leave final binaries and project
+               files intact.
+    distclean: Delete intermediate files, final binaries and project files.
+    help:      Display this help.
+
+Assembly signing:
+    To create strongly-named assemblies, place a keypair file named OpenTK.snk
+    to the root folder (the same folder as Build.exe). If OpenTK.snk does not
+    exist the resulting assemblies will not be signed.
+";
 
         static readonly Assembly Prebuild = Assembly.Load(Resources.Prebuild);
 
@@ -44,8 +64,12 @@ namespace OpenTK.Build
 
         static void PrintUsage()
         {
-            Console.WriteLine("Usage: Build.exe target");
-            Console.WriteLine("    target: one of vs, vs9, clean, distclean");
+            Console.WriteLine(Usage);
+        }
+
+        static void PrintHelp()
+        {
+            Console.WriteLine(Help);
         }
 
         static void Main(string[] args)
@@ -62,11 +86,12 @@ namespace OpenTK.Build
             }
 
             RootPath = Directory.GetCurrentDirectory();
-            SourcePath = Path.Combine(RootPath, "Source");
 
-            File.WriteAllText(bindings, Resources.Generator);
-            File.WriteAllText(opentk, Resources.OpenTK);
-            File.WriteAllText(quickstart, Resources.QuickStart);
+            string sign_assembly = CheckKeyFile(keyfile) ? "SIGN_ASSEMBLY" : "";
+
+            File.WriteAllText(bindings, String.Format(Resources.Generator, sign_assembly));
+            File.WriteAllText(opentk, String.Format(Resources.OpenTK, sign_assembly));
+            File.WriteAllText(quickstart, String.Format(Resources.QuickStart,sign_assembly));
 
             // Workaroung for nant on x64 windows (safe for other platforms too, as this affects only the current process).
             Environment.SetEnvironmentVariable("CommonProgramFiles(x86)", String.Empty, EnvironmentVariableTarget.Process);
@@ -79,6 +104,10 @@ namespace OpenTK.Build
                 {
                     case "":
                         break;
+
+                    case "help":
+                        PrintHelp();
+                        return;
 
                     case "mono":
                     case "xbuild":
@@ -207,8 +236,8 @@ namespace OpenTK.Build
 
         static void FindDirectories(string directory, string search, List<string> matches) 
         {
-	        try	
-	        {
+            try    
+            {
                 foreach (string d in Directory.GetDirectories(directory)) 
                 {
                     foreach (string f in Directory.GetDirectories(d, search))
@@ -217,79 +246,10 @@ namespace OpenTK.Build
                     }
                     FindDirectories(d, search, matches);
                 }
-	        }
-	        catch (System.Exception e) 
-	        {
-		        Console.WriteLine(e.Message);
-	        }
-        }
-
-        static void FindFiles(string directory, string search, List<string> matches)
-        {
-            try
-            {
-                foreach (string f in Directory.GetFiles(directory, search, SearchOption.AllDirectories))
-                {
-                    matches.Add(f);
-                }
-                //FindFiles(d, search, matches);
             }
-            catch (System.Exception e)
+            catch (System.Exception e) 
             {
                 Console.WriteLine(e.Message);
-            }
-        }
-
-        static void ExecuteProcess(string path, string args)
-        {
-            ProcessStartInfo sinfo = new ProcessStartInfo();
-            using (Process p = new Process())
-            {
-                try
-                {
-                    if (Environment.OSVersion.Platform == PlatformID.Unix && !path.ToLower().Contains("nant"))
-                    {
-                        sinfo.FileName = "mono";
-                        sinfo.Arguments = path + " " + args;
-                    }
-                    else
-                    {
-                        sinfo.FileName = path;
-                        sinfo.Arguments = args;
-                    }
-
-                    sinfo.WorkingDirectory = RootPath;
-                    sinfo.CreateNoWindow = true;
-                    sinfo.RedirectStandardOutput = true;
-                    sinfo.UseShellExecute = false;
-                    p.StartInfo = sinfo;
-                    p.OutputDataReceived += new DataReceivedEventHandler(p_OutputDataReceived);
-                    p.Start();
-                    p.BeginOutputReadLine();
-                    //StreamReader sr = p.StandardOutput;
-                    //while (!p.HasExited)
-                    //{
-                    //    Console.WriteLine(sr.ReadLine());
-                    //    Console.Out.Flush();
-                    //}
-
-                    p.WaitForExit();
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Failed to execute process: {0}", sinfo.FileName);
-                }
-            }
-
-        }
-
-        static void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            if (!String.IsNullOrEmpty(e.Data))
-            {
-                // Eat the last \n, we use WriteLine instead. This way we get the same result
-                // in both windows and linux (linux would interpret both \n and WriteLine).
-                Console.WriteLine(e.Data.TrimEnd('\n'));
             }
         }
 
@@ -324,6 +284,25 @@ namespace OpenTK.Build
         static void ExecutePrebuild(params string[] options)
         {
             Prebuild.EntryPoint.Invoke(null, new object[] { options });
+        }
+
+        static bool CheckKeyFile(string keyfile)
+        {
+            if (!File.Exists(keyfile))
+            {
+                //Console.WriteLine("Keyfile {0} not found. Generating temporary key pair.", keyfile);
+                //Process keygen = Process.Start("sn", "-k " + keyfile);
+                //keygen.WaitForExit();
+                Console.WriteLine("Keyfile {0} not found. Assemblies will not be signed.", keyfile);
+                Console.WriteLine();
+                return false;
+            }
+            else
+            {
+                Console.WriteLine("Keyfile {0} found. Assemblies will be signed.", keyfile);
+                Console.WriteLine();
+                return true;
+            }
         }
     }
 }
