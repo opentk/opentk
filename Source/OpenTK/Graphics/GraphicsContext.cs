@@ -146,7 +146,8 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <returns>A new, dummy GraphicsContext instance.</returns>
         /// <remarks>
-        /// <para>Instances created by this methodwill not be functional. Instance methods will have no effect.</para>
+        /// <para>Instances created by this method will not be functional. Instance methods will have no effect.</para>
+        /// <para>This method requires that a context is current on the calling thread.</para>
         /// </remarks>
         public static GraphicsContext CreateDummyContext()
         {
@@ -157,6 +158,14 @@ namespace OpenTK.Graphics
             return CreateDummyContext(handle);
         }
 
+        /// <summary>
+        /// Creates a dummy GraphicsContext to allow OpenTK to work with contexts created by external libraries.
+        /// </summary>
+        /// <param name="handle">The handle of a context.</param>
+        /// <returns>A new, dummy GraphicsContext instance.</returns>
+        /// <remarks>
+        /// <para>Instances created by this method will not be functional. Instance methods will have no effect.</para>
+        /// </remarks>
         public static GraphicsContext CreateDummyContext(ContextHandle handle)
         {
             if (handle == ContextHandle.Zero)
