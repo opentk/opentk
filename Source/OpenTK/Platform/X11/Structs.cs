@@ -801,7 +801,6 @@ namespace OpenTK.Platform.X11
         StaticGravity = 10
     }
 
-    [CLSCompliant(false)]
     internal enum XKeySym : uint
     {
         XK_BackSpace = 0xFF08,
@@ -890,7 +889,7 @@ namespace OpenTK.Platform.X11
         public IntPtr killid;
     }
 
-    [StructLayout(LayoutKind.Sequential, Pack = 2), CLSCompliant(false)]
+    [StructLayout(LayoutKind.Sequential, Pack = 2)]
     internal struct XColor
     {
         public IntPtr pixel;
