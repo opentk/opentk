@@ -105,7 +105,7 @@ namespace OpenTK.Platform.Egl
             Handle = new Compute.Handle<Workaround>(handle);
         }
 
-        public static readonly EGLDisplay Null;
+        public static readonly EGLDisplay Null = default(EGLDisplay);
     }
 
     struct EGLSurface
@@ -120,7 +120,7 @@ namespace OpenTK.Platform.Egl
             Handle = new Compute.Handle<Workaround>(handle);
         }
 
-        public static readonly EGLSurface None;
+        public static readonly EGLSurface None = default(EGLSurface);
     }
 
     struct EGLClientBuffer
