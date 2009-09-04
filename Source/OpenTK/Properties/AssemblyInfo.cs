@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -10,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("The Open Toolkit Library")]
 [assembly: AssemblyProduct("The Open Toolkit Library")]
-[assembly: AssemblyCopyright("Copyright ©  2006-2009 the Open Toolkit team")]
+[assembly: AssemblyCopyright("Copyright Â©  2006-2009 the Open Toolkit team")]
 [assembly: AssemblyTrademark("OpenTK")]
 [assembly: AssemblyCulture("")]
 
@@ -33,3 +34,10 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("0.9.9.2")]
 [assembly: AssemblyFileVersion("0.9.9.2")]
+
+[assembly: CLSCompliant(true)]
+
+#if SIGN_ASSEMBLY
+[assembly: AssemblyKeyFile(@"../../../OpenTK.snk")]
+[assembly: System.Security.AllowPartiallyTrustedCallersAttribute]
+#endif
