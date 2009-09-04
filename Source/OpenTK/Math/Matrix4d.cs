@@ -163,38 +163,6 @@ namespace OpenTK
             get { return new Vector4d (Row0.W, Row1.W, Row2.W, Row3.W); }
         }
 
-        public double this[int i, int j]
-        {
-            get
-            {
-                if (i < 0 || i > 3)
-                    throw new ArgumentOutOfRangeException("i");
-
-                if (j < 0 || j > 3)
-                    throw new ArgumentOutOfRangeException("j");
-
-                unsafe
-                {
-                    fixed (Matrix4d* ptr = &this)
-                        return *((double*)ptr + i + j * 4);
-                }
-            }
-            set
-            {
-                if (i < 0 || i > 3)
-                    throw new ArgumentOutOfRangeException("i");
-
-                if (j < 0 || j > 3)
-                    throw new ArgumentOutOfRangeException("j");
-
-                unsafe
-                {
-                    fixed (Matrix4d* ptr = &this)
-                        *((double*)ptr + i + j * 4) = value;
-                }
-            }
-        }
-
         /// <summary>
         /// Gets or sets the value at row 1, column 1 of this instance.
         /// </summary>
