@@ -79,10 +79,7 @@ namespace OpenTK
 
         IGraphicsContext glContext;
 
-        bool hasMainLoop;
         bool isExiting = false;
-
-        int main_loop_thread_id;
 
         double update_period, render_period;
         double target_update_period, target_render_period;
@@ -213,7 +210,6 @@ namespace OpenTK
                 VSync = VSyncMode.On;
 
                 //glWindow.WindowInfoChanged += delegate(object sender, EventArgs e) { OnWindowInfoChangedInternal(e); };
-                EnableEvents();
             }
             catch (Exception e)
             {
@@ -236,7 +232,7 @@ namespace OpenTK
         /// <summary>
         /// Disposes of the GameWindow, releasing all resources consumed by it.
         /// </summary>
-        public new void Dispose()
+        public override void Dispose()
         {
             try
             {
@@ -244,14 +240,16 @@ namespace OpenTK
             }
             finally
             {
-                if (!IsDisposed())
+                try
                 {
                     if (glContext != null)
                     {
                         glContext.Dispose();
                         glContext = null;
                     }
-
+                }
+                finally
+                {
                     base.Dispose();
                 }
             }
@@ -271,6 +269,7 @@ namespace OpenTK
         /// </remarks>
         public virtual void Exit()
         {
+            isExiting = true;
             Close();
         }
 
@@ -292,13 +291,12 @@ namespace OpenTK
         #region OnLoad
 
         /// <summary>
-        /// Occurs after establishing an OpenGL context, but before entering the main loop.
-        /// Override to load resources that should be maintained for the lifetime of the application.
+        /// Called after an OpenGL context has been established, but before entering the main loop.
         /// </summary>
         /// <param name="e">Not used.</param>
         public virtual void OnLoad(EventArgs e)
         {
-            EnsureUndisposed(); //if (disposed) throw new ObjectDisposedException("GameWindow"); // What is the exact purpose?
+            if (Load != null) Load(this, e);
         }
 
         #endregion
@@ -306,13 +304,12 @@ namespace OpenTK
         #region OnUnload
 
         /// <summary>
-        /// Occurs after after calling GameWindow.Exit, but before destroying the OpenGL context.
-        /// Override to unload application resources.
+        /// Called after GameWindow.Exit was called, but before destroying the OpenGL context.
         /// </summary>
         /// <param name="e">Not used.</param>
         public virtual void OnUnload(EventArgs e)
         {
-            EnsureUndisposed(); //if (disposed) throw new ObjectDisposedException("GameWindow"); // What is the exact purpose?
+            if (Unload != null) Unload(this, e);
         }
 
         #endregion
@@ -363,10 +360,6 @@ namespace OpenTK
 
             try
             {
-                // Necessary to be here, otherwise Exit() wouldn't work correctly when called inside OnLoad().
-                hasMainLoop = true;
-                main_loop_thread_id = Thread.CurrentThread.ManagedThreadId;
-
                 if (updates_per_second < 0.0 || updates_per_second > 200.0)
                     throw new ArgumentOutOfRangeException("updates_per_second", updates_per_second,
                                                           "Parameter should be inside the range [0.0, 200.0]");
@@ -389,7 +382,7 @@ namespace OpenTK
                 OnLoadInternal(EventArgs.Empty);
 
                 Debug.Print("Entering main loop.");
-                while (!IsExiting && Exists && HasMainLoop)
+                while (!IsExiting && Exists)
                 {
                     ProcessEvents();
 
@@ -897,26 +890,32 @@ namespace OpenTK
         #region OnRenderFrame
 
         /// <summary>
-        /// Override in derived classes to render a frame.
+        /// Called when the frame is rendered.
         /// </summary>
         /// <param name="e">Contains information necessary for frame rendering.</param>
         /// <remarks>
-        /// The base implementation (base.OnRenderFrame) is empty, there is no need to call it.
+        /// Subscribe to the <see cref="RenderFrame"/> event instead of overriding this method.
         /// </remarks>
-        protected virtual void OnRenderFrame(FrameEventArgs e) { }
+        protected virtual void OnRenderFrame(FrameEventArgs e)
+        {
+            if (RenderFrame != null) RenderFrame(this, e);
+        }
 
         #endregion
 
         #region OnUpdateFrame
 
         /// <summary>
-        /// Override in derived classes to update a frame.
+        /// Called when the frame is updated.
         /// </summary>
         /// <param name="e">Contains information necessary for frame updating.</param>
         /// <remarks>
-        /// The base implementation (base.OnUpdateFrame) is empty, there is no need to call it.
+        /// Subscribe to the <see cref="UpdateFrame"/> event instead of overriding this method.
         /// </remarks>
-        protected virtual void OnUpdateFrame(FrameEventArgs e) { }
+        protected virtual void OnUpdateFrame(FrameEventArgs e)
+        {
+            if (UpdateFrame != null) UpdateFrame(this, e);
+        }
 
         #endregion
 
@@ -932,57 +931,13 @@ namespace OpenTK
 
         #endregion
 
-        #region --- Assembly Members ---
-
-        #region Methods
-
-        #region ExitAsync
-
-        // Gracefully exits the GameWindow. May be called from any thread.
-        void ExitAsync()
-        {
-            HasMainLoop = false;
-            isExiting = true;
-            //UpdateFrame += delegate
-            //{
-            //    ExitInternal();
-            //};
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Properties
-
-        #region HasMainLoop
-
-        bool HasMainLoop
-        {
-            get { return hasMainLoop; }
-            set { hasMainLoop = value; }
-        }
-
-        #endregion
-
-        #endregion
-
-        #endregion
-
         #region --- Private Members ---
 
         #region OnLoadInternal
 
-        /// <summary>
-        /// Raises the Load event, and calls the user's OnLoad override.
-        /// </summary>
-        /// <param name="e">The event data.</param>
         private void OnLoadInternal(EventArgs e)
         {
             OnResize(EventArgs.Empty);
-
-            if (Load != null) Load(this, e);
-
             OnLoad(e);
         }
 
@@ -990,46 +945,19 @@ namespace OpenTK
 
         #region OnRenderFrameInternal
 
-        private void OnRenderFrameInternal(FrameEventArgs e)
-        {
-            EnsureUndisposed();
-
-            if (!this.Exists || this.IsExiting) return; // TODO: Redundant because of EnsureUndisposed.
-
-            if (RenderFrame != null) RenderFrame(this, e);
-
-            OnRenderFrame(e);
-        }
+        private void OnRenderFrameInternal(FrameEventArgs e) { if (Exists && !isExiting) OnRenderFrame(e); }
 
         #endregion
 
         #region OnUnloadInternal
 
-        /// <summary>
-        /// Raises the Unload event, and calls the user's OnUnload override.
-        /// </summary>
-        /// <param name="e">The event data.</param>
-        private void OnUnloadInternal(EventArgs e)
-        {
-            if (Unload != null) Unload(this, e);
-
-            OnUnload(e);
-        }
+        private void OnUnloadInternal(EventArgs e) { OnUnload(e); }
 
         #endregion
 
         #region OnUpdateFrameInternal
 
-        private void OnUpdateFrameInternal(FrameEventArgs e)
-        {
-            EnsureUndisposed();
-
-            if (!this.Exists || this.IsExiting) return; // TODO: Redundant because of EnsureUndisposed.
-
-            if (UpdateFrame != null) UpdateFrame(this, e);
-
-            OnUpdateFrame(e);
-        }
+        private void OnUpdateFrameInternal(FrameEventArgs e) { if (Exists && !isExiting) OnUpdateFrame(e); }
 
         #endregion
 
@@ -1045,14 +973,6 @@ namespace OpenTK
         #endregion
 
         #endregion
-
-        ///// <summary>Finalizes unmanaged resources consumed by the GameWindow.</summary>
-        //~GameWindow()
-        //{
-        //    Dispose(false);
-        //    DisposeInternal(false);
-        //}
-
     }
 
     #region public enum VSyncMode

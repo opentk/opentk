@@ -15,9 +15,13 @@ namespace OpenTK
     {
         #region --- Fields ---
 
-        private bool disposed;
+        private readonly GameWindowFlags options;
+
+        private readonly DisplayDevice device;
 
         private readonly INativeWindow implementation;
+
+        private bool disposed, events;
 
         #endregion
 
@@ -27,16 +31,7 @@ namespace OpenTK
 
         /// <summary>Constructs a new NativeWindow with default attributes without enabling events.</summary>
         public NativeWindow()
-            : this(640, 480, "OpenTK Native Window", GameWindowFlags.Default, GraphicsMode.Default, DisplayDevice.Default, false) { }
-
-        #endregion
-
-        #region
-
-        /// <summary>Constructs a new NativeWindow with default attributes.</summary>
-        /// <param name="enableEvents">Indicates to enable event processing as part of the NativeWindow construction.</param>
-        public NativeWindow(bool enableEvents)
-            : this(640, 480, "OpenTK Native Window", GameWindowFlags.Default, GraphicsMode.Default, DisplayDevice.Default, enableEvents) { }
+            : this(640, 480, "OpenTK Native Window", GameWindowFlags.Default, GraphicsMode.Default, DisplayDevice.Default) { }
 
         #endregion
 
@@ -44,7 +39,7 @@ namespace OpenTK
 
         #region NativeWindow(int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
 
-        /// <summary>Constructs a new centered NativeWindow with the specified attributes without enabling events.</summary>
+        /// <summary>Constructs a new centered NativeWindow with the specified attributes.</summary>
         /// <param name="width">The width of the NativeWindow in pixels.</param>
         /// <param name="height">The height of the NativeWindow in pixels.</param>
         /// <param name="title">The title of the NativeWindow.</param>
@@ -54,32 +49,15 @@ namespace OpenTK
         /// <exception cref="System.ArgumentOutOfRangeException">If width or height is less than 1.</exception>
         /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
         public NativeWindow(int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
-            : this(width, height, title, options, mode, device, false) { }
-
-        #endregion
-
-        #region NativeWindow(int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device, bool enableEvents)
-
-        /// <summary>Constructs a new centered NativeWindow with the specified attributes.</summary>
-        /// <param name="width">The width of the NativeWindow in pixels.</param>
-        /// <param name="height">The height of the NativeWindow in pixels.</param>
-        /// <param name="title">The title of the NativeWindow.</param>
-        /// <param name="options">GameWindow options specifying window appearance and behavior.</param>
-        /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the NativeWindow.</param>
-        /// <param name="device">The OpenTK.Graphics.DisplayDevice to construct the NativeWindow in.</param>
-        /// <param name="enableEvents">Indicates to enable event processing as part of the NativeWindow construction.</param>
-        /// <exception cref="System.ArgumentOutOfRangeException">If width or height is less than 1.</exception>
-        /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
-        public NativeWindow(int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device, bool enableEvents)
             : this(device.Bounds.Left + (device.Bounds.Width - width) / 2,
                    device.Bounds.Top + (device.Bounds.Height - height) / 2,
-                   width, height, title, options, mode, device, enableEvents) { }
+                   width, height, title, options, mode, device) { }
 
         #endregion
 
-        #region NativeWindow0(int x, int y, int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
+        #region NativeWindow(int x, int y, int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
 
-        /// <summary>Constructs a new NativeWindow with the specified attributes without enabling events.</summary>
+        /// <summary>Constructs a new NativeWindow with the specified attributes.</summary>
         /// <param name="x">Horizontal screen space coordinate of the NativeWindow's origin.</param>
         /// <param name="y">Vertical screen space coordinate of the NativeWindow's origin.</param>
         /// <param name="width">The width of the NativeWindow in pixels.</param>
@@ -91,25 +69,6 @@ namespace OpenTK
         /// <exception cref="System.ArgumentOutOfRangeException">If width or height is less than 1.</exception>
         /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
         public NativeWindow(int x, int y, int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
-            : this(x, y, width, height, title, options, mode, device, false) { }
-
-        #endregion
-
-        #region NativeWindow0(int x, int y, int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device, bool enableEvents)
-
-        /// <summary>Constructs a new NativeWindow with the specified attributes.</summary>
-        /// <param name="x">Horizontal screen space coordinate of the NativeWindow's origin.</param>
-        /// <param name="y">Vertical screen space coordinate of the NativeWindow's origin.</param>
-        /// <param name="width">The width of the NativeWindow in pixels.</param>
-        /// <param name="height">The height of the NativeWindow in pixels.</param>
-        /// <param name="title">The title of the NativeWindow.</param>
-        /// <param name="options">GameWindow options specifying window appearance and behavior.</param>
-        /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the NativeWindow.</param>
-        /// <param name="device">The OpenTK.Graphics.DisplayDevice to construct the NativeWindow in.</param>
-        /// <param name="enableEvents">Indicates to enable event processing as part of the NativeWindow construction.</param>
-        /// <exception cref="System.ArgumentOutOfRangeException">If width or height is less than 1.</exception>
-        /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
-        public NativeWindow(int x, int y, int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device, bool enableEvents)
         {
             // TODO: Should a constraint be added for the position?
             if (width < 1)
@@ -121,15 +80,16 @@ namespace OpenTK
             if (device == null)
                 throw new ArgumentNullException("device");
 
-            implementation = Factory.Default.CreateNativeWindow(x, y, width, height, title, mode, options, device);
+            this.options = options;
+            this.device = device;
+
+            implementation = Factory.Default.CreateNativeWindow(x, y, width, height, title, mode, options, this.device);
 
             if ((options & GameWindowFlags.Fullscreen) != 0)
             {
-                device.ChangeResolution(width, height, mode.ColorFormat.BitsPerPixel, 0);
+                this.device.ChangeResolution(width, height, mode.ColorFormat.BitsPerPixel, 0);
                 WindowState = WindowState.Fullscreen;
             }
-
-            if (enableEvents) EnableEvents();
         }
 
         #endregion
@@ -201,8 +161,7 @@ namespace OpenTK
         /// </summary>
         public void ProcessEvents()
         {
-            EnsureUndisposed();
-            implementation.ProcessEvents();
+            ProcessEvents(false);
         }
 
         #endregion
@@ -616,10 +575,15 @@ namespace OpenTK
         /// <summary>
         /// Releases all non-managed resources belonging to this NativeWindow.
         /// </summary>
-        public void Dispose()
+        public virtual void Dispose()
         {
             if (!disposed)
             {
+                if ((options & GameWindowFlags.Fullscreen) != 0)
+                {
+                    //if (WindowState == WindowState.Fullscreen) WindowState = WindowState.Normal; // TODO: Revise.
+                    device.RestoreResolution();
+                }
                 implementation.Dispose();
                 GC.SuppressFinalize(this);
 
@@ -634,52 +598,6 @@ namespace OpenTK
         #region --- Protected Members ---
 
         #region Methods
-
-        #region DisableEvents
-
-        /// <summary>
-        /// Disables the propagation of OS events.
-        /// </summary>
-        protected void DisableEvents()
-        {
-            EnsureUndisposed();
-            implementation.Closed -= OnClosedInternal;
-            implementation.Closing -= OnClosingInternal;
-            implementation.Disposed -= OnDisposedInternal;
-            implementation.FocusedChanged -= OnFocusedChangedInternal;
-            implementation.KeyPress -= OnKeyPressInternal;
-            implementation.Move -= OnMoveInternal;
-            implementation.Resize -= OnResizeInternal;
-            implementation.TitleChanged -= OnTitleChangedInternal;
-            implementation.VisibleChanged -= OnVisibleChangedInternal;
-            implementation.WindowBorderChanged -= OnWindowBorderChangedInternal;
-            implementation.WindowStateChanged -= OnWindowStateChangedInternal;
-        }
-
-        #endregion
-
-        #region EnableEvents
-
-        /// <summary>
-        /// Enables the propagation of OS events.
-        /// </summary>
-        protected void EnableEvents()
-        {
-            EnsureUndisposed();
-            implementation.Closed += OnClosedInternal;
-            implementation.Closing += OnClosingInternal;
-            implementation.Disposed += OnDisposedInternal;
-            implementation.FocusedChanged += OnFocusedChangedInternal;
-            implementation.KeyPress += OnKeyPressInternal;
-            implementation.Move += OnMoveInternal;
-            implementation.Resize += OnResizeInternal;
-            implementation.TitleChanged += OnTitleChangedInternal;
-            implementation.VisibleChanged += OnVisibleChangedInternal;
-            implementation.WindowBorderChanged += OnWindowBorderChangedInternal;
-            implementation.WindowStateChanged += OnWindowStateChangedInternal;
-        }
-
-        #endregion
 
         #region EnsureUndisposed
 
@@ -711,7 +629,10 @@ namespace OpenTK
         /// Called when the NativeWindow has closed.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnClosed(EventArgs e) { }
+        protected virtual void OnClosed(EventArgs e)
+        {
+            if (Closed != null) Closed(this, e);
+        }
 
         #endregion
 
@@ -723,7 +644,49 @@ namespace OpenTK
         /// <param name="e">
         /// The <see cref="System.ComponentModel.CancelEventArgs" /> for this event.
         /// Set e.Cancel to true in order to stop the NativeWindow from closing.</param>
-        protected virtual void OnClosing(CancelEventArgs e) { }
+        protected virtual void OnClosing(CancelEventArgs e)
+        {
+            if (Closing != null) Closing(this, e);
+        }
+
+        #endregion
+
+        #region OnDisposed
+
+        /// <summary>
+        /// Called when the NativeWindow is disposed.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        protected virtual void OnDisposed(EventArgs e)
+        {
+            if (Disposed != null) Disposed(this, e);
+        }
+
+        #endregion
+
+        #region OnFocusedChanged
+
+        /// <summary>
+        /// Called when the <see cref="OpenTK.INativeWindow.Focused"/> property of the NativeWindow has changed.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        protected virtual void OnFocusedChanged(EventArgs e)
+        {
+            if (FocusedChanged != null) FocusedChanged(this, e);
+        }
+
+        #endregion
+
+        #region OnKeyPress
+
+        /// <summary>
+        /// Called when a character is typed.
+        /// </summary>
+        /// <param name="e">The <see cref="OpenTK.KeyPressEventArgs"/> for this event.</param>
+        protected virtual void OnKeyPress(KeyPressEventArgs e)
+        {
+            if (KeyPress != null) KeyPress(this, e);
+        }
 
         #endregion
 
@@ -733,7 +696,10 @@ namespace OpenTK
         /// Called when the NativeWindow is moved.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnMove(EventArgs e) { }
+        protected virtual void OnMove(EventArgs e)
+        {
+            if (Move != null) Move(this, e);
+        }
 
         #endregion
 
@@ -743,7 +709,36 @@ namespace OpenTK
         /// Called when the NativeWindow is resized.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnResize(EventArgs e) { }
+        protected virtual void OnResize(EventArgs e)
+        {
+            if (Resize != null) Resize(this, e);
+        }
+
+        #endregion
+
+        #region OnTitleChanged
+
+        /// <summary>
+        /// Called when the <see cref="OpenTK.INativeWindow.Title"/> property of the NativeWindow has changed.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        protected virtual void OnTitleChanged(EventArgs e)
+        {
+            if (TitleChanged != null) TitleChanged(this, e);
+        }
+
+        #endregion
+
+        #region OnVisibleChanged
+
+        /// <summary>
+        /// Called when the <see cref="OpenTK.INativeWindow.Visible"/> property of the NativeWindow has changed.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        protected virtual void OnVisibleChanged(EventArgs e)
+        {
+            if (VisibleChanged != null) VisibleChanged(this, e);
+        }
 
         #endregion
 
@@ -753,7 +748,10 @@ namespace OpenTK
         /// Called when the WindowBorder of this NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnWindowBorderChanged(EventArgs e) { }
+        protected virtual void OnWindowBorderChanged(EventArgs e)
+        {
+            if (WindowBorderChanged != null) WindowBorderChanged(this, e);
+        }
 
         #endregion
 
@@ -763,7 +761,25 @@ namespace OpenTK
         /// Called when the WindowState of this NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnWindowStateChanged(EventArgs e) { }
+        protected virtual void OnWindowStateChanged(EventArgs e)
+        {
+            if (WindowStateChanged != null) WindowStateChanged(this, e);
+        }
+
+        #endregion
+
+        #region ProcessEvents
+
+        /// <summary>
+        /// Processes operating system events until the NativeWindow becomes idle.
+        /// </summary>
+        /// <param name="retainEvents">If true, the state of underlying system event propagation will be preserved, otherwise event propagation will be enabled if it has not been already.</param>
+        protected void ProcessEvents(bool retainEvents)
+        {
+            EnsureUndisposed();
+            if (!events) Events = true;
+            implementation.ProcessEvents();
+        }
 
         #endregion
 
@@ -773,129 +789,130 @@ namespace OpenTK
 
         #region --- Private Members ---
 
+        #region Methods
+
         #region OnClosedInternal
 
         private void OnClosedInternal(object sender, EventArgs e)
         {
             OnClosed(e);
-
-            if (Closed != null) Closed(this, e);
+            Events = false;
         }
 
         #endregion
 
         #region OnClosingInternal
 
-        private void OnClosingInternal(object sender, CancelEventArgs e)
-        {
-            OnClosing(e);
-
-            if (Closing != null) Closing(this, e);
-
-            //if (!e.Cancel) Close();
-        }
+        private void OnClosingInternal(object sender, CancelEventArgs e) { OnClosing(e); }
 
         #endregion
 
         #region OnDisposedInternal
 
-        private void OnDisposedInternal(object sender, EventArgs e)
-        {
-            // TODO: OnDisposed?
-            if (Disposed != null) Disposed(this, e);
-        }
+        private void OnDisposedInternal(object sender, EventArgs e) { OnDisposed(e); }
 
         #endregion
 
         #region OnFocusedChangedInternal
 
-        private void OnFocusedChangedInternal(object sender, EventArgs e)
-        {
-            // TODO: OnFocusedChanged?
-            if (FocusedChanged != null) FocusedChanged(this, e);
-        }
+        private void OnFocusedChangedInternal(object sender, EventArgs e) { OnFocusedChanged(e); }
 
         #endregion
 
         #region OnKeyPressInternal
 
-        private void OnKeyPressInternal(object sender, KeyPressEventArgs e)
-        {
-            // TODO: OnKeyPress?
-            if (KeyPress != null) KeyPress(this, e);
-        }
+        private void OnKeyPressInternal(object sender, KeyPressEventArgs e) { OnKeyPress(e); }
 
         #endregion
 
         #region OnMoveInternal
 
-        private void OnMoveInternal(object sender, EventArgs e)
-        {
-            EnsureUndisposed();
-
-            //if (!this.Exists || this.IsExiting) return; // TODO: See EnableEvents and DisableEvents.
-
-            OnMove(e);
-
-            if (Move != null) Move(this, e);
-        }
+        private void OnMoveInternal(object sender, EventArgs e) { OnMove(e); }
 
         #endregion
 
         #region OnResizeInternal
 
-        private void OnResizeInternal(object sender, EventArgs e)
-        {
-            EnsureUndisposed();
-
-            //if (!this.Exists || this.IsExiting) return; // TODO: See EnableEvents and DisableEvents.
-
-            OnResize(e);
-
-            if (Resize != null) Resize(this, e);
-        }
+        private void OnResizeInternal(object sender, EventArgs e) { OnResize(e); }
 
         #endregion
 
         #region OnTitleChangedInternal
 
-        private void OnTitleChangedInternal(object sender, EventArgs e)
-        {
-            // TODO: OnTitleChanged?
-            if (TitleChanged != null) TitleChanged(this, e);
-        }
+        private void OnTitleChangedInternal(object sender, EventArgs e) { OnTitleChanged(e); }
 
         #endregion
 
         #region OnVisibleChangedInternal
 
-        private void OnVisibleChangedInternal(object sender, EventArgs e)
-        {
-            // TODO: OnVisibleChanged?
-            if (VisibleChanged != null) VisibleChanged(this, e);
-        }
+        private void OnVisibleChangedInternal(object sender, EventArgs e) { OnVisibleChanged(e); }
 
         #endregion
 
         #region OnWindowBorderChangedInternal
 
-        private void OnWindowBorderChangedInternal(object sender, EventArgs e)
-        {
-            OnWindowBorderChanged(e);
-
-            if (WindowBorderChanged != null) WindowBorderChanged(this, e); // TODO: This was closed with EventArgs.Empty. Special reason?
-        }
+        private void OnWindowBorderChangedInternal(object sender, EventArgs e) { OnWindowBorderChanged(e); }
 
         #endregion
 
         #region OnWindowStateChangedInternal
 
-        private void OnWindowStateChangedInternal(object sender, EventArgs e)
-        {
-            OnWindowStateChanged(e);
+        private void OnWindowStateChangedInternal(object sender, EventArgs e) { OnWindowStateChanged(e); }
 
-            if (WindowStateChanged != null) WindowStateChanged(this, e);
+        #endregion
+
+        #endregion
+
+        #region Properties
+
+        #region Events
+
+        private bool Events
+        {
+            set
+            {
+                if (value)
+                {
+                    if (events)
+                    {
+                        throw new InvalidOperationException("Event propagation is already enabled.");
+                    }
+                    implementation.Closed += OnClosedInternal;
+                    implementation.Closing += OnClosingInternal;
+                    implementation.Disposed += OnDisposedInternal;
+                    implementation.FocusedChanged += OnFocusedChangedInternal;
+                    implementation.KeyPress += OnKeyPressInternal;
+                    implementation.Move += OnMoveInternal;
+                    implementation.Resize += OnResizeInternal;
+                    implementation.TitleChanged += OnTitleChangedInternal;
+                    implementation.VisibleChanged += OnVisibleChangedInternal;
+                    implementation.WindowBorderChanged += OnWindowBorderChangedInternal;
+                    implementation.WindowStateChanged += OnWindowStateChangedInternal;
+                    events = true;
+                }
+                else if (events)
+                {
+                    implementation.Closed -= OnClosedInternal;
+                    implementation.Closing -= OnClosingInternal;
+                    implementation.Disposed -= OnDisposedInternal;
+                    implementation.FocusedChanged -= OnFocusedChangedInternal;
+                    implementation.KeyPress -= OnKeyPressInternal;
+                    implementation.Move -= OnMoveInternal;
+                    implementation.Resize -= OnResizeInternal;
+                    implementation.TitleChanged -= OnTitleChangedInternal;
+                    implementation.VisibleChanged -= OnVisibleChangedInternal;
+                    implementation.WindowBorderChanged -= OnWindowBorderChangedInternal;
+                    implementation.WindowStateChanged -= OnWindowStateChangedInternal;
+                    events = false;
+                }
+                else
+                {
+                    throw new InvalidOperationException("Event propagation is already disabled.");
+                }
+            }
         }
+
+        #endregion
 
         #endregion
 
