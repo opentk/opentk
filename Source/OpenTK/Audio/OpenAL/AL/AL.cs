@@ -70,7 +70,7 @@ namespace OpenTK.Audio.OpenAL
 
         #region Constants
 
-        public const string Lib = "openal32.dll";
+        internal const string Lib = "openal32.dll";
         private const CallingConvention Style = CallingConvention.Cdecl;
 
         #endregion Constants
