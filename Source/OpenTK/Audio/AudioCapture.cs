@@ -378,6 +378,9 @@ namespace OpenTK.Audio
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Finalizes this instance.
+        /// </summary>
         ~AudioCapture()
         {
             Dispose();

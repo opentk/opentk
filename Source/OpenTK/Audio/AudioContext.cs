@@ -725,6 +725,9 @@ namespace OpenTK.Audio
             }
         }
 
+        /// <summary>
+        /// Finalizes this instance.
+        /// </summary>
         ~AudioContext()
         {
             this.Dispose(false);
@@ -734,16 +737,29 @@ namespace OpenTK.Audio
 
         #region --- Overrides ---
 
+        /// <summary>
+        /// Calculates the hash code for this instance.
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
         }
 
+        /// <summary>
+        /// Compares this instance with another.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True, if obj refers to this instance; false otherwise.</returns>
         public override bool Equals(object obj)
         {
             return base.Equals(obj);
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that desrcibes this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.String"/> that desrcibes this instance.</returns>
         public override string ToString()
         {
             return String.Format("{0} (handle: {1}, device: {2})",
