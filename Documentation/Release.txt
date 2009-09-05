@@ -1,57 +1,103 @@
-The Open Toolkit 0.9.9-1 Beta
+The Open Toolkit 0.9.9-2 Beta
 
 
 
 [Overview]
 
-This is the first preview release of what will become OpenTK 1.0. Major changes:
-* Initial OpenGL ES support
-* OpenCL bugfixes.
-* Math API improvements.
-* Internal improvements to DisplayDevice and DisplayResolution.
+This is the third preview release of what will become OpenTK 1.0. Major changes:
+* Added new OpenTK.Compatibility project to ensure compatilibility with older OpenTK and Tao projects.
+* Deprecated and merged OpenTK.Utilities into OpenTK.Compatibility.
+* Moved OpenTK.GLControl into its own project.
+* Added NativeWindow class and modified GameWindow to inherit from it.
+* Improved the build system and added support for signed assemblies.
+* Added complete OpenGL|ES support.
+* Recreated the OpenCL bindings using the binding generator.
+* Improved the math API.
+* Fixed all documentation warnings.
+* Improved implementations for GraphicsContext, GLControl, NativeWindow, GameWindow.
+* Added a large number of stability fixes and improved the behavior of OpenTK under buggy environments.
 
 
-Please note that this is a work-in-progress snapshot release and should only be used for testing purposes.
-
-Visit http://www.opentk.com to report issues or request features.
+Please visit http://www.opentk.com to report issues or request features.
 
 
 
 [Resolved issues]
 
-[#744]
-[#917]
-[#955]
-[#964]
-[#1005]
-[#1021]
-[#1032]
-[#1035]
-[#1037]
-[#1050]
-[#1060]
+[#566]
+[#775]
+[#993]
+[#1071]
+[#1074]
+[#1081]
+[#1082]
+[#1084]
+[#1089]
+[#1101]
+[#1119]
+[#1121]
+[#1126]
+[#1131]
+[#1138]
+[#1140]
+[#1141]
+[#1143]
 
 
 
 [Known issues]
 
-Mono 2.2 and 2.4 fail to compile this release (bug report: https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0 or 2.4.2+, or use the precompiled binaries.
+Mono 2.2 and 2.4 fail to compile this release (bug report: https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0, 2.4.2+ or use the precompiled binaries.
 
 OpenTK.Graphics.TextPrinter fails to render text with newlines or a layout rectangle on Mono. This is a Mono GDI+ bug.
 
 Example documentation may not show up correctly when running on Mono. This is a Mono issue with RTF parsing.
 
-Joystick input is not supported on MacOS at this time.
+Joystick input is not supported on Mac OS X at this time.
 
-OpenGL 3.0 is not supported on MacOS at this time.
+OpenGL 3.0 is not supported on Mac OS X at this time.
 
 The new GameWindow implementation may not function correctly on Mac OS X.
+
+The new GraphicsContext  implementation may not function correctly on Mac OS X.
 
 
 
 [API changes]
 
 Please note that binary compatibility is not preserved between beta releases.
+
+
+[0.9.9-2]
+
+If you are upgrading from an earlier version of OpenTK, please add a reference to OpenTK.Compatibility and OpenTK.GLControl (if you are using the GLControl).
+
+1. OpenTK.Utilities assembly no longer exists.
+Solution: add a reference to OpenTK.Compatibility.
+
+2. OpenTK.GLControl no longer exists in OpenTK.dll.
+Solution: add a reference to OpenTK.GLControl.
+
+3. OpenTK.Graphics.GL has been moved to OpenTK.Graphics.OpenGL.GL.
+Solution: add a reference to OpenTK.Compatibility or change the relevant qualifiers from OpenTK.Graphics to OpenTK.Graphics.OpenGL or add a using directive for OpenTK.Graphics.OpenGL.
+
+4. OpenTK.Audio.AL has been moved to OpenTK.Audio.OpenAL.AL.
+Solution: add a reference to OpenTK.Compatibility or change the relevant qualifiers from OpenTK.Audio to OpenTK.Audio.OpenAL or add a using directive for OpenTK.Audio.OpenAL.
+
+ 5. GameWindow events are no longer raised if the relevant On* method is overriden.
+ Solution: ensure that you call "base.On*" when you override one of the "On*" methods (e.g. OnLoad).
+ 
+ 6. GameWindow OnLoad and OnUnload methods are now protected instead of public.
+ Solution: change the access qualifier to protected for overriding methods.
+ 
+ 7. DisplayResolution and DisplayDevice classes have been moved from OpenTK.Graphics into the root OpenTK namespace.
+ Solution: change the relevant using directives and qualifiers from OpenTK.Graphics to OpenTK.
+ 
+ 8. TextPrinter is marked as deprecated.
+ Solution: there is no solution at this time. The TextPrinter will continue to work as expected but is need of a dedicated maintainer.
+ 
+ 9. Tao.OpenGl, Tao.OpenAl and Tao.Platform.Windows.SimpleOpenGlControl are marked as deprecated.
+ Solution: use core OpenTK classes if possible. The Tao namespaces are only offered for compatibility with existing applications and new projects should avoid using them.
 
 
 [0.9.9-1]
