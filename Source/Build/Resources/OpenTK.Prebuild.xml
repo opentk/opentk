@@ -5,17 +5,19 @@
 
     <Configuration name="Debug">
       <Options>
-        <CompilerDefines>DEBUG;TRACE;{0}</CompilerDefines>
+        <CompilerDefines>DEBUG;TRACE;</CompilerDefines>
         <OptimizeCode>false</OptimizeCode>
         <DebugInformation>true</DebugInformation>
+        {0} <!-- KeyFile -->
       </Options>
     </Configuration>
 
     <Configuration name="Release">
       <Options>
-        <CompilerDefines>TRACE;{0}</CompilerDefines>
+        <CompilerDefines>TRACE;</CompilerDefines>
         <OptimizeCode>true</OptimizeCode>
         <DebugInformation>false</DebugInformation>
+        {0} <!-- KeyFile -->
       </Options>
     </Configuration>
 
