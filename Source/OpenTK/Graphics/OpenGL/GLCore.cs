@@ -1651,13 +1651,13 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void GetConvolutionFilterEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr image);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetConvolutionParameterfv", ExactSpelling = true)]
-            internal extern static unsafe void GetConvolutionParameterfv(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.Version12Deprecated pname, [OutAttribute] Single* @params);
+            internal extern static unsafe void GetConvolutionParameterfv(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.GetConvolutionParameterPName pname, [OutAttribute] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetConvolutionParameterfvEXT", ExactSpelling = true)]
             internal extern static unsafe void GetConvolutionParameterfvEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.ExtConvolution pname, [OutAttribute] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetConvolutionParameteriv", ExactSpelling = true)]
-            internal extern static unsafe void GetConvolutionParameteriv(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.Version12Deprecated pname, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetConvolutionParameteriv(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.GetConvolutionParameterPName pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetConvolutionParameterivEXT", ExactSpelling = true)]
             internal extern static unsafe void GetConvolutionParameterivEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.ExtConvolution pname, [OutAttribute] Int32* @params);
@@ -1723,19 +1723,19 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static Int32 GetHandleARB(OpenTK.Graphics.OpenGL.ArbShaderObjects pname);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetHistogram", ExactSpelling = true)]
-            internal extern static void GetHistogram(OpenTK.Graphics.OpenGL.Version12Deprecated target, bool reset, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr values);
+            internal extern static void GetHistogram(OpenTK.Graphics.OpenGL.HistogramTarget target, bool reset, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetHistogramEXT", ExactSpelling = true)]
             internal extern static void GetHistogramEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, bool reset, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetHistogramParameterfv", ExactSpelling = true)]
-            internal extern static unsafe void GetHistogramParameterfv(OpenTK.Graphics.OpenGL.Version12Deprecated target, OpenTK.Graphics.OpenGL.Version12Deprecated pname, [OutAttribute] Single* @params);
+            internal extern static unsafe void GetHistogramParameterfv(OpenTK.Graphics.OpenGL.HistogramTarget target, OpenTK.Graphics.OpenGL.GetHistogramParameterPName pname, [OutAttribute] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetHistogramParameterfvEXT", ExactSpelling = true)]
             internal extern static unsafe void GetHistogramParameterfvEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, OpenTK.Graphics.OpenGL.ExtHistogram pname, [OutAttribute] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetHistogramParameteriv", ExactSpelling = true)]
-            internal extern static unsafe void GetHistogramParameteriv(OpenTK.Graphics.OpenGL.Version12Deprecated target, OpenTK.Graphics.OpenGL.Version12Deprecated pname, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetHistogramParameteriv(OpenTK.Graphics.OpenGL.HistogramTarget target, OpenTK.Graphics.OpenGL.GetHistogramParameterPName pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetHistogramParameterivEXT", ExactSpelling = true)]
             internal extern static unsafe void GetHistogramParameterivEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, OpenTK.Graphics.OpenGL.ExtHistogram pname, [OutAttribute] Int32* @params);
@@ -1834,13 +1834,13 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void GetMinmaxEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, bool reset, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetMinmaxParameterfv", ExactSpelling = true)]
-            internal extern static unsafe void GetMinmaxParameterfv(OpenTK.Graphics.OpenGL.Version12Deprecated target, OpenTK.Graphics.OpenGL.Version12Deprecated pname, [OutAttribute] Single* @params);
+            internal extern static unsafe void GetMinmaxParameterfv(OpenTK.Graphics.OpenGL.Version12Deprecated target, OpenTK.Graphics.OpenGL.GetMinmaxParameterPName pname, [OutAttribute] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetMinmaxParameterfvEXT", ExactSpelling = true)]
             internal extern static unsafe void GetMinmaxParameterfvEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, OpenTK.Graphics.OpenGL.ExtHistogram pname, [OutAttribute] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetMinmaxParameteriv", ExactSpelling = true)]
-            internal extern static unsafe void GetMinmaxParameteriv(OpenTK.Graphics.OpenGL.Version12Deprecated target, OpenTK.Graphics.OpenGL.Version12Deprecated pname, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetMinmaxParameteriv(OpenTK.Graphics.OpenGL.Version12Deprecated target, OpenTK.Graphics.OpenGL.GetMinmaxParameterPName pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetMinmaxParameterivEXT", ExactSpelling = true)]
             internal extern static unsafe void GetMinmaxParameterivEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, OpenTK.Graphics.OpenGL.ExtHistogram pname, [OutAttribute] Int32* @params);
@@ -2341,7 +2341,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void HintPGI(OpenTK.Graphics.OpenGL.PgiMiscHints target, Int32 mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glHistogram", ExactSpelling = true)]
-            internal extern static void Histogram(OpenTK.Graphics.OpenGL.Version12Deprecated target, Int32 width, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, bool sink);
+            internal extern static void Histogram(OpenTK.Graphics.OpenGL.HistogramTarget target, Int32 width, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, bool sink);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glHistogramEXT", ExactSpelling = true)]
             internal extern static void HistogramEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, Int32 width, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, bool sink);
@@ -3856,7 +3856,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void RequestResidentProgramsNV(Int32 n, UInt32* programs);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glResetHistogram", ExactSpelling = true)]
-            internal extern static void ResetHistogram(OpenTK.Graphics.OpenGL.Version12Deprecated target);
+            internal extern static void ResetHistogram(OpenTK.Graphics.OpenGL.HistogramTarget target);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glResetHistogramEXT", ExactSpelling = true)]
             internal extern static void ResetHistogramEXT(OpenTK.Graphics.OpenGL.ExtHistogram target);
