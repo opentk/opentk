@@ -1,37 +1,30 @@
 [General]
-+ Split OpenTK.Utilities from the core OpenTK.
++ Split TextPrinter from the core OpenTK.
 + Change all public APIs to conform to the class library interface guidelines.
 + Revisit all classes and make sure IDisposable is correctly implemented.
-+ Remove System.Windows.Forms dependence.
++ Remove System.Windows.Forms dependency.
 
-[OpenTK.Graphics.GL]
+[OpenTK.Graphics.OpenGL]
 + Improve performance for functions that return StringBuilders.
-+ Enforce PureValue constraint in generic classes.
++ Enforce BlittableValueType constraint in generic classes.
 + Improve performance for functions that take generic arrays.
 + Fix documentation - parameter mismatches.
 
+[OpenTK.Compute]
+[OpenTK.Graphics.ES*]
++ Improve the API.
+
 [OpenTK.Graphics.GraphicsContext]
-+ FSAA support (very simple, now that GL3 support has been added.)
 + Implement GL3 support on Mac OS X.
 + Improve API for context sharing (add a sharedContext parameter to the context constructor).
 
 [OpenTK.GLControl]
 + Improve the designer interface.
-+ Move to a separate assembly.
 
 [OpenTK.Input]
 + Implement joystick support on Mac OS X.
 + Implement GameWindow-independent input drivers.
 + Implement support for multiple mice and keyboards.
 
-[OpenTK]
-+ Move to the OpenTK namespace instead of OpenTK.
-+ Improve performance.
-+ Improve API.
-
 [Examples]
-+ Add GL3 examples.
 + Add more comprehensive Graphics and Audio tutorials.
-
-[OpenTK.Compute]
-+ Begin the implementation.

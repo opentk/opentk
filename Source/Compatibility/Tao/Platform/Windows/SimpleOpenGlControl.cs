@@ -3,6 +3,9 @@
 MIT License
 Copyright ©2003-2006 Tao Framework Team
 http://www.taoframework.com
+Copyright ©2009 the Open Toolkit library
+http://www.opentk.com
+ 
 All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
