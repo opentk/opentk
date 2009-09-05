@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OpenTK binding generator")]
-[assembly: AssemblyDescription("Generates OpenGL and OpenCL bindings for C#")]
+[assembly: AssemblyTitle("The Open Toolkit Library Binding Generator")]
+[assembly: AssemblyDescription("Generates C# bindings for the the Open Toolkit Library")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("OpenTK.OpenGL.Bind")]
-[assembly: AssemblyCopyright("Copyright ©  2006-2009 the OpenTK team")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("The Open Toolkit Library")]
+[assembly: AssemblyProduct("The Open Toolkit Library")]
+[assembly: AssemblyCopyright("Copyright ©  2006-2009 the Open Toolkit Library")]
+[assembly: AssemblyTrademark("OpenTK")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.9.9.13")]
-[assembly: AssemblyFileVersion("0.9.9.13")]
+[assembly: AssemblyVersion("0.9.9.14")]
+[assembly: AssemblyFileVersion("0.9.9.14")]
