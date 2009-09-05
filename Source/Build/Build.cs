@@ -217,11 +217,21 @@ Assembly signing:
             File.Delete(opentk);
             File.Delete(quickstart);
 
+            foreach (string file in Directory.GetFiles("Source", "*.csproj", SearchOption.AllDirectories))
+                ApplyMonoDevelopWorkarounds(file);
+
             if (Debugger.IsAttached)
             {
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey(true);
             }
+        }
+
+        static void ApplyMonoDevelopWorkarounds(string solution)
+        {
+            File.WriteAllText(solution, File.ReadAllText(solution)
+                .Replace("AssemblyOriginatorKeyFile", "AssemblyKeyFile")
+                .Replace(@"..\", @"../"));
         }
 
         static void DeleteDirectories(string root_path, string search)
