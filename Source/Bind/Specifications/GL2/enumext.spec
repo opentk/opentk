@@ -6222,45 +6222,94 @@ BlendingFactorSrc enum:
 
 # Promoted from SGI_color_table
 ColorTableTarget enum:
-	use SGI_color_table COLOR_TABLE
-	use SGI_color_table POST_CONVOLUTION_COLOR_TABLE
-	use SGI_color_table POST_COLOR_MATRIX_COLOR_TABLE
-	use SGI_color_table PROXY_COLOR_TABLE
-	use SGI_color_table PROXY_POST_CONVOLUTION_COLOR_TABLE
-	use SGI_color_table PROXY_POST_COLOR_MATRIX_COLOR_TABLE
+	COLOR_TABLE                 = 0x80D0 # 1 I # Equivalent to SGI_color_table
+    POST_CONVOLUTION_COLOR_TABLE            = 0x80D1 # 1 I
+    POST_COLOR_MATRIX_COLOR_TABLE           = 0x80D2 # 1 I
+    PROXY_COLOR_TABLE               = 0x80D3
+    PROXY_POST_CONVOLUTION_COLOR_TABLE      = 0x80D4
+    PROXY_POST_COLOR_MATRIX_COLOR_TABLE     = 0x80D5
 
 ColorTableParameterPName enum:
-	use SGI_color_table COLOR_TABLE_SCALE
-	use SGI_color_table COLOR_TABLE_BIAS
+	COLOR_TABLE_SCALE               = 0x80D6
+    COLOR_TABLE_BIAS                = 0x80D7
 	
 GetColorTableParameterPName enum:
-	use SGI_color_table COLOR_TABLE_SCALE
-	use SGI_color_table COLOR_TABLE_BIAS
-	use SGI_color_table COLOR_TABLE_FORMAT
-	use SGI_color_table COLOR_TABLE_WIDTH
-	use SGI_color_table COLOR_TABLE_RED_SIZE
-	use SGI_color_table COLOR_TABLE_GREEN_SIZE
-	use SGI_color_table COLOR_TABLE_BLUE_SIZE
-	use SGI_color_table COLOR_TABLE_ALPHA_SIZE
-	use SGI_color_table COLOR_TABLE_LUMINANCE_SIZE
-	use SGI_color_table COLOR_TABLE_INTENSITY_SIZE
+	COLOR_TABLE_SCALE               = 0x80D6
+    COLOR_TABLE_BIAS                = 0x80D7
+    COLOR_TABLE_FORMAT              = 0x80D8
+    COLOR_TABLE_WIDTH               = 0x80D9
+    COLOR_TABLE_RED_SIZE                = 0x80DA
+    COLOR_TABLE_GREEN_SIZE              = 0x80DB
+    COLOR_TABLE_BLUE_SIZE               = 0x80DC
+    COLOR_TABLE_ALPHA_SIZE              = 0x80DD
+    COLOR_TABLE_LUMINANCE_SIZE          = 0x80DE
+    COLOR_TABLE_INTENSITY_SIZE          = 0x80DF
 	
 EnableCap enum:
-	use SGI_color_table COLOR_TABLE
-	use SGI_color_table POST_CONVOLUTION_COLOR_TABLE
-	use SGI_color_table POST_COLOR_MATRIX_COLOR_TABLE
+	COLOR_TABLE                 = 0x80D0
+	POST_CONVOLUTION_COLOR_TABLE            = 0x80D1
+	POST_COLOR_MATRIX_COLOR_TABLE           = 0x80D2
 
 # Promoted from EXT_convolution
 ConvolutionParameter enum:
-	use EXT_convolution CONVOLUTION_BORDER_MODE
-	use EXT_convolution CONVOLUTION_FILTER_SCALE
-	use EXT_convolution CONVOLUTION_FILTER_BIAS
+    CONVOLUTION_BORDER_MODE             = 0x8013
+    CONVOLUTION_FILTER_SCALE            = 0x8014
+    CONVOLUTION_FILTER_BIAS             = 0x8015
+    
+ConvolutionParameterValue enum:
+	REDUCE                      = 0x8016
+	CONSTANT_BORDER                 = 0x8151
+    REPLICATE_BORDER                = 0x8153
 
 ConvolutionTarget enum:
-	use EXT_convolution CONVOLUTION_1D
-	use EXT_convolution CONVOLUTION_2D
-	
-	
+    CONVOLUTION_1D                  = 0x8010 # 1 I # Equivalent to EXT_convolution
+    CONVOLUTION_2D                  = 0x8011 # 1 I
+    SEPARABLE_2D                          = 0x8012
+    
+GetConvolutionParameterPName enum:
+    CONVOLUTION_BORDER_MODE             = 0x8013
+    CONVOLUTION_BORDER_COLOR            = 0x8154
+    CONVOLUTION_FILTER_SCALE            = 0x8014
+    CONVOLUTION_FILTER_BIAS             = 0x8015
+    CONVOLUTION_FORMAT              = 0x8017
+    CONVOLUTION_WIDTH               = 0x8018
+    CONVOLUTION_HEIGHT              = 0x8019
+    MAX_CONVOLUTION_WIDTH               = 0x801A
+    MAX_CONVOLUTION_HEIGHT              = 0x801B
+    
+SeparableFilterTarget enum:
+    SEPARABLE_2D                    = 0x8012 # 1 I
+
+EnableCap enum:
+	CONVOLUTION_1D                  = 0x8010
+    CONVOLUTION_2D                  = 0x8011
+    SEPARABLE_2D                          = 0x8012
+    
+# Promoted from EXT_histogram
+MinMaxTarget enum:
+	MINMAX = 0x802E
+
+GetMinmaxParameterPName enum:
+	MINMAX_FORMAT                   = 0x802F
+    MINMAX_SINK                 = 0x8030
+
+HistogramTarget enum:
+    HISTOGRAM                   = 0x8024 # 1 I # Equivalent to EXT_histogram
+    PROXY_HISTOGRAM                 = 0x8025
+    
+GetHistogramParameterPName enum:
+    HISTOGRAM_WIDTH                 = 0x8026
+    HISTOGRAM_FORMAT                = 0x8027
+    HISTOGRAM_RED_SIZE              = 0x8028
+    HISTOGRAM_GREEN_SIZE                = 0x8029
+    HISTOGRAM_BLUE_SIZE             = 0x802A
+    HISTOGRAM_ALPHA_SIZE                = 0x802B
+    HISTOGRAM_LUMINANCE_SIZE            = 0x802C
+    HISTOGRAM_SINK                  = 0x802D
+
+EnableCap enum:
+    HISTOGRAM                   = 0x8024
+
 
 # Version 1.3
 
