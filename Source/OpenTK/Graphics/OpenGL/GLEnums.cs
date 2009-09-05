@@ -8182,7 +8182,7 @@ namespace OpenTK.Graphics.OpenGL
         Fill = ((int)0X1b02),
     }
 
-    public enum MinMaxTarget
+    public enum MinmaxTarget
     {
         Minmax = ((int)0X802e),
     }
@@ -9460,7 +9460,7 @@ namespace OpenTK.Graphics.OpenGL
         Gl4Pass3Sgis = ((int)0X80a7),
     }
 
-    public enum SeparableFilterTarget
+    public enum SeparableTarget
     {
         Separable2D = ((int)0X8012),
     }
