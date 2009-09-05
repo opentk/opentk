@@ -5408,6 +5408,8 @@ namespace OpenTK.Graphics.OpenGL
 
     public enum ColorTableParameterPName
     {
+        ColorTableScale = ((int)0X80d6),
+        ColorTableBias = ((int)0X80d7),
     }
 
     public enum ColorTableParameterPNameSgi
@@ -5418,6 +5420,12 @@ namespace OpenTK.Graphics.OpenGL
 
     public enum ColorTableTarget
     {
+        ColorTable = ((int)0X80d0),
+        PostConvolutionColorTable = ((int)0X80d1),
+        PostColorMatrixColorTable = ((int)0X80d2),
+        ProxyColorTable = ((int)0X80d3),
+        ProxyPostConvolutionColorTable = ((int)0X80d4),
+        ProxyPostColorMatrixColorTable = ((int)0X80d5),
     }
 
     public enum ColorTableTargetSgi
@@ -5447,6 +5455,9 @@ namespace OpenTK.Graphics.OpenGL
 
     public enum ConvolutionParameter
     {
+        ConvolutionBorderMode = ((int)0X8013),
+        ConvolutionFilterScale = ((int)0X8014),
+        ConvolutionFilterBias = ((int)0X8015),
     }
 
     public enum ConvolutionParameterExt
@@ -5456,8 +5467,18 @@ namespace OpenTK.Graphics.OpenGL
         ConvolutionFilterBiasExt = ((int)0X8015),
     }
 
+    public enum ConvolutionParameterValue
+    {
+        Reduce = ((int)0X8016),
+        ConstantBorder = ((int)0X8151),
+        ReplicateBorder = ((int)0X8153),
+    }
+
     public enum ConvolutionTarget
     {
+        Convolution1D = ((int)0X8010),
+        Convolution2D = ((int)0X8011),
+        Separable2D = ((int)0X8012),
     }
 
     public enum ConvolutionTargetExt
@@ -5632,9 +5653,13 @@ namespace OpenTK.Graphics.OpenGL
         Light5 = ((int)0X4005),
         Light6 = ((int)0X4006),
         Light7 = ((int)0X4007),
+        Convolution1D = ((int)0X8010),
         Convolution1DExt = ((int)0X8010),
+        Convolution2D = ((int)0X8011),
         Convolution2DExt = ((int)0X8011),
+        Separable2D = ((int)0X8012),
         Separable2DExt = ((int)0X8012),
+        Histogram = ((int)0X8024),
         HistogramExt = ((int)0X8024),
         MinmaxExt = ((int)0X802e),
         PolygonOffsetFill = ((int)0X8037),
@@ -5656,8 +5681,11 @@ namespace OpenTK.Graphics.OpenGL
         SampleCoverage = ((int)0X80a0),
         SampleMaskSgis = ((int)0X80a0),
         TextureColorTableSgi = ((int)0X80bc),
+        ColorTable = ((int)0X80d0),
         ColorTableSgi = ((int)0X80D0),
+        PostConvolutionColorTable = ((int)0X80d1),
         PostConvolutionColorTableSgi = ((int)0X80D1),
+        PostColorMatrixColorTable = ((int)0X80d2),
         PostColorMatrixColorTableSgi = ((int)0X80D2),
         Texture4DSgis = ((int)0X8134),
         PixelTexGenSgix = ((int)0X8139),
@@ -6970,6 +6998,16 @@ namespace OpenTK.Graphics.OpenGL
 
     public enum GetColorTableParameterPName
     {
+        ColorTableScale = ((int)0X80d6),
+        ColorTableBias = ((int)0X80d7),
+        ColorTableFormat = ((int)0X80d8),
+        ColorTableWidth = ((int)0X80d9),
+        ColorTableRedSize = ((int)0X80da),
+        ColorTableGreenSize = ((int)0X80db),
+        ColorTableBlueSize = ((int)0X80dc),
+        ColorTableAlphaSize = ((int)0X80dd),
+        ColorTableLuminanceSize = ((int)0X80de),
+        ColorTableIntensitySize = ((int)0X80df),
     }
 
     public enum GetColorTableParameterPNameSgi
@@ -6996,6 +7034,31 @@ namespace OpenTK.Graphics.OpenGL
         ConvolutionHeightExt = ((int)0X8019),
         MaxConvolutionWidthExt = ((int)0X801a),
         MaxConvolutionHeightExt = ((int)0X801b),
+    }
+
+    public enum GetConvolutionParameterPName
+    {
+        ConvolutionBorderMode = ((int)0X8013),
+        ConvolutionFilterScale = ((int)0X8014),
+        ConvolutionFilterBias = ((int)0X8015),
+        ConvolutionFormat = ((int)0X8017),
+        ConvolutionWidth = ((int)0X8018),
+        ConvolutionHeight = ((int)0X8019),
+        MaxConvolutionWidth = ((int)0X801a),
+        MaxConvolutionHeight = ((int)0X801b),
+        ConvolutionBorderColor = ((int)0X8154),
+    }
+
+    public enum GetHistogramParameterPName
+    {
+        HistogramWidth = ((int)0X8026),
+        HistogramFormat = ((int)0X8027),
+        HistogramRedSize = ((int)0X8028),
+        HistogramGreenSize = ((int)0X8029),
+        HistogramBlueSize = ((int)0X802a),
+        HistogramAlphaSize = ((int)0X802b),
+        HistogramLuminanceSize = ((int)0X802c),
+        HistogramSink = ((int)0X802d),
     }
 
     public enum GetHistogramParameterPNameExt
@@ -7025,6 +7088,12 @@ namespace OpenTK.Graphics.OpenGL
         Coeff = ((int)0X0a00),
         Order = ((int)0X0a01),
         Domain = ((int)0X0a02),
+    }
+
+    public enum GetMinmaxParameterPName
+    {
+        MinmaxFormat = ((int)0X802f),
+        MinmaxSink = ((int)0X8030),
     }
 
     public enum GetMinmaxParameterPNameExt
@@ -7719,6 +7788,12 @@ namespace OpenTK.Graphics.OpenGL
         FragmentShaderDerivativeHint = ((int)0X8b8b),
     }
 
+    public enum HistogramTarget
+    {
+        Histogram = ((int)0X8024),
+        ProxyHistogram = ((int)0X8025),
+    }
+
     public enum HistogramTargetExt
     {
         HistogramExt = ((int)0X8024),
@@ -8105,6 +8180,11 @@ namespace OpenTK.Graphics.OpenGL
         Point = ((int)0X1b00),
         Line = ((int)0X1b01),
         Fill = ((int)0X1b02),
+    }
+
+    public enum MinMaxTarget
+    {
+        Minmax = ((int)0X802e),
     }
 
     public enum MinmaxTargetExt
@@ -9378,6 +9458,11 @@ namespace OpenTK.Graphics.OpenGL
         Gl4Pass1Sgis = ((int)0X80a5),
         Gl4Pass2Sgis = ((int)0X80a6),
         Gl4Pass3Sgis = ((int)0X80a7),
+    }
+
+    public enum SeparableFilterTarget
+    {
+        Separable2D = ((int)0X8012),
     }
 
     public enum SeparableTargetExt
