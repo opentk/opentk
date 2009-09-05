@@ -316,6 +316,28 @@ namespace OpenTK
                 left.W * right.W - Vector3d.Dot(left.Xyz, right.Xyz));
         }
 
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="quaternion">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <param name="result">A new instance containing the result of the calculation.</param>
+        public static void Multiply(ref Quaterniond quaternion, ref double scale, out Quaterniond result)
+        {
+            result = new Quaterniond(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);
+        }
+
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="quaternion">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <returns>A new instance containing the result of the calculation.</returns>
+        public static Quaterniond Multiply(Quaterniond quaternion, double scale)
+        {
+            return new Quaterniond(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);
+        }
+
         #endregion
 
         #region Conjugate
@@ -538,6 +560,28 @@ namespace OpenTK
             left.Xyz = right.W * left.Xyz + left.W * right.Xyz + Vector3d.Cross(left.Xyz, right.Xyz);
             left.W = w;
             return left;
+        }
+
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="quaternion">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <returns>A new instance containing the result of the calculation.</returns>
+        public static Quaterniond operator *(Quaterniond quaternion, double scale)
+        {
+            return new Quaterniond(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);
+        }
+
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="quaternion">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <returns>A new instance containing the result of the calculation.</returns>
+        public static Quaterniond operator *(double scale, Quaterniond quaternion)
+        {
+            return new Quaterniond(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);
         }
 
         /// <summary>
