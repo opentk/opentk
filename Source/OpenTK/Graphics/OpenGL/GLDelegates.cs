@@ -1649,13 +1649,13 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void GetConvolutionFilterEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr image);
             internal static GetConvolutionFilterEXT glGetConvolutionFilterEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetConvolutionParameterfv(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.Version12Deprecated pname, [OutAttribute] Single* @params);
+            internal unsafe delegate void GetConvolutionParameterfv(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.GetConvolutionParameterPName pname, [OutAttribute] Single* @params);
             internal unsafe static GetConvolutionParameterfv glGetConvolutionParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetConvolutionParameterfvEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.ExtConvolution pname, [OutAttribute] Single* @params);
             internal unsafe static GetConvolutionParameterfvEXT glGetConvolutionParameterfvEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetConvolutionParameteriv(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.Version12Deprecated pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetConvolutionParameteriv(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.GetConvolutionParameterPName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetConvolutionParameteriv glGetConvolutionParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetConvolutionParameterivEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.ExtConvolution pname, [OutAttribute] Int32* @params);
@@ -1721,19 +1721,19 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate Int32 GetHandleARB(OpenTK.Graphics.OpenGL.ArbShaderObjects pname);
             internal static GetHandleARB glGetHandleARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetHistogram(OpenTK.Graphics.OpenGL.Version12Deprecated target, bool reset, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr values);
+            internal delegate void GetHistogram(OpenTK.Graphics.OpenGL.HistogramTarget target, bool reset, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr values);
             internal static GetHistogram glGetHistogram;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void GetHistogramEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, bool reset, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr values);
             internal static GetHistogramEXT glGetHistogramEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetHistogramParameterfv(OpenTK.Graphics.OpenGL.Version12Deprecated target, OpenTK.Graphics.OpenGL.Version12Deprecated pname, [OutAttribute] Single* @params);
+            internal unsafe delegate void GetHistogramParameterfv(OpenTK.Graphics.OpenGL.HistogramTarget target, OpenTK.Graphics.OpenGL.GetHistogramParameterPName pname, [OutAttribute] Single* @params);
             internal unsafe static GetHistogramParameterfv glGetHistogramParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetHistogramParameterfvEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, OpenTK.Graphics.OpenGL.ExtHistogram pname, [OutAttribute] Single* @params);
             internal unsafe static GetHistogramParameterfvEXT glGetHistogramParameterfvEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetHistogramParameteriv(OpenTK.Graphics.OpenGL.Version12Deprecated target, OpenTK.Graphics.OpenGL.Version12Deprecated pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetHistogramParameteriv(OpenTK.Graphics.OpenGL.HistogramTarget target, OpenTK.Graphics.OpenGL.GetHistogramParameterPName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetHistogramParameteriv glGetHistogramParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetHistogramParameterivEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, OpenTK.Graphics.OpenGL.ExtHistogram pname, [OutAttribute] Int32* @params);
@@ -1832,13 +1832,13 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void GetMinmaxEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, bool reset, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr values);
             internal static GetMinmaxEXT glGetMinmaxEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetMinmaxParameterfv(OpenTK.Graphics.OpenGL.Version12Deprecated target, OpenTK.Graphics.OpenGL.Version12Deprecated pname, [OutAttribute] Single* @params);
+            internal unsafe delegate void GetMinmaxParameterfv(OpenTK.Graphics.OpenGL.Version12Deprecated target, OpenTK.Graphics.OpenGL.GetMinmaxParameterPName pname, [OutAttribute] Single* @params);
             internal unsafe static GetMinmaxParameterfv glGetMinmaxParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetMinmaxParameterfvEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, OpenTK.Graphics.OpenGL.ExtHistogram pname, [OutAttribute] Single* @params);
             internal unsafe static GetMinmaxParameterfvEXT glGetMinmaxParameterfvEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetMinmaxParameteriv(OpenTK.Graphics.OpenGL.Version12Deprecated target, OpenTK.Graphics.OpenGL.Version12Deprecated pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetMinmaxParameteriv(OpenTK.Graphics.OpenGL.Version12Deprecated target, OpenTK.Graphics.OpenGL.GetMinmaxParameterPName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetMinmaxParameteriv glGetMinmaxParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetMinmaxParameterivEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, OpenTK.Graphics.OpenGL.ExtHistogram pname, [OutAttribute] Int32* @params);
@@ -2339,7 +2339,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void HintPGI(OpenTK.Graphics.OpenGL.PgiMiscHints target, Int32 mode);
             internal static HintPGI glHintPGI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void Histogram(OpenTK.Graphics.OpenGL.Version12Deprecated target, Int32 width, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, bool sink);
+            internal delegate void Histogram(OpenTK.Graphics.OpenGL.HistogramTarget target, Int32 width, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, bool sink);
             internal static Histogram glHistogram;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void HistogramEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, Int32 width, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, bool sink);
@@ -3854,7 +3854,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void RequestResidentProgramsNV(Int32 n, UInt32* programs);
             internal unsafe static RequestResidentProgramsNV glRequestResidentProgramsNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ResetHistogram(OpenTK.Graphics.OpenGL.Version12Deprecated target);
+            internal delegate void ResetHistogram(OpenTK.Graphics.OpenGL.HistogramTarget target);
             internal static ResetHistogram glResetHistogram;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ResetHistogramEXT(OpenTK.Graphics.OpenGL.ExtHistogram target);
