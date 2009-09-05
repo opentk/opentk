@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OpenTK Build script")]
+[assembly: AssemblyTitle("The Open Toolkit Library Build Script")]
 [assembly: AssemblyDescription("Cross-platform build script for OpenTK")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Build")]
-[assembly: AssemblyCopyright("Copyright ©  2006-2008 the OpenTK team")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("The Open Toolkit Library")]
+[assembly: AssemblyProduct("The Open Toolkit Library")]
+[assembly: AssemblyCopyright("Copyright ©  2006-2009 the Open Toolkit Library")]
+[assembly: AssemblyTrademark("OpenTK")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

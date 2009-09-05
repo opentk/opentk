@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OpenTK Examples")]
+[assembly: AssemblyTitle("The Open Toolkit Library Examples")]
 [assembly: AssemblyDescription("Examples showcasing OpenTK and OpenGL")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("The Open Toolkit Library")]
 [assembly: AssemblyProduct("The Open Toolkit Library")]
-[assembly: AssemblyCopyright("Copyright ©  2006-2009 the Open Toolkit team")]
+[assembly: AssemblyCopyright("Copyright ©  2006-2009 the Open Toolkit Library")]
 [assembly: AssemblyTrademark("OpenTK")]
 [assembly: AssemblyCulture("")]
 
