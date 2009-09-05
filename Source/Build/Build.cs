@@ -87,7 +87,8 @@ Assembly signing:
 
             RootPath = Directory.GetCurrentDirectory();
 
-            string sign_assembly = CheckKeyFile(keyfile) ? "SIGN_ASSEMBLY" : "";
+            //string sign_assembly = CheckKeyFile(keyfile) ? "SIGN_ASSEMBLY" : "";
+            string sign_assembly = CheckKeyFile(keyfile) ? @"<KeyFile>../../" + keyfile + @"</KeyFile>" : "";
 
             File.WriteAllText(bindings, String.Format(Resources.Generator, sign_assembly));
             File.WriteAllText(opentk, String.Format(Resources.OpenTK, sign_assembly));
