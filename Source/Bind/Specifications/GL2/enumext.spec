@@ -6277,7 +6277,7 @@ GetConvolutionParameterPName enum:
     MAX_CONVOLUTION_WIDTH               = 0x801A
     MAX_CONVOLUTION_HEIGHT              = 0x801B
     
-SeparableFilterTarget enum:
+SeparableTarget enum:
     SEPARABLE_2D                    = 0x8012 # 1 I
 
 EnableCap enum:
@@ -6286,7 +6286,7 @@ EnableCap enum:
     SEPARABLE_2D                          = 0x8012
     
 # Promoted from EXT_histogram
-MinMaxTarget enum:
+MinmaxTarget enum:
 	MINMAX = 0x802E
 
 GetMinmaxParameterPName enum:
