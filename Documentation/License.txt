@@ -26,7 +26,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 
-OpenTK.Compatibility offers the Tao namespace, which includes portions of the Tao Framework library. These portions are covered by the following license:
+OpenTK.Compatibility includes portions of the Tao Framework library (Tao.OpenGl, Tao.OpenAl and Tao.Platform.Windows.SimpleOpenGlControl). These portions are covered by the following license:
 
 Copyright ©2003-2007 Tao Framework Team
 http://www.taoframework.com

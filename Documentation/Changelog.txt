@@ -1,20 +1,109 @@
 [Legend: complete('+') | WIP('*') | missing('-')]
 
 ---------------------------
- OpenTK 0.9.8-1 -> 0.9.8-2
+ OpenTK 0.9.9-1 -> 0.9.9-2
 ---------------------------
-+ Bind
-    + Fixed handling of string arrays.
+
++ General
+    + Changed project layout.
+    + Bind project now relies on C# 3.0 / .Net 3.5.
+    + Removed OpenTK.Utilities project.
+    + Added OpenTK.Compatibility project.
+    + Added OpenTK.GLControl project.
+    + Improved build system.
+    + OpenTK can now be strongly-named.
     
++ Generator
+	+ Bind
+		+ Cleaned up using directives and removed unnecessary qualifiers.
+		+ Added support for specs in XML form.
+		+ Added OpenGL|ES and OpenCL specs in XML form.
+		+ Fixed handling of output paths in the ES generator.
+		+ Fixed several instances that ignored the generator settings.
+		+ Improved handling of pointer/reference overloads.
+		+ Ensured that methods are written in lexicographic order.
+	+ Converter
+		+ Added support for OpenGL|ES extensions.
+		+ Fixed several OpenGL|ES extensions from Nvidia that did not list parameter names.
+		+ Fixed several other corner cases in the conversion process.
+
 + OpenTK
+	+ Added support for signed assemblies.
+    + Fixed all documentation warnings.
+    + Moved DisplayDevice and DisplayResolution classes to the root OpenTK namespace.
+    + Audio
+		+ Moved OpenAL flat API to the OpenTK.Audio.OpenAL namespace.
+		+ Removed SoundData class and OpenAL overloads using this class.
+    + Build
+        + Prebuild.exe and the Prebuild.xml are now distributed as an embedded resources.
+        + Improved help and usage instructions.
+        + Added support for strong names.
+        + Removed obsolete build options and targets (nant, monodevelop 1, sharpdevelop 1).
+        + Split OpenTK into three distinct solution files: OpenTK, Generator and QuickStart.
+    + Compute
+		+ Fixed a TypeLoadException issue in the various handle wrappers that could result prevent OpenTK from loading.
+		+ OpenCL
+			+ Moved OpenCL flat API to the OpenTK.Compute.OpenCL namespace.
+			+ Regenerated the OpenCL using Bind.
+			+ Updated to the latest version of the specs.
+			+ Added missing 's' to 'CL.GetPlatformIDs'.
+	+ NativeWindow
+		+ New NativeWindow implementation of INativeWindow members.
+		+ Connected several internal INativeWindow events to the public NativeWindow interface.
+	+ GameWindow
+		+ Modified to inherit from NativeWindow.
+		+ Improved event handling.
+		+ Removed ExitAsync method. GameWindow must be closed by the thread it originated from.
     + Graphics
-        + Fixed wrappers for functions taking string arrays: TranformFeedbackVaryings, GetUniformIndices, GetShaderSource.
+		+ GraphicsContext
+			+ Refactored internal IGraphicsContext implementations to reduce code duplication.
+			+ GraphicsContext no longer accesses OpenGL or OpenGL|ES bindings directly and can work independently.
+			+ Added support for EGL context implementations.
+			+ Added GraphicsContextFlags.Embedded to GraphicsContext constructor, to allow creation of EGL contexts. Tested on the OpenGL|ES emulator from AMD.
+			+ Fixed NullReferenceException in GraphicsContext.CreateDummyContext.
+			+ Fixed potential KeyNotFoundException on X11.
+		+ OpenGL
+			+ Moved OpenGL flat API to the OpenTK.Graphics.OpenGL namespace.
+			+ Replaced all occurences of Version12 and Version12Deprecated enums with specific enums.
+			+ Cleaned up tokens for the ARB_imaging subset: EXT_convolution, EXT_histogram and SGI_color_table.
+			+ Added missing ColorAttachmenti tokens to ReadBufferMode.
+			+ Reduced duplication and improved initialization and extension loading code for OpenGL and OpenGL|ES.
+			+ Removed methods that rely on OpenGL version checks, such as GL.SupportsExtension(). Programs should use one of the documented ways of checking for OpenGL extension support (GL.GetString(StringName.Extensions) on versions <= 2.1 and GL.GetString(StringName.Extensions, n) on versions >= 3.0).
+			+ Removed GL.Load() and GL.LoadDelegate() methods.
+			+ Removed unnecessary [In] and [Out] attributes.
+		+ OpenGL|ES
+			+ Added support for OpenGL|ES extensions.
+			+ Regenerated the bindings using the latest version of Bind.
+			+ Removed unnecessary [In] and [Out] attributes.
+    + Input
+        + Removed deprecated code.
+        + Added more stubs for the static input classes.
+    + Math
+		+ Quaternions can now be scaled by scalars.
+		+ Cleaned up parameter names and ensured they match the documentation.
     + Platform
-        + X11XrandrDisplayDevice now ignores invalid resolutions returned by XRandR.
-        
+		+ Removed Utiilties.CreateWindowInfo method. Please use one of the platform-specific Utilities.Create[X11|Windows|Carbon|Dummy]WindowInfo methods.
+		+ Removed all deprecated methods from the Utilities class.
+		+ X11
+			+ Improved handling of invalid XRandR values reported by some drivers. This allows OpenTK to run on Xming.
+    
++ OpenTK.Compatibility
+	+ Added support for Tao.OpenGl, Tao.OpenAl and Tao.Platform.Windows.SimpleOpenGlControl (through OpenTK.GLControl).
+	+ Added old math API from OpenTK.Math.
+	+ Added old OpenGL API from OpenTK.Graphics.
+	+ Added old OpenAL API from OpenTK.Audio.
+	+ Added OpenTK.Graphics.TextPrinter.
+	+ Moved GDI+ bindings to this project.
+	+ TextPrinter
+		+ Reset TextureGen, TextureEnvMode and lighting before rendering text.
+	
++ OpenTK.GLControl
+	+ Moved to different project, to reduce reliance of core OpenTK on Windows.Forms.
+	+ Moved Windows.Forms-specific code from OpenTK.Platform.Utilities to OpenTK.GLControl.
+
 + OpenTK.Utilities
-    + TextPrinter
-        + Fixed handling of text color parameter in TextPrinter.Print().
+	+ Merged project into OpenTK.Compatibility.
+
 
 -------------------------
  OpenTK 0.9.9 -> 0.9.9-1
@@ -53,6 +142,22 @@
     + Graphics
         + Glu is now marked as obsolete.
         + Support for multisampled contexts (Windows-only at the moment).
+
+---------------------------
+ OpenTK 0.9.8-1 -> 0.9.8-2
+---------------------------
++ Bind
+    + Fixed handling of string arrays.
+    
++ OpenTK
+    + Graphics
+        + Fixed wrappers for functions taking string arrays: TranformFeedbackVaryings, GetUniformIndices, GetShaderSource.
+    + Platform
+        + X11XrandrDisplayDevice now ignores invalid resolutions returned by XRandR.
+        
++ OpenTK.Utilities
+    + TextPrinter
+        + Fixed handling of text color parameter in TextPrinter.Print().
 
 -------------------------
  OpenTK 0.9.8 -> 0.9.8-1
