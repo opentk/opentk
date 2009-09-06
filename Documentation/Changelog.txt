@@ -1,5 +1,14 @@
 [Legend: complete('+') | WIP('*') | missing('-')]
 
+
+----------------------------
+ OpenTK 0.9.9-2 -> 0.9.9-2b
+----------------------------
+
++ OpenTK
+    + Added AllowPartialTrustedCallers attribute.
+
+
 ---------------------------
  OpenTK 0.9.9-1 -> 0.9.9-2
 ---------------------------
