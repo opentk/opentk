@@ -230,8 +230,8 @@ Assembly signing:
         static void ApplyMonoDevelopWorkarounds(string solution)
         {
             File.WriteAllText(solution, File.ReadAllText(solution)
-                .Replace("AssemblyOriginatorKeyFile", "AssemblyKeyFile")
-                .Replace(@"..\", @"../"));
+                .Replace("AssemblyOriginatorKeyFile", "AssemblyKeyFile"));
+            //.Replace(@"..\", @"../")); // Causes problems in visual studio
         }
 
         static void DeleteDirectories(string root_path, string search)
