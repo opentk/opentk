@@ -47,19 +47,14 @@ Please visit http://www.opentk.com to report issues or request features.
 
 [Known issues]
 
-Mono 2.2 and 2.4 fail to compile this release (bug report: https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0, 2.4.2+ or use the precompiled binaries.
-
-OpenTK.Graphics.TextPrinter fails to render text with newlines or a layout rectangle on Mono. This is a Mono GDI+ bug.
-
-Example documentation may not show up correctly when running on Mono. This is a Mono issue with RTF parsing.
-
-Joystick input is not supported on Mac OS X at this time.
-
-OpenGL 3.0 is not supported on Mac OS X at this time.
-
-The new GameWindow implementation may not function correctly on Mac OS X.
-
-The new GraphicsContext  implementation may not function correctly on Mac OS X.
+* Mono 2.2 and 2.4 fail to compile this release (bug report: https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0, 2.4.2+ or use the precompiled binaries.
+* OpenTK.Graphics.TextPrinter fails to render text with newlines or a layout rectangle on Mono. This is a Mono GDI+ bug.
+* Example documentation may not show up correctly when running on Mono. This is a Mono issue with RTF parsing.
+* Joystick input is not supported on Mac OS X at this time.
+* OpenGL 3.0 is not supported on Mac OS X at this time.
+* The new GameWindow implementation may not function correctly on Mac OS X.
+* The new GraphicsContext  implementation may not function correctly on Mac OS X.
+* MonoDevelop fails to sign assemblies (bugs https://bugzilla.novell.com/show_bug.cgi?id=484752 and https://bugzilla.novell.com/show_bug.cgi?id=537063).
 
 
 
