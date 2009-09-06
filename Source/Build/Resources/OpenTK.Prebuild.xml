@@ -58,7 +58,6 @@
         <Match path="." pattern="*.cs" recurse="true"/>
         <Match path="." pattern="*.resx" recurse="true" buildAction="EmbeddedResource"/>
         <Match path="." pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
-        <Match path="../../" pattern="OpenTK.snk" buildAction="None" copyToOutput="Never"  />
       </Files>
 
     </Project>
@@ -83,7 +82,6 @@
         <Match path="." pattern="*.cs" recurse="true"/>
         <Match path="." pattern="*.resx" recurse="true" buildAction="EmbeddedResource"/>
         <Match path="Resources" pattern="*.*" buildAction="Content"/>
-        <Match path="../../" pattern="OpenTK.snk" buildAction="None" copyToOutput="Never"  />
       </Files>
 
     </Project>
@@ -120,7 +118,6 @@
         <Match path="." pattern="*.cs" recurse="true"/>
         <Match path="." pattern="*.resx" recurse="true" buildAction="EmbeddedResource"/>
         <Match path="." pattern="OpenTK.Compatibility.dll.config" buildAction="None" copyToOutput="Always"/>
-        <Match path="../../" pattern="OpenTK.snk" buildAction="None" copyToOutput="Never"  />
       </Files>
 
     </Project>
@@ -158,7 +155,6 @@
         <Match path="./Data" pattern="*.glsl" recurse="true" buildAction="None" copyToOutput="Always"/>
         <Match path="../OpenTK" pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
         <Match path="../OpenTK" pattern="OpenTK.Compatibility.dll.config" buildAction="None" copyToOutput="Always"/>
-        <Match path="../../" pattern="OpenTK.snk" buildAction="None" copyToOutput="Never"  />
       </Files>
 
     </Project>
@@ -190,7 +186,6 @@
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
-        <Match path="../../" pattern="OpenTK.snk" buildAction="None" copyToOutput="Never"  />
       </Files>
 
     </Project>
