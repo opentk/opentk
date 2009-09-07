@@ -100,6 +100,12 @@ namespace OpenTK.Graphics.OpenGL
         UnsignedIntSamplerCube = ((int)0X8dd4),
         UnsignedIntSampler1DArray = ((int)0X8dd6),
         UnsignedIntSampler2DArray = ((int)0X8dd7),
+        Sampler2DMultisample = ((int)0X9108),
+        IntSampler2DMultisample = ((int)0X9109),
+        UnsignedIntSampler2DMultisample = ((int)0X910a),
+        Sampler2DMultisampleArray = ((int)0X910b),
+        IntSampler2DMultisampleArray = ((int)0X910c),
+        UnsignedIntSampler2DMultisampleArray = ((int)0X910d),
     }
 
     public enum All
@@ -5720,6 +5726,7 @@ namespace OpenTK.Graphics.OpenGL
         PointSprite = ((int)0X8861),
         RasterizerDiscard = ((int)0X8c89),
         FramebufferSrgb = ((int)0X8Db9),
+        SampleMask = ((int)0X8e51),
     }
 
     public enum ErrorCode
@@ -7081,6 +7088,7 @@ namespace OpenTK.Graphics.OpenGL
         TransformFeedbackBufferStart = ((int)0X8c84),
         TransformFeedbackBufferSize = ((int)0X8c85),
         TransformFeedbackBufferBinding = ((int)0X8c8f),
+        SampleMaskValue = ((int)0X8e52),
     }
 
     public enum GetMapQuery
@@ -7100,6 +7108,11 @@ namespace OpenTK.Graphics.OpenGL
     {
         MinmaxFormatExt = ((int)0X802f),
         MinmaxSinkExt = ((int)0X8030),
+    }
+
+    public enum GetMultisamplePName
+    {
+        SamplePosition = ((int)0X8e50),
     }
 
     public enum GetPixelMap
@@ -7629,6 +7642,13 @@ namespace OpenTK.Graphics.OpenGL
         MaxColorAttachmentsExt = ((int)0X8cdf),
         MaxSamples = ((int)0X8D57),
         FramebufferSrgb = ((int)0X8Db9),
+        SampleMask = ((int)0X8e51),
+        MaxSampleMaskWords = ((int)0X8e59),
+        TextureBinding2DMultisample = ((int)0X9104),
+        TextureBinding2DMultisampleArray = ((int)0X9105),
+        MaxColorTextureSamples = ((int)0X910e),
+        MaxDepthTextureSamples = ((int)0X910f),
+        MaxIntegerSamples = ((int)0X9110),
     }
 
     public enum GetPointervPName
@@ -7735,6 +7755,8 @@ namespace OpenTK.Graphics.OpenGL
         TextureIntensityType = ((int)0X8c15),
         TextureDepthType = ((int)0X8c16),
         TextureSharedSize = ((int)0X8c3f),
+        TextureSamples = ((int)0X9106),
+        TextureFixedSampleLocations = ((int)0X9107),
     }
 
     public enum Gl3DfxMultisample
@@ -10396,6 +10418,16 @@ namespace OpenTK.Graphics.OpenGL
         ProxyTexture1DArray = ((int)0X8c19),
         Texture2DArray = ((int)0X8c1a),
         ProxyTexture2DArray = ((int)0X8c1b),
+        Texture2DMultisample = ((int)0X9100),
+        Texture2DMultisampleArray = ((int)0X9102),
+    }
+
+    public enum TextureTargetMultisample
+    {
+        Texture2DMultisample = ((int)0X9100),
+        ProxyTexture2DMultisample = ((int)0X9101),
+        Texture2DMultisampleArray = ((int)0X9102),
+        ProxyTexture2DMultisampleArray = ((int)0X9103),
     }
 
     public enum TextureUnit
