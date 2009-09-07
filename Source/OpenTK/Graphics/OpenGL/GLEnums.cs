@@ -5417,6 +5417,7 @@ namespace OpenTK.Graphics.OpenGL
         Float = ((int)0X1406),
         Double = ((int)0X140a),
         HalfFloat = ((int)0X140b),
+        Bgra = ((int)0X80e1),
     }
 
     public enum ColorTableParameterPName
@@ -5731,6 +5732,8 @@ namespace OpenTK.Graphics.OpenGL
         ProgramPointSize = ((int)0X8642),
         VertexProgramPointSize = ((int)0X8642),
         VertexProgramTwoSide = ((int)0X8643),
+        DepthClamp = ((int)0X864f),
+        TextureCubeMapSeamless = ((int)0X884f),
         PointSprite = ((int)0X8861),
         RasterizerDiscard = ((int)0X8c89),
         FramebufferSrgb = ((int)0X8Db9),
@@ -7570,6 +7573,7 @@ namespace OpenTK.Graphics.OpenGL
         UnpackSubsampleRateSgix = ((int)0X85a1),
         VertexArrayBinding = ((int)0X85b5),
         ProgramPointSize = ((int)0X8642),
+        DepthClamp = ((int)0X864f),
         NumCompressedTextureFormats = ((int)0X86a2),
         CompressedTextureFormats = ((int)0X86a3),
         StencilBackFunc = ((int)0X8800),
@@ -7595,6 +7599,7 @@ namespace OpenTK.Graphics.OpenGL
         DrawBuffer14 = ((int)0X8833),
         DrawBuffer15 = ((int)0X8834),
         BlendEquationAlpha = ((int)0X883d),
+        TextureCubeMapSeamless = ((int)0X884f),
         PointSprite = ((int)0X8861),
         MaxVertexAttribs = ((int)0X8869),
         MaxTextureCoords = ((int)0X8871),
@@ -7661,6 +7666,8 @@ namespace OpenTK.Graphics.OpenGL
         MaxGeometryUniformComponents = ((int)0X8ddf),
         MaxGeometryOutputVertices = ((int)0X8de0),
         MaxGeometryTotalOutputComponents = ((int)0X8de1),
+        QuadsFollowProvokingVertexConvention = ((int)0X8e4c),
+        ProvokingVertex = ((int)0X8e4f),
         SampleMask = ((int)0X8e51),
         MaxSampleMaskWords = ((int)0X8e59),
         TextureBinding2DMultisample = ((int)0X9104),
@@ -9327,6 +9334,12 @@ namespace OpenTK.Graphics.OpenGL
         GeometryVerticesOut = ((int)0X8dda),
         GeometryInputType = ((int)0X8ddb),
         GeometryOutputType = ((int)0X8ddc),
+    }
+
+    public enum ProvokingVertexMode
+    {
+        FirstVertexConvention = ((int)0X8e4d),
+        LastVertexConvention = ((int)0X8e4e),
     }
 
     public enum QueryTarget
@@ -11907,6 +11920,7 @@ namespace OpenTK.Graphics.OpenGL
         Float = ((int)0X1406),
         Double = ((int)0X140a),
         HalfFloat = ((int)0X140b),
+        Bgra = ((int)0X80e1),
     }
 
     public enum VertexAttribPointerTypeArb

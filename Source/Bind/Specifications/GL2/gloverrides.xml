@@ -283,7 +283,26 @@
     <param name="pname"><type>GetMultisamplePName</type></param>
   </function>
 
+  <function name="ProvokingVertex" extension="Core">
+    <param name="mode"><type>ProvokingVertexMode</type></param>
+  </function>
+
+  <function name="DrawElementsBaseVertex" extension="Core">
+    <param name="mode"><type>BeginMode</type></param>
+  </function>
  
+  <function name="DrawRangeElementsBaseVertex" extension="Core">
+    <param name="mode"><type>BeginMode</type></param>
+  </function>
+
+  <function name="DrawElementsInstancedBaseVertex" extension="Core">
+    <param name="mode"><type>BeginMode</type></param>
+  </function>
+  
+  <function name="MultiDrawElementsBaseVertex" extension="Core">
+    <param name="mode"><type>BeginMode</type></param>
+  </function>
+  
   <!-- Arb -->
 
   <function name="VertexAttribPointer" extension="Arb">
