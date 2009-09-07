@@ -7797,7 +7797,7 @@ ErrorCode enum:
 	
 # Version 3.2
 
-# Tokens promoted from ARB_texture_multisample
+# ARB_texture_multisample tokens
 # http://www.opengl.org/registry/specs/ARB/texture_multisample.txt
 
 TextureTargetMultisample enum:
@@ -7840,7 +7840,7 @@ ActiveUniformType enum:
 	INT_SAMPLER_2D_MULTISAMPLE_ARRAY = 0x910C
 	UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY = 0x910D
 
-# Tokens promoted from ARB_geometry_shader4
+# ARB_geometry_shader4 tokens
 # http://www.opengl.org/registry/specs/ARB/geometry_shader4.txt
 
 ShaderType enum:
@@ -7879,5 +7879,45 @@ EnableCap enum:
 	
 GetPName enum:
 	PROGRAM_POINT_SIZE = 0x8642
+	
+# ARB_depth_clamp tokens
+# http://www.opengl.org/registry/specs/ARB/depth_clamp.txt
+
+EnableCap enum:
+	DEPTH_CLAMP = 0x864F
+
+GetPName enum:
+	DEPTH_CLAMP = 0x864F
+
+# ARB_vertex_array_bgra tokens
+# http://www.opengl.org/registry/specs/ARB/vertex_array_bgra.txt
+
+ColorPointerType enum:
+	BGRA = 0x80E1
+
+VertexAttribPointerType enum:
+	BGRA = 0x80E1
+
+# ARB_seamless_cube_map tokens
+# http://www.opengl.org/registry/specs/ARB/seamless_cube_map.txt
+EnableCap enum:
+	TEXTURE_CUBE_MAP_SEAMLESS = 0x884F
+
+GetPName enum:
+	TEXTURE_CUBE_MAP_SEAMLESS = 0x884F
+
+# ARB_provoking_vertex tokens
+# http://www.opengl.org/registry/specs/ARB/provoking_vertex.txt
+
+ProvokingVertexMode enum:
+	FIRST_VERTEX_CONVENTION = 0x8E4D
+	LAST_VERTEX_CONVENTION = 0x8E4E
+
+GetPName enum:
+	PROVOKING_VERTEX = 0x8E4F
+	QUADS_FOLLOW_PROVOKING_VERTEX_CONVENTION = 0x8E4C
+
+# ARB_draw_elements_base_vertex tokens
+# http://www.opengl.org/registry/specs/ARB/draw_elements_base_vertex.txt
 
 # End (don't remove, or the last token may be removed!)
