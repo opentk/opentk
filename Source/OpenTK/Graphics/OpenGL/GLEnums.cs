@@ -3413,6 +3413,7 @@ namespace OpenTK.Graphics.OpenGL
         FramebufferIncompleteLayerTargets = ((int)0X8da8),
         FramebufferIncompleteLayerTargetsArb = ((int)0X8da8),
         FramebufferIncompleteLayerTargetsExt = ((int)0X8da8),
+        FramebufferIncompleteLayerCount = ((int)0X8da9),
         FramebufferIncompleteLayerCountArb = ((int)0X8da9),
         FramebufferIncompleteLayerCountExt = ((int)0X8da9),
         DepthComponent32fNv = ((int)0X8dab),
@@ -3490,8 +3491,10 @@ namespace OpenTK.Graphics.OpenGL
         GeometryInputTypeExt = ((int)0X8ddb),
         GeometryOutputTypeArb = ((int)0X8ddc),
         GeometryOutputTypeExt = ((int)0X8ddc),
+        MaxGeometryVaryingComponents = ((int)0X8ddd),
         MaxGeometryVaryingComponentsArb = ((int)0X8ddd),
         MaxGeometryVaryingComponentsExt = ((int)0X8ddd),
+        MaxVertexVaryingComponents = ((int)0X8dde),
         MaxVertexVaryingComponentsArb = ((int)0X8dde),
         MaxVertexVaryingComponentsExt = ((int)0X8dde),
         MaxGeometryUniformComponents = ((int)0X8ddf),
@@ -5155,6 +5158,10 @@ namespace OpenTK.Graphics.OpenGL
         Quads = ((int)0X0007),
         QuadStrip = ((int)0X0008),
         Polygon = ((int)0X0009),
+        LinesAdjacency = ((int)0Xa),
+        LineStripAdjacency = ((int)0Xb),
+        TrianglesAdjacency = ((int)0Xc),
+        TriangleStripAdjacency = ((int)0Xd),
     }
 
     public enum BlendEquationMode
@@ -5721,6 +5728,7 @@ namespace OpenTK.Graphics.OpenGL
         ColorSum = ((int)0X8458),
         SecondaryColorArray = ((int)0X845e),
         TextureCubeMap = ((int)0X8513),
+        ProgramPointSize = ((int)0X8642),
         VertexProgramPointSize = ((int)0X8642),
         VertexProgramTwoSide = ((int)0X8643),
         PointSprite = ((int)0X8861),
@@ -6957,6 +6965,8 @@ namespace OpenTK.Graphics.OpenGL
         FramebufferUnsupported = ((int)0X8cdd),
         FramebufferUnsupportedExt = ((int)0X8cdd),
         FramebufferIncompleteMultisample = ((int)0X8D56),
+        FramebufferIncompleteLayerTargets = ((int)0X8da8),
+        FramebufferIncompleteLayerCount = ((int)0X8da9),
     }
 
     public enum FramebufferParameterName
@@ -6979,6 +6989,7 @@ namespace OpenTK.Graphics.OpenGL
         FramebufferAttachmentTextureCubeMapFaceExt = ((int)0X8cd3),
         FramebufferAttachmentTexture3DZoffsetExt = ((int)0X8cd4),
         FramebufferAttachmentTextureLayer = ((int)0X8cd4),
+        FramebufferAttachmentLayered = ((int)0X8da7),
     }
 
     public enum FramebufferTarget
@@ -7558,6 +7569,7 @@ namespace OpenTK.Graphics.OpenGL
         PackSubsampleRateSgix = ((int)0X85a0),
         UnpackSubsampleRateSgix = ((int)0X85a1),
         VertexArrayBinding = ((int)0X85b5),
+        ProgramPointSize = ((int)0X8642),
         NumCompressedTextureFormats = ((int)0X86a2),
         CompressedTextureFormats = ((int)0X86a3),
         StencilBackFunc = ((int)0X8800),
@@ -7619,6 +7631,7 @@ namespace OpenTK.Graphics.OpenGL
         UniformBufferOffsetAlignment = ((int)0X8a34),
         MaxFragmentUniformComponents = ((int)0X8b49),
         MaxVertexUniformComponents = ((int)0X8b4a),
+        MaxVaryingComponents = ((int)0X8b4b),
         MaxVaryingFloats = ((int)0X8b4b),
         MaxVertexTextureImageUnits = ((int)0X8b4c),
         MaxCombinedTextureImageUnits = ((int)0X8b4d),
@@ -7626,6 +7639,7 @@ namespace OpenTK.Graphics.OpenGL
         CurrentProgram = ((int)0X8b8d),
         TextureBinding1DArray = ((int)0X8c1c),
         TextureBinding2DArray = ((int)0X8c1d),
+        MaxGeometryTextureImageUnits = ((int)0X8c29),
         MaxTransformFeedbackSeparateComponents = ((int)0X8c80),
         MaxTransformFeedbackInterleavedComponents = ((int)0X8c8a),
         MaxTransformFeedbackSeparateAttribs = ((int)0X8c8b),
@@ -7642,6 +7656,11 @@ namespace OpenTK.Graphics.OpenGL
         MaxColorAttachmentsExt = ((int)0X8cdf),
         MaxSamples = ((int)0X8D57),
         FramebufferSrgb = ((int)0X8Db9),
+        MaxGeometryVaryingComponents = ((int)0X8ddd),
+        MaxVertexVaryingComponents = ((int)0X8dde),
+        MaxGeometryUniformComponents = ((int)0X8ddf),
+        MaxGeometryOutputVertices = ((int)0X8de0),
+        MaxGeometryTotalOutputComponents = ((int)0X8de1),
         SampleMask = ((int)0X8e51),
         MaxSampleMaskWords = ((int)0X8e59),
         TextureBinding2DMultisample = ((int)0X9104),
@@ -9305,6 +9324,9 @@ namespace OpenTK.Graphics.OpenGL
         TransformFeedbackVaryingMaxLength = ((int)0X8c76),
         TransformFeedbackBufferMode = ((int)0X8c7f),
         TransformFeedbackVaryings = ((int)0X8c83),
+        GeometryVerticesOut = ((int)0X8dda),
+        GeometryInputType = ((int)0X8ddb),
+        GeometryOutputType = ((int)0X8ddc),
     }
 
     public enum QueryTarget
@@ -9991,6 +10013,7 @@ namespace OpenTK.Graphics.OpenGL
     {
         FragmentShader = ((int)0X8b30),
         VertexShader = ((int)0X8b31),
+        GeometryShader = ((int)0X8dd9),
         GeometryShaderExt = ((int)0X8dd9),
     }
 
