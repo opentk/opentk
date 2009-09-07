@@ -261,6 +261,12 @@ namespace Bind.GL2
                             c.Reference = words[1];
                             c.Value = words[2];
                         }
+                        else
+                        {
+                            // Typical cause is hand-editing the specs and forgetting to add an '=' sign.
+                            throw new InvalidOperationException(String.Format(
+                                "[Error] Invalid constant definition: \"{0}\"", line));
+                        }
 
                         //if (!String.IsNullOrEmpty(c.Name) && !e.Members.Contains.Contains(c))
                         //SpecTranslator.Merge(e.Members, c);
