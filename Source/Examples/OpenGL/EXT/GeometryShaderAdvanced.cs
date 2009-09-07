@@ -82,6 +82,13 @@ namespace Examples.Tutorial
         {
             public Vector3 Position, Normal;
             public Vector2 Texture;
+            
+            public VertexPositionNormalTexture(Vector3 position, Vector3 normal, Vector2 texture)
+            {
+                Position = position;
+                Normal = normal;
+                Texture = texture;
+            }
         }
 
         #region Fields
@@ -1015,7 +1022,7 @@ namespace Examples.Tutorial
 
         static VertexPositionNormalTexture[] CalculateSphereVertices(float radius, float height, byte segments, byte rings)
         {
-            var data = new VertexPositionNormalTexture[segments * rings];
+            VertexPositionNormalTexture[] data = new VertexPositionNormalTexture[segments * rings];
 
             int i = 0;
 
@@ -1026,20 +1033,16 @@ namespace Examples.Tutorial
                 {
                     double theta = (x / (segments - 1)) * 2 * Math.PI;
 
-                    Vector3 v = new Vector3()
-                    {
-                        X = (float)(radius * Math.Sin(phi) * Math.Cos(theta)),
-                        Y = (float)(height * Math.Cos(phi)),
-                        Z = (float)(radius * Math.Sin(phi) * Math.Sin(theta)),
-                    };
+                    Vector3 v = new Vector3(
+                        (float)(radius * Math.Sin(phi) * Math.Cos(theta)),
+                        (float)(height * Math.Cos(phi)),
+                        (float)(radius * Math.Sin(phi) * Math.Sin(theta)));
                     Vector3 n = Vector3.Normalize(v);
-                    Vector2 uv = new Vector2()
-                    {
-                        X = (float)(x / (segments - 1)),
-                        Y = (float)(y / (rings - 1))
-                    };
+                    Vector2 uv = new Vector2(
+                        (float)(x / (segments - 1)),
+                        (float)(y / (rings - 1)));
                     // Using data[i++] causes i to be incremented multiple times in Mono 2.2 (bug #479506).
-                    data[i] = new VertexPositionNormalTexture() { Position = v, Normal = n, Texture = uv };
+                    data[i] = new VertexPositionNormalTexture(v, n, uv);
                     i++;
                 }
 
@@ -1050,8 +1053,8 @@ namespace Examples.Tutorial
 
         static ushort[] CalculateSphereElements(float radius, float height, byte segments, byte rings)
         {
-            var num_vertices = segments * rings;
-            var data = new ushort[num_vertices * 6];
+            int num_vertices = segments * rings;
+            ushort[] data = new ushort[num_vertices * 6];
 
             ushort i = 0;
 
