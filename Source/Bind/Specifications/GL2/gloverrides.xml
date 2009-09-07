@@ -267,6 +267,23 @@
     <param name="internalformat"><type>SizedInternalFormat</type></param>
   </function>
   
+  <!-- Version 3.2 -->
+  
+  <function name="TexImage2DMultisample" extension="Core">
+    <param name="target"><type>TextureTargetMultisample</type></param>
+    <param name="internalformat"><type>PixelInternalFormat</type></param>
+  </function>
+  
+  <function name="TexImage3DMultisample" extension="Core">
+    <param name="target"><type>TextureTargetMultisample</type></param>
+    <param name="internalformat"><type>PixelInternalFormat</type></param>
+  </function>
+
+  <function name="GetMultisample" extension="Core">
+    <param name="pname"><type>GetMultisamplePName</type></param>
+  </function>
+
+ 
   <!-- Arb -->
 
   <function name="VertexAttribPointer" extension="Arb">

@@ -1844,7 +1844,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetMinmaxParameterivEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, OpenTK.Graphics.OpenGL.ExtHistogram pname, [OutAttribute] Int32* @params);
             internal unsafe static GetMinmaxParameterivEXT glGetMinmaxParameterivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetMultisamplefv(OpenTK.Graphics.OpenGL.ArbTextureMultisample pname, UInt32 index, [OutAttribute] Single* val);
+            internal unsafe delegate void GetMultisamplefv(OpenTK.Graphics.OpenGL.GetMultisamplePName pname, UInt32 index, [OutAttribute] Single* val);
             internal unsafe static GetMultisamplefv glGetMultisamplefv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetMultisamplefvNV(OpenTK.Graphics.OpenGL.NvExplicitMultisample pname, UInt32 index, [OutAttribute] Single* val);
@@ -4406,7 +4406,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void TexImage2D(OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
             internal static TexImage2D glTexImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexImage2DMultisample(OpenTK.Graphics.OpenGL.ArbTextureMultisample target, Int32 samples, Int32 internalformat, Int32 width, Int32 height, bool fixedsamplelocations);
+            internal delegate void TexImage2DMultisample(OpenTK.Graphics.OpenGL.TextureTargetMultisample target, Int32 samples, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, bool fixedsamplelocations);
             internal static TexImage2DMultisample glTexImage2DMultisample;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexImage3D(OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
@@ -4415,7 +4415,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void TexImage3DEXT(OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
             internal static TexImage3DEXT glTexImage3DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexImage3DMultisample(OpenTK.Graphics.OpenGL.ArbTextureMultisample target, Int32 samples, Int32 internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
+            internal delegate void TexImage3DMultisample(OpenTK.Graphics.OpenGL.TextureTargetMultisample target, Int32 samples, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
             internal static TexImage3DMultisample glTexImage3DMultisample;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexImage4DSGIS(OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 size4d, Int32 border, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
