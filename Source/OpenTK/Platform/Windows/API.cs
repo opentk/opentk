@@ -96,8 +96,6 @@ namespace OpenTK.Platform.Windows
 
     internal static class Functions
     {
-        #region --- Functions ---
-
         #region Window functions
 
         #region SetWindowPos
@@ -810,6 +808,9 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        [DllImport("user32.dll")]
+        public static extern bool IsWindowVisisble(IntPtr intPtr);
+
         #endregion
 
         #region Display settings
@@ -1380,8 +1381,6 @@ namespace OpenTK.Platform.Windows
 
         [DllImport("gdi32.dll", SetLastError = true)]
         internal static extern IntPtr GetStockObject(int index);
-
-        #endregion
 
         #endregion
 
