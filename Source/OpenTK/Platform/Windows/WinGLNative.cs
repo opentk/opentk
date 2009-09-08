@@ -714,9 +714,6 @@ namespace OpenTK.Platform.Windows
 
         #region Visible
 
-        /// <summary>
-        /// TODO
-        /// </summary>
         public bool Visible
         {
             get
