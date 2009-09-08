@@ -154,10 +154,11 @@ namespace OpenTK.Platform.Windows
         GraphicsMode SelectGraphicsModeARB(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum,
             int buffers, bool stereo)
         {
-            using (Control native_window = new Control())
-            using (WinWindowInfo window = new WinWindowInfo(native_window.Handle, null))
-            using (WinGLContext context = new WinGLContext(new GraphicsMode(new ColorFormat(), 0, 0, 0, new ColorFormat(), 2, false), window, null, 1, 0, GraphicsContextFlags.Default))
+            using (INativeWindow native_window = new NativeWindow())
+            using (IGraphicsContext context = new GraphicsContext(new GraphicsMode(new ColorFormat(), 0, 0, 0, new ColorFormat(), 2, false), native_window.WindowInfo, 1, 0, GraphicsContextFlags.Default))
             {
+                WinWindowInfo window = (WinWindowInfo)native_window.WindowInfo;
+
                 Debug.Write("Selecting pixel format (ARB)... ");
                 if (Wgl.Delegates.wglChoosePixelFormatARB == null || Wgl.Delegates.wglGetPixelFormatAttribivARB == null)
                 {
