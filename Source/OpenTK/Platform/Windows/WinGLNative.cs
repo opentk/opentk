@@ -52,7 +52,6 @@ namespace OpenTK.Platform.Windows
         readonly WindowProcedure WindowProcedureDelegate;
 
         bool class_registered;
-        bool visible = true;
         bool disposed;
         bool exists;
         WinWindowInfo window, child_window;
@@ -462,14 +461,20 @@ namespace OpenTK.Platform.Windows
             // Use win32 to create the native window.
             // Keep in mind that some construction code runs in the WM_CREATE message handler.
 
-            WindowStyle style =
-                WindowStyle.Visible |
-                (parentHandle == IntPtr.Zero ?
-                WindowStyle.OverlappedWindow | WindowStyle.ClipChildren :
-                WindowStyle.Child | WindowStyle.ClipSiblings);
-
-            ExtendedWindowStyle ex_style =
-                (parentHandle == IntPtr.Zero ? ParentStyleEx : ChildStyleEx);
+            // The style of a parent window is different than that of a child window.
+            // Note: the child window should always be visible, even if the parent isn't.
+            WindowStyle style = 0;
+            ExtendedWindowStyle ex_style = 0;
+            if (parentHandle == IntPtr.Zero)
+            {
+                style |= WindowStyle.OverlappedWindow | WindowStyle.ClipChildren;
+                ex_style = ParentStyleEx;
+            }
+            else
+            {
+                style |= WindowStyle.Visible | WindowStyle.Child | WindowStyle.ClipSiblings;
+                ex_style = ChildStyleEx;
+            }
 
             // Find out the final window rectangle, after the WM has added its chrome (titlebar, sidebars etc).
             Rectangle rect = new Rectangle();
@@ -716,19 +721,17 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                return visible;
+                return Functions.IsWindowVisisble(window.WindowHandle);
             }
             set
             {
-                if (value && !Visible)
+                if (value)
                 {
                     Functions.ShowWindow(window.WindowHandle, ShowWindowCommand.SHOWNORMAL);
-                    visible = true;
                 }
-                else if (!value && Visible)
+                else if (!value)
                 {
                     Functions.ShowWindow(window.WindowHandle, ShowWindowCommand.HIDE);
-                    visible = false;
                 }
             }
         }
