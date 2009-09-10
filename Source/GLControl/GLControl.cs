@@ -325,6 +325,18 @@ namespace OpenTK
 
         #endregion
 
+        #region WindowInfo
+
+        /// <summary>
+        /// Gets the <see cref="OpenTK.Platform.IWindowInfo"/> for this instance.
+        /// </summary>
+        public IWindowInfo WindowInfo
+        {
+            get { return implementation.WindowInfo; }
+        }
+        
+        #endregion
+
         #region public Bitmap GrabScreenshot()
 
         /// <summary>Grabs a screenshot of the frontbuffer contents.</summary>
