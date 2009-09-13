@@ -132,8 +132,6 @@ namespace OpenTK.Platform.X11
             catch (ArgumentException e)
             {
                 Debug.Print("Exception while creating keymap: '{0}'.", e.ToString());
-                System.Windows.Forms.MessageBox.Show(
-                    String.Format("Exception while creating keymap: '{0}'.", e.ToString()));
             }
         }
     }
