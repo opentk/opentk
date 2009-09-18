@@ -50,6 +50,7 @@ namespace OpenTK
         GraphicsMode format;
         int major, minor;
         GraphicsContextFlags flags;
+        bool? initial_vsync_value;
 
         #region --- Constructors ---
 
@@ -111,11 +112,11 @@ namespace OpenTK
 
             if (!IsHandleCreated)
                 CreateControl();
-            
+
             if (implementation == null || context == null || context.IsDisposed)
                 RecreateHandle();
         }
-        
+
         #endregion
 
         #region --- Protected Methods ---
@@ -129,7 +130,7 @@ namespace OpenTK
 
             if (implementation != null)
                 implementation.WindowInfo.Dispose();
-            
+
             if (DesignMode)
                 implementation = new DummyGLControl();
             else
@@ -140,6 +141,13 @@ namespace OpenTK
 
             if (!DesignMode)
                 ((IGraphicsContextInternal)Context).LoadAll();
+
+            // Deferred setting of vsync mode. See VSync property for more information.
+            if (initial_vsync_value.HasValue)
+            {
+                Context.VSync = initial_vsync_value.Value;
+                initial_vsync_value = null;
+            }
 
             base.OnHandleCreated(e);
         }
@@ -159,7 +167,7 @@ namespace OpenTK
                 implementation.WindowInfo.Dispose();
                 implementation = null;
             }
-                
+
             base.OnHandleDestroyed(e);
         }
 
@@ -170,7 +178,7 @@ namespace OpenTK
         protected override void OnPaint(PaintEventArgs e)
         {
             ValidateState();
-            
+
             if (DesignMode)
                 e.Graphics.Clear(BackColor);
 
@@ -294,11 +302,24 @@ namespace OpenTK
         {
             get
             {
+                if (!IsHandleCreated)
+                    return false;
+
                 ValidateState();
                 return Context.VSync;
             }
             set
             {
+                // The winforms designer sets this to false by default which forces control creation.
+                // However, events are typically connected after the VSync = false assignment, which
+                // can lead to "event xyz is not fired" issues.
+                // Work around this issue by deferring VSync mode setting to the HandleCreated event.
+                if (!IsHandleCreated)
+                {
+                    initial_vsync_value = value;
+                    return;
+                }
+
                 ValidateState();
                 Context.VSync = value;
             }
@@ -348,7 +369,7 @@ namespace OpenTK
         public Bitmap GrabScreenshot()
         {
             ValidateState();
-            
+
             Bitmap bmp = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
             System.Drawing.Imaging.BitmapData data =
                 bmp.LockBits(this.ClientRectangle, System.Drawing.Imaging.ImageLockMode.WriteOnly,
