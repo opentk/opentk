@@ -718,7 +718,7 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                return Functions.IsWindowVisisble(window.WindowHandle);
+                return Functions.IsWindowVisible(window.WindowHandle);
             }
             set
             {

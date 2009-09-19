@@ -809,7 +809,7 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         [DllImport("user32.dll")]
-        public static extern bool IsWindowVisisble(IntPtr intPtr);
+        public static extern bool IsWindowVisible(IntPtr intPtr);
 
         #endregion
 
