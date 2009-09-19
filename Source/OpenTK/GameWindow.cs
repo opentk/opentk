@@ -379,6 +379,7 @@ namespace OpenTK
                 update_watch.Reset();
                 render_watch.Reset();
 
+                Visible = true;   // Make sure the GameWindow is visible.
                 OnLoadInternal(EventArgs.Empty);
 
                 Debug.Print("Entering main loop.");
