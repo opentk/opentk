@@ -17,7 +17,8 @@ using OpenTK.Graphics;
 namespace OpenTK.Platform.X11
 {
     class X11GraphicsMode : IGraphicsMode
-    {        // Todo: Add custom visual selection algorithm, instead of ChooseFBConfig/ChooseVisual.
+    {
+        // Todo: Add custom visual selection algorithm, instead of ChooseFBConfig/ChooseVisual.
         // It seems the Choose* methods do not take multisampling into account (at least on some
         // drivers).
         
@@ -159,13 +160,14 @@ namespace OpenTK.Platform.X11
 
             // Select a visual that matches the parameters set by the user.
             IntPtr display = API.DefaultDisplay;
-
-            int screen = Functions.XDefaultScreen(display);
-            IntPtr root = Functions.XRootWindow(display, screen);
-            Debug.Print("Display: {0}, Screen: {1}, RootWindow: {2}", display, screen, root);
-
             try
             {
+                Functions.XLockDisplay(display);
+    
+                int screen = Functions.XDefaultScreen(display);
+                IntPtr root = Functions.XRootWindow(display, screen);
+                Debug.Print("Display: {0}, Screen: {1}, RootWindow: {2}", display, screen, root);
+
                 unsafe
                 {
                     Debug.Print("Getting FB config.");
@@ -184,6 +186,10 @@ namespace OpenTK.Platform.X11
             {
                 Debug.Print("Function glXChooseFBConfig not supported.");
                 return IntPtr.Zero;
+            }
+            finally
+            {
+                Functions.XUnlockDisplay(display);
             }
 
             return visual;
@@ -255,7 +261,15 @@ namespace OpenTK.Platform.X11
 
             Debug.Print("Falling back to glXChooseVisual.");
             IntPtr display = API.DefaultDisplay;
-            return Glx.ChooseVisual(display, Functions.XDefaultScreen(display), visualAttributes.ToArray());
+            try
+            {
+                Functions.XLockDisplay(display);
+                return Glx.ChooseVisual(display, Functions.XDefaultScreen(display), visualAttributes.ToArray());
+            }
+            finally
+            {
+                Functions.XUnlockDisplay(display);
+            }
         }
 
         #endregion
