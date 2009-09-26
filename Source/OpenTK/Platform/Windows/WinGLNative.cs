@@ -80,6 +80,8 @@ namespace OpenTK.Platform.Windows
         const long ExtendedBit = 1 << 24;           // Used to distinguish left and right control, alt and enter keys.
         static readonly uint ShiftRightScanCode = Functions.MapVirtualKey(VirtualKeys.RSHIFT, 0);         // Used to distinguish left and right shift keys.
 
+        KeyPressEventArgs key_press = new KeyPressEventArgs((char)0);
+
         #endregion
 
         #region Contructors
@@ -216,6 +218,16 @@ namespace OpenTK.Platform.Windows
                 #endregion
 
                 #region Input events
+
+                case WindowMessage.CHAR:
+                    if (IntPtr.Size == 4)
+                        key_press.KeyChar = (char)wParam.ToInt32();
+                    else
+                        key_press.KeyChar = (char)wParam.ToInt64();
+                    
+                    if (KeyPress != null)
+                        KeyPress(this, key_press);
+                    break;
 
                 //case WindowMessage.MOUSELEAVE:
                 //    Cursor.Current = Cursors.Default;
