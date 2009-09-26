@@ -52,7 +52,7 @@ namespace OpenTK
         public char KeyChar
         {
             get { return key_char; }
-            private set { key_char = value; }
+            internal set { key_char = value; }
         }
     }
 }
