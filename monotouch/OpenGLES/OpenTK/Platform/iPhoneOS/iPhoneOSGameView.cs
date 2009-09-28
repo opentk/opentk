@@ -97,7 +97,6 @@ namespace OpenTK.Platform.iPhoneOS
     public class iPhoneOSGameView : UIView, IGameWindow
     {
         bool disposed;
-        bool hasBeenCurrent;
 
         int framebuffer, renderbuffer;
 
@@ -416,13 +415,8 @@ namespace OpenTK.Platform.iPhoneOS
                     (int) Math.Round(eaglLayer.Bounds.Size.Height));
             Size = newSize;
 
-            if (!hasBeenCurrent) {
-                gl.Viewport(0, 0, newSize.Width, newSize.Height);
-                gl.Scissor(0, 0, newSize.Width, newSize.Height);
-                hasBeenCurrent = true;
-            }
-            else
-                gl.BindFramebuffer(All.FramebufferOes, oldFramebuffer);
+            gl.Viewport(0, 0, newSize.Width, newSize.Height);
+            gl.Scissor(0, 0, newSize.Width, newSize.Height);
         }
 
         protected virtual void ConfigureLayer(CAEAGLLayer eaglLayer)
