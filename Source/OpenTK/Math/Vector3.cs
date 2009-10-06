@@ -919,14 +919,14 @@ namespace OpenTK
             result = a; // copy
 
             Vector3 temp = b; // copy
-            temp.Sub(ref a);
-            temp.Mult(u);
-            result.Add(ref temp);
+            Subtract(ref temp, ref a, out temp);
+            Multiply(ref temp, u, out temp);
+            Add(ref result, ref temp, out result);
 
             temp = c; // copy
-            temp.Sub(ref a);
-            temp.Mult(v);
-            result.Add(ref temp);
+            Subtract(ref temp, ref a, out temp);
+            Multiply(ref temp, v, out temp);
+            Add(ref result, ref temp, out result);
         }
 
         #endregion
