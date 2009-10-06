@@ -104,7 +104,7 @@ namespace OpenTK
 
         /// <summary>Add the Vector passed as parameter to this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
-        public void Add( Vector2 right )
+        public void Add(Vector2 right)
         {
             this.X += right.X;
             this.Y += right.Y;
@@ -113,7 +113,7 @@ namespace OpenTK
         /// <summary>Add the Vector passed as parameter to this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
         [CLSCompliant(false)]
-        public void Add( ref Vector2 right )
+        public void Add(ref Vector2 right)
         {
             this.X += right.X;
             this.Y += right.Y;
@@ -125,7 +125,7 @@ namespace OpenTK
 
         /// <summary>Subtract the Vector passed as parameter from this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
-        public void Sub( Vector2 right )
+        public void Sub(Vector2 right)
         {
             this.X -= right.X;
             this.Y -= right.Y;
@@ -134,7 +134,7 @@ namespace OpenTK
         /// <summary>Subtract the Vector passed as parameter from this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
         [CLSCompliant(false)]
-        public void Sub( ref Vector2 right )
+        public void Sub(ref Vector2 right)
         {
             this.X -= right.X;
             this.Y -= right.Y;
@@ -144,9 +144,10 @@ namespace OpenTK
 
         #region public void Mult()
 
+        [Obsolete]
         /// <summary>Multiply this instance by a scalar.</summary>
         /// <param name="f">Scalar operand.</param>
-        public void Mult( float f )
+        public void Mult(float f)
         {
             this.X *= f;
             this.Y *= f;
@@ -158,7 +159,7 @@ namespace OpenTK
 
         /// <summary>Divide this instance by a scalar.</summary>
         /// <param name="f">Scalar operand.</param>
-        public void Div( float f )
+        public void Div(float f)
         {
             float mult = 1.0f / f;
             this.X *= mult;
@@ -299,7 +300,7 @@ namespace OpenTK
 
         /// <summary>Scales this instance by the given parameter.</summary>
         /// <param name="scale">The scaling of the individual components.</param>
-        public void Scale( Vector2 scale )
+        public void Scale(Vector2 scale)
         {
             this.X *= scale.X;
             this.Y *= scale.Y;
@@ -308,7 +309,7 @@ namespace OpenTK
         /// <summary>Scales this instance by the given parameter.</summary>
         /// <param name="scale">The scaling of the individual components.</param>
         [CLSCompliant(false)]
-        public void Scale( ref Vector2 scale )
+        public void Scale(ref Vector2 scale)
         {
             this.X *= scale.X;
             this.Y *= scale.Y;
@@ -341,7 +342,7 @@ namespace OpenTK
         /// Defines an instance with all components set to 1.
         /// </summary>
         public static readonly Vector2 One = new Vector2(1, 1);
-        
+
         /// <summary>
         /// Defines the size of the Vector2 struct in bytes.
         /// </summary>
@@ -663,7 +664,7 @@ namespace OpenTK
         /// <param name="left">First operand</param>
         /// <param name="right">Second operand</param>
         /// <param name="result">The dot product of the two inputs</param>
-        public static void Dot( ref Vector2 left, ref Vector2 right, out float result )
+        public static void Dot(ref Vector2 left, ref Vector2 right, out float result)
         {
             result = left.X * right.X + left.Y * right.Y;
         }
@@ -693,10 +694,10 @@ namespace OpenTK
         /// <param name="b">Second input vector</param>
         /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise</param>
-        public static void Lerp( ref Vector2 a, ref Vector2 b, float blend, out Vector2 result )
+        public static void Lerp(ref Vector2 a, ref Vector2 b, float blend, out Vector2 result)
         {
-            result.X = blend * ( b.X - a.X ) + a.X;
-            result.Y = blend * ( b.Y - a.Y ) + a.Y;
+            result.X = blend * (b.X - a.X) + a.X;
+            result.Y = blend * (b.Y - a.Y) + a.Y;
         }
 
         #endregion
@@ -724,19 +725,19 @@ namespace OpenTK
         /// <param name="u">First Barycentric Coordinate.</param>
         /// <param name="v">Second Barycentric Coordinate.</param>
         /// <param name="result">Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise</param>
-        public static void BaryCentric( ref Vector2 a, ref Vector2 b, ref Vector2 c, float u, float v, out Vector2 result )
+        public static void BaryCentric(ref Vector2 a, ref Vector2 b, ref Vector2 c, float u, float v, out Vector2 result)
         {
             result = a; // copy
 
             Vector2 temp = b; // copy
-            temp.Sub( ref a );
-            temp.Mult( u );
-            result.Add( ref temp );
+            temp.Sub(ref a);
+            temp.Mult(u);
+            result.Add(ref temp);
 
             temp = c; // copy
-            temp.Sub( ref a );
-            temp.Mult( v );
-            result.Add( ref temp );
+            temp.Sub(ref a);
+            temp.Mult(v);
+            result.Add(ref temp);
         }
 
         #endregion
