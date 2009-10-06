@@ -404,6 +404,11 @@ namespace OpenTK.Graphics.OpenGL
             GL.ClearColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
 
+        public static void ClearColor(Color4 color)
+        {
+            GL.ClearColor(color.R, color.G, color.B, color.A);
+        }
+
         #endregion
 
         #region public static void BlendColor() overloads
