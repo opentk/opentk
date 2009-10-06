@@ -285,6 +285,7 @@ namespace OpenTK
         /// <param name="sx">The scale of the X component.</param>
         /// <param name="sy">The scale of the Y component.</param>
         /// <param name="sz">The scale of the Z component.</param>
+        [Obsolete("Use static Multiply() method instead.")]
         public void Scale(double sx, double sy, double sz)
         {
             this.X = X * sx;
@@ -294,6 +295,7 @@ namespace OpenTK
 
         /// <summary>Scales this instance by the given parameter.</summary>
         /// <param name="scale">The scaling of the individual components.</param>
+        [Obsolete("Use static Multiply() method instead.")]
         public void Scale(Vector3d scale)
         {
             this.X *= scale.X;
@@ -304,6 +306,7 @@ namespace OpenTK
         /// <summary>Scales this instance by the given parameter.</summary>
         /// <param name="scale">The scaling of the individual components.</param>
         [CLSCompliant(false)]
+        [Obsolete("Use static Multiply() method instead.")]
         public void Scale(ref Vector3d scale)
         {
             this.X *= scale.X;
