@@ -913,19 +913,19 @@ namespace OpenTK
         /// <param name="u">First Barycentric Coordinate.</param>
         /// <param name="v">Second Barycentric Coordinate.</param>
         /// <param name="result">Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise</param>
-        public static void BaryCentric(ref Vector3d a, ref Vector3d b, ref Vector3d c, float u, float v, out Vector3d result)
+        public static void BaryCentric(ref Vector3d a, ref Vector3d b, ref Vector3d c, double u, double v, out Vector3d result)
         {
             result = a; // copy
 
             Vector3d temp = b; // copy
-            temp.Sub(ref a);
-            temp.Mult(u);
-            result.Add(ref temp);
+            Subtract(ref temp, ref a, out temp);
+            Multiply(ref temp, u, out temp);
+            Add(ref result, ref temp, out result);
 
             temp = c; // copy
-            temp.Sub(ref a);
-            temp.Mult(v);
-            result.Add(ref temp);
+            Subtract(ref temp, ref a, out temp);
+            Multiply(ref temp, v, out temp);
+            Add(ref result, ref temp, out result);
         }
 
         #endregion
