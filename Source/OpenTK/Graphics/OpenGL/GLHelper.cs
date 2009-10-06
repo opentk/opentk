@@ -663,6 +663,68 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
+        #region Shaders
+
+        #region GetActiveAttrib
+
+        public static string GetActiveAttrib(int program, int index, out int size, out ActiveAttribType type)
+        {
+            int length;
+            GetProgram(program, OpenTK.Graphics.OpenGL.ProgramParameter.ActiveAttributeMaxLength, out length);
+
+            StringBuilder sb = new StringBuilder(length == 0 ? 1 : length);
+            GetActiveAttrib(program, index, sb.Length, out length, out size, out type, sb);
+            return sb.ToString();
+        }
+
+        #endregion
+
+        #region GetActiveUniform
+
+        public static string GetActiveUniform(int program, int uniformIndex, out int size, out ActiveUniformType type)
+        {
+            int length;
+            GetProgram(program, OpenTK.Graphics.OpenGL.ProgramParameter.ActiveUniformMaxLength, out length);
+
+            StringBuilder sb = new StringBuilder(length == 0 ? 1 : length);
+            GetActiveUniform(program, uniformIndex, sb.Length, out length, out size, out type, sb);
+            return sb.ToString();
+        }
+
+        #endregion
+
+        #region GetActiveUniformName
+
+        public static string GetActiveUniformName(int program, int uniformIndex)
+        {
+            int length;
+            GetProgram(program, OpenTK.Graphics.OpenGL.ProgramParameter.ActiveUniformMaxLength, out length);
+            if (length == 0)
+                return String.Empty;
+            
+            StringBuilder sb = new StringBuilder(length);
+            GetActiveUniformName(program, uniformIndex, sb.Length, out length, sb);
+            return sb.ToString();
+        }
+
+        #endregion
+
+        #region GetActiveUniformBlockName
+
+        public static string GetActiveUniformBlockName(int program, int uniformIndex)
+        {
+            int length;
+            GetProgram(program, OpenTK.Graphics.OpenGL.ProgramParameter.ActiveUniformBlockMaxNameLength, out length);
+            if (length == 0)
+                return String.Empty;
+
+            StringBuilder sb = new StringBuilder(length);
+            GetActiveUniformBlockName(program, uniformIndex, sb.Length, out length, sb);
+            return sb.ToString();
+        }
+
+        #endregion
+
         #region public static void ShaderSource(Int32 shader, System.String @string)
 
         public static void ShaderSource(Int32 shader, System.String @string)
@@ -736,6 +798,8 @@ namespace OpenTK.Graphics.OpenGL
                 info = sb.ToString();
             }
         }
+
+        #endregion
 
         #endregion
 
