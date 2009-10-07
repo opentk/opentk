@@ -52,9 +52,6 @@ namespace OpenTK.Graphics.OpenGL
 
         internal const string Library = "opengl32.dll";
 
-        static StringBuilder sb = new StringBuilder();
-        static object gl_lock = new object();
-
         private static SortedList<string, bool> AvailableExtensions = new SortedList<string, bool>();
 
         #endregion
@@ -202,7 +199,7 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         #endregion
-#endif
+
         #region private static void BuildExtensionList()
 
         /// <summary>
@@ -335,34 +332,7 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         #endregion
-
-        #region GetAddress
-
-        /// <summary>
-        /// Retrieves the entry point for a dynamically exported OpenGL function.
-        /// </summary>
-        /// <param name="function">The function string for the OpenGL function (eg. "glNewList")</param>
-        /// <returns>
-        /// An IntPtr contaning the address for the entry point, or IntPtr.Zero if the specified
-        /// OpenGL function is not dynamically exported.
-        /// </returns>
-        /// <remarks>
-        /// <para>
-        /// The Marshal.GetDelegateForFunctionPointer method can be used to turn the return value
-        /// into a call-able delegate.
-        /// </para>
-        /// <para>
-        /// This function is cross-platform. It determines the underlying platform and uses the
-        /// correct wgl, glx or agl GetAddress function to retrieve the function pointer.
-        /// </para>
-        /// </remarks>
-        private static IntPtr GetAddress(string function)
-        {
-            return (GraphicsContext.CurrentContext as IGraphicsContextInternal).GetAddress(function);
-        }
-
-        #endregion
-
+#endif
         #endregion
 
         #region --- GL Overloads ---
