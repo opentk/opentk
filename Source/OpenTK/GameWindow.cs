@@ -372,7 +372,6 @@ namespace OpenTK
 
                 Stopwatch update_watch = new Stopwatch(), render_watch = new Stopwatch();
                 double next_render = 0.0, next_update = 0.0;
-                int num_updates = 0;
                 FrameEventArgs update_args = new FrameEventArgs();
                 FrameEventArgs render_args = new FrameEventArgs();
 
@@ -382,13 +381,24 @@ namespace OpenTK
                 Visible = true;   // Make sure the GameWindow is visible.
                 OnLoadInternal(EventArgs.Empty);
 
+                // On some platforms, ProcessEvents() does not return while the user is resizing or moving
+                // the window. We can avoid this issue by raising UpdateFrame and RenderFrame events
+                // whenever we encounter a size or move event.
+                EventHandler<EventArgs> DispatchUpdateAndRenderFrame = delegate(object sender, EventArgs e)
+                {
+                    RaiseUpdateFrame(update_watch, ref next_update, update_args);
+                    RaiseRenderFrame(render_watch, ref next_render, render_args);
+                };
+
+                Move += DispatchUpdateAndRenderFrame;
+                Resize += DispatchUpdateAndRenderFrame;
+
                 Debug.Print("Entering main loop.");
                 while (!IsExiting && Exists)
                 {
                     ProcessEvents();
 
-                    RaiseUpdateFrame(update_watch, ref next_update, update_args);
-                    RaiseRenderFrame(render_watch, ref next_render, render_args);
+                    DispatchUpdateAndRenderFrame(this, EventArgs.Empty);
                 }
             }
             finally
