@@ -15,13 +15,19 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.X11
 {
-    static partial class Glx
+    partial class Glx : BindingsBase
     {
         const string Library = "libGL.so.1";
 
         // Disable BeforeFieldInit optimization.
         static Glx() { }
 
+        protected override IntPtr GetAddress (string funcname)
+        {
+            return Glx.GetProcAddress(funcname);
+        }
+
+#if false
         #region static Delegate LoadDelegate(string name, Type signature)
 
         /// <summary>
@@ -83,5 +89,6 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
+#endif
     }
 }

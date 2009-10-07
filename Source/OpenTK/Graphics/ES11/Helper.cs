@@ -9,7 +9,7 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Provides access to OpenGL ES 1.1 methods.
     /// </summary>
-    public sealed partial class GL : BindingsBase
+    public sealed partial class GL : GraphicsBindingsBase
     {
         const string Library = "libGLES.dll";
     }
