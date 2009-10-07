@@ -46,7 +46,7 @@ namespace OpenTK.Graphics.OpenGL
     /// </para>
     /// </remarks>
     /// <see href="http://opengl.org/registry/"/>
-    public sealed partial class GL : BindingsBase
+    public sealed partial class GL : GraphicsBindingsBase
     {
         #region --- Fields ---
 

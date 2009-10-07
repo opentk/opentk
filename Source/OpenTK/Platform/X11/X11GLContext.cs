@@ -59,7 +59,7 @@ namespace OpenTK.Platform.X11
 
                 if (ctx != IntPtr.Zero)
                 {
-                    Glx.LoadAll();
+                    new Glx().LoadAll();
                     Glx.MakeCurrent(currentWindow.Display, IntPtr.Zero, IntPtr.Zero);
                     //Glx.DestroyContext(currentWindow.Display, ctx);
                     glx_loaded = true;
@@ -271,7 +271,7 @@ namespace OpenTK.Platform.X11
         public override void LoadAll()
         {
             new OpenTK.Graphics.OpenGL.GL().LoadAll();
-            Glx.LoadAll();
+            new Glx().LoadAll();
             vsync_supported = this.GetAddress("glXSwapIntervalSGI") != IntPtr.Zero;
             Debug.Print("Context supports vsync: {0}.", vsync_supported);
         }
