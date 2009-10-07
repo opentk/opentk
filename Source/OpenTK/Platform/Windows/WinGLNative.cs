@@ -789,7 +789,7 @@ namespace OpenTK.Platform.Windows
 
         public void Close()
         {
-            DestroyWindow();
+            Functions.PostMessage(window.WindowHandle, WindowMessage.CLOSE, IntPtr.Zero, IntPtr.Zero);
         }
 
         #endregion
