@@ -205,7 +205,7 @@ namespace OpenTK.Audio
         /// <summary>
         /// Start recording samples.
         /// The number of available samples can be obtained through the <see cref="AvailableSamples"/> property.
-        /// The data can be queried with any <see cref="ReadSamples"/> method.
+        /// The data can be queried with any <see cref="ReadSamples(IntPtr, int)"/> method.
         /// </summary>
         public void Start()
         {
