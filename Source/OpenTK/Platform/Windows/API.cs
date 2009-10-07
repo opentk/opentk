@@ -61,6 +61,10 @@ namespace OpenTK.Platform.Windows
 
     using HRESULT = System.IntPtr;
 
+    using UINT_PTR = System.UIntPtr;
+
+    using TIMERPROC = Functions.TimerProc;
+
     #endregion
 
     /// <summary>
@@ -1383,6 +1387,19 @@ namespace OpenTK.Platform.Windows
         internal static extern IntPtr GetStockObject(int index);
 
         #endregion
+
+        #endregion
+
+        #region Timer Functions
+
+        [DllImport("user32.dll", SetLastError=true)]
+        public static extern UINT_PTR SetTimer(HWND hWnd, UINT_PTR nIDEvent, UINT uElapse, TIMERPROC lpTimerFunc);
+
+        [DllImport("user32.dll", SetLastError=true)]
+        public static extern BOOL KillTimer(HWND hWnd, UINT_PTR uIDEvent);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        public delegate void TimerProc(HWND hwnd, WindowMessage uMsg, UINT_PTR idEvent, DWORD dwTime);
 
         #endregion
     }
