@@ -371,7 +371,7 @@ namespace OpenTK
                 TargetRenderFrequency = frames_per_second;
 
                 Stopwatch update_watch = new Stopwatch(), render_watch = new Stopwatch();
-                double time, next_render = 0.0, next_update = 0.0, update_time_counter = 0.0;
+                double next_render = 0.0, next_update = 0.0;
                 int num_updates = 0;
                 FrameEventArgs update_args = new FrameEventArgs();
                 FrameEventArgs render_args = new FrameEventArgs();
@@ -387,77 +387,8 @@ namespace OpenTK
                 {
                     ProcessEvents();
 
-                    // Raise UpdateFrame events
-                    time = update_watch.Elapsed.TotalSeconds;
-                    if (time > 1.0)
-                        time = 1.0;
-                    while (next_update - time <= 0.0)
-                    {
-                        next_update = next_update - time + TargetUpdatePeriod;
-                        if (next_update < -1.0)       // Cap the maximum time drift, to avoid lengthy catch-up games.
-                            next_update = -1.0;
-
-                        update_time_counter += time;
-                        ++num_updates;
-
-                        update_watch.Reset();
-                        update_watch.Start();
-
-                        if (time > 0)
-                        {
-                            update_args.Time = time;
-                            OnUpdateFrameInternal(update_args);
-                            update_time = update_watch.Elapsed.TotalSeconds;
-                        }
-                        if (TargetUpdateFrequency == 0.0)
-                            break;
-
-                        time = update_watch.Elapsed.TotalSeconds;
-                        next_update -= time;
-                        update_time_counter += time;
-
-                        // Allow up to 10 frames to be dropped. Prevents the application from hanging
-                        // with very high update frequencies.
-                        if (num_updates >= 10)
-                            break;
-                    }
-                    if (num_updates > 0)
-                    {
-                        update_period = update_time_counter / (double)num_updates;
-                        num_updates = 0;
-                        update_time_counter = 0.0;
-                    }
-
-                    // Raise RenderFrame event
-                    time = render_watch.Elapsed.TotalSeconds;
-                    if (time > 1.0)
-                        time = 1.0;
-                    double time_left = next_render - time;
-                    if (VSync == VSyncMode.Adaptive)
-                    {
-                        // Check if we have enough time for a vsync
-                        if (TargetRenderPeriod != 0 && RenderTime > 2.0 * TargetRenderPeriod)
-                            Context.VSync = false;
-                        else
-                            Context.VSync = true;
-                    }
-
-                    if (time_left <= 0.0)
-                    {
-                        next_render = time_left + TargetRenderPeriod;
-                        if (next_render < -1.0)       // Cap the maximum time drift, to avoid lengthy catch-up games.
-                            next_render = -1.0;
-
-                        render_watch.Reset();
-                        render_watch.Start();
-
-                        if (time > 0)
-                        {
-                            render_period = render_args.Time = time;
-                            OnRenderFrameInternal(render_args);
-                            render_time = render_watch.Elapsed.TotalSeconds;
-                        }
-                    }
+                    RaiseUpdateFrame(update_watch, ref next_update, update_args);
+                    RaiseRenderFrame(render_watch, ref next_render, render_args);
                 }
             }
             finally
@@ -471,6 +402,98 @@ namespace OpenTK
                 {
                     Dispose();
                     //while (this.Exists) ProcessEvents(); // TODO: Should similar behaviour be retained, possibly on native window level?
+                }
+            }
+        }
+
+        private void RaiseUpdateFrame(Stopwatch update_watch, ref double next_update, FrameEventArgs update_args)
+        {
+            int num_updates = 0;
+
+            // Cap the maximum time drift to 1 second (e.g. when the process is suspended).
+            double time = update_watch.Elapsed.TotalSeconds;
+            if (time > 1.0)
+                time = 1.0;
+
+            // Raise UpdateFrame events until we catch up with our target update rate.
+            while (next_update - time <= 0.0)
+            {
+                // Don't schedule a new update more than 1 second in the future.
+                // Sometimes the hardware cannot keep up with updates
+                // (e.g. when the update rate is too high, or the UpdateFrame processing
+                // is too costly). This cap ensures  we can catch up in a reasonable time
+                // once the load becomes lighter.
+                next_update = next_update - time + TargetUpdatePeriod;
+                if (next_update < -1.0)
+                    next_update = -1.0;
+
+                // Allow up to 10 consecutive UpdateFrame events.
+                // This prevents the application from "hanging" when the hardware cannot
+                // keep up with the requested update rate.
+                if (++num_updates >= 10)
+                    break;
+
+                if (time > 0)
+                {
+                    update_args.Time = time;
+                    OnUpdateFrameInternal(update_args);
+                    update_time = update_watch.Elapsed.TotalSeconds;
+                }
+                if (TargetUpdateFrequency == 0.0)
+                    break;
+
+                time = update_watch.Elapsed.TotalSeconds;
+                next_update -= time;
+
+                // Stopwatches are not accurate over long time periods.
+                // We accumlate the total elapsed time into the time variable
+                // while reseting the Stopwatch frequently.
+                update_watch.Reset();
+                update_watch.Start();
+            }
+
+            // Calculate statistics 
+            if (num_updates > 0)
+            {
+                update_period = time / (double)num_updates;
+            }
+        }
+
+        private void RaiseRenderFrame(Stopwatch render_watch, ref double next_render, FrameEventArgs render_args)
+        {
+            // Cap the maximum time drift to 1 second (e.g. when the process is suspended).
+            double time = render_watch.Elapsed.TotalSeconds;
+            if (time > 1.0)
+                time = 1.0;
+
+            double time_left = next_render - time;
+
+            // Todo: remove this?
+            if (VSync == VSyncMode.Adaptive)
+            {
+                // Check if we have enough time for a vsync
+                if (TargetRenderPeriod != 0 && RenderTime > 2.0 * TargetRenderPeriod)
+                    Context.VSync = false;
+                else
+                    Context.VSync = true;
+            }
+
+            if (time_left <= 0.0)
+            {
+                // Schedule next render event. The 1 second cap ensures
+                // the process does not appear to hang.
+                next_render = time_left + TargetRenderPeriod;
+                if (next_render < -1.0)
+                    next_render = -1.0;
+
+                render_watch.Reset();
+                render_watch.Start();
+
+                if (time > 0)
+                {
+                    render_period = render_args.Time = time;
+                    OnRenderFrameInternal(render_args);
+                    render_time = render_watch.Elapsed.TotalSeconds;
                 }
             }
         }
