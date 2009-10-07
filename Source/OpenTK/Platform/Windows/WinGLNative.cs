@@ -50,6 +50,13 @@ namespace OpenTK.Platform.Windows
         readonly IntPtr Instance = Marshal.GetHINSTANCE(typeof(WinGLNative).Module);
         readonly IntPtr ClassName = Marshal.StringToHGlobalAuto("OpenTK.INativeWindow" + WindowCount++.ToString());
         readonly WindowProcedure WindowProcedureDelegate;
+        readonly UIntPtr ModalLoopTimerId = new UIntPtr(1);
+        readonly uint ModalLoopTimerPeriod = 1;
+        UIntPtr timer_handle;
+        readonly Functions.TimerProc ModalLoopCallback = delegate(IntPtr handle, WindowMessage msg, UIntPtr eventId, int time)
+        {
+            // Todo: find a way to notify the frontend that it should process queued up UpdateFrame/RenderFrame events.
+        };
 
         bool class_registered;
         bool disposed;
@@ -129,6 +136,26 @@ namespace OpenTK.Platform.Windows
                 #region Size / Move events
 
                 case WindowMessage.ACTIVATE:
+                    break;
+
+                case WindowMessage.ENTERSIZEMOVE:
+                    // Entering the modal size/move loop: we don't want rendering to
+                    // stop during this time, so we register a timer callback to continue
+                    // processing from time to time.
+                    timer_handle = Functions.SetTimer(handle, ModalLoopTimerId, ModalLoopTimerPeriod, ModalLoopCallback);
+                    if (timer_handle == UIntPtr.Zero)
+                        Debug.Print("[Warning] Failed to set modal loop timer callback ({0}:{1}->{2}).",
+                            GetType().Name, handle, Marshal.GetLastWin32Error());
+
+                    break;
+
+                case WindowMessage.EXITSIZEMOVE:
+                    // ExitingmModal size/move loop: the timer callback is no longer
+                    // necessary.
+                    if (!Functions.KillTimer(handle, timer_handle))
+                        Debug.Print("[Warning] Failed to kill modal loop timer callback ({0}:{1}->{2}).",
+                            GetType().Name, handle, Marshal.GetLastWin32Error());
+                    timer_handle = UIntPtr.Zero;
                     break;
 
                 case WindowMessage.NCCALCSIZE:
