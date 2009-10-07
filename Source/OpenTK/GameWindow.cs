@@ -261,7 +261,7 @@ namespace OpenTK
         #region Exit
 
         /// <summary>
-        /// Gracefully exits the GameWindow. May be called from any thread.
+        /// Closes the GameWindow. Equivalent to <see cref="Close"/> method.
         /// </summary>
         /// <remarks>
         /// <para>Override if you are not using <see cref="GameWindow.Run()"/>.</para>
@@ -269,7 +269,6 @@ namespace OpenTK
         /// </remarks>
         public virtual void Exit()
         {
-            isExiting = true;
             Close();
         }
 
