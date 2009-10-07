@@ -396,14 +396,30 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="n">The number of sources to be generated.</param>
         /// <param name="sources">Pointer to an array of uint values which will store the names of the new sources.</param>
         [CLSCompliant(false)]
-        [DllImport(AL.Lib, EntryPoint = "alGenSources", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern void GenSources(int n, out uint sources);
+        public static void GenSources(int n, out uint sources)
+        {
+            unsafe
+            {
+                fixed (uint* sources_ptr = &sources)
+                {
+                     GenSourcesPrivate(n, sources_ptr);
+                }
+            }
+        }
 
         /// <summary>This function generates one or more sources. References to sources are int values, which are used wherever a source reference is needed (in calls such as AL.DeleteSources and AL.Source with parameter ALSourcei).</summary>
         /// <param name="n">The number of sources to be generated.</param>
         /// <param name="sources">Pointer to an array of int values which will store the names of the new sources.</param>
-        [DllImport(AL.Lib, EntryPoint = "alGenSources", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern void GenSources(int n, out int sources);
+        public static void GenSources(int n, out int sources)
+        {
+            unsafe
+            {
+                fixed (int* sources_ptr = &sources)
+                {
+                     GenSourcesPrivate(n, (uint*)sources_ptr);
+                }
+            }
+        }
 
         /// <summary>This function generates one or more sources. References to sources are int values, which are used wherever a source reference is needed (in calls such as AL.DeleteSources and AL.Source with parameter ALSourcei).</summary>
         /// <param name="sources">Pointer to an array of int values which will store the names of the new sources.</param>
