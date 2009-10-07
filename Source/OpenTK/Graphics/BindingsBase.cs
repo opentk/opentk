@@ -32,10 +32,10 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
-namespace OpenTK.Graphics
+namespace OpenTK
 {
     /// <summary>
-    /// Provides a common foundation for all flat API classes.
+    /// Provides a common foundation for all flat API bindings and implements the extension loading interface.
     /// </summary>
     public abstract class BindingsBase
     {
@@ -70,11 +70,14 @@ namespace OpenTK.Graphics
             DelegatesClass = this.GetType().GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
             CoreClass = this.GetType().GetNestedType("Core", BindingFlags.Static | BindingFlags.NonPublic);
 
-            MethodInfo[] methods = CoreClass.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
-            CoreFunctionMap = new SortedList<string, MethodInfo>(methods.Length);
-            foreach (MethodInfo m in methods)
+            if (CoreClass != null)
             {
-                CoreFunctionMap.Add(m.Name, m);
+                MethodInfo[] methods = CoreClass.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
+                CoreFunctionMap = new SortedList<string, MethodInfo>(methods.Length); // Avoid resizing
+                foreach (MethodInfo m in methods)
+                {
+                    CoreFunctionMap.Add(m.Name, m);
+                }
             }
         }
 
@@ -90,6 +93,8 @@ namespace OpenTK.Graphics
             get { return rebuildExtensionList; }
             set { rebuildExtensionList = value; }
         }
+
+        protected abstract IntPtr GetAddress(string funcname);
 
         #endregion
 
@@ -176,10 +181,10 @@ namespace OpenTK.Graphics
         #region GetExtensionDelegate
 
         // Creates a System.Delegate that can be used to call a dynamically exported OpenGL function.
-        internal static Delegate GetExtensionDelegate(string name, Type signature)
+        internal Delegate GetExtensionDelegate(string name, Type signature)
         {
-            IntPtr address = (GraphicsContext.CurrentContext as IGraphicsContextInternal).GetAddress(name);
-
+            IntPtr address = GetAddress(name);
+            
             if (address == IntPtr.Zero ||
                 address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
                 address == new IntPtr(2))       // 1 or 2 instead of IntPtr.Zero for some extensions.
@@ -195,5 +200,16 @@ namespace OpenTK.Graphics
         #endregion
 
         #endregion
+    }
+}
+
+namespace OpenTK.Graphics
+{
+    public class GraphicsBindingsBase : BindingsBase
+    {
+        protected override IntPtr GetAddress(string funcname)
+        {
+            return (GraphicsContext.CurrentContext as IGraphicsContextInternal).GetAddress(funcname);
+        }
     }
 }
