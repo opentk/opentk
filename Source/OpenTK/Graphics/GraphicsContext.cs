@@ -23,7 +23,6 @@ namespace OpenTK.Graphics
         #region --- Fields ---
 
         IGraphicsContext implementation;  // The actual render context implementation for the underlying platform.
-        List<IDisposable> dispose_queue = new List<IDisposable>();
         bool disposed;
         // Indicates that this context was created through external means, e.g. Tao.Sdl or GLWidget#.
         // In this case, We'll assume that the external program will manage the lifetime of this
