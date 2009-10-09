@@ -683,13 +683,13 @@ namespace Bind.GL2
                         Console.WriteLine("Creating docs for #{0} ({1})", current++, f.Name);
                         try
                         {
-                            string path = Path.Combine(Settings.DocPath, "gl" + f.WrappedDelegate.Name + ".xml");
+                            string path = Path.Combine(Settings.DocPath, Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml");
                             if (!File.Exists(path))
-                                path = Path.Combine(Settings.DocPath, "gl" +
+                                path = Path.Combine(Settings.DocPath, Settings.FunctionPrefix +
                                     f.TrimmedName + ".xml");
 
                             if (!File.Exists(path))
-                                path = Path.Combine(Settings.DocPath, "gl" + f.TrimmedName.TrimEnd(numbers) + ".xml");
+                                path = Path.Combine(Settings.DocPath, Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml");
 
                             if (File.Exists(path))
                             {
