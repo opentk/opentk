@@ -31,7 +31,7 @@ namespace OpenTK.Compute.CL10
 {
     #pragma warning disable 1591
 
-    public enum AddressingMode
+    public enum AddressingMode : int
     {
         AddressNone = ((int)0X1130),
         AddressClampToEdge = ((int)0X1131),
@@ -39,7 +39,7 @@ namespace OpenTK.Compute.CL10
         AddressRepeat = ((int)0X1133),
     }
 
-    public enum All
+    public enum All : int
     {
         DeviceTypeDefault = ((int)(1 << 0)),
         ExecKernel = ((int)(1 << 0)),
@@ -307,13 +307,13 @@ namespace OpenTK.Compute.CL10
         ImageFormatMismatch = ((int)-9),
     }
 
-    public enum Bool
+    public enum Bool : int
     {
         False = ((int)0),
         True = ((int)1),
     }
 
-    public enum BuildStatus
+    public enum BuildStatus : int
     {
         BuildSuccess = ((int)0),
         BuildNone = ((int)-1),
@@ -321,7 +321,7 @@ namespace OpenTK.Compute.CL10
         BuildInProgress = ((int)-3),
     }
 
-    public enum ChannelOrder
+    public enum ChannelOrder : int
     {
         R = ((int)0X10b0),
         A = ((int)0X10b1),
@@ -335,7 +335,7 @@ namespace OpenTK.Compute.CL10
         Luminance = ((int)0X10b9),
     }
 
-    public enum ChannelType
+    public enum ChannelType : int
     {
         SnormInt8 = ((int)0X10d0),
         SnormInt16 = ((int)0X10d1),
@@ -354,7 +354,7 @@ namespace OpenTK.Compute.CL10
         Float = ((int)0X10de),
     }
 
-    public enum CommandExecutionStatus
+    public enum CommandExecutionStatus : int
     {
         Complete = ((int)0X0),
         Running = ((int)0X1),
@@ -362,13 +362,13 @@ namespace OpenTK.Compute.CL10
         Queued = ((int)0X3),
     }
 
-    public enum CommandQueueFlags
+    public enum CommandQueueFlags : long
     {
         QueueOutOfOrderExecModeEnable = ((int)(1 << 0)),
         QueueProfilingEnable = ((int)(1 << 1)),
     }
 
-    public enum CommandQueueInfo
+    public enum CommandQueueInfo : int
     {
         QueueContext = ((int)0X1090),
         QueueDevice = ((int)0X1091),
@@ -376,7 +376,7 @@ namespace OpenTK.Compute.CL10
         QueueProperties = ((int)0X1093),
     }
 
-    public enum CommandType
+    public enum CommandType : int
     {
         CommandNdrangeKernel = ((int)0X11f0),
         CommandTask = ((int)0X11f1),
@@ -397,25 +397,25 @@ namespace OpenTK.Compute.CL10
         CommandReleaseGlObjects = ((int)0X1200),
     }
 
-    public enum ContextInfo
+    public enum ContextInfo : int
     {
         ContextReferenceCount = ((int)0X1080),
         ContextDevices = ((int)0X1081),
         ContextProperties = ((int)0X1082),
     }
 
-    public enum ContextProperties
+    public enum ContextProperties : int
     {
         ContextPlatform = ((int)0X1084),
     }
 
-    public enum DeviceExecCapabilitiesFlags
+    public enum DeviceExecCapabilitiesFlags : long
     {
         ExecKernel = ((int)(1 << 0)),
         ExecNativeKernel = ((int)(1 << 1)),
     }
 
-    public enum DeviceFpConfigFlags
+    public enum DeviceFpConfigFlags : long
     {
         FpDenorm = ((int)(1 << 0)),
         FpInfNan = ((int)(1 << 1)),
@@ -425,7 +425,7 @@ namespace OpenTK.Compute.CL10
         FpFma = ((int)(1 << 5)),
     }
 
-    public enum DeviceInfo
+    public enum DeviceInfo : int
     {
         DeviceType = ((int)0X1000),
         DeviceVendorId = ((int)0X1001),
@@ -479,20 +479,20 @@ namespace OpenTK.Compute.CL10
         DevicePlatform = ((int)0X1031),
     }
 
-    public enum DeviceLocalMemType
+    public enum DeviceLocalMemType : int
     {
         Local = ((int)0X1),
         Global = ((int)0X2),
     }
 
-    public enum DeviceMemCacheType
+    public enum DeviceMemCacheType : int
     {
         None = ((int)0X0),
         ReadOnlyCache = ((int)0X1),
         ReadWriteCache = ((int)0X2),
     }
 
-    public enum DeviceTypeFlags
+    public enum DeviceTypeFlags : long
     {
         DeviceTypeDefault = ((int)(1 << 0)),
         DeviceTypeCpu = ((int)(1 << 1)),
@@ -501,7 +501,7 @@ namespace OpenTK.Compute.CL10
         DeviceTypeAll = unchecked((int)0Xffffffff),
     }
 
-    public enum ErrorCode
+    public enum ErrorCode : int
     {
         Success = ((int)0),
         DeviceNotFound = ((int)-1),
@@ -551,7 +551,7 @@ namespace OpenTK.Compute.CL10
         ImageFormatMismatch = ((int)-9),
     }
 
-    public enum EventInfo
+    public enum EventInfo : int
     {
         EventCommandQueue = ((int)0X11d0),
         EventCommandType = ((int)0X11d1),
@@ -559,13 +559,13 @@ namespace OpenTK.Compute.CL10
         EventCommandExecutionStatus = ((int)0X11d3),
     }
 
-    public enum FilterMode
+    public enum FilterMode : int
     {
         FilterNearest = ((int)0X1140),
         FilterLinear = ((int)0X1141),
     }
 
-    public enum ImageInfo
+    public enum ImageInfo : int
     {
         ImageFormat = ((int)0X1110),
         ImageElementSize = ((int)0X1111),
@@ -576,7 +576,7 @@ namespace OpenTK.Compute.CL10
         ImageDepth = ((int)0X1116),
     }
 
-    public enum KernelInfo
+    public enum KernelInfo : int
     {
         KernelFunctionName = ((int)0X1190),
         KernelNumArgs = ((int)0X1191),
@@ -585,20 +585,20 @@ namespace OpenTK.Compute.CL10
         KernelProgram = ((int)0X1194),
     }
 
-    public enum KernelWorkGroupInfo
+    public enum KernelWorkGroupInfo : int
     {
         KernelWorkGroupSize = ((int)0X11b0),
         KernelCompileWorkGroupSize = ((int)0X11b1),
         KernelLocalMemSize = ((int)0X11b2),
     }
 
-    public enum MapFlags
+    public enum MapFlags : long
     {
         MapRead = ((int)(1 << 0)),
         MapWrite = ((int)(1 << 1)),
     }
 
-    public enum MemFlags
+    public enum MemFlags : long
     {
         MemReadWrite = ((int)(1 << 0)),
         MemWriteOnly = ((int)(1 << 1)),
@@ -608,7 +608,7 @@ namespace OpenTK.Compute.CL10
         MemCopyHostPtr = ((int)(1 << 5)),
     }
 
-    public enum MemInfo
+    public enum MemInfo : int
     {
         MemType = ((int)0X1100),
         MemFlags = ((int)0X1101),
@@ -619,14 +619,14 @@ namespace OpenTK.Compute.CL10
         MemContext = ((int)0X1106),
     }
 
-    public enum MemObjectType
+    public enum MemObjectType : int
     {
         MemObjectBuffer = ((int)0X10f0),
         MemObjectImage2d = ((int)0X10f1),
         MemObjectImage3d = ((int)0X10f2),
     }
 
-    public enum PlatformInfo
+    public enum PlatformInfo : int
     {
         PlatformProfile = ((int)0X0900),
         PlatformVersion = ((int)0X0901),
@@ -635,7 +635,7 @@ namespace OpenTK.Compute.CL10
         PlatformExtensions = ((int)0X0904),
     }
 
-    public enum ProfilingInfo
+    public enum ProfilingInfo : int
     {
         ProfilingCommandQueued = ((int)0X1280),
         ProfilingCommandSubmit = ((int)0X1281),
@@ -643,14 +643,14 @@ namespace OpenTK.Compute.CL10
         ProfilingCommandEnd = ((int)0X1283),
     }
 
-    public enum ProgramBuildInfo
+    public enum ProgramBuildInfo : int
     {
         ProgramBuildStatus = ((int)0X1181),
         ProgramBuildOptions = ((int)0X1182),
         ProgramBuildLog = ((int)0X1183),
     }
 
-    public enum ProgramInfo
+    public enum ProgramInfo : int
     {
         ProgramReferenceCount = ((int)0X1160),
         ProgramContext = ((int)0X1161),
@@ -661,7 +661,7 @@ namespace OpenTK.Compute.CL10
         ProgramBinaries = ((int)0X1166),
     }
 
-    public enum SamplerInfo
+    public enum SamplerInfo : int
     {
         SamplerReferenceCount = ((int)0X1150),
         SamplerContext = ((int)0X1151),
@@ -670,7 +670,7 @@ namespace OpenTK.Compute.CL10
         SamplerFilterMode = ((int)0X1154),
     }
 
-    public enum Unknown
+    public enum Unknown : int
     {
         ScharMin = ((int)(-127-1)),
         IntMin = ((int)(-2147483647-1)),
@@ -694,7 +694,7 @@ namespace OpenTK.Compute.CL10
         CharBit = ((int)8),
     }
 
-    public enum Version
+    public enum Version : int
     {
         Version10 = ((int)1),
     }
