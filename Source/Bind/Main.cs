@@ -154,7 +154,7 @@ namespace Bind
                         break;
 
                     case GeneratorMode.CL10:
-                        Generator = new CLGenerator("CL10");
+                        Generator = new CLGenerator("CL10", dirName);
                         break;
                     
                     case GeneratorMode.Wgl:
