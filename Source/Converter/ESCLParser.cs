@@ -57,6 +57,7 @@ namespace CHeaderToXML
         public IEnumerable<XElement> Parse(string[] lines)
         {
             char[] splitters = new char[] { ' ', '\t', ',', '(', ')', ';', '\n', '\r' };
+			bool is_long_bitfield = false;
 
             // Line splitter
             Func<string, string[]> split = line =>
@@ -70,7 +71,7 @@ namespace CHeaderToXML
                     {
                         switch (t.ToLower())
                         {
-                            case ("bitfield"): return "Flags";
+                            case ("bitfield"): is_long_bitfield = true; return "Flags";
                             default:
                                 if (t.ToLower() == Prefix)
                                     return "";
@@ -126,7 +127,9 @@ namespace CHeaderToXML
                         case "":
                             return acc;
                         default:
-                            acc.Add(new XElement("enum", new XAttribute("name", @enum)));
+                            acc.Add(new XElement("enum",
+							    new XAttribute("name", @enum),
+                                new XAttribute("type", is_long_bitfield ? "long" : "int")));
                             return acc;
                     }
                 };
