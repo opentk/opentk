@@ -57,7 +57,6 @@ namespace CHeaderToXML
         public IEnumerable<XElement> Parse(string[] lines)
         {
             char[] splitters = new char[] { ' ', '\t', ',', '(', ')', ';', '\n', '\r' };
-			bool is_long_bitfield = false;
 
             // Line splitter
             Func<string, string[]> split = line =>
@@ -66,12 +65,17 @@ namespace CHeaderToXML
             // Adds new enum to the accumulator (acc)
             Func<string, List<XElement>, List<XElement>> enum_name = (line, acc) =>
             {
+				bool is_long_bitfield = false;
+				
                 Func<string, string[]> get_tokens = (_) =>
                     line.Trim("/*. ".ToCharArray()).Split(" _-+".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(t =>
                     {
                         switch (t.ToLower())
                         {
-                            case ("bitfield"): is_long_bitfield = true; return "Flags";
+                            case ("bitfield"):
+								is_long_bitfield = true;
+								return "Flags";
+						
                             default:
                                 if (t.ToLower() == Prefix)
                                     return "";
