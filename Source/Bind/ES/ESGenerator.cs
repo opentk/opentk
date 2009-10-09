@@ -97,7 +97,7 @@ namespace Bind.ES
         public override EnumCollection ReadEnums(StreamReader specFile)
         {
             EnumCollection enums = new EnumCollection();
-            Enum all = new Enum(Settings.CompleteEnumName); 
+            Enum all = new Enum() { Name = Settings.CompleteEnumName }; 
             XPathDocument doc = new XPathDocument(specFile);
             XPathNavigator nav = doc.CreateNavigator().SelectSingleNode("/signatures");
 
@@ -105,7 +105,11 @@ namespace Bind.ES
             
             foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
             {
-                Enum e = new Enum(node.GetAttribute("name", String.Empty));
+                Enum e = new Enum()
+				{
+					Name = node.GetAttribute("name", String.Empty),
+					Type = node.GetAttribute("type", String.Empty)
+				};
                 if (String.IsNullOrEmpty(e.Name))
                     throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
 

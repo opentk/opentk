@@ -20,7 +20,7 @@ namespace Bind.Structures
         internal static EnumCollection AuxEnums = new EnumCollection();
 
         static StringBuilder translator = new StringBuilder();
-        string _name;
+        string _name, _type;
         static bool enumsLoaded;
 
         #region Initialize
@@ -69,12 +69,8 @@ namespace Bind.Structures
         #region Constructors
 
         public Enum()
-        { }
-
-        public Enum(string name)
         {
-            Name = name;
-        }
+		}
 
         #endregion
 
@@ -96,9 +92,16 @@ namespace Bind.Structures
 
         public string Name
         {
-            get { return _name; }
+            get { return _name ?? ""; }
             set { _name = value; }
         }
+		
+		// Typically 'long' or 'int'. Default is 'int'.
+		public string Type
+		{
+			get { return String.IsNullOrEmpty(_type) ? "int" : _type; }
+			set { _type = value; }
+		}
 
         #endregion
 
@@ -182,7 +185,10 @@ namespace Bind.Structures
 
             if (IsFlagCollection)
                 sb.AppendLine("[Flags]");
-            sb.AppendLine("public enum " + Name);
+            sb.Append("public enum ");
+			sb.Append(Name);
+			sb.Append(" : ");
+			sb.AppendLine(Type);
             sb.AppendLine("{");
 
             foreach (Constant c in constants)
