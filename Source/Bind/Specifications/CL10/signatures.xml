@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <signatures>
-  <enum name="AddressingMode">
+  <enum name="AddressingMode" type="long">
     <token name="ADDRESS_CLAMP" value="0x1132" />
     <token name="ADDRESS_CLAMP_TO_EDGE" value="0x1131" />
     <token name="ADDRESS_NONE" value="0x1130" />
     <token name="ADDRESS_REPEAT" value="0x1133" />
   </enum>
-  <enum name="Bool">
+  <enum name="Bool" type="int">
     <token name="FALSE" value="0" />
     <token name="TRUE" value="1" />
   </enum>
-  <enum name="BuildStatus">
+  <enum name="BuildStatus" type="long">
     <token name="BUILD_ERROR" value="-2" />
     <token name="BUILD_IN_PROGRESS" value="-3" />
     <token name="BUILD_NONE" value="-1" />
     <token name="BUILD_SUCCESS" value="0" />
   </enum>
-  <enum name="ChannelOrder">
+  <enum name="ChannelOrder" type="long">
     <token name="A" value="0x10B1" />
     <token name="ARGB" value="0x10B7" />
     <token name="BGRA" value="0x10B6" />
@@ -28,7 +28,7 @@
     <token name="RGB" value="0x10B4" />
     <token name="RGBA" value="0x10B5" />
   </enum>
-  <enum name="ChannelType">
+  <enum name="ChannelType" type="long">
     <token name="FLOAT" value="0x10DE" />
     <token name="HALF_FLOAT" value="0x10DD" />
     <token name="SIGNED_INT16" value="0x10D8" />
@@ -45,23 +45,23 @@
     <token name="UNSIGNED_INT32" value="0x10DC" />
     <token name="UNSIGNED_INT8" value="0x10DA" />
   </enum>
-  <enum name="CommandExecutionStatus">
+  <enum name="CommandExecutionStatus" type="long">
     <token name="COMPLETE" value="0x0" />
     <token name="QUEUED" value="0x3" />
     <token name="RUNNING" value="0x1" />
     <token name="SUBMITTED" value="0x2" />
   </enum>
-  <enum name="CommandQueueInfo">
+  <enum name="CommandQueueInfo" type="long">
     <token name="QUEUE_CONTEXT" value="0x1090" />
     <token name="QUEUE_DEVICE" value="0x1091" />
     <token name="QUEUE_PROPERTIES" value="0x1093" />
     <token name="QUEUE_REFERENCE_COUNT" value="0x1092" />
   </enum>
-  <enum name="CommandQueuePropertiesFlags">
+  <enum name="CommandQueuePropertiesFlags" type="long">
     <token name="QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE" value="(1 &lt;&lt; 0)" />
     <token name="QUEUE_PROFILING_ENABLE" value="(1 &lt;&lt; 1)" />
   </enum>
-  <enum name="CommandType">
+  <enum name="CommandType" type="long">
     <token name="COMMAND_ACQUIRE_GL_OBJECTS" value="0x11FF" />
     <token name="COMMAND_COPY_BUFFER" value="0x11F5" />
     <token name="COMMAND_COPY_BUFFER_TO_IMAGE" value="0x11FA" />
@@ -80,19 +80,19 @@
     <token name="COMMAND_WRITE_BUFFER" value="0x11F4" />
     <token name="COMMAND_WRITE_IMAGE" value="0x11F7" />
   </enum>
-  <enum name="ContextInfo">
+  <enum name="ContextInfo" type="long">
     <token name="CONTEXT_DEVICES" value="0x1081" />
     <token name="CONTEXT_PROPERTIES" value="0x1082" />
     <token name="CONTEXT_REFERENCE_COUNT" value="0x1080" />
   </enum>
-  <enum name="ContextProperties">
+  <enum name="ContextProperties" type="long">
     <token name="CONTEXT_PLATFORM" value="0x1084" />
   </enum>
-  <enum name="DeviceExecCapabilitiesFlags">
+  <enum name="DeviceExecCapabilitiesFlags" type="long">
     <token name="EXEC_KERNEL" value="(1 &lt;&lt; 0)" />
     <token name="EXEC_NATIVE_KERNEL" value="(1 &lt;&lt; 1)" />
   </enum>
-  <enum name="DeviceFpConfigFlags">
+  <enum name="DeviceFpConfigFlags" type="long">
     <token name="FP_DENORM" value="(1 &lt;&lt; 0)" />
     <token name="FP_FMA" value="(1 &lt;&lt; 5)" />
     <token name="FP_INF_NAN" value="(1 &lt;&lt; 1)" />
@@ -100,7 +100,7 @@
     <token name="FP_ROUND_TO_NEAREST" value="(1 &lt;&lt; 2)" />
     <token name="FP_ROUND_TO_ZERO" value="(1 &lt;&lt; 3)" />
   </enum>
-  <enum name="DeviceInfo">
+  <enum name="DeviceInfo" type="long">
     <token name="DEVICE_ADDRESS_BITS" value="0x100D" />
     <token name="DEVICE_AVAILABLE" value="0x1027" />
     <token name="DEVICE_COMPILER_AVAILABLE" value="0x1028" />
@@ -152,23 +152,23 @@
     <token name="DEVICE_VERSION" value="0x102F" />
     <token name="DRIVER_VERSION" value="0x102D" />
   </enum>
-  <enum name="DeviceLocalMemType">
+  <enum name="DeviceLocalMemType" type="long">
     <token name="GLOBAL" value="0x2" />
     <token name="LOCAL" value="0x1" />
   </enum>
-  <enum name="DeviceMemCacheType">
+  <enum name="DeviceMemCacheType" type="long">
     <token name="NONE" value="0x0" />
     <token name="READ_ONLY_CACHE" value="0x1" />
     <token name="READ_WRITE_CACHE" value="0x2" />
   </enum>
-  <enum name="DeviceTypeFlags">
+  <enum name="DeviceTypeFlags" type="long">
     <token name="DEVICE_TYPE_ACCELERATOR" value="(1 &lt;&lt; 3)" />
     <token name="DEVICE_TYPE_ALL" value="0xFFFFFFFF" />
     <token name="DEVICE_TYPE_CPU" value="(1 &lt;&lt; 1)" />
     <token name="DEVICE_TYPE_DEFAULT" value="(1 &lt;&lt; 0)" />
     <token name="DEVICE_TYPE_GPU" value="(1 &lt;&lt; 2)" />
   </enum>
-  <enum name="ErrorCodes">
+  <enum name="ErrorCodes" type="int">
     <token name="BUILD_PROGRAM_FAILURE" value="-11" />
     <token name="COMPILER_NOT_AVAILABLE" value="-3" />
     <token name="DEVICE_NOT_AVAILABLE" value="-2" />
@@ -216,17 +216,17 @@
     <token name="PROFILING_INFO_NOT_AVAILABLE" value="-7" />
     <token name="SUCCESS" value="0" />
   </enum>
-  <enum name="EventInfo">
+  <enum name="EventInfo" type="long">
     <token name="EVENT_COMMAND_EXECUTION_STATUS" value="0x11D3" />
     <token name="EVENT_COMMAND_QUEUE" value="0x11D0" />
     <token name="EVENT_COMMAND_TYPE" value="0x11D1" />
     <token name="EVENT_REFERENCE_COUNT" value="0x11D2" />
   </enum>
-  <enum name="FilterMode">
+  <enum name="FilterMode" type="long">
     <token name="FILTER_LINEAR" value="0x1141" />
     <token name="FILTER_NEAREST" value="0x1140" />
   </enum>
-  <enum name="ImageInfo">
+  <enum name="ImageInfo" type="long">
     <token name="IMAGE_DEPTH" value="0x1116" />
     <token name="IMAGE_ELEMENT_SIZE" value="0x1111" />
     <token name="IMAGE_FORMAT" value="0x1110" />
@@ -235,23 +235,23 @@
     <token name="IMAGE_SLICE_PITCH" value="0x1113" />
     <token name="IMAGE_WIDTH" value="0x1114" />
   </enum>
-  <enum name="KernelInfo">
+  <enum name="KernelInfo" type="long">
     <token name="KERNEL_CONTEXT" value="0x1193" />
     <token name="KERNEL_FUNCTION_NAME" value="0x1190" />
     <token name="KERNEL_NUM_ARGS" value="0x1191" />
     <token name="KERNEL_PROGRAM" value="0x1194" />
     <token name="KERNEL_REFERENCE_COUNT" value="0x1192" />
   </enum>
-  <enum name="KernelWorkGroupInfo">
+  <enum name="KernelWorkGroupInfo" type="long">
     <token name="KERNEL_COMPILE_WORK_GROUP_SIZE" value="0x11B1" />
     <token name="KERNEL_LOCAL_MEM_SIZE" value="0x11B2" />
     <token name="KERNEL_WORK_GROUP_SIZE" value="0x11B0" />
   </enum>
-  <enum name="MapFlags">
+  <enum name="MapFlags" type="long">
     <token name="MAP_READ" value="(1 &lt;&lt; 0)" />
     <token name="MAP_WRITE" value="(1 &lt;&lt; 1)" />
   </enum>
-  <enum name="MemFlags">
+  <enum name="MemFlags" type="long">
     <token name="MEM_ALLOC_HOST_PTR" value="(1 &lt;&lt; 4)" />
     <token name="MEM_COPY_HOST_PTR" value="(1 &lt;&lt; 5)" />
     <token name="MEM_READ_ONLY" value="(1 &lt;&lt; 2)" />
@@ -259,7 +259,7 @@
     <token name="MEM_USE_HOST_PTR" value="(1 &lt;&lt; 3)" />
     <token name="MEM_WRITE_ONLY" value="(1 &lt;&lt; 1)" />
   </enum>
-  <enum name="MemInfo">
+  <enum name="MemInfo" type="long">
     <token name="MEM_CONTEXT" value="0x1106" />
     <token name="MEM_FLAGS" value="0x1101" />
     <token name="MEM_HOST_PTR" value="0x1103" />
@@ -268,30 +268,30 @@
     <token name="MEM_SIZE" value="0x1102" />
     <token name="MEM_TYPE" value="0x1100" />
   </enum>
-  <enum name="MemObjectType">
+  <enum name="MemObjectType" type="long">
     <token name="MEM_OBJECT_BUFFER" value="0x10F0" />
     <token name="MEM_OBJECT_IMAGE2D" value="0x10F1" />
     <token name="MEM_OBJECT_IMAGE3D" value="0x10F2" />
   </enum>
-  <enum name="PlatformInfo">
+  <enum name="PlatformInfo" type="int">
     <token name="PLATFORM_EXTENSIONS" value="0x0904" />
     <token name="PLATFORM_NAME" value="0x0902" />
     <token name="PLATFORM_PROFILE" value="0x0900" />
     <token name="PLATFORM_VENDOR" value="0x0903" />
     <token name="PLATFORM_VERSION" value="0x0901" />
   </enum>
-  <enum name="ProfilingInfo">
+  <enum name="ProfilingInfo" type="long">
     <token name="PROFILING_COMMAND_END" value="0x1283" />
     <token name="PROFILING_COMMAND_QUEUED" value="0x1280" />
     <token name="PROFILING_COMMAND_START" value="0x1282" />
     <token name="PROFILING_COMMAND_SUBMIT" value="0x1281" />
   </enum>
-  <enum name="ProgramBuildInfo">
+  <enum name="ProgramBuildInfo" type="long">
     <token name="PROGRAM_BUILD_LOG" value="0x1183" />
     <token name="PROGRAM_BUILD_OPTIONS" value="0x1182" />
     <token name="PROGRAM_BUILD_STATUS" value="0x1181" />
   </enum>
-  <enum name="ProgramInfo">
+  <enum name="ProgramInfo" type="long">
     <token name="PROGRAM_BINARIES" value="0x1166" />
     <token name="PROGRAM_BINARY_SIZES" value="0x1165" />
     <token name="PROGRAM_CONTEXT" value="0x1161" />
@@ -300,7 +300,7 @@
     <token name="PROGRAM_REFERENCE_COUNT" value="0x1160" />
     <token name="PROGRAM_SOURCE" value="0x1164" />
   </enum>
-  <enum name="SamplerInfo">
+  <enum name="SamplerInfo" type="long">
     <token name="SAMPLER_ADDRESSING_MODE" value="0x1153" />
     <token name="SAMPLER_CONTEXT" value="0x1151" />
     <token name="SAMPLER_FILTER_MODE" value="0x1154" />
@@ -331,7 +331,7 @@
     <token name="UINT_MAX" value="0xffffffffU" />
     <token name="USHRT_MAX" value="65535" />
   </enum>
-  <enum name="Version">
+  <enum name="Version" type="int">
     <token name="VERSION_1_0" value="1" />
   </enum>
   <function name="BuildProgram" extension="Core" profile="" category="1.0" version="1.0">
