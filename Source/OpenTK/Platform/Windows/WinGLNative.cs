@@ -143,6 +143,7 @@ namespace OpenTK.Platform.Windows
                 case WindowMessage.ACTIVATE:
                     break;
 
+                case WindowMessage.ENTERMENULOOP:
                 case WindowMessage.ENTERSIZEMOVE:
                     // Entering the modal size/move loop: we don't want rendering to
                     // stop during this time, so we register a timer callback to continue
@@ -154,6 +155,7 @@ namespace OpenTK.Platform.Windows
 
                     break;
 
+                case WindowMessage.EXITMENULOOP:
                 case WindowMessage.EXITSIZEMOVE:
                     // ExitingmModal size/move loop: the timer callback is no longer
                     // necessary.
