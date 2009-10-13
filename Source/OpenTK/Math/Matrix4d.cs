@@ -287,13 +287,13 @@ namespace OpenTK
         {
             double cos = System.Math.Cos(-angle);
             double sin = System.Math.Sin(-angle);
-            double t = 1.0f - cos;
+            double t = 1.0 - cos;
 
             axis.Normalize();
 
-            result = new Matrix4d(t * axis.X * axis.X + cos, t * axis.X * axis.Y - sin * axis.Z, t * axis.X * axis.Z + sin * axis.Y, 0.0f,
-                                 t * axis.X * axis.Y + sin * axis.Z, t * axis.Y * axis.Y + cos, t * axis.Y * axis.Z - sin * axis.X, 0.0f,
-                                 t * axis.X * axis.Z - sin * axis.Y, t * axis.Y * axis.Z + sin * axis.X, t * axis.Z * axis.Z + cos, 0.0f,
+            result = new Matrix4d(t * axis.X * axis.X + cos, t * axis.X * axis.Y - sin * axis.Z, t * axis.X * axis.Z + sin * axis.Y, 0.0,
+                                 t * axis.X * axis.Y + sin * axis.Z, t * axis.Y * axis.Y + cos, t * axis.Y * axis.Z - sin * axis.X, 0.0,
+                                 t * axis.X * axis.Z - sin * axis.Y, t * axis.Y * axis.Z + sin * axis.X, t * axis.Z * axis.Z + cos, 0.0,
                                  0, 0, 0, 1);
         }
 
@@ -534,6 +534,143 @@ namespace OpenTK
 
         #endregion
 
+        #region CreatePerspectiveFieldOfView
+
+        /// <summary>
+        /// Creates a perspective projection matrix.
+        /// </summary>
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians)</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height)</param>
+        /// <param name="zNear">Distance to the near clip plane</param>
+        /// <param name="zFar">Distance to the far clip plane</param>
+        /// <param name="result">A projection matrix that transforms camera space to raster space</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown under the following conditions:
+        /// <list type="bullet">
+        /// <item>fovy is zero, less than zero or larger than Math.PI</item>
+        /// <item>aspect is negative or zero</item>
+        /// <item>zNear is negative or zero</item>
+        /// <item>zFar is negative or zero</item>
+        /// <item>zNear is larger than zFar</item>
+        /// </list>
+        /// </exception>
+        public static void CreatePerspectiveFieldOfView(double fovy, double aspect, double zNear, double zFar, out Matrix4d result)
+        {
+            if (fovy <= 0 || fovy > Math.PI)
+                throw new ArgumentOutOfRangeException("fovy");
+            if (aspect <= 0)
+                throw new ArgumentOutOfRangeException("aspect");
+            if (zNear <= 0)
+                throw new ArgumentOutOfRangeException("zNear");
+            if (zFar <= 0)
+                throw new ArgumentOutOfRangeException("zFar");
+            if (zNear >= zFar)
+                throw new ArgumentOutOfRangeException("zNear");
+
+            double yMax = zNear * System.Math.Tan(0.5 * fovy);
+            double yMin = -yMax;
+            double xMin = yMin * aspect;
+            double xMax = yMax * aspect;
+
+            CreatePerspectiveOffCenter(xMin, xMax, yMin, yMax, zNear, zFar, out result);
+        }
+
+        /// <summary>
+        /// Creates a perspective projection matrix.
+        /// </summary>
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians)</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height)</param>
+        /// <param name="zNear">Distance to the near clip plane</param>
+        /// <param name="zFar">Distance to the far clip plane</param>
+        /// <returns>A projection matrix that transforms camera space to raster space</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown under the following conditions:
+        /// <list type="bullet">
+        /// <item>fovy is zero, less than zero or larger than Math.PI</item>
+        /// <item>aspect is negative or zero</item>
+        /// <item>zNear is negative or zero</item>
+        /// <item>zFar is negative or zero</item>
+        /// <item>zNear is larger than zFar</item>
+        /// </list>
+        /// </exception>
+        public static Matrix4d CreatePerspectiveFieldOfView(double fovy, double aspect, double zNear, double zFar)
+        {
+            Matrix4d result;
+            CreatePerspectiveFieldOfView(fovy, aspect, zNear, zFar, out result);
+            return result;
+        }
+
+        #endregion
+
+        #region CreatePerspectiveOffCenter
+
+        /// <summary>
+        /// Creates an perspective projection matrix.
+        /// </summary>
+        /// <param name="left">Left edge of the view frustum</param>
+        /// <param name="right">Right edge of the view frustum</param>
+        /// <param name="bottom">Bottom edge of the view frustum</param>
+        /// <param name="top">Top edge of the view frustum</param>
+        /// <param name="zNear">Distance to the near clip plane</param>
+        /// <param name="zFar">Distance to the far clip plane</param>
+        /// <param name="result">A projection matrix that transforms camera space to raster space</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown under the following conditions:
+        /// <list type="bullet">
+        /// <item>zNear is negative or zero</item>
+        /// <item>zFar is negative or zero</item>
+        /// <item>zNear is larger than zFar</item>
+        /// </list>
+        /// </exception>
+        public static void CreatePerspectiveOffCenter(double left, double right, double bottom, double top, double zNear, double zFar, out Matrix4d result)
+        {
+            if (zNear <= 0)
+                throw new ArgumentOutOfRangeException("zNear");
+            if (zFar <= 0)
+                throw new ArgumentOutOfRangeException("zFar");
+            if (zNear >= zFar)
+                throw new ArgumentOutOfRangeException("zNear");
+
+            double x = (2.0 * zNear) / (right - left);
+            double y = (2.0 * zNear) / (top - bottom);
+            double a = (right + left) / (right - left);
+            double b = (top + bottom) / (top - bottom);
+            double c = -(zFar + zNear) / (zFar - zNear);
+            double d = -(2.0 * zFar * zNear) / (zFar - zNear);
+
+            result = new Matrix4d(x, 0, 0, 0,
+                                 0, y, 0, 0,
+                                 a, b, c, -1,
+                                 0, 0, d, 0);
+        }
+
+        /// <summary>
+        /// Creates an perspective projection matrix.
+        /// </summary>
+        /// <param name="left">Left edge of the view frustum</param>
+        /// <param name="right">Right edge of the view frustum</param>
+        /// <param name="bottom">Bottom edge of the view frustum</param>
+        /// <param name="top">Top edge of the view frustum</param>
+        /// <param name="zNear">Distance to the near clip plane</param>
+        /// <param name="zFar">Distance to the far clip plane</param>
+        /// <returns>A projection matrix that transforms camera space to raster space</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown under the following conditions:
+        /// <list type="bullet">
+        /// <item>zNear is negative or zero</item>
+        /// <item>zFar is negative or zero</item>
+        /// <item>zNear is larger than zFar</item>
+        /// </list>
+        /// </exception>
+        public static Matrix4d CreatePerspectiveOffCenter(double left, double right, double bottom, double top, double zNear, double zFar)
+        {
+            Matrix4d result;
+            CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out result);
+            return result;
+        }
+
+        #endregion
+
         #region Obsolete Functions
 
         #region Translation Functions
@@ -560,7 +697,7 @@ namespace OpenTK
         public static Matrix4d Translation(double x, double y, double z)
         {
             Matrix4d result = Identity;
-            result.Row3 = new Vector4d(x, y, z, 1.0f);
+            result.Row3 = new Vector4d(x, y, z, 1.0);
             return result;
         }
 
@@ -618,13 +755,13 @@ namespace OpenTK
         /// <returns>A rotation matrix</returns>
         public static Matrix4d RotateX(double angle)
         {
-            double cos = (double)System.Math.Cos(angle);
-            double sin = (double)System.Math.Sin(angle);
+            double cos = System.Math.Cos(angle);
+            double sin = System.Math.Sin(angle);
 
             Matrix4d result;
             result.Row0 = Vector4d .UnitX;
-            result.Row1 = new Vector4d (0.0f, cos, sin, 0.0f);
-            result.Row2 = new Vector4d (0.0f, -sin, cos, 0.0f);
+            result.Row1 = new Vector4d (0.0, cos, sin, 0.0);
+            result.Row2 = new Vector4d (0.0, -sin, cos, 0.0);
             result.Row3 = Vector4d .UnitW;
             return result;
         }
@@ -636,13 +773,13 @@ namespace OpenTK
         /// <returns>A rotation matrix</returns>
         public static Matrix4d RotateY(double angle)
         {
-            double cos = (double)System.Math.Cos(angle);
-            double sin = (double)System.Math.Sin(angle);
+            double cos = System.Math.Cos(angle);
+            double sin = System.Math.Sin(angle);
 
             Matrix4d result;
-            result.Row0 = new Vector4d (cos, 0.0f, -sin, 0.0f);
+            result.Row0 = new Vector4d (cos, 0.0, -sin, 0.0);
             result.Row1 = Vector4d .UnitY;
-            result.Row2 = new Vector4d (sin, 0.0f, cos, 0.0f);
+            result.Row2 = new Vector4d (sin, 0.0, cos, 0.0);
             result.Row3 = Vector4d .UnitW;
             return result;
         }
@@ -654,12 +791,12 @@ namespace OpenTK
         /// <returns>A rotation matrix</returns>
         public static Matrix4d RotateZ(double angle)
         {
-            double cos = (double)System.Math.Cos(angle);
-            double sin = (double)System.Math.Sin(angle);
+            double cos = System.Math.Cos(angle);
+            double sin = System.Math.Sin(angle);
 
             Matrix4d result;
-            result.Row0 = new Vector4d (cos, sin, 0.0f, 0.0f);
-            result.Row1 = new Vector4d (-sin, cos, 0.0f, 0.0f);
+            result.Row0 = new Vector4d (cos, sin, 0.0, 0.0);
+            result.Row1 = new Vector4d (-sin, cos, 0.0, 0.0);
             result.Row2 = Vector4d .UnitZ;
             result.Row3 = Vector4d .UnitW;
             return result;
@@ -673,16 +810,16 @@ namespace OpenTK
         /// <returns>A rotation matrix</returns>
         public static Matrix4d Rotate(Vector3d axis, double angle)
         {
-            double cos = (double)System.Math.Cos(-angle);
-            double sin = (double)System.Math.Sin(-angle);
-            double t = 1.0f - cos;
+            double cos = System.Math.Cos(-angle);
+            double sin = System.Math.Sin(-angle);
+            double t = 1.0 - cos;
 
             axis.Normalize();
 
             Matrix4d result;
-            result.Row0 = new Vector4d (t * axis.X * axis.X + cos, t * axis.X * axis.Y - sin * axis.Z, t * axis.X * axis.Z + sin * axis.Y, 0.0f);
-            result.Row1 = new Vector4d (t * axis.X * axis.Y + sin * axis.Z, t * axis.Y * axis.Y + cos, t * axis.Y * axis.Z - sin * axis.X, 0.0f);
-            result.Row2 = new Vector4d (t * axis.X * axis.Z - sin * axis.Y, t * axis.Y * axis.Z + sin * axis.X, t * axis.Z * axis.Z + cos, 0.0f);
+            result.Row0 = new Vector4d (t * axis.X * axis.X + cos, t * axis.X * axis.Y - sin * axis.Z, t * axis.X * axis.Z + sin * axis.Y, 0.0);
+            result.Row1 = new Vector4d (t * axis.X * axis.Y + sin * axis.Z, t * axis.Y * axis.Y + cos, t * axis.Y * axis.Z - sin * axis.X, 0.0);
+            result.Row2 = new Vector4d (t * axis.X * axis.Z - sin * axis.Y, t * axis.Y * axis.Z + sin * axis.X, t * axis.Z * axis.Z + cos, 0.0);
             result.Row3 = Vector4d .UnitW;
             return result;
         }
@@ -717,9 +854,9 @@ namespace OpenTK
             Vector3d x = Vector3d.Normalize(Vector3d.Cross(up, z));
             Vector3d y = Vector3d.Normalize(Vector3d.Cross(z, x));
 
-            Matrix4d rot = new Matrix4d(new Vector4d (x.X, y.X, z.X, 0.0f),
-                                        new Vector4d (x.Y, y.Y, z.Y, 0.0f),
-                                        new Vector4d (x.Z, y.Z, z.Z, 0.0f),
+            Matrix4d rot = new Matrix4d(new Vector4d (x.X, y.X, z.X, 0.0),
+                                        new Vector4d (x.Y, y.Y, z.Y, 0.0),
+                                        new Vector4d (x.Z, y.Z, z.Z, 0.0),
                                         Vector4d .UnitW);
 
             Matrix4d trans = Matrix4d.CreateTranslation(-eye);
@@ -757,13 +894,13 @@ namespace OpenTK
         /// <returns>A projection matrix that transforms camera space to raster space</returns>
         public static Matrix4d Frustum(double left, double right, double bottom, double top, double near, double far)
         {
-            double invRL = 1.0f / (right - left);
-            double invTB = 1.0f / (top - bottom);
-            double invFN = 1.0f / (far - near);
-            return new Matrix4d(new Vector4d (2.0f * near * invRL, 0.0f, 0.0f, 0.0f),
-                               new Vector4d (0.0f, 2.0f * near * invTB, 0.0f, 0.0f),
-                               new Vector4d ((right + left) * invRL, (top + bottom) * invTB, -(far + near) * invFN, -1.0f),
-                               new Vector4d (0.0f, 0.0f, -2.0f * far * near * invFN, 0.0f));
+            double invRL = 1.0 / (right - left);
+            double invTB = 1.0 / (top - bottom);
+            double invFN = 1.0 / (far - near);
+            return new Matrix4d(new Vector4d (2.0 * near * invRL, 0.0, 0.0, 0.0),
+                               new Vector4d (0.0, 2.0 * near * invTB, 0.0, 0.0),
+                               new Vector4d ((right + left) * invRL, (top + bottom) * invTB, -(far + near) * invFN, -1.0),
+                               new Vector4d (0.0, 0.0, -2.0 * far * near * invFN, 0.0));
         }
 
         /// <summary>
@@ -776,7 +913,7 @@ namespace OpenTK
         /// <returns>A projection matrix that transforms camera space to raster space</returns>
         public static Matrix4d Perspective(double fovy, double aspect, double near, double far)
         {
-            double yMax = near * (double)System.Math.Tan(0.5f * fovy);
+            double yMax = near * System.Math.Tan(0.5f * fovy);
             double yMin = -yMax;
             double xMin = yMin * aspect;
             double xMax = yMax * aspect;
@@ -854,7 +991,7 @@ namespace OpenTK
             for (int i = 0; i < 4; i++)
             {
                 // Find the largest pivot value
-                double maxPivot = 0.0f;
+                double maxPivot = 0.0;
                 for (int j = 0; j < 4; j++)
                 {
                     if (pivotIdx[j] != 0)
@@ -897,15 +1034,15 @@ namespace OpenTK
 
                 double pivot = inverse[icol, icol];
                 // check for singular matrix
-                if (pivot == 0.0f)
+                if (pivot == 0.0)
                 {
                     throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
                     //return mat;
                 }
 
                 // Scale row so it has a unit diagonal
-                double oneOverPivot = 1.0f / pivot;
-                inverse[icol, icol] = 1.0f;
+                double oneOverPivot = 1.0 / pivot;
+                inverse[icol, icol] = 1.0;
                 for (int k = 0; k < 4; ++k)
                     inverse[icol, k] *= oneOverPivot;
 
@@ -916,7 +1053,7 @@ namespace OpenTK
                     if (icol != j)
                     {
                         double f = inverse[j, icol];
-                        inverse[j, icol] = 0.0f;
+                        inverse[j, icol] = 0.0;
                         for (int k = 0; k < 4; ++k)
                             inverse[j, k] -= inverse[icol, k] * f;
                     }
