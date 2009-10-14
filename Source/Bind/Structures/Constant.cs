@@ -7,6 +7,7 @@
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace Bind.Structures
@@ -174,7 +175,10 @@ namespace Bind.Structures
             translator.Remove(0, translator.Length);
 
             // Translate the constant's name to match .Net naming conventions
-            if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None)
+            bool name_is_all_caps = s.AsEnumerable().All(c => Char.IsLetter(c) ? Char.IsUpper(c) : true);
+            bool name_contains_underscore = s.Contains("_");
+            if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None &&
+                (name_is_all_caps || name_contains_underscore))
             {
                 bool next_char_uppercase = true;
                 bool is_after_digit = false;
