@@ -96,31 +96,38 @@ namespace Bind.ES
 
         public override EnumCollection ReadEnums(StreamReader specFile)
         {
+            // First, read all enum definitions from spec and override file.
+            // Afterwards, read all token/enum overrides from overrides file.
+            // Every single enum is merged into
+
             EnumCollection enums = new EnumCollection();
             Enum all = new Enum() { Name = Settings.CompleteEnumName }; 
-            XPathDocument doc = new XPathDocument(specFile);
-            XPathNavigator nav = doc.CreateNavigator().SelectSingleNode("/signatures");
-
+            XPathDocument specs = new XPathDocument(specFile);
             XPathDocument overrides = new XPathDocument(new StreamReader(Path.Combine(Settings.InputPath, functionOverridesFile)));
-            
-            foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
+
+            foreach (XPathNavigator nav in new XPathNavigator[] {
+                specs.CreateNavigator().SelectSingleNode("/signatures"),
+                overrides.CreateNavigator().SelectSingleNode("/overrides") })
             {
-                Enum e = new Enum()
-				{
-					Name = node.GetAttribute("name", String.Empty),
-					Type = node.GetAttribute("type", String.Empty)
-				};
-                if (String.IsNullOrEmpty(e.Name))
-                    throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
-
-                foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
+                foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
                 {
-                    Constant c = new Constant(param.GetAttribute("name", String.Empty), param.GetAttribute("value", String.Empty));
-                    Utilities.Merge(all, c);
-                    e.ConstantCollection.Add(c.Name, c);
-                }
+                    Enum e = new Enum()
+                    {
+                        Name = node.GetAttribute("name", String.Empty),
+                        Type = node.GetAttribute("type", String.Empty)
+                    };
+                    if (String.IsNullOrEmpty(e.Name))
+                        throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
 
-                Utilities.Merge(enums, e);
+                    foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
+                    {
+                        Constant c = new Constant(param.GetAttribute("name", String.Empty), param.GetAttribute("value", String.Empty));
+                        Utilities.Merge(all, c);
+                        e.ConstantCollection.Add(c.Name, c);
+                    }
+
+                    Utilities.Merge(enums, e);
+                }
             }
 
             Utilities.Merge(enums, all);
