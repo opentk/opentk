@@ -588,26 +588,29 @@ namespace OpenTK.Platform.Windows
         // Gets the shell application icon for the executing process or the default icon, if not available.
         Icon GetApplicationIcon()
         {
-            IntPtr retval = IntPtr.Zero;
-            try
-            {
-                SHFILEINFO info = new SHFILEINFO();
-                info.szDisplayName = "";
-                info.szTypeName = "";
+            //return Icon.FromHandle(Functions.LoadIcon(Process.GetCurrentProcess().Handle, ""));
+            try { return Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetEntryAssembly().CodeBase);  }
+            catch { return null; }
+            //IntPtr retval = IntPtr.Zero;
+            //try
+            //{
+            //    SHFILEINFO info = new SHFILEINFO();
+            //    info.szDisplayName = "";
+            //    info.szTypeName = "";
 
-                int cbFileInfo = Marshal.SizeOf(info);
-                ShGetFileIconFlags flags = ShGetFileIconFlags.Icon | ShGetFileIconFlags.SmallIcon | ShGetFileIconFlags.UseFileAttributes;
-                string path = System.Reflection.Assembly.GetEntryAssembly().CodeBase;
+            //    int cbFileInfo = Marshal.SizeOf(info);
+            //    ShGetFileIconFlags flags = ShGetFileIconFlags.Icon | ShGetFileIconFlags.SmallIcon | ShGetFileIconFlags.UseFileAttributes;
+            //    string path = System.Reflection.Assembly.GetEntryAssembly().CodeBase;
 
-                retval = Functions.SHGetFileInfo(path, 256, ref info, (uint)cbFileInfo, flags);
-                return Icon.FromHandle(info.hIcon);
-            }
-            catch
-            {
-                // Shallow exceptions and fall-back to default icon.
-                Debug.Print("SHGetFileInfo failed, return value: {0}", retval);
-                return null;
-            }
+            //    retval = Functions.SHGetFileInfo(path, 256, ref info, (uint)cbFileInfo, flags);
+            //    return Icon.FromHandle(info.hIcon);
+            //}
+            //catch
+            //{
+            //    // Shallow exceptions and fall-back to default icon.
+            //    Debug.Print("SHGetFileInfo failed, return value: {0}", retval);
+            //    return null;
+            //}
         }
 
         #endregion

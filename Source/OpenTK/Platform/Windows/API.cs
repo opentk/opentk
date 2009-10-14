@@ -813,8 +813,19 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region IsWindowVisible
+
         [DllImport("user32.dll")]
         public static extern bool IsWindowVisible(IntPtr intPtr);
+
+        #endregion
+
+        #region LoadIcon
+
+        [DllImport("user32.dll")]
+        public static extern HICON LoadIcon(HINSTANCE hInstance, LPCTSTR lpIconName);
+
+        #endregion
 
         #endregion
 
@@ -2701,7 +2712,7 @@ namespace OpenTK.Platform.Windows
     #region ShFileInfo
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    public struct SHFILEINFO
+    struct SHFILEINFO
     {
         public IntPtr hIcon;
         public int iIcon;
