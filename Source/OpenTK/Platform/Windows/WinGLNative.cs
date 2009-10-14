@@ -62,8 +62,10 @@ namespace OpenTK.Platform.Windows
         WindowBorder windowBorder = WindowBorder.Resizable, previous_window_border;
         WindowState windowState = WindowState.Normal;
 
-        System.Drawing.Rectangle bounds = new System.Drawing.Rectangle();
-        System.Drawing.Rectangle client_rectangle = new System.Drawing.Rectangle();
+        System.Drawing.Rectangle
+            bounds = new System.Drawing.Rectangle(),
+            client_rectangle = new System.Drawing.Rectangle(),
+            previous_bounds = new System.Drawing.Rectangle(); // Used to restore previous size when leaving fullscreen mode.
         Icon icon;
 
         static readonly ClassStyle ClassStyle =
@@ -835,6 +837,7 @@ namespace OpenTK.Platform.Windows
                         // previous_window_border == Hidden.
                         // After the trick, we store the 'real' previous border, to allow state changes to work
                         // as expected.
+                        previous_bounds = Bounds;
                         WindowBorder temp = WindowBorder;
                         previous_window_border = WindowBorder.Hidden;
                         WindowBorder = WindowBorder.Hidden;
@@ -848,6 +851,14 @@ namespace OpenTK.Platform.Windows
 
                 if (command != 0)
                     Functions.ShowWindow(window.WindowHandle, command);
+
+                // Restore previous window size when leaving fullscreen mode
+                if (command == ShowWindowCommand.RESTORE &&
+                    previous_bounds != System.Drawing.Rectangle.Empty)
+                {
+                    Bounds = previous_bounds;
+                    previous_bounds = System.Drawing.Rectangle.Empty;
+                }
             }
         }
 
