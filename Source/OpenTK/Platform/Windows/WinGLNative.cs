@@ -33,6 +33,7 @@ using System.Text;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using System.Collections.Generic;
+using System.IO;
 
 namespace OpenTK.Platform.Windows
 {
@@ -126,6 +127,8 @@ namespace OpenTK.Platform.Windows
 
             keyboards.Add(keyboard);
             mice.Add(mouse);
+
+            Icon = GetApplicationIcon();
         }
 
         #endregion
@@ -539,6 +542,7 @@ namespace OpenTK.Platform.Windows
                 wc.Instance = Instance;
                 wc.WndProc = WindowProcedureDelegate;
                 wc.ClassName = ClassName;
+                wc.Icon = Icon != null ? Icon.Handle : IntPtr.Zero;
                 //wc.Background = Functions.GetStockObject(5);
                 ushort atom = Functions.RegisterClassEx(ref wc);
 
@@ -574,6 +578,35 @@ namespace OpenTK.Platform.Windows
                 Debug.Print("Destroying window: {0}", window.ToString());
                 Functions.DestroyWindow(window.WindowHandle);
                 exists = false;
+            }
+        }
+
+        #endregion
+
+        #region GetApplicationIcon
+
+        // Gets the shell application icon for the executing process or the default icon, if not available.
+        Icon GetApplicationIcon()
+        {
+            IntPtr retval = IntPtr.Zero;
+            try
+            {
+                SHFILEINFO info = new SHFILEINFO();
+                info.szDisplayName = "";
+                info.szTypeName = "";
+
+                int cbFileInfo = Marshal.SizeOf(info);
+                ShGetFileIconFlags flags = ShGetFileIconFlags.Icon | ShGetFileIconFlags.SmallIcon | ShGetFileIconFlags.UseFileAttributes;
+                string path = System.Reflection.Assembly.GetEntryAssembly().CodeBase;
+
+                retval = Functions.SHGetFileInfo(path, 256, ref info, (uint)cbFileInfo, flags);
+                return Icon.FromHandle(info.hIcon);
+            }
+            catch
+            {
+                // Shallow exceptions and fall-back to default icon.
+                Debug.Print("SHGetFileInfo failed, return value: {0}", retval);
+                return null;
             }
         }
 
@@ -714,8 +747,9 @@ namespace OpenTK.Platform.Windows
             }
             set
             {
-                Functions.SendMessage(window.WindowHandle, WindowMessage.SETICON, (IntPtr)1, icon == null ? IntPtr.Zero : value.Handle);
                 icon = value;
+                if (window.WindowHandle != IntPtr.Zero)
+                    Functions.SendMessage(window.WindowHandle, WindowMessage.SETICON, (IntPtr)1, icon == null ? IntPtr.Zero : value.Handle);
             }
         }
 
@@ -1077,6 +1111,8 @@ namespace OpenTK.Platform.Windows
                 {
                     // Safe to clean managed resources
                     DestroyWindow();
+                    if (Icon != null)
+                        Icon.Dispose();
                 }
                 else
                 {
