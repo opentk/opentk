@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml.XPath;
 
@@ -118,6 +119,7 @@ namespace Bind.Structures
 
         #region TranslateName
 
+        // Translate the constant's name to match .Net naming conventions
         public static string TranslateName(string name)
         {
             if (String.IsNullOrEmpty(name))
@@ -128,13 +130,12 @@ namespace Bind.Structures
 
             translator.Remove(0, translator.Length);    // Trick to avoid allocating a new StringBuilder.
 
-            // Translate the constant's name to match .Net naming conventions
             if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None)
             {
-                bool is_after_underscore_or_number = true;    // Detect if we just passed a '_' or a number and make the next char
-                                                    // uppercase.
-                bool is_previous_uppercase = false; // Detect if previous character was uppercase, and turn
-                                                    // the current one to lowercase.
+                // Detect if we just passed a '_' or a number and make the next char uppercase.
+                bool is_after_underscore_or_number = true;
+                // Detect if previous character was uppercase, and turn the current one to lowercase.
+                bool is_previous_uppercase = false;
 
                 foreach (char c in name)
                 {
@@ -145,10 +146,12 @@ namespace Bind.Structures
                     {
                         if (Char.IsDigit(c))
                             is_after_underscore_or_number = true;
+
                         char_to_add = is_after_underscore_or_number ? Char.ToUpper(c) :
                             is_previous_uppercase ? Char.ToLower(c) : c;
-                        is_previous_uppercase = Char.IsUpper(c);
                         translator.Append(char_to_add);
+
+                        is_previous_uppercase = Char.IsUpper(c);
                         is_after_underscore_or_number = false;
                     }
                 }
