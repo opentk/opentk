@@ -229,7 +229,7 @@ namespace OpenTK
         public float M41 { get { return Row3.X; } set { Row3.X = value; } }
 
         /// <summary>
-        /// Gets or sets the value at row 4, column 3 of this instance.
+        /// Gets or sets the value at row 4, column 2 of this instance.
         /// </summary>
         public float M42 { get { return Row3.Y; } set { Row3.Y = value; } }
 
