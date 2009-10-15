@@ -191,6 +191,9 @@ namespace OpenTK
         /// <param name="e">A System.EventArgs that contains the event data.</param>
         protected override void OnResize(EventArgs e)
         {
+            if (IsHandleCreated == false)
+                CreateHandle();
+
             if (context != null)
                 context.Update(Implementation.WindowInfo);
 
