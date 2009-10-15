@@ -1013,7 +1013,7 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 fixed (Vector2d* ptr = &vector)
-                    GetFloat(pname, (float*)ptr);
+                    GetDouble(pname, (double*)ptr);
             }
         }
 
@@ -1022,7 +1022,7 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 fixed (Vector3d* ptr = &vector)
-                    GetFloat(pname, (float*)ptr);
+                    GetDouble(pname, (double*)ptr);
             }
         }
 
@@ -1031,7 +1031,7 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 fixed (Vector4d* ptr = &vector)
-                    GetFloat(pname, (float*)ptr);
+                    GetDouble(pname, (double*)ptr);
             }
         }
 
@@ -1040,7 +1040,7 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 fixed (Matrix4d* ptr = &matrix)
-                    GetFloat(pname, (float*)ptr);
+                    GetDouble(pname, (double*)ptr);
             }
         }
 
