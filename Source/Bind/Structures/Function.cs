@@ -422,7 +422,9 @@ namespace Bind.Structures
 
                         handle_release_statements.Add(String.Format("{0}_ptr.Free();", p.Name));
 
-                        if (p.Flow == FlowDirection.Out)
+                        // Due to the GCHandle-style pinning (which boxes value types), we need to assign the modified
+                        // value back to the reference parameter (but only if it has an out or in/out flow direction).
+                        if ((p.Flow == FlowDirection.Out || p.Flow == FlowDirection.Undefined) && p.Reference)
                         {
                             assign_statements.Add(String.Format(
                                 "{0} = ({1}){0}_ptr.Target;",
@@ -444,7 +446,12 @@ namespace Bind.Structures
                             p.Array > 0 ? p.Name : "&" + p.Name,
                             indirection_levels[p.IndirectionLevel]));
 
-                        if (p.Flow == FlowDirection.Out && p.Array == 0)  // Fixed Arrays of blittable types don't need explicit assignment.
+                        if (p.Name == "pixels_ptr")
+                            System.Diagnostics.Debugger.Break();
+
+                        // Arrays are not value types, so we don't need to do anything for them.
+                        // Pointers are passed directly by value, so we don't need to assign them back either (they don't change).
+                        if ((p.Flow == FlowDirection.Out || p.Flow == FlowDirection.Undefined) && p.Reference)
                         {
                             assign_statements.Add(String.Format("{0} = *{0}_ptr;", p.Name));
                         }
