@@ -281,6 +281,7 @@ namespace OpenTK.Graphics.ES11
             try
             {
                 Delegates.glBufferData((OpenTK.Graphics.ES11.All)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES11.All)usage);
+                data = (T2)data_ptr.Target;
             }
             finally
             {
@@ -507,6 +508,7 @@ namespace OpenTK.Graphics.ES11
             try
             {
                 Delegates.glBufferSubData((OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
+                data = (T3)data_ptr.Target;
             }
             finally
             {
@@ -1255,6 +1257,7 @@ namespace OpenTK.Graphics.ES11
             try
             {
                 Delegates.glColorPointer((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                pointer = (T3)pointer_ptr.Target;
             }
             finally
             {
@@ -1501,6 +1504,7 @@ namespace OpenTK.Graphics.ES11
             try
             {
                 Delegates.glCompressedTexImage2D((OpenTK.Graphics.ES11.All)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                data = (T7)data_ptr.Target;
             }
             finally
             {
@@ -1832,6 +1836,7 @@ namespace OpenTK.Graphics.ES11
             try
             {
                 Delegates.glCompressedTexSubImage2D((OpenTK.Graphics.ES11.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.All)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                data = (T8)data_ptr.Target;
             }
             finally
             {
@@ -2857,6 +2862,7 @@ namespace OpenTK.Graphics.ES11
             try
             {
                 Delegates.glDrawElements((OpenTK.Graphics.ES11.All)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                indices = (T3)indices_ptr.Target;
             }
             finally
             {
@@ -4843,6 +4849,7 @@ namespace OpenTK.Graphics.ES11
             try
             {
                 Delegates.glGetPointerv((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                @params = (T1)@params_ptr.Target;
             }
             finally
             {
@@ -6658,6 +6665,7 @@ namespace OpenTK.Graphics.ES11
             try
             {
                 Delegates.glNormalPointer((OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                pointer = (T2)pointer_ptr.Target;
             }
             finally
             {
@@ -7195,6 +7203,7 @@ namespace OpenTK.Graphics.ES11
             try
             {
                 Delegates.glReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                pixels = (T6)pixels_ptr.Target;
             }
             finally
             {
@@ -7760,6 +7769,7 @@ namespace OpenTK.Graphics.ES11
             try
             {
                 Delegates.glTexCoordPointer((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                pointer = (T3)pointer_ptr.Target;
             }
             finally
             {
@@ -8272,6 +8282,7 @@ namespace OpenTK.Graphics.ES11
             try
             {
                 Delegates.glTexImage2D((OpenTK.Graphics.ES11.All)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                pixels = (T8)pixels_ptr.Target;
             }
             finally
             {
@@ -8884,6 +8895,7 @@ namespace OpenTK.Graphics.ES11
             try
             {
                 Delegates.glTexSubImage2D((OpenTK.Graphics.ES11.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                pixels = (T8)pixels_ptr.Target;
             }
             finally
             {
@@ -9247,6 +9259,7 @@ namespace OpenTK.Graphics.ES11
             try
             {
                 Delegates.glVertexPointer((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                pointer = (T3)pointer_ptr.Target;
             }
             finally
             {
@@ -11318,6 +11331,7 @@ namespace OpenTK.Graphics.ES11
                 try
                 {
                     Delegates.glGetBufferPointervOES((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                    @params = (T2)@params_ptr.Target;
                 }
                 finally
                 {
@@ -12557,6 +12571,7 @@ namespace OpenTK.Graphics.ES11
                 try
                 {
                     Delegates.glMatrixIndexPointerOES((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    pointer = (T3)pointer_ptr.Target;
                 }
                 finally
                 {
@@ -12842,6 +12857,7 @@ namespace OpenTK.Graphics.ES11
                 try
                 {
                     Delegates.glPointSizePointerOES((OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    pointer = (T2)pointer_ptr.Target;
                 }
                 finally
                 {
@@ -13476,6 +13492,7 @@ namespace OpenTK.Graphics.ES11
                 try
                 {
                     Delegates.glWeightPointerOES((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    pointer = (T3)pointer_ptr.Target;
                 }
                 finally
                 {

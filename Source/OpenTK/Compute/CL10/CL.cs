@@ -46,7 +46,9 @@ namespace OpenTK.Compute.CL10
             GCHandle user_data_ptr = GCHandle.Alloc(user_data, GCHandleType.Pinned);
             try
             {
-                return Delegates.clBuildProgram((IntPtr)program, (uint)num_devices, (IntPtr*)device_list, (String)options, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject());
+                int retval = Delegates.clBuildProgram((IntPtr)program, (uint)num_devices, (IntPtr*)device_list, (String)options, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject());
+                user_data = (T5)user_data_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -125,7 +127,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle user_data_ptr = GCHandle.Alloc(user_data, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clBuildProgram((IntPtr)program, (uint)num_devices, (IntPtr*)device_list_ptr, (String)options, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject());
+                        int retval = Delegates.clBuildProgram((IntPtr)program, (uint)num_devices, (IntPtr*)device_list_ptr, (String)options, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject());
+                        user_data = (T5)user_data_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -226,7 +230,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle user_data_ptr = GCHandle.Alloc(user_data, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clBuildProgram((IntPtr)program, (uint)num_devices, (IntPtr*)device_list_ptr, (String)options, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject());
+                        int retval = Delegates.clBuildProgram((IntPtr)program, (uint)num_devices, (IntPtr*)device_list_ptr, (String)options, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject());
+                        user_data = (T5)user_data_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -324,7 +330,9 @@ namespace OpenTK.Compute.CL10
             GCHandle user_data_ptr = GCHandle.Alloc(user_data, GCHandleType.Pinned);
             try
             {
-                return Delegates.clBuildProgram((IntPtr)program, (uint)num_devices, (IntPtr*)device_list, (String)options, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject());
+                int retval = Delegates.clBuildProgram((IntPtr)program, (uint)num_devices, (IntPtr*)device_list, (String)options, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject());
+                user_data = (T5)user_data_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -404,7 +412,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle user_data_ptr = GCHandle.Alloc(user_data, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clBuildProgram((IntPtr)program, (uint)num_devices, (IntPtr*)device_list_ptr, (String)options, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject());
+                        int retval = Delegates.clBuildProgram((IntPtr)program, (uint)num_devices, (IntPtr*)device_list_ptr, (String)options, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject());
+                        user_data = (T5)user_data_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -510,7 +520,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle user_data_ptr = GCHandle.Alloc(user_data, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clBuildProgram((IntPtr)program, (uint)num_devices, (IntPtr*)device_list_ptr, (String)options, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject());
+                        int retval = Delegates.clBuildProgram((IntPtr)program, (uint)num_devices, (IntPtr*)device_list_ptr, (String)options, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject());
+                        user_data = (T5)user_data_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -612,7 +624,9 @@ namespace OpenTK.Compute.CL10
             GCHandle host_ptr_ptr = GCHandle.Alloc(host_ptr, GCHandleType.Pinned);
             try
             {
-                return Delegates.clCreateBuffer((IntPtr)context, (MemFlags)flags, (IntPtr)size, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (OpenTK.Compute.CL10.ErrorCode*)errcode_ret);
+                IntPtr retval = Delegates.clCreateBuffer((IntPtr)context, (MemFlags)flags, (IntPtr)size, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (OpenTK.Compute.CL10.ErrorCode*)errcode_ret);
+                host_ptr = (T3)host_ptr_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -632,7 +646,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle host_ptr_ptr = GCHandle.Alloc(host_ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clCreateBuffer((IntPtr)context, (MemFlags)flags, (IntPtr)size, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (OpenTK.Compute.CL10.ErrorCode*)errcode_ret_ptr);
+                        IntPtr retval = Delegates.clCreateBuffer((IntPtr)context, (MemFlags)flags, (IntPtr)size, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (OpenTK.Compute.CL10.ErrorCode*)errcode_ret_ptr);
+                        host_ptr = (T3)host_ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -655,6 +671,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         IntPtr retval = Delegates.clCreateBuffer((IntPtr)context, (MemFlags)flags, (IntPtr)size, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (OpenTK.Compute.CL10.ErrorCode*)errcode_ret_ptr);
+                        host_ptr = (T3)host_ptr_ptr.Target;
                         errcode_ret = *errcode_ret_ptr;
                         return retval;
                     }
@@ -936,7 +953,9 @@ namespace OpenTK.Compute.CL10
             GCHandle user_data_ptr = GCHandle.Alloc(user_data, GCHandleType.Pinned);
             try
             {
-                return Delegates.clCreateContext((ContextProperties*)properties, (uint)num_devices, (IntPtr*)devices, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (int*)errcode_ret);
+                IntPtr retval = Delegates.clCreateContext((ContextProperties*)properties, (uint)num_devices, (IntPtr*)devices, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (int*)errcode_ret);
+                user_data = (T4)user_data_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -1012,7 +1031,9 @@ namespace OpenTK.Compute.CL10
             GCHandle user_data_ptr = GCHandle.Alloc(user_data, GCHandleType.Pinned);
             try
             {
-                return Delegates.clCreateContext((ContextProperties*)properties, (uint)num_devices, (IntPtr*)devices, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (int*)errcode_ret);
+                IntPtr retval = Delegates.clCreateContext((ContextProperties*)properties, (uint)num_devices, (IntPtr*)devices, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (int*)errcode_ret);
+                user_data = (T4)user_data_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -1093,7 +1114,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle user_data_ptr = GCHandle.Alloc(user_data, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clCreateContext((ContextProperties*)properties_ptr, (uint)num_devices, (IntPtr*)devices_ptr, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (int*)errcode_ret_ptr);
+                        IntPtr retval = Delegates.clCreateContext((ContextProperties*)properties_ptr, (uint)num_devices, (IntPtr*)devices_ptr, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (int*)errcode_ret_ptr);
+                        user_data = (T4)user_data_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -1205,7 +1228,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle user_data_ptr = GCHandle.Alloc(user_data, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clCreateContext((ContextProperties*)properties_ptr, (uint)num_devices, (IntPtr*)devices_ptr, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (int*)errcode_ret_ptr);
+                        IntPtr retval = Delegates.clCreateContext((ContextProperties*)properties_ptr, (uint)num_devices, (IntPtr*)devices_ptr, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (int*)errcode_ret_ptr);
+                        user_data = (T4)user_data_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -1321,6 +1346,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         IntPtr retval = Delegates.clCreateContext((ContextProperties*)properties_ptr, (uint)num_devices, (IntPtr*)devices_ptr, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (int*)errcode_ret_ptr);
+                        user_data = (T4)user_data_ptr.Target;
                         errcode_ret = *errcode_ret_ptr;
                         return retval;
                     }
@@ -1443,6 +1469,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         IntPtr retval = Delegates.clCreateContext((ContextProperties*)properties_ptr, (uint)num_devices, (IntPtr*)devices_ptr, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (int*)errcode_ret_ptr);
+                        user_data = (T4)user_data_ptr.Target;
                         errcode_ret = *errcode_ret_ptr;
                         return retval;
                     }
@@ -1562,7 +1589,9 @@ namespace OpenTK.Compute.CL10
             GCHandle user_data_ptr = GCHandle.Alloc(user_data, GCHandleType.Pinned);
             try
             {
-                return Delegates.clCreateContextFromType((ContextProperties*)properties, (DeviceTypeFlags)device_type, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (OpenTK.Compute.CL10.ErrorCode*)errcode_ret);
+                IntPtr retval = Delegates.clCreateContextFromType((ContextProperties*)properties, (DeviceTypeFlags)device_type, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (OpenTK.Compute.CL10.ErrorCode*)errcode_ret);
+                user_data = (T3)user_data_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -1642,7 +1671,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle user_data_ptr = GCHandle.Alloc(user_data, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clCreateContextFromType((ContextProperties*)properties_ptr, (DeviceTypeFlags)device_type, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (OpenTK.Compute.CL10.ErrorCode*)errcode_ret_ptr);
+                        IntPtr retval = Delegates.clCreateContextFromType((ContextProperties*)properties_ptr, (DeviceTypeFlags)device_type, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (OpenTK.Compute.CL10.ErrorCode*)errcode_ret_ptr);
+                        user_data = (T3)user_data_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -1749,6 +1780,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         IntPtr retval = Delegates.clCreateContextFromType((ContextProperties*)properties_ptr, (DeviceTypeFlags)device_type, (IntPtr)pfn_notify, (IntPtr)user_data_ptr.AddrOfPinnedObject(), (OpenTK.Compute.CL10.ErrorCode*)errcode_ret_ptr);
+                        user_data = (T3)user_data_ptr.Target;
                         errcode_ret = *errcode_ret_ptr;
                         return retval;
                     }
@@ -1860,7 +1892,9 @@ namespace OpenTK.Compute.CL10
             GCHandle host_ptr_ptr = GCHandle.Alloc(host_ptr, GCHandleType.Pinned);
             try
             {
-                return Delegates.clCreateImage2D((IntPtr)context, (MemFlags)flags, (ImageFormat*)image_format, (IntPtr)image_width, (IntPtr)image_height, (IntPtr)image_row_pitch, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (int*)errcode_ret);
+                IntPtr retval = Delegates.clCreateImage2D((IntPtr)context, (MemFlags)flags, (ImageFormat*)image_format, (IntPtr)image_width, (IntPtr)image_height, (IntPtr)image_row_pitch, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (int*)errcode_ret);
+                host_ptr = (T6)host_ptr_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -1940,7 +1974,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle host_ptr_ptr = GCHandle.Alloc(host_ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clCreateImage2D((IntPtr)context, (MemFlags)flags, (ImageFormat*)image_format_ptr, (IntPtr)image_width, (IntPtr)image_height, (IntPtr)image_row_pitch, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (int*)errcode_ret_ptr);
+                        IntPtr retval = Delegates.clCreateImage2D((IntPtr)context, (MemFlags)flags, (ImageFormat*)image_format_ptr, (IntPtr)image_width, (IntPtr)image_height, (IntPtr)image_row_pitch, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (int*)errcode_ret_ptr);
+                        host_ptr = (T6)host_ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -2047,6 +2083,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         IntPtr retval = Delegates.clCreateImage2D((IntPtr)context, (MemFlags)flags, (ImageFormat*)image_format_ptr, (IntPtr)image_width, (IntPtr)image_height, (IntPtr)image_row_pitch, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (int*)errcode_ret_ptr);
+                        host_ptr = (T6)host_ptr_ptr.Target;
                         errcode_ret = *errcode_ret_ptr;
                         return retval;
                     }
@@ -2158,7 +2195,9 @@ namespace OpenTK.Compute.CL10
             GCHandle host_ptr_ptr = GCHandle.Alloc(host_ptr, GCHandleType.Pinned);
             try
             {
-                return Delegates.clCreateImage3D((IntPtr)context, (MemFlags)flags, (ImageFormat*)image_format, (IntPtr)image_width, (IntPtr)image_height, (IntPtr)image_depth, (IntPtr)image_row_pitch, (IntPtr)image_slice_pitch, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (int*)errcode_ret);
+                IntPtr retval = Delegates.clCreateImage3D((IntPtr)context, (MemFlags)flags, (ImageFormat*)image_format, (IntPtr)image_width, (IntPtr)image_height, (IntPtr)image_depth, (IntPtr)image_row_pitch, (IntPtr)image_slice_pitch, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (int*)errcode_ret);
+                host_ptr = (T8)host_ptr_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -2238,7 +2277,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle host_ptr_ptr = GCHandle.Alloc(host_ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clCreateImage3D((IntPtr)context, (MemFlags)flags, (ImageFormat*)image_format_ptr, (IntPtr)image_width, (IntPtr)image_height, (IntPtr)image_depth, (IntPtr)image_row_pitch, (IntPtr)image_slice_pitch, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (int*)errcode_ret_ptr);
+                        IntPtr retval = Delegates.clCreateImage3D((IntPtr)context, (MemFlags)flags, (ImageFormat*)image_format_ptr, (IntPtr)image_width, (IntPtr)image_height, (IntPtr)image_depth, (IntPtr)image_row_pitch, (IntPtr)image_slice_pitch, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (int*)errcode_ret_ptr);
+                        host_ptr = (T8)host_ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -2345,6 +2386,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         IntPtr retval = Delegates.clCreateImage3D((IntPtr)context, (MemFlags)flags, (ImageFormat*)image_format_ptr, (IntPtr)image_width, (IntPtr)image_height, (IntPtr)image_depth, (IntPtr)image_row_pitch, (IntPtr)image_slice_pitch, (IntPtr)host_ptr_ptr.AddrOfPinnedObject(), (int*)errcode_ret_ptr);
+                        host_ptr = (T8)host_ptr_ptr.Target;
                         errcode_ret = *errcode_ret_ptr;
                         return retval;
                     }
@@ -3267,7 +3309,9 @@ namespace OpenTK.Compute.CL10
             GCHandle args_mem_loc_ptr = GCHandle.Alloc(args_mem_loc, GCHandleType.Pinned);
             try
             {
-                return Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args_ptr.AddrOfPinnedObject(), (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                int retval = Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args_ptr.AddrOfPinnedObject(), (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                args = (T2)args_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -3292,7 +3336,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle args_mem_loc_ptr = GCHandle.Alloc(args_mem_loc, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args_ptr.AddrOfPinnedObject(), (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args_ptr.AddrOfPinnedObject(), (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        args = (T2)args_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -3319,7 +3365,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle args_mem_loc_ptr = GCHandle.Alloc(args_mem_loc, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args_ptr.AddrOfPinnedObject(), (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args_ptr.AddrOfPinnedObject(), (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        args = (T2)args_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -3341,7 +3389,9 @@ namespace OpenTK.Compute.CL10
             GCHandle args_mem_loc_ptr = GCHandle.Alloc(args_mem_loc, GCHandleType.Pinned);
             try
             {
-                return Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args_ptr.AddrOfPinnedObject(), (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                int retval = Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args_ptr.AddrOfPinnedObject(), (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                args = (T2)args_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -3367,7 +3417,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle args_mem_loc_ptr = GCHandle.Alloc(args_mem_loc, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args_ptr.AddrOfPinnedObject(), (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args_ptr.AddrOfPinnedObject(), (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        args = (T2)args_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -3395,7 +3447,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle args_mem_loc_ptr = GCHandle.Alloc(args_mem_loc, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args_ptr.AddrOfPinnedObject(), (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args_ptr.AddrOfPinnedObject(), (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        args = (T2)args_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -3865,7 +3919,9 @@ namespace OpenTK.Compute.CL10
             GCHandle args_mem_loc_ptr = GCHandle.Alloc(args_mem_loc, GCHandleType.Pinned);
             try
             {
-                return Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args, (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                int retval = Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args, (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                args_mem_loc = (T6)args_mem_loc_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -3946,7 +4002,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle args_mem_loc_ptr = GCHandle.Alloc(args_mem_loc, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args, (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args, (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        args_mem_loc = (T6)args_mem_loc_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -4057,7 +4115,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle args_mem_loc_ptr = GCHandle.Alloc(args_mem_loc, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args, (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args, (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        args_mem_loc = (T6)args_mem_loc_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -4163,7 +4223,9 @@ namespace OpenTK.Compute.CL10
             GCHandle args_mem_loc_ptr = GCHandle.Alloc(args_mem_loc, GCHandleType.Pinned);
             try
             {
-                return Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args, (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                int retval = Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args, (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                args_mem_loc = (T6)args_mem_loc_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -4245,7 +4307,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle args_mem_loc_ptr = GCHandle.Alloc(args_mem_loc, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args, (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args, (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        args_mem_loc = (T6)args_mem_loc_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -4361,7 +4425,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle args_mem_loc_ptr = GCHandle.Alloc(args_mem_loc, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args, (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueNativeKernel((IntPtr)command_queue, (IntPtr)user_func, (IntPtr)args, (IntPtr)cb_args, (uint)num_mem_objects, (IntPtr*)mem_list_ptr, (IntPtr)args_mem_loc_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        args_mem_loc = (T6)args_mem_loc_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -4557,7 +4623,9 @@ namespace OpenTK.Compute.CL10
             GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
             try
             {
-                return Delegates.clEnqueueReadBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_read, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                int retval = Delegates.clEnqueueReadBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_read, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                ptr = (T5)ptr_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -4578,7 +4646,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueReadBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_read, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueReadBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_read, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        ptr = (T5)ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -4601,7 +4671,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueReadBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_read, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueReadBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_read, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        ptr = (T5)ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -4620,7 +4692,9 @@ namespace OpenTK.Compute.CL10
             GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
             try
             {
-                return Delegates.clEnqueueReadBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_read, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                int retval = Delegates.clEnqueueReadBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_read, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                ptr = (T5)ptr_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -4642,7 +4716,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueReadBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_read, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueReadBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_read, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        ptr = (T5)ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -4666,7 +4742,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueReadBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_read, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueReadBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_read, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        ptr = (T5)ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -5143,7 +5221,9 @@ namespace OpenTK.Compute.CL10
             GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
             try
             {
-                return Delegates.clEnqueueReadImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_read, (IntPtr**)origin, (IntPtr**)region, (IntPtr)row_pitch, (IntPtr)slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                int retval = Delegates.clEnqueueReadImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_read, (IntPtr**)origin, (IntPtr**)region, (IntPtr)row_pitch, (IntPtr)slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                ptr = (T7)ptr_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -5160,7 +5240,9 @@ namespace OpenTK.Compute.CL10
             GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
             try
             {
-                return Delegates.clEnqueueReadImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_read, (IntPtr**)origin, (IntPtr**)region, (IntPtr)row_pitch, (IntPtr)slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                int retval = Delegates.clEnqueueReadImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_read, (IntPtr**)origin, (IntPtr**)region, (IntPtr)row_pitch, (IntPtr)slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                ptr = (T7)ptr_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -5300,7 +5382,9 @@ namespace OpenTK.Compute.CL10
                 GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                 try
                 {
-                    return Delegates.clEnqueueReadImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_read, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)row_pitch, (IntPtr)slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    int retval = Delegates.clEnqueueReadImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_read, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)row_pitch, (IntPtr)slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    ptr = (T7)ptr_ptr.Target;
+                    return retval;
                 }
                 finally
                 {
@@ -5323,7 +5407,9 @@ namespace OpenTK.Compute.CL10
                 GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                 try
                 {
-                    return Delegates.clEnqueueReadImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_read, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)row_pitch, (IntPtr)slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    int retval = Delegates.clEnqueueReadImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_read, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)row_pitch, (IntPtr)slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    ptr = (T7)ptr_ptr.Target;
+                    return retval;
                 }
                 finally
                 {
@@ -5512,7 +5598,9 @@ namespace OpenTK.Compute.CL10
                 GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                 try
                 {
-                    return Delegates.clEnqueueReadImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_read, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)row_pitch, (IntPtr)slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    int retval = Delegates.clEnqueueReadImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_read, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)row_pitch, (IntPtr)slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    ptr = (T7)ptr_ptr.Target;
+                    return retval;
                 }
                 finally
                 {
@@ -5535,7 +5623,9 @@ namespace OpenTK.Compute.CL10
                 GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                 try
                 {
-                    return Delegates.clEnqueueReadImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_read, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)row_pitch, (IntPtr)slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    int retval = Delegates.clEnqueueReadImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_read, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)row_pitch, (IntPtr)slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    ptr = (T7)ptr_ptr.Target;
+                    return retval;
                 }
                 finally
                 {
@@ -5793,7 +5883,9 @@ namespace OpenTK.Compute.CL10
             GCHandle mapped_ptr_ptr = GCHandle.Alloc(mapped_ptr, GCHandleType.Pinned);
             try
             {
-                return Delegates.clEnqueueUnmapMemObject((IntPtr)command_queue, (IntPtr)memobj, (IntPtr)mapped_ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                int retval = Delegates.clEnqueueUnmapMemObject((IntPtr)command_queue, (IntPtr)memobj, (IntPtr)mapped_ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                mapped_ptr = (T2)mapped_ptr_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -5814,7 +5906,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle mapped_ptr_ptr = GCHandle.Alloc(mapped_ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueUnmapMemObject((IntPtr)command_queue, (IntPtr)memobj, (IntPtr)mapped_ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueUnmapMemObject((IntPtr)command_queue, (IntPtr)memobj, (IntPtr)mapped_ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        mapped_ptr = (T2)mapped_ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -5837,7 +5931,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle mapped_ptr_ptr = GCHandle.Alloc(mapped_ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueUnmapMemObject((IntPtr)command_queue, (IntPtr)memobj, (IntPtr)mapped_ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueUnmapMemObject((IntPtr)command_queue, (IntPtr)memobj, (IntPtr)mapped_ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        mapped_ptr = (T2)mapped_ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -5856,7 +5952,9 @@ namespace OpenTK.Compute.CL10
             GCHandle mapped_ptr_ptr = GCHandle.Alloc(mapped_ptr, GCHandleType.Pinned);
             try
             {
-                return Delegates.clEnqueueUnmapMemObject((IntPtr)command_queue, (IntPtr)memobj, (IntPtr)mapped_ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                int retval = Delegates.clEnqueueUnmapMemObject((IntPtr)command_queue, (IntPtr)memobj, (IntPtr)mapped_ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                mapped_ptr = (T2)mapped_ptr_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -5878,7 +5976,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle mapped_ptr_ptr = GCHandle.Alloc(mapped_ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueUnmapMemObject((IntPtr)command_queue, (IntPtr)memobj, (IntPtr)mapped_ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueUnmapMemObject((IntPtr)command_queue, (IntPtr)memobj, (IntPtr)mapped_ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        mapped_ptr = (T2)mapped_ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -5902,7 +6002,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle mapped_ptr_ptr = GCHandle.Alloc(mapped_ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueUnmapMemObject((IntPtr)command_queue, (IntPtr)memobj, (IntPtr)mapped_ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueUnmapMemObject((IntPtr)command_queue, (IntPtr)memobj, (IntPtr)mapped_ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        mapped_ptr = (T2)mapped_ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -6449,7 +6551,9 @@ namespace OpenTK.Compute.CL10
             GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
             try
             {
-                return Delegates.clEnqueueWriteBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_write, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                int retval = Delegates.clEnqueueWriteBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_write, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                ptr = (T5)ptr_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -6470,7 +6574,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueWriteBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_write, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueWriteBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_write, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        ptr = (T5)ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -6493,7 +6599,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueWriteBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_write, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueWriteBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_write, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        ptr = (T5)ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -6512,7 +6620,9 @@ namespace OpenTK.Compute.CL10
             GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
             try
             {
-                return Delegates.clEnqueueWriteBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_write, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                int retval = Delegates.clEnqueueWriteBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_write, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                ptr = (T5)ptr_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -6534,7 +6644,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueWriteBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_write, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueWriteBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_write, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        ptr = (T5)ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -6558,7 +6670,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clEnqueueWriteBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_write, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        int retval = Delegates.clEnqueueWriteBuffer((IntPtr)command_queue, (IntPtr)buffer, (bool)blocking_write, (IntPtr)offset, (IntPtr)cb, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                        ptr = (T5)ptr_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -7035,7 +7149,9 @@ namespace OpenTK.Compute.CL10
             GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
             try
             {
-                return Delegates.clEnqueueWriteImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_write, (IntPtr**)origin, (IntPtr**)region, (IntPtr)input_row_pitch, (IntPtr)input_slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                int retval = Delegates.clEnqueueWriteImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_write, (IntPtr**)origin, (IntPtr**)region, (IntPtr)input_row_pitch, (IntPtr)input_slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                ptr = (T7)ptr_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -7052,7 +7168,9 @@ namespace OpenTK.Compute.CL10
             GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
             try
             {
-                return Delegates.clEnqueueWriteImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_write, (IntPtr**)origin, (IntPtr**)region, (IntPtr)input_row_pitch, (IntPtr)input_slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                int retval = Delegates.clEnqueueWriteImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_write, (IntPtr**)origin, (IntPtr**)region, (IntPtr)input_row_pitch, (IntPtr)input_slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list, (IntPtr*)@event);
+                ptr = (T7)ptr_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -7192,7 +7310,9 @@ namespace OpenTK.Compute.CL10
                 GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                 try
                 {
-                    return Delegates.clEnqueueWriteImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_write, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)input_row_pitch, (IntPtr)input_slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    int retval = Delegates.clEnqueueWriteImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_write, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)input_row_pitch, (IntPtr)input_slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    ptr = (T7)ptr_ptr.Target;
+                    return retval;
                 }
                 finally
                 {
@@ -7215,7 +7335,9 @@ namespace OpenTK.Compute.CL10
                 GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                 try
                 {
-                    return Delegates.clEnqueueWriteImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_write, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)input_row_pitch, (IntPtr)input_slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    int retval = Delegates.clEnqueueWriteImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_write, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)input_row_pitch, (IntPtr)input_slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    ptr = (T7)ptr_ptr.Target;
+                    return retval;
                 }
                 finally
                 {
@@ -7404,7 +7526,9 @@ namespace OpenTK.Compute.CL10
                 GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                 try
                 {
-                    return Delegates.clEnqueueWriteImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_write, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)input_row_pitch, (IntPtr)input_slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    int retval = Delegates.clEnqueueWriteImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_write, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)input_row_pitch, (IntPtr)input_slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    ptr = (T7)ptr_ptr.Target;
+                    return retval;
                 }
                 finally
                 {
@@ -7427,7 +7551,9 @@ namespace OpenTK.Compute.CL10
                 GCHandle ptr_ptr = GCHandle.Alloc(ptr, GCHandleType.Pinned);
                 try
                 {
-                    return Delegates.clEnqueueWriteImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_write, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)input_row_pitch, (IntPtr)input_slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    int retval = Delegates.clEnqueueWriteImage((IntPtr)command_queue, (IntPtr)image, (bool)blocking_write, (IntPtr**)origin_ptr, (IntPtr**)region_ptr, (IntPtr)input_row_pitch, (IntPtr)input_slice_pitch, (IntPtr)ptr_ptr.AddrOfPinnedObject(), (uint)num_events_in_wait_list, (IntPtr*)event_wait_list_ptr, (IntPtr*)@event_ptr);
+                    ptr = (T7)ptr_ptr.Target;
+                    return retval;
                 }
                 finally
                 {
@@ -7625,7 +7751,9 @@ namespace OpenTK.Compute.CL10
             GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clGetCommandQueueInfo((IntPtr)command_queue, (CommandQueueInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                int retval = Delegates.clGetCommandQueueInfo((IntPtr)command_queue, (CommandQueueInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                param_value = (T3)param_value_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -7645,7 +7773,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clGetCommandQueueInfo((IntPtr)command_queue, (CommandQueueInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        int retval = Delegates.clGetCommandQueueInfo((IntPtr)command_queue, (CommandQueueInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -7668,6 +7798,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         int retval = Delegates.clGetCommandQueueInfo((IntPtr)command_queue, (CommandQueueInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
                         param_value_size_ret = *param_value_size_ret_ptr;
                         return retval;
                     }
@@ -7913,7 +8044,9 @@ namespace OpenTK.Compute.CL10
             GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clGetContextInfo((IntPtr)context, (ContextInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                int retval = Delegates.clGetContextInfo((IntPtr)context, (ContextInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                param_value = (T3)param_value_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -7933,7 +8066,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clGetContextInfo((IntPtr)context, (ContextInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        int retval = Delegates.clGetContextInfo((IntPtr)context, (ContextInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -7956,6 +8091,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         int retval = Delegates.clGetContextInfo((IntPtr)context, (ContextInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
                         param_value_size_ret = *param_value_size_ret_ptr;
                         return retval;
                     }
@@ -8275,7 +8411,9 @@ namespace OpenTK.Compute.CL10
             GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clGetDeviceInfo((IntPtr)device, (DeviceInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                int retval = Delegates.clGetDeviceInfo((IntPtr)device, (DeviceInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                param_value = (T3)param_value_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -8295,7 +8433,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clGetDeviceInfo((IntPtr)device, (DeviceInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        int retval = Delegates.clGetDeviceInfo((IntPtr)device, (DeviceInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -8318,6 +8458,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         int retval = Delegates.clGetDeviceInfo((IntPtr)device, (DeviceInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
                         param_value_size_ret = *param_value_size_ret_ptr;
                         return retval;
                     }
@@ -8563,7 +8704,9 @@ namespace OpenTK.Compute.CL10
             GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clGetEventInfo((IntPtr)@event, (EventInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                int retval = Delegates.clGetEventInfo((IntPtr)@event, (EventInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                param_value = (T3)param_value_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -8583,7 +8726,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clGetEventInfo((IntPtr)@event, (EventInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        int retval = Delegates.clGetEventInfo((IntPtr)@event, (EventInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -8606,6 +8751,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         int retval = Delegates.clGetEventInfo((IntPtr)@event, (EventInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
                         param_value_size_ret = *param_value_size_ret_ptr;
                         return retval;
                     }
@@ -8851,7 +8997,9 @@ namespace OpenTK.Compute.CL10
             GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clGetEventProfilingInfo((IntPtr)@event, (ProfilingInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                int retval = Delegates.clGetEventProfilingInfo((IntPtr)@event, (ProfilingInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                param_value = (T3)param_value_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -8871,7 +9019,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clGetEventProfilingInfo((IntPtr)@event, (ProfilingInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        int retval = Delegates.clGetEventProfilingInfo((IntPtr)@event, (ProfilingInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -8894,6 +9044,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         int retval = Delegates.clGetEventProfilingInfo((IntPtr)@event, (ProfilingInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
                         param_value_size_ret = *param_value_size_ret_ptr;
                         return retval;
                     }
@@ -9139,7 +9290,9 @@ namespace OpenTK.Compute.CL10
             GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clGetImageInfo((IntPtr)image, (ImageInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                int retval = Delegates.clGetImageInfo((IntPtr)image, (ImageInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                param_value = (T3)param_value_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -9159,7 +9312,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clGetImageInfo((IntPtr)image, (ImageInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        int retval = Delegates.clGetImageInfo((IntPtr)image, (ImageInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -9182,6 +9337,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         int retval = Delegates.clGetImageInfo((IntPtr)image, (ImageInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
                         param_value_size_ret = *param_value_size_ret_ptr;
                         return retval;
                     }
@@ -9427,7 +9583,9 @@ namespace OpenTK.Compute.CL10
             GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clGetKernelInfo((IntPtr)kernel, (KernelInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                int retval = Delegates.clGetKernelInfo((IntPtr)kernel, (KernelInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                param_value = (T3)param_value_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -9447,7 +9605,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clGetKernelInfo((IntPtr)kernel, (KernelInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        int retval = Delegates.clGetKernelInfo((IntPtr)kernel, (KernelInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -9470,6 +9630,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         int retval = Delegates.clGetKernelInfo((IntPtr)kernel, (KernelInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
                         param_value_size_ret = *param_value_size_ret_ptr;
                         return retval;
                     }
@@ -9715,7 +9876,9 @@ namespace OpenTK.Compute.CL10
             GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clGetKernelWorkGroupInfo((IntPtr)kernel, (IntPtr)device, (KernelWorkGroupInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                int retval = Delegates.clGetKernelWorkGroupInfo((IntPtr)kernel, (IntPtr)device, (KernelWorkGroupInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                param_value = (T4)param_value_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -9735,7 +9898,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clGetKernelWorkGroupInfo((IntPtr)kernel, (IntPtr)device, (KernelWorkGroupInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        int retval = Delegates.clGetKernelWorkGroupInfo((IntPtr)kernel, (IntPtr)device, (KernelWorkGroupInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T4)param_value_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -9758,6 +9923,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         int retval = Delegates.clGetKernelWorkGroupInfo((IntPtr)kernel, (IntPtr)device, (KernelWorkGroupInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T4)param_value_ptr.Target;
                         param_value_size_ret = *param_value_size_ret_ptr;
                         return retval;
                     }
@@ -10003,7 +10169,9 @@ namespace OpenTK.Compute.CL10
             GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clGetMemObjectInfo((IntPtr)memobj, (MemInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                int retval = Delegates.clGetMemObjectInfo((IntPtr)memobj, (MemInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                param_value = (T3)param_value_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -10023,7 +10191,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clGetMemObjectInfo((IntPtr)memobj, (MemInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        int retval = Delegates.clGetMemObjectInfo((IntPtr)memobj, (MemInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -10046,6 +10216,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         int retval = Delegates.clGetMemObjectInfo((IntPtr)memobj, (MemInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
                         param_value_size_ret = *param_value_size_ret_ptr;
                         return retval;
                     }
@@ -10365,7 +10536,9 @@ namespace OpenTK.Compute.CL10
             GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clGetPlatformInfo((IntPtr)platform, (PlatformInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                int retval = Delegates.clGetPlatformInfo((IntPtr)platform, (PlatformInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                param_value = (T3)param_value_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -10385,7 +10558,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clGetPlatformInfo((IntPtr)platform, (PlatformInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        int retval = Delegates.clGetPlatformInfo((IntPtr)platform, (PlatformInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -10408,6 +10583,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         int retval = Delegates.clGetPlatformInfo((IntPtr)platform, (PlatformInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
                         param_value_size_ret = *param_value_size_ret_ptr;
                         return retval;
                     }
@@ -10653,7 +10829,9 @@ namespace OpenTK.Compute.CL10
             GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clGetProgramBuildInfo((IntPtr)program, (IntPtr)device, (ProgramBuildInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                int retval = Delegates.clGetProgramBuildInfo((IntPtr)program, (IntPtr)device, (ProgramBuildInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                param_value = (T4)param_value_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -10673,7 +10851,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clGetProgramBuildInfo((IntPtr)program, (IntPtr)device, (ProgramBuildInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        int retval = Delegates.clGetProgramBuildInfo((IntPtr)program, (IntPtr)device, (ProgramBuildInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T4)param_value_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -10696,6 +10876,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         int retval = Delegates.clGetProgramBuildInfo((IntPtr)program, (IntPtr)device, (ProgramBuildInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T4)param_value_ptr.Target;
                         param_value_size_ret = *param_value_size_ret_ptr;
                         return retval;
                     }
@@ -10941,7 +11122,9 @@ namespace OpenTK.Compute.CL10
             GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clGetProgramInfo((IntPtr)program, (ProgramInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                int retval = Delegates.clGetProgramInfo((IntPtr)program, (ProgramInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                param_value = (T3)param_value_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -10961,7 +11144,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clGetProgramInfo((IntPtr)program, (ProgramInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        int retval = Delegates.clGetProgramInfo((IntPtr)program, (ProgramInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -10984,6 +11169,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         int retval = Delegates.clGetProgramInfo((IntPtr)program, (ProgramInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
                         param_value_size_ret = *param_value_size_ret_ptr;
                         return retval;
                     }
@@ -11229,7 +11415,9 @@ namespace OpenTK.Compute.CL10
             GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clGetSamplerInfo((IntPtr)sampler, (SamplerInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                int retval = Delegates.clGetSamplerInfo((IntPtr)sampler, (SamplerInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret);
+                param_value = (T3)param_value_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -11249,7 +11437,9 @@ namespace OpenTK.Compute.CL10
                     GCHandle param_value_ptr = GCHandle.Alloc(param_value, GCHandleType.Pinned);
                     try
                     {
-                        return Delegates.clGetSamplerInfo((IntPtr)sampler, (SamplerInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        int retval = Delegates.clGetSamplerInfo((IntPtr)sampler, (SamplerInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
+                        return retval;
                     }
                     finally
                     {
@@ -11272,6 +11462,7 @@ namespace OpenTK.Compute.CL10
                     try
                     {
                         int retval = Delegates.clGetSamplerInfo((IntPtr)sampler, (SamplerInfo)param_name, (IntPtr)param_value_size, (IntPtr)param_value_ptr.AddrOfPinnedObject(), (IntPtr*)param_value_size_ret_ptr);
+                        param_value = (T3)param_value_ptr.Target;
                         param_value_size_ret = *param_value_size_ret_ptr;
                         return retval;
                     }
@@ -11722,7 +11913,9 @@ namespace OpenTK.Compute.CL10
             GCHandle arg_value_ptr = GCHandle.Alloc(arg_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clSetKernelArg((IntPtr)kernel, (uint)arg_index, (IntPtr)arg_size, (IntPtr)arg_value_ptr.AddrOfPinnedObject());
+                int retval = Delegates.clSetKernelArg((IntPtr)kernel, (uint)arg_index, (IntPtr)arg_size, (IntPtr)arg_value_ptr.AddrOfPinnedObject());
+                arg_value = (T3)arg_value_ptr.Target;
+                return retval;
             }
             finally
             {
@@ -11794,7 +11987,9 @@ namespace OpenTK.Compute.CL10
             GCHandle arg_value_ptr = GCHandle.Alloc(arg_value, GCHandleType.Pinned);
             try
             {
-                return Delegates.clSetKernelArg((IntPtr)kernel, (uint)arg_index, (IntPtr)arg_size, (IntPtr)arg_value_ptr.AddrOfPinnedObject());
+                int retval = Delegates.clSetKernelArg((IntPtr)kernel, (uint)arg_index, (IntPtr)arg_size, (IntPtr)arg_value_ptr.AddrOfPinnedObject());
+                arg_value = (T3)arg_value_ptr.Target;
+                return retval;
             }
             finally
             {
