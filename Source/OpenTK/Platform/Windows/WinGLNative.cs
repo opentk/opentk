@@ -143,7 +143,7 @@ namespace OpenTK.Platform.Windows
 
             switch (message)
             {
-                #region Size / Move events
+                #region Size / Move / Style events
 
                 case WindowMessage.ACTIVATE:
                     break;
@@ -781,17 +781,14 @@ namespace OpenTK.Platform.Windows
             get
             {
                 sb_title.Remove(0, sb_title.Length);
-                Functions.GetWindowText(window.WindowHandle, sb_title, sb_title.MaxCapacity);
+                if (Functions.GetWindowText(window.WindowHandle, sb_title, sb_title.MaxCapacity) == 0)
+                    Debug.Print("Failed to retrieve window title (window:{0}, reason:{2}).", window.WindowHandle, Marshal.GetLastWin32Error());
                 return sb_title.ToString();
             }
             set
             {
-                bool ret = Functions.SetWindowText(window.WindowHandle, value);
-
-                if (ret)
-                    Debug.Print("Window {0} title changed to '{1}'.", window.WindowHandle, Title);
-                else
-                    Debug.Print("Window {0} title failed to change to '{1}'.", window.WindowHandle, Title);
+                if (!Functions.SetWindowText(window.WindowHandle, value))
+                    Debug.Print("Failed to change window title (window:{0}, new title:{1}, reason:{2}).", window.WindowHandle, value, Marshal.GetLastWin32Error());
             }
         }
 
