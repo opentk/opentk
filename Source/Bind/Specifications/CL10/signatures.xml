@@ -168,7 +168,7 @@
     <token name="DEVICE_TYPE_DEFAULT" value="(1 &lt;&lt; 0)" />
     <token name="DEVICE_TYPE_GPU" value="(1 &lt;&lt; 2)" />
   </enum>
-  <enum name="ErrorCodes" type="int">
+  <enum name="ErrorCode" type="int">
     <token name="BUILD_PROGRAM_FAILURE" value="-11" />
     <token name="COMPILER_NOT_AVAILABLE" value="-3" />
     <token name="DEVICE_NOT_AVAILABLE" value="-2" />
@@ -839,4 +839,3 @@
     <param type="cl_event*" name="event_list" flow="in" />
   </function>
 </signatures>
-

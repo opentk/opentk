@@ -599,7 +599,7 @@ namespace Bind.Structures
             if (overrides == null)
                 throw new ArgumentNullException("overrides");
 
-            string path = "/overrides/function[@name='{0}' and @extension='{1}']";
+            string path = "/overrides/replace/function[@name='{0}' and @extension='{1}']";
             string name = TrimName(Name, false);
             XPathNavigator function_override = overrides.CreateNavigator().SelectSingleNode(String.Format(path, name, Extension));
 

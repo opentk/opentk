@@ -450,6 +450,7 @@ namespace OpenTK.Graphics.ES20
                 try
                 {
                     Delegates.glGetPerfMonitorCounterInfoAMD((UInt32)group, (UInt32)counter, (OpenTK.Graphics.ES20.All)pname, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    data = (T3)data_ptr.Target;
                 }
                 finally
                 {
@@ -557,6 +558,7 @@ namespace OpenTK.Graphics.ES20
                 try
                 {
                     Delegates.glGetPerfMonitorCounterInfoAMD((UInt32)group, (UInt32)counter, (OpenTK.Graphics.ES20.All)pname, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    data = (T3)data_ptr.Target;
                 }
                 finally
                 {
@@ -1724,6 +1726,7 @@ namespace OpenTK.Graphics.ES20
             try
             {
                 Delegates.glBufferData((OpenTK.Graphics.ES20.All)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES20.All)usage);
+                data = (T2)data_ptr.Target;
             }
             finally
             {
@@ -1950,6 +1953,7 @@ namespace OpenTK.Graphics.ES20
             try
             {
                 Delegates.glBufferSubData((OpenTK.Graphics.ES20.All)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
+                data = (T3)data_ptr.Target;
             }
             finally
             {
@@ -2396,6 +2400,7 @@ namespace OpenTK.Graphics.ES20
             try
             {
                 Delegates.glCompressedTexImage2D((OpenTK.Graphics.ES20.All)target, (Int32)level, (OpenTK.Graphics.ES20.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                data = (T7)data_ptr.Target;
             }
             finally
             {
@@ -2727,6 +2732,7 @@ namespace OpenTK.Graphics.ES20
             try
             {
                 Delegates.glCompressedTexSubImage2D((OpenTK.Graphics.ES20.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.All)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                data = (T8)data_ptr.Target;
             }
             finally
             {
@@ -4169,6 +4175,7 @@ namespace OpenTK.Graphics.ES20
             try
             {
                 Delegates.glDrawElements((OpenTK.Graphics.ES20.All)mode, (Int32)count, (OpenTK.Graphics.ES20.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                indices = (T3)indices_ptr.Target;
             }
             finally
             {
@@ -9373,6 +9380,7 @@ namespace OpenTK.Graphics.ES20
             try
             {
                 Delegates.glGetVertexAttribPointerv((UInt32)index, (OpenTK.Graphics.ES20.All)pname, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                pointer = (T2)pointer_ptr.Target;
             }
             finally
             {
@@ -9575,6 +9583,7 @@ namespace OpenTK.Graphics.ES20
             try
             {
                 Delegates.glGetVertexAttribPointerv((UInt32)index, (OpenTK.Graphics.ES20.All)pname, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                pointer = (T2)pointer_ptr.Target;
             }
             finally
             {
@@ -10213,6 +10222,7 @@ namespace OpenTK.Graphics.ES20
             try
             {
                 Delegates.glReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.All)format, (OpenTK.Graphics.ES20.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                pixels = (T6)pixels_ptr.Target;
             }
             finally
             {
@@ -10520,6 +10530,7 @@ namespace OpenTK.Graphics.ES20
             try
             {
                 Delegates.glShaderBinary((Int32)n, (UInt32*)shaders, (OpenTK.Graphics.ES20.All)binaryformat, (IntPtr)binary_ptr.AddrOfPinnedObject(), (Int32)length);
+                binary = (T3)binary_ptr.Target;
             }
             finally
             {
@@ -10634,6 +10645,7 @@ namespace OpenTK.Graphics.ES20
                     try
                     {
                         Delegates.glShaderBinary((Int32)n, (UInt32*)shaders_ptr, (OpenTK.Graphics.ES20.All)binaryformat, (IntPtr)binary_ptr.AddrOfPinnedObject(), (Int32)length);
+                        binary = (T3)binary_ptr.Target;
                     }
                     finally
                     {
@@ -10770,6 +10782,7 @@ namespace OpenTK.Graphics.ES20
                     try
                     {
                         Delegates.glShaderBinary((Int32)n, (UInt32*)shaders_ptr, (OpenTK.Graphics.ES20.All)binaryformat, (IntPtr)binary_ptr.AddrOfPinnedObject(), (Int32)length);
+                        binary = (T3)binary_ptr.Target;
                     }
                     finally
                     {
@@ -10907,6 +10920,7 @@ namespace OpenTK.Graphics.ES20
                     try
                     {
                         Delegates.glShaderBinary((Int32)n, (UInt32*)shaders_ptr, (OpenTK.Graphics.ES20.All)binaryformat, (IntPtr)binary_ptr.AddrOfPinnedObject(), (Int32)length);
+                        binary = (T3)binary_ptr.Target;
                     }
                     finally
                     {
@@ -11044,6 +11058,7 @@ namespace OpenTK.Graphics.ES20
             try
             {
                 Delegates.glShaderBinary((Int32)n, (UInt32*)shaders, (OpenTK.Graphics.ES20.All)binaryformat, (IntPtr)binary_ptr.AddrOfPinnedObject(), (Int32)length);
+                binary = (T3)binary_ptr.Target;
             }
             finally
             {
@@ -11159,6 +11174,7 @@ namespace OpenTK.Graphics.ES20
                     try
                     {
                         Delegates.glShaderBinary((Int32)n, (UInt32*)shaders_ptr, (OpenTK.Graphics.ES20.All)binaryformat, (IntPtr)binary_ptr.AddrOfPinnedObject(), (Int32)length);
+                        binary = (T3)binary_ptr.Target;
                     }
                     finally
                     {
@@ -11919,6 +11935,7 @@ namespace OpenTK.Graphics.ES20
             try
             {
                 Delegates.glTexImage2D((OpenTK.Graphics.ES20.All)target, (Int32)level, (OpenTK.Graphics.ES20.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES20.All)format, (OpenTK.Graphics.ES20.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                pixels = (T8)pixels_ptr.Target;
             }
             finally
             {
@@ -12482,6 +12499,7 @@ namespace OpenTK.Graphics.ES20
             try
             {
                 Delegates.glTexSubImage2D((OpenTK.Graphics.ES20.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.All)format, (OpenTK.Graphics.ES20.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                pixels = (T8)pixels_ptr.Target;
             }
             finally
             {
@@ -14986,6 +15004,7 @@ namespace OpenTK.Graphics.ES20
             try
             {
                 Delegates.glVertexAttribPointer((UInt32)indx, (Int32)size, (OpenTK.Graphics.ES20.All)type, (bool)normalized, (Int32)stride, (IntPtr)ptr_ptr.AddrOfPinnedObject());
+                ptr = (T5)ptr_ptr.Target;
             }
             finally
             {
@@ -15263,6 +15282,7 @@ namespace OpenTK.Graphics.ES20
             try
             {
                 Delegates.glVertexAttribPointer((UInt32)indx, (Int32)size, (OpenTK.Graphics.ES20.All)type, (bool)normalized, (Int32)stride, (IntPtr)ptr_ptr.AddrOfPinnedObject());
+                ptr = (T5)ptr_ptr.Target;
             }
             finally
             {
@@ -16044,6 +16064,7 @@ namespace OpenTK.Graphics.ES20
                 try
                 {
                     Delegates.glCompressedTexImage3DOES((OpenTK.Graphics.ES20.All)target, (Int32)level, (OpenTK.Graphics.ES20.All)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    data = (T8)data_ptr.Target;
                 }
                 finally
                 {
@@ -16400,6 +16421,7 @@ namespace OpenTK.Graphics.ES20
                 try
                 {
                     Delegates.glCompressedTexSubImage3DOES((OpenTK.Graphics.ES20.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.Graphics.ES20.All)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    data = (T10)data_ptr.Target;
                 }
                 finally
                 {
@@ -16837,6 +16859,7 @@ namespace OpenTK.Graphics.ES20
                 try
                 {
                     Delegates.glGetBufferPointervOES((OpenTK.Graphics.ES20.All)target, (OpenTK.Graphics.ES20.All)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                    @params = (T2)@params_ptr.Target;
                 }
                 finally
                 {
@@ -16944,6 +16967,7 @@ namespace OpenTK.Graphics.ES20
                 try
                 {
                     Delegates.glGetProgramBinaryOES((UInt32)program, (Int32)bufSize, (Int32*)length, (OpenTK.Graphics.ES20.All*)binaryFormat, (IntPtr)binary_ptr.AddrOfPinnedObject());
+                    binary = (T4)binary_ptr.Target;
                 }
                 finally
                 {
@@ -17059,6 +17083,7 @@ namespace OpenTK.Graphics.ES20
                         try
                         {
                             Delegates.glGetProgramBinaryOES((UInt32)program, (Int32)bufSize, (Int32*)length_ptr, (OpenTK.Graphics.ES20.All*)binaryFormat_ptr, (IntPtr)binary_ptr.AddrOfPinnedObject());
+                            binary = (T4)binary_ptr.Target;
                         }
                         finally
                         {
@@ -17200,6 +17225,7 @@ namespace OpenTK.Graphics.ES20
                         try
                         {
                             Delegates.glGetProgramBinaryOES((UInt32)program, (Int32)bufSize, (Int32*)length_ptr, (OpenTK.Graphics.ES20.All*)binaryFormat_ptr, (IntPtr)binary_ptr.AddrOfPinnedObject());
+                            binary = (T4)binary_ptr.Target;
                         }
                         finally
                         {
@@ -17337,6 +17363,7 @@ namespace OpenTK.Graphics.ES20
                 try
                 {
                     Delegates.glGetProgramBinaryOES((UInt32)program, (Int32)bufSize, (Int32*)length, (OpenTK.Graphics.ES20.All*)binaryFormat, (IntPtr)binary_ptr.AddrOfPinnedObject());
+                    binary = (T4)binary_ptr.Target;
                 }
                 finally
                 {
@@ -17453,6 +17480,7 @@ namespace OpenTK.Graphics.ES20
                         try
                         {
                             Delegates.glGetProgramBinaryOES((UInt32)program, (Int32)bufSize, (Int32*)length_ptr, (OpenTK.Graphics.ES20.All*)binaryFormat_ptr, (IntPtr)binary_ptr.AddrOfPinnedObject());
+                            binary = (T4)binary_ptr.Target;
                         }
                         finally
                         {
@@ -17599,6 +17627,7 @@ namespace OpenTK.Graphics.ES20
                         try
                         {
                             Delegates.glGetProgramBinaryOES((UInt32)program, (Int32)bufSize, (Int32*)length_ptr, (OpenTK.Graphics.ES20.All*)binaryFormat_ptr, (IntPtr)binary_ptr.AddrOfPinnedObject());
+                            binary = (T4)binary_ptr.Target;
                         }
                         finally
                         {
@@ -17768,6 +17797,7 @@ namespace OpenTK.Graphics.ES20
                 try
                 {
                     Delegates.glProgramBinaryOES((UInt32)program, (OpenTK.Graphics.ES20.All)binaryFormat, (IntPtr)binary_ptr.AddrOfPinnedObject(), (Int32)length);
+                    binary = (T2)binary_ptr.Target;
                 }
                 finally
                 {
@@ -17875,6 +17905,7 @@ namespace OpenTK.Graphics.ES20
                 try
                 {
                     Delegates.glProgramBinaryOES((UInt32)program, (OpenTK.Graphics.ES20.All)binaryFormat, (IntPtr)binary_ptr.AddrOfPinnedObject(), (Int32)length);
+                    binary = (T2)binary_ptr.Target;
                 }
                 finally
                 {
@@ -18039,6 +18070,7 @@ namespace OpenTK.Graphics.ES20
                 try
                 {
                     Delegates.glTexImage3DOES((OpenTK.Graphics.ES20.All)target, (Int32)level, (OpenTK.Graphics.ES20.All)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (OpenTK.Graphics.ES20.All)format, (OpenTK.Graphics.ES20.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                    pixels = (T9)pixels_ptr.Target;
                 }
                 finally
                 {
@@ -18420,6 +18452,7 @@ namespace OpenTK.Graphics.ES20
                 try
                 {
                     Delegates.glTexSubImage3DOES((OpenTK.Graphics.ES20.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.Graphics.ES20.All)format, (OpenTK.Graphics.ES20.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                    pixels = (T10)pixels_ptr.Target;
                 }
                 finally
                 {

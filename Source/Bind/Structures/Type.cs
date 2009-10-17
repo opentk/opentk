@@ -384,7 +384,7 @@ namespace Bind.Structures
             // Make sure that enum parameters follow enum overrides, i.e.
             // if enum ErrorCodes is overriden to ErrorCode, then parameters
             // of type ErrorCodes should also be overriden to ErrorCode.
-            XPathNavigator enum_override = overrides.SelectSingleNode(String.Format("/overrides/enum[@name='{0}']/name", CurrentType));
+            XPathNavigator enum_override = overrides.SelectSingleNode(String.Format("/overrides/replace/enum[@name='{0}']/name", CurrentType));
             if (enum_override != null)
                 CurrentType = enum_override.Value;
 
