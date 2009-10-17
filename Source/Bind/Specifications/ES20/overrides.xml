@@ -9,4 +9,7 @@
   <function name="GetShaderSource" extension="Core">
     <param name="source"><flow>out</flow></param>
   </function>
+  <function name="GetProgramInfoLog" extension="Core">
+    <param name="infolog"><flow>out</flow></param>
+  </function>
 </overrides>
