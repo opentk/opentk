@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <overrides>
-  <function name="GetString" extension="Core">
-    <returns>String</returns>
-  </function>
+
+  <replace>
+    <function name="GetString" extension="Core">
+      <returns>String</returns>
+    </function>
+  </replace>
+  
 </overrides>

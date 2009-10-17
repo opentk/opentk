@@ -228,7 +228,7 @@ namespace Bind.Structures
             if (overrides == null)
                 throw new ArgumentNullException("overrides");
 
-            string path = "/overrides/enum[@name='{0}']";
+            string path = "/overrides/replace/enum[@name='{0}']";
 
             // Translate enum names.
             {

@@ -1,512 +1,516 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <overrides>
 
-  <function name="TexImage1D" extension="Core">
-    <param name="internalformat"><type>PixelInternalFormat</type></param>
-  </function>
-
-  <function name="TexImage2D" extension="Core">
-    <param name="internalformat"><type>PixelInternalFormat</type></param>
-  </function>
+  <replace>
   
-  <function name="TexImage3D" extension="Core">
-    <param name="internalformat"><type>PixelInternalFormat</type></param>
-  </function>
-
-  <function name="BlendFuncSeparate" extension="Core">
-    <param name="sfactorRGB"><type>BlendingFactorSrc</type></param>
-    <param name="dfactorRGB"><type>BlendingFactorDest</type></param>
-    <param name="sfactorAlpha"><type>BlendingFactorSrc</type></param>
-    <param name="dfactorAlpha"><type>BlendingFactorDest</type></param>
-  </function>
-
-  <function name="FogCoordPointer" extension="Core">
-    <param name="type"><type>FogPointerType</type></param>
-  </function>
-
-  <function name="PointParameter" extension="Core">
-    <param name="pname"><type>PointParameterName</type></param>
-  </function>
-
-  <!-- Version 1.5 -->
-
-  <function name="BeginQuery" extension="Core">
-    <param name="target"><type>QueryTarget</type></param>
-  </function>
-  
-  <function name="EndQuery" extension="Core">
-    <param name="target"><type>QueryTarget</type></param>
-  </function>
-  
-  <function name="GetQuery" extension="Core">
-    <param name="target"><type>QueryTarget</type></param>
-    <param name="pname"><type>GetQueryParam</type></param>
-  </function>
-
-    <function name="GetQueryObject" extension="Core">
-    <param name="pname"><type>GetQueryObjectParam</type></param>
-  </function>
-
-  <function name="BindBuffer" extension="Core">
-    <param name="target"><type>BufferTarget</type></param>
-  </function>
-
-  <function name="BufferData" extension="Core">
-    <param name="target"><type>BufferTarget</type></param>
-    <param name="usage"><type>BufferUsageHint</type></param>
-  </function>
-
-  <function name="BufferSubData" extension="Core">
-    <param name="target"><type>BufferTarget</type></param>
-  </function>
-
-  <function name="GetBufferSubData" extension="Core">
-    <param name="target"><type>BufferTarget</type></param>
-  </function>
-  
-  <function name="MapBuffer" extension="Core">
-    <param name="target"><type>BufferTarget</type></param>
-    <param name="access"><type>BufferAccess</type></param>
-  </function>
-  
-  <function name="UnmapBuffer" extension="Core">
-    <param name="target"><type>BufferTarget</type></param>
-  </function>
-  
-  <function name="GetBufferParameter" extension="Core">
-    <param name="target"><type>BufferTarget</type></param>
-    <param name="pname"><type>BufferParameterName</type></param>
-  </function>
-  
-  <function name="GetBufferPointer" extension="Core">
-    <param name="target"><type>BufferTarget</type></param>
-    <param name="pname"><type>BufferPointer</type></param>
-  </function>
-
-  <!-- Version 2.0-->
-  
-  <function name="BlendEquationSeparate" extension="Core">
-    <param name="modeRGB"><type>BlendEquationMode</type></param>
-    <param name="modeAlpha"><type>BlendEquationMode</type></param>
-  </function>
-  
-  <function name="DrawBuffers" extension="Core">
-    <param name="bufs"><type>DrawBuffersEnum</type></param>
-  </function>
-
-  <function name="StencilFuncSeparate" extension="Core">
-    <param name="frontfunc"><name>face</name><type>StencilFace</type></param>
-    <param name="backfunc"><name>func</name></param>
-  </function>
-  
-  <function name="StencilMaskSeparate" extension="Core">
-    <param name="face"><type>StencilFace</type></param>
-  </function>
-  
-  <function name="StencilOpSeparate" extension="Core">
-    <param name="face"><type>StencilFace</type></param>
-  </function>
-  
-  <function name="CreateShader" extension="Core">
-    <param name="type"><type>ShaderType</type></param>
-  </function>
-  
-  <function name="GetShader" extension="Core">
-    <param name="pname"><type>ShaderParameter</type></param>
-  </function>
-  
-  <function name="GetActiveAttrib" extension="Core">
-    <param name="type"><type>ActiveAttribType</type></param>
-  </function>
-
-  <function name="GetActiveUniform" extension="Core">
-    <param name="type"><type>ActiveUniformType</type></param>
-  </function>
-  
-  <function name="GetProgram" extension="Core">
-    <param name="pname"><type>ProgramParameter</type></param>
-  </function>
-  
-  <function name="GetVertexAttrib" extension="Core">
-    <param name="pname"><type>VertexAttribParameter</type></param>
-  </function>
-
-  <function name="GetVertexAttribI" extension="Core">
-    <param name="pname"><type>VertexAttribParameter</type></param>
-  </function>
-  
-  <function name="VertexAttribPointer" extension="Core">
-    <param name="type"><type>VertexAttribPointerType</type></param>
-  </function>
-  
-  <function name="GetVertexAttribPointer" extension="Core">
-    <param name="pname"><type>VertexAttribPointerType</type></param>
-  </function>
-
-  <!-- Version 3.0 -->
-  
-  <function name="GetBoolean" extension="Core">
-    <param name="target"><type>GetIndexedPName</type></param>
-  </function>
-
-  <function name="GetInteger" extension="Core">
-    <param name="target"><type>GetIndexedPName</type></param>
-  </function>
-
-  <function name="Enable" extension="Core">
-    <param name="target"><type>IndexedEnableCap</type></param>
-  </function>
-
-  <function name="Disable" extension="Core">
-    <param name="target"><type>IndexedEnableCap</type></param>
-  </function>
-
-  <function name="IsEnabled" extension="Core">
-    <param name="target"><type>IndexedEnableCap</type></param>
-  </function>
-  
-  <function name="BeginTransformFeedback" extension="Core">
-    <param name="primitiveMode"><type>BeginFeedbackMode</type></param>
-  </function>
-
-<function name="BindBufferRange" extension="Core">
-    <param name="target"><type>BufferTarget</type></param>
-  </function>
-
-  <function name="BindBufferBase" extension="Core">
-    <param name="target"><type>BufferTarget</type></param>
-  </function>
-
-  <function name="TransformFeedbackVaryings" extension="Core">
-    <param name="bufferMode"><type>TransformFeedbackMode</type></param>
-  </function>
-
-  <function name="GetTransformFeedbackVarying" extension="Core">
-    <param name="type"><type>ActiveAttribType</type></param>
-  </function>
-  
-  <function name="ClampColor" extension="Core">
-    <param name="target"><type>ClampColorTarget</type></param>
-    <param name="clamp"><type>ClampColorMode</type></param>
-  </function>
-  
-  <function name="RenderbufferStorage" extension="Core">
-    <param name="internalformat"><type>RenderbufferStorage</type></param>
-  </function>
-  
-  <function name="GetRenderbufferParameter" extension="Core">
-    <param name="pname"><type>RenderbufferParameterName</type></param>
-  </function>
-
-  <function name="FramebufferTexture1D" extension="Core">
-    <param name="textarget"><type>TextureTarget</type></param>
-  </function>
-
-  <function name="FramebufferTexture2D" extension="Core">
-    <param name="textarget"><type>TextureTarget</type></param>
-  </function>
-
-  <function name="FramebufferTexture3D" extension="Core">
-    <param name="textarget"><type>TextureTarget</type></param>
-  </function>
-
-  <function name="GetFramebufferAttachmentParameter" extension="Core">
-    <param name="pname"><type>FramebufferParameterName</type></param>
-  </function>
-
-  <function name="CheckFramebufferStatus" extension="Core">
-    <returns>FramebufferErrorCode</returns>
-  </function>
-
-  <function name="GenerateMipmap" extension="Core">
-    <param name="target"><type>GenerateMipmapTarget</type></param>
-  </function>
-
-  <function name="BlitFramebuffer" extension="Core">
-    <param name="filter"><type>BlitFramebufferFilter</type></param>
-  </function>
-
-  <function name="RenderbufferStorageMultisample" extension="Core">
-    <param name="target"><type>RenderbufferTarget</type></param>
-    <param name="internalformat"><type>RenderbufferStorage</type></param>
-  </function>
-
-  <function name="MapBufferRange" extension="Core">
-    <param name="target"><type>BufferTarget</type></param>
-  </function>
-
-  <function name="FlushMappedBufferRange" extension="Core">
-    <param name="target"><type>BufferTarget</type></param>
-  </function>
-
-  <function name="CopyBufferSubData" extension="Core">
-    <param name="readTarget"><type>BufferTarget</type></param>
-    <param name="writeTarget"><type>BufferTarget</type></param>
-  </function>
-
-  <function name="VertexAttribIPointer" extension="Core">
-    <param name="type"><type>VertexAttribParameter</type></param>
-  </function>
-
-  <function name="BeginConditionalRender" extension="Core">
-    <param name="mode"><type>ConditionalRenderType</type></param>
-  </function>
-  
-  <function name="ClearBuffer" extension="Core">
-    <param name="buffer"><type>ClearBuffer</type></param>
-  </function>
-
-  <function name="GetString" extension="Core">
-    <param name="name"><type>StringName</type></param>
-  </function>
-
-  <!-- Version 3.1 -->
-  
-  <function name="TexBuffer" extension="Core">
-    <param name="target"><type>TextureBufferTarget</type></param>
-    <param name="internalformat"><type>SizedInternalFormat</type></param>
-  </function>
-  
-  <!-- Version 3.2 -->
-  
-  <function name="TexImage2DMultisample" extension="Core">
-    <param name="target"><type>TextureTargetMultisample</type></param>
-    <param name="internalformat"><type>PixelInternalFormat</type></param>
-  </function>
-  
-  <function name="TexImage3DMultisample" extension="Core">
-    <param name="target"><type>TextureTargetMultisample</type></param>
-    <param name="internalformat"><type>PixelInternalFormat</type></param>
-  </function>
-
-  <function name="GetMultisample" extension="Core">
-    <param name="pname"><type>GetMultisamplePName</type></param>
-  </function>
-
-  <function name="ProvokingVertex" extension="Core">
-    <param name="mode"><type>ProvokingVertexMode</type></param>
-  </function>
-
-  <function name="DrawElementsBaseVertex" extension="Core">
-    <param name="mode"><type>BeginMode</type></param>
-  </function>
- 
-  <function name="DrawRangeElementsBaseVertex" extension="Core">
-    <param name="mode"><type>BeginMode</type></param>
-  </function>
-
-  <function name="DrawElementsInstancedBaseVertex" extension="Core">
-    <param name="mode"><type>BeginMode</type></param>
-  </function>
-  
-  <function name="MultiDrawElementsBaseVertex" extension="Core">
-    <param name="mode"><type>BeginMode</type></param>
-  </function>
-  
-  <!-- Arb -->
-
-  <function name="VertexAttribPointer" extension="Arb">
-    <param name="type"><type>VertexAttribPointerTypeArb</type></param>
-  </function>
-
-  <function name="ProgramString" extension="Arb">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-  </function>
-
-  <function name="BindProgram" extension="Arb">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-  </function>
-
-  <function name="ProgramEnvParameter4" extension="Arb">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-  </function>
-
-  <function name="ProgramLocalParameter4" extension="Arb">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-  </function>
-  
-  <function name="GetProgramEnvParameter4" extension="Arb">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-  </function>
-
-  <function name="GetProgramLocalParameter4" extension="Arb">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-  </function>
-
-  <function name="GetProgram" extension="Arb">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-    <param name="pname"><type>AssemblyProgramParameterArb</type></param>
-  </function>
-  
-  <function name="GetProgramString" extension="Arb">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-    <param name="pname"><type>AssemblyProgramParameterArb</type></param>
-  </function>
-
-  <function name="GetVertexAttrib" extension="Arb">
-    <param name="pname"><type>VertexAttribParameterArb</type></param>
-  </function>
-
-  <function name="GetVertexAttribPointer" extension="Arb">
-    <param name="pname"><type>VertexAttribPointerParameterArb</type></param>
-  </function>
-
-  <function name="BindBuffer" extension="Arb">
-    <param name="target"><type>BufferTargetArb</type></param>
-  </function>
-
-  <function name="BufferData" extension="Arb">
-    <param name="target"><type>BufferTargetArb</type></param>
-    <param name="usage"><type>BufferUsageArb</type></param>
-  </function>
-
-  <function name="BufferSubData" extension="Arb">
-    <param name="target"><type>BufferTargetArb</type></param>
-  </function>
-  
-  <function name="GetBufferSubData" extension="Arb">
-    <param name="target"><type>BufferTargetArb</type></param>
-  </function>
-  
-  <function name="MapBuffer" extension="Arb">
-    <param name="target"><type>BufferTargetArb</type></param>
-  </function>
-  
-  <function name="UnmapBuffer" extension="Arb">
-    <param name="target"><type>BufferTargetArb</type></param>
-  </function>
-  
-  <function name="GetBufferParameter" extension="Arb">
-    <param name="pname"><type>BufferParameterNameArb</type></param>
-  </function>
-  
-  <function name="GetBufferPointer" extension="Arb">
-    <param name="pname"><type>BufferPointerNameArb</type></param>
-  </function>
-
-  <!-- Ext -->
-
-  <function name="TangentPointer" extension="Ext">
-    <param name="type"><type>NormalPointerType</type></param>
-  </function>
-
-  <function name="BinormalPointer" extension="Ext">
-    <param name="type"><type>NormalPointerType</type></param>
-  </function>
-
-    <function name="RenderbufferStorage" extension="Ext">
-    <param name="internalformat"><type>RenderbufferStorage</type></param>
-  </function>
-  
-  <function name="GetRenderbufferParameter" extension="Ext">
-    <param name="pname"><type>RenderbufferParameterName</type></param>
-  </function>
-
-  <function name="CheckFramebufferStatus" extension="Ext">
-    <returns>FramebufferErrorCode</returns>
-  </function>
-
-  <function name="FramebufferTexture1D" extension="Ext">
-    <param name="textarget"><type>TextureTarget</type></param>
-  </function>
-
-  <function name="FramebufferTexture2D" extension="Ext">
-    <param name="textarget"><type>TextureTarget</type></param>
-  </function>
-
-  <function name="FramebufferTexture3D" extension="Ext">
-    <param name="textarget"><type>TextureTarget</type></param>
-  </function>
-
-  <function name="GetFramebufferAttachmentParameter" extension="Ext">
-    <param name="pname"><type>FramebufferParameterName</type></param>
-  </function>
-
-  <function name="GenerateMipmap" extension="Ext">
-    <param name="target"><type>GenerateMipmapTarget</type></param>
-  </function>
-
-  <function name="BlitFramebuffer">
-    <param name="filter"><type>BlitFramebufferFilter</type></param>
-  </function>
-
-  <function name="RenderbufferStorageMultisample">
-    <param name="target"><type>RenderbufferTarget</type></param>
-    <param name="internalformat"><type>RenderbufferStorage</type></param>
-  </function>
-
-  <!-- Apple -->
-  
-  <function name="BufferParameter" extension="Apple">
-    <param name="target"><type>BufferTarget</type></param>
-    <param name="pname"><type>BufferParameterApple</type></param>
-  </function>
-
-  <function name="FlushMappedBufferRange" extension="Apple">
-    <param name="target"><type>BufferTarget</type></param>
-  </function>
-
-  
-  <!-- IBM -->
-
-  <function name="FogCoordPointerList" extension="IBM">
-    <param name="type"><type>FogPointerType</type></param>
-  </function>
-  
-  <!-- NV -->
-  
-  <function name="BindProgram" extension="NV">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-  </function>
-
-  <function name="ExecuteProgram" extension="NV">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-  </function>
-
-  <function name="GetProgramParameter" extension="NV">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-    <param name="pname"><type>AssemblyProgramParameterArb</type></param>
-  </function>
-
-  <function name="GetProgram" extension="NV">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-  </function>
-
-  <function name="GetProgramString" extension="NV">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-  </function>
-
-  <function name="GetTrackMatrix" extension="NV">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-    <param name="pname"><type>AssemblyProgramParameterArb</type></param>
-  </function>
-
-  <function name="GetVertexAttrib" extension="NV">
-    <param name="target"><type>VertexAttribParameterArb</type></param>
-  </function>
-
-  <function name="GetVertexAttribPointer" extension="NV">
-    <param name="target"><type>VertexAttribParameterPointerArb</type></param>
-  </function>
-
-  <function name="LoadProgram" extension="NV">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-  </function>
-
-  <function name="ProgramParameter4" extension="NV">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-  </function>
-
-  <function name="ProgramParameters4" extension="NV">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-  </function>
-
-  <function name="TrackMatrix" extension="NV">
-    <param name="target"><type>AssemblyProgramTargetArb</type></param>
-  </function>
-
-  <function name="VertexAttribPointer" extension="NV">
-    <param name="type"><type>VertexAttribParameterArb</type></param>
-  </function>
+    <function name="TexImage1D" extension="Core">
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+    </function>
+
+    <function name="TexImage2D" extension="Core">
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+    </function>
+    
+    <function name="TexImage3D" extension="Core">
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+    </function>
+
+    <function name="BlendFuncSeparate" extension="Core">
+      <param name="sfactorRGB"><type>BlendingFactorSrc</type></param>
+      <param name="dfactorRGB"><type>BlendingFactorDest</type></param>
+      <param name="sfactorAlpha"><type>BlendingFactorSrc</type></param>
+      <param name="dfactorAlpha"><type>BlendingFactorDest</type></param>
+    </function>
+
+    <function name="FogCoordPointer" extension="Core">
+      <param name="type"><type>FogPointerType</type></param>
+    </function>
+
+    <function name="PointParameter" extension="Core">
+      <param name="pname"><type>PointParameterName</type></param>
+    </function>
+
+    <!-- Version 1.5 -->
+
+    <function name="BeginQuery" extension="Core">
+      <param name="target"><type>QueryTarget</type></param>
+    </function>
+    
+    <function name="EndQuery" extension="Core">
+      <param name="target"><type>QueryTarget</type></param>
+    </function>
+    
+    <function name="GetQuery" extension="Core">
+      <param name="target"><type>QueryTarget</type></param>
+      <param name="pname"><type>GetQueryParam</type></param>
+    </function>
+
+      <function name="GetQueryObject" extension="Core">
+      <param name="pname"><type>GetQueryObjectParam</type></param>
+    </function>
+
+    <function name="BindBuffer" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+
+    <function name="BufferData" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="usage"><type>BufferUsageHint</type></param>
+    </function>
+
+    <function name="BufferSubData" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+
+    <function name="GetBufferSubData" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+    
+    <function name="MapBuffer" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="access"><type>BufferAccess</type></param>
+    </function>
+    
+    <function name="UnmapBuffer" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+    
+    <function name="GetBufferParameter" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="pname"><type>BufferParameterName</type></param>
+    </function>
+    
+    <function name="GetBufferPointer" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="pname"><type>BufferPointer</type></param>
+    </function>
+
+    <!-- Version 2.0-->
+    
+    <function name="BlendEquationSeparate" extension="Core">
+      <param name="modeRGB"><type>BlendEquationMode</type></param>
+      <param name="modeAlpha"><type>BlendEquationMode</type></param>
+    </function>
+    
+    <function name="DrawBuffers" extension="Core">
+      <param name="bufs"><type>DrawBuffersEnum</type></param>
+    </function>
+
+    <function name="StencilFuncSeparate" extension="Core">
+      <param name="frontfunc"><name>face</name><type>StencilFace</type></param>
+      <param name="backfunc"><name>func</name></param>
+    </function>
+    
+    <function name="StencilMaskSeparate" extension="Core">
+      <param name="face"><type>StencilFace</type></param>
+    </function>
+    
+    <function name="StencilOpSeparate" extension="Core">
+      <param name="face"><type>StencilFace</type></param>
+    </function>
+    
+    <function name="CreateShader" extension="Core">
+      <param name="type"><type>ShaderType</type></param>
+    </function>
+    
+    <function name="GetShader" extension="Core">
+      <param name="pname"><type>ShaderParameter</type></param>
+    </function>
+    
+    <function name="GetActiveAttrib" extension="Core">
+      <param name="type"><type>ActiveAttribType</type></param>
+    </function>
+
+    <function name="GetActiveUniform" extension="Core">
+      <param name="type"><type>ActiveUniformType</type></param>
+    </function>
+    
+    <function name="GetProgram" extension="Core">
+      <param name="pname"><type>ProgramParameter</type></param>
+    </function>
+    
+    <function name="GetVertexAttrib" extension="Core">
+      <param name="pname"><type>VertexAttribParameter</type></param>
+    </function>
+
+    <function name="GetVertexAttribI" extension="Core">
+      <param name="pname"><type>VertexAttribParameter</type></param>
+    </function>
+    
+    <function name="VertexAttribPointer" extension="Core">
+      <param name="type"><type>VertexAttribPointerType</type></param>
+    </function>
+    
+    <function name="GetVertexAttribPointer" extension="Core">
+      <param name="pname"><type>VertexAttribPointerType</type></param>
+    </function>
+
+    <!-- Version 3.0 -->
+    
+    <function name="GetBoolean" extension="Core">
+      <param name="target"><type>GetIndexedPName</type></param>
+    </function>
+
+    <function name="GetInteger" extension="Core">
+      <param name="target"><type>GetIndexedPName</type></param>
+    </function>
+
+    <function name="Enable" extension="Core">
+      <param name="target"><type>IndexedEnableCap</type></param>
+    </function>
+
+    <function name="Disable" extension="Core">
+      <param name="target"><type>IndexedEnableCap</type></param>
+    </function>
+
+    <function name="IsEnabled" extension="Core">
+      <param name="target"><type>IndexedEnableCap</type></param>
+    </function>
+    
+    <function name="BeginTransformFeedback" extension="Core">
+      <param name="primitiveMode"><type>BeginFeedbackMode</type></param>
+    </function>
+
+  <function name="BindBufferRange" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+
+    <function name="BindBufferBase" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+
+    <function name="TransformFeedbackVaryings" extension="Core">
+      <param name="bufferMode"><type>TransformFeedbackMode</type></param>
+    </function>
+
+    <function name="GetTransformFeedbackVarying" extension="Core">
+      <param name="type"><type>ActiveAttribType</type></param>
+    </function>
+    
+    <function name="ClampColor" extension="Core">
+      <param name="target"><type>ClampColorTarget</type></param>
+      <param name="clamp"><type>ClampColorMode</type></param>
+    </function>
+    
+    <function name="RenderbufferStorage" extension="Core">
+      <param name="internalformat"><type>RenderbufferStorage</type></param>
+    </function>
+    
+    <function name="GetRenderbufferParameter" extension="Core">
+      <param name="pname"><type>RenderbufferParameterName</type></param>
+    </function>
+
+    <function name="FramebufferTexture1D" extension="Core">
+      <param name="textarget"><type>TextureTarget</type></param>
+    </function>
+
+    <function name="FramebufferTexture2D" extension="Core">
+      <param name="textarget"><type>TextureTarget</type></param>
+    </function>
+
+    <function name="FramebufferTexture3D" extension="Core">
+      <param name="textarget"><type>TextureTarget</type></param>
+    </function>
+
+    <function name="GetFramebufferAttachmentParameter" extension="Core">
+      <param name="pname"><type>FramebufferParameterName</type></param>
+    </function>
+
+    <function name="CheckFramebufferStatus" extension="Core">
+      <returns>FramebufferErrorCode</returns>
+    </function>
+
+    <function name="GenerateMipmap" extension="Core">
+      <param name="target"><type>GenerateMipmapTarget</type></param>
+    </function>
+
+    <function name="BlitFramebuffer" extension="Core">
+      <param name="filter"><type>BlitFramebufferFilter</type></param>
+    </function>
+
+    <function name="RenderbufferStorageMultisample" extension="Core">
+      <param name="target"><type>RenderbufferTarget</type></param>
+      <param name="internalformat"><type>RenderbufferStorage</type></param>
+    </function>
+
+    <function name="MapBufferRange" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+
+    <function name="FlushMappedBufferRange" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+
+    <function name="CopyBufferSubData" extension="Core">
+      <param name="readTarget"><type>BufferTarget</type></param>
+      <param name="writeTarget"><type>BufferTarget</type></param>
+    </function>
+
+    <function name="VertexAttribIPointer" extension="Core">
+      <param name="type"><type>VertexAttribParameter</type></param>
+    </function>
+
+    <function name="BeginConditionalRender" extension="Core">
+      <param name="mode"><type>ConditionalRenderType</type></param>
+    </function>
+    
+    <function name="ClearBuffer" extension="Core">
+      <param name="buffer"><type>ClearBuffer</type></param>
+    </function>
+
+    <function name="GetString" extension="Core">
+      <param name="name"><type>StringName</type></param>
+    </function>
+
+    <!-- Version 3.1 -->
+    
+    <function name="TexBuffer" extension="Core">
+      <param name="target"><type>TextureBufferTarget</type></param>
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+    </function>
+    
+    <!-- Version 3.2 -->
+    
+    <function name="TexImage2DMultisample" extension="Core">
+      <param name="target"><type>TextureTargetMultisample</type></param>
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+    </function>
+    
+    <function name="TexImage3DMultisample" extension="Core">
+      <param name="target"><type>TextureTargetMultisample</type></param>
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+    </function>
+
+    <function name="GetMultisample" extension="Core">
+      <param name="pname"><type>GetMultisamplePName</type></param>
+    </function>
+
+    <function name="ProvokingVertex" extension="Core">
+      <param name="mode"><type>ProvokingVertexMode</type></param>
+    </function>
+
+    <function name="DrawElementsBaseVertex" extension="Core">
+      <param name="mode"><type>BeginMode</type></param>
+    </function>
+   
+    <function name="DrawRangeElementsBaseVertex" extension="Core">
+      <param name="mode"><type>BeginMode</type></param>
+    </function>
+
+    <function name="DrawElementsInstancedBaseVertex" extension="Core">
+      <param name="mode"><type>BeginMode</type></param>
+    </function>
+    
+    <function name="MultiDrawElementsBaseVertex" extension="Core">
+      <param name="mode"><type>BeginMode</type></param>
+    </function>
+    
+    <!-- Arb -->
+
+    <function name="VertexAttribPointer" extension="Arb">
+      <param name="type"><type>VertexAttribPointerTypeArb</type></param>
+    </function>
+
+    <function name="ProgramString" extension="Arb">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+    </function>
+
+    <function name="BindProgram" extension="Arb">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+    </function>
+
+    <function name="ProgramEnvParameter4" extension="Arb">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+    </function>
+
+    <function name="ProgramLocalParameter4" extension="Arb">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+    </function>
+    
+    <function name="GetProgramEnvParameter4" extension="Arb">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+    </function>
+
+    <function name="GetProgramLocalParameter4" extension="Arb">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+    </function>
+
+    <function name="GetProgram" extension="Arb">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+      <param name="pname"><type>AssemblyProgramParameterArb</type></param>
+    </function>
+    
+    <function name="GetProgramString" extension="Arb">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+      <param name="pname"><type>AssemblyProgramParameterArb</type></param>
+    </function>
+
+    <function name="GetVertexAttrib" extension="Arb">
+      <param name="pname"><type>VertexAttribParameterArb</type></param>
+    </function>
+
+    <function name="GetVertexAttribPointer" extension="Arb">
+      <param name="pname"><type>VertexAttribPointerParameterArb</type></param>
+    </function>
+
+    <function name="BindBuffer" extension="Arb">
+      <param name="target"><type>BufferTargetArb</type></param>
+    </function>
+
+    <function name="BufferData" extension="Arb">
+      <param name="target"><type>BufferTargetArb</type></param>
+      <param name="usage"><type>BufferUsageArb</type></param>
+    </function>
+
+    <function name="BufferSubData" extension="Arb">
+      <param name="target"><type>BufferTargetArb</type></param>
+    </function>
+    
+    <function name="GetBufferSubData" extension="Arb">
+      <param name="target"><type>BufferTargetArb</type></param>
+    </function>
+    
+    <function name="MapBuffer" extension="Arb">
+      <param name="target"><type>BufferTargetArb</type></param>
+    </function>
+    
+    <function name="UnmapBuffer" extension="Arb">
+      <param name="target"><type>BufferTargetArb</type></param>
+    </function>
+    
+    <function name="GetBufferParameter" extension="Arb">
+      <param name="pname"><type>BufferParameterNameArb</type></param>
+    </function>
+    
+    <function name="GetBufferPointer" extension="Arb">
+      <param name="pname"><type>BufferPointerNameArb</type></param>
+    </function>
+
+    <!-- Ext -->
+
+    <function name="TangentPointer" extension="Ext">
+      <param name="type"><type>NormalPointerType</type></param>
+    </function>
+
+    <function name="BinormalPointer" extension="Ext">
+      <param name="type"><type>NormalPointerType</type></param>
+    </function>
+
+      <function name="RenderbufferStorage" extension="Ext">
+      <param name="internalformat"><type>RenderbufferStorage</type></param>
+    </function>
+    
+    <function name="GetRenderbufferParameter" extension="Ext">
+      <param name="pname"><type>RenderbufferParameterName</type></param>
+    </function>
+
+    <function name="CheckFramebufferStatus" extension="Ext">
+      <returns>FramebufferErrorCode</returns>
+    </function>
+
+    <function name="FramebufferTexture1D" extension="Ext">
+      <param name="textarget"><type>TextureTarget</type></param>
+    </function>
+
+    <function name="FramebufferTexture2D" extension="Ext">
+      <param name="textarget"><type>TextureTarget</type></param>
+    </function>
+
+    <function name="FramebufferTexture3D" extension="Ext">
+      <param name="textarget"><type>TextureTarget</type></param>
+    </function>
+
+    <function name="GetFramebufferAttachmentParameter" extension="Ext">
+      <param name="pname"><type>FramebufferParameterName</type></param>
+    </function>
+
+    <function name="GenerateMipmap" extension="Ext">
+      <param name="target"><type>GenerateMipmapTarget</type></param>
+    </function>
+
+    <function name="BlitFramebuffer">
+      <param name="filter"><type>BlitFramebufferFilter</type></param>
+    </function>
+
+    <function name="RenderbufferStorageMultisample">
+      <param name="target"><type>RenderbufferTarget</type></param>
+      <param name="internalformat"><type>RenderbufferStorage</type></param>
+    </function>
+
+    <!-- Apple -->
+    
+    <function name="BufferParameter" extension="Apple">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="pname"><type>BufferParameterApple</type></param>
+    </function>
+
+    <function name="FlushMappedBufferRange" extension="Apple">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+
+    
+    <!-- IBM -->
+
+    <function name="FogCoordPointerList" extension="IBM">
+      <param name="type"><type>FogPointerType</type></param>
+    </function>
+    
+    <!-- NV -->
+    
+    <function name="BindProgram" extension="NV">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+    </function>
+
+    <function name="ExecuteProgram" extension="NV">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+    </function>
+
+    <function name="GetProgramParameter" extension="NV">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+      <param name="pname"><type>AssemblyProgramParameterArb</type></param>
+    </function>
+
+    <function name="GetProgram" extension="NV">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+    </function>
+
+    <function name="GetProgramString" extension="NV">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+    </function>
+
+    <function name="GetTrackMatrix" extension="NV">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+      <param name="pname"><type>AssemblyProgramParameterArb</type></param>
+    </function>
+
+    <function name="GetVertexAttrib" extension="NV">
+      <param name="target"><type>VertexAttribParameterArb</type></param>
+    </function>
+
+    <function name="GetVertexAttribPointer" extension="NV">
+      <param name="target"><type>VertexAttribParameterPointerArb</type></param>
+    </function>
+
+    <function name="LoadProgram" extension="NV">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+    </function>
+
+    <function name="ProgramParameter4" extension="NV">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+    </function>
+
+    <function name="ProgramParameters4" extension="NV">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+    </function>
+
+    <function name="TrackMatrix" extension="NV">
+      <param name="target"><type>AssemblyProgramTargetArb</type></param>
+    </function>
+
+    <function name="VertexAttribPointer" extension="NV">
+      <param name="type"><type>VertexAttribParameterArb</type></param>
+    </function>
+    
+  </replace>
 
 </overrides>
