@@ -310,7 +310,7 @@ namespace OpenTK.Graphics.ES20
             internal extern static unsafe void GetProgramBinaryOES(UInt32 program, Int32 bufSize, Int32* length, OpenTK.Graphics.ES20.All* binaryFormat, IntPtr binary);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetProgramInfoLog", ExactSpelling = true)]
-            internal extern static unsafe void GetProgramInfoLog(UInt32 program, Int32 bufsize, Int32* length, String infolog);
+            internal extern static unsafe void GetProgramInfoLog(UInt32 program, Int32 bufsize, Int32* length, [OutAttribute] System.Text.StringBuilder infolog);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetProgramiv", ExactSpelling = true)]
             internal extern static unsafe void GetProgramiv(UInt32 program, OpenTK.Graphics.ES20.All pname, Int32* @params);
