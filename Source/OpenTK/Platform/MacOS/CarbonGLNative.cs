@@ -680,6 +680,12 @@ namespace OpenTK.Platform.MacOS
 
         #region INativeWindow Members
 
+        public System.Drawing.Icon Icon
+        {
+            get { return null; }
+            set { }
+        }
+
         public string Title
         {
             get

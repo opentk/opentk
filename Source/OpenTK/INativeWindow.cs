@@ -40,6 +40,11 @@ namespace OpenTK
     public interface INativeWindow : IDisposable
     {
         /// <summary>
+        /// Gets or sets the <see cref="System.Drawing.Icon"/> of the window.
+        /// </summary>
+        Icon Icon { get; set; }
+
+        /// <summary>
         /// Gets or sets the title of the window.
         /// </summary>
         string Title { get; set; }
@@ -183,6 +188,11 @@ namespace OpenTK
         /// Occurs when the window is disposed. 
         /// </summary>
         event EventHandler<EventArgs> Disposed;
+
+        /// <summary>
+        /// Occurs when the <see cref="Icon"/> property of the window changes. 
+        /// </summary>
+        event EventHandler<EventArgs> IconChanged;
 
         /// <summary>
         /// Occurs when the <see cref="Title"/> property of the window changes.
