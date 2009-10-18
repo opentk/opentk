@@ -60,6 +60,7 @@ namespace OpenTK.Platform.Windows
     using LPDEVMODE = DeviceMode;
 
     using HRESULT = System.IntPtr;
+    using HMONITOR = System.IntPtr;
 
     using DWORD_PTR = System.IntPtr;
     using UINT_PTR = System.UIntPtr;
@@ -891,6 +892,20 @@ namespace OpenTK.Platform.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern BOOL GetMonitorInfo(IntPtr hMonitor, ref MonitorInfo lpmi);
+
+        #endregion
+
+        #region MonitorFromPoint
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern HMONITOR MonitorFromPoint(POINT pt, MonitorFrom dwFlags);
+
+        #endregion
+
+        #region MonitorFromWindow
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern HMONITOR MonitorFromWindow(HWND hwnd, MonitorFrom dwFlags);
 
         #endregion
 
@@ -4009,6 +4024,17 @@ namespace OpenTK.Platform.Windows
         AddOverlays = 0x000000020,
         /// <summary>Get the index of the overlay in the upper 8 bits of the iIcon</summary>
         OverlayIndex = 0x000000040,
+    }
+
+    #endregion
+
+    #region MonitorFrom
+
+    enum MonitorFrom
+    {
+        Null = 0,
+        Primary = 1,
+        Nearest = 2,
     }
 
     #endregion
