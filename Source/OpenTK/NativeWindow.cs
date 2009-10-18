@@ -287,6 +287,27 @@ namespace OpenTK
 
         #endregion
 
+        #region Icon
+
+        /// <summary>
+        /// Gets or sets the System.Drawing.Icon for this GameWindow.
+        /// </summary>
+        public Icon Icon
+        {
+            get
+            {
+                EnsureUndisposed();
+                return implementation.Icon;
+            }
+            set
+            {
+                EnsureUndisposed();
+                implementation.Icon = value;
+            }
+        }
+
+        #endregion
+
         #region InputDriver
 
         /// <summary>
@@ -530,6 +551,11 @@ namespace OpenTK
         public event EventHandler<EventArgs> FocusedChanged;
 
         /// <summary>
+        /// Occurs when the <see cref="Icon"/> property of the window changes. 
+        /// </summary>
+        public event EventHandler<EventArgs> IconChanged;
+
+        /// <summary>
         /// Occurs whenever a character is typed.
         /// </summary>
         public event EventHandler<KeyPressEventArgs> KeyPress;
@@ -682,6 +708,19 @@ namespace OpenTK
 
         #endregion
 
+        #region OnIconChanged
+
+        /// <summary>
+        /// Called when the <see cref="OpenTK.INativeWindow.Icon"/> property of the NativeWindow has changed.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        protected virtual void OnIconChanged(EventArgs e)
+        {
+            if (IconChanged != null) IconChanged(this, e);
+        }
+
+        #endregion
+
         #region OnKeyPress
 
         /// <summary>
@@ -824,6 +863,12 @@ namespace OpenTK
 
         #endregion
 
+        #region OnIconChangedInternal
+
+        private void OnIconChangedInternal(object sender, EventArgs e) { OnIconChanged(e); }
+
+        #endregion
+
         #region OnKeyPressInternal
 
         private void OnKeyPressInternal(object sender, KeyPressEventArgs e) { OnKeyPress(e); }
@@ -886,6 +931,7 @@ namespace OpenTK
                     implementation.Closing += OnClosingInternal;
                     implementation.Disposed += OnDisposedInternal;
                     implementation.FocusedChanged += OnFocusedChangedInternal;
+                    implementation.IconChanged += OnIconChangedInternal;
                     implementation.KeyPress += OnKeyPressInternal;
                     implementation.Move += OnMoveInternal;
                     implementation.Resize += OnResizeInternal;
@@ -901,6 +947,7 @@ namespace OpenTK
                     implementation.Closing -= OnClosingInternal;
                     implementation.Disposed -= OnDisposedInternal;
                     implementation.FocusedChanged -= OnFocusedChangedInternal;
+                    implementation.IconChanged -= OnIconChangedInternal;
                     implementation.KeyPress -= OnKeyPressInternal;
                     implementation.Move -= OnMoveInternal;
                     implementation.Resize -= OnResizeInternal;
