@@ -61,8 +61,9 @@ namespace OpenTK.Platform.Windows
         bool exists;
         WinWindowInfo window, child_window;
         WindowBorder windowBorder = WindowBorder.Resizable, previous_window_border;
+        WindowBorder deferred_window_border; // Set to avoid changing borders during fullscreen states.
         WindowState windowState = WindowState.Normal;
-        bool borderless_maximized_window_state = false;
+        bool borderless_maximized_window_state = false; // Hack to get maximized mode with hidden border (not normally possible).
 
         System.Drawing.Rectangle
             bounds = new System.Drawing.Rectangle(),
@@ -856,6 +857,7 @@ namespace OpenTK.Platform.Windows
                     return;
 
                 ShowWindowCommand command = 0;
+                bool exiting_fullscreen = false;
                 borderless_maximized_window_state = false;
 
                 switch (value)
@@ -863,11 +865,9 @@ namespace OpenTK.Platform.Windows
                     case WindowState.Normal:
                         command = ShowWindowCommand.RESTORE;
 
-                        // If we are leaving fullscreen mode, restore previous border.
+                        // If we are leaving fullscreen mode we need to restore the border.
                         if (WindowState == WindowState.Fullscreen)
-                        {
-                            WindowBorder = previous_window_border;
-                        }
+                            exiting_fullscreen = true;
                         break;
 
                     case WindowState.Maximized:
@@ -918,11 +918,18 @@ namespace OpenTK.Platform.Windows
                 if (command != 0)
                     Functions.ShowWindow(window.WindowHandle, command);
 
-                // Restore previous window size when leaving fullscreen mode
+                // Restore previous window size/location if necessary
                 if (command == ShowWindowCommand.RESTORE && previous_bounds != System.Drawing.Rectangle.Empty)
                 {
                     Bounds = previous_bounds;
                     previous_bounds = System.Drawing.Rectangle.Empty;
+                }
+
+                // Restore previous window border or apply pending border change when leaving fullscreen mode.
+                if (exiting_fullscreen)
+                {
+                    WindowBorder = deferred_window_border != 0 ? deferred_window_border : previous_window_border;
+                    deferred_window_border = previous_window_border = 0;
                 }
             }
         }
@@ -939,8 +946,21 @@ namespace OpenTK.Platform.Windows
             }
             set
             {
+                // Do not allow border changes during fullscreen mode.
+                // Defer them for when we leave fullscreen.
+                if (WindowState == WindowState.Fullscreen)
+                {
+                    deferred_window_border = value;
+                    return;
+                }
+
                 if (windowBorder == value)
                     return;
+
+                // To ensure maximized/minimized windows work correctly, reset state to normal,
+                // change the border, then go back to maximized/minimized.
+                WindowState state = WindowState;
+                WindowState = WindowState.Normal;
 
                 WindowStyle style = WindowStyle.ClipChildren | WindowStyle.ClipSiblings;
 
@@ -974,6 +994,8 @@ namespace OpenTK.Platform.Windows
                     SetWindowPosFlags.FRAMECHANGED);
 
                 Visible = true;
+
+                WindowState = state;
 
                 if (WindowBorderChanged != null)
                     WindowBorderChanged(this, EventArgs.Empty);
