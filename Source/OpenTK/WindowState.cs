@@ -20,7 +20,7 @@ namespace OpenTK
         /// <summary>
         /// The window is in its normal state.
         /// </summary>
-        Normal = 0,
+        Normal = 1,
         /// <summary>
         /// The window is minimized to the taskbar (also known as 'iconified').
         /// </summary>
