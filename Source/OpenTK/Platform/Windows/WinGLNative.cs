@@ -64,6 +64,7 @@ namespace OpenTK.Platform.Windows
         WindowBorder deferred_window_border; // Set to avoid changing borders during fullscreen states.
         WindowState windowState = WindowState.Normal;
         bool borderless_maximized_window_state = false; // Hack to get maximized mode with hidden border (not normally possible).
+        bool focused;
 
         System.Drawing.Rectangle
             bounds = new System.Drawing.Rectangle(),
@@ -148,6 +149,16 @@ namespace OpenTK.Platform.Windows
                 #region Size / Move / Style events
 
                 case WindowMessage.ACTIVATE:
+                    // See http://msdn.microsoft.com/en-us/library/ms646274(VS.85).aspx (WM_ACTIVATE notification):
+                    // wParam: The low-order word specifies whether the window is being activated or deactivated.
+                    bool new_focused_state = Focused;
+                    if (IntPtr.Size == 4)
+                        focused = (wParam.ToInt32() & 0xFFFF) != 0;
+                    else
+                        focused = (wParam.ToInt64() & 0xFFFF) != 0;
+
+                    if (new_focused_state != Focused && FocusedChanged != null)
+                        FocusedChanged(this, EventArgs.Empty);
                     break;
 
                 case WindowMessage.ENTERMENULOOP:
@@ -773,13 +784,7 @@ namespace OpenTK.Platform.Windows
 
         public bool Focused
         {
-            get
-            {
-                IntPtr focus = Functions.GetFocus();
-                return
-                    (window != null && focus == window.WindowHandle) ||
-                    (child_window != null && focus == child_window.WindowHandle);
-            }
+            get { return focused; }
         }
 
         #endregion
