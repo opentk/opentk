@@ -30,8 +30,9 @@ namespace Examples.Tests
             VSync = VSyncMode.On;
             Keyboard.KeyUp += KeyUpHandler;
 
-            WindowBorderChanged += WindowBorderOrStateChangedHandler;
-            WindowStateChanged += WindowBorderOrStateChangedHandler;
+            WindowBorderChanged += delegate(object sender, EventArgs e) { UpdateText(); };
+            WindowStateChanged += delegate(object sender, EventArgs e) { UpdateText(); };
+            FocusedChanged += delegate(object sender, EventArgs e) { UpdateText(); };
         }
 
         void KeyUpHandler(object sender, KeyboardKeyEventArgs e)
@@ -51,7 +52,7 @@ namespace Examples.Tests
             }
         }
 
-        void WindowBorderOrStateChangedHandler(object sender, EventArgs e)
+        void UpdateText()
         {
             using (Graphics gfx = Graphics.FromImage(TextBitmap))
             {
@@ -60,6 +61,7 @@ namespace Examples.Tests
 
                 gfx.DrawString(String.Format("[1 - 4]: change WindowState (current: {0}).", this.WindowState), TextFont, Brushes.White, new PointF(0, 0));
                 gfx.DrawString(String.Format("[5 - 7]: change WindowBorder (current: {0}).", this.WindowBorder), TextFont, Brushes.White, new PointF(0, TextFont.Height));
+                gfx.DrawString(String.Format("Focused: {0}.", this.Focused), TextFont, Brushes.White, new PointF(0, 2 * TextFont.Height));
             }
 
             System.Drawing.Imaging.BitmapData data = TextBitmap.LockBits(new Rectangle(0, 0, TextBitmap.Width, TextBitmap.Height),
@@ -81,7 +83,7 @@ namespace Examples.Tests
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Nearest);
 
             // Make sure text is displayed when the application starts.
-            WindowBorderOrStateChangedHandler(this, EventArgs.Empty);
+            UpdateText();
         }
 
         protected override void OnResize(EventArgs e)
