@@ -130,8 +130,6 @@ namespace OpenTK.Platform.Windows
 
             keyboards.Add(keyboard);
             mice.Add(mouse);
-
-            Icon = GetApplicationIcon();
         }
 
         #endregion
@@ -453,27 +451,6 @@ namespace OpenTK.Platform.Windows
                         Functions.GetClientRect(handle, out rect);
                         client_rectangle = rect.ToRectangle();
                     }
-                    break;
-
-                case WindowMessage.GETICON:
-                    if (icon != null)
-                    {
-                        icon.Dispose();
-                        icon = null;
-                    }
-
-                    if (lParam != IntPtr.Zero)
-                    {
-                        icon = Icon.FromHandle(lParam);
-                    }
-                    else
-                    {
-                        IntPtr icon_handle = Functions.DefWindowProc(handle, message, wParam, lParam);
-                        if (icon_handle != IntPtr.Zero)
-                            icon = Icon.FromHandle(icon_handle);
-                        return icon_handle;
-                    }
-
                     break;
 
                 case WindowMessage.CLOSE:
