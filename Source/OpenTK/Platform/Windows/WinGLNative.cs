@@ -62,6 +62,7 @@ namespace OpenTK.Platform.Windows
         WinWindowInfo window, child_window;
         WindowBorder windowBorder = WindowBorder.Resizable, previous_window_border;
         WindowState windowState = WindowState.Normal;
+        bool borderless_maximized_window_state = false;
 
         System.Drawing.Rectangle
             bounds = new System.Drawing.Rectangle(),
@@ -243,13 +244,22 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.SIZE:
                     SizeMessage state = (SizeMessage)wParam.ToInt64();
+                    WindowState new_state = windowState;
                     switch (state)
                     {
-                        case SizeMessage.RESTORED: windowState = WindowState.Normal; break;
-                        case SizeMessage.MINIMIZED: windowState = WindowState.Minimized; break;
-                        case SizeMessage.MAXIMIZED:
-                            windowState = WindowBorder == WindowBorder.Hidden ? WindowState.Fullscreen : WindowState.Maximized;
+                        case SizeMessage.RESTORED: new_state = borderless_maximized_window_state ?
+                            WindowState.Maximized : WindowState.Normal; break;
+                        case SizeMessage.MINIMIZED: new_state = WindowState.Minimized; break;
+                        case SizeMessage.MAXIMIZED: new_state = WindowBorder == WindowBorder.Hidden ?
+                            WindowState.Fullscreen : WindowState.Maximized;
                             break;
+                    }
+
+                    if (new_state != windowState)
+                    {
+                        windowState = new_state;
+                        if (WindowStateChanged != null)
+                            WindowStateChanged(this, EventArgs.Empty);
                     }
 
                     break;
@@ -846,19 +856,43 @@ namespace OpenTK.Platform.Windows
                     return;
 
                 ShowWindowCommand command = 0;
+                borderless_maximized_window_state = false;
 
                 switch (value)
                 {
                     case WindowState.Normal:
                         command = ShowWindowCommand.RESTORE;
-                        if (WindowBorder == WindowBorder.Hidden && previous_window_border != WindowBorder.Hidden)
+
+                        // If we are leaving fullscreen mode, restore previous border.
+                        if (WindowState == WindowState.Fullscreen)
+                        {
                             WindowBorder = previous_window_border;
+                        }
                         break;
 
                     case WindowState.Maximized:
-                        command = ShowWindowCommand.MAXIMIZE;
-                        if (WindowBorder == WindowBorder.Hidden && previous_window_border != WindowBorder.Hidden)
-                            WindowBorder = previous_window_border;
+                        // Note: if we use the MAXIMIZE command and the window border is Hidden (i.e. WS_POPUP),
+                        // we will enter fullscreen mode - we don't want that! As a workaround, we'll resize the window
+                        // manually to cover the whole working area of the current monitor.
+
+                        // Reset state to avoid strange interactions with fullscreen/minimized windows.
+                        WindowState = WindowState.Normal;
+
+                        if (WindowBorder == WindowBorder.Hidden)
+                        {
+                            IntPtr current_monitor = Functions.MonitorFromWindow(window.WindowHandle, MonitorFrom.Nearest);
+                            MonitorInfo info = new MonitorInfo();
+                            info.Size = MonitorInfo.SizeInBytes;
+                            Functions.GetMonitorInfo(current_monitor, ref info);
+
+                            previous_bounds = Bounds;
+                            borderless_maximized_window_state = true;
+                            Bounds = info.Work.ToRectangle();
+                        }
+                        else
+                        {
+                            command = ShowWindowCommand.MAXIMIZE;
+                        }
                         break;
 
                     case WindowState.Minimized:
@@ -866,29 +900,26 @@ namespace OpenTK.Platform.Windows
                         break;
 
                     case WindowState.Fullscreen:
-                        // We achieve fullscreen by hiding the window border and maximizing the window.
-                        // We have to 'trick' maximize above to not restore the border, by making it think
-                        // previous_window_border == Hidden.
-                        // After the trick, we store the 'real' previous border, to allow state changes to work
-                        // as expected.
+                        // We achieve fullscreen by hiding the window border and sending the MAXIMIZE command.
+                        // We cannot use the WindowState.Maximized directly, as that will not send the MAXIMIZE
+                        // command for windows with hidden borders.
+
+                        // Reset state to avoid strange side-effects from maximized/minimized windows.
+                        WindowState = WindowState.Normal;
+
                         previous_bounds = Bounds;
-                        WindowBorder temp = WindowBorder;
-                        previous_window_border = WindowBorder.Hidden;
+                        previous_window_border = WindowBorder;
                         WindowBorder = WindowBorder.Hidden;
-                        WindowState = WindowState.Maximized;
-                        previous_window_border = temp;
+                        command = ShowWindowCommand.MAXIMIZE;
+
                         break;
                 }
-
-                if (WindowStateChanged != null)
-                    WindowStateChanged(this, EventArgs.Empty);
 
                 if (command != 0)
                     Functions.ShowWindow(window.WindowHandle, command);
 
                 // Restore previous window size when leaving fullscreen mode
-                if (command == ShowWindowCommand.RESTORE &&
-                    previous_bounds != System.Drawing.Rectangle.Empty)
+                if (command == ShowWindowCommand.RESTORE && previous_bounds != System.Drawing.Rectangle.Empty)
                 {
                     Bounds = previous_bounds;
                     previous_bounds = System.Drawing.Rectangle.Empty;
