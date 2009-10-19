@@ -12,7 +12,7 @@ namespace OpenTK
         /// <summary>
         /// The window has a resizable border. A window with a resizable border can be resized by the user or programmatically.
         /// </summary>
-        Resizable = 1,
+        Resizable = 0,
         /// <summary>
         /// The window has a fixed border. A window with a fixed border can only be resized programmatically.
         /// </summary>
