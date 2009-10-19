@@ -38,6 +38,11 @@ namespace OpenTK
     {
         public IGLControl CreateGLControl(GraphicsMode mode, Control control)
         {
+            if (mode == null)
+                throw new ArgumentNullException("mode");
+            if (control == null)
+                throw new ArgumentNullException("control");
+            
             if (Configuration.RunningOnWindows) return new WinGLControl(mode, control);
             else if (Configuration.RunningOnX11) return new X11GLControl(mode, control);
             else if (Configuration.RunningOnMacOS) return new CarbonGLControl(mode, control);
