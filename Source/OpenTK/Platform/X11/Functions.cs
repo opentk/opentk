@@ -71,6 +71,10 @@ namespace OpenTK.Platform.X11
 
     #endregion
 
+    #region Structs
+   
+    #endregion
+
     internal static partial class Functions
     {
         public static readonly object Lock = new object();
@@ -269,7 +273,7 @@ namespace OpenTK.Platform.X11
 
         // Drawing
         [DllImport("libX11", EntryPoint = "XCreateGC")]
-        public extern static IntPtr XCreateGC(IntPtr display, IntPtr window, IntPtr valuemask, ref XGCValues values);
+        public extern static IntPtr XCreateGC(IntPtr display, IntPtr window, IntPtr valuemask, XGCValues[] values);
 
         [DllImport("libX11", EntryPoint = "XFreeGC")]
         public extern static int XFreeGC(IntPtr display, IntPtr gc);
@@ -347,7 +351,7 @@ namespace OpenTK.Platform.X11
         public extern static void XUngrabServer(IntPtr display);
 
         [DllImport("libX11", EntryPoint = "XGetWMNormalHints")]
-        public extern static void XGetWMNormalHints(IntPtr display, IntPtr window, ref XSizeHints hints, out IntPtr supplied_return);
+        public extern static int XGetWMNormalHints(IntPtr display, IntPtr window, ref XSizeHints hints, out IntPtr supplied_return);
 
         [DllImport("libX11", EntryPoint = "XSetWMNormalHints")]
         public extern static void XSetWMNormalHints(IntPtr display, IntPtr window, ref XSizeHints hints);
@@ -355,9 +359,15 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XSetZoomHints")]
         public extern static void XSetZoomHints(IntPtr display, IntPtr window, ref XSizeHints hints);
 
-        [DllImport("libX11", EntryPoint = "XSetWMHints")]
-        public extern static void XSetWMHints(IntPtr display, IntPtr window, ref XWMHints wmhints);
+        [DllImport("libX11")]
+        public static extern IntPtr XGetWMHints(Display display, Window w); // returns XWMHints*
 
+        [DllImport("libX11")]
+        public static extern void XSetWMHints(Display display, Window w, ref XWMHints wmhints);
+
+        [DllImport("libX11")]
+        public static extern IntPtr XAllocWMHints();
+        
         [DllImport("libX11", EntryPoint = "XGetIconSizes")]
         public extern static int XGetIconSizes(IntPtr display, IntPtr window, out IntPtr size_list, out int count);
 
@@ -436,6 +446,28 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11")]
         public static extern void XAutoRepeatOn(IntPtr display);
 
+        [DllImport("libX11")]
+        public static extern IntPtr XDefaultRootWindow(IntPtr display);
+
+        [DllImport("libX11")]
+        public static extern int XBitmapBitOrder(Display display);
+
+        [DllImport("libX11")]
+        public static extern IntPtr XCreateImage(Display display, IntPtr visual,
+            uint depth, ImageFormat format, int offset, byte[] data, uint width, uint height,
+            int bitmap_pad, int bytes_per_line);
+
+        [DllImport("libX11")]
+        public static extern IntPtr XCreateImage(Display display, IntPtr visual,
+            uint depth, ImageFormat format, int offset, IntPtr data, uint width, uint height,
+            int bitmap_pad, int bytes_per_line);
+
+        [DllImport("libX11")]
+        public static extern void XPutImage(Display display, IntPtr drawable,
+            IntPtr gc, IntPtr image, int src_x, int src_y, int dest_x, int dest_y, uint width, uint height);
+
+        static readonly IntPtr CopyFromParent = IntPtr.Zero;
+
         public static void SendNetWMMessage(X11WindowInfo window, IntPtr message_type, IntPtr l0, IntPtr l1, IntPtr l2)
         {
             XEvent xev;
@@ -471,6 +503,86 @@ namespace OpenTK.Platform.X11
             xev.ClientMessageEvent.ptr3 = l2;
 
             XSendEvent(window.Display, window.WindowHandle, false, new IntPtr((int)EventMask.NoEventMask), ref xev);
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        struct  Pixel
+        {
+            public byte A, R, G, B;
+            public Pixel(byte a, byte r, byte g, byte b)
+            {
+                A= a;
+                R = r;
+                G = g;
+                B = b;
+            }
+            public static implicit operator Pixel(int argb)
+            {
+                return new Pixel(
+                    (byte)((argb >> 24) & 0xFF),
+                    (byte)((argb >> 16) & 0xFF),
+                    (byte)((argb >> 8) & 0xFF),
+                    (byte)(argb & 0xFF));
+            }
+        }
+        public static IntPtr CreatePixmapFromImage(Display display, System.Drawing.Bitmap image) 
+        { 
+            int width = image.Width;
+            int height = image.Height;
+            int size = width * height; 
+            //Pixel[] data = new byte[size * 4];
+            int index = 0;
+
+//            for (int y = 0; y < height; ++y) 
+//            {
+//                for (int x = 0; x < width; ++x)
+//                {
+//                    data[index++] = image.GetPixel(x, y).ToArgb();
+//                }
+//            }
+
+            System.Drawing.Imaging.BitmapData data = image.LockBits(new System.Drawing.Rectangle(0, 0, width, height),
+                System.Drawing.Imaging.ImageLockMode.ReadOnly,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            
+            IntPtr ximage = XCreateImage(display, CopyFromParent, 24, ImageFormat.ZPixmap, 
+                0, data.Scan0, (uint)width, (uint)height, 32, 0); 
+            IntPtr pixmap = XCreatePixmap(display, XDefaultRootWindow(display), 
+                width, height, 24); 
+            IntPtr gc = XCreateGC(display, pixmap, IntPtr.Zero, null);
+            
+            XPutImage(display, pixmap, gc, ximage, 0, 0, 0, 0, (uint)width, (uint)height);
+            
+            XFreeGC(display, gc);
+            image.UnlockBits(data);
+                                         
+            return pixmap; 
+        } 
+        
+        public static IntPtr CreateMaskFromImage(Display display, System.Drawing.Bitmap image) 
+        { 
+            int width = image.Width; 
+            int height = image.Height; 
+            int stride = (width + 7) >> 3; 
+            byte[] mask = new byte[stride * height];
+            bool msbfirst = (XBitmapBitOrder(display) == 1); // 1 = MSBFirst
+        
+            for (int y = 0; y < height; ++y) 
+            { 
+                for (int x = 0; x < width; ++x) 
+                { 
+                    byte bit = (byte) (1 << (msbfirst ? (7 - (x & 7)) : (x & 7))); 
+                    int offset = y * stride + (x >> 3); 
+        
+                    if (image.GetPixel(x, y).A >= 128) 
+                        mask[offset] |= bit; 
+                } 
+            } 
+        
+            Pixmap pixmap = XCreatePixmapFromBitmapData(display, XDefaultRootWindow(display), 
+                mask, width, height, new IntPtr(1), IntPtr.Zero, 1); 
+        
+            return pixmap; 
         }
     }
 }
