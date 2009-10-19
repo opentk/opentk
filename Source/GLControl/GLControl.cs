@@ -78,17 +78,20 @@ namespace OpenTK
         /// <param name="flags">The GraphicsContextFlags for the OpenGL GraphicsContext.</param>
         public GLControl(GraphicsMode mode, int major, int minor, GraphicsContextFlags flags)
         {
+            if (mode == null)
+                throw new ArgumentNullException("mode");
+            
             SetStyle(ControlStyles.Opaque, true);
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             DoubleBuffered = false;
 
-            InitializeComponent();
-
             this.format = mode;
             this.major = major;
             this.minor = minor;
             this.flags = flags;
+
+            InitializeComponent();
         }
 
         #endregion
