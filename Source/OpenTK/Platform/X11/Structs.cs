@@ -1617,4 +1617,10 @@ namespace OpenTK.Platform.X11
         UnregisterAccelerator = 13,
         ActivateAccelerator = 14
     }
+
+    internal enum ImageFormat
+    {
+        XYPixmap = 1,
+        ZPixmap
+    }
 }
