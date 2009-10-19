@@ -551,10 +551,8 @@ namespace OpenTK.Platform.X11
         public void ProcessEvents()
         {
             // Process all pending events
-            if (!exists || window == null)
-                return;
-            
-            while (Functions.XCheckWindowEvent(window.Display, window.WindowHandle, window.EventMask, ref e) ||
+            while (Exists && window != null &&
+                   Functions.XCheckWindowEvent(window.Display, window.WindowHandle, window.EventMask, ref e) ||
                    Functions.XCheckTypedWindowEvent(window.Display, window.WindowHandle, XEventName.ClientMessage, ref e))
             {
                 // Respond to the event e
@@ -585,8 +583,7 @@ namespace OpenTK.Platform.X11
                         break;
 
                     case XEventName.ClientMessage:
-                        Debug.WriteLine("Client message received.");
-                        if (e.ClientMessageEvent.ptr1 == _atom_wm_destroy)
+                        if (!isExiting && e.ClientMessageEvent.ptr1 == _atom_wm_destroy)
                         {
                             Debug.WriteLine("Exit message received.");
                             CancelEventArgs ce = new CancelEventArgs();
@@ -614,8 +611,8 @@ namespace OpenTK.Platform.X11
 
                         if (Closed != null)
                             Closed(this, EventArgs.Empty);
-                        
-                        break;
+
+                        return;
 
                     case XEventName.ConfigureNotify:
                         border_width = e.ConfigureEvent.border_width;
@@ -1354,19 +1351,22 @@ namespace OpenTK.Platform.X11
                 {
                     if (window != null && window.WindowHandle != IntPtr.Zero)
                     {
-                        try
+                        if (Exists)
                         {
-                            Functions.XLockDisplay(window.Display);
-                            Functions.XDestroyWindow(window.Display, window.WindowHandle);
-                        }
-                        finally
-                        {
-                            Functions.XUnlockDisplay(window.Display);
-                        }
-    
-                        while (Exists)
-                            ProcessEvents();
+                            try
+                            {
+                                Functions.XLockDisplay(window.Display);
+                                Functions.XDestroyWindow(window.Display, window.WindowHandle);
+                            }
+                            finally
+                            {
+                                Functions.XUnlockDisplay(window.Display);
+                            }
 
+                            while (Exists)
+                                ProcessEvents();
+                        }
+                        
                         if (GraphicsContext.CurrentContext != null)
                             GraphicsContext.CurrentContext.MakeCurrent(null);
                         
