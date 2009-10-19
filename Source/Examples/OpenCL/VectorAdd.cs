@@ -13,7 +13,7 @@ namespace Examples
     using cl_mem = IntPtr;
 
     [Example("Vector Addition", ExampleCategory.OpenCL, "1.0")]
-    class FFT
+    class VectorAdd
     {
         public static void Main()
         {
@@ -98,17 +98,30 @@ vectorAdd(__global const float * a,
                     CL.SetKernelArg(hKernel, 1, new IntPtr(sizeof(cl_mem)), new IntPtr(&hDeviceMemB));
                     CL.SetKernelArg(hKernel, 2, new IntPtr(sizeof(cl_mem)), new IntPtr(&hDeviceMemC));
 
+                    // write data from host to device
+                    CL.EnqueueWriteBuffer(hCmdQueue, hDeviceMemA, true, IntPtr.Zero,
+                        new IntPtr(cnDimension.ToInt32() * sizeof(float)),
+                        new IntPtr(pA), 0, null, (IntPtr[])null);
+                    CL.EnqueueWriteBuffer(hCmdQueue, hDeviceMemB, true, IntPtr.Zero,
+                        new IntPtr(cnDimension.ToInt32() * sizeof(float)),
+                        new IntPtr(pB), 0, null, (IntPtr[])null);
+
                     // execute kernel
                     CL.EnqueueNDRangeKernel(hCmdQueue, hKernel, 1, null, &cnDimension, null, 0, null, null);
                     // copy results from device back to host
-                    CL.EnqueueReadBuffer(hContext, hDeviceMemC, true, IntPtr.Zero,
-                                         new IntPtr(cnDimension.ToInt32() * sizeof(float)),
-                                         new IntPtr(pC), 0, null, (IntPtr[])null);
+                    CL.EnqueueReadBuffer(hCmdQueue, hDeviceMemC, true, IntPtr.Zero,
+                         new IntPtr(cnDimension.ToInt32() * sizeof(float)),
+                         new IntPtr(pC), 0, null, (IntPtr[])null);
 
                     CL.ReleaseMemObject(hDeviceMemA);
                     CL.ReleaseMemObject(hDeviceMemB);
                     CL.ReleaseMemObject(hDeviceMemC);
                 }
+            }
+
+            for (int i = 0; i < A.Length; i++)
+            {
+                System.Diagnostics.Trace.WriteLine(String.Format("{0} + {1} = {2}", A[i], B[i], C[i]));
             }
         }
     }
