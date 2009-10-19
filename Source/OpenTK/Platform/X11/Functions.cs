@@ -157,6 +157,11 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XSendEvent")]
         public extern static int XSendEvent(IntPtr display, IntPtr window, bool propagate, IntPtr event_mask, ref XEvent send_event);
 
+        public static int XSendEvent(IntPtr display, IntPtr window, bool propagate, EventMask event_mask, ref XEvent send_event)
+        {
+            return XSendEvent(display, window, propagate, new IntPtr((int)event_mask), ref send_event);
+        }
+
         [DllImport("libX11", EntryPoint = "XQueryTree")]
         public extern static int XQueryTree(IntPtr display, IntPtr window, out IntPtr root_return, out IntPtr parent_return, out IntPtr children_return, out int nchildren_return);
 
