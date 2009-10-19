@@ -60,8 +60,9 @@ namespace OpenTK.Platform.Windows
         bool disposed;
         bool exists;
         WinWindowInfo window, child_window;
-        WindowBorder windowBorder = WindowBorder.Resizable, previous_window_border;
-        WindowBorder deferred_window_border; // Set to avoid changing borders during fullscreen states.
+        WindowBorder windowBorder = WindowBorder.Resizable;
+        Nullable<WindowBorder> previous_window_border; // Set when changing to fullscreen state.
+        Nullable<WindowBorder> deferred_window_border; // Set to avoid changing borders during fullscreen state.
         WindowState windowState = WindowState.Normal;
         bool borderless_maximized_window_state = false; // Hack to get maximized mode with hidden border (not normally possible).
         bool focused;
@@ -910,8 +911,11 @@ namespace OpenTK.Platform.Windows
                 // Restore previous window border or apply pending border change when leaving fullscreen mode.
                 if (exiting_fullscreen)
                 {
-                    WindowBorder = deferred_window_border != 0 ? deferred_window_border : previous_window_border;
-                    deferred_window_border = previous_window_border = 0;
+                    WindowBorder =
+                        deferred_window_border.HasValue ? deferred_window_border.Value :
+                        previous_window_border.HasValue ? previous_window_border.Value :
+                        WindowBorder;
+                    deferred_window_border = previous_window_border = null;
                 }
             }
         }
