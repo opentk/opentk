@@ -422,67 +422,67 @@ namespace OpenTK.Graphics.OpenGL
 
         public static void Normal3(Vector3 normal)
         {
-            Delegates.glNormal3f(normal.X, normal.Y, normal.Z);
+            GL.Normal3(normal.X, normal.Y, normal.Z);
         }
 
         public static void RasterPos2(Vector2 pos)
         {
-            Delegates.glRasterPos2f(pos.X, pos.Y);
+            GL.RasterPos2(pos.X, pos.Y);
         }
 
         public static void RasterPos3(Vector3 pos)
         {
-            Delegates.glRasterPos3f(pos.X, pos.Y, pos.Z);
+            GL.RasterPos3(pos.X, pos.Y, pos.Z);
         }
 
         public static void RasterPos4(Vector4 pos)
         {
-            Delegates.glRasterPos4f(pos.X, pos.Y, pos.Z, pos.W);
+            GL.RasterPos4(pos.X, pos.Y, pos.Z, pos.W);
         }
 
         public static void Vertex2(Vector2 v)
         {
-            Delegates.glVertex2f(v.X, v.Y);
+            GL.Vertex2(v.X, v.Y);
         }
 
         public static void Vertex3(Vector3 v)
         {
-            Delegates.glVertex3f(v.X, v.Y, v.Z);
+            GL.Vertex3(v.X, v.Y, v.Z);
         }
 
         public static void Vertex4(Vector4 v)
         {
-            Delegates.glVertex4f(v.X, v.Y, v.Z, v.W);
+            GL.Vertex4(v.X, v.Y, v.Z, v.W);
         }
 
         public static void TexCoord2(Vector2 v)
         {
-            Delegates.glTexCoord2f(v.X, v.Y);
+            GL.TexCoord2(v.X, v.Y);
         }
 
         public static void TexCoord3(Vector3 v)
         {
-            Delegates.glTexCoord3f(v.X, v.Y, v.Z);
+            GL.TexCoord3(v.X, v.Y, v.Z);
         }
 
         public static void TexCoord4(Vector4 v)
         {
-            Delegates.glTexCoord4f(v.X, v.Y, v.Z, v.W);
+            GL.TexCoord4(v.X, v.Y, v.Z, v.W);
         }
 
         public static void Rotate(Single angle, Vector3 axis)
         {
-            Delegates.glRotatef((Single)angle, axis.X, axis.Y, axis.Z);
+            GL.Rotate((Single)angle, axis.X, axis.Y, axis.Z);
         }
 
         public static void Scale(Vector3 scale)
         {
-            Delegates.glScalef(scale.X, scale.Y, scale.Z);
+            GL.Scale(scale.X, scale.Y, scale.Z);
         }
 
         public static void Translate(Vector3 trans)
         {
-            Delegates.glTranslatef(trans.X, trans.Y, trans.Z);
+            GL.Translate(trans.X, trans.Y, trans.Z);
         }
 
         public static void MultMatrix(ref Matrix4 mat)
@@ -491,7 +491,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Single* m_ptr = &mat.Row0.X)
                 {
-                    Delegates.glMultMatrixf((Single*)m_ptr);
+                    GL.MultMatrix((Single*)m_ptr);
                 }
             }
         }
@@ -502,7 +502,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Single* m_ptr = &mat.Row0.X)
                 {
-                    Delegates.glLoadMatrixf((Single*)m_ptr);
+                    GL.LoadMatrix((Single*)m_ptr);
                 }
             }
         }
@@ -513,7 +513,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Single* m_ptr = &mat.Row0.X)
                 {
-                    Delegates.glLoadTransposeMatrixf((Single*)m_ptr);
+                    GL.LoadTransposeMatrix((Single*)m_ptr);
                 }
             }
         }
@@ -524,7 +524,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Single* m_ptr = &mat.Row0.X)
                 {
-                    Delegates.glMultTransposeMatrixf((Single*)m_ptr);
+                    GL.MultTransposeMatrix((Single*)m_ptr);
                 }
             }
         }
@@ -535,7 +535,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Double* m_ptr = &mat.Row0.X)
                 {
-                    Delegates.glMultMatrixd((Double*)m_ptr);
+                    GL.MultMatrix((Double*)m_ptr);
                 }
             }
         }
@@ -546,7 +546,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Double* m_ptr = &mat.Row0.X)
                 {
-                    Delegates.glLoadMatrixd((Double*)m_ptr);
+                    GL.LoadMatrix((Double*)m_ptr);
                 }
             }
         }
@@ -557,7 +557,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Double* m_ptr = &mat.Row0.X)
                 {
-                    Delegates.glLoadTransposeMatrixd((Double*)m_ptr);
+                    GL.LoadTransposeMatrix((Double*)m_ptr);
                 }
             }
         }
@@ -568,7 +568,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Double* m_ptr = &mat.Row0.X)
                 {
-                    Delegates.glMultTransposeMatrixd((Double*)m_ptr);
+                    GL.MultTransposeMatrix((Double*)m_ptr);
                 }
             }
         }
@@ -702,7 +702,7 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 int length = @string.Length;
-                Delegates.glShaderSource((UInt32)shader, 1, new string[] { @string }, &length);
+                GL.ShaderSource((UInt32)shader, 1, new string[] { @string }, &length);
             }
         }
 
@@ -733,7 +733,7 @@ namespace OpenTK.Graphics.OpenGL
                     return;
                 }
                 StringBuilder sb = new StringBuilder(length);
-                Delegates.glGetShaderInfoLog((UInt32)shader, sb.Capacity, &length, sb);
+                GL.GetShaderInfoLog((UInt32)shader, sb.Capacity, &length, sb);
                 info = sb.ToString();
             }
         }
@@ -764,7 +764,7 @@ namespace OpenTK.Graphics.OpenGL
                     return;
                 }
                 StringBuilder sb = new StringBuilder(length);
-                Delegates.glGetProgramInfoLog((UInt32)program, sb.Capacity, &length, sb);
+                GL.GetProgramInfoLog((UInt32)program, sb.Capacity, &length, sb);
                 info = sb.ToString();
             }
         }
