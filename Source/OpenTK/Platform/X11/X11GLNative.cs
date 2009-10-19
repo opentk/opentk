@@ -512,6 +512,36 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region DeleteIconPixmaps
+        
+        static void DeleteIconPixmaps(IntPtr display, IntPtr window)
+        {
+            IntPtr wmHints_ptr = Functions.XGetWMHints(display, window);
+
+            if (wmHints_ptr != IntPtr.Zero)
+            {
+                XWMHints wmHints = (XWMHints)Marshal.PtrToStructure(wmHints_ptr, typeof(XWMHints));
+                XWMHintsFlags flags = (XWMHintsFlags)wmHints.flags.ToInt32();
+
+                if ((flags & XWMHintsFlags.IconPixmapHint) != 0)
+                {
+                    wmHints.flags = new IntPtr((int)(flags & ~XWMHintsFlags.IconPixmapHint));
+                    Functions.XFreePixmap(display, wmHints.icon_pixmap);
+                }
+
+                if ((flags & XWMHintsFlags.IconMaskHint) != 0)
+                {
+                    wmHints.flags = new IntPtr((int)(flags & ~XWMHintsFlags.IconMaskHint));
+                    Functions.XFreePixmap(display, wmHints.icon_mask);
+                }
+
+                Functions.XSetWMHints(display, window, ref wmHints);
+                Functions.XFree(wmHints_ptr);
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region INativeWindow Members
@@ -792,21 +822,20 @@ namespace OpenTK.Platform.X11
                 if (value == icon)
                     return;
 
+                // Note: it seems that Gnome/Metacity does not respect the _NET_WM_ICON hint.
+                // For this reason, we'll also set the icon using XSetWMHints.
                 if (value == null)
                 {
                     Functions.XDeleteProperty(window.Display, window.WindowHandle, _atom_net_wm_icon);
+                    DeleteIconPixmaps(window.Display, window.WindowHandle);
                 }
                 else
                 {
-                    Bitmap bitmap;
-                    int size;
-                    IntPtr[] data;
-                    int index;
-    
-                    bitmap = icon.ToBitmap();
-                    index = 0;
-                    size = bitmap.Width * bitmap.Height + 2;
-                    data = new IntPtr[size];
+                    // Set _NET_WM_ICON
+                    Bitmap bitmap = value.ToBitmap();
+                    int size = bitmap.Width * bitmap.Height + 2;
+                    IntPtr[] data = new IntPtr[size];
+                    int index = 0;
     
                     data[index++] = (IntPtr)bitmap.Width;
                     data[index++] = (IntPtr)bitmap.Height;
@@ -818,10 +847,29 @@ namespace OpenTK.Platform.X11
                     Functions.XChangeProperty(window.Display, window.WindowHandle,
                                   _atom_net_wm_icon, _atom_xa_cardinal, 32,
                                   PropertyMode.Replace, data, size);
+
+                    // Set XWMHints
+                    DeleteIconPixmaps(window.Display, window.WindowHandle);
+                    IntPtr wmHints_ptr = Functions.XGetWMHints(window.Display, window.WindowHandle);
+
+                    if (wmHints_ptr == IntPtr.Zero)
+                        wmHints_ptr = Functions.XAllocWMHints();
+
+                    XWMHints wmHints = (XWMHints)Marshal.PtrToStructure(wmHints_ptr, typeof(XWMHints));
+                    
+                    wmHints.flags = new IntPtr(wmHints.flags.ToInt32() | (int)(XWMHintsFlags.IconPixmapHint | XWMHintsFlags.IconMaskHint));
+                    wmHints.icon_pixmap = Functions.CreatePixmapFromImage(window.Display, bitmap); 
+                    wmHints.icon_mask = Functions.CreateMaskFromImage(window.Display, bitmap); 
+                    
+                    Functions.XSetWMHints(window.Display, window.WindowHandle, ref wmHints);
+                    Functions.XFree (wmHints_ptr);
+
+                    Functions.XSync(window.Display, false);
                 }
 
                 icon = value;
-                IconChanged(this, EventArgs.Empty);
+                if (IconChanged != null)
+                    IconChanged(this, EventArgs.Empty);
             }
         }
 
