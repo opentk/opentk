@@ -585,8 +585,10 @@ namespace OpenTK.Platform.X11
                         break;
 
                     case XEventName.ClientMessage:
+                        Debug.WriteLine("Client message received.");
                         if (e.ClientMessageEvent.ptr1 == _atom_wm_destroy)
                         {
+                            Debug.WriteLine("Exit message received.");
                             CancelEventArgs ce = new CancelEventArgs();
                             if (Closing != null)
                                 Closing(this, ce);
@@ -597,7 +599,8 @@ namespace OpenTK.Platform.X11
                                 
                                 if (Unload != null)
                                     Unload(this, EventArgs.Empty);
-        
+
+                                Debug.WriteLine("Destroying window.");
                                 Functions.XDestroyWindow(window.Display, window.WindowHandle);
                                 break;
                             }
@@ -606,6 +609,7 @@ namespace OpenTK.Platform.X11
                         break;
 
                     case XEventName.DestroyNotify:
+                        Debug.WriteLine("Window destroyed");
                         exists = false;
 
                         if (Closed != null)
@@ -1276,9 +1280,14 @@ namespace OpenTK.Platform.X11
         public void Exit()
         {
             XEvent ev = new XEvent();
+            ev.type = XEventName.ClientMessage;
+            ev.ClientMessageEvent.format = 32;
+            ev.ClientMessageEvent.display = window.Display;
+            ev.ClientMessageEvent.window = window.WindowHandle;
             ev.ClientMessageEvent.ptr1 = _atom_wm_destroy;
             Functions.XSendEvent(window.Display, window.WindowHandle, false,
-                new IntPtr((int)EventMask.NoEventMask), ref ev);
+                EventMask.NoEventMask, ref ev);
+            Functions.XFlush(window.Display);
         }
 
         #endregion
