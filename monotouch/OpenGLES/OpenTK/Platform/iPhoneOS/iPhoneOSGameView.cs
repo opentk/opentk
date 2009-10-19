@@ -574,7 +574,9 @@ namespace OpenTK.Platform.iPhoneOS
             var curUpdateTime = DateTime.Now;
             if (prevUpdateTime.Ticks == 0)
                 prevUpdateTime = curUpdateTime;
-            updateEventArgs.Time = (curUpdateTime - prevUpdateTime).TotalSeconds;
+            var t = (curUpdateTime - prevUpdateTime).TotalSeconds;
+            Console.Error.WriteLine("# RunIteration: update t={0}", t.ToString());
+            updateEventArgs.Time = t;
             OnUpdateFrame(updateEventArgs);
             prevUpdateTime = curUpdateTime;
 
@@ -583,7 +585,9 @@ namespace OpenTK.Platform.iPhoneOS
             var curRenderTime = DateTime.Now;
             if (prevRenderTime.Ticks == 0)
                 prevRenderTime = curRenderTime;
-            renderEventArgs.Time = (curRenderTime - prevRenderTime).TotalSeconds;
+            t = (curRenderTime - prevRenderTime).TotalSeconds;
+            Console.Error.WriteLine("# RunIteration: render t={0}", t.ToString());
+            renderEventArgs.Time = t;
             OnRenderFrame(renderEventArgs);
             prevRenderTime = curRenderTime;
         }

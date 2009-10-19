@@ -65,6 +65,10 @@ namespace OpenTK.Platform.iPhoneOS {
             get {return EAGLContext.CurrentContext == EAGLContext;}
         }
 
+        public bool IsDisposed {
+            get {return EAGLContext == null;}
+        }
+
         public bool VSync {
             get {throw new NotSupportedException();}
             set {throw new NotSupportedException();}
