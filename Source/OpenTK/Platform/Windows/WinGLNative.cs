@@ -431,6 +431,9 @@ namespace OpenTK.Platform.Windows
                     }
                     break;
 
+                case WindowMessage.SYSCHAR:
+                    return IntPtr.Zero;
+
                 case WindowMessage.KILLFOCUS:
                     keyboard.ClearKeys();
                     break;
