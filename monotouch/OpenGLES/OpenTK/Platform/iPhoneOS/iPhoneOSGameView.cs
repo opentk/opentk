@@ -545,7 +545,11 @@ namespace OpenTK.Platform.iPhoneOS
             }
             CreateFrameBuffer();
             OnLoad(EventArgs.Empty);
-            timer = NSTimer.CreateRepeatingScheduledTimer(TimeSpan.FromSeconds(1 / updatesPerSecond), RunIteration);
+            // Can't use TimeSpan.FromSeconds() as that only has 1ms
+            // resolution, and we need better (e.g. 60fps doesn't fit nicely
+            // in 1ms resolution, but does in ticks).
+            var timeout = new TimeSpan ((long) (((1.0 * TimeSpan.TicksPerSecond) / updatesPerSecond) + 0.5));
+            timer = NSTimer.CreateRepeatingScheduledTimer(timeout, RunIteration);
         }
 
         public void Stop()
