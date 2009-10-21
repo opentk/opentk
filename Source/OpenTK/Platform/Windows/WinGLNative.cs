@@ -546,6 +546,7 @@ namespace OpenTK.Platform.Windows
                 wc.WndProc = WindowProcedureDelegate;
                 wc.ClassName = ClassName;
                 wc.Icon = Icon != null ? Icon.Handle : IntPtr.Zero;
+                wc.Cursor = Functions.LoadCursor(CursorName.Arrow);
                 //wc.Background = Functions.GetStockObject(5);
                 ushort atom = Functions.RegisterClassEx(ref wc);
 
