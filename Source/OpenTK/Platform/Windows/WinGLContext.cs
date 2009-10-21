@@ -205,10 +205,10 @@ namespace OpenTK.Platform.Windows
         public override void LoadAll()
         {
             Wgl.LoadAll();
-            new GL().LoadAll();
-
             vsync_supported = Wgl.Arb.SupportsExtension(this, "WGL_EXT_swap_control") &&
                 Wgl.Load("wglGetSwapIntervalEXT") && Wgl.Load("wglSwapIntervalEXT");
+
+            base.LoadAll();
         }
 
         #endregion

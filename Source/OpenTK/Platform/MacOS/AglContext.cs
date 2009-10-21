@@ -379,7 +379,7 @@ namespace OpenTK.Platform.MacOS
 
         public override void LoadAll()
         {
-            new OpenTK.Graphics.OpenGL.GL().LoadAll();
+            base.LoadAll();
         }
 
          private const string Library = "libdl.dylib";

@@ -269,10 +269,11 @@ namespace OpenTK.Platform.X11
 
         public override void LoadAll()
         {
-            new OpenTK.Graphics.OpenGL.GL().LoadAll();
             new Glx().LoadAll();
             vsync_supported = this.GetAddress("glXSwapIntervalSGI") != IntPtr.Zero;
             Debug.Print("Context supports vsync: {0}.", vsync_supported);
+
+            base.LoadAll();
         }
 
         #endregion
