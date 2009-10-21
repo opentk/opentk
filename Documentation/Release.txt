@@ -1,22 +1,24 @@
-The Open Toolkit 0.9.9-2 Beta
+The Open Toolkit 0.9.9-3 Beta
 
 
 
 [Overview]
 
-This is the third preview release of what will become OpenTK 1.0. Major changes:
-* Added new OpenTK.Compatibility project to ensure compatilibility with older OpenTK and Tao projects.
-* Deprecated and merged OpenTK.Utilities into OpenTK.Compatibility.
-* Moved OpenTK.GLControl into its own project.
-* Added NativeWindow class and modified GameWindow to inherit from it.
-* Improved the build system and added support for signed assemblies.
-* Added complete OpenGL|ES support.
-* Recreated the OpenCL bindings using the binding generator.
-* Improved the math API.
-* Fixed all documentation warnings.
-* Improved implementations for GraphicsContext, GLControl, NativeWindow, GameWindow.
-* Added a large number of stability fixes and improved the behavior of OpenTK under buggy environments.
-
+This is the a preview release of what will become OpenTK 1.0. Major changes:
+* Bindings with generic ref/out overloads now reflect changes back to the caller.
+* Improved OpenGL 3.2 bindings.
+* Added helper overloads to GetAttrib* methods.
+* Fixed 'out string' parameters in ES20 (should have been StringBuilder).
+* Added Icon and IconChanged support to NativeWindow.
+* Added Focused and FocusedChanged support to NativeWindow.
+* Added KeyPress event to NativeWindow (in progress).
+* Improved WindowBorder and WindowState changes for NativeWindow on win32.
+* Fixed premature GLControl initialization (Load event is now correctly raised).
+* Fixed Vector[234]d and Matrix4d signatures (double instead of float) and added several new methods to Matrix4 and Matrix4d.
+* Fixed a large number of smaller issues and annoyances in NativeWindow (see complete bug list, below).
+* Improved internal loading code for the various bindings.
+* Made the binding generator more robust when handling invalid or malformed specifications.
+* GameWindow OnLoad and OnUnload methods are now protected instead of public (this was supposed to happen in the previous release).
 
 Please visit http://www.opentk.com to report issues or request features.
 
@@ -24,36 +26,38 @@ Please visit http://www.opentk.com to report issues or request features.
 
 [Resolved issues]
 
-[#566]
-[#775]
-[#993]
+[#588]
+[#964]
 [#1071]
-[#1074]
-[#1081]
-[#1082]
-[#1084]
-[#1089]
-[#1101]
-[#1119]
-[#1121]
-[#1126]
-[#1131]
-[#1138]
-[#1140]
-[#1141]
-[#1143]
+[#1083]
+[#1146]
+[#1151]
+[#1165]
+[#1175]
+[#1176]
+[#1180]
+[#1190]
+[#1207]
+[#1213]
+[#1214]
+[#1215]
+[#1118]
+[#1226]
+[#1227]
+[#1233]
+[#1235]
+[#1239]
+[#1240]
+[#1248]
+
 
 
 
 [Known issues]
 
-* Mono 2.2 and 2.4 fail to compile this release (bug report: https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0, 2.4.2+ or use the precompiled binaries.
-* OpenTK.Graphics.TextPrinter fails to render text with newlines or a layout rectangle on Mono. This is a Mono GDI+ bug.
-* Example documentation may not show up correctly when running on Mono. This is a Mono issue with RTF parsing.
-* Joystick input is not supported on Mac OS X at this time.
-* OpenGL 3.0 is not supported on Mac OS X at this time.
-* The new GameWindow implementation may not function correctly on Mac OS X.
-* The new GraphicsContext  implementation may not function correctly on Mac OS X.
+* Mono 2.2 and 2.4.0 cannot compile this release due to a compiler bug (https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0, 2.4.2+ or use the precompiled binaries instead.
+* The example browser is incomplete.
+* The Mac OS X port is untested and may fail to work correctly. If you are interested in helping out, please make a post at the forums.
 * MonoDevelop fails to sign assemblies (bugs https://bugzilla.novell.com/show_bug.cgi?id=484752 and https://bugzilla.novell.com/show_bug.cgi?id=537063).
 
 
@@ -62,10 +66,25 @@ Please visit http://www.opentk.com to report issues or request features.
 
 Please note that binary compatibility is not preserved between beta releases.
 
+If you are upgrading from OpenTK 0.9.9-0 or earlier, please add a reference to OpenTK.Compatibility.dll and OpenTK.GLControl.dll (if necessary).
+
+
+[0.9.9-3]
+
+1. OpenTK.Matrix4d no longer contains an [int, int] indexer.
+Solution: there is no solution at this time. If you were using this indexer, please file an issue report at http://www.opentk.com/node/add/project-issue
+
+2. OpenTK.Graphics.ES20.GetProgramInfoLog now takes a StringBuilder instead of an 'out string' parameter.
+Solution: the previous signature was incorrect. Please create and pass a StringBuilder to this method.
+
+3. A number of OpenTK.Graphics.OpenGL 3.2 methods now take strongly-typed enums instead of the 'All' enum.
+Solution: please replace the All enum by the correct one, as indicated by the compiler error.
+
+ 4. GameWindow OnLoad and OnUnload methods are now protected instead of public.
+ Solution: change the access qualifier to protected when overriding these methods.
+ 
 
 [0.9.9-2]
-
-If you are upgrading from an earlier version of OpenTK, please add a reference to OpenTK.Compatibility and OpenTK.GLControl (if you are using the GLControl).
 
 1. OpenTK.Utilities assembly no longer exists.
 Solution: add a reference to OpenTK.Compatibility.
