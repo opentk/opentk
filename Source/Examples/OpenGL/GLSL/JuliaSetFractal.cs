@@ -194,7 +194,7 @@ namespace Examples.Tutorial
 
         #region OnUnload
 
-        public override void OnUnload(EventArgs e)
+        protected override void OnUnload(EventArgs e)
         {
             if (TextureObject != 0)
                 GL.DeleteTextures(1, ref TextureObject);

@@ -869,7 +869,7 @@ namespace Examples.Tutorial
 
         }
 
-        public override void OnUnload(EventArgs e)
+        protected override void OnUnload(EventArgs e)
         {
             if (shaderProgramBox != 0)
                 GL.DeleteProgram(shaderProgramBox);
