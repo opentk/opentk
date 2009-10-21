@@ -170,7 +170,7 @@ namespace Examples.Tutorial
 
         #region OnUnload
 
-        public override void OnUnload(EventArgs e)
+        protected override void OnUnload(EventArgs e)
         {
             if (shader_program != 0)
                 GL.DeleteProgram(shader_program);
