@@ -64,7 +64,7 @@ namespace Examples.Tutorial
 
         #region OnLoad
 
-        public override void OnLoad(EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
             GL.ClearColor(Color.MidnightBlue);
             GL.Enable(EnableCap.DepthTest);

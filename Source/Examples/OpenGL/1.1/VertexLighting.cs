@@ -34,7 +34,7 @@ namespace Examples.Tutorial
 
         #region OnLoad
 
-        public override void OnLoad(EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 

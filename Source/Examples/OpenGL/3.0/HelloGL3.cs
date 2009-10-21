@@ -120,7 +120,7 @@ void main(void)
             GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
         { }
         
-        public override void OnLoad (System.EventArgs e)
+        protected override void OnLoad (System.EventArgs e)
         {
             // Create shaders
             vertexShaderHandle = GL.CreateShader(ShaderType.VertexShader);
