@@ -828,6 +828,21 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region LoadCursor
+
+        [DllImport("user32.dll")]
+        public static extern HCURSOR LoadCursor(HINSTANCE hInstance, LPCTSTR lpCursorName);
+
+        [DllImport("user32.dll")]
+        public static extern HCURSOR LoadCursor(HINSTANCE hInstance, IntPtr lpCursorName);
+
+        public static HCURSOR LoadCursor(CursorName lpCursorName)
+        {
+            return LoadCursor(IntPtr.Zero, new IntPtr((int)lpCursorName));
+        }
+
+        #endregion
+
         #endregion
 
         #region Display settings
@@ -4035,6 +4050,15 @@ namespace OpenTK.Platform.Windows
         Null = 0,
         Primary = 1,
         Nearest = 2,
+    }
+
+    #endregion
+
+    #region CursorName
+
+    enum CursorName : int
+    {
+        Arrow = 32512
     }
 
     #endregion
