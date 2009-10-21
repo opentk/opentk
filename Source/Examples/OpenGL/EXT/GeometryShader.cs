@@ -188,7 +188,7 @@ namespace Examples.Tutorial
             }
         }
 
-        public override void OnUnload(EventArgs e)
+        protected override void OnUnload(EventArgs e)
         {
             if (shaderProgram != 0)
                 GL.DeleteProgram(shaderProgram);

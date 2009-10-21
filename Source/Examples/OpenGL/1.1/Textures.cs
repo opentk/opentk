@@ -62,7 +62,7 @@ namespace Examples.Tutorial
 
         #region OnUnload
 
-        public override void OnUnload(EventArgs e)
+        protected override void OnUnload(EventArgs e)
         {
             GL.DeleteTextures(1, ref texture);
         }

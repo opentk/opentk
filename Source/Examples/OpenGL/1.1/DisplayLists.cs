@@ -107,7 +107,7 @@ namespace Examples.Tutorial
 
         #region OnUnload
 
-        public override void OnUnload(EventArgs e)
+        protected override void OnUnload(EventArgs e)
         {
             GL.DeleteLists(lists[0], num_lists);
         }
