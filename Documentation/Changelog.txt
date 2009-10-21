@@ -4,7 +4,16 @@
 
 2009-10-21  the_fiddler
 
+
+
+	* Documentation/Changelog.txt, Documentation/Release.txt, Source/Compatibility/Properties/AssemblyInfo.cs, Source/Examples/Properties/AssemblyInfo.cs, Source/GLControl/Properties/AssemblyInfo.cs: Bumped version numbers and updated documentation in preparation of 0.9.9-3 release.
+
+	* Source/Examples/OpenGL/1.1/DisplayLists.cs, Source/Examples/OpenGL/1.1/ImmediateMode.cs, Source/Examples/OpenGL/1.1/Textures.cs, Source/Examples/OpenGL/1.1/VertexArrays.cs, Source/Examples/OpenGL/1.1/VertexLighting.cs, Source/Examples/OpenGL/1.5/VertexBufferObject.cs, Source/Examples/OpenGL/3.0/HelloGL3.cs, Source/Examples/OpenGL/EXT/FramebufferObject.cs, Source/Examples/OpenGL/EXT/GeometryShader.cs, Source/Examples/OpenGL/EXT/GeometryShaderAdvanced.cs, Source/Examples/OpenGL/GLSL/JuliaSetFractal.cs, Source/Examples/OpenGL/GLSL/SimpleGLSL.cs, Source/Examples/OpenGLES/1.1/SimpleWindow.cs, Source/Examples/OpenGLES/2.0/SimpleWindow20.cs, Source/Examples/OpenTK/Fonts/FontRenderingAdvanced.cs, Source/Examples/OpenTK/GameWindow/FullscreenAntialias.cs, Source/Examples/OpenTK/GameWindow/SimpleWindow.cs, Source/Examples/OpenTK/Test/GameWindowStates.cs, Source/OpenTK/GameWindow.cs, Source/QuickStart/Game.cs: OnLoad/OnUnload should be protected, not public, to conform with the class
+
+	  library design guidelines. This issue was supposed to be fixed in 0.9.9-2, but was apparently overlooked.
+
 	* Source/OpenTK/Platform/MacOS/AglContext.cs, Source/OpenTK/Platform/Windows/WinGLContext.cs, Source/OpenTK/Platform/X11/X11GLContext.cs: Avoid accessing OpenTK.Graphics.OpenGL from platform-specific code. Reduces coupling and code-duplication.
+	* Source/Examples/OpenGL/1.1/DisplayLists.cs, Source/Examples/OpenGL/1.1/Textures.cs, Source/Examples/OpenGL/EXT/FramebufferObject.cs, Source/Examples/OpenGL/EXT/GeometryShader.cs, Source/Examples/OpenGL/EXT/GeometryShaderAdvanced.cs, Source/Examples/OpenGL/GLSL/JuliaSetFractal.cs, Source/Examples/OpenGL/GLSL/SimpleGLSL.cs: Fixed compilation issue caused by OnUnload access modifier changed (public -> protected).
 
 2009-10-20  the_fiddler
 
