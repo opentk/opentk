@@ -341,7 +341,10 @@ namespace OpenTK.Graphics.OpenGL
 #pragma warning disable 1591
 #pragma warning disable 1572
 #pragma warning disable 1573
-        
+
+        // Note: Mono 1.9.1 truncates StringBuilder results (for 'out string' parameters).
+        // We work around this issue by doubling the StringBuilder capacity.
+
         #region public static void Color[34]() overloads
 
         public static void Color3(System.Drawing.Color color)
@@ -618,7 +621,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
         }
-        
+
         public static void Uniform4(int location, Color4 color)
         {
             GL.Uniform4(location, color.R, color.G, color.B, color.A);
@@ -628,7 +631,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             GL.Uniform4(location, quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
         }
-        
+
         #endregion
 
         #endregion
@@ -641,9 +644,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             int length;
             GetProgram(program, OpenTK.Graphics.OpenGL.ProgramParameter.ActiveAttributeMaxLength, out length);
+            StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
 
-            StringBuilder sb = new StringBuilder(length == 0 ? 1 : length);
-            GetActiveAttrib(program, index, sb.Length, out length, out size, out type, sb);
+            GetActiveAttrib(program, index, sb.Capacity, out length, out size, out type, sb);
             return sb.ToString();
         }
 
@@ -657,7 +660,7 @@ namespace OpenTK.Graphics.OpenGL
             GetProgram(program, OpenTK.Graphics.OpenGL.ProgramParameter.ActiveUniformMaxLength, out length);
 
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length);
-            GetActiveUniform(program, uniformIndex, sb.Length, out length, out size, out type, sb);
+            GetActiveUniform(program, uniformIndex, sb.Capacity, out length, out size, out type, sb);
             return sb.ToString();
         }
 
@@ -669,11 +672,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             int length;
             GetProgram(program, OpenTK.Graphics.OpenGL.ProgramParameter.ActiveUniformMaxLength, out length);
-            if (length == 0)
-                return String.Empty;
-            
-            StringBuilder sb = new StringBuilder(length);
-            GetActiveUniformName(program, uniformIndex, sb.Length, out length, sb);
+            StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
+
+            GetActiveUniformName(program, uniformIndex, sb.Capacity, out length, sb);
             return sb.ToString();
         }
 
@@ -685,11 +686,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             int length;
             GetProgram(program, OpenTK.Graphics.OpenGL.ProgramParameter.ActiveUniformBlockMaxNameLength, out length);
-            if (length == 0)
-                return String.Empty;
+            StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
 
-            StringBuilder sb = new StringBuilder(length);
-            GetActiveUniformBlockName(program, uniformIndex, sb.Length, out length, sb);
+            GetActiveUniformBlockName(program, uniformIndex, sb.Capacity, out length, sb);
             return sb.ToString();
         }
 
@@ -714,7 +713,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             string info;
             GetShaderInfoLog(shader, out info);
-            return info;        
+            return info;
         }
 
         #endregion
@@ -732,7 +731,7 @@ namespace OpenTK.Graphics.OpenGL
                     info = String.Empty;
                     return;
                 }
-                StringBuilder sb = new StringBuilder(length);
+                StringBuilder sb = new StringBuilder(length * 2);
                 GL.GetShaderInfoLog((UInt32)shader, sb.Capacity, &length, sb);
                 info = sb.ToString();
             }
@@ -741,16 +740,16 @@ namespace OpenTK.Graphics.OpenGL
         #endregion
 
         #region public static string GetProgramInfoLog(Int32 program)
-        
+
         public static string GetProgramInfoLog(Int32 program)
         {
             string info;
             GetProgramInfoLog(program, out info);
             return info;
         }
-        
+
         #endregion
-        
+
         #region public static void GetProgramInfoLog(Int32 program, out string info)
 
         public static void GetProgramInfoLog(Int32 program, out string info)
@@ -763,7 +762,7 @@ namespace OpenTK.Graphics.OpenGL
                     info = String.Empty;
                     return;
                 }
-                StringBuilder sb = new StringBuilder(length);
+                StringBuilder sb = new StringBuilder(length * 2);
                 GL.GetProgramInfoLog((UInt32)program, sb.Capacity, &length, sb);
                 info = sb.ToString();
             }
