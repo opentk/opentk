@@ -70,7 +70,7 @@ namespace Examples.Tests
             TextBitmap.UnlockBits(data);
         }
 
-        public override void OnLoad(EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
             GL.ClearColor(Color.MidnightBlue);
 

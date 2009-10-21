@@ -59,7 +59,7 @@ namespace Examples.Tutorial
 
         #region OnLoad
 
-        public override void OnLoad(EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
             GL.Enable(EnableCap.Texture2D);
 

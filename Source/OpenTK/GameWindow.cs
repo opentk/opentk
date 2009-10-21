@@ -293,7 +293,7 @@ namespace OpenTK
         /// Called after an OpenGL context has been established, but before entering the main loop.
         /// </summary>
         /// <param name="e">Not used.</param>
-        public virtual void OnLoad(EventArgs e)
+        protected virtual void OnLoad(EventArgs e)
         {
             if (Load != null) Load(this, e);
         }
@@ -306,7 +306,7 @@ namespace OpenTK
         /// Called after GameWindow.Exit was called, but before destroying the OpenGL context.
         /// </summary>
         /// <param name="e">Not used.</param>
-        public virtual void OnUnload(EventArgs e)
+        protected virtual void OnUnload(EventArgs e)
         {
             if (Unload != null) Unload(this, e);
         }
