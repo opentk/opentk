@@ -1,4 +1,207 @@
-[Legend: complete('+') | WIP('*') | missing('-')]
+---------------------------
+ OpenTK 0.9.9-2b -> 0.9.9-3
+----------------------------
+
+2009-10-21  the_fiddler
+
+	* Source/OpenTK/Platform/MacOS/AglContext.cs, Source/OpenTK/Platform/Windows/WinGLContext.cs, Source/OpenTK/Platform/X11/X11GLContext.cs: Avoid accessing OpenTK.Graphics.OpenGL from platform-specific code. Reduces coupling and code-duplication.
+
+2009-10-20  the_fiddler
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Trap WM_SYSCHAR to avoid generating system beeps on Alt+[Key] combinations.
+
+2009-10-19  the_fiddler
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs, Source/OpenTK/WindowBorder.cs, Source/OpenTK/WindowState.cs: Revert WindowBorder and WindowState value changes.
+	  Use Nullable types to detect when WindowBorder and WindowState is not set.
+	* Source/OpenTK/Platform/X11/X11GLNative.cs: * X11GLNative.cs: Added more defensive checks for the existence of the window before issuing XDestroyWindow.
+	  Do not allow multiple calls to XDestroyWindow once the shutdown sequence has been initialized. Fixes issue [#1190]: "GameWindow dispose on linux".
+	* Source/OpenTK/Platform/X11/X11GLNative.cs: * X11GLNative.cs: Correctly set all necessary ClientMessage fields
+	  for XSendEvent call in Close() method.
+	* Source/OpenTK/Platform/X11/Functions.cs: * Functions.cs: Added helper function for XSendEvent, so that we
+	  don't need to cast the EventMask to IntPtr.
+	* Source/OpenTK/Platform/X11/X11GLContext.cs: * X11GLContext.cs: Correctly set GraphicsMode in constructor (resolves issue [#1175]: "Graphics] GraphicsContext.GraphicsMode property returns null on Linux").
+	* Source/OpenTK/OpenTK.dll.config: Added dllmap for OpenCL on Linux.
+	* Source/Compatibility/OpenTK.Compatibility.dll.config: Added missing OpenTK.Compatibility.dll.config file. Fixes issue [#1176]: "[Compat] OpenTK.Compatibility is missing dll.config file".
+	* Source/Examples/OpenCL/VectorAdd.cs: * OpenCL/VectorAdd.cs: Use hCmdQueue instead of hContext and added
+	  missing CL.EnqueueWriteBuffer calls (patch by mike vasiljevs, fixes
+	  issue [#1233]: "OpenCL - AddVector.cs - example corrections").
+	  Output calculation results.
+	* Source/GLControl/GLControl.cs, Source/GLControl/GLControlFactory.cs: * GLControlFactory.cs: More defensive checks for null GraphicsModes.
+	  
+	  
+	  * GLControl.cs: More defensive checks for null GraphicsModes.
+	  Set flags, context version and GraphicsMode before calling
+	  InitializeComponents(), as the latter might cause the context to be
+	  created (and we need this information before creating the context).
+	  Fixes ArgumentNullException on Linux.
+	* Source/OpenTK/Platform/X11/X11GLNative.cs: * X11GLNative.cs: Implemented Icon property for WMs that do not
+	  respect _NET_WM_ICON (e.g. Gnome/Metacity/Compiz).
+	* Source/OpenTK/Platform/X11/Functions.cs, Source/OpenTK/Platform/X11/Structs.cs: * Functions.cs: Added a number of missing methods relating to
+	  XWMHints, images, pixmaps and root windows.
+	  Implemented Create[Mask|Pixmap]FromImage methods.
+	  
+	  * Structs.cs: Added ImageFormat enum.
+	* Source/OpenTK/Graphics/OpenGL/GLHelper.cs: Route overloads through GL class instead of calling the Delegates directly. Ensures that automatic error checking will work as expected.
+
+2009-10-18  the_fiddler
+
+	* Source/OpenTK/INativeWindow.cs, Source/OpenTK/NativeWindow.cs, Source/OpenTK/Platform/MacOS/CarbonGLNative.cs, Source/OpenTK/Platform/Windows/WinGLNative.cs: Implemented icon support.
+	* Source/Examples/OpenTK/Test/GameWindowStates.cs: Indicate whether the window is focused or not.
+	* Source/OpenTK/WindowBorder.cs, Source/OpenTK/WindowState.cs: Treat 0 as a special value (necessary for internal purposes).
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Focused property now returns correct values. FocusedChanged event is now correctly raised.
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Improved handling if WindowBorder changes when the window is WindowState is Maximized or Fullscreen. Maximized windows now correctly retain their maximized state, while fullscreen windows do not become non-fullscreen when their border is modified.
+	* Source/OpenTK/Platform/Windows/API.cs, Source/OpenTK/Platform/Windows/WinGLNative.cs: * API.cs: added MonitorFromWindow/MonitorFromPoint methods.
+	  * WinGLNative.cs: fixed handling of WindowState.Maximized when WindowBorder is Hidden.
+	  WindowStateChanged events are now correctly raised on all state changes.
+
+2009-10-17  the_fiddler
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Do not print window title to debug stream inside the set_Title property. Instead, log an error only when the method call fails. Fixes issue [#1239]: "Debug.Print in Title property".
+	* Source/Bind/ES/ESGenerator.cs, Source/Bind/Specifications/CL10/overrides.xml, Source/Bind/Specifications/CL10/signatures.xml, Source/Bind/Specifications/ES10/overrides.xml, Source/Bind/Specifications/ES11/overrides.xml, Source/Bind/Specifications/ES20/overrides.xml, Source/Bind/Specifications/GL2/gloverrides.xml, Source/Bind/Structures/Delegate.cs, Source/Bind/Structures/Enum.cs, Source/Bind/Structures/Type.cs, Source/OpenTK/Compute/CL10/CL.cs, Source/OpenTK/Compute/CL10/Enums.cs, Source/OpenTK/Graphics/ES10/ES.cs, Source/OpenTK/Graphics/ES10/Enums.cs, Source/OpenTK/Graphics/ES11/ES.cs, Source/OpenTK/Graphics/ES11/Enums.cs, Source/OpenTK/Graphics/ES20/ES.cs, Source/OpenTK/Graphics/ES20/Enums.cs, Source/OpenTK/Graphics/OpenGL/GLEnums.cs: Added distinct /overrides/add and /overrides/replace elements.
+	  Added check for the existence of override elements before trying to use them (avoids potential null reference exception).
+	  Regenerated bindings using the latest version of the generator.
+	* Source/Bind/Structures/Function.cs, Source/OpenTK/Graphics/OpenGL/GL.cs: Fixed issue [#1240]: "Generic ref and out wrappers do not copy results to the reference parameter", by assigning the GCHandle.Target back to the reference parameter.
+	* Source/Bind/Specifications/ES20/overrides.xml, Source/OpenTK/Graphics/ES20/Core.cs, Source/OpenTK/Graphics/ES20/Delegates.cs, Source/OpenTK/Graphics/ES20/ES.cs: Added override for GetProgramInfoLog: infolog parameter should have a flow of 'out'.
+
+2009-10-15  the_fiddler
+
+	* Source/GLControl/GLControl.cs: Added workaround for the "Resize event called before GraphicsContext is ready" issue.
+	* Source/OpenTK/Graphics/OpenGL/GLHelper.cs: Fixed GetDouble implementation to return correct values (should call GetDouble not GetFloat!) Fixes issue [#1235]: "Matrix4d wrong value on GL.GetDouble".
+	* Source/GLControl/GLControl.cs: Clarified GrabScreenshot() ObsoleteAttribute message.
+
+2009-10-14  the_fiddler
+
+	* Source/Bind/ES/ESGenerator.cs: Support adding new enum definitions through overrides.xml.
+	* Source/Bind/Structures/Constant.cs, Source/Bind/Structures/Enum.cs: Avoid translating names that do not need translation (i.e. are not in ALL_CAPS).
+	* Source/OpenTK/Platform/Windows/API.cs, Source/OpenTK/Platform/Windows/WinGLNative.cs: Added LoadIcon method.
+	  Made SHFILEINFO non-public.
+	  Modified WinGLNative.cs to use Icon.ExctractAssociatedIcon() to set the application icon (needs work).
+	* Source/OpenTK/Platform/Windows/API.cs, Source/OpenTK/Platform/Windows/WinGLNative.cs: Added support for setting the application (use SHGetFileInfo to retrieve the correct icon and set it when constructing a new window).
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Restore previous window size when leaving fullscreen mode.
+	* Source/OpenTK/Math/Matrix4.cs, Source/OpenTK/Math/Matrix4d.cs: Corrected documentation on the M42 property. Fixes issue [#1227]: "Matrix4.M42 documentation".
+	* Source/QuickStart/Game.cs: Fixed documentation on the event args for the Resize event.
+	  Ensure that we call the base method when we override an On* method.
+
+2009-10-13  the_fiddler
+
+	* Source/OpenTK/Math/Matrix4d.cs: Added missing CreatePerspectiveFieldOfView and CreatePerspectiveOffCenter methods (fixes issue [#1226]: "Matrix4d.CreatePerspectiveFieldOfView").
+	  Replaced several instances of float values by double equivalents.
+
+2009-10-12  the_fiddler
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Workaround for modal loop blocking in ENTERMENULOOP event.
+
+2009-10-09  the_fiddler
+
+	* Source/OpenTK/Compute/CL10/Enums.cs: * Enums.cs: Enums now use the inherit from the correct int or long type.
+	* Source/Bind/Specifications/CL10/signatures.xml: * signatures.xml: Fixed long enum types.
+	* Source/Converter/ESCLParser.cs: * ESCLParser.cs: Fixed long bitfield detection.
+	* Source/Bind/ES/ESGenerator.cs, Source/Bind/Structures/Enum.cs: * ES/ESGenerator.cs: Set enum Type property.
+	  
+	  * Structures/Enum.cs: Added enum Type property.
+	  Removed Enum(string) constructor in favor of C# 3.0 syntax (new Enum()
+	  { Name = ... }).
+	* Source/OpenTK/Compute/CL10/CL.cs: * CL.cs: Removed invalid documentation.
+	* Source/Bind/GL2/Generator.cs: * Generator.cs: Use Settings.FunctionPrefix when searching for
+	  documentation (instead of hardcoded "gl" prefix).
+	* Source/Bind/CL/CLGenerator.cs, Source/Bind/Main.cs: * Main.cs:
+	  * CL/CLGenerator.cs: Made CLGenerator inherit from ESGenerator. Reduces code duplication significantly.
+	* Source/Bind/Specifications/CL10/signatures.xml: * Specifications/CL10/signatures.xml: Updated specs with information on enum types (long or int).
+	* Source/Converter/ESCLParser.cs: * ESCLParser.cs: OpenCL bitfileds are defines as long, not int. Added 'type' attribute to enums, which can be 'long' or 'int'.
+
+2009-10-07  the_fiddler
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Post a close message instead of destroying the window outright, when the user calls the Close() method. Ensures that the user can stop the exit sequence through the IsClosing event.
+	* Source/OpenTK/GameWindow.cs: * GameWindow.cs: Improved implementation of GameWindow.Exit(). It should now be possible to cancel the exit through the IsClosing event.
+	* Source/OpenTK/GameWindow.cs, Source/OpenTK/Platform/Windows/WinGLNative.cs: Generate Update/ResizeFrame events whenever the window is moved or resized. Partially fix for issue [#1218]: "[NativeWindow] Avoid modal loop during window resize/movement".
+	* Source/OpenTK/GameWindow.cs: Refactored and simplified the Run() loop.
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Added timer callback to WM_ENTERSIZEMOVE messages to avoid stalling the rendering during the modal size/move loop (which occurs when the user clicks the window bar or borders). Still need to find a way to notify the frontend (GameWindow) to process queued up UpdateFrame/RenderFrame events.
+	* Source/OpenTK/Platform/Windows/API.cs: Added SetTimer, KillTimer and TimerProc bindings.
+	* Source/OpenTK/Graphics/OpenGL/GLHelper.cs: * OpenGL/GLHelper.cs: Removed static GetAddress method in favor of
+	  implementation inherited from GraphicsBindingsBase.
+	  Disabled unused code.
+	* Source/OpenTK/Graphics/GraphicsContext.cs: * GraphicsContext.cs: Removed unused code.
+	* Source/OpenTK/Audio/AudioCapture.cs: * AudioCapture.cs: Fixed documentation warning.
+	* Source/OpenTK/Audio/OpenAL/AL/AL.cs, Source/OpenTK/Audio/OpenAL/Alc/AlcEnums.cs: * AL/AL.cs:
+	  * Alc/AlcEnums.cs: Fixed documentation warnings.
+	* Source/OpenTK/BindingsBase.cs, Source/OpenTK/Graphics/BindingsBase.cs, Source/OpenTK/Graphics/GraphicsBindingsBase.cs: * BindingsBase.cs:
+	  * Graphics/BindingsBase.cs:
+	  * Graphics/GraphicsBindingsBase.cs: Moved GraphicsBindingsBase to its
+	  own file.
+	  Moved BindingsBase to root OpenTK folder (reason: BindingsBase is not
+	  specific to OpenTK.Graphics anymore).
+	  Documented GetAddress methods.
+	* Source/OpenTK/Graphics/BindingsBase.cs, Source/OpenTK/Graphics/ES10/Helper.cs, Source/OpenTK/Graphics/ES11/Helper.cs, Source/OpenTK/Graphics/ES20/Helper.cs, Source/OpenTK/Graphics/OpenGL/GLHelper.cs, Source/OpenTK/Platform/X11/GlxHelper.cs, Source/OpenTK/Platform/X11/X11GLContext.cs: * Graphics/ES10/Helper.cs:
+	  * Graphics/ES11/Helper.cs:
+	  * Graphics/ES20/Helper.cs:
+	  * Graphics/BindingsBase.cs:
+	  * Platform/X11/GlxHelper.cs:
+	  * Graphics/OpenGL/GLHelper.cs:
+	  * Platform/X11/X11GLContext.cs: Modified BindingsBase to define
+	  abstract GetAddress method (reason: removes OpenTK.Graphics-specific
+	  code from BindingsBase and allows it to be used in different
+	  bindings).
+	  Implemented GraphicsBindingsBase and modified the OpenGL and OpenGL|ES
+	  bindings to use this.
+	  Modified the GLX bindings to inherit from BindingsBase (reason:
+	  reduces code duplication for extension loading).
+
+2009-10-06  the_fiddler
+
+	* Source/OpenTK/Math/Vector2.cs, Source/OpenTK/Math/Vector2d.cs, Source/OpenTK/Math/Vector3.cs, Source/OpenTK/Math/Vector3d.cs, Source/OpenTK/Math/Vector4.cs, Source/OpenTK/Math/Vector4d.cs: Replaced calls to obsolete methods.
+	  Fixed parameters in double versions of BaryCentric() (should be double instead of float).
+	* Source/OpenTK/Math/Vector2.cs, Source/OpenTK/Math/Vector2d.cs, Source/OpenTK/Math/Vector3.cs, Source/OpenTK/Math/Vector3d.cs, Source/OpenTK/Math/Vector4.cs, Source/OpenTK/Math/Vector4d.cs: Obsoleted Scale() instance method (reason: redundant. Mult()/Multiply() instance/static methods can be used to achieve the same effect).
+	* Source/OpenTK/Math/Vector2.cs, Source/OpenTK/Math/Vector2d.cs, Source/OpenTK/Math/Vector3.cs, Source/OpenTK/Math/Vector3d.cs, Source/OpenTK/Math/Vector4.cs, Source/OpenTK/Math/Vector4d.cs: Added vector overloads to Multiply and Divide methods.
+	  Renamed Sub to Subtract, Mult to Multiply and Div to Divide (reason: conform with the class library design guidelines).
+	  Obsoleted instance Add, Sub, Mult and Div methods in favor of static ones (reason: reduce API bloat, they are completely redudant).
+	  Improved documentation for new methods.
+	* Source/OpenTK/Math/Vector2.cs, Source/OpenTK/Math/Vector4.cs: Fixed formatting.
+	* Source/OpenTK/Properties/AssemblyInfo.cs: Bumped version number.
+	* Source/OpenTK/Graphics/OpenGL/GLHelper.cs: Added GetActiveAttrib, GetActiveUniform, GetActiveUniformName and GetActiveUniformBlockName overloads that return strings. Fixes issue [#1213]: "[GL] let GetUniformName() return String".
+	* Source/OpenTK/Graphics/OpenGL/GLHelper.cs: Added ClearColor(Color4) overload. Fixes issue [#1207]: "[GL] add Color4 argument overload for ClearColor".
+
+2009-09-26  the_fiddler
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Raise KeyPress events (handle WindowsMessage.CHAR message).
+	* Source/OpenTK/KeyPressEventArgs.cs: Made KeyChar property setter internal instead of private. Useful for reusing KeyPressEventArgs structures (instead of allocating a new one on each and every character event).
+	* Source/OpenTK/IGameWindow.cs: Marked IGameWindow as public.
+
+2009-09-25  the_fiddler
+
+	* Source/OpenTK/Platform/X11/X11GraphicsMode.cs: * X11GraphicsMode.cs: Protect the mode queries with XLockDisplay()/XUnlockDisplay().
+
+2009-09-19  the_fiddler
+
+	* Source/OpenTK/GameWindow.cs: Ensure the GameWindow is visible when the Run() method is called.
+	* Source/OpenTK/Platform/Windows/API.cs, Source/OpenTK/Platform/Windows/WinGLNative.cs: Renamed IsWindowVisisble to the correct IsWindowVisible.
+
+2009-09-18  the_fiddler
+
+	* Source/GLControl/GLControl.cs: Setting VSync mode should not force control creation. Fixes issue [#1071]: "Not firing Load event for GLControl."
+
+2009-09-13  the_fiddler
+
+	* Source/OpenTK/Platform/X11/X11KeyMap.cs: * X11KeyMap.cs: Removed dependency on System.Windows.Forms.
+
+2009-09-10  the_fiddler
+
+	* Source/GLControl/GLControl.cs: * GLControl.cs: Added a public getter for the IWindowInfo of the GLControl.
+
+2009-09-08  the_fiddler
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Removed obsolete comment.
+	* Source/OpenTK/Platform/Windows/WinGraphicsMode.cs: Remove System.Windows.Forms.Control dependency in favor of OpenTK.NativeWindow.
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Construct windows invisible by default. Use 'Visible = true' or 'GameWindow.Run' to display them.
+	* Source/OpenTK/Platform/Windows/API.cs: Added IsWindowVisible method.
+
+2009-09-07  the_fiddler
+
+	* Source/Examples/OpenGL/EXT/GeometryShaderAdvanced.cs: Fixed several code instances that relies on C# 3.0 features.
+	* Source/Bind/Specifications/GL2/enumext.spec, Source/Bind/Specifications/GL2/gloverrides.xml, Source/OpenTK/Graphics/OpenGL/GL.cs, Source/OpenTK/Graphics/OpenGL/GLCore.cs, Source/OpenTK/Graphics/OpenGL/GLDelegates.cs, Source/OpenTK/Graphics/OpenGL/GLEnums.cs: Updated tokens for ARB_depth_clamp, ARB_vertex_array_bgra, ARB_seamless_cube_map, ARB_provoking_vertex, ARB_draw_elements_base_vertex which where promoted in version 3.2. Fixes issue [#1146]: "[GL3.2] Multiple (minor) corrections".
+	* Source/Bind/Specifications/GL2/enumext.spec, Source/OpenTK/Graphics/OpenGL/GLEnums.cs: Updated tokens for ARB_geometry_shader4 (promoted in Version 3.2). Fixes issue [#588]: "ARB_geometry_shader4".
+	* Source/Bind/Specifications/GL2/enumext.spec, Source/Bind/Specifications/GL2/gloverrides.xml, Source/OpenTK/Graphics/OpenGL/GL.cs, Source/OpenTK/Graphics/OpenGL/GLCore.cs, Source/OpenTK/Graphics/OpenGL/GLDelegates.cs, Source/OpenTK/Graphics/OpenGL/GLEnums.cs: Updated tokens for ARB_texture_multisample (promoted in Version 3.2). Fixes issue [#1151]: "ARB_texture_multisample".
+	* Source/Bind/GL2/Generator.cs: Report an error if a constant does not contain either '=' or 'use' in its definition.
 
 
 ----------------------------
