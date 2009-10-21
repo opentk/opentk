@@ -63,7 +63,7 @@ namespace Examples.Tutorial
         /// Setup OpenGL and load resources here.
         /// </summary>
         /// <param name="e">Not used.</param>
-        public override void OnLoad(EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
             // Check for necessary capabilities:
             string version = GL.GetString(StringName.Version);

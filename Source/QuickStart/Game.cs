@@ -21,7 +21,7 @@ namespace StarterKit
 
         /// <summary>Load resources here.</summary>
         /// <param name="e">Not used.</param>
-        public override void OnLoad(EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 
