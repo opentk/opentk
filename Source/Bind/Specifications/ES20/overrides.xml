@@ -173,9 +173,114 @@
       <param name="pname"><type>VertexPointer</type></param> 
     </function>
       
+    <function name="ActiveTexture" extension="Core" version="2.0">
+      <param name="texture"><type>TextureUnit</type></param>
+    </function>
+ 
+    <function name="BindTexture" extension="Core" version="2.0">
+      <param name="target"><type>BindTextureTarget</type></param>
+    </function>
+     
+    <function name="GenerateMipmap" extension="Core" version="2.0">
+      <param name="target"><type>BindTextureTarget</type></param>
+    </function>
+     
+    <function name="GetTexParameter" extension="Core" version="2.0">
+      <param name="target"><type>BindTextureTarget</type></param>
+      <param name="pname"><type>TexturePName</type></param>
+    </function>
+     
+    <function name="TexParameter" extension="Core" version="2.0">
+      <param name="target"><type>BindTextureTarget</type></param>
+      <param name="pname"><type>TexturePName</type></param>
+    </function>
+     
+    <function name="TexImage2D" extension="Core" version="2.0">
+      <param name="target"><type>TextureTarget</type></param>
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+     
+    <function name="TexSubImage2D" extension="Core" version="2.0">
+      <param name="target"><type>TextureTarget</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+     
+    <function name="CopyTexImage2D" extension="Core" version="2.0">
+      <param name="target"><type>TextureTarget</type></param>
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+    </function>
+     
+    <function name="CopyTexSubImage2D" extension="Core" version="2.0">
+      <param name="target"><type>TextureTarget</type></param>
+    </function>
+     
+    <function name="CompressedTexImage2D" extension="Core" version="2.0">
+      <param name="target"><type>TextureTarget</type></param>
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+    </function>
+     
+    <function name="CompressedTexSubImage2D" extension="Core" version="2.0">
+      <param name="target"><type>TextureTarget</type></param>
+    </function>
+     
+    <function name="ReadPixels" extension="Core" version="2.0">
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+     
+    <function name="CheckFramebufferStatus" extension="Core" version="2.0">
+      <returns type="FramebufferError" />  
+      <param name="target"><type>FramebufferTarget</type></param>
+    </function>
+     
+    <function name="BindFramebuffer" extension="Core" version="2.0">
+      <param name="target"><type>FramebufferTarget</type></param>
+    </function>
+
+    <function name="BindRenderbuffer" extension="Core" version="2.0">
+      <param name="target"><type>RenderbufferTarget</type></param>
+    </function>
+      
+    <function name="RenderbufferStorage" extension="Core" version="2.0">
+      <param name="target"><type>RenderbufferTarget</type></param>
+      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
+    </function>
+      
+    <function name="GetRenderbufferParameter" extension="Core" version="2.0">
+      <param name="target"><type>RenderbufferTarget</type></param>
+      <param name="pname"><type>GetRenderbufferPName</type></param>
+    </function>
+      
+    <function name="FramebufferRenderbuffer" extension="Core" version="2.0">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachment"><type>FramebufferSlot</type></param>
+      <param name="renderbuffertarget"><type>RenderbufferTarget</type></param>
+    </function>
+     
+    <function name="FramebufferTexture2D" extension="Core" version="2.0">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachment"><type>FramebufferSlot</type></param>
+      <param name="textarget"><type>TextureTarget</type></param>
+    </function>
+    
+    <function name="GetFramebufferAttachmentParameter" extension="Core" version="2.0">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachment"><type>FramebufferSlot</type></param>
+      <param name="pname"><type>FramebufferAttachmentParameter</type></param>
+    </function>
+
+    <function name="PixelStore" extension="Core" version="2.0">
+      <param name="pname"><type>PixelStorePName</type></param>
+      <param name="param"><type>PixelStoreParameter</type></param>
+    </function>
+  
   </replace>
 
   <add> 
+
     <enum name="BlendMode">
       <token name="FuncAdd" value="0X8006" />
       <token name="FuncSubtract" value="0X800a" />
@@ -397,7 +502,7 @@
       <token name="Always" value="0X0207" />
     </enum>
      
-      <enum name="StencilOperation">
+    <enum name="StencilOperation">
       <token name="Invert" value="0X150a" />
       <token name="Keep" value="0X1e00" />
       <token name="Replace" value="0X1e01" />
@@ -406,6 +511,162 @@
       <token name="IncrWrap" value="0X8507" />
       <token name="DecrWrap" value="0X8508" />
       <token name="Zero" value="0X0000" />
+    </enum>
+
+    <enum name="TextureUnit">
+      <token name="Texture0" value="0X84c0" />
+      <token name="Texture1" value="0X84c1" />
+      <token name="Texture2" value="0X84c2" />
+      <token name="Texture3" value="0X84c3" />
+      <token name="Texture4" value="0X84c4" />
+      <token name="Texture5" value="0X84c5" />
+      <token name="Texture6" value="0X84c6" />
+      <token name="Texture7" value="0X84c7" />
+      <token name="Texture8" value="0X84c8" />
+      <token name="Texture9" value="0X84c9" />
+      <token name="Texture10" value="0X84ca" />
+      <token name="Texture11" value="0X84cb" />
+      <token name="Texture12" value="0X84cc" />
+      <token name="Texture13" value="0X84cd" />
+      <token name="Texture14" value="0X84ce" />
+      <token name="Texture15" value="0X84cf" />
+      <token name="Texture16" value="0X84d0" />
+      <token name="Texture17" value="0X84d1" />
+      <token name="Texture18" value="0X84d2" />
+      <token name="Texture19" value="0X84d3" />
+      <token name="Texture20" value="0X84d4" />
+      <token name="Texture21" value="0X84d5" />
+      <token name="Texture22" value="0X84d6" />
+      <token name="Texture23" value="0X84d7" />
+      <token name="Texture24" value="0X84d8" />
+      <token name="Texture25" value="0X84d9" />
+      <token name="Texture26" value="0X84da" />
+      <token name="Texture27" value="0X84db" />
+      <token name="Texture28" value="0X84dc" />
+      <token name="Texture29" value="0X84dd" />
+      <token name="Texture30" value="0X84de" />
+      <token name="Texture31" value="0X84df" />
+    </enum>
+    
+    <enum name="BindTextureTarget">
+      <token name="Texture2D" value="0X0de1" />
+      <token name="TextureCubeMap" value="0X8513" />
+    </enum>
+
+    <enum name="TextureMinFilter">
+      <token name="NearestMipmapNearest" value="0X2700" />
+      <token name="LinearMipmapNearest" value="0X2701" />
+      <token name="NearestMipmapLinear" value="0X2702" />
+      <token name="LinearMipmapLinear" value="0X2703" />
+      <token name="Nearest" value="0X2600" />
+      <token name="Linear" value="0X2601" />
+    </enum>
+
+    <enum name="TextureMagFilter">
+      <token name="Nearest" value="0X2600" />
+      <token name="Linear" value="0X2601" />
+    </enum>
+
+    <enum name="TexturePName">
+      <token name="TextureMagFilter" value="0X2800" />
+      <token name="TextureMinFilter" value="0X2801" />
+      <token name="TextureWrapS" value="0X2802" />
+      <token name="TextureWrapT" value="0X2803" />
+    </enum>
+    
+    <enum name="TextureTarget">
+      <token name="Texture2D" value="0X0de1" />
+      <token name="TextureCubeMapPositiveX" value="0X8515" />
+      <token name="TextureCubeMapNegativeX" value="0X8516" />
+      <token name="TextureCubeMapPositiveY" value="0X8517" />
+      <token name="TextureCubeMapNegativeY" value="0X8518" />
+      <token name="TextureCubeMapPositiveZ" value="0X8519" />
+      <token name="TextureCubeMapNegativeZ" value="0X851a" />
+    </enum>
+
+    <enum name="PixelType">
+      <token name="UnsignedShort4444" value="0X8033" />
+      <token name="UnsignedShort5551" value="0X8034" />
+      <token name="UnsignedShort565" value="0X8363" />
+      <token name="UnsignedByte" value="0X1401" />
+    </enum>
+
+    <enum name="PixelFormat">
+      <token name="Alpha" value="0X1906" />
+      <token name="Rgb" value="0X1907" />
+      <token name="Rgba" value="0X1908" />
+      <token name="Luminance" value="0X1909" />
+      <token name="LuminanceAlpha" value="0X190a" />
+    </enum>
+
+    <enum name="PixelInternalFormat">
+      <token name="Alpha" value="0X1906" />
+      <token name="Rgb" value="0X1907" />
+      <token name="Rgba" value="0X1908" />
+      <token name="Luminance" value="0X1909" />
+      <token name="LuminanceAlpha" value="0X190a" />
+    </enum>
+
+
+    <enum name="FramebufferTarget">
+      <token name="Framebuffer" value="0X8d40" />
+    </enum>
+
+    <enum name="FramebufferError">
+      <token name="FramebufferComplete" value="0X8cd5" />
+      <token name="FramebufferIncompleteAttachment" value="0X8cd6" />
+      <token name="FramebufferIncompleteMissingAttachment" value="0X8cd7" />
+      <token name="FramebufferIncompleteDimensions" value="0X8cd9" />
+      <token name="FramebufferUnsupported" value="0X8cdd" />
+    </enum>
+
+    <enum name="RenderbufferTarget">
+      <token name="Renderbuffer" value="0X8d41" />
+    </enum>
+
+    <enum name="RenderbufferInternalFormat">
+      <token name="DepthComponent16" value="0X81a5" />
+      <token name="Rgba4" value="0X8056" />
+      <token name="Rgb5A1" value="0X8057" />
+      <token name="Rgb565" value="0X8d62" />
+      <token name="StencilIndex8" value="0X8d48" />
+    </enum>
+
+    <enum name="GetRenderbufferPName">
+      <token name="RenderbufferWidth" value="0X8d42" />
+      <token name="RenderbufferHeight" value="0X8d43" />
+      <token name="RenderbufferInternalFormat" value="0X8d44" />
+      <token name="RenderbufferRedSize" value="0X8d50" />
+      <token name="RenderbufferGreenSize" value="0X8d51" />
+      <token name="RenderbufferBlueSize" value="0X8d52" />
+      <token name="RenderbufferAlphaSize" value="0X8d53" />
+      <token name="RenderbufferDepthSize" value="0X8d54" />
+      <token name="RenderbufferStencilSize" value="0X8d55" />
+    </enum>
+
+    <enum name="FramebufferSlot">
+      <token name="ColorAttachment0" value="0X8ce0" />
+      <token name="DepthAttachment" value="0X8d00" />
+      <token name="StencilAttachment" value="0X8d20" />
+    </enum>
+
+    <enum name="FramebufferAttachmentParameter">
+      <token name="FramebufferAttachmentObjectType" value="0X8cd0" />
+      <token name="FramebufferAttachmentObjectName" value="0X8cd1" />
+      <token name="FramebufferAttachmentTextureLevel" value="0X8cd2" />
+      <token name="FramebufferAttachmentTextureCubeMapFace" value="0X8cd3" />
+    </enum>
+
+    <enum name="PixelStorePName">
+      <token name="PackAlignment" value="0X0d05" />
+      <token name="UnpackAlignment" value="0X0cf5" />
+    </enum>
+     
+    <enum name="PixelStoreParameter">
+      <token name="One" value="0X0001" />
+      <token name="Two" value="0X0002" />
+      <token name="Four" value="0X0004" />
+      <token name="Eight" value="0X0008" />
     </enum>
 
   </add>
