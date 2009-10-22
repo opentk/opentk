@@ -1,17 +1,413 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <overrides>
+
   <replace>
+  
     <function name="GetString" extension="Core">
       <returns>String</returns>
     </function>
+
     <function name="ShaderSource" extension="Core">
       <param name="string"><type>String*</type></param>
     </function>
+    
     <function name="GetShaderSource" extension="Core">
       <param name="source"><flow>out</flow></param>
     </function>
+    
     <function name="GetProgramInfoLog" extension="Core">
       <param name="infolog"><flow>out</flow></param>
     </function>
+
+    <!-- strong types -->  
+    <function name="BlendEquation" extension="Core" version="2.0">
+      <param name="mode"><type>BlendMode</type></param>
+    </function>
+     
+    <function name="BlendEquationSeparate" extension="Core" version="2.0">
+      <param name="modeRGB"><type>BlendMode</type></param>
+      <param name="modeAlpha"><type>BlendMode</type></param>
+    </function>
+
+    <function name="BlendFunc" extension="Core" version="2.0">
+      <param name="sfactor"><type>BlendFactor</type></param>
+      <param name="dfactor"><type>BlendFactor</type></param>
+    </function>
+     
+    <function name="BlendFuncSeparate" extension="Core" version="2.0">
+      <param name="srcRGB"><type>BlendFactor</type></param>
+      <param name="dstRGB"><type>BlendFactor</type></param>
+      <param name="srcAlpha"><type>BlendFactor</type></param>
+      <param name="dstAlpha"><type>BlendFactor</type></param>
+    </function>
+
+    <function name="BindBuffer" extension="Core" version="2.0">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+     
+    <function name="BufferData" extension="Core" version="2.0">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="usage"><type>BufferUsage</type></param>
+    </function>
+     
+    <function name="BufferSubData" extension="Core" version="2.0">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+
+    <function name="VertexAttribPointer" extension="Core" version="2.0">
+      <param name="type"><type>VertexAttribType</type></param>
+    </function>
+
+    <function name="Hint" extension="Core" version="2.0">
+      <param name="target"><type>HintTarget</type></param>
+      <param name="mode"><type>HintMode</type></param>
+    </function>
+     
+    <function name="StencilFunc" extension="Core" version="2.0">
+      <param name="func"><type>StencilFunction</type></param>
+    </function>
+     
+    <function name="StencilFuncSeparate" extension="Core" version="2.0">
+      <param name="face"><type>CullFaceMode</type></param>
+      <param name="func"><type>StencilFunction</type></param>
+    </function>
+     
+    <function name="StencilMaskSeparate" extension="Core" version="2.0">
+      <param name="face"><type>CullFaceMode</type></param>
+    </function>
+     
+    <function name="StencilOp" extension="Core" version="2.0">
+      <param name="fail"><type>StencilOperation</type></param>
+      <param name="zfail"><type>StencilOperation</type></param>
+      <param name="zpass"><type>StencilOperation</type></param>
+    </function>
+     
+    <function name="StencilOpSeparate" extension="Core" version="2.0">
+      <param name="face"><type>CullFaceMode</type></param>
+      <param name="fail"><type>StencilOperation</type></param>
+      <param name="zfail"><type>StencilOperation</type></param>
+      <param name="zpass"><type>StencilOperation</type></param>
+    </function>  
+
+    <function name="GetBufferParameter" extension="Core" version="2.0">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="pname"><type>GetBufferPName</type></param>
+    </function>
+
+    <function name="Clear" extension="Core" version="2.0">
+      <param name="mask"><type>ClearBufferMask</type></param>
+    </function>
+
+    <function name="CreateShader" extension="Core" version="2.0">
+      <param name="type"><type>ShaderType</type></param>
+    </function>
+
+    <function name="GetShaderPrecisionFormat" extension="Core" version="2.0">
+      <param name="shadertype"><type>ShaderType</type></param>
+      <param name="precisiontype"><type>ShaderPrecision</type></param>
+    </function>
+
+    <function name="CullFace" extension="Core" version="2.0">
+      <param name="mode"><type>CullFaceMode</type></param>
+    </function>
+
+    <function name="DepthFunc" extension="Core" version="2.0">
+      <param name="func"><type>DepthFunction</type></param>
+    </function>
+     
+    <function name="DrawArrays" extension="Core" version="2.0">
+      <param name="mode"><type>PrimitiveMode</type></param>
+    </function>
+     
+    <function name="DrawElements" extension="Core" version="2.0">
+      <param name="mode"><type>PrimitiveMode</type></param>
+      <param name="type"><type>DrawElementsType</type></param>
+    </function>
+
+    <function name="Enable" extension="Core" version="2.0">
+      <param name="cap"><type>EnableCap</type></param>
+    </function>
+     
+    <function name="Disable" extension="Core" version="2.0">
+      <param name="cap"><type>EnableCap</type></param>
+    </function>
+     
+    <function name="IsEnabled" extension="Core" version="2.0">
+      <param name="cap"><type>EnableCap</type></param>
+    </function>
+     
+        
+    <function name="FrontFace" extension="Core" version="2.0">
+      <param name="mode"><type>FrontFaceDirection</type></param>
+    </function>
+      
+    <function name="GetActiveAttrib" extension="Core" version="2.0">
+      <param name="type"><type>ActiveAttribType</type></param>
+    </function>
+
+    <function name="GetActiveUniform" extension="Core" version="2.0">
+      <param name="type"><type>ActiveUniformType</type></param>
+    </function>
+
+    <function name="GetError" extension="Core" version="2.0">
+      <returns type="ErrorCode" />  
+    </function>
+
+    <function name="GetProgram" extension="Core" version="2.0">
+      <param name="pname"><type>ProgramPName</type></param> 
+    </function>
+
+    <function name="GetShader" extension="Core" version="2.0">
+      <param name="pname"><type>ShaderPName</type></param> 
+    </function>
+
+    <function name="GetString" extension="Core" version="2.0">
+      <param name="name"><type>StringName</type></param> 
+    </function>
+
+    <function name="GetVertexAttrib" extension="Core" version="2.0">
+      <param name="pname"><type>VertexArray</type></param> 
+    </function>
+     
+    <function name="GetVertexAttribPointer" extension="Core" version="2.0">
+      <param name="pname"><type>VertexPointer</type></param> 
+    </function>
+      
   </replace>
+
+  <add> 
+    <enum name="BlendMode">
+      <token name="FuncAdd" value="0X8006" />
+      <token name="FuncSubtract" value="0X800a" />
+      <token name="FuncReverseSubtract" value="0X800b" />
+    </enum>
+     
+    <enum name="BlendFactor">
+      <token name="Zero" value="0" />
+      <token name="One" value="1" />
+      <token name="SrcColor" value="0X0300" />
+      <token name="OneMinusSrcColor" value="0X0301" />
+      <token name="DstColor" value="0X0306" />
+      <token name="OneMinusDstColor" value="0X0307" />
+      <token name="SrcAlpha" value="0X0302" />
+      <token name="OneMinusSrcAlpha" value="0X0303" />
+      <token name="DstAlpha" value="0X0304" />
+      <token name="OneMinusDstAlpha" value="0X0305" />
+      <token name="ConstantColor" value="0X8001" />
+      <token name="OneMinusConstantColor" value="0X8002" />
+      <token name="ConstantAlpha" value="0X8003" />
+      <token name="OneMinusConstantAlpha" value="0X8004" />
+      <token name="SrcAlphaSaturate" value="0X0308" remark="only valid for source RGB/Alpha" />
+    </enum>
+     
+    <enum name="BufferTarget">
+      <token name="ArrayBuffer" value="0X8892" />
+      <token name="ElementArrayBuffer" value="0X8893" />
+    </enum>
+     
+    <enum name="BufferUsage">
+      <token name="DynamicDraw" value="0X88e8" />
+      <token name="StaticDraw" value="0X88e4" />
+      <token name="StreamDraw" value="0X88e0" />
+    </enum>
+     
+    <enum name="GetBufferPName">
+      <token name="BufferSize" value="0X8764" />
+      <token name="BufferUsage" value="0X8765" />
+    </enum>
+     
+    <enum name="VertexAttribType">
+      <token name="Byte" value="0X1400" />
+      <token name="UnsignedByte" value="0X1401" />
+      <token name="Short" value="0X1402" />
+      <token name="UnsignedShort" value="0X1403" />
+      <token name="Fixed" value="0X140c" />
+      <token name="Float" value="0X1406" />
+    </enum>
+      
+    <enum name="ClearBufferMask">
+      <token name="DepthBufferBit" value="0X0100" />
+      <token name="StencilBufferBit" value="0X0400" />
+      <token name="ColorBufferBit" value="0X4000" />
+    </enum>
+     
+    <enum name="ShaderType">
+      <token name="VertexShader" value="0X8b31" />
+      <token name="FragmentShader" value="0X8b30" />
+    </enum>
+
+    <enum name="ShaderPrecision">
+      <token name="LowFloat" value="0X8df0" />
+      <token name="MediumFloat" value="0X8df1" />
+      <token name="HighFloat" value="0X8df2" />
+      <token name="LowInt" value="0X8df3" />
+      <token name="MediumInt" value="0X8df4" />
+      <token name="HighInt" value="0X8df5" />
+    </enum>
+     
+    <enum name="CullFaceMode">
+      <token name="Front" value="0X0404" />
+      <token name="Back" value="0X0405" />
+      <token name="FrontAndBack" value="0X0408" />
+    </enum>
+     
+    <enum name="DepthFunction">
+      <token name="Never" value="0X0200" />
+      <token name="Less" value="0X0201" />
+      <token name="Equal" value="0X0202" />
+      <token name="Lequal" value="0X0203" />
+      <token name="Greater" value="0X0204" />
+      <token name="Notequal" value="0X0205" />
+      <token name="Gequal" value="0X0206" />
+      <token name="Always" value="0X0207" />
+    </enum>
+
+    <enum name="PrimitiveMode">
+      <token name="Points" value="0X0000" />
+      <token name="Lines" value="0X0001" />
+      <token name="LineLoop" value="0X0002" />
+      <token name="LineStrip" value="0X0003" />
+      <token name="Triangles" value="0X0004" />
+      <token name="TriangleStrip" value="0X0005" />
+      <token name="TriangleFan" value="0X0006" />
+    </enum>
+
+    <enum name="DrawElementsType">
+      <token name="UnsignedByte" value="0X1401" />
+      <token name="UnsignedShort" value="0X1403" />
+    </enum>
+
+    <enum name="EnableCap">
+      <token name="CullFace" value="0X0b44" />
+      <token name="DepthTest" value="0X0b71" />
+      <token name="StencilTest" value="0X0b90" />
+      <token name="Dither" value="0X0bd0" />
+      <token name="Blend" value="0X0be2" />
+      <token name="ScissorTest" value="0X0c11" />
+      <token name="Texture2D" value="0X0de1" />
+      <token name="PolygonOffsetFill" value="0X8037" />
+      <token name="SampleAlphaToCoverage" value="0X809e" />
+      <token name="SampleCoverage" value="0X80a0" />
+    </enum>
+
+    <enum name="FrontFaceDirection">
+      <token name="Cw" value="0X0900" />
+      <token name="Ccw" value="0X0901" />
+    </enum>
+     
+    <enum name="ActiveAttribType">
+      <token name="Float" value="0X1406" />
+      <token name="FloatVec2" value="0X8b50" />
+      <token name="FloatVec3" value="0X8b51" />
+      <token name="FloatVec4" value="0X8b52" />
+      <token name="FloatMat2" value="0X8b5a" />
+      <token name="FloatMat3" value="0X8b5b" />
+      <token name="FloatMat4" value="0X8b5c" />
+    </enum>
+
+    <enum name="ActiveUniformType">
+      <token name="Float" value="0X1406" />
+      <token name="FloatVec2" value="0X8b50" />
+      <token name="FloatVec3" value="0X8b51" />
+      <token name="FloatVec4" value="0X8b52" />
+      <token name="Int" value="0X1404" />
+      <token name="IntVec2" value="0X8b53" />
+      <token name="IntVec3" value="0X8b54" />
+      <token name="IntVec4" value="0X8b55" />
+      <token name="Bool" value="0X8b56" />
+      <token name="BoolVec2" value="0X8b57" />
+      <token name="BoolVec3" value="0X8b58" />
+      <token name="BoolVec4" value="0X8b59" />
+      <token name="FloatMat2" value="0X8b5a" />
+      <token name="FloatMat3" value="0X8b5b" />
+      <token name="FloatMat4" value="0X8b5c" />
+      <token name="Sampler2D" value="0X8b5e" />
+      <token name="SamplerCube" value="0X8b60" />
+    </enum>
+
+    <enum name="ErrorCode">
+      <token name="NoError" value="0" />
+      <token name="InvalidEnum" value="0X0500" />
+      <token name="InvalidValue" value="0X0501" />
+      <token name="InvalidOperation" value="0X0502" />
+      <token name="OutOfMemory" value="0X0505" />
+      <token name="InvalidFramebufferOperation " value="0X0506" />
+    </enum>
+     
+    <enum name="ProgramPName">
+      <token name="DeleteStatus" value="0X8b80" />
+      <token name="LinkStatus" value="0X8b82" />
+      <token name="ValidateStatus" value="0X8b83" />
+      <token name="InfoLogLength" value="0X8b84" />
+      <token name="AttachedShaders" value="0X8b85" />
+      <token name="ActiveAttributes" value="0X8b89" />
+      <token name="ActiveAttributeMaxLength" value="0X8b8a" />
+      <token name="ActiveUniforms" value="0X8b86" />
+      <token name="ActiveUniformMaxLength" value="0X8b87" />
+    </enum>
+     
+    <enum name="ShaderPName">
+      <token name="ShaderType" value="0X8b4f" remark="This output may be cast to the ShaderType enum." />
+      <token name="DeleteStatus" value="0X8b80" />
+      <token name="CompileStatus" value="0X8b81" />
+      <token name="InfoLogLength" value="0X8b84" />
+      <token name="ShaderSourceLength" value="0X8b88" />
+    </enum>
+     
+    <enum name="StringName">
+      <token name="Vendor" value="0X1f00" />
+      <token name="Renderer" value="0X1f01" />
+      <token name="Version" value="0X1f02" />
+      <token name="Extensions" value="0X1f03" />
+      <token name="ShadingLanguageVersion" value="0X8b8c" />
+    </enum>
+
+    <enum name="VertexArray">
+      <token name="VertexAttribArrayEnabled" value="0X8622" />
+      <token name="VertexAttribArraySize" value="0X8623" />
+      <token name="VertexAttribArrayStride" value="0X8624" />
+      <token name="VertexAttribArrayType" value="0X8625" />
+      <token name="VertexAttribArrayNormalized" value="0X886a" />
+      <token name="VertexAttribArrayBufferBinding" value="0X889f" />
+      <token name="CurrentVertexAttrib" value="0X8626" />
+    </enum>
+     
+    <enum name="VertexPointer">
+      <token name="VertexAttribArrayPointer" value="0X8645" />
+    </enum>
+     
+    <enum name="HintTarget">
+      <token name="GenerateMipmapHint" value="0X8192" />
+    </enum>
+     
+    <enum name="HintMode">
+      <token name="DontCare" value="0X1100" />
+      <token name="Fastest" value="0X1101" />
+      <token name="Nicest" value="0X1102" />
+    </enum>
+     
+    <enum name="StencilFunction">
+      <token name="Never" value="0X0200" />
+      <token name="Less" value="0X0201" />
+      <token name="Equal" value="0X0202" />
+      <token name="Lequal" value="0X0203" />
+      <token name="Greater" value="0X0204" />
+      <token name="Notequal" value="0X0205" />
+      <token name="Gequal" value="0X0206" />
+      <token name="Always" value="0X0207" />
+    </enum>
+     
+      <enum name="StencilOperation">
+      <token name="Invert" value="0X150a" />
+      <token name="Keep" value="0X1e00" />
+      <token name="Replace" value="0X1e01" />
+      <token name="Incr" value="0X1e02" />
+      <token name="Decr" value="0X1e03" />
+      <token name="IncrWrap" value="0X8507" />
+      <token name="DecrWrap" value="0X8508" />
+      <token name="Zero" value="0X0000" />
+    </enum>
+
+  </add>
+
 </overrides>
