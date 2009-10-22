@@ -51,6 +51,11 @@ namespace OpenTK
         int major, minor;
         GraphicsContextFlags flags;
         bool? initial_vsync_value;
+        // Indicates that OnResize was called before OnHandleCreated.
+        // To avoid issues with missing OpenGL contexts, we suppress
+        // the premature Resize event and raise it as soon as the handle
+        // is ready.
+        bool resize_event_suppressed;
 
         #region --- Constructors ---
 
@@ -153,6 +158,12 @@ namespace OpenTK
             }
 
             base.OnHandleCreated(e);
+
+            if (resize_event_suppressed)
+            {
+                OnResize(EventArgs.Empty);
+                resize_event_suppressed = false;
+            }
         }
 
         /// <summary>Raises the HandleDestroyed event.</summary>
@@ -190,12 +201,18 @@ namespace OpenTK
 
         /// <summary>
         /// Raises the Resize event.
+        /// Note: this method may be called before the OpenGL context is ready.
+        /// Check that IsHandleCreated is true before using any OpenGL methods.
         /// </summary>
         /// <param name="e">A System.EventArgs that contains the event data.</param>
         protected override void OnResize(EventArgs e)
         {
-            if (IsHandleCreated == false)
-                CreateHandle();
+            // Do not raise OnResize event before the handle and context are created.
+            if (!IsHandleCreated)
+            {
+                resize_event_suppressed = true;
+                return;
+            }
 
             if (context != null)
                 context.Update(Implementation.WindowInfo);
