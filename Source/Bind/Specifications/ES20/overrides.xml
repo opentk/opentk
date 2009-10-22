@@ -136,7 +136,6 @@
       <param name="cap"><type>EnableCap</type></param>
     </function>
      
-        
     <function name="FrontFace" extension="Core" version="2.0">
       <param name="mode"><type>FrontFaceDirection</type></param>
     </function>
@@ -275,6 +274,18 @@
     <function name="PixelStore" extension="Core" version="2.0">
       <param name="pname"><type>PixelStorePName</type></param>
       <param name="param"><type>PixelStoreParameter</type></param>
+    </function>
+    
+    <function name="GetBoolean" extension="Core">
+      <param name="pname"><type>GetBooleanPName</type></param>
+    </function>
+ 
+    <function name="GetFloat" extension="Core">
+      <param name="pname"><type>GetFloatPName</type></param>
+    </function>
+     
+    <function name="GetInteger" extension="Core">
+      <param name="pname"><type>GetIntegerPName</type></param>
     </function>
   
   </replace>
@@ -669,6 +680,102 @@
       <token name="Eight" value="0X0008" />
     </enum>
 
+    <enum name="GetBooleanPName">
+      <token name="ShaderCompiler" value="0X8dfa" />
+      <token name="SampleCoverageInvert" value="0X80ab" />
+      <token name="ColorWritemask" value="0X0c23" />
+      <token name="DepthWritemask" value="0X0b72" />
+    </enum>
+ 
+       <!--
+      According to http://www.khronos.org/opengles/sdk/docs/man/ the GetBooleanPName enum should also contain:
+      GL_BLEND
+      GL_CULL_FACE
+      GL_DEPTH_TEST
+      GL_DITHER
+      GL_POLYGON_OFFSET_FILL
+       -->
+
+    <enum name="GetFloatPName">
+      <token name="BlendColor" value="0X8005" />
+      <token name="DepthRange" value="0X0b70" />
+      <token name="LineWidth" value="0X0b21" />
+      <token name="PolygonOffsetUnits" value="0X2a00" />
+      <token name="PolygonOffsetFactor" value="0X8038" />
+      <token name="AliasedPointSizeRange" value="0X846d" />
+      <token name="AliasedLineWidthRange" value="0X846e" />
+      <token name="SampleCoverageValue" value="0X80aa" />
+      <token name="ColorClearValue" value="0X0c22" />
+    </enum>
+
+    <enum name="GetIntegerPName">
+     <token name="BlendEquation" value="0X8009" />
+      <token name="BlendEquationRgb" value="0X8009" />
+      <token name="BlendEquationAlpha" value="0X883d" />
+      <token name="ImplementationColorReadType" value="0X8b9a" />
+      <token name="ImplementationColorReadFormat" value="0X8b9b" />
+      <token name="FramebufferBinding" value="0X8ca6" />
+      <token name="RenderbufferBinding" value="0X8ca7" />
+      <token name="ArrayBufferBinding" value="0X8894" />
+      <token name="ElementArrayBufferBinding" value="0X8895" />
+      <token name="ScissorBox" value="0X0c10" />
+      <token name="Viewport" value="0X0ba2" />
+      <token name="TextureBinding2D" value="0X8069" />
+      <token name="TextureBindingCubeMap" value="0X8514" />
+      <token name="ActiveTexture" value="0X84e0" />
+      <token name="FrontFace" value="0X0b46" />
+      <token name="CullFaceMode" value="0X0b45" />
+      <token name="BlendDstRgb" value="0X80c8" />
+      <token name="BlendSrcRgb" value="0X80c9" />
+      <token name="BlendDstAlpha" value="0X80ca" />
+      <token name="BlendSrcAlpha" value="0X80cb" />
+      <token name="StencilFunc" value="0X0b92" />
+      <token name="StencilValueMask" value="0X0b93" />
+      <token name="StencilFail" value="0X0b94" />
+      <token name="StencilPassDepthFail" value="0X0b95" />
+      <token name="StencilPassDepthPass" value="0X0b96" />
+      <token name="StencilRef" value="0X0b97" />
+      <token name="StencilBackFunc" value="0X8800" />
+      <token name="StencilBackFail" value="0X8801" />
+      <token name="StencilBackPassDepthFail" value="0X8802" />
+      <token name="StencilBackPassDepthPass" value="0X8803" />
+      <token name="StencilBackRef" value="0X8ca3" />
+      <token name="StencilBackValueMask" value="0X8ca4" />
+      <token name="StencilWritemask" value="0X0b98" />
+      <token name="StencilBackWritemask" value="0X8ca5" />
+      <token name="DepthFunc" value="0X0b74" />
+      <token name="DepthClearValue" value="0X0b73" />
+      <token name="StencilClearValue" value="0X0b91" />
+      <token name="UnpackAlignment" value="0X0cf5" />
+      <token name="PackAlignment" value="0X0d05" />
+      <token name="CurrentProgram" value="0X8b8d" />
+      <token name="GenerateMipmapHint" value="0X8192" />
+      <token name="MaxTextureSize" value="0X0d33" />
+      <token name="MaxViewportDims" value="0X0d3a" />
+      <token name="SubpixelBits" value="0X0d50" />
+      <token name="MaxCubeMapTextureSize" value="0X851c" />
+      <token name="SampleBuffers" value="0X80a8" />
+      <token name="Samples" value="0X80a9" />
+      <token name="NumCompressedTextureFormats" value="0X86a2" />
+      <token name="CompressedTextureFormats" value="0X86a3" />
+      <token name="ShaderBinaryFormats" value="0X8df8" />
+      <token name="NumShaderBinaryFormats" value="0X8df9" />
+      <token name="MaxVertexAttribs" value="0X8869" />
+      <token name="MaxTextureImageUnits" value="0X8872" />
+      <token name="MaxVertexTextureImageUnits" value="0X8b4c" />
+      <token name="MaxCombinedTextureImageUnits" value="0X8b4d" />
+      <token name="MaxRenderbufferSize" value="0X84e8" />
+      <token name="MaxVertexUniformVectors" value="0X8dfb" />
+      <token name="MaxVaryingVectors" value="0X8dfc" />
+      <token name="MaxFragmentUniformVectors" value="0X8dfd" />
+      <token name="RedBits" value="0X0d52" />
+      <token name="GreenBits" value="0X0d53" />
+      <token name="BlueBits" value="0X0d54" />
+      <token name="AlphaBits" value="0X0d55" />
+      <token name="DepthBits" value="0X0d56" />
+      <token name="StencilBits" value="0X0d57" />
+    </enum>
+     
   </add>
 
 </overrides>
