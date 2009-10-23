@@ -75,13 +75,10 @@ namespace OpenTK.Graphics.ES20
         ColorBufferBit = ((int)0x00004000),
         Lines = ((int)0x0001),
         LineLoop = ((int)0x0002),
-        Two = ((int)0X0002),
         LineStrip = ((int)0x0003),
         Triangles = ((int)0x0004),
-        Four = ((int)0X0004),
         TriangleStrip = ((int)0x0005),
         TriangleFan = ((int)0x0006),
-        Eight = ((int)0X0008),
         Never = ((int)0x0200),
         Less = ((int)0x0201),
         Equal = ((int)0x0202),
@@ -517,12 +514,6 @@ namespace OpenTK.Graphics.ES20
         TriangleFan = ((int)0x0006),
     }
 
-    public enum BindTextureTarget : int
-    {
-        Texture2D = ((int)0X0de1),
-        TextureCubeMap = ((int)0X8513),
-    }
-
     public enum BlendEquationSeparate : int
     {
         FuncAdd = ((int)0x8006),
@@ -599,6 +590,12 @@ namespace OpenTK.Graphics.ES20
         StreamDraw = ((int)0x88E0),
         StaticDraw = ((int)0x88E4),
         DynamicDraw = ((int)0x88E8),
+    }
+
+    public enum BufferParameterName : int
+    {
+        BufferSize = ((int)0X8764),
+        BufferUsage = ((int)0X8765),
     }
 
     public enum BufferTarget : int
@@ -702,15 +699,7 @@ namespace OpenTK.Graphics.ES20
         ExtTextureType2101010Rev = ((int)1),
     }
 
-    public enum FramebufferAttachmentParameter : int
-    {
-        FramebufferAttachmentObjectType = ((int)0X8cd0),
-        FramebufferAttachmentObjectName = ((int)0X8cd1),
-        FramebufferAttachmentTextureLevel = ((int)0X8cd2),
-        FramebufferAttachmentTextureCubeMapFace = ((int)0X8cd3),
-    }
-
-    public enum FramebufferError : int
+    public enum FramebufferErrorCode : int
     {
         FramebufferComplete = ((int)0X8cd5),
         FramebufferIncompleteAttachment = ((int)0X8cd6),
@@ -757,6 +746,14 @@ namespace OpenTK.Graphics.ES20
         Rgb565 = ((int)0x8D62),
     }
 
+    public enum FramebufferParameterName : int
+    {
+        FramebufferAttachmentObjectType = ((int)0X8cd0),
+        FramebufferAttachmentObjectName = ((int)0X8cd1),
+        FramebufferAttachmentTextureLevel = ((int)0X8cd2),
+        FramebufferAttachmentTextureCubeMapFace = ((int)0X8cd3),
+    }
+
     public enum FramebufferSlot : int
     {
         ColorAttachment0 = ((int)0X8ce0),
@@ -773,102 +770,6 @@ namespace OpenTK.Graphics.ES20
     {
         Cw = ((int)0x0900),
         Ccw = ((int)0x0901),
-    }
-
-    public enum GetBooleanPName : int
-    {
-        DepthWritemask = ((int)0X0b72),
-        ColorWritemask = ((int)0X0c23),
-        SampleCoverageInvert = ((int)0X80ab),
-        ShaderCompiler = ((int)0X8dfa),
-    }
-
-    public enum GetBufferPName : int
-    {
-        BufferSize = ((int)0X8764),
-        BufferUsage = ((int)0X8765),
-    }
-
-    public enum GetFloatPName : int
-    {
-        LineWidth = ((int)0X0b21),
-        DepthRange = ((int)0X0b70),
-        ColorClearValue = ((int)0X0c22),
-        PolygonOffsetUnits = ((int)0X2a00),
-        BlendColor = ((int)0X8005),
-        PolygonOffsetFactor = ((int)0X8038),
-        SampleCoverageValue = ((int)0X80aa),
-        AliasedPointSizeRange = ((int)0X846d),
-        AliasedLineWidthRange = ((int)0X846e),
-    }
-
-    public enum GetIntegerPName : int
-    {
-        CullFaceMode = ((int)0X0b45),
-        FrontFace = ((int)0X0b46),
-        DepthClearValue = ((int)0X0b73),
-        DepthFunc = ((int)0X0b74),
-        StencilClearValue = ((int)0X0b91),
-        StencilFunc = ((int)0X0b92),
-        StencilValueMask = ((int)0X0b93),
-        StencilFail = ((int)0X0b94),
-        StencilPassDepthFail = ((int)0X0b95),
-        StencilPassDepthPass = ((int)0X0b96),
-        StencilRef = ((int)0X0b97),
-        StencilWritemask = ((int)0X0b98),
-        Viewport = ((int)0X0ba2),
-        ScissorBox = ((int)0X0c10),
-        UnpackAlignment = ((int)0X0cf5),
-        PackAlignment = ((int)0X0d05),
-        MaxTextureSize = ((int)0X0d33),
-        MaxViewportDims = ((int)0X0d3a),
-        SubpixelBits = ((int)0X0d50),
-        RedBits = ((int)0X0d52),
-        GreenBits = ((int)0X0d53),
-        BlueBits = ((int)0X0d54),
-        AlphaBits = ((int)0X0d55),
-        DepthBits = ((int)0X0d56),
-        StencilBits = ((int)0X0d57),
-        BlendEquation = ((int)0X8009),
-        BlendEquationRgb = ((int)0X8009),
-        TextureBinding2D = ((int)0X8069),
-        SampleBuffers = ((int)0X80a8),
-        Samples = ((int)0X80a9),
-        BlendDstRgb = ((int)0X80c8),
-        BlendSrcRgb = ((int)0X80c9),
-        BlendDstAlpha = ((int)0X80ca),
-        BlendSrcAlpha = ((int)0X80cb),
-        GenerateMipmapHint = ((int)0X8192),
-        ActiveTexture = ((int)0X84e0),
-        MaxRenderbufferSize = ((int)0X84e8),
-        TextureBindingCubeMap = ((int)0X8514),
-        MaxCubeMapTextureSize = ((int)0X851c),
-        NumCompressedTextureFormats = ((int)0X86a2),
-        CompressedTextureFormats = ((int)0X86a3),
-        StencilBackFunc = ((int)0X8800),
-        StencilBackFail = ((int)0X8801),
-        StencilBackPassDepthFail = ((int)0X8802),
-        StencilBackPassDepthPass = ((int)0X8803),
-        BlendEquationAlpha = ((int)0X883d),
-        MaxVertexAttribs = ((int)0X8869),
-        MaxTextureImageUnits = ((int)0X8872),
-        ArrayBufferBinding = ((int)0X8894),
-        ElementArrayBufferBinding = ((int)0X8895),
-        MaxVertexTextureImageUnits = ((int)0X8b4c),
-        MaxCombinedTextureImageUnits = ((int)0X8b4d),
-        CurrentProgram = ((int)0X8b8d),
-        ImplementationColorReadType = ((int)0X8b9a),
-        ImplementationColorReadFormat = ((int)0X8b9b),
-        StencilBackRef = ((int)0X8ca3),
-        StencilBackValueMask = ((int)0X8ca4),
-        StencilBackWritemask = ((int)0X8ca5),
-        FramebufferBinding = ((int)0X8ca6),
-        RenderbufferBinding = ((int)0X8ca7),
-        ShaderBinaryFormats = ((int)0X8df8),
-        NumShaderBinaryFormats = ((int)0X8df9),
-        MaxVertexUniformVectors = ((int)0X8dfb),
-        MaxVaryingVectors = ((int)0X8dfc),
-        MaxFragmentUniformVectors = ((int)0X8dfd),
     }
 
     public enum GetPName : int
@@ -904,38 +805,61 @@ namespace OpenTK.Graphics.ES20
         DepthBits = ((int)0x0D56),
         StencilBits = ((int)0x0D57),
         PolygonOffsetUnits = ((int)0x2A00),
+        BlendColor = ((int)0X8005),
+        BlendEquation = ((int)0X8009),
+        BlendEquationRgb = ((int)0X8009),
         PolygonOffsetFactor = ((int)0x8038),
         TextureBinding2D = ((int)0x8069),
         SampleBuffers = ((int)0x80A8),
         Samples = ((int)0x80A9),
         SampleCoverageValue = ((int)0x80AA),
         SampleCoverageInvert = ((int)0x80AB),
+        BlendDstRgb = ((int)0X80c8),
+        BlendSrcRgb = ((int)0X80c9),
+        BlendDstAlpha = ((int)0X80ca),
+        BlendSrcAlpha = ((int)0X80cb),
+        GenerateMipmapHint = ((int)0X8192),
         AliasedPointSizeRange = ((int)0x846D),
         AliasedLineWidthRange = ((int)0x846E),
+        ActiveTexture = ((int)0X84e0),
+        MaxRenderbufferSize = ((int)0X84e8),
+        TextureBindingCubeMap = ((int)0X8514),
+        MaxCubeMapTextureSize = ((int)0X851c),
+        NumCompressedTextureFormats = ((int)0X86a2),
+        CompressedTextureFormats = ((int)0X86a3),
         StencilBackFunc = ((int)0x8800),
         StencilBackFail = ((int)0x8801),
         StencilBackPassDepthFail = ((int)0x8802),
         StencilBackPassDepthPass = ((int)0x8803),
+        BlendEquationAlpha = ((int)0X883d),
+        MaxVertexAttribs = ((int)0X8869),
+        MaxTextureImageUnits = ((int)0X8872),
+        ArrayBufferBinding = ((int)0X8894),
+        ElementArrayBufferBinding = ((int)0X8895),
+        MaxVertexTextureImageUnits = ((int)0X8b4c),
+        MaxCombinedTextureImageUnits = ((int)0X8b4d),
+        CurrentProgram = ((int)0X8b8d),
+        ImplementationColorReadType = ((int)0X8b9a),
+        ImplementationColorReadFormat = ((int)0X8b9b),
         StencilBackRef = ((int)0x8CA3),
         StencilBackValueMask = ((int)0x8CA4),
         StencilBackWritemask = ((int)0x8CA5),
-    }
-
-    public enum GetRenderbufferPName : int
-    {
-        RenderbufferWidth = ((int)0X8d42),
-        RenderbufferHeight = ((int)0X8d43),
-        RenderbufferInternalFormat = ((int)0X8d44),
-        RenderbufferRedSize = ((int)0X8d50),
-        RenderbufferGreenSize = ((int)0X8d51),
-        RenderbufferBlueSize = ((int)0X8d52),
-        RenderbufferAlphaSize = ((int)0X8d53),
-        RenderbufferDepthSize = ((int)0X8d54),
-        RenderbufferStencilSize = ((int)0X8d55),
+        FramebufferBinding = ((int)0X8ca6),
+        RenderbufferBinding = ((int)0X8ca7),
+        ShaderBinaryFormats = ((int)0X8df8),
+        NumShaderBinaryFormats = ((int)0X8df9),
+        ShaderCompiler = ((int)0X8dfa),
+        MaxVertexUniformVectors = ((int)0X8dfb),
+        MaxVaryingVectors = ((int)0X8dfc),
+        MaxFragmentUniformVectors = ((int)0X8dfd),
     }
 
     public enum GetTextureParameter : int
     {
+        TextureMagFilter = ((int)0X2800),
+        TextureMinFilter = ((int)0X2801),
+        TextureWrapS = ((int)0X2802),
+        TextureWrapT = ((int)0X2803),
         NumCompressedTextureFormats = ((int)0x86A2),
         CompressedTextureFormats = ((int)0x86A3),
     }
@@ -1160,14 +1084,6 @@ namespace OpenTK.Graphics.ES20
 
     public enum PixelStoreParameter : int
     {
-        One = ((int)0X0001),
-        Two = ((int)0X0002),
-        Four = ((int)0X0004),
-        Eight = ((int)0X0008),
-    }
-
-    public enum PixelStorePName : int
-    {
         UnpackAlignment = ((int)0X0cf5),
         PackAlignment = ((int)0X0d05),
     }
@@ -1191,7 +1107,7 @@ namespace OpenTK.Graphics.ES20
         TriangleFan = ((int)0X0006),
     }
 
-    public enum ProgramPName : int
+    public enum ProgramParameter : int
     {
         DeleteStatus = ((int)0X8b80),
         LinkStatus = ((int)0X8b82),
@@ -1230,6 +1146,19 @@ namespace OpenTK.Graphics.ES20
         Rgb565 = ((int)0X8d62),
     }
 
+    public enum RenderbufferParameterName : int
+    {
+        RenderbufferWidth = ((int)0X8d42),
+        RenderbufferHeight = ((int)0X8d43),
+        RenderbufferInternalFormat = ((int)0X8d44),
+        RenderbufferRedSize = ((int)0X8d50),
+        RenderbufferGreenSize = ((int)0X8d51),
+        RenderbufferBlueSize = ((int)0X8d52),
+        RenderbufferAlphaSize = ((int)0X8d53),
+        RenderbufferDepthSize = ((int)0X8d54),
+        RenderbufferStencilSize = ((int)0X8d55),
+    }
+
     public enum RenderbufferTarget : int
     {
         Renderbuffer = ((int)0X8d41),
@@ -1254,7 +1183,7 @@ namespace OpenTK.Graphics.ES20
         NumShaderBinaryFormats = ((int)0x8DF9),
     }
 
-    public enum ShaderPName : int
+    public enum ShaderParameter : int
     {
         ShaderType = ((int)0X8b4f),
         DeleteStatus = ((int)0X8b80),
@@ -1389,14 +1318,6 @@ namespace OpenTK.Graphics.ES20
         TextureWrapT = ((int)0x2803),
     }
 
-    public enum TexturePName : int
-    {
-        TextureMagFilter = ((int)0X2800),
-        TextureMinFilter = ((int)0X2801),
-        TextureWrapS = ((int)0X2802),
-        TextureWrapT = ((int)0X2803),
-    }
-
     public enum TextureTarget : int
     {
         Texture2D = ((int)0X0de1),
@@ -1475,17 +1396,6 @@ namespace OpenTK.Graphics.ES20
         SamplerCube = ((int)0x8B60),
     }
 
-    public enum VertexArray : int
-    {
-        VertexAttribArrayEnabled = ((int)0X8622),
-        VertexAttribArraySize = ((int)0X8623),
-        VertexAttribArrayStride = ((int)0X8624),
-        VertexAttribArrayType = ((int)0X8625),
-        CurrentVertexAttrib = ((int)0X8626),
-        VertexAttribArrayNormalized = ((int)0X886a),
-        VertexAttribArrayBufferBinding = ((int)0X889f),
-    }
-
     public enum VertexArrays : int
     {
         VertexAttribArrayEnabled = ((int)0x8622),
@@ -1497,6 +1407,22 @@ namespace OpenTK.Graphics.ES20
         VertexAttribArrayBufferBinding = ((int)0x889F),
     }
 
+    public enum VertexAttribParameter : int
+    {
+        VertexAttribArrayEnabled = ((int)0X8622),
+        VertexAttribArraySize = ((int)0X8623),
+        VertexAttribArrayStride = ((int)0X8624),
+        VertexAttribArrayType = ((int)0X8625),
+        CurrentVertexAttrib = ((int)0X8626),
+        VertexAttribArrayNormalized = ((int)0X886a),
+        VertexAttribArrayBufferBinding = ((int)0X889f),
+    }
+
+    public enum VertexAttribPointerType : int
+    {
+        VertexAttribArrayPointer = ((int)0X8645),
+    }
+
     public enum VertexAttribType : int
     {
         Byte = ((int)0X1400),
@@ -1505,11 +1431,6 @@ namespace OpenTK.Graphics.ES20
         UnsignedShort = ((int)0X1403),
         Float = ((int)0X1406),
         Fixed = ((int)0X140c),
-    }
-
-    public enum VertexPointer : int
-    {
-        VertexAttribArrayPointer = ((int)0X8645),
     }
 
 }
