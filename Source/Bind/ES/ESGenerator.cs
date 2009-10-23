@@ -131,7 +131,8 @@ namespace Bind.ES
                         {
                             Constant c = new Constant(param.GetAttribute("name", String.Empty), param.GetAttribute("value", String.Empty));
                             Utilities.Merge(all, c);
-                            e.ConstantCollection.Add(c.Name, c);
+                            try { e.ConstantCollection.Add(c.Name, c); }
+                            catch (ArgumentException ex) { Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message); }
                         }
 
                         Utilities.Merge(enums, e);

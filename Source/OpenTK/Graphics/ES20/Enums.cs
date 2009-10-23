@@ -775,12 +775,15 @@ namespace OpenTK.Graphics.ES20
     public enum GetPName : int
     {
         LineWidth = ((int)0x0B21),
+        CullFace = ((int)0X0b44),
         CullFaceMode = ((int)0x0B45),
         FrontFace = ((int)0x0B46),
         DepthRange = ((int)0x0B70),
+        DepthTest = ((int)0X0b71),
         DepthWritemask = ((int)0x0B72),
         DepthClearValue = ((int)0x0B73),
         DepthFunc = ((int)0x0B74),
+        StencilTest = ((int)0X0b90),
         StencilClearValue = ((int)0x0B91),
         StencilFunc = ((int)0x0B92),
         StencilValueMask = ((int)0x0B93),
@@ -790,7 +793,10 @@ namespace OpenTK.Graphics.ES20
         StencilRef = ((int)0x0B97),
         StencilWritemask = ((int)0x0B98),
         Viewport = ((int)0x0BA2),
+        Dither = ((int)0X0bd0),
+        Blend = ((int)0X0be2),
         ScissorBox = ((int)0x0C10),
+        ScissorTest = ((int)0X0c11),
         ColorClearValue = ((int)0x0C22),
         ColorWritemask = ((int)0x0C23),
         UnpackAlignment = ((int)0x0CF5),
@@ -804,12 +810,16 @@ namespace OpenTK.Graphics.ES20
         AlphaBits = ((int)0x0D55),
         DepthBits = ((int)0x0D56),
         StencilBits = ((int)0x0D57),
+        Texture2D = ((int)0X0de1),
         PolygonOffsetUnits = ((int)0x2A00),
         BlendColor = ((int)0X8005),
         BlendEquation = ((int)0X8009),
         BlendEquationRgb = ((int)0X8009),
+        PolygonOffsetFill = ((int)0X8037),
         PolygonOffsetFactor = ((int)0x8038),
         TextureBinding2D = ((int)0x8069),
+        SampleAlphaToCoverage = ((int)0X809e),
+        SampleCoverage = ((int)0X80a0),
         SampleBuffers = ((int)0x80A8),
         Samples = ((int)0x80A9),
         SampleCoverageValue = ((int)0x80AA),
@@ -1181,6 +1191,10 @@ namespace OpenTK.Graphics.ES20
     {
         ShaderBinaryFormats = ((int)0x8DF8),
         NumShaderBinaryFormats = ((int)0x8DF9),
+    }
+
+    public enum ShaderBinaryFormat : int
+    {
     }
 
     public enum ShaderParameter : int

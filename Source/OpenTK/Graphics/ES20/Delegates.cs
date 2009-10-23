@@ -110,7 +110,7 @@ namespace OpenTK.Graphics.ES20
             internal delegate void CompressedTexImage3DOES(OpenTK.Graphics.ES20.All target, Int32 level, OpenTK.Graphics.ES20.All internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
             internal static CompressedTexImage3DOES glCompressedTexImage3DOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CompressedTexSubImage2D(OpenTK.Graphics.ES20.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, Int32 imageSize, IntPtr data);
+            internal delegate void CompressedTexSubImage2D(OpenTK.Graphics.ES20.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, Int32 imageSize, IntPtr data);
             internal static CompressedTexSubImage2D glCompressedTexSubImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void CompressedTexSubImage3DOES(OpenTK.Graphics.ES20.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES20.All format, Int32 imageSize, IntPtr data);
@@ -329,7 +329,7 @@ namespace OpenTK.Graphics.ES20
             internal unsafe delegate void GetShaderSource(UInt32 shader, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] System.Text.StringBuilder source);
             internal unsafe static GetShaderSource glGetShaderSource;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr GetString(OpenTK.Graphics.ES20.All name);
+            internal unsafe delegate IntPtr GetString(OpenTK.Graphics.ES20.StringName name);
             internal unsafe static GetString glGetString;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetTexParameterfv(OpenTK.Graphics.ES20.TextureTarget target, OpenTK.Graphics.ES20.GetTextureParameter pname, [OutAttribute] Single* @params);
@@ -422,7 +422,7 @@ namespace OpenTK.Graphics.ES20
             internal delegate void SetFenceNV(UInt32 fence, OpenTK.Graphics.ES20.All condition);
             internal static SetFenceNV glSetFenceNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ShaderBinary(Int32 n, UInt32* shaders, OpenTK.Graphics.ES20.All binaryformat, IntPtr binary, Int32 length);
+            internal unsafe delegate void ShaderBinary(Int32 n, UInt32* shaders, OpenTK.Graphics.ES20.ShaderBinaryFormat binaryformat, IntPtr binary, Int32 length);
             internal unsafe static ShaderBinary glShaderBinary;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void ShaderSource(UInt32 shader, Int32 count, String[] @string, Int32* length);
