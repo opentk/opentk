@@ -88,8 +88,14 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="attrlist">a pointer to a set of attributes: ALC_FREQUENCY, ALC_MONO_SOURCES, ALC_REFRESH, ALC_STEREO_SOURCES, ALC_SYNC</param>
         /// <returns>Returns a pointer to the new context (NULL on failure). The attribute list can be NULL, or a zero terminated list of integer pairs composed of valid ALC attribute tokens and requested values.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcCreateContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity]
+        unsafe static extern IntPtr sys_CreateContext([In] IntPtr device, [In] int* attrlist);
+
         [CLSCompliant(false)]
-        unsafe public static extern ContextHandle CreateContext([In] IntPtr device, [In] int* attrlist);
+        unsafe public static ContextHandle CreateContext([In] IntPtr device, [In] int* attrlist)
+        {
+            return new ContextHandle(sys_CreateContext(device, attrlist));
+        }
+
         // ALC_API ALCcontext *    ALC_APIENTRY alcCreateContext( ALCdevice *device, const ALCint* attrlist );
 
         /// <summary>This function creates a context using a specified device.</summary>
@@ -138,7 +144,12 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>This function retrieves the current context.</summary>
         /// <returns>Returns a pointer to the current context.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcGetCurrentContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern ContextHandle GetCurrentContext();
+        private static extern IntPtr sys_GetCurrentContext();
+
+        public static ContextHandle GetCurrentContext()
+        {
+            return new ContextHandle(sys_GetCurrentContext());
+        }
         // ALC_API ALCcontext *    ALC_APIENTRY alcGetCurrentContext( void );
 
         /// <summary>This function retrieves a context's device pointer.</summary>
