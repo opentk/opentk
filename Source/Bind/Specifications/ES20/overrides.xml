@@ -17,24 +17,24 @@
     </function>
     
     <function name="BlendEquation" extension="Core" version="2.0">
-      <param name="mode"><type>BlendMode</type></param>
+      <param name="mode"><type>BlendEquationMode</type></param>
     </function>
      
     <function name="BlendEquationSeparate" extension="Core" version="2.0">
-      <param name="modeRGB"><type>BlendMode</type></param>
-      <param name="modeAlpha"><type>BlendMode</type></param>
+      <param name="modeRGB"><type>BlendEquationMode</type></param>
+      <param name="modeAlpha"><type>BlendEquationMode</type></param>
     </function>
 
     <function name="BlendFunc" extension="Core" version="2.0">
-      <param name="sfactor"><type>BlendFactor</type></param>
-      <param name="dfactor"><type>BlendFactor</type></param>
+      <param name="sfactor"><type>BlendingFactorSrc</type></param>
+      <param name="dfactor"><type>BlendingFactorDst</type></param>
     </function>
      
     <function name="BlendFuncSeparate" extension="Core" version="2.0">
-      <param name="srcRGB"><type>BlendFactor</type></param>
-      <param name="dstRGB"><type>BlendFactor</type></param>
-      <param name="srcAlpha"><type>BlendFactor</type></param>
-      <param name="dstAlpha"><type>BlendFactor</type></param>
+      <param name="srcRGB"><type>BlendingFactorSrc</type></param>
+      <param name="dstRGB"><type>BlendingFactorDst</type></param>
+      <param name="srcAlpha"><type>BlendingFactorSrc</type></param>
+      <param name="dstAlpha"><type>BlendingFactorDst</type></param>
     </function>
 
     <function name="BindBuffer" extension="Core" version="2.0">
@@ -51,7 +51,7 @@
     </function>
 
     <function name="VertexAttribPointer" extension="Core" version="2.0">
-      <param name="type"><type>VertexAttribType</type></param>
+      <param name="type"><type>VertexAttribPointerType</type></param>
     </function>
 
     <function name="Hint" extension="Core" version="2.0">
@@ -73,16 +73,16 @@
     </function>
      
     <function name="StencilOp" extension="Core" version="2.0">
-      <param name="fail"><type>StencilOperation</type></param>
-      <param name="zfail"><type>StencilOperation</type></param>
-      <param name="zpass"><type>StencilOperation</type></param>
+      <param name="fail"><type>StencilOp</type></param>
+      <param name="zfail"><type>StencilOp</type></param>
+      <param name="zpass"><type>StencilOp</type></param>
     </function>
      
     <function name="StencilOpSeparate" extension="Core" version="2.0">
       <param name="face"><type>CullFaceMode</type></param>
-      <param name="fail"><type>StencilOperation</type></param>
-      <param name="zfail"><type>StencilOperation</type></param>
-      <param name="zpass"><type>StencilOperation</type></param>
+      <param name="fail"><type>StencilOp</type></param>
+      <param name="zfail"><type>StencilOp</type></param>
+      <param name="zpass"><type>StencilOp</type></param>
     </function>  
 
     <function name="GetBufferParameter" extension="Core" version="2.0">
@@ -112,11 +112,11 @@
     </function>
      
     <function name="DrawArrays" extension="Core" version="2.0">
-      <param name="mode"><type>PrimitiveMode</type></param>
+      <param name="mode"><type>BeginMode</type></param>
     </function>
      
     <function name="DrawElements" extension="Core" version="2.0">
-      <param name="mode"><type>PrimitiveMode</type></param>
+      <param name="mode"><type>BeginMode</type></param>
       <param name="type"><type>DrawElementsType</type></param>
     </function>
 
@@ -165,7 +165,7 @@
     </function>
      
     <function name="GetVertexAttribPointer" extension="Core" version="2.0">
-      <param name="pname"><type>VertexAttribPointerType</type></param> 
+      <param name="pname"><type>VertexAttribPointerParameter</type></param> 
     </function>
       
     <function name="ActiveTexture" extension="Core" version="2.0">
@@ -287,18 +287,22 @@
     <function name="GetError" extension="Core">
       <returns>ErrorCode</returns>
     </function>
-  
+
+    <function name="GetAttribLocation" extension="Core">
+      <param name="name"><flow>in</flow></param>
+    </function>
+    
   </replace>
 
   <add> 
 
-    <enum name="BlendMode">
+    <enum name="BlendEquationMode">
       <token name="FuncAdd" value="0X8006" />
       <token name="FuncSubtract" value="0X800a" />
       <token name="FuncReverseSubtract" value="0X800b" />
     </enum>
      
-    <enum name="BlendFactor">
+    <enum name="BlendingFactorSrc">
       <token name="Zero" value="0" />
       <token name="One" value="1" />
       <token name="SrcColor" value="0X0300" />
@@ -315,7 +319,25 @@
       <token name="OneMinusConstantAlpha" value="0X8004" />
       <token name="SrcAlphaSaturate" value="0X0308" remark="only valid for source RGB/Alpha" />
     </enum>
-     
+
+    <enum name="BlendingFactorDst">
+      <token name="Zero" value="0" />
+      <token name="One" value="1" />
+      <token name="SrcColor" value="0X0300" />
+      <token name="OneMinusSrcColor" value="0X0301" />
+      <token name="DstColor" value="0X0306" />
+      <token name="OneMinusDstColor" value="0X0307" />
+      <token name="SrcAlpha" value="0X0302" />
+      <token name="OneMinusSrcAlpha" value="0X0303" />
+      <token name="DstAlpha" value="0X0304" />
+      <token name="OneMinusDstAlpha" value="0X0305" />
+      <token name="ConstantColor" value="0X8001" />
+      <token name="OneMinusConstantColor" value="0X8002" />
+      <token name="ConstantAlpha" value="0X8003" />
+      <token name="OneMinusConstantAlpha" value="0X8004" />
+      <token name="SrcAlphaSaturate" value="0X0308" remark="only valid for source RGB/Alpha" />
+    </enum>
+
     <enum name="BufferTarget">
       <token name="ArrayBuffer" value="0X8892" />
       <token name="ElementArrayBuffer" value="0X8893" />
@@ -332,7 +354,7 @@
       <token name="BufferUsage" value="0X8765" />
     </enum>
      
-    <enum name="VertexAttribType">
+    <enum name="VertexAttribPointerType">
       <token name="Byte" value="0X1400" />
       <token name="UnsignedByte" value="0X1401" />
       <token name="Short" value="0X1402" />
@@ -378,7 +400,7 @@
       <token name="Always" value="0X0207" />
     </enum>
 
-    <enum name="PrimitiveMode">
+    <enum name="BeginMode">
       <token name="Points" value="0X0000" />
       <token name="Lines" value="0X0001" />
       <token name="LineLoop" value="0X0002" />
@@ -488,7 +510,7 @@
       <token name="CurrentVertexAttrib" value="0X8626" />
     </enum>
      
-    <enum name="VertexAttribPointerType">
+    <enum name="VertexAttribPointerParameter">
       <token name="VertexAttribArrayPointer" value="0X8645" />
     </enum>
      
@@ -513,7 +535,7 @@
       <token name="Always" value="0X0207" />
     </enum>
      
-    <enum name="StencilOperation">
+    <enum name="StencilOp">
       <token name="Invert" value="0X150a" />
       <token name="Keep" value="0X1e00" />
       <token name="Replace" value="0X1e01" />

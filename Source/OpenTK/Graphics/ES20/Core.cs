@@ -67,16 +67,16 @@ namespace OpenTK.Graphics.ES20
             internal extern static void BlendColor(Single red, Single green, Single blue, Single alpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquation", ExactSpelling = true)]
-            internal extern static void BlendEquation(OpenTK.Graphics.ES20.BlendMode mode);
+            internal extern static void BlendEquation(OpenTK.Graphics.ES20.BlendEquationMode mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationSeparate", ExactSpelling = true)]
-            internal extern static void BlendEquationSeparate(OpenTK.Graphics.ES20.BlendMode modeRGB, OpenTK.Graphics.ES20.BlendMode modeAlpha);
+            internal extern static void BlendEquationSeparate(OpenTK.Graphics.ES20.BlendEquationMode modeRGB, OpenTK.Graphics.ES20.BlendEquationMode modeAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFunc", ExactSpelling = true)]
-            internal extern static void BlendFunc(OpenTK.Graphics.ES20.BlendFactor sfactor, OpenTK.Graphics.ES20.BlendFactor dfactor);
+            internal extern static void BlendFunc(OpenTK.Graphics.ES20.BlendingFactorSrc sfactor, OpenTK.Graphics.ES20.BlendingFactorDst dfactor);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFuncSeparate", ExactSpelling = true)]
-            internal extern static void BlendFuncSeparate(OpenTK.Graphics.ES20.BlendFactor srcRGB, OpenTK.Graphics.ES20.BlendFactor dstRGB, OpenTK.Graphics.ES20.BlendFactor srcAlpha, OpenTK.Graphics.ES20.BlendFactor dstAlpha);
+            internal extern static void BlendFuncSeparate(OpenTK.Graphics.ES20.BlendingFactorSrc srcRGB, OpenTK.Graphics.ES20.BlendingFactorDst dstRGB, OpenTK.Graphics.ES20.BlendingFactorSrc srcAlpha, OpenTK.Graphics.ES20.BlendingFactorDst dstAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBufferData", ExactSpelling = true)]
             internal extern static void BufferData(OpenTK.Graphics.ES20.BufferTarget target, IntPtr size, IntPtr data, OpenTK.Graphics.ES20.BufferUsage usage);
@@ -181,10 +181,10 @@ namespace OpenTK.Graphics.ES20
             internal extern static void DisableVertexAttribArray(UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawArrays", ExactSpelling = true)]
-            internal extern static void DrawArrays(OpenTK.Graphics.ES20.PrimitiveMode mode, Int32 first, Int32 count);
+            internal extern static void DrawArrays(OpenTK.Graphics.ES20.BeginMode mode, Int32 first, Int32 count);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElements", ExactSpelling = true)]
-            internal extern static void DrawElements(OpenTK.Graphics.ES20.PrimitiveMode mode, Int32 count, OpenTK.Graphics.ES20.DrawElementsType type, IntPtr indices);
+            internal extern static void DrawElements(OpenTK.Graphics.ES20.BeginMode mode, Int32 count, OpenTK.Graphics.ES20.DrawElementsType type, IntPtr indices);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEGLImageTargetRenderbufferStorageOES", ExactSpelling = true)]
             internal extern static void EGLImageTargetRenderbufferStorageOES(OpenTK.Graphics.ES20.All target, IntPtr image);
@@ -256,7 +256,7 @@ namespace OpenTK.Graphics.ES20
             internal extern static unsafe void GetAttachedShaders(UInt32 program, Int32 maxcount, [OutAttribute] Int32* count, [OutAttribute] UInt32* shaders);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetAttribLocation", ExactSpelling = true)]
-            internal extern static int GetAttribLocation(UInt32 program, [OutAttribute] System.Text.StringBuilder name);
+            internal extern static int GetAttribLocation(UInt32 program, String name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetBooleanv", ExactSpelling = true)]
             internal extern static unsafe void GetBooleanv(OpenTK.Graphics.ES20.GetPName pname, [OutAttribute] bool* @params);
@@ -355,7 +355,7 @@ namespace OpenTK.Graphics.ES20
             internal extern static unsafe void GetVertexAttribiv(UInt32 index, OpenTK.Graphics.ES20.VertexAttribParameter pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVertexAttribPointerv", ExactSpelling = true)]
-            internal extern static void GetVertexAttribPointerv(UInt32 index, OpenTK.Graphics.ES20.VertexAttribPointerType pname, [OutAttribute] IntPtr pointer);
+            internal extern static void GetVertexAttribPointerv(UInt32 index, OpenTK.Graphics.ES20.VertexAttribPointerParameter pname, [OutAttribute] IntPtr pointer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glHint", ExactSpelling = true)]
             internal extern static void Hint(OpenTK.Graphics.ES20.HintTarget target, OpenTK.Graphics.ES20.HintMode mode);
@@ -442,10 +442,10 @@ namespace OpenTK.Graphics.ES20
             internal extern static void StencilMaskSeparate(OpenTK.Graphics.ES20.CullFaceMode face, UInt32 mask);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glStencilOp", ExactSpelling = true)]
-            internal extern static void StencilOp(OpenTK.Graphics.ES20.StencilOperation fail, OpenTK.Graphics.ES20.StencilOperation zfail, OpenTK.Graphics.ES20.StencilOperation zpass);
+            internal extern static void StencilOp(OpenTK.Graphics.ES20.StencilOp fail, OpenTK.Graphics.ES20.StencilOp zfail, OpenTK.Graphics.ES20.StencilOp zpass);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glStencilOpSeparate", ExactSpelling = true)]
-            internal extern static void StencilOpSeparate(OpenTK.Graphics.ES20.CullFaceMode face, OpenTK.Graphics.ES20.StencilOperation fail, OpenTK.Graphics.ES20.StencilOperation zfail, OpenTK.Graphics.ES20.StencilOperation zpass);
+            internal extern static void StencilOpSeparate(OpenTK.Graphics.ES20.CullFaceMode face, OpenTK.Graphics.ES20.StencilOp fail, OpenTK.Graphics.ES20.StencilOp zfail, OpenTK.Graphics.ES20.StencilOp zpass);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTestFenceNV", ExactSpelling = true)]
             internal extern static bool TestFenceNV(UInt32 fence);
@@ -565,7 +565,7 @@ namespace OpenTK.Graphics.ES20
             internal extern static unsafe void VertexAttrib4fv(UInt32 indx, Single* values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribPointer", ExactSpelling = true)]
-            internal extern static void VertexAttribPointer(UInt32 indx, Int32 size, OpenTK.Graphics.ES20.VertexAttribType type, bool normalized, Int32 stride, IntPtr ptr);
+            internal extern static void VertexAttribPointer(UInt32 indx, Int32 size, OpenTK.Graphics.ES20.VertexAttribPointerType type, bool normalized, Int32 stride, IntPtr ptr);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glViewport", ExactSpelling = true)]
             internal extern static void Viewport(Int32 x, Int32 y, Int32 width, Int32 height);

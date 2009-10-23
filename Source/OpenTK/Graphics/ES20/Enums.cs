@@ -514,6 +514,13 @@ namespace OpenTK.Graphics.ES20
         TriangleFan = ((int)0x0006),
     }
 
+    public enum BlendEquationMode : int
+    {
+        FuncAdd = ((int)0X8006),
+        FuncSubtract = ((int)0X800a),
+        FuncReverseSubtract = ((int)0X800b),
+    }
+
     public enum BlendEquationSeparate : int
     {
         FuncAdd = ((int)0x8006),
@@ -521,7 +528,19 @@ namespace OpenTK.Graphics.ES20
         BlendEquationAlpha = ((int)0x883D),
     }
 
-    public enum BlendFactor : int
+    public enum BlendingFactorDest : int
+    {
+        Zero = ((int)0),
+        SrcColor = ((int)0x0300),
+        OneMinusSrcColor = ((int)0x0301),
+        SrcAlpha = ((int)0x0302),
+        OneMinusSrcAlpha = ((int)0x0303),
+        DstAlpha = ((int)0x0304),
+        OneMinusDstAlpha = ((int)0x0305),
+        One = ((int)1),
+    }
+
+    public enum BlendingFactorDst : int
     {
         Zero = ((int)0),
         SrcColor = ((int)0X0300),
@@ -540,30 +559,23 @@ namespace OpenTK.Graphics.ES20
         One = ((int)1),
     }
 
-    public enum BlendingFactorDest : int
-    {
-        Zero = ((int)0),
-        SrcColor = ((int)0x0300),
-        OneMinusSrcColor = ((int)0x0301),
-        SrcAlpha = ((int)0x0302),
-        OneMinusSrcAlpha = ((int)0x0303),
-        DstAlpha = ((int)0x0304),
-        OneMinusDstAlpha = ((int)0x0305),
-        One = ((int)1),
-    }
-
     public enum BlendingFactorSrc : int
     {
+        Zero = ((int)0),
+        SrcColor = ((int)0X0300),
+        OneMinusSrcColor = ((int)0X0301),
+        SrcAlpha = ((int)0X0302),
+        OneMinusSrcAlpha = ((int)0X0303),
+        DstAlpha = ((int)0X0304),
+        OneMinusDstAlpha = ((int)0X0305),
         DstColor = ((int)0x0306),
         OneMinusDstColor = ((int)0x0307),
         SrcAlphaSaturate = ((int)0x0308),
-    }
-
-    public enum BlendMode : int
-    {
-        FuncAdd = ((int)0X8006),
-        FuncSubtract = ((int)0X800a),
-        FuncReverseSubtract = ((int)0X800b),
+        ConstantColor = ((int)0X8001),
+        OneMinusConstantColor = ((int)0X8002),
+        ConstantAlpha = ((int)0X8003),
+        OneMinusConstantAlpha = ((int)0X8004),
+        One = ((int)1),
     }
 
     public enum BlendSubtract : int
@@ -1106,17 +1118,6 @@ namespace OpenTK.Graphics.ES20
         UnsignedShort565 = ((int)0x8363),
     }
 
-    public enum PrimitiveMode : int
-    {
-        Points = ((int)0X0000),
-        Lines = ((int)0X0001),
-        LineLoop = ((int)0X0002),
-        LineStrip = ((int)0X0003),
-        Triangles = ((int)0X0004),
-        TriangleStrip = ((int)0X0005),
-        TriangleFan = ((int)0X0006),
-    }
-
     public enum ProgramParameter : int
     {
         DeleteStatus = ((int)0X8b80),
@@ -1278,6 +1279,7 @@ namespace OpenTK.Graphics.ES20
 
     public enum StencilOp : int
     {
+        Zero = ((int)0X0000),
         Invert = ((int)0x150A),
         Keep = ((int)0x1E00),
         Replace = ((int)0x1E01),
@@ -1285,18 +1287,6 @@ namespace OpenTK.Graphics.ES20
         Decr = ((int)0x1E03),
         IncrWrap = ((int)0x8507),
         DecrWrap = ((int)0x8508),
-    }
-
-    public enum StencilOperation : int
-    {
-        Zero = ((int)0X0000),
-        Invert = ((int)0X150a),
-        Keep = ((int)0X1e00),
-        Replace = ((int)0X1e01),
-        Incr = ((int)0X1e02),
-        Decr = ((int)0X1e03),
-        IncrWrap = ((int)0X8507),
-        DecrWrap = ((int)0X8508),
     }
 
     public enum StringName : int
@@ -1432,12 +1422,12 @@ namespace OpenTK.Graphics.ES20
         VertexAttribArrayBufferBinding = ((int)0X889f),
     }
 
-    public enum VertexAttribPointerType : int
+    public enum VertexAttribPointerParameter : int
     {
         VertexAttribArrayPointer = ((int)0X8645),
     }
 
-    public enum VertexAttribType : int
+    public enum VertexAttribPointerType : int
     {
         Byte = ((int)0X1400),
         UnsignedByte = ((int)0X1401),
