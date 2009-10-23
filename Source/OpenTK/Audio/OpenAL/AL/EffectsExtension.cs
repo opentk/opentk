@@ -1221,7 +1221,7 @@ namespace OpenTK.Audio.OpenAL
 
             if (!AudioContext.CurrentContext.SupportsExtension("ALC_EXT_EFX"))
             {
-                Debug.WriteLine("EFX Extension (ALC_EXT_EFX) is not supported(AudioContext: {0}).", AudioContext.CurrentContext.ToString());
+                Debug.Print("EFX Extension (ALC_EXT_EFX) is not supported(AudioContext: {0}).", AudioContext.CurrentContext.ToString());
                 return;
             }
             // Console.WriteLine("ALC_EXT_EFX found. Efx can be used.");
