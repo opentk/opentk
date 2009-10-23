@@ -537,18 +537,6 @@ namespace OpenTK.Graphics.ES20
         OneMinusSrcAlpha = ((int)0x0303),
         DstAlpha = ((int)0x0304),
         OneMinusDstAlpha = ((int)0x0305),
-        One = ((int)1),
-    }
-
-    public enum BlendingFactorDst : int
-    {
-        Zero = ((int)0),
-        SrcColor = ((int)0X0300),
-        OneMinusSrcColor = ((int)0X0301),
-        SrcAlpha = ((int)0X0302),
-        OneMinusSrcAlpha = ((int)0X0303),
-        DstAlpha = ((int)0X0304),
-        OneMinusDstAlpha = ((int)0X0305),
         DstColor = ((int)0X0306),
         OneMinusDstColor = ((int)0X0307),
         SrcAlphaSaturate = ((int)0X0308),
