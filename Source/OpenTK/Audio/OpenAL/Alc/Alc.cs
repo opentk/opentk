@@ -120,25 +120,41 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="context">A pointer to the new context.</param>
         /// <returns>Returns True on success, or False on failure.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcMakeContextCurrent", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern bool MakeContextCurrent([In] ContextHandle context);
+        static extern bool MakeContextCurrent(IntPtr context);
+        public static bool MakeContextCurrent(ContextHandle context)
+        {
+            return MakeContextCurrent(context.Handle);
+        }
         // ALC_API ALCboolean      ALC_APIENTRY alcMakeContextCurrent( ALCcontext *context );
 
         /// <summary>This function tells a context to begin processing. When a context is suspended, changes in OpenAL state will be accepted but will not be processed. alcSuspendContext can be used to suspend a context, and then all the OpenAL state changes can be applied at once, followed by a call to alcProcessContext to apply all the state changes immediately. In some cases, this procedure may be more efficient than application of properties in a non-suspended state. In some implementations, process and suspend calls are each a NOP.</summary>
         /// <param name="context">a pointer to the new context</param>
         [DllImport(Alc.Lib, EntryPoint = "alcProcessContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern void ProcessContext([In] ContextHandle context);
+        static extern void ProcessContext(IntPtr context);
+        public static void ProcessContext(ContextHandle context)
+        {
+            ProcessContext(context.Handle);
+        }
         // ALC_API void            ALC_APIENTRY alcProcessContext( ALCcontext *context );
 
         /// <summary>This function suspends processing on a specified context. When a context is suspended, changes in OpenAL state will be accepted but will not be processed. A typical use of alcSuspendContext would be to suspend a context, apply all the OpenAL state changes at once, and then call alcProcessContext to apply all the state changes at once. In some cases, this procedure may be more efficient than application of properties in a non-suspended state. In some implementations, process and suspend calls are each a NOP.</summary>
         /// <param name="context">a pointer to the context to be suspended.</param>
         [DllImport(Alc.Lib, EntryPoint = "alcSuspendContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern void SuspendContext([In] ContextHandle context);
+        static extern void SuspendContext(IntPtr context);
+        public static void SuspendContext(ContextHandle context)
+        {
+            SuspendContext(context.Handle);
+        }
         // ALC_API void            ALC_APIENTRY alcSuspendContext( ALCcontext *context );
 
         /// <summary>This function destroys a context.</summary>
         /// <param name="context">a pointer to the new context.</param>
         [DllImport(Alc.Lib, EntryPoint = "alcDestroyContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern void DestroyContext([In] ContextHandle context);
+        static extern void DestroyContext(IntPtr context);
+        public static void DestroyContext(ContextHandle context)
+        {
+            DestroyContext(context.Handle);
+        }
         // ALC_API void            ALC_APIENTRY alcDestroyContext( ALCcontext *context );
 
         /// <summary>This function retrieves the current context.</summary>
@@ -156,7 +172,11 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="context">a pointer to a context.</param>
         /// <returns>Returns a pointer to the specified context's device.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcGetContextsDevice", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern IntPtr GetContextsDevice([In] ContextHandle context);
+        static extern IntPtr GetContextsDevice(IntPtr context);
+        public static IntPtr GetContextsDevice(ContextHandle context)
+        {
+            return GetContextsDevice(context.Handle);
+        }
         // ALC_API ALCdevice*      ALC_APIENTRY alcGetContextsDevice( ALCcontext *context );
 
         #endregion Context Management
@@ -404,7 +424,7 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="device">a pointer to a capture device.</param>
         /// <param name="buffer">a buffer, which must be large enough to accommodate the number of samples.</param>
         /// <param name="samples">the number of samples to be retrieved.</param>
-        public static void CaptureSamples<T>(IntPtr device, T[,,] buffer, int samples)
+        public static void CaptureSamples<T>(IntPtr device, T[, ,] buffer, int samples)
             where T : struct
         {
             CaptureSamples(device, ref buffer[0, 0, 0], samples);
