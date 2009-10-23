@@ -11,15 +11,6 @@
       <param name="string"><type>String*</type></param>
     </function>
     
-    <function name="GetShaderSource" extension="Core">
-      <param name="source"><flow>out</flow></param>
-    </function>
-    
-    <function name="GetProgramInfoLog" extension="Core">
-      <param name="infolog"><flow>out</flow></param>
-    </function>
-
-    <!-- strong types -->  
     <function name="BlendEquation" extension="Core" version="2.0">
       <param name="mode"><type>BlendMode</type></param>
     </function>
@@ -91,7 +82,7 @@
 
     <function name="GetBufferParameter" extension="Core" version="2.0">
       <param name="target"><type>BufferTarget</type></param>
-      <param name="pname"><type>GetBufferPName</type></param>
+      <param name="pname"><type>BufferParameterName</type></param>
     </function>
 
     <function name="Clear" extension="Core" version="2.0">
@@ -149,15 +140,15 @@
     </function>
 
     <function name="GetError" extension="Core" version="2.0">
-      <returns type="ErrorCode" />  
+      <returns>ErrorCode</returns>
     </function>
 
     <function name="GetProgram" extension="Core" version="2.0">
-      <param name="pname"><type>ProgramPName</type></param> 
+      <param name="pname"><type>ProgramParameter</type></param>
     </function>
 
     <function name="GetShader" extension="Core" version="2.0">
-      <param name="pname"><type>ShaderPName</type></param> 
+      <param name="pname"><type>ShaderParameter</type></param> 
     </function>
 
     <function name="GetString" extension="Core" version="2.0">
@@ -165,11 +156,11 @@
     </function>
 
     <function name="GetVertexAttrib" extension="Core" version="2.0">
-      <param name="pname"><type>VertexArray</type></param> 
+      <param name="pname"><type>VertexAttribParameter</type></param> 
     </function>
      
     <function name="GetVertexAttribPointer" extension="Core" version="2.0">
-      <param name="pname"><type>VertexPointer</type></param> 
+      <param name="pname"><type>VertexAttribPointerType</type></param> 
     </function>
       
     <function name="ActiveTexture" extension="Core" version="2.0">
@@ -177,21 +168,21 @@
     </function>
  
     <function name="BindTexture" extension="Core" version="2.0">
-      <param name="target"><type>BindTextureTarget</type></param>
+      <param name="target"><type>TextureTarget</type></param>
     </function>
      
     <function name="GenerateMipmap" extension="Core" version="2.0">
-      <param name="target"><type>BindTextureTarget</type></param>
+      <param name="target"><type>TextureTarget</type></param>
     </function>
      
     <function name="GetTexParameter" extension="Core" version="2.0">
-      <param name="target"><type>BindTextureTarget</type></param>
-      <param name="pname"><type>TexturePName</type></param>
+      <param name="target"><type>TextureTarget</type></param>
+      <param name="pname"><type>GetTextureParameter</type></param>
     </function>
      
     <function name="TexParameter" extension="Core" version="2.0">
-      <param name="target"><type>BindTextureTarget</type></param>
-      <param name="pname"><type>TexturePName</type></param>
+      <param name="target"><type>TextureTarget</type></param>
+      <param name="pname"><type>TextureParameterName</type></param>
     </function>
      
     <function name="TexImage2D" extension="Core" version="2.0">
@@ -231,7 +222,7 @@
     </function>
      
     <function name="CheckFramebufferStatus" extension="Core" version="2.0">
-      <returns type="FramebufferError" />  
+      <returns>FramebufferErrorCode</returns>
       <param name="target"><type>FramebufferTarget</type></param>
     </function>
      
@@ -250,7 +241,7 @@
       
     <function name="GetRenderbufferParameter" extension="Core" version="2.0">
       <param name="target"><type>RenderbufferTarget</type></param>
-      <param name="pname"><type>GetRenderbufferPName</type></param>
+      <param name="pname"><type>RenderbufferParameterName</type></param>
     </function>
       
     <function name="FramebufferRenderbuffer" extension="Core" version="2.0">
@@ -268,24 +259,27 @@
     <function name="GetFramebufferAttachmentParameter" extension="Core" version="2.0">
       <param name="target"><type>FramebufferTarget</type></param>
       <param name="attachment"><type>FramebufferSlot</type></param>
-      <param name="pname"><type>FramebufferAttachmentParameter</type></param>
+      <param name="pname"><type>FramebufferParameterName</type></param>
     </function>
 
     <function name="PixelStore" extension="Core" version="2.0">
-      <param name="pname"><type>PixelStorePName</type></param>
-      <param name="param"><type>PixelStoreParameter</type></param>
+      <param name="pname"><type>PixelStoreParameter</type></param>
     </function>
     
     <function name="GetBoolean" extension="Core">
-      <param name="pname"><type>GetBooleanPName</type></param>
+      <param name="pname"><type>GetPName</type></param>
     </function>
  
     <function name="GetFloat" extension="Core">
-      <param name="pname"><type>GetFloatPName</type></param>
+      <param name="pname"><type>GetPName</type></param>
     </function>
      
     <function name="GetInteger" extension="Core">
-      <param name="pname"><type>GetIntegerPName</type></param>
+      <param name="pname"><type>GetPName</type></param>
+    </function>
+
+    <function name="GetError" extension="Core">
+      <returns>ErrorCode</returns>
     </function>
   
   </replace>
@@ -327,7 +321,7 @@
       <token name="StreamDraw" value="0X88e0" />
     </enum>
      
-    <enum name="GetBufferPName">
+    <enum name="BufferParameterName">
       <token name="BufferSize" value="0X8764" />
       <token name="BufferUsage" value="0X8765" />
     </enum>
@@ -450,7 +444,7 @@
       <token name="InvalidFramebufferOperation " value="0X0506" />
     </enum>
      
-    <enum name="ProgramPName">
+    <enum name="ProgramParameter">
       <token name="DeleteStatus" value="0X8b80" />
       <token name="LinkStatus" value="0X8b82" />
       <token name="ValidateStatus" value="0X8b83" />
@@ -462,7 +456,7 @@
       <token name="ActiveUniformMaxLength" value="0X8b87" />
     </enum>
      
-    <enum name="ShaderPName">
+    <enum name="ShaderParameter">
       <token name="ShaderType" value="0X8b4f" remark="This output may be cast to the ShaderType enum." />
       <token name="DeleteStatus" value="0X8b80" />
       <token name="CompileStatus" value="0X8b81" />
@@ -478,7 +472,7 @@
       <token name="ShadingLanguageVersion" value="0X8b8c" />
     </enum>
 
-    <enum name="VertexArray">
+    <enum name="VertexAttribParameter">
       <token name="VertexAttribArrayEnabled" value="0X8622" />
       <token name="VertexAttribArraySize" value="0X8623" />
       <token name="VertexAttribArrayStride" value="0X8624" />
@@ -488,7 +482,7 @@
       <token name="CurrentVertexAttrib" value="0X8626" />
     </enum>
      
-    <enum name="VertexPointer">
+    <enum name="VertexAttribPointerType">
       <token name="VertexAttribArrayPointer" value="0X8645" />
     </enum>
      
@@ -559,7 +553,7 @@
       <token name="Texture31" value="0X84df" />
     </enum>
     
-    <enum name="BindTextureTarget">
+    <enum name="TextureTarget">
       <token name="Texture2D" value="0X0de1" />
       <token name="TextureCubeMap" value="0X8513" />
     </enum>
@@ -578,13 +572,20 @@
       <token name="Linear" value="0X2601" />
     </enum>
 
-    <enum name="TexturePName">
+    <enum name="TextureParameterName">
       <token name="TextureMagFilter" value="0X2800" />
       <token name="TextureMinFilter" value="0X2801" />
       <token name="TextureWrapS" value="0X2802" />
       <token name="TextureWrapT" value="0X2803" />
     </enum>
-    
+
+    <enum name="GetTextureParameter">
+      <token name="TextureMagFilter" value="0X2800" />
+      <token name="TextureMinFilter" value="0X2801" />
+      <token name="TextureWrapS" value="0X2802" />
+      <token name="TextureWrapT" value="0X2803" />
+    </enum>
+
     <enum name="TextureTarget">
       <token name="Texture2D" value="0X0de1" />
       <token name="TextureCubeMapPositiveX" value="0X8515" />
@@ -623,7 +624,7 @@
       <token name="Framebuffer" value="0X8d40" />
     </enum>
 
-    <enum name="FramebufferError">
+    <enum name="FramebufferErrorCode">
       <token name="FramebufferComplete" value="0X8cd5" />
       <token name="FramebufferIncompleteAttachment" value="0X8cd6" />
       <token name="FramebufferIncompleteMissingAttachment" value="0X8cd7" />
@@ -643,7 +644,7 @@
       <token name="StencilIndex8" value="0X8d48" />
     </enum>
 
-    <enum name="GetRenderbufferPName">
+    <enum name="RenderbufferParameterName">
       <token name="RenderbufferWidth" value="0X8d42" />
       <token name="RenderbufferHeight" value="0X8d43" />
       <token name="RenderbufferInternalFormat" value="0X8d44" />
@@ -661,33 +662,19 @@
       <token name="StencilAttachment" value="0X8d20" />
     </enum>
 
-    <enum name="FramebufferAttachmentParameter">
+    <enum name="FramebufferParameterName">
       <token name="FramebufferAttachmentObjectType" value="0X8cd0" />
       <token name="FramebufferAttachmentObjectName" value="0X8cd1" />
       <token name="FramebufferAttachmentTextureLevel" value="0X8cd2" />
       <token name="FramebufferAttachmentTextureCubeMapFace" value="0X8cd3" />
     </enum>
 
-    <enum name="PixelStorePName">
+    <enum name="PixelStoreParameter">
       <token name="PackAlignment" value="0X0d05" />
       <token name="UnpackAlignment" value="0X0cf5" />
     </enum>
-     
-    <enum name="PixelStoreParameter">
-      <token name="One" value="0X0001" />
-      <token name="Two" value="0X0002" />
-      <token name="Four" value="0X0004" />
-      <token name="Eight" value="0X0008" />
-    </enum>
 
-    <enum name="GetBooleanPName">
-      <token name="ShaderCompiler" value="0X8dfa" />
-      <token name="SampleCoverageInvert" value="0X80ab" />
-      <token name="ColorWritemask" value="0X0c23" />
-      <token name="DepthWritemask" value="0X0b72" />
-    </enum>
- 
-       <!--
+    <!--
       According to http://www.khronos.org/opengles/sdk/docs/man/ the GetBooleanPName enum should also contain:
       GL_BLEND
       GL_CULL_FACE
@@ -696,7 +683,11 @@
       GL_POLYGON_OFFSET_FILL
        -->
 
-    <enum name="GetFloatPName">
+    <enum name="GetPName">
+      <token name="ShaderCompiler" value="0X8dfa" />
+      <token name="SampleCoverageInvert" value="0X80ab" />
+      <token name="ColorWritemask" value="0X0c23" />
+      <token name="DepthWritemask" value="0X0b72" />
       <token name="BlendColor" value="0X8005" />
       <token name="DepthRange" value="0X0b70" />
       <token name="LineWidth" value="0X0b21" />
@@ -706,9 +697,6 @@
       <token name="AliasedLineWidthRange" value="0X846e" />
       <token name="SampleCoverageValue" value="0X80aa" />
       <token name="ColorClearValue" value="0X0c22" />
-    </enum>
-
-    <enum name="GetIntegerPName">
      <token name="BlendEquation" value="0X8009" />
       <token name="BlendEquationRgb" value="0X8009" />
       <token name="BlendEquationAlpha" value="0X883d" />
