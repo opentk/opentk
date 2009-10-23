@@ -142,7 +142,7 @@
     </function>
     
     <function name="GetVertexAttribPointer" extension="Core">
-      <param name="pname"><type>VertexAttribPointerType</type></param>
+      <param name="pname"><type>VertexAttribPointerParameter</type></param>
     </function>
 
     <!-- Version 3.0 -->
