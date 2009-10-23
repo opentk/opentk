@@ -5,8 +5,13 @@
   
     <function name="GetString" extension="Core">
       <returns>String</returns>
+      <param name="name"><type>StringName</type></param>
     </function>
 
+    <function name="ShaderBinary" extension="Core">
+      <param name="binaryformat"><type>ShaderBinaryFormat</type></param>
+    </function>
+    
     <function name="ShaderSource" extension="Core">
       <param name="string"><type>String*</type></param>
     </function>
@@ -197,7 +202,7 @@
       <param name="format"><type>PixelFormat</type></param>
       <param name="type"><type>PixelType</type></param>
     </function>
-     
+
     <function name="CopyTexImage2D" extension="Core" version="2.0">
       <param name="target"><type>TextureTarget</type></param>
       <param name="internalformat"><type>PixelInternalFormat</type></param>
@@ -214,6 +219,7 @@
      
     <function name="CompressedTexSubImage2D" extension="Core" version="2.0">
       <param name="target"><type>TextureTarget</type></param>
+      <param name="format"><type>PixelFormat</type></param>
     </function>
      
     <function name="ReadPixels" extension="Core" version="2.0">
@@ -674,15 +680,6 @@
       <token name="UnpackAlignment" value="0X0cf5" />
     </enum>
 
-    <!--
-      According to http://www.khronos.org/opengles/sdk/docs/man/ the GetBooleanPName enum should also contain:
-      GL_BLEND
-      GL_CULL_FACE
-      GL_DEPTH_TEST
-      GL_DITHER
-      GL_POLYGON_OFFSET_FILL
-       -->
-
     <enum name="GetPName">
       <token name="ShaderCompiler" value="0X8dfa" />
       <token name="SampleCoverageInvert" value="0X80ab" />
@@ -762,8 +759,24 @@
       <token name="AlphaBits" value="0X0d55" />
       <token name="DepthBits" value="0X0d56" />
       <token name="StencilBits" value="0X0d57" />
+      <!-- From EnableCap -->
+      <token name="CullFace" value="0X0b44" />
+      <token name="DepthTest" value="0X0b71" />
+      <token name="StencilTest" value="0X0b90" />
+      <token name="Dither" value="0X0bd0" />
+      <token name="Blend" value="0X0be2" />
+      <token name="ScissorTest" value="0X0c11" />
+      <token name="Texture2D" value="0X0de1" />
+      <token name="PolygonOffsetFill" value="0X8037" />
+      <token name="SampleAlphaToCoverage" value="0X809e" />
+      <token name="SampleCoverage" value="0X80a0" />
     </enum>
-     
+
+    <enum name="ShaderBinaryFormat">
+      <!-- Note: ShaderBinaryFormat must be queried at runtime, using
+      GetInteger(GetPName.ShaderBinaryFormats) -->
+    </enum>
+    
   </add>
 
 </overrides>
