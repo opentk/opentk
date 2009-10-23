@@ -27,14 +27,14 @@
 
     <function name="BlendFunc" extension="Core" version="2.0">
       <param name="sfactor"><type>BlendingFactorSrc</type></param>
-      <param name="dfactor"><type>BlendingFactorDst</type></param>
+      <param name="dfactor"><type>BlendingFactorDest</type></param>
     </function>
      
     <function name="BlendFuncSeparate" extension="Core" version="2.0">
       <param name="srcRGB"><type>BlendingFactorSrc</type></param>
-      <param name="dstRGB"><type>BlendingFactorDst</type></param>
+      <param name="dstRGB"><type>BlendingFactorDest</type></param>
       <param name="srcAlpha"><type>BlendingFactorSrc</type></param>
-      <param name="dstAlpha"><type>BlendingFactorDst</type></param>
+      <param name="dstAlpha"><type>BlendingFactorDest</type></param>
     </function>
 
     <function name="BindBuffer" extension="Core" version="2.0">
@@ -292,6 +292,10 @@
       <param name="name"><flow>in</flow></param>
     </function>
     
+    <function name="GetUniformLocation" extension="Core">
+      <param name="name"><flow>in</flow></param>
+    </function>
+
   </replace>
 
   <add> 
@@ -320,7 +324,7 @@
       <token name="SrcAlphaSaturate" value="0X0308" remark="only valid for source RGB/Alpha" />
     </enum>
 
-    <enum name="BlendingFactorDst">
+    <enum name="BlendingFactorDest">
       <token name="Zero" value="0" />
       <token name="One" value="1" />
       <token name="SrcColor" value="0X0300" />
