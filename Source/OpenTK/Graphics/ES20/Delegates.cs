@@ -65,16 +65,16 @@ namespace OpenTK.Graphics.ES20
             internal delegate void BlendColor(Single red, Single green, Single blue, Single alpha);
             internal static BlendColor glBlendColor;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendEquation(OpenTK.Graphics.ES20.BlendMode mode);
+            internal delegate void BlendEquation(OpenTK.Graphics.ES20.BlendEquationMode mode);
             internal static BlendEquation glBlendEquation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendEquationSeparate(OpenTK.Graphics.ES20.BlendMode modeRGB, OpenTK.Graphics.ES20.BlendMode modeAlpha);
+            internal delegate void BlendEquationSeparate(OpenTK.Graphics.ES20.BlendEquationMode modeRGB, OpenTK.Graphics.ES20.BlendEquationMode modeAlpha);
             internal static BlendEquationSeparate glBlendEquationSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendFunc(OpenTK.Graphics.ES20.BlendFactor sfactor, OpenTK.Graphics.ES20.BlendFactor dfactor);
+            internal delegate void BlendFunc(OpenTK.Graphics.ES20.BlendingFactorSrc sfactor, OpenTK.Graphics.ES20.BlendingFactorDst dfactor);
             internal static BlendFunc glBlendFunc;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendFuncSeparate(OpenTK.Graphics.ES20.BlendFactor srcRGB, OpenTK.Graphics.ES20.BlendFactor dstRGB, OpenTK.Graphics.ES20.BlendFactor srcAlpha, OpenTK.Graphics.ES20.BlendFactor dstAlpha);
+            internal delegate void BlendFuncSeparate(OpenTK.Graphics.ES20.BlendingFactorSrc srcRGB, OpenTK.Graphics.ES20.BlendingFactorDst dstRGB, OpenTK.Graphics.ES20.BlendingFactorSrc srcAlpha, OpenTK.Graphics.ES20.BlendingFactorDst dstAlpha);
             internal static BlendFuncSeparate glBlendFuncSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BufferData(OpenTK.Graphics.ES20.BufferTarget target, IntPtr size, IntPtr data, OpenTK.Graphics.ES20.BufferUsage usage);
@@ -179,10 +179,10 @@ namespace OpenTK.Graphics.ES20
             internal delegate void DisableVertexAttribArray(UInt32 index);
             internal static DisableVertexAttribArray glDisableVertexAttribArray;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawArrays(OpenTK.Graphics.ES20.PrimitiveMode mode, Int32 first, Int32 count);
+            internal delegate void DrawArrays(OpenTK.Graphics.ES20.BeginMode mode, Int32 first, Int32 count);
             internal static DrawArrays glDrawArrays;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawElements(OpenTK.Graphics.ES20.PrimitiveMode mode, Int32 count, OpenTK.Graphics.ES20.DrawElementsType type, IntPtr indices);
+            internal delegate void DrawElements(OpenTK.Graphics.ES20.BeginMode mode, Int32 count, OpenTK.Graphics.ES20.DrawElementsType type, IntPtr indices);
             internal static DrawElements glDrawElements;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void EGLImageTargetRenderbufferStorageOES(OpenTK.Graphics.ES20.All target, IntPtr image);
@@ -254,7 +254,7 @@ namespace OpenTK.Graphics.ES20
             internal unsafe delegate void GetAttachedShaders(UInt32 program, Int32 maxcount, [OutAttribute] Int32* count, [OutAttribute] UInt32* shaders);
             internal unsafe static GetAttachedShaders glGetAttachedShaders;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate int GetAttribLocation(UInt32 program, [OutAttribute] System.Text.StringBuilder name);
+            internal delegate int GetAttribLocation(UInt32 program, String name);
             internal static GetAttribLocation glGetAttribLocation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetBooleanv(OpenTK.Graphics.ES20.GetPName pname, [OutAttribute] bool* @params);
@@ -353,7 +353,7 @@ namespace OpenTK.Graphics.ES20
             internal unsafe delegate void GetVertexAttribiv(UInt32 index, OpenTK.Graphics.ES20.VertexAttribParameter pname, [OutAttribute] Int32* @params);
             internal unsafe static GetVertexAttribiv glGetVertexAttribiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetVertexAttribPointerv(UInt32 index, OpenTK.Graphics.ES20.VertexAttribPointerType pname, [OutAttribute] IntPtr pointer);
+            internal delegate void GetVertexAttribPointerv(UInt32 index, OpenTK.Graphics.ES20.VertexAttribPointerParameter pname, [OutAttribute] IntPtr pointer);
             internal static GetVertexAttribPointerv glGetVertexAttribPointerv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Hint(OpenTK.Graphics.ES20.HintTarget target, OpenTK.Graphics.ES20.HintMode mode);
@@ -440,10 +440,10 @@ namespace OpenTK.Graphics.ES20
             internal delegate void StencilMaskSeparate(OpenTK.Graphics.ES20.CullFaceMode face, UInt32 mask);
             internal static StencilMaskSeparate glStencilMaskSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void StencilOp(OpenTK.Graphics.ES20.StencilOperation fail, OpenTK.Graphics.ES20.StencilOperation zfail, OpenTK.Graphics.ES20.StencilOperation zpass);
+            internal delegate void StencilOp(OpenTK.Graphics.ES20.StencilOp fail, OpenTK.Graphics.ES20.StencilOp zfail, OpenTK.Graphics.ES20.StencilOp zpass);
             internal static StencilOp glStencilOp;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void StencilOpSeparate(OpenTK.Graphics.ES20.CullFaceMode face, OpenTK.Graphics.ES20.StencilOperation fail, OpenTK.Graphics.ES20.StencilOperation zfail, OpenTK.Graphics.ES20.StencilOperation zpass);
+            internal delegate void StencilOpSeparate(OpenTK.Graphics.ES20.CullFaceMode face, OpenTK.Graphics.ES20.StencilOp fail, OpenTK.Graphics.ES20.StencilOp zfail, OpenTK.Graphics.ES20.StencilOp zpass);
             internal static StencilOpSeparate glStencilOpSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate bool TestFenceNV(UInt32 fence);
@@ -563,7 +563,7 @@ namespace OpenTK.Graphics.ES20
             internal unsafe delegate void VertexAttrib4fv(UInt32 indx, Single* values);
             internal unsafe static VertexAttrib4fv glVertexAttrib4fv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void VertexAttribPointer(UInt32 indx, Int32 size, OpenTK.Graphics.ES20.VertexAttribType type, bool normalized, Int32 stride, IntPtr ptr);
+            internal delegate void VertexAttribPointer(UInt32 indx, Int32 size, OpenTK.Graphics.ES20.VertexAttribPointerType type, bool normalized, Int32 stride, IntPtr ptr);
             internal static VertexAttribPointer glVertexAttribPointer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Viewport(Int32 x, Int32 y, Int32 width, Int32 height);
