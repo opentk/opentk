@@ -25,7 +25,7 @@ namespace Examples.Tutorial
     [Example("Texture mapping", ExampleCategory.OpenGL, "1.1", Documentation="Textures")]
     public class Textures : GameWindow
     {
-        Bitmap bitmap = new Bitmap("Data/logo.jpg");
+        Bitmap bitmap = new Bitmap("Data/Textures/logo.jpg");
         int texture;
 
         public Textures() : base(800, 600) { }

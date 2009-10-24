@@ -23,7 +23,7 @@ namespace Examples
         public static void PrintOpenALErrors( IntPtr device )
         {
             ALError AlErr = AL.GetError();
-            Console.WriteLine("OpenAL error: {0}", AlErr);
+            Trace.WriteLine("OpenAL error: {0}"+ AlErr);
         }
 
         public static void Main()
@@ -65,7 +65,7 @@ namespace Examples
 
             //int AttribCount;
             //Alc.GetInteger(context.Device, AlcGetInteger.AttributesSize, sizeof(int), out AttribCount);
-            //Console.WriteLine("AttributeSize: " + AttribCount);
+            //Trace.WriteLine("AttributeSize: " + AttribCount);
 
             //if (AttribCount > 0)
             //{
@@ -73,10 +73,10 @@ namespace Examples
             //    Alc.GetInteger(context.Device, AlcGetInteger.AllAttributes, AttribCount, out Attribs[0]);
             //    for (int i = 0; i < Attribs.Length; i++)
             //    {
-            //        Console.Write(Attribs[i]);
-            //        Console.Write(" ");
+            //        Trace.Write(Attribs[i]);
+            //        Trace.Write(" ");
             //    }
-            //    Console.WriteLine();
+            //    Trace.WriteLine();
             //}
             
             #endregion Get Attribs
@@ -89,36 +89,36 @@ namespace Examples
             MyDevice = Alc.OpenDevice( null );// open default device
             if ( MyDevice != Al.Null )
             {
-                Console.WriteLine( "Device allocation succeeded." );
+                Trace.WriteLine( "Device allocation succeeded." );
                 MyContext = Alc.CreateContext( MyDevice, Al.Null ); // create context
                 if ( MyContext != Al.Null )
                 {
-                    Console.WriteLine( "Context allocation succeeded." );
+                    Trace.WriteLine( "Context allocation succeeded." );
                     GetOpenALErrors( MyDevice );
 
                     Alc.SuspendContext( MyContext ); // disable context
                     Alc.ProcessContext( MyContext ); // enable context. The default state of a context created by alcCreateContext is that it is processing.
                     Al.Bool result = Alc.MakeContextCurrent( MyContext ); // set active context
-                    Console.WriteLine( "MakeContextCurrent succeeded? " + result );
+                    Trace.WriteLine( "MakeContextCurrent succeeded? " + result );
                     GetOpenALErrors( MyDevice );
 
-                    Console.WriteLine( "Default: " + Alc.GetString( MyDevice, Enums.AlcGetString.DefaultDeviceSpecifier ) );
-                    Console.WriteLine( "Device: " + Alc.GetString( MyDevice, Enums.AlcGetString.DeviceSpecifier ) );
-                    Console.WriteLine( "Extensions: " + Alc.GetString( MyDevice, Enums.AlcGetString.Extensions ) );
+                    Trace.WriteLine( "Default: " + Alc.GetString( MyDevice, Enums.AlcGetString.DefaultDeviceSpecifier ) );
+                    Trace.WriteLine( "Device: " + Alc.GetString( MyDevice, Enums.AlcGetString.DeviceSpecifier ) );
+                    Trace.WriteLine( "Extensions: " + Alc.GetString( MyDevice, Enums.AlcGetString.Extensions ) );
                     GetOpenALErrors( MyDevice );
 
                     #region Get Attribs
                     int AttribCount;
                     Alc.GetInteger( MyDevice, Enums.AlcGetInteger.AttributesSize, sizeof( int ), out AttribCount );
-                    Console.WriteLine( "AttributeSize: " + AttribCount );
+                    Trace.WriteLine( "AttributeSize: " + AttribCount );
 
                     if ( AttribCount > 0 )
                     {
                         int[] Attribs = new int[AttribCount];
                         Alc.GetInteger( MyDevice, Enums.AlcGetInteger.AttributesSize, AttribCount, out Attribs[0] );
                         for ( int i = 0; i < Attribs.Length; i++ )
-                            Console.Write( ", " + Attribs[i] );
-                        Console.WriteLine( );
+                            Trace.Write( ", " + Attribs[i] );
+                        Trace.WriteLine( );
                     }
                     #endregion Get Attribs
                     GetOpenALErrors( MyDevice );
@@ -127,30 +127,30 @@ namespace Examples
                     AlContext currcon = Alc.GetCurrentContext( );
 
                     if ( MyDevice == currdev )
-                        Console.WriteLine( "Devices match." );
+                        Trace.WriteLine( "Devices match." );
                     else
-                        Console.WriteLine( "Error: Devices do not match." );
+                        Trace.WriteLine( "Error: Devices do not match." );
 
                     if ( MyContext == currcon )
-                        Console.WriteLine( "Context match." );
+                        Trace.WriteLine( "Context match." );
                     else
-                        Console.WriteLine( "Error: Contexts do not match." );
+                        Trace.WriteLine( "Error: Contexts do not match." );
 
                     // exit
                     Alc.MakeContextCurrent( Al.Null ); // results in no context being current
                     Alc.DestroyContext( MyContext );
                     result = Alc.CloseDevice( MyDevice );
-                    Console.WriteLine( "Result: " + result );
-                    Console.ReadLine( );
+                    Trace.WriteLine( "Result: " + result );
+                    Trace.ReadLine( );
                 }
                 else
                 {
-                    Console.WriteLine( "Context creation failed." );
+                    Trace.WriteLine( "Context creation failed." );
                 }
             }
             else
             {
-                Console.WriteLine( "Failed to find suitable Device." );
+                Trace.WriteLine( "Failed to find suitable Device." );
             }
 #endif
             /*

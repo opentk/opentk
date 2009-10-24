@@ -1,0 +1,18 @@
+The files named "Swizzled *.dds" for the Parallax mapping demo originate from
+http://www.TyphoonLabs.com ShaderDesigner application. Used with permission.
+
+The Textures have been altered from the layout:
+
+Diffuse R, Diffuse G, Diffuse B, Gloss
+Normal X, Normal Y, Normal Z, Height
+
+to
+
+Diffuse R, Diffuse G, Diffuse B, Height
+Gloss, Normal Y, Gloss, Normal X
+
+Additionally, the Textures in this folder have been compressed with a lossy
+algorithm (S3TC) and do not reflect the quality of the source Textures.
+
+Please refer to the above website for unaltered versions of the textures,
+or licensing information.
