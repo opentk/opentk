@@ -43,7 +43,7 @@ namespace Examples
             uint source;
             int state;
 
-            Console.WriteLine("PlayStatic Test Application\n");
+            Trace.WriteLine("PlayStatic Test Application\n");
 
             // Generate an AL Buffer
             AL.GenBuffers(out buffer);
@@ -59,17 +59,17 @@ namespace Examples
 
             // Play Source
             AL.SourcePlay(source);
-            Console.WriteLine("Playing Source ");
+            Trace.WriteLine("Playing Source ");
 
             do
             {
                 Thread.Sleep(100);
-                Console.Write(".");
+                Trace.Write(".");
                 // Get Source State
                 AL.GetSource(source, ALGetSourcei.SourceState, out state);
             } while ((ALSourceState)state == ALSourceState.Playing);
 
-            Console.WriteLine();
+            Trace.WriteLine();
 
             // Clean up by deleting Source(s) and Buffer(s)
             AL.SourceStop(source);

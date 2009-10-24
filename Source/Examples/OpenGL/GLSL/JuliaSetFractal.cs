@@ -157,7 +157,7 @@ namespace Examples.Tutorial
             GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureWrapS, (int)(TextureWrapMode)All.ClampToEdge);
 
-            using (Bitmap bitmap = new Bitmap("Data/JuliaColorTable.bmp"))
+            using (Bitmap bitmap = new Bitmap("Data/Textures/JuliaColorTable.bmp"))
             {
                 BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly,
                                                   System.Drawing.Imaging.PixelFormat.Format24bppRgb);
