@@ -28,6 +28,7 @@
 namespace OpenTK.Compute.CL10
 {
     using System;
+    using System.Text;
     using System.Runtime.InteropServices;
     #pragma warning disable 0649
     #pragma warning disable 3019
@@ -89,10 +90,10 @@ namespace OpenTK.Compute.CL10
             internal unsafe delegate int EnqueueCopyImageToBuffer(IntPtr command_queue, IntPtr src_image, IntPtr dst_buffer, IntPtr** src_origin, IntPtr** region, IntPtr dst_offset, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event);
             internal unsafe static EnqueueCopyImageToBuffer clEnqueueCopyImageToBuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr EnqueueMapBuffer(IntPtr command_queue, IntPtr buffer, bool blocking_map, MapFlags map_flags, IntPtr offset, IntPtr cb, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, [OutAttribute] int* errcode_ret);
+            internal unsafe delegate System.IntPtr EnqueueMapBuffer(IntPtr command_queue, IntPtr buffer, bool blocking_map, MapFlags map_flags, IntPtr offset, IntPtr cb, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, [OutAttribute] int* errcode_ret);
             internal unsafe static EnqueueMapBuffer clEnqueueMapBuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr EnqueueMapImage(IntPtr command_queue, IntPtr image, bool blocking_map, MapFlags map_flags, IntPtr** origin, IntPtr** region, IntPtr* image_row_pitch, IntPtr* image_slice_pitch, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, [OutAttribute] int* errcode_ret);
+            internal unsafe delegate System.IntPtr EnqueueMapImage(IntPtr command_queue, IntPtr image, bool blocking_map, MapFlags map_flags, IntPtr** origin, IntPtr** region, IntPtr* image_row_pitch, IntPtr* image_slice_pitch, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event, [OutAttribute] int* errcode_ret);
             internal unsafe static EnqueueMapImage clEnqueueMapImage;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate int EnqueueMarker(IntPtr command_queue, IntPtr* @event);

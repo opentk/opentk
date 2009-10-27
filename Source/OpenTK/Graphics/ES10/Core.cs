@@ -28,6 +28,7 @@
 namespace OpenTK.Graphics.ES10
 {
     using System;
+    using System.Text;
     using System.Runtime.InteropServices;
     #pragma warning disable 3019
     #pragma warning disable 1591
@@ -172,7 +173,7 @@ namespace OpenTK.Graphics.ES10
             internal extern static unsafe void GetIntegerv(OpenTK.Graphics.ES10.All pname, Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetString", ExactSpelling = true)]
-            internal extern static unsafe IntPtr GetString(OpenTK.Graphics.ES10.All name);
+            internal extern static unsafe System.IntPtr GetString(OpenTK.Graphics.ES10.All name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glHint", ExactSpelling = true)]
             internal extern static void Hint(OpenTK.Graphics.ES10.All target, OpenTK.Graphics.ES10.All mode);
