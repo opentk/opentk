@@ -28,6 +28,7 @@
 namespace OpenTK.Graphics.ES20
 {
     using System;
+    using System.Text;
     using System.Runtime.InteropServices;
     #pragma warning disable 0649
     #pragma warning disable 3019
@@ -245,10 +246,10 @@ namespace OpenTK.Graphics.ES20
             internal unsafe delegate void GenTextures(Int32 n, [OutAttribute] UInt32* textures);
             internal unsafe static GenTextures glGenTextures;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetActiveAttrib(UInt32 program, UInt32 index, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.ES20.ActiveAttribType* type, [OutAttribute] System.Text.StringBuilder name);
+            internal unsafe delegate void GetActiveAttrib(UInt32 program, UInt32 index, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.ES20.ActiveAttribType* type, [OutAttribute] StringBuilder name);
             internal unsafe static GetActiveAttrib glGetActiveAttrib;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetActiveUniform(UInt32 program, UInt32 index, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.ES20.ActiveUniformType* type, [OutAttribute] System.Text.StringBuilder name);
+            internal unsafe delegate void GetActiveUniform(UInt32 program, UInt32 index, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.ES20.ActiveUniformType* type, [OutAttribute] StringBuilder name);
             internal unsafe static GetActiveUniform glGetActiveUniform;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetAttachedShaders(UInt32 program, Int32 maxcount, [OutAttribute] Int32* count, [OutAttribute] UInt32* shaders);
@@ -269,7 +270,7 @@ namespace OpenTK.Graphics.ES20
             internal unsafe delegate void GetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls);
             internal unsafe static GetDriverControlsQCOM glGetDriverControlsQCOM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetDriverControlStringQCOM(UInt32 driverControl, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] System.Text.StringBuilder driverControlString);
+            internal unsafe delegate void GetDriverControlStringQCOM(UInt32 driverControl, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder driverControlString);
             internal unsafe static GetDriverControlStringQCOM glGetDriverControlStringQCOM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate OpenTK.Graphics.ES20.ErrorCode GetError();
@@ -296,19 +297,19 @@ namespace OpenTK.Graphics.ES20
             internal unsafe delegate void GetPerfMonitorCountersAMD(UInt32 group, [OutAttribute] Int32* numCounters, [OutAttribute] Int32* maxActiveCounters, Int32 counterSize, [OutAttribute] UInt32* counters);
             internal unsafe static GetPerfMonitorCountersAMD glGetPerfMonitorCountersAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetPerfMonitorCounterStringAMD(UInt32 group, UInt32 counter, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] System.Text.StringBuilder counterString);
+            internal unsafe delegate void GetPerfMonitorCounterStringAMD(UInt32 group, UInt32 counter, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder counterString);
             internal unsafe static GetPerfMonitorCounterStringAMD glGetPerfMonitorCounterStringAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetPerfMonitorGroupsAMD([OutAttribute] Int32* numGroups, Int32 groupsSize, [OutAttribute] UInt32* groups);
             internal unsafe static GetPerfMonitorGroupsAMD glGetPerfMonitorGroupsAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetPerfMonitorGroupStringAMD(UInt32 group, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] System.Text.StringBuilder groupString);
+            internal unsafe delegate void GetPerfMonitorGroupStringAMD(UInt32 group, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder groupString);
             internal unsafe static GetPerfMonitorGroupStringAMD glGetPerfMonitorGroupStringAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetProgramBinaryOES(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.ES20.All* binaryFormat, [OutAttribute] IntPtr binary);
             internal unsafe static GetProgramBinaryOES glGetProgramBinaryOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetProgramInfoLog(UInt32 program, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] System.Text.StringBuilder infolog);
+            internal unsafe delegate void GetProgramInfoLog(UInt32 program, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infolog);
             internal unsafe static GetProgramInfoLog glGetProgramInfoLog;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetProgramiv(UInt32 program, OpenTK.Graphics.ES20.ProgramParameter pname, [OutAttribute] Int32* @params);
@@ -317,7 +318,7 @@ namespace OpenTK.Graphics.ES20
             internal unsafe delegate void GetRenderbufferParameteriv(OpenTK.Graphics.ES20.RenderbufferTarget target, OpenTK.Graphics.ES20.RenderbufferParameterName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetRenderbufferParameteriv glGetRenderbufferParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetShaderInfoLog(UInt32 shader, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] System.Text.StringBuilder infolog);
+            internal unsafe delegate void GetShaderInfoLog(UInt32 shader, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infolog);
             internal unsafe static GetShaderInfoLog glGetShaderInfoLog;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetShaderiv(UInt32 shader, OpenTK.Graphics.ES20.ShaderParameter pname, [OutAttribute] Int32* @params);
@@ -326,10 +327,10 @@ namespace OpenTK.Graphics.ES20
             internal unsafe delegate void GetShaderPrecisionFormat(OpenTK.Graphics.ES20.ShaderType shadertype, OpenTK.Graphics.ES20.ShaderPrecision precisiontype, [OutAttribute] Int32* range, [OutAttribute] Int32* precision);
             internal unsafe static GetShaderPrecisionFormat glGetShaderPrecisionFormat;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetShaderSource(UInt32 shader, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] System.Text.StringBuilder source);
+            internal unsafe delegate void GetShaderSource(UInt32 shader, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder source);
             internal unsafe static GetShaderSource glGetShaderSource;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr GetString(OpenTK.Graphics.ES20.StringName name);
+            internal unsafe delegate System.IntPtr GetString(OpenTK.Graphics.ES20.StringName name);
             internal unsafe static GetString glGetString;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetTexParameterfv(OpenTK.Graphics.ES20.TextureTarget target, OpenTK.Graphics.ES20.GetTextureParameter pname, [OutAttribute] Single* @params);
@@ -389,7 +390,7 @@ namespace OpenTK.Graphics.ES20
             internal delegate void LinkProgram(UInt32 program);
             internal static LinkProgram glLinkProgram;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr MapBufferOES(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All access);
+            internal unsafe delegate System.IntPtr MapBufferOES(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All access);
             internal unsafe static MapBufferOES glMapBufferOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void PixelStorei(OpenTK.Graphics.ES20.PixelStoreParameter pname, Int32 param);
