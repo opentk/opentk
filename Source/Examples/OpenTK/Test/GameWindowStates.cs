@@ -23,6 +23,7 @@ namespace Examples.Tests
         readonly Font TextFont = new Font(FontFamily.GenericSansSerif, 16);
         readonly Bitmap TextBitmap = new Bitmap(1024, 256);
         int texture;
+        bool mouse_in_window = false;
         
         public GameWindowStates()
             : base(800, 600)
@@ -33,6 +34,8 @@ namespace Examples.Tests
             WindowBorderChanged += delegate(object sender, EventArgs e) { UpdateText(); };
             WindowStateChanged += delegate(object sender, EventArgs e) { UpdateText(); };
             FocusedChanged += delegate(object sender, EventArgs e) { UpdateText(); };
+            MouseEnter += delegate(object sender, EventArgs e) { mouse_in_window = true; UpdateText(); };
+            MouseLeave += delegate(object sender, EventArgs e) { mouse_in_window = false; UpdateText(); };
         }
 
         void KeyUpHandler(object sender, KeyboardKeyEventArgs e)
@@ -62,6 +65,7 @@ namespace Examples.Tests
                 gfx.DrawString(String.Format("[1 - 4]: change WindowState (current: {0}).", this.WindowState), TextFont, Brushes.White, new PointF(0, 0));
                 gfx.DrawString(String.Format("[5 - 7]: change WindowBorder (current: {0}).", this.WindowBorder), TextFont, Brushes.White, new PointF(0, TextFont.Height));
                 gfx.DrawString(String.Format("Focused: {0}.", this.Focused), TextFont, Brushes.White, new PointF(0, 2 * TextFont.Height));
+                gfx.DrawString(String.Format("Mouse {0} window.", mouse_in_window ? "inside" : "outside of"), TextFont, Brushes.White, new PointF(0, 3 * TextFont.Height));
             }
 
             System.Drawing.Imaging.BitmapData data = TextBitmap.LockBits(new Rectangle(0, 0, TextBitmap.Width, TextBitmap.Height),
