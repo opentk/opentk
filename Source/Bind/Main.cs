@@ -48,7 +48,6 @@ namespace Bind
             Console.WriteLine("OpenGL binding generator {0} for OpenTK.",
                 Assembly.GetExecutingAssembly().GetName().Version.ToString());
             Console.WriteLine("For comments, bugs and suggestions visit http://opentk.sourceforge.net");
-            //Console.WriteLine(" - the OpenTK team ;-)");
             Console.WriteLine();
 
             string dirName =  null;
@@ -104,13 +103,14 @@ namespace Bind
                             case "legacy":
                             case "o":
                             case "option":
-                                Settings.Compatibility |= b[1].ToLower().Contains("tao") ? Settings.Legacy.Tao : Settings.Legacy.None;
-                                Settings.Compatibility |= b[1].ToLower().Contains("enums") ? Settings.Legacy.NoAdvancedEnumProcessing : Settings.Legacy.None;
-                                Settings.Compatibility |= b[1].ToLower().Contains("safe") ? Settings.Legacy.NoPublicUnsafeFunctions : Settings.Legacy.None;
+                                Settings.Compatibility |= b[1].ToLower() == "tao" ? Settings.Legacy.Tao : Settings.Legacy.None;
+                                Settings.Compatibility |= b[1].ToLower() == "simple_enums" ? Settings.Legacy.NoAdvancedEnumProcessing : Settings.Legacy.None;
+                                Settings.Compatibility |= b[1].ToLower() == "safe" ? Settings.Legacy.NoPublicUnsafeFunctions : Settings.Legacy.None;
                                 //Settings.Compatibility |= b[1].ToLower().Contains("novoid") ? Settings.Legacy.TurnVoidPointersToIntPtr : Settings.Legacy.None;
-                                Settings.Compatibility |= b[1].ToLower().Contains("permutations") ? Settings.Legacy.GenerateAllPermutations : Settings.Legacy.None;
-                                Settings.Compatibility |= b[1].ToLower().Contains("enums_in_class") ? Settings.Legacy.NestedEnums : Settings.Legacy.None;
-                                Settings.Compatibility |= b[1].ToLower().Contains("nodocs") ? Settings.Legacy.NoDocumentation : Settings.Legacy.None;
+                                Settings.Compatibility |= b[1].ToLower() == "permutations" ? Settings.Legacy.GenerateAllPermutations : Settings.Legacy.None;
+                                Settings.Compatibility |= b[1].ToLower() == "enums_in_class" ? Settings.Legacy.NestedEnums : Settings.Legacy.None;
+                                Settings.Compatibility |= b[1].ToLower() == "nodocs" ? Settings.Legacy.NoDocumentation : Settings.Legacy.None;
+                                Settings.Compatibility |= b[1].ToLower() == "keep_untyped_enums" ? Settings.Legacy.KeepUntypedEnums : Settings.Legacy.None;
                                 break;
                             default:
                                 throw new ArgumentException(
