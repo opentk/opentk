@@ -448,17 +448,19 @@ namespace OpenTK
                     OnUpdateFrameInternal(update_args);
                     update_time = update_watch.Elapsed.TotalSeconds;
                 }
-                if (TargetUpdateFrequency == 0.0)
-                    break;
 
                 time = update_watch.Elapsed.TotalSeconds;
-                next_update -= time;
 
                 // Stopwatches are not accurate over long time periods.
                 // We accumlate the total elapsed time into the time variable
                 // while reseting the Stopwatch frequently.
                 update_watch.Reset();
                 update_watch.Start();
+
+                if (TargetUpdateFrequency == 0.0)
+                    break;
+
+                next_update -= time;
             }
 
             // Calculate statistics 
