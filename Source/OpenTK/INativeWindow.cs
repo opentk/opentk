@@ -223,8 +223,17 @@ namespace OpenTK
         /// Occurs whenever a character is typed.
         /// </summary>
         event EventHandler<KeyPressEventArgs> KeyPress;
-        
-        //event EventHandler<EventArgs> MouseEnter;
+
+        /// <summary>
+        /// Occurs whenever the mouse cursor leaves the window <see cref="Bounds"/>.
+        /// </summary>
+        event EventHandler<EventArgs> MouseLeave;
+
+        /// <summary>
+        /// Occurs whenever the mouse cursor enters the window <see cref="Bounds"/>.
+        /// </summary>
+        event EventHandler<EventArgs> MouseEnter;
+
         //event EventHandler<MouseEventArgs> MouseMove;
         //event EventHandler<MouseEventArgs> MouseWheel; 
         //event EventHandler<MouseEventArgs> MouseDown;

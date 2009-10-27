@@ -131,6 +131,8 @@ namespace OpenTK.Platform.Windows
 
             keyboards.Add(keyboard);
             mice.Add(mouse);
+
+            EnableMouseLeaveNotifications();
         }
 
         #endregion
@@ -141,7 +143,7 @@ namespace OpenTK.Platform.Windows
 
         IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            bool mouse_about_to_enter = false;
+            bool mouse_left = false;
 
             switch (message)
             {
@@ -289,27 +291,26 @@ namespace OpenTK.Platform.Windows
                         KeyPress(this, key_press);
                     break;
 
-                //case WindowMessage.MOUSELEAVE:
-                //    Cursor.Current = Cursors.Default;
-                //    break;
-
-                //case WindowMessage.MOUSE_ENTER:
-                //    Cursor.Current = Cursors.Default;
-                //    break;
-
-                // Mouse events:
-                case WindowMessage.NCMOUSEMOVE:
-                    mouse_about_to_enter = true;   // Used to simulate a mouse enter event.
-                    break;
-
                 case WindowMessage.MOUSEMOVE:
-                    mouse.Position = new System.Drawing.Point(
+                    System.Drawing.Point point = new System.Drawing.Point(
                                                         (int)(lParam.ToInt32() & 0x0000FFFF),
                                                         (int)(lParam.ToInt32() & 0xFFFF0000) >> 16);
-                    if (mouse_about_to_enter)
+                    mouse.Position = point;
                     {
-                        //Cursor.Current = Cursors.Default;
-                        mouse_about_to_enter = false;
+                        Rectangle rect;
+                        Functions.GetClientRect(window.WindowHandle, out rect);
+                        if (!rect.ToRectangle().Contains(point))
+                        {
+                            Functions.ReleaseCapture();
+                            if (MouseLeave != null)
+                                MouseLeave(this, EventArgs.Empty);
+                        }
+                        else if (Functions.GetCapture() != window.WindowHandle)
+                        {
+                            Functions.SetCapture(window.WindowHandle);
+                            if (MouseEnter != null)
+                                MouseEnter(this, EventArgs.Empty);
+                        }
                     }
                     break;
 
@@ -618,6 +619,18 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion
+
+        void EnableMouseLeaveNotifications()
+        {
+            TrackMouseEventStructure tme = new TrackMouseEventStructure();
+            tme.Size = TrackMouseEventStructure.SizeInBytes;
+            tme.Flags |= TrackMouseEventFlags.LEAVE;
+            tme.TrackWindowHandle = child_window.WindowHandle;
+            tme.HoverTime = -1; // HOVER_DEFAULT
+            if (!Functions.TrackMouseEvent(ref tme))
+                Debug.Print("[Error] Failed to enable mouse event tracking. Error: {0}",
+                    Marshal.GetLastWin32Error());
+        }
 
         #endregion
 
@@ -1052,6 +1065,10 @@ namespace OpenTK.Platform.Windows
         public event EventHandler<EventArgs> WindowStateChanged;
 
         public event EventHandler<KeyPressEventArgs> KeyPress;
+
+        public event EventHandler<EventArgs> MouseEnter;
+
+        public event EventHandler<EventArgs> MouseLeave;
         
         #endregion
 
