@@ -18,6 +18,8 @@ namespace Bind.Structures
 
         private static bool typesLoaded;
 
+        string current_qualifier = "", previous_qualifier = "";
+
         #region internal static void Initialize(string glTypes, string csTypes)
         
         internal static void Initialize(string glTypes, string csTypes)
@@ -54,8 +56,9 @@ namespace Bind.Structures
         {
             if (t != null)
             {
-                CurrentType = t.CurrentType;
+                QualifiedType = t.QualifiedType; // Covers current type and qualifier
                 PreviousType = t.PreviousType;
+                PreviousQualifier = t.PreviousQualifier;
                 WrapperType = t.WrapperType;
                 Array = t.Array;
                 Pointer = t.Pointer;
@@ -65,6 +68,44 @@ namespace Bind.Structures
         }
         
         #endregion
+
+        public string CurrentQualifier
+        {
+            get { return current_qualifier; }
+            set { PreviousQualifier = CurrentQualifier; current_qualifier = value; }
+        }
+
+        public string PreviousQualifier
+        {
+            get { return previous_qualifier; }
+            private set { previous_qualifier = value; }
+        }
+
+        public string QualifiedType {
+            get
+            {
+                if (!String.IsNullOrEmpty(CurrentQualifier))
+                    return String.Format("{0}.{1}", CurrentQualifier, CurrentType);
+                else
+                    return CurrentType;
+            }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                    throw new ArgumentException();
+
+                int qualifier_end = value.LastIndexOf('.');
+                if (qualifier_end > -1)
+                {
+                    CurrentQualifier = value.Substring(0, qualifier_end);
+                    CurrentType = value.Substring(qualifier_end + 1);
+                }
+                else
+                {
+                    CurrentType = value;
+                }
+            }
+        }
 
         #region public string CurrentType
 
@@ -84,6 +125,9 @@ namespace Bind.Structures
             }
             set
             {
+                if (String.IsNullOrEmpty(value))
+                    throw new ArgumentException();
+
                 if (!String.IsNullOrEmpty(type))
                     PreviousType = type;
                 if (!String.IsNullOrEmpty(value))
@@ -106,9 +150,8 @@ namespace Bind.Structures
         public string PreviousType
         {
             get { return _previous_type; }
-            set { _previous_type = value; }
+            private set { _previous_type = value; }
         }
-
 
         #endregion
 
@@ -160,6 +203,16 @@ namespace Bind.Structures
         }
 
         #endregion
+
+        // Returns true if parameter is an enum.
+        public bool IsEnum
+        {
+            get
+            {
+                return Enum.GLEnums.ContainsKey(CurrentType) ||
+                    Enum.AuxEnums.ContainsKey(CurrentType);
+            }
+        }
 
         #region IndirectionLevel
 
@@ -291,7 +344,7 @@ namespace Bind.Structures
         
         public override string ToString()
         {
-            return CurrentType;
+            return QualifiedType;
         }
         
         #endregion
@@ -316,13 +369,14 @@ namespace Bind.Structures
             if ((normal || aux) && @enum.Name != "GLenum" && @enum.Name != "Boolean")
             {
                 if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
-                    CurrentType = "int";
+                    QualifiedType = "int";
                 else
                 {
+#warning "Unecessary code"
                     if (normal)
-                        CurrentType = CurrentType.Insert(0, String.Format("{0}.", Settings.EnumsOutput));
+                        QualifiedType = CurrentType.Insert(0, String.Format("{0}.", Settings.EnumsOutput));
                     else if (aux)
-                        CurrentType = CurrentType.Insert(0, String.Format("{0}.", Settings.EnumsAuxOutput));
+                        QualifiedType = CurrentType.Insert(0, String.Format("{0}.", Settings.EnumsAuxOutput));
                 }
             }
             else if (GLTypes.TryGetValue(CurrentType, out s))
@@ -333,23 +387,30 @@ namespace Bind.Structures
                 {
                     if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
                     {
-                        CurrentType = "int";
+                        QualifiedType = "int";
                     }
                     else
                     {
                         // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
                         if (Enum.GLEnums.ContainsKey(category))
                         {
-                            CurrentType = String.Format("{0}.{1}", Settings.EnumsOutput, Enum.TranslateName(category));
+                            QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, Enum.TranslateName(category));
                         }
                         else
                         {
-                            CurrentType = String.Format("{0}.{1}", Settings.EnumsOutput, Settings.CompleteEnumName);
+                            QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, Settings.CompleteEnumName);
                         }
                     }
                 }
                 else
                 {
+                    // A few translations for consistency
+                    switch (CurrentType.ToLower())
+                    {
+                        case "string": QualifiedType = "String"; break;
+                    }
+
+#warning "Stale code"
                     // This is not enum, default translation:
                     if (CurrentType == "PIXELFORMATDESCRIPTOR" || CurrentType == "LAYERPLANEDESCRIPTOR" ||
                         CurrentType == "GLYPHMETRICSFLOAT")
@@ -370,10 +431,9 @@ namespace Bind.Structures
                     {
                         //p.Pointer = false;
                         //p.Reference = true;
-
                     }
                     else
-                        CurrentType = s;
+                        QualifiedType = s;
                 }
             }
 
@@ -386,7 +446,15 @@ namespace Bind.Structures
             // of type ErrorCodes should also be overriden to ErrorCode.
             XPathNavigator enum_override = overrides.SelectSingleNode(String.Format("/overrides/replace/enum[@name='{0}']/name", CurrentType));
             if (enum_override != null)
-                CurrentType = enum_override.Value;
+            {
+                // For consistency - many overrides use string instead of String.
+                if (enum_override.Value == "string")
+                    QualifiedType = "String";
+                else if (enum_override.Value == "StringBuilder")
+                    QualifiedType = "StringBuilder";
+                else
+                    CurrentType = enum_override.Value;
+            }
 
             if (CurrentType == "IntPtr" && String.IsNullOrEmpty(PreviousType))
                 Pointer = 0;
