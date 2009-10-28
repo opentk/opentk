@@ -150,7 +150,7 @@
         <Match path="." pattern="*.cs" recurse="true"/>
         <Match path="." pattern="*.rtf" recurse="true" buildAction="EmbeddedResource" />
         <Match path="." pattern="*.resx" recurse="true" buildAction="EmbeddedResource"/>
-        <Match path="../Examples/Data" pattern="^.*\.(bmp|png|jpg|txt|glsl|wav|ogg)$" useRegex="true" recurse="true" buildAction="None" copyToOutput="Always"/>
+        <Match path="../Examples/Data" pattern="^.*\.(bmp|png|jpg|txt|glsl|wav|ogg|dds)$" useRegex="true" recurse="true" buildAction="None" copyToOutput="Always"/>
         <Match path="../OpenTK" pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
         <Match path="../OpenTK" pattern="OpenTK.Compatibility.dll.config" buildAction="None" copyToOutput="Always"/>
       </Files>
