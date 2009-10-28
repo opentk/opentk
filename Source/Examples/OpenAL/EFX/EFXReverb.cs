@@ -26,6 +26,7 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.IO;
 using OpenTK.Audio;
@@ -42,7 +43,7 @@ namespace Examples
         {
             using (AudioContext context = new AudioContext())
             {
-                Console.WriteLine("Testing WaveReader({0}).ReadToEnd()", filename);
+                Trace.WriteLine("Testing WaveReader({0}).ReadToEnd()", filename);
 
                 EffectsExtension efx = new EffectsExtension();
 
@@ -73,18 +74,18 @@ namespace Examples
                 AL.Source(source, ALSourcei.Buffer, buffer);
                 AL.SourcePlay(source);
 
-                Console.Write("Playing");
+                Trace.Write("Playing");
 
                 // Query the source to find out when it stops playing.
                 do
                 {
                     Thread.Sleep(250);
-                    Console.Write(".");
+                    Trace.Write(".");
                     AL.GetSource(source, ALGetSourcei.SourceState, out state);
                 }
                 while ((ALSourceState)state == ALSourceState.Playing);
 
-                Console.WriteLine();
+                Trace.WriteLine("");
 
                 AL.SourceStop(source);
                 AL.DeleteSource(source);

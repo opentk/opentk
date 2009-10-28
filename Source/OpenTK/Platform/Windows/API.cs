@@ -928,6 +928,18 @@ namespace OpenTK.Platform.Windows
 
         #region Input functions
 
+        [DllImport("user32.dll", SetLastError=true)]
+        public static extern BOOL TrackMouseEvent(ref TrackMouseEventStructure lpEventTrack);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
+        public static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern IntPtr SetCapture(IntPtr hwnd);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern IntPtr GetCapture();
+
         #region Async input
 
         #region GetCursorPos
@@ -2755,6 +2767,20 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
+    #region TrackMouseEventStructure
+
+    struct TrackMouseEventStructure
+    {
+        public DWORD Size;
+        public TrackMouseEventFlags Flags;
+        public HWND TrackWindowHandle;
+        public DWORD HoverTime;
+
+        public static readonly int SizeInBytes = Marshal.SizeOf(typeof(TrackMouseEventStructure));
+    }
+
+    #endregion
+
     #endregion
 
     #region --- Enums ---
@@ -4059,6 +4085,20 @@ namespace OpenTK.Platform.Windows
     enum CursorName : int
     {
         Arrow = 32512
+    }
+
+    #endregion
+
+    #region TrackMouseEventFlags
+
+    [Flags]
+    enum TrackMouseEventFlags : uint
+    {
+        HOVER = 0x00000001,
+        LEAVE = 0x00000002,
+        NONCLIENT = 0x00000010,
+        QUERY = 0x40000000,
+        CANCEL = 0x80000000,
     }
 
     #endregion

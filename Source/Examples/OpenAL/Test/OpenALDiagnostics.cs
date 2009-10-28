@@ -99,8 +99,8 @@ namespace Examples
                 rec = null;
             }
 
-            Trace.WriteLine("All done. Press Enter to exit.");
-            Console.ReadLine();
+           // Trace.WriteLine("All done. Press Enter to exit.");
+           // Console.ReadLine();
         }
     }
 
