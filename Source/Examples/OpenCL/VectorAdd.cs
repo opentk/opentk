@@ -17,7 +17,7 @@ namespace Examples
     {
         public static void Main()
         {
-            const int cnBlockSize = 512;
+            const int cnBlockSize = 4;
             const int cnBlocks    = 3;
             IntPtr cnDimension = new IntPtr(cnBlocks * cnBlockSize);
             string sProgramSource = @"
@@ -66,8 +66,12 @@ vectorAdd(__global const float * a,
             float[] B = new float[cnDimension.ToInt32()];
             float[] C = new float[cnDimension.ToInt32()];
             // initialize host memory
-           // randomInit(pA, cnDimension);
-            //randomInit(pB, cnDimension);
+            Random rand = new Random();
+            for (int i = 0; i < A.Length; i++)
+            {
+                A[i] = rand.Next() % 256;
+                B[i] = rand.Next() % 256;
+            }
             
             // allocate device memory
             unsafe
@@ -107,11 +111,19 @@ vectorAdd(__global const float * a,
                         new IntPtr(pB), 0, null, (IntPtr[])null);
 
                     // execute kernel
-                    CL.EnqueueNDRangeKernel(hCmdQueue, hKernel, 1, null, &cnDimension, null, 0, null, null);
+                    error = (ErrorCode)CL.EnqueueNDRangeKernel(hCmdQueue, hKernel, 1, null, &cnDimension, null, 0, null, null);
+                    if (error != ErrorCode.Success)
+                        throw new Exception(error.ToString());
+
                     // copy results from device back to host
-                    CL.EnqueueReadBuffer(hCmdQueue, hDeviceMemC, true, IntPtr.Zero,
+                    IntPtr event_handle = IntPtr.Zero;
+                    error = (ErrorCode)CL.EnqueueReadBuffer(hCmdQueue, hDeviceMemC, true, IntPtr.Zero,
                          new IntPtr(cnDimension.ToInt32() * sizeof(float)),
                          new IntPtr(pC), 0, null, (IntPtr[])null);
+                    if (error != ErrorCode.Success)
+                        throw new Exception(error.ToString());
+
+                    CL.Finish(hCmdQueue);
 
                     CL.ReleaseMemObject(hDeviceMemA);
                     CL.ReleaseMemObject(hDeviceMemB);
