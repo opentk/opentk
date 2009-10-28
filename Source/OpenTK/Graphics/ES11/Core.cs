@@ -28,6 +28,7 @@
 namespace OpenTK.Graphics.ES11
 {
     using System;
+    using System.Text;
     using System.Runtime.InteropServices;
     #pragma warning disable 3019
     #pragma warning disable 1591
@@ -394,7 +395,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void GetRenderbufferParameterivOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetString", ExactSpelling = true)]
-            internal extern static unsafe IntPtr GetString(OpenTK.Graphics.ES11.All name);
+            internal extern static unsafe System.IntPtr GetString(OpenTK.Graphics.ES11.All name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexEnvfv", ExactSpelling = true)]
             internal extern static unsafe void GetTexEnvfv(OpenTK.Graphics.ES11.All env, OpenTK.Graphics.ES11.All pname, Single* @params);
@@ -514,7 +515,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static void LogicOp(OpenTK.Graphics.ES11.All opcode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMapBufferOES", ExactSpelling = true)]
-            internal extern static unsafe IntPtr MapBufferOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All access);
+            internal extern static unsafe System.IntPtr MapBufferOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All access);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMaterialf", ExactSpelling = true)]
             internal extern static void Materialf(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, Single param);

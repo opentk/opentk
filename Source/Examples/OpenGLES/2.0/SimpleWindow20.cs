@@ -60,7 +60,7 @@ namespace Examples.Tutorial
 
             Color color = Color.MidnightBlue;
             GL.ClearColor(color.R, color.G, color.B, color.A);
-            GL.Enable((All)EnableCap.DepthTest);
+            GL.Enable(EnableCap.DepthTest);
         }
 
         #endregion
@@ -108,7 +108,7 @@ namespace Examples.Tutorial
         /// </summary>
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            GL.Clear((uint)(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit));
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             this.SwapBuffers();
         }
