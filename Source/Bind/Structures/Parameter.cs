@@ -244,7 +244,7 @@ namespace Bind.Structures
                     }
                     else
                     {
-                        sb.Append(CurrentType);
+                        sb.Append(base.ToString());
                         if (Array > 0)
                         {
                             sb.Append("[");
@@ -256,7 +256,7 @@ namespace Bind.Structures
                 }
                 else
                 {
-                    sb.Append(CurrentType);
+                    sb.Append(base.ToString());
                     for (int i = 0; i < Pointer; i++)
                         sb.Append("*");
                     if (Array > 0)
@@ -293,9 +293,9 @@ namespace Bind.Structures
                 if (CurrentType.ToLower().Contains("string"))
                 {
                     // string* -> [In] String[] or [Out] StringBuilder[]
-                    CurrentType =
+                    QualifiedType =
                         Flow == FlowDirection.Out ?
-                        "System.Text.StringBuilder[]" :
+                        "StringBuilder[]" :
                         "String[]";
 
                     Pointer = 0;
@@ -304,9 +304,9 @@ namespace Bind.Structures
                 else if (CurrentType.ToLower().Contains("char"))
                 {
                     // char* -> [In] String or [Out] StringBuilder
-                    CurrentType =
+                    QualifiedType =
                         Flow == FlowDirection.Out ?
-                        "System.Text.StringBuilder" :
+                        "StringBuilder" :
                         "String";
 
                     Pointer = 0;
@@ -383,6 +383,12 @@ namespace Bind.Structures
             {
                 Add(new Parameter(p));
             }
+        }
+
+        public ParameterCollection(IEnumerable<Parameter> parameters)
+        {
+            foreach (Parameter p in parameters)
+                Add(new Parameter(p));
         }
 
         #endregion
@@ -581,24 +587,24 @@ namespace Bind.Structures
                 foreach (Parameter p in this)
                 {
                     if (p.Unchecked)
-                        sb.Append("unchecked((" + p.CurrentType + ")");
+                        sb.Append("unchecked((" + p.QualifiedType + ")");
 
                     if (!p.Generic && p.CurrentType != "object")
                     {
                         if (p.CurrentType.ToLower().Contains("string"))
                         {
                             sb.Append(String.Format("({0}{1})",
-                                p.CurrentType, (p.Array > 0) ? "[]" : ""));
+                                p.QualifiedType, (p.Array > 0) ? "[]" : ""));
                         }
                         else if (p.IndirectionLevel != 0)
                         {
                             if (((Settings.Compatibility & Settings.Legacy.TurnVoidPointersToIntPtr) != Settings.Legacy.None) &&
                                 p.Pointer != 0 && p.CurrentType.Contains("void"))
-                                sb.Append("(IntPtr)");
+                                sb.Append("(System.IntPtr)");
                             else
                             {
                                 sb.Append("(");
-                                sb.Append(p.CurrentType);
+                                sb.Append(p.QualifiedType);
                                 for (int i = 0; i < p.IndirectionLevel; i++)
                                     sb.Append("*");
                                 sb.Append(")");
@@ -606,7 +612,7 @@ namespace Bind.Structures
                         }
                         else
                         {
-                            sb.Append(String.Format("({0})", p.CurrentType));
+                            sb.Append(String.Format("({0})", p.QualifiedType));
                         }
                     }
 

@@ -28,6 +28,7 @@
 namespace OpenTK.Graphics.ES11
 {
     using System;
+    using System.Text;
     using System.Runtime.InteropServices;
     #pragma warning disable 0649
     #pragma warning disable 3019
@@ -392,7 +393,7 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void GetRenderbufferParameterivOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, Int32* @params);
             internal unsafe static GetRenderbufferParameterivOES glGetRenderbufferParameterivOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr GetString(OpenTK.Graphics.ES11.All name);
+            internal unsafe delegate System.IntPtr GetString(OpenTK.Graphics.ES11.All name);
             internal unsafe static GetString glGetString;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetTexEnvfv(OpenTK.Graphics.ES11.All env, OpenTK.Graphics.ES11.All pname, Single* @params);
@@ -512,7 +513,7 @@ namespace OpenTK.Graphics.ES11
             internal delegate void LogicOp(OpenTK.Graphics.ES11.All opcode);
             internal static LogicOp glLogicOp;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr MapBufferOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All access);
+            internal unsafe delegate System.IntPtr MapBufferOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All access);
             internal unsafe static MapBufferOES glMapBufferOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Materialf(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, Single param);
