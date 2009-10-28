@@ -41,7 +41,7 @@ namespace Examples.Tutorial
         // Textures
         const TextureUnit TMU0_Unit = TextureUnit.Texture0;
         const int TMU0_UnitInteger = 0;
-        const string TMU0_Filename = "Data/Textures/Earth CubeMap.dds";
+        const string TMU0_Filename = "Data/Textures/earth-cubemap.dds";
         uint TMU0_Handle;
         TextureTarget TMU0_Target;
 
