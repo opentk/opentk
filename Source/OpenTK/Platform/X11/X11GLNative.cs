@@ -142,7 +142,8 @@ namespace OpenTK.Platform.X11
                 window.EventMask = EventMask.StructureNotifyMask | EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
                                    EventMask.KeyReleaseMask | EventMask.KeyPressMask |
                                    EventMask.PointerMotionMask | EventMask.FocusChangeMask |
-                                   EventMask.ButtonPressMask | EventMask.ButtonReleaseMask;
+                                   EventMask.ButtonPressMask | EventMask.ButtonReleaseMask |
+                                   EventMask.EnterWindowMask | EventMask.LeaveWindowMask;
                 attributes.event_mask = (IntPtr)window.EventMask;
 
                 uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
@@ -678,6 +679,16 @@ namespace OpenTK.Platform.X11
                                     FocusedChanged(this, EventArgs.Empty);
                         }
                         break;
+
+                    case XEventName.LeaveNotify:
+                        if (MouseLeave != null)
+                            MouseLeave(this, EventArgs.Empty);
+                        break;
+
+                    case XEventName.EnterNotify:
+                        if (MouseEnter != null)
+                            MouseEnter(this, EventArgs.Empty);
+                        break;
                        
                     default:
                         //Debug.WriteLine(String.Format("{0} event was not handled", e.type));
@@ -1092,6 +1103,10 @@ namespace OpenTK.Platform.X11
         public event EventHandler<EventArgs> WindowStateChanged;
 
         public event EventHandler<KeyPressEventArgs> KeyPress;
+
+        public event EventHandler<EventArgs> MouseEnter;
+
+        public event EventHandler<EventArgs> MouseLeave;
         
         #endregion
 

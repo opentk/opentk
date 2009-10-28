@@ -129,9 +129,9 @@ namespace OpenTK
             if (delegates == null)
                 throw new InvalidOperationException("The specified type does not have any loadable extensions.");
 
-            Debug.Write("Load extensions for " + this.GetType().FullName + "... ");
+            Debug.Write("Loading extensions for " + this.GetType().FullName + "... ");
 
-            System.Diagnostics.Stopwatch time = new System.Diagnostics.Stopwatch();
+            Stopwatch time = new Stopwatch();
             time.Reset();
             time.Start();
 
@@ -147,7 +147,7 @@ namespace OpenTK
             rebuildExtensionList = true;
 
             time.Stop();
-            Debug.Print("{0} extensions loaded in {1} ms.", supported, time.ElapsedMilliseconds);
+            Debug.Print("{0} extensions loaded in {1} ms.", supported, time.Elapsed.TotalMilliseconds);
             time.Reset();
         }
 

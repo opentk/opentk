@@ -7,6 +7,7 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -36,9 +37,9 @@ namespace Examples.OpenAL
                 int[] buffers = AL.GenBuffers(buffer_count);
                 int state;
 
-                Console.WriteLine("Testing WaveReader({0}).ReadSamples()", filename);
+                Trace.WriteLine("Testing WaveReader({0}).ReadSamples()", filename);
 
-                Console.Write("Playing");
+                Trace.Write("Playing");
 
                 //foreach (int buffer in buffers)
                 //    AL.BufferData(buffer, sound.ReadSamples(buffer_size));
@@ -49,7 +50,7 @@ namespace Examples.OpenAL
 
                 do
                 {
-                    //Console.Write(".");
+                    //Trace.Write(".");
 
                     do
                     {
@@ -58,13 +59,13 @@ namespace Examples.OpenAL
                     }
                     while (processed_count == 0);
 
-                    Console.WriteLine(processed_count);
+                    Trace.WriteLine(processed_count);
                     //while (processed_count > 0)
                     //{
                     //    int buffer = AL.SourceUnqueueBuffer(source);
                     //    if (buffer != 0 && !sound.EndOfFile)
                     //    {
-                    //        Console.WriteLine("    " + buffer.ToString());
+                    //        Trace.WriteLine("    " + buffer.ToString());
                     //        AL.BufferData(buffer, sound.ReadSamples(buffer_size));
                     //        AL.SourceQueueBuffer(source, buffer);
                     //    }
@@ -78,7 +79,7 @@ namespace Examples.OpenAL
                         if ((ALSourceState)state != ALSourceState.Playing)
                         {
                             AL.SourcePlay(source);
-                            Console.WriteLine("r");
+                            Trace.WriteLine("r");
                         }
                     }
                     else
@@ -91,7 +92,7 @@ namespace Examples.OpenAL
                 AL.DeleteBuffers(buffers);
             }
 
-            Console.WriteLine();
+            Trace.WriteLine("");
         }
     }
 }

@@ -30,13 +30,14 @@ namespace OpenTK
         #region --- Fields ---
 
         DisplayResolution current_resolution, original_resolution;
-        List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
+        readonly List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
+        readonly IList<DisplayResolution> available_resolutions_readonly;
         bool primary;
 
-        static List<DisplayDevice> available_displays = new List<DisplayDevice>();
-        static object display_lock = new object();
+        static readonly List<DisplayDevice> available_displays = new List<DisplayDevice>();
+        static readonly IList<DisplayDevice> available_displays_readonly;
+        static readonly object display_lock = new object();
         static DisplayDevice primary_display;
-        //static FadeEffect effect = new FadeEffect();
 
         static Platform.IDisplayDeviceDriver implementation;
 
@@ -47,6 +48,7 @@ namespace OpenTK
         static DisplayDevice()
         {
             implementation = Platform.Factory.Default.CreateDisplayDeviceDriver();
+            available_displays_readonly = available_displays.AsReadOnly();
         }
 
         internal DisplayDevice(DisplayResolution currentResolution, bool primary,
@@ -65,6 +67,8 @@ namespace OpenTK
                 if (primary)
                     primary_display = this;
             }
+
+            available_resolutions_readonly = available_resolutions.AsReadOnly();
         }
 
         #endregion
@@ -155,21 +159,14 @@ namespace OpenTK
 
         #endregion
 
-        #region public DisplayResolution[] AvailableResolutions
+        #region public IList<DisplayResolution> AvailableResolutions
 
         /// <summary>
-        /// Gets an array of OpenTK.DisplayResolution objects, which describe all available resolutions
-        /// for this device.
+        /// Gets the list of <see cref="DisplayResolution"/> objects available on this device.
         /// </summary>
-        public DisplayResolution[] AvailableResolutions
+        public IList<DisplayResolution> AvailableResolutions
         {
-            get
-            {
-                lock (display_lock)
-                {
-                    return available_resolutions.ToArray();
-                }
-            }
+            get { return available_resolutions_readonly; }
         }
 
         #endregion
@@ -242,20 +239,14 @@ namespace OpenTK
 
         #endregion
 
-        #region public static DisplayDevice[] AvailableDisplays
+        #region public static IList<DisplayDevice> AvailableDisplays
 
         /// <summary>
-        /// Gets an array of OpenTK.DisplayDevice objects, which describe all available display devices.
+        /// Gets the list of available <see cref="DisplayDevice"/> objects.
         /// </summary>
-        public static DisplayDevice[] AvailableDisplays
+        public static IList<DisplayDevice> AvailableDisplays
         {
-            get
-            {
-                lock (display_lock)
-                {
-                    return available_displays.ToArray();
-                }
-            }
+            get { return available_displays_readonly; }
         }
 
         #endregion

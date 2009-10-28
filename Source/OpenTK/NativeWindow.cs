@@ -566,6 +566,16 @@ namespace OpenTK
         public event EventHandler<EventArgs> Move;
 
         /// <summary>
+        /// Occurs whenever the mouse cursor enters the window <see cref="Bounds"/>.
+        /// </summary>
+        public event EventHandler<EventArgs> MouseEnter;
+        
+        /// <summary>
+        /// Occurs whenever the mouse cursor leaves the window <see cref="Bounds"/>.
+        /// </summary>
+        public event EventHandler<EventArgs> MouseLeave;
+
+        /// <summary>
         /// Occurs whenever the window is resized.
         /// </summary>
         public event EventHandler<EventArgs> Resize;
@@ -747,6 +757,32 @@ namespace OpenTK
 
         #endregion
 
+        #region OnMouseEnter
+
+        /// <summary>
+        /// Called whenever the mouse cursor reenters the window <see cref="Bounds"/>.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        protected virtual void OnMouseEnter(EventArgs e)
+        {
+            if (MouseEnter != null) MouseEnter(this, e);
+        }
+
+        #endregion
+
+        #region OnMouseLeave
+
+        /// <summary>
+        /// Called whenever the mouse cursor leaves the window <see cref="Bounds"/>.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        protected virtual void OnMouseLeave(EventArgs e)
+        {
+            if (MouseLeave != null) MouseLeave(this, e);
+        }
+
+        #endregion
+
         #region OnResize
 
         /// <summary>
@@ -875,6 +911,18 @@ namespace OpenTK
 
         #endregion
 
+        #region OnMouseEnterInternal
+
+        private void OnMouseEnterInternal(object sender, EventArgs e) { OnMouseEnter(e); }
+
+        #endregion
+
+        #region OnMouseLeaveInternal
+
+        private void OnMouseLeaveInternal(object sender, EventArgs e) { OnMouseLeave(e); }
+
+        #endregion
+
         #region OnMoveInternal
 
         private void OnMoveInternal(object sender, EventArgs e) { OnMove(e); }
@@ -933,6 +981,8 @@ namespace OpenTK
                     implementation.FocusedChanged += OnFocusedChangedInternal;
                     implementation.IconChanged += OnIconChangedInternal;
                     implementation.KeyPress += OnKeyPressInternal;
+                    implementation.MouseEnter += OnMouseEnterInternal;
+                    implementation.MouseLeave += OnMouseLeaveInternal;
                     implementation.Move += OnMoveInternal;
                     implementation.Resize += OnResizeInternal;
                     implementation.TitleChanged += OnTitleChangedInternal;
@@ -949,6 +999,8 @@ namespace OpenTK
                     implementation.FocusedChanged -= OnFocusedChangedInternal;
                     implementation.IconChanged -= OnIconChangedInternal;
                     implementation.KeyPress -= OnKeyPressInternal;
+                    implementation.MouseEnter -= OnMouseEnterInternal;
+                    implementation.MouseLeave -= OnMouseLeaveInternal;
                     implementation.Move -= OnMoveInternal;
                     implementation.Resize -= OnResizeInternal;
                     implementation.TitleChanged -= OnTitleChangedInternal;
