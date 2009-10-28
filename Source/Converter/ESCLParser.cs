@@ -255,7 +255,10 @@ namespace CHeaderToXML
                                     (tokens.Contains("unsigned") && !param_type.StartsWith("byte") ? "u" : "") +    // Make sure we don't ignore the unsigned part of unsigned parameters (e.g. unsigned int -> uint)
                                     param_type.Replace("*", "") + String.Join("", pointers, 0, indirection_level),  // Normalize pointer indirection level (place as many asterisks as in indirection_level variable)
                                 Count = has_array_size ? Int32.Parse(array_size.Match(param_name).Value.Trim('[', ']')) : 0,
-                                Flow = param_name.EndsWith("ret") ? "out" : "in"
+                                Flow =
+                                    param_name.EndsWith("ret") ||
+                                    ((funcname.StartsWith("Get") || funcname.StartsWith("Gen")) && indirection_level > 0) ?
+                                    "out" : "in"
                             }
                     };
 

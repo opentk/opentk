@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.XPath;
@@ -132,15 +133,12 @@ namespace Bind.Structures
         #region public bool NeedsWrapper
 
         /// <summary>
-        /// Indicates whether this function needs to be wrapped with a Marshaling function.
+        /// Gets a value that indicates whether this function needs to be wrapped with a Marshaling function.
         /// This flag is set if a function contains an Array parameter, or returns
         /// an Array or string.
         /// </summary>
         public bool NeedsWrapper
         {
-            //get { return _needs_wrapper; }
-            //set { _needs_wrapper = value; }
-
             get
             {
                 // TODO: Add special cases for (Get)ShaderSource.
@@ -235,7 +233,7 @@ namespace Bind.Structures
         public ParameterCollection Parameters
         {
             get { return _parameters; }
-            protected set { _parameters = value; }
+            set { _parameters = value; }
         }
 
         #endregion
@@ -415,21 +413,20 @@ namespace Bind.Structures
         void CreateWrappers()
         {
             List<Function> wrappers = new List<Function>();
-            if (!NeedsWrapper)
-            {
-                // No special wrapper needed - just call this delegate:
-                Function f = new Function(this);
-                f.CreateBody(false);
+            CreateNormalWrappers(wrappers);
 
-                wrappers.Add(f);
-            }
-            else
+            // Generate wrappers using the untyped enum parameters, if necessary.
+            if ((Settings.Compatibility & Settings.Legacy.KeepUntypedEnums) != 0)
             {
-                Function f = new Function(this);
-                f.WrapReturnType();
-                f.WrapParameters(wrappers);
+                CreateUntypedEnumWrappers(wrappers);
             }
+            
+            // Add CLS-compliant overloads for non-CLS compliant wrappers.
+            CreateCLSCompliantWrappers(wrappers);
+        }
 
+        private static void CreateCLSCompliantWrappers(List<Function> wrappers)
+        {
             // If the function is not CLS-compliant (e.g. it contains unsigned parameters)
             // we need to create a CLS-Compliant overload. However, we should only do this
             // iff the opengl function does not contain unsigned/signed overloads itself
@@ -445,18 +442,45 @@ namespace Bind.Structures
                     cls.Body.Clear();
                     cls.CreateBody(true);
 
-                    bool somethingChanged = false;
+                    bool modified = false;
                     for (int i = 0; i < f.Parameters.Count; i++)
                     {
                         cls.Parameters[i].CurrentType = cls.Parameters[i].GetCLSCompliantType();
                         if (cls.Parameters[i].CurrentType != f.Parameters[i].CurrentType)
-                            somethingChanged = true;
+                            modified = true;
                     }
 
-                    if (somethingChanged)
+                    if (modified)
                         Function.Wrappers.AddChecked(cls);
                 }
             }
+        }
+
+        private void CreateUntypedEnumWrappers(List<Function> wrappers)
+        {
+            Function f = new Function(this);
+            var modified = false;
+            f.Parameters = new ParameterCollection(f.Parameters.Select(p =>
+            {
+                if (p.IsEnum && p.CurrentType != Settings.CompleteEnumName)
+                {
+                    p.CurrentType = Settings.CompleteEnumName;
+                    modified = true;
+                }
+                return p;
+            }));
+            if (modified)
+            {
+                f.WrapReturnType();
+                f.WrapParameters(wrappers);
+            }
+        }
+
+        void CreateNormalWrappers(List<Function> wrappers)
+        {
+            Function f = new Function(this);
+            f.WrapReturnType();
+            f.WrapParameters(wrappers);
         }
 
         #endregion
@@ -529,28 +553,28 @@ namespace Bind.Structures
 
             if (ReturnType.CurrentType.ToLower().Contains("void") && ReturnType.Pointer != 0)
             {
-                ReturnType.CurrentType = "IntPtr";
+                ReturnType.QualifiedType = "System.IntPtr";
                 ReturnType.WrapperType = WrapperTypes.GenericReturnType;
             }
 
             if (ReturnType.CurrentType.ToLower().Contains("string"))
             {
-                ReturnType.CurrentType = "IntPtr";
+                ReturnType.QualifiedType = "System.IntPtr";
                 ReturnType.WrapperType = WrapperTypes.StringReturnType;
             }
 
             if (ReturnType.CurrentType.ToLower().Contains("object"))
             {
-                ReturnType.CurrentType = "IntPtr";
+                ReturnType.QualifiedType = "System.IntPtr";
                 ReturnType.WrapperType |= WrapperTypes.GenericReturnType;
             }
 
             if (ReturnType.CurrentType.Contains("GLenum"))
             {
                 if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
-                    ReturnType.CurrentType = String.Format("{0}.{1}", Settings.EnumsOutput, Settings.CompleteEnumName);
+                    ReturnType.QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, Settings.CompleteEnumName);
                 else
-                    ReturnType.CurrentType = "int";
+                    ReturnType.QualifiedType = "int";
             }
 
             ReturnType.CurrentType = ReturnType.GetCLSCompliantType();

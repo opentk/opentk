@@ -52,9 +52,11 @@ namespace Bind.Structures
         }
 
         public Function(Function f)
-            : this((Delegate)f)
+            : this(f.WrappedDelegate)
         {
-            Body = new FunctionBody(f.Body);
+            Parameters = new ParameterCollection(f.Parameters);
+            ReturnType = new Type(f.ReturnType);
+            Body.AddRange(f.Body);
         }
 
         #endregion
@@ -297,7 +299,6 @@ namespace Bind.Structures
             }
             else
             {
-                //wrappers.Add(DefaultWrapper(new Function(this)));
                 f = new Function(this);
                 f.CreateBody(false);
                 wrappers.Add(f);
@@ -379,7 +380,7 @@ namespace Bind.Structures
             switch (ReturnType.WrapperType)
             {
                 case WrapperTypes.StringReturnType:
-                    ReturnType.CurrentType = "string";
+                    ReturnType.QualifiedType = "String";
                     break;
             }
         }
@@ -388,10 +389,10 @@ namespace Bind.Structures
 
         #region public void CreateBody(bool wantCLSCompliance)
 
-        readonly List<string> handle_statements = new List<string>();
-        readonly List<string> handle_release_statements = new List<string>();
-        readonly List<string> fixed_statements = new List<string>();
-        readonly List<string> assign_statements = new List<string>();
+        readonly static List<string> handle_statements = new List<string>();
+        readonly static List<string> handle_release_statements = new List<string>();
+        readonly static List<string> fixed_statements = new List<string>();
+        readonly static List<string> assign_statements = new List<string>();
 
         // For example, if parameter foo has indirection level = 1, then it
         // is consumed as 'foo*' in the fixed_statements and the call string.
@@ -428,7 +429,7 @@ namespace Bind.Structures
                         {
                             assign_statements.Add(String.Format(
                                 "{0} = ({1}){0}_ptr.Target;",
-                                p.Name, p.CurrentType));
+                                p.Name, p.QualifiedType));
                         }
 
                         // Note! The following line modifies f.Parameters, *not* this.Parameters
@@ -441,7 +442,7 @@ namespace Bind.Structures
                         // A fixed statement is issued for all non-generic pointers, arrays and references.
                         fixed_statements.Add(String.Format(
                             "fixed ({0}{3} {1} = {2})",
-                            wantCLSCompliance && !p.CLSCompliant ? p.GetCLSCompliantType() : p.CurrentType,
+                            wantCLSCompliance && !p.CLSCompliant ? p.GetCLSCompliantType() : p.QualifiedType,
                             p.Name + "_ptr",
                             p.Array > 0 ? p.Name : "&" + p.Name,
                             indirection_levels[p.IndirectionLevel]));
@@ -504,16 +505,36 @@ namespace Bind.Structures
                 f.Body.Indent();
             }
 
+            // Hack: When creating untyped enum wrappers, it is possible that the wrapper uses an "All"
+            // enum, while the delegate uses a specific enum (e.g. "TextureUnit"). For this reason, we need
+            // to modify the parameters before generating the call string.
+            // Note: We cannot generate a callstring using WrappedDelegate directly, as its parameters will
+            // typically be different than the parameters of the wrapper. We need to modify the parameters
+            // of the wrapper directly.
+            if ((Settings.Compatibility & Settings.Legacy.KeepUntypedEnums) != 0)
+            {
+                int parameter_index = -1; // Used for comparing wrapper parameters with delegate parameters
+                foreach (Parameter p in f.Parameters)
+                {
+                    parameter_index++;
+                    if (p.IsEnum && p.QualifiedType != f.WrappedDelegate.Parameters[parameter_index].QualifiedType)
+                    {
+                        p.QualifiedType = f.WrappedDelegate.Parameters[parameter_index].QualifiedType;
+                    }
+                }
+            }
+
             if (assign_statements.Count > 0)
             {
                 // Call function
+                string method_call = f.CallString();
                 if (f.ReturnType.CurrentType.ToLower().Contains("void"))
-                    f.Body.Add(String.Format("{0};", f.CallString()));
+                    f.Body.Add(String.Format("{0};", method_call));
                 else if (ReturnType.CurrentType.ToLower().Contains("string"))
                     f.Body.Add(String.Format("{0} {1} = Marshal.PtrToStringAnsi({2});",
-                        ReturnType.CurrentType, "retval", CallString()));
+                        ReturnType.QualifiedType, "retval", method_call));
                 else
-                    f.Body.Add(String.Format("{0} {1} = {2};", f.ReturnType.CurrentType, "retval", f.CallString()));
+                    f.Body.Add(String.Format("{0} {1} = {2};", f.ReturnType.QualifiedType, "retval", method_call));
 
                 // Assign out parameters
                 f.Body.AddRange(assign_statements);
@@ -526,14 +547,12 @@ namespace Bind.Structures
             }
             else
             {
-                //if (Name == "EnqueueCopyBufferToImage")
-                //    Debugger.Break();
                 // Call function and return
                 if (f.ReturnType.CurrentType.ToLower().Contains("void"))
                     f.Body.Add(String.Format("{0};", f.CallString()));
                 else if (ReturnType.CurrentType.ToLower().Contains("string"))
                     f.Body.Add(String.Format("return System.Runtime.InteropServices.Marshal.PtrToStringAnsi({0});",
-                        CallString()));
+                        f.CallString()));
                 else
                     f.Body.Add(String.Format("return {0};", f.CallString()));
             }
