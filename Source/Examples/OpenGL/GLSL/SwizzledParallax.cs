@@ -48,15 +48,13 @@ namespace Examples.Tutorial
         // Textures
         const TextureUnit TMU0_Unit = TextureUnit.Texture0;
         const int TMU0_UnitInteger = 0;
-        //const string TMU0_Filename = "Data/Textures/Swizzled Metal Diffuse&Height.dds";
-         const string TMU0_Filename = "Data/Textures/Swizzled Rock Diffuse&Height.dds";
+        const string TMU0_Filename = "Data/Textures/swizzled-rock-diffuse-height.dds";
         uint TMU0_Handle;
         TextureTarget TMU0_Target;
 
         const TextureUnit TMU1_Unit = TextureUnit.Texture1;
         const int TMU1_UnitInteger = 1;
-        //const string TMU1_Filename = "Data/Textures/Swizzled Metal Normal&Gloss.dds";
-         const string TMU1_Filename = "Data/Textures/Swizzled Rock Normal&Gloss.dds";
+        const string TMU1_Filename = "Data/Textures/swizzled-rock-normal-gloss.dds";
         uint TMU1_Handle;
         TextureTarget TMU1_Target;
 
@@ -76,22 +74,19 @@ namespace Examples.Tutorial
         {
             this.VSync = VSyncMode.Off;
 
-            /*
             // Check for necessary capabilities:
-            if ( !GL.SupportsExtension( "VERSION_2_0" ) )
+            string extensions = GL.GetString(StringName.Extensions);
+            if ( !GL.GetString(StringName.Extensions).Contains("GL_ARB_shading_language"))
             {
-                MessageBox.Show( "You need at least OpenGL 2.0 to run this example. Aborting.",
-                                 "GLSL not supported", MessageBoxButtons.OK, MessageBoxIcon.Exclamation );
-                this.Exit( );
+                throw new NotSupportedException(String.Format("This example requires OpenGL 2.0. Found {0}. Aborting.",
+                    GL.GetString(StringName.Version).Substring(0, 3)));
             }
 
-            if ( !GL.SupportsExtension( "GL_ARB_texture_compression" ) ||
-                 !GL.SupportsExtension( "GL_EXT_texture_compression_s3tc" ) )
+            if (!extensions.Contains("GL_ARB_texture_compression") || 
+                 !extensions.Contains("GL_EXT_texture_compression_s3tc"))
             {
-                MessageBox.Show( "Texture compression extensions not found. Trying to run anyways.",
-                                 "Possible problem", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+                throw new NotSupportedException("This example requires support for texture compression. Aborting.");
             }
-            */
 
             int[] temp = new int[1];
             GL.GetInteger( GetPName.MaxTextureImageUnits, out temp[0] );
