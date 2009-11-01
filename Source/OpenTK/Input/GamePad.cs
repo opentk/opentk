@@ -30,7 +30,7 @@ using System;
 namespace OpenTK.Input
 {
     /// <summary>
-    /// Provides access to GamePad devices.
+    /// Provides access to GamePad devices. Note: this API is not implemented yet.
     /// </summary>
     public class GamePad
     {
