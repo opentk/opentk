@@ -32,7 +32,7 @@ using System.Text;
 namespace OpenTK.Input
 {
     /// <summary>
-    /// Provides access to mouse devices.
+    /// Provides access to mouse devices. Note: this API is not implemented yet.
     /// </summary>
     public static class Mouse
     {
