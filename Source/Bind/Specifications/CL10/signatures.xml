@@ -168,7 +168,7 @@
     <token name="DEVICE_TYPE_DEFAULT" value="(1 &lt;&lt; 0)" />
     <token name="DEVICE_TYPE_GPU" value="(1 &lt;&lt; 2)" />
   </enum>
-  <enum name="ErrorCode" type="int">
+  <enum name="ErrorCodes" type="int">
     <token name="BUILD_PROGRAM_FAILURE" value="-11" />
     <token name="COMPILER_NOT_AVAILABLE" value="-3" />
     <token name="DEVICE_NOT_AVAILABLE" value="-2" />
@@ -418,7 +418,7 @@
     <param type="cl_uint" name="num_devices" flow="in" />
     <param type="cl_device_id*" name="device_list" flow="in" />
     <param type="size_t*" name="lengths" flow="in" />
-    <param type="uchar" name="char" flow="in" />
+    <param type="uchar**" name="binaries" flow="in" />
     <param type="cl_int*" name="binary_status" flow="in" />
     <param type="cl_int*" name="errcode_ret" flow="out" />
   </function>
