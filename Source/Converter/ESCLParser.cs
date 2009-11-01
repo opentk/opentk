@@ -209,13 +209,17 @@ namespace CHeaderToXML
                 var paramaters_string = Regex.Match(line, @"\(.*\)").Captures[0].Value.TrimStart('(').TrimEnd(')');
 
                 // This regex matches function parameters.
-                // The first part matches functions pointers in the following format:
+                // The first part matches function pointers in the following format:
                 // '[return type] (*[function pointer name])([parameter list]) [parameter name]
                 // where [parameter name] may or may not be in comments.
-                // The second part (before the '|') matches parameters of the following formats:
-                // '[return type] [parameter name]', '[return type] * [parameter name]', 'const [return type]* [parameter name]'
-                // where [parameter name] can either be inside comments (/* ... */) or not.
-                var get_param = new Regex(@"(\w+\s\(\*\w+\)\s*\(.*\)\s*(/\*.*?\*/|\w+)? | (const\s)?\w+\s*\**\s*(/\*.*?\*/|\w+(\[.*?\])?)),?", RegexOptions.IgnorePatternWhitespace);
+                // The second part (after the '|') matches parameters of the following formats:
+                // '[parameter type] [parameter name]', '[parameter type] [pointer] [parameter name]', 'const [parameter type][pointer] [parameter name]'
+                // where [parameter name] may be inside comments (/* ... */) and [pointer] is '', '*', '**', etc.
+                var get_param = new Regex(@"(\w+\s\(\*\w+\)\s*\(.*\)\s*(/\*.*?\*/|\w+)? | (const\s)?(\w+\s*)+\**\s*(/\*.*?\*/|\w+(\[.*?\])?)),?", RegexOptions.IgnorePatternWhitespace);
+
+                var parameters =
+                    (from item in get_param.Matches(paramaters_string).OfType<Match>()
+                    select item.Captures[0].Value.TrimEnd(',')).ToList();
 
                 var fun =
                     new
@@ -257,7 +261,9 @@ namespace CHeaderToXML
                                 Count = has_array_size ? Int32.Parse(array_size.Match(param_name).Value.Trim('[', ']')) : 0,
                                 Flow =
                                     param_name.EndsWith("ret") ||
-                                    ((funcname.StartsWith("Get") || funcname.StartsWith("Gen")) && indirection_level > 0) ?
+                                    ((funcname.StartsWith("Get") || funcname.StartsWith("Gen")) &&
+                                     indirection_level > 0 &&
+                                     !(funcname.EndsWith("Info") || funcname.EndsWith("IDs") || funcname.EndsWith("ImageFormats"))) ? // OpenCL contains Get*[Info|IDs|ImageFormats] methods with 'in' pointer parameters
                                     "out" : "in"
                             }
                     };
