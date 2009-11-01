@@ -11,6 +11,7 @@ using OpenTK.Input;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
+using System.Drawing;
 
 namespace OpenTK.Platform.Windows
 {
@@ -153,7 +154,7 @@ namespace OpenTK.Platform.Windows
             else
             {
                 Debug.Print("Registered mouse {0}", mouse.ToString());
-                System.Drawing.Point p = new System.Drawing.Point();
+                Point p = new Point();
                 if (Functions.GetCursorPos(ref p))
                     mouse.Position = p;
             }
@@ -197,11 +198,11 @@ namespace OpenTK.Platform.Windows
 
                     if ((rin.Data.Mouse.Flags & RawMouseFlags.MOUSE_MOVE_ABSOLUTE) != 0)
                     {
-                        mouse.Position = new System.Drawing.Point(rin.Data.Mouse.LastX, rin.Data.Mouse.LastY);
+                        mouse.Position = new Point(rin.Data.Mouse.LastX, rin.Data.Mouse.LastY);
                     }
                     else
                     {   // Seems like MOUSE_MOVE_RELATIVE is the default, unless otherwise noted.
-                        mouse.Position = new System.Drawing.Point(mouse.X + rin.Data.Mouse.LastX,
+                        mouse.Position = new Point(mouse.X + rin.Data.Mouse.LastX,
                                                                   mouse.Y + rin.Data.Mouse.LastY);
                     }
 

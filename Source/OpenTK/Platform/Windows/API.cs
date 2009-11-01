@@ -8,6 +8,7 @@
 #region --- Using Directives ---
 
 using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Security;
@@ -55,7 +56,7 @@ namespace OpenTK.Platform.Windows
     using ATOM = System.Int32;
 
     using COLORREF = System.Int32;
-    using RECT = OpenTK.Platform.Windows.Rectangle;
+    using RECT = OpenTK.Platform.Windows.Win32Rectangle;
     using WNDPROC = System.IntPtr;
     using LPDEVMODE = DeviceMode;
 
@@ -139,10 +140,10 @@ namespace OpenTK.Platform.Windows
         /// Found Winuser.h, user32.dll
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
-        internal static extern BOOL AdjustWindowRect([In, Out] ref Rectangle lpRect, WindowStyle dwStyle, BOOL bMenu);
+        internal static extern BOOL AdjustWindowRect([In, Out] ref Win32Rectangle lpRect, WindowStyle dwStyle, BOOL bMenu);
 
         [DllImport("user32.dll", EntryPoint = "AdjustWindowRectEx", CallingConvention = CallingConvention.StdCall, SetLastError = true), SuppressUnmanagedCodeSecurity]
-        internal static extern bool AdjustWindowRectEx(ref Rectangle lpRect, WindowStyle dwStyle, bool bMenu, ExtendedWindowStyle dwExStyle);
+        internal static extern bool AdjustWindowRectEx(ref Win32Rectangle lpRect, WindowStyle dwStyle, bool bMenu, ExtendedWindowStyle dwExStyle);
 
         #endregion
 
@@ -738,7 +739,7 @@ namespace OpenTK.Platform.Windows
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
         //internal static extern BOOL ScreenToClient(HWND hWnd, ref POINT point);
-        internal static extern BOOL ScreenToClient(HWND hWnd, ref System.Drawing.Point point);
+        internal static extern BOOL ScreenToClient(HWND hWnd, ref Point point);
 
         #endregion
 
@@ -755,7 +756,7 @@ namespace OpenTK.Platform.Windows
         /// <para>All coordinates are device coordinates.</para>
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
-        internal static extern BOOL ClientToScreen(HWND hWnd, ref System.Drawing.Point point);
+        internal static extern BOOL ClientToScreen(HWND hWnd, ref Point point);
 
         #endregion
 
@@ -772,7 +773,7 @@ namespace OpenTK.Platform.Windows
         /// </returns>
         /// <remarks>In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.</remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
-        internal extern static BOOL GetClientRect(HWND windowHandle, out Rectangle clientRectangle);
+        internal extern static BOOL GetClientRect(HWND windowHandle, out Win32Rectangle clientRectangle);
 
         #endregion
 
@@ -789,7 +790,7 @@ namespace OpenTK.Platform.Windows
         /// </returns>
         /// <remarks>In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.</remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
-        internal extern static BOOL GetWindowRect(HWND windowHandle, out Rectangle windowRectangle);
+        internal extern static BOOL GetWindowRect(HWND windowHandle, out Win32Rectangle windowRectangle);
 
         #endregion
 
@@ -955,7 +956,7 @@ namespace OpenTK.Platform.Windows
         /// <para>The input desktop must be the current desktop when you call GetCursorPos. Call OpenInputDesktop to determine whether the current desktop is the input desktop. If it is not, call SetThreadDesktop with the HDESK returned by OpenInputDesktop to switch to that desktop.</para>
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
-        internal static extern BOOL GetCursorPos(ref System.Drawing.Point point);
+        internal static extern BOOL GetCursorPos(ref Point point);
 
         #endregion
 
@@ -1994,11 +1995,11 @@ namespace OpenTK.Platform.Windows
     [StructLayout(LayoutKind.Sequential)]
     internal struct MINMAXINFO
     {
-        System.Drawing.Point Reserved;
-        public System.Drawing.Size MaxSize;
-        public System.Drawing.Point MaxPosition;
-        public System.Drawing.Size MinTrackSize;
-        public System.Drawing.Size MaxTrackSize;
+        Point Reserved;
+        public Size MaxSize;
+        public Point MaxPosition;
+        public Size MinTrackSize;
+        public Size MaxTrackSize;
     }
 
     #endregion
@@ -2610,9 +2611,9 @@ namespace OpenTK.Platform.Windows
     /// By convention, the right and bottom edges of the rectangle are normally considered exclusive. In other words, the pixel whose coordinates are (right, bottom) lies immediately outside of the the rectangle. For example, when RECT is passed to the FillRect function, the rectangle is filled up to, but not including, the right column and bottom row of pixels. This structure is identical to the RECTL structure.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
-    internal struct Rectangle
+    internal struct Win32Rectangle
     {
-        internal Rectangle(int width, int height)
+        internal Win32Rectangle(int width, int height)
         {
             left = top = 0;
             right = width;
@@ -2644,14 +2645,14 @@ namespace OpenTK.Platform.Windows
             return String.Format("({0},{1})-({2},{3})", left, top, right, bottom);
         }
 
-        internal System.Drawing.Rectangle ToRectangle()
+        internal Rectangle ToRectangle()
         {
-            return System.Drawing.Rectangle.FromLTRB(left, top, right, bottom);
+            return Rectangle.FromLTRB(left, top, right, bottom);
         }
 
-        internal static Rectangle From(System.Drawing.Rectangle value)
+        internal static Win32Rectangle From(Rectangle value)
         {
-            Rectangle rect = new Rectangle();
+            Win32Rectangle rect = new Win32Rectangle();
             rect.left = value.Left;
             rect.right = value.Right;
             rect.top = value.Top;
@@ -2659,9 +2660,9 @@ namespace OpenTK.Platform.Windows
             return rect;
         }
 
-        internal static Rectangle From(System.Drawing.Size value)
+        internal static Win32Rectangle From(Size value)
         {
-            Rectangle rect = new Rectangle();
+            Win32Rectangle rect = new Win32Rectangle();
             rect.left = 0;
             rect.right = value.Width;
             rect.top = 0;
@@ -2743,9 +2744,9 @@ namespace OpenTK.Platform.Windows
     [StructLayout(LayoutKind.Sequential, Pack=1)]
     internal struct NcCalculateSize
     {
-        public Rectangle NewBounds;
-        public Rectangle OldBounds;
-        public Rectangle OldClientRectangle;
+        public Win32Rectangle NewBounds;
+        public Win32Rectangle OldBounds;
+        public Win32Rectangle OldClientRectangle;
         unsafe public WindowPosition* Position;
     }
 
@@ -4144,9 +4145,9 @@ namespace OpenTK.Platform.Windows
             this.Y = y;
         }
 
-        internal System.Drawing.Point ToPoint()
+        internal Point ToPoint()
         {
-            return new System.Drawing.Point(X, Y);
+            return new Point(X, Y);
         }
 
         public override string ToString()
