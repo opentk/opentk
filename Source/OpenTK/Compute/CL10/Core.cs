@@ -68,7 +68,7 @@ namespace OpenTK.Compute.CL10
             internal extern static unsafe int CreateKernelsInProgram(IntPtr program, uint num_kernels, IntPtr* kernels, [OutAttribute] uint* num_kernels_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateProgramWithBinary", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateProgramWithBinary(IntPtr context, uint num_devices, IntPtr* device_list, IntPtr* lengths, byte @char, int* binary_status, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal extern static unsafe IntPtr CreateProgramWithBinary(IntPtr context, uint num_devices, IntPtr* device_list, IntPtr* lengths, byte** binaries, int* binary_status, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateProgramWithSource", ExactSpelling = true)]
             internal extern static unsafe IntPtr CreateProgramWithSource(IntPtr context, uint count, String[] strings, IntPtr* lengths, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
