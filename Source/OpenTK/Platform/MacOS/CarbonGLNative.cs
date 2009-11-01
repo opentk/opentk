@@ -29,6 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Text;
 
 namespace OpenTK.Platform.MacOS
@@ -49,7 +50,7 @@ namespace OpenTK.Platform.MacOS
         IntPtr uppHandler;
 
         string title = "OpenTK Window";
-        System.Drawing.Rectangle bounds, windowedBounds, clientRectangle;
+        Rectangle bounds, windowedBounds, clientRectangle;
         bool mIsDisposed = false;
 
         WindowAttributes mWindowAttrib;
@@ -415,10 +416,7 @@ namespace OpenTK.Platform.MacOS
 
             if (this.windowState == WindowState.Fullscreen)
             {
-                InputDriver.Mouse[0].Position =
-                    new System.Drawing.Point(
-                        (int)pt.X,
-                        (int)pt.Y);
+                InputDriver.Mouse[0].Position = new Point((int)pt.X, (int)pt.Y);
             }
             else
             {
@@ -426,10 +424,8 @@ namespace OpenTK.Platform.MacOS
                 if (pt.Y < mTitlebarHeight)
                     return OSStatus.EventNotHandled;
 
-                InputDriver.Mouse[0].Position =
-                    new System.Drawing.Point(
-                        (int)pt.X,
-                        (int)(pt.Y - mTitlebarHeight));
+                InputDriver.Mouse[0].Position = 
+                    new Point((int)pt.X, (int)(pt.Y - mTitlebarHeight));
             }
 
             switch (evt.MouseEventKind)
@@ -627,16 +623,16 @@ namespace OpenTK.Platform.MacOS
             Application.ProcessEvents();
         }
 
-        public System.Drawing.Point PointToClient(System.Drawing.Point point)
+        public Point PointToClient(Point point)
         {
             IntPtr handle = window.WindowRef;
 
             Rect r = Carbon.API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
             Console.WriteLine("Rect: {0}", r);
 
-            return new System.Drawing.Point(point.X - r.X, point.Y - r.Y);
+            return new Point(point.X - r.X, point.Y - r.Y);
         }
-        public System.Drawing.Point PointToScreen(System.Drawing.Point point)
+        public Point PointToScreen(Point point)
         {
             throw new NotImplementedException();
         }
@@ -716,7 +712,7 @@ namespace OpenTK.Platform.MacOS
             get { throw new NotImplementedException(); }
         }
 
-        public System.Drawing.Rectangle Bounds
+        public Rectangle Bounds
         {
             get
             {
@@ -729,7 +725,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public System.Drawing.Point Location
+        public Point Location
         {
             get
             {
@@ -741,7 +737,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public System.Drawing.Size Size
+        public Size Size
         {
             get
             {
@@ -756,13 +752,13 @@ namespace OpenTK.Platform.MacOS
         public int Width
         {
             get { return Bounds.Width; }
-            set { Size = new System.Drawing.Size(value, Height); }
+            set { Size = new Size(value, Height); }
         }
 
         public int Height
         {
             get { return Bounds.Height; }
-            set { Size = new System.Drawing.Size(Width, value); }
+            set { Size = new Size(Width, value); }
         }
 
         public int X
@@ -773,7 +769,7 @@ namespace OpenTK.Platform.MacOS
             }
             set
             {
-                Location = new System.Drawing.Point(value, Y);
+                Location = new Point(value, Y);
             }
         }
 
@@ -785,11 +781,11 @@ namespace OpenTK.Platform.MacOS
             }
             set
             {
-                Location = new System.Drawing.Point(X, value);
+                Location = new Point(X, value);
             }
         }
 
-        public System.Drawing.Rectangle ClientRectangle
+        public Rectangle ClientRectangle
         {
             get
             {
@@ -801,7 +797,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public System.Drawing.Size ClientSize
+        public Size ClientSize
         {
             get
             {
@@ -851,7 +847,7 @@ namespace OpenTK.Platform.MacOS
                 {
                     API.CollapseWindow(window.WindowRef, false);
                 }
-                Point idealSize;
+                CarbonPoint idealSize;
 
                 switch (value)
                 {
@@ -864,14 +860,14 @@ namespace OpenTK.Platform.MacOS
                         // hack because mac os has no concept of maximized. Instead windows are "zoomed" 
                         // meaning they are maximized up to their reported ideal size.  So we report a 
                         // large ideal size.
-                        idealSize = new Point(9000, 9000);
+                        idealSize = new CarbonPoint(9000, 9000);
                         API.ZoomWindowIdeal(window.WindowRef, WindowPartCode.inZoomOut, ref idealSize);
                         break;
 
                     case WindowState.Normal:
                         if (WindowState == WindowState.Maximized)
                         {
-                            idealSize = new Point();
+                            idealSize = new CarbonPoint();
                             API.ZoomWindowIdeal(window.WindowRef, WindowPartCode.inZoomIn, ref idealSize);
                         }
                         break;

@@ -27,17 +27,11 @@ namespace OpenTK
 
         #region --- Contructors ---
 
-        #region NativeWindow()
-
         /// <summary>Constructs a new NativeWindow with default attributes without enabling events.</summary>
         public NativeWindow()
             : this(640, 480, "OpenTK Native Window", GameWindowFlags.Default, GraphicsMode.Default, DisplayDevice.Default) { }
 
-        #endregion
-
         // TODO: Remaining constructors.
-
-        #region NativeWindow(int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
 
         /// <summary>Constructs a new centered NativeWindow with the specified attributes.</summary>
         /// <param name="width">The width of the NativeWindow in pixels.</param>
@@ -52,10 +46,6 @@ namespace OpenTK
             : this(device.Bounds.Left + (device.Bounds.Width - width) / 2,
                    device.Bounds.Top + (device.Bounds.Height - height) / 2,
                    width, height, title, options, mode, device) { }
-
-        #endregion
-
-        #region NativeWindow(int x, int y, int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
 
         /// <summary>Constructs a new NativeWindow with the specified attributes.</summary>
         /// <param name="x">Horizontal screen space coordinate of the NativeWindow's origin.</param>
@@ -94,8 +84,6 @@ namespace OpenTK
 
         #endregion
 
-        #endregion
-
         #region --- INativeWindow Members ---
 
         #region Methods
@@ -124,7 +112,7 @@ namespace OpenTK
         /// <returns>
         /// The point transformed to client coordinates.
         /// </returns>
-        public System.Drawing.Point PointToClient(System.Drawing.Point point)
+        public Point PointToClient(Point point)
         {
             return implementation.PointToClient(point);
         }
@@ -142,11 +130,11 @@ namespace OpenTK
         /// <returns>
         /// The point transformed to screen coordinates.
         /// </returns>
-        public System.Drawing.Point PointToScreen(System.Drawing.Point point)
+        public Point PointToScreen(Point point)
         {
             // Here we use the fact that PointToClient just translates the point, and PointToScreen
             // should perform the inverse operation.
-            System.Drawing.Point trans = PointToClient(System.Drawing.Point.Empty);
+            Point trans = PointToClient(Point.Empty);
             point.X -= trans.X;
             point.Y -= trans.Y;
             return point;

@@ -11,6 +11,7 @@ using System.Windows.Forms;
 
 using OpenTK.Input;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace OpenTK.Platform.Windows
 {
@@ -80,7 +81,7 @@ namespace OpenTK.Platform.Windows
                     break;
 
                 case WindowMessage.MOUSEMOVE:
-                    mouse.Position = new System.Drawing.Point(
+                    mouse.Position = new Point(
                                                         (int)(lparam.ToUInt32() & 0x0000FFFF),
                                                         (int)(lparam.ToUInt32() & 0xFFFF0000) >> 16);
                     if (mouse_about_to_enter)
