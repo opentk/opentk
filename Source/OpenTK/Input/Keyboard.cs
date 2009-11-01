@@ -32,7 +32,7 @@ using System.Text;
 namespace OpenTK.Input
 {
     /// <summary>
-    /// Provides access to keyboard devices.
+    /// Provides access to keyboard devices. Note: this API is not implemented yet.
     /// </summary>
     public static class Keyboard
     {
