@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 using OpenTK.Input;
+using System.Drawing;
 
 namespace OpenTK.Platform.X11
 {
@@ -198,7 +199,7 @@ namespace OpenTK.Platform.X11
                     break;
 
                 case XEventName.MotionNotify:
-                    mouse.Position = new System.Drawing.Point(e.MotionEvent.x, e.MotionEvent.y);
+                    mouse.Position = new Point(e.MotionEvent.x, e.MotionEvent.y);
                     break;
             }
         }

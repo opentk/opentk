@@ -10,6 +10,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace OpenTK.Platform.MacOS.Carbon
 {
@@ -17,12 +18,12 @@ namespace OpenTK.Platform.MacOS.Carbon
     #region --- Types defined in MacTypes.h ---
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct Point
+    internal struct CarbonPoint
     {
         internal short V;
         internal short H;
 
-        public Point(int x, int y)
+        public CarbonPoint(int x, int y)
         {
             V = (short)x;
             H = (short)y;
@@ -82,9 +83,9 @@ namespace OpenTK.Platform.MacOS.Carbon
                 "Rect: [{0}, {1}, {2}, {3}]", X, Y, Width, Height);
         }
 
-        public System.Drawing.Rectangle ToRectangle()
+        public Rectangle ToRectangle()
         {
-            return new System.Drawing.Rectangle(X, Y, Width, Height);
+            return new Rectangle(X, Y, Width, Height);
         }
     }
 
@@ -534,7 +535,7 @@ namespace OpenTK.Platform.MacOS.Carbon
             public ushort what;
             public uint message;
             public uint when;
-            public Point where;
+            public CarbonPoint where;
             public uint modifiers;
         }
 
@@ -875,16 +876,16 @@ namespace OpenTK.Platform.MacOS.Carbon
         [DllImport(carbon, EntryPoint = "ZoomWindowIdeal")]
         unsafe static extern OSStatus _ZoomWindowIdeal(IntPtr windowRef, short inPartCode, IntPtr toIdealSize);
 
-        internal static void ZoomWindowIdeal(IntPtr windowRef, WindowPartCode inPartCode, ref Point toIdealSize)
+        internal static void ZoomWindowIdeal(IntPtr windowRef, WindowPartCode inPartCode, ref CarbonPoint toIdealSize)
         {
-            Point pt = toIdealSize;
+            CarbonPoint pt = toIdealSize;
             OSStatus error ;
-            IntPtr handle = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Point)));
+            IntPtr handle = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CarbonPoint)));
             Marshal.StructureToPtr(toIdealSize, handle, false);
 
             error = _ZoomWindowIdeal(windowRef, (short)inPartCode, handle);
 
-            toIdealSize = (Point)Marshal.PtrToStructure(handle,typeof(Point));
+            toIdealSize = (CarbonPoint)Marshal.PtrToStructure(handle,typeof(CarbonPoint));
 
             Marshal.FreeHGlobal(handle);
 

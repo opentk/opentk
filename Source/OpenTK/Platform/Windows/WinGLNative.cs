@@ -27,13 +27,13 @@
 
 using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using System.Collections.Generic;
 using System.IO;
+using System.Drawing;
 
 namespace OpenTK.Platform.Windows
 {
@@ -67,11 +67,11 @@ namespace OpenTK.Platform.Windows
         bool borderless_maximized_window_state = false; // Hack to get maximized mode with hidden border (not normally possible).
         bool focused;
 
-        System.Drawing.Rectangle
-            bounds = new System.Drawing.Rectangle(),
-            client_rectangle = new System.Drawing.Rectangle(),
-            previous_bounds = new System.Drawing.Rectangle(); // Used to restore previous size when leaving fullscreen mode.
-        Icon icon;
+        Rectangle
+            bounds = new Rectangle(),
+            client_rectangle = new Rectangle(),
+            previous_bounds = new Rectangle(); // Used to restore previous size when leaving fullscreen mode.
+        System.Drawing.Icon icon;
 
         static readonly ClassStyle ClassStyle =
             ClassStyle.OwnDC | ClassStyle.VRedraw | ClassStyle.HRedraw | ClassStyle.Ime;
@@ -223,7 +223,7 @@ namespace OpenTK.Platform.Windows
                                 bounds.Width = pos->cx;
                                 bounds.Height = pos->cy;
 
-                                Rectangle rect;
+                                Win32Rectangle rect;
                                 Functions.GetClientRect(handle, out rect);
                                 client_rectangle = rect.ToRectangle();
 
@@ -292,12 +292,12 @@ namespace OpenTK.Platform.Windows
                     break;
 
                 case WindowMessage.MOUSEMOVE:
-                    System.Drawing.Point point = new System.Drawing.Point(
+                    Point point = new Point(
                                                         (int)(lParam.ToInt32() & 0x0000FFFF),
                                                         (int)(lParam.ToInt32() & 0xFFFF0000) >> 16);
                     mouse.Position = point;
                     {
-                        Rectangle rect;
+                        Win32Rectangle rect;
                         Functions.GetClientRect(window.WindowHandle, out rect);
                         if (!rect.ToRectangle().Contains(point))
                         {
@@ -452,7 +452,7 @@ namespace OpenTK.Platform.Windows
                         bounds.Width = cs.cx;
                         bounds.Height = cs.cy;
 
-                        Rectangle rect;
+                        Win32Rectangle rect;
                         Functions.GetClientRect(handle, out rect);
                         client_rectangle = rect.ToRectangle();
                     }
@@ -532,7 +532,7 @@ namespace OpenTK.Platform.Windows
             }
 
             // Find out the final window rectangle, after the WM has added its chrome (titlebar, sidebars etc).
-            Rectangle rect = new Rectangle();
+            Win32Rectangle rect = new Win32Rectangle();
             rect.left = x; rect.top = y; rect.right = x + width; rect.bottom = y + height;
             Functions.AdjustWindowRectEx(ref rect, style, false, ex_style);
 
@@ -588,38 +588,6 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region GetApplicationIcon
-
-        // Gets the shell application icon for the executing process or the default icon, if not available.
-        Icon GetApplicationIcon()
-        {
-            //return Icon.FromHandle(Functions.LoadIcon(Process.GetCurrentProcess().Handle, ""));
-            try { return Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetEntryAssembly().CodeBase);  }
-            catch { return null; }
-            //IntPtr retval = IntPtr.Zero;
-            //try
-            //{
-            //    SHFILEINFO info = new SHFILEINFO();
-            //    info.szDisplayName = "";
-            //    info.szTypeName = "";
-
-            //    int cbFileInfo = Marshal.SizeOf(info);
-            //    ShGetFileIconFlags flags = ShGetFileIconFlags.Icon | ShGetFileIconFlags.SmallIcon | ShGetFileIconFlags.UseFileAttributes;
-            //    string path = System.Reflection.Assembly.GetEntryAssembly().CodeBase;
-
-            //    retval = Functions.SHGetFileInfo(path, 256, ref info, (uint)cbFileInfo, flags);
-            //    return Icon.FromHandle(info.hIcon);
-            //}
-            //catch
-            //{
-            //    // Shallow exceptions and fall-back to default icon.
-            //    Debug.Print("SHGetFileInfo failed, return value: {0}", retval);
-            //    return null;
-            //}
-        }
-
-        #endregion
-
         void EnableMouseLeaveNotifications()
         {
             TrackMouseEventStructure tme = new TrackMouseEventStructure();
@@ -638,7 +606,7 @@ namespace OpenTK.Platform.Windows
 
         #region Bounds
 
-        public System.Drawing.Rectangle Bounds
+        public Rectangle Bounds
         {
             get { return bounds; }
             set
@@ -680,7 +648,7 @@ namespace OpenTK.Platform.Windows
 
         #region ClientRectangle
 
-        public System.Drawing.Rectangle ClientRectangle
+        public Rectangle ClientRectangle
         {
             get
             {
@@ -709,7 +677,7 @@ namespace OpenTK.Platform.Windows
             set
             {
                 WindowStyle style = (WindowStyle)Functions.GetWindowLong(window.WindowHandle, GetWindowLongOffsets.STYLE);
-                Rectangle rect = Rectangle.From(value);
+                Win32Rectangle rect = Win32Rectangle.From(value);
                 Functions.AdjustWindowRect(ref rect, style, false);
                 Size = new Size(rect.Width, rect.Height);
             }
@@ -722,7 +690,7 @@ namespace OpenTK.Platform.Windows
         public int Width
         {
             get { return ClientRectangle.Width; }
-            set { ClientRectangle = new System.Drawing.Rectangle(Location, new Size(value, Height)); }
+            set { ClientRectangle = new Rectangle(Location, new Size(value, Height)); }
         }
 
         #endregion
@@ -732,7 +700,7 @@ namespace OpenTK.Platform.Windows
         public int Height
         {
             get { return ClientRectangle.Height; }
-            set { ClientRectangle = new System.Drawing.Rectangle(Location, new Size(Width, value)); }
+            set { ClientRectangle = new Rectangle(Location, new Size(Width, value)); }
         }
 
         #endregion
@@ -742,7 +710,7 @@ namespace OpenTK.Platform.Windows
         public int X
         {
             get { return ClientRectangle.X; }
-            set { ClientRectangle = new System.Drawing.Rectangle(new Point(value, Y), Size); }
+            set { ClientRectangle = new Rectangle(new Point(value, Y), Size); }
         }
 
         #endregion
@@ -752,14 +720,14 @@ namespace OpenTK.Platform.Windows
         public int Y
         {
             get { return ClientRectangle.Y; }
-            set { ClientRectangle = new System.Drawing.Rectangle(new Point(X, value), Size); }
+            set { ClientRectangle = new Rectangle(new Point(X, value), Size); }
         }
 
         #endregion
 
         #region Icon
 
-        public Icon Icon
+        public System.Drawing.Icon Icon
         {
             get
             {
@@ -919,10 +887,10 @@ namespace OpenTK.Platform.Windows
                     Functions.ShowWindow(window.WindowHandle, command);
 
                 // Restore previous window size/location if necessary
-                if (command == ShowWindowCommand.RESTORE && previous_bounds != System.Drawing.Rectangle.Empty)
+                if (command == ShowWindowCommand.RESTORE && previous_bounds != Rectangle.Empty)
                 {
                     Bounds = previous_bounds;
-                    previous_bounds = System.Drawing.Rectangle.Empty;
+                    previous_bounds = Rectangle.Empty;
                 }
 
                 // Restore previous window border or apply pending border change when leaving fullscreen mode.
@@ -985,7 +953,7 @@ namespace OpenTK.Platform.Windows
 
                 // Make sure client size doesn't change when changing the border style.
                 Size client_size = ClientSize;
-                Rectangle rect = Rectangle.From(client_size);
+                Win32Rectangle rect = Win32Rectangle.From(client_size);
                 Functions.AdjustWindowRectEx(ref rect, style, false, ParentStyleEx);
 
                 // This avoids leaving garbage on the background window.

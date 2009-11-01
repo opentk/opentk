@@ -29,12 +29,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Graphics;
 using OpenTK.Input;
+using System.Drawing;
 
 namespace OpenTK.Platform.X11
 {
@@ -92,7 +92,7 @@ namespace OpenTK.Platform.X11
         
         Rectangle bounds, client_rectangle;
         int border_width;
-        Icon icon;
+        System.Drawing.Icon icon;
         bool has_focus;
         bool visible;
 
@@ -701,7 +701,7 @@ namespace OpenTK.Platform.X11
 
         #region Bounds
 
-        public System.Drawing.Rectangle Bounds
+        public Rectangle Bounds
         {
             get { return bounds; }
             set
@@ -746,7 +746,7 @@ namespace OpenTK.Platform.X11
 
         #region ClientRectangle
 
-        public System.Drawing.Rectangle ClientRectangle
+        public Rectangle ClientRectangle
         {
             get
             {
@@ -823,7 +823,7 @@ namespace OpenTK.Platform.X11
 
         #region Icon
 
-        public Icon Icon
+        public System.Drawing.Icon Icon
         {
             get
             {
@@ -844,7 +844,7 @@ namespace OpenTK.Platform.X11
                 else
                 {
                     // Set _NET_WM_ICON
-                    Bitmap bitmap = value.ToBitmap();
+                    System.Drawing.Bitmap bitmap = value.ToBitmap();
                     int size = bitmap.Width * bitmap.Height + 2;
                     IntPtr[] data = new IntPtr[size];
                     int index = 0;
