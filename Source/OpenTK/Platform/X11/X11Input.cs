@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
@@ -53,38 +53,41 @@ namespace OpenTK.Platform.X11
 
             //window = new X11WindowInfo(attach);
             X11WindowInfo window = (X11WindowInfo)attach;
-
+            
             // Init mouse
             mouse.Description = "Default X11 mouse";
             mouse.DeviceID = IntPtr.Zero;
             mouse.NumberOfButtons = 5;
             mouse.NumberOfWheels = 1;
             dummy_mice_list.Add(mouse);
-
-            // Init keyboard
-            API.DisplayKeycodes(window.Display, ref firstKeyCode, ref lastKeyCode);
-            Debug.Print("First keycode: {0}, last {1}", firstKeyCode, lastKeyCode);
-
-            IntPtr keysym_ptr = API.GetKeyboardMapping(window.Display, (byte)firstKeyCode,
-                lastKeyCode - firstKeyCode + 1, ref keysyms_per_keycode);
-            Debug.Print("{0} keysyms per keycode.", keysyms_per_keycode);
-
-            keysyms = new IntPtr[(lastKeyCode - firstKeyCode + 1) * keysyms_per_keycode];
-            Marshal.PtrToStructure(keysym_ptr, keysyms);
-            API.Free(keysym_ptr);
-
-            KeyboardDevice kb = new KeyboardDevice();
-            keyboard.Description = "Default X11 keyboard";
-            keyboard.NumberOfKeys = lastKeyCode - firstKeyCode + 1;
-            keyboard.DeviceID = IntPtr.Zero;
-            dummy_keyboard_list.Add(keyboard);
-
-            // Request that auto-repeat is only set on devices that support it physically.
-            // This typically means that it's turned off for keyboards (which is what we want).
-            // We prefer this method over XAutoRepeatOff/On, because the latter needs to
-            // be reset before the program exits.
-            bool supported;
-            Functions.XkbSetDetectableAutoRepeat(window.Display, true, out supported);
+            
+            using (new XLock(window.Display))
+            {
+                // Init keyboard
+                API.DisplayKeycodes(window.Display, ref firstKeyCode, ref lastKeyCode);
+                Debug.Print("First keycode: {0}, last {1}", firstKeyCode, lastKeyCode);
+    
+                IntPtr keysym_ptr = API.GetKeyboardMapping(window.Display, (byte)firstKeyCode,
+                    lastKeyCode - firstKeyCode + 1, ref keysyms_per_keycode);
+                Debug.Print("{0} keysyms per keycode.", keysyms_per_keycode);
+    
+                keysyms = new IntPtr[(lastKeyCode - firstKeyCode + 1) * keysyms_per_keycode];
+                Marshal.PtrToStructure(keysym_ptr, keysyms);
+                API.Free(keysym_ptr);
+    
+                KeyboardDevice kb = new KeyboardDevice();
+                keyboard.Description = "Default X11 keyboard";
+                keyboard.NumberOfKeys = lastKeyCode - firstKeyCode + 1;
+                keyboard.DeviceID = IntPtr.Zero;
+                dummy_keyboard_list.Add(keyboard);
+    
+                // Request that auto-repeat is only set on devices that support it physically.
+                // This typically means that it's turned off for keyboards (which is what we want).
+                // We prefer this method over XAutoRepeatOff/On, because the latter needs to
+                // be reset before the program exits.
+                bool supported;
+                Functions.XkbSetDetectableAutoRepeat(window.Display, true, out supported);
+            }
 
             Debug.Unindent();
         }

@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * Contributions from Erik Ylvisaker
  * See license.txt for license info
@@ -1589,6 +1589,23 @@ XF86VidModeGetGammaRampSize(
         }
     }
     */
+
+    struct XLock : IDisposable
+    {
+        readonly IntPtr Display;
+
+        public XLock(IntPtr display)
+            : this()
+        {
+            Functions.XLockDisplay(display);
+            Display = display;
+        }
+
+        public void Dispose()
+        {
+            Functions.XUnlockDisplay(Display);
+        }
+    }
 }
 
 #pragma warning restore 3019

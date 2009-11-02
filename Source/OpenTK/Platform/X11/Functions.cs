@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
@@ -77,10 +77,18 @@ namespace OpenTK.Platform.X11
 
     internal static partial class Functions
     {
-        public static readonly object Lock = new object();
+        public static readonly object Lock = API.Lock;
 
         [DllImport("libX11", EntryPoint = "XOpenDisplay")]
-        public extern static IntPtr XOpenDisplay(IntPtr display);
+        extern static IntPtr sys_XOpenDisplay(IntPtr display);
+        public static IntPtr XOpenDisplay(IntPtr display)
+        {
+            lock (Lock)
+            {
+                return sys_XOpenDisplay(display);
+            }
+        }
+
         [DllImport("libX11", EntryPoint = "XCloseDisplay")]
         public extern static int XCloseDisplay(IntPtr display);
         [DllImport("libX11", EntryPoint = "XSynchronize")]

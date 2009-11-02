@@ -122,7 +122,7 @@ namespace OpenTK.Platform.X11
 
             Debug.Indent();
             
-            lock (API.Lock)
+            using (new XLock(window.Display))
             {
                 if (!mode.Index.HasValue)
                     throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
@@ -164,7 +164,7 @@ namespace OpenTK.Platform.X11
             hints.base_width = width;
             hints.base_height = height;
             hints.flags = (IntPtr)(XSizeHintsFlags.PSize | XSizeHintsFlags.PPosition);
-            lock (API.Lock)
+            using (new XLock(window.Display))
             {
                 Functions.XSetWMNormalHints(window.Display, window.WindowHandle, ref hints);
 
@@ -194,21 +194,18 @@ namespace OpenTK.Platform.X11
                 Debug.Indent();
 
                 // Open a display connection to the X server, and obtain the screen and root window.
-                window.Display = API.DefaultDisplay;
+                window.Display = Functions.XOpenDisplay(IntPtr.Zero);
+                //window.Display = API.DefaultDisplay;
                 if (window.Display == IntPtr.Zero)
                     throw new Exception("Could not open connection to X");
 
-                try
+                using (new XLock(window.Display))
                 {
                     Functions.XLockDisplay(window.Display);
                     window.Screen = Functions.XDefaultScreen(window.Display); //API.DefaultScreen;
                     window.RootWindow = Functions.XRootWindow(window.Display, window.Screen); // API.RootWindow;
                 }
-                finally
-                {
-                    Functions.XUnlockDisplay(window.Display);
-                }
-                
+
                 Debug.Print("Display: {0}, Screen {1}, Root window: {2}", window.Display, window.Screen,
                             window.RootWindow);
                 
@@ -232,28 +229,30 @@ namespace OpenTK.Platform.X11
         /// </summary>
         private void RegisterAtoms(X11WindowInfo window)
         {
-            Debug.WriteLine("Registering atoms.");   
-            _atom_wm_destroy = Functions.XInternAtom(window.Display, "WM_DELETE_WINDOW", true);
+            using (new XLock(window.Display))
+            {
+                Debug.WriteLine("Registering atoms.");
+                _atom_wm_destroy = Functions.XInternAtom(window.Display, "WM_DELETE_WINDOW", true);
             
             _atom_net_wm_state = Functions.XInternAtom(window.Display, "_NET_WM_STATE", false);
-            _atom_net_wm_state_minimized = Functions.XInternAtom(window.Display, "_NET_WM_STATE_MINIMIZED", false);
-            _atom_net_wm_state_fullscreen = Functions.XInternAtom(window.Display, "_NET_WM_STATE_FULLSCREEN", false);
-            _atom_net_wm_state_maximized_horizontal =
+                _atom_net_wm_state_minimized = Functions.XInternAtom(window.Display, "_NET_WM_STATE_MINIMIZED", false);
+                _atom_net_wm_state_fullscreen = Functions.XInternAtom(window.Display, "_NET_WM_STATE_FULLSCREEN", false);
+                _atom_net_wm_state_maximized_horizontal =
                 Functions.XInternAtom(window.Display, "_NET_WM_STATE_MAXIMIZED_HORZ", false);
-            _atom_net_wm_state_maximized_vertical =
+                _atom_net_wm_state_maximized_vertical =
                 Functions.XInternAtom(window.Display, "_NET_WM_STATE_MAXIMIZED_VERT", false);
             
             _atom_net_wm_allowed_actions =
                 Functions.XInternAtom(window.Display, "_NET_WM_ALLOWED_ACTIONS", false);
-            _atom_net_wm_action_resize =
+                _atom_net_wm_action_resize =
                 Functions.XInternAtom(window.Display, "_NET_WM_ACTION_RESIZE", false);
-            _atom_net_wm_action_maximize_horizontally =
+                _atom_net_wm_action_maximize_horizontally =
                 Functions.XInternAtom(window.Display, "_NET_WM_ACTION_MAXIMIZE_HORZ", false);
-            _atom_net_wm_action_maximize_vertically =
+                _atom_net_wm_action_maximize_vertically =
                 Functions.XInternAtom(window.Display, "_NET_WM_ACTION_MAXIMIZE_VERT", false);
 
             _atom_net_wm_icon =
-                Functions.XInternAtom(window.Display,"_NEW_WM_ICON", false);
+                Functions.XInternAtom(window.Display, "_NEW_WM_ICON", false);
             
 //            string[] atom_names = new string[]
 //            {
@@ -266,6 +265,7 @@ namespace OpenTK.Platform.X11
 //            int offset = 0;
 //            //WMTitle = atoms[offset++];
 //            //UTF8String = atoms[offset++];
+            }
         }
 
         #endregion

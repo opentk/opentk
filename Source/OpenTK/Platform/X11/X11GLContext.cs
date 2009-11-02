@@ -49,18 +49,18 @@ namespace OpenTK.Platform.X11
             // Do not move this lower, as almost everything requires the Display
             // property to be correctly set.
             Display = ((X11WindowInfo)window).Display;
-
+            
             currentWindow = (X11WindowInfo)window;
             currentWindow.VisualInfo = SelectVisual(mode, currentWindow);
-
+            
             ContextHandle shareHandle = shared != null ?
                 (shared as IGraphicsContextInternal).Context : (ContextHandle)IntPtr.Zero;
-
+            
             Debug.Write("Creating X11GLContext context: ");
             Debug.Write(direct ? "direct, " : "indirect, ");
             Debug.WriteLine(shareHandle.Handle == IntPtr.Zero ? "not shared... " :
                 String.Format("shared with ({0})... ", shareHandle));
-
+            
             if (!glx_loaded)
             {
                 Debug.WriteLine("Creating temporary context to load GLX extensions.");
@@ -130,7 +130,10 @@ namespace OpenTK.Platform.X11
                         else
                             Debug.WriteLine("success!");
                         
-                        Functions.XFree((IntPtr)fbconfigs);
+                        using (new XLock(Display))
+                        {
+                            Functions.XFree((IntPtr)fbconfigs);
+                        }
                     }
                 }
             }
