@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
@@ -42,16 +42,19 @@ namespace OpenTK.Platform.X11
             for (int screen = 0; screen < API.ScreenCount; screen++)
             {
                 IntPtr timestamp_of_last_update;
-                Functions.XRRTimes(API.DefaultDisplay, screen, out timestamp_of_last_update);
+                using (new XLock(API.DefaultDisplay))
+                {
+                    Functions.XRRTimes(API.DefaultDisplay, screen, out timestamp_of_last_update);
+                }
                 lastConfigUpdate.Add(timestamp_of_last_update);
-
+                
                 List<DisplayResolution> available_res = new List<DisplayResolution>();
-
+                
                 // Add info for a new screen.
                 screenResolutionToIndex.Add(new Dictionary<DisplayResolution, int>());
-
+                
                 int[] depths = FindAvailableDepths(screen);
-
+                
                 int resolution_count = 0;
                 foreach (XRRScreenSize size in FindAvailableResolutions(screen))
                 {
@@ -60,7 +63,11 @@ namespace OpenTK.Platform.X11
                         Debug.Print("[Warning] XRandR returned an invalid resolution ({0}) for display device {1}", size, screen);
                         continue;
                     }
-                    short[] rates = Functions.XRRRates(API.DefaultDisplay, screen, resolution_count);
+                    short[] rates = null;
+                    using (new XLock(API.DefaultDisplay))
+                    {
+                        rates = Functions.XRRRates(API.DefaultDisplay, screen, resolution_count);
+                    }
 
                     // It seems that XRRRates returns 0 for modes that are larger than the screen
                     // can support, as well as for all supported modes. On Ubuntu 7.10 the tool
@@ -114,7 +121,10 @@ namespace OpenTK.Platform.X11
 
         static int[] FindAvailableDepths(int screen)
         {
-            return Functions.XListDepths(API.DefaultDisplay, screen);
+            using (new XLock(API.DefaultDisplay))
+            {
+                return Functions.XListDepths(API.DefaultDisplay, screen);
+            }
         }
 
         #endregion
@@ -123,7 +133,11 @@ namespace OpenTK.Platform.X11
 
         static XRRScreenSize[] FindAvailableResolutions(int screen)
         {
-            XRRScreenSize[] resolutions = Functions.XRRSizes(API.DefaultDisplay, screen);
+            XRRScreenSize[] resolutions = null;
+            using (new XLock(API.DefaultDisplay))
+            {
+                resolutions = Functions.XRRSizes(API.DefaultDisplay, screen);
+            }
             if (resolutions == null)
                 throw new NotSupportedException("XRandR extensions not available.");
             return resolutions;
@@ -135,12 +149,15 @@ namespace OpenTK.Platform.X11
 
         static float FindCurrentRefreshRate(int screen)
         {
-            IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
-            ushort rotation = 0;
-            int size = Functions.XRRConfigCurrentConfiguration(screen_config, out rotation);
-            short rate = Functions.XRRConfigCurrentRate(screen_config);
-            Functions.XRRFreeScreenConfigInfo(screen_config);
-
+            short rate = 0;
+            using (new XLock(API.DefaultDisplay))
+            {
+                IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
+                ushort rotation = 0;
+                int size = Functions.XRRConfigCurrentConfiguration(screen_config, out rotation);
+                rate = Functions.XRRConfigCurrentRate(screen_config);
+                Functions.XRRFreeScreenConfigInfo(screen_config);
+            }
             return (float)rate;
         }
 
@@ -150,7 +167,10 @@ namespace OpenTK.Platform.X11
 
         private static int FindCurrentDepth(int screen)
         {
-            return (int)Functions.XDefaultDepth(API.DefaultDisplay, screen);
+            using (new XLock(API.DefaultDisplay))
+            {
+                return (int)Functions.XDefaultDepth(API.DefaultDisplay, screen);
+            }
         }
 
         #endregion
@@ -163,24 +183,27 @@ namespace OpenTK.Platform.X11
         {
             // If resolution == null, restore to default resolution (new_resolution_index = 0).
 
-            int screen = deviceToScreen[device];
-            IntPtr root = Functions.XRootWindow(API.DefaultDisplay, screen);
-            IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, root);
-
-            ushort current_rotation;
-            int current_resolution_index = Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
-            int new_resolution_index;
-            if (resolution != null)
-                new_resolution_index = screenResolutionToIndex[screen]
-                    [new DisplayResolution(0, 0, resolution.Width, resolution.Height, resolution.BitsPerPixel, 0)];
-            else
-                new_resolution_index = deviceToDefaultResolution[device];
-
-            Debug.Print("Changing size of screen {0} from {1} to {2}",
-                screen, current_resolution_index, new_resolution_index);
-
-            return 0 == Functions.XRRSetScreenConfigAndRate(API.DefaultDisplay, screen_config, root, new_resolution_index,
-                current_rotation, (short)(resolution != null ? resolution.RefreshRate : 0), lastConfigUpdate[screen]);
+            using (new XLock(API.DefaultDisplay))
+            {
+                int screen = deviceToScreen[device];
+                IntPtr root = Functions.XRootWindow(API.DefaultDisplay, screen);
+                IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, root);
+    
+                ushort current_rotation;
+                int current_resolution_index = Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
+                int new_resolution_index;
+                if (resolution != null)
+                    new_resolution_index = screenResolutionToIndex[screen]
+                        [new DisplayResolution(0, 0, resolution.Width, resolution.Height, resolution.BitsPerPixel, 0)];
+                else
+                    new_resolution_index = deviceToDefaultResolution[device];
+    
+                Debug.Print("Changing size of screen {0} from {1} to {2}",
+                    screen, current_resolution_index, new_resolution_index);
+    
+                return 0 == Functions.XRRSetScreenConfigAndRate(API.DefaultDisplay, screen_config, root, new_resolution_index,
+                    current_rotation, (short)(resolution != null ? resolution.RefreshRate : 0), lastConfigUpdate[screen]);
+            }
         }
 
         public bool TryRestoreResolution(DisplayDevice device)

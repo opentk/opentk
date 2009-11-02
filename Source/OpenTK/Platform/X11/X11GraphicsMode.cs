@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
@@ -35,22 +35,23 @@ namespace OpenTK.Platform.X11
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum,
                                                int buffers, bool stereo)
         {
-            GraphicsMode gfx;                               // The actual GraphicsMode that will be selected.
+            GraphicsMode gfx;
+            // The actual GraphicsMode that will be selected.
             IntPtr visual = IntPtr.Zero;
             IntPtr display = API.DefaultDisplay;
-
+            
             // Try to select a visual using Glx.ChooseFBConfig and Glx.GetVisualFromFBConfig.
             // This is only supported on GLX 1.3 - if it fails, fall back to Glx.ChooseVisual.
             visual = SelectVisualUsingFBConfig(color, depth, stencil, samples, accum, buffers, stereo);
             
             if (visual == IntPtr.Zero)
                 visual = SelectVisualUsingChooseVisual(color, depth, stencil, samples, accum, buffers, stereo);
-
+            
             if (visual == IntPtr.Zero)
                 throw new GraphicsContextException("Requested GraphicsMode not available.");
-
+            
             XVisualInfo info = (XVisualInfo)Marshal.PtrToStructure(visual, typeof(XVisualInfo));
-
+            
             // See what we *really* got:
             int r, g, b, a;
             Glx.GetConfig(display, ref info, GLXAttribute.ALPHA_SIZE, out a);
@@ -66,15 +67,19 @@ namespace OpenTK.Platform.X11
             Glx.GetConfig(display, ref info, GLXAttribute.STENCIL_SIZE, out stencil);
             Glx.GetConfig(display, ref info, GLXAttribute.SAMPLES, out samples);
             Glx.GetConfig(display, ref info, GLXAttribute.DOUBLEBUFFER, out buffers);
-            ++buffers;  // the above lines returns 0 - false and 1 - true.
+            ++buffers;
+            // the above lines returns 0 - false and 1 - true.
             int st;
             Glx.GetConfig(display, ref info, GLXAttribute.STEREO, out st);
             stereo = st != 0;
             
             gfx = new GraphicsMode(info.VisualID, new ColorFormat(r, g, b, a), depth, stencil, samples,
-                                   new ColorFormat(ar, ag, ab, aa), buffers, stereo);
-
-            Functions.XFree(visual);
+            new ColorFormat(ar, ag, ab, aa), buffers, stereo);
+            
+            using (new XLock(display))
+            {
+                Functions.XFree(visual);
+            }
             
             return gfx;
         }
