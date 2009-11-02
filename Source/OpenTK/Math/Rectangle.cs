@@ -1,4 +1,4 @@
-﻿#region License
+#region License
  //
  // The Open Toolkit Library License
  //
@@ -25,7 +25,7 @@
  //
  #endregion
  
- using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -37,15 +37,9 @@ namespace OpenTK
     {
         #region Fields
 
-        public int X;
+        Point location;
 
-        public int Y;
-
-        public int Width;
-
-        public int Height;
-
-        public static readonly Rectangle Empty = new Rectangle();
+        Size size;
 
         #endregion
 
@@ -66,16 +60,40 @@ namespace OpenTK
 
         #region Public Members
 
+        public int X
+        {
+            get { return Location.X; }
+            set { Location = new Point (value, Y); }
+        }
+
+        public int Y
+        {
+            get { return Location.Y; }
+            set { Location = new Point (X, value); }
+        }
+
+        public int Width
+        { 
+            get { return Size.Width; }
+            set { Size = new Size (value, Height); }
+        }
+
+        public int Height
+        {
+            get { return Size.Height; }
+            set { Size = new Size(Width, value); }
+        }
+
         public Point Location
         {
-            get { return new Point(X, Y); }
-            set { X = value.X; Y = value.Y; }
+            get { return location; }
+            set { location = value; }
         }
 
         public Size Size
         {
-            get { return new Size(Width, Height); }
-            set { Width = value.Width; Height = value.Height; }
+            get { return size; }
+            set { size = value; }
         }
 
         public int Top { get { return Y; } }
@@ -83,10 +101,13 @@ namespace OpenTK
         public int Bottom { get { return Y + Height; } }
         public int Left { get { return X; } }
 
-        public bool IsEmpty
+        public bool IsEmpty 
         {
-            get { return X == 0 && Y == 0 && Width == 0 && Height == 0; }
+            get { return Location.IsEmpty && Size.IsEmpty; }
         }
+
+        public static readonly Rectangle Zero = new Rectangle();
+        public static readonly Rectangle Empty = new Rectangle();
 
         public static Rectangle FromLTRB(int left, int top, int right, int bottom)
         {
@@ -95,8 +116,13 @@ namespace OpenTK
 
         public bool Contains(Point point)
         {
-            return point.X >= Left && point.X < Right &&
+            return point.X >= Left && point.X < Right && 
                 point.Y >= Top && point.Y < Bottom;
+        }
+
+        public bool Contains(Rectangle rect)
+        {
+            return Contains(rect.Location) && Contains(rect.Location + rect.Size);
         }
 
         public static bool operator ==(Rectangle left, Rectangle right)
@@ -107,6 +133,21 @@ namespace OpenTK
         public static bool operator !=(Rectangle left, Rectangle right)
         {
             return !left.Equals(right);
+        }
+
+        public static implicit operator System.Drawing.Rectangle(Rectangle rect)
+        {
+            return new System.Drawing.Rectangle(rect.Location, rect.Size);
+        }
+
+        public static implicit operator Rectangle(System.Drawing.Rectangle rect)
+        {
+            return new Rectangle(rect.Location, rect.Size);
+        }
+
+        public static implicit operator System.Drawing.RectangleF(Rectangle rect)
+        {
+            return new System.Drawing.RectangleF(rect.Location, rect.Size);
         }
 
         #endregion
