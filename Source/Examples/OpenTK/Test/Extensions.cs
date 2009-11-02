@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
@@ -142,7 +142,7 @@ namespace Examples.WinForms
             // Change the width of our Form to make every DataGridView column visible.
             dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
             dataGridView1.Columns[1].Width = 450;
-            this.Size = dataGridView1.GetPreferredSize(new Size(2000, Height));
+            this.Size = dataGridView1.GetPreferredSize(new System.Drawing.Size(2000, Height));
         }
 
         #endregion
