@@ -1,4 +1,4 @@
-﻿#region License
+#region License
  //
  // The Open Toolkit Library License
  //
@@ -25,7 +25,7 @@
  //
  #endregion
  
- using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -37,25 +37,7 @@ namespace OpenTK
     {
         #region Fields
 
-        /// <summary>
-        /// The X coordinate of this instance.
-        /// </summary>
-        public int X;
-
-        /// <summary>
-        /// The Y coordinate of this instance.
-        /// </summary>
-        public int Y;
-
-        /// <summary>
-        /// Returns the Point (0, 0).
-        /// </summary>
-        public static readonly Point Zero = new Point();
-
-        /// <summary>
-        /// Returns the Point (0, 0).
-        /// </summary>
-        public static readonly Point Empty = new Point();
+        int x, y;
 
         #endregion
 
@@ -77,6 +59,65 @@ namespace OpenTK
         #region Public Members
 
         /// <summary>
+        /// Gets a <see cref="System.Boolean"/> that indicates whether this instance is empty or zero.
+        /// </summary>
+        public bool IsEmpty { get { return X == 0 && Y == 0; } }
+
+        /// <summary>
+        /// Gets or sets the X coordinate of this instance.
+        /// </summary>
+        public int X { get { return x; } set { x = value; } }
+
+        /// <summary>
+        /// Gets or sets the Y coordinate of this instance.
+        /// </summary>
+        public int Y { get { return y; } set { y = value; } }
+
+        /// <summary>
+        /// Returns the Point (0, 0).
+        /// </summary>
+        public static readonly Point Zero = new Point();
+
+        /// <summary>
+        /// Returns the Point (0, 0).
+        /// </summary>
+        public static readonly Point Empty = new Point();
+
+        /// <summary>
+        /// Translates the specified Point by the specified Size.
+        /// </summary>
+        /// <param name="point">
+        /// The <see cref="Point"/> instance to translate.
+        /// </param>
+        /// <param name="size">
+        /// The <see cref="Size"/> instance to translate point with.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="Point"/> instance translated by size.
+        /// </returns>
+        public static Point operator +(Point point, Size size)
+        {
+            return new Point(point.X + size.Width, point.Y + size.Height);
+        }
+
+        /// <summary>
+        /// Translates the specified Point by the negative of the specified Size.
+        /// </summary>
+        /// <param name="point">
+        /// The <see cref="Point"/> instance to translate.
+        /// </param>
+        /// <param name="size">
+        /// The <see cref="Size"/> instance to translate point with.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="Point"/> instance translated by size.
+        /// </returns>
+        public static Point operator -(Point point, Size size)
+        {
+            return new Point(point.X - size.Width, point.Y - size.Height);
+          }
+
+        /// <summary>
         /// Compares two instances for equality.
         /// </summary>
         /// <param name="left">The first instance.</param>
@@ -96,6 +137,48 @@ namespace OpenTK
         public static bool operator !=(Point left, Point right)
         {
             return !left.Equals(right);
+        }
+
+        /// <summary>
+        /// Converts an OpenTK.Point instance to a System.Drawing.Point.
+        /// </summary>
+        /// <param name="point">
+        /// The <see cref="Point"/> instance to convert.
+        /// </param>
+        /// <returns>
+        /// A <see cref="System.Drawing.Point"/> instance equivalent to point.
+        /// </returns>
+        public static implicit operator System.Drawing.Point(Point point)
+        {
+            return new System.Drawing.Point(point.X, point.Y);
+        }
+
+        /// <summary>
+        /// Converts a System.Drawing.Point instance to an OpenTK.Point.
+        /// </summary>
+        /// <param name="point">
+        /// The <see cref="System.Drawing.Point"/> instance to convert.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Point"/> instance equivalent to point.
+        /// </returns>
+        public static implicit operator Point(System.Drawing.Point point)
+        {
+            return new Point(point.X, point.Y);
+        }
+
+        /// <summary>
+        /// Converts an OpenTK.Point instance to a System.Drawing.PointF.
+        /// </summary>
+        /// <param name="point">
+        /// The <see cref="Point"/> instance to convert.
+        /// </param>
+        /// <returns>
+        /// A <see cref="System.Drawing.PointF"/> instance equivalent to point.
+        /// </returns>
+        public static implicit operator System.Drawing.PointF(Point point)
+        {
+            return new System.Drawing.PointF(point.X, point.Y);
         }
 
         /// <summary>
