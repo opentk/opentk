@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
@@ -159,7 +159,7 @@ namespace Examples.Tutorial
 
             using (Bitmap bitmap = new Bitmap("Data/Textures/JuliaColorTable.bmp"))
             {
-                BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly,
+                BitmapData data = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly,
                                                   System.Drawing.Imaging.PixelFormat.Format24bppRgb);
                 GL.TexImage1D(TextureTarget.Texture1D, 0, PixelInternalFormat.Rgb8, data.Width, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr,
                               PixelType.UnsignedByte, data.Scan0);
@@ -177,7 +177,7 @@ namespace Examples.Tutorial
             {
                 Bitmap bmp = new Bitmap(this.Width, this.Height);
                 System.Drawing.Imaging.BitmapData data = 
-                    bmp.LockBits(new Rectangle(0, 0, this.Width, this.Height),
+                    bmp.LockBits(new System.Drawing.Rectangle(0, 0, this.Width, this.Height),
                                  System.Drawing.Imaging.ImageLockMode.WriteOnly,
                                  System.Drawing.Imaging.PixelFormat.Format24bppRgb);
                 GL.ReadPixels(0, 0, this.Width, this.Height,

@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
@@ -68,7 +68,7 @@ namespace Examples.Tests
                 gfx.DrawString(String.Format("Mouse {0} window.", mouse_in_window ? "inside" : "outside of"), TextFont, Brushes.White, new PointF(0, 3 * TextFont.Height));
             }
 
-            System.Drawing.Imaging.BitmapData data = TextBitmap.LockBits(new Rectangle(0, 0, TextBitmap.Width, TextBitmap.Height),
+            System.Drawing.Imaging.BitmapData data = TextBitmap.LockBits(new System.Drawing.Rectangle(0, 0, TextBitmap.Width, TextBitmap.Height),
                 System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             GL.TexSubImage2D(TextureTarget.Texture2D, 0, 0, 0, TextBitmap.Width, TextBitmap.Height, PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
             TextBitmap.UnlockBits(data);
