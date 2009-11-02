@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -38,7 +38,7 @@ namespace OpenTK
     /// <summary>Provides information about the underlying OS and runtime.</summary>
     public static class Configuration
     {
-        static bool runningOnWindows, runningOnX11, runningOnMacOS, runningOnLinux, runningOnMono;
+        static bool runningOnWindows, runningOnUnix, runningOnX11, runningOnMacOS, runningOnLinux, runningOnMono;
 
         #region --- Constructors ---
 
@@ -53,36 +53,40 @@ namespace OpenTK
             else if (System.Environment.OSVersion.Platform == PlatformID.Unix ||
                      System.Environment.OSVersion.Platform == (PlatformID)4)
             {
+                try { runningOnX11 = OpenTK.Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
+                catch { }
+
                 // Distinguish between Unix and Mac OS X kernels.
                 switch (DetectUnixKernel())
                 {
-                    case "Unix":
-                        runningOnX11 = true;
-                        break;
+                case "Unix":
+                    runningOnUnix = true;
+                    break;
+                
+                case "Linux":
+                    runningOnLinux = runningOnUnix = true;
+                    break;
+                
+                case "Darwin":
+                    runningOnMacOS = runningOnUnix = true;
+                    break;
 
-                    case "Linux":
-                        runningOnLinux = runningOnX11 = true;
-                        break;
-
-                    case "Darwin":
-                        runningOnMacOS = true;
-                        break;
-
-                    default:
-                        throw new PlatformNotSupportedException(
+                default:
+                    throw new PlatformNotSupportedException(
                             DetectUnixKernel() + ": Unknown Unix platform. Please report this error at http://www.opentk.com.");
                 }
             }
             else
                 throw new PlatformNotSupportedException("Unknown platform. Please report this error at http://www.opentk.com.");
-
+            
             // Detect the Mono runtime (code taken from http://mono.wikia.com/wiki/Detecting_if_program_is_running_in_Mono).
             Type t = Type.GetType("Mono.Runtime");
             if (t != null)
                 runningOnMono = true;
-
+            
             Debug.Print("Detected configuration: {0} / {1}",
-                RunningOnWindows ? "Windows" : RunningOnLinux ? "Linux" : RunningOnMacOS ? "MacOS" : RunningOnX11 ? "X11" : "Unknown Platform",
+                RunningOnWindows ? "Windows" : RunningOnLinux ? "Linux" : RunningOnMacOS ? "MacOS" :
+                runningOnUnix ? "Unix" : RunningOnX11 ? "X11" : "Unknown Platform",
                 RunningOnMono ? "Mono" : ".Net");
         }
 
@@ -100,7 +104,18 @@ namespace OpenTK
         #region public static bool RunningOnX11
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on an X11 platform.</summary>
-        public static bool RunningOnX11 { get { return runningOnX11; } }
+        public static bool RunningOnX11
+        {
+            get { return runningOnX11; }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="System.Boolean"/> indicating whether OpenTK is running on a Unix platform.
+        /// </summary>
+        public static bool RunningOnUnix
+        {
+            get { return runningOnUnix; }
+        }
 
         #endregion
 
