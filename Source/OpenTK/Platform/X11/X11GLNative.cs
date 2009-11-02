@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -92,7 +92,7 @@ namespace OpenTK.Platform.X11
         
         Rectangle bounds, client_rectangle;
         int border_width;
-        System.Drawing.Icon icon;
+        Icon icon;
         bool has_focus;
         bool visible;
 
@@ -823,7 +823,7 @@ namespace OpenTK.Platform.X11
 
         #region Icon
 
-        public System.Drawing.Icon Icon
+        public Icon Icon
         {
             get
             {

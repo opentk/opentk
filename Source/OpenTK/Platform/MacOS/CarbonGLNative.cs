@@ -676,7 +676,7 @@ namespace OpenTK.Platform.MacOS
 
         #region INativeWindow Members
 
-        public System.Drawing.Icon Icon
+        public Icon Icon
         {
             get { return null; }
             set { }

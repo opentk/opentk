@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -71,7 +71,7 @@ namespace OpenTK.Platform.Windows
             bounds = new Rectangle(),
             client_rectangle = new Rectangle(),
             previous_bounds = new Rectangle(); // Used to restore previous size when leaving fullscreen mode.
-        System.Drawing.Icon icon;
+        Icon icon;
 
         static readonly ClassStyle ClassStyle =
             ClassStyle.OwnDC | ClassStyle.VRedraw | ClassStyle.HRedraw | ClassStyle.Ime;
@@ -727,7 +727,7 @@ namespace OpenTK.Platform.Windows
 
         #region Icon
 
-        public System.Drawing.Icon Icon
+        public Icon Icon
         {
             get
             {
@@ -737,7 +737,10 @@ namespace OpenTK.Platform.Windows
             {
                 icon = value;
                 if (window.WindowHandle != IntPtr.Zero)
+                {
+                    Functions.SendMessage(window.WindowHandle, WindowMessage.SETICON, (IntPtr)0, icon == null ? IntPtr.Zero : value.Handle);
                     Functions.SendMessage(window.WindowHandle, WindowMessage.SETICON, (IntPtr)1, icon == null ? IntPtr.Zero : value.Handle);
+                }
             }
         }
 
