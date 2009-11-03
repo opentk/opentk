@@ -531,7 +531,7 @@ namespace Bind.Structures
                 if (f.ReturnType.CurrentType.ToLower().Contains("void"))
                     f.Body.Add(String.Format("{0};", method_call));
                 else if (ReturnType.CurrentType.ToLower().Contains("string"))
-                    f.Body.Add(String.Format("{0} {1} = Marshal.PtrToStringAnsi({2});",
+                    f.Body.Add(String.Format("{0} {1} = null; unsafe {{ {1} = new string((sbyte*){2}); }}",
                         ReturnType.QualifiedType, "retval", method_call));
                 else
                     f.Body.Add(String.Format("{0} {1} = {2};", f.ReturnType.QualifiedType, "retval", method_call));
@@ -551,7 +551,7 @@ namespace Bind.Structures
                 if (f.ReturnType.CurrentType.ToLower().Contains("void"))
                     f.Body.Add(String.Format("{0};", f.CallString()));
                 else if (ReturnType.CurrentType.ToLower().Contains("string"))
-                    f.Body.Add(String.Format("return System.Runtime.InteropServices.Marshal.PtrToStringAnsi({0});",
+                    f.Body.Add(String.Format("unsafe {{ return new string((sbyte*){0}); }}",
                         f.CallString()));
                 else
                     f.Body.Add(String.Format("return {0};", f.CallString()));

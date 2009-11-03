@@ -2599,7 +2599,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.glGetString((OpenTK.Graphics.ES10.All)name));
+            unsafe { return new string((sbyte*)Delegates.glGetString((OpenTK.Graphics.ES10.All)name)); }
             #if DEBUG
             }
             #endif
