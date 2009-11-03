@@ -885,6 +885,41 @@ namespace OpenTK
 
         #endregion
 
+        #region Transform
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <returns>The result of the operation.</returns>
+        public static Vector2 Transform(Vector2 vec, Quaternion quat)
+        {
+            Vector2 result;
+            Transform(ref vec, ref quat, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <param name="result">The result of the operation.</param>
+        public static void Transform(ref Vector2 vec, ref Quaternion quat, out Vector2 result)
+        {
+            Quaternion v = new Quaternion() { X = vec.X, Y = vec.Y, Z = 0, W = 0 };
+            Quaternion i;
+            Quaternion t;
+            Quaternion.Invert(ref quat, out i);
+            t = i * v;
+            v = t * quat;
+
+            result = new Vector2(v.X, v.Y);
+        }
+
+        #endregion
+
         #endregion
 
         #region Operators
