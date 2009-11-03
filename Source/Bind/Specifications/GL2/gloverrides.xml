@@ -304,7 +304,12 @@
     <function name="MultiDrawElementsBaseVertex" extension="Core">
       <param name="mode"><type>BeginMode</type></param>
     </function>
-    
+
+    <function name="FramebufferTexture" extension="Core">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachment"><type>FramebufferAttachment</type></param>
+    </function>
+
     <!-- Arb -->
 
     <function name="VertexAttribPointer" extension="Arb">
