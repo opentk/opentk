@@ -8202,7 +8202,7 @@ namespace OpenTK.Graphics.ES20
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.glGetString((OpenTK.Graphics.ES20.StringName)name));
+            unsafe { return new string((sbyte*)Delegates.glGetString((OpenTK.Graphics.ES20.StringName)name)); }
             #if DEBUG
             }
             #endif
