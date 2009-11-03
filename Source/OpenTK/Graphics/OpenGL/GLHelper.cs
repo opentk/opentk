@@ -52,7 +52,8 @@ namespace OpenTK.Graphics.OpenGL
 
         internal const string Library = "opengl32.dll";
 
-        private static SortedList<string, bool> AvailableExtensions = new SortedList<string, bool>();
+        static SortedList<string, bool> AvailableExtensions = new SortedList<string, bool>();
+        static readonly object sync_root = new object();
 
         #endregion
 
@@ -333,6 +334,18 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 #endif
+        #endregion
+
+        #region --- Protected Members ---
+
+        /// <summary>
+        /// Returns a synchronization token unique for the GL class.
+        /// </summary>
+        protected override object SyncRoot
+        {
+            get { return sync_root; }
+        }
+
         #endregion
 
         #region --- GL Overloads ---
