@@ -925,10 +925,7 @@ namespace OpenTK
         public static Vector4 Transform(Vector4 vec, Matrix4 mat)
         {
             Vector4 result;
-            result.X = Vector4.Dot(vec, mat.Column0);
-            result.Y = Vector4.Dot(vec, mat.Column1);
-            result.Z = Vector4.Dot(vec, mat.Column2);
-            result.W = Vector4.Dot(vec, mat.Column3);
+            Transform(ref vec, ref mat, out result);
             return result;
         }
 
@@ -938,25 +935,11 @@ namespace OpenTK
         /// <param name="result">The transformed vector</param>
         public static void Transform(ref Vector4 vec, ref Matrix4 mat, out Vector4 result)
         {
-            result.X = vec.X * mat.Row0.X +
-                       vec.Y * mat.Row1.X +
-                       vec.Z * mat.Row2.X +
-                       vec.W * mat.Row3.X;
-
-            result.Y = vec.X * mat.Row0.Y +
-                       vec.Y * mat.Row1.Y +
-                       vec.Z * mat.Row2.Y +
-                       vec.W * mat.Row3.Y;
-
-            result.Z = vec.X * mat.Row0.Z +
-                       vec.Y * mat.Row1.Z +
-                       vec.Z * mat.Row2.Z +
-                       vec.W * mat.Row3.Z;
-
-            result.W = vec.X * mat.Row0.W +
-                       vec.Y * mat.Row1.W +
-                       vec.Z * mat.Row2.W +
-                       vec.W * mat.Row3.W;
+            result = new Vector4(
+                vec.X * mat.Row0.X + vec.Y * mat.Row1.X + vec.Z * mat.Row2.X + vec.W * mat.Row3.X,
+                vec.X * mat.Row0.Y + vec.Y * mat.Row1.Y + vec.Z * mat.Row2.Y + vec.W * mat.Row3.Y,
+                vec.X * mat.Row0.Z + vec.Y * mat.Row1.Z + vec.Z * mat.Row2.Z + vec.W * mat.Row3.Z,
+                vec.X * mat.Row0.W + vec.Y * mat.Row1.W + vec.Z * mat.Row2.W + vec.W * mat.Row3.W);
         }
 
         #endregion
