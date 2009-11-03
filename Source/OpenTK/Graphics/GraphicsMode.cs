@@ -23,7 +23,7 @@ namespace OpenTK.Graphics
 
         static GraphicsMode defaultMode;
         static IGraphicsMode implementation;
-        static object mode_selection_lock = new object();
+        static readonly object SyncRoot = new object();
 
         #region --- Constructors ---
 
@@ -31,7 +31,10 @@ namespace OpenTK.Graphics
         
         static GraphicsMode()
         {
-            implementation = Platform.Factory.Default.CreateGraphicsMode();
+            lock (SyncRoot)
+            {
+                implementation = Platform.Factory.Default.CreateGraphicsMode();
+            }
         }
 
         #endregion
@@ -180,10 +183,7 @@ namespace OpenTK.Graphics
                 if (index == null)
                 {
                     GraphicsMode mode;
-                    lock (mode_selection_lock)
-                    {
-                        mode = implementation.SelectGraphicsMode(ColorFormat, Depth, Stencil, Samples, AccumulatorFormat, Buffers, Stereo);
-                    }
+                    mode = implementation.SelectGraphicsMode(ColorFormat, Depth, Stencil, Samples, AccumulatorFormat, Buffers, Stereo);
 
                     Index = mode.Index;
                     ColorFormat = mode.ColorFormat;
@@ -303,13 +303,16 @@ namespace OpenTK.Graphics
         {
             get
             {
-                if (defaultMode == null)
+                lock (SyncRoot)
                 {
-                    Debug.Print("Creating default GraphicsMode ({0}, {1}, {2}, {3}, {4}, {5}, {6}).", DisplayDevice.Default.BitsPerPixel,
-                                16, 0, 0, 0, 2, false);
-                    defaultMode = new GraphicsMode(DisplayDevice.Default.BitsPerPixel, 16, 0, 0, 0, 2, false);
+                    if (defaultMode == null)
+                    {
+                        Debug.Print("Creating default GraphicsMode ({0}, {1}, {2}, {3}, {4}, {5}, {6}).", DisplayDevice.Default.BitsPerPixel,
+                                    16, 0, 0, 0, 2, false);
+                        defaultMode = new GraphicsMode(DisplayDevice.Default.BitsPerPixel, 16, 0, 0, 0, 2, false);
+                    }
+                    return defaultMode;
                 }
-                return defaultMode;
             }
         }
 
