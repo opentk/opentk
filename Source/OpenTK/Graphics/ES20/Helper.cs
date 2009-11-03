@@ -37,6 +37,19 @@ namespace OpenTK.Graphics.ES20
     public sealed partial class GL : GraphicsBindingsBase
     {
         const string Library = "libGLESv2.dll";
+        static readonly object sync_root = new object();
+
+        #region --- Protected Members ---
+
+        /// <summary>
+        /// Returns a synchronization token unique for the GL class.
+        /// </summary>
+        protected override object SyncRoot
+        {
+            get { return sync_root; }
+        }
+
+        #endregion
 
         #region Helper Overloads
 

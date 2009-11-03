@@ -35,11 +35,12 @@ namespace OpenTK.Compute.CL10
     /// <summary>
     /// Provides access to the OpenCL 1.0 flat API.
     /// </summary>
-    public partial class CL
+    public partial class CL : BindingsBase
     {
-        #region Private Members
+        #region Fields
 
         const string Library = "opencl.dll";
+        static readonly object sync_root = new object();
 
         #endregion
 
@@ -58,6 +59,36 @@ namespace OpenTK.Compute.CL10
                 Delegate @new = Delegate.CreateDelegate(delegates[i].FieldType, method);
                 delegates[i].SetValue(null, @new);
             }
+        }
+
+        #endregion
+
+        #region Protected Members
+
+        /// <summary>
+        /// Returns a synchronization token unique for the GL class.
+        /// </summary>
+        protected override object SyncRoot
+        {
+            get { return sync_root; }
+        }
+
+        /// <summary>
+        /// Not supported yet.
+        /// </summary>
+        /// <param name="funcname">The name of the extension function.</param>
+        /// <returns>A pointer to the extension function, if available; IntPtr.Zero otherwise.</returns>
+        /// <remarks>
+        /// <para>Use <see cref="Marshal.GetDelegateForFunctionPointer"/> to turn this function pointer
+        /// into a callable delegate.</para>
+        /// <para>A non-zero return value does not mean that this extension function is supported. You also
+        /// need to query available extensions through <see cref="GetDeviceInfo"/>.</para>
+        /// <para>This method will always return IntPtr.Zero for core (i.e. non-extension) functions.</para>
+        /// </remarks>
+        protected override IntPtr GetAddress(string funcname)
+        {
+            throw new NotSupportedException();
+            //CL.GetExtensionFunctionAddress
         }
 
         #endregion
