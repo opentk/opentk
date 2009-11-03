@@ -7794,6 +7794,15 @@ GetPName enum:
 ErrorCode enum:             
 	INVALID_FRAMEBUFFER_OPERATION_EXT = 0x0506
 	
+# ARB_texture_buffer_object tokens
+# Sections 2.9, 3.8.5 and 3.8.14 of the 3.2 specs.
+# See also http://www.opentk.com/node/1313
+BufferTarget enum:
+    TEXTURE_BUFFER                  = 0x8C2A
+
+TextureTarget enum:
+    TEXTURE_BUFFER                  = 0x8C2A
+	
 	
 # Version 3.2
 
