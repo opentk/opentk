@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -51,11 +51,11 @@ namespace Bind
                 // The pure XmlReader is ~20x faster than the XmlTextReader.
                 doc = XmlReader.Create(new StringReader(text), settings);
                 //doc = new XmlTextReader(new StringReader(text));
-    
+                
                 using (StringWriter sw = new StringWriter())
                 {
                     xslt.Transform(doc, null, sw);
-                    return sw.ToString();
+                    return sw.ToString().TrimEnd('\n');
                 }
             }
             catch (XmlException e)
