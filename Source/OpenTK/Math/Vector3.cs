@@ -1076,14 +1076,10 @@ namespace OpenTK
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <returns>The transformed vector</returns>
-        public static Vector4 Transform(Vector3 vec, Matrix4 mat)
+        public static Vector3 Transform(Vector3 vec, Matrix4 mat)
         {
-            Vector4 v4 = new Vector4(vec.X, vec.Y, vec.Z, 1.0f);
-            Vector4 result;
-            result.X = Vector4.Dot(v4, mat.Column0);
-            result.Y = Vector4.Dot(v4, mat.Column1);
-            result.Z = Vector4.Dot(v4, mat.Column2);
-            result.W = Vector4.Dot(v4, mat.Column3);
+            Vector3 result;
+            Transform(ref vec, ref mat, out result);
             return result;
         }
 
@@ -1091,10 +1087,11 @@ namespace OpenTK
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <param name="result">The transformed vector</param>
-        public static void Transform(ref Vector3 vec, ref Matrix4 mat, out Vector4 result)
+        public static void Transform(ref Vector3 vec, ref Matrix4 mat, out Vector3 result)
         {
             Vector4 v4 = new Vector4(vec.X, vec.Y, vec.Z, 1.0f);
-            Vector4.Transform(ref v4, ref mat, out result);
+            Vector4.Transform(ref v4, ref mat, out v4);
+            result = v4.Xyz;
         }
 
         /// <summary>Transform a Vector3 by the given Matrix, and project the resulting Vector4 back to a Vector3</summary>
@@ -1103,8 +1100,9 @@ namespace OpenTK
         /// <returns>The transformed vector</returns>
         public static Vector3 TransformPerspective(Vector3 vec, Matrix4 mat)
         {
-            Vector4 h = Transform(vec, mat);
-            return new Vector3(h.X / h.W, h.Y / h.W, h.Z / h.W);
+            Vector3 result;
+            TransformPerspective(ref vec, ref mat, out result);
+            return result;
         }
 
         /// <summary>Transform a Vector3 by the given Matrix, and project the resulting Vector4 back to a Vector3</summary>
@@ -1113,11 +1111,11 @@ namespace OpenTK
         /// <param name="result">The transformed vector</param>
         public static void TransformPerspective(ref Vector3 vec, ref Matrix4 mat, out Vector3 result)
         {
-            Vector4 h;
-            Vector3.Transform(ref vec, ref mat, out h);
-            result.X = h.X / h.W;
-            result.Y = h.Y / h.W;
-            result.Z = h.Z / h.W;
+            Vector4 v = new Vector4(vec);
+            Vector4.Transform(ref v, ref mat, out v);
+            result.X = v.X / v.W;
+            result.Y = v.Y / v.W;
+            result.Z = v.Z / v.W;
         }
 
         #endregion
