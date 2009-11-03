@@ -32,7 +32,7 @@ namespace OpenTK.Graphics
 
         static bool share_contexts = true;
         static bool direct_rendering = true;
-        readonly static object context_lock = new object();        
+        readonly static object SyncRoot = new object();        
         // Maps OS-specific context handles to GraphicsContext weak references.
         readonly static Dictionary<ContextHandle, WeakReference> available_contexts = new Dictionary<ContextHandle, WeakReference>();
 
@@ -50,7 +50,7 @@ namespace OpenTK.Graphics
         {
             implementation = new OpenTK.Platform.Dummy.DummyGLContext(handle);
 
-            lock (context_lock)
+            lock (SyncRoot)
             {
                 available_contexts.Add((implementation as IGraphicsContextInternal).Context, new WeakReference(this));
             }
@@ -78,31 +78,31 @@ namespace OpenTK.Graphics
         /// </remarks>
         public GraphicsContext(GraphicsMode mode, IWindowInfo window, int major, int minor, GraphicsContextFlags flags)
         {
-            bool designMode = false;
-            if (mode == null && window == null)
-                designMode = true;
-            else if (mode == null) throw new ArgumentNullException("mode", "Must be a valid GraphicsMode.");
-            else if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
-
-            // Silently ignore invalid major and minor versions.
-            if (major <= 0)
-                major = 1;
-            if (minor < 0)
-                minor = 0;
-
-            Debug.Print("Creating GraphicsContext.");
-            try
+            lock (SyncRoot)
             {
-                Debug.Indent();
-                Debug.Print("GraphicsMode: {0}", mode);
-                Debug.Print("IWindowInfo: {0}", window);
-                Debug.Print("GraphicsContextFlags: {0}", flags);
-                Debug.Print("Requested version: {0}.{1}", major, minor);
+                bool designMode = false;
+                if (mode == null && window == null)
+                    designMode = true;
+                else if (mode == null) throw new ArgumentNullException("mode", "Must be a valid GraphicsMode.");
+                else if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
 
-                IGraphicsContext shareContext = null;
-                if (GraphicsContext.ShareContexts)
+                // Silently ignore invalid major and minor versions.
+                if (major <= 0)
+                    major = 1;
+                if (minor < 0)
+                    minor = 0;
+
+                Debug.Print("Creating GraphicsContext.");
+                try
                 {
-                    lock (context_lock)
+                    Debug.Indent();
+                    Debug.Print("GraphicsMode: {0}", mode);
+                    Debug.Print("IWindowInfo: {0}", window);
+                    Debug.Print("GraphicsContextFlags: {0}", flags);
+                    Debug.Print("Requested version: {0}.{1}", major, minor);
+
+                    IGraphicsContext shareContext = null;
+                    if (GraphicsContext.ShareContexts)
                     {
                         // A small hack to create a shared context with the first available context.
                         foreach (WeakReference r in GraphicsContext.available_contexts.Values)
@@ -111,26 +111,23 @@ namespace OpenTK.Graphics
                             break;
                         }
                     }
-                }
 
-                // Todo: Add a DummyFactory implementing IPlatformFactory.
-                if (designMode)
-                    implementation = new Platform.Dummy.DummyGLContext();
-                else
-                    switch ((flags & GraphicsContextFlags.Embedded) == GraphicsContextFlags.Embedded)
-                    {
-                        case false: implementation = Factory.Default.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags); break;
-                        case true: implementation = Factory.Embedded.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags); break;
-                    }
+                    // Todo: Add a DummyFactory implementing IPlatformFactory.
+                    if (designMode)
+                        implementation = new Platform.Dummy.DummyGLContext();
+                    else
+                        switch ((flags & GraphicsContextFlags.Embedded) == GraphicsContextFlags.Embedded)
+                        {
+                            case false: implementation = Factory.Default.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags); break;
+                            case true: implementation = Factory.Embedded.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags); break;
+                        }
 
-                lock (context_lock)
-                {
                     available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
                 }
-            }
-            finally
-            {
-                Debug.Unindent();
+                finally
+                {
+                    Debug.Unindent();
+                }
             }
         }
 
@@ -201,7 +198,7 @@ namespace OpenTK.Graphics
         {
             get
             {
-                lock (context_lock)
+                lock (SyncRoot)
                 {
                     if (available_contexts.Count > 0)
                     {
@@ -282,7 +279,7 @@ namespace OpenTK.Graphics
         /// </remarks>
         void CreateContext(bool direct, IGraphicsContext source)
         {
-            lock (context_lock)
+            lock (SyncRoot)
             {
                 available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
             }
@@ -418,7 +415,7 @@ namespace OpenTK.Graphics
             if (!IsDisposed)
             {
                 Debug.Print("Disposing context {0}.", (this as IGraphicsContextInternal).Context.ToString());
-                lock (context_lock)
+                lock (SyncRoot)
                 {
                     available_contexts.Remove((this as IGraphicsContextInternal).Context);
                 }
