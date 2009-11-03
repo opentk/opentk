@@ -32,7 +32,7 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Implements BindingsBase for the OpenTK.Graphics namespace (OpenGL and OpenGL|ES).
     /// </summary>
-    public class GraphicsBindingsBase : BindingsBase
+    public abstract class GraphicsBindingsBase : BindingsBase
     {
         /// <summary>
         /// Retrieves an unmanaged function pointer to the specified function.

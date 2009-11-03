@@ -111,6 +111,14 @@ namespace OpenTK
         /// </remarks>
         protected abstract IntPtr GetAddress(string funcname);
 
+        /// <summary>
+        /// Gets an object that can be used to synchronize access to the bindings implementation.
+        /// </summary>
+        /// <remarks>This object should be unique across bindings but consistent between bindings
+        /// of the same type. For example, ES10.GL, OpenGL.GL and CL10.CL should all return 
+        /// unique objects, but all instances of ES10.GL should return the same object.</remarks>
+        protected abstract object SyncRoot { get; }
+
         #endregion
 
         #region Internal Members
@@ -141,7 +149,10 @@ namespace OpenTK
                 if (d != null)
                     ++supported;
 
-                f.SetValue(null, d);
+                lock (SyncRoot)
+                {
+                    f.SetValue(null, d);
+                }
             }
 
             rebuildExtensionList = true;
@@ -166,9 +177,12 @@ namespace OpenTK
 
             Delegate old = f.GetValue(null) as Delegate;
             Delegate @new = LoadDelegate(f.Name, f.FieldType);
-            if (old.Target != @new.Target)
+            lock (SyncRoot)
             {
-                f.SetValue(null, @new);
+                if (old.Target != @new.Target)
+                {
+                    f.SetValue(null, @new);
+                }
             }
             return @new != null;
         }
