@@ -1072,24 +1072,22 @@ namespace OpenTK
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <returns>The transformed vector</returns>
-        public static Vector4d Transform(Vector3d vec, Matrix4d mat)
+        public static Vector3d Transform(Vector3d vec, Matrix4d mat)
         {
-            Vector4d v4 = new Vector4d(vec.X, vec.Y, vec.Z, 1.0f);
-            return new Vector4d(
-                Vector4d.Dot(v4, mat.Column0),
-                Vector4d.Dot(v4, mat.Column1),
-                Vector4d.Dot(v4, mat.Column2),
-                Vector4d.Dot(v4, mat.Column3));
+            Vector3d result;
+            Transform(ref vec, ref mat, out result);
+            return result;
         }
 
         /// <summary>Transform a Vector by the given Matrix</summary>
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <param name="result">The transformed vector</param>
-        public static void Transform(ref Vector3d vec, ref Matrix4d mat, out Vector4d result)
+        public static void Transform(ref Vector3d vec, ref Matrix4d mat, out Vector3d result)
         {
             Vector4d v4 = new Vector4d(vec.X, vec.Y, vec.Z, 1.0f);
-            Vector4d.Transform(ref v4, ref mat, out result);
+            Vector4d.Transform(ref v4, ref mat, out v4);
+            result = v4.Xyz;
         }
 
         /// <summary>
@@ -1100,8 +1098,9 @@ namespace OpenTK
         /// <returns>The transformed vector</returns>
         public static Vector3d TransformPerspective(Vector3d vec, Matrix4d mat)
         {
-            Vector4d h = Transform(vec, mat);
-            return new Vector3d(h.X / h.W, h.Y / h.W, h.Z / h.W);
+            Vector3d result;
+            TransformPerspective(ref vec, ref mat, out result);
+            return result;
         }
 
         /// <summary>Transform a Vector3d by the given Matrix, and project the resulting Vector4d back to a Vector3d</summary>
@@ -1110,11 +1109,11 @@ namespace OpenTK
         /// <param name="result">The transformed vector</param>
         public static void TransformPerspective(ref Vector3d vec, ref Matrix4d mat, out Vector3d result)
         {
-            Vector4d h;
-            Vector3d.Transform(ref vec, ref mat, out h);
-            result.X = h.X / h.W;
-            result.Y = h.Y / h.W;
-            result.Z = h.Z / h.W;
+            Vector4d v = new Vector4d(vec);
+            Vector4d.Transform(ref v, ref mat, out v);
+            result.X = v.X / v.W;
+            result.Y = v.Y / v.W;
+            result.Z = v.Z / v.W;
         }
 
         #endregion
