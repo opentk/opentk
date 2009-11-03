@@ -30,7 +30,7 @@ namespace Examples.Tutorial
     {
         #region --- Fields ---
 
-        float rotation_speed = 3.0f;
+        const float rotation_speed = 180.0f;
         float angle;
 
         #endregion
@@ -115,6 +115,7 @@ namespace Examples.Tutorial
             DrawCube();
 
             this.SwapBuffers();
+            Thread.Sleep(1);
         }
 
         #endregion
