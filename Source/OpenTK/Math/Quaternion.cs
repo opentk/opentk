@@ -296,6 +296,7 @@ namespace OpenTK
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>A new instance containing the result of the calculation.</returns>
+        [Obsolete("Use Multiply instead.")]
         public static Quaternion Mult(Quaternion left, Quaternion right)
         {
             return new Quaternion(
@@ -309,7 +310,34 @@ namespace OpenTK
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <param name="result">A new instance containing the result of the calculation.</param>
+        [Obsolete("Use Multiply instead.")]
         public static void Mult(ref Quaternion left, ref Quaternion right, out Quaternion result)
+        {
+            result = new Quaternion(
+                right.W * left.Xyz + left.W * right.Xyz + Vector3.Cross(left.Xyz, right.Xyz),
+                left.W * right.W - Vector3.Dot(left.Xyz, right.Xyz));
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>A new instance containing the result of the calculation.</returns>
+        public static Quaternion Multiply(Quaternion left, Quaternion right)
+        {
+            Quaternion result;
+            Multiply(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <param name="result">A new instance containing the result of the calculation.</param>
+        public static void Multiply(ref Quaternion left, ref Quaternion right, out Quaternion result)
         {
             result = new Quaternion(
                 right.W * left.Xyz + left.W * right.Xyz + Vector3.Cross(left.Xyz, right.Xyz),
@@ -322,7 +350,7 @@ namespace OpenTK
         /// <param name="quaternion">The instance.</param>
         /// <param name="scale">The scalar.</param>
         /// <param name="result">A new instance containing the result of the calculation.</param>
-        public static void Multiply(ref Quaternion quaternion, ref float scale, out Quaternion result)
+        public static void Multiply(ref Quaternion quaternion, float scale, out Quaternion result)
         {
             result = new Quaternion(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);
         }
@@ -556,9 +584,7 @@ namespace OpenTK
         /// <returns>The result of the calculation.</returns>
         public static Quaternion operator *(Quaternion left, Quaternion right)
         {
-            float w = left.W * right.W - Vector3.Dot(left.Xyz, right.Xyz);
-            left.Xyz = right.W * left.Xyz + left.W * right.Xyz + Vector3.Cross(left.Xyz, right.Xyz);
-            left.W = w;
+            Multiply(ref left, ref right, out left);
             return left;
         }
 
@@ -570,7 +596,8 @@ namespace OpenTK
         /// <returns>A new instance containing the result of the calculation.</returns>
         public static Quaternion operator *(Quaternion quaternion, float scale)
         {
-            return new Quaternion(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);
+            Multiply(ref quaternion, scale, out quaternion);
+            return quaternion;
         }
 
         /// <summary>
