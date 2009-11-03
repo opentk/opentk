@@ -5304,6 +5304,7 @@ namespace OpenTK.Graphics.OpenGL
         PixelPackBuffer = ((int)0x88EB),
         PixelUnpackBuffer = ((int)0x88EC),
         UniformBuffer = ((int)0x8A11),
+        TextureBuffer = ((int)0x8C2A),
         TransformFeedbackBuffer = ((int)0x8C8E),
         CopyReadBuffer = ((int)0x8F36),
         CopyWriteBuffer = ((int)0x8F37),
@@ -10454,6 +10455,7 @@ namespace OpenTK.Graphics.OpenGL
         ProxyTexture1DArray = ((int)0x8C19),
         Texture2DArray = ((int)0x8C1A),
         ProxyTexture2DArray = ((int)0x8C1B),
+        TextureBuffer = ((int)0x8C2A),
         Texture2DMultisample = ((int)0x9100),
         Texture2DMultisampleArray = ((int)0x9102),
     }
