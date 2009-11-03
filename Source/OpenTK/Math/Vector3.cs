@@ -1094,6 +1094,37 @@ namespace OpenTK
             result = v4.Xyz;
         }
 
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <returns>The result of the operation.</returns>
+        public static Vector3 Transform(Vector3 vec, Quaternion quat)
+        {
+            Vector3 result;
+            Transform(ref vec, ref quat, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <param name="result">The result of the operation.</param>
+        public static void Transform(ref Vector3 vec, ref Quaternion quat, out Vector3 result)
+        {
+            Quaternion v = new Quaternion() { X = vec.X, Y = vec.Y, Z = vec.Z, W = 0 };
+            Quaternion i;
+            Quaternion t;
+            Quaternion.Invert(ref quat, out i);
+            t = i * v;
+            v = t * quat;
+
+            result = new Vector3(v.X, v.Y, v.Z);
+        }
+
         /// <summary>Transform a Vector3 by the given Matrix, and project the resulting Vector4 back to a Vector3</summary>
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>

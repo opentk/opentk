@@ -945,6 +945,37 @@ namespace OpenTK
                 vec.X * mat.Row0.W + vec.Y * mat.Row1.W + vec.Z * mat.Row2.W + vec.W * mat.Row3.W);
         }
 
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <returns>The result of the operation.</returns>
+        public static Vector4d Transform(Vector4d vec, Quaterniond quat)
+        {
+            Vector4d result;
+            Transform(ref vec, ref quat, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <param name="result">The result of the operation.</param>
+        public static void Transform(ref Vector4d vec, ref Quaterniond quat, out Vector4d result)
+        {
+            Quaterniond v = new Quaterniond() { X = vec.X, Y = vec.Y, Z = vec.Z, W = vec.W };
+            Quaterniond i;
+            Quaterniond t;
+            Quaterniond.Invert(ref quat, out i);
+            t = i * v;
+            v = t * quat;
+
+            result = new Vector4d(v.X, v.Y, v.Z, v.W);
+        }
+
         #endregion
 
         #endregion
