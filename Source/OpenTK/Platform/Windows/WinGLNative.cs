@@ -45,13 +45,15 @@ namespace OpenTK.Platform.Windows
     {
         #region Fields
 
+        readonly static object SyncRoot = new object();
+
         readonly static ExtendedWindowStyle ParentStyleEx = ExtendedWindowStyle.WindowEdge;
         readonly static ExtendedWindowStyle ChildStyleEx = 0;
 
         readonly IntPtr Instance = Marshal.GetHINSTANCE(typeof(WinGLNative).Module);
-        readonly IntPtr ClassName = Marshal.StringToHGlobalAuto("OpenTK.INativeWindow" + WindowCount++.ToString());
+        readonly IntPtr ClassName;
         readonly WindowProcedure WindowProcedureDelegate;
-        readonly UIntPtr ModalLoopTimerId = new UIntPtr(1);
+        readonly UIntPtr ModalLoopTimerId;
         readonly uint ModalLoopTimerPeriod = 1;
         UIntPtr timer_handle;
         readonly Functions.TimerProc ModalLoopCallback;
@@ -73,12 +75,10 @@ namespace OpenTK.Platform.Windows
             previous_bounds = new Rectangle(); // Used to restore previous size when leaving fullscreen mode.
         Icon icon;
 
-        static readonly ClassStyle ClassStyle =
+        const ClassStyle DefaultClassStyle =
             ClassStyle.OwnDC | ClassStyle.VRedraw | ClassStyle.HRedraw | ClassStyle.Ime;
 
-        static int WindowCount = 0; // Used to create unique window class names.
-
-        IntPtr DefaultWindowProcedure =
+        readonly IntPtr DefaultWindowProcedure =
             Marshal.GetFunctionPointerForDelegate(new WindowProcedure(Functions.DefWindowProc));
 
         // Used for IInputDriver implementation
@@ -93,12 +93,21 @@ namespace OpenTK.Platform.Windows
 
         KeyPressEventArgs key_press = new KeyPressEventArgs((char)0);
 
+        static int window_count;
+
         #endregion
 
         #region Contructors
 
         public WinGLNative(int x, int y, int width, int height, string title, GameWindowFlags options, DisplayDevice device)
         {
+            lock (SyncRoot)
+            {
+                ++window_count;
+                ClassName = Marshal.StringToHGlobalAuto(typeof(WinGLNative).Name + window_count.ToString());
+                ModalLoopTimerId = new UIntPtr((uint)window_count);
+            }
+
             // This is the main window procedure callback. We need the callback in order to create the window, so
             // don't move it below the CreateWindow calls.
             WindowProcedureDelegate = WindowProcedure;
@@ -143,8 +152,6 @@ namespace OpenTK.Platform.Windows
 
         IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            bool mouse_left = false;
-
             switch (message)
             {
                 #region Size / Move / Style events
@@ -160,8 +167,8 @@ namespace OpenTK.Platform.Windows
 
                     if (new_focused_state != Focused && FocusedChanged != null)
                         FocusedChanged(this, EventArgs.Empty);
-                    break;
-
+                    return IntPtr.Zero;
+                    
                 case WindowMessage.ENTERMENULOOP:
                 case WindowMessage.ENTERSIZEMOVE:
                     // Entering the modal size/move loop: we don't want rendering to
@@ -307,6 +314,7 @@ namespace OpenTK.Platform.Windows
                         }
                         else if (Functions.GetCapture() != window.WindowHandle)
                         {
+                            Functions.SetFocus(window.WindowHandle);
                             Functions.SetCapture(window.WindowHandle);
                             if (MouseEnter != null)
                                 MouseEnter(this, EventArgs.Empty);
@@ -542,7 +550,7 @@ namespace OpenTK.Platform.Windows
             {
                 ExtendedWindowClass wc = new ExtendedWindowClass();
                 wc.Size = ExtendedWindowClass.SizeInBytes;
-                wc.Style = ClassStyle;
+                wc.Style = DefaultClassStyle;
                 wc.Instance = Instance;
                 wc.WndProc = WindowProcedureDelegate;
                 wc.ClassName = ClassName;
@@ -552,7 +560,17 @@ namespace OpenTK.Platform.Windows
                 ushort atom = Functions.RegisterClassEx(ref wc);
 
                 if (atom == 0)
-                    throw new PlatformException(String.Format("Failed to register window class. Error: {0}", Marshal.GetLastWin32Error()));
+                {
+                    int error= Marshal.GetLastWin32Error();
+                    Debug.Print("Failed to register class {0}, due to error {1}.", Marshal.PtrToStringAuto(ClassName), error);
+
+                    // Error 1410 means "class already exists", which means we'll just go ahead and use it.
+                    // In all other cases, we'll throw an exception and stop execution.
+                    if (error != 1410)
+                    {
+                        throw new PlatformException(String.Format("Failed to register window class. Error: {0}", error));
+                    }
+                }
 
                 class_registered = true;
             }

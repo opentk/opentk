@@ -941,6 +941,9 @@ namespace OpenTK.Platform.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         public static extern IntPtr GetCapture();
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern IntPtr SetFocus(IntPtr hwnd);
+
         #region Async input
 
         #region GetCursorPos
@@ -4100,6 +4103,18 @@ namespace OpenTK.Platform.Windows
         NONCLIENT = 0x00000010,
         QUERY = 0x40000000,
         CANCEL = 0x80000000,
+    }
+
+    #endregion
+
+    #region MouseActivate
+
+    enum MouseActivate
+    {
+        ACTIVATE = 1,
+        ACTIVATEANDEAT = 2,
+        NOACTIVATE = 3,
+        NOACTIVATEANDEAT = 4,
     }
 
     #endregion
