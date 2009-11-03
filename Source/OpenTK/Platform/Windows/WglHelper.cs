@@ -132,7 +132,6 @@ namespace OpenTK.Platform.Windows
         /// <summary>Contains ARB extensions for WGL.</summary>
         public static partial class Arb
         {
-            private static string[] extensions;
             /// <summary>
             /// Checks if a Wgl extension is supported by the given context.
             /// </summary>
@@ -141,20 +140,27 @@ namespace OpenTK.Platform.Windows
             /// <returns>True if the extension is supported by the given context, false otherwise</returns>
             public static bool SupportsExtension(WinGLContext context, string ext)
             {
-                if (Wgl.Delegates.wglGetExtensionsStringARB != null)
+                // We cache this locally, as another thread might create a context which doesn't support  this method.
+                // The design is far from ideal, but there's no good solution to this issue as long as we are using
+                // static WGL/GL classes. Fortunately, this issue is extremely unlikely to arise in practice, as you'd
+                // have to create one accelerated and one non-accelerated context in the same application, with the
+                // non-accelerated context coming second.
+                Wgl.Delegates.GetExtensionsStringARB get = Wgl.Delegates.wglGetExtensionsStringARB;
+
+                if (get != null)
                 {
-                    if (rebuildExtensionList)
+                    string[] extensions = null;
+                    unsafe
                     {
-                        rebuildExtensionList = false;
-
-                        extensions = Wgl.Arb.GetExtensionsString(context.DeviceContext).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        if (extensions == null || extensions.Length == 0)
-                            return false;
-
-                        Array.Sort(extensions);
+                        extensions = new string((sbyte*)get(context.DeviceContext))
+                            .Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                     }
+                    if (extensions == null || extensions.Length == 0)
+                        return false;
 
-                    return Array.BinarySearch(extensions, ext) != -1;
+                    foreach (string s in extensions)
+                        if (s == ext)
+                            return true;
                 }
                 return false;
             }
