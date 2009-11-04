@@ -27,7 +27,7 @@ namespace OpenTK.Graphics
         // Indicates that this context was created through external means, e.g. Tao.Sdl or GLWidget#.
         // In this case, We'll assume that the external program will manage the lifetime of this
         // context - we'll not destroy it manually.
-        //bool is_external;
+        readonly bool IsExternal;
         bool check_errors = true;
 
         static bool share_contexts = true;
@@ -101,17 +101,8 @@ namespace OpenTK.Graphics
                     Debug.Print("GraphicsContextFlags: {0}", flags);
                     Debug.Print("Requested version: {0}.{1}", major, minor);
 
-                    IGraphicsContext shareContext = null;
-                    if (GraphicsContext.ShareContexts)
-                    {
-                        // A small hack to create a shared context with the first available context.
-                        foreach (WeakReference r in GraphicsContext.available_contexts.Values)
-                        {
-                            shareContext = (IGraphicsContext)r.Target;
-                            break;
-                        }
-                    }
-
+                    IGraphicsContext shareContext = shareContext = FindSharedContext();
+                    
                     // Todo: Add a DummyFactory implementing IPlatformFactory.
                     if (designMode)
                         implementation = new Platform.Dummy.DummyGLContext();
@@ -129,6 +120,50 @@ namespace OpenTK.Graphics
                     Debug.Unindent();
                 }
             }
+        }
+
+        public GraphicsContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, int major, int minor, GraphicsContextFlags flags)
+        {
+            lock (SyncRoot)
+            {
+                IsExternal = true;
+
+                if (handle == ContextHandle.Zero)
+                {
+                    implementation = new OpenTK.Platform.Dummy.DummyGLContext(handle);
+                }
+                else if (available_contexts.ContainsKey(handle))
+                {
+                    throw new GraphicsContextException("Context already exists.");
+                }
+                else
+                {
+                    switch ((flags & GraphicsContextFlags.Embedded) == GraphicsContextFlags.Embedded)
+                    {
+                        case false: implementation = Factory.Default.CreateGLContext(handle, window, shareContext, direct_rendering, major, minor, flags); break;
+                        case true: implementation = Factory.Embedded.CreateGLContext(handle, window, shareContext, direct_rendering, major, minor, flags); break;
+                    }
+                }
+
+                available_contexts.Add((implementation as IGraphicsContextInternal).Context, new WeakReference(this));
+            }
+        }
+
+        #endregion
+
+        #region Private Members
+
+        static IGraphicsContext FindSharedContext()
+        {
+            if (GraphicsContext.ShareContexts)
+            {
+                // A small hack to create a shared context with the first available context.
+                foreach (WeakReference r in GraphicsContext.available_contexts.Values)
+                {
+                    return (IGraphicsContext)r.Target;
+                }
+            }
+            return null;
         }
 
         #endregion
@@ -420,7 +455,7 @@ namespace OpenTK.Graphics
                     available_contexts.Remove((this as IGraphicsContextInternal).Context);
                 }
 
-                if (manual)
+                if (manual && !IsExternal)
                 {
                     if (implementation != null)
                         implementation.Dispose();
@@ -428,11 +463,6 @@ namespace OpenTK.Graphics
                 IsDisposed = true;
             }
         }
-
-        //~GraphicsContext()
-        //{
-        //    this.Dispose(false);
-        //}
 
         #endregion
     }

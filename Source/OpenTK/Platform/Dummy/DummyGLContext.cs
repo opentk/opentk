@@ -26,8 +26,8 @@ namespace OpenTK.Platform.Dummy
         #region --- Constructors ---
 
         public DummyGLContext()
+            : this(new ContextHandle(new IntPtr(++handle_count)))
         {
-            Handle = new ContextHandle(new IntPtr(++handle_count));
             Mode = new GraphicsMode(new IntPtr(2), 32, 16, 0, 0, 0, 2, false);
         }
         

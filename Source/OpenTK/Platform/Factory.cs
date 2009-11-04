@@ -99,6 +99,11 @@ namespace OpenTK.Platform
             return default_implementation.CreateGLContext(mode, window, shareContext, directRendering, major, minor, flags);
         }
 
+        public IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        {
+            return default_implementation.CreateGLContext(handle, window, shareContext, directRendering, major, minor, flags);
+        }
+
         public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
             return default_implementation.CreateGetCurrentGraphicsContext();
@@ -135,6 +140,11 @@ namespace OpenTK.Platform
             }
 
             public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+            {
+                throw new PlatformNotSupportedException(error_string);
+            }
+
+            public IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
             {
                 throw new PlatformNotSupportedException(error_string);
             }

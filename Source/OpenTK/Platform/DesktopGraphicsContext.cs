@@ -35,7 +35,7 @@ namespace OpenTK.Platform
     {
         public override void LoadAll()
         {
-            new OpenTK.Graphics.OpenGL.GL().LoadAll();
+            new OpenTK.Graphics.OpenGL.GL().LoadEntryPoints();
         }
     }
 }
