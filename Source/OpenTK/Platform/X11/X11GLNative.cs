@@ -1246,8 +1246,11 @@ namespace OpenTK.Platform.X11
             }
             set
             {
-                if (value != null)
+                if (value != null && value != Title)
                     Functions.XStoreName(window.Display, window.WindowHandle, value);
+
+                if (TitleChanged != null)
+                    TitleChanged(this, EventArgs.Empty);
             }
         }
 
