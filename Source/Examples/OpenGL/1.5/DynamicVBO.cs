@@ -19,7 +19,7 @@ namespace Examples.Tutorial
         }
 
         #region Particles
-        const int MaxParticleCount = 1000;
+        static int MaxParticleCount = 2000;
         int VisibleParticleCount;
         VertexC4ubV3f[] VBO = new VertexC4ubV3f[MaxParticleCount];
         ParticleAttribut[] ParticleAttributes = new ParticleAttribut[MaxParticleCount];
@@ -79,11 +79,11 @@ namespace Examples.Tutorial
                 VBO[i].A = (byte) rnd.Next( 0, 256 ); // isn't actually used
                 VBO[i].Position = Vector3.Zero; // all particles are born at the origin
 
-                // generate direction vector in the range [-0.1f...+0.1f] 
+                // generate direction vector in the range [-0.25f...+0.25f] 
                 // that's slow enough so you can see particles 'disappear' when they are respawned
-                temp.X = (float) ( ( rnd.NextDouble( ) - 0.5 ) * 0.2 );
-                temp.Y = (float) ( ( rnd.NextDouble( ) - 0.5 ) * 0.2 );
-                temp.Z = (float) ( ( rnd.NextDouble( ) - 0.5 ) * 0.2 );
+                temp.X = (float) ( ( rnd.NextDouble( ) - 0.5 ) * 0.5f );
+                temp.Y = (float) ( ( rnd.NextDouble( ) - 0.5 ) * 0.5f );
+                temp.Z = (float) ( ( rnd.NextDouble( ) - 0.5 ) * 0.5f );
                 ParticleAttributes[i].Direction = temp; // copy 
                 ParticleAttributes[i].Age = 0;
             }
@@ -108,7 +108,7 @@ namespace Examples.Tutorial
             GL.Viewport(0, 0, Width, Height);
 
             GL.MatrixMode(MatrixMode.Projection);
-            Matrix4 p = Matrix4.Perspective(45.0f, Width / (float)Height, 0.1f, 50.0f);
+            Matrix4 p = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Width / (float)Height, 0.1f, 50.0f);
             GL.LoadMatrix(ref p);
 
             GL.MatrixMode(MatrixMode.Modelview);
@@ -136,15 +136,15 @@ namespace Examples.Tutorial
 
             for ( int i = MaxParticleCount - VisibleParticleCount ; i < MaxParticleCount ; i++ )
             {
-                if ( ParticleAttributes[i].Age >= MaxParticleCount )
+                if (ParticleAttributes[i].Age >= MaxParticleCount)
                 {
                     // reset particle
                     ParticleAttributes[i].Age = 0;
                     VBO[i].Position = Vector3.Zero;
                 } else
                 {
-                    ParticleAttributes[i].Age++;
-                    Vector3.Mult( ref ParticleAttributes[i].Direction, (float) e.Time, out temp );
+                    ParticleAttributes[i].Age += (uint)Math.Max(ParticleAttributes[i].Direction.LengthFast * 10, 1);
+                    Vector3.Multiply( ref ParticleAttributes[i].Direction, (float) e.Time, out temp );
                     Vector3.Add( ref VBO[i].Position, ref temp, out VBO[i].Position );
                 }
             }
@@ -188,9 +188,7 @@ namespace Examples.Tutorial
             // RenderFrame events (as fast as the computer can handle).
             using (T09_VBO_Dynamic example = new T09_VBO_Dynamic())
             {
-                // Get the title and category  of this example using reflection.
-                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
-                example.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                Utilities.SetWindowTitle(example);
                 example.Run(60.0, 0.0);
             }
         }
