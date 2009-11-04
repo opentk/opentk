@@ -148,24 +148,24 @@ namespace Examples.Shapes
         {
             Vector3d temp1, temp2, temp3;
 
-            Vector3d.Sub( ref A, ref D, out temp1 );
-            Vector3d.Sub( ref B, ref D, out temp2 );
-            Vector3d.Sub( ref C, ref D, out temp3 );
+            Vector3d.Subtract( ref A, ref D, out temp1 );
+            Vector3d.Subtract( ref B, ref D, out temp2 );
+            Vector3d.Subtract( ref C, ref D, out temp3 );
 
             Vector3d.Add( ref temp1, ref temp2, out result );
-            result.Add( ref temp3 );
+            Vector3d.Add(ref result, ref temp3, out result);
             result.Normalize();
         }
 
         internal static void FindNormal( ref Vector3d A, ref Vector3d B, ref Vector3d C, out Vector3d result )
         {
             Vector3d temp1, temp2;
-            Vector3d.Sub( ref A, ref B, out temp1 );
+            Vector3d.Subtract( ref A, ref B, out temp1 );
             temp1.Normalize();
-            Vector3d.Sub( ref C, ref B, out temp2 );
+            Vector3d.Subtract(ref C, ref B, out temp2);
             temp2.Normalize();
             Vector3d.Cross( ref temp1, ref temp2, out result );
-            result.Mult( -1.0 );
+            result *=  -1.0;
             result.Normalize();
         }
 

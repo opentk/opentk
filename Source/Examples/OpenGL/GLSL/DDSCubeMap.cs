@@ -49,7 +49,7 @@ namespace Examples.Tutorial
         DrawableShape sphere;
 
         // Camera
-        Vector3 EyePos = new Vector3( 0.0f, 0.0f, 3.0f );
+        Vector3 EyePos = new Vector3( 0.0f, 0.0f, 6.0f );
         Vector3 Trackball = Vector3.Zero;
 
         #endregion internal Fields
@@ -60,22 +60,19 @@ namespace Examples.Tutorial
         {
             this.VSync = VSyncMode.Off;
 
-            /*
             // Check for necessary capabilities:
-            if ( !GL.SupportsExtension( "VERSION_2_0" ) )
+            string extensions = GL.GetString(StringName.Extensions);
+            if (!GL.GetString(StringName.Extensions).Contains("GL_ARB_shading_language"))
             {
-                MessageBox.Show( "You need at least OpenGL 2.0 to run this example. Aborting.",
-                                 "GLSL not supported", MessageBoxButtons.OK, MessageBoxIcon.Exclamation );
-                this.Exit( );
+                throw new NotSupportedException(String.Format("This example requires OpenGL 2.0. Found {0}. Aborting.",
+                    GL.GetString(StringName.Version).Substring(0, 3)));
             }
 
-            if ( !GL.SupportsExtension( "GL_ARB_texture_compression" ) ||
-                 !GL.SupportsExtension( "GL_EXT_texture_compression_s3tc" ) )
+            if (!extensions.Contains("GL_ARB_texture_compression") ||
+                 !extensions.Contains("GL_EXT_texture_compression_s3tc"))
             {
-                MessageBox.Show( "Texture compression extensions not found. Trying to run anyways.",
-                                 "Possible problem", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+                throw new NotSupportedException("This example requires support for texture compression. Aborting.");
             }
-            */
 
             #region GL State
 
@@ -193,7 +190,7 @@ namespace Examples.Tutorial
             GL.Viewport( 0, 0, Width, Height );
 
             GL.MatrixMode( MatrixMode.Projection );
-            Matrix4 p = Matrix4.Perspective( 45.0f, Width / (float) Height, 0.1f, 10.0f );
+            Matrix4 p = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Width / (float)Height, 0.1f, 10.0f);
             GL.LoadMatrix(ref p);
 
             GL.MatrixMode( MatrixMode.Modelview );
@@ -225,7 +222,7 @@ namespace Examples.Tutorial
         /// <remarks>There is no need to call the base implementation.</remarks>
        protected override void OnRenderFrame(FrameEventArgs e)
        {
-           this.Title = "FPS: " + 1 / e.Time;
+           this.Title = "FPS: " + (1 / e.Time).ToString("0.");
 
            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 

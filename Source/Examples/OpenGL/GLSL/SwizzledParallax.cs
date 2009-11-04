@@ -219,7 +219,7 @@ namespace Examples.Tutorial
             GL.Viewport( 0, 0, Width, Height );
 
             GL.MatrixMode( MatrixMode.Projection );
-            Matrix4 p = Matrix4.Perspective( 45.0f, Width / (float) Height, 0.1f, 100.0f );
+            Matrix4 p = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Width / (float)Height, 0.1f, 100.0f);
             GL.LoadMatrix(ref p);
 
             GL.MatrixMode( MatrixMode.Modelview );
@@ -281,7 +281,7 @@ namespace Examples.Tutorial
         /// <remarks>There is no need to call the base implementation.</remarks>
        protected override void OnRenderFrame( FrameEventArgs e )
         {
-            this.Title = "FPS: " + 1 / e.Time;
+            this.Title = "FPS: " + (1 / e.Time).ToString("0.");
 
             GL.Clear( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit );
 
