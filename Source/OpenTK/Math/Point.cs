@@ -31,8 +31,9 @@ using System.Text;
 
 namespace OpenTK
 {
-#if EXPERIMENTAL
-
+    /// <summary>
+    /// Defines a point on a two-dimensional plane.
+    /// </summary>
     public struct Point : IEquatable<Point>
     {
         #region Fields
@@ -44,11 +45,12 @@ namespace OpenTK
         #region Constructors
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Constructs a new Point instance.
         /// </summary>
         /// <param name="x">The X coordinate of this instance.</param>
         /// <param name="y">The Y coordinate of this instance.</param>
         public Point(int x, int y)
+            : this()
         {
             X = x;
             Y = y;
@@ -228,6 +230,4 @@ namespace OpenTK
 
         #endregion
     }
-
-#endif
 }
