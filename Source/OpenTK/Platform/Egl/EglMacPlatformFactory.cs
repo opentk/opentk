@@ -39,5 +39,10 @@ namespace OpenTK.Platform.Egl
         {
             throw new NotImplementedException();
         }
+
+        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
