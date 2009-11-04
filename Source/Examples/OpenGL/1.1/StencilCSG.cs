@@ -31,20 +31,28 @@ namespace Examples.Tutorial
         float CameraZoom;
         float CameraRotX;
         float CameraRotY;
-        Vector3 EyePosition = new Vector3( 0f, 0f, 5f );
+        Vector3 EyePosition = new Vector3( 0f, 0f, 15f );
 
         #region Window
         public StencilCSG()
             : base( 800, 600, new GraphicsMode( new ColorFormat( 8, 8, 8, 8 ), 24, 8 ) ) // request 8-bit stencil buffer
         {
             base.VSync = VSyncMode.Off;
+            Keyboard.KeyDown += delegate(object sender, KeyboardKeyEventArgs e)
+            {
+                switch (e.Key)
+                {
+                    case Key.Escape: this.Exit(); break;
+                    case Key.Space: ShowDebugWireFrame = !ShowDebugWireFrame; break;
+                }
+            };
         }
 
         protected override void OnResize(EventArgs e )
         {
             GL.Viewport( 0, 0, Width, Height );
             GL.MatrixMode( MatrixMode.Projection );
-            Matrix4 p= Matrix4.Perspective( 45f, Width / (float)Height, 0.1f, 15.0f);
+            Matrix4 p = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Width / (float)Height, 0.1f, 64.0f);
             GL.LoadMatrix(ref p);
         }
         #endregion Window
@@ -142,7 +150,7 @@ namespace Examples.Tutorial
 
             for (int i = 0; i < tempVertices.Length; i++)
             {
-                tempVertices[i].Normal.Mult(-1.0);
+                tempVertices[i].Normal *= -1.0;
                 tempVertices[i].Normal.Normalize();
             }
 
@@ -162,17 +170,6 @@ namespace Examples.Tutorial
 
         protected override void OnUpdateFrame( FrameEventArgs e )
         {
-
-            if (Keyboard[OpenTK.Input.Key.Escape])
-            {
-                this.Exit();
-            }
-
-            if (Keyboard[Key.Space])
-            {
-                ShowDebugWireFrame = !ShowDebugWireFrame;
-            }
-
             #region Magic numbers for camera
             CameraRotX = -Mouse.X * .5f;
             CameraRotY = Mouse.Y * .5f;
@@ -260,7 +257,7 @@ namespace Examples.Tutorial
 
         protected override void OnRenderFrame( FrameEventArgs e )
         {
-            this.Title = WindowTitle + "  fps: " + ( 1f / e.Time );
+            this.Title = WindowTitle + "  fps: " + ( 1f / e.Time ).ToString("0.");
 
             MySphereZOffset += (float)( e.Time * 3.1 );
             MySphereXOffset += (float)( e.Time * 4.2 );
@@ -284,9 +281,10 @@ namespace Examples.Tutorial
 
             if ( ShowDebugWireFrame )
             {
+                GL.Color3(System.Drawing.Color.LightGray);
                 GL.Disable( EnableCap.StencilTest );
                 GL.Disable( EnableCap.Lighting );
-                GL.Disable( EnableCap.DepthTest );
+                //GL.Disable( EnableCap.DepthTest );
                 GL.PolygonMode( MaterialFace.Front, PolygonMode.Line );
                 DrawOperandB();
                 GL.PolygonMode( MaterialFace.Front, PolygonMode.Fill );

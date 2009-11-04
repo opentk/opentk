@@ -44,12 +44,12 @@ namespace Examples.Shapes
             #region Find the Torus length
             Vector3d result;
             double[] Lengths = new double[pathsteps];
-            Vector3d.Sub( ref PathPositions[pathsteps - 1], ref PathPositions[0], out result );
+            Vector3d.Subtract( ref PathPositions[pathsteps - 1], ref PathPositions[0], out result );
             Lengths[0] = result.Length;
             double TotalLength = result.Length;
             for ( int i = 1; i < pathsteps; i++ ) // skipping 
             {
-                Vector3d.Sub( ref PathPositions[i - 1], ref PathPositions[i], out result );
+                Vector3d.Subtract( ref PathPositions[i - 1], ref PathPositions[i], out result );
                 Lengths[i] = result.Length;
                 TotalLength += result.Length;
             }
@@ -72,12 +72,12 @@ namespace Examples.Shapes
                 else
                     last = PathPositions[i - 1];
 
-                Vector3d.Sub( ref next, ref last, out tangent ); // Guesstimate tangent
+                Vector3d.Subtract( ref next, ref last, out tangent ); // Guesstimate tangent
                 tangent.Normalize();
 
                 Vector3d.Add( ref next, ref last, out normal ); // Approximate N
                 normal.Normalize();
-                Vector3d.Mult( ref normal, radius, out normal );// scale the shape to desired radius
+                Vector3d.Multiply( ref normal, radius, out normal );// scale the shape to desired radius
 
                 for ( uint j = 0; j < shapevertices; j++ )
                 {
@@ -88,7 +88,7 @@ namespace Examples.Shapes
                     Vector3d point = Vector3d.TransformVector( normal, RotationMatrix );
                     Vector3d.Add( ref PathPositions[i], ref point, out VertexArray[index].Position );
                     // Since the used shape is a circle, the Vertex normal's heading is easy to find
-                    Vector3d.Sub( ref VertexArray[index].Position, ref PathPositions[i], out VertexArray[index].Normal );
+                    Vector3d.Subtract( ref VertexArray[index].Position, ref PathPositions[i], out VertexArray[index].Normal );
                     VertexArray[index].Normal.Normalize();
                     // just generate some semi-useful UVs to fill blanks
                     VertexArray[index].TexCoord = new Vector2d( (double)( i / TotalLength/ TexCount  ), j / ( shapevertices - 1.0 ) );

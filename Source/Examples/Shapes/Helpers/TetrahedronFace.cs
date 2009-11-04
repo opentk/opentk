@@ -37,15 +37,15 @@ namespace Examples.Shapes
             // find the 3 points AB, BC, CA 
             Vector3d CenterAB;
             Vector3d.Add( ref this.APosition, ref this.BPosition, out temp );
-            Vector3d.Mult( ref temp, 0.5f, out CenterAB );
+            Vector3d.Multiply( ref temp, 0.5f, out CenterAB );
 
             Vector3d CenterBC;
             Vector3d.Add( ref this.BPosition, ref this.CPosition, out temp );
-            Vector3d.Mult( ref temp, 0.5f, out CenterBC );
+            Vector3d.Multiply( ref temp, 0.5f, out CenterBC );
 
             Vector3d CenterCA;
             Vector3d.Add( ref this.CPosition, ref this.APosition, out temp );
-            Vector3d.Mult( ref temp, 0.5f, out CenterCA );
+            Vector3d.Multiply( ref temp, 0.5f, out CenterCA );
 
             // find the 3 points AD, BD, CD 
             Vector3d CenterAD;
@@ -93,21 +93,21 @@ namespace Examples.Shapes
             Vector3d.Lerp( ref this.BPosition, ref this.CPosition, 0.5, out CenterBC );
             Vector3d.Lerp( ref this.CPosition, ref this.APosition, 0.5, out CenterCA );
             CenterD = CenterAB;
-            CenterD.Add( ref CenterBC );
-            CenterD.Add( ref CenterCA );
-            CenterD.Div( 3.0 );
+            Vector3d.Add(ref CenterD, ref CenterBC, out CenterD);
+            Vector3d.Add(ref CenterD, ref CenterCA, out CenterD);
+            CenterD /= 3.0;
             Vector3d E = CenterD + ( this.Normal * 0.5 );
             Vector3d temp = this.Normal;
-            temp.Mult( height );
-            CenterD.Add( temp );
+            temp *= height;
+            Vector3d.Add(ref CenterD, ref temp, out CenterD);
 
             Vector2d.Lerp( ref this.ATexCoord, ref this.BTexCoord, 0.5, out TexCoordAB );
             Vector2d.Lerp( ref this.BTexCoord, ref this.CTexCoord, 0.5, out TexCoordBC );
             Vector2d.Lerp( ref this.CTexCoord, ref this.ATexCoord, 0.5, out TexCoordCA );
             TexCoordD = TexCoordAB;
-            TexCoordD.Add( ref TexCoordBC );
-            TexCoordD.Add( ref TexCoordCA );
-            TexCoordD.Div( 3.0 );
+            Vector2d.Add(ref TexCoordD, ref TexCoordBC, out TexCoordD);
+            Vector2d.Add(ref TexCoordD, ref TexCoordCA, out TexCoordD);
+            TexCoordD /= 3.0;
             #region 1
             first.APosition = this.APosition;
             first.ATexCoord = this.ATexCoord;
@@ -120,8 +120,8 @@ namespace Examples.Shapes
 
             first.Normal = this.Normal;
             temp = ( this.APosition + CenterAB + CenterCA );
-            temp.Div( 3.0 );
-            temp.Add( this.Normal * -1.0 );
+            temp /= 3.0;
+            temp += this.Normal * -1.0;
             first.DPosition = temp;
             #endregion 1
             #region 2
@@ -137,8 +137,8 @@ namespace Examples.Shapes
             second.Normal = this.Normal;
 
             temp = CenterAB + this.BPosition + CenterBC;
-            temp.Div( 3.0 );
-            temp.Add( this.Normal * -1.0 );
+            temp /=  3.0;
+            temp += this.Normal * -1.0;
             second.DPosition = temp;
 
             #endregion 2
@@ -154,8 +154,8 @@ namespace Examples.Shapes
 
             third.Normal = this.Normal;
             temp = CenterBC + this.CPosition + CenterCA;
-            temp.Div( 3.0 );
-            temp.Add( this.Normal * -1.0 );
+            temp /= 3.0;
+            temp += this.Normal * -1.0;
             third.DPosition = temp;
             #endregion 3
             #region 4
