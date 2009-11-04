@@ -33,12 +33,14 @@ namespace Examples
         {
             ExampleAttribute info = GetExampleAttribute(window.GetType());
             window.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+            window.Icon = OpenTK.Examples.Properties.Resources.App;
         }
 
         public static void SetWindowTitle(System.Windows.Forms.Form window)
         {
             ExampleAttribute info = GetExampleAttribute(window.GetType());
             window.Text = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+            window.Icon = OpenTK.Examples.Properties.Resources.App;
         }
 
         static ExampleAttribute GetExampleAttribute(Type type)
