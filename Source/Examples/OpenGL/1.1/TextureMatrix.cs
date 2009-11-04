@@ -78,7 +78,7 @@ namespace Examples.Tutorial
         {
             GL.Viewport(this.ClientRectangle);
 
-            Matrix4 projection = Matrix4.Perspective(45.0f, Width / (float)Height, 1.0f, 50.0f);
+            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Width / (float)Height, 1.0f, 50.0f);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref projection);
         }

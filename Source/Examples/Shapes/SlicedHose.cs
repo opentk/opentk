@@ -133,7 +133,7 @@ namespace Examples.Shapes
                 Slerp( ref start, ref end, Multiplier, out temp[i].Normal );
                 temp[i].Normal.Normalize();
                 temp[i].Position = temp[i].Normal;
-                temp[i].Position.Mult( scale );
+                temp[i].Position *= scale;
             }
 
             VertexArray = new VertexT2dN3dV3d[temp.Length * 2];
@@ -184,8 +184,8 @@ namespace Examples.Shapes
         double t2 = System.Math.Sin( ( 1.0 - factor ) * theta ) * temp;
         double t3 = System.Math.Sin( factor * theta ) * temp;
 
-        Vector3d v1 = Vector3d.Mult( a, t2);
-        Vector3d v2 = Vector3d.Mult( b, t3 );
+        Vector3d v1 = Vector3d.Multiply( a, t2);
+        Vector3d v2 = Vector3d.Multiply( b, t3 );
         result = Vector3d.Add( v1, v2 );
     }
 

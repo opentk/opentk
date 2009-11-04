@@ -93,7 +93,7 @@ namespace Examples.Shapes
 
             for (int i=0; i<VertexArray.Length;i++)
             {
-            VertexArray[i].Position.Add( ref offset );
+                Vector3d.Add(ref VertexArray[i].Position, ref offset, out VertexArray[i].Position);
             }
         }
 
