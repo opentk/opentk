@@ -52,6 +52,7 @@ namespace Examples
             Font = SystemFonts.DialogFont;
 
             InitializeComponent();
+            Icon = Resources.App;
 
             // Windows 6 (Vista) and higher come with Consolas, a high-quality monospace font. Use that or fallback to
             // the generic monospace font on other systems.
