@@ -79,7 +79,7 @@ namespace OpenTK.Compute.CL10
         /// <param name="funcname">The name of the extension function.</param>
         /// <returns>A pointer to the extension function, if available; IntPtr.Zero otherwise.</returns>
         /// <remarks>
-        /// <para>Use <see cref="Marshal.GetDelegateForFunctionPointer"/> to turn this function pointer
+        /// <para>Use <see cref="System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer"/> to turn this function pointer
         /// into a callable delegate.</para>
         /// <para>A non-zero return value does not mean that this extension function is supported. You also
         /// need to query available extensions through <see cref="GetDeviceInfo"/>.</para>

@@ -261,7 +261,7 @@ namespace OpenTK
         #region Exit
 
         /// <summary>
-        /// Closes the GameWindow. Equivalent to <see cref="Close"/> method.
+        /// Closes the GameWindow. Equivalent to <see cref="NativeWindow.Close"/> method.
         /// </summary>
         /// <remarks>
         /// <para>Override if you are not using <see cref="GameWindow.Run()"/>.</para>

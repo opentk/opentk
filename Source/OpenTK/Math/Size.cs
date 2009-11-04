@@ -173,7 +173,7 @@ namespace OpenTK
         /// <summary>
         /// Indicates whether this instance is equal to the specified object.
         /// </summary>
-        /// <param name="other">The object instance to compare to.</param>
+        /// <param name="obj">The object instance to compare to.</param>
         /// <returns>True, if both instances are equal; false otherwise.</returns>
         public override bool Equals(object obj)
         {
@@ -186,7 +186,7 @@ namespace OpenTK
         /// <summary>
         /// Returns the hash code for this instance.
         /// </summary>
-        /// <returns>A <see cref="System.Int32" that represents the hash code for this instance./></returns>
+        /// <returns>A <see cref="System.Int32"/> that represents the hash code for this instance./></returns>
         public override int GetHashCode()
         {
             return Width.GetHashCode() ^ Height.GetHashCode();
