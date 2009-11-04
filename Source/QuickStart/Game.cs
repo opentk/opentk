@@ -1,5 +1,6 @@
+// Released to the public domain. Use, modify and relicense at will.
+
 using System;
-using System.Drawing;
 
 using OpenTK;
 using OpenTK.Graphics;
@@ -25,7 +26,7 @@ namespace StarterKit
         {
             base.OnLoad(e);
 
-            GL.ClearColor(System.Drawing.Color.MidnightBlue);
+            GL.ClearColor(0.1f, 0.2f, 0.5f, 0.0f);
             GL.Enable(EnableCap.DepthTest);
         }
 
@@ -39,7 +40,7 @@ namespace StarterKit
         {
             base.OnResize(e);
 
-            GL.Viewport(ClientRectangle);
+            GL.Viewport(ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height);
 
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, Width / (float)Height, 1.0f, 64.0f);
             GL.MatrixMode(MatrixMode.Projection);
@@ -74,9 +75,9 @@ namespace StarterKit
 
             GL.Begin(BeginMode.Triangles);
 
-            GL.Color3(Color.Yellow); GL.Vertex3(-1.0f, -1.0f, 4.0f);
-            GL.Color3(Color.Red); GL.Vertex3(1.0f, -1.0f, 4.0f);
-            GL.Color3(Color.LightCyan); GL.Vertex3(0.0f, 1.0f, 4.0f);
+            GL.Color3(1.0f, 1.0f, 0.0f); GL.Vertex3(-1.0f, -1.0f, 4.0f);
+            GL.Color3(1.0f, 0.0f, 0.0f); GL.Vertex3(1.0f, -1.0f, 4.0f);
+            GL.Color3(0.2f, 0.9f, 1.0f); GL.Vertex3(0.0f, 1.0f, 4.0f);
 
             GL.End();
 
