@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -47,6 +47,7 @@ namespace Examples.Tests
                     {
                         using (Tutorial.T03_Immediate_Mode_Cube game = new Examples.Tutorial.T03_Immediate_Mode_Cube())
                         {
+                            Utilities.SetWindowTitle(game);
                             game.Run(30.0);
                         }
                     });
