@@ -123,6 +123,10 @@ namespace OpenTK.Graphics.OpenGL
             GL.Color4(color.X, color.Y, color.Z, color.W);
         }
 
+        public static void Color4(Color4 color)
+        {
+            GL.Color4(color.R, color.G, color.B, color.A);
+        }
 
         #endregion
 
@@ -145,6 +149,11 @@ namespace OpenTK.Graphics.OpenGL
         public static void BlendColor(System.Drawing.Color color)
         {
             GL.BlendColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
+        }
+
+        public static void BlendColor(Color4 color)
+        {
+            GL.BlendColor(color.R, color.G, color.B, color.A);
         }
 
         #endregion
@@ -814,6 +823,16 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         public static void Viewport(System.Drawing.Rectangle rectangle)
+        {
+            GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+        }
+
+        public static void Viewport(OpenTK.Point location, OpenTK.Size size)
+        {
+            GL.Viewport(location.X, location.Y, size.Width, size.Height);
+        }
+
+        public static void Viewport(OpenTK.Rectangle rectangle)
         {
             GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
