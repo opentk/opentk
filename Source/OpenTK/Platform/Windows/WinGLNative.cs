@@ -152,7 +152,6 @@ namespace OpenTK.Platform.Windows
 
         IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            Debug.WriteLine(message.ToString());
             switch (message)
             {
                 #region Size / Move / Style events
