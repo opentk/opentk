@@ -122,7 +122,7 @@
 
     </Project>
 
-    <Project name="OpenTK.Examples" path="Source/Examples" language="C#" type="WinExe" startupObject="Examples.Program" assemblyName="Examples">
+    <Project name="OpenTK.Examples" path="Source/Examples" language="C#" type="WinExe" startupObject="Examples.Program" assemblyName="Examples" icon="Resources/App.ico">
 
       <Configuration name="Debug">
         <Options>
@@ -137,7 +137,7 @@
           <AllowUnsafe>true</AllowUnsafe>
         </Options>
       </Configuration>
-
+      
       <Reference name="OpenTK" localCopy="true"/>
       <Reference name="OpenTK.GLControl" localCopy="true"/>
       <Reference name="System"/>
@@ -150,7 +150,8 @@
         <Match path="." pattern="*.cs" recurse="true"/>
         <Match path="." pattern="*.rtf" recurse="true" buildAction="EmbeddedResource" />
         <Match path="." pattern="*.resx" recurse="true" buildAction="EmbeddedResource"/>
-        <Match path="../Examples/Data" pattern="^.*\.(bmp|png|jpg|txt|glsl|wav|ogg|dds)$" useRegex="true" recurse="true" buildAction="None" copyToOutput="Always"/>
+        <Match path="../Examples/Data" pattern="^.*\.(bmp|png|jpg|txt|glsl|wav|ogg|dds|ico)$" useRegex="true" recurse="true" buildAction="None" copyToOutput="Always"/>
+        <Match path="../Examples/Resources" pattern="^.*\.(bmp|png|jpg|txt|glsl|wav|ogg|dds|ico)$" useRegex="true" recurse="true" buildAction="None"/>
         <Match path="../OpenTK" pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
         <Match path="../OpenTK" pattern="OpenTK.Compatibility.dll.config" buildAction="None" copyToOutput="Always"/>
       </Files>
