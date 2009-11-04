@@ -543,16 +543,6 @@ namespace OpenTK.Platform.X11
             int width = image.Width;
             int height = image.Height;
             int size = width * height; 
-            //Pixel[] data = new byte[size * 4];
-            int index = 0;
-
-//            for (int y = 0; y < height; ++y) 
-//            {
-//                for (int x = 0; x < width; ++x)
-//                {
-//                    data[index++] = image.GetPixel(x, y).ToArgb();
-//                }
-//            }
 
             System.Drawing.Imaging.BitmapData data = image.LockBits(new System.Drawing.Rectangle(0, 0, width, height),
                 System.Drawing.Imaging.ImageLockMode.ReadOnly,
