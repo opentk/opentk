@@ -47,8 +47,8 @@ namespace OpenTK.Platform.Windows
 
         readonly static object SyncRoot = new object();
 
-        readonly static ExtendedWindowStyle ParentStyleEx = ExtendedWindowStyle.WindowEdge;
-        readonly static ExtendedWindowStyle ChildStyleEx = 0;
+        const ExtendedWindowStyle ParentStyleEx = ExtendedWindowStyle.WindowEdge | ExtendedWindowStyle.ApplicationWindow;
+        const ExtendedWindowStyle ChildStyleEx = 0;
 
         readonly IntPtr Instance = Marshal.GetHINSTANCE(typeof(WinGLNative).Module);
         readonly IntPtr ClassName;
@@ -152,6 +152,7 @@ namespace OpenTK.Platform.Windows
 
         IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
+            Debug.WriteLine(message.ToString());
             switch (message)
             {
                 #region Size / Move / Style events
@@ -555,22 +556,13 @@ namespace OpenTK.Platform.Windows
                 wc.WndProc = WindowProcedureDelegate;
                 wc.ClassName = ClassName;
                 wc.Icon = Icon != null ? Icon.Handle : IntPtr.Zero;
+#warning "This seems to resize one of the 'large' icons, rather than using a small icon directly (multi-icon files). Investigate!"
+                wc.IconSm = Icon != null ? new Icon(Icon, 16, 16).Handle : IntPtr.Zero;
                 wc.Cursor = Functions.LoadCursor(CursorName.Arrow);
-                //wc.Background = Functions.GetStockObject(5);
                 ushort atom = Functions.RegisterClassEx(ref wc);
 
                 if (atom == 0)
-                {
-                    int error= Marshal.GetLastWin32Error();
-                    Debug.Print("Failed to register class {0}, due to error {1}.", Marshal.PtrToStringAuto(ClassName), error);
-
-                    // Error 1410 means "class already exists", which means we'll just go ahead and use it.
-                    // In all other cases, we'll throw an exception and stop execution.
-                    if (error != 1410)
-                    {
-                        throw new PlatformException(String.Format("Failed to register window class. Error: {0}", error));
-                    }
-                }
+                    throw new PlatformException(String.Format("Failed to register window class. Error: {0}", Marshal.GetLastWin32Error()));
 
                 class_registered = true;
             }
