@@ -157,6 +157,8 @@ namespace OpenTK.Graphics
                 }
 
                 available_contexts.Add((implementation as IGraphicsContextInternal).Context, new WeakReference(this));
+
+                (this as IGraphicsContextInternal).LoadAll();
             }
         }
 
