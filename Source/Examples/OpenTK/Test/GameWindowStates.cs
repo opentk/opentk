@@ -76,6 +76,8 @@ namespace Examples.Tests
 
         protected override void OnLoad(EventArgs e)
         {
+            base.OnLoad(e);
+
             GL.ClearColor(Color.MidnightBlue);
 
             GL.Enable(EnableCap.Texture2D);
@@ -92,6 +94,8 @@ namespace Examples.Tests
 
         protected override void OnResize(EventArgs e)
         {
+            base.OnResize(e);
+
             GL.Viewport(0, 0, Width, Height);
 
             Matrix4 ortho_projection = Matrix4.CreateOrthographicOffCenter(0, Width, Height, 0, -1, 1);
@@ -101,6 +105,8 @@ namespace Examples.Tests
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            base.OnRenderFrame(e);
+
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
             GL.Begin(BeginMode.Quads);
