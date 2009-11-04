@@ -168,27 +168,20 @@ namespace OpenTK.Platform.Windows
                     if (new_focused_state != Focused && FocusedChanged != null)
                         FocusedChanged(this, EventArgs.Empty);
                     return IntPtr.Zero;
-                    
+
                 case WindowMessage.ENTERMENULOOP:
                 case WindowMessage.ENTERSIZEMOVE:
                     // Entering the modal size/move loop: we don't want rendering to
                     // stop during this time, so we register a timer callback to continue
                     // processing from time to time.
-                    timer_handle = Functions.SetTimer(handle, ModalLoopTimerId, ModalLoopTimerPeriod, ModalLoopCallback);
-                    if (timer_handle == UIntPtr.Zero)
-                        Debug.Print("[Warning] Failed to set modal loop timer callback ({0}:{1}->{2}).",
-                            GetType().Name, handle, Marshal.GetLastWin32Error());
-
+                    StartTimer(handle);
                     break;
 
                 case WindowMessage.EXITMENULOOP:
                 case WindowMessage.EXITSIZEMOVE:
                     // ExitingmModal size/move loop: the timer callback is no longer
                     // necessary.
-                    if (!Functions.KillTimer(handle, timer_handle))
-                        Debug.Print("[Warning] Failed to kill modal loop timer callback ({0}:{1}->{2}).",
-                            GetType().Name, handle, Marshal.GetLastWin32Error());
-                    timer_handle = UIntPtr.Zero;
+                    StopTimer(handle);
                     break;
 
                 case WindowMessage.NCCALCSIZE:
@@ -304,9 +297,7 @@ namespace OpenTK.Platform.Windows
                                                         (int)(lParam.ToInt32() & 0xFFFF0000) >> 16);
                     mouse.Position = point;
                     {
-                        Win32Rectangle rect;
-                        Functions.GetClientRect(window.WindowHandle, out rect);
-                        if (!rect.ToRectangle().Contains(point))
+                        if (!ClientRectangle.Contains(point))
                         {
                             Functions.ReleaseCapture();
                             if (MouseLeave != null)
@@ -500,6 +491,28 @@ namespace OpenTK.Platform.Windows
             }
 
             return Functions.DefWindowProc(handle, message, wParam, lParam);
+        }
+
+        private void StartTimer(IntPtr handle)
+        {
+            if (timer_handle == UIntPtr.Zero)
+            {
+                timer_handle = Functions.SetTimer(handle, ModalLoopTimerId, ModalLoopTimerPeriod, ModalLoopCallback);
+                if (timer_handle == UIntPtr.Zero)
+                    Debug.Print("[Warning] Failed to set modal loop timer callback ({0}:{1}->{2}).",
+                        GetType().Name, handle, Marshal.GetLastWin32Error());
+            }
+        }
+
+        private void StopTimer(IntPtr handle)
+        {
+            if (timer_handle != UIntPtr.Zero)
+            {
+                if (!Functions.KillTimer(handle, timer_handle))
+                    Debug.Print("[Warning] Failed to kill modal loop timer callback ({0}:{1}->{2}).",
+                        GetType().Name, handle, Marshal.GetLastWin32Error());
+                timer_handle = UIntPtr.Zero;
+            }
         }
 
         #endregion
