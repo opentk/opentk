@@ -122,6 +122,17 @@ namespace OpenTK.Graphics
             }
         }
 
+        /// <summary>
+        /// Constructs a new GraphicsContext from a pre-existing context created outside of OpenTK.
+        /// </summary>
+        /// <param name="handle">The handle of the existing context. This must be a valid, unique handle that is not known to OpenTK.</param>
+        /// <param name="window">The window this context is bound to. This must be a valid window obtained through Utilities.CreateWindowInfo.</param>
+        /// <param name="shareContext">A different context that shares resources with this instance, if any.
+        /// Pass null if the context is not shared or if this is the first GraphicsContext instruct you construct.</param>
+        /// <param name="major">The major version of the context (e.g. "2" for "2.1").</param>
+        /// <param name="minor">The minor version of the context (e.g. "1" for "2.1").</param>
+        /// <param name="flags">A bitwise combination of <see cref="GraphicsContextFlags"/> that describe this context.</param>
+        /// <exception cref="GraphicsContextException">Occurs if handle is identical to a context already registered with OpenTK.</exception>
         public GraphicsContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, int major, int minor, GraphicsContextFlags flags)
         {
             lock (SyncRoot)
