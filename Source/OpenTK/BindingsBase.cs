@@ -123,9 +123,9 @@ namespace OpenTK
 
         #region Internal Members
 
-        #region LoadAll
+        #region LoadEntryPoints
 
-        internal void LoadAll()
+        internal void LoadEntryPoints()
         {
             // Using reflection is more than 3 times faster than directly loading delegates on the first
             // run, probably due to code generation overhead. Subsequent runs are faster with direct loading
@@ -164,12 +164,9 @@ namespace OpenTK
 
         #endregion
 
-        #region Load
+        #region LoadEntryPoint
 
-        /// <summary>
-        /// Loads all extension and core functions.
-        /// </summary>
-        internal bool Load(string function)
+        internal bool LoadEntryPoint(string function)
         {
             FieldInfo f = DelegatesClass.GetField(function, BindingFlags.Static | BindingFlags.NonPublic);
             if (f == null)

@@ -141,6 +141,17 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        public WinGLContext(ContextHandle handle, WinWindowInfo window, IGraphicsContext sharedContext,
+            int major, int minor, GraphicsContextFlags flags)
+        {
+            if (handle == ContextHandle.Zero)
+                throw new ArgumentException("handle");
+            if (window == null)
+                throw new ArgumentNullException("window");
+
+            Handle = handle;
+        }
+
         #endregion
 
         #region --- IGraphicsContext Members ---

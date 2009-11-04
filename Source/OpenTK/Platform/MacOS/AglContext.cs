@@ -47,6 +47,17 @@ namespace OpenTK.Platform.MacOS
             CreateContext(mode, carbonWindow, shareContextRef, true);
         }
 
+        public AglContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext)
+        {
+            if (handle == ContextHandle.Zero)
+                throw new ArgumentException("handle");
+            if (window == null)
+                throw new ArgumentNullException("window");
+
+            Handle = handle;
+            carbonWindow = (CarbonWindowInfo)window;
+        }
+
 
         private void AddPixelAttrib(List<int> aglAttributes, Agl.PixelFormatAttribute pixelFormatAttribute)
         {

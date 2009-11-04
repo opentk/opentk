@@ -73,7 +73,7 @@ namespace OpenTK.Platform.X11
                 
                 if (ctx != IntPtr.Zero)
                 {
-                    new Glx().LoadAll();
+                    new Glx().LoadEntryPoints();
                     Glx.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero);
                     //Glx.DestroyContext(Display, ctx);
                     glx_loaded = true;
@@ -160,6 +160,19 @@ namespace OpenTK.Platform.X11
             
             if (!Glx.IsDirect(Display, Handle.Handle))
                 Debug.Print("Warning: Context is not direct.");
+        }
+
+        public X11GLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shared, bool direct,
+            int major, int minor, GraphicsContextFlags flags)
+        {
+            if (handle == ContextHandle.Zero)
+                throw new ArgumentException("handle");
+            if (window == null)
+                throw new ArgumentNullException("window");
+
+            Handle = handle;
+            currentWindow = (X11WindowInfo)window;
+            Display = currentWindow.Display;
         }
 
         #endregion
@@ -318,7 +331,7 @@ namespace OpenTK.Platform.X11
 
         public override void LoadAll()
         {
-            new Glx().LoadAll();
+            new Glx().LoadEntryPoints();
             vsync_supported = this.GetAddress("glXSwapIntervalSGI") != IntPtr.Zero;
             Debug.Print("Context supports vsync: {0}.", vsync_supported);
 

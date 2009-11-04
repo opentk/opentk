@@ -52,6 +52,11 @@ namespace OpenTK.Platform.MacOS
             return new AglContext(mode, window, shareContext);
         }
 
+        public virtual IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        {
+            return new AglContext(handle, window, shareContext);
+        } 
+
         public virtual GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
             return (GraphicsContext.GetCurrentContextDelegate)delegate
