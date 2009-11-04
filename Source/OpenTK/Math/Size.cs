@@ -31,8 +31,9 @@ using System.Text;
 
 namespace OpenTK
 {
-    #if EXPERIMENTAL
-
+    /// <summary>
+    /// Stores the width and height of a rectangle.
+    /// </summary>
     public struct Size : IEquatable<Size>
     {
         #region Fields
@@ -44,11 +45,12 @@ namespace OpenTK
         #region Constructors
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Constructs a new Size instance.
         /// </summary>
         /// <param name="width">The width of this instance.</param>
         /// <param name="height">The height of this instance.</param>
         public Size(int width, int height)
+            : this()
         {
             Width = width;
             Height = height;
@@ -215,7 +217,4 @@ namespace OpenTK
         
         #endregion
     }
-    
-    #endif
-
 }
