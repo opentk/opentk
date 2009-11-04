@@ -71,6 +71,7 @@ namespace OpenTK.Graphics.OpenGL
         /// Loads all OpenGL entry points (core and extension).
         /// This method is provided for compatibility purposes with older OpenTK versions.
         /// </summary>
+        [Obsolete("If you are using a context constructed outside of OpenTK, create a new GraphicsContext and pass your context handle to it. Otherwise, there is no need to call this method.")]
         public static void LoadAll()
         {
             new GL().LoadEntryPoints();
