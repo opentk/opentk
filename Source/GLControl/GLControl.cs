@@ -388,7 +388,7 @@ namespace OpenTK
         /// <exception cref="OpenTK.Graphics.GraphicsContextException">
         /// Occurs when no OpenTK.Graphics.GraphicsContext is current in the calling thread.
         /// </exception>
-        [Obsolete("This method will not work correctly with OpenGL|ES. Please use ReadPixels to capture the contents of the framebuffer (you can then load them into a System.Drawing.Bitmap for further processing or saving them to disk).")]
+        [Obsolete("This method will not work correctly with OpenGL|ES. Please use GL.ReadPixels to capture the contents of the framebuffer (refer to http://www.opentk.com/doc/graphics/save-opengl-rendering-to-disk for more information).")]
         public Bitmap GrabScreenshot()
         {
             ValidateState();
