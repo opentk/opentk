@@ -105,7 +105,9 @@ namespace OpenTK.Platform.X11
 
         bool _decorations_hidden = false;
 
-        readonly byte[] characters = new byte[16]; // Keyboard input
+         // Keyboard input
+        readonly byte[] ascii = new byte[16];
+        readonly char[] chars = new char[16];
         readonly KeyPressEventArgs KPEventArgs = new KeyPressEventArgs('\0');
 
         #endregion
@@ -648,14 +650,16 @@ namespace OpenTK.Platform.X11
 
                     case XEventName.KeyPress:
                         driver.ProcessEvent(ref e);
-                        int status = Functions.XLookupString(ref e.KeyEvent, characters, characters.Length, null, IntPtr.Zero);
+
+                        int status = Functions.XLookupString(ref e.KeyEvent, ascii, ascii.Length, null, IntPtr.Zero);
+                        Encoding.Default.GetChars(ascii, 0, status, chars, 0);
 
                         EventHandler<KeyPressEventArgs> key_press = KeyPress;
                         if (key_press != null)
                         {
                             for (int i = 0; i < status; i++)
                             {
-                                KPEventArgs.KeyChar = (char)characters[i];
+                                KPEventArgs.KeyChar = chars[i];
                                 key_press(this, KPEventArgs);
                             }
                         }
