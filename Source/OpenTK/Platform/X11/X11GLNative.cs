@@ -103,8 +103,11 @@ namespace OpenTK.Platform.X11
         bool exists;
         bool isExiting;
 
-        bool _decorations_hidden = false;        
-        
+        bool _decorations_hidden = false;
+
+        readonly byte[] characters = new byte[16]; // Keyboard input
+        readonly KeyPressEventArgs KPEventArgs = new KeyPressEventArgs('\0');
+
         #endregion
 
         #region Constructors
@@ -140,7 +143,7 @@ namespace OpenTK.Platform.X11
                 attributes.border_pixel = IntPtr.Zero;
                 attributes.colormap = Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.Visual, 0/*AllocNone*/);
                 window.EventMask = EventMask.StructureNotifyMask | EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
-                                   EventMask.KeyReleaseMask | EventMask.KeyPressMask |
+                                   EventMask.KeyReleaseMask | EventMask.KeyPressMask | EventMask.KeymapStateMask |
                                    EventMask.PointerMotionMask | EventMask.FocusChangeMask |
                                    EventMask.ButtonPressMask | EventMask.ButtonReleaseMask |
                                    EventMask.EnterWindowMask | EventMask.LeaveWindowMask;
@@ -645,6 +648,17 @@ namespace OpenTK.Platform.X11
 
                     case XEventName.KeyPress:
                         driver.ProcessEvent(ref e);
+                        int status = Functions.XLookupString(ref e.KeyEvent, characters, characters.Length, null, IntPtr.Zero);
+
+                        EventHandler<KeyPressEventArgs> key_press = KeyPress;
+                        if (key_press != null)
+                        {
+                            for (int i = 0; i < status; i++)
+                            {
+                                KPEventArgs.KeyChar = (char)characters[i];
+                                key_press(this, KPEventArgs);
+                            }
+                        }
                         break;
 
                     case XEventName.KeyRelease:
@@ -688,6 +702,15 @@ namespace OpenTK.Platform.X11
                     case XEventName.EnterNotify:
                         if (MouseEnter != null)
                             MouseEnter(this, EventArgs.Empty);
+                        break;
+
+                    case XEventName.MappingNotify:
+                        // 0 == MappingModifier, 1 == MappingKeyboard
+                        if (e.MappingEvent.request == 0 || e.MappingEvent.request == 1)
+                        {
+                            Debug.Print("keybard mapping refreshed");
+                            Functions.XRefreshKeyboardMapping(ref e.MappingEvent);
+                        }
                         break;
                        
                     default:
