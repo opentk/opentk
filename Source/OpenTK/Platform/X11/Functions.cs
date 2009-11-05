@@ -479,6 +479,13 @@ namespace OpenTK.Platform.X11
         public static extern void XPutImage(Display display, IntPtr drawable,
             IntPtr gc, IntPtr image, int src_x, int src_y, int dest_x, int dest_y, uint width, uint height);
 
+        [DllImport("libX11")]
+        public static extern int XLookupString(ref XKeyEvent event_struct, [Out] byte[] buffer_return,
+            int bytes_buffer, [Out] KeySym[] keysym_return, IntPtr status_in_out);
+
+        [DllImport("libX11")]
+        public static extern int XRefreshKeyboardMapping(ref XMappingEvent event_map);
+
         static readonly IntPtr CopyFromParent = IntPtr.Zero;
 
         public static void SendNetWMMessage(X11WindowInfo window, IntPtr message_type, IntPtr l0, IntPtr l1, IntPtr l2)
