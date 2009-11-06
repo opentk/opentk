@@ -39,11 +39,14 @@ namespace OpenTK
     {
         GraphicsMode mode;
         Control control;
+        IWindowInfo window_info;
 
         internal CarbonGLControl(GraphicsMode mode, Control owner)
         {
             this.mode = mode;
             this.control = owner;
+
+            window_info = Utilities.CreateMacOSCarbonWindowInfo(control.Handle, false, true);
         }
 
         #region IGLControl Members
@@ -68,7 +71,7 @@ namespace OpenTK
         {
             get
             {
-                return Utilities.CreateDummyWindowInfo();
+                return window_info;
             }
         }
 
