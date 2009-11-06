@@ -616,7 +616,7 @@ namespace OpenTK
         #region RenderFrequency
 
         /// <summary>
-        /// Gets a double representing the actual frequency of RenderFrame events, in Herz (i.e. FPS or Frames Per Second).
+        /// Gets a double representing the actual frequency of RenderFrame events, in hertz (i.e. fps or frames per second).
         /// </summary>
         public double RenderFrequency
         {
@@ -671,7 +671,7 @@ namespace OpenTK
         #region TargetRenderFrequency
 
         /// <summary>
-        /// Gets or sets a double representing the target render frequency, in Herz.
+        /// Gets or sets a double representing the target render frequency, in hertz.
         /// </summary>
         /// <remarks>
         /// <para>A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
@@ -739,7 +739,7 @@ namespace OpenTK
         #region TargetUpdateFrequency
 
         /// <summary>
-        /// Gets or sets a double representing the target update frequency, in Herz.
+        /// Gets or sets a double representing the target update frequency, in hertz.
         /// </summary>
         /// <remarks>
         /// <para>A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
@@ -807,7 +807,7 @@ namespace OpenTK
         #region UpdateFrequency
 
         /// <summary>
-        /// Gets a double representing the frequency of UpdateFrame events, in Herz.
+        /// Gets a double representing the frequency of UpdateFrame events, in hertz.
         /// </summary>
         public double UpdateFrequency
         {
