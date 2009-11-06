@@ -297,7 +297,7 @@ namespace OpenTK
         /// <returns>A <see cref="System.String"/> that describes this instance.</returns>
         public override string ToString()
         {
-            return String.Format("{{{0}, {1}}}-{{{2},{3}}}", Location, Size);
+            return String.Format("{{{0}-{1}}}", Location, Location + Size);
         }
 
 
