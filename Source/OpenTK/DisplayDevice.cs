@@ -167,7 +167,7 @@ namespace OpenTK
         /// <param name="width">The width of the requested resolution in pixels.</param>
         /// <param name="height">The height of the requested resolution in pixels.</param>
         /// <param name="bitsPerPixel">The bits per pixel of the requested resolution.</param>
-        /// <param name="refreshRate">The refresh rate of the requested resolution in Herz.</param>
+        /// <param name="refreshRate">The refresh rate of the requested resolution in hertz.</param>
         /// <returns>The requested DisplayResolution or null if the parameters cannot be met.</returns>
         /// <remarks>
         /// <para>If a matching resolution is not found, this function will retry ignoring the specified refresh rate,
