@@ -46,15 +46,15 @@ namespace OpenTK.Platform
         static Factory()
         {
             if (Configuration.RunningOnWindows) Default = new Windows.WinFactory();
-            else if (Configuration.RunningOnX11) Default = new X11.X11Factory();
             else if (Configuration.RunningOnMacOS) Default = new MacOS.MacOSFactory();
+            else if (Configuration.RunningOnX11) Default = new X11.X11Factory();
             else Default = new UnsupportedPlatform();
 
             if (Egl.Egl.IsSupported)
             {
                 if (Configuration.RunningOnWindows) Embedded = new Egl.EglWinPlatformFactory();
-                else if (Configuration.RunningOnX11) Embedded = new Egl.EglX11PlatformFactory();
                 else if (Configuration.RunningOnMacOS) Embedded = new Egl.EglMacPlatformFactory();
+                else if (Configuration.RunningOnX11) Embedded = new Egl.EglX11PlatformFactory();
                 else Embedded = new UnsupportedPlatform();
             }
             else Embedded = new UnsupportedPlatform();
