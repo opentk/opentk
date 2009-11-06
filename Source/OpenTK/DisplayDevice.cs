@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK team.
  * This notice may not be removed.
@@ -29,10 +29,12 @@ namespace OpenTK
 
         #region --- Fields ---
 
-        DisplayResolution current_resolution, original_resolution;
-        readonly List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
-        readonly IList<DisplayResolution> available_resolutions_readonly;
+        DisplayResolution current_resolution = new DisplayResolution(), original_resolution;
+        List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
+        IList<DisplayResolution> available_resolutions_readonly;
         bool primary;
+
+        Rectangle bounds;
 
         static readonly List<DisplayDevice> available_displays = new List<DisplayDevice>();
         static readonly IList<DisplayDevice> available_displays_readonly;
@@ -51,16 +53,8 @@ namespace OpenTK
             available_displays_readonly = available_displays.AsReadOnly();
         }
 
-        internal DisplayDevice(DisplayResolution currentResolution, bool primary,
-            IEnumerable<DisplayResolution> availableResolutions)
+        internal DisplayDevice()
         {
-            this.current_resolution = currentResolution;
-            this.primary = primary;
-            this.available_resolutions.AddRange(availableResolutions);
-
-            Debug.Print("DisplayDevice {0} ({1}) supports {2} resolutions.",
-                available_displays.Count, primary ? "primary" : "secondary", available_resolutions.Count);
-
             lock (display_lock)
             {
                 available_displays.Add(this);
@@ -71,6 +65,18 @@ namespace OpenTK
             available_resolutions_readonly = available_resolutions.AsReadOnly();
         }
 
+        internal DisplayDevice(DisplayResolution currentResolution, bool primary,
+            IEnumerable<DisplayResolution> availableResolutions, Rectangle bounds)
+            : this()
+        {
+            this.current_resolution = currentResolution;
+            this.primary = primary;
+            this.available_resolutions.AddRange(availableResolutions);
+
+            Debug.Print("DisplayDevice {0} ({1}) supports {2} resolutions.",
+                available_displays.Count, primary ? "primary" : "secondary", available_resolutions.Count);
+        }
+
         #endregion
 
         #region --- Public Methods ---
@@ -78,11 +84,17 @@ namespace OpenTK
         #region public Rectangle Bounds
 
         /// <summary>
-        /// Gets a System.Drawing.Rectangle that contains the current bounds of this DisplayDevice.
+        /// Gets the bounds of this instance in pixel coordinates..
         /// </summary>
         public Rectangle Bounds
         {
-            get { return current_resolution.Bounds; }
+            get { return bounds; }
+            internal set
+            {
+                bounds = value;
+                current_resolution.Height = bounds.Height;
+                current_resolution.Width = bounds.Width;
+            }
         }
 
         #endregion
@@ -104,7 +116,11 @@ namespace OpenTK
         #region public int BitsPerPixel
 
         /// <summary>Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24 and 32.</summary>
-        public int BitsPerPixel { get { return current_resolution.BitsPerPixel; } }
+        public int BitsPerPixel
+        {
+            get { return current_resolution.BitsPerPixel; }
+            internal set { current_resolution.BitsPerPixel = value; }
+        }
 
         #endregion
 
@@ -116,6 +132,7 @@ namespace OpenTK
         public float RefreshRate
         {
             get { return current_resolution.RefreshRate; }
+            internal set { current_resolution.RefreshRate = value; }
         }
 
         #endregion
@@ -123,7 +140,22 @@ namespace OpenTK
         #region public bool IsPrimary
 
         /// <summary>Gets a System.Boolean that indicates whether this Display is the primary Display in systems with multiple Displays.</summary>
-        public bool IsPrimary { get { return primary; } }
+        public bool IsPrimary
+        {
+            get { return primary; }
+            internal set
+            {
+                if (primary_display != null && primary_display != this)
+                    primary_display.IsPrimary = false;
+
+                lock (display_lock)
+                {
+                    primary = value;
+                    if (value)
+                        primary_display = this;
+                }
+            }
+        }
 
         #endregion
 
@@ -167,6 +199,11 @@ namespace OpenTK
         public IList<DisplayResolution> AvailableResolutions
         {
             get { return available_resolutions_readonly; }
+            internal set
+            {
+                available_resolutions = (List<DisplayResolution>)value;
+                available_resolutions_readonly = available_resolutions.AsReadOnly();
+            }
         }
 
         #endregion

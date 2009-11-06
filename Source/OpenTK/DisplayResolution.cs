@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK team.
  * This notice may not be removed.
@@ -22,6 +22,8 @@ namespace OpenTK
         float refresh_rate;
 
         #region --- Constructors ---
+
+        internal DisplayResolution() { }
 
         #region public DisplayResolution(int width, int height, int bitsPerPixel, float refreshRate)
 
@@ -82,6 +84,8 @@ namespace OpenTK
         /// <summary>
         /// Gets a System.Drawing.Rectangle that contains the bounds of this display device.
         /// </summary>
+        [Obsolete("This property will return invalid results if a monitor changes resolution. Use DisplayDevice.Bounds instead.")]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public Rectangle Bounds
         {
             get { return bounds; }
@@ -92,21 +96,33 @@ namespace OpenTK
         #region public int Width
 
         /// <summary>Gets a System.Int32 that contains the width of this display in pixels.</summary>
-        public int Width { get { return bounds.Width; } }
+        public int Width
+        {
+            get { return bounds.Width; }
+            internal set { bounds.Width = value; }
+        }
 
         #endregion
 
         #region public int Height
 
         /// <summary>Gets a System.Int32 that contains the height of this display in pixels.</summary>
-        public int Height { get { return bounds.Height; } }
+        public int Height
+        {
+            get { return bounds.Height; }
+            internal set { bounds.Height = value; }
+        }
 
         #endregion
 
         #region public int BitsPerPixel
 
         /// <summary>Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24 and 32.</summary>
-        public int BitsPerPixel { get { return bits_per_pixel; } }
+        public int BitsPerPixel
+        {
+            get { return bits_per_pixel; }
+            internal set { bits_per_pixel = value; }
+        }
 
         #endregion
 
@@ -118,6 +134,7 @@ namespace OpenTK
         public float RefreshRate
         {
             get { return refresh_rate; }
+            internal set { refresh_rate = value; }
         }
 
         #endregion
