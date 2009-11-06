@@ -746,6 +746,7 @@ namespace OpenTK.Platform.MacOS
             set
             {
                 SetSize((short)value.Width, (short)value.Height);
+                context.Update(WindowInfo);
             }
         }
 
