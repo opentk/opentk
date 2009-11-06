@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK team.
  * This notice may not be removed.
@@ -81,7 +81,8 @@ namespace OpenTK.Platform.Windows
                     opentk_dev = new DisplayDevice(
                         opentk_dev_current_res,
                         opentk_dev_primary,
-                        opentk_dev_available_res);
+                        opentk_dev_available_res,
+                        opentk_dev_current_res.Bounds);
 
                     available_device_names.Add(opentk_dev, dev1.DeviceName);
                 }
