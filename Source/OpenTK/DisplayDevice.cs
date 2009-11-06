@@ -58,8 +58,6 @@ namespace OpenTK
             lock (display_lock)
             {
                 available_displays.Add(this);
-                if (primary)
-                    primary_display = this;
             }
 
             available_resolutions_readonly = available_resolutions.AsReadOnly();
@@ -70,7 +68,7 @@ namespace OpenTK
             : this()
         {
             this.current_resolution = currentResolution;
-            this.primary = primary;
+            IsPrimary = primary;
             this.available_resolutions.AddRange(availableResolutions);
 
             Debug.Print("DisplayDevice {0} ({1}) supports {2} resolutions.",
