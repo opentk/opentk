@@ -257,7 +257,7 @@ namespace Examples.Tutorial
 
         protected override void OnRenderFrame( FrameEventArgs e )
         {
-            this.Title = WindowTitle + "  fps: " + ( 1f / e.Time ).ToString("0.");
+            this.Title = WindowTitle + "  FPS: " + ( 1f / e.Time ).ToString("0.");
 
             MySphereZOffset += (float)( e.Time * 3.1 );
             MySphereXOffset += (float)( e.Time * 4.2 );

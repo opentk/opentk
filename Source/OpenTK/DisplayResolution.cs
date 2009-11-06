@@ -53,7 +53,7 @@ namespace OpenTK
         /// <param name="width">The requested width in pixels.</param>
         /// <param name="height">The requested height in pixels.</param>
         /// <param name="bitsPerPixel">The requested bits per pixel in bits.</param>
-        /// <param name="refreshRate">The requested refresh rate in Herz.</param>
+        /// <param name="refreshRate">The requested refresh rate in hertz.</param>
         /// <remarks>OpenTK will select the closest match between all available resolutions on the specified DisplayDevice.</remarks>
         /// 
         public DisplayResolution(int width, int height, int bitsPerPixel, float refreshRate, DisplayDevice device)
