@@ -67,9 +67,11 @@ namespace OpenTK
             IEnumerable<DisplayResolution> availableResolutions, Rectangle bounds)
             : this()
         {
+#warning "Consolidate current resolution with bounds? Can they fall out of sync right now?"
             this.current_resolution = currentResolution;
             IsPrimary = primary;
             this.available_resolutions.AddRange(availableResolutions);
+            this.bounds = bounds == Rectangle.Empty ? currentResolution.Bounds : bounds;
 
             Debug.Print("DisplayDevice {0} ({1}) supports {2} resolutions.",
                 available_displays.Count, primary ? "primary" : "secondary", available_resolutions.Count);
@@ -143,7 +145,7 @@ namespace OpenTK
             get { return primary; }
             internal set
             {
-                if (primary_display != null && primary_display != this)
+                if (value && primary_display != null && primary_display != this)
                     primary_display.IsPrimary = false;
 
                 lock (display_lock)
@@ -326,7 +328,7 @@ namespace OpenTK
         public override string ToString()
         {
             return String.Format("{0}: {1} ({2} modes available)", IsPrimary ? "Primary" : "Secondary",
-                current_resolution.ToString(), available_resolutions.Count);
+                Bounds.ToString(), available_resolutions.Count);
         }
 
         #endregion
