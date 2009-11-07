@@ -810,7 +810,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (value)
                 {
-                    Functions.ShowWindow(window.WindowHandle, ShowWindowCommand.SHOWNORMAL);
+                    Functions.ShowWindow(window.WindowHandle, ShowWindowCommand.SHOW);
                 }
                 else if (!value)
                 {
@@ -989,7 +989,11 @@ namespace OpenTK.Platform.Windows
                     SetWindowPosFlags.NOMOVE | SetWindowPosFlags.NOZORDER |
                     SetWindowPosFlags.FRAMECHANGED);
 
-                Visible = true;
+                // Force window to redraw update its borders, but only if it's
+                // already visible (invisible windows will change borders when
+                // they become visible, so no need to make them visiable prematurely).
+                if (Visible)
+                    Visible = true;
 
                 WindowState = state;
 
