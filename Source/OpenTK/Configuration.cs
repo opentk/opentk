@@ -53,8 +53,6 @@ namespace OpenTK
             else if (System.Environment.OSVersion.Platform == PlatformID.Unix ||
                      System.Environment.OSVersion.Platform == (PlatformID)4)
             {
-                try { runningOnX11 = OpenTK.Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
-                catch { }
 
                 // Distinguish between Unix and Mac OS X kernels.
                 switch (DetectUnixKernel())
@@ -78,7 +76,17 @@ namespace OpenTK
             }
             else
                 throw new PlatformNotSupportedException("Unknown platform. Please report this error at http://www.opentk.com.");
-            
+
+            // Detect whether X is present.
+            // Hack: it seems that this check will cause X to initialize itself on Mac OS X Leopard and newer.
+            // We don't want that (we'll be using the native interfaces anyway), so we'll avoid this check
+            // when we detect Mac OS X.
+            if (!RunningOnMacOS)
+            {
+                try { runningOnX11 = OpenTK.Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
+                catch { }
+            }
+
             // Detect the Mono runtime (code taken from http://mono.wikia.com/wiki/Detecting_if_program_is_running_in_Mono).
             Type t = Type.GetType("Mono.Runtime");
             if (t != null)
