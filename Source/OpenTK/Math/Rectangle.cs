@@ -31,6 +31,7 @@ using System.Text;
 
 namespace OpenTK
 {
+#if NO_SYSDRAWING
     /// <summary>
     /// Represents a rectangular region on a two-dimensional plane.
     /// </summary>
@@ -318,4 +319,5 @@ namespace OpenTK
 
         #endregion
     }
+#endif
 }
