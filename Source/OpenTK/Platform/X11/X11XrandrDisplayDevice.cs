@@ -8,11 +8,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
-
-using OpenTK.Graphics;
 using System.Diagnostics;
+using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.X11
 {
