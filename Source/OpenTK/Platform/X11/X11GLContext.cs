@@ -110,9 +110,15 @@ namespace OpenTK.Platform.X11
                         attributes.Add(minor);
                         if (flags != 0)
                         {
+#warning "This is not entirely correct: Embedded is not a valid flag! We need to add a GetARBContextFlags(GraphicsContextFlags) method."
                             attributes.Add((int)ArbCreateContext.Flags);
                             attributes.Add((int)flags);
                         }
+                        // According to the docs, " <attribList> specifies a list of attributes for the context.
+                        // The list consists of a sequence of <name,value> pairs terminated by the
+                        // value 0. [...]"
+                        // Is this a single 0, or a <0, 0> pair? (Defensive coding: add two zeroes just in case).
+                        attributes.Add(0);
                         attributes.Add(0);
                         
                         Handle = new ContextHandle(Glx.Arb.CreateContextAttribs(Display, *fbconfigs,
