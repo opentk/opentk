@@ -34,6 +34,7 @@
       </Configuration>
 
       <Reference name="System"/>
+      <Reference name="System.Drawing"/>
       <Reference name="OpenTK" localCopy="true"/>
 
       <Files>
