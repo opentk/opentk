@@ -175,8 +175,6 @@ namespace OpenTK.Platform.X11
 
                 // Register for window destroy notification
                 Functions.XSetWMProtocols(window.Display, window.WindowHandle, new IntPtr[] { _atom_wm_destroy }, 1);
-
-                API.MapRaised(window.Display, window.WindowHandle);
             }
 
             driver = new X11Input(window);
