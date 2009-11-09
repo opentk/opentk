@@ -125,10 +125,14 @@ namespace OpenTK.Platform.MacOS
             // Choose a pixel format with the attributes we specified.
             if (fullscreen)
             {
-                IntPtr gdevice;
-    
+				IntPtr gdevice;
+				IntPtr cgdevice = GetQuartzDevice(carbonWindow);
+
+				if (cgdevice == IntPtr.Zero)
+					cgdevice = QuartzDisplayDeviceDriver.MainDisplay;
+
                 OSStatus status = Carbon.API.DMGetGDeviceByDisplayID(
-                    QuartzDisplayDeviceDriver.MainDisplay, out gdevice, false);
+                    cgdevice, out gdevice, false);
                 
                 if (status != OSStatus.NoError)
                     throw new MacOSException(status, "DMGetGDeviceByDisplayID failed.");
@@ -176,6 +180,26 @@ namespace OpenTK.Platform.MacOS
 
             Debug.Print("context: {0}", Handle.Handle);
         }
+
+		private IntPtr GetQuartzDevice(CarbonWindowInfo carbonWindow)
+		{
+			IntPtr windowRef = carbonWindow.WindowRef;
+
+			if (CarbonGLNative.WindowRefMap.ContainsKey(windowRef) == false)
+				return IntPtr.Zero;
+
+			WeakReference nativeRef = CarbonGLNative.WindowRefMap[windowRef];
+			if (nativeRef.IsAlive == false)
+				return IntPtr.Zero;
+
+			CarbonGLNative window = nativeRef.Target as CarbonGLNative;
+
+			if (window == null)
+				return IntPtr.Zero;
+
+			return QuartzDisplayDeviceDriver.HandleTo(window.TargetDisplayDevice);
+
+		}
 
         void SetBufferRect(CarbonWindowInfo carbonWindow)
         {
