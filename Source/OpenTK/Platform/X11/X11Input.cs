@@ -53,7 +53,7 @@ namespace OpenTK.Platform.X11
 
             //window = new X11WindowInfo(attach);
             X11WindowInfo window = (X11WindowInfo)attach;
-            
+
             // Init mouse
             mouse.Description = "Default X11 mouse";
             mouse.DeviceID = IntPtr.Zero;
