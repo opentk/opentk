@@ -178,7 +178,7 @@ namespace OpenTK.Platform.X11
             }
 
             driver = new X11Input(window);
-            
+
             Debug.WriteLine(String.Format("X11GLNative window created successfully (id: {0}).", Handle));
             Debug.Unindent();
 
@@ -280,7 +280,10 @@ namespace OpenTK.Platform.X11
             IntPtr dummy;
             XSizeHints hints = new XSizeHints();
 
-            Functions.XGetWMNormalHints(window.Display, window.WindowHandle, ref hints, out dummy);
+            using (new XLock(window.Display))
+            {
+                Functions.XGetWMNormalHints(window.Display, window.WindowHandle, ref hints, out dummy);
+            }
 
             if (min_width > 0 || min_height > 0)
             {
@@ -300,13 +303,15 @@ namespace OpenTK.Platform.X11
             else
                 hints.flags = (IntPtr)((int)hints.flags & ~(int)XSizeHintsFlags.PMaxSize);
 
-
             if (hints.flags != IntPtr.Zero)
             {
                 // The Metacity team has decided that they won't care about this when clicking the maximize
                 // icon, will maximize the window to fill the screen/parent no matter what.
                 // http://bugzilla.ximian.com/show_bug.cgi?id=80021
-                Functions.XSetWMNormalHints(window.Display, window.WindowHandle, ref hints);
+                using (new XLock(window.Display))
+                {
+                    Functions.XSetWMNormalHints(window.Display, window.WindowHandle, ref hints);
+                }
             }
         }
 
@@ -325,21 +330,24 @@ namespace OpenTK.Platform.X11
                 IntPtr prop = IntPtr.Zero;
                 IntPtr atom;
                 //XWindowAttributes attributes;                
-                
-                Functions.XGetWindowProperty(window.Display, window.WindowHandle,
-                                             _atom_net_wm_allowed_actions, IntPtr.Zero, new IntPtr(256), false,
-                                             IntPtr.Zero, out actual_atom, out actual_format, out nitems,
-                                             out bytes_after, ref prop);
-                if ((long)nitems > 0 && prop != IntPtr.Zero)
+
+                using (new XLock(window.Display))
                 {
-                    for (int i = 0; i < (long)nitems; i++)
+                    Functions.XGetWindowProperty(window.Display, window.WindowHandle,
+                                                 _atom_net_wm_allowed_actions, IntPtr.Zero, new IntPtr(256), false,
+                                                 IntPtr.Zero, out actual_atom, out actual_format, out nitems,
+                                                 out bytes_after, ref prop);
+                    if ((long)nitems > 0 && prop != IntPtr.Zero)
                     {
-                        atom = (IntPtr)Marshal.ReadIntPtr(prop, i * IntPtr.Size);
-                        
-                        if (atom == _atom_net_wm_action_resize)
-                            return true;
+                        for (int i = 0; i < (long)nitems; i++)
+                        {
+                            atom = (IntPtr)Marshal.ReadIntPtr(prop, i * IntPtr.Size);
+    
+                            if (atom == _atom_net_wm_action_resize)
+                                return true;
+                        }
+                        Functions.XFree(prop);
                     }
-                    Functions.XFree(prop);
                 }
                     
                 return false;
@@ -362,24 +370,27 @@ namespace OpenTK.Platform.X11
                 //IntPtr atom;
                 //XWindowAttributes attributes;
 
-                // Test if decorations have been disabled through Motif.
-                IntPtr motif_hints_atom = Functions.XInternAtom(this.window.Display, MOTIF_WM_ATOM, true);
-                if (motif_hints_atom != IntPtr.Zero)
+                using (new XLock(window.Display))
                 {
-                    // TODO: How to check if MotifWMHints decorations have been really disabled?
-                    if (_decorations_hidden)
+                    // Test if decorations have been disabled through Motif.
+                    IntPtr motif_hints_atom = Functions.XInternAtom(this.window.Display, MOTIF_WM_ATOM, true);
+                    if (motif_hints_atom != IntPtr.Zero)
+                    {
+                        // TODO: How to check if MotifWMHints decorations have been really disabled?
+                        if (_decorations_hidden)
+                            return true;
+                    }
+    
+                    // Some WMs remove decorations when the transient_for hint is set. Most new ones do not (but those
+                    // should obey the Motif hint). Anyway, if this hint is set, we say the decorations have been remove
+                    // although there is a slight chance this is not the case.
+                    IntPtr transient_for_parent;
+                    Functions.XGetTransientForHint(window.Display, window.WindowHandle, out transient_for_parent);
+                    if (transient_for_parent != IntPtr.Zero)
                         return true;
+    
+                    return false;
                 }
-
-                // Some WMs remove decorations when the transient_for hint is set. Most new ones do not (but those
-                // should obey the Motif hint). Anyway, if this hint is set, we say the decorations have been remove
-                // although there is a slight chance this is not the case.
-                IntPtr transient_for_parent;                
-                Functions.XGetTransientForHint(window.Display, window.WindowHandle, out transient_for_parent);
-                if (transient_for_parent != IntPtr.Zero)
-                    return true;
-                
-                return false;
             }
         }
                 
@@ -395,15 +406,18 @@ namespace OpenTK.Platform.X11
                 _decorations_hidden = true;
             }
 
-            // Functions.XSetTransientForHint(this.window.Display, this.Handle, this.window.RootWindow);
-            
-            // Some WMs remove decorations when this hint is set. Doesn't hurt to try.
-            Functions.XSetTransientForHint(this.window.Display, this.Handle, this.window.RootWindow);
-
-            if (_decorations_hidden)
+            using (new XLock(window.Display))
             {
-                Functions.XUnmapWindow(this.window.Display, this.Handle);
-                Functions.XMapWindow(this.window.Display, this.Handle);
+                // Functions.XSetTransientForHint(this.window.Display, this.Handle, this.window.RootWindow);
+    
+                // Some WMs remove decorations when this hint is set. Doesn't hurt to try.
+                Functions.XSetTransientForHint(this.window.Display, this.Handle, this.window.RootWindow);
+    
+                if (_decorations_hidden)
+                {
+                    Functions.XUnmapWindow(this.window.Display, this.Handle);
+                    Functions.XMapWindow(this.window.Display, this.Handle);
+                }
             }
         }
 
@@ -459,12 +473,15 @@ namespace OpenTK.Platform.X11
 
             //if (EnableGnomeDecorations()) { Debug.Print("Activated decorations through gnome."); activated = true; }
 
-            Functions.XSetTransientForHint(this.window.Display, this.Handle, IntPtr.Zero);
-
-            if (!_decorations_hidden)
+            using (new XLock(window.Display))
             {
-                Functions.XUnmapWindow(this.window.Display, this.Handle);
-                Functions.XMapWindow(this.window.Display, this.Handle);
+                Functions.XSetTransientForHint(this.window.Display, this.Handle, IntPtr.Zero);
+    
+                if (!_decorations_hidden)
+                {
+                    Functions.XUnmapWindow(this.window.Display, this.Handle);
+                    Functions.XMapWindow(this.window.Display, this.Handle);
+                }
             }
         }
 
@@ -472,19 +489,22 @@ namespace OpenTK.Platform.X11
 
         bool EnableMotifDecorations()
         {
-            IntPtr atom = Functions.XInternAtom(this.window.Display, MOTIF_WM_ATOM, true);
-            if (atom != IntPtr.Zero)
+            using (new XLock(window.Display))
             {
-                //Functions.XDeleteProperty(this.window.Display, this.Handle, atom);
-                MotifWmHints hints = new MotifWmHints();
-                hints.flags = (IntPtr)MotifFlags.Decorations;
-                hints.decorations = (IntPtr)MotifDecorations.All;
-                Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace,
-                                          ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
-                
-                return true;
+                IntPtr atom = Functions.XInternAtom(this.window.Display, MOTIF_WM_ATOM, true);
+                if (atom != IntPtr.Zero)
+                {
+                    //Functions.XDeleteProperty(this.window.Display, this.Handle, atom);
+                    MotifWmHints hints = new MotifWmHints();
+                    hints.flags = (IntPtr)MotifFlags.Decorations;
+                    hints.decorations = (IntPtr)MotifDecorations.All;
+                    Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace,
+                                              ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
+    
+                    return true;
+                }
+                return false;
             }
-            return false;
         }
 
         #endregion
@@ -493,23 +513,26 @@ namespace OpenTK.Platform.X11
 
         bool EnableGnomeDecorations()
         {
-            // Restore window layer.
-            //XEvent xev = new XEvent();
-            //xev.ClientMessageEvent.window = this.window.Handle;
-            //xev.ClientMessageEvent.type = XEventName.ClientMessage;
-            //xev.ClientMessageEvent.message_type = Functions.XInternAtom(this.window.Display, Constants.XA_WIN_LAYER, false);
-            //xev.ClientMessageEvent.format = 32;
-            //xev.ClientMessageEvent.ptr1 = (IntPtr)WindowLayer.AboveDock;
-            //Functions.XSendEvent(this.window.Display, this.window.RootWindow, false, (IntPtr)EventMask.SubstructureNotifyMask, ref xev);
-            
-            IntPtr atom = Functions.XInternAtom(this.window.Display, Constants.XA_WIN_HINTS, true);
-            if (atom != IntPtr.Zero)
+            using (new XLock(window.Display))
             {
-                Functions.XDeleteProperty(this.window.Display, this.Handle, atom);
-                return true;
+                // Restore window layer.
+                //XEvent xev = new XEvent();
+                //xev.ClientMessageEvent.window = this.window.Handle;
+                //xev.ClientMessageEvent.type = XEventName.ClientMessage;
+                //xev.ClientMessageEvent.message_type = Functions.XInternAtom(this.window.Display, Constants.XA_WIN_LAYER, false);
+                //xev.ClientMessageEvent.format = 32;
+                //xev.ClientMessageEvent.ptr1 = (IntPtr)WindowLayer.AboveDock;
+                //Functions.XSendEvent(this.window.Display, this.window.RootWindow, false, (IntPtr)EventMask.SubstructureNotifyMask, ref xev);
+    
+                IntPtr atom = Functions.XInternAtom(this.window.Display, Constants.XA_WIN_HINTS, true);
+                if (atom != IntPtr.Zero)
+                {
+                    Functions.XDeleteProperty(this.window.Display, this.Handle, atom);
+                    return true;
+                }
+    
+                return false;
             }
-
-            return false;
         }
 
         #endregion
@@ -520,27 +543,30 @@ namespace OpenTK.Platform.X11
         
         static void DeleteIconPixmaps(IntPtr display, IntPtr window)
         {
-            IntPtr wmHints_ptr = Functions.XGetWMHints(display, window);
-
-            if (wmHints_ptr != IntPtr.Zero)
+            using (new XLock(display))
             {
-                XWMHints wmHints = (XWMHints)Marshal.PtrToStructure(wmHints_ptr, typeof(XWMHints));
-                XWMHintsFlags flags = (XWMHintsFlags)wmHints.flags.ToInt32();
-
-                if ((flags & XWMHintsFlags.IconPixmapHint) != 0)
+                IntPtr wmHints_ptr = Functions.XGetWMHints(display, window);
+    
+                if (wmHints_ptr != IntPtr.Zero)
                 {
-                    wmHints.flags = new IntPtr((int)(flags & ~XWMHintsFlags.IconPixmapHint));
-                    Functions.XFreePixmap(display, wmHints.icon_pixmap);
+                    XWMHints wmHints = (XWMHints)Marshal.PtrToStructure(wmHints_ptr, typeof(XWMHints));
+                    XWMHintsFlags flags = (XWMHintsFlags)wmHints.flags.ToInt32();
+    
+                    if ((flags & XWMHintsFlags.IconPixmapHint) != 0)
+                    {
+                        wmHints.flags = new IntPtr((int)(flags & ~XWMHintsFlags.IconPixmapHint));
+                        Functions.XFreePixmap(display, wmHints.icon_pixmap);
+                    }
+    
+                    if ((flags & XWMHintsFlags.IconMaskHint) != 0)
+                    {
+                        wmHints.flags = new IntPtr((int)(flags & ~XWMHintsFlags.IconMaskHint));
+                        Functions.XFreePixmap(display, wmHints.icon_mask);
+                    }
+    
+                    Functions.XSetWMHints(display, window, ref wmHints);
+                    Functions.XFree(wmHints_ptr);
                 }
-
-                if ((flags & XWMHintsFlags.IconMaskHint) != 0)
-                {
-                    wmHints.flags = new IntPtr((int)(flags & ~XWMHintsFlags.IconMaskHint));
-                    Functions.XFreePixmap(display, wmHints.icon_mask);
-                }
-
-                Functions.XSetWMHints(display, window, ref wmHints);
-                Functions.XFree(wmHints_ptr);
             }
         }
 
@@ -863,8 +889,11 @@ namespace OpenTK.Platform.X11
                 // For this reason, we'll also set the icon using XSetWMHints.
                 if (value == null)
                 {
-                    Functions.XDeleteProperty(window.Display, window.WindowHandle, _atom_net_wm_icon);
-                    DeleteIconPixmaps(window.Display, window.WindowHandle);
+                    using (new XLock(window.Display))
+                    {
+                        Functions.XDeleteProperty(window.Display, window.WindowHandle, _atom_net_wm_icon);
+                        DeleteIconPixmaps(window.Display, window.WindowHandle);
+                    }
                 }
                 else
                 {
@@ -880,28 +909,34 @@ namespace OpenTK.Platform.X11
                     for (int y = 0; y < bitmap.Height; y++)
                         for (int x = 0; x < bitmap.Width; x++)
                             data[index++] = (IntPtr)bitmap.GetPixel(x, y).ToArgb();
-    
-                    Functions.XChangeProperty(window.Display, window.WindowHandle,
-                                  _atom_net_wm_icon, _atom_xa_cardinal, 32,
-                                  PropertyMode.Replace, data, size);
+
+                    using (new XLock(window.Display))
+                    {
+                        Functions.XChangeProperty(window.Display, window.WindowHandle,
+                                      _atom_net_wm_icon, _atom_xa_cardinal, 32,
+                                      PropertyMode.Replace, data, size);
+                    }
 
                     // Set XWMHints
                     DeleteIconPixmaps(window.Display, window.WindowHandle);
-                    IntPtr wmHints_ptr = Functions.XGetWMHints(window.Display, window.WindowHandle);
-
-                    if (wmHints_ptr == IntPtr.Zero)
-                        wmHints_ptr = Functions.XAllocWMHints();
-
-                    XWMHints wmHints = (XWMHints)Marshal.PtrToStructure(wmHints_ptr, typeof(XWMHints));
-                    
-                    wmHints.flags = new IntPtr(wmHints.flags.ToInt32() | (int)(XWMHintsFlags.IconPixmapHint | XWMHintsFlags.IconMaskHint));
-                    wmHints.icon_pixmap = Functions.CreatePixmapFromImage(window.Display, bitmap); 
-                    wmHints.icon_mask = Functions.CreateMaskFromImage(window.Display, bitmap); 
-                    
-                    Functions.XSetWMHints(window.Display, window.WindowHandle, ref wmHints);
-                    Functions.XFree (wmHints_ptr);
-
-                    Functions.XSync(window.Display, false);
+                    using (new XLock(window.Display))
+                    {
+                        IntPtr wmHints_ptr = Functions.XGetWMHints(window.Display, window.WindowHandle);
+    
+                        if (wmHints_ptr == IntPtr.Zero)
+                            wmHints_ptr = Functions.XAllocWMHints();
+    
+                        XWMHints wmHints = (XWMHints)Marshal.PtrToStructure(wmHints_ptr, typeof(XWMHints));
+    
+                        wmHints.flags = new IntPtr(wmHints.flags.ToInt32() | (int)(XWMHintsFlags.IconPixmapHint | XWMHintsFlags.IconMaskHint));
+                        wmHints.icon_pixmap = Functions.CreatePixmapFromImage(window.Display, bitmap);
+                        wmHints.icon_mask = Functions.CreateMaskFromImage(window.Display, bitmap);
+    
+                        Functions.XSetWMHints(window.Display, window.WindowHandle, ref wmHints);
+                        Functions.XFree (wmHints_ptr);
+    
+                        Functions.XSync(window.Display, false);
+                    }
                 }
 
                 icon = value;
@@ -941,9 +976,12 @@ namespace OpenTK.Platform.X11
                 int maximized = 0;
                 bool minimized = false;
 
-                Functions.XGetWindowProperty(window.Display, window.WindowHandle,
-                             _atom_net_wm_state, IntPtr.Zero, new IntPtr(256), false,
-                             IntPtr.Zero, out actual_atom, out actual_format, out nitems, out bytes_after, ref prop);
+                using (new XLock(window.Display))
+                {
+                    Functions.XGetWindowProperty(window.Display, window.WindowHandle,
+                                 _atom_net_wm_state, IntPtr.Zero, new IntPtr(256), false,
+                                 IntPtr.Zero, out actual_atom, out actual_format, out nitems, out bytes_after, ref prop);
+                }
 
                 if ((long)nitems > 0 && prop != IntPtr.Zero)
                 {
@@ -959,7 +997,10 @@ namespace OpenTK.Platform.X11
                         else if (atom == _atom_net_wm_state_fullscreen)
                             fullscreen = true;
                     }
-                    Functions.XFree(prop);
+                    using (new XLock(window.Display))
+                    {
+                        Functions.XFree(prop);
+                    }
                 }
 
                 if (minimized)
@@ -986,19 +1027,21 @@ namespace OpenTK.Platform.X11
                 Debug.Print("GameWindow {0} changing WindowState from {1} to {2}.", window.WindowHandle.ToString(),
                             current_state.ToString(), value.ToString());
 
-                if (current_state == OpenTK.WindowState.Minimized)
-                    Functions.XMapWindow(window.Display, window.WindowHandle);
-                else if (current_state == OpenTK.WindowState.Fullscreen)
-                    Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_remove,
-                                              _atom_net_wm_state_fullscreen,
-                                               IntPtr.Zero);
-                else if (current_state == OpenTK.WindowState.Maximized)
-                    Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_toggle,
-                                              _atom_net_wm_state_maximized_horizontal,
-                                              _atom_net_wm_state_maximized_vertical);
-
-                Functions.XSync(window.Display, false);
-
+                using (new XLock(window.Display))
+                {
+                    if (current_state == OpenTK.WindowState.Minimized)
+                        Functions.XMapWindow(window.Display, window.WindowHandle);
+                    else if (current_state == OpenTK.WindowState.Fullscreen)
+                        Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_remove,
+                                                  _atom_net_wm_state_fullscreen,
+                                                   IntPtr.Zero);
+                    else if (current_state == OpenTK.WindowState.Maximized)
+                        Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_toggle,
+                                                  _atom_net_wm_state_maximized_horizontal,
+                                                  _atom_net_wm_state_maximized_vertical);
+    
+                    Functions.XSync(window.Display, false);
+                }
                 // We can't resize the window if its border is fixed, so make it resizable first.
                 bool temporary_resizable = false;
                 WindowBorder previous_state = WindowBorder;
@@ -1008,35 +1051,38 @@ namespace OpenTK.Platform.X11
                     WindowBorder = WindowBorder.Resizable;
                 }
 
-                switch (value)
+                using (new XLock(window.Display))
                 {
-                    case OpenTK.WindowState.Normal:
-                        Functions.XRaiseWindow(window.Display, window.WindowHandle);
-
-                        break;
-
-                    case OpenTK.WindowState.Maximized:
-                        Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_add,
-                                                  _atom_net_wm_state_maximized_horizontal,
-                                                  _atom_net_wm_state_maximized_vertical);
-                        Functions.XRaiseWindow(window.Display, window.WindowHandle);
-
-                        break;
-
-                    case OpenTK.WindowState.Minimized:
-                        // Todo: multiscreen support
-                        Functions.XIconifyWindow(window.Display, window.WindowHandle, window.Screen);
-
-                        break;
-
-                    case OpenTK.WindowState.Fullscreen:
-                        //_previous_window_border = this.WindowBorder;
-                        //this.WindowBorder = WindowBorder.Hidden;
-                        Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_add,
-                                                  _atom_net_wm_state_fullscreen, IntPtr.Zero);
-                        Functions.XRaiseWindow(window.Display, window.WindowHandle);
-
-                        break;
+                    switch (value)
+                    {
+                        case OpenTK.WindowState.Normal:
+                            Functions.XRaiseWindow(window.Display, window.WindowHandle);
+    
+                            break;
+    
+                        case OpenTK.WindowState.Maximized:
+                            Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_add,
+                                                      _atom_net_wm_state_maximized_horizontal,
+                                                      _atom_net_wm_state_maximized_vertical);
+                            Functions.XRaiseWindow(window.Display, window.WindowHandle);
+    
+                            break;
+    
+                        case OpenTK.WindowState.Minimized:
+                            // Todo: multiscreen support
+                            Functions.XIconifyWindow(window.Display, window.WindowHandle, window.Screen);
+    
+                            break;
+    
+                        case OpenTK.WindowState.Fullscreen:
+                            //_previous_window_border = this.WindowBorder;
+                            //this.WindowBorder = WindowBorder.Hidden;
+                            Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_add,
+                                                      _atom_net_wm_state_fullscreen, IntPtr.Zero);
+                            Functions.XRaiseWindow(window.Display, window.WindowHandle);
+    
+                            break;
+                    }
                 }
 
                 if (temporary_resizable)
