@@ -69,14 +69,14 @@ namespace OpenTK.Audio
                     {
                         if (BitsPerSample == 16)
                         {
-                            Console.Write("Uploading 16 bit mono data to OpenAL...");
+                            Console.Write("Uploading 16-bit mono data to OpenAL...");
                             AL.BufferData(bid, ALFormat.Mono16, (IntPtr)p_Data, _Data.Length, SampleRate);
                         }
                         else
                         {
                             if (BitsPerSample == 8)
                             {
-                                Console.Write("Uploading 8 bit mono data to OpenAL...");
+                                Console.Write("Uploading 8-bit mono data to OpenAL...");
                                 AL.BufferData(bid, ALFormat.Mono8, (IntPtr)p_Data, _Data.Length, SampleRate);
                             }
                         }
@@ -88,14 +88,14 @@ namespace OpenTK.Audio
                         {
                             if (BitsPerSample == 16)
                             {
-                                Console.Write("Uploading 16 bit stereo data to OpenAL...");
+                                Console.Write("Uploading 16-bit stereo data to OpenAL...");
                                 AL.BufferData(bid, ALFormat.Stereo16, (IntPtr)p_Data, _Data.Length, SampleRate);
                             }
                             else
                             {
                                 if (BitsPerSample == 8)
                                 {
-                                    Console.Write("Uploading 8 bit stereo data to OpenAL...");
+                                    Console.Write("Uploading 8-bit stereo data to OpenAL...");
                                     AL.BufferData(bid, ALFormat.Stereo8, (IntPtr)p_Data, _Data.Length, SampleRate);
                                 }
                             }

@@ -111,9 +111,9 @@ namespace OpenTK.Audio
         public static extern uint CreateBufferHelloWorld();
         //ALUT_API ALuint ALUT_APIENTRY alutCreateBufferHelloWorld (void);
 
-        /// <summary>Alut.CreateBufferWaveform returns a handle to an OpenAL buffer containing a snippet of audio with the specified waveshape at the specified frequency (in Hertz), phase (in degrees: -180 to +180) and duration (in seconds).</summary>
+        /// <summary>Alut.CreateBufferWaveform returns a handle to an OpenAL buffer containing a snippet of audio with the specified waveshape at the specified frequency (in hertz), phase (in degrees: -180 to +180) and duration (in seconds).</summary>
         /// <param name="waveshape"></param>
-        /// <param name="frequency">Frequency in Hertz [Hz].</param>
+        /// <param name="frequency">Frequency in hertz [Hz].</param>
         /// <param name="phase">Phase (in degrees: -180 to +180)</param>
         /// <param name="duration">Duration (in seconds)</param>
         /// <returns>OpenAL Buffer, 0 on failure.</returns>

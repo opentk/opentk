@@ -37713,7 +37713,7 @@ namespace Tao.OpenGl
         ///     An array of <i>knotCount</i> nondecreasing knot values.
         /// </param>
         /// <param name="stride">
-        ///     The offset (as a number of single precision–floating-point values) between
+        ///     The offset (as a number of single-precision floating-point values) between
         ///     successive curve control points.
         /// </param>
         /// <param name="control">
@@ -37807,7 +37807,7 @@ namespace Tao.OpenGl
         ///     An array of <i>knotCount</i> nondecreasing knot values.
         /// </param>
         /// <param name="stride">
-        ///     The offset (as a number of single precision–floating-point values) between
+        ///     The offset (as a number of single-precision floating-point values) between
         ///     successive curve control points.
         /// </param>
         /// <param name="control">
@@ -38164,11 +38164,11 @@ namespace Tao.OpenGl
         ///     v direction.
         /// </param>
         /// <param name="sStride">
-        ///     The offset (as a number of single precision–floating-point values) between
+        ///     The offset (as a number of single-precision floating-point values) between
         ///     successive control points in the parametric u direction in <i>control</i>.
         /// </param>
         /// <param name="tStride">
-        ///     The offset (in single precision–floating-point values) between successive
+        ///     The offset (in single-precision floating-point values) between successive
         ///     control points in the parametric v direction in <i>control</i>.
         /// </param>
         /// <param name="control">
@@ -38268,11 +38268,11 @@ namespace Tao.OpenGl
         ///     v direction.
         /// </param>
         /// <param name="sStride">
-        ///     The offset (as a number of single precision–floating-point values) between
+        ///     The offset (as a number of single-precision floating-point values) between
         ///     successive control points in the parametric u direction in <i>control</i>.
         /// </param>
         /// <param name="tStride">
-        ///     The offset (in single precision–floating-point values) between successive
+        ///     The offset (in single-precision floating-point values) between successive
         ///     control points in the parametric v direction in <i>control</i>.
         /// </param>
         /// <param name="control">
@@ -38372,11 +38372,11 @@ namespace Tao.OpenGl
         ///     v direction.
         /// </param>
         /// <param name="sStride">
-        ///     The offset (as a number of single precision–floating-point values) between
+        ///     The offset (as a number of single-precision floating-point values) between
         ///     successive control points in the parametric u direction in <i>control</i>.
         /// </param>
         /// <param name="tStride">
-        ///     The offset (in single precision–floating-point values) between successive
+        ///     The offset (in single-precision floating-point values) between successive
         ///     control points in the parametric v direction in <i>control</i>.
         /// </param>
         /// <param name="control">
@@ -38801,7 +38801,7 @@ namespace Tao.OpenGl
         ///     An array containing the curve points.
         /// </param>
         /// <param name="stride">
-        ///     The offset (a number of single precision–floating-point values) between
+        ///     The offset (a number of single-precision floating-point values) between
         ///     points on the curve.
         /// </param>
         /// <param name="type">
@@ -38857,7 +38857,7 @@ namespace Tao.OpenGl
         ///     An array containing the curve points.
         /// </param>
         /// <param name="stride">
-        ///     The offset (a number of single precision–floating-point values) between
+        ///     The offset (a number of single-precision floating-point values) between
         ///     points on the curve.
         /// </param>
         /// <param name="type">
