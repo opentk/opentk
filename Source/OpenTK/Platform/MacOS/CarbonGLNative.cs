@@ -53,6 +53,7 @@ namespace OpenTK.Platform.MacOS
         Rectangle bounds, windowedBounds, clientRectangle;
         bool mIsDisposed = false;
 		bool mExists = true;
+		DisplayDevice mDisplayDevice;
 
         WindowAttributes mWindowAttrib;
         WindowClass mWindowClass;
@@ -65,9 +66,16 @@ namespace OpenTK.Platform.MacOS
 
         #endregion
 
-        #region Constructors
+		#region AGL Device Hack
 
-        static CarbonGLNative()
+		static internal Dictionary<IntPtr, WeakReference> WindowRefMap { get { return mWindows; } }
+		internal DisplayDevice TargetDisplayDevice { get { return mDisplayDevice; } }
+
+		#endregion
+
+		#region Constructors
+
+		static CarbonGLNative()
         {
             Application.Initialize();
         }
@@ -93,6 +101,8 @@ namespace OpenTK.Platform.MacOS
                 WindowAttributes.StandardDocument | WindowAttributes.StandardHandler |
                 WindowAttributes.InWindowMenu | WindowAttributes.LiveResize,
                 new Rect((short)x, (short)y, (short)width, (short)height));
+
+			mDisplayDevice = device;
         }
 
         #endregion

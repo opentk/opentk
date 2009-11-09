@@ -106,6 +106,15 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
+
+		internal static IntPtr HandleTo(DisplayDevice displayDevice)
+		{
+			if (displayMap.ContainsKey(displayDevice))
+				return displayMap[displayDevice];
+			else
+				return IntPtr.Zero;
+		}
+
         #region IDisplayDeviceDriver Members
 
         Dictionary<IntPtr, IntPtr> storedModes = new Dictionary<IntPtr, IntPtr>();
@@ -173,5 +182,6 @@ namespace OpenTK.Platform.MacOS
         }
 
         #endregion
-    }
+
+	}
 }
