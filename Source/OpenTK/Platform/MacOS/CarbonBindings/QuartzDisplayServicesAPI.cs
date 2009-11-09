@@ -26,6 +26,9 @@ namespace OpenTK.Platform.MacOS.Carbon
         [DllImport(appServices,EntryPoint="CGMainDisplayID")]
         internal static extern IntPtr MainDisplayID();
 
+		[DllImport(appServices, EntryPoint = "CGDisplayBounds")]
+		internal unsafe static extern HIRect DisplayBounds(IntPtr display);
+
         [DllImport(appServices,EntryPoint="CGDisplayPixelsWide")]
         internal static extern int DisplayPixelsWide(IntPtr display);
 
