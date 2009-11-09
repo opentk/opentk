@@ -700,18 +700,18 @@ namespace OpenTK.Platform.MacOS.Carbon
         {
             IntPtr windowTarget = GetWindowEventTarget(windowRef);
 
-            Debug.Print("Window: {0}", windowRef);
-            Debug.Print("Window Target: {0}", windowTarget);
-            Debug.Print("Handler: {0}", uppHandlerProc);
-            Debug.Print("Num Events: {0}", eventTypes.Length);
-            Debug.Print("User Data: {0}", userData);
-            Debug.Print("Handler Ref: {0}", handlerRef);
+			//Debug.Print("Window: {0}", windowRef);
+			//Debug.Print("Window Target: {0}", windowTarget);
+			//Debug.Print("Handler: {0}", uppHandlerProc);
+			//Debug.Print("Num Events: {0}", eventTypes.Length);
+			//Debug.Print("User Data: {0}", userData);
+			//Debug.Print("Handler Ref: {0}", handlerRef);
 
             OSStatus error = _InstallEventHandler(windowTarget, uppHandlerProc, 
                                     eventTypes.Length, eventTypes,
                                     userData, handlerRef);
 
-            Debug.Print("Status: {0}", error);
+			//Debug.Print("Status: {0}", error);
 
             if (error != OSStatus.NoError)
             {
