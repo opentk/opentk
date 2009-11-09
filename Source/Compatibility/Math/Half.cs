@@ -66,7 +66,7 @@ namespace OpenTK.Math
 
     /// <summary>
     /// The name Half is derived from half-precision floating-point number.
-    /// It occupies only 16 Bits, which are split into 1 Sign bit, 5 Exponent bits and 10 Mantissa bits.
+    /// It occupies only 16 bits, which are split into 1 Sign bit, 5 Exponent bits and 10 Mantissa bits.
     /// </summary>
     /// <remarks>
     /// Quote from ARB_half_float_pixel specification:
@@ -104,9 +104,9 @@ namespace OpenTK.Math
         #region Constructors
 
         /// <summary>
-        /// The new Half instance will convert the parameter into 16-Bit Half precision floating point.
+        /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="f">32-Bit Single precision floating point number.</param>
+        /// <param name="f">32-bit single-precision floating-point number.</param>
         public Half(Single f)
             : this()
         {
@@ -117,9 +117,9 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half instance will convert the parameter into 16-Bit Half precision floating point.
+        /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="f">32-Bit Single precision floating point number.</param>
+        /// <param name="f">32-bit single-precision floating-point number.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Half(Single f, bool throwOnError)
             : this(f)
@@ -131,22 +131,22 @@ namespace OpenTK.Math
                 if (f < -Half.MaxValue) throw new ArithmeticException("Half: Negative minimum value exceeded.");
 
                 // handle cases that make no sense
-                if (Single.IsNaN(f)) throw new ArithmeticException("Half: input is Not a Number (NaN).");
-                if (Single.IsPositiveInfinity(f)) throw new ArithmeticException("Half: input is +infinity.");
-                if (Single.IsNegativeInfinity(f)) throw new ArithmeticException("Half: input is -infinity.");
+                if (Single.IsNaN(f)) throw new ArithmeticException("Half: Input is not a number (NaN).");
+                if (Single.IsPositiveInfinity(f)) throw new ArithmeticException("Half: Input is positive infinity.");
+                if (Single.IsNegativeInfinity(f)) throw new ArithmeticException("Half: Input is negative infinity.");
             }
         }
 
         /// <summary>
-        /// The new Half instance will convert the parameter into 16-Bit Half precision floating point.
+        /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="d">64-Bit Double precision floating point number.</param>
+        /// <param name="d">64-bit double-precision floating-point number.</param>
         public Half(Double d) : this((Single)d) { }
 
         /// <summary>
-        /// The new Half instance will convert the parameter into 16-Bit Half precision floating point.
+        /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="d">64-Bit Double precision floating point number.</param>
+        /// <param name="d">64-bit double-precision floating-point number.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Half(Double d, bool throwOnError) : this((Single)d, throwOnError) { }
 
@@ -236,7 +236,7 @@ namespace OpenTK.Math
                 }
 
                 // exponent overflow
-                if (exponent > 30) throw new ArithmeticException("Half: hardware floating point overflow.");
+                if (exponent > 30) throw new ArithmeticException("Half: Hardware floating-point overflow.");
 
                 // Assemble the half from S, E and M.
 
@@ -248,8 +248,8 @@ namespace OpenTK.Math
 
         #region Half -> Single
 
-        /// <summary>Converts the 16-Bit half to 32-Bit floating point.</summary>
-        /// <returns>A Single precision floating point Number.</returns>
+        /// <summary>Converts the 16-bit half to 32-bit floating-point.</summary>
+        /// <returns>A single-precision floating-point number.</returns>
         public Single ToSingle()
         {
             int i = HalfToFloat(bits);
@@ -505,7 +505,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>Converts this Half into a human-legible string representation.</summary>
-        /// <param name="format">formatting for the output string.</param>
+        /// <param name="format">Formatting for the output string.</param>
         /// <param name="formatProvider">Culture-specific formatting information.</param>
         /// <returns>The string representation of this instance.</returns>
         public string ToString(string format, IFormatProvider formatProvider)
@@ -517,17 +517,17 @@ namespace OpenTK.Math
 
         #region String -> Half
 
-        /// <summary>Converts the string representation of a number to a Half precision floating point equivalent.</summary>
-        /// <param name="s">string representation of the number to convert.</param>
+        /// <summary>Converts the string representation of a number to a half-precision floating-point equivalent.</summary>
+        /// <param name="s">String representation of the number to convert.</param>
         /// <returns>A new Half instance.</returns>
         public static Half Parse(string s)
         {
             return (Half)Single.Parse(s);
         }
 
-        /// <summary>Converts the string representation of a number to a Half precision floating point equivalent.</summary>
-        /// <param name="s">string representation of the number to convert.</param>
-        /// <param name="style">specifies the format of s.</param>
+        /// <summary>Converts the string representation of a number to a half-precision floating-point equivalent.</summary>
+        /// <param name="s">String representation of the number to convert.</param>
+        /// <param name="style">Specifies the format of s.</param>
         /// <param name="provider">Culture-specific formatting information.</param>
         /// <returns>A new Half instance.</returns>
         public static Half Parse(string s, System.Globalization.NumberStyles style, IFormatProvider provider)
@@ -535,8 +535,8 @@ namespace OpenTK.Math
             return (Half)Single.Parse(s, style, provider);
         }
 
-        /// <summary>Converts the string representation of a number to a Half precision floating point equivalent. Returns success.</summary>
-        /// <param name="s">string representation of the number to convert.</param>
+        /// <summary>Converts the string representation of a number to a half-precision floating-point equivalent. Returns success.</summary>
+        /// <param name="s">String representation of the number to convert.</param>
         /// <param name="result">The Half instance to write to.</param>
         /// <returns>Success.</returns>
         public static bool TryParse(string s, out Half result)
@@ -547,7 +547,7 @@ namespace OpenTK.Math
             return b;
         }
 
-        /// <summary>Converts the string representation of a number to a Half precision floating point equivalent. Returns success.</summary>
+        /// <summary>Converts the string representation of a number to a half-precision floating-point equivalent. Returns success.</summary>
         /// <param name="s">string representation of the number to convert.</param>
         /// <param name="style">specifies the format of s.</param>
         /// <param name="provider">Culture-specific formatting information.</param>

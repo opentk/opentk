@@ -131,7 +131,7 @@
             this.label_MONO16BIT.Name = "label_MONO16BIT";
             this.label_MONO16BIT.Size = new System.Drawing.Size(64, 13);
             this.label_MONO16BIT.TabIndex = 102;
-            this.label_MONO16BIT.Text = "Mono 16 Bit";
+            this.label_MONO16BIT.Text = "Mono 16-bit";
             // 
             // label_RINGBUFFER
             // 

@@ -351,20 +351,20 @@ namespace OpenTK.Audio.OpenAL
         //[CLSCompliant(false)]
         private Delegate_alEffectf Imported_alEffectf;
 
-        /// <summary>This function is used to set floating point properties on Effect objects.</summary>
+        /// <summary>This function is used to set floating-point properties on Effect objects.</summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
-        /// <param name="value">Floating point value.</param>
+        /// <param name="value">Floating-point value.</param>
         [CLSCompliant(false)]
         public void Effect(uint eid, EfxEffectf param, float value)
         {
             Imported_alEffectf(eid, param, value);
         }
 
-        /// <summary>This function is used to set floating point properties on Effect objects.</summary>
+        /// <summary>This function is used to set floating-point properties on Effect objects.</summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
-        /// <param name="value">Floating point value.</param>
+        /// <param name="value">Floating-point value.</param>
 
         public void Effect(int eid, EfxEffectf param, float value)
         {
@@ -382,7 +382,7 @@ namespace OpenTK.Audio.OpenAL
         //[CLSCompliant(false)]
         private Delegate_alEffectfv Imported_alEffectfv;
 
-        /// <summary>This function is used to set 3 floating point properties on Effect objects.</summary>
+        /// <summary>This function is used to set 3 floating-point properties on Effect objects.</summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="values">Pointer to Math.Vector3.</param>
@@ -398,7 +398,7 @@ namespace OpenTK.Audio.OpenAL
             }
         }
 
-        /// <summary>This function is used to set 3 floating point properties on Effect objects.</summary>
+        /// <summary>This function is used to set 3 floating-point properties on Effect objects.</summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="values">Pointer to Math.Vector3.</param>
@@ -456,10 +456,10 @@ namespace OpenTK.Audio.OpenAL
         //[CLSCompliant(false)]
         private Delegate_alGetEffectf Imported_alGetEffectf;
 
-        /// <summary>This function is used to retrieve floating point properties from Effect objects.</summary>
+        /// <summary>This function is used to retrieve floating-point properties from Effect objects.</summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
-        /// <param name="value">Address where floating point value will be stored.</param>
+        /// <param name="value">Address where floating-point value will be stored.</param>
         [CLSCompliant(false)]
         public void GetEffect(uint eid, EfxEffectf pname, out float value)
         {
@@ -472,10 +472,10 @@ namespace OpenTK.Audio.OpenAL
             }
         }
 
-        /// <summary>This function is used to retrieve floating point properties from Effect objects.</summary>
+        /// <summary>This function is used to retrieve floating-point properties from Effect objects.</summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
-        /// <param name="value">Address where floating point value will be stored.</param>
+        /// <param name="value">Address where floating-point value will be stored.</param>
 
         public void GetEffect(int eid, EfxEffectf pname, out float value)
         {
@@ -493,7 +493,7 @@ namespace OpenTK.Audio.OpenAL
         //[CLSCompliant(false)]
         private Delegate_alGetEffectfv Imported_alGetEffectfv;
 
-        /// <summary>This function is used to retrieve 3 floating point properties from Effect objects.</summary>
+        /// <summary>This function is used to retrieve 3 floating-point properties from Effect objects.</summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to retrieve.</param>
         /// <param name="values">A Math.Vector3 to hold the values.</param>
@@ -512,7 +512,7 @@ namespace OpenTK.Audio.OpenAL
             }
         }
 
-        /// <summary>This function is used to retrieve 3 floating point properties from Effect objects.</summary>
+        /// <summary>This function is used to retrieve 3 floating-point properties from Effect objects.</summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to retrieve.</param>
         /// <param name="values">A Math.Vector3 to hold the values.</param>
@@ -761,20 +761,20 @@ namespace OpenTK.Audio.OpenAL
         //[CLSCompliant(false)]
         private Delegate_alFilterf Imported_alFilterf;
 
-        /// <summary>This function is used to set floating point properties on Filter objects.</summary>
+        /// <summary>This function is used to set floating-point properties on Filter objects.</summary>
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="param">Effect property to set.</param>
-        /// <param name="value">Floating point value.</param>
+        /// <param name="value">Floating-point value.</param>
         [CLSCompliant(false)]
         public void Filter(uint fid, EfxFilterf param, float value)
         {
             Imported_alFilterf(fid, param, value);
         }
 
-        /// <summary>This function is used to set floating point properties on Filter objects.</summary>
+        /// <summary>This function is used to set floating-point properties on Filter objects.</summary>
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="param">Effect property to set.</param>
-        /// <param name="value">Floating point value.</param>
+        /// <param name="value">Floating-point value.</param>
 
         public void Filter(int fid, EfxFilterf param, float value)
         {
@@ -829,10 +829,10 @@ namespace OpenTK.Audio.OpenAL
         //[CLSCompliant(false)]
         private Delegate_alGetFilterf Imported_alGetFilterf;
 
-        /// <summary>This function is used to retrieve floating point properties from Filter objects.</summary>
+        /// <summary>This function is used to retrieve floating-point properties from Filter objects.</summary>
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
-        /// <param name="value">Address where floating point value will be stored.</param>
+        /// <param name="value">Address where floating-point value will be stored.</param>
         [CLSCompliant(false)]
         public void GetFilter(uint fid, EfxFilterf pname, out float value)
         {
@@ -845,10 +845,10 @@ namespace OpenTK.Audio.OpenAL
             }
         }
 
-        /// <summary>This function is used to retrieve floating point properties from Filter objects.</summary>
+        /// <summary>This function is used to retrieve floating-point properties from Filter objects.</summary>
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
-        /// <param name="value">Address where floating point value will be stored.</param>
+        /// <param name="value">Address where floating-point value will be stored.</param>
 
         public void GetFilter(int fid, EfxFilterf pname, out float value)
         {
@@ -1092,20 +1092,20 @@ namespace OpenTK.Audio.OpenAL
         //[CLSCompliant(false)]
         private Delegate_alAuxiliaryEffectSlotf Imported_alAuxiliaryEffectSlotf;
 
-        /// <summary>This function is used to set floating point properties on Auxiliary Effect Slot objects.</summary>
+        /// <summary>This function is used to set floating-point properties on Auxiliary Effect Slot objects.</summary>
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="param">Auxiliary Effect Slot property to set.</param>
-        /// <param name="value">Floating point value.</param>
+        /// <param name="value">Floating-point value.</param>
         [CLSCompliant(false)]
         public void AuxiliaryEffectSlot(uint asid, EfxAuxiliaryf param, float value)
         {
             Imported_alAuxiliaryEffectSlotf(asid, param, value);
         }
 
-        /// <summary>This function is used to set floating point properties on Auxiliary Effect Slot objects.</summary>
+        /// <summary>This function is used to set floating-point properties on Auxiliary Effect Slot objects.</summary>
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="param">Auxiliary Effect Slot property to set.</param>
-        /// <param name="value">Floating point value.</param>
+        /// <param name="value">Floating-point value.</param>
 
         public void AuxiliaryEffectSlot(int asid, EfxAuxiliaryf param, float value)
         {
@@ -1163,7 +1163,7 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>This function is used to retrieve floating properties on Auxiliary Effect Slot objects.</summary>
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="pname">Auxiliary Effect Slot property to retrieve.</param>
-        /// <param name="value">Address where floating point value will be stored.</param>
+        /// <param name="value">Address where floating-point value will be stored.</param>
         [CLSCompliant(false)]
         public void GetAuxiliaryEffectSlot(uint asid, EfxAuxiliaryf pname, out float value)
         {
@@ -1179,7 +1179,7 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>This function is used to retrieve floating properties on Auxiliary Effect Slot objects.</summary>
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="pname">Auxiliary Effect Slot property to retrieve.</param>
-        /// <param name="value">Address where floating point value will be stored.</param>
+        /// <param name="value">Address where floating-point value will be stored.</param>
 
         public void GetAuxiliaryEffectSlot(int asid, EfxAuxiliaryf pname, out float value)
         {

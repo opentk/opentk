@@ -58,10 +58,10 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half4 instance will avoid conversion and copy directly from the Half parameters.
         /// </summary>
-        /// <param name="x">An Half instance of a 16-Bit half precision floating point number.</param>
-        /// <param name="y">An Half instance of a 16-Bit half precision floating point number.</param>
-        /// <param name="z">An Half instance of a 16-Bit half precision floating point number.</param>
-        /// <param name="w">An Half instance of a 16-Bit half precision floating point number.</param>
+        /// <param name="x">An Half instance of a 16-bit half-precision floating-point number.</param>
+        /// <param name="y">An Half instance of a 16-bit half-precision floating-point number.</param>
+        /// <param name="z">An Half instance of a 16-bit half-precision floating-point number.</param>
+        /// <param name="w">An Half instance of a 16-bit half-precision floating-point number.</param>
         public Vector4h(Half x, Half y, Half z, Half w)
         {
             this.X = x;
@@ -71,12 +71,12 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the 4 parameters into 16-Bit Half precision floating point.
+        /// The new Half4 instance will convert the 4 parameters into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="x">32-Bit Single precision floating point number.</param>
-        /// <param name="y">32-Bit Single precision floating point number.</param>
-        /// <param name="z">32-Bit Single precision floating point number.</param>
-        /// <param name="w">32-Bit Single precision floating point number.</param>
+        /// <param name="x">32-bit single-precision floating-point number.</param>
+        /// <param name="y">32-bit single-precision floating-point number.</param>
+        /// <param name="z">32-bit single-precision floating-point number.</param>
+        /// <param name="w">32-bit single-precision floating-point number.</param>
         public Vector4h(Single x, Single y, Single z, Single w)
         {
             X = new Half(x);
@@ -86,12 +86,12 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the 4 parameters into 16-Bit Half precision floating point.
+        /// The new Half4 instance will convert the 4 parameters into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="x">32-Bit Single precision floating point number.</param>
-        /// <param name="y">32-Bit Single precision floating point number.</param>
-        /// <param name="z">32-Bit Single precision floating point number.</param>
-        /// <param name="w">32-Bit Single precision floating point number.</param>
+        /// <param name="x">32-bit single-precision floating-point number.</param>
+        /// <param name="y">32-bit single-precision floating-point number.</param>
+        /// <param name="z">32-bit single-precision floating-point number.</param>
+        /// <param name="w">32-bit single-precision floating-point number.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector4h(Single x, Single y, Single z, Single w, bool throwOnError)
         {
@@ -102,7 +102,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4 into 16-Bit Half precision floating point.
+        /// The new Half4 instance will convert the Vector4 into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector4</param>
         [CLSCompliant(false)]
@@ -115,7 +115,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4 into 16-Bit Half precision floating point.
+        /// The new Half4 instance will convert the Vector4 into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector4</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -129,7 +129,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4 into 16-Bit Half precision floating point.
+        /// The new Half4 instance will convert the Vector4 into 16-bit half-precision floating-point.
         /// This is the fastest constructor.
         /// </summary>
         /// <param name="v">OpenTK.Vector4</param>
@@ -142,7 +142,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4 into 16-Bit Half precision floating point.
+        /// The new Half4 instance will convert the Vector4 into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector4</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -155,7 +155,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4d into 16-Bit Half precision floating point.
+        /// The new Half4 instance will convert the Vector4d into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector4d</param>
         public Vector4h(Vector4d v)
@@ -167,7 +167,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4d into 16-Bit Half precision floating point.
+        /// The new Half4 instance will convert the Vector4d into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector4d</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -180,7 +180,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4d into 16-Bit Half precision floating point.
+        /// The new Half4 instance will convert the Vector4d into 16-bit half-precision floating-point.
         /// This is the faster constructor.
         /// </summary>
         /// <param name="v">OpenTK.Vector4d</param>
@@ -194,7 +194,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4d into 16-Bit Half precision floating point.
+        /// The new Half4 instance will convert the Vector4d into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector4d</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>

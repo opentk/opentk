@@ -19,7 +19,7 @@ namespace OpenTK.Audio.OpenAL
         Invalid = -1,
     }
 
-    ///<summary>A list of valid 32-Bits Float Listener/GetListener parameters</summary>
+    ///<summary>A list of valid 32-bit Float Listener/GetListener parameters</summary>
     public enum ALListenerf : int
     {
         ///<summary>Indicate the gain (Volume amplification) applied. Type: float Range: [0.0f - ? ] A value of 1.0 means un-attenuated/unchanged. Each division by 2 equals an attenuation of -6dB. Each multiplicaton with 2 equals an amplification of +6dB. A value of 0.0f is interpreted as zero volume and the channel is effectively disabled.</summary>
@@ -46,7 +46,7 @@ namespace OpenTK.Audio.OpenAL
         Orientation = 0x100F,
     }
 
-    ///<summary>A list of valid 32-Bits Float Source/GetSource parameters</summary>
+    ///<summary>A list of valid 32-bit Float Source/GetSource parameters</summary>
     public enum ALSourcef : int
     {
         ///<summary>Source specific reference distance. Type: float Range: [0.0f - float.PositiveInfinity] At 0.0f, no distance attenuation occurs. Type: float Default: 1.0f.</summary>
@@ -106,7 +106,7 @@ namespace OpenTK.Audio.OpenAL
         Direction = 0x1005,
     }
 
-    ///<summary>A list of valid 8-Bits boolean Source/GetSource parameters</summary>
+    ///<summary>A list of valid 8-bit boolean Source/GetSource parameters</summary>
     public enum ALSourceb : int
     {
         ///<summary>Indicate that the Source has relative coordinates. Type: bool Range: [True, False]</summary>
@@ -216,16 +216,16 @@ namespace OpenTK.Audio.OpenAL
     ///<summary>Sound samples: Format specifier.</summary>
     public enum ALFormat : int
     {
-        ///<summary>1 Channel, 8 Bits per sample.</summary>
+        ///<summary>1 Channel, 8 bits per sample.</summary>
         Mono8 = 0x1100,
 
-        ///<summary>1 Channel, 16 Bits per sample.</summary>
+        ///<summary>1 Channel, 16 bits per sample.</summary>
         Mono16 = 0x1101,
 
-        ///<summary>2 Channels, 8 Bits per sample each.</summary>
+        ///<summary>2 Channels, 8 bits per sample each.</summary>
         Stereo8 = 0x1102,
 
-        ///<summary>2 Channels, 16 Bits per sample each.</summary>
+        ///<summary>2 Channels, 16 bits per sample each.</summary>
         Stereo16 = 0x1103,
 
         /// <summary>1 Channel, A-law encoded data. Requires Extension: AL_EXT_ALAW</summary>
@@ -264,56 +264,56 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>2 Channels, double-precision floating-point data. Requires Extension: AL_EXT_double</summary>
         StereoDoubleExt = 0x10013,
 
-        /// <summary>Multichannel 5.1, 16 Bits data. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>Multichannel 5.1, 16-bit data. Requires Extension: AL_EXT_MCFORMATS</summary>
         Multi51Chn16Ext = 0x120B,
 
-        /// <summary>Multichannel 5.1, 32 Bits data. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>Multichannel 5.1, 32-bit data. Requires Extension: AL_EXT_MCFORMATS</summary>
         Multi51Chn32Ext = 0x120C,
 
-        /// <summary>Multichannel 5.1, 8 Bits data. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>Multichannel 5.1, 8-bit data. Requires Extension: AL_EXT_MCFORMATS</summary>
         Multi51Chn8Ext = 0x120A,
 
-        /// <summary>Multichannel 6.1, 16 Bits data. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>Multichannel 6.1, 16-bit data. Requires Extension: AL_EXT_MCFORMATS</summary>
         Multi61Chn16Ext = 0x120E,
 
-        /// <summary>Multichannel 6.1, 32 Bits data. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>Multichannel 6.1, 32-bit data. Requires Extension: AL_EXT_MCFORMATS</summary>
         Multi61Chn32Ext = 0x120F,
 
-        /// <summary>Multichannel 6.1, 8 Bits data. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>Multichannel 6.1, 8-bit data. Requires Extension: AL_EXT_MCFORMATS</summary>
         Multi61Chn8Ext = 0x120D,
 
-        /// <summary>Multichannel 7.1, 16 Bits data. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>Multichannel 7.1, 16-bit data. Requires Extension: AL_EXT_MCFORMATS</summary>
         Multi71Chn16Ext = 0x1211,
 
-        /// <summary>Multichannel 7.1, 32 Bits data. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>Multichannel 7.1, 32-bit data. Requires Extension: AL_EXT_MCFORMATS</summary>
         Multi71Chn32Ext = 0x1212,
 
-        /// <summary>Multichannel 7.1, 8 Bits data. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>Multichannel 7.1, 8-bit data. Requires Extension: AL_EXT_MCFORMATS</summary>
         Multi71Chn8Ext = 0x1210,
 
-        /// <summary>Multichannel 4.0, 16 Bits data. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>Multichannel 4.0, 16-bit data. Requires Extension: AL_EXT_MCFORMATS</summary>
         MultiQuad16Ext = 0x1205,
 
-        /// <summary>Multichannel 4.0, 32 Bits data. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>Multichannel 4.0, 32-bit data. Requires Extension: AL_EXT_MCFORMATS</summary>
         MultiQuad32Ext = 0x1206,
 
-        /// <summary>Multichannel 4.0, 8 Bits data. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>Multichannel 4.0, 8-bit data. Requires Extension: AL_EXT_MCFORMATS</summary>
         MultiQuad8Ext = 0x1204,
 
-        /// <summary>1 Channel rear speaker, 16 Bits data. See Quadrophonic setups. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>1 Channel rear speaker, 16-bit data. See Quadrophonic setups. Requires Extension: AL_EXT_MCFORMATS</summary>
         MultiRear16Ext = 0x1208,
 
-        /// <summary>1 Channel rear speaker, 32 Bits data. See Quadrophonic setups. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>1 Channel rear speaker, 32-bit data. See Quadrophonic setups. Requires Extension: AL_EXT_MCFORMATS</summary>
         MultiRear32Ext = 0x1209,
 
-        /// <summary>1 Channel rear speaker, 8 Bits data. See Quadrophonic setups. Requires Extension: AL_EXT_MCFORMATS</summary>
+        /// <summary>1 Channel rear speaker, 8-bit data. See Quadrophonic setups. Requires Extension: AL_EXT_MCFORMATS</summary>
         MultiRear8Ext = 0x1207,
     }
 
     ///<summary>A list of valid Int32 GetBuffer parameters</summary>
     public enum ALGetBufferi : int
     {
-        ///<summary>Sound sample's frequency, in units of Hertz [Hz]. This is the number of samples per second. Half of the sample frequency marks the maximum significant frequency component.</summary>
+        ///<summary>Sound sample's frequency, in units of hertz [Hz]. This is the number of samples per second. Half of the sample frequency marks the maximum significant frequency component.</summary>
         Frequency = 0x2001,
 
         /// <summary>Bit depth of the buffer. Should be 8 or 16.</summary>
@@ -383,7 +383,7 @@ namespace OpenTK.Audio.OpenAL
         Extensions = 0xB004,
     }
 
-    ///<summary>A list of valid 32-Bits Float AL.Get() parameters</summary>
+    ///<summary>A list of valid 32-bit Float AL.Get() parameters</summary>
     public enum ALGetFloat : int
     {
         ///<summary>Doppler scale. Default 1.0f</summary>

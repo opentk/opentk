@@ -1922,7 +1922,7 @@ namespace Tao.OpenAl
 
         #region alGetBufferf(int buffer, int attribute, out int val)
         /// <summary>
-        ///     Retrieves a floating point property of a buffer.
+        ///     Retrieves a floating-point property of a buffer.
         /// </summary>
         /// <param name="buffer">
         ///     Buffer name whose attribute is being retrieved.
@@ -1943,7 +1943,7 @@ namespace Tao.OpenAl
 
         #region alGetBufferf(int buffer, int attribute, [Out] int[] val)
         /// <summary>
-        ///     Retrieves a floating point property of a buffer.
+        ///     Retrieves a floating-point property of a buffer.
         /// </summary>
         /// <param name="buffer">
         ///     Buffer name whose attribute is being retrieved.
@@ -1964,7 +1964,7 @@ namespace Tao.OpenAl
 
         #region alGetBufferf(int buffer, int attribute, [Out] IntPtr val)
         /// <summary>
-        ///     Retrieves a floating point property of a buffer.
+        ///     Retrieves a floating-point property of a buffer.
         /// </summary>
         /// <param name="buffer">
         ///     Buffer name whose attribute is being retrieved.
@@ -1985,7 +1985,7 @@ namespace Tao.OpenAl
 
         #region alGetBufferf(int buffer, int attribute, [Out] float *val)
         /// <summary>
-        ///     Retrieves a floating point property of a buffer.
+        ///     Retrieves a floating-point property of a buffer.
         /// </summary>
         /// <param name="buffer">
         ///     Buffer name whose attribute is being retrieved.
@@ -2006,7 +2006,7 @@ namespace Tao.OpenAl
 
         #region void alGetBuffer3f(int buffer, int attribute, out float value1, out float value2, out float value3)
         /// <summary>
-        ///     Retrieves a floating point property of a buffer.
+        ///     Retrieves a floating-point property of a buffer.
         /// </summary>
         /// <param name="buffer">
         ///     Buffer name whose attribute is being retrieved.
@@ -2033,7 +2033,7 @@ namespace Tao.OpenAl
 
         #region alGetBufferfv(int buffer, int attribute, out float val)
         /// <summary>
-        ///     Retrieves a floating point property of a buffer.
+        ///     Retrieves a floating-point property of a buffer.
         /// </summary>
         /// <param name="buffer">
         ///     Buffer name whose attribute is being retrieved.
@@ -2054,7 +2054,7 @@ namespace Tao.OpenAl
 
         #region alGetBufferfv(int buffer, int attribute, [Out] float[] val)
         /// <summary>
-        ///     Retrieves a floating point property of a buffer.
+        ///     Retrieves a floating-point property of a buffer.
         /// </summary>
         /// <param name="buffer">
         ///     Buffer name whose attribute is being retrieved.
@@ -2075,7 +2075,7 @@ namespace Tao.OpenAl
 
         #region alGetBufferfv(int buffer, int attribute, [Out] IntPtr val)
         /// <summary>
-        ///     Retrieves a floating point property of a buffer.
+        ///     Retrieves a floating-point property of a buffer.
         /// </summary>
         /// <param name="buffer">
         ///     Buffer name whose attribute is being retrieved.
@@ -2096,7 +2096,7 @@ namespace Tao.OpenAl
 
         #region alGetBufferfv(int buffer, int attribute, [Out] float *val)
         /// <summary>
-        ///     Retrieves a floating point property of a buffer.
+        ///     Retrieves a floating-point property of a buffer.
         /// </summary>
         /// <param name="buffer">
         ///     Buffer name whose attribute is being retrieved.
@@ -2376,7 +2376,7 @@ namespace Tao.OpenAl
 
         #region double alGetDouble(int state)
         /// <summary>
-        ///     Returns a double precision floating point OpenAL state.
+        ///     Returns a double-precision floating-point OpenAL state.
         /// </summary>
         /// <param name="state">
         ///     The state to be queried.
@@ -2385,7 +2385,7 @@ namespace Tao.OpenAl
         ///     The double value described by <i>state</i> will be returned.
         /// </returns>
         /// <remarks>
-        ///     There aren’t any double precision floating point states defined at the time of
+        ///     There aren’t any double-precision floating-point states defined at the time of
         ///     this writing, so this function will always generate the error
         ///     <see cref="AL_INVALID_ENUM" />.
         /// </remarks>
@@ -2396,7 +2396,7 @@ namespace Tao.OpenAl
 
         #region alGetDoublev(int state, out double output)
         /// <summary>
-        ///     Retrieves a double precision floating point OpenAL state.
+        ///     Retrieves a double-precision floating-point OpenAL state.
         /// </summary>
         /// <param name="state">
         ///     The state to be queried.
@@ -2405,7 +2405,7 @@ namespace Tao.OpenAl
         ///     A pointer to the location where the state will be stored.
         /// </param>
         /// <remarks>
-        ///     There aren’t any double precision floating point states defined at the time of
+        ///     There aren’t any double-precision floating-point states defined at the time of
         ///     this writing, so this function will always generate the error
         ///     <see cref="AL_INVALID_ENUM" />.
         /// </remarks>
@@ -2416,7 +2416,7 @@ namespace Tao.OpenAl
 
         #region alGetDoublev(int state, [Out] double[] output)
         /// <summary>
-        ///     Retrieves a double precision floating point OpenAL state.
+        ///     Retrieves a double-precision floating-point OpenAL state.
         /// </summary>
         /// <param name="state">
         ///     The state to be queried.
@@ -2425,7 +2425,7 @@ namespace Tao.OpenAl
         ///     A pointer to the location where the state will be stored.
         /// </param>
         /// <remarks>
-        ///     There aren’t any double precision floating point states defined at the time of
+        ///     There aren’t any double-precision floating-point states defined at the time of
         ///     this writing, so this function will always generate the error
         ///     <see cref="AL_INVALID_ENUM" />.
         /// </remarks>
@@ -2436,7 +2436,7 @@ namespace Tao.OpenAl
 
         #region alGetDoublev(int state, [Out] IntPtr output)
         /// <summary>
-        ///     Retrieves a double precision floating point OpenAL state.
+        ///     Retrieves a double-precision floating-point OpenAL state.
         /// </summary>
         /// <param name="state">
         ///     The state to be queried.
@@ -2445,7 +2445,7 @@ namespace Tao.OpenAl
         ///     A pointer to the location where the state will be stored.
         /// </param>
         /// <remarks>
-        ///     There aren’t any double precision floating point states defined at the time of
+        ///     There aren’t any double-precision floating-point states defined at the time of
         ///     this writing, so this function will always generate the error
         ///     <see cref="AL_INVALID_ENUM" />.
         /// </remarks>
@@ -2456,7 +2456,7 @@ namespace Tao.OpenAl
 
         #region alGetDoublev(int state, [Out] double *output)
         /// <summary>
-        ///     Retrieves a double precision floating point OpenAL state.
+        ///     Retrieves a double-precision floating-point OpenAL state.
         /// </summary>
         /// <param name="state">
         ///     The state to be queried.
@@ -2465,7 +2465,7 @@ namespace Tao.OpenAl
         ///     A pointer to the location where the state will be stored.
         /// </param>
         /// <remarks>
-        ///     There aren’t any double precision floating point states defined at the time of
+        ///     There aren’t any double-precision floating-point states defined at the time of
         ///     this writing, so this function will always generate the error
         ///     <see cref="AL_INVALID_ENUM" />.
         /// </remarks>
@@ -2511,7 +2511,7 @@ namespace Tao.OpenAl
 
         #region float alGetFloat(int state)
         /// <summary>
-        ///     Returns a floating point OpenAL state.
+        ///     Returns a floating-point OpenAL state.
         /// </summary>
         /// <param name="state">
         ///     <para>
@@ -2525,7 +2525,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <returns>
-        ///     The floating point value described by <i>state</i> will be returned.
+        ///     The floating-point value described by <i>state</i> will be returned.
         /// </returns>
         // ALAPI ALfloat ALAPIENTRY alGetFloat(ALenum param);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -2534,7 +2534,7 @@ namespace Tao.OpenAl
 
         #region alGetFloatv(int state, out float output)
         /// <summary>
-        ///     Retrieves a floating point OpenAL state.
+        ///     Retrieves a floating-point OpenAL state.
         /// </summary>
         /// <param name="state">
         ///     <para>
@@ -2557,7 +2557,7 @@ namespace Tao.OpenAl
 
         #region alGetFloatv(int state, [Out] float[] output)
         /// <summary>
-        ///     Retrieves a floating point OpenAL state.
+        ///     Retrieves a floating-point OpenAL state.
         /// </summary>
         /// <param name="state">
         ///     <para>
@@ -2580,7 +2580,7 @@ namespace Tao.OpenAl
 
         #region alGetFloatv(int state, [Out] IntPtr output)
         /// <summary>
-        ///     Retrieves a floating point OpenAL state.
+        ///     Retrieves a floating-point OpenAL state.
         /// </summary>
         /// <param name="state">
         ///     <para>
@@ -2603,7 +2603,7 @@ namespace Tao.OpenAl
 
         #region alGetFloatv(int state, [Out] float *output)
         /// <summary>
-        ///     Retrieves a floating point OpenAL state.
+        ///     Retrieves a floating-point OpenAL state.
         /// </summary>
         /// <param name="state">
         ///     <para>
@@ -2736,7 +2736,7 @@ namespace Tao.OpenAl
 
         #region alGetListener3f(int attribute, out float output1, out float output2, out float output3)
         /// <summary>
-        ///     Retrieves a set of three floating point values from a property of the listener.
+        ///     Retrieves a set of three floating-point values from a property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -2750,13 +2750,13 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="output1">
-        ///     Pointer to the the floating point being retrieved.
+        ///     Pointer to the the floating-point being retrieved.
         /// </param>
         /// <param name="output2">
-        ///     Pointer to the the floating point being retrieved.
+        ///     Pointer to the the floating-point being retrieved.
         /// </param>
         /// <param name="output3">
-        ///     Pointer to the the floating point being retrieved.
+        ///     Pointer to the the floating-point being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetListener3f(ALenum param, ALfloat* v1, ALfloat* v2, ALfloat* v3);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -2765,7 +2765,7 @@ namespace Tao.OpenAl
 
         #region alGetListener3f(int attribute, [Out] float[] output1, [Out] float[] output2, [Out] float[] output3)
         /// <summary>
-        ///     Retrieves a set of three floating point values from a property of the listener.
+        ///     Retrieves a set of three floating-point values from a property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -2779,13 +2779,13 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="output1">
-        ///     Pointer to the the floating point being retrieved.
+        ///     Pointer to the the floating-point being retrieved.
         /// </param>
         /// <param name="output2">
-        ///     Pointer to the the floating point being retrieved.
+        ///     Pointer to the the floating-point being retrieved.
         /// </param>
         /// <param name="output3">
-        ///     Pointer to the the floating point being retrieved.
+        ///     Pointer to the the floating-point being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetListener3f(ALenum param, ALfloat* v1, ALfloat* v2, ALfloat* v3);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -2794,7 +2794,7 @@ namespace Tao.OpenAl
 
         #region alGetListener3f(int attribute, [Out] IntPtr output1, [Out] IntPtr output2, [Out] IntPtr output3)
         /// <summary>
-        ///     Retrieves a set of three floating point values from a property of the listener.
+        ///     Retrieves a set of three floating-point values from a property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -2808,13 +2808,13 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="output1">
-        ///     Pointer to the the floating point being retrieved.
+        ///     Pointer to the the floating-point being retrieved.
         /// </param>
         /// <param name="output2">
-        ///     Pointer to the the floating point being retrieved.
+        ///     Pointer to the the floating-point being retrieved.
         /// </param>
         /// <param name="output3">
-        ///     Pointer to the the floating point being retrieved.
+        ///     Pointer to the the floating-point being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetListener3f(ALenum param, ALfloat* v1, ALfloat* v2, ALfloat* v3);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -2823,7 +2823,7 @@ namespace Tao.OpenAl
 
         #region alGetListener3f(int attribute, [Out] float *output1, [Out] float *output2, [Out] float *output3)
         /// <summary>
-        ///     Retrieves a set of three floating point values from a property of the listener.
+        ///     Retrieves a set of three floating-point values from a property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -2837,13 +2837,13 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="output1">
-        ///     Pointer to the the floating point being retrieved.
+        ///     Pointer to the the floating-point being retrieved.
         /// </param>
         /// <param name="output2">
-        ///     Pointer to the the floating point being retrieved.
+        ///     Pointer to the the floating-point being retrieved.
         /// </param>
         /// <param name="output3">
-        ///     Pointer to the the floating point being retrieved.
+        ///     Pointer to the the floating-point being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetListener3f(ALenum param, ALfloat* v1, ALfloat* v2, ALfloat* v3);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), CLSCompliant(false), SuppressUnmanagedCodeSecurity]
@@ -2852,7 +2852,7 @@ namespace Tao.OpenAl
 
         #region alGetListenerf(int attribute, out float output)
         /// <summary>
-        ///     Retrieves a floating point property of the listener.
+        ///     Retrieves a floating-point property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -2865,7 +2865,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="output">
-        ///     A pointer to the floating point value being retrieved.
+        ///     A pointer to the floating-point value being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetListenerf(ALenum param, ALfloat* value);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -2874,7 +2874,7 @@ namespace Tao.OpenAl
 
         #region alGetListenerf(int attribute, [Out] float[] output)
         /// <summary>
-        ///     Retrieves a floating point property of the listener.
+        ///     Retrieves a floating-point property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -2887,7 +2887,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="output">
-        ///     A pointer to the floating point value being retrieved.
+        ///     A pointer to the floating-point value being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetListenerf(ALenum param, ALfloat* value);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -2896,7 +2896,7 @@ namespace Tao.OpenAl
 
         #region alGetListenerf(int attribute, [Out] IntPtr output)
         /// <summary>
-        ///     Retrieves a floating point property of the listener.
+        ///     Retrieves a floating-point property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -2909,7 +2909,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="output">
-        ///     A pointer to the floating point value being retrieved.
+        ///     A pointer to the floating-point value being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetListenerf(ALenum param, ALfloat* value);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -2918,7 +2918,7 @@ namespace Tao.OpenAl
 
         #region alGetListenerf(int attribute, [Out] float *output)
         /// <summary>
-        ///     Retrieves a floating point property of the listener.
+        ///     Retrieves a floating-point property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -2931,7 +2931,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="output">
-        ///     A pointer to the floating point value being retrieved.
+        ///     A pointer to the floating-point value being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetListenerf(ALenum param, ALfloat* value);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), CLSCompliant(false), SuppressUnmanagedCodeSecurity]
@@ -2940,7 +2940,7 @@ namespace Tao.OpenAl
 
         #region alGetListenerfv(int attribute, out float output)
         /// <summary>
-        ///     Retrieves a floating point-vector property of the listener.
+        ///     Retrieves a floating-point vector property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -2955,7 +2955,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="output">
-        ///     A pointer to the floating point-vector value being retrieved.
+        ///     A pointer to the floating-point vector value being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetListenerfv(ALenum param, ALfloat* values);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -2964,7 +2964,7 @@ namespace Tao.OpenAl
 
         #region alGetListenerfv(int attribute, [Out] float[] output)
         /// <summary>
-        ///     Retrieves a floating point-vector property of the listener.
+        ///     Retrieves a floating-point vector property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -2979,7 +2979,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="output">
-        ///     A pointer to the floating point-vector value being retrieved.
+        ///     A pointer to the floating-point vector value being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetListenerfv(ALenum param, ALfloat* values);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -2988,7 +2988,7 @@ namespace Tao.OpenAl
 
         #region alGetListenerfv(int attribute, [Out] IntPtr output)
         /// <summary>
-        ///     Retrieves a floating point-vector property of the listener.
+        ///     Retrieves a floating-point vector property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -3003,7 +3003,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="output">
-        ///     A pointer to the floating point-vector value being retrieved.
+        ///     A pointer to the floating-point vector value being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetListenerfv(ALenum param, ALfloat* values);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -3012,7 +3012,7 @@ namespace Tao.OpenAl
 
         #region alGetListenerfv(int attribute, [Out] float *output)
         /// <summary>
-        ///     Retrieves a floating point-vector property of the listener.
+        ///     Retrieves a floating-point vector property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -3027,7 +3027,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="output">
-        ///     A pointer to the floating point-vector value being retrieved.
+        ///     A pointer to the floating-point vector value being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetListenerfv(ALenum param, ALfloat* values);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), CLSCompliant(false), SuppressUnmanagedCodeSecurity]
@@ -3359,7 +3359,7 @@ namespace Tao.OpenAl
 
         #region alGetSourcef(int source, int attribute, out float val)
         /// <summary>
-        ///     Retrieves a floating point property of a source.
+        ///     Retrieves a floating-point property of a source.
         /// </summary>
         /// <param name="source">
         ///     Source name whose attribute is being retrieved.
@@ -3384,7 +3384,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="val">
-        ///     A pointer to the floating point value being retrieved.
+        ///     A pointer to the floating-point value being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetSourcef(ALuint source, ALenum param, ALfloat* value);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -3393,7 +3393,7 @@ namespace Tao.OpenAl
 
         #region alGetSourcef(int source, int attribute, [Out] float[] val)
         /// <summary>
-        ///     Retrieves a floating point property of a source.
+        ///     Retrieves a floating-point property of a source.
         /// </summary>
         /// <param name="source">
         ///     Source name whose attribute is being retrieved.
@@ -3418,7 +3418,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="val">
-        ///     A pointer to the floating point value being retrieved.
+        ///     A pointer to the floating-point value being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetSourcef(ALuint source, ALenum param, ALfloat* value);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -3427,7 +3427,7 @@ namespace Tao.OpenAl
 
         #region alGetSourcef(int source, int attribute, [Out] IntPtr val)
         /// <summary>
-        ///     Retrieves a floating point property of a source.
+        ///     Retrieves a floating-point property of a source.
         /// </summary>
         /// <param name="source">
         ///     Source name whose attribute is being retrieved.
@@ -3452,7 +3452,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="val">
-        ///     A pointer to the floating point value being retrieved.
+        ///     A pointer to the floating-point value being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetSourcef(ALuint source, ALenum param, ALfloat* value);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -3461,7 +3461,7 @@ namespace Tao.OpenAl
 
         #region alGetSourcef(int source, int attribute, [Out] float *val)
         /// <summary>
-        ///     Retrieves a floating point property of a source.
+        ///     Retrieves a floating-point property of a source.
         /// </summary>
         /// <param name="source">
         ///     Source name whose attribute is being retrieved.
@@ -3486,7 +3486,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="val">
-        ///     A pointer to the floating point value being retrieved.
+        ///     A pointer to the floating-point value being retrieved.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alGetSourcef(ALuint source, ALenum param, ALfloat* value);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), CLSCompliant(false), SuppressUnmanagedCodeSecurity]
@@ -3495,7 +3495,7 @@ namespace Tao.OpenAl
 
         #region alGetSourcefv(int source, int attribute, out float val)
         /// <summary>
-        ///     Retrieves a floating point-vector property of a source.
+        ///     Retrieves a floating-point vector property of a source.
         /// </summary>
         /// <param name="source">
         ///     Source name whose attribute is being retrieved.
@@ -3522,7 +3522,7 @@ namespace Tao.OpenAl
 
         #region alGetSourcefv(int source, int attribute, [Out] float[] values)
         /// <summary>
-        ///     Retrieves a floating point-vector property of a source.
+        ///     Retrieves a floating-point vector property of a source.
         /// </summary>
         /// <param name="source">
         ///     Source name whose attribute is being retrieved.
@@ -3549,7 +3549,7 @@ namespace Tao.OpenAl
 
         #region alGetSourcefv(int source, int attribute, [Out] IntPtr values)
         /// <summary>
-        ///     Retrieves a floating point-vector property of a source.
+        ///     Retrieves a floating-point vector property of a source.
         /// </summary>
         /// <param name="source">
         ///     Source name whose attribute is being retrieved.
@@ -3576,7 +3576,7 @@ namespace Tao.OpenAl
 
         #region alGetSourcefv(int source, int attribute, [Out] float *values)
         /// <summary>
-        ///     Retrieves a floating point-vector property of a source.
+        ///     Retrieves a floating-point vector property of a source.
         /// </summary>
         /// <param name="source">
         ///     Source name whose attribute is being retrieved.
@@ -3988,7 +3988,7 @@ namespace Tao.OpenAl
 
         #region alListener3f(int attribute, float value1, float value2, float value3)
         /// <summary>
-        ///     Sets a floating point property for the listener.
+        ///     Sets a floating-point property for the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -4017,7 +4017,7 @@ namespace Tao.OpenAl
 
         #region alListenerf(int attribute, float val)
         /// <summary>
-        ///     Sets a floating point property for the listener.
+        ///     Sets a floating-point property for the listener.
         /// </summary>
         /// <param name="attribute">
         ///     The name of the attribute to be set.
@@ -4032,7 +4032,7 @@ namespace Tao.OpenAl
 
         #region alListenerfv(int attribute, [In] ref float values)
         /// <summary>
-        ///     Sets a floating point-vector property of the listener.
+        ///     Sets a floating-point vector property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -4047,7 +4047,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="values">
-        ///     Pointer to floating point-vector values.
+        ///     Pointer to floating-point vector values.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alListenerfv(ALenum param, ALfloat* values);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -4056,7 +4056,7 @@ namespace Tao.OpenAl
 
         #region alListenerfv(int attribute, [In] float[] values)
         /// <summary>
-        ///     Sets a floating point-vector property of the listener.
+        ///     Sets a floating-point vector property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -4071,7 +4071,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="values">
-        ///     Pointer to floating point-vector values.
+        ///     Pointer to floating-point vector values.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alListenerfv(ALenum param, ALfloat* values);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -4080,7 +4080,7 @@ namespace Tao.OpenAl
 
         #region alListenerfv(int attribute, [In] IntPtr values)
         /// <summary>
-        ///     Sets a floating point-vector property of the listener.
+        ///     Sets a floating-point vector property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -4095,7 +4095,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="values">
-        ///     Pointer to floating point-vector values.
+        ///     Pointer to floating-point vector values.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alListenerfv(ALenum param, ALfloat* values);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), SuppressUnmanagedCodeSecurity]
@@ -4104,7 +4104,7 @@ namespace Tao.OpenAl
 
         #region alListenerfv(int attribute, [In] float *values)
         /// <summary>
-        ///     Sets a floating point-vector property of the listener.
+        ///     Sets a floating-point vector property of the listener.
         /// </summary>
         /// <param name="attribute">
         ///     <para>
@@ -4119,7 +4119,7 @@ namespace Tao.OpenAl
         ///     </para>
         /// </param>
         /// <param name="values">
-        ///     Pointer to floating point-vector values.
+        ///     Pointer to floating-point vector values.
         /// </param>
         // ALAPI ALvoid ALAPIENTRY alListenerfv(ALenum param, ALfloat* values);
         [DllImport(AL_NATIVE_LIBRARY, CallingConvention = CALLING_CONVENTION), CLSCompliant(false), SuppressUnmanagedCodeSecurity]
@@ -4217,7 +4217,7 @@ namespace Tao.OpenAl
 
         #region alSource3f(int source, int attribute, float value1, float value2, float value3)
         /// <summary>
-        ///     Sets a source property requiring three floating point values.
+        ///     Sets a source property requiring three floating-point values.
         /// </summary>
         /// <param name="source">
         ///     Source name whose attribute is being set.
@@ -4253,7 +4253,7 @@ namespace Tao.OpenAl
 
         #region alSourcef(int source, int attribute, float val)
         /// <summary>
-        ///     Sets a floating point property of a source.
+        ///     Sets a floating-point property of a source.
         /// </summary>
         /// <param name="source">
         ///     Source name whose attribute is being set.
@@ -4285,7 +4285,7 @@ namespace Tao.OpenAl
 
         #region alSourcefv(int source, int attribute, [In] ref float values)
         /// <summary>
-        ///     Sets a floating point-vector property of a source.
+        ///     Sets a floating-point vector property of a source.
         /// </summary>
         /// <param name="source">
         ///     Source name whose attribute is being set.
@@ -4312,7 +4312,7 @@ namespace Tao.OpenAl
 
         #region alSourcefv(int source, int attribute, [In] float[] values)
         /// <summary>
-        ///     Sets a floating point-vector property of a source.
+        ///     Sets a floating-point vector property of a source.
         /// </summary>
         /// <param name="source">
         ///     Source name whose attribute is being set.
@@ -4339,7 +4339,7 @@ namespace Tao.OpenAl
 
         #region alSourcefv(int source, int attribute, [In] IntPtr values)
         /// <summary>
-        ///     Sets a floating point-vector property of a source.
+        ///     Sets a floating-point vector property of a source.
         /// </summary>
         /// <param name="source">
         ///     Source name whose attribute is being set.
@@ -4366,7 +4366,7 @@ namespace Tao.OpenAl
 
         #region alSourcefv(int source, int attribute, [In] float *values)
         /// <summary>
-        ///     Sets a floating point-vector property of a source.
+        ///     Sets a floating-point vector property of a source.
         /// </summary>
         /// <param name="source">
         ///     Source name whose attribute is being set.

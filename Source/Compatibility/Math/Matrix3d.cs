@@ -271,7 +271,7 @@ namespace OpenTK.Math
             this.R2C2 = r2c2;
         }
 
-        /// <summary>Constructs left matrix from the given array of double-precision floating point numbers.</summary>
+        /// <summary>Constructs left matrix from the given array of double-precision floating-point numbers.</summary>
         /// <param name="doubleArray">The array of doubles for the components of the matrix.</param>
         public Matrix3d(double[] doubleArray)
         {
