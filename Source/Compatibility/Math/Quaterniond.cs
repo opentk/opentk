@@ -629,7 +629,7 @@ namespace OpenTK.Math
             this.Z = z;
         }
 
-        /// <summary>Constructs left Quaterniond from the given array of double-precision floating point numbers.</summary>
+        /// <summary>Constructs left Quaterniond from the given array of double-precision floating-point numbers.</summary>
         /// <param name="doubleArray">The array of doubles for the components of the Quaterniond.</param>
         public Quaterniond(double[] doubleArray)
         {

@@ -13,7 +13,7 @@ namespace OpenTK.Audio
 {
     #region Effect
 
-    ///<summary>A list of valid 32-Bits Float Effect/GetEffect parameters</summary>
+    ///<summary>A list of valid 32-bit Float Effect/GetEffect parameters</summary>
     public enum EfxEffectf : int
     {
         ///<summary>Reverb Modal Density controls the coloration of the late reverb. Lowering the value adds more coloration to the late reverb. Range [0.0f .. 1.0f] Default: 1.0f</summary>
@@ -305,7 +305,7 @@ namespace OpenTK.Audio
         EffectslotAuxiliarySendAuto = 0x0003,
     }
 
-    ///<summary>A list of valid 32-Bits Float AuxiliaryEffectSlot/GetAuxiliaryEffectSlot parameters</summary>
+    ///<summary>A list of valid 32-bits Float AuxiliaryEffectSlot/GetAuxiliaryEffectSlot parameters</summary>
     public enum EfxAuxiliaryf : int
     {
         /// <summary>This property is used to specify an output level for the Auxiliary Effect Slot. Setting the gain to 0.0f mutes the output. Range [0.0f .. 1.0f] Default: 1.0f</summary>
@@ -316,7 +316,7 @@ namespace OpenTK.Audio
 
     #region Filter Object
 
-    ///<summary>A list of valid 32-Bits Float Filter/GetFilter parameters</summary>
+    ///<summary>A list of valid 32-bits Float Filter/GetFilter parameters</summary>
     public enum EfxFilterf : int
     {
         ///<summary>Range [0.0f .. 1.0f] Default: 1.0f</summary>

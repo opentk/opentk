@@ -50,8 +50,8 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half2 instance will avoid conversion and copy directly from the Half parameters.
         /// </summary>
-        /// <param name="x">An Half instance of a 16-Bit half precision floating point number.</param>
-        /// <param name="y">An Half instance of a 16-Bit half precision floating point number.</param>
+        /// <param name="x">An Half instance of a 16-bit half-precision floating-point number.</param>
+        /// <param name="y">An Half instance of a 16-bit half-precision floating-point number.</param>
         public Vector2h(Half x, Half y)
         {
             X = x;
@@ -59,10 +59,10 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half2 instance will convert the 2 parameters into 16-Bit Half precision floating point.
+        /// The new Half2 instance will convert the 2 parameters into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="x">32-Bit Single precision floating point number.</param>
-        /// <param name="y">32-Bit Single precision floating point number.</param>
+        /// <param name="x">32-bit single-precision floating-point number.</param>
+        /// <param name="y">32-bit single-precision floating-point number.</param>
         public Vector2h(Single x, Single y)
         {
             X = new Half(x);
@@ -70,10 +70,10 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half2 instance will convert the 2 parameters into 16-Bit Half precision floating point.
+        /// The new Half2 instance will convert the 2 parameters into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="x">32-Bit Single precision floating point number.</param>
-        /// <param name="y">32-Bit Single precision floating point number.</param>
+        /// <param name="x">32-bit single-precision floating-point number.</param>
+        /// <param name="y">32-bit single-precision floating-point number.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector2h(Single x, Single y, bool throwOnError)
         {
@@ -82,7 +82,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half2 instance will convert the Vector2 into 16-Bit Half precision floating point.
+        /// The new Half2 instance will convert the Vector2 into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector2</param>
         [CLSCompliant(false)]
@@ -93,7 +93,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half2 instance will convert the Vector2 into 16-Bit Half precision floating point.
+        /// The new Half2 instance will convert the Vector2 into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector2</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -105,7 +105,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half2 instance will convert the Vector2 into 16-Bit Half precision floating point.
+        /// The new Half2 instance will convert the Vector2 into 16-bit half-precision floating-point.
         /// This is the fastest constructor.
         /// </summary>
         /// <param name="v">OpenTK.Vector2</param>
@@ -116,7 +116,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half2 instance will convert the Vector2 into 16-Bit Half precision floating point.
+        /// The new Half2 instance will convert the Vector2 into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector2</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -127,7 +127,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half2 instance will convert the Vector2d into 16-Bit Half precision floating point.
+        /// The new Half2 instance will convert the Vector2d into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector2d</param>
         public Vector2h(Vector2d v)
@@ -137,7 +137,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half2 instance will convert the Vector2d into 16-Bit Half precision floating point.
+        /// The new Half2 instance will convert the Vector2d into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector2d</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -148,7 +148,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half2 instance will convert the Vector2d into 16-Bit Half precision floating point.
+        /// The new Half2 instance will convert the Vector2d into 16-bit half-precision floating-point.
         /// This is the faster constructor.
         /// </summary>
         /// <param name="v">OpenTK.Vector2d</param>
@@ -160,7 +160,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// The new Half2 instance will convert the Vector2d into 16-Bit Half precision floating point.
+        /// The new Half2 instance will convert the Vector2d into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector2d</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>

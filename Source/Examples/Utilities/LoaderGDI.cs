@@ -6,7 +6,7 @@
  */
 #endregion
 
-// TODO: Find paint program that can properly export 8/16 Bit Textures and make sure they are loaded correctly.
+// TODO: Find paint program that can properly export 8/16-bit Textures and make sure they are loaded correctly.
 
 using System;
 using System.Diagnostics;
