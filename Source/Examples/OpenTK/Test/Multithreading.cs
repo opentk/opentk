@@ -37,20 +37,13 @@ namespace Examples.Tests
     {
         public static void Main()
         {
-            const int ThreadCount = 4;
+            const int ThreadCount = 2;
             List<Thread> threads = new List<Thread>();
 
             // launch threads
             for (int i = 0; i < ThreadCount; i++)
             {
-                Thread t = new Thread(delegate()
-                    {
-                        using (Tutorial.T03_Immediate_Mode_Cube game = new Examples.Tutorial.T03_Immediate_Mode_Cube())
-                        {
-                            Utilities.SetWindowTitle(game);
-                            game.Run(30.0);
-                        }
-                    });
+                Thread t = new Thread(RunGame);
                 t.IsBackground = true;
                 t.Priority = ThreadPriority.BelowNormal;
                 t.Start();
@@ -61,6 +54,25 @@ namespace Examples.Tests
             foreach (Thread t in threads)
             {
                 t.Join();
+            }
+        }
+
+        static void RunGame()
+        {
+            using (Tutorial.T03_Immediate_Mode_Cube game = new Examples.Tutorial.T03_Immediate_Mode_Cube())
+            {
+                Utilities.SetWindowTitle(game);
+                game.Keyboard.KeyUp += delegate(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
+                {
+                    if (e.Key == OpenTK.Input.Key.Space)
+                    {
+                        if  (game.WindowState == OpenTK.WindowState.Fullscreen)
+                            game.WindowState = OpenTK.WindowState.Normal;
+                        else
+                            game.WindowState = OpenTK.WindowState.Fullscreen;
+                    }
+                };
+                game.Run(30.0);
             }
         }
     }
