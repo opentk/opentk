@@ -100,7 +100,7 @@ namespace OpenTK
         /// <param name="x">The x component of the Vector4d.</param>
         /// <param name="y">The y component of the Vector4d.</param>
         /// <param name="z">The z component of the Vector4d.</param>
-        /// <param name="w">The z component of the Vector4d.</param>
+        /// <param name="w">The w component of the Vector4d.</param>
         public Vector4d(double x, double y, double z, double w)
         {
             X = x;
@@ -134,10 +134,10 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Constructs a new Vector4d from the specified Vector3d and W component.
+        /// Constructs a new Vector4d from the specified Vector3d and w component.
         /// </summary>
         /// <param name="v">The Vector3d to copy components from.</param>
-        /// <param name="w">The W component of the new Vector4.</param>
+        /// <param name="w">The w component of the new Vector4.</param>
         public Vector4d(Vector3 v, double w)
         {
             X = v.X;
