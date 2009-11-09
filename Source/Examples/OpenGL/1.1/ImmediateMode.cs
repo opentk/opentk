@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
@@ -41,7 +41,7 @@ namespace Examples.Tutorial
 		{ } 
 
 		#endregion	
-		
+
         #region OnLoad
 
         protected override void OnLoad(EventArgs e)
@@ -65,6 +65,8 @@ namespace Examples.Tutorial
         /// </remarks>
         protected override void OnResize(EventArgs e)
         {
+            base.OnResize(e);
+
             GL.Viewport(0, 0, Width, Height);
 
             double aspect_ratio = Width / (double)Height;
@@ -87,6 +89,8 @@ namespace Examples.Tutorial
         /// </remarks>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
+            base.OnUpdateFrame(e);
+
             if (Keyboard[OpenTK.Input.Key.Escape])
             {
                 this.Exit();
@@ -103,6 +107,8 @@ namespace Examples.Tutorial
         /// </summary>
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            base.OnRenderFrame(e);
+
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
