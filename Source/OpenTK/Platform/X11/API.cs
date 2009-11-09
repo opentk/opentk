@@ -1590,15 +1590,32 @@ XF86VidModeGetGammaRampSize(
     }
     */
 
+    // Helper structure for calling XLock/UnlockDisplay
     struct XLock : IDisposable
     {
-        readonly IntPtr Display;
+        IntPtr _display;
+
+        public IntPtr Display
+        {
+            get
+            {
+                if (_display == IntPtr.Zero)
+                    throw new InvalidOperationException("Internal error (XLockDisplay with IntPtr.Zero). Please report this at http://www.opentk.com/node/add/project-issue/opentk");
+                return _display;
+            }
+            set
+            {
+                if (value == IntPtr.Zero)
+                    throw new ArgumentException();
+                _display = value;
+            }
+        }
 
         public XLock(IntPtr display)
             : this()
         {
-            Functions.XLockDisplay(display);
             Display = display;
+            Functions.XLockDisplay(Display);
         }
 
         public void Dispose()
