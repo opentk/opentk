@@ -39,7 +39,7 @@ namespace OpenTK.Platform.MacOS
                     }
                 }
 
-                Debug.Print("CoreGraphics reported {0} displays.", displayCount);
+                Debug.Print("CoreGraphics reported {0} display(s).", displayCount);
                 Debug.Indent();
 
                 for (int i = 0; i < displayCount; i++)
@@ -90,8 +90,14 @@ namespace OpenTK.Platform.MacOS
 
                     }
 
+					HIRect bounds = CG.DisplayBounds(currentDisplay);
+					Rectangle newRect = new Rectangle(
+						(int)bounds.Origin.X, (int)bounds.Origin.Y, (int)bounds.Size.Width, (int)bounds.Size.Height);
+
+					Debug.Print("Display {0} bounds: {1}", i, newRect);
+
                     DisplayDevice opentk_dev =
-                        new DisplayDevice(opentk_dev_current_res, primary, opentk_dev_available_res, Rectangle.Empty);
+                        new DisplayDevice(opentk_dev_current_res, primary, opentk_dev_available_res, newRect);
 
                     displayMap.Add(opentk_dev, currentDisplay);
                 }
