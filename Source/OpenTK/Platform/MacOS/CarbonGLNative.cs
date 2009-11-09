@@ -52,6 +52,7 @@ namespace OpenTK.Platform.MacOS
         string title = "OpenTK Window";
         Rectangle bounds, windowedBounds, clientRectangle;
         bool mIsDisposed = false;
+		bool mExists = true;
 
         WindowAttributes mWindowAttrib;
         WindowClass mWindowClass;
@@ -112,6 +113,7 @@ namespace OpenTK.Platform.MacOS
             Debug.Print("Disposing of CarbonGLNative window.");
 
             mIsDisposed = true;
+			mExists = false;
 
             if (disposing)
             {
@@ -289,8 +291,8 @@ namespace OpenTK.Platform.MacOS
                 return OSStatus.EventNotHandled;
             }
 
-            EventInfo evt = new EventInfo(inEvent);
-            CarbonGLNative window = (CarbonGLNative)reference.Target;
+			CarbonGLNative window = (CarbonGLNative)reference.Target;
+			EventInfo evt = new EventInfo(inEvent);
 
             //Debug.Print("Processing {0} event for {1}.", evt, window.window);
 
@@ -366,7 +368,8 @@ namespace OpenTK.Platform.MacOS
                         return OSStatus.EventNotHandled;
 
                 case WindowEventKind.WindowClosed:
-                    OnClosed();
+					mExists = false;
+					OnClosed();
 
                     return OSStatus.NoError;
 
@@ -639,7 +642,7 @@ namespace OpenTK.Platform.MacOS
 
         public bool Exists
         {
-            get { return !mIsDisposed; }
+            get { return mExists; }
         }
 
         public IWindowInfo WindowInfo
