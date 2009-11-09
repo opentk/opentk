@@ -961,13 +961,23 @@ namespace OpenTK
 
         #endregion
 
-        #endregion
+		#region OnResize
 
-        #region --- Private Members ---
+		protected override void OnResize(EventArgs e)
+		{
+			base.OnResize(e);
+			glContext.Update(base.WindowInfo);
+		}
 
-        #region OnLoadInternal
+		#endregion
 
-        private void OnLoadInternal(EventArgs e)
+		#endregion
+
+		#region --- Private Members ---
+
+		#region OnLoadInternal
+
+		private void OnLoadInternal(EventArgs e)
         {
             OnResize(EventArgs.Empty);
             OnLoad(e);
