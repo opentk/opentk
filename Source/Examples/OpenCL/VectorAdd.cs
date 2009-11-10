@@ -5,6 +5,7 @@ using OpenTK.Compute.CL10;
 
 namespace Examples
 {
+#if EXPERIMENTAL
     using cl_context = IntPtr;
     using cl_device_id = IntPtr;
     using cl_command_queue = IntPtr;
@@ -137,4 +138,5 @@ vectorAdd(__global const float * a,
             }
         }
     }
+#endif
 }
