@@ -4,6 +4,9 @@
 
 2009-11-10  the_fiddler
 
+	* Disabled CL10, ES10 and ES11 bindings which were not finalized in
+	  time for OpenTK 1.0.
+	* Updated documentation for release.
 	* Color4Serialization example now correctly prints its output
 	  messages.
 	* Color4(byte, byte, byte, byte) constructor now correctly
