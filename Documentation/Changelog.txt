@@ -1,4 +1,315 @@
----------------------------
+------------------------------
+ OpenTK 0.9.9-3 -> 1.0 beta-1
+------------------------------
+
+2009-11-10  the_fiddler
+
+	* Disabled CL10, ES10 and ES11 bindings which were not finalized in
+	  time for OpenTK 1.0.
+	* Updated documentation for release.
+	* Color4Serialization example now correctly prints its output
+	  messages.
+	* Color4(byte, byte, byte, byte) constructor now correctly
+	  normalizes values to the 0.0 - 1.0 range.
+
+2009-11-09  the_fiddler
+
+	* Added keyfiles to ignore list.
+	* Fixed keyfile handling in Visual Studio.
+	* Updated ignore rules.
+	* Updated ignore rules.
+	* Branched for 1.0 release.
+	* Fixed a large number of recurring spelling mistakes in
+	  documentation (patch by iRBiS). Fixes issue [#1341]: "Vector4
+	  constructor describes w component as z component + other spelling
+	  corrections".
+	* Fixed documentation which describes w components as z components
+	  (patch by iRBiS).
+	* Updated ignore lists.
+
+2009-11-09  kanato
+
+	* MacOS: Hack for AGL to have access to the display device
+	  specified when a NativeWindow is created.
+	* MacOS: Detect display boundaries so created windows are placed in
+	  the right spot.
+	* MacOS: Fix event from user clicking close box to properly report
+	  that window doesn't exist anymore.
+	* Mac OS X Fix for GameWindow to call glContext.Update when resized
+
+2009-11-08  the_fiddler
+
+	* Added System.Drawing reference back to QuickStart project (see
+	  previous commit).
+	* Disabled OpenTK.Point, Size and Rectangle structures that were
+	  meant to replace their System.Drawing implementations until the
+	  correct course of action can be determined. This change is too
+	  disruptive to existing applications, especially if they are also
+	  using Windows.Forms (see discussion here:
+	  http://www.opentk.com/node/1348).
+	* Don't display window by default, unless "Visible = true" is
+	  called. Allows the creation of invisible windows for secondary
+	  GraphicsContexts.
+	* Added a second terminating 0 to attribute list, trying to work
+	  around issue [#1352]: "Occasional AccessViolationExceptions when
+	  creating the GLControl".
+
+2009-11-07  the_fiddler
+
+	* Added system-defined colors.
+	  Added and improved constructors (more versatile).
+	  Added ToArgb() method for improved System.Drawing.Color interop.
+	* Use SHOW command instead of SHOWNORMAL when making a window
+	  visible, since SHOWNORMAL will un-maximize a fullscreen or
+	  maximized window.
+	  Do not force an invisible window to become visible when modifying
+	  its state or borders.
+	* Always set the DisplayDevice.Bounds to a correct value. Fixes
+	  issue [#1339]: "DisplayDevice.Bounds not set".
+	* Do not check for an X server if we detect Mac OS X. Should solve
+	  issue [#1338]: "Running apps in Mac OSX start a application
+	  called X11".
+
+2009-11-06  the_fiddler
+
+	* Update the context when the native window is resized.
+	* MacOS may have an X server installed. Prefers the native
+	  Carbon/Quartz platform driver over X in this case (same issue as
+	  rev. 2465).
+	* Correctly set the primary device in the DisplayDevice
+	  constructor.
+	* MacOS can have an X server installed. Modified the code so that
+	  it prefers the native Carbon/Quartz platform driver over X in
+	  this case.
+	* Fixed spelling of hertz and fps. Fixes issue [#1333]: "Spelling
+	  of SI units in documentation and captions". Patch by iRBiS.
+	* Return proper CarbonWindowInfo instance instead of
+	  DummyWindowInfo.
+	* * Rectangle.cs: Fixed ToString formatting code.
+	* * Platform/Windows/WinDisplayDevice.cs:
+	  * Platform/MacOS/QuartzDisplayDeviceDriver.cs: Updated to use the
+	  new
+	  DisplayDevice constructors.
+	  
+	  * Platform/X11/X11XrandrDisplayDevice.cs: Query Xinerama for the
+	  exact
+	  bounds of each display device, if available.
+	  Use global X lock to protect from multithreaded access.
+	* * DisplayDevice.cs: Made DisplayDevice properties settable
+	  internally (simplifies device detection code).
+	  Bounds property is now independent of the default resolution.
+	  
+	  * DisplayResolution.cs: Obsoleted the Bounds property, as this
+	  becomes
+	  invalid as soon as the resolution of any display device is
+	  changed.
+
+2009-11-05  the_fiddler
+
+	* * X11GLNative.cs: Convert from ASCII to the default encoding
+	  before generating KeyPress events (allows support for simple
+	  scripts that do not use composition.)
+	* * X11GLNative.cs: Implemented KeyPress event (no support for
+	  input
+	  methods yet).
+	  
+	  * Functions.cs: Added XLookupString and XRefreshKeyboardMapping
+	  methods for simple ANSI text input.
+
+2009-11-04  the_fiddler
+
+	* Removed System.Drawing dependency from QuickStart.
+	* Added missing TitleChanged event.
+	* Removed unused code.
+	* Cleaned up deprecated methods.
+	* Cleaned up a large number of documentation issues.
+	* Updated deprecation message with specific instructions on how to
+	  solve the issue.
+	* Added helper overloads for OpenTK.Point/Rectangle structures.
+	* Enabled System.Drawing.Point/Size/Rectangle replacements.
+	* Refactored timer installation/removal into their own methods.
+	* Added simpler constructor overload for external GraphicsContexts.
+	* Don't forget to load all bindings when constructing an external
+	  context - this constructor was added for precisely this reason,
+	  after all.
+	* Deprecated the LoadAll() method in favor of the new
+	  GraphicsContext constructors.
+	* Added missing base.On* calls.
+	* Support external EGL contexts.
+	* Added missing documentation to GraphicsContext constructor.
+	* Renamed internal BindingsBase.LoadAll/Load methods to
+	  LoadEntryPoints/LoadEntryPoint, in order to avoid name clashes
+	  with the static GL.LoadAll() method.
+	  Added GraphicsContext() constructor that takes an existing, valid
+	  OpenGL context. This can be used for interop with third-party
+	  toolkits which create the OpenGL context themselves.
+	* Set window title and icon.
+	* Doubled the size of particles and made them slightly faster.
+	* Cleaned up sample, added color and motion.
+	* Initialize threads before calling any other X methods.
+	* Removed unnecessary debugging messages from main loop.
+	* Added Toolkit.Init() method that can be used to configure the
+	  underlying platform correctly when using OpenTK along with other
+	  toolkits (e.g. OpenTK+GTK# on X, where GTK# does not initialize
+	  threads).
+	* Default window style flags can be constants rather than static
+	  readonly fields.
+	  Throw an exception if we fail to register the window class, the
+	  previous solution (check for "class already exists" error) was a
+	  workaround for a threading issue that has been solved.
+	  Set the small icon when registering the class.
+	* Now recognizes Resources folder for Examples project.
+	  Added icon to Examples project.
+	* Added default icon to samples and the example browser.
+	* Added default application icon.
+
+2009-11-03  the_fiddler
+
+	* Fixed ClassName and ModalLoopTimerId when constructing multiple
+	  WinGLNative windows in parallel.
+	  WinGLNative windows are now correctly focused when clicked on the
+	  client area.
+	* Serialize context construction to avoid threading issues with
+	  shared contexts.
+	* Avoid static caching of extension strings and improve
+	  multithreading behavior - WGL extension checking is fast enough
+	  that caching is not very useful.
+	* Added SyncRoot object to BindingsBase that can be used to protect
+	  shared state in the various bindings.
+	* Fixed race condition in GraphicsMode.Default.
+	* No need to burn 100% CPU time just for a spinning cube!
+	  (Especially important for the multithreading test, which opens
+	  multiple such windows).
+	* Use new string(sbyte*) instead of Marshal.PtrToStringAnsi to
+	  increase performance when calling GetString to retrieve the list
+	  of available extensions.
+	* Implemented Tranform(Vector, Quaternion) overloads. Fixes issue
+	  [#1028]: "[Math] Add vector transformation by quaternion".
+	* Deprecated Mult in favor of Multiply.
+	  Modified operator * to use Multiply internally (reduces code
+	  duplication).
+	* Fixed Vector3.Transform signature to return a Vector3, not a
+	  Vector4. It was previously impossible to transform a Vector3
+	  structure without intermediate conversions to Vector4.
+	* Modified Transform(ref Vector4, ref Matrix4, out Vector4)
+	  overload to work correctly when the ref and out parameters point
+	  to the same Vector4.
+	  Modified Transform(Vector4, Matrix4): Vector4 to call the
+	  reference overload internally. Faster and reduces code
+	  duplication.
+	* Added missing TextureBuffer token to BufferTarget and
+	  TextureTarget enums (promoted from ARB_texture_buffer_object).
+	  Fixes issue [#1313]: "TextureBuffer target".
+	* Added type-safe parameters to FramebufferTexture (fixes issue
+	  [#1303]: "[GL] fix FramebufferTexture parameters").
+	* Added multithreading test to verify GameWindow behavior with
+	  multiple threads.
+	* * DocProcessor.cs: Remove any trailing newlines in XML docs.
+	  Output
+	  between Mono/Linux and .Net/Windows is now consistent.
+
+2009-11-02  the_fiddler
+
+	* Use more aggressive xlib locking following the advice of the
+	  multithreaded X manpages (needs work).
+	* Do not allow MakeCurrent() to change the display connection of
+	  the context. This would result in an X error and the change
+	  allows us to simplify shutdown/cleanup logic.
+	* * Matrix4d.cs: M44 should be 1.0 to conform with GL.Ortho().
+	  Fixes issue [#1307]: "GL.Ortho behaves other than combination of
+	  OpenTK.Matrix4d.CreateOrthographic and GL.MultMatrix".
+	* Qualify System.Drawing.Rectangle/Point/Size structs fully when
+	  necessary, to avoid namespace clash with
+	  OpenTK.Rectangle/Point/Size.
+	* Added experimental Icon and IconConverter implementations from
+	  Mono.
+	  Modified INativeWindow implementations to not qualify Icon class
+	  fully, so we can change the implementation between System.Drawing
+	  and OpenTK at will (using the EXPERIMENTAL #define).
+	* Improved interoperation with System.Drawing with new addition,
+	  subtraction and implicit conversion operators, as well as
+	  additional method overloads.
+	  Only expose fields through public properties to allow for
+	  parameter validation.
+
+2009-11-01  the_fiddler
+
+	* Updated version numbers in preparation for release.
+	* Fixed an issue where "const unsigned [type] [pointer]" parameters
+	  where not parsed correctly. Solves issue [#1300]: "[OpenCL]
+	  Possible bug at CL.CreateProgramWithBinary".
+	* Added experimental OpenTK.Point/Size/Rectangle alternatives to
+	  System.Drawing, to make OpenTK usable without referencing
+	  System.Drawing (disabled by default, #define EXPERIMENTAL to
+	  test). Modified a number of using directives and namespace
+	  qualifiers to accommodate this change.
+	* Document that these APIs are incomplete.
+
+2009-10-28  the_fiddler
+
+	* Merged es20 branch back into trunk.
+	* Initialize input vectors to random values.
+	  Use smaller data blocks that can be verified visually.
+	  Perform error checking when executing the kernel.
+	  Wait for the command queue to finish before displaying the
+	  results.
+	* Recognize and copy dds files as part of example resources.
+	* Renamed dds textures to not contain strange characters that
+	  confuse Prebuild.
+	  Added checks for extension support to SwizzledParallax sample.
+	* Return readonly IList<> instead of copying arrays of data.
+
+2009-10-27  the_fiddler
+
+	* Track mouse enter/leave events.
+	* Implemented INativeWindow.MouseEnter/MouseLeave events on Win32
+	  and X11.
+	* Generate UpdateFrame events even if TargetUpdateFrequency is 0.
+	  According to the documentation, setting this value to 0 will
+	  result in unconstrained UpdateFrame frequency. Fixes issue
+	  [#1294]: "OnUpdateFrame function does not work with maximum
+	  update rate".
+
+2009-10-24  the_fiddler
+
+	* Do not qualify Stopwatch fully, to allow it to be overridden by
+	  Minimal.cs if necessary.
+	* Provide dummy implementations for classes not available on the
+	  iPhone.
+	* Plane.cs belongs to the 'old' structures.
+	* Merged Inertia's example and geometry branch,
+
+2009-10-23  the_fiddler
+
+	* Fixed x86-specific ABI assumption (do not pass structure directly
+	  when a pointer is expected). Patch by jonp.
+	* Added dllmap for OpenGL|ES on Mac OS X.
+	* Debug.WriteLine(object, string) does not work as intended (the
+	  first parameter defines the category). Use Debug.Print instead.
+	* Fixed x86-specific ABI assumption (do not return structure
+	  directly when a pointer is expected). Patch by jonp.
+
+2009-10-22  the_fiddler
+
+	* Do not force control to create its handle in Resize event (the
+	  designer places code that raises this event before the rest of
+	  the events are hooked). Instead, suppress the event and raise it
+	  once the handle is actually created.
+
+2009-10-21  the_fiddler
+
+	* Set default class cursor to avoid invalid cursors when entering
+	  the window.
+	* Added LoadCursor method.
+	  Added CursorName enum (only default arrow cursor is defined for
+	  now).
+	* Use StringBuilder.Capacity to specify the available buffer size
+	  in OpenGL interop (StringBuilder.Length is invalid in this case).
+	  Added workaround for Mono 1.9.1 issue, where StringBuilder return
+	  truncated results when used in interop. Doubling 
+
+
+----------------------------
  OpenTK 0.9.9-2b -> 0.9.9-3
 ----------------------------
 
