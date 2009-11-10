@@ -21,13 +21,14 @@ namespace OpenTK.Build
 {
     class Project
     {
-        static string RootPath;
+        static string RootPath = Directory.GetCurrentDirectory();
+        static string SourcePath = Path.Combine(RootPath, "Source");
 
         const string bindings = "Generator.Prebuild.xml";
         const string opentk = "OpenTK.Prebuild.xml";
         const string quickstart = "QuickStart.Prebuild.xml";
 
-        const string keyfile = "OpenTK.snk";
+        const string keyfile = "OpenTK.snk"; // Do not change
 
         const string Usage =  @"Usage: Build.exe target
     target: one of vs, vs9, clean, distclean, help";
@@ -52,6 +53,7 @@ Assembly signing:
 
         enum BuildTarget
         {
+            None = 0,
             VS2005,
             VS2008,
             Mono,
@@ -59,8 +61,6 @@ Assembly signing:
             Clean,
             DistClean,
         }
-
-        static BuildTarget target = BuildTarget.VS2005;
 
         static void PrintUsage()
         {
@@ -85,18 +85,61 @@ Assembly signing:
                     args[0] = "vs";
             }
 
-            RootPath = Directory.GetCurrentDirectory();
+            try
+            {
+                PreparePrebuildFiles();
+                PrepareEnvironment();
 
-            //string sign_assembly = CheckKeyFile(keyfile) ? "SIGN_ASSEMBLY" : "";
-            string sign_assembly = CheckKeyFile(keyfile) ? @"<KeyFile>../../" + keyfile + @"</KeyFile>" : "";
+                BuildTarget target = SelectTarget(args);
+                if (target != BuildTarget.None)
+                {
+                    Build(target);
+                    foreach (string file in Directory.GetFiles("Source", "*.csproj", SearchOption.AllDirectories))
+                        ApplyMonoDevelopWorkarounds(file);
+                }
+            }
+            finally
+            {
+                // Wait until Prebuild releases the input files.
+                System.Threading.Thread.Sleep(2000);
+                DeletePrebuildFiles();
+            }
 
-            File.WriteAllText(bindings, String.Format(Resources.Generator, sign_assembly));
-            File.WriteAllText(opentk, String.Format(Resources.OpenTK, sign_assembly));
-            File.WriteAllText(quickstart, String.Format(Resources.QuickStart,sign_assembly));
+            WaitForExit();
+        }
 
+        private static void PrepareEnvironment()
+        {
             // Workaroung for nant on x64 windows (safe for other platforms too, as this affects only the current process).
             Environment.SetEnvironmentVariable("CommonProgramFiles(x86)", String.Empty, EnvironmentVariableTarget.Process);
             Environment.SetEnvironmentVariable("ProgramFiles(x86)", String.Empty, EnvironmentVariableTarget.Process);
+        }
+
+        private static void PreparePrebuildFiles()
+        {
+            //string sign_assembly = CheckKeyFile(keyfile) ? "SIGN_ASSEMBLY" : "";
+            string sign_assembly = CheckKeyFile(keyfile) ? @"<KeyFile>" + keyfile + @"</KeyFile>" : "";
+            if (sign_assembly != "")
+                DistributeKeyFile(keyfile);
+
+            File.WriteAllText(bindings, String.Format(Resources.Generator, sign_assembly));
+            File.WriteAllText(opentk, String.Format(Resources.OpenTK, sign_assembly));
+            File.WriteAllText(quickstart, String.Format(Resources.QuickStart, sign_assembly));
+        }
+
+        // Copies keyfile to the various source directories. This is necessary
+        // as Visual Studio won't pick up the file otherwise.
+        static void DistributeKeyFile(string keyfile)
+        {
+            foreach (string dir in Directory.GetDirectories("Source"))
+            {
+                File.Copy(keyfile, Path.Combine(dir, keyfile), true);
+            }
+        }
+
+        static BuildTarget SelectTarget(string[] args)
+        {
+            BuildTarget target = BuildTarget.None;
 
             foreach (string s in args)
             {
@@ -108,7 +151,7 @@ Assembly signing:
 
                     case "help":
                         PrintHelp();
-                        return;
+                        break;
 
                     case "mono":
                     case "xbuild":
@@ -142,10 +185,15 @@ Assembly signing:
                     default:
                         Console.WriteLine("Unknown command: {0}", s);
                         PrintUsage();
-                        return;
+                        break;
                 }
             }
 
+            return target;
+        }
+
+        static void Build(BuildTarget target)
+        {
             switch (target)
             {
                 //case BuildTarget.Mono:
@@ -181,22 +229,24 @@ Assembly signing:
                     ExecutePrebuild("/target", "vs2008", "/file", opentk);
                     ExecutePrebuild("/target", "vs2008", "/file", quickstart);
                     break;
-                
+
                 case BuildTarget.Clean:
                     Console.WriteLine("Cleaning intermediate object files.");
                     ExecutePrebuild("/clean", "/yes", "/file", bindings);
                     ExecutePrebuild("/clean", "/yes", "/file", opentk);
                     ExecutePrebuild("/clean", "/yes", "/file", quickstart);
                     DeleteDirectories(RootPath, "obj");
+                    DeleteFiles(SourcePath, keyfile);
                     break;
 
                 case BuildTarget.DistClean:
                     Console.WriteLine("Cleaning intermediate and final object files.");
                     ExecutePrebuild("/clean", "/yes", "/file", bindings);
                     ExecutePrebuild("/clean", "/yes", "/file", opentk);
-                    ExecutePrebuild("/clean", "/yes", "/file", quickstart); 
+                    ExecutePrebuild("/clean", "/yes", "/file", quickstart);
                     DeleteDirectories(RootPath, "obj");
                     DeleteDirectories(RootPath, "bin");
+                    DeleteFiles(SourcePath, keyfile);
 
                     string binaries_path = Path.Combine(RootPath, "Binaries");
                     if (Directory.Exists(binaries_path))
@@ -207,19 +257,12 @@ Assembly signing:
                 default:
                     Console.WriteLine("Unknown target: {0}", target);
                     PrintUsage();
-                    return;
+                    break;
             }
+        }
 
-            // Wait until Prebuild releases the input files.
-            System.Threading.Thread.Sleep(1000);
-
-            File.Delete(bindings);
-            File.Delete(opentk);
-            File.Delete(quickstart);
-
-            foreach (string file in Directory.GetFiles("Source", "*.csproj", SearchOption.AllDirectories))
-                ApplyMonoDevelopWorkarounds(file);
-
+        static void WaitForExit()
+        {
             if (Debugger.IsAttached)
             {
                 Console.WriteLine("Press any key to continue...");
@@ -227,11 +270,27 @@ Assembly signing:
             }
         }
 
+        static void DeletePrebuildFiles()
+        {
+            try
+            {
+                File.Delete(bindings);
+                File.Delete(opentk);
+                File.Delete(quickstart);
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("[Warning] Failed to delete prebuild files, error follows:");
+                Console.WriteLine(e.ToString());
+            }
+        }
+
         static void ApplyMonoDevelopWorkarounds(string solution)
         {
-            File.WriteAllText(solution, File.ReadAllText(solution)
-                .Replace("AssemblyOriginatorKeyFile", "AssemblyKeyFile"));
-            //.Replace(@"..\", @"../")); // Causes problems in visual studio
+            // Both workarounds cause problems in visual studio...
+            //File.WriteAllText(solution, File.ReadAllText(solution)
+            //    .Replace("AssemblyOriginatorKeyFile", "AssemblyKeyFile"));
+            //    .Replace(@"..\", @"../"));
         }
 
         static void DeleteDirectories(string root_path, string search)
@@ -242,6 +301,17 @@ Assembly signing:
             foreach (string m in matches)
             {
                 Directory.Delete(m, true);
+            }
+        }
+
+        static void DeleteFiles(string root_path, string search)
+        {
+            Console.WriteLine("Deleting {0} files", search);
+            List<string> matches = new List<string>();
+            FindDirectories(root_path, search, matches);
+            foreach (string m in matches)
+            {
+                File.Delete(m);
             }
         }
 
@@ -259,6 +329,25 @@ Assembly signing:
                 }
             }
             catch (System.Exception e) 
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        static void FindFiles(string directory, string search, List<string> matches)
+        {
+            try
+            {
+                foreach (string d in Directory.GetDirectories(directory))
+                {
+                    foreach (string f in Directory.GetFiles(d, search))
+                    {
+                        matches.Add(f);
+                    }
+                    FindFiles(d, search, matches);
+                }
+            }
+            catch (System.Exception e)
             {
                 Console.WriteLine(e.Message);
             }
