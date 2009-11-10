@@ -82,16 +82,16 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Constructs a new Color4 structure from the specified components.
         /// </summary>
-        /// <param name="r"></param>
-        /// <param name="g"></param>
-        /// <param name="b"></param>
-        /// <param name="a"></param>
+        /// <param name="r">The red component of the new Color4 structure.</param>
+        /// <param name="g">The green component of the new Color4 structure.</param>
+        /// <param name="b">The blue component of the new Color4 structure.</param>
+        /// <param name="a">The alpha component of the new Color4 structure.</param>
         public Color4(byte r, byte g, byte b, byte a)
         {
-            R = r * (float)Byte.MaxValue;
-            G = g * (float)Byte.MaxValue;
-            B = b * (float)Byte.MaxValue;
-            A = a * (float)Byte.MaxValue;
+            R = r / (float)Byte.MaxValue;
+            G = g / (float)Byte.MaxValue;
+            B = b / (float)Byte.MaxValue;
+            A = a / (float)Byte.MaxValue;
         }
 
         /// <summary>
