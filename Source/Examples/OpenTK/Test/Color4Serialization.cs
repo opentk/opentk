@@ -25,11 +25,9 @@
 //
 #endregion
 
-using System;
+using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
-
-using OpenTK;
 using OpenTK.Graphics;
 
 namespace Examples.Tests
@@ -48,9 +46,9 @@ namespace Examples.Tests
                 xs.Serialize(stream, color);
                 stream.Seek(0, SeekOrigin.Begin);
                 color2 = (Color4)xs.Deserialize(stream);
-                Console.WriteLine(color);
-                Console.WriteLine(color2);
-                Console.WriteLine(color.Equals(color2));
+                Trace.WriteLine(color);
+                Trace.WriteLine(color2);
+                Trace.WriteLine(color.Equals(color2));
             }
         }
     }
