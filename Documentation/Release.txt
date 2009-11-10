@@ -1,24 +1,19 @@
-The Open Toolkit 0.9.9-3 Beta
+The Open Toolkit 1.0 beta 1
 
 
 
 [Overview]
 
-This is the a preview release of what will become OpenTK 1.0. Major changes:
-* Bindings with generic ref/out overloads now reflect changes back to the caller.
-* Improved OpenGL 3.2 bindings.
-* Added helper overloads to GetAttrib* methods.
-* Fixed 'out string' parameters in ES20 (should have been StringBuilder).
-* Added Icon and IconChanged support to NativeWindow.
-* Added Focused and FocusedChanged support to NativeWindow.
-* Added KeyPress event to NativeWindow (in progress).
-* Improved WindowBorder and WindowState changes for NativeWindow on win32.
-* Fixed premature GLControl initialization (Load event is now correctly raised).
-* Fixed Vector[234]d and Matrix4d signatures (double instead of float) and added several new methods to Matrix4 and Matrix4d.
-* Fixed a large number of smaller issues and annoyances in NativeWindow (see complete bug list, below).
-* Improved internal loading code for the various bindings.
-* Made the binding generator more robust when handling invalid or malformed specifications.
-* GameWindow OnLoad and OnUnload methods are now protected instead of public (this was supposed to happen in the previous release).
+This is the first beta release of OpenTK 1.0. Important changes include:
+* Type-safe OpenGL|ES 2.0 bindings.
+* A large number of new examples on picking, shaders, dds textures, constructive solid geometry and multithreading.
+* Improved Mac OS X support.
+* Improved multi-monitor support.
+* Improved multithreading support.
+* A large number of bug- and stability fixes.
+* Improved documentation.
+* Improvements and bugfixes to the build system.
+* Temporary removal of OpenGL|ES 1.0, 1.1 and OpenCL bindings.
 
 Please visit http://www.opentk.com to report issues or request features.
 
@@ -26,47 +21,61 @@ Please visit http://www.opentk.com to report issues or request features.
 
 [Resolved issues]
 
-[#588]
-[#964]
+[#550]
+[#552]
+[#622]
+[#1013]
+[#1014]
+[#1015]
+[#1028]
 [#1071]
-[#1083]
-[#1146]
-[#1151]
-[#1165]
-[#1175]
-[#1176]
-[#1180]
-[#1190]
-[#1207]
-[#1213]
-[#1214]
-[#1215]
-[#1118]
-[#1226]
-[#1227]
-[#1233]
-[#1235]
-[#1239]
-[#1240]
-[#1248]
-
+[#1142]
+[#1265]
+[#1268]
+[#1274]
+[#1291]
+[#1294]
+[#1300]
+[#1303]
+[#1304]
+[#1307]
+[#1313]
+[#1318]
+[#1333]
+[#1334]
+[#1338]
+[#1339]
+[#1341]
+[#1350]
 
 
 
 [Known issues]
 
-* Mono 2.2 and 2.4.0 cannot compile this release due to a compiler bug (https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0, 2.4.2+ or use the precompiled binaries instead.
+* Mono 2.2 and 2.4.0 fail to compile OpenTK due to a compiler bug (https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0, 2.4.2+ or use the supplied binaries instead.
 * The example browser is incomplete.
-* The Mac OS X port is untested and may fail to work correctly. If you are interested in helping out, please make a post at the forums.
+* The Mac OS X port needs work. If you are interested in helping out, please make a post at http://www.opentk.com/forum/3.
 * MonoDevelop fails to sign assemblies (bugs https://bugzilla.novell.com/show_bug.cgi?id=484752 and https://bugzilla.novell.com/show_bug.cgi?id=537063).
-
+* OpenGL 3.2 methods may be missing specific tokens. Please report any such issues at http://www.opentk.com/node/add/project-issue/opentk
 
 
 [API changes]
 
 Please note that binary compatibility is not preserved between beta releases.
 
-If you are upgrading from OpenTK 0.9.9-0 or earlier, please add a reference to OpenTK.Compatibility.dll and OpenTK.GLControl.dll (if necessary).
+If you are upgrading from OpenTK 0.9.9-0 or earlier you can simplify the upgrade process by adding a reference to OpenTK.Compatibility.dll and OpenTK.GLControl.dll (if necessary). OpenTK.Compatibility contains code and APIs that have been deprecated and removed from the core library, as well as code for interoperation with the Tao framework.
+
+
+[1.0 beta-1]
+
+1. Compiler errors in OpenTK.Graphics.ES20 about missing "All" enums.
+Solution: The ES20 namespace now contains proper, type-safe enums, similar to the OpenGL and OpenAL namespaces. Please replaces all instances of the All enum by the enums suggested by your compiler.
+
+2. DisplayDevice.AvailableDevices and AvailableResolutions now return IList<DisplayDevice> and IList<DisplayResolution> instead of DisplayDevice[] and DisplayResolution[], respectively.
+Solution: Please store the return value in an IList<T> variable, instead of T[] (where T may be DisplayDevice or DisplayResolution). This issue is unlikely to come up in practice.
+
+3. OpenGL|ES 1.0, 1.1 and OpenCL namespaces are missing.
+Solution: These namespaces were not finalized in time for OpenTK 1.0 will be distributed as separate libraries. Please upgrade to the latest 1.x-dev release in http://www.opentk.com/project/opentk.
 
 
 [0.9.9-3]
