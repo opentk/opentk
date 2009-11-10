@@ -41,6 +41,7 @@ using OpenTK.Graphics.ES11;
 
 namespace Examples.Tutorial
 {
+#if EXPERIMENTAL
     [Example("Immediate mode", ExampleCategory.OpenGLES, "1.1", Documentation = "SimpleES11Window")]
     public class SimpleES11Window : GameWindow
     {
@@ -204,4 +205,5 @@ namespace Examples.Tutorial
 
         #endregion
     }
+#endif
 }
