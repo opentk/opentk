@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
@@ -1115,7 +1115,7 @@ namespace OpenTK
         /// <param name="result">The result of the operation.</param>
         public static void Transform(ref Vector3 vec, ref Quaternion quat, out Vector3 result)
         {
-            Quaternion v = new Quaternion() { X = vec.X, Y = vec.Y, Z = vec.Z, W = 0 };
+            Quaternion v = new Quaternion(vec.X, vec.Y, vec.Z,  0);
             Quaternion i;
             Quaternion t;
             Quaternion.Invert(ref quat, out i);

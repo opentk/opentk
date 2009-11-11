@@ -966,7 +966,7 @@ namespace OpenTK
         /// <param name="result">The result of the operation.</param>
         public static void Transform(ref Vector4d vec, ref Quaterniond quat, out Vector4d result)
         {
-            Quaterniond v = new Quaterniond() { X = vec.X, Y = vec.Y, Z = vec.Z, W = vec.W };
+            Quaterniond v = new Quaterniond(vec.X, vec.Y, vec.Z, vec.W);
             Quaterniond i;
             Quaterniond t;
             Quaterniond.Invert(ref quat, out i);
