@@ -72,6 +72,9 @@ namespace OpenTK
         /// <summary>
         /// Gets the size of the type in bytes.
         /// </summary>
+        /// <remarks>
+        /// This property returns 0 for non-blittable types.
+        /// </remarks>
         public static int Stride { get { return stride; } }
 
         #region Check
