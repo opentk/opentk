@@ -74,24 +74,15 @@ namespace OpenTK.Platform.X11
         {
             Debug.Print("Initializing threaded X11: {0}.", Functions.XInitThreads().ToString());
         
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
-            
-            // Bad idea - Windows.Forms will steal our events!
-            //Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
-            //defaultDisplay = (IntPtr)xplatui.GetField("DisplayHandle", System.Reflection.BindingFlags.Static |
-            //                                                           System.Reflection.BindingFlags.NonPublic).GetValue(null);
-
             defaultDisplay = Functions.XOpenDisplay(IntPtr.Zero);
                 
             if (defaultDisplay == IntPtr.Zero)
                 throw new PlatformException("Could not establish connection to the X-Server.");
 
-            //defaultScreen = Functions.XDefaultScreen(DefaultDisplay);
-            //rootWindow = Functions.XRootWindow(DefaultDisplay, DefaultScreen);
             screenCount = Functions.XScreenCount(DefaultDisplay);
-            //Debug.Print("Default Display: {0}, Default Screen: {1}, Default Root Window: {2}, Screen Count: {3}",
-            //    DefaultDisplay, DefaultScreen, RootWindow, ScreenCount);
             Debug.Print("Display connection: {0}, Screen count: {1}", DefaultDisplay, ScreenCount);
+
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
         }
 
         static void CurrentDomain_ProcessExit(object sender, EventArgs e)
