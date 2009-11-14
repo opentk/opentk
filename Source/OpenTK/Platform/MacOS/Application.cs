@@ -40,7 +40,20 @@ namespace OpenTK.Platform.MacOS.Carbon
             API.Gestalt(GestaltSelector.SystemVersionBugFix, out osBugfix);
 
             Debug.Print("Running on Mac OS X {0}.{1}.{2}.", osMajor, osMinor, osBugfix);
+
+			TransformProcessToForeground();
         }
+
+		private static void TransformProcessToForeground()
+		{
+			Carbon.ProcessSerialNumber psn = new ProcessSerialNumber();
+
+			Debug.Print("Setting process to be foreground application.");
+
+			API.GetCurrentProcess(ref psn);
+			API.TransformProcessType(ref psn, ProcessApplicationTransformState.kProcessTransformToForegroundApplication);
+			API.SetFrontProcess(ref psn);
+		}
 
         internal static CarbonGLNative WindowEventHandler
         {

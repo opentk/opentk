@@ -388,8 +388,22 @@ namespace OpenTK.Platform.MacOS.Carbon
     };
 
     #endregion
+	#region --- Process Manager ---
 
-    enum HICoordinateSpace 
+	enum ProcessApplicationTransformState : int
+	{
+		kProcessTransformToForegroundApplication = 1,
+	}
+
+	struct ProcessSerialNumber
+	{
+		public ulong high;
+		public ulong low;
+	}
+
+	#endregion
+
+	enum HICoordinateSpace 
     {
         _72DPIGlobal      = 1,
         ScreenPixel      = 2,
@@ -756,8 +770,18 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal static extern void DisposeEventHandlerUPP(IntPtr userUPP);
 
         #endregion
+		#region --- Process Manager ---
 
-        [DllImport(carbon)]
+		[DllImport(carbon)]
+		internal static extern int TransformProcessType(ref Carbon.ProcessSerialNumber psn, ProcessApplicationTransformState type);
+		[DllImport(carbon)]
+		internal static extern int GetCurrentProcess(ref Carbon.ProcessSerialNumber psn);
+		[DllImport(carbon)]
+		internal static extern int SetFrontProcess(ref Carbon.ProcessSerialNumber psn);
+
+		#endregion
+
+		[DllImport(carbon)]
         static extern IntPtr GetControlBounds(IntPtr control, out Rect bounds);
 
         internal static Rect GetControlBounds(IntPtr control)
