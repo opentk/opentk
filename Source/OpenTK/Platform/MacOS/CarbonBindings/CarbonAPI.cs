@@ -640,6 +640,25 @@ namespace OpenTK.Platform.MacOS.Carbon
 
             return (MouseButton)button;
         }
+		static internal int GetEventMouseWheelDelta(IntPtr inEvent)
+		{
+			int delta;
+
+			unsafe
+			{
+				int* d = &delta;
+
+				OSStatus result = API.GetEventParameter(inEvent,
+					 EventParamName.MouseWheelDelta, EventParamType.typeSInt32,
+					 IntPtr.Zero, (uint)sizeof(int), IntPtr.Zero, (IntPtr)d);
+
+				if (result != OSStatus.NoError)
+					throw new MacOSException(result);
+			}
+
+			return delta;
+		}
+
         static internal OSStatus GetEventWindowMouseLocation(IntPtr inEvent, out HIPoint pt)
         {
             HIPoint point;

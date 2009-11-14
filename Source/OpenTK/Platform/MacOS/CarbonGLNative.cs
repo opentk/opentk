@@ -64,6 +64,8 @@ namespace OpenTK.Platform.MacOS
 
         static Dictionary<IntPtr, WeakReference> mWindows = new Dictionary<IntPtr, WeakReference>();
 
+		KeyPressEventArgs mKeyPressArgs = new KeyPressEventArgs((char)0);
+
         #endregion
 
 		#region AGL Device Hack
@@ -331,25 +333,35 @@ namespace OpenTK.Platform.MacOS
         private OSStatus ProcessKeyboardEvent(IntPtr inCaller, IntPtr inEvent, EventInfo evt, IntPtr userData)
         {
             System.Diagnostics.Debug.Assert(evt.EventClass == EventClass.Keyboard);
-            MacOSKeyCode code;
-            char charCode;
+            MacOSKeyCode code = (MacOSKeyCode)0;
+            char charCode = '\0';
+
+			//Debug.Print("Processing keyboard event {0}", evt.KeyboardEventKind);
+
+			switch (evt.KeyboardEventKind)
+			{
+				case KeyboardEventKind.RawKeyDown:
+				case KeyboardEventKind.RawKeyRepeat:
+				case KeyboardEventKind.RawKeyUp:
+					GetCharCodes(inEvent, out code, out charCode);
+					mKeyPressArgs.KeyChar = charCode;
+					break;
+			}
 
             switch (evt.KeyboardEventKind)
             {
                 case KeyboardEventKind.RawKeyRepeat:
-                    GetCharCodes(inEvent, out code, out charCode);
                     InputDriver.Keyboard[0].KeyRepeat = true;
                     goto case KeyboardEventKind.RawKeyDown;
 
                 case KeyboardEventKind.RawKeyDown:
-                    GetCharCodes(inEvent, out code, out charCode);
+					OnKeyPress(mKeyPressArgs);
                     InputDriver.Keyboard[0][Keymap[code]] = true;
                     return OSStatus.EventNotHandled;
 
                 case KeyboardEventKind.RawKeyUp:
-                    GetCharCodes(inEvent, out code, out charCode);
                     InputDriver.Keyboard[0][Keymap[code]] = false;
-
+					
                     return OSStatus.EventNotHandled;
 
                 case KeyboardEventKind.RawKeyModifiersChanged:
@@ -362,6 +374,7 @@ namespace OpenTK.Platform.MacOS
 
 
         }
+
         private OSStatus ProcessWindowEvent(IntPtr inCaller, IntPtr inEvent, EventInfo evt, IntPtr userData)
         {
             System.Diagnostics.Debug.Assert(evt.EventClass == EventClass.Window);
@@ -426,21 +439,6 @@ namespace OpenTK.Platform.MacOS
                 }
             }
 
-
-            if (this.windowState == WindowState.Fullscreen)
-            {
-                InputDriver.Mouse[0].Position = new Point((int)pt.X, (int)pt.Y);
-            }
-            else
-            {
-                // ignore clicks in the title bar
-                if (pt.Y < mTitlebarHeight)
-                    return OSStatus.EventNotHandled;
-
-                InputDriver.Mouse[0].Position = 
-                    new Point((int)pt.X, (int)(pt.Y - mTitlebarHeight));
-            }
-
             switch (evt.MouseEventKind)
             {
                 case MouseEventKind.MouseDown:
@@ -462,9 +460,11 @@ namespace OpenTK.Platform.MacOS
                     }
 
 
-                    break;
+					return OSStatus.NoError;
 
                 case MouseEventKind.MouseUp:
+					button = API.GetEventMouseButton(inEvent);
+
                     switch (button)
                     {
                         case MouseButton.Primary:
@@ -482,12 +482,43 @@ namespace OpenTK.Platform.MacOS
 
                     button = API.GetEventMouseButton(inEvent);
 
-                    break;
+					return OSStatus.NoError;
+
+				case MouseEventKind.WheelMoved:
+
+					int delta = API.GetEventMouseWheelDelta(inEvent) / 3;
+
+					InputDriver.Mouse[0].Wheel += delta;
+
+					return OSStatus.NoError;
 
                 case MouseEventKind.MouseMoved:
                 case MouseEventKind.MouseDragged:
 
-                    //Debug.Print("MouseMoved: {0}", InputDriver.Mouse[0].Position);
+					if (this.windowState == WindowState.Fullscreen)
+					{
+						Point mousePosInClient = new Point((int)pt.X, (int)pt.Y);
+
+						if (mousePosInClient.X != InputDriver.Mouse[0].X ||
+							mousePosInClient.Y != InputDriver.Mouse[0].Y)
+						{
+							InputDriver.Mouse[0].Position = mousePosInClient;
+						}
+					}
+					else
+					{
+						// ignore clicks in the title bar
+						if (pt.Y < mTitlebarHeight)
+							return OSStatus.EventNotHandled;
+
+						Point mousePosInClient = new Point((int)pt.X, (int)(pt.Y - mTitlebarHeight));
+
+						if (mousePosInClient.X != InputDriver.Mouse[0].X ||
+							mousePosInClient.Y != InputDriver.Mouse[0].Y)
+						{
+							InputDriver.Mouse[0].Position = mousePosInClient;
+						}
+					}
 
                     return OSStatus.EventNotHandled;
 
@@ -496,8 +527,6 @@ namespace OpenTK.Platform.MacOS
 
                     return OSStatus.EventNotHandled;
             }
-
-            return OSStatus.EventNotHandled;
         }
 
         private static void GetCharCodes(IntPtr inEvent, out MacOSKeyCode code, out char charCode)
@@ -596,18 +625,6 @@ namespace OpenTK.Platform.MacOS
                 return;
 
             bounds = GetRegion().ToRectangle();
-        }
-
-        protected virtual void OnClosing(CancelEventArgs e)
-        {
-            if (Closing != null)
-                Closing(this, e);
-        }
-
-        protected virtual void OnClosed()
-        {
-            if (Closed != null)
-                Closed(this, EventArgs.Empty);
         }
 
         #endregion
@@ -894,8 +911,7 @@ namespace OpenTK.Platform.MacOS
 
                 windowState = value;
 
-                if (WindowStateChanged != null)
-                    WindowStateChanged(this, EventArgs.Empty);
+				OnWindowStateChanged();
 
                 OnResize();
             }
@@ -928,44 +944,55 @@ namespace OpenTK.Platform.MacOS
                         WindowBorderChanged(this, EventArgs.Empty);
                 }
             }
-        }
+		}
 
-        public event EventHandler<EventArgs> Idle;
+		#region --- Event wrappers ---
 
+		private void OnKeyPress(KeyPressEventArgs keyPressArgs)
+		{
+			if (KeyPress != null)
+				KeyPress(this, keyPressArgs);
+		}
+
+
+		private void OnWindowStateChanged()
+		{
+			if (WindowStateChanged != null)
+				WindowStateChanged(this, EventArgs.Empty);
+		}
+
+		protected virtual void OnClosing(CancelEventArgs e)
+		{
+			if (Closing != null)
+				Closing(this, e);
+		}
+
+		protected virtual void OnClosed()
+		{
+			if (Closed != null)
+				Closed(this, EventArgs.Empty);
+		}
+
+		#endregion
+
+		public event EventHandler<EventArgs> Idle;
         public event EventHandler<EventArgs> Load;
-
         public event EventHandler<EventArgs> Unload;
-
         public event EventHandler<EventArgs> Move;
-
         public event EventHandler<EventArgs> Resize;
-
         public event EventHandler<CancelEventArgs> Closing;
-
         public event EventHandler<EventArgs> Closed;
-
         public event EventHandler<EventArgs> Disposed;
-
         public event EventHandler<EventArgs> IconChanged;
-
         public event EventHandler<EventArgs> TitleChanged;
-
         public event EventHandler<EventArgs> ClientSizeChanged;
-
         public event EventHandler<EventArgs> VisibleChanged;
-
         public event EventHandler<EventArgs> WindowInfoChanged;
-
         public event EventHandler<EventArgs> FocusedChanged;
-
         public event EventHandler<EventArgs> WindowBorderChanged;
-
         public event EventHandler<EventArgs> WindowStateChanged;
-
         public event EventHandler<KeyPressEventArgs> KeyPress;
-
         public event EventHandler<EventArgs> MouseEnter;
-
         public event EventHandler<EventArgs> MouseLeave;
 
         #endregion
