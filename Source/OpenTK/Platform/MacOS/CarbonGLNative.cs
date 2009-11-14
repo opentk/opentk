@@ -124,6 +124,8 @@ namespace OpenTK.Platform.MacOS
 
             Debug.Print("Disposing of CarbonGLNative window.");
 
+			API.DisposeWindow(window.WindowRef);
+
             mIsDisposed = true;
 			mExists = false;
 
@@ -136,6 +138,7 @@ namespace OpenTK.Platform.MacOS
             }
 
             DisposeUPP();
+
         }
 
         ~CarbonGLNative()
@@ -842,7 +845,15 @@ namespace OpenTK.Platform.MacOS
 
         public void Close()
         {
-            throw new NotImplementedException();
+			CancelEventArgs e = new CancelEventArgs();
+			OnClosing(e);
+
+			if (e.Cancel)
+				return;
+
+			OnClosed();
+
+			Dispose();
         }
 
         public WindowState WindowState

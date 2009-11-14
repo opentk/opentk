@@ -358,6 +358,7 @@ namespace OpenTK.Platform.MacOS
         #endregion
 
         #region IDisposable Members
+
         ~AglContext()
         {
             Dispose(false);
@@ -374,25 +375,20 @@ namespace OpenTK.Platform.MacOS
                 return;
 
             Debug.Print("Disposing of AGL context.");
-
-            try
-            {
-                throw new Exception();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.StackTrace);
-            }
-
             Agl.aglSetCurrentContext(IntPtr.Zero);
-            Agl.aglSetDrawable(Handle.Handle, IntPtr.Zero);
+			
+			//Debug.Print("Setting drawable to null for context {0}.", Handle.Handle);
+			//Agl.aglSetDrawable(Handle.Handle, IntPtr.Zero);
 
-            Debug.Print("Set drawable to null for context {0}.", Handle.Handle);
-
+			// I do not know MacOS allows us to destroy a context from a separate thread,
+			// like the finalizer thread.  It's untested, but worst case is probably
+			// an exception on application exit, which would be logged to the console.
+			Debug.Print("Destroying context");
             if (Agl.aglDestroyContext(Handle.Handle) == true)
             {
-                Handle = ContextHandle.Zero;
-                return;
+				Debug.Print("Context destruction completed successfully.");
+				Handle = ContextHandle.Zero;
+			    return;
             }
 
             // failed to destroy context.
