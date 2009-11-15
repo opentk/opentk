@@ -69,6 +69,8 @@ namespace OpenTK.Platform.MacOS
 		bool mMouseIn = false;
 		bool mIsActive = false;
 
+		Icon mIcon;
+
         #endregion
 
 		#region AGL Device Hack
@@ -752,9 +754,62 @@ namespace OpenTK.Platform.MacOS
 
         public Icon Icon
         {
-            get { return null; }
-            set { }
+			get { return mIcon; }
+            set {
+				SetIcon(value);
+			}
         }
+
+		private void SetIcon(Icon icon)
+		{
+			// The code for this function was adapted from Mono's XplatUICarbon implementation,
+			// written by Geoff Norton
+			// http://anonsvn.mono-project.com/viewvc/trunk/mcs/class/Managed.Windows.Forms/System.Windows.Forms/XplatUICarbon.cs?view=markup&pathrev=136932
+			if (icon == null)
+			{
+				API.RestoreApplicationDockTileImage();
+			}
+			else
+			{
+				Bitmap bitmap;
+				int size;
+				IntPtr[] data;
+				int index;
+
+				bitmap = new Bitmap(128, 128);
+				using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
+				{
+					g.DrawImage(icon.ToBitmap(), 0, 0, 128, 128);
+				}
+				index = 0;
+				size = bitmap.Width * bitmap.Height;
+				data = new IntPtr[size];
+
+				for (int y = 0; y < bitmap.Height; y++)
+				{
+					for (int x = 0; x < bitmap.Width; x++)
+					{
+						int pixel = bitmap.GetPixel(x, y).ToArgb();
+						if (BitConverter.IsLittleEndian)
+						{
+							byte a = (byte)((pixel >> 24) & 0xFF);
+							byte r = (byte)((pixel >> 16) & 0xFF);
+							byte g = (byte)((pixel >> 8) & 0xFF);
+							byte b = (byte)(pixel & 0xFF);
+							data[index++] = (IntPtr)(a + (r << 8) + (g << 16) + (b << 24));
+						}
+						else
+						{
+							data[index++] = (IntPtr)pixel;
+						}
+					}
+				}
+
+				IntPtr provider = API.CGDataProviderCreateWithData(IntPtr.Zero, data, size * 4, IntPtr.Zero);
+				IntPtr image = API.CGImageCreate(128, 128, 8, 32, 4 * 128, API.CGColorSpaceCreateDeviceRGB(), 4, provider, IntPtr.Zero, 0, 0);
+				API.SetApplicationDockTileImage(image);
+			}
+		}
 
         public string Title
         {
