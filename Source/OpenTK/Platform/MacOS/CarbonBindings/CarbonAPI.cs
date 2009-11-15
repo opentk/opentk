@@ -416,6 +416,7 @@ namespace OpenTK.Platform.MacOS.Carbon
 
 	#endregion
 
+
 	enum HICoordinateSpace 
     {
         _72DPIGlobal      = 1,
@@ -854,6 +855,20 @@ namespace OpenTK.Platform.MacOS.Carbon
 		internal static extern int GetCurrentProcess(ref Carbon.ProcessSerialNumber psn);
 		[DllImport(carbon)]
 		internal static extern int SetFrontProcess(ref Carbon.ProcessSerialNumber psn);
+
+		#endregion
+		#region --- Setting Dock Tile ---
+
+		[DllImport(carbon)]
+		internal extern static IntPtr CGColorSpaceCreateDeviceRGB();
+		[DllImport(carbon)]
+		internal extern static IntPtr CGDataProviderCreateWithData(IntPtr info, IntPtr[] data, int size, IntPtr releasefunc);
+		[DllImport(carbon)]
+		internal extern static IntPtr CGImageCreate(int width, int height, int bitsPerComponent, int bitsPerPixel, int bytesPerRow, IntPtr colorspace, uint bitmapInfo, IntPtr provider, IntPtr decode, int shouldInterpolate, int intent);
+		[DllImport(carbon)]
+		internal extern static void SetApplicationDockTileImage(IntPtr imageRef);
+		[DllImport(carbon)]
+		internal extern static void RestoreApplicationDockTileImage();
 
 		#endregion
 
