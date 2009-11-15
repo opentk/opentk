@@ -563,6 +563,9 @@ namespace OpenTK.Platform.MacOS
 
 		private void CheckEnterLeaveEvents(IntPtr eventWindowRef, Point pt)
 		{
+			if (window == null)
+				return;
+
 			bool thisIn = eventWindowRef == window.WindowRef;
 
 			if (pt.Y < 0) 
