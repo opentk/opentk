@@ -67,6 +67,7 @@ namespace OpenTK.Platform.MacOS
 		KeyPressEventArgs mKeyPressArgs = new KeyPressEventArgs((char)0);
 
 		bool mMouseIn = false;
+		bool mIsActive = false;
 
         #endregion
 
@@ -202,6 +203,8 @@ namespace OpenTK.Platform.MacOS
                 new EventTypeSpec(EventClass.Window, WindowEventKind.WindowClose),
                 new EventTypeSpec(EventClass.Window, WindowEventKind.WindowClosed),
                 new EventTypeSpec(EventClass.Window, WindowEventKind.WindowBoundsChanged),
+				new EventTypeSpec(EventClass.Window, WindowEventKind.WindowActivate),
+				new EventTypeSpec(EventClass.Window, WindowEventKind.WindowDeactivate),
 
                 //new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDown),
                 //new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseUp),
@@ -411,6 +414,14 @@ namespace OpenTK.Platform.MacOS
                         OnResize();
 
                     return OSStatus.EventNotHandled;
+
+				case WindowEventKind.WindowActivate:
+					OnActivate();
+					return OSStatus.EventNotHandled;
+
+				case WindowEventKind.WindowDeactivate:
+					OnDeactivate();
+					return OSStatus.EventNotHandled;
 
                 default:
                     Debug.Print("{0}", evt);
@@ -772,7 +783,7 @@ namespace OpenTK.Platform.MacOS
 
         public bool Focused
         {
-            get { throw new NotImplementedException(); }
+			get { return this.mIsActive; }
         }
 
         public Rectangle Bounds
@@ -1027,6 +1038,18 @@ namespace OpenTK.Platform.MacOS
 				MouseEnter(this, EventArgs.Empty);
 		}
 
+		private void OnActivate()
+		{
+			mIsActive = true;
+			if (FocusedChanged != null)
+				FocusedChanged(this, EventArgs.Empty);
+		}
+		private void OnDeactivate()
+		{
+			mIsActive = false;
+			if (FocusedChanged != null)
+				FocusedChanged(this, EventArgs.Empty);
+		}
 
 		#endregion
 
