@@ -66,6 +66,8 @@ namespace OpenTK.Platform.MacOS
 
 		KeyPressEventArgs mKeyPressArgs = new KeyPressEventArgs((char)0);
 
+		bool mMouseIn = false;
+
         #endregion
 
 		#region AGL Device Hack
@@ -421,12 +423,13 @@ namespace OpenTK.Platform.MacOS
             System.Diagnostics.Debug.Assert(evt.EventClass == EventClass.Mouse);
             MouseButton button = MouseButton.Primary;
             HIPoint pt = new HIPoint();
+			HIPoint screenLoc =  new HIPoint();
 
-            OSStatus err;
+			OSStatus err = API.GetEventMouseLocation(inEvent, out screenLoc);
 
             if (this.windowState == WindowState.Fullscreen)
             {
-                err = API.GetEventMouseLocation(inEvent, out pt);
+				pt = screenLoc;
             }
             else
             {
@@ -442,6 +445,17 @@ namespace OpenTK.Platform.MacOS
                 }
             }
 
+			Point mousePosInClient = new Point((int)pt.X, (int)pt.Y);
+			if (this.windowState != WindowState.Fullscreen)
+			{
+				mousePosInClient.Y -= mTitlebarHeight;
+			}
+
+			// check for enter/leave events
+			IntPtr thisEventWindow;
+			API.GetEventWindowRef(inEvent, out thisEventWindow);
+			CheckEnterLeaveEvents(thisEventWindow, mousePosInClient);
+			
             switch (evt.MouseEventKind)
             {
                 case MouseEventKind.MouseDown:
@@ -497,11 +511,11 @@ namespace OpenTK.Platform.MacOS
 
                 case MouseEventKind.MouseMoved:
                 case MouseEventKind.MouseDragged:
+					
+					//Debug.Print("Mouse Location: {0}, {1}", pt.X, pt.Y);
 
 					if (this.windowState == WindowState.Fullscreen)
 					{
-						Point mousePosInClient = new Point((int)pt.X, (int)pt.Y);
-
 						if (mousePosInClient.X != InputDriver.Mouse[0].X ||
 							mousePosInClient.Y != InputDriver.Mouse[0].Y)
 						{
@@ -511,10 +525,8 @@ namespace OpenTK.Platform.MacOS
 					else
 					{
 						// ignore clicks in the title bar
-						if (pt.Y < mTitlebarHeight)
+						if (pt.Y < 0)
 							return OSStatus.EventNotHandled;
-
-						Point mousePosInClient = new Point((int)pt.X, (int)(pt.Y - mTitlebarHeight));
 
 						if (mousePosInClient.X != InputDriver.Mouse[0].X ||
 							mousePosInClient.Y != InputDriver.Mouse[0].Y)
@@ -531,6 +543,24 @@ namespace OpenTK.Platform.MacOS
                     return OSStatus.EventNotHandled;
             }
         }
+
+		private void CheckEnterLeaveEvents(IntPtr eventWindowRef, Point pt)
+		{
+			bool thisIn = eventWindowRef == window.WindowRef;
+
+			if (pt.Y < 0) 
+				thisIn = false;
+
+			if (thisIn != mMouseIn)
+			{
+				mMouseIn = thisIn;
+
+				if (mMouseIn)
+					OnMouseEnter();
+				else
+					OnMouseLeave();
+			}
+		}
 
         private static void GetCharCodes(IntPtr inEvent, out MacOSKeyCode code, out char charCode)
         {
@@ -983,6 +1013,20 @@ namespace OpenTK.Platform.MacOS
 			if (Closed != null)
 				Closed(this, EventArgs.Empty);
 		}
+
+
+		private void OnMouseLeave()
+		{
+			if (MouseLeave != null)
+				MouseLeave(this, EventArgs.Empty);
+		}
+
+		private void OnMouseEnter()
+		{
+			if (MouseEnter != null)
+				MouseEnter(this, EventArgs.Empty);
+		}
+
 
 		#endregion
 
