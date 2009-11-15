@@ -43,6 +43,8 @@ namespace OpenTK.Platform.MacOS
 
         CarbonWindowInfo window;
         CarbonInput mInputDriver;
+
+		[Obsolete]
         GraphicsContext context;
 
         static MacOSKeyMap Keymap = new MacOSKeyMap();
@@ -50,7 +52,8 @@ namespace OpenTK.Platform.MacOS
         IntPtr uppHandler;
 
         string title = "OpenTK Window";
-        Rectangle bounds, windowedBounds, clientRectangle;
+        Rectangle bounds, clientRectangle;
+		Rectangle windowedBounds;
         bool mIsDisposed = false;
 		bool mExists = true;
 		DisplayDevice mDisplayDevice;
@@ -257,6 +260,7 @@ namespace OpenTK.Platform.MacOS
 
             Debug.Print("Prev Size: {0}, {1}", Width, Height);
 
+			// TODO: if we go full screen we need to make this use the device specified.
             bounds = DisplayDevice.Default.Bounds;
 
             Debug.Print("New Size: {0}, {1}", Width, Height);
@@ -631,33 +635,18 @@ namespace OpenTK.Platform.MacOS
             if (WindowState == WindowState.Fullscreen)
                 return;
 
-            // Todo: why call SizeWindow twice?
+			// The bounds of the window should be the size specified, but
+			// API.SizeWindow sets the content region size.  So
+			// we reduce the size to get the correct bounds.
+			width -= (short)(bounds.Width - clientRectangle.Width);
+			height -= (short)(bounds.Height - clientRectangle.Height);
+            
             API.SizeWindow(window.WindowRef, width, height, true);
-            bounds.Width = (short)width;
-            bounds.Height = (short)height;
-
-            Rect contentBounds = API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
-
-            Rect newSize = new Rect(0, 0,
-                (short)(2 * width - contentBounds.Width),
-                (short)(2 * height - contentBounds.Height));
-
-            Debug.Print("Content region was: {0}", contentBounds);
-            Debug.Print("Resizing window to: {0}", newSize);
-
-            API.SizeWindow(window.WindowRef, newSize.Width, newSize.Height, true);
-
-            contentBounds = API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
-            Debug.Print("New content region size: {0}", contentBounds);
-            clientRectangle = contentBounds.ToRectangle();
         }
 
         protected void OnResize()
         {
             LoadSize();
-
-            if (context != null && this.windowState != WindowState.Fullscreen)
-                context.Update(window);
 
             if (Resize != null)
             {
@@ -670,7 +659,11 @@ namespace OpenTK.Platform.MacOS
             if (WindowState == WindowState.Fullscreen)
                 return;
 
-            bounds = GetRegion().ToRectangle();
+			Rect r = API.GetWindowBounds(window.WindowRef, WindowRegionCode.StructureRegion);
+			bounds = new Rectangle(r.X, r.Y, r.Width, r.Height);
+
+			r = API.GetWindowBounds(window.WindowRef, WindowRegionCode.GlobalPortRegion);
+			clientRectangle = new Rectangle(0, 0, r.Width, r.Height);
         }
 
         #endregion
@@ -762,8 +755,8 @@ namespace OpenTK.Platform.MacOS
 
 		private void SetIcon(Icon icon)
 		{
-			// The code for this function was adapted from Mono's XplatUICarbon implementation,
-			// written by Geoff Norton
+			// The code for this function was adapted from Mono's 
+			// XplatUICarbon implementation, written by Geoff Norton
 			// http://anonsvn.mono-project.com/viewvc/trunk/mcs/class/Managed.Windows.Forms/System.Windows.Forms/XplatUICarbon.cs?view=markup&pathrev=136932
 			if (icon == null)
 			{
@@ -845,7 +838,8 @@ namespace OpenTK.Platform.MacOS
         {
             get
             {
-                return bounds;
+				
+				return bounds;
             }
             set
             {
@@ -858,7 +852,7 @@ namespace OpenTK.Platform.MacOS
         {
             get
             {
-                return bounds.Location;
+                return Bounds.Location;
             }
             set
             {
@@ -875,7 +869,6 @@ namespace OpenTK.Platform.MacOS
             set
             {
                 SetSize((short)value.Width, (short)value.Height);
-                context.Update(WindowInfo);
             }
         }
 
@@ -919,11 +912,13 @@ namespace OpenTK.Platform.MacOS
         {
             get
             {
-                return clientRectangle;
+				return clientRectangle;
             }
             set
             {
-                throw new NotImplementedException();
+				// just set the size, and ignore the location value.
+				// this is the behavior of the Windows WinGLNative.
+				ClientSize = value.Size;
             }
         }
 
@@ -935,7 +930,8 @@ namespace OpenTK.Platform.MacOS
             }
             set
             {
-                throw new NotImplementedException();
+				API.SizeWindow(window.WindowRef, (short)value.Width, (short)value.Height, true);
+				OnResize();
             }
         }
 
