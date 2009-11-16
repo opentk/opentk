@@ -247,7 +247,7 @@
     </function>
 
     <function name="VertexAttribIPointer" extension="Core">
-      <param name="type"><type>VertexAttribParameter</type></param>
+      <param name="type"><type>VertexAttribIPointerType</type></param>
     </function>
 
     <function name="BeginConditionalRender" extension="Core">
@@ -267,6 +267,10 @@
     <function name="TexBuffer" extension="Core">
       <param name="target"><type>TextureBufferTarget</type></param>
       <param name="internalformat"><type>SizedInternalFormat</type></param>
+    </function>
+    
+    <function name="GetActiveUniformBlock" extension="Core">
+      <param name="pname"><type>ActiveUniformBlockParameter</type></param>
     </function>
     
     <!-- Version 3.2 -->

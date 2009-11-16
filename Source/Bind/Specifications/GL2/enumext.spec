@@ -7556,6 +7556,33 @@ SizedInternalFormat enum:
 	use PixelInternalFormat RGBA8UI
 	use PixelInternalFormat RGBA16UI
 	use PixelInternalFormat RGBA32UI
+	
+TextureTarget enum:
+	TEXTURE_RECTANGLE               = 0x84F5    # ARB_texture_rectangle
+    PROXY_TEXTURE_RECTANGLE             = 0x84F7    # ARB_texture_rectangle
+    
+GetPName enum:
+    TEXTURE_BINDING_RECTANGLE           = 0x84F6    # ARB_texture_rectangle
+    MAX_RECTANGLE_TEXTURE_SIZE          = 0x84F8    # ARB_texture_rectangle
+
+ActiveUniformType enum:
+	SAMPLER_2D_RECT                 = 0x8B63    # ARB_shader_objects + ARB_texture_rectangle
+    SAMPLER_2D_RECT_SHADOW              = 0x8B64    # ARB_shader_objects + ARB_texture_rectangle
+    SAMPLER_BUFFER                  = 0x8DC2    # EXT_gpu_shader4 + ARB_texture_buffer_object
+    INT_SAMPLER_2D_RECT             = 0x8DCD    # EXT_gpu_shader4 + ARB_texture_rectangle
+    INT_SAMPLER_BUFFER              = 0x8DD0    # EXT_gpu_shader4 + ARB_texture_buffer_object
+    UNSIGNED_INT_SAMPLER_2D_RECT            = 0x8DD5    # EXT_gpu_shader4 + ARB_texture_rectangle
+    UNSIGNED_INT_SAMPLER_BUFFER         = 0x8DD8    # EXT_gpu_shader4 + ARB_texture_buffer_object
+    
+ActiveUniformBlockParameter enum:
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_BINDING
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_DATA_SIZE
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_NAME_LENGTH
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_ACTIVE_UNIFORMS
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER
+	
 
 # Non-core 
 
@@ -7721,7 +7748,11 @@ BufferPointerNameARB enum:
 
 GenerateMipmapTarget enum:
 	use TextureTarget TEXTURE_1D
+	use TextureTarget TEXTURE_1D_ARRAY
 	use TextureTarget TEXTURE_2D
+	use TextureTarget TEXTURE_2D_ARRAY
+	use TextureTarget TEXTURE_2D_MULTISAMPLE
+	use TextureTarget TEXTURE_2D_MULTISAMPLE_ARRAY
 	use TextureTarget TEXTURE_3D
 	use TextureTarget TEXTURE_CUBE_MAP
 
@@ -7839,7 +7870,9 @@ GetTextureParameter enum:
 
 TextureTarget enum:
 	TEXTURE_2D_MULTISAMPLE = 0x9100
+	PROXY_TEXTURE_2D_MULTISAMPLE = 0x9101
 	TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
+	PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9103
 	
 ActiveUniformType enum:
 	SAMPLER_2D_MULTISAMPLE = 0x9108
@@ -7900,12 +7933,14 @@ GetPName enum:
 
 # ARB_vertex_array_bgra tokens
 # http://www.opengl.org/registry/specs/ARB/vertex_array_bgra.txt
+# The following tokens are incorrect. They are valid for the <size>
+# parameteter, not the <type> parameter - but <size> is not an enum!
+# (Maybe something changed between the ARB spec and its core version?)
+#ColorPointerType enum:
+#	BGRA = 0x80E1
 
-ColorPointerType enum:
-	BGRA = 0x80E1
-
-VertexAttribPointerType enum:
-	BGRA = 0x80E1
+#VertexAttribPointerType enum:
+#	BGRA = 0x80E1
 
 # ARB_seamless_cube_map tokens
 # http://www.opengl.org/registry/specs/ARB/seamless_cube_map.txt
@@ -7928,5 +7963,16 @@ GetPName enum:
 
 # ARB_draw_elements_base_vertex tokens
 # http://www.opengl.org/registry/specs/ARB/draw_elements_base_vertex.txt
+
+# VertexAttribIPointerType (see OpenGL 3.2 reference card)
+# Note: the underscore is there to avoid changing IPointer to Ipointer.
+VertexAttribI_PointerType enum:
+	use DataType BYTE
+	use DataType UNSIGNED_BYTE
+	use DataType SHORT
+	use DataType UNSIGNED_SHORT
+	use DataType INT
+	use DataType UNSIGNED_INT
+
 
 # End (don't remove, or the last token may be removed!)

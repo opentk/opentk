@@ -963,12 +963,10 @@ namespace OpenTK
         /// <param name="result">The result of the operation.</param>
         public static void Transform(ref Vector4 vec, ref Quaternion quat, out Vector4 result)
         {
-            Quaternion v = new Quaternion(vec.X, vec.Y, vec.Z, vec.W);
-            Quaternion i;
-            Quaternion t;
+            Quaternion v = new Quaternion(vec.X, vec.Y, vec.Z, vec.W), i, t;
             Quaternion.Invert(ref quat, out i);
-            t = i * v;
-            v = t * quat;
+            Quaternion.Multiply(ref quat, ref v, out t);
+            Quaternion.Multiply(ref t, ref i, out v);
 
             result = new Vector4(v.X, v.Y, v.Z, v.W);
         }

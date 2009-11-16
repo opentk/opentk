@@ -46,7 +46,7 @@ namespace OpenTK.Input
         IntPtr id;
         int numButtons, numWheels;
         readonly bool[] button_state = new bool[Enum.GetValues(typeof(MouseButton)).Length];
-        int wheel, last_wheel;
+        float wheel, last_wheel;
         Point pos = new Point(), last_pos = new Point();
         MouseMoveEventArgs move_args = new MouseMoveEventArgs();
         MouseButtonEventArgs button_args = new MouseButtonEventArgs();
@@ -131,9 +131,19 @@ namespace OpenTK.Input
         #region public int Wheel
 
         /// <summary>
-        /// Gets an integer representing the absolute wheel position.
+        /// Gets the absolute wheel position in integer units.
+        /// To support high-precision mice, it is recommended to use <see cref="WheelPrecise"/> instead.
         /// </summary>
         public int Wheel
+        {
+            get { return (int)(wheel + 0.5f); }
+            internal set { WheelPrecise = value; }
+        }
+
+        /// <summary>
+        /// Gets the absolute wheel position in floating-point units.
+        /// </summary>
+        public float WheelPrecise
         {
             get { return wheel; }
             internal set
@@ -142,11 +152,11 @@ namespace OpenTK.Input
 
                 wheel_args.X = pos.X;
                 wheel_args.Y = pos.Y;
-                wheel_args.Value = wheel;
-                wheel_args.Delta = wheel - last_wheel;
-                
-                WheelChanged(this, wheel_args );
-                
+                wheel_args.ValuePrecise = wheel;
+                wheel_args.DeltaPrecise = wheel - last_wheel;
+
+                WheelChanged(this, wheel_args);
+
                 last_wheel = wheel;
             }
         }
@@ -296,8 +306,8 @@ namespace OpenTK.Input
         {
             get
             {
-                int result = wheel - wheel_last_accessed;
-                wheel_last_accessed = wheel;
+                int result = (int)(wheel - wheel_last_accessed + 0.5f);
+                wheel_last_accessed = (int)wheel;
                 return result;
             }
         }
@@ -561,8 +571,8 @@ namespace OpenTK.Input
     {
         #region Fields
 
-        int value;
-        int delta;
+        float value;
+        float delta;
 
         #endregion
 
@@ -601,14 +611,26 @@ namespace OpenTK.Input
         #region Public Members
 
         /// <summary>
-        /// Gets the value of the wheel.
+        /// Gets the value of the wheel in integer units.
+        /// To support high-precision mice, it is recommended to use <see cref="ValuePrecise"/> instead.
         /// </summary>
-        public int Value { get { return this.value; } internal set { this.value = value; } }
+        public int Value { get { return (int)(value + 0.5f); } }
 
         /// <summary>
-        /// Gets the change in value of the wheel for this event.
+        /// Gets the change in value of the wheel for this event in integer units.
+        /// To support high-precision mice, it is recommended to use <see cref="DeltaPrecise"/> instead.
         /// </summary>
-        public int Delta { get { return delta; } internal set { delta = value; } }
+        public int Delta { get { return (int)(delta + 0.5f); } }
+
+        /// <summary>
+        /// Gets the precise value of the wheel in floating-point units.
+        /// </summary>
+        public float ValuePrecise { get { return value; } internal set { this.value = value; } }
+
+        /// <summary>
+        /// Gets the precise change in value of the wheel for this event in floating-point units.
+        /// </summary>
+        public float DeltaPrecise { get { return delta; } internal set { delta = value; } }
 
         #endregion
     }
