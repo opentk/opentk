@@ -1111,12 +1111,10 @@ namespace OpenTK
         /// <param name="result">The result of the operation.</param>
         public static void Transform(ref Vector3d vec, ref Quaterniond quat, out Vector3d result)
         {
-            Quaterniond v = new Quaterniond(vec.X, vec.Y, vec.Z, 0);
-            Quaterniond i;
-            Quaterniond t;
+            Quaterniond v = new Quaterniond(vec.X, vec.Y, vec.Z, 0), i, t;
             Quaterniond.Invert(ref quat, out i);
-            t = i * v;
-            v = t * quat;
+            Quaterniond.Multiply(ref quat, ref v, out t);
+            Quaterniond.Multiply(ref t, ref i, out v);
 
             result = new Vector3d(v.X, v.Y, v.Z);
         }
