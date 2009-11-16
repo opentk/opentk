@@ -32,6 +32,7 @@ using System.Drawing.Text;
 using System.Reflection;
 using System.Windows.Forms;
 using OpenTK.Examples.Properties;
+using System.Threading;
 
 namespace Examples
 {
@@ -333,7 +334,11 @@ namespace Examples
                     }
                     Trace.WriteLine(String.Format("Launching sample: \"{0}\"", e.Attribute.Title));
                     Trace.WriteLine(String.Empty);
-                    main.Invoke(null, null);
+
+                    Thread thread = new Thread((ThreadStart)delegate { main.Invoke(null, null); });
+                    thread.IsBackground = true;
+                    thread.Start();
+                    thread.Join();
                 }
                 catch (TargetInvocationException expt)
                 {
