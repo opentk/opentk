@@ -7556,6 +7556,24 @@ SizedInternalFormat enum:
 	use PixelInternalFormat RGBA8UI
 	use PixelInternalFormat RGBA16UI
 	use PixelInternalFormat RGBA32UI
+	
+TextureTarget enum:
+	TEXTURE_RECTANGLE               = 0x84F5    # ARB_texture_rectangle
+    PROXY_TEXTURE_RECTANGLE             = 0x84F7    # ARB_texture_rectangle
+    
+GetPName enum:
+    TEXTURE_BINDING_RECTANGLE           = 0x84F6    # ARB_texture_rectangle
+    MAX_RECTANGLE_TEXTURE_SIZE          = 0x84F8    # ARB_texture_rectangle
+
+ActiveUniformType enum:
+	SAMPLER_2D_RECT                 = 0x8B63    # ARB_shader_objects + ARB_texture_rectangle
+    SAMPLER_2D_RECT_SHADOW              = 0x8B64    # ARB_shader_objects + ARB_texture_rectangle
+    SAMPLER_BUFFER                  = 0x8DC2    # EXT_gpu_shader4 + ARB_texture_buffer_object
+    INT_SAMPLER_2D_RECT             = 0x8DCD    # EXT_gpu_shader4 + ARB_texture_rectangle
+    INT_SAMPLER_BUFFER              = 0x8DD0    # EXT_gpu_shader4 + ARB_texture_buffer_object
+    UNSIGNED_INT_SAMPLER_2D_RECT            = 0x8DD5    # EXT_gpu_shader4 + ARB_texture_rectangle
+    UNSIGNED_INT_SAMPLER_BUFFER         = 0x8DD8    # EXT_gpu_shader4 + ARB_texture_buffer_object
+	
 
 # Non-core 
 
