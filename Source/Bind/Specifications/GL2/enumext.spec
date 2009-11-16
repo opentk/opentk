@@ -7573,6 +7573,15 @@ ActiveUniformType enum:
     INT_SAMPLER_BUFFER              = 0x8DD0    # EXT_gpu_shader4 + ARB_texture_buffer_object
     UNSIGNED_INT_SAMPLER_2D_RECT            = 0x8DD5    # EXT_gpu_shader4 + ARB_texture_rectangle
     UNSIGNED_INT_SAMPLER_BUFFER         = 0x8DD8    # EXT_gpu_shader4 + ARB_texture_buffer_object
+    
+ActiveUniformBlockParameter enum:
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_BINDING
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_DATA_SIZE
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_NAME_LENGTH
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_ACTIVE_UNIFORMS
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER
 	
 
 # Non-core 
