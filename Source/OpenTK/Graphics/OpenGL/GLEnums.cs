@@ -5418,7 +5418,6 @@ namespace OpenTK.Graphics.OpenGL
         Float = ((int)0x1406),
         Double = ((int)0x140A),
         HalfFloat = ((int)0x140B),
-        Bgra = ((int)0x80E1),
     }
 
     public enum ColorTableParameterPName : int
@@ -11928,7 +11927,6 @@ namespace OpenTK.Graphics.OpenGL
         Float = ((int)0x1406),
         Double = ((int)0x140A),
         HalfFloat = ((int)0x140B),
-        Bgra = ((int)0x80E1),
     }
 
     public enum VertexAttribPointerTypeArb : int
