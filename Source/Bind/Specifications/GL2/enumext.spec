@@ -7937,4 +7937,15 @@ GetPName enum:
 # ARB_draw_elements_base_vertex tokens
 # http://www.opengl.org/registry/specs/ARB/draw_elements_base_vertex.txt
 
+# VertexAttribIPointerType (see OpenGL 3.2 reference card)
+# Note: the underscore is there to avoid changing IPointer to Ipointer.
+VertexAttribI_PointerType enum:
+	use DataType BYTE
+	use DataType UNSIGNED_BYTE
+	use DataType SHORT
+	use DataType UNSIGNED_SHORT
+	use DataType INT
+	use DataType UNSIGNED_INT
+
+
 # End (don't remove, or the last token may be removed!)

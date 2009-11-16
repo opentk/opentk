@@ -247,7 +247,7 @@
     </function>
 
     <function name="VertexAttribIPointer" extension="Core">
-      <param name="type"><type>VertexAttribParameter</type></param>
+      <param name="type"><type>VertexAttribIPointerType</type></param>
     </function>
 
     <function name="BeginConditionalRender" extension="Core">
