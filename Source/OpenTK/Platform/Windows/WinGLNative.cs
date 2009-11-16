@@ -293,8 +293,8 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.MOUSEMOVE:
                     Point point = new Point(
-                                                        (int)(lParam.ToInt32() & 0x0000FFFF),
-                                                        (int)(lParam.ToInt32() & 0xFFFF0000) >> 16);
+                        (short)((uint)lParam.ToInt32() & 0x0000FFFF),
+                        (short)(((uint)lParam.ToInt32() & 0xFFFF0000) >> 16));
                     mouse.Position = point;
                     {
                         if (!ClientRectangle.Contains(point))
