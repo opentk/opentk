@@ -195,16 +195,16 @@ namespace Examples.Tests
 
         #region Keyboards
 
-        delegate void ControlLogKeyboard(GameWindow input_window, InputLogger control, OpenTK.Input.KeyboardDevice sender, Key key);
+        delegate void ControlLogKeyboard(GameWindow input_window, InputLogger control, OpenTK.Input.KeyboardDevice sender, KeyboardKeyEventArgs e);
         ControlLogKeyboard ControlLogKeyboardDown =
-            delegate(GameWindow input_window, InputLogger control, KeyboardDevice sender, Key key)
+            delegate(GameWindow input_window, InputLogger control, KeyboardDevice sender, KeyboardKeyEventArgs e)
             {
-                control.keyboardListBoxes[sender.DeviceID].Items.Add(key);
+                control.keyboardListBoxes[sender.DeviceID].Items.Add(e.Key);
             };
         ControlLogKeyboard ControlLogKeyboardUp =
-            delegate(GameWindow input_window, InputLogger control, KeyboardDevice sender, Key key)
+            delegate(GameWindow input_window, InputLogger control, KeyboardDevice sender, KeyboardKeyEventArgs e)
             {
-                control.keyboardListBoxes[sender.DeviceID].Items.Remove(key);
+                control.keyboardListBoxes[sender.DeviceID].Items.Remove(e.Key);
             };
 
         #endregion
