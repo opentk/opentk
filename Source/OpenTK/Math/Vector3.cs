@@ -837,9 +837,9 @@ namespace OpenTK
         /// <returns>The cross product of the two inputs</returns>
         public static Vector3 Cross(Vector3 left, Vector3 right)
         {
-            return new Vector3(left.Y * right.Z - left.Z * right.Y,
-                               left.Z * right.X - left.X * right.Z,
-                               left.X * right.Y - left.Y * right.X);
+            Vector3 result;
+            Cross(ref left, ref right, out result);
+            return result;
         }
 
         /// <summary>
@@ -851,9 +851,9 @@ namespace OpenTK
         /// <param name="result">The cross product of the two inputs</param>
         public static void Cross(ref Vector3 left, ref Vector3 right, out Vector3 result)
         {
-            result.X = left.Y * right.Z - left.Z * right.Y;
-            result.Y = left.Z * right.X - left.X * right.Z;
-            result.Z = left.X * right.Y - left.Y * right.X;
+            result = new Vector3(left.Y * right.Z - left.Z * right.Y,
+                left.Z * right.X - left.X * right.Z,
+                left.X * right.Y - left.Y * right.X);
         }
 
         #endregion
@@ -1115,14 +1115,15 @@ namespace OpenTK
         /// <param name="result">The result of the operation.</param>
         public static void Transform(ref Vector3 vec, ref Quaternion quat, out Vector3 result)
         {
-            Quaternion v = new Quaternion(vec.X, vec.Y, vec.Z,  0);
-            Quaternion i;
-            Quaternion t;
-            Quaternion.Invert(ref quat, out i);
-            t = i * v;
-            v = t * quat;
-
-            result = new Vector3(v.X, v.Y, v.Z);
+            // Since vec.W == 0, we can optimize quat * vec * quat^-1 as follows:
+            // vec + 2.0 * cross(quat.xyz, cross(quat.xyz, vec) + quat.w * vec)
+            Vector3 xyz = quat.Xyz, temp, temp2;
+            Vector3.Cross(ref xyz, ref vec, out temp);
+            Vector3.Multiply(ref vec, quat.W, out temp2);
+            Vector3.Add(ref temp, ref temp2, out temp);
+            Vector3.Cross(ref xyz, ref temp, out temp);
+            Vector3.Multiply(ref temp, 2, out temp);
+            Vector3.Add(ref vec, ref temp, out result);
         }
 
         /// <summary>Transform a Vector3 by the given Matrix, and project the resulting Vector4 back to a Vector3</summary>

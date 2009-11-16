@@ -11,6 +11,8 @@ using System;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Drawing;
+using EventTime = System.Double;
+
 
 namespace OpenTK.Platform.MacOS.Carbon
 {
@@ -120,6 +122,13 @@ namespace OpenTK.Platform.MacOS.Carbon
     #endregion
 
     #region --- Types defined in CarbonEvents.h ---
+
+	enum EventAttributes : uint
+	{
+		kEventAttributeNone = 0,
+		kEventAttributeUserEvent = (1 << 0),
+		kEventAttributeMonitored = 1 << 3,
+	}
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct EventTypeSpec
@@ -238,6 +247,8 @@ namespace OpenTK.Platform.MacOS.Carbon
 
     internal enum EventParamName : int 
     {
+		WindowRef = 0x77696e64,           // typeWindowRef,
+
         // Mouse Events
         MouseLocation = 0x6d6c6f63,       // typeHIPoint
         WindowMouseLocation = 0x776d6f75, // typeHIPoint
@@ -255,6 +266,8 @@ namespace OpenTK.Platform.MacOS.Carbon
     }
     internal enum EventParamType : int
     {
+		typeWindowRef = 0x77696e64,           
+
         typeMouseButton = 0x6d62746e,
         typeMouseWheelAxis = 0x6d776178,
         typeHIPoint = 0x68697074,
@@ -388,14 +401,29 @@ namespace OpenTK.Platform.MacOS.Carbon
     };
 
     #endregion
+	#region --- Process Manager ---
 
-    enum HICoordinateSpace 
+	enum ProcessApplicationTransformState : int
+	{
+		kProcessTransformToForegroundApplication = 1,
+	}
+
+	struct ProcessSerialNumber
+	{
+		public ulong high;
+		public ulong low;
+	}
+
+	#endregion
+
+
+	enum HICoordinateSpace 
     {
         _72DPIGlobal      = 1,
         ScreenPixel      = 2,
         Window           = 3,
         View             = 4
-};
+    };
 
     #region --- Carbon API Methods ---
 
@@ -488,6 +516,12 @@ namespace OpenTK.Platform.MacOS.Carbon
         [DllImport(carbon)]
         static extern void ReleaseEvent(IntPtr theEvent);
 
+		internal static void SendEvent(IntPtr theEvent)
+		{
+			IntPtr theTarget = GetEventDispatcherTarget();
+			SendEventToEventTarget(theEvent, theTarget);
+		}
+
         // Processes events in the queue and then returns.
         internal static void ProcessEvents()
         {
@@ -558,6 +592,26 @@ namespace OpenTK.Platform.MacOS.Carbon
         #endregion
         #region --- Getting Event Parameters ---
 
+		[DllImport(carbon,EntryPoint="CreateEvent")]
+		static extern OSStatus _CreateEvent( IntPtr inAllocator,
+			EventClass inClassID, UInt32 kind, EventTime when,
+			EventAttributes flags,out IntPtr outEvent);
+
+		internal static IntPtr CreateWindowEvent(WindowEventKind kind)
+		{
+			IntPtr retval;
+
+			OSStatus stat = _CreateEvent(IntPtr.Zero, EventClass.Window, (uint)kind, 
+				0, EventAttributes.kEventAttributeNone, out retval);
+
+			if (stat != OSStatus.NoError)
+			{
+				throw new MacOSException(stat);
+			}
+
+			return retval;
+		}
+
         [DllImport(carbon)]
         static extern OSStatus GetEventParameter(
             IntPtr inEvent, EventParamName inName, EventParamType inDesiredType,
@@ -626,6 +680,25 @@ namespace OpenTK.Platform.MacOS.Carbon
 
             return (MouseButton)button;
         }
+		static internal int GetEventMouseWheelDelta(IntPtr inEvent)
+		{
+			int delta;
+
+			unsafe
+			{
+				int* d = &delta;
+
+				OSStatus result = API.GetEventParameter(inEvent,
+					 EventParamName.MouseWheelDelta, EventParamType.typeSInt32,
+					 IntPtr.Zero, (uint)sizeof(int), IntPtr.Zero, (IntPtr)d);
+
+				if (result != OSStatus.NoError)
+					throw new MacOSException(result);
+			}
+
+			return delta;
+		}
+
         static internal OSStatus GetEventWindowMouseLocation(IntPtr inEvent, out HIPoint pt)
         {
             HIPoint point;
@@ -645,6 +718,24 @@ namespace OpenTK.Platform.MacOS.Carbon
             }
 
         }
+
+		static internal OSStatus GetEventWindowRef(IntPtr inEvent, out IntPtr windowRef)
+		{
+			IntPtr retval;
+
+			unsafe
+			{
+				IntPtr* parm = &retval;
+				OSStatus result = API.GetEventParameter(inEvent,
+					EventParamName.WindowRef, EventParamType.typeWindowRef, IntPtr.Zero,
+					(uint)sizeof(IntPtr), IntPtr.Zero, (IntPtr)parm);
+
+				windowRef = retval;
+
+				return result;
+			}
+		}
+
         static internal OSStatus GetEventMouseLocation(IntPtr inEvent, out HIPoint pt)
         {
             HIPoint point;
@@ -756,8 +847,32 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal static extern void DisposeEventHandlerUPP(IntPtr userUPP);
 
         #endregion
+		#region --- Process Manager ---
 
-        [DllImport(carbon)]
+		[DllImport(carbon)]
+		internal static extern int TransformProcessType(ref Carbon.ProcessSerialNumber psn, ProcessApplicationTransformState type);
+		[DllImport(carbon)]
+		internal static extern int GetCurrentProcess(ref Carbon.ProcessSerialNumber psn);
+		[DllImport(carbon)]
+		internal static extern int SetFrontProcess(ref Carbon.ProcessSerialNumber psn);
+
+		#endregion
+		#region --- Setting Dock Tile ---
+
+		[DllImport(carbon)]
+		internal extern static IntPtr CGColorSpaceCreateDeviceRGB();
+		[DllImport(carbon)]
+		internal extern static IntPtr CGDataProviderCreateWithData(IntPtr info, IntPtr[] data, int size, IntPtr releasefunc);
+		[DllImport(carbon)]
+		internal extern static IntPtr CGImageCreate(int width, int height, int bitsPerComponent, int bitsPerPixel, int bytesPerRow, IntPtr colorspace, uint bitmapInfo, IntPtr provider, IntPtr decode, int shouldInterpolate, int intent);
+		[DllImport(carbon)]
+		internal extern static void SetApplicationDockTileImage(IntPtr imageRef);
+		[DllImport(carbon)]
+		internal extern static void RestoreApplicationDockTileImage();
+
+		#endregion
+
+		[DllImport(carbon)]
         static extern IntPtr GetControlBounds(IntPtr control, out Rect bounds);
 
         internal static Rect GetControlBounds(IntPtr control)

@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -43,11 +43,12 @@ namespace OpenTK
     /// A blittable value type is a struct that only references other value types recursively,
     /// which allows it to be passed to unmanaged code directly.
     /// </remarks>
-    public static class BlittableValueType<T> where T : struct
+    public static class BlittableValueType<T>
     {
         #region Fields
 
         static readonly Type Type;
+        static readonly int stride;
 
         #endregion
 
@@ -56,6 +57,12 @@ namespace OpenTK
         static BlittableValueType()
         {
             Type = typeof(T);
+            if (Type.IsValueType)
+            {
+                // Does this support generic types? On Mono 2.4.3 it does
+                // http://msdn.microsoft.com/en-us/library/5s4920fa.aspx
+                stride = Marshal.SizeOf(typeof(T));
+            }
         }
 
         #endregion
@@ -65,7 +72,10 @@ namespace OpenTK
         /// <summary>
         /// Gets the size of the type in bytes.
         /// </summary>
-        public static readonly int Stride = Marshal.SizeOf(typeof(T));
+        /// <remarks>
+        /// This property returns 0 for non-blittable types.
+        /// </remarks>
+        public static int Stride { get { return stride; } }
 
         #region Check
 
@@ -102,6 +112,9 @@ namespace OpenTK
             //Debug.Print("Checking type {0} (size: {1} bytes).", type.Name, Marshal.SizeOf(type));
             if (type.IsPrimitive)
                 return true;
+
+            if (!type.IsValueType)
+                return false;
 
             FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             Debug.Indent();
@@ -151,7 +164,7 @@ namespace OpenTK
         /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
-        public static bool Check<T>(T type) where T : struct
+        public static bool Check<T>(T type)
         {
             return BlittableValueType<T>.Check();
         }
@@ -160,7 +173,7 @@ namespace OpenTK
         /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
-        public static bool Check<T>(T[] type) where T : struct
+        public static bool Check<T>(T[] type)
         {
             return BlittableValueType<T>.Check();
         }
@@ -169,7 +182,7 @@ namespace OpenTK
         /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
-        public static bool Check<T>(T[,] type) where T : struct
+        public static bool Check<T>(T[,] type)
         {
             return BlittableValueType<T>.Check();
         }
@@ -178,7 +191,7 @@ namespace OpenTK
         /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
-        public static bool Check<T>(T[, ,] type) where T : struct
+        public static bool Check<T>(T[, ,] type)
         {
             return BlittableValueType<T>.Check();
         }
@@ -188,14 +201,14 @@ namespace OpenTK
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
         [CLSCompliant(false)]
-        public static bool Check<T>(T[][] type) where T : struct
+        public static bool Check<T>(T[][] type)
         {
             return BlittableValueType<T>.Check();
         }
 
         #endregion
 
-        #region From
+        #region StrideOf
 
         /// <summary>
         /// Returns the size of the specified value type in bytes.
@@ -205,7 +218,6 @@ namespace OpenTK
         /// <returns>An integer, specifying the size of the type in bytes.</returns>
         /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
         public static int StrideOf<T>(T type)
-            where T : struct
         {
             if (!Check(type))
                 throw new ArgumentException("type");
@@ -221,7 +233,6 @@ namespace OpenTK
         /// <returns>An integer, specifying the size of the type in bytes.</returns>
         /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
         public static int StrideOf<T>(T[] type)
-            where T : struct
         {
             if (!Check(type))
                 throw new ArgumentException("type");
@@ -237,7 +248,6 @@ namespace OpenTK
         /// <returns>An integer, specifying the size of the type in bytes.</returns>
         /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
         public static int StrideOf<T>(T[,] type)
-            where T : struct
         {
             if (!Check(type))
                 throw new ArgumentException("type");
@@ -253,7 +263,6 @@ namespace OpenTK
         /// <returns>An integer, specifying the size of the type in bytes.</returns>
         /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
         public static int StrideOf<T>(T[, ,] type)
-            where T : struct
         {
             if (!Check(type))
                 throw new ArgumentException("type");

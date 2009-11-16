@@ -53,25 +53,26 @@ namespace OpenTK
             else if (System.Environment.OSVersion.Platform == PlatformID.Unix ||
                      System.Environment.OSVersion.Platform == (PlatformID)4)
             {
-
-                // Distinguish between Unix and Mac OS X kernels.
-                switch (DetectUnixKernel())
+                // Distinguish between Linux, Mac OS X and other Unix operating systems.
+                string kernel_name = DetectUnixKernel();
+                switch (kernel_name)
                 {
-                case "Unix":
-                    runningOnUnix = true;
-                    break;
-                
-                case "Linux":
-                    runningOnLinux = runningOnUnix = true;
-                    break;
-                
-                case "Darwin":
-                    runningOnMacOS = runningOnUnix = true;
-                    break;
+                    case null:
+                    case "":
+                        throw new PlatformNotSupportedException(
+                            "Unknown platform. Please file a bug report at http://www.opentk.com/node/add/project-issue/opentk");
 
-                default:
-                    throw new PlatformNotSupportedException(
-                            DetectUnixKernel() + ": Unknown Unix platform. Please report this error at http://www.opentk.com.");
+                    case "Linux":
+                        runningOnLinux = runningOnUnix = true;
+                        break;
+
+                    case "Darwin":
+                        runningOnMacOS = runningOnUnix = true;
+                        break;
+
+                    default:
+                        runningOnUnix = true;
+                        break;
                 }
             }
             else
@@ -178,7 +179,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Detects the unix kernel by p/invoking the uname call in libc.
+        /// Detects the unix kernel by p/invoking uname (libc).
         /// </summary>
         /// <returns></returns>
         private static string DetectUnixKernel()

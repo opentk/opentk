@@ -55,9 +55,15 @@ namespace Examples.WinForms
         {
             Application.Idle -= StartAsync;
 
-            // Create a context in order to load all GL methods (GL.LoadAll() is called automatically.)
-            using (GLControl control = new GLControl(GraphicsMode.Default, 3, 0, GraphicsContextFlags.Default))
+            // Create a context to load all GL entry points.
+            // The loading part is handled automatically by OpenTK.
+            using (INativeWindow window = new OpenTK.NativeWindow())
+            using (IGraphicsContext context = new GraphicsContext(GraphicsMode.Default, window.WindowInfo, 3, 0, GraphicsContextFlags.Default))
             {
+                window.ProcessEvents();
+                context.MakeCurrent(window.WindowInfo);
+                (context as IGraphicsContextInternal).LoadAll();
+
                 TextBoxVendor.Text = GL.GetString(StringName.Vendor);
                 TextBoxRenderer.Text = GL.GetString(StringName.Renderer);
                 TextBoxVersion.Text = GL.GetString(StringName.Version);
@@ -73,11 +79,14 @@ namespace Examples.WinForms
 
             foreach (Function f in LoadFunctionsFromType(typeof(GL)))
             {
+                FieldInfo @delegate = delegates.GetField(f.EntryPoint,
+                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+                
                 // Only show a function as supported when all relevant overloads are supported.
                 if (!functions.ContainsKey(f))
-                    functions.Add(f, (bool)delegates.GetField(f.EntryPoint).GetValue(null));
+                    functions.Add(f, @delegate != null && @delegate.GetValue(null) != null);
                 else
-                    functions[f] &= (bool)delegates.GetField(f.EntryPoint).GetValue(null);
+                    functions[f] &= @delegate != null && @delegate.GetValue(null) != null;
             }
 
             // Count supported functions using the delegates directly.

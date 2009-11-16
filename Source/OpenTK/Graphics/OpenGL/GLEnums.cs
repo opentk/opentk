@@ -51,6 +51,17 @@ namespace OpenTK.Graphics.OpenGL
         FloatMat4 = ((int)0x8B5C),
     }
 
+    public enum ActiveUniformBlockParameter : int
+    {
+        UniformBlockBinding = ((int)0x8A3F),
+        UniformBlockDataSize = ((int)0x8A40),
+        UniformBlockNameLength = ((int)0x8A41),
+        UniformBlockActiveUniforms = ((int)0x8A42),
+        UniformBlockActiveUniformIndices = ((int)0x8A43),
+        UniformBlockReferencedByVertexShader = ((int)0x8A44),
+        UniformBlockReferencedByFragmentShader = ((int)0x8A46),
+    }
+
     public enum ActiveUniformType : int
     {
         Int = ((int)0x1404),
@@ -74,6 +85,8 @@ namespace OpenTK.Graphics.OpenGL
         SamplerCube = ((int)0x8B60),
         Sampler1DShadow = ((int)0x8B61),
         Sampler2DShadow = ((int)0x8B62),
+        Sampler2DRect = ((int)0x8B63),
+        Sampler2DRectShadow = ((int)0x8B64),
         FloatMat2x3 = ((int)0x8B65),
         FloatMat2x4 = ((int)0x8B66),
         FloatMat3x2 = ((int)0x8B67),
@@ -82,6 +95,7 @@ namespace OpenTK.Graphics.OpenGL
         FloatMat4x3 = ((int)0x8B6A),
         Sampler1DArray = ((int)0x8DC0),
         Sampler2DArray = ((int)0x8DC1),
+        SamplerBuffer = ((int)0x8DC2),
         Sampler1DArrayShadow = ((int)0x8DC3),
         Sampler2DArrayShadow = ((int)0x8DC4),
         SamplerCubeShadow = ((int)0x8DC5),
@@ -92,14 +106,18 @@ namespace OpenTK.Graphics.OpenGL
         IntSampler2D = ((int)0x8DCA),
         IntSampler3D = ((int)0x8DCB),
         IntSamplerCube = ((int)0x8DCC),
+        IntSampler2DRect = ((int)0x8DCD),
         IntSampler1DArray = ((int)0x8DCE),
         IntSampler2DArray = ((int)0x8DCF),
+        IntSamplerBuffer = ((int)0x8DD0),
         UnsignedIntSampler1D = ((int)0x8DD1),
         UnsignedIntSampler2D = ((int)0x8DD2),
         UnsignedIntSampler3D = ((int)0x8DD3),
         UnsignedIntSamplerCube = ((int)0x8DD4),
+        UnsignedIntSampler2DRect = ((int)0x8DD5),
         UnsignedIntSampler1DArray = ((int)0x8DD6),
         UnsignedIntSampler2DArray = ((int)0x8DD7),
+        UnsignedIntSamplerBuffer = ((int)0x8DD8),
         Sampler2DMultisample = ((int)0x9108),
         IntSampler2DMultisample = ((int)0x9109),
         UnsignedIntSampler2DMultisample = ((int)0x910A),
@@ -5418,7 +5436,6 @@ namespace OpenTK.Graphics.OpenGL
         Float = ((int)0x1406),
         Double = ((int)0x140A),
         HalfFloat = ((int)0x140B),
-        Bgra = ((int)0x80E1),
     }
 
     public enum ColorTableParameterPName : int
@@ -7016,6 +7033,10 @@ namespace OpenTK.Graphics.OpenGL
         Texture2D = ((int)0x0DE1),
         Texture3D = ((int)0x806F),
         TextureCubeMap = ((int)0x8513),
+        Texture1DArray = ((int)0x8C18),
+        Texture2DArray = ((int)0x8C1A),
+        Texture2DMultisample = ((int)0x9100),
+        Texture2DMultisampleArray = ((int)0x9102),
     }
 
     public enum GetColorTableParameterPName : int
@@ -7566,6 +7587,8 @@ namespace OpenTK.Graphics.OpenGL
         MaxRenderbufferSize = ((int)0x84E8),
         MaxRenderbufferSizeExt = ((int)0x84E8),
         TextureCompressionHint = ((int)0x84EF),
+        TextureBindingRectangle = ((int)0x84F6),
+        MaxRectangleTextureSize = ((int)0x84F8),
         MaxTextureLodBias = ((int)0x84FD),
         TextureCubeMap = ((int)0x8513),
         TextureBindingCubeMap = ((int)0x8514),
@@ -10440,8 +10463,10 @@ namespace OpenTK.Graphics.OpenGL
         TextureMaxLod = ((int)0x813B),
         TextureBaseLevel = ((int)0x813C),
         TextureMaxLevel = ((int)0x813D),
+        TextureRectangle = ((int)0x84F5),
         TextureRectangleArb = ((int)0x84F5),
         TextureRectangleNv = ((int)0x84F5),
+        ProxyTextureRectangle = ((int)0x84F7),
         TextureCubeMap = ((int)0x8513),
         TextureBindingCubeMap = ((int)0x8514),
         TextureCubeMapPositiveX = ((int)0x8515),
@@ -10457,7 +10482,9 @@ namespace OpenTK.Graphics.OpenGL
         ProxyTexture2DArray = ((int)0x8C1B),
         TextureBuffer = ((int)0x8C2A),
         Texture2DMultisample = ((int)0x9100),
+        ProxyTexture2DMultisample = ((int)0x9101),
         Texture2DMultisampleArray = ((int)0x9102),
+        ProxyTexture2DMultisampleArray = ((int)0x9103),
     }
 
     public enum TextureTargetMultisample : int
@@ -11879,6 +11906,16 @@ namespace OpenTK.Graphics.OpenGL
         TimeoutIgnored = unchecked((int)0xFFFFFFFFFFFFFFFF),
     }
 
+    public enum VertexAttribIPointerType : int
+    {
+        Byte = ((int)0x1400),
+        UnsignedByte = ((int)0x1401),
+        Short = ((int)0x1402),
+        UnsignedShort = ((int)0x1403),
+        Int = ((int)0x1404),
+        UnsignedInt = ((int)0x1405),
+    }
+
     public enum VertexAttribParameter : int
     {
         ArrayEnabled = ((int)0x8622),
@@ -11922,7 +11959,6 @@ namespace OpenTK.Graphics.OpenGL
         Float = ((int)0x1406),
         Double = ((int)0x140A),
         HalfFloat = ((int)0x140B),
-        Bgra = ((int)0x80E1),
     }
 
     public enum VertexAttribPointerTypeArb : int

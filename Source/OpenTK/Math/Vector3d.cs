@@ -836,9 +836,9 @@ namespace OpenTK
         /// <returns>The cross product of the two inputs</returns>
         public static Vector3d Cross(Vector3d left, Vector3d right)
         {
-            return new Vector3d(left.Y * right.Z - left.Z * right.Y,
-                                left.Z * right.X - left.X * right.Z,
-                                left.X * right.Y - left.Y * right.X);
+            Vector3d result;
+            Cross(ref left, ref right, out result);
+            return result;
         }
 
         /// <summary>
@@ -850,9 +850,9 @@ namespace OpenTK
         /// <param name="result">The cross product of the two inputs</param>
         public static void Cross(ref Vector3d left, ref Vector3d right, out Vector3d result)
         {
-            result.X = left.Y * right.Z - left.Z * right.Y;
-            result.Y = left.Z * right.X - left.X * right.Z;
-            result.Z = left.X * right.Y - left.Y * right.X;
+            result = new Vector3d(left.Y * right.Z - left.Z * right.Y,
+                left.Z * right.X - left.X * right.Z,
+                left.X * right.Y - left.Y * right.X);
         }
 
         #endregion
@@ -1111,14 +1111,15 @@ namespace OpenTK
         /// <param name="result">The result of the operation.</param>
         public static void Transform(ref Vector3d vec, ref Quaterniond quat, out Vector3d result)
         {
-            Quaterniond v = new Quaterniond(vec.X, vec.Y, vec.Z, 0);
-            Quaterniond i;
-            Quaterniond t;
-            Quaterniond.Invert(ref quat, out i);
-            t = i * v;
-            v = t * quat;
-
-            result = new Vector3d(v.X, v.Y, v.Z);
+            // Since vec.W == 0, we can optimize quat * vec * quat^-1 as follows:
+            // vec + 2.0 * cross(quat.xyz, cross(quat.xyz, vec) + quat.w * vec)
+            Vector3d xyz = quat.Xyz, temp, temp2;
+            Vector3d.Cross(ref xyz, ref vec, out temp);
+            Vector3d.Multiply(ref vec, quat.W, out temp2);
+            Vector3d.Add(ref temp, ref temp2, out temp);
+            Vector3d.Cross(ref xyz, ref temp, out temp);
+            Vector3d.Multiply(ref temp, 2, out temp);
+            Vector3d.Add(ref vec, ref temp, out result);
         }
 
         /// <summary>
