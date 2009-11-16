@@ -7016,6 +7016,10 @@ namespace OpenTK.Graphics.OpenGL
         Texture2D = ((int)0x0DE1),
         Texture3D = ((int)0x806F),
         TextureCubeMap = ((int)0x8513),
+        Texture1DArray = ((int)0x8C18),
+        Texture2DArray = ((int)0x8C1A),
+        Texture2DMultisample = ((int)0x9100),
+        Texture2DMultisampleArray = ((int)0x9102),
     }
 
     public enum GetColorTableParameterPName : int
@@ -10457,7 +10461,9 @@ namespace OpenTK.Graphics.OpenGL
         ProxyTexture2DArray = ((int)0x8C1B),
         TextureBuffer = ((int)0x8C2A),
         Texture2DMultisample = ((int)0x9100),
+        ProxyTexture2DMultisample = ((int)0x9101),
         Texture2DMultisampleArray = ((int)0x9102),
+        ProxyTexture2DMultisampleArray = ((int)0x9103),
     }
 
     public enum TextureTargetMultisample : int

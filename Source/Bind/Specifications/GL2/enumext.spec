@@ -7721,7 +7721,11 @@ BufferPointerNameARB enum:
 
 GenerateMipmapTarget enum:
 	use TextureTarget TEXTURE_1D
+	use TextureTarget TEXTURE_1D_ARRAY
 	use TextureTarget TEXTURE_2D
+	use TextureTarget TEXTURE_2D_ARRAY
+	use TextureTarget TEXTURE_2D_MULTISAMPLE
+	use TextureTarget TEXTURE_2D_MULTISAMPLE_ARRAY
 	use TextureTarget TEXTURE_3D
 	use TextureTarget TEXTURE_CUBE_MAP
 
@@ -7839,7 +7843,9 @@ GetTextureParameter enum:
 
 TextureTarget enum:
 	TEXTURE_2D_MULTISAMPLE = 0x9100
+	PROXY_TEXTURE_2D_MULTISAMPLE = 0x9101
 	TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
+	PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9103
 	
 ActiveUniformType enum:
 	SAMPLER_2D_MULTISAMPLE = 0x9108
