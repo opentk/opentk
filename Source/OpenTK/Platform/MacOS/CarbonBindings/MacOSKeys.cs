@@ -121,7 +121,4 @@ namespace OpenTK.Platform.MacOS.Carbon
         Command  = 0x0100,  // Open-Apple  - Windows key 
         Option   = 0x0800,  // Option key is same position as the alt key on non-mac keyboards.
     }
-    partial class API
-    {
-    }
 }

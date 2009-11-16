@@ -293,8 +293,8 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.MOUSEMOVE:
                     Point point = new Point(
-                                                        (int)(lParam.ToInt32() & 0x0000FFFF),
-                                                        (int)(lParam.ToInt32() & 0xFFFF0000) >> 16);
+                        (short)((uint)lParam.ToInt32() & 0x0000FFFF),
+                        (short)(((uint)lParam.ToInt32() & 0xFFFF0000) >> 16));
                     mouse.Position = point;
                     {
                         if (!ClientRectangle.Contains(point))
@@ -316,7 +316,7 @@ namespace OpenTK.Platform.Windows
                 case WindowMessage.MOUSEWHEEL:
                     // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
                     // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
-                    mouse.Wheel += (int)((long)wParam << 32 >> 48) / 120;
+                    mouse.WheelPrecise += ((long)wParam << 32 >> 48) / 120.0f;
                     break;
 
                 case WindowMessage.LBUTTONDOWN:
