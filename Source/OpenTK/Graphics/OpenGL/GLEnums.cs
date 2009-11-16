@@ -11884,6 +11884,16 @@ namespace OpenTK.Graphics.OpenGL
         TimeoutIgnored = unchecked((int)0xFFFFFFFFFFFFFFFF),
     }
 
+    public enum VertexAttribIPointerType : int
+    {
+        Byte = ((int)0x1400),
+        UnsignedByte = ((int)0x1401),
+        Short = ((int)0x1402),
+        UnsignedShort = ((int)0x1403),
+        Int = ((int)0x1404),
+        UnsignedInt = ((int)0x1405),
+    }
+
     public enum VertexAttribParameter : int
     {
         ArrayEnabled = ((int)0x8622),
