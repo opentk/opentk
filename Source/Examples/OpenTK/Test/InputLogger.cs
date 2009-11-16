@@ -188,7 +188,7 @@ namespace Examples.Tests
         ControlLogMouseWheel ControlLogMouseWheelChanges =
             delegate(GameWindow input_window, InputLogger control, object sender, MouseWheelEventArgs e)
             {
-                control.MouseWheelText.Text = e.Value.ToString();
+                control.MouseWheelText.Text = e.ValuePrecise.ToString("F2");
             };
 
         #endregion
