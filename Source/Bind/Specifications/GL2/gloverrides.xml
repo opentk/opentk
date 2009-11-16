@@ -269,6 +269,10 @@
       <param name="internalformat"><type>SizedInternalFormat</type></param>
     </function>
     
+    <function name="GetActiveUniformBlock" extension="Core">
+      <param name="pname"><type>ActiveUniformBlockParameter</type></param>
+    </function>
+    
     <!-- Version 3.2 -->
     
     <function name="TexImage2DMultisample" extension="Core">

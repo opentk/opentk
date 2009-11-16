@@ -51,6 +51,17 @@ namespace OpenTK.Graphics.OpenGL
         FloatMat4 = ((int)0x8B5C),
     }
 
+    public enum ActiveUniformBlockParameter : int
+    {
+        UniformBlockBinding = ((int)0x8A3F),
+        UniformBlockDataSize = ((int)0x8A40),
+        UniformBlockNameLength = ((int)0x8A41),
+        UniformBlockActiveUniforms = ((int)0x8A42),
+        UniformBlockActiveUniformIndices = ((int)0x8A43),
+        UniformBlockReferencedByVertexShader = ((int)0x8A44),
+        UniformBlockReferencedByFragmentShader = ((int)0x8A46),
+    }
+
     public enum ActiveUniformType : int
     {
         Int = ((int)0x1404),
