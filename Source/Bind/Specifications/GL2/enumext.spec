@@ -7906,12 +7906,14 @@ GetPName enum:
 
 # ARB_vertex_array_bgra tokens
 # http://www.opengl.org/registry/specs/ARB/vertex_array_bgra.txt
+# The following tokens are incorrect. They are valid for the <size>
+# parameteter, not the <type> parameter - but <size> is not an enum!
+# (Maybe something changed between the ARB spec and its core version?)
+#ColorPointerType enum:
+#	BGRA = 0x80E1
 
-ColorPointerType enum:
-	BGRA = 0x80E1
-
-VertexAttribPointerType enum:
-	BGRA = 0x80E1
+#VertexAttribPointerType enum:
+#	BGRA = 0x80E1
 
 # ARB_seamless_cube_map tokens
 # http://www.opengl.org/registry/specs/ARB/seamless_cube_map.txt
