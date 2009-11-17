@@ -697,39 +697,53 @@ namespace OpenTK.Graphics.OpenGL
 
         #region [Vertex|Normal|Index|Color|FogCoord|VertexAttrib]Pointer
 
-        public static void VertexPointer(int size, VertexPointerType type, int stride, int pointer)
+        public static void VertexPointer(int size, VertexPointerType type, int stride, int offset)
         {
-            VertexPointer(size, type, stride, (IntPtr)pointer);
+            VertexPointer(size, type, stride, (IntPtr)offset);
         }
 
-        public static void NormalPointer(int size, NormalPointerType type, int stride, int pointer)
+        public static void NormalPointer(NormalPointerType type, int stride, int offset)
         {
-            NormalPointer(type, stride, (IntPtr)pointer);
+            NormalPointer(type, stride, (IntPtr)offset);
         }
 
-        public static void IndexPointer(IndexPointerType type, int stride, int pointer)
+        public static void IndexPointer(IndexPointerType type, int stride, int offset)
         {
-            IndexPointer(type, stride, (IntPtr)pointer);
+            IndexPointer(type, stride, (IntPtr)offset);
         }
 
-        public static void ColorPointer(int size, ColorPointerType type, int stride, int pointer)
+        public static void ColorPointer(int size, ColorPointerType type, int stride, int offset)
         {
-            ColorPointer(size, type, stride, (IntPtr)pointer);
+            ColorPointer(size, type, stride, (IntPtr)offset);
         }
 
-        public static void FogCoordPointer(int size, FogPointerType type, int stride, int pointer)
+        public static void FogCoordPointer(FogPointerType type, int stride, int offset)
         {
-            FogCoordPointer(type, stride, (IntPtr)pointer);
+            FogCoordPointer(type, stride, (IntPtr)offset);
         }
 
-        public static void EdgeFlagPointer(int stride, int pointer)
+        public static void EdgeFlagPointer(int stride, int offset)
         {
-            EdgeFlagPointer(stride, (IntPtr)pointer);
+            EdgeFlagPointer(stride, (IntPtr)offset);
         }
 
-        public static void VertexAttribPointer(int index, int size, VertexAttribPointerType type, bool normalized, int stride, int pointer)
+        public static void TexCoordPointer(int size, TexCoordPointerType type, int stride, int offset)
         {
-            VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)pointer);
+            TexCoordPointer(size, type, stride, offset);
+        }
+
+        public static void VertexAttribPointer(int index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)
+        {
+            VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);
+        }
+
+        #endregion
+
+        #region DrawElements
+
+        public static void DrawElements(BeginMode mode, int count, DrawElementsType type, int offset)
+        {
+            DrawElements(mode, count, type, new IntPtr(offset));
         }
 
         #endregion
