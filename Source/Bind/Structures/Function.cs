@@ -608,9 +608,9 @@ namespace Bind.Structures
         {
             int ret = Name.CompareTo(other.Name);
             if (ret == 0)
-                ret = Parameters.ToString().CompareTo(other.Parameters.ToString());
+                ret = Parameters.CompareTo(other.Parameters);
             if (ret == 0)
-                ret = ReturnType.ToString().CompareTo(other.ReturnType.ToString());
+                ret = ReturnType.CompareTo(other.ReturnType);
             return ret;
         }
 

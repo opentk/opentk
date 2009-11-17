@@ -15,7 +15,7 @@ namespace Bind.Structures
     /// <summary>
     /// Represents a single parameter of an opengl function.
     /// </summary>
-    public class Parameter : Type
+    public class Parameter : Type, IComparable<Parameter>
     {
         string cache;
         bool rebuild;
@@ -350,12 +350,24 @@ namespace Bind.Structures
         }
         
         #endregion
+
+        #region IComparable<Parameter> Members
+
+        public int CompareTo(Parameter other)
+        {
+            int result = base.CompareTo(other);
+            if (result == 0)
+                result = Name.CompareTo(other.Name);
+            return result;
+        }
+
+        #endregion
     }
 
     /// <summary>
     /// Holds the parameter list of an opengl function.
     /// </summary>
-    public class ParameterCollection : List<Parameter>
+    public class ParameterCollection : List<Parameter>, IComparable<ParameterCollection>
     {
         string cache = String.Empty;
         string callStringCache = String.Empty;
@@ -642,5 +654,31 @@ namespace Bind.Structures
                     return true;
             return false;
         }
+
+        #region IComparable<ParameterCollection> Members
+
+        public int CompareTo(ParameterCollection other)
+        {
+            if (Count < other.Count)
+            {
+                return -1;
+            }
+            else if (Count > other.Count)
+            {
+                return 1;
+            }
+            else
+            {
+                for (int i = 0; i < Count; i++)
+                {
+                    int result = this[i].CompareTo(other[i]);
+                    if (result != 0)
+                        return result;
+                }
+                return 0;
+            }
+        }
+
+        #endregion
     }
 }
