@@ -313,6 +313,30 @@ namespace OpenTK.Graphics.ES20
 
         #endregion
 
+        #region VertexAttribPointer
+
+        public static void VertexAttribPointer(int index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)
+        {
+            VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);
+        }
+
+        [CLSCompliant(false)]
+        public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)
+        {
+            VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);
+        }
+
+        #endregion
+
+        #region DrawElements
+
+        public static void DrawElements(BeginMode mode, int count, DrawElementsType type, int offset)
+        {
+            DrawElements(mode, count, type, new IntPtr(offset));
+        }
+
+        #endregion
+
         #region public static int GenTexture()
 
         public static int GenTexture()
