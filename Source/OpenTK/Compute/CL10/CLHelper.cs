@@ -35,10 +35,7 @@ namespace OpenTK.Compute.CL10
     /// <summary>
     /// Provides access to the OpenCL 1.0 flat API.
     /// </summary>
-#if EXPERIMENTAL
-    public
-#endif
-    sealed partial class CL : BindingsBase
+    public sealed partial class CL : BindingsBase
     {
         #region Fields
 
