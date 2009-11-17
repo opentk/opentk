@@ -11,7 +11,7 @@ using System.Xml.XPath;
 
 namespace Bind.Structures
 {
-    public class Type
+    public class Type : IComparable<Type>
     {
         internal static Dictionary<string, string> GLTypes;
         internal static Dictionary<string, string> CSTypes;
@@ -458,6 +458,29 @@ namespace Bind.Structures
 
             if (CurrentType == "IntPtr" && String.IsNullOrEmpty(PreviousType))
                 Pointer = 0;
+        }
+
+        #endregion
+
+        #region IComparable<Type> Members
+
+        public int CompareTo(Type other)
+        {
+            // Make sure that Pointer parameters are sorted last to avoid bug [#1098].
+            // The rest of the comparisons are not important, but they are there to
+            // guarantee a stable order between program executions.
+            int result = this.CurrentType.CompareTo(other.CurrentType);
+            if (result == 0)
+                result = Pointer.CompareTo(other.Pointer);
+            if (result == 0)
+                result = Reference.CompareTo(other.Reference);
+            if (result == 0)
+                result = Array.CompareTo(other.Array);
+            if (result == 0)
+                result = CLSCompliant.CompareTo(other.CLSCompliant);
+            if (result == 0)
+                result = ElementCount.CompareTo(other.ElementCount);
+            return result;
         }
 
         #endregion
