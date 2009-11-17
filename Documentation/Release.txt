@@ -1,69 +1,72 @@
-The Open Toolkit 1.0 beta 1
+The Open Toolkit 1.0 beta 2
 
 
 
 [Overview]
 
-This is the first beta release of OpenTK 1.0. Important changes include:
-* Type-safe OpenGL|ES 2.0 bindings.
-* A large number of new examples on picking, shaders, dds textures, constructive solid geometry and multithreading.
-* Improved Mac OS X support.
-* Improved multi-monitor support.
-* Improved multithreading support.
-* A large number of bug- and stability fixes.
-* Improved documentation.
-* Improvements and bugfixes to the build system.
-* Temporary removal of OpenGL|ES 1.0, 1.1 and OpenCL bindings.
+This is the second beta release of OpenTK 1.0. This release a laarge number of issues identified in the first beta. Additionally, it:
+* improves support for Mac OS × (multiple monitors, dock integration, input focus and more).
+* allows OpenTK to run on *BSD, Solaris and other Unix variants.
+* fixes a timing issue that caused UpdateFrame events to be raised up to 50% faster than necessary.
+* adds a number of missing tokens for OpenGL 3.1 and 3.2.
+* fixes mouse movement on windows and adds support for fractional wheel values (available in high-precision mice).
+* fixes and optimizes quaternion-vector transforms.
+* further improves multithreading support on Linux.
+* works around a Visual Studio bug, which caused a number of OpenGL wrappers to disappear from intellisense.
 
-Please visit http://www.opentk.com to report issues or request features.
+Visit http://www.opentk.com for the latest news and information on the Open Toolkit.
 
 
 
 [Resolved issues]
 
-[#550]
-[#552]
-[#622]
-[#1013]
-[#1014]
-[#1015]
-[#1028]
-[#1071]
-[#1142]
-[#1265]
-[#1268]
-[#1274]
-[#1291]
-[#1294]
-[#1300]
-[#1303]
-[#1304]
-[#1307]
-[#1313]
-[#1318]
-[#1333]
-[#1334]
-[#1338]
-[#1339]
-[#1341]
-[#1350]
+[#805]
+[#1098]
+[#1162]
+[#1166]
+[#1216]
+[#1279]
+[#1324]
+[#1354]
+[#1355]
+[#1364]
+[#1367]
+[#1372]
+[#1373]
+[#1376]
+[#1378]
+[#1382]
+[#1386]
+
+Please report any issues you encounter at http://www.opentk.com/node/add/project-issue/opentk
 
 
 
 [Known issues]
 
+* The Mac OS X port needs testing. If you encounter a bug, please report it at http://www.opentk.com/node/add/project-issue/opentk.
+
+* OpenGL 3.1 and 3.2 fucntions may be missing specific tokens. Please report any such issues at http://www.opentk.com/node/add/project-issue/opentk
+
 * Mono 2.2 and 2.4.0 fail to compile OpenTK due to a compiler bug (https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0, 2.4.2+ or use the supplied binaries instead.
-* The example browser is incomplete.
-* The Mac OS X port needs work. If you are interested in helping out, please make a post at http://www.opentk.com/forum/3.
+
+* The example browser is a work-in-progress.
+
 * MonoDevelop fails to sign assemblies (bugs https://bugzilla.novell.com/show_bug.cgi?id=484752 and https://bugzilla.novell.com/show_bug.cgi?id=537063).
-* OpenGL 3.2 methods may be missing specific tokens. Please report any such issues at http://www.opentk.com/node/add/project-issue/opentk
+
 
 
 [API changes]
 
 Please note that binary compatibility is not preserved between beta releases.
 
-If you are upgrading from OpenTK 0.9.9-0 or earlier you can simplify the upgrade process by adding a reference to OpenTK.Compatibility.dll and OpenTK.GLControl.dll (if necessary). OpenTK.Compatibility contains code and APIs that have been deprecated and removed from the core library, as well as code for interoperation with the Tao framework.
+If you are upgrading from OpenTK 0.9.9-0 or earlier you can simplify the upgrade process by adding a reference to OpenTK.Compatibility.dll and OpenTK.GLControl.dll (if necessary). OpenTK.Compatibility contains code and APIs that have been deprecated and removed from the core library and supports applications written against the Tao framework (Tao.OpenGl, Tao.OpenAl and Tao.Platform.Windows.SimpleOpenGlControl).
+
+
+[1.0 beta-2]
+
+1. NormalPointer(..., int) and FogCoordPointer(..., int) overloads no longer specify a 'size' argument.
+Solution: this is the correct signature, the 'size' argument found in previous OpenTK versions was invalid. This bug is unlikely to appear in practice.
 
 
 [1.0 beta-1]

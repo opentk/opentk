@@ -1,9 +1,120 @@
+---------------------------------
+ OpenTK 1.0 beta-1 -> 1.0 beta-2
+---------------------------------
+
+2009-11-17  the_fiddler
+
+	* Removed unused code.
+	* Fixed OnUpdateFrame timing calculation (the previous
+	  implementation could overshoot the target by up to 50%).
+	  Refactored Update-/RenderFrame dispatching into a separate
+	  method.
+	* Updated release notes for 1.0 beta-2 release.
+	* Bumped version numbers for 1.0 beta-2 release.
+	* Added VertexAttribPointer(..., int) and DrawElements(..., int)
+	  overloads.
+	* Fixed NormalPointer and FogCoordPointer parameters. Added missing
+	  TexCoordPointer(..., int) overload. Added DrawElements(..., int)
+	  overload. Renamed the last parameter from pointer to offset, to
+	  clarify its intent. (Fixes isse [#1386]: "Add overloads for
+	  TexCoordPointer and NormalPointer".)
+	* Completely disabled CL10, ES10 and ES11 wrappers. They won't be
+	  in the 1.0 release, we can reduce download size a bit.
+	* Type, Parameter, ParameterCollection and Function classes now
+	  implement IComparable directly (rather than casting to strings
+	  and comparing those). Modified comparison order to place pointer
+	  overloads after reference or array overloads. Fixes issue
+	  [#1098]: "[Bind] Work around VS bug by ensuring pointer
+	  parameters are generated last".
+
+2009-11-16  the_fiddler
+
+	* Added strongly-typed tokens for GetActiveUniformBlock, which was
+	  introduced in OpenGL 3.1. Fixes issue [#1216]: "[GL]
+	  GetActiveUniformBlock* methods take ArbUniformBufferObject
+	  parameters".
+	* Added new OpenGL 3.1 tokens for ARB_texture_rectangle,
+	  ARB_shader_objects and EXT_gpu_shader4. Fixes issue [#1355]:
+	  "TextureRectangle tokens for ActiveUniformType".
+	* VertexAttribIPointer should take the integer subset
+	  (VertexAttribIPointerType) of VertexAttribPointerType. Fixes
+	  issue [#1166]: "VertexAttribIPointer pointer type parameter".
+	* Removed invalid BGRA token from VertexAttribPointerType.
+	* Made unix kernel detection less strict. The program is now
+	  allowed to run even the specific kernel name is unknown. Partly
+	  fixes issue [#1382]: "OpenTK and other Unix OS".
+	* Added new OpenGL 3.x tokens to GenerateMipmap. Fixes issue
+	  [#1162]: "GL.GenerateMipmap argument".
+	* Vector3(d).Cross: do not modify 'result' more than once to ensure
+	  that Cross(ref a, ref b, out a) works correctly. Optimized
+	  vector-quaternion transform. Fixes issue [#1373]: "[Math]
+	  optimize Vector transform by Quaternion".
+	* Changed vector-quaternion transformations to use standard q * v *
+	  q^-1 convention. Fixes issue [#1372]: "[Math] Vector
+	  transformation by Quaternion follows non-standard quaternion math
+	  convention".
+	* Added support for fractional mouse wheel values. Fixes issue
+	  [#1279]: "Mouse wheel does not seem to work".
+	* Renamed "Entry" to "Unmanaged Name" to clarify its purpose.
+	* Make context current on loading thread and be more defensive when
+	  retrieving unmanaged entry points. Resolves issue [#1378]:
+	  "OpenGL Extensions test fails".
+	* Launch samples on a different thread than the launcher. Samples
+	  may install their own message loops and some operating systems do
+	  not behave correctly with multiple message loops on a single
+	  thread.
+	* Preserve the sign of the mouse position. Fixes issue [#1376]:
+	  "mouse position".
+	* Fixed InvalidCastException in keyboard logging delegates.
+
+2009-11-15  kanato
+
+	* MacOS: Fix crash in CheckEnterLeaveEvents if using WinForms too.
+	* MacOS: Correct resizing behavior and correctly implement Bounds,
+	  ClientRectangle, and ClientSize getters and setters.
+	* MacOS: Add proper icon support for the dock.
+	* MacOS: Implement Focused property and FocusChanged event.
+	* MacOS: Implement mouse enter / leave events.
+
+2009-11-14  kanato
+
+	* MacOS: Clean up AglContext destruction code. Implement
+	  INativeWindow.Close method.
+	* MacOS: Several minor fixes: * Implement MouseWheel event *
+	  Implement KeyPress event * Fix generation of MouseMove events *
+	  Fix right mouse button up event
+	* MacOS: Fix bug where application started from the command line
+	  would not be in the foreground and not respond to keyboard
+	  events.
+
+2009-11-12  the_fiddler
+
+	* Do not hook ProcessExit event if an X server is not available.
+	  Should fix issue [#1364]: 1.0 beta-1 throws
+	  TypeInitializationException in OpenTK.Platform.X11.API when
+	  running on windows. Cleaned up stale comments and code.
+
+2009-11-11  the_fiddler
+
+	* * Vector4.cs: * Vector3.cs: * Vector2.cs: * Vector4d.cs: *
+	  Vector3d.cs: * Vector2d.cs: Removed code using C# 3.0 features.
+	* * BlittableValueType.cs: Clarify how BlittableValueType<T>.Stride
+	  works on non-blittable types.
+	* * Source/OpenTK/BlittableValueType.cs: Removed struct constraint.
+	  Sometimes consumers of this class may not be able to use struct
+	  generic constraints - the class is now usable in this case. *
+	  Source/Examples/OpenTK/Test/BlittableValueTypes.cs: Test
+	  BlittableValueType class using several different types.
+
+
 ------------------------------
  OpenTK 0.9.9-3 -> 1.0 beta-1
 ------------------------------
 
 2009-11-10  the_fiddler
 
+	* Added missing license information.
+	* Updated documentation for release.
 	* Disabled CL10, ES10 and ES11 bindings which were not finalized in
 	  time for OpenTK 1.0.
 	* Updated documentation for release.
