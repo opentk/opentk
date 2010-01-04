@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <overrides>
 
   <replace>
@@ -19,6 +19,10 @@
     <enum name="CommandQueueProperties"><name>CommandQueueFlags</name></enum>
 
     <function name="CreateBuffer" extension="Core">
+      <param name="errcode_ret"><type>ErrorCode</type></param>
+    </function>
+    
+    <function name="CreateContext" extension="Core">
       <param name="errcode_ret"><type>ErrorCode</type></param>
     </function>
 
