@@ -50,10 +50,10 @@ namespace OpenTK.Compute.CL10
             internal extern static unsafe IntPtr CreateCommandQueue(IntPtr context, IntPtr device, CommandQueueFlags properties, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateContext", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateContext(ContextProperties* properties, uint num_devices, IntPtr* devices, IntPtr pfn_notify, IntPtr user_data, [OutAttribute] int* errcode_ret);
+            internal extern static unsafe IntPtr CreateContext(IntPtr* properties, uint num_devices, IntPtr* devices, IntPtr pfn_notify, IntPtr user_data, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateContextFromType", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateContextFromType(ContextProperties* properties, DeviceTypeFlags device_type, IntPtr pfn_notify, IntPtr user_data, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal extern static unsafe IntPtr CreateContextFromType(IntPtr* properties, DeviceTypeFlags device_type, IntPtr pfn_notify, IntPtr user_data, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateImage2D", ExactSpelling = true)]
             internal extern static unsafe IntPtr CreateImage2D(IntPtr context, MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, IntPtr host_ptr, [OutAttribute] int* errcode_ret);

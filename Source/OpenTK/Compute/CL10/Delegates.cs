@@ -48,10 +48,10 @@ namespace OpenTK.Compute.CL10
             internal unsafe delegate IntPtr CreateCommandQueue(IntPtr context, IntPtr device, CommandQueueFlags properties, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             internal unsafe static CreateCommandQueue clCreateCommandQueue;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateContext(ContextProperties* properties, uint num_devices, IntPtr* devices, IntPtr pfn_notify, IntPtr user_data, [OutAttribute] int* errcode_ret);
+            internal unsafe delegate IntPtr CreateContext(IntPtr* properties, uint num_devices, IntPtr* devices, IntPtr pfn_notify, IntPtr user_data, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             internal unsafe static CreateContext clCreateContext;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr CreateContextFromType(ContextProperties* properties, DeviceTypeFlags device_type, IntPtr pfn_notify, IntPtr user_data, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal unsafe delegate IntPtr CreateContextFromType(IntPtr* properties, DeviceTypeFlags device_type, IntPtr pfn_notify, IntPtr user_data, [OutAttribute] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             internal unsafe static CreateContextFromType clCreateContextFromType;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate IntPtr CreateImage2D(IntPtr context, MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, IntPtr host_ptr, [OutAttribute] int* errcode_ret);

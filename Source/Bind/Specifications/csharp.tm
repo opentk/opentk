@@ -118,7 +118,7 @@ cl_addressing_mode, AddressingMode
 cl_command_queue_info, CommandQueueInfo
 cl_command_queue_properties, CommandQueueProperties
 cl_context_info, ContextInfo
-cl_context_properties, ContextProperties
+cl_context_properties, IntPtr # ContextProperties
 cl_device_info, DeviceInfo
 cl_device_type, DeviceType
 cl_event_info, EventInfo
