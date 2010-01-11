@@ -647,6 +647,14 @@ namespace OpenTK.Platform.MacOS
             API.SizeWindow(window.WindowRef, width, height, true);
         }
 
+		void SetClientSize(short width, short height)
+		{
+			if (WindowState == WindowState.Fullscreen)
+				return;
+			
+			API.SizeWindow(window.WindowRef, width, height, true);
+		}
+		
         protected void OnResize()
         {
             LoadSize();
@@ -877,21 +885,21 @@ namespace OpenTK.Platform.MacOS
 
         public int Width
         {
-            get { return Bounds.Width; }
-            set { Size = new Size(value, Height); }
+            get { return ClientRectangle.Width; }
+            set { SetClientSize((short)value, (short)Height); }
         }
 
         public int Height
         {
-            get { return Bounds.Height; }
-            set { Size = new Size(Width, value); }
+            get { return ClientRectangle.Height; }
+            set { SetClientSize((short)Width, (short)value); }
         }
 
         public int X
         {
             get
             {
-                return bounds.X;
+                return ClientRectangle.X;
             }
             set
             {
@@ -903,7 +911,7 @@ namespace OpenTK.Platform.MacOS
         {
             get
             {
-                return bounds.Y;
+                return ClientRectangle.Y;
             }
             set
             {
