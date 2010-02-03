@@ -10456,6 +10456,7 @@ namespace OpenTK.Graphics.OpenGL
         TextureMaxClampSSgix = ((int)0x8369),
         TextureMaxClampTSgix = ((int)0x836A),
         TextureMaxClampRSgix = ((int)0x836B),
+        TextureLodBias = ((int)0x8501),
         DepthTextureMode = ((int)0x884B),
         TextureCompareMode = ((int)0x884C),
         TextureCompareFunc = ((int)0x884D),

@@ -7992,5 +7992,9 @@ VertexAttribI_PointerType enum:
 	use DataType INT
 	use DataType UNSIGNED_INT
 
+# See OpenGL 3.2 reference card
+TextureParameterName enum:
+	TEXTURE_LOD_BIAS                = 0x8501
+
 
 # End (don't remove, or the last token may be removed!)
