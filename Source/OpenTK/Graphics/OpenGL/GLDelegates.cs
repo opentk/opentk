@@ -1533,7 +1533,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetActiveUniformName(UInt32 program, UInt32 uniformIndex, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder uniformName);
             internal unsafe static GetActiveUniformName glGetActiveUniformName;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetActiveUniformsiv(UInt32 program, Int32 uniformCount, UInt32* uniformIndices, OpenTK.Graphics.OpenGL.ArbUniformBufferObject pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetActiveUniformsiv(UInt32 program, Int32 uniformCount, UInt32* uniformIndices, OpenTK.Graphics.OpenGL.ActiveUniformParameter pname, [OutAttribute] Int32* @params);
             internal unsafe static GetActiveUniformsiv glGetActiveUniformsiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetActiveVaryingNV(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.OpenGL.NvTransformFeedback* type, [OutAttribute] StringBuilder name);
