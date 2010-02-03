@@ -2,6 +2,14 @@
 <overrides>
 
   <replace>
+
+    <function name="DisableClientState" extension="Core">
+      <param name="array"><type>ArrayCap</type></param>
+    </function>
+    
+    <function name="EnableClientState" extension="Core">
+      <param name="array"><type>ArrayCap</type></param>
+    </function>
   
     <function name="TexImage1D" extension="Core">
       <param name="internalformat"><type>PixelInternalFormat</type></param>
