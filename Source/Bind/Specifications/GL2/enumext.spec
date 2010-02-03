@@ -7996,5 +7996,16 @@ VertexAttribI_PointerType enum:
 TextureParameterName enum:
 	TEXTURE_LOD_BIAS                = 0x8501
 
+# See OpenGL 3.2 reference card
+ActiveUniformParameter enum:
+    use ARB_uniform_buffer_object       UNIFORM_TYPE
+    use ARB_uniform_buffer_object       UNIFORM_SIZE
+    use ARB_uniform_buffer_object       UNIFORM_NAME_LENGTH
+    use ARB_uniform_buffer_object       UNIFORM_BLOCK_INDEX
+    use ARB_uniform_buffer_object       UNIFORM_OFFSET
+    use ARB_uniform_buffer_object       UNIFORM_ARRAY_STRIDE
+    use ARB_uniform_buffer_object       UNIFORM_MATRIX_STRIDE
+    use ARB_uniform_buffer_object       UNIFORM_IS_ROW_MAJOR
+
 
 # End (don't remove, or the last token may be removed!)

@@ -62,6 +62,18 @@ namespace OpenTK.Graphics.OpenGL
         UniformBlockReferencedByFragmentShader = ((int)0x8A46),
     }
 
+    public enum ActiveUniformParameter : int
+    {
+        UniformType = ((int)0x8A37),
+        UniformSize = ((int)0x8A38),
+        UniformNameLength = ((int)0x8A39),
+        UniformBlockIndex = ((int)0x8A3A),
+        UniformOffset = ((int)0x8A3B),
+        UniformArrayStride = ((int)0x8A3C),
+        UniformMatrixStride = ((int)0x8A3D),
+        UniformIsRowMajor = ((int)0x8A3E),
+    }
+
     public enum ActiveUniformType : int
     {
         Int = ((int)0x1404),
