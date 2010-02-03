@@ -167,7 +167,7 @@ namespace OpenTK
         {
             get
             {
-                return (float)System.Math.Sqrt(X * X + Y * Y);
+                return System.Math.Sqrt(X * X + Y * Y);
             }
         }
 
@@ -230,7 +230,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            double scale = 1.0f / Length;
+            double scale = 1.0 / Length;
             X *= scale;
             Y *= scale;
         }
@@ -627,7 +627,7 @@ namespace OpenTK
         /// <returns>The normalized vector</returns>
         public static Vector2d Normalize(Vector2d vec)
         {
-            double scale = 1.0f / vec.Length;
+            double scale = 1.0 / vec.Length;
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -640,7 +640,7 @@ namespace OpenTK
         /// <param name="result">The normalized vector</param>
         public static void Normalize(ref Vector2d vec, out Vector2d result)
         {
-            double scale = 1.0f / vec.Length;
+            double scale = 1.0 / vec.Length;
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
@@ -882,7 +882,7 @@ namespace OpenTK
         /// <returns>The result of the operation.</returns>
         public static Vector2d operator /(Vector2d vec, double f)
         {
-            double mult = 1.0f / f;
+            double mult = 1.0 / f;
             vec.X *= mult;
             vec.Y *= mult;
             return vec;

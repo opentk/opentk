@@ -38,7 +38,7 @@ namespace OpenTK.Platform.Egl
 
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers, bool stereo)
         {
-            EGLConfig[] configs = new EGLConfig[1];
+            IntPtr[] configs = new IntPtr[1];
             int[] attribList = new int[] 
             { 
                 //Egl.SURFACE_TYPE, Egl.WINDOW_BIT,
@@ -58,7 +58,7 @@ namespace OpenTK.Platform.Egl
             };
 
             // Todo: what if we don't wish to use the default display?
-            EGLDisplay display = Egl.GetDisplay(EGLNativeDisplayType.Default);
+            IntPtr display = Egl.GetDisplay(IntPtr.Zero);
             int major, minor;
             if (!Egl.Initialize(display, out major, out minor))
                 throw new GraphicsModeException(String.Format("Failed to initialize display connection, error {0}", Egl.GetError()));
@@ -75,7 +75,7 @@ namespace OpenTK.Platform.Egl
             }
 
             // See what we really got
-            EGLConfig active_config = configs[0];
+            IntPtr active_config = configs[0];
             int r, g, b, a;
             Egl.GetConfigAttrib(display, active_config, Egl.RED_SIZE, out r);
             Egl.GetConfigAttrib(display, active_config, Egl.GREEN_SIZE, out g);
@@ -88,7 +88,7 @@ namespace OpenTK.Platform.Egl
             Egl.GetConfigAttrib(display, active_config, Egl.SAMPLES, out sample_buffers);
             Egl.GetConfigAttrib(display, active_config, Egl.SAMPLES, out samples);
 
-            return new GraphicsMode(active_config.Handle.Value, new ColorFormat(r, g, b, a), d, s, sample_buffers > 0 ? samples : 0, 0, 2, false);
+            return new GraphicsMode(active_config, new ColorFormat(r, g, b, a), d, s, sample_buffers > 0 ? samples : 0, 0, 2, false);
         }
 
         #endregion

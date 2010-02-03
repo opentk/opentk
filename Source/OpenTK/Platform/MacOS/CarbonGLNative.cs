@@ -44,9 +44,6 @@ namespace OpenTK.Platform.MacOS
         CarbonWindowInfo window;
         CarbonInput mInputDriver;
 
-		[Obsolete]
-        GraphicsContext context;
-
         static MacOSKeyMap Keymap = new MacOSKeyMap();
 
         IntPtr uppHandler;
@@ -107,11 +104,11 @@ namespace OpenTK.Platform.MacOS
 
         public CarbonGLNative(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
-            CreateNativeWindow(WindowClass.Document,
+			CreateNativeWindow(WindowClass.Document,
                 WindowAttributes.StandardDocument | WindowAttributes.StandardHandler |
                 WindowAttributes.InWindowMenu | WindowAttributes.LiveResize,
                 new Rect((short)x, (short)y, (short)width, (short)height));
-
+			
 			mDisplayDevice = device;
         }
 
@@ -252,23 +249,32 @@ namespace OpenTK.Platform.MacOS
             API.HideWindow(window.WindowRef);
         }
 
-        void SetFullscreen()
+        internal void SetFullscreen(AglContext context)
         {
             windowedBounds = bounds;
 
-            ((AglContext)(context as IGraphicsContextInternal).Implementation).SetFullScreen(window);
+			int width, height;
+
+            context.SetFullScreen(window, out width, out height);
 
             Debug.Print("Prev Size: {0}, {1}", Width, Height);
+			clientRectangle.Size = new Size(width, height);
+			Debug.Print("New Size: {0}, {1}", Width, Height);
 
 			// TODO: if we go full screen we need to make this use the device specified.
-            bounds = DisplayDevice.Default.Bounds;
+            bounds = mDisplayDevice.Bounds;
 
-            Debug.Print("New Size: {0}, {1}", Width, Height);
+            
+			windowState = WindowState.Fullscreen;
         }
 
-        void UnsetFullscreen()
+        internal void UnsetFullscreen(AglContext context)
         {
-            ((AglContext)(context as IGraphicsContextInternal).Implementation).UnsetFullScreen(window);
+            context.UnsetFullScreen(window);
+
+			Debug.Print("Telling Carbon to reset window state to " + windowState.ToString());
+			SetCarbonWindowState();
+
             SetSize((short)windowedBounds.Width, (short)windowedBounds.Height);
         }
 
@@ -371,16 +377,16 @@ namespace OpenTK.Platform.MacOS
                 case KeyboardEventKind.RawKeyDown:
 					OnKeyPress(mKeyPressArgs);
                     InputDriver.Keyboard[0][Keymap[code]] = true;
-                    return OSStatus.EventNotHandled;
+                    return OSStatus.NoError;
 
                 case KeyboardEventKind.RawKeyUp:
                     InputDriver.Keyboard[0][Keymap[code]] = false;
-					
-                    return OSStatus.EventNotHandled;
+
+					return OSStatus.NoError;
 
                 case KeyboardEventKind.RawKeyModifiersChanged:
                     ProcessModifierKey(inEvent);
-                    return OSStatus.EventNotHandled;
+					return OSStatus.NoError;
 
                 default:
                     return OSStatus.EventNotHandled;
@@ -679,26 +685,9 @@ namespace OpenTK.Platform.MacOS
 
         #endregion
 
-        #region INativeGLWindow Members
+		#region INativeWindow Members
 
-        public void CreateWindow(int width, int height, GraphicsMode mode, int major, int minor, GraphicsContextFlags flags, out IGraphicsContext context)
-        {
-            Rect r = new Rect(0, 0, (short)width, (short)height);
-            CreateNativeWindow(mWindowClass, mWindowAttrib, r);
-
-            Show();
-
-            this.context = new GraphicsContext(mode, window, major, minor, flags);
-            this.context.MakeCurrent(window);
-
-            context = this.context;
-        }
-
-        public void DestroyWindow()
-        {
-            Dispose();
-        }
-        public void ProcessEvents()
+		public void ProcessEvents()
         {
             Application.ProcessEvents();
         }
@@ -708,13 +697,18 @@ namespace OpenTK.Platform.MacOS
             IntPtr handle = window.WindowRef;
 
             Rect r = Carbon.API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
-            Console.WriteLine("Rect: {0}", r);
+            Debug.Print("Rect: {0}", r);
 
             return new Point(point.X - r.X, point.Y - r.Y);
         }
         public Point PointToScreen(Point point)
         {
-            throw new NotImplementedException();
+			IntPtr handle = window.WindowRef;
+
+			Rect r = Carbon.API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
+			Debug.Print("Rect: {0}", r);
+
+			return new Point(point.X + r.X, point.Y + r.Y);
         }
 
         public bool Exists
@@ -740,21 +734,6 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public bool Fullscreen
-        {
-            get
-            {
-                return false;
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        #endregion
-
-        #region INativeWindow Members
 
         public Icon Icon
         {
@@ -969,7 +948,6 @@ namespace OpenTK.Platform.MacOS
                 if (Carbon.API.IsWindowCollapsed(window.WindowRef))
                     return WindowState.Minimized;
 
-
                 if (Carbon.API.IsWindowInStandardState(window.WindowRef))
                 {
                     return WindowState.Maximized;
@@ -983,81 +961,94 @@ namespace OpenTK.Platform.MacOS
                     return;
 
                 Debug.Print("Switching window state from {0} to {1}", WindowState, value);
+				WindowState oldState = WindowState;
 
-                if (WindowState == WindowState.Fullscreen)
+				windowState = value;
+
+				if (oldState == WindowState.Fullscreen)
                 {
-                    UnsetFullscreen();
+					window.GoWindowedHack = true;
+
+					// when returning from full screen, wait until the context is updated
+					// to actually do the work.
+					return;
                 }
-                if (WindowState == WindowState.Minimized)
+
+                if (oldState == WindowState.Minimized)
                 {
                     API.CollapseWindow(window.WindowRef, false);
                 }
-                CarbonPoint idealSize;
 
-                switch (value)
-                {
-                    case WindowState.Fullscreen:
-                        SetFullscreen();
-
-                        break;
-
-                    case WindowState.Maximized:
-                        // hack because mac os has no concept of maximized. Instead windows are "zoomed" 
-                        // meaning they are maximized up to their reported ideal size.  So we report a 
-                        // large ideal size.
-                        idealSize = new CarbonPoint(9000, 9000);
-                        API.ZoomWindowIdeal(window.WindowRef, WindowPartCode.inZoomOut, ref idealSize);
-                        break;
-
-                    case WindowState.Normal:
-                        if (WindowState == WindowState.Maximized)
-                        {
-                            idealSize = new CarbonPoint();
-                            API.ZoomWindowIdeal(window.WindowRef, WindowPartCode.inZoomIn, ref idealSize);
-                        }
-                        break;
-
-                    case WindowState.Minimized:
-                        API.CollapseWindow(window.WindowRef, true);
-
-                        break;
-                }
-
-                windowState = value;
-
-				OnWindowStateChanged();
-
-                OnResize();
+				SetCarbonWindowState();
             }
         }
 
-        public WindowBorder WindowBorder
-        {
-            get
-            {
-                return windowBorder;
-            }
-            set
-            {
-                if (windowBorder != value)
-                {
-                    windowBorder = value;
+		private void SetCarbonWindowState()
+		{
+			CarbonPoint idealSize;
 
-                    if (windowBorder == WindowBorder.Resizable)
-                    {
-                        API.ChangeWindowAttributes(window.WindowRef, WindowAttributes.Resizable | WindowAttributes.FullZoom,
-                                                   WindowAttributes.NoAttributes);
-                    }
-                    else if (windowBorder == WindowBorder.Fixed)
-                    {
-                        API.ChangeWindowAttributes(window.WindowRef, WindowAttributes.NoAttributes,
-                                                   WindowAttributes.Resizable | WindowAttributes.FullZoom);
-                    }
+			switch (windowState)
+			{
+				case WindowState.Fullscreen:
+					window.GoFullScreenHack = true;
 
-                    if (WindowBorderChanged != null)
-                        WindowBorderChanged(this, EventArgs.Empty);
-                }
-            }
+					break;
+
+				case WindowState.Maximized:
+					// hack because mac os has no concept of maximized. Instead windows are "zoomed" 
+					// meaning they are maximized up to their reported ideal size.  So we report a 
+					// large ideal size.
+					idealSize = new CarbonPoint(9000, 9000);
+					API.ZoomWindowIdeal(window.WindowRef, WindowPartCode.inZoomOut, ref idealSize);
+					break;
+
+				case WindowState.Normal:
+					if (WindowState == WindowState.Maximized)
+					{
+						idealSize = new CarbonPoint();
+						API.ZoomWindowIdeal(window.WindowRef, WindowPartCode.inZoomIn, ref idealSize);
+					}
+					break;
+
+				case WindowState.Minimized:
+					API.CollapseWindow(window.WindowRef, true);
+
+					break;
+			}
+
+
+			OnWindowStateChanged();
+
+			OnResize();
+		}
+
+		public WindowBorder WindowBorder
+		{
+			get
+			{
+				return windowBorder;
+			}
+			set
+			{
+				if (windowBorder == value)
+					return;
+
+				windowBorder = value;
+
+				if (windowBorder == WindowBorder.Resizable)
+				{
+					API.ChangeWindowAttributes(window.WindowRef, WindowAttributes.Resizable | WindowAttributes.FullZoom,
+											   WindowAttributes.NoAttributes);
+				}
+				else if (windowBorder == WindowBorder.Fixed)
+				{
+					API.ChangeWindowAttributes(window.WindowRef, WindowAttributes.NoAttributes,
+											   WindowAttributes.Resizable | WindowAttributes.FullZoom);
+				}
+
+				if (WindowBorderChanged != null)
+					WindowBorderChanged(this, EventArgs.Empty);
+			}
 		}
 
 		#region --- Event wrappers ---

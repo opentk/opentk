@@ -294,9 +294,9 @@ namespace OpenTK.Audio.OpenAL
 
         /// <summary>This function retrieves a set of three floating-point values from a property of the listener.</summary>
         /// <param name="param">The name of the attribute to be retrieved: ALListener3f.Position, ALListener3f.Velocity</param>
-        /// <param name="value1">Pointers to the three floating-point being retrieved.</param>
-        /// <param name="value2">Pointers to the three floating-point being retrieved.</param>
-        /// <param name="value3">Pointers to the three floating-point being retrieved.</param>
+        /// <param name="value1">The first floating-point value being retrieved.</param>
+        /// <param name="value2">The second floating-point value  being retrieved.</param>
+        /// <param name="value3">The third floating-point value  being retrieved.</param>
         [DllImport(AL.Lib, EntryPoint = "alGetListener3f", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
         public static extern void GetListener(ALListener3f param, [Out] out float value1, [Out] out float value2, [Out] out float value3);
         // AL_API void AL_APIENTRY alGetListener3f( ALenum param, ALfloat *value1, ALfloat *value2, ALfloat *value3 );

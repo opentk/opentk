@@ -38,7 +38,7 @@ namespace OpenTK.Platform.Egl
         #region Fields
 
         EglWindowInfo WindowInfo;
-        EGLContext HandleAsEGLContext { get { return new EGLContext(Handle.Handle); } set { Handle = new ContextHandle(value.Handle.Value); } }
+        IntPtr HandleAsEGLContext { get { return Handle.Handle; } set { Handle = new ContextHandle(value); } }
         bool vsync = true;   // Default vsync value is defined as 1 (true) in EGL.
 
         #endregion
@@ -64,13 +64,13 @@ namespace OpenTK.Platform.Egl
             Mode = new EglGraphicsMode().SelectGraphicsMode(mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples, mode.AccumulatorFormat, mode.Buffers, mode.Stereo);
             if (!Mode.Index.HasValue)
                 throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
-            EGLConfig config = new EGLConfig(mode.Index.Value);
+            IntPtr config = Mode.Index.Value;
 
-            if (window.Surface.Handle == EGLSurface.None.Handle)
+            if (window.Surface == IntPtr.Zero)
                 window.CreateWindowSurface(config);
 
             int[] attrib_list = new int[] { Egl.CONTEXT_CLIENT_VERSION, major, Egl.NONE };
-            HandleAsEGLContext = Egl.CreateContext(window.Display, config, shared != null ? shared.HandleAsEGLContext : EGLContext.None, attrib_list);
+            HandleAsEGLContext = Egl.CreateContext(window.Display, config, shared != null ? shared.HandleAsEGLContext : IntPtr.Zero, attrib_list);
 
             MakeCurrent(window);
         }
@@ -108,7 +108,7 @@ namespace OpenTK.Platform.Egl
 
         public override bool IsCurrent
         {
-            get { return Egl.GetCurrentContext().Handle == HandleAsEGLContext.Handle; }
+            get { return Egl.GetCurrentContext() == HandleAsEGLContext; }
         }
 
         public override bool VSync
@@ -155,12 +155,12 @@ namespace OpenTK.Platform.Egl
             {
                 if (manual)
                 {
-                    Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, EGLContext.None);
+                    Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, IntPtr.Zero);
                     Egl.DestroyContext(WindowInfo.Display, HandleAsEGLContext);
                 }
                 else
                 {
-                    Debug.Print("[Warning] {0}:{1} was not disposed.", this.GetType().Name, HandleAsEGLContext.Handle);
+                    Debug.Print("[Warning] {0}:{1} was not disposed.", this.GetType().Name, HandleAsEGLContext);
                 }
                 IsDisposed = true;
             }

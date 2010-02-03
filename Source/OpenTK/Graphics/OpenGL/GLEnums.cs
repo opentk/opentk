@@ -5756,6 +5756,7 @@ namespace OpenTK.Graphics.OpenGL
         RasterizerDiscard = ((int)0x8C89),
         FramebufferSrgb = ((int)0x8DB9),
         SampleMask = ((int)0x8E51),
+        PrimitiveRestart = ((int)0x8F9D),
     }
 
     public enum ErrorCode : int

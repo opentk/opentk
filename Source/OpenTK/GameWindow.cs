@@ -287,6 +287,27 @@ namespace OpenTK
 
         #endregion
 
+        #region OnClose
+
+        /// <summary>
+        /// Called when the NativeWindow is about to close.
+        /// </summary>
+        /// <param name="e">
+        /// The <see cref="System.ComponentModel.CancelEventArgs" /> for this event.
+        /// Set e.Cancel to true in order to stop the GameWindow from closing.</param>
+        protected override void OnClosing (System.ComponentModel.CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            if (!e.Cancel)
+            {
+                isExiting = true;
+                OnUnloadInternal(EventArgs.Empty);
+            }
+        }
+
+
+        #endregion
+
         #region OnLoad
 
         /// <summary>
@@ -381,20 +402,25 @@ namespace OpenTK
                 Debug.Print("Entering main loop.");
                 update_watch.Start();
                 render_watch.Start();
-                while (!IsExiting && Exists)
+                while (true)
                 {
                     ProcessEvents();
-                    DispatchUpdateAndRenderFrame(this, EventArgs.Empty);
+                    if (Exists && !IsExiting)
+                        DispatchUpdateAndRenderFrame(this, EventArgs.Empty);
+                    else
+                        return;
                 }
             }
             finally
             {
-                OnUnloadInternal(EventArgs.Empty);
+                Move -= DispatchUpdateAndRenderFrame;
+                Resize -= DispatchUpdateAndRenderFrame;
 
                 if (Exists)
                 {
-                    Dispose();
-                    //while (this.Exists) ProcessEvents(); // TODO: Should similar behaviour be retained, possibly on native window level?
+                    // TODO: Should similar behaviour be retained, possibly on native window level?
+                    //while (this.Exists)
+                    //    ProcessEvents(false);
                 }
             }
         }
@@ -464,16 +490,6 @@ namespace OpenTK
                 return;
             double time_left = next_render - time;
 
-            // Todo: remove this?
-            if (VSync == VSyncMode.Adaptive)
-            {
-                // Check if we have enough time for a vsync
-                if (TargetRenderPeriod != 0 && RenderTime > 2.0 * TargetRenderPeriod)
-                    Context.VSync = false;
-                else
-                    Context.VSync = true;
-            }
-
             if (time_left <= 0.0)
             {
                 // Schedule next render event. The 1 second cap ensures
@@ -487,6 +503,22 @@ namespace OpenTK
 
                 if (time > 0)
                 {
+                    // Todo: revisit this code. Maybe check average framerate instead?
+                    // Note: VSyncMode.Adaptive enables vsync by default. The code below
+                    // is supposed to disable vsync if framerate becomes too low (half of target
+                    // framerate in the current approach) and reenable once the framerate
+                    // rises again.
+                    // Note 2: calling Context.VSync = true repeatedly seems to cause jitter on
+                    // some configurations. If possible, we should avoid repeated calls.
+                    if (VSync == VSyncMode.Adaptive && TargetRenderPeriod != 0)
+                    {
+                        // Check if we have enough time for a vsync
+                        if (RenderTime > 2.0 * TargetRenderPeriod)
+                            Context.VSync = false;
+                        else
+                            Context.VSync = true;
+                    }
+
                     render_period = render_args.Time = time;
                     OnRenderFrameInternal(render_args);
                     render_time = render_watch.Elapsed.TotalSeconds;
@@ -864,11 +896,33 @@ namespace OpenTK
 
         #endregion
 
-        #endregion
+		#region WindowState
 
-        #region Events
+		/// <summary>
+		/// Gets or states the state of the NativeWindow.
+		/// </summary>
+		public override WindowState WindowState
+		{
+			get
+			{
+				return base.WindowState;
+			}
+			set
+			{
+				base.WindowState = value;
+				Debug.Print("Updating Context after setting WindowState to {0}", value);
 
-        /// <summary>
+				if (Context != null)
+					Context.Update(WindowInfo);
+			}
+		}
+		#endregion
+
+		#endregion
+
+		#region Events
+
+		/// <summary>
         /// Occurs before the window is displayed for the first time.
         /// </summary>
         public event EventHandler<EventArgs> Load;
@@ -1018,7 +1072,8 @@ namespace OpenTK
         /// </summary>
         On,
         /// <summary>
-        /// VSync enabled, but automatically disabled if framerate falls below a specified limit.
+        /// VSync enabled, unless framerate falls below one half of target framerate.
+        /// If no target framerate is specified, this behaves exactly like <see cref="VSyncMode.On"/>.
         /// </summary>
         Adaptive,
     }

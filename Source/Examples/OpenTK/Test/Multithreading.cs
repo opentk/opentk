@@ -64,7 +64,7 @@ namespace Examples.Tests
                 Utilities.SetWindowTitle(game);
                 game.Keyboard.KeyUp += delegate(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
                 {
-                    if (e.Key == OpenTK.Input.Key.Space)
+                    if (e.Key == OpenTK.Input.Key.F11)
                     {
                         if  (game.WindowState == OpenTK.WindowState.Fullscreen)
                             game.WindowState = OpenTK.WindowState.Normal;

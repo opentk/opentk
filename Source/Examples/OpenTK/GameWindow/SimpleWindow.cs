@@ -39,7 +39,7 @@ namespace Examples.Tutorial
             if (e.Key == Key.Escape)
                 this.Exit();
 
-            if ((e.Key == Key.AltLeft || e.Key == Key.AltRight) && (e.Key == Key.Enter || e.Key == Key.KeypadEnter))
+            if (e.Key == Key.F11)
                 if (this.WindowState == WindowState.Fullscreen)
                     this.WindowState = WindowState.Normal;
                 else
