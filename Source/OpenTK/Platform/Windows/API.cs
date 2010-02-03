@@ -844,6 +844,9 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        [DllImport("user32.dll", SetLastError=true)]
+        public static extern BOOL SetForegroundWindow(HWND hWnd);
+
         #endregion
 
         #region Display settings

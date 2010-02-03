@@ -115,10 +115,10 @@ namespace OpenTK.Graphics
         public int ToArgb()
         {
             uint value =
-                (uint)(A / Byte.MaxValue) << 24 |
-                (uint)(R / Byte.MaxValue) << 16 |
-                (uint)(G / Byte.MaxValue) << 8 |
-                (uint)(B / Byte.MaxValue);
+                (uint)(A * Byte.MaxValue) << 24 |
+                (uint)(R * Byte.MaxValue) << 16 |
+                (uint)(G * Byte.MaxValue) << 8 |
+                (uint)(B * Byte.MaxValue);
 
             return unchecked((int)value);
         }

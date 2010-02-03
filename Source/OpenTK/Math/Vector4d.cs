@@ -260,7 +260,7 @@ namespace OpenTK
         {
             get
             {
-                return (double)System.Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
+                return System.Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
             }
         }
 
@@ -281,7 +281,7 @@ namespace OpenTK
         {
             get
             {
-                return 1.0f / MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W);
+                return 1.0 / MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W);
             }
         }
 
@@ -314,7 +314,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            double scale = 1.0f / this.Length;
+            double scale = 1.0 / this.Length;
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -469,7 +469,7 @@ namespace OpenTK
         [Obsolete("Use static Divide() method instead.")]
         public static Vector4d Div(Vector4d a, double f)
         {
-            double mult = 1.0f / f;
+            double mult = 1.0 / f;
             a.X *= mult;
             a.Y *= mult;
             a.Z *= mult;
@@ -486,7 +486,7 @@ namespace OpenTK
         [Obsolete("Use static Divide() method instead.")]
         public static void Div(ref Vector4d a, double f, out Vector4d result)
         {
-            double mult = 1.0f / f;
+            double mult = 1.0 / f;
             result.X = a.X * mult;
             result.Y = a.Y * mult;
             result.Z = a.Z * mult;
@@ -761,7 +761,7 @@ namespace OpenTK
         /// <returns>The normalized vector</returns>
         public static Vector4d Normalize(Vector4d vec)
         {
-            double scale = 1.0f / vec.Length;
+            double scale = 1.0 / vec.Length;
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -776,7 +776,7 @@ namespace OpenTK
         /// <param name="result">The normalized vector</param>
         public static void Normalize(ref Vector4d vec, out Vector4d result)
         {
-            double scale = 1.0f / vec.Length;
+            double scale = 1.0 / vec.Length;
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;

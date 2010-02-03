@@ -116,8 +116,7 @@ namespace Examples.Tutorial
                 return;
             }
 
-            // Alt+Enter toggles fullscreen mode.
-            if ((Keyboard[Key.AltLeft] || Keyboard[Key.AltRight]) && Keyboard[Key.Enter])
+            if (Keyboard[Key.F11])
                 if (WindowState != WindowState.Fullscreen)
                     WindowState = WindowState.Fullscreen;
                 else

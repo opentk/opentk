@@ -59,8 +59,7 @@ namespace OpenTK.Audio
 
         #region static AudioContext()
 
-        /// <private />
-        /// <static />
+        /// \internal
         /// <summary>
         /// Runs before the actual class constructor, to load available devices.
         /// </summary>
@@ -224,7 +223,7 @@ namespace OpenTK.Audio
             Four = 4,
         }
 
-        /// <private />
+        /// \internal
         /// <summary>Creates the audio context using the specified device.</summary>
         /// <param name="device">The device descriptor obtained through AudioContext.AvailableDevices, or null for the default device.</param>
         /// <param name="freq">Frequency for mixing output buffer, in units of Hz. Pass 0 for driver default.</param>
@@ -358,7 +357,7 @@ namespace OpenTK.Audio
 
         #region static void MakeCurrent(AudioContext context)
 
-        /// <private />
+        /// \internal
         /// <summary>Makes the specified AudioContext current in the calling thread.</summary>
         /// <param name="context">The OpenTK.Audio.AudioContext to make current, or null.</param>
         /// <exception cref="ObjectDisposedException">

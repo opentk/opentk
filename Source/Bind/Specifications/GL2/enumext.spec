@@ -7582,6 +7582,10 @@ ActiveUniformBlockParameter enum:
     use ARB_uniform_buffer_object       UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES
     use ARB_uniform_buffer_object       UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER
     use ARB_uniform_buffer_object       UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER
+
+# Used in primitive restart
+EnableCap enum:
+	PRIMITIVE_RESTART               = 0x8F9D    # 3.1 (different from NV_primitive_restart)
 	
 
 # Non-core 

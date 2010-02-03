@@ -32,6 +32,8 @@ namespace OpenTK.Platform.MacOS
         GraphicsMode graphics_mode;
         CarbonWindowInfo carbonWindow;
         IntPtr shareContextRef;
+		DisplayDevice device;
+		bool mIsFullscreen = false;
 
         public AglContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext)
         {
@@ -43,7 +45,19 @@ namespace OpenTK.Platform.MacOS
 
             if (shareContext is AglContext)
                 shareContextRef = ((AglContext)shareContext).Handle.Handle;
-            
+			if (shareContext is GraphicsContext)
+			{
+				ContextHandle shareHandle = shareContext != null ?
+					(shareContext as IGraphicsContextInternal).Context : (ContextHandle)IntPtr.Zero;
+
+				shareContextRef = shareHandle.Handle;
+			}
+
+			if (shareContextRef == IntPtr.Zero)
+			{
+				Debug.Print("No context sharing will take place.");
+			}
+
             CreateContext(mode, carbonWindow, shareContextRef, true);
         }
 
@@ -76,7 +90,7 @@ namespace OpenTK.Platform.MacOS
             IntPtr shareContextRef, bool fullscreen)
         {
             List<int> aglAttributes = new  List<int>();
-            
+
             Debug.Print("AGL pixel format attributes:");
             Debug.Indent();
 
@@ -101,7 +115,7 @@ namespace OpenTK.Platform.MacOS
                 AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha);
             }
             
-            if (mode.Samples > 0)
+            if (mode.Samples > 1)
             {
                 AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_SAMPLE_BUFFERS_ARB, 1);
                 AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_SAMPLES_ARB, mode.Samples);
@@ -160,8 +174,10 @@ namespace OpenTK.Platform.MacOS
 
                 MyAGLReportError("aglChoosePixelFormat");
             }
-            
-            
+
+
+			Debug.Print("Creating AGL context.  Sharing with {0}", shareContextRef);
+
             // create the context and share it with the share reference.
             Handle = new ContextHandle( Agl.aglCreateContext(myAGLPixelFormat, shareContextRef));
             MyAGLReportError("aglCreateContext");
@@ -243,6 +259,7 @@ namespace OpenTK.Platform.MacOS
         void SetDrawable(CarbonWindowInfo carbonWindow)
         {
             IntPtr windowPort = GetWindowPortForWindowInfo(carbonWindow);
+			//Debug.Print("Setting drawable for context {0} to window port: {1}", Handle.Handle, windowPort);
 
             Agl.aglSetDrawable(Handle.Handle, windowPort);
 
@@ -261,17 +278,57 @@ namespace OpenTK.Platform.MacOS
             }
             else
                 windowPort = API.GetWindowPort(carbonWindow.WindowRef);
+
             return windowPort;
         }
         public override void Update(IWindowInfo window)      
         {
             CarbonWindowInfo carbonWindow = (CarbonWindowInfo)window;
 
+			if (carbonWindow.GoFullScreenHack)
+			{
+				carbonWindow.GoFullScreenHack = false;
+				CarbonGLNative wind = GetCarbonWindow(carbonWindow);
+
+				if (wind != null)
+					wind.SetFullscreen(this);
+				else
+					Debug.Print("Could not find window!");
+
+				return;
+			}
+			else if (carbonWindow.GoWindowedHack)
+			{
+				carbonWindow.GoWindowedHack = false;
+				CarbonGLNative wind = GetCarbonWindow(carbonWindow);
+
+				if (wind != null)
+					wind.UnsetFullscreen(this);
+				else
+					Debug.Print("Could not find window!");
+
+			}
+
+			if (mIsFullscreen)
+				return;
+			
             SetDrawable(carbonWindow);
             SetBufferRect(carbonWindow);
 
             Agl.aglUpdateContext(Handle.Handle);
         }
+
+		private CarbonGLNative GetCarbonWindow(CarbonWindowInfo carbonWindow)
+		{
+			WeakReference r = CarbonGLNative.WindowRefMap[carbonWindow.WindowRef];
+
+			if (r.IsAlive)
+			{
+				return (CarbonGLNative) r.Target;
+			}
+			else
+				return null;
+		}
 
         void MyAGLReportError(string function)
         {
@@ -285,24 +342,43 @@ namespace OpenTK.Platform.MacOS
 
         bool firstFullScreen = false;
 
-        internal void SetFullScreen(CarbonWindowInfo info)
+        internal void SetFullScreen(CarbonWindowInfo info, out int width, out int height)
         {
-            Agl.aglSetFullScreen(Handle.Handle, 0, 0, 0, 0);
+			CarbonGLNative wind = GetCarbonWindow(info);
+
+			Debug.Print("Switching to full screen {0}x{1} on context {2}", 
+				wind.TargetDisplayDevice.Width, wind.TargetDisplayDevice.Height, Handle.Handle);
+
+			CG.DisplayCapture(GetQuartzDevice(info));
+			Agl.aglSetFullScreen(Handle.Handle, wind.TargetDisplayDevice.Width, wind.TargetDisplayDevice.Height, 0, 0);
+			MakeCurrent(info);
+
+			width = wind.TargetDisplayDevice.Width;
+			height = wind.TargetDisplayDevice.Height;
 
             // This is a weird hack to workaround a bug where the first time a context
             // is made fullscreen, we just end up with a blank screen.  So we undo it as fullscreen
             // and redo it as fullscreen.  
-            if (firstFullScreen == false)
-            {
-                firstFullScreen = true;
-                UnsetFullScreen(info);
-                SetFullScreen(info);
-            }
+			if (firstFullScreen == false)
+			{
+				firstFullScreen = true;
+				UnsetFullScreen(info);
+				SetFullScreen(info, out width, out height);
+			}
+
+			mIsFullscreen = true;
         }
         internal void UnsetFullScreen(CarbonWindowInfo windowInfo)
         {
+			Debug.Print("Unsetting AGL fullscreen.");
             Agl.aglSetDrawable(Handle.Handle, IntPtr.Zero);
-            SetDrawable(windowInfo);
+			Agl.aglUpdateContext(Handle.Handle);
+			
+			CG.DisplayRelease(GetQuartzDevice(windowInfo));
+			Debug.Print("Resetting drawable.");
+			SetDrawable(windowInfo);
+
+			mIsFullscreen = false;
         }
 
 

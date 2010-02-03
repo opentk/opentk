@@ -68,6 +68,7 @@ namespace OpenTK.Platform.Windows
         WindowState windowState = WindowState.Normal;
         bool borderless_maximized_window_state = false; // Hack to get maximized mode with hidden border (not normally possible).
         bool focused;
+        bool mouse_outside_window = true;
 
         Rectangle
             bounds = new Rectangle(),
@@ -75,8 +76,7 @@ namespace OpenTK.Platform.Windows
             previous_bounds = new Rectangle(); // Used to restore previous size when leaving fullscreen mode.
         Icon icon;
 
-        const ClassStyle DefaultClassStyle =
-            ClassStyle.OwnDC | ClassStyle.VRedraw | ClassStyle.HRedraw | ClassStyle.Ime;
+        const ClassStyle DefaultClassStyle = ClassStyle.OwnDC;
 
         readonly IntPtr DefaultWindowProcedure =
             Marshal.GetFunctionPointerForDelegate(new WindowProcedure(Functions.DefWindowProc));
@@ -140,8 +140,6 @@ namespace OpenTK.Platform.Windows
 
             keyboards.Add(keyboard);
             mice.Add(mouse);
-
-            EnableMouseLeaveNotifications();
         }
 
         #endregion
@@ -182,22 +180,6 @@ namespace OpenTK.Platform.Windows
                     // ExitingmModal size/move loop: the timer callback is no longer
                     // necessary.
                     StopTimer(handle);
-                    break;
-
-                case WindowMessage.NCCALCSIZE:
-                    // Need to update the client rectangle, because it has the wrong size on Vista with Aero enabled.
-                    //if (m.WParam == new IntPtr(1))
-                    //{
-                    //    unsafe
-                    //    {
-                    //        NcCalculateSize* nc_calc_size = (NcCalculateSize*)m.LParam;
-                    //        //nc_calc_size->NewBounds = nc_calc_size->OldBounds;
-                    //        //nc_calc_size->OldBounds = nc_calc_size->NewBounds;
-                    //        //client_rectangle = rect.OldClientRectangle;
-                    //    }
-
-                    //    m.Result = new IntPtr((int)(NcCalcSizeOptions.ALIGNTOP | NcCalcSizeOptions.ALIGNLEFT/* | NcCalcSizeOptions.REDRAW*/));
-                    //}
                     break;
 
                 case WindowMessage.ERASEBKGND:
@@ -296,21 +278,25 @@ namespace OpenTK.Platform.Windows
                         (short)((uint)lParam.ToInt32() & 0x0000FFFF),
                         (short)(((uint)lParam.ToInt32() & 0xFFFF0000) >> 16));
                     mouse.Position = point;
+
+                    if (mouse_outside_window)
                     {
-                        if (!ClientRectangle.Contains(point))
-                        {
-                            Functions.ReleaseCapture();
-                            if (MouseLeave != null)
-                                MouseLeave(this, EventArgs.Empty);
-                        }
-                        else if (Functions.GetCapture() != window.WindowHandle)
-                        {
-                            Functions.SetFocus(window.WindowHandle);
-                            Functions.SetCapture(window.WindowHandle);
-                            if (MouseEnter != null)
-                                MouseEnter(this, EventArgs.Empty);
-                        }
+                        // Once we receive a mouse move event, it means that the mouse has
+                        // re-entered the window.
+                        mouse_outside_window = false;
+                        EnableMouseTracking();
+
+                        if (MouseEnter != null)
+                            MouseEnter(this, EventArgs.Empty);
                     }
+                    break;
+
+                case WindowMessage.MOUSELEAVE:
+                    mouse_outside_window = true;
+                    // Mouse tracking is disabled automatically by the OS
+                    
+                    if (MouseLeave != null)
+                        MouseLeave(this, EventArgs.Empty);
                     break;
 
                 case WindowMessage.MOUSEWHEEL:
@@ -454,6 +440,8 @@ namespace OpenTK.Platform.Windows
                         Win32Rectangle rect;
                         Functions.GetClientRect(handle, out rect);
                         client_rectangle = rect.ToRectangle();
+
+                        Functions.SetForegroundWindow(handle);
                     }
                     break;
 
@@ -478,7 +466,6 @@ namespace OpenTK.Platform.Windows
                     exists = false;
 
                     Functions.UnregisterClass(ClassName, Instance);
-                    //Marshal.FreeHGlobal(ClassName);
                     window.Dispose();
                     child_window.Dispose();
 
@@ -491,6 +478,18 @@ namespace OpenTK.Platform.Windows
             }
 
             return Functions.DefWindowProc(handle, message, wParam, lParam);
+        }
+
+        private void EnableMouseTracking()
+        {
+            TrackMouseEventStructure me = new TrackMouseEventStructure();
+            me.Size = TrackMouseEventStructure.SizeInBytes;
+            me.TrackWindowHandle = child_window.WindowHandle;
+            me.Flags = TrackMouseEventFlags.LEAVE;
+
+            if (!Functions.TrackMouseEvent(ref me))
+                Debug.Print("[Warning] Failed to enable mouse tracking, error: {0}.",
+                    Marshal.GetLastWin32Error());
         }
 
         private void StartTimer(IntPtr handle)
@@ -610,18 +609,6 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        void EnableMouseLeaveNotifications()
-        {
-            TrackMouseEventStructure tme = new TrackMouseEventStructure();
-            tme.Size = TrackMouseEventStructure.SizeInBytes;
-            tme.Flags |= TrackMouseEventFlags.LEAVE;
-            tme.TrackWindowHandle = child_window.WindowHandle;
-            tme.HoverTime = -1; // HOVER_DEFAULT
-            if (!Functions.TrackMouseEvent(ref tme))
-                Debug.Print("[Error] Failed to enable mouse event tracking. Error: {0}",
-                    Marshal.GetLastWin32Error());
-        }
-
         #endregion
 
         #region INativeWindow Members
@@ -682,7 +669,7 @@ namespace OpenTK.Platform.Windows
             }
             set
             {
-                Size = value.Size;
+                ClientSize = value.Size;
             }
         }
 
@@ -905,6 +892,8 @@ namespace OpenTK.Platform.Windows
                         WindowBorder = WindowBorder.Hidden;
                         command = ShowWindowCommand.MAXIMIZE;
 
+                        Functions.SetForegroundWindow(window.WindowHandle);
+
                         break;
                 }
 
@@ -953,6 +942,11 @@ namespace OpenTK.Platform.Windows
                 if (windowBorder == value)
                     return;
 
+                // We wish to avoid making an invisible window visible just to change the border.
+                // However, it's a good idea to make a visible window invisible temporarily, to
+                // avoid garbage caused by the border change.
+                bool was_visible = Visible;
+
                 // To ensure maximized/minimized windows work correctly, reset state to normal,
                 // change the border, then go back to maximized/minimized.
                 WindowState state = WindowState;
@@ -982,7 +976,8 @@ namespace OpenTK.Platform.Windows
                 Functions.AdjustWindowRectEx(ref rect, style, false, ParentStyleEx);
 
                 // This avoids leaving garbage on the background window.
-                Visible = false;
+                if (was_visible)
+                    Visible = false;
 
                 Functions.SetWindowLong(window.WindowHandle, GetWindowLongOffsets.STYLE, (IntPtr)(int)style);
                 Functions.SetWindowPos(window.WindowHandle, IntPtr.Zero, 0, 0, rect.Width, rect.Height,
@@ -992,7 +987,7 @@ namespace OpenTK.Platform.Windows
                 // Force window to redraw update its borders, but only if it's
                 // already visible (invisible windows will change borders when
                 // they become visible, so no need to make them visiable prematurely).
-                if (Visible)
+                if (was_visible)
                     Visible = true;
 
                 WindowState = state;

@@ -136,7 +136,7 @@ namespace OpenTK.Input
         /// </summary>
         public int Wheel
         {
-            get { return (int)(wheel + 0.5f); }
+            get { return (int)Math.Round(wheel, MidpointRounding.AwayFromZero); }
             internal set { WheelPrecise = value; }
         }
 
@@ -306,7 +306,7 @@ namespace OpenTK.Input
         {
             get
             {
-                int result = (int)(wheel - wheel_last_accessed + 0.5f);
+                int result = (int)Math.Round(wheel - wheel_last_accessed, MidpointRounding.AwayFromZero);
                 wheel_last_accessed = (int)wheel;
                 return result;
             }
@@ -614,13 +614,13 @@ namespace OpenTK.Input
         /// Gets the value of the wheel in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="ValuePrecise"/> instead.
         /// </summary>
-        public int Value { get { return (int)(value + 0.5f); } }
+        public int Value { get { return (int)Math.Round(value, MidpointRounding.AwayFromZero); } }
 
         /// <summary>
         /// Gets the change in value of the wheel for this event in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="DeltaPrecise"/> instead.
         /// </summary>
-        public int Delta { get { return (int)(delta + 0.5f); } }
+        public int Delta { get { return (int)Math.Round(delta, MidpointRounding.AwayFromZero); } }
 
         /// <summary>
         /// Gets the precise value of the wheel in floating-point units.

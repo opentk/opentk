@@ -221,8 +221,7 @@ namespace Examples.Tutorial
             if (Keyboard[OpenTK.Input.Key.Escape])
                 this.Exit();
 
-            if ((Keyboard[OpenTK.Input.Key.AltLeft] || Keyboard[OpenTK.Input.Key.AltRight]) &&
-                Keyboard[OpenTK.Input.Key.Enter])
+            if (Keyboard[OpenTK.Input.Key.F11])
                 if (WindowState != WindowState.Fullscreen)
                     WindowState = WindowState.Fullscreen;
                 else

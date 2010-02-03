@@ -15,6 +15,7 @@ using System.Drawing;
 
 namespace OpenTK.Platform.X11
 {
+    /// \internal
     /// <summary>
     /// Drives the InputDriver on X11.
     /// This class supports OpenTK, and is not intended for users of OpenTK.
