@@ -29,6 +29,10 @@ namespace Examples
             return (int)((c.A << 24) | (c.B << 16) | (c.G << 8) | c.R);
         }
 
+        /// <summary>
+        /// Sets the window title to the name of the sample.
+        /// </summary>
+        /// <param name="window"></param>
         public static void SetWindowTitle(GameWindow window)
         {
             ExampleAttribute info = GetExampleAttribute(window.GetType());
@@ -36,6 +40,10 @@ namespace Examples
             window.Icon = OpenTK.Examples.Properties.Resources.App;
         }
 
+        /// <summary>
+        /// Sets the window title to the name of the sample.
+        /// </summary>
+        /// <param name="window"></param>
         public static void SetWindowTitle(System.Windows.Forms.Form window)
         {
             ExampleAttribute info = GetExampleAttribute(window.GetType());

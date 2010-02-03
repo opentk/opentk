@@ -40,11 +40,6 @@ namespace OpenTK.Graphics
 
         #region --- Constructors ---
 
-        static GraphicsContext()
-        {
-            GetCurrentContext = Factory.Default.CreateGetCurrentGraphicsContext();
-        }
-        
         // Necessary to allow creation of dummy GraphicsContexts (see CreateDummyContext static method).
         GraphicsContext(ContextHandle handle)
         {
@@ -105,13 +100,24 @@ namespace OpenTK.Graphics
                     
                     // Todo: Add a DummyFactory implementing IPlatformFactory.
                     if (designMode)
+                    {
                         implementation = new Platform.Dummy.DummyGLContext();
+                    }
                     else
+                    {
+                        IPlatformFactory factory = null;
                         switch ((flags & GraphicsContextFlags.Embedded) == GraphicsContextFlags.Embedded)
                         {
-                            case false: implementation = Factory.Default.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags); break;
-                            case true: implementation = Factory.Embedded.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags); break;
+                            case false: factory = Factory.Default; break;
+                            case true: factory = Factory.Embedded; break;
                         }
+
+                        implementation = factory.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags);
+                        // Note: this approach does not allow us to mix native and EGL contexts in the same process.
+                        // This should not be a problem, as this use-case is not interesting for regular applications.
+                        if (GetCurrentContext == null)
+                            GetCurrentContext = factory.CreateGetCurrentGraphicsContext();
+                    }
 
                     available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
                 }
@@ -252,6 +258,10 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets the GraphicsContext that is current in the calling thread.
         /// </summary>
+        /// <remarks>
+        /// Note: this property will not function correctly when both desktop and EGL contexts are
+        /// available in the same process. This scenario is very unlikely to appear in practice.
+        /// </remarks>
         public static IGraphicsContext CurrentContext
         {
             get

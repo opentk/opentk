@@ -485,7 +485,7 @@ namespace OpenTK
         /// <summary>
         /// Gets or states the state of the NativeWindow.
         /// </summary>
-        public WindowState WindowState
+        public virtual WindowState WindowState
         {
             get
             {

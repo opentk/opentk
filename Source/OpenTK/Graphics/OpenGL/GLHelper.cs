@@ -729,7 +729,7 @@ namespace OpenTK.Graphics.OpenGL
 
         public static void TexCoordPointer(int size, TexCoordPointerType type, int stride, int offset)
         {
-            TexCoordPointer(size, type, stride, offset);
+            TexCoordPointer(size, type, stride, (IntPtr)offset);
         }
 
         public static void VertexAttribPointer(int index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)

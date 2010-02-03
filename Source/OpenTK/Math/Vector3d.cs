@@ -199,7 +199,7 @@ namespace OpenTK
         {
             get
             {
-                return (float)System.Math.Sqrt(X * X + Y * Y + Z * Z);
+                return System.Math.Sqrt(X * X + Y * Y + Z * Z);
             }
         }
 
@@ -220,7 +220,7 @@ namespace OpenTK
         {
             get
             {
-                return 1.0f / MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z);
+                return 1.0 / MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z);
             }
         }
 
@@ -254,7 +254,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            double scale = 1.0f / this.Length;
+            double scale = 1.0 / this.Length;
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -433,7 +433,7 @@ namespace OpenTK
         [Obsolete("Use static Divide() method instead.")]
         public static Vector3d Div(Vector3d a, double f)
         {
-            double mult = 1.0f / f;
+            double mult = 1.0 / f;
             a.X *= mult;
             a.Y *= mult;
             a.Z *= mult;
@@ -449,7 +449,7 @@ namespace OpenTK
         [Obsolete("Use static Divide() method instead.")]
         public static void Div(ref Vector3d a, double f, out Vector3d result)
         {
-            double mult = 1.0f / f;
+            double mult = 1.0 / f;
             result.X = a.X * mult;
             result.Y = a.Y * mult;
             result.Z = a.Z * mult;
@@ -747,7 +747,7 @@ namespace OpenTK
         /// <returns>The normalized vector</returns>
         public static Vector3d Normalize(Vector3d vec)
         {
-            double scale = 1.0f / vec.Length;
+            double scale = 1.0 / vec.Length;
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -761,7 +761,7 @@ namespace OpenTK
         /// <param name="result">The normalized vector</param>
         public static void Normalize(ref Vector3d vec, out Vector3d result)
         {
-            double scale = 1.0f / vec.Length;
+            double scale = 1.0 / vec.Length;
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -1085,7 +1085,7 @@ namespace OpenTK
         /// <param name="result">The transformed vector</param>
         public static void Transform(ref Vector3d vec, ref Matrix4d mat, out Vector3d result)
         {
-            Vector4d v4 = new Vector4d(vec.X, vec.Y, vec.Z, 1.0f);
+            Vector4d v4 = new Vector4d(vec.X, vec.Y, vec.Z, 1.0);
             Vector4d.Transform(ref v4, ref mat, out v4);
             result = v4.Xyz;
         }

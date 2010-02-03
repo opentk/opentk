@@ -14,6 +14,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.X11
 {
+    /// \internal
     /// <summary>
     /// Provides methods to create and control an opengl context on the X11 platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
@@ -370,7 +371,7 @@ namespace OpenTK.Platform.X11
                 {
                     IntPtr display = Display;
                     if (IsCurrent)
-                        MakeCurrent(null);
+                        Glx.MakeCurrent(display, IntPtr.Zero, IntPtr.Zero);
 
                     Glx.DestroyContext(display, Handle);
                 }

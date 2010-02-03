@@ -41,6 +41,8 @@ namespace OpenTK.Platform.MacOS
         bool ownHandle = false;
         bool disposed = false;
         bool isControl = false;
+		bool goFullScreenHack = false;
+		bool goWindowedHack = false;
 
         #region Constructors
 
@@ -68,6 +70,18 @@ namespace OpenTK.Platform.MacOS
         {
             get { return this.windowRef; }
         }
+
+		internal bool GoFullScreenHack
+		{
+			get { return goFullScreenHack; }
+			set { goFullScreenHack = value; }
+		}
+		internal bool GoWindowedHack
+		{
+			get { return goWindowedHack; }
+			set { goWindowedHack = value; }
+		}
+
 
         /// <summary>
         /// Gets a value indicating whether this instance refers to a System.Windows.Forms.Control.

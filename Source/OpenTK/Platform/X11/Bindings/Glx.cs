@@ -252,6 +252,7 @@ namespace OpenTK.Platform.X11
 
     #endregion
 
+    /// \internal
     /// <summary>
     /// Provides access to GLX functions.
     /// </summary>

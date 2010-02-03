@@ -39,21 +39,21 @@ namespace OpenTK.Platform.Egl
         #region Fields
 
         IntPtr handle;
-        EGLDisplay display;
-        EGLSurface surface;
+        IntPtr display;
+        IntPtr surface;
         bool disposed;
 
         #endregion
 
         #region Constructiors
 
-        public EglWindowInfo(IntPtr handle, EGLDisplay display)
+        public EglWindowInfo(IntPtr handle, IntPtr display)
         {
             Handle = handle;
             Display = display;
         }
 
-        public EglWindowInfo(IntPtr handle, EGLDisplay display, EGLSurface surface)
+        public EglWindowInfo(IntPtr handle, IntPtr display, IntPtr surface)
         {
             Handle = handle;
             Display = display;
@@ -66,11 +66,11 @@ namespace OpenTK.Platform.Egl
 
         public IntPtr Handle { get { return handle; } private set { handle = value; } }
 
-        public EGLDisplay Display { get { return display; } private set { display = value; } }
+        public IntPtr Display { get { return display; } private set { display = value; } }
 
-        public EGLSurface Surface { get { return surface; } private set { surface = value; } }
+        public IntPtr Surface { get { return surface; } private set { surface = value; } }
 
-        public void CreateWindowSurface(EGLConfig config)
+        public void CreateWindowSurface(IntPtr config)
         {
             Surface = Egl.CreateWindowSurface(Display, config, Handle, null);
             int error = Egl.GetError();
@@ -90,7 +90,7 @@ namespace OpenTK.Platform.Egl
 
         public void DestroySurface()
         {
-            if (Surface.Handle != EGLSurface.None.Handle)
+            if (Surface != IntPtr.Zero)
                 if (!Egl.DestroySurface(Display, Surface))
                     Debug.Print("[Warning] Failed to destroy {0}:{1}.", Surface.GetType().Name, Surface);
         }

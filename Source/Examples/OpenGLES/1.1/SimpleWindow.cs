@@ -66,14 +66,14 @@ namespace Examples.Tutorial
         {
             base.OnLoad(e);
 
-            Color color = Color.MidnightBlue;
+            Color4 color = Color4.MidnightBlue;
             GL.ClearColor(color.R, color.G, color.B, color.A);
             GL.Enable((All)EnableCap.DepthTest);
         }
 
         #endregion
 
-        #region OnResize
+    #region OnResize
 
         /// <summary>
         /// Called when the user resizes the window.
@@ -95,7 +95,7 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region OnUpdateFrame
+    #region OnUpdateFrame
 
         /// <summary>
         /// Prepares the next frame for rendering.
@@ -115,7 +115,7 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region OnRenderFrame
+    #region OnRenderFrame
 
         /// <summary>
         /// Place your rendering code here.
@@ -138,7 +138,7 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region private void DrawCube()
+    #region private void DrawCube()
 
         private void DrawCube()
         {
@@ -188,7 +188,7 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region public static void Main()
+    #region public static void Main()
 
         /// <summary>
         /// Entry point of this example.

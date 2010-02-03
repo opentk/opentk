@@ -33,108 +33,13 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Egl
 {
-    // Note: the Workaround structs declared in each type below work around
-    // gmcs 2.4.2 bug #530270 (https://bugzilla.novell.com/show_bug.cgi?id=530270).
-    // They don't cause any change in functionality other than make the compiler happy.
-    
-    struct EGLNativeDisplayType
-    {
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public struct Workaround { }
-
-        public readonly Compute.Handle<Workaround> Handle;
-
-        public EGLNativeDisplayType(IntPtr handle)
-        {
-            Handle = new Compute.Handle<Workaround>(handle);
-        }
-
-        public static readonly EGLNativeDisplayType Default = new EGLNativeDisplayType();
-    }
-
-    struct EGLNativePixmapType
-    {
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public struct Workaround { }
-        
-       public readonly Compute.Handle<Workaround> Handle;
-
-        public EGLNativePixmapType(IntPtr handle)
-        {
-            Handle = new Compute.Handle<Workaround>(handle);
-        }
-    }
-
-    struct EGLConfig
-    {
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public struct Workaround { }
-        
-       public readonly Compute.Handle<Workaround> Handle;
-
-        public EGLConfig(IntPtr handle)
-        {
-            Handle = new Compute.Handle<Workaround>(handle);
-        }
-    }
-
-    struct EGLContext
-    {
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public struct Workaround { }
-
-        public readonly Compute.Handle<Workaround> Handle;
-
-        public EGLContext(IntPtr handle)
-        {
-            Handle = new Compute.Handle<Workaround>(handle);
-        }
-
-        public static readonly EGLContext None;
-    }
-
-    struct EGLDisplay
-    {
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public struct Workaround { }
-
-        public readonly Compute.Handle<Workaround> Handle;
-
-        public EGLDisplay(IntPtr handle)
-        {
-            Handle = new Compute.Handle<Workaround>(handle);
-        }
-
-        public static readonly EGLDisplay Null = default(EGLDisplay);
-    }
-
-    struct EGLSurface
-    {
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public struct Workaround { }
-
-        public readonly Compute.Handle<Workaround> Handle;
-
-        public EGLSurface(IntPtr handle)
-        {
-            Handle = new Compute.Handle<Workaround>(handle);
-        }
-
-        public static readonly EGLSurface None = default(EGLSurface);
-    }
-
-    struct EGLClientBuffer
-    {
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public struct Workaround { }
-
-        public readonly Compute.Handle<Workaround> Handle;
-
-        public EGLClientBuffer(IntPtr handle)
-        {
-            Handle = new Compute.Handle<Workaround>(handle);
-        }
-    }
+    using EGLNativeDisplayType = IntPtr;
+    using EGLNativePixmapType = IntPtr;
+    using EGLConfig = IntPtr;
+    using EGLContext = IntPtr;
+    using EGLDisplay = IntPtr;
+    using EGLSurface = IntPtr;
+    using EGLClientBuffer = IntPtr;
 
     static partial class Egl
     {
@@ -267,21 +172,14 @@ namespace OpenTK.Platform.Egl
         public static extern int GetError();
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetDisplay")]
-        static extern IntPtr eglGetDisplay(EGLNativeDisplayType display_id);
-
-        public static EGLDisplay GetDisplay(EGLNativeDisplayType display_id)
-        {
-            IntPtr ptr = eglGetDisplay(display_id);
-            EGLDisplay ret = new EGLDisplay(ptr);
-            return ret;
-        }
+        public static extern EGLDisplay GetDisplay(EGLNativeDisplayType display_id);
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglInitialize")]
-        [return: MarshalAsAttribute(UnmanagedType.I1)]
+        //[return: MarshalAsAttribute(UnmanagedType.I1)]
         public static extern bool Initialize(EGLDisplay dpy, out int major, out int minor);
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglTerminate")]
-        [return: MarshalAsAttribute(UnmanagedType.I1)]
+        //[return: MarshalAsAttribute(UnmanagedType.I1)]
         public static extern bool Terminate(EGLDisplay dpy);
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglQueryString")]
@@ -300,14 +198,7 @@ namespace OpenTK.Platform.Egl
         public static extern bool GetConfigAttrib(EGLDisplay dpy, EGLConfig config, int attribute, out int value);
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglCreateWindowSurface")]
-        static extern IntPtr eglCreateWindowSurface(EGLDisplay dpy, EGLConfig config, IntPtr win, int[] attrib_list);
-
-        public static EGLSurface CreateWindowSurface(EGLDisplay dpy, EGLConfig config, IntPtr win, int[] attrib_list)
-        {
-            IntPtr ptr = eglCreateWindowSurface(dpy, config,  win, attrib_list);
-            EGLSurface ret = new EGLSurface(ptr);
-            return ret;
-        }
+        public static extern  EGLSurface CreateWindowSurface(EGLDisplay dpy, EGLConfig config, IntPtr win, int[] attrib_list);
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglCreatePbufferSurface")]
         public static extern EGLSurface CreatePbufferSurface(EGLDisplay dpy, EGLConfig config, int[] attrib_list);
@@ -363,9 +254,9 @@ namespace OpenTK.Platform.Egl
         public static EGLContext CreateContext(EGLDisplay dpy, EGLConfig config, EGLContext share_context, int[] attrib_list)
         {
             IntPtr ptr = eglCreateContext(dpy, config, share_context, attrib_list);
-            if (ptr == EGLContext.None.Handle.Value)
+            if (ptr == IntPtr.Zero)
                 throw new GraphicsContextException(String.Format("Failed to create EGL context, error: {0}.", Egl.GetError()));
-            return new EGLContext(ptr);
+            return ptr;
         }
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglDestroyContext")]
