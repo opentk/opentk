@@ -981,7 +981,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void Disable(OpenTK.Graphics.OpenGL.EnableCap cap);
             internal static Disable glDisable;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DisableClientState(OpenTK.Graphics.OpenGL.EnableCap array);
+            internal delegate void DisableClientState(OpenTK.Graphics.OpenGL.ArrayCap array);
             internal static DisableClientState glDisableClientState;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DisableClientStateIndexedEXT(OpenTK.Graphics.OpenGL.EnableCap array, UInt32 index);
@@ -1104,7 +1104,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void Enable(OpenTK.Graphics.OpenGL.EnableCap cap);
             internal static Enable glEnable;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void EnableClientState(OpenTK.Graphics.OpenGL.EnableCap array);
+            internal delegate void EnableClientState(OpenTK.Graphics.OpenGL.ArrayCap array);
             internal static EnableClientState glEnableClientState;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void EnableClientStateIndexedEXT(OpenTK.Graphics.OpenGL.EnableCap array, UInt32 index);
