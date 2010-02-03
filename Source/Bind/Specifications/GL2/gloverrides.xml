@@ -321,6 +321,10 @@
       <param name="target"><type>FramebufferTarget</type></param>
       <param name="attachment"><type>FramebufferAttachment</type></param>
     </function>
+    
+    <function name="GetActiveUniforms" extension="Core">
+      <param name="pname"><type>ActiveUniformParameter</type></param>
+    </function>
 
     <!-- Arb -->
 
