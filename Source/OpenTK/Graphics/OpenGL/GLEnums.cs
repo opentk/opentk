@@ -4821,6 +4821,18 @@ namespace OpenTK.Graphics.OpenGL
     {
     }
 
+    public enum ArrayCap : int
+    {
+        VertexArray = ((int)0x8074),
+        NormalArray = ((int)0x8075),
+        ColorArray = ((int)0x8076),
+        IndexArray = ((int)0x8077),
+        TextureCoordArray = ((int)0x8078),
+        EdgeFlagArray = ((int)0x8079),
+        FogCoordArray = ((int)0x8457),
+        SecondaryColorArray = ((int)0x845E),
+    }
+
     public enum AssemblyProgramFormatArb : int
     {
         ProgramFormatAsciiArb = ((int)0x8875),

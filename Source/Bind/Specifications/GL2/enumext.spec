@@ -6114,6 +6114,20 @@ APPLE_row_bytes enum:
 #
 #------------------------------------------------------------------------------
 
+
+# Version 1.1
+
+ArrayCap enum:
+	use GetPName VERTEX_ARRAY
+	use GetPName NORMAL_ARRAY
+	use GetPName COLOR_ARRAY
+	SECONDARY_COLOR_ARRAY               = 0x845E # 1 I
+	use GetPName INDEX_ARRAY
+	use GetPName EDGE_FLAG_ARRAY
+	use GetPName TEXTURE_COORD_ARRAY
+	FOG_COORD_ARRAY				= 0x8457
+	
+
 # Version 1.2
 
 

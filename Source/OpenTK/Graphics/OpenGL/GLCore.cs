@@ -983,7 +983,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void Disable(OpenTK.Graphics.OpenGL.EnableCap cap);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDisableClientState", ExactSpelling = true)]
-            internal extern static void DisableClientState(OpenTK.Graphics.OpenGL.EnableCap array);
+            internal extern static void DisableClientState(OpenTK.Graphics.OpenGL.ArrayCap array);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDisableClientStateIndexedEXT", ExactSpelling = true)]
             internal extern static void DisableClientStateIndexedEXT(OpenTK.Graphics.OpenGL.EnableCap array, UInt32 index);
@@ -1106,7 +1106,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void Enable(OpenTK.Graphics.OpenGL.EnableCap cap);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEnableClientState", ExactSpelling = true)]
-            internal extern static void EnableClientState(OpenTK.Graphics.OpenGL.EnableCap array);
+            internal extern static void EnableClientState(OpenTK.Graphics.OpenGL.ArrayCap array);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEnableClientStateIndexedEXT", ExactSpelling = true)]
             internal extern static void EnableClientStateIndexedEXT(OpenTK.Graphics.OpenGL.EnableCap array, UInt32 index);
