@@ -92,8 +92,6 @@ namespace OpenTK.Platform.iPhoneOS {
 
         void IGraphicsContextInternal.LoadAll()
         {
-            new GL11().LoadAll();
-            new GL20().LoadAll();
         }
 
         ContextHandle contextHandle;
