@@ -32,6 +32,7 @@ using System.Text;
 
 namespace OpenTK.Platform.MacOS
 {
+    /// \internal
     /// <summary>
     /// Describes a Carbon window.
     /// </summary>

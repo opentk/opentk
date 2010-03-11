@@ -70,6 +70,7 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
+    /// \internal
     /// <summary>
     /// For internal use by OpenTK only!
     /// Exposes useful native WINAPI methods and structures.
@@ -846,6 +847,9 @@ namespace OpenTK.Platform.Windows
 
         [DllImport("user32.dll", SetLastError=true)]
         public static extern BOOL SetForegroundWindow(HWND hWnd);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern BOOL BringWindowToTop(HWND hWnd);
 
         #endregion
 
@@ -1679,6 +1683,7 @@ namespace OpenTK.Platform.Windows
 
     #region PixelFormatDescriptor
 
+    /// \internal
     /// <summary>
     /// Describes a pixel format. It is used when interfacing with the WINAPI to create a new Context.
     /// Found in WinGDI.h
@@ -1718,6 +1723,7 @@ namespace OpenTK.Platform.Windows
     
     #region internal class LayerPlaneDescriptor
 
+    /// \internal
     /// <summary>
     /// Describes the pixel format of a drawing surface.
     /// </summary>
@@ -1754,6 +1760,7 @@ namespace OpenTK.Platform.Windows
 
     #region GlyphMetricsFloat
 
+    /// \internal
     /// <summary>
     /// The <b>GlyphMetricsFloat</b> structure contains information about the placement and orientation of a glyph in a
     /// character cell.
@@ -1789,6 +1796,7 @@ namespace OpenTK.Platform.Windows
 
     #region PointFloat
 
+    /// \internal
     /// <summary>
     /// The <b>PointFloat</b> structure contains the x and y coordinates of a point.
     /// </summary>
@@ -1917,7 +1925,8 @@ namespace OpenTK.Platform.Windows
     #endregion DeviceMode class
 
     #region DisplayDevice
-    
+
+    /// \internal
     /// <summary>
     /// The DISPLAY_DEVICE structure receives information about the display device specified by the iDevNum parameter of the EnumDisplayDevices function.
     /// </summary>
@@ -1995,6 +2004,7 @@ namespace OpenTK.Platform.Windows
 
     #region internal struct MinMaxInfo
 
+    /// \internal
     /// <summary>
     /// Struct pointed to by WM_GETMINMAXINFO lParam
     /// </summary>
@@ -2012,6 +2022,7 @@ namespace OpenTK.Platform.Windows
 
     #region internal struct WindowPosition
 
+    /// \internal
     /// <summary>
     /// The WindowPosition structure contains information about the size and position of a window.
     /// </summary>
@@ -2133,6 +2144,7 @@ namespace OpenTK.Platform.Windows
 
     #region RawInputDevice
 
+    /// \internal
     /// <summary>
     /// Defines information for the raw input devices.
     /// </summary>
@@ -2174,6 +2186,7 @@ namespace OpenTK.Platform.Windows
 
     #region RawInputDeviceList
 
+    /// \internal
     /// <summary>
     /// Contains information about a raw input device.
     /// </summary>
@@ -2199,6 +2212,7 @@ namespace OpenTK.Platform.Windows
 
     #region RawInput
 
+    /// \internal
     /// <summary>
     /// Contains the raw input from a device.
     /// </summary>
@@ -2244,6 +2258,7 @@ namespace OpenTK.Platform.Windows
 
     #region RawInputHeader
 
+    /// \internal
     /// <summary>
     /// Contains the header information that is part of the raw input data.
     /// </summary>
@@ -2275,6 +2290,7 @@ namespace OpenTK.Platform.Windows
 
     #region RawKeyboard
 
+    /// \internal
     /// <summary>
     /// Contains information about the state of the keyboard.
     /// </summary>
@@ -2321,6 +2337,7 @@ namespace OpenTK.Platform.Windows
 
     #region RawMouse
 
+    /// \internal
     /// <summary>
     /// Contains information about the state of the mouse.
     /// </summary>
@@ -2436,6 +2453,7 @@ namespace OpenTK.Platform.Windows
 
     #region RawHID
 
+    /// \internal
     /// <summary>
     /// The RawHID structure describes the format of the raw input
     /// from a Human Interface Device (HID).
@@ -2466,6 +2484,7 @@ namespace OpenTK.Platform.Windows
 
     #region RawInputDeviceInfo
 
+    /// \internal
     /// <summary>
     /// Defines the raw input data coming from any device.
     /// </summary>
@@ -2497,6 +2516,7 @@ namespace OpenTK.Platform.Windows
 
     #region RawInputHIDDeviceInfo
 
+    /// \internal
     /// <summary>
     /// Defines the raw input data coming from the specified Human Interface Device (HID).
     /// </summary>
@@ -2531,6 +2551,7 @@ namespace OpenTK.Platform.Windows
 
     #region RawInputKeyboardDeviceInfo
 
+    /// \internal
     /// <summary>
     /// Defines the raw input data coming from the specified keyboard.
     /// </summary>
@@ -2570,6 +2591,7 @@ namespace OpenTK.Platform.Windows
 
     #region RawInputMouseDeviceInfo
 
+    /// \internal
     /// <summary>
     /// Defines the raw input data coming from the specified mouse.
     /// </summary>
@@ -2610,6 +2632,7 @@ namespace OpenTK.Platform.Windows
 
     #region Rectangle
 
+    /// \internal
     /// <summary>
     /// Defines the coordinates of the upper-left and lower-right corners of a rectangle.
     /// </summary>
@@ -2681,6 +2704,7 @@ namespace OpenTK.Platform.Windows
 
     #region WindowInfo
 
+    /// \internal
     /// <summary>
     /// Contains window information.
     /// </summary>
@@ -3526,6 +3550,7 @@ namespace OpenTK.Platform.Windows
 
     #region QueueStatusFlags
 
+    /// \internal
     /// <summary>
     /// Queue status flags for GetQueueStatus() and MsgWaitForMultipleObjects()
     /// </summary>

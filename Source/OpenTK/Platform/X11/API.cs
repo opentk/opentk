@@ -79,7 +79,10 @@ namespace OpenTK.Platform.X11
             if (defaultDisplay == IntPtr.Zero)
                 throw new PlatformException("Could not establish connection to the X-Server.");
 
-            screenCount = Functions.XScreenCount(DefaultDisplay);
+            using (new XLock(defaultDisplay))
+            {
+                screenCount = Functions.XScreenCount(DefaultDisplay);
+            }
             Debug.Print("Display connection: {0}, Screen count: {1}", DefaultDisplay, ScreenCount);
 
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
