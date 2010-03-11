@@ -33,6 +33,7 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Windows
 {
+    /// \internal
     /// <summary>Describes a win32 window.</summary>
     sealed class WinWindowInfo : IWindowInfo
     {

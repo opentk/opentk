@@ -295,7 +295,7 @@ namespace OpenTK
         /// <param name="e">
         /// The <see cref="System.ComponentModel.CancelEventArgs" /> for this event.
         /// Set e.Cancel to true in order to stop the GameWindow from closing.</param>
-        protected override void OnClosing (System.ComponentModel.CancelEventArgs e)
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             base.OnClosing(e);
             if (!e.Cancel)
@@ -392,6 +392,7 @@ namespace OpenTK
 
                 Visible = true;   // Make sure the GameWindow is visible.
                 OnLoadInternal(EventArgs.Empty);
+                OnResize(EventArgs.Empty);
 
                 // On some platforms, ProcessEvents() does not return while the user is resizing or moving
                 // the window. We can avoid this issue by raising UpdateFrame and RenderFrame events
@@ -510,7 +511,9 @@ namespace OpenTK
                     // rises again.
                     // Note 2: calling Context.VSync = true repeatedly seems to cause jitter on
                     // some configurations. If possible, we should avoid repeated calls.
-                    if (VSync == VSyncMode.Adaptive && TargetRenderPeriod != 0)
+                    // Note 3: we may not read/write the VSync property without a current context.
+                    // This may come to pass if the user has moved rendering to his own thread.
+                    if (Context.IsCurrent && VSync == VSyncMode.Adaptive && TargetRenderPeriod != 0)
                     {
                         // Check if we have enough time for a vsync
                         if (RenderTime > 2.0 * TargetRenderPeriod)
@@ -896,33 +899,33 @@ namespace OpenTK
 
         #endregion
 
-		#region WindowState
+        #region WindowState
 
-		/// <summary>
-		/// Gets or states the state of the NativeWindow.
-		/// </summary>
-		public override WindowState WindowState
-		{
-			get
-			{
-				return base.WindowState;
-			}
-			set
-			{
-				base.WindowState = value;
-				Debug.Print("Updating Context after setting WindowState to {0}", value);
+        /// <summary>
+        /// Gets or states the state of the NativeWindow.
+        /// </summary>
+        public override WindowState WindowState
+        {
+            get
+            {
+                return base.WindowState;
+            }
+            set
+            {
+                base.WindowState = value;
+                Debug.Print("Updating Context after setting WindowState to {0}", value);
 
-				if (Context != null)
-					Context.Update(WindowInfo);
-			}
-		}
-		#endregion
+                if (Context != null)
+                    Context.Update(WindowInfo);
+            }
+        }
+        #endregion
 
-		#endregion
+        #endregion
 
-		#region Events
+        #region Events
 
-		/// <summary>
+        /// <summary>
         /// Occurs before the window is displayed for the first time.
         /// </summary>
         public event EventHandler<EventArgs> Load;
@@ -1000,25 +1003,24 @@ namespace OpenTK
 
         #endregion
 
-		#region OnResize
+        #region OnResize
 
-		protected override void OnResize(EventArgs e)
-		{
-			base.OnResize(e);
-			glContext.Update(base.WindowInfo);
-		}
-
-		#endregion
-
-		#endregion
-
-		#region --- Private Members ---
-
-		#region OnLoadInternal
-
-		private void OnLoadInternal(EventArgs e)
+        protected override void OnResize(EventArgs e)
         {
-            OnResize(EventArgs.Empty);
+            base.OnResize(e);
+            glContext.Update(base.WindowInfo);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region --- Private Members ---
+
+        #region OnLoadInternal
+
+        private void OnLoadInternal(EventArgs e)
+        {
             OnLoad(e);
         }
 

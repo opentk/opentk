@@ -42,35 +42,6 @@ namespace OpenTK.Platform.X11
 
     #endregion
     
-    #region DisplayLock
-    
-    /*
-    internal class DisplayLock : IDisposable
-    {
-        IntPtr display;
-        
-        public DisplayLock(IntPtr display)
-        {
-            if (display == IntPtr.Zero) throw new ArgumentException("display", "Must be a valid X11 display connection.");
-            this.display = display;
-            Functions.XLockDisplay(display);
-        }
-    
-        publc void Dispose()
-        {
-            Functions.XUnlockDisplay(display);
-            GC.SuppressFinalize(this);
-        }
-        
-        ~DisplayLock()
-        {
-            Functions.XUnlockDisplay(display);
-        }
-    }
-    */
-
-    #endregion
-
     #region Structs
    
     #endregion
@@ -140,8 +111,7 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XMoveResizeWindow")]
         public extern static int XMoveResizeWindow(IntPtr display, IntPtr window, int x, int y, int width, int height);
 
-        
-        [DllImport("libX11", EntryPoint = "XResizeWindow")]
+        [DllImport("libX11", EntryPoint = "XMoveWindow")]
         public extern static int XMoveWindow(IntPtr display, IntPtr w, int x, int y);
         
         [DllImport("libX11", EntryPoint = "XResizeWindow")]

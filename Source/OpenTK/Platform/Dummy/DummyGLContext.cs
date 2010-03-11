@@ -13,6 +13,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Dummy
 {
+    /// \internal
     /// <summary>
     /// An empty IGraphicsContext implementation to be used inside the Visual Studio designer.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.

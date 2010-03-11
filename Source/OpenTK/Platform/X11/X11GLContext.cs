@@ -68,15 +68,23 @@ namespace OpenTK.Platform.X11
                 
                 // Create a temporary context to obtain the necessary function pointers.
                 XVisualInfo visual = currentWindow.VisualInfo;
-                IntPtr ctx = Glx.CreateContext(Display, ref visual, IntPtr.Zero, true);
-                if (ctx == IntPtr.Zero)
-                    ctx = Glx.CreateContext(Display, ref visual, IntPtr.Zero, false);
+                IntPtr ctx = IntPtr.Zero;
+
+                using (new XLock(Display))
+                {
+                    ctx = Glx.CreateContext(Display, ref visual, IntPtr.Zero, true);
+                    if (ctx == IntPtr.Zero)
+                        ctx = Glx.CreateContext(Display, ref visual, IntPtr.Zero, false);
+                }
                 
                 if (ctx != IntPtr.Zero)
                 {
                     new Glx().LoadEntryPoints();
-                    Glx.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero);
-                    //Glx.DestroyContext(Display, ctx);
+                    using (new XLock(Display))
+                    {
+                        Glx.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero);
+                        //Glx.DestroyContext(Display, ctx);
+                    }
                     glx_loaded = true;
                 }
             }
@@ -121,15 +129,18 @@ namespace OpenTK.Platform.X11
                         // Is this a single 0, or a <0, 0> pair? (Defensive coding: add two zeroes just in case).
                         attributes.Add(0);
                         attributes.Add(0);
-                        
-                        Handle = new ContextHandle(Glx.Arb.CreateContextAttribs(Display, *fbconfigs,
-                                shareHandle.Handle, direct, attributes.ToArray()));
-                        
-                        if (Handle == ContextHandle.Zero)
+
+                        using (new XLock(Display))
                         {
-                            Debug.Write(String.Format("failed. Trying direct: {0}... ", !direct));
                             Handle = new ContextHandle(Glx.Arb.CreateContextAttribs(Display, *fbconfigs,
-                                    shareHandle.Handle, !direct, attributes.ToArray()));
+                                    shareHandle.Handle, direct, attributes.ToArray()));
+
+                            if (Handle == ContextHandle.Zero)
+                            {
+                                Debug.Write(String.Format("failed. Trying direct: {0}... ", !direct));
+                                Handle = new ContextHandle(Glx.Arb.CreateContextAttribs(Display, *fbconfigs,
+                                        shareHandle.Handle, !direct, attributes.ToArray()));
+                            }
                         }
                         
                         if (Handle == ContextHandle.Zero)
@@ -150,13 +161,16 @@ namespace OpenTK.Platform.X11
                 Debug.Write("Using legacy context creation... ");
                 
                 XVisualInfo info = currentWindow.VisualInfo;
-                // Cannot pass a Property by reference.
-                Handle = new ContextHandle(Glx.CreateContext(Display, ref info, shareHandle.Handle, direct));
-                
-                if (Handle == ContextHandle.Zero)
+                using (new XLock(Display))
                 {
-                    Debug.WriteLine(String.Format("failed. Trying direct: {0}... ", !direct));
-                    Handle = new ContextHandle(Glx.CreateContext(Display, ref info, IntPtr.Zero, !direct));
+                    // Cannot pass a Property by reference.
+                    Handle = new ContextHandle(Glx.CreateContext(Display, ref info, shareHandle.Handle, direct));
+
+                    if (Handle == ContextHandle.Zero)
+                    {
+                        Debug.WriteLine(String.Format("failed. Trying direct: {0}... ", !direct));
+                        Handle = new ContextHandle(Glx.CreateContext(Display, ref info, IntPtr.Zero, !direct));
+                    }
                 }
             }
             
@@ -164,9 +178,12 @@ namespace OpenTK.Platform.X11
                 Debug.Print("Context created (id: {0}).", Handle);
             else
                 throw new GraphicsContextException("Failed to create OpenGL context. Glx.CreateContext call returned 0.");
-            
-            if (!Glx.IsDirect(Display, Handle.Handle))
-                Debug.Print("Warning: Context is not direct.");
+
+            using (new XLock(Display))
+            {
+                if (!Glx.IsDirect(Display, Handle.Handle))
+                    Debug.Print("Warning: Context is not direct.");
+            }
         }
 
         public X11GLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shared, bool direct,
@@ -232,7 +249,11 @@ namespace OpenTK.Platform.X11
             if (window.Display != Display)
                 throw new InvalidOperationException();
 
-            string extensions = Glx.QueryExtensionsString(Display, window.Screen);
+            string extensions = null;
+            using (new XLock(Display))
+            {
+                extensions = Glx.QueryExtensionsString(Display, window.Screen);
+            }
             return !String.IsNullOrEmpty(extensions) && extensions.Contains(e);
         }
 
@@ -247,7 +268,10 @@ namespace OpenTK.Platform.X11
             if (Display == IntPtr.Zero || currentWindow.WindowHandle == IntPtr.Zero)
                 throw new InvalidOperationException(
                     String.Format("Window is invalid. Display ({0}), Handle ({1}).", Display, currentWindow.WindowHandle));
-            Glx.SwapBuffers(Display, currentWindow.WindowHandle);
+            using (new XLock(Display))
+            {
+                Glx.SwapBuffers(Display, currentWindow.WindowHandle);
+            }
         }
 
         #endregion
@@ -264,7 +288,19 @@ namespace OpenTK.Platform.X11
 
             if (window == null)
             {
-                Glx.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero);
+                Debug.Write(String.Format("Releasing context {0} from thread {1} (Display: {2})... ",
+                        Handle, System.Threading.Thread.CurrentThread.ManagedThreadId, Display));
+
+                bool result;
+                using (new XLock(Display))
+                {
+                    result = Glx.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero);
+                    if (result)
+                    {
+                        currentWindow = null;
+                    }
+                }
+                Debug.Print("{0}", result ? "done!" : "failed.");
             }
             else
             {
@@ -277,7 +313,14 @@ namespace OpenTK.Platform.X11
                 if (Display == IntPtr.Zero || w.WindowHandle == IntPtr.Zero || Handle == ContextHandle.Zero)
                     throw new InvalidOperationException("Invalid display, window or context.");
 
-                result = Glx.MakeCurrent(Display, w.WindowHandle, Handle);
+                using (new XLock(Display))
+                {
+                    result = Glx.MakeCurrent(Display, w.WindowHandle, Handle);
+                    if (result)
+                    {
+                        currentWindow = w;
+                    }
+                }
 
                 if (!result)
                     throw new GraphicsContextException("Failed to make context current.");
@@ -294,7 +337,13 @@ namespace OpenTK.Platform.X11
 
         public override bool IsCurrent
         {
-            get { return Glx.GetCurrentContext() == Handle.Handle; }
+            get
+            {
+                using (new XLock(Display))
+                {
+                    return Glx.GetCurrentContext() == Handle.Handle;
+                }
+            }
         }
 
         #endregion
@@ -311,7 +360,11 @@ namespace OpenTK.Platform.X11
             {
                 if (vsync_supported)
                 {
-                    ErrorCode error_code = Glx.Sgi.SwapInterval(value ? 1 : 0);
+                    ErrorCode error_code = 0;
+                    using (new XLock(Display))
+                    {
+                        error_code = Glx.Sgi.SwapInterval(value ? 1 : 0);
+                    }
                     if (error_code != X11.ErrorCode.NO_ERROR)
                         Debug.Print("VSync = {0} failed, error code: {1}.", value, error_code);
                     vsync_interval = value ? 1 : 0;
@@ -325,7 +378,10 @@ namespace OpenTK.Platform.X11
 
         public override IntPtr GetAddress(string function)
         {
-            return Glx.GetProcAddress(function);
+            using (new XLock(Display))
+            {
+                return Glx.GetProcAddress(function);
+            }
         }
 
         #endregion
@@ -370,18 +426,27 @@ namespace OpenTK.Platform.X11
                 if (manuallyCalled)
                 {
                     IntPtr display = Display;
-                    if (IsCurrent)
-                        Glx.MakeCurrent(display, IntPtr.Zero, IntPtr.Zero);
 
-                    Glx.DestroyContext(display, Handle);
+                    if (IsCurrent)
+                    {
+                        using (new XLock(display))
+                        {
+                            Glx.MakeCurrent(display, IntPtr.Zero, IntPtr.Zero);
+                        }
+                    }
+                    using (new XLock(display))
+                    {
+                        Glx.DestroyContext(display, Handle);
+                    }
                 }
-                else
-                {
-                    Debug.Print("[Warning] {0} leaked.", this.GetType().Name);
-                }
-                IsDisposed = true;
             }
+            else
+            {
+                Debug.Print("[Warning] {0} leaked.", this.GetType().Name);
+            }
+            IsDisposed = true;
         }
+        
 
         ~X11GLContext()
         {

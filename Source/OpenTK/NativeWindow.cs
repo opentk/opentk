@@ -872,7 +872,7 @@ namespace OpenTK
         protected void ProcessEvents(bool retainEvents)
         {
             EnsureUndisposed();
-            if (!events) Events = true;
+            if (!retainEvents && !events) Events = true;
             implementation.ProcessEvents();
         }
 

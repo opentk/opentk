@@ -37,6 +37,7 @@ using System.Drawing;
 
 namespace OpenTK.Platform.Windows
 {
+    /// \internal
     /// <summary>
     /// Drives GameWindow on Windows.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
@@ -45,15 +46,12 @@ namespace OpenTK.Platform.Windows
     {
         #region Fields
 
-        readonly static object SyncRoot = new object();
-
         const ExtendedWindowStyle ParentStyleEx = ExtendedWindowStyle.WindowEdge | ExtendedWindowStyle.ApplicationWindow;
         const ExtendedWindowStyle ChildStyleEx = 0;
 
         readonly IntPtr Instance = Marshal.GetHINSTANCE(typeof(WinGLNative).Module);
-        readonly IntPtr ClassName;
+        readonly IntPtr ClassName = Marshal.StringToHGlobalAuto(Guid.NewGuid().ToString());
         readonly WindowProcedure WindowProcedureDelegate;
-        readonly UIntPtr ModalLoopTimerId;
         readonly uint ModalLoopTimerPeriod = 1;
         UIntPtr timer_handle;
         readonly Functions.TimerProc ModalLoopCallback;
@@ -69,6 +67,8 @@ namespace OpenTK.Platform.Windows
         bool borderless_maximized_window_state = false; // Hack to get maximized mode with hidden border (not normally possible).
         bool focused;
         bool mouse_outside_window = true;
+        bool invisible_since_creation; // Set by WindowsMessage.CREATE and consumed by Visible = true (calls BringWindowToFront).
+        int suppress_resize; // Used in WindowBorder and WindowState in order to avoid rapid, consecutive resize events.
 
         Rectangle
             bounds = new Rectangle(),
@@ -93,21 +93,12 @@ namespace OpenTK.Platform.Windows
 
         KeyPressEventArgs key_press = new KeyPressEventArgs((char)0);
 
-        static int window_count;
-
         #endregion
 
         #region Contructors
 
         public WinGLNative(int x, int y, int width, int height, string title, GameWindowFlags options, DisplayDevice device)
         {
-            lock (SyncRoot)
-            {
-                ++window_count;
-                ClassName = Marshal.StringToHGlobalAuto(typeof(WinGLNative).Name + window_count.ToString());
-                ModalLoopTimerId = new UIntPtr((uint)window_count);
-            }
-
             // This is the main window procedure callback. We need the callback in order to create the window, so
             // don't move it below the CreateWindow calls.
             WindowProcedureDelegate = WindowProcedure;
@@ -165,7 +156,7 @@ namespace OpenTK.Platform.Windows
 
                     if (new_focused_state != Focused && FocusedChanged != null)
                         FocusedChanged(this, EventArgs.Empty);
-                    return IntPtr.Zero;
+                    break;
 
                 case WindowMessage.ENTERMENULOOP:
                 case WindowMessage.ENTERSIZEMOVE:
@@ -213,7 +204,7 @@ namespace OpenTK.Platform.Windows
                                     SetWindowPosFlags.NOZORDER | SetWindowPosFlags.NOOWNERZORDER |
                                     SetWindowPosFlags.NOACTIVATE | SetWindowPosFlags.NOSENDCHANGING);
 
-                                if (Resize != null)
+                                if (suppress_resize <= 0 && Resize != null)
                                     Resize(this, EventArgs.Empty);
                             }
                         }
@@ -268,7 +259,7 @@ namespace OpenTK.Platform.Windows
                         key_press.KeyChar = (char)wParam.ToInt32();
                     else
                         key_press.KeyChar = (char)wParam.ToInt64();
-                    
+
                     if (KeyPress != null)
                         KeyPress(this, key_press);
                     break;
@@ -294,7 +285,7 @@ namespace OpenTK.Platform.Windows
                 case WindowMessage.MOUSELEAVE:
                     mouse_outside_window = true;
                     // Mouse tracking is disabled automatically by the OS
-                    
+
                     if (MouseLeave != null)
                         MouseLeave(this, EventArgs.Empty);
                     break;
@@ -441,13 +432,13 @@ namespace OpenTK.Platform.Windows
                         Functions.GetClientRect(handle, out rect);
                         client_rectangle = rect.ToRectangle();
 
-                        Functions.SetForegroundWindow(handle);
+                        invisible_since_creation = true;
                     }
                     break;
 
                 case WindowMessage.CLOSE:
                     System.ComponentModel.CancelEventArgs e = new System.ComponentModel.CancelEventArgs();
-                    
+
                     if (Closing != null)
                         Closing(this, e);
 
@@ -471,7 +462,7 @@ namespace OpenTK.Platform.Windows
 
                     if (Closed != null)
                         Closed(this, EventArgs.Empty);
-                    
+
                     break;
 
                 #endregion
@@ -496,7 +487,7 @@ namespace OpenTK.Platform.Windows
         {
             if (timer_handle == UIntPtr.Zero)
             {
-                timer_handle = Functions.SetTimer(handle, ModalLoopTimerId, ModalLoopTimerPeriod, ModalLoopCallback);
+                timer_handle = Functions.SetTimer(handle, new UIntPtr(1), ModalLoopTimerPeriod, ModalLoopCallback);
                 if (timer_handle == UIntPtr.Zero)
                     Debug.Print("[Warning] Failed to set modal loop timer callback ({0}:{1}->{2}).",
                         GetType().Name, handle, Marshal.GetLastWin32Error());
@@ -518,7 +509,7 @@ namespace OpenTK.Platform.Windows
 
         #region IsIdle
 
-       bool IsIdle
+        bool IsIdle
         {
             get
             {
@@ -608,6 +599,34 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion
+
+        void HideBorder()
+        {
+            suppress_resize++;
+            WindowBorder = WindowBorder.Hidden;
+            ProcessEvents();
+            suppress_resize--;
+        }
+
+        void RestoreBorder()
+        {
+            suppress_resize++;
+            WindowBorder =
+                deferred_window_border.HasValue ? deferred_window_border.Value :
+                previous_window_border.HasValue ? previous_window_border.Value :
+                WindowBorder;
+            ProcessEvents();
+            suppress_resize--;
+            deferred_window_border = previous_window_border = null;
+        }
+
+        void ResetWindowState()
+        {
+            suppress_resize++;
+            WindowState = WindowState.Normal;
+            ProcessEvents();
+            suppress_resize--;
+        }
 
         #endregion
 
@@ -699,7 +718,7 @@ namespace OpenTK.Platform.Windows
         public int Width
         {
             get { return ClientRectangle.Width; }
-            set { ClientRectangle = new Rectangle(Location, new Size(value, Height)); }
+            set { ClientRectangle = new Rectangle(0, 0, value, Height); }
         }
 
         #endregion
@@ -709,7 +728,7 @@ namespace OpenTK.Platform.Windows
         public int Height
         {
             get { return ClientRectangle.Height; }
-            set { ClientRectangle = new Rectangle(Location, new Size(Width, value)); }
+            set { ClientRectangle = new Rectangle(0, 0, Width, value); }
         }
 
         #endregion
@@ -718,8 +737,8 @@ namespace OpenTK.Platform.Windows
 
         public int X
         {
-            get { return ClientRectangle.X; }
-            set { ClientRectangle = new Rectangle(new Point(value, Y), Size); }
+            get { return Location.X; }
+            set { Location = new Point(value, Y); }
         }
 
         #endregion
@@ -728,8 +747,8 @@ namespace OpenTK.Platform.Windows
 
         public int Y
         {
-            get { return ClientRectangle.Y; }
-            set { ClientRectangle = new Rectangle(new Point(X, value), Size); }
+            get { return Location.Y; }
+            set { Location = new Point(X, value); }
         }
 
         #endregion
@@ -798,6 +817,11 @@ namespace OpenTK.Platform.Windows
                 if (value)
                 {
                     Functions.ShowWindow(window.WindowHandle, ShowWindowCommand.SHOW);
+                    if (invisible_since_creation)
+                    {
+                        Functions.BringWindowToTop(window.WindowHandle);
+                        Functions.SetForegroundWindow(window.WindowHandle);
+                    }
                 }
                 else if (!value)
                 {
@@ -856,7 +880,7 @@ namespace OpenTK.Platform.Windows
                         // manually to cover the whole working area of the current monitor.
 
                         // Reset state to avoid strange interactions with fullscreen/minimized windows.
-                        WindowState = WindowState.Normal;
+                        ResetWindowState();
 
                         if (WindowBorder == WindowBorder.Hidden)
                         {
@@ -885,11 +909,11 @@ namespace OpenTK.Platform.Windows
                         // command for windows with hidden borders.
 
                         // Reset state to avoid strange side-effects from maximized/minimized windows.
-                        WindowState = WindowState.Normal;
+                        ResetWindowState();
 
                         previous_bounds = Bounds;
                         previous_window_border = WindowBorder;
-                        WindowBorder = WindowBorder.Hidden;
+                        HideBorder();
                         command = ShowWindowCommand.MAXIMIZE;
 
                         Functions.SetForegroundWindow(window.WindowHandle);
@@ -900,21 +924,17 @@ namespace OpenTK.Platform.Windows
                 if (command != 0)
                     Functions.ShowWindow(window.WindowHandle, command);
 
+                // Restore previous window border or apply pending border change when leaving fullscreen mode.
+                if (exiting_fullscreen)
+                {
+                    RestoreBorder();
+                }
+
                 // Restore previous window size/location if necessary
                 if (command == ShowWindowCommand.RESTORE && previous_bounds != Rectangle.Empty)
                 {
                     Bounds = previous_bounds;
                     previous_bounds = Rectangle.Empty;
-                }
-
-                // Restore previous window border or apply pending border change when leaving fullscreen mode.
-                if (exiting_fullscreen)
-                {
-                    WindowBorder =
-                        deferred_window_border.HasValue ? deferred_window_border.Value :
-                        previous_window_border.HasValue ? previous_window_border.Value :
-                        WindowBorder;
-                    deferred_window_border = previous_window_border = null;
                 }
             }
         }
@@ -950,7 +970,7 @@ namespace OpenTK.Platform.Windows
                 // To ensure maximized/minimized windows work correctly, reset state to normal,
                 // change the border, then go back to maximized/minimized.
                 WindowState state = WindowState;
-                WindowState = WindowState.Normal;
+                ResetWindowState();
 
                 WindowStyle style = WindowStyle.ClipChildren | WindowStyle.ClipSiblings;
 
@@ -1061,7 +1081,7 @@ namespace OpenTK.Platform.Windows
         public event EventHandler<EventArgs> MouseEnter;
 
         public event EventHandler<EventArgs> MouseLeave;
-        
+
         #endregion
 
         #endregion

@@ -20,6 +20,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.Platform.Windows
 {
+    /// \internal
     /// <summary>
     /// Provides methods to create and control an opengl context on the Windows platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.

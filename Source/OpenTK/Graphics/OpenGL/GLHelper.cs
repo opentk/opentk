@@ -186,7 +186,7 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region --- Overloads for OpenTK.Math ---
+        #region Normal|RasterPos|Vertex|TexCoord|Rotate|Scale|Translate|*Matrix
 
         public static void Normal3(Vector3 normal)
         {
@@ -297,6 +297,82 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
 
+        public static void UniformMatrix4(int location, bool transpose, ref Matrix4 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix4(location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void Normal3(Vector3d normal)
+        {
+            GL.Normal3(normal.X, normal.Y, normal.Z);
+        }
+
+        public static void RasterPos2(Vector2d pos)
+        {
+            GL.RasterPos2(pos.X, pos.Y);
+        }
+
+        public static void RasterPos3(Vector3d pos)
+        {
+            GL.RasterPos3(pos.X, pos.Y, pos.Z);
+        }
+
+        public static void RasterPos4(Vector4d pos)
+        {
+            GL.RasterPos4(pos.X, pos.Y, pos.Z, pos.W);
+        }
+
+        public static void Vertex2(Vector2d v)
+        {
+            GL.Vertex2(v.X, v.Y);
+        }
+
+        public static void Vertex3(Vector3d v)
+        {
+            GL.Vertex3(v.X, v.Y, v.Z);
+        }
+
+        public static void Vertex4(Vector4d v)
+        {
+            GL.Vertex4(v.X, v.Y, v.Z, v.W);
+        }
+
+        public static void TexCoord2(Vector2d v)
+        {
+            GL.TexCoord2(v.X, v.Y);
+        }
+
+        public static void TexCoord3(Vector3d v)
+        {
+            GL.TexCoord3(v.X, v.Y, v.Z);
+        }
+
+        public static void TexCoord4(Vector4d v)
+        {
+            GL.TexCoord4(v.X, v.Y, v.Z, v.W);
+        }
+
+        public static void Rotate(double angle, Vector3d axis)
+        {
+            GL.Rotate((double)angle, axis.X, axis.Y, axis.Z);
+        }
+
+        public static void Scale(Vector3d scale)
+        {
+            GL.Scale(scale.X, scale.Y, scale.Z);
+        }
+
+        public static void Translate(Vector3d trans)
+        {
+            GL.Translate(trans.X, trans.Y, trans.Z);
+        }
+
         public static void MultMatrix(ref Matrix4d mat)
         {
             unsafe
@@ -337,17 +413,6 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Double* m_ptr = &mat.Row0.X)
                 {
                     GL.MultTransposeMatrix((Double*)m_ptr);
-                }
-            }
-        }
-
-        public static void UniformMatrix4(int location, bool transpose, ref Matrix4 matrix)
-        {
-            unsafe
-            {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
-                {
-                    GL.UniformMatrix4(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -553,7 +618,7 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region public static void VertexAttrib2(Int32 index, ref Vector2 v)
+        #region VertexAttrib|MultiTexCoord
 
         [CLSCompliant(false)]
         public static void VertexAttrib2(Int32 index, ref Vector2 v)
@@ -561,19 +626,11 @@ namespace OpenTK.Graphics.OpenGL
             GL.VertexAttrib2(index, v.X, v.Y);
         }
 
-        #endregion
-
-        #region public static void VertexAttrib3(Int32 index, ref Vector3 v)
-
         [CLSCompliant(false)]
         public static void VertexAttrib3(Int32 index, ref Vector3 v)
         {
             GL.VertexAttrib3(index, v.X, v.Y, v.Z);
         }
-
-        #endregion
-
-        #region public static void VertexAttrib4(Int32 index, ref Vector4 v)
 
         [CLSCompliant(false)]
         public static void VertexAttrib4(Int32 index, ref Vector4 v)
@@ -581,91 +638,103 @@ namespace OpenTK.Graphics.OpenGL
             GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
 
-        #endregion
-
-        #region public static void VertexAttrib2(Int32 index, Vector2 v)
-
         public static void VertexAttrib2(Int32 index, Vector2 v)
         {
             GL.VertexAttrib2(index, v.X, v.Y);
         }
-
-        #endregion
-
-        #region public static void VertexAttrib3(Int32 index, Vector3 v)
 
         public static void VertexAttrib3(Int32 index, Vector3 v)
         {
             GL.VertexAttrib3(index, v.X, v.Y, v.Z);
         }
 
-        #endregion
-
-        #region public static void VertexAttrib4(Int32 index, Vector4 v)
-
         public static void VertexAttrib4(Int32 index, Vector4 v)
         {
             GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
-
-        #endregion
-
-        #region public static void MultiTexCoord2(TextureUnit target, ref Vector2 v)
 
         public static void MultiTexCoord2(TextureUnit target, ref Vector2 v)
         {
             GL.MultiTexCoord2(target, v.X, v.Y);
         }
 
-        #endregion
-
-        #region public static void MultiTexCoord3(TextureUnit target, ref Vector3 v)
-
         public static void MultiTexCoord3(TextureUnit target, ref Vector3 v)
         {
             GL.MultiTexCoord3(target, v.X, v.Y, v.Z);
         }
-
-        #endregion
-
-        #region public static void MultiTexCoord4(TextureUnit target, ref Vector4 v)
 
         public static void MultiTexCoord4(TextureUnit target, ref Vector4 v)
         {
             GL.MultiTexCoord4(target, v.X, v.Y, v.Z, v.W);
         }
 
+        [CLSCompliant(false)]
+        public static void VertexAttrib2(Int32 index, ref Vector2d v)
+        {
+            GL.VertexAttrib2(index, v.X, v.Y);
+        }
+
+        [CLSCompliant(false)]
+        public static void VertexAttrib3(Int32 index, ref Vector3d v)
+        {
+            GL.VertexAttrib3(index, v.X, v.Y, v.Z);
+        }
+
+        [CLSCompliant(false)]
+        public static void VertexAttrib4(Int32 index, ref Vector4d v)
+        {
+            GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
+        }
+
+        public static void VertexAttrib2(Int32 index, Vector2d v)
+        {
+            GL.VertexAttrib2(index, v.X, v.Y);
+        }
+
+        public static void VertexAttrib3(Int32 index, Vector3d v)
+        {
+            GL.VertexAttrib3(index, v.X, v.Y, v.Z);
+        }
+
+        public static void VertexAttrib4(Int32 index, Vector4d v)
+        {
+            GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
+        }
+
+        public static void MultiTexCoord2(TextureUnit target, ref Vector2d v)
+        {
+            GL.MultiTexCoord2(target, v.X, v.Y);
+        }
+
+        public static void MultiTexCoord3(TextureUnit target, ref Vector3d v)
+        {
+            GL.MultiTexCoord3(target, v.X, v.Y, v.Z);
+        }
+
+        public static void MultiTexCoord4(TextureUnit target, ref Vector4d v)
+        {
+            GL.MultiTexCoord4(target, v.X, v.Y, v.Z, v.W);
+        }
+
         #endregion
 
-        #region public static void Rect(System.Drawing.RectangleF rect)
+        #region Rect
 
         public static void Rect(System.Drawing.RectangleF rect)
         {
             GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
         }
 
-        #endregion
-
-        #region public static void Rect(ref System.Drawing.RectangleF rect)
+        public static void Rect(System.Drawing.Rectangle rect)
+        {
+            GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
+        }
 
         [CLSCompliant(false)]
         public static void Rect(ref System.Drawing.RectangleF rect)
         {
             GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
         }
-
-        #endregion
-
-        #region public static void Rect(System.Drawing.Rectangle rect)
-
-        public static void Rect(System.Drawing.Rectangle rect)
-        {
-            GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
-        }
-
-        #endregion
-
-        #region public static void Rect(ref System.Drawing.Rectangle rect)
 
         [CLSCompliant(false)]
         public static void Rect(ref System.Drawing.Rectangle rect)
