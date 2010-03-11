@@ -15,6 +15,7 @@ using System.Drawing;
 
 namespace OpenTK.Platform.Windows
 {
+    /// \internal
     /// <summary>
     /// Contains methods to register for and process mouse WM_INPUT messages.
     /// </summary>

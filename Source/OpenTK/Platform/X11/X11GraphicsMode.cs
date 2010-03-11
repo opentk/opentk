@@ -165,36 +165,33 @@ namespace OpenTK.Platform.X11
 
             // Select a visual that matches the parameters set by the user.
             IntPtr display = API.DefaultDisplay;
-            try
+            using (new XLock(display))
             {
-                Functions.XLockDisplay(display);
-    
-                int screen = Functions.XDefaultScreen(display);
-                IntPtr root = Functions.XRootWindow(display, screen);
-                Debug.Print("Display: {0}, Screen: {1}, RootWindow: {2}", display, screen, root);
-
-                unsafe
+                try
                 {
-                    Debug.Print("Getting FB config.");
-                    int fbcount;
-                    // Note that ChooseFBConfig returns an array of GLXFBConfig opaque structures (i.e. mapped to IntPtrs).
-                    IntPtr* fbconfigs = Glx.ChooseFBConfig(display, screen, visualAttributes.ToArray(), out fbcount);
-                    if (fbcount > 0 && fbconfigs != null)
+                    int screen = Functions.XDefaultScreen(display);
+                    IntPtr root = Functions.XRootWindow(display, screen);
+                    Debug.Print("Display: {0}, Screen: {1}, RootWindow: {2}", display, screen, root);
+    
+                    unsafe
                     {
-                        // We want to use the first GLXFBConfig from the fbconfigs array (the first one is the best match).
-                        visual = Glx.GetVisualFromFBConfig(display, *fbconfigs);
-                        Functions.XFree((IntPtr)fbconfigs);
+                        Debug.Print("Getting FB config.");
+                        int fbcount;
+                        // Note that ChooseFBConfig returns an array of GLXFBConfig opaque structures (i.e. mapped to IntPtrs).
+                        IntPtr* fbconfigs = Glx.ChooseFBConfig(display, screen, visualAttributes.ToArray(), out fbcount);
+                        if (fbcount > 0 && fbconfigs != null)
+                        {
+                            // We want to use the first GLXFBConfig from the fbconfigs array (the first one is the best match).
+                            visual = Glx.GetVisualFromFBConfig(display, *fbconfigs);
+                            Functions.XFree((IntPtr)fbconfigs);
+                        }
                     }
                 }
-            }
-            catch (EntryPointNotFoundException)
-            {
-                Debug.Print("Function glXChooseFBConfig not supported.");
-                return IntPtr.Zero;
-            }
-            finally
-            {
-                Functions.XUnlockDisplay(display);
+                catch (EntryPointNotFoundException)
+                {
+                    Debug.Print("Function glXChooseFBConfig not supported.");
+                    return IntPtr.Zero;
+                }
             }
 
             return visual;
@@ -266,14 +263,9 @@ namespace OpenTK.Platform.X11
 
             Debug.Print("Falling back to glXChooseVisual.");
             IntPtr display = API.DefaultDisplay;
-            try
+            using (new XLock(display))
             {
-                Functions.XLockDisplay(display);
                 return Glx.ChooseVisual(display, Functions.XDefaultScreen(display), visualAttributes.ToArray());
-            }
-            finally
-            {
-                Functions.XUnlockDisplay(display);
             }
         }
 

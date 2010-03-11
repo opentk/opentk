@@ -38,6 +38,7 @@ GLuint64,           UInt64
 
 # ARB_sync (introduced in 3.2)
 sync,           IntPtr
+GLsync,		IntPtr
 
 # Wgl types.
 PROC,           IntPtr

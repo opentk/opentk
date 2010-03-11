@@ -1,5 +1,4 @@
 [General]
-+ Split TextPrinter from the core OpenTK.
 + Change all public APIs to conform to the class library interface guidelines.
 + Revisit all classes and make sure IDisposable is correctly implemented.
 + Remove System.Windows.Forms dependency.

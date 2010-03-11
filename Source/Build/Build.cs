@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
@@ -21,23 +21,27 @@ namespace OpenTK.Build
 {
     class Project
     {
-        static string RootPath = Directory.GetCurrentDirectory();
-        static string SourcePath = Path.Combine(RootPath, "Source");
+        static readonly string RootPath = Directory.GetCurrentDirectory();
+        static readonly string SourcePath = Path.Combine(RootPath, "Source");
+        static readonly string DocPath = Path.Combine(RootPath, "Documentation");
 
         const string bindings = "Generator.Prebuild.xml";
         const string opentk = "OpenTK.Prebuild.xml";
         const string quickstart = "QuickStart.Prebuild.xml";
+        const string DoxyFile = "Doxyfile";
+        const string ReferenceFile = "Reference.pdf";
 
-        const string keyfile = "OpenTK.snk"; // Do not change
+        const string KeyFile = "OpenTK.snk"; // Do not change
 
         const string Usage =  @"Usage: Build.exe target
-    target: one of vs, vs9, clean, distclean, help";
+    target: one of vs, vs9, doc, clean, distclean, help";
 
         const string Help = Usage + @"
 
 Available targets:
     vs:        Create Visual Studio 2005 project files.
     vs9:       Create Visual Studio 2008 project files.
+    doc:       Builds html and pdf documentation.
     clean:     Delete intermediate files but leave final binaries and project
                files intact.
     distclean: Delete intermediate files, final binaries and project files.
@@ -60,6 +64,7 @@ Assembly signing:
             Net,
             Clean,
             DistClean,
+            Docs,
         }
 
         static void PrintUsage()
@@ -87,7 +92,7 @@ Assembly signing:
 
             try
             {
-                PreparePrebuildFiles();
+                PrepareBuildFiles();
                 PrepareEnvironment();
 
                 BuildTarget target = SelectTarget(args);
@@ -102,7 +107,7 @@ Assembly signing:
             {
                 // Wait until Prebuild releases the input files.
                 System.Threading.Thread.Sleep(2000);
-                DeletePrebuildFiles();
+                DeleteBuildFiles();
             }
 
             WaitForExit();
@@ -115,16 +120,26 @@ Assembly signing:
             Environment.SetEnvironmentVariable("ProgramFiles(x86)", String.Empty, EnvironmentVariableTarget.Process);
         }
 
-        private static void PreparePrebuildFiles()
+        private static void PrepareBuildFiles()
         {
             //string sign_assembly = CheckKeyFile(keyfile) ? "SIGN_ASSEMBLY" : "";
-            string sign_assembly = CheckKeyFile(keyfile) ? @"<KeyFile>" + keyfile + @"</KeyFile>" : "";
+            string sign_assembly = CheckKeyFile(KeyFile) ? @"<KeyFile>" + KeyFile + @"</KeyFile>" : "";
             if (sign_assembly != "")
-                DistributeKeyFile(keyfile);
+                DistributeKeyFile(KeyFile);
 
             File.WriteAllText(bindings, String.Format(Resources.Generator, sign_assembly));
             File.WriteAllText(opentk, String.Format(Resources.OpenTK, sign_assembly));
             File.WriteAllText(quickstart, String.Format(Resources.QuickStart, sign_assembly));
+            
+            string doxy = Regex.Replace(Resources.DoxyFile, @"(\{\}|\{\w+\})", "");
+            File.WriteAllText(DoxyFile, String.Format(doxy, GetVersion()));
+        }
+
+        // Returns the version of the executing assembly.
+        static string GetVersion()
+        {
+            string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            return version;
         }
 
         // Copies keyfile to the various source directories. This is necessary
@@ -172,6 +187,11 @@ Assembly signing:
                     case "vs2008":
                     case "vs9":
                         target = BuildTarget.VS2008;
+                        break;
+
+                    case "doc":
+                    case "docs":
+                        target = BuildTarget.Docs;
                         break;
 
                     case "clean":
@@ -230,13 +250,40 @@ Assembly signing:
                     ExecutePrebuild("/target", "vs2008", "/file", quickstart);
                     break;
 
+                case BuildTarget.Docs:
+                    Console.WriteLine("Generating reference documentation (this may take several minutes)...");
+                    Console.WriteLine("Generating html sources...");
+                    try { ExecuteCommand("doxygen", null, null); }
+                    catch
+                    {
+                        Console.WriteLine("Failed to run \"doxygen\".");
+                        Console.WriteLine("Please consult the documentation for more information.");
+                    }
+
+                    string latex_path = Path.Combine(Path.Combine(DocPath, "Source"), "latex");
+                    Console.WriteLine("Compiling sources to pdf...");
+                    try
+                    {
+                        ExecuteCommand("pdflatex", latex_path, "-interaction=batchmode", "refman.tex");
+                        ExecuteCommand("makeindex", latex_path, "-q", "refman.idx");
+                        ExecuteCommand("pdflatex", latex_path, "-interaction=batchmode", "refman.tex");
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Failed to run \"pdflatex\" or \"makeindex\".");
+                        Console.WriteLine("Please consult the documentation for more information");
+                    }
+                    File.Copy(Path.Combine(latex_path, "refman.pdf"),
+                        Path.Combine(DocPath, ReferenceFile), true);
+                    break;
+
                 case BuildTarget.Clean:
                     Console.WriteLine("Cleaning intermediate object files.");
                     ExecutePrebuild("/clean", "/yes", "/file", bindings);
                     ExecutePrebuild("/clean", "/yes", "/file", opentk);
                     ExecutePrebuild("/clean", "/yes", "/file", quickstart);
                     DeleteDirectories(RootPath, "obj");
-                    DeleteFiles(SourcePath, keyfile);
+                    DeleteFiles(SourcePath, KeyFile);
                     break;
 
                 case BuildTarget.DistClean:
@@ -246,11 +293,21 @@ Assembly signing:
                     ExecutePrebuild("/clean", "/yes", "/file", quickstart);
                     DeleteDirectories(RootPath, "obj");
                     DeleteDirectories(RootPath, "bin");
-                    DeleteFiles(SourcePath, keyfile);
+                    DeleteDirectories(DocPath, "Source");
+                    DeleteFiles(DocPath, ReferenceFile);
+                    DeleteFiles(SourcePath, KeyFile);
 
                     string binaries_path = Path.Combine(RootPath, "Binaries");
-                    if (Directory.Exists(binaries_path))
-                        Directory.Delete(binaries_path, true);
+                    try
+                    {
+                        if (Directory.Exists(binaries_path))
+                            Directory.Delete(binaries_path, true);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Failed to delete directory \"{0}\".", binaries_path);
+                        Console.WriteLine(e.ToString());
+                    }
 
                     break;
 
@@ -265,18 +322,20 @@ Assembly signing:
         {
             if (Debugger.IsAttached)
             {
+                Console.WriteLine();
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey(true);
             }
         }
 
-        static void DeletePrebuildFiles()
+        static void DeleteBuildFiles()
         {
             try
             {
                 File.Delete(bindings);
                 File.Delete(opentk);
                 File.Delete(quickstart);
+                File.Delete(DoxyFile);
             }
             catch (IOException e)
             {
@@ -296,9 +355,7 @@ Assembly signing:
         static void DeleteDirectories(string root_path, string search)
         {
             Console.WriteLine("Deleting {0} directories", search);
-            List<string> matches = new List<string>();
-            FindDirectories(root_path, search, matches);
-            foreach (string m in matches)
+            foreach (string m in Directory.GetDirectories(root_path, search, SearchOption.AllDirectories))
             {
                 Directory.Delete(m, true);
             }
@@ -307,9 +364,7 @@ Assembly signing:
         static void DeleteFiles(string root_path, string search)
         {
             Console.WriteLine("Deleting {0} files", search);
-            List<string> matches = new List<string>();
-            FindDirectories(root_path, search, matches);
-            foreach (string m in matches)
+            foreach (string m in Directory.GetFiles(root_path, search, SearchOption.AllDirectories))
             {
                 File.Delete(m);
             }
@@ -384,6 +439,31 @@ Assembly signing:
         static void ExecutePrebuild(params string[] options)
         {
             Prebuild.EntryPoint.Invoke(null, new object[] { options });
+        }
+
+        static void ExecuteCommand(string command, string workingDirectory, params string[] options)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo(command);
+            
+            if (options != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (string opt in options)
+                {
+                    sb.Append(opt);
+                    sb.Append(" ");
+                }
+                psi.Arguments = sb.ToString();
+            }
+
+            if (!String.IsNullOrEmpty(workingDirectory))
+            {
+                psi.WorkingDirectory = workingDirectory;
+                psi.UseShellExecute = false;
+            }
+
+            Process p = Process.Start(psi);
+            p.WaitForExit();
         }
 
         static bool CheckKeyFile(string keyfile)

@@ -1,4 +1,373 @@
 ---------------------------------
+ OpenTK 1.0 beta-2 -> 1.0 beta-3
+---------------------------------
+
+2010-03-09  the_fiddler
+
+	* Source/Compatibility/Properties/AssemblyInfo.cs,
+	  Source/Examples/Properties/AssemblyInfo.cs,
+	  Source/GLControl/Properties/AssemblyInfo.cs,
+	  Source/OpenTK/Properties/AssemblyInfo.cs: Updated version numbers
+	  for 1.0-beta3 release.
+
+2010-03-05  the_fiddler
+
+	* Build.exe: Added error messages for missing doxygen or latex
+	  installations.
+
+	* Source/Build/Build.cs: Added error messages for missing doxygen
+	  or latex installations.
+
+	* Source/OpenTK/Platform/X11/Functions.cs: Removed unused code.
+
+	* Source/OpenTK/Platform/X11/API.cs,
+	  Source/OpenTK/Platform/X11/X11GLContext.cs,
+	  Source/OpenTK/Platform/X11/X11GLNative.cs,
+	  Source/OpenTK/Platform/X11/X11GraphicsMode.cs: Ensure that all X
+	  function calls are protected by XLockDisplay/XUnlockDisplay.
+	  Fixed nasty deadlock bug due to (incorrectly) nested XLockDisplay
+	  calls. Removed XLockDisplay from methods that do not use a
+	  display connection.
+
+	* Source/OpenTK/GameWindow.cs: Do not access VSync property without
+	  checking for a current context (avoids
+	  GraphicsContextMissingException when the user moves the context
+	  to its own rendering thread.)
+
+	* Source/Examples/OpenGL/1.5/VertexBufferObject.cs,
+	  Source/Examples/OpenTK/GameWindow/ThreadedRendering.cs,
+	  Source/Examples/Shapes/VertexPositionColor.cs: Added example for
+	  threaded rendering (where OpenGL rendering is performed on its
+	  own thread.) Moved VertexPositionColor struct to its own file, to
+	  simplify sharing between samples.
+
+	* Source/Examples/Main.cs: Added missing license information.
+
+	* Source/OpenTK/Platform/X11/Bindings/Glx.cs: * Glx.cs: Do not use
+	  ContextHandle directly as a p/invoke parameter (not portable).
+
+	* Source/OpenTK/Platform/Dummy/DummyGLContext.cs,
+	  Source/OpenTK/Platform/MacOS/CarbonWindowInfo.cs,
+	  Source/OpenTK/Platform/Windows/API.cs,
+	  Source/OpenTK/Platform/Windows/WinGLContext.cs,
+	  Source/OpenTK/Platform/Windows/WinGLNative.cs,
+	  Source/OpenTK/Platform/Windows/WinRawMouse.cs,
+	  Source/OpenTK/Platform/Windows/WinWindowInfo.cs: Marked internal
+	  documentation as such, to avoid littering doxygen output.
+
+	* Source/Examples/OpenTK/Test/GameWindowStates.cs: * Minor code
+	  cleanup and reorganization. * Added support for changing the
+	  window size via + and - keys. * Moved key handling to the KeyDown
+	  event. The user can now press and hold a key to observe how the
+	  GameWindow reacts.
+
+	* Source/OpenTK/Platform/X11/X11GLNative.cs: * Protect all xlib
+	  calls by XLockDisplay/XUnlockDisplay. * Remove
+	  SubstructureNotifyMask, as we are not creating any child windows.
+	  * Return ClientSize instead of Bounds.Size and Location instead
+	  of Bounds.Location for the Size and Location properties
+	  respectively. This aligns the implementation of these properties
+	  on win32 and x11.
+
+2010-03-02  the_fiddler
+
+	* Source/Compatibility/Properties/AssemblyInfo.cs,
+	  Source/Examples/Properties/AssemblyInfo.cs,
+	  Source/GLControl/Properties/AssemblyInfo.cs,
+	  Source/OpenTK/Properties/AssemblyInfo.cs: Bumped version numbers
+	  for release.
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: X and Y properties
+	  now correctly get and set the window location on screen.
+
+	* Source/Examples/OpenTK/Test/GameWindowStates.cs: Allow arrow keys
+	  to move the window around the screen.
+
+	* Source/OpenTK/Graphics/OpenGL/GLHelper.cs: Added overloads for
+	  Vector[234]d and Matrix4d for a large number of helper functions.
+	  Fixes issue [#1596]: "Vector3d and Vector2d support in Functions
+	  like GL.Vertex3(), GL.Color3(), GL.TexCoord2() etc.".
+
+	* Source/OpenTK/GameWindow.cs: Replaced tabs with spaces.
+	  
+	  GameWindow no longer raises a Resize event before Load. This was
+	  a hack that was introduced to work around some design limitations
+	  in the early days of the library. These limitations no longer
+	  hold (INativeWindow size is now set independently of the Resize
+	  event), so the hack is no longer necessary. The To avoid breaking
+	  existing applications, a Resize event is still raised
+	  unconditionally after Load is complete.
+
+	* Source/Examples/OpenTK/Test/GameWindowStates.cs: Display
+	  information on mouse location and window position/size.
+
+	* Source/OpenTK/NativeWindow.cs: Use retainEvents parameter
+	  according to the documentation (parameter was left unused
+	  before).
+
+	* Source/OpenTK/Platform/Windows/API.cs,
+	  Source/OpenTK/Platform/Windows/WinGLNative.cs: Ensure window is
+	  brought to the top of the z-order when it becomes visible for the
+	  first time (typically when GameWindow.Run() is called.) Ensure
+	  window bounds are correctly restored after leaving fullscreen
+	  mode, by restoring window border before setting the bounds.
+
+2010-02-06  the_fiddler
+
+	* Source/Build/Build.cs: * Build.cs: Corrected filename casing for
+	  default doxygen target (should be Doxyfile, not DoxyFile).
+
+2010-02-04  the_fiddler
+
+	* Build.exe: Updated with documentation support.
+
+	* Source/Build/Build.cs: Improved output messages when generating
+	  documentation.
+
+	* Source/Build/Build.cs, Source/Build/Resources/DoxyFile.txt: Do
+	  not report doxygen warnings. Run pdflatex and makeindex in quiet
+	  mode.
+
+	* Source/Build/Build.cs,
+	  Source/Build/Properties/Resources.Designer.cs,
+	  Source/Build/Properties/Resources.resx,
+	  Source/Build/Resources/DoxyFile.txt: Added support for 'doc'
+	  target, which generates html and pdf documentation (requires
+	  doxygen and latex). Fixed implementation of DeleteFiles and
+	  DeleteDirectories.
+
+	* Documentation/Source: Removed empty source documentation
+	  directory from source control. This directory is created as
+	  necessary when generating documentation.
+
+2010-02-03  the_fiddler
+
+	* Source/Bind/Specifications/GL2/enumext.spec,
+	  Source/Bind/Specifications/GL2/gloverrides.xml,
+	  Source/OpenTK/Graphics/OpenGL/GL.cs,
+	  Source/OpenTK/Graphics/OpenGL/GLCore.cs,
+	  Source/OpenTK/Graphics/OpenGL/GLDelegates.cs,
+	  Source/OpenTK/Graphics/OpenGL/GLEnums.cs,
+	  Source/OpenTK/Graphics/OpenGL/GLHelper.cs: Added explicit
+	  ActiveUniformParameter enum for GetActiveUniforms function. Fixes
+	  issue [#1443]: "GetActiveUniforms parameter name".
+
+	* Source/Bind/Specifications/GL2/enumext.spec,
+	  Source/OpenTK/Graphics/OpenGL/GLEnums.cs: Added missing
+	  TEXTURE_LOD_BIAS token to TextureParameterName. Fixes issue
+	  [#1531]: "TextureParameterName enum missing TEXTURE_LOD_BIAS
+	  element".
+
+	* Source/Bind/Specifications/GL2/enumext.spec,
+	  Source/Bind/Specifications/GL2/gloverrides.xml,
+	  Source/OpenTK/Graphics/OpenGL/GL.cs,
+	  Source/OpenTK/Graphics/OpenGL/GLCore.cs,
+	  Source/OpenTK/Graphics/OpenGL/GLDelegates.cs,
+	  Source/OpenTK/Graphics/OpenGL/GLEnums.cs,
+	  Source/OpenTK/Graphics/OpenGL/GLHelper.cs: Added specific
+	  ArrayCap enum for Enable/DisableClientState. Fixes issue [#1538]:
+	  "GLCore.cs: EnableClientState()".
+
+	* Source/OpenTK/Graphics/Color4.cs: Color4.ToArgb() should scale
+	  components from clamped floats [0.0, 1.0] to unsigned bytes [0,
+	  255]. Fixes issue [#1504]: "Color4.ToArgb returns wrong results".
+
+	* Source/OpenTK/Math/Vector2d.cs, Source/OpenTK/Math/Vector3d.cs,
+	  Source/OpenTK/Math/Vector4d.cs: Converted single-precision
+	  constants to double-precision in double-precision calculations.
+
+	* Source/OpenTK/Math/Vector2d.cs, Source/OpenTK/Math/Vector3d.cs,
+	  Source/OpenTK/Math/Vector4d.cs: Do not cast to float when
+	  calculating double-precision vector Length. Fixes issue [#1542]:
+	  "Vector3d.Length casts result to float".
+
+2010-01-28  kanato
+
+	* Source/OpenTK/Platform/MacOS/AglContext.cs,
+	  Source/OpenTK/Platform/MacOS/CarbonGLNative.cs: Fix reported
+	  Width, Height properties for full screen window.
+
+	* Source/OpenTK/GameWindow.cs: Correct NullReferenceException when
+	  initializing GameWindow with GameWindowFlags.FullScreen.
+
+2010-01-21  the_fiddler
+
+	* Source/OpenTK/Graphics/GraphicsContext.cs: Use the correct
+	  GetCurrentContext() implementation depending on whether we are
+	  using native or embedded (EGL) contexts.
+
+2010-01-20  the_fiddler
+
+	* Source/OpenTK/Platform/Egl/EglWinPlatformFactory.cs,
+	  Source/OpenTK/Platform/Egl/EglX11PlatformFactory.cs: Use
+	  Egl.GetCurrentContext() instead of Wgl/Glx.GetCurrentContext() in
+	  EglContext.
+
+2010-01-11  kanato
+
+	* Source/OpenTK/Platform/MacOS/CarbonGLNative.cs: Backport
+	  Width/Height fix (rev. 2577) for MacOS implementation.
+
+2009-12-27  the_fiddler
+
+	* Source/OpenTK/Platform/Egl/EglContext.cs: Use the graphics mode
+	  that was selected by EglGraphicsMode.SelectGraphicsMode() instead
+	  of the native, platform-specific one. Fixes issue [#1483]: "ES20
+	  application problem, Graphicmode with stencil buffer?"
+
+	* Source/OpenTK/Platform/Egl/EglWinPlatformFactory.cs: Try to
+	  retrieve the EGL display for the current DC before falling back
+	  to the default display.
+
+	* Source/OpenTK/Platform/Egl/Egl.cs,
+	  Source/OpenTK/Platform/Egl/EglContext.cs,
+	  Source/OpenTK/Platform/Egl/EglGraphicsMode.cs,
+	  Source/OpenTK/Platform/Egl/EglWinPlatformFactory.cs,
+	  Source/OpenTK/Platform/Egl/EglWindowInfo.cs,
+	  Source/OpenTK/Platform/Egl/EglX11PlatformFactory.cs: Replaced
+	  struct wrappers over IntPtr by plain IntPtr types. This should
+	  ensure correct p/invoke behavior regardless of the OS/CPU.
+
+	* Source/OpenTK/GameWindow.cs: Avoid enabling VSync repeatedly,
+	  when VSyncMode is Adaptive and TargetRenderPeriod is 0. Should
+	  remove jitter observed on specific configurations. Solves issue
+	  [#1482]: "OnRenderFrame elapsed time".
+
+	* Source/Examples/OpenGLES/2.0/SimpleWindow20.cs: Renamed, since
+	  example doesn't use immediate mode. Removed unused code.
+
+2009-12-26  the_fiddler
+
+	* Source/OpenTK/Audio/AudioContext.cs,
+	  Source/OpenTK/Platform/X11/Bindings/Glx.cs,
+	  Source/OpenTK/Platform/X11/X11GLContext.cs,
+	  Source/OpenTK/Platform/X11/X11GLNative.cs,
+	  Source/OpenTK/Platform/X11/X11Input.cs,
+	  Source/OpenTK/Platform/X11/X11WindowInfo.cs: Marked as internal
+	  so they don't appear in doxygen documentation.
+
+2009-12-22  the_fiddler
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Avoid NRE when
+	  setting the foreground window in WindowMessage.CREATE. Fixes
+	  issue [#1467]: "Failure to initialize on Windows."
+
+	* Source/OpenTK/Input/MouseDevice.cs: Corrected rounding of
+	  negative delta values. Fixes issue [#1446]:
+	  "MouseWheelEventArgs.Delta".
+
+2009-12-18  the_fiddler
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Calculate the
+	  correct client rectangle when modifying width or height. Fixes
+	  issue [#1457]: "GameWindow Width and Height properties are
+	  inconsistent".
+
+2009-12-15  the_fiddler
+
+	* Source/OpenTK/OpenTK.dll.config: Added missing OpenCL dllmap for
+	  Mac OS X (thanks chrisse27).
+
+2009-12-14  the_fiddler
+
+	* Source/OpenTK/Graphics/OpenGL/GLHelper.cs: * GLHelper.cs: Fixed
+	  StackOverflowException in TexCoordPointer overload. (Issue
+	  [#1444]: "TexCoordPointer creates StackOverflow").
+
+2009-12-09  the_fiddler
+
+	* Source/Examples/OpenGLES/1.1/SimpleWindow.cs,
+	  Source/Examples/OpenGLES/2.0/SimpleWindow20.cs: ClearColor takes
+	  a clamped float in the range 0.0-1.0, instead of a byte argument.
+
+	* Source/OpenTK/Platform/EmbeddedGraphicsContext.cs: Do not attempt
+	  to load ES10 and ES11 entry points, as these are disabled in
+	  1.0.0.
+
+2009-12-06  the_fiddler
+
+	* Source/OpenTK/Audio/OpenAL/AL/AL.cs: Clarified documentation for
+	  alGetListener3f parameters.
+
+	* Source/Bind/Specifications/GL2/enumext.spec,
+	  Source/OpenTK/Graphics/OpenGL/GLEnums.cs: Added missing 3.1 core
+	  PRIMITIVE_RESTART token. Fixes issue [#1422]: "Missing
+	  EnableCap.PrimitiveRestart".
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Removed IME class
+	  style. Fixes the alt-tab order issue, where NativeWindows would
+	  always appear last in the tab order (issue [#1244]: "Alt+Tab
+	  weirdness"). Removed VRedraw and HRedraw class styles (not
+	  necessary, since we are not relying on WM_PAINT messages).
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Removed unused
+	  code.
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Ensure window is
+	  activated and focused when created.
+
+	* Source/OpenTK/GameWindow.cs,
+	  Source/OpenTK/Platform/X11/X11GLContext.cs,
+	  Source/OpenTK/Platform/X11/X11GLNative.cs: Do not call Dispose()
+	  automatically on GameWindow.Close(). Ensure that Unload event is
+	  raised before window destruction, Ensure that Render and
+	  UpdateFrame events are not called once the shutdown sequence is
+	  initiated.
+
+	* Source/OpenTK/Platform/Windows/API.cs,
+	  Source/OpenTK/Platform/Windows/WinGLNative.cs: *
+	  OpenTK/Platform/Windows/API.cs: added SetForegroundWindow
+	  dllimport.
+	  
+	  * OpenTK/Platform/Windows/WinGLNative.cs: Move window to the
+	  foreground before entering fullscreen mode.
+
+2009-11-25  the_fiddler
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Correctly reset
+	  Visible state when changing WindowBorder. Fixes issue [#1418]:
+	  "[OpenTK] Invisible window when changing from Fullscreen to
+	  Normal WIndowState on Windows 7".
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Fixed build
+	  breakage introduced in r2551.
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Removed stale
+	  code.
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Use
+	  TrackMouseEvent function for generating MouseEnter/MouseLeave
+	  events. Resolves issues associated with SetCapture and windows
+	  focus (bug [#1419]: "[OpenTK] NativeWindow reported as focused
+	  whenever mouse enters its area, even without clicking (win32)").
+
+	* Source/OpenTK/Platform/X11/X11GLNative.cs: * X11GLNative.cs: Only
+	  raise WindowStateChanged when the relevant PropertyNotify event
+	  arrives. Fixes issue [#966]: "[GameWindow] Changing WindowBorder
+	  from Hidden to Normal/Fixed does not update the relevant property
+	  on KDE4.2".
+
+	* Source/Examples/OpenGL/1.1/VertexArrays.cs,
+	  Source/Examples/OpenGL/1.1/VertexLighting.cs,
+	  Source/Examples/OpenGL/GLSL/SimpleGLSL.cs,
+	  Source/Examples/OpenTK/GameWindow/FullscreenAntialias.cs,
+	  Source/Examples/OpenTK/GameWindow/SimpleWindow.cs,
+	  Source/Examples/OpenTK/Test/Multithreading.cs,
+	  Source/Examples/Utilities.cs: Normalized keyboard handling to use
+	  F11 for fullscreen/normal switches.
+
+2009-11-23  kanato
+
+	* Source/OpenTK/Platform/MacOS/AglContext.cs: MacOS: Fix context
+	  sharing.
+
+	* Source/OpenTK/GameWindow.cs, Source/OpenTK/NativeWindow.cs,
+	  Source/OpenTK/Platform/MacOS/AglContext.cs,
+	  Source/OpenTK/Platform/MacOS/CarbonGLNative.cs,
+	  Source/OpenTK/Platform/MacOS/CarbonWindowInfo.cs: MacOS:
+	  Implement CarbonWindowInfo hack for going fullscreen.
+
+---------------------------------
  OpenTK 1.0 beta-1 -> 1.0 beta-2
 ---------------------------------
 
