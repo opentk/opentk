@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK", "Source\OpenTK\OpenTK.csproj", "{A37A7E14-0000-0000-0000-000000000000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Build", "Source\Build\OpenTK.Build.csproj", "{00FF4258-0000-0000-0000-000000000000}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Compatibility", "Source\Compatibility\OpenTK.Compatibility.csproj", "{62C0DB35-0000-0000-0000-000000000000}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Examples", "Source\Examples\OpenTK.Examples.csproj", "{868E37B3-0000-0000-0000-000000000000}"
@@ -50,13 +48,6 @@ Global
 		{A37A7E14-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
 		{A37A7E14-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A37A7E14-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{00FF4258-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00FF4258-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{00FF4258-0000-0000-0000-000000000000}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
-		{00FF4258-0000-0000-0000-000000000000}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
-		{00FF4258-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
-		{00FF4258-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{00FF4258-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
 		{62C0DB35-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{62C0DB35-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62C0DB35-0000-0000-0000-000000000000}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
