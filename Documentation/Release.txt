@@ -1,19 +1,14 @@
-The Open Toolkit 1.0 beta 3
+The Open Toolkit 1.0 rc1
 
 
 
 [Overview]
 
-This is the third beta release of OpenTK 1.0. This release resolves a large number of identified issues:
-* adds support for doxygen-based documentation.
-* significantly improves GameWindow stability.
-* improves stability on multithreaded scenarios.
-* fixes a number of input-related bugs.
-* improves support for OpenGL 3.2 functions and adds a number of missing OpenGL tokens.
-* features a better "GameWindow States" sample and introduces a "Multithreaded Rendering" sample.
-* adds new double-precision based OpenGL overloads.
-* fixes a number of smaller annoyances and oversights.
-
+This is the first release candidate for OpenTK 1.0. Notable changes:
+* Implemented NSIS-based installer, added new build targets ("nsis", "lib" and "all") and made the build system more robust.
+* Fixed ClassName clashes between GameWindows running on different AppDomains. Fixes NUnit support (patch by kring789).
+* Improved behavior of several GameWindow events and properties on Windows and Linux.
+* Fixed various documentation issues.
 
 Visit http://www.opentk.com for the latest news and information on the Open Toolkit.
 
@@ -21,31 +16,14 @@ Visit http://www.opentk.com for the latest news and information on the Open Tool
 
 [Resolved issues]
 
-[#966]
-[#1244]
-[#1343]
-[#1417]
-[#1418]
-[#1419]
-[#1422]
-[#1443]
-[#1444]
-[#1446]
-[#1457]
-[#1467]
-[#1468]
-[#1483]
-[#1492]
-[#1498]
-[#1504]
-[#1508]
-[#1531]
-[#1538]
-[#1542]
-[#1593]
-[#1596]
-[#1598]
-[#1600]
+[#1132]
+[#1461]
+[#1599]
+[#1605]
+[#1617]
+[#1622]
+[#1649]
+
 
 
 Please report any issues you encounter at http://www.opentk.com/node/add/project-issue/opentk
@@ -60,11 +38,11 @@ Please report any issues you encounter at http://www.opentk.com/node/add/project
 
 * Mono 2.2 and 2.4.0 fail to compile OpenTK due to a compiler bug (https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0, 2.4.2+ or use the supplied binaries instead.
 
-* The example browser should list summaries for available samples.
+* The example browser does not list summaries for available samples.
 
 * MonoDevelop fails to sign assemblies (bugs https://bugzilla.novell.com/show_bug.cgi?id=484752 and https://bugzilla.novell.com/show_bug.cgi?id=537063).
 
-* XBuild <= 2.6.1 fails to compile OpenTK. This issue has been upstream.
+* XBuild <= 2.4.3 fails to build OpenTK. Please use XBuild 2.6.0 or newer.
 
 
 [API changes]
@@ -72,6 +50,10 @@ Please report any issues you encounter at http://www.opentk.com/node/add/project
 Please note that binary compatibility is not preserved between beta releases.
 
 If you are upgrading from OpenTK 0.9.9-0 or earlier you can simplify the upgrade process by adding a reference to OpenTK.Compatibility.dll and OpenTK.GLControl.dll (if necessary). OpenTK.Compatibility contains code and APIs that have been deprecated and removed from the core library and supports applications written against the Tao framework (Tao.OpenGl, Tao.OpenAl and Tao.Platform.Windows.SimpleOpenGlControl).
+
+[1.0 rc1]
+
+No API changes.
 
 
 [1.0 beta-3]

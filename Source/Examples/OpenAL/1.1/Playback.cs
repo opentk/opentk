@@ -81,8 +81,6 @@ namespace Examples
         {
             using (AudioContext context = new AudioContext())
             {
-                Trace.WriteLine("Testing WaveReader({0}).ReadToEnd()", filename);
-
                 int buffer = AL.GenBuffer();
                 int source = AL.GenSource();
                 int state;

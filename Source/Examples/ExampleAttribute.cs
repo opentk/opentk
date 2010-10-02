@@ -23,13 +23,13 @@ namespace Examples
         public bool Visible { get { return visible; } set { visible = value; } }
 
         public ExampleAttribute(string title, ExampleCategory category, string subcategory)
-            : this(title, category, subcategory, 0, true) { }
+            : this(title, category, subcategory, Int32.MaxValue, true) { }
 
         public ExampleAttribute(string title, ExampleCategory category, string subcategory, int difficulty)
             : this(title, category, subcategory, difficulty, true) { }
 
         public ExampleAttribute(string title, ExampleCategory category, string subcategory, bool visible)
-            : this(title, category, subcategory, 0, visible) { }
+            : this(title, category, subcategory, Int32.MaxValue, visible) { }
 
         public ExampleAttribute(string title, ExampleCategory category, string subcategory, int difficulty, bool visible)
         {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="2.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OutputPath>$(MSBuildProjectDirectory)\Source\latex</OutputPath>
+  </PropertyGroup>
+  <Target Name="Build">
+    <Exec Command="doxygen Doxyfile" />
+    <Exec Command="pdflatex -interaction=batchmode refman.tex" WorkingDirectory="$(OutputPath)" />
+    <Exec Command="makeindex -q refman.idx" WorkingDirectory="$(OutputPath)" />
+    <Exec Command="pdflatex -interaction=batchmode refman.tex" WorkingDirectory="$(OutputPath)" />
+    <Copy SourceFiles="$(OutputPath)\refman.pdf" DestinationFiles="Reference.pdf" />
+  </Target>
+</Project>

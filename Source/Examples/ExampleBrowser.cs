@@ -33,6 +33,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using OpenTK.Examples.Properties;
 using System.Threading;
+using System.IO;
 
 namespace Examples
 {
@@ -43,6 +44,8 @@ namespace Examples
         //PrivateFontCollection font_collection = new PrivateFontCollection();
 
         bool show_warning = true;
+
+        static readonly string SourcePath = FindSourcePath();
 
         #endregion
 
@@ -108,16 +111,35 @@ namespace Examples
             
             if (e.Node.Tag != null && !String.IsNullOrEmpty(((ExampleInfo)e.Node.Tag).Attribute.Documentation))
             {
-                string docs = (string)Resources.ResourceManager.GetObject(((ExampleInfo)e.Node.Tag).Attribute.Documentation + "Doc");
-                string source = (string)Resources.ResourceManager.GetObject(((ExampleInfo)e.Node.Tag).Attribute.Documentation);
+                string docs = null;
+                string source = null;
+
+                ExampleInfo einfo = (ExampleInfo)e.Node.Tag;
+                string sample = einfo.Attribute.Documentation;
+                string category = einfo.Attribute.Category.ToString();
+                string subcategory = einfo.Attribute.Subcategory;
+
+                string path = Path.Combine(Path.Combine(Path.Combine(SourcePath, category), subcategory), sample);
+                string sample_rtf = Path.ChangeExtension(path, "rtf");
+                string sample_cs = Path.ChangeExtension(path, "cs");
+
+                if (File.Exists(sample_rtf))
+                {
+                    docs = File.ReadAllText(sample_rtf);
+                }
+
+                if (File.Exists(sample_cs))
+                {
+                    source = File.ReadAllText(sample_cs);
+                }
                 
                 if (String.IsNullOrEmpty(docs))
-                    richTextBoxDescription.Text = no_docs;
+                    richTextBoxDescription.Text = String.Format("File {0} not found.", sample_rtf);
                 else
                     richTextBoxDescription.Rtf = docs;
-                
+
                 if (String.IsNullOrEmpty(source))
-                    richTextBoxSource.Text = no_source;
+                    richTextBoxSource.Text = String.Format("File {0} not found.", sample_cs);
                 else
                     richTextBoxSource.Text = source;
             }
@@ -312,7 +334,7 @@ namespace Examples
             if (list.Images.ContainsKey(category.ToString() + ".png"))
                 return list.Images.IndexOfKey(category.ToString() + ".png");
 
-            return 0;
+            return -1;
         }
 
         static void RunSample(Control parent, ExampleInfo e)
@@ -335,25 +357,31 @@ namespace Examples
                     Trace.WriteLine(String.Format("Launching sample: \"{0}\"", e.Attribute.Title));
                     Trace.WriteLine(String.Empty);
 
-                    Thread thread = new Thread((ThreadStart)delegate { main.Invoke(null, null); });
+                    Thread thread = new Thread((ThreadStart)delegate
+                    {
+                        try
+                        {
+                            main.Invoke(null, null);
+                        }
+                        catch (TargetInvocationException expt)
+                        {
+                            string ex_info;
+                            if (expt.InnerException != null)
+                                ex_info = expt.InnerException.ToString();
+                            else
+                                ex_info = expt.ToString();
+                            MessageBox.Show(ex_info, "An OpenTK example encountered an error.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                            Debug.Print(expt.ToString());
+                        }
+                        catch (NullReferenceException expt)
+                        {
+                            MessageBox.Show(expt.ToString(), "The Example launcher failed to load the example.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    });
                     thread.IsBackground = true;
                     thread.Start();
                     thread.Join();
-                }
-                catch (TargetInvocationException expt)
-                {
-                    string ex_info;
-                    if (expt.InnerException != null)
-                        ex_info = expt.InnerException.ToString();
-                    else
-                        ex_info = expt.ToString();
-                    MessageBox.Show(ex_info, "An OpenTK example encountered an error.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                    Debug.Print(expt.ToString());
-                }
-                catch (NullReferenceException expt)
-                {
-                    MessageBox.Show(expt.ToString(), "The Example launcher failed to load the example.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 finally
                 {
@@ -370,7 +398,54 @@ namespace Examples
             }
         }
 
-        #endregion
+        // Tries to detect the path that contains the source for the examples.
+        static string FindSourcePath()
+        {
+            string current_dir = Directory.GetCurrentDirectory();
+
+            // Typically, our working directory is either "[opentk]/Binaries/OpenTK/[config]" or "[opentk]".
+            // The desired source path is "[opentk]/Source/Examples/[ExampleCategory]"
+
+            string guess = current_dir;
+            if (CheckPath(ref guess))
+                return guess; // We were in [opentk] after all
+
+            guess = current_dir;
+            for (int i = 0; i < 3; i++)
+            {
+                DirectoryInfo dir = Directory.GetParent(guess);
+                if (!dir.Exists)
+                    break;
+                guess = dir.FullName;
+            }
+            
+            if (CheckPath(ref guess))
+                return guess; // We were in [opentk]/Binaries/OpenTK/[config] after all
+
+            throw new DirectoryNotFoundException();
+        }
+
+        static bool CheckPath(ref string path)
+        {
+            string guess = path;
+            if (Directory.Exists(guess))
+            {
+                guess = Path.Combine(guess, "Source");
+                if (Directory.Exists(guess))
+                {
+                    guess = Path.Combine(guess, "Examples");
+                    if (Directory.Exists(guess))
+                    {
+                        // We are have found [opentk]/Source/Examples
+                        path = guess;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+       #endregion
 
         #endregion
     }

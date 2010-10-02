@@ -484,11 +484,6 @@ namespace OpenTK.Platform.MacOS
 
         #region IGraphicsContextInternal Members
 
-        public override void LoadAll()
-        {
-            base.LoadAll();
-        }
-
          private const string Library = "libdl.dylib";
 
         [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]

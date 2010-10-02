@@ -114,6 +114,8 @@ namespace OpenTK.Platform.Windows
                     stick.Details.PovType |= PovType.Continuous;
             }
 
+#warning "Implement joystick name detection for WinMM."
+            stick.Description = String.Format("Joystick/Joystick #{0} ({1} axes, {2} buttons)", number, stick.Axis.Count, stick.Button.Count);
             // Todo: Try to get the device name from the registry. Oh joy!
             //string key_path = String.Format("{0}\\{1}\\{2}", RegistryJoyConfig, caps.RegKey, RegstryJoyCurrent);
             //RegistryKey key = Registry.LocalMachine.OpenSubKey(key_path, false);

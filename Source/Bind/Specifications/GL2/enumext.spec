@@ -6527,6 +6527,12 @@ PixelInternalFormat enum:
 	COMPRESSED_INTENSITY		= 0x84EC
 	COMPRESSED_RGB				= 0x84ED
 	COMPRESSED_RGBA				= 0x84EE
+	
+# Tokens from EXT_texture_compression_s3tc enum:
+    COMPRESSED_RGB_S3TC_DXT1_EXT            = 0x83F0
+    COMPRESSED_RGBA_S3TC_DXT1_EXT           = 0x83F1
+    COMPRESSED_RGBA_S3TC_DXT3_EXT           = 0x83F2
+    COMPRESSED_RGBA_S3TC_DXT5_EXT           = 0x83F3
 
 HintTarget enum:
 	TEXTURE_COMPRESSION_HINT	= 0x84EF

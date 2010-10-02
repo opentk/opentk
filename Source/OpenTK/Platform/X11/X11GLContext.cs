@@ -386,10 +386,6 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #endregion
-
-        #region --- IGLContextInternal Members ---
-
         #region LoadAll
 
         public override void LoadAll()
@@ -403,7 +399,11 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region IWindowInfo IGLContextInternal.Info
+        #endregion
+
+        #region --- IGLContextInternal Members ---
+
+         #region IWindowInfo IGLContextInternal.Info
 
         //IWindowInfo IGraphicsContextInternal.Info { get { return window; } }
 

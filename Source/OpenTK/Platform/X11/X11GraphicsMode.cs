@@ -48,7 +48,7 @@ namespace OpenTK.Platform.X11
                 visual = SelectVisualUsingChooseVisual(color, depth, stencil, samples, accum, buffers, stereo);
             
             if (visual == IntPtr.Zero)
-                throw new GraphicsContextException("Requested GraphicsMode not available.");
+                throw new GraphicsModeException("Requested GraphicsMode not available.");
             
             XVisualInfo info = (XVisualInfo)Marshal.PtrToStructure(visual, typeof(XVisualInfo));
             

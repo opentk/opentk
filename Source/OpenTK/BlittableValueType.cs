@@ -2,7 +2,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2009 the Open Toolkit library.
+// Copyright (c) 2006 - 2010 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -57,9 +57,10 @@ namespace OpenTK
         static BlittableValueType()
         {
             Type = typeof(T);
-            if (Type.IsValueType)
+            if (Type.IsValueType && !Type.IsGenericType)
             {
                 // Does this support generic types? On Mono 2.4.3 it does
+                // On .Net it doesn't.
                 // http://msdn.microsoft.com/en-us/library/5s4920fa.aspx
                 stride = Marshal.SizeOf(typeof(T));
             }
@@ -70,7 +71,7 @@ namespace OpenTK
         #region Public Members
 
         /// <summary>
-        /// Gets the size of the type in bytes.
+        /// Gets the size of the type in bytes or 0 for non-blittable types.
         /// </summary>
         /// <remarks>
         /// This property returns 0 for non-blittable types.
@@ -82,6 +83,7 @@ namespace OpenTK
         /// <summary>
         /// Checks whether the current typename T is blittable.
         /// </summary>
+        /// <returns>True if T is blittable; false otherwise.</returns>
         public static bool Check()
         {
             return Check(Type);
@@ -91,6 +93,7 @@ namespace OpenTK
         /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">A System.Type to check.</param>
+        /// <returns>True if T is blittable; false otherwise.</returns>
         public static bool Check(Type type)
         {
             if (!CheckStructLayoutAttribute(type))
@@ -125,7 +128,7 @@ namespace OpenTK
             }
             Debug.Unindent();
 
-            return true;
+            return Stride != 0;
         }
 
         // Checks whether the specified struct defines [StructLayout(LayoutKind.Sequential, Pack=1)]
@@ -164,6 +167,7 @@ namespace OpenTK
         /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
+        /// <returns>True if T is blittable; false otherwise.</returns>
         public static bool Check<T>(T type)
         {
             return BlittableValueType<T>.Check();
@@ -173,6 +177,7 @@ namespace OpenTK
         /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
+        /// <returns>True if T is blittable; false otherwise.</returns>
         public static bool Check<T>(T[] type)
         {
             return BlittableValueType<T>.Check();
@@ -182,6 +187,7 @@ namespace OpenTK
         /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
+        /// <returns>True if T is blittable; false otherwise.</returns>
         public static bool Check<T>(T[,] type)
         {
             return BlittableValueType<T>.Check();
@@ -191,6 +197,7 @@ namespace OpenTK
         /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
+        /// <returns>True if T is blittable; false otherwise.</returns>
         public static bool Check<T>(T[, ,] type)
         {
             return BlittableValueType<T>.Check();
@@ -200,6 +207,7 @@ namespace OpenTK
         /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
+        /// <returns>True if T is blittable; false otherwise.</returns>
         [CLSCompliant(false)]
         public static bool Check<T>(T[][] type)
         {
@@ -211,7 +219,7 @@ namespace OpenTK
         #region StrideOf
 
         /// <summary>
-        /// Returns the size of the specified value type in bytes.
+        /// Returns the size of the specified value type in bytes or 0 if the type is not blittable.
         /// </summary>
         /// <typeparam name="T">The value type. Must be blittable.</typeparam>
         /// <param name="type">An instance of the value type.</param>
@@ -226,7 +234,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns the size of a single array element in bytes.
+        /// Returns the size of a single array element in bytes  or 0 if the element is not blittable.
         /// </summary>
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="type">An instance of the value type.</param>
@@ -241,7 +249,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns the size of a single array element in bytes.
+        /// Returns the size of a single array element in bytes or 0 if the element is not blittable.
         /// </summary>
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="type">An instance of the value type.</param>
@@ -256,7 +264,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns the size of a single array element in bytes.
+        /// Returns the size of a single array element in bytes or 0 if the element is not blittable.
         /// </summary>
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="type">An instance of the value type.</param>

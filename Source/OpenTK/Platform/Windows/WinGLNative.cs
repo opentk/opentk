@@ -103,13 +103,13 @@ namespace OpenTK.Platform.Windows
             // don't move it below the CreateWindow calls.
             WindowProcedureDelegate = WindowProcedure;
 
-            // This timer callback is called periodically when the window enters a sizing / moving modal loop.
-            ModalLoopCallback = delegate(IntPtr handle, WindowMessage msg, UIntPtr eventId, int time)
-            {
-                // Todo: find a way to notify the frontend that it should process queued up UpdateFrame/RenderFrame events.
-                if (Move != null)
-                    Move(this, EventArgs.Empty);
-            };
+            //// This timer callback is called periodically when the window enters a sizing / moving modal loop.
+            //ModalLoopCallback = delegate(IntPtr handle, WindowMessage msg, UIntPtr eventId, int time)
+            //{
+            //    // Todo: find a way to notify the frontend that it should process queued up UpdateFrame/RenderFrame events.
+            //    if (Move != null)
+            //        Move(this, EventArgs.Empty);
+            //};
 
             // To avoid issues with Ati drivers on Windows 6+ with compositing enabled, the context will not be
             // bound to the top-level window, but rather to a child window docked in the parent.

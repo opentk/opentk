@@ -14,7 +14,7 @@ using System.Diagnostics;
 namespace OpenTK.Graphics
 {
     /// <summary>Defines the format for graphics operations.</summary>
-    public class GraphicsMode
+    public class GraphicsMode : IEquatable<GraphicsMode>
     {
         ColorFormat color_format, accumulator_format;
         int depth, stencil, buffers, samples;
@@ -180,21 +180,7 @@ namespace OpenTK.Graphics
         {
             get
             {
-                if (index == null)
-                {
-                    GraphicsMode mode;
-                    mode = implementation.SelectGraphicsMode(ColorFormat, Depth, Stencil, Samples, AccumulatorFormat, Buffers, Stereo);
-
-                    Index = mode.Index;
-                    ColorFormat = mode.ColorFormat;
-                    Depth = mode.Depth;
-                    Stencil = mode.Stencil;
-                    Samples = mode.Samples;
-                    AccumulatorFormat = mode.AccumulatorFormat;
-                    Buffers = mode.Buffers;
-                    Stereo = mode.Stereo;
-                }
-
+                LazySelectGraphicsMode();
                 return index;
             }
             set { index = value; }
@@ -209,7 +195,11 @@ namespace OpenTK.Graphics
         /// </summary>
         public ColorFormat ColorFormat
         {
-            get { return color_format; }
+            get
+            {
+                LazySelectGraphicsMode();
+                return color_format;
+            }
             private set { color_format = value; }
         }
 
@@ -222,7 +212,11 @@ namespace OpenTK.Graphics
         /// </summary>
         public ColorFormat AccumulatorFormat
         {
-            get { return accumulator_format; }
+            get 
+            {
+                LazySelectGraphicsMode();
+                return accumulator_format;
+            }
             private set { accumulator_format = value; }
         }
 
@@ -236,7 +230,11 @@ namespace OpenTK.Graphics
         /// </summary>
         public int Depth
         {
-            get { return depth; }
+            get
+            {
+                LazySelectGraphicsMode();
+                return depth;
+            }
             private set { depth = value; }
         }
 
@@ -250,7 +248,11 @@ namespace OpenTK.Graphics
         /// </summary>
         public int Stencil
         {
-            get { return stencil; }
+            get
+            {
+                LazySelectGraphicsMode();
+                return stencil;
+            }
             private set { stencil = value; }
         }
 
@@ -263,7 +265,11 @@ namespace OpenTK.Graphics
         /// </summary>
         public int Samples
         {
-            get { return samples; }
+            get
+            {
+                LazySelectGraphicsMode();
+                return samples;
+            }
             private set { samples = value; }
         }
 
@@ -276,8 +282,12 @@ namespace OpenTK.Graphics
         /// </summary>
         public bool Stereo
         {
-            get { return this.stereo; }
-            private set { this.stereo = value; }
+            get
+            {
+                LazySelectGraphicsMode();
+                return stereo;
+            }
+            private set { stereo = value; }
         }
 
         #endregion
@@ -290,8 +300,12 @@ namespace OpenTK.Graphics
         /// </summary>
         public int Buffers
         {
-            get { return this.buffers; }
-            private set { this.buffers = value; }
+            get
+            {
+                LazySelectGraphicsMode();
+                return buffers;
+            }
+            private set { buffers = value; }
         }
 
         #endregion
@@ -320,6 +334,30 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region --- Private Methods ---
+
+        // Queries the implementation for the actual graphics mode if this hasn't been done already.
+        // This method allows for lazy evaluation of the actual GraphicsMode and should be called
+        // by all GraphicsMode properties.
+        void LazySelectGraphicsMode()
+        {
+            if (index == null)
+            {
+                GraphicsMode mode = implementation.SelectGraphicsMode(color_format, depth, stencil, samples, accumulator_format, buffers, stereo);
+
+                Index = mode.Index;
+                ColorFormat = mode.ColorFormat;
+                Depth = mode.Depth;
+                Stencil = mode.Stencil;
+                Samples = mode.Samples;
+                AccumulatorFormat = mode.AccumulatorFormat;
+                Buffers = mode.Buffers;
+                Stereo = mode.Stereo;
+            }
+        }
+
+        #endregion
+
         #region --- Overrides ---
 
         /// <summary>Returns a System.String describing the current GraphicsFormat.</summary>
@@ -328,6 +366,43 @@ namespace OpenTK.Graphics
         {
             return String.Format("Index: {0}, Color: {1}, Depth: {2}, Stencil: {3}, Samples: {4}, Accum: {5}, Buffers: {6}, Stereo: {7}",
                 Index, ColorFormat, Depth, Stencil, Samples, AccumulatorFormat, Buffers, Stereo);
+        }
+
+        /// <summary>
+        /// Returns the hashcode for this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.Int32"/> hashcode for this instance.</returns>
+        public override int GetHashCode()
+        {
+            return Index.GetHashCode();
+        }
+
+        /// <summary>
+        /// Indicates whether obj is equal to this instance.
+        /// </summary>
+        /// <param name="obj">An object instance to compare for equality.</param>
+        /// <returns>True, if obj equals this instance; false otherwise.</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is GraphicsMode)
+            {
+                return Equals((GraphicsMode)obj);
+            }
+            return false;
+        }
+
+        #endregion
+
+        #region IEquatable<GraphicsMode> Members
+
+        /// <summary>
+        /// Indicates whether other represents the same mode as this instance.
+        /// </summary>
+        /// <param name="other">The GraphicsMode to compare to.</param>
+        /// <returns>True, if other is equal to this instance; false otherwise.</returns>
+        public bool Equals(GraphicsMode other)
+        {
+            return Index.HasValue && Index == other.Index;
         }
 
         #endregion

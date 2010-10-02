@@ -9,6 +9,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Dummy
@@ -23,6 +25,7 @@ namespace OpenTK.Platform.Dummy
         // This mode is not real. To receive a real mode we'd have to create a temporary context, which is not desirable!
         bool vsync;
         static int handle_count;
+        Thread current_thread;
 
         #region --- Constructors ---
 
@@ -51,8 +54,31 @@ namespace OpenTK.Platform.Dummy
         }
 
         public override void SwapBuffers() { }
-        public override void MakeCurrent(IWindowInfo info) { }
-        public override bool IsCurrent { get { return true; } }
+
+        public override void MakeCurrent(IWindowInfo info)
+        {
+            Thread new_thread = Thread.CurrentThread;
+            // A context may be current only on one thread at a time.
+            if (current_thread != null && new_thread != current_thread)
+            {
+                throw new GraphicsContextException(
+                    "Cannot make context current on two threads at the same time");
+            }
+
+            if (info != null)
+            {
+                current_thread = Thread.CurrentThread;
+            }
+            else
+            {
+                current_thread = null;
+            }
+        }
+
+        public override bool IsCurrent
+        {
+            get { return current_thread != null && current_thread == Thread.CurrentThread; }
+        }
 
         public override IntPtr GetAddress(string function) { return IntPtr.Zero; }
 
@@ -61,13 +87,8 @@ namespace OpenTK.Platform.Dummy
         public override void Update(IWindowInfo window)
         { }
 
-        #endregion
-
-        #region IGraphicsContextInternal Members
-
         public override void LoadAll()
-        {
-        }
+        { }
 
         #endregion
 
