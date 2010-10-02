@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="2.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)' == 'Documentation'">
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Nsis'">
+    <OutputPath>.</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <Import Project="..\..\Source\Build.Tasks\Common.xml" />
+  <PropertyGroup>
+    <ProjectGuid>{ADC34399-7613-44D2-90B2-19250F06FE7A}</ProjectGuid>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <Target Name="Build">
+    <DateStamp>
+      <Output TaskParameter="Date" PropertyName="ShortDate" />
+    </DateStamp>
+    <Run Command="makensis opentk.nsi" WorkingDirectory="$(OutputPath)" />
+    <Copy SourceFiles="$(OutputPath)\opentk.exe" DestinationFiles="..\..\opentk-1.0.$(ShortDate).exe" />
+  </Target>
+  <Target Name="Clean">
+    <ItemGroup Condition="'$(OS)' == 'Windows_NT'">
+      <FilesToDelete Include="$(OutputPath)\opentk.exe;..\..\opentk-1.0.*.exe" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" Condition="'$(OS)' == 'Windows_NT'" />
+    <Exec Command="rm $(OutputPath)\opentk.exe" Condition="'$(OS)' != 'Windows_NT'" />
+    <Exec Command="rm ..\..\opentk-1.0.*.exe" Condition="'$(OS)' != 'Windows_NT'" />
+  </Target>
+</Project>
