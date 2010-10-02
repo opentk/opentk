@@ -13,9 +13,9 @@ SetCompressor lzma
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "OpenTK"
-!define PRODUCT_VERSION "{{version}}" ; To be replaced by Build.exe
-!define PRODUCT_VERSION_REVISION "{{revision}}"  ; To be replaced by Build.exe
-!define PRODUCT_VERSION_EXTRA "{{extra}}" ; To be replaced by Build.exe
+!define PRODUCT_VERSION "1.0" ; To be replaced by Build.exe
+;!define PRODUCT_VERSION_REVISION "{{revision}}"  ; To be replaced by Build.exe
+;!define PRODUCT_VERSION_EXTRA "{{extra}}" ; To be replaced by Build.exe
 !define PRODUCT_PUBLISHER "The Open Toolkit team"
 !define PRODUCT_WEB_SITE "http://www.opentk.com"
 !define PRODUCT_UNINST_KEY "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
@@ -123,7 +123,7 @@ SetCompressor lzma
 ; MUI END ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "opentk-${PRODUCT_VERSION}.${PRODUCT_VERSION_REVISION}-${PRODUCT_VERSION_EXTRA}.exe"
+OutFile "opentk.exe"
 InstallDir "${MULTIUSER_INSTALLMODE_INSTDIR}"
 ShowInstDetails show
 ShowUnInstDetails show
