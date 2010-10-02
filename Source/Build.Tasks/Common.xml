@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' != 'Debug' ">Release</Configuration>
+    <BuildTasksPath Condition="'$(BuildTasksPath)' == ''">..\..\Binaries\OpenTK\Release</BuildTasksPath>
+    <BuildTasksLib>$(BuildTasksPath)\Build.Tasks.dll</BuildTasksLib>
+  </PropertyGroup>
+
+  <UsingTask AssemblyFile="$(BuildTasksLib)" TaskName="DateStamp" Condition="'$(Target)' != 'Clean'" />
+  <UsingTask AssemblyFile="$(BuildTasksLib)" TaskName="DelTree" Condition="'$(Target)' != 'Clean'" />
+  <UsingTask AssemblyFile="$(BuildTasksLib)" TaskName="Run" Condition="'$(Target)' != 'Clean'" />
+
+</Project>
