@@ -52,7 +52,7 @@ namespace OpenTK.Platform.X11
 
         public virtual IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
-            return new X11XrandrDisplayDevice();
+            return new X11DisplayDevice();
         }
 
         public virtual IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)

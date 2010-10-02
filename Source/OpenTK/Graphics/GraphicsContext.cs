@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
@@ -115,8 +115,18 @@ namespace OpenTK.Graphics
                         implementation = factory.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags);
                         // Note: this approach does not allow us to mix native and EGL contexts in the same process.
                         // This should not be a problem, as this use-case is not interesting for regular applications.
+                        // Note 2: some platforms may not support a direct way of getting the current context
+                        // (this happens e.g. with DummyGLContext). In that case, we use a slow fallback which
+                        // iterates through all known contexts and checks if any is current (check GetCurrentContext
+                        // declaration).
                         if (GetCurrentContext == null)
-                            GetCurrentContext = factory.CreateGetCurrentGraphicsContext();
+                        {
+                            GetCurrentContextDelegate temp = factory.CreateGetCurrentGraphicsContext();
+                            if (temp != null)
+                            {
+                                GetCurrentContext = temp;
+                            }
+                        }
                     }
 
                     available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
@@ -189,7 +199,13 @@ namespace OpenTK.Graphics
                 // A small hack to create a shared context with the first available context.
                 foreach (WeakReference r in GraphicsContext.available_contexts.Values)
                 {
-                    return (IGraphicsContext)r.Target;
+                    // Fix for bug 1874: if a GraphicsContext gets finalized
+                    // (but not disposed), it won't be removed from available_contexts
+                    // making this return null even if another valid context exists.
+                    // The workaround is to simply ignore null targets.
+                    IGraphicsContext target = r.Target as IGraphicsContext;
+                    if (target != null)
+                        return target;
                 }
             }
             return null;
@@ -253,7 +269,24 @@ namespace OpenTK.Graphics
         #region public static IGraphicsContext CurrentContext
 
         internal delegate ContextHandle GetCurrentContextDelegate();
-        internal static GetCurrentContextDelegate GetCurrentContext;
+        internal static GetCurrentContextDelegate GetCurrentContext = delegate
+        {
+            // Note: this is a slow, generic fallback for use with DummyGLContext.
+            // Most other platforms can query the current context directly (via
+            // [Wgl|Glx|Agl|Egl].GetCurrentContext()) so the GraphicsContext
+            // constructor will replace this implementation with a platform-specific
+            // one, if it exists.
+            foreach (WeakReference weak_ref in available_contexts.Values)
+            {
+                IGraphicsContext context = (IGraphicsContext)weak_ref.Target;
+                if (context.IsCurrent)
+                {
+                    return (context as IGraphicsContextInternal).Context;
+                }
+            }
+
+            return ContextHandle.Zero;
+        };
 
         /// <summary>
         /// Gets the GraphicsContext that is current in the calling thread.
@@ -409,6 +442,20 @@ namespace OpenTK.Graphics
         {
             implementation.Update(window);
         }
+
+        /// <summary>
+        /// Loads all OpenGL entry points.
+        /// </summary>
+        /// <exception cref="OpenTK.Graphics.GraphicsContextException">
+        /// Occurs when this instance is not current on the calling thread.
+        /// </exception>
+        public void LoadAll()
+        {
+            if (GraphicsContext.CurrentContext != this)
+                throw new GraphicsContextException();
+
+            implementation.LoadAll();
+        }
         
         #endregion
 
@@ -420,20 +467,6 @@ namespace OpenTK.Graphics
         IGraphicsContext IGraphicsContextInternal.Implementation
         {
             get { return implementation; }
-        }
-
-        /// <summary>
-        /// Loads all OpenGL extensions.
-        /// </summary>
-        /// <exception cref="OpenTK.Graphics.GraphicsContextException">
-        /// Occurs when this instance is not the current GraphicsContext on the calling thread.
-        /// </exception>
-        void IGraphicsContextInternal.LoadAll()
-        {
-            if (GraphicsContext.CurrentContext != this)
-                throw new GraphicsContextException();
-
-            (implementation as IGraphicsContextInternal).LoadAll();
         }
 
         /// <summary>

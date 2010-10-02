@@ -53,11 +53,22 @@ namespace Bind.ES
                 {
                     foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
                     {
-                        Delegate d = new Delegate();
-                        d.Name = node.GetAttribute("name", String.Empty);
-                        //d.Extension = node.GetAttribute("extension");
-                        d.Version = node.GetAttribute("version", String.Empty);
-                        d.Category = node.GetAttribute("category", String.Empty);
+                        var name = node.GetAttribute("name", String.Empty);
+                        
+                        // Check whether we are adding to an existing delegate or creating a new one.
+                        Delegate d = null;
+                        if (delegates.ContainsKey(name))
+                        {
+                            d = delegates[name];
+                        }
+                        else
+                        {
+                            d = new Delegate();
+                            d.Name = name;
+                            d.Version = node.GetAttribute("version", String.Empty);
+                            d.Category = node.GetAttribute("category", String.Empty);
+                        }
+
                         foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
                         {
                             switch (param.Name)

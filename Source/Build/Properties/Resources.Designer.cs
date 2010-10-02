@@ -61,7 +61,7 @@ namespace OpenTK.Build.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to # Doxyfile 1.6.1
+        ///   Looks up a localized string similar to # Doxyfile 1.6.2
         ///
         ///# This file describes the settings to be used by the documentation system
         ///# doxygen (www.doxygen.org) for a project
@@ -74,7 +74,7 @@ namespace OpenTK.Build.Properties {
         ///# Values that contain spaces should be placed between quotes (&quot; &quot;)
         ///
         ///#---------------------------------------------------------------------------
-        ///# Project relate [rest of string was truncated]&quot;;.
+        ///# Project related configurati [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DoxyFile {
             get {

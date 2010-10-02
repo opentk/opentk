@@ -37,7 +37,6 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.viewDescriptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imageListSampleCategories = new System.Windows.Forms.ImageList(this.components);
             this.tabControlSample = new System.Windows.Forms.TabControl();
             this.tabDescription = new System.Windows.Forms.TabPage();
             this.richTextBoxDescription = new System.Windows.Forms.RichTextBox();
@@ -51,6 +50,7 @@
             this.textBoxOutput = new System.Windows.Forms.TextBox();
             this.contextMenuStripOutput = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageListSampleCategories = new System.Windows.Forms.ImageList(this.components);
             this.toolTipSamples = new System.Windows.Forms.ToolTip(this.components);
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -91,7 +91,7 @@
             this.treeViewSamples.HotTracking = true;
             this.treeViewSamples.ImageIndex = 0;
             this.treeViewSamples.ImageList = this.imageListSampleCategories;
-            this.treeViewSamples.Indent = 71;
+            this.treeViewSamples.Indent = 32;
             this.treeViewSamples.Location = new System.Drawing.Point(0, 0);
             this.treeViewSamples.Name = "treeViewSamples";
             this.treeViewSamples.SelectedImageIndex = 0;
@@ -137,31 +137,6 @@
             this.viewSourceToolStripMenuItem.Name = "viewSourceToolStripMenuItem";
             this.viewSourceToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.viewSourceToolStripMenuItem.Text = "View Source Code";
-            // 
-            // imageListSampleCategories
-            // 
-            this.imageListSampleCategories.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListSampleCategories.ImageStream")));
-            this.imageListSampleCategories.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListSampleCategories.Images.SetKeyName(0, "OpenAL.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(1, "OpenGL.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(2, "1.1.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(3, "1.2.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(4, "1.3.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(5, "1.4.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(6, "1.5.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(7, "2.0.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(8, "2.1.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(9, "3.0.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(10, "3.1.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(11, "GLSL.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(12, "FBO.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(13, "EFX.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(14, "GameWindow.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(15, "GLControl.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(16, "Test.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(17, "Fonts.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(18, "OpenTK.jpg");
-            this.imageListSampleCategories.Images.SetKeyName(19, "OpenCL.png");
             // 
             // tabControlSample
             // 
@@ -287,6 +262,20 @@
             this.copyToolStripMenuItem2.Name = "copyToolStripMenuItem2";
             this.copyToolStripMenuItem2.Size = new System.Drawing.Size(102, 22);
             this.copyToolStripMenuItem2.Text = "&Copy";
+            // 
+            // imageListSampleCategories
+            // 
+            this.imageListSampleCategories.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListSampleCategories.ImageStream")));
+            this.imageListSampleCategories.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListSampleCategories.Images.SetKeyName(0, "OpenAL.png");
+            this.imageListSampleCategories.Images.SetKeyName(1, "OpenCL.png");
+            this.imageListSampleCategories.Images.SetKeyName(2, "OpenGL.png");
+            this.imageListSampleCategories.Images.SetKeyName(3, "OpenGLES.png");
+            this.imageListSampleCategories.Images.SetKeyName(4, "OpenTK.png");
+            this.imageListSampleCategories.Images.SetKeyName(5, "1.x.png");
+            this.imageListSampleCategories.Images.SetKeyName(6, "2.x.png");
+            this.imageListSampleCategories.Images.SetKeyName(7, "3.x.png");
+            this.imageListSampleCategories.Images.SetKeyName(8, "4.x.png");
             // 
             // ExampleBrowser
             // 

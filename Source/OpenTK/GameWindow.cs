@@ -397,8 +397,9 @@ namespace OpenTK
                 // On some platforms, ProcessEvents() does not return while the user is resizing or moving
                 // the window. We can avoid this issue by raising UpdateFrame and RenderFrame events
                 // whenever we encounter a size or move event.
-                Move += DispatchUpdateAndRenderFrame;
-                Resize += DispatchUpdateAndRenderFrame;
+                // Note: hack disabled. Threaded rendering isprovides a better solution to this issue.
+                //Move += DispatchUpdateAndRenderFrame;
+                //Resize += DispatchUpdateAndRenderFrame;
 
                 Debug.Print("Entering main loop.");
                 update_watch.Start();

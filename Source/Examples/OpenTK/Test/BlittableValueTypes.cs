@@ -1,29 +1,5 @@
-#region License
-//
-// The Open Toolkit Library License
-//
-// Copyright (c) 2006 - 2008 the Open Toolkit library, except where noted.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
-// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-// the Software, and to permit persons to whom the Software is furnished to do
-// so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-// OTHER DEALINGS IN THE SOFTWARE.
-//
-#endregion
+// This code is in the Public Domain. It is provided "as is"
+// without express or implied warranty of any kind.
 
 using System;
 using System.Diagnostics;
@@ -49,29 +25,40 @@ namespace Examples.Tests
     {
         public static void Main()
         {
-            PrintType(new Simple());
-            PrintType(new Generic<Simple>());
-            PrintType(new Generic<Enum>());
-            PrintType(new Complex());
-            PrintType(new Complex<Enum>());
-            PrintType(new Complex2());
-            PrintType(new Complex3());
-            PrintType(new Complex4());
-            PrintType(new Class());
-            PrintType(new Class<Simple>());
+            TestType(new Simple());
+            TestType(new Generic<Simple>());
+            TestType(new Generic<Enum>());
+            TestType(new Complex());
+            TestType(new Complex<Enum>());
+            TestType(new Complex2());
+            TestType(new Complex3());
+            TestType(new Complex4());
+            TestType(new Class());
+            TestType(new Class<Simple>());
         }
 
-        static bool CheckBlittable<T>(T type)
+        // Tests whether specified type is blittable and prints its marshalled size if so.
+        static void TestType<T>(T instance)
         {
-            return BlittableValueType.Check(type);
+            PrintType<T>();
+            
+            Trace.Write(BlittableValueType.Check(instance) ? "is blittable " : "is not blittable ");
+
+            try
+            {
+                // StrideOf() will throw an ArgumentException if the type is not blittable.
+                Trace.Write(String.Format("({0} bytes)", BlittableValueType.StrideOf(instance)));
+            }
+            catch (Exception e)
+            {
+                Trace.Write(String.Format("({0})", e.GetType().Name));
+            }
+            
+            Trace.WriteLine("");
         }
 
-        static int GetStride<T>(T type)
-        {
-            return BlittableValueType.StrideOf(type);
-        }
-
-        static void PrintType<T>(T instance)
+        // Prints a simple description for the type.
+        static void PrintType<T>()
         {
             Type type = typeof(T);
             string typename = type.GetFields()[0].FieldType.ToString();
@@ -84,10 +71,6 @@ namespace Examples.Tests
 
             Trace.Write(typename.Substring(typename.LastIndexOf('.') + 1));
             Trace.Write(" } ");
-            Trace.Write(CheckBlittable(instance) ? "is blittable " : "is not blittable ");
-            try { Trace.Write(String.Format("({0} bytes)", GetStride(instance))); }
-            catch (Exception e) { Trace.Write(String.Format("({0})", e.GetType().Name)); }
-            Trace.WriteLine("");
         }
     }
 }

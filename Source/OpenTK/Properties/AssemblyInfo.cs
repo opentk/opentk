@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("The Open Toolkit Library")]
+[assembly: AssemblyTitle("OpenTK")]
 [assembly: AssemblyDescription("Open source game development toolkit for .Net/Mono.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("The Open Toolkit Library")]
@@ -32,11 +32,14 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("0.9.9.4")]
-[assembly: AssemblyFileVersion("0.9.9.4")]
+[assembly: AssemblyVersion("1.0.0.201")]
+[assembly: AssemblyFileVersion("1.0.0.201")]
 
 [assembly: CLSCompliant(true)]
 [assembly: System.Security.AllowPartiallyTrustedCallers]
+#if NET40
+[assembly: System.Security.SecurityRules(System.Security.SecurityRuleSet.Level1)]
+#endif
 
 #if SIGN_ASSEMBLY
 [assembly: AssemblyKeyFile(@"../../../OpenTK.snk")]
