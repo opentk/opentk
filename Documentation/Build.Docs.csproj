@@ -1,13 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="2.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <OutputPath>$(MSBuildProjectDirectory)\Source\latex</OutputPath>
+  <PropertyGroup Condition="'$(Configuration)' == 'Documentation'">
+    <OutputPath>$(MSBuildProjectDirectory)\Source</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Nsis'">
+    <OutputPath>Source\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <Import Project="..\Source\Build.Tasks\Common.xml" />
+  <PropertyGroup>
+    <LatexPath>$(OutputPath)\latex</LatexPath>
+    <HtmlPath>$(OutputPath)\html</HtmlPath>
+    <ProjectGuid>{650C6F3D-33B5-4216-9536-956AB42C0624}</ProjectGuid>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Doxyfile" />
+  </ItemGroup>
   <Target Name="Build">
-    <Exec Command="doxygen Doxyfile" />
-    <Exec Command="pdflatex -interaction=batchmode refman.tex" WorkingDirectory="$(OutputPath)" />
-    <Exec Command="makeindex -q refman.idx" WorkingDirectory="$(OutputPath)" />
-    <Exec Command="pdflatex -interaction=batchmode refman.tex" WorkingDirectory="$(OutputPath)" />
-    <Copy SourceFiles="$(OutputPath)\refman.pdf" DestinationFiles="Reference.pdf" />
+    <Run Command="doxygen" />
+    <Run Command="pdflatex -interaction=batchmode refman.tex" WorkingDirectory="$(LatexPath)" />
+    <Run Command="makeindex -q refman.idx" WorkingDirectory="$(LatexPath)" />
+    <Run Command="pdflatex -interaction=batchmode refman.tex" WorkingDirectory="$(LatexPath)" />
+    <Copy SourceFiles="$(LatexPath)\refman.pdf" DestinationFiles="Reference.pdf" />
+  </Target>
+  <Target Name="Clean">
+    <Delete Files="Reference.pdf" />
+    <Delete Files="texput.log" />
+    <RemoveDir Directories="$(OutputPath)" Condition="'$(OS)' == 'Windows_NT'" />
+    <Exec Command="rm -rf $(OutputPath)" Condition="'$(OS)' != 'Windows_NT'" />
   </Target>
 </Project>
