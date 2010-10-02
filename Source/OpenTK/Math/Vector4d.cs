@@ -138,7 +138,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="v">The Vector3d to copy components from.</param>
         /// <param name="w">The w component of the new Vector4.</param>
-        public Vector4d(Vector3 v, double w)
+        public Vector4d(Vector3d v, double w)
         {
             X = v.X;
             Y = v.Y;

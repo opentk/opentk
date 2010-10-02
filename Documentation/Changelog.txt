@@ -1,3 +1,155 @@
+------------------------------
+ OpenTK 1.0 beta-3 -> 1.0 rc1
+------------------------------
+
+2010-03-24  the_fiddler
+
+	* Build.exe, Source/Build/Resources/DoxyFile.txt: Modified doxygen
+	  script to ignore .svn directories.
+
+	* Source/Build/Build.cs: Improved documentation and added lib
+	  target (builds project files directly).
+
+	* Documentation/Manual.pdf: Added manual to source control. This
+	  file is a pdf copy of http://www.opentk.com/book/export/html/111,
+	  converted to pdf format manually (it is not part of the regular
+	  build process).
+
+	* Build.exe, Source/Build/Build.cs: Print total build time.
+
+	* Source/OpenTK/Platform/X11/X11GLNative.cs: Set initial values for
+	  window bounds and client rectangle to ensure the various
+	  properties return correct values inside the constructor and Load
+	  event. Fixes issue [#1649]: "WindowBorder.Fixed causes 1x1 sized
+	  window on Linux".
+
+	* ., Documentation: Update svn:ignore to ignore documentation
+	  source and Visual Studio solution upgrade files.
+
+	* Source/Bind/Specifications/GL2/enumext.spec,
+	  Source/OpenTK/Graphics/OpenGL/GLEnums.cs: Added
+	  EXT_texture_compression_s3tc tokens to PixelInternalFormat.
+	  Previously, only the srgb s3tc tokens were available there, now
+	  we have both srgb and rgb tokens.
+
+	* Source/Compatibility, Source/Examples, Source/GLControl,
+	  Source/OpenTK: Added pidb files to svn:ignore.
+
+	* Build.exe: Updated Build.exe to the latest version that includes
+	  nsis and all targets.
+
+	* Installers/Nsis/opentk.nsi: Enabled all languages and add source
+	  code and documentation to the generated installer.
+
+	* Source/Build/Build.cs, Source/Build/BuildNsis.cs,
+	  Source/Build/BuildProject.cs,
+	  Source/Build/Resources/OpenTK.Prebuild.xml: * Added "nsis" build
+	  target. * Added "all" build target, that creates solutions,
+	  builds them, creates documentation and runs the nsis target
+	  automatically. * Added support for building the generated
+	  solutions through Build.exe (using Microsoft BuildEngine). This
+	  is necessary for the "all" target. * Patch Prebuild output to fix
+	  csproj paths in the generated solutions.
+
+	* Source/OpenTK/GameWindow.cs: Disabled hack for modal event loop
+	  when click-dragging on windows. Threaded rendering is now
+	  supported and provides a superior solution.
+
+	* Source/OpenTK/Platform/X11/API.cs: Threaded X should be
+	  initialized both in debug and release modes.
+
+	* Source/Build/Properties/Resources.Designer.cs,
+	  Source/Build/Properties/Resources.resx,
+	  Source/Compatibility/Properties/Resources.Designer.cs,
+	  Source/Compatibility/Properties/Resources.resx,
+	  Source/Examples/Properties/Resources.Designer.cs,
+	  Source/Examples/Properties/Resources.resx: Use forward slashes in
+	  resource paths in order to maintain compatibility with xbuild
+	  2.6. See http://www.opentk.com/node/1551
+
+2010-03-23  the_fiddler
+
+	* Build.exe, Installers, Installers/Nsis,
+	  Installers/Nsis/opentk.nsi, Source/Build/Build.cs,
+	  Source/Build/BuildNsis.cs,
+	  Source/Build/Properties/AssemblyInfo.cs,
+	  Source/Compatibility/Properties/AssemblyInfo.cs,
+	  Source/Examples/Properties/AssemblyInfo.cs,
+	  Source/GLControl/Properties/AssemblyInfo.cs,
+	  Source/OpenTK/Properties/AssemblyInfo.cs: * Added Nsis installer
+	  script. * Added support for Nsis installer generation in
+	  OpenTK.Build. * Updated project titles. * Bumped version numbers
+	  for 1.0-rc1 release.
+
+	* Source/OpenTK/Platform/Windows/WinGLContext.cs: Print
+	  success/failure of wglShareLists. In case of failure, print error
+	  code to simplify debugging.
+
+2010-03-12  the_fiddler
+
+	* Source/OpenTK/Graphics/GraphicsContext.cs,
+	  Source/OpenTK/Graphics/IGraphicsContext.cs,
+	  Source/OpenTK/Platform/Dummy/DummyGLContext.cs,
+	  Source/OpenTK/Platform/MacOS/AglContext.cs,
+	  Source/OpenTK/Platform/Windows/WinGLContext.cs,
+	  Source/OpenTK/Platform/X11/X11GLContext.cs: Make LoadAll() method
+	  available to IGraphicsContext. Avoids the need for ugly casts of
+	  GraphicsContext to IGraphicsContextInternal when loading entry
+	  points (for example when trying to use an external, dummy
+	  context).
+
+	* Source/OpenTK/Platform/X11/API.cs: XCloseDisplay causes crash in
+	  libGL. Removed as a temporary workaround while investigating the
+	  issue.
+
+	* Source/OpenTK/Platform/X11/X11DisplayDevice.cs,
+	  Source/OpenTK/Platform/X11/X11Factory.cs,
+	  Source/OpenTK/Platform/X11/X11XrandrDisplayDevice.cs: * Do not
+	  blow up when XRandR extension is not available. Fixes issue
+	  [#1331]: "XRandR does not work with Nvidia dynamic TwinView
+	  enabled". * Renamed X11XrandrDisplayDevice to X11DisplayDevice as
+	  it should provide more code-paths than only XRandR.
+
+2010-03-11  the_fiddler
+
+	* Source/OpenTK/Platform/X11/X11GLNative.cs: * Added support for
+	  reading the actual window borders (WM decoration) through
+	  _NET_FRAME_EXTENTS. Updated Bounds property to use the actual
+	  border size. * Refactored parts of the event loop into separate
+	  functions for improved code clarity. * Updates the window
+	  location or size now immediately process pending events. Fixes
+	  issue [#1605]: "LINUX X, Y, Width, Height not being updated."
+
+	* Source/OpenTK/Platform/X11/Functions.cs: XMoveWindow was
+	  incorrectly p/invoking XResizeWindow instead of XMoveWindow.
+	  Fixes issue [#1599]: GameWindow.X or Y don't work correctly on
+	  Linux.
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: In the current
+	  implementation, ClientRectangle origin always starts at (0,0).
+	  Location is used for Bounds (the outer rectangle) and was not
+	  used correctly here.
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: * Raise only a
+	  single Resize event when changing WindowBorder or WindowState.
+	  Fixes issue [#1461]: "OnResize called multiple times when
+	  changing WindowState." * Refactored WindowBorder and WindowState
+	  parts into new private methods for increased clarity. *
+
+	* Source/Examples/OpenTK/GameWindow/ThreadedRendering.cs: Serialize
+	  viewport updates between main and rendering thread to avoid race
+	  conditions.
+
+	* Source/OpenTK/Platform/Windows/API.cs: Hide internal members from
+	  doxygen documentation. Fixes issue [#1617]: "Hide internal /
+	  private members for the function reference".
+
+	* Source/OpenTK/Platform/Windows/WinGLNative.cs: Use Guid for class
+	  name instead of trying to create our own unique name. Fixes issue
+	  [#1622]: "WinGLNative's window class registration strategy does
+	  not take AppDomains into account" (thanks kring789!)
+
+
 ---------------------------------
  OpenTK 1.0 beta-2 -> 1.0 beta-3
 ---------------------------------

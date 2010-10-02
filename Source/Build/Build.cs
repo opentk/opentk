@@ -19,11 +19,12 @@ using OpenTK.Build.Properties;
 
 namespace OpenTK.Build
 {
-    class Project
+    partial class Project
     {
         static readonly string RootPath = Directory.GetCurrentDirectory();
         static readonly string SourcePath = Path.Combine(RootPath, "Source");
         static readonly string DocPath = Path.Combine(RootPath, "Documentation");
+        static readonly string InstallersPath = Path.Combine(RootPath, "Installers");
 
         const string bindings = "Generator.Prebuild.xml";
         const string opentk = "OpenTK.Prebuild.xml";
@@ -33,15 +34,23 @@ namespace OpenTK.Build
 
         const string KeyFile = "OpenTK.snk"; // Do not change
 
-        const string Usage =  @"Usage: Build.exe target
-    target: one of vs, vs9, doc, clean, distclean, help";
+        const string Usage =  @"Solution generator and build script for OpenTK.
+Usage: [mono] Build.exe [target]
+    [mono]: use the Mono VM (otherwise use .Net)
+    [target]: vs, vs9 - generate solutions
+              all, lib, doc, nsis - build specified target
+              clean, distclean - delete intermediate and/or final build results
+              help - display extended usage information";
 
         const string Help = Usage + @"
 
 Available targets:
     vs:        Create Visual Studio 2005 project files.
     vs9:       Create Visual Studio 2008 project files.
-    doc:       Builds html and pdf documentation.
+    all:       Build library, documentation and installer packages.
+    lib:       Build library.
+    doc:       Build html and pdf documentation.
+    nsis:      Build NSIS installer for Windows.
     clean:     Delete intermediate files but leave final binaries and project
                files intact.
     distclean: Delete intermediate files, final binaries and project files.
@@ -54,17 +63,41 @@ Assembly signing:
 ";
 
         static readonly Assembly Prebuild = Assembly.Load(Resources.Prebuild);
+        static readonly Version AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
+        static string ProductVersion { get { return AssemblyVersion.Major + "." + AssemblyVersion.Minor; } }
+        static string ProductVersionRevision { get { return AssemblyVersion.Build.ToString(); } }
+        static string ProductVersionExtra
+        {
+            get
+            {
+                // See discussion here: http://www.opentk.com/node/1420#comment-7554
+                // 0-99 = alpha
+                // 100-199 = beta
+                // 200-299 = rc
+                // 300 = final
+                if (AssemblyVersion.Revision < 99)
+                    return "alpha" + AssemblyVersion.Revision % 100;
+                else if (AssemblyVersion.Revision < 199)
+                    return "beta" + AssemblyVersion.Revision % 100;
+                else if (AssemblyVersion.Revision < 299)
+                    return "rc" + AssemblyVersion.Revision % 100;
+                else
+                    return "final";
+            }
+        }
 
         enum BuildTarget
         {
             None = 0,
+            All,
             VS2005,
             VS2008,
-            Mono,
-            Net,
+            Net20,
+            // Net40, // Not implemented yet
             Clean,
             DistClean,
             Docs,
+            Nsis,
         }
 
         static void PrintUsage()
@@ -77,6 +110,7 @@ Assembly signing:
             Console.WriteLine(Help);
         }
 
+        [STAThread]
         static void Main(string[] args)
         {
             if (args.Length == 0)
@@ -90,6 +124,7 @@ Assembly signing:
                     args[0] = "vs";
             }
 
+            DateTime start = DateTime.Now;
             try
             {
                 PrepareBuildFiles();
@@ -105,6 +140,9 @@ Assembly signing:
             }
             finally
             {
+                DateTime end = DateTime.Now;
+                Console.WriteLine("Total build time: {0}", end - start);
+
                 // Wait until Prebuild releases the input files.
                 System.Threading.Thread.Sleep(2000);
                 DeleteBuildFiles();
@@ -132,14 +170,7 @@ Assembly signing:
             File.WriteAllText(quickstart, String.Format(Resources.QuickStart, sign_assembly));
             
             string doxy = Regex.Replace(Resources.DoxyFile, @"(\{\}|\{\w+\})", "");
-            File.WriteAllText(DoxyFile, String.Format(doxy, GetVersion()));
-        }
-
-        // Returns the version of the executing assembly.
-        static string GetVersion()
-        {
-            string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            return version;
+            File.WriteAllText(DoxyFile, String.Format(doxy, AssemblyVersion.ToString()));
         }
 
         // Copies keyfile to the various source directories. This is necessary
@@ -168,14 +199,17 @@ Assembly signing:
                         PrintHelp();
                         break;
 
-                    case "mono":
-                    case "xbuild":
-                        target = BuildTarget.Mono;
+                    case "lib":
+                    case "lib20":
+                        target = BuildTarget.Net20;
                         break;
 
-                    case "net":
-                    case "msbuild":
-                        target = BuildTarget.Net;
+                    //case "lib40":
+                    //    target = BuildTarget.Net40;
+                    //    break;
+
+                    case "all":
+                        target = BuildTarget.All;
                         break;
 
                     case "vs2005":
@@ -192,6 +226,12 @@ Assembly signing:
                     case "doc":
                     case "docs":
                         target = BuildTarget.Docs;
+                        break;
+
+                    case "ns":
+                    case "nsi":
+                    case "nsis":
+                        target = BuildTarget.Nsis;
                         break;
 
                     case "clean":
@@ -216,65 +256,33 @@ Assembly signing:
         {
             switch (target)
             {
-                //case BuildTarget.Mono:
-                //    Console.WriteLine("Building OpenTK using Mono/XBuild.");
-                //    ExecuteProcess(PrebuildPath, "/target nant /file " + PrebuildXml);
-                //    Console.WriteLine();
-                //    ExecuteProcess(
-                //        "nant",
-                //        "-buildfile:./Build/OpenTK.build -t:mono-2.0 " + (mode == BuildMode.Debug ? "build-debug" : "build-release"));
-                //    CopyBinaries();
-                //    break;
-
-                //case BuildTarget.Net:
-                //    Console.WriteLine("Building OpenTK using .Net");
-                //    ExecuteProcess(PrebuildPath, "/target nant /file " + PrebuildXml);
-                //    Console.WriteLine();
-                //    ExecuteProcess(
-                //        "nant",
-                //        "-buildfile:./Build/OpenTK.build -t:net-2.0 " + (mode == BuildMode.Debug ? "build-debug" : "build-release"));
-                //    CopyBinaries();
-                //    break;
-
                 case BuildTarget.VS2005:
-                    Console.WriteLine("Creating VS2005 project files");
-                    ExecutePrebuild("/target", "vs2008", "/file", bindings);
-                    ExecutePrebuild("/target", "vs2005", "/file", opentk);
-                    ExecutePrebuild("/target", "vs2005", "/file", quickstart);
+                    BuildVS2005();
                     break;
 
                 case BuildTarget.VS2008:
-                    Console.WriteLine("Creating VS2008 project files");
-                    ExecutePrebuild("/target", "vs2008", "/file", bindings);
-                    ExecutePrebuild("/target", "vs2008", "/file", opentk);
-                    ExecutePrebuild("/target", "vs2008", "/file", quickstart);
+                    BuildVS2008();
+                    break;
+
+                case BuildTarget.All:
+                    BuildVS2005();
+                    BuildProject();
+                    BuildDocumentation();
+                    BuildVS2005(); // Ensure that QuickStart project contains the correct links.
+                    BuildNsis(ProductVersion, ProductVersionRevision, ProductVersionExtra);
+                    break;
+
+                case BuildTarget.Net20:
+                    BuildVS2005();
+                    BuildProject();
                     break;
 
                 case BuildTarget.Docs:
-                    Console.WriteLine("Generating reference documentation (this may take several minutes)...");
-                    Console.WriteLine("Generating html sources...");
-                    try { ExecuteCommand("doxygen", null, null); }
-                    catch
-                    {
-                        Console.WriteLine("Failed to run \"doxygen\".");
-                        Console.WriteLine("Please consult the documentation for more information.");
-                    }
+                    BuildDocumentation();
+                    break;
 
-                    string latex_path = Path.Combine(Path.Combine(DocPath, "Source"), "latex");
-                    Console.WriteLine("Compiling sources to pdf...");
-                    try
-                    {
-                        ExecuteCommand("pdflatex", latex_path, "-interaction=batchmode", "refman.tex");
-                        ExecuteCommand("makeindex", latex_path, "-q", "refman.idx");
-                        ExecuteCommand("pdflatex", latex_path, "-interaction=batchmode", "refman.tex");
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Failed to run \"pdflatex\" or \"makeindex\".");
-                        Console.WriteLine("Please consult the documentation for more information");
-                    }
-                    File.Copy(Path.Combine(latex_path, "refman.pdf"),
-                        Path.Combine(DocPath, ReferenceFile), true);
+                case BuildTarget.Nsis:
+                    BuildNsis(null, null, null);
                     break;
 
                 case BuildTarget.Clean:
@@ -284,6 +292,7 @@ Assembly signing:
                     ExecutePrebuild("/clean", "/yes", "/file", quickstart);
                     DeleteDirectories(RootPath, "obj");
                     DeleteFiles(SourcePath, KeyFile);
+                    CleanNsisFiles();
                     break;
 
                 case BuildTarget.DistClean:
@@ -296,6 +305,7 @@ Assembly signing:
                     DeleteDirectories(DocPath, "Source");
                     DeleteFiles(DocPath, ReferenceFile);
                     DeleteFiles(SourcePath, KeyFile);
+                    DistCleanNsisFiles();
 
                     string binaries_path = Path.Combine(RootPath, "Binaries");
                     try
@@ -315,6 +325,72 @@ Assembly signing:
                     Console.WriteLine("Unknown target: {0}", target);
                     PrintUsage();
                     break;
+            }
+        }
+
+        static void BuildDocumentation()
+        {
+            Console.WriteLine("Generating reference documentation (this may take several minutes)...");
+            Console.WriteLine("Generating html sources...");
+            try { ExecuteCommand("doxygen", null, null); }
+            catch
+            {
+                Console.WriteLine("Failed to run \"doxygen\".");
+                Console.WriteLine("Please consult the documentation for more information.");
+            }
+
+            string latex_path = Path.Combine(Path.Combine(DocPath, "Source"), "latex");
+            Console.WriteLine("Compiling sources to pdf...");
+            try
+            {
+                ExecuteCommand("pdflatex", latex_path, "-interaction=batchmode", "refman.tex");
+                ExecuteCommand("makeindex", latex_path, "-q", "refman.idx");
+                ExecuteCommand("pdflatex", latex_path, "-interaction=batchmode", "refman.tex");
+            }
+            catch
+            {
+                Console.WriteLine("Failed to run \"pdflatex\" or \"makeindex\".");
+                Console.WriteLine("Please consult the documentation for more information");
+            }
+            File.Copy(Path.Combine(latex_path, "refman.pdf"),
+                Path.Combine(DocPath, ReferenceFile), true);
+        }
+
+        static void BuildVS2005()
+        {
+            Console.WriteLine("Creating VS2005 project files");
+            ExecutePrebuild("/target", "vs2008", "/file", bindings);
+            ExecutePrebuild("/target", "vs2005", "/file", opentk);
+            ExecutePrebuild("/target", "vs2005", "/file", quickstart);
+            PatchPrebuildOutput();
+        }
+
+        static void BuildVS2008()
+        {
+            Console.WriteLine("Creating VS2008 project files");
+            ExecutePrebuild("/target", "vs2008", "/file", bindings);
+            ExecutePrebuild("/target", "vs2008", "/file", opentk);
+            ExecutePrebuild("/target", "vs2008", "/file", quickstart);
+            PatchPrebuildOutput();
+        }
+
+        // Prebuild is fiendishly buggy. Patch a number of known issues
+        // to ensure its output actually works.
+        static void PatchPrebuildOutput()
+        {
+            // Patch 1: sln files contain paths to csproj in the form of
+            // "../[current dir]/Source/". If we rename [current dir]
+            // the generated solutions become invalid. Ugh!
+            Console.WriteLine("Patching paths in prebuild output");
+            foreach (string solution in Directory.GetFiles(RootPath, "*.sln", SearchOption.TopDirectoryOnly))
+            {
+                // We could use an XmlDocument for extra validation,
+                // but it's not worth the extra effort. Let's just remove
+                // the offending part ("../[current dir]") directly.
+                string sln_data = File.ReadAllText(solution);
+                string current_dir = RootPath.Substring(RootPath.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+                sln_data = sln_data.Replace(String.Format("..{0}{1}{0}", Path.DirectorySeparatorChar, current_dir), "");
+                File.WriteAllText(solution, sln_data);
             }
         }
 

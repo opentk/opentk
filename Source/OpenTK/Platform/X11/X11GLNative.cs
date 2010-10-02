@@ -164,6 +164,9 @@ namespace OpenTK.Platform.X11
 
                 if (window.WindowHandle == IntPtr.Zero)
                     throw new ApplicationException("XCreateWindow call failed (returned 0).");
+
+                if (title != null)
+                    Functions.XStoreName(window.Display, window.WindowHandle, title);
             }
 
             // Set the window hints
@@ -180,6 +183,15 @@ namespace OpenTK.Platform.X11
                 // Register for window destroy notification
                 Functions.XSetWMProtocols(window.Display, window.WindowHandle, new IntPtr[] { _atom_wm_destroy }, 1);
             }
+
+            // Set the initial window size to ensure X, Y, Width, Height and the rest
+            // return the correct values inside the constructor and the Load event.
+            XEvent e = new XEvent();
+            e.ConfigureEvent.x = x;
+            e.ConfigureEvent.y = y;
+            e.ConfigureEvent.width = width;
+            e.ConfigureEvent.height = height;
+            RefreshWindowBounds(ref e);
 
             driver = new X11Input(window);
 

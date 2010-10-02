@@ -141,8 +141,10 @@ namespace OpenTK.Platform.Windows
 
                 if (sharedContext != null)
                 {
-                    Debug.Print("Sharing state with context {0}", sharedContext.ToString());
-                    Wgl.Imports.ShareLists((sharedContext as IGraphicsContextInternal).Context.Handle, Handle.Handle);
+                    Marshal.GetLastWin32Error();
+                    Debug.Write("Sharing state with context {0}: ", sharedContext.ToString());
+                    bool result = Wgl.Imports.ShareLists((sharedContext as IGraphicsContextInternal).Context.Handle, Handle.Handle);
+                    Debug.WriteLine(result ? "success!" : "failed with win32 error " + Marshal.GetLastWin32Error());
                 }
             }
         }
@@ -225,10 +227,6 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #endregion
-
-        #region --- IGLContextInternal Members ---
-
         #region void LoadAll()
 
         public override void LoadAll()
@@ -241,6 +239,10 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion
+
+        #endregion
+
+        #region --- IGLContextInternal Members ---
 
         #region IWindowInfo IGLContextInternal.Info
         /*

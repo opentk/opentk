@@ -77,6 +77,8 @@
       </Configuration>
 
       <Reference name="System"/>
+      <Reference name="Microsoft.Build.Engine"/>
+      <Reference name="Microsoft.Build.Framework"/>
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
@@ -148,10 +150,12 @@
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
-        <Match path="." pattern="*.rtf" recurse="true" buildAction="EmbeddedResource" />
+        <Match path="." pattern="*.rtf" recurse="true" buildAction="EmbeddedResource">
+          <Exclude name="obj"/>
+        </Match>
         <Match path="." pattern="*.resx" recurse="true" buildAction="EmbeddedResource"/>
-        <Match path="../Examples/Data" pattern="^.*\.(bmp|png|jpg|txt|glsl|wav|ogg|dds|ico)$" useRegex="true" recurse="true" buildAction="None" copyToOutput="Always"/>
-        <Match path="../Examples/Resources" pattern="^.*\.(bmp|png|jpg|txt|glsl|wav|ogg|dds|ico)$" useRegex="true" recurse="true" buildAction="None"/>
+        <Match path="Data" pattern="^.*\.(bmp|png|jpg|txt|glsl|wav|ogg|dds|ico)$" useRegex="true" recurse="true" buildAction="None" copyToOutput="Always"/>
+        <Match path="Resources" pattern="^.*\.(bmp|png|jpg|txt|glsl|wav|ogg|dds|ico)$" useRegex="true" recurse="true" buildAction="None"/>
         <Match path="../OpenTK" pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
         <Match path="../OpenTK" pattern="OpenTK.Compatibility.dll.config" buildAction="None" copyToOutput="Always"/>
       </Files>
