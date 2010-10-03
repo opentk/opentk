@@ -1,0 +1,942 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{31D19132-0000-0000-0000-000000000000}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>Bind</AssemblyName>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>
+    </AppDesignerFolder>
+    <RootNamespace>Bind</RootNamespace>
+    <StartupObject>
+    </StartupObject>
+    <StartArguments>
+    </StartArguments>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>True</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <Optimize>False</Optimize>
+    <OutputPath>..\..\Binaries\OpenTK\Debug\</OutputPath>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <RemoveIntegerChecks>False</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>False</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE;</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>False</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <Optimize>True</Optimize>
+    <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <RemoveIntegerChecks>False</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>False</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nsis|AnyCPU'">
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE;</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>False</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <Optimize>True</Optimize>
+    <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <RemoveIntegerChecks>False</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>False</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Documentation|AnyCPU'">
+    <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Name>System.Core</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.Xml</Name>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IBind.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Main.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DocProcessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Settings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BindStreamWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utilities.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ISpecReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ISpecWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CL\CLGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GL2\Generator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Structures\Type.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Structures\Function.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Structures\Constant.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Structures\Enum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Structures\Delegate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Structures\Parameter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Structures\FlowDirection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ES\ESGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Glx\Generator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Glu\Generator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Wgl\Generator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Specifications\GL2\enum.spec">
+    </None>
+    <None Include="Specifications\GL2\gl.spec">
+    </None>
+    <None Include="Specifications\GL2\enumext.spec">
+    </None>
+    <None Include="Specifications\Glx\glx.spec">
+    </None>
+    <None Include="Specifications\Glx\glxenum.spec">
+    </None>
+    <None Include="Specifications\Glx\glxenumext.spec">
+    </None>
+    <None Include="Specifications\Glx\glxext.spec">
+    </None>
+    <None Include="Specifications\Glu\glu.spec">
+    </None>
+    <None Include="Specifications\Glu\enumglu.spec">
+    </None>
+    <None Include="Specifications\Wgl\wglenum.spec">
+    </None>
+    <None Include="Specifications\Wgl\wglext.spec">
+    </None>
+    <None Include="Specifications\Wgl\wgl.spec">
+    </None>
+    <None Include="Specifications\Wgl\wglenumext.spec">
+    </None>
+    <None Include="Specifications\csharp.tm">
+    </None>
+    <None Include="Specifications\GL2\gl.tm">
+    </None>
+    <None Include="Specifications\Glx\glx.tm">
+    </None>
+    <None Include="Specifications\Glu\glu.tm">
+    </None>
+    <None Include="Specifications\Wgl\wgl.tm">
+    </None>
+    <None Include="Specifications\CL10\signatures.xml">
+    </None>
+    <None Include="Specifications\CL10\overrides.xml">
+    </None>
+    <None Include="Specifications\ES10\signatures.xml">
+    </None>
+    <None Include="Specifications\ES10\overrides.xml">
+    </None>
+    <None Include="Specifications\ES11\signatures.xml">
+    </None>
+    <None Include="Specifications\ES11\overrides.xml">
+    </None>
+    <None Include="Specifications\GL2\gloverrides.xml">
+    </None>
+    <None Include="Specifications\ES20\signatures.xml">
+    </None>
+    <None Include="Specifications\ES20\overrides.xml">
+    </None>
+    <None Include="Specifications\Docs\glIsTexture.xml">
+    </None>
+    <None Include="Specifications\Docs\glXCreatePixmap.xml">
+    </None>
+    <None Include="Specifications\Docs\glViewport.xml">
+    </None>
+    <None Include="Specifications\Docs\glXDestroyContext.xml">
+    </None>
+    <None Include="Specifications\Docs\gluGetTessProperty.xml">
+    </None>
+    <None Include="Specifications\Docs\glEvalPoint.xml">
+    </None>
+    <None Include="Specifications\Docs\gluPerspective.xml">
+    </None>
+    <None Include="Specifications\Docs\glXDestroyPbuffer.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetTexGen.xml">
+    </None>
+    <None Include="Specifications\Docs\glVertexPointer.xml">
+    </None>
+    <None Include="Specifications\Docs\glBlendFuncSeparate.xml">
+    </None>
+    <None Include="Specifications\Docs\glNormalPointer.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetShader.xml">
+    </None>
+    <None Include="Specifications\Docs\gluBeginPolygon.xml">
+    </None>
+    <None Include="Specifications\Docs\glIsQuery.xml">
+    </None>
+    <None Include="Specifications\Docs\glResetHistogram.xml">
+    </None>
+    <None Include="Specifications\Docs\glXQueryExtensionsString.xml">
+    </None>
+    <None Include="Specifications\Docs\glLoadTransposeMatrix.xml">
+    </None>
+    <None Include="Specifications\Docs\glCompressedTexImage2D.xml">
+    </None>
+    <None Include="Specifications\Docs\glTexImage2D.xml">
+    </None>
+    <None Include="Specifications\Docs\glStencilOpSeparate.xml">
+    </None>
+    <None Include="Specifications\Docs\glDrawBuffer.xml">
+    </None>
+    <None Include="Specifications\Docs\glEdgeFlagPointer.xml">
+    </None>
+    <None Include="Specifications\Docs\glTexCoord.xml">
+    </None>
+    <None Include="Specifications\Docs\glMultiDrawElements.xml">
+    </None>
+    <None Include="Specifications\Docs\glEnableVertexAttribArray.xml">
+    </None>
+    <None Include="Specifications\Docs\glXGetProcAddress.xml">
+    </None>
+    <None Include="Specifications\Docs\glGenBuffers.xml">
+    </None>
+    <None Include="Specifications\Docs\glXFreeContextEXT.xml">
+    </None>
+    <None Include="Specifications\Docs\glFlush.xml">
+    </None>
+    <None Include="Specifications\Docs\glClearStencil.xml">
+    </None>
+    <None Include="Specifications\Docs\gluNextContour.xml">
+    </None>
+    <None Include="Specifications\Docs\glListBase.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetColorTableParameter.xml">
+    </None>
+    <None Include="Specifications\Docs\glMapBuffer.xml">
+    </None>
+    <None Include="Specifications\Docs\glXDestroyGLXPixmap.xml">
+    </None>
+    <None Include="Specifications\Docs\glDrawElements.xml">
+    </None>
+    <None Include="Specifications\Docs\glPushMatrix.xml">
+    </None>
+    <None Include="Specifications\Docs\glVertexAttribPointer.xml">
+    </None>
+    <None Include="Specifications\Docs\glMultMatrix.xml">
+    </None>
+    <None Include="Specifications\Docs\glXGetClientString.xml">
+    </None>
+    <None Include="Specifications\Docs\glXGetContextIDEXT.xml">
+    </None>
+    <None Include="Specifications\Docs\gluLookAt.xml">
+    </None>
+    <None Include="Specifications\Docs\gluBuild3DMipmapLevels.xml">
+    </None>
+    <None Include="Specifications\Docs\glDrawRangeElements.xml">
+    </None>
+    <None Include="Specifications\Docs\glXGetFBConfigAttrib.xml">
+    </None>
+    <None Include="Specifications\Docs\glValidateProgram.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetMap.xml">
+    </None>
+    <None Include="Specifications\Docs\glUniform.xml">
+    </None>
+    <None Include="Specifications\Docs\gluPwlCurve.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetPointerv.xml">
+    </None>
+    <None Include="Specifications\Docs\glXDestroyPixmap.xml">
+    </None>
+    <None Include="Specifications\Docs\gluUnProject.xml">
+    </None>
+    <None Include="Specifications\Docs\glPrioritizeTextures.xml">
+    </None>
+    <None Include="Specifications\Docs\glCompressedTexSubImage2D.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetQueryObject.xml">
+    </None>
+    <None Include="Specifications\Docs\glXCreateGLXPixmap.xml">
+    </None>
+    <None Include="Specifications\Docs\glBufferSubData.xml">
+    </None>
+    <None Include="Specifications\Docs\glClearDepth.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetUniform.xml">
+    </None>
+    <None Include="Specifications\Docs\glEnable.xml">
+    </None>
+    <None Include="Specifications\Docs\glCopyColorTable.xml">
+    </None>
+    <None Include="Specifications\Docs\glTexImage1D.xml">
+    </None>
+    <None Include="Specifications\Docs\glPushClientAttrib.xml">
+    </None>
+    <None Include="Specifications\Docs\glBindBuffer.xml">
+    </None>
+    <None Include="Specifications\Docs\glEdgeFlag.xml">
+    </None>
+    <None Include="Specifications\Docs\gluDeleteTess.xml">
+    </None>
+    <None Include="Specifications\Docs\glVertexAttrib.xml">
+    </None>
+    <None Include="Specifications\Docs\glFog.xml">
+    </None>
+    <None Include="Specifications\Docs\glBeginQuery.xml">
+    </None>
+    <None Include="Specifications\Docs\glDrawPixels.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetSeparableFilter.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetConvolutionFilter.xml">
+    </None>
+    <None Include="Specifications\Docs\glXGetCurrentReadDrawable.xml">
+    </None>
+    <None Include="Specifications\Docs\glShaderSource.xml">
+    </None>
+    <None Include="Specifications\Docs\glPolygonOffset.xml">
+    </None>
+    <None Include="Specifications\Docs\glPushAttrib.xml">
+    </None>
+    <None Include="Specifications\Docs\glXQueryDrawable.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetMinmax.xml">
+    </None>
+    <None Include="Specifications\Docs\gluScaleImage.xml">
+    </None>
+    <None Include="Specifications\Docs\glLineWidth.xml">
+    </None>
+    <None Include="Specifications\Docs\glRotate.xml">
+    </None>
+    <None Include="Specifications\Docs\glLight.xml">
+    </None>
+    <None Include="Specifications\Docs\glSelectBuffer.xml">
+    </None>
+    <None Include="Specifications\Docs\glFogCoord.xml">
+    </None>
+    <None Include="Specifications\Docs\glXGetSelectedEvent.xml">
+    </None>
+    <None Include="Specifications\Docs\glStencilMask.xml">
+    </None>
+    <None Include="Specifications\Docs\gluBuild2DMipmapLevels.xml">
+    </None>
+    <None Include="Specifications\Docs\glDepthRange.xml">
+    </None>
+    <None Include="Specifications\Docs\glReadBuffer.xml">
+    </None>
+    <None Include="Specifications\Docs\glDeleteBuffers.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetBufferPointerv.xml">
+    </None>
+    <None Include="Specifications\Docs\glClearColor.xml">
+    </None>
+    <None Include="Specifications\Docs\glIsBuffer.xml">
+    </None>
+    <None Include="Specifications\Docs\glTexSubImage1D.xml">
+    </None>
+    <None Include="Specifications\Docs\glXGetCurrentContext.xml">
+    </None>
+    <None Include="Specifications\Docs\glIsList.xml">
+    </None>
+    <None Include="Specifications\Docs\glBlendEquation.xml">
+    </None>
+    <None Include="Specifications\Docs\glHint.xml">
+    </None>
+    <None Include="Specifications\Docs\glVertex.xml">
+    </None>
+    <None Include="Specifications\Docs\glTexSubImage3D.xml">
+    </None>
+    <None Include="Specifications\Docs\glCopyColorSubTable.xml">
+    </None>
+    <None Include="Specifications\Docs\gluNurbsCallback.xml">
+    </None>
+    <None Include="Specifications\Docs\gluNewQuadric.xml">
+    </None>
+    <None Include="Specifications\Docs\glUseProgram.xml">
+    </None>
+    <None Include="Specifications\Docs\glCullFace.xml">
+    </None>
+    <None Include="Specifications\Docs\glXGetCurrentDisplay.xml">
+    </None>
+    <None Include="Specifications\Docs\glSecondaryColor.xml">
+    </None>
+    <None Include="Specifications\Docs\glStencilFuncSeparate.xml">
+    </None>
+    <None Include="Specifications\Docs\gluPickMatrix.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetTexParameter.xml">
+    </None>
+    <None Include="Specifications\Docs\glPixelZoom.xml">
+    </None>
+    <None Include="Specifications\Docs\gluBeginSurface.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetVertexAttribPointerv.xml">
+    </None>
+    <None Include="Specifications\Docs\glClearAccum.xml">
+    </None>
+    <None Include="Specifications\Docs\glPushName.xml">
+    </None>
+    <None Include="Specifications\Docs\gluQuadricCallback.xml">
+    </None>
+    <None Include="Specifications\Docs\glCompileShader.xml">
+    </None>
+    <None Include="Specifications\Docs\gluDisk.xml">
+    </None>
+    <None Include="Specifications\Docs\gluCylinder.xml">
+    </None>
+    <None Include="Specifications\Docs\glBlendEquationSeparate.xml">
+    </None>
+    <None Include="Specifications\Docs\glPassThrough.xml">
+    </None>
+    <None Include="Specifications\Docs\glConvolutionFilter2D.xml">
+    </None>
+    <None Include="Specifications\Docs\glStencilOp.xml">
+    </None>
+    <None Include="Specifications\Docs\glScale.xml">
+    </None>
+    <None Include="Specifications\Docs\glXCreateWindow.xml">
+    </None>
+    <None Include="Specifications\Docs\glFogCoordPointer.xml">
+    </None>
+    <None Include="Specifications\Docs\glWindowPos.xml">
+    </None>
+    <None Include="Specifications\Docs\gluQuadricTexture.xml">
+    </None>
+    <None Include="Specifications\Docs\glAreTexturesResident.xml">
+    </None>
+    <None Include="Specifications\Docs\glXDestroyWindow.xml">
+    </None>
+    <None Include="Specifications\Docs\gluTessCallback.xml">
+    </None>
+    <None Include="Specifications\Docs\glDrawArrays.xml">
+    </None>
+    <None Include="Specifications\Docs\glMinmax.xml">
+    </None>
+    <None Include="Specifications\Docs\glArrayElement.xml">
+    </None>
+    <None Include="Specifications\Docs\glReadPixels.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetLight.xml">
+    </None>
+    <None Include="Specifications\Docs\glTexEnv.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetBufferParameteriv.xml">
+    </None>
+    <None Include="Specifications\Docs\glFrontFace.xml">
+    </None>
+    <None Include="Specifications\Docs\glCopyPixels.xml">
+    </None>
+    <None Include="Specifications\Docs\glXWaitX.xml">
+    </None>
+    <None Include="Specifications\Docs\glXQueryContext.xml">
+    </None>
+    <None Include="Specifications\Docs\gluTessEndPolygon.xml">
+    </None>
+    <None Include="Specifications\Docs\glEvalCoord.xml">
+    </None>
+    <None Include="Specifications\Docs\glLightModel.xml">
+    </None>
+    <None Include="Specifications\Docs\glXIsDirect.xml">
+    </None>
+    <None Include="Specifications\Docs\glMultiTexCoord.xml">
+    </None>
+    <None Include="Specifications\Docs\glXUseXFont.xml">
+    </None>
+    <None Include="Specifications\Docs\glBindAttribLocation.xml">
+    </None>
+    <None Include="Specifications\Docs\glTexImage3D.xml">
+    </None>
+    <None Include="Specifications\Docs\gluQuadricNormals.xml">
+    </None>
+    <None Include="Specifications\Docs\glClipPlane.xml">
+    </None>
+    <None Include="Specifications\Docs\glIndexPointer.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetPixelMap.xml">
+    </None>
+    <None Include="Specifications\Docs\glXCreateContext.xml">
+    </None>
+    <None Include="Specifications\Docs\glCreateProgram.xml">
+    </None>
+    <None Include="Specifications\Docs\glCallLists.xml">
+    </None>
+    <None Include="Specifications\Docs\glTexCoordPointer.xml">
+    </None>
+    <None Include="Specifications\Docs\gluDeleteNurbsRenderer.xml">
+    </None>
+    <None Include="Specifications\Docs\glLogicOp.xml">
+    </None>
+    <None Include="Specifications\Docs\glLoadMatrix.xml">
+    </None>
+    <None Include="Specifications\Docs\glXIntro.xml">
+    </None>
+    <None Include="Specifications\Docs\gluBuild1DMipmaps.xml">
+    </None>
+    <None Include="Specifications\Docs\glIsProgram.xml">
+    </None>
+    <None Include="Specifications\Docs\glShadeModel.xml">
+    </None>
+    <None Include="Specifications\Docs\glBlendColor.xml">
+    </None>
+    <None Include="Specifications\Docs\glCallList.xml">
+    </None>
+    <None Include="Specifications\Docs\glBegin.xml">
+    </None>
+    <None Include="Specifications\Docs\glRenderMode.xml">
+    </None>
+    <None Include="Specifications\Docs\glXQueryVersion.xml">
+    </None>
+    <None Include="Specifications\Docs\glPolygonStipple.xml">
+    </None>
+    <None Include="Specifications\Docs\glDeleteQueries.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetTexLevelParameter.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetColorTable.xml">
+    </None>
+    <None Include="Specifications\Docs\gluBuild2DMipmaps.xml">
+    </None>
+    <None Include="Specifications\Docs\glColor.xml">
+    </None>
+    <None Include="Specifications\Docs\glAttachShader.xml">
+    </None>
+    <None Include="Specifications\Docs\glXGetVisualFromFBConfig.xml">
+    </None>
+    <None Include="Specifications\Docs\glXCreateNewContext.xml">
+    </None>
+    <None Include="Specifications\Docs\glBindTexture.xml">
+    </None>
+    <None Include="Specifications\Docs\glLoadName.xml">
+    </None>
+    <None Include="Specifications\Docs\glGenLists.xml">
+    </None>
+    <None Include="Specifications\Docs\gluNurbsProperty.xml">
+    </None>
+    <None Include="Specifications\Docs\glColorMask.xml">
+    </None>
+    <None Include="Specifications\Docs\glBufferData.xml">
+    </None>
+    <None Include="Specifications\Docs\gluQuadricDrawStyle.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetActiveUniform.xml">
+    </None>
+    <None Include="Specifications\Docs\glSampleCoverage.xml">
+    </None>
+    <None Include="Specifications\Docs\glFeedbackBuffer.xml">
+    </None>
+    <None Include="Specifications\Docs\glCopyTexImage1D.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetMaterial.xml">
+    </None>
+    <None Include="Specifications\Docs\glNewList.xml">
+    </None>
+    <None Include="Specifications\Docs\glNormal.xml">
+    </None>
+    <None Include="Specifications\Docs\glPointSize.xml">
+    </None>
+    <None Include="Specifications\Docs\glGenQueries.xml">
+    </None>
+    <None Include="Specifications\Docs\gluTessProperty.xml">
+    </None>
+    <None Include="Specifications\Docs\glIsShader.xml">
+    </None>
+    <None Include="Specifications\Docs\gluGetString.xml">
+    </None>
+    <None Include="Specifications\Docs\glTexGen.xml">
+    </None>
+    <None Include="Specifications\Docs\glDepthMask.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetProgramInfoLog.xml">
+    </None>
+    <None Include="Specifications\Docs\gluOrtho2D.xml">
+    </None>
+    <None Include="Specifications\Docs\glXChooseFBConfig.xml">
+    </None>
+    <None Include="Specifications\Docs\glSeparableFilter2D.xml">
+    </None>
+    <None Include="Specifications\Docs\glDeleteProgram.xml">
+    </None>
+    <None Include="Specifications\Docs\gluErrorString.xml">
+    </None>
+    <None Include="Specifications\Docs\gluNewTess.xml">
+    </None>
+    <None Include="Specifications\Docs\gluUnProject4.xml">
+    </None>
+    <None Include="Specifications\Docs\glXChooseVisual.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetHistogram.xml">
+    </None>
+    <None Include="Specifications\Docs\glEnableClientState.xml">
+    </None>
+    <None Include="Specifications\Docs\gluNewNurbsRenderer.xml">
+    </None>
+    <None Include="Specifications\Docs\glXGetFBConfigs.xml">
+    </None>
+    <None Include="Specifications\Docs\glXSwapBuffers.xml">
+    </None>
+    <None Include="Specifications\Docs\glBitmap.xml">
+    </None>
+    <None Include="Specifications\Docs\glLineStipple.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetCompressedTexImage.xml">
+    </None>
+    <None Include="Specifications\Docs\gluBeginTrim.xml">
+    </None>
+    <None Include="Specifications\Docs\glCopyConvolutionFilter1D.xml">
+    </None>
+    <None Include="Specifications\Docs\glCreateShader.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetHistogramParameter.xml">
+    </None>
+    <None Include="Specifications\Docs\gluQuadricOrientation.xml">
+    </None>
+    <None Include="Specifications\Docs\glFinish.xml">
+    </None>
+    <None Include="Specifications\Docs\glXQueryExtension.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetString.xml">
+    </None>
+    <None Include="Specifications\Docs\glCompressedTexImage3D.xml">
+    </None>
+    <None Include="Specifications\Docs\glStencilFunc.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetShaderSource.xml">
+    </None>
+    <None Include="Specifications\Docs\gluPartialDisk.xml">
+    </None>
+    <None Include="Specifications\Docs\glColorMaterial.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetAttribLocation.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetPolygonStipple.xml">
+    </None>
+    <None Include="Specifications\Docs\glScissor.xml">
+    </None>
+    <None Include="Specifications\Docs\gluTessBeginContour.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetMinmaxParameter.xml">
+    </None>
+    <None Include="Specifications\Docs\glClientActiveTexture.xml">
+    </None>
+    <None Include="Specifications\Docs\glCopyTexSubImage2D.xml">
+    </None>
+    <None Include="Specifications\Docs\gluProject.xml">
+    </None>
+    <None Include="Specifications\Docs\glDeleteTextures.xml">
+    </None>
+    <None Include="Specifications\Docs\gluGetNurbsProperty.xml">
+    </None>
+    <None Include="Specifications\Docs\glResetMinmax.xml">
+    </None>
+    <None Include="Specifications\Docs\glMapGrid.xml">
+    </None>
+    <None Include="Specifications\Docs\gluSphere.xml">
+    </None>
+    <None Include="Specifications\Docs\glActiveTexture.xml">
+    </None>
+    <None Include="Specifications\Docs\glXWaitGL.xml">
+    </None>
+    <None Include="Specifications\Docs\glGet.xml">
+    </None>
+    <None Include="Specifications\Docs\glDepthFunc.xml">
+    </None>
+    <None Include="Specifications\Docs\glMap2.xml">
+    </None>
+    <None Include="Specifications\Docs\gluTessVertex.xml">
+    </None>
+    <None Include="Specifications\Docs\glBlendFunc.xml">
+    </None>
+    <None Include="Specifications\Docs\glMultTransposeMatrix.xml">
+    </None>
+    <None Include="Specifications\Docs\glMultiDrawArrays.xml">
+    </None>
+    <None Include="Specifications\Docs\glColorTableParameter.xml">
+    </None>
+    <None Include="Specifications\Docs\glXMakeContextCurrent.xml">
+    </None>
+    <None Include="Specifications\Docs\glPointParameter.xml">
+    </None>
+    <None Include="Specifications\Docs\glMaterial.xml">
+    </None>
+    <None Include="Specifications\Docs\glColorSubTable.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetQueryiv.xml">
+    </None>
+    <None Include="Specifications\Docs\glCopyConvolutionFilter2D.xml">
+    </None>
+    <None Include="Specifications\Docs\glXCreatePbuffer.xml">
+    </None>
+    <None Include="Specifications\Docs\glClearIndex.xml">
+    </None>
+    <None Include="Specifications\Docs\gluTessBeginPolygon.xml">
+    </None>
+    <None Include="Specifications\Docs\gluBuild1DMipmapLevels.xml">
+    </None>
+    <None Include="Specifications\Docs\glXGetCurrentDrawable.xml">
+    </None>
+    <None Include="Specifications\Docs\glLinkProgram.xml">
+    </None>
+    <None Include="Specifications\Docs\gluNurbsCallbackDataEXT.xml">
+    </None>
+    <None Include="Specifications\Docs\glXQueryServerString.xml">
+    </None>
+    <None Include="Specifications\Docs\gluNurbsCallbackData.xml">
+    </None>
+    <None Include="Specifications\Docs\glClear.xml">
+    </None>
+    <None Include="Specifications\Docs\glTexSubImage2D.xml">
+    </None>
+    <None Include="Specifications\Docs\glColorPointer.xml">
+    </None>
+    <None Include="Specifications\Docs\gluBuild3DMipmaps.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetActiveAttrib.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetTexEnv.xml">
+    </None>
+    <None Include="Specifications\Docs\glCompressedTexImage1D.xml">
+    </None>
+    <None Include="Specifications\Docs\glConvolutionFilter1D.xml">
+    </None>
+    <None Include="Specifications\Docs\glXGetConfig.xml">
+    </None>
+    <None Include="Specifications\Docs\glCompressedTexSubImage1D.xml">
+    </None>
+    <None Include="Specifications\Docs\glAccum.xml">
+    </None>
+    <None Include="Specifications\Docs\glPolygonMode.xml">
+    </None>
+    <None Include="Specifications\Docs\gluCheckExtension.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetVertexAttrib.xml">
+    </None>
+    <None Include="Specifications\Docs\glXImportContextEXT.xml">
+    </None>
+    <None Include="Specifications\Docs\glPixelMap.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetShaderInfoLog.xml">
+    </None>
+    <None Include="Specifications\Docs\glStencilMaskSeparate.xml">
+    </None>
+    <None Include="Specifications\Docs\glTranslate.xml">
+    </None>
+    <None Include="Specifications\Docs\glMap1.xml">
+    </None>
+    <None Include="Specifications\Docs\glCopyTexSubImage1D.xml">
+    </None>
+    <None Include="Specifications\Docs\glColorTable.xml">
+    </None>
+    <None Include="Specifications\Docs\gluNurbsSurface.xml">
+    </None>
+    <None Include="Specifications\Docs\glDeleteLists.xml">
+    </None>
+    <None Include="Specifications\Docs\glRect.xml">
+    </None>
+    <None Include="Specifications\Docs\glSecondaryColorPointer.xml">
+    </None>
+    <None Include="Specifications\Docs\glEvalMesh.xml">
+    </None>
+    <None Include="Specifications\Docs\glXSelectEvent.xml">
+    </None>
+    <None Include="Specifications\Docs\glPixelStore.xml">
+    </None>
+    <None Include="Specifications\Docs\glGenTextures.xml">
+    </None>
+    <None Include="Specifications\Docs\gluDeleteQuadric.xml">
+    </None>
+    <None Include="Specifications\Docs\glXCopyContext.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetBufferSubData.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetClipPlane.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetTexImage.xml">
+    </None>
+    <None Include="Specifications\Docs\glCopyTexImage2D.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetConvolutionParameter.xml">
+    </None>
+    <None Include="Specifications\Docs\glXQueryContextInfoEXT.xml">
+    </None>
+    <None Include="Specifications\Docs\glPixelTransfer.xml">
+    </None>
+    <None Include="Specifications\Docs\glRasterPos.xml">
+    </None>
+    <None Include="Specifications\Docs\glDrawBuffers.xml">
+    </None>
+    <None Include="Specifications\Docs\glLoadIdentity.xml">
+    </None>
+    <None Include="Specifications\Docs\glCopyTexSubImage3D.xml">
+    </None>
+    <None Include="Specifications\Docs\gluBeginCurve.xml">
+    </None>
+    <None Include="Specifications\Docs\glXMakeCurrent.xml">
+    </None>
+    <None Include="Specifications\Docs\glIsEnabled.xml">
+    </None>
+    <None Include="Specifications\Docs\gluTessNormal.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetAttachedShaders.xml">
+    </None>
+    <None Include="Specifications\Docs\glFrustum.xml">
+    </None>
+    <None Include="Specifications\Docs\gluLoadSamplingMatrices.xml">
+    </None>
+    <None Include="Specifications\Docs\glMatrixMode.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetUniformLocation.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetProgram.xml">
+    </None>
+    <None Include="Specifications\Docs\glHistogram.xml">
+    </None>
+    <None Include="Specifications\Docs\glConvolutionParameter.xml">
+    </None>
+    <None Include="Specifications\Docs\glInterleavedArrays.xml">
+    </None>
+    <None Include="Specifications\Docs\glCompressedTexSubImage3D.xml">
+    </None>
+    <None Include="Specifications\Docs\glGetError.xml">
+    </None>
+    <None Include="Specifications\Docs\glDeleteShader.xml">
+    </None>
+    <None Include="Specifications\Docs\glAlphaFunc.xml">
+    </None>
+    <None Include="Specifications\Docs\glOrtho.xml">
+    </None>
+    <None Include="Specifications\Docs\glDetachShader.xml">
+    </None>
+    <None Include="Specifications\Docs\gluNurbsCurve.xml">
+    </None>
+    <None Include="Specifications\Docs\glInitNames.xml">
+    </None>
+    <None Include="Specifications\Docs\glIndexMask.xml">
+    </None>
+    <None Include="Specifications\Docs\glTexParameter.xml">
+    </None>
+    <None Include="Specifications\Docs\glIndex.xml">
+    </None>
+    <None Include="Specifications\Docs\ToInlineDocs.xslt">
+    </None>
+    <None Include="Documentation\todo.txt">
+    </None>
+    <None Include="Documentation\changelog.txt">
+    </None>
+    <None Include="Specifications\License.txt">
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
