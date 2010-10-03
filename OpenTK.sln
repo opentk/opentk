@@ -1,13 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{1D8C00B3-7BB4-48CA-B14C-AEB76967FD16}"
-	ProjectSection(SolutionItems) = preProject
-		Documentation\Changelog.txt = Documentation\Changelog.txt
-		Documentation\License.txt = Documentation\License.txt
-		Documentation\Release.txt = Documentation\Release.txt
-		Documentation\Todo.txt = Documentation\Todo.txt
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK", "Source\OpenTK\OpenTK.csproj", "{A37A7E14-0000-0000-0000-000000000000}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Compatibility", "Source\Compatibility\OpenTK.Compatibility.csproj", "{62C0DB35-0000-0000-0000-000000000000}"

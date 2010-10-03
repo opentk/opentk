@@ -1,10 +1,9 @@
 [Immediate]
-- Modify nsis script to always install to %DOCUMENTS%.
 - Remove Build.exe and OpenTK.Build projects.
-- Add #ifdef to OpenCL bindings.
 - Make a release from trunk.
 
 [Short term]
+- Update contributors list.
 - Automate uploads of nightly builds.
 - Add generator project to OpenTK.sln.
 - Update AssemblyInfo through the msbuild script.

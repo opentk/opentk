@@ -27,6 +27,14 @@
   <ItemGroup>
     <None Include="Doxyfile" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Changelog.txt" />
+    <None Include="Contributors.txt" />
+    <None Include="Instructions.txt" />
+    <None Include="License.txt" />
+    <None Include="Release.txt" />
+    <None Include="Todo.txt" />
+  </ItemGroup>
   <Target Name="Build">
     <Run Command="doxygen" />
     <Run Command="pdflatex -interaction=batchmode refman.tex" WorkingDirectory="$(LatexPath)" />
