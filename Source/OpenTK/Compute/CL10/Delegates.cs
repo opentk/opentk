@@ -25,6 +25,8 @@
 //
 #endregion
 
+#if EXPERIMENTAL
+
 namespace OpenTK.Compute.CL10
 {
     using System;
@@ -236,3 +238,5 @@ namespace OpenTK.Compute.CL10
         }
     }
 }
+
+#endif

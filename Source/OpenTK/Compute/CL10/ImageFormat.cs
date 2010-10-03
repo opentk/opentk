@@ -25,6 +25,8 @@
 //
 #endregion
 
+#if EXPERIMENTAL
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -52,3 +54,5 @@ namespace OpenTK.Compute.CL10
         public ChannelType ChannelType { get { return image_channel_data_type; } set { image_channel_data_type = value; } }
     }
 }
+
+#endif
