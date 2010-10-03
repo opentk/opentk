@@ -1,3 +1,42 @@
+[Immediate]
+- Modify nsis script to always install to %DOCUMENTS%.
+- Remove Build.exe and OpenTK.Build projects.
+- Add #ifdef to OpenCL bindings.
+- Make a release from trunk.
+
+[Short term]
+- Automate uploads of nightly builds.
+- Add generator project to OpenTK.sln.
+- Update AssemblyInfo through the msbuild script.
+- Modify buildbot to generate zip package from the nsis installer.
+- Modify nsis script to make source code and openal installer optional features.
+- Modify nsis script to download openal installer from the web.
+- Implement GL3.3 and 4.1.
+- Clean site and example documentation.
+
+[Mid term]
+- Add mouse cursor visibility to NativeWindow.
+- Add mouse cursor capture to NativeWindow.
+- Add joystick support to Mac OS X.
+- Fix GraphicsMode on Mac OS X.
+- Implement the new input system.
+- Fix external GraphicsContexts.
+- Move OpenAL bindings to the generator.
+- Remove DllImports/GetDelegateForFunctionPointer in favor of LCG calli instructions.
+- Remove #if DEBUG statements in favor of LCG.
+- Evaluate IKVM.Reflection for speed improvement.
+- Evaluate possibility of separate OpenGL profiles.
+
+[Long term]
+- Release gloo.
+- Release aloo.
+- Release demo.
+- Make the example launcher pretty.
+- Add nunit tests.
+- Clean up the generator.
+
+---
+
 [General]
 + Change all public APIs to conform to the class library interface guidelines.
 + Revisit all classes and make sure IDisposable is correctly implemented.
@@ -5,7 +44,6 @@
 
 [OpenTK.Graphics.OpenGL]
 + Improve performance for functions that return StringBuilders.
-+ Enforce BlittableValueType constraint in generic classes.
 + Improve performance for functions that take generic arrays.
 + Fix documentation - parameter mismatches.
 
@@ -25,5 +63,3 @@
 + Implement GameWindow-independent input drivers.
 + Implement support for multiple mice and keyboards.
 
-[Examples]
-+ Add more comprehensive Graphics and Audio tutorials.
