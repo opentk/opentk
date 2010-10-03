@@ -196,7 +196,6 @@
     <Compile Include="Wgl\Generator.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="app.config" />
     <None Include="Specifications\GL2\enum.spec">
     </None>
     <None Include="Specifications\GL2\gl.spec">
