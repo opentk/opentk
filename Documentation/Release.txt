@@ -5,10 +5,8 @@ The Open Toolkit 1.0 rc1
 [Overview]
 
 This is the first release candidate for OpenTK 1.0. Notable changes:
-* Implemented NSIS-based installer, added new build targets ("nsis", "lib" and "all") and made the build system more robust.
-* Fixed ClassName clashes between GameWindows running on different AppDomains. Fixes NUnit support (patch by kring789).
-* Improved behavior of several GameWindow events and properties on Windows and Linux.
-* Fixed various documentation issues.
+* Modified nsis script to always install to %DOCUMENTS%.
+* Fixed nsis detection of previous installations.
 
 Visit http://www.opentk.com for the latest news and information on the Open Toolkit.
 
