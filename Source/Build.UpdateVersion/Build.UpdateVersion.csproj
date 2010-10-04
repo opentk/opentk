@@ -14,7 +14,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <ProjectGuid>{75DC22B1-113F-4A66-96B9-2FF8208C10E8}</ProjectGuid>
-    <Configuration Condition="$(Configuration) == ''">Release</Configuration>
   </PropertyGroup>
   <Import Project="..\Build.Tasks\Common.xml" />
   <Target Name="UpdateVersion">
@@ -25,5 +24,6 @@
   </Target>
   <Target Name="Rebuild">
     <CallTarget Targets="UpdateVersion" />
-  </Target>  <Target Name="Clean" />
+  </Target>
+  <Target Name="Clean" />
 </Project>
