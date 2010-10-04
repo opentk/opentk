@@ -48,4 +48,8 @@
     <RemoveDir Directories="$(OutputPath)" Condition="'$(OS)' == 'Windows_NT'" />
     <Exec Command="rm -rf $(OutputPath)" Condition="'$(OS)' != 'Windows_NT'" />
   </Target>
+  <Target Name="Rebuild">
+    <CallTarget Targets="Clean" />
+    <CallTarget Targets="Build" />
+  </Target>
 </Project>
