@@ -201,11 +201,11 @@ Section -AdditionalIcons
   CreateDirectory "$SMPROGRAMS\OpenTK"
   
   SetOutPath "$INSTDIR\Binaries\OpenTK\Release" ; Make sure the working directory is correct
-  CreateShortCut "$SMPROGRAMS\OpenTK\Examples.lnk" "$INSTDIR\Binaries\OpenTK\Release\Examples.exe"
+  CreateShortCut "$SMPROGRAMS\OpenTK\OpenTK Example Browser.lnk" "$INSTDIR\Binaries\OpenTK\Release\Examples.exe"
   SetOutPath $INSTDIR
   
-  CreateShortCut "$SMPROGRAMS\OpenTK\Reference.lnk" "$INSTDIR\Documentation\Reference.pdf"
-  CreateShortCut "$SMPROGRAMS\OpenTK\Manual.lnk" "$INSTDIR\Documentation\Manual.pdf"
+  CreateShortCut "$SMPROGRAMS\OpenTK\Function Reference (PDF).lnk" "$INSTDIR\Documentation\Reference.pdf"
+  CreateShortCut "$SMPROGRAMS\OpenTK\Project Manual (PDF).lnk" "$INSTDIR\Documentation\Manual.pdf"
   ;CreateShortCut "$SMPROGRAMS\OpenTK\Release Notes.lnk" "$INSTDIR\Documentation\Release.txt"
   ;CreateShortCut "$SMPROGRAMS\OpenTK\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
 SectionEnd
