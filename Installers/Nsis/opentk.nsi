@@ -164,6 +164,8 @@ Section "Core library" SEC01
   SetOutPath $INSTDIR
   File /r /x *.vshost.exe /x *.vshost.exe.manifest /x *.log ..\..\Binaries
   File /r /x .svn /x obj /x Source /x Source\*.* ..\..\Documentation
+  SetOutPath $INSTDIR\Source
+  File /r /x .svn /x obj /x *.snk /x *.user /x *.pidb /x html /x latex /x OpenTK*.xml ..\..\Source\Examples
 SectionEnd
 
 Section "Source code" SEC02
