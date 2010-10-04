@@ -10,6 +10,7 @@
 
 [Mid term]
 - Clean up warnings.
+- Embed Example data into the executable?
 - Remove System.Windows.Forms reference from OpenTK.dll.
 - Add mouse cursor visibility to NativeWindow.
 - Add mouse cursor capture to NativeWindow.
