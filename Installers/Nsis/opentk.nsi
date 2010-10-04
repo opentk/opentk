@@ -173,6 +173,7 @@ Section "Source code" SEC02
   File /r /x .svn /x obj /x *.snk /x *.user /x *.pidb /x html /x latex /x OpenTK*.xml ..\..\Source
   File /r /x .svn ..\..\*.csproj
   File ..\..\*.sln
+  File ..\..\OpenTK.snk
   File /r /x .svn /x obj /x opentk-actual.* /x *.exe /x *.msi /x *.deb /x *.rpm ..\..\Installers
 SectionEnd
 
