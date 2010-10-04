@@ -1,12 +1,25 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK", "Source\OpenTK\OpenTK.csproj", "{A37A7E14-0000-0000-0000-000000000000}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CCE26215-7591-4CC3-8E39-9A08F8BF35E2} = {CCE26215-7591-4CC3-8E39-9A08F8BF35E2}
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Compatibility", "Source\Compatibility\OpenTK.Compatibility.csproj", "{62C0DB35-0000-0000-0000-000000000000}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Examples", "Source\Examples\OpenTK.Examples.csproj", "{868E37B3-0000-0000-0000-000000000000}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.GLControl", "Source\GLControl\OpenTK.GLControl.csproj", "{A625BE88-0000-0000-0000-000000000000}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build.Installer.Nsis", "Installers\Nsis\Build.Installer.Nsis.csproj", "{ADC34399-7613-44D2-90B2-19250F06FE7A}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -28,8 +41,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build.Docs", "Documentation
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Bind", "Source\Bind\Generator.Bind.csproj", "{31D19132-0000-0000-0000-000000000000}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Convert", "Source\Converter\Generator.Convert.csproj", "{5FDFF4B6-0000-0000-0000-000000000000}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build.UpdateVersion", "Source\Build.UpdateVersion\Build.UpdateVersion.csproj", "{75DC22B1-113F-4A66-96B9-2FF8208C10E8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CCE26215-7591-4CC3-8E39-9A08F8BF35E2} = {CCE26215-7591-4CC3-8E39-9A08F8BF35E2}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +124,14 @@ Global
 		{5FDFF4B6-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
 		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Documentation|Any CPU.Build.0 = Documentation|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
