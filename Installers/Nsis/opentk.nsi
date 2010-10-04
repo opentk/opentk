@@ -72,7 +72,6 @@ ShowUnInstDetails show
 
 Function .onInit
   StrCpy $INSTDIR "$DOCUMENTS\${MULTIUSER_INSTALLMODE_INSTDIR}"
-
   !insertmacro MUI_LANGDLL_DISPLAY
 FunctionEnd
 
@@ -149,7 +148,7 @@ FunctionEnd
  
 FunctionEnd
 
-Section "OpenTK Library (required)" SEC01
+Section "Core library" SEC01
   SectionIn RO
   
   ${If} $INSTDIR == $PROGRAMFILES
@@ -164,7 +163,7 @@ Section "OpenTK Library (required)" SEC01
 
   SetOutPath $INSTDIR
   File /r /x *.vshost.exe /x *.vshost.exe.manifest /x *.log ..\..\Binaries
-  File /r /x .svn /x Source /x Source\*.* ..\..\Documentation
+  File /r /x .svn /x obj /x Source /x Source\*.* ..\..\Documentation
 SectionEnd
 
 Section "Source code" SEC02
@@ -172,24 +171,43 @@ Section "Source code" SEC02
   File /r /x .svn /x obj /x *.snk /x *.user /x *.pidb /x html /x latex /x OpenTK*.xml ..\..\Source
   File /r /x .svn ..\..\*.csproj
   File ..\..\*.sln
-  File /r /x .svn /x opentk-actual.* /x *.exe /x *.msi /x *.deb /x *.rpm ..\..\Installers
+  File /r /x .svn /x obj /x opentk-actual.* /x *.exe /x *.msi /x *.deb /x *.rpm ..\..\Installers
 SectionEnd
 
 Section "OpenAL drivers" SEC03
   SetOutPath $INSTDIR\Installers\Dependencies
-  File ..\..\Installers\Dependencies\oalinst.exe
+  NSISdl::download /TIMEOUT=5000 http://www.opentk.net/files/dependencies/win32/oalinst.exe oalinst.exe
+  NSISdl::download /TIMEOUT=5000 http://www.opentk.net/files/dependencies/win32/oalinst-license.txt oalinst-license.txt
   ExecShell "open"  '"$INSTDIR\Installers\Dependencies\oalinst.exe"' /S
+SectionEnd
+
+Section "NShader plugin (VS2010)" SEC04
+  SetOutPath $INSTDIR\Installers\Dependencies
+  NSISdl::download /TIMEOUT=5000 http://www.opentk.net/files/dependencies/win32/NShaderVS2010.vsix NShaderVS2010.vsix
+  NSISdl::download /TIMEOUT=5000 http://www.opentk.net/files/dependencies/win32/nshader-license.txt nshader-license.txt
+  ExecShell "open" '"$INSTDIR\Installers\Dependencies\NShaderVS2010.vsix"'
+SectionEnd
+
+Section "NShader plugin (VS2008)" SEC05
+  SetOutPath $INSTDIR\Installers\Dependencies
+  NSISdl::download /TIMEOUT=5000 http://www.opentk.net/files/dependencies/win32/NShaderVS2008.msi NShaderVS2008.msi
+  NSISdl::download /TIMEOUT=5000 http://www.opentk.net/files/dependencies/win32/nshader-license.txt nshader-license.txt
+  ExecShell "open" '"$INSTDIR\Installers\Dependencies\NShaderVS2008.msi"'
 SectionEnd
 
 Section -AdditionalIcons
   SetOutPath $INSTDIR
   WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
   CreateDirectory "$SMPROGRAMS\OpenTK"
-  ;CreateShortCut "$SMPROGRAMS\OpenTK\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
+  
+  SetOutPath "$INSTDIR\Binaries\OpenTK\Release" ; Make sure the working directory is correct
   CreateShortCut "$SMPROGRAMS\OpenTK\Examples.lnk" "$INSTDIR\Binaries\OpenTK\Release\Examples.exe"
+  SetOutPath $INSTDIR
+  
   CreateShortCut "$SMPROGRAMS\OpenTK\Reference.lnk" "$INSTDIR\Documentation\Reference.pdf"
   CreateShortCut "$SMPROGRAMS\OpenTK\Manual.lnk" "$INSTDIR\Documentation\Manual.pdf"
-  ;CreateShortCut "$SMPROGRAMS\OpenTK\Release.lnk" "$INSTDIR\Documentation\Release.txt"
+  ;CreateShortCut "$SMPROGRAMS\OpenTK\Release Notes.lnk" "$INSTDIR\Documentation\Release.txt"
+  ;CreateShortCut "$SMPROGRAMS\OpenTK\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
 SectionEnd
 
 Section -Post
@@ -205,6 +223,20 @@ Section -Post
   WriteRegStr ${MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
   WriteRegStr ${MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_KEY} "${DOTNET20_PUBLIC_ASSEMBLIES_KEY}" "" "$INSTDIR\Binaries\OpenTK\Release"
 SectionEnd
+
+LangString DESC_Section1 ${LANG_ENGLISH} "Installs the Open Toolkit library, documentation and samples."
+LangString DESC_Section2 ${LANG_ENGLISH} "Installs the source code for the Open Toolkit library."
+LangString DESC_Section3 ${LANG_ENGLISH} "Installs OpenAL sound drivers from Creative Inc. Required for OpenAL support."
+LangString DESC_Section4 ${LANG_ENGLISH} "Adds support for GLSL syntax highlighting to Visual Studio 2010. Requires Professional edition or higher."
+LangString DESC_Section5 ${LANG_ENGLISH} "Adds support for GLSL syntax highlighting to Visual Studio 2008. Requires Professional edition or higher."
+
+!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC01} $(DESC_Section1)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC02} $(DESC_Section2)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC03} $(DESC_Section3)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC04} $(DESC_Section4)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC05} $(DESC_Section5)
+!insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 Function un.onUninstSuccess
   HideWindow
