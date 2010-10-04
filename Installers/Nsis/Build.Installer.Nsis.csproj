@@ -35,8 +35,8 @@
       <FilesToDelete Include=".\opentk.exe;..\..\opentk-1.0.*.exe" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" Condition="'$(OS)' == 'Windows_NT'" />
-    <Exec Command="rm .\opentk.exe" Condition="'$(OS)' != 'Windows_NT'" />
-    <Exec Command="rm ..\..\opentk-1.0.*.exe" Condition="'$(OS)' != 'Windows_NT'" />
+    <Exec Command="rm -f .\opentk.exe" Condition="'$(OS)' != 'Windows_NT'" />
+    <Exec Command="rm -f ..\..\opentk-1.0.*.exe" Condition="'$(OS)' != 'Windows_NT'" />
   </Target>
   <Target Name="Rebuild">
     <CallTarget Targets="Clean" />
