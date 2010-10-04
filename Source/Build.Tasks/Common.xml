@@ -2,8 +2,9 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' != 'Debug' ">Release</Configuration>
-    <BuildTasksPath Condition="'$(BuildTasksPath)' == ''">..\..\Binaries\OpenTK\$(Configuration)</BuildTasksPath>
+    <TaskConfig Condition=" '$(Configuration)' != 'Debug' ">Release</TaskConfig>
+    <TaskConfig Condition=" '$(Configuration)' == 'Debug' ">Debug</TaskConfig>
+    <BuildTasksPath Condition="'$(BuildTasksPath)' == ''">..\..\Binaries\OpenTK\$(TaskConfig)</BuildTasksPath>
     <BuildTasksLib>$(BuildTasksPath)\Build.Tasks.dll</BuildTasksLib>
   </PropertyGroup>
 
