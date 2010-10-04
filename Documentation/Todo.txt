@@ -1,19 +1,16 @@
 [Immediate]
-- Remove Build.exe and OpenTK.Build projects.
 - Make a release from trunk.
 
 [Short term]
-- Update contributors list.
 - Automate uploads of nightly builds.
-- Add generator project to OpenTK.sln.
-- Update AssemblyInfo through the msbuild script.
 - Modify buildbot to generate zip package from the nsis installer.
-- Modify nsis script to make source code and openal installer optional features.
-- Modify nsis script to download openal installer from the web.
 - Implement GL3.3 and 4.1.
-- Clean site and example documentation.
+- Clean up site and example documentation.
+- Update contributors list.
 
 [Mid term]
+- Clean up warnings.
+- Remove System.Windows.Forms reference from OpenTK.dll.
 - Add mouse cursor visibility to NativeWindow.
 - Add mouse cursor capture to NativeWindow.
 - Add joystick support to Mac OS X.
