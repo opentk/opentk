@@ -11,7 +11,7 @@ namespace Build.Tasks
     /// </summary>
     public class Run : Task
     {
-        string command, args, wdir;
+        string command, wdir;
 
         /// <summary>
         /// The command to execute.
