@@ -59,6 +59,7 @@ namespace Build.Tasks
                 if (String.IsNullOrEmpty(Path) ||
                     System.IO.Directory.Exists(Path))
                 {
+                    Log.LogError(String.Format("Path '{0}' does not exist.", Path));
                     return false;
                 }
                 else
