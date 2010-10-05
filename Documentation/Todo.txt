@@ -2,6 +2,8 @@
 - Make a release from trunk.
 
 [Short term]
+- Move Documentation generation to obj directory.
+- Completely clean bin and obj directories on Clean command?
 - Automate uploads of nightly builds.
 - Modify buildbot to generate zip package from the nsis installer.
 - Implement GL3.3 and 4.1.

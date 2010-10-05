@@ -53,7 +53,12 @@ namespace Build.Tasks
         {
             try
             {
-                Date = DateTime.Now.ToString("yyMMdd", CultureInfo.InvariantCulture);
+                // Build number is defined as the number of days since 1/1/2010.
+                // Revision number is defined as the fraction of the current day, expressed in seconds.
+                double timespan = DateTime.UtcNow.Subtract(new DateTime(2010, 1, 1)).TotalDays;
+                string build = ((int)timespan).ToString();
+                string revision = ((int)((timespan - (int)timespan) * UInt16.MaxValue)).ToString();
+                Date = String.Format("{0}.{1}", build, revision);
             }
             catch (Exception e)
             {
