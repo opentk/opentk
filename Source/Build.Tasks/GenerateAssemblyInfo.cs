@@ -44,16 +44,11 @@ namespace Build.Tasks
         public string Major { get; set; }
         public string Minor { get; set; }
 
-        string Build { get; set; }
-        string Revision { get; set; }
+        string Date { get; set; }
 
         public GenerateAssemblyInfo()
         {
-            // Build number is defined as the number of days since 1/1/2010.
-            // Revision number is defined as the fraction of the current day, expressed in seconds.
-            double timespan = DateTime.UtcNow.Subtract(new DateTime(2010, 1, 1)).TotalDays;
-            Build = ((int)timespan).ToString();
-            Revision = ((int)((timespan - (int)timespan) * UInt16.MaxValue)).ToString();
+            Date = new DateStamp().Date;
             Major = Major ?? "0";
             Minor = Minor ?? "0";
         }
@@ -80,7 +75,7 @@ namespace Build.Tasks
                 sw.WriteLine("[assembly: AssemblyCopyright(\"{0}\")]", AssemblyCopyright ?? "");
                 sw.WriteLine("[assembly: AssemblyTrademark(\"{0}\")]", AssemblyTrademark ?? "");
                 sw.WriteLine("[assembly: AssemblyVersion(\"{0}.{1}.0.0\")]", Major, Minor);
-                sw.WriteLine("[assembly: AssemblyFileVersion(\"{0}.{1}.{2}.{3}\")]", Major, Minor, Build, Revision);
+                sw.WriteLine("[assembly: AssemblyFileVersion(\"{0}.{1}.{2}\")]", Major, Minor, Date);
 
                 sw.Flush();
                 sw.Close();
