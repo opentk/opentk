@@ -566,6 +566,33 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\v4x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OpenAL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OpenCL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OpenGL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OpenGLES.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OpenTK.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\v1x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\v2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\v3x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
