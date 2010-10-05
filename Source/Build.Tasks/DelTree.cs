@@ -56,16 +56,7 @@ namespace Build.Tasks
         {
             try
             {
-                if (String.IsNullOrEmpty(Path) ||
-                    System.IO.Directory.Exists(Path))
-                {
-                    Log.LogError(String.Format("Path '{0}' does not exist.", Path));
-                    return false;
-                }
-                else
-                {
-                    System.IO.Directory.Delete(Path, true);
-                }
+                System.IO.Directory.Delete(Path, true);
             }
             catch (Exception e)
             {
