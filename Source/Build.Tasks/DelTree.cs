@@ -57,13 +57,13 @@ namespace Build.Tasks
             try
             {
                 System.IO.Directory.Delete(Path, true);
+                return true;
             }
             catch (Exception e)
             {
                 Log.LogErrorFromException(e);
                 return false;
             }
-            return true;
         }
     }
 }
