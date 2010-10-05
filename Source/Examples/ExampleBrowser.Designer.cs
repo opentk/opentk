@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExampleBrowser));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeViewSamples = new System.Windows.Forms.TreeView();
             this.contextMenuStripSamples = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -37,6 +36,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.viewDescriptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageListSampleCategories = new System.Windows.Forms.ImageList(this.components);
             this.tabControlSample = new System.Windows.Forms.TabControl();
             this.tabDescription = new System.Windows.Forms.TabPage();
             this.richTextBoxDescription = new System.Windows.Forms.RichTextBox();
@@ -50,7 +50,6 @@
             this.textBoxOutput = new System.Windows.Forms.TextBox();
             this.contextMenuStripOutput = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.imageListSampleCategories = new System.Windows.Forms.ImageList(this.components);
             this.toolTipSamples = new System.Windows.Forms.ToolTip(this.components);
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -98,11 +97,11 @@
             this.treeViewSamples.Size = new System.Drawing.Size(261, 564);
             this.treeViewSamples.TabIndex = 0;
             this.toolTipSamples.SetToolTip(this.treeViewSamples, "Right-click a sample for more options.");
-            this.treeViewSamples.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewSamples_NodeMouseDoubleClick);
-            this.treeViewSamples.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewSamples_AfterSelect);
-            this.treeViewSamples.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeViewSamples_MouseDown);
-            this.treeViewSamples.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewSamples_KeyDown);
             this.treeViewSamples.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewSamples_AfterExpand);
+            this.treeViewSamples.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewSamples_AfterSelect);
+            this.treeViewSamples.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewSamples_NodeMouseDoubleClick);
+            this.treeViewSamples.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewSamples_KeyDown);
+            this.treeViewSamples.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeViewSamples_MouseDown);
             // 
             // contextMenuStripSamples
             // 
@@ -137,6 +136,12 @@
             this.viewSourceToolStripMenuItem.Name = "viewSourceToolStripMenuItem";
             this.viewSourceToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.viewSourceToolStripMenuItem.Text = "View Source Code";
+            // 
+            // imageListSampleCategories
+            // 
+            this.imageListSampleCategories.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.imageListSampleCategories.ImageSize = new System.Drawing.Size(35, 35);
+            this.imageListSampleCategories.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // tabControlSample
             // 
@@ -262,20 +267,6 @@
             this.copyToolStripMenuItem2.Name = "copyToolStripMenuItem2";
             this.copyToolStripMenuItem2.Size = new System.Drawing.Size(102, 22);
             this.copyToolStripMenuItem2.Text = "&Copy";
-            // 
-            // imageListSampleCategories
-            // 
-            this.imageListSampleCategories.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListSampleCategories.ImageStream")));
-            this.imageListSampleCategories.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListSampleCategories.Images.SetKeyName(0, "OpenAL.png");
-            this.imageListSampleCategories.Images.SetKeyName(1, "OpenCL.png");
-            this.imageListSampleCategories.Images.SetKeyName(2, "OpenGL.png");
-            this.imageListSampleCategories.Images.SetKeyName(3, "OpenGLES.png");
-            this.imageListSampleCategories.Images.SetKeyName(4, "OpenTK.png");
-            this.imageListSampleCategories.Images.SetKeyName(5, "1.x.png");
-            this.imageListSampleCategories.Images.SetKeyName(6, "2.x.png");
-            this.imageListSampleCategories.Images.SetKeyName(7, "3.x.png");
-            this.imageListSampleCategories.Images.SetKeyName(8, "4.x.png");
             // 
             // ExampleBrowser
             // 

@@ -80,6 +80,18 @@ namespace Examples
         {
             base.OnLoad(e);
 
+            // Add those by hand, because using the designer results in an empty
+            // image list when cross-compiling on Mono.
+            imageListSampleCategories.Images.Add("OpenAL", Resources.OpenAL);
+            imageListSampleCategories.Images.Add("OpenGL", Resources.OpenGL);
+            imageListSampleCategories.Images.Add("OpenGLES", Resources.OpenGLES);
+            imageListSampleCategories.Images.Add("OpenCL", Resources.OpenCL);
+            imageListSampleCategories.Images.Add("OpenTK", Resources.OpenTK);
+            imageListSampleCategories.Images.Add("1.x", Resources.v1x);
+            imageListSampleCategories.Images.Add("2.x", Resources.v2x);
+            imageListSampleCategories.Images.Add("3.x", Resources.v3x);
+            imageListSampleCategories.Images.Add("4.x", Resources.v4x);
+
             Debug.Listeners.Add(new TextBoxTraceListener(textBoxOutput));
             treeViewSamples.TreeViewNodeSorter = new SamplesTreeViewSorter();
 
@@ -325,15 +337,17 @@ namespace Examples
             if (list == null)
                 throw new ArgumentNullException("list");
 
-            if (list.Images.ContainsKey(subcategory.ToString() + ".jpg"))
-                return list.Images.IndexOfKey(subcategory.ToString() + ".jpg");
-            if (list.Images.ContainsKey(category.ToString() + ".jpg"))
-                return list.Images.IndexOfKey(category.ToString() + ".jpg");
-            if (list.Images.ContainsKey(subcategory.ToString() + ".png"))
-                return list.Images.IndexOfKey(subcategory.ToString() + ".png");
-            if (list.Images.ContainsKey(category.ToString() + ".png"))
-                return list.Images.IndexOfKey(category.ToString() + ".png");
+            foreach (string extension in new string[] { "", ".png", ".jpg" })
+            {
+                string name = subcategory.ToString() + extension;
+                if (list.Images.ContainsKey(name))
+                    return list.Images.IndexOfKey(name);
 
+                name = category.ToString() + extension;
+                if (list.Images.ContainsKey(name))
+                    return list.Images.IndexOfKey(name);
+            }
+            
             return -1;
         }
 
