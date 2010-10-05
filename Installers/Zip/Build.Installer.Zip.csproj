@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)' == 'Documentation'">
+    <OutputPath>.\opentk\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <OutputPath>.\opentk\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <OutputPath>.\opentk\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Nsis'">
+    <OutputPath>.\opentk\</OutputPath>
+  </PropertyGroup>
+  <Import Project="..\..\Source\Build.Tasks\Common.xml" />
+  <PropertyGroup>
+    <ProjectGuid>{ADC34399-7613-44D2-90B2-19250F06FE7B}</ProjectGuid>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <InputPath>..\..\</InputPath>
+    <OutputPath>.\opentk\</OutputPath>
+  </PropertyGroup>
+  <Target Name="Build">
+    <CreateItem
+        Include="$(InputPath)**\*.*"
+	Exclude="$(InputPath)**\.svn\**\*.*;
+                 $(InputPath)**\obj\**\*.*;
+	         $(InputPath)**\OpenTK*.xml;
+                 $(InputPath)**\*.suo;
+                 $(InputPath)**\*.pidb;
+                 $(InputPath)**\*.userprefs;
+                 $(InputPath)**\opentk*.zip">
+        <Output TaskParameter="Include" ItemName="FileList" />
+    </CreateItem>
+    <DateStamp>
+      <Output TaskParameter="Date" PropertyName="ShortDate" />
+    </DateStamp>
+    <Copy SourceFiles="@(FileList)" DestinationFiles="@(FileList->'$(OutputPath)%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Run Command="7z a -tzip opentk.zip $(OutputPath)" />
+    <Copy SourceFiles=".\opentk.zip" DestinationFiles="..\..\opentk-1.0.$(ShortDate).zip" />
+  </Target>
+  <Target Name="Clean">
+    <CreateItem Include=".\opentk.zip;..\..\opentk-1.0.*.zip">
+      <Output TaskParameter="Include" ItemName="FilesToDelete" />
+    </CreateItem>
+    <Delete Files="@(FilesToDelete)" />
+    <DelTree Path="$(OutputPath)" />
+  </Target>
+  <Target Name="Rebuild">
+    <CallTarget Targets="Clean" />
+    <CallTarget Targets="Build" />
+  </Target>
+</Project>
