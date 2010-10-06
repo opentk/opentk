@@ -174,7 +174,7 @@ Section "Source code" SEC02
   File /r /x .svn ..\..\*.csproj
   File ..\..\*.sln
   File ..\..\OpenTK.snk
-  File /r /x .svn /x obj /x opentk-actual.* /x *.exe /x *.msi /x *.deb /x *.rpm ..\..\Installers
+  File /r /x .svn /x obj /x opentk /x opentk-actual.* /x *.exe /x *.msi /x *.deb /x *.rpm /x *.zip ..\..\Installers
 SectionEnd
 
 Section "OpenAL drivers" SEC03
