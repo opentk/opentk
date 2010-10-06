@@ -34,39 +34,43 @@ namespace Build.UpdateVersion
 	{
         const string Major = "1";
         const string Minor = "0";
-        static string Version = "{0}.{1}.{2}";
 
         public static void Main()
         {
-            GenerateVersionInfo("../../Version.txt");
-            GenerateAssemblyInfo("../GlobalAssemblyInfo.cs");
+            DateTime now = DateTime.UtcNow;
+            GenerateVersionInfo(now, "../../Version.txt");
+            GenerateAssemblyInfo(now, "../GlobalAssemblyInfo.cs");
         }
 
-        static void GenerateVersionInfo(string file)
+        static void GenerateVersionInfo(DateTime now, string file)
         {
-            // If the file does not exist, create it.
+            string version = null;
+
             if (System.IO.File.Exists(file))
             {
                 string[] lines = System.IO.File.ReadAllLines(file);
                 if (lines.Length > 0 && !String.IsNullOrEmpty(lines[0]))
                 {
-                    Version = lines[0];
+                    version = lines[0];
                 }
             }
-            else
+            
+            // If the file does not exist, create it.
+            if (version == null)
             {
-                // Build number is defined as the number of days since 1/1/2010.
-                // Revision number is defined as the fraction of the current day, expressed in seconds.
-                double timespan = DateTime.UtcNow.Subtract(new DateTime(2010, 1, 1)).TotalDays;
-                string build = ((int)timespan).ToString();
-                string revision = ((int)((timespan - (int)timespan) * UInt16.MaxValue)).ToString();
-                Version = String.Format("{0}.{1}.{2}.{3}", Major, Minor, build, revision);
-                System.IO.File.WriteAllLines(file, new string[] { Version });
+                version = now.ToString("u").Split(' ')[0];
+                System.IO.File.WriteAllLines(file, new string[] { version });
             }
         }
 
-        static void GenerateAssemblyInfo(string file)
+        static void GenerateAssemblyInfo(DateTime now, string file)
         {
+            // Build number is defined as the number of days since 1/1/2010.
+            // Revision number is defined as the fraction of the current day, expressed in seconds.
+            double timespan = now.Subtract(new DateTime(2010, 1, 1)).TotalDays;
+            string build = ((int)timespan).ToString();
+            string revision = ((int)((timespan - (int)timespan) * UInt16.MaxValue)).ToString();
+
             File.WriteAllLines(file, new string[]
             {
                 "// This file is auto-generated through Source/Build.Tasks/GenerateAssemblyInfo.cs.",
@@ -83,7 +87,7 @@ namespace Build.UpdateVersion
                 "[assembly: AssemblyCopyright(\"Copyright © 2006 - 2010 the Open Toolkit Library\")]",
                 "[assembly: AssemblyTrademark(\"OpenTK\")]",
                 String.Format("[assembly: AssemblyVersion(\"{0}.{1}.0.0\")]", Major, Minor),
-                String.Format("[assembly: AssemblyFileVersion(\"{0}\")]", Version)
+                String.Format("[assembly: AssemblyFileVersion(\"{0}.{1}.{2}.{3}\")]", Major, Minor, build, revision),
             });
         }
 	}
