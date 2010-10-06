@@ -1,12 +1,16 @@
-The Open Toolkit 1.0 rc1
+The Open Toolkit 1.0 - 6 October 2010
 
 
 
 [Overview]
 
 This is the first release candidate for OpenTK 1.0. Notable changes:
-* Modified nsis script to always install to %DOCUMENTS%.
-* Fixed nsis detection of previous installations.
+* New MSBuild-based build system with automated versioning, zip and nsis generation. Build.exe is no longer required.
+* Significantly improved nsis installation script.
+* Improved stability on Ati drivers.
+* Improved example browser and documentation.
+* Improved support for compilation on Mono.
+* Various smaller bugfixes.
 
 Visit http://www.opentk.com for the latest news and information on the Open Toolkit.
 
@@ -14,14 +18,17 @@ Visit http://www.opentk.com for the latest news and information on the Open Tool
 
 [Resolved issues]
 
-[#1132]
-[#1461]
-[#1599]
-[#1605]
-[#1617]
-[#1622]
-[#1649]
+http://www.opentk.com/project/issues/opentk/
 
+[#1498]
+[#1585]
+[#1673]
+[#1680]
+[#1746]
+[#1765]
+[#1881]
+[#1874]
+[#1995]
 
 
 Please report any issues you encounter at http://www.opentk.com/node/add/project-issue/opentk
@@ -30,15 +37,13 @@ Please report any issues you encounter at http://www.opentk.com/node/add/project
 
 [Known issues]
 
+* Visual Studio 2005 and 2008 are no longer supported. Please use Visual Studio 2010 or MonoDevelop 2.4 to edit OpenTK. The project can also be built from the commandline (see documentation).
+
 * The Mac OS X port needs more testing. If you encounter a bug, please report it at http://www.opentk.com/node/add/project-issue/opentk.
 
 * OpenGL 3.1 and 3.2 fucntions may be missing specific tokens. Please report any such issues at http://www.opentk.com/node/add/project-issue/opentk
 
 * Mono 2.2 and 2.4.0 fail to compile OpenTK due to a compiler bug (https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0, 2.4.2+ or use the supplied binaries instead.
-
-* The example browser does not list summaries for available samples.
-
-* MonoDevelop fails to sign assemblies (bugs https://bugzilla.novell.com/show_bug.cgi?id=484752 and https://bugzilla.novell.com/show_bug.cgi?id=537063).
 
 * XBuild <= 2.4.3 fails to build OpenTK. Please use XBuild 2.6.0 or newer.
 
@@ -48,6 +53,11 @@ Please report any issues you encounter at http://www.opentk.com/node/add/project
 Please note that binary compatibility is not preserved between beta releases.
 
 If you are upgrading from OpenTK 0.9.9-0 or earlier you can simplify the upgrade process by adding a reference to OpenTK.Compatibility.dll and OpenTK.GLControl.dll (if necessary). OpenTK.Compatibility contains code and APIs that have been deprecated and removed from the core library and supports applications written against the Tao framework (Tao.OpenGl, Tao.OpenAl and Tao.Platform.Windows.SimpleOpenGlControl).
+
+[1.0 - 6 October 2010]
+
+No API changes.
+
 
 [1.0 rc1]
 
