@@ -19,7 +19,7 @@
     <InputPath>..\..\</InputPath>
     <OutputPath>.\opentk\</OutputPath>
   </PropertyGroup>
-  <Target Name="Build1">
+  <Target Name="Build">
     <CallTarget Targets="CleanTreeCopy" />
     <!-- Make a clean copy of the source tree -->
     <CreateItem
@@ -40,9 +40,7 @@
     </CreateItem>
     <Copy SourceFiles="@(FileList)" DestinationFiles="@(FileList->'$(OutputPath)%(RecursiveDir)%(Filename)%(Extension)')" />
     <!-- Zip the copy of the source tree -->
-    <Run Command="7z a -tzip opentk.zip $(OutputPath)" />
-    </Target>
-      <Target Name="Build">
+    <Exec Command="7z a -tzip opentk.zip $(OutputPath)" />
     <!-- Copy the zip file to the root directory and add a date stamp -->
     <ReadLinesFromFile File="../../Version.txt">
       <Output TaskParameter="Lines" ItemName="Version"/>
