@@ -22,7 +22,8 @@
   </PropertyGroup>
   <PropertyGroup>
     <ProjectGuid>{75DC22B1-113F-4A66-96B9-2FF8208C10E8}</ProjectGuid>
-    <RootNamespace>Build</RootNamespace>
+    <AssemblyName>Build.UpdateVersion</AssemblyName>
+    <RootNamespace>Build.UpdateVersion</RootNamespace>
     <OutputType>Exe</OutputType>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
   </PropertyGroup>
