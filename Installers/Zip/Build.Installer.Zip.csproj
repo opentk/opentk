@@ -21,15 +21,20 @@
     <OutputPath>.\opentk\</OutputPath>
   </PropertyGroup>
   <Target Name="Build">
+    <DelTree Path="$(OutputPath)" />
     <CreateItem
         Include="$(InputPath)**\*.*"
-	Exclude="$(InputPath)**\.svn\**\*.*;
+        Exclude="$(InputPath)**\.svn\**\*.*;
                  $(InputPath)**\obj\**\*.*;
-	         $(InputPath)**\OpenTK*.xml;
+                 $(InputPath)**\opentk\**\*.*;
+                 $(InputPath)Documentation\Source\**\*.*;
+                 $(InputPath)**\OpenTK*.xml;
                  $(InputPath)**\*.suo;
                  $(InputPath)**\*.pidb;
                  $(InputPath)**\*.userprefs;
-                 $(InputPath)**\opentk*.zip">
+                 $(InputPath)**\opentk*.zip;
+                 $(InputPath)**\vshost*.exe;
+                 ">
         <Output TaskParameter="Include" ItemName="FileList" />
     </CreateItem>
     <DateStamp>
