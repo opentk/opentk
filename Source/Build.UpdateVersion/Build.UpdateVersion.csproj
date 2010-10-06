@@ -17,13 +17,43 @@
   </PropertyGroup>
   <Import Project="..\Build.Tasks\Common.xml" />
   <Target Name="UpdateVersion">
-    <GenerateAssemblyInfo OutputFile="..\GlobalAssemblyInfo.cs" AssemblyCompany="The Open Toolkit Library" AssemblyProduct="The Open Toolkit Library" AssemblyCopyright="Copyright © 2006 - 2010 the Open Toolkit Library" AssemblyTrademark="OpenTK" Major="1" Minor="0" />
+    <Delete Files="..\..\Version.txt" />
+    <GenerateAssemblyInfo
+      OutputFile="..\GlobalAssemblyInfo.cs"
+      AssemblyCompany="The Open Toolkit Library"
+      AssemblyProduct="The Open Toolkit Library"
+      AssemblyCopyright="Copyright © 2006 - 2010 the Open Toolkit Library"
+      AssemblyTrademark="OpenTK"
+      Major="1"
+      Minor="0" />
+<!-- Fails because xbuild does not respect %3b
+    <DateStamp>
+      <Output TaskParameter="Date" PropertyName="ShortDate" />
+    </DateStamp>
+    <WriteLinesToFile File="..\GlobalAssemblyInfo.cs" Overwrite="true" 
+      Lines='// This file is auto-generated through Build.UpdateVersion.csproj.;
+             // Do not edit by hand!;
+             using System%3b;
+             using System.Reflection%3b;
+             using System.Resources%3b;
+             using System.Runtime.CompilerServices%3b;
+             using System.Runtime.Runtime.InteropServices%3b;
+             ;
+             [assembly: AssemblyCompany("The Open Toolkit Library")];
+             [assembly: AssemblyProduct("The Open Toolkit Library")];
+             [assembly: AssemblyCopyright("Copyright © 2006 - 2010 the Open Toolkit Library")];
+             [assembly: AssemblyTrademark("OpenTK")];
+             [assembly: AssemblyVersion("1.0.0.0")];
+             [assembly: AssemblyFileVersion("1.0.$(ShortDate)")];
+    ' />
+-->
   </Target>
   <Target Name="Build">
     <CallTarget Targets="UpdateVersion" />
   </Target>
   <Target Name="Rebuild">
-    <CallTarget Targets="UpdateVersion" />
+    <CallTarget Targets="Clean" />
+    <CallTarget Targets="Build" />
   </Target>
   <Target Name="Clean" />
 </Project>
