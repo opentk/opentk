@@ -26,7 +26,7 @@
         Include="$(InputPath)**\*.*"
         Exclude="$(InputPath)**\.svn\**\*.*;
                  $(InputPath)**\obj\**\*.*;
-                 $(InputPath)**\opentk\**\*.*;
+                 $(InputPath)Installers\Zip\opentk\**\*.*;
                  $(InputPath)Documentation\Source\**\*.*;
                  $(InputPath)**\OpenTK*.xml;
                  $(InputPath)**\*.suo;
