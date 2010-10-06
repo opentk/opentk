@@ -28,7 +28,7 @@
 using System;
 using System.IO;
 
-namespace Build
+namespace Build.UpdateVersion
 {
 	class Program
 	{
