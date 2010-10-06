@@ -40,6 +40,7 @@
     <Delete Files="..\..\Version.txt" />
   </Target>
   <Target Name="AfterBuild">
-    <Exec Command="$(OutputPath)\Build.UpdateVersion.exe" />
+    <Exec Command="$(OutputPath)\Build.UpdateVersion.exe" Condition="$(OS) == 'Windows_NT'" />
+    <Exec Command="mono $(OutputPath)\Build.UpdateVersion.exe" Condition="$(OS) != 'Windows_NT'" />
   </Target>
 </Project>
