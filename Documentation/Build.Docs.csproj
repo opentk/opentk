@@ -16,8 +16,8 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
-  <Import Project="..\Source\Build.Tasks\Common.xml" />
   <PropertyGroup>
+    <OutputPath>.\Source</OutputPath>
     <LatexPath>$(OutputPath)\latex</LatexPath>
     <HtmlPath>$(OutputPath)\html</HtmlPath>
     <ProjectGuid>{650C6F3D-33B5-4216-9536-956AB42C0624}</ProjectGuid>
@@ -36,10 +36,10 @@
     <None Include="Todo.txt" />
   </ItemGroup>
   <Target Name="Build">
-    <Run Command="doxygen" />
-    <Run Command="pdflatex -interaction=batchmode refman.tex" WorkingDirectory="$(LatexPath)" />
-    <Run Command="makeindex -q refman.idx" WorkingDirectory="$(LatexPath)" />
-    <Run Command="pdflatex -interaction=batchmode refman.tex" WorkingDirectory="$(LatexPath)" />
+    <Exec Command="doxygen" />
+    <Exec Command="pdflatex -interaction=batchmode refman.tex" WorkingDirectory="$(LatexPath)" />
+    <Exec Command="makeindex -q refman.idx" WorkingDirectory="$(LatexPath)" />
+    <Exec Command="pdflatex -interaction=batchmode refman.tex" WorkingDirectory="$(LatexPath)" />
     <Copy SourceFiles="$(LatexPath)\refman.pdf" DestinationFiles="Reference.pdf" />
   </Target>
   <Target Name="Clean">
