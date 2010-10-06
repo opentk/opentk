@@ -32,12 +32,10 @@ using Microsoft.Build.Utilities;
 
 namespace Build.Tasks
 {
-    /// <summary>
-    /// Returns a date stamp in the form yyMMdd.
-    /// </summary>
     public class DateStamp : Task
     {
         string date;
+        const string file = "../../Version.txt";
 
         /// <summary>
         /// Gets a <see cref="System.String"/> represting the date stamp.
@@ -53,12 +51,23 @@ namespace Build.Tasks
         {
             try
             {
-                // Build number is defined as the number of days since 1/1/2010.
-                // Revision number is defined as the fraction of the current day, expressed in seconds.
-                double timespan = DateTime.UtcNow.Subtract(new DateTime(2010, 1, 1)).TotalDays;
-                string build = ((int)timespan).ToString();
-                string revision = ((int)((timespan - (int)timespan) * UInt16.MaxValue)).ToString();
-                Date = String.Format("{0}.{1}", build, revision);
+                // Version.txt contains the datestamp for the current build.
+                // This is used in order to sync stamps between build tasks.
+                // If the file does not exist, create it.
+                if (System.IO.File.Exists(file))
+                {
+                    Date = System.IO.File.ReadAllLines(file)[0];
+                }
+                else
+                {
+                    // Build number is defined as the number of days since 1/1/2010.
+                    // Revision number is defined as the fraction of the current day, expressed in seconds.
+                    double timespan = DateTime.UtcNow.Subtract(new DateTime(2010, 1, 1)).TotalDays;
+                    string build = ((int)timespan).ToString();
+                    string revision = ((int)((timespan - (int)timespan) * UInt16.MaxValue)).ToString();
+                    Date = String.Format("{0}.{1}", build, revision);
+                    System.IO.File.WriteAllLines(file, new string[] { Date });
+                }
             }
             catch (Exception e)
             {

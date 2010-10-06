@@ -48,7 +48,9 @@ namespace Build.Tasks
 
         public GenerateAssemblyInfo()
         {
-            Date = new DateStamp().Date;
+            DateStamp stamp = new DateStamp();
+            stamp.Execute();
+            Date = stamp.Date;
             Major = Major ?? "0";
             Minor = Minor ?? "0";
         }
@@ -59,7 +61,7 @@ namespace Build.Tasks
 
             using (StreamWriter sw = new StreamWriter(OutputFile, false, utf8))
             {
-                sw.WriteLine("// This file is auto-generated through Source.Build.Tasks/AssemblyInfo.cs.");
+                sw.WriteLine("// This file is auto-generated through Source/Build.Tasks/GenerateAssemblyInfo.cs.");
                 sw.WriteLine("// Do not edit by hand!");
                 sw.WriteLine();
 
