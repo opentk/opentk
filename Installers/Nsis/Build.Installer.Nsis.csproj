@@ -14,7 +14,6 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
-  <Import Project="..\..\Source\Build.Tasks\Common.xml" />
   <PropertyGroup>
     <ProjectGuid>{ADC34399-7613-44D2-90B2-19250F06FE7A}</ProjectGuid>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
@@ -24,19 +23,17 @@
     <None Include="opentk.nsi" />
   </ItemGroup>
   <Target Name="Build">
-    <DateStamp>
-      <Output TaskParameter="Date" PropertyName="ShortDate" />
-    </DateStamp>
-    <Run Command="makensis opentk.nsi" />
-    <Copy SourceFiles=".\opentk.exe" DestinationFiles="..\..\opentk-1.0.$(ShortDate).exe" />
+    <Exec Command="makensis opentk.nsi" />
+    <ReadLinesFromFile File="../../Version.txt">
+      <Output TaskParameter="Lines" ItemName="Version"/>
+    </ReadLinesFromFile>
+    <Copy SourceFiles=".\opentk.exe" DestinationFiles="@(Version->'../../opentk-%(Identity).exe')" />
   </Target>
   <Target Name="Clean">
-    <ItemGroup Condition="'$(OS)' == 'Windows_NT'">
-      <FilesToDelete Include=".\opentk.exe;..\..\opentk-1.0.*.exe" />
-    </ItemGroup>
-    <Delete Files="@(FilesToDelete)" Condition="'$(OS)' == 'Windows_NT'" />
-    <Exec Command="rm -f .\opentk.exe" Condition="'$(OS)' != 'Windows_NT'" />
-    <Exec Command="rm -f ..\..\opentk-1.0.*.exe" Condition="'$(OS)' != 'Windows_NT'" />
+    <CreateItem Include=".\opentk.exe;..\..\opentk-*.exe">
+      <Output TaskParameter="Include" ItemName="FilesToDelete" />
+    </CreateItem>
+    <Delete Files="@(FilesToDelete)" />
   </Target>
   <Target Name="Rebuild">
     <CallTarget Targets="Clean" />
