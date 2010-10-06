@@ -12,7 +12,6 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Nsis'">
     <OutputPath>.\opentk\</OutputPath>
   </PropertyGroup>
-  <Import Project="..\..\Source\Build.Tasks\Common.xml" />
   <PropertyGroup>
     <ProjectGuid>{ADC34399-7613-44D2-90B2-19250F06FE7B}</ProjectGuid>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
@@ -20,8 +19,9 @@
     <InputPath>..\..\</InputPath>
     <OutputPath>.\opentk\</OutputPath>
   </PropertyGroup>
-  <Target Name="Build">
-    <DelTree Path="$(OutputPath)" />
+  <Target Name="Build1">
+    <CallTarget Targets="CleanTreeCopy" />
+    <!-- Make a clean copy of the source tree -->
     <CreateItem
         Include="$(InputPath)**\*.*"
         Exclude="$(InputPath)**\.svn\**\*.*;
@@ -32,27 +32,36 @@
                  $(InputPath)**\*.suo;
                  $(InputPath)**\*.pidb;
                  $(InputPath)**\*.userprefs;
-                 $(InputPath)**\opentk*.zip;
+                 $(InputPath)**\opentk-*.zip;
+                 $(InputPath)**\opentk-*.exe;
                  $(InputPath)**\vshost*.exe;
                  ">
         <Output TaskParameter="Include" ItemName="FileList" />
     </CreateItem>
-    <DateStamp>
-      <Output TaskParameter="Date" PropertyName="ShortDate" />
-    </DateStamp>
     <Copy SourceFiles="@(FileList)" DestinationFiles="@(FileList->'$(OutputPath)%(RecursiveDir)%(Filename)%(Extension)')" />
+    <!-- Zip the copy of the source tree -->
     <Run Command="7z a -tzip opentk.zip $(OutputPath)" />
-    <Copy SourceFiles=".\opentk.zip" DestinationFiles="..\..\opentk-1.0.$(ShortDate).zip" />
+    </Target>
+      <Target Name="Build">
+    <!-- Copy the zip file to the root directory and add a date stamp -->
+    <ReadLinesFromFile File="../../Version.txt">
+      <Output TaskParameter="Lines" ItemName="Version"/>
+    </ReadLinesFromFile>
+    <Copy SourceFiles=".\opentk.zip" DestinationFiles="@(Version->'..\..\opentk-%(Identity).zip')" />
   </Target>
   <Target Name="Clean">
-    <CreateItem Include=".\opentk.zip;..\..\opentk-1.0.*.zip">
+    <CreateItem Include=".\opentk.zip;..\..\opentk-*.zip">
       <Output TaskParameter="Include" ItemName="FilesToDelete" />
     </CreateItem>
     <Delete Files="@(FilesToDelete)" />
-    <DelTree Path="$(OutputPath)" />
+    <CallTarget Targets="CleanTreeCopy" />
   </Target>
   <Target Name="Rebuild">
     <CallTarget Targets="Clean" />
     <CallTarget Targets="Build" />
+  </Target>
+  <Target Name="CleanTreeCopy">
+    <RemoveDir Directories="$(OutputPath)" Condition="$(OS) == 'Windows_NT'" />
+    <Exec Command="rm -rf '$(OutputPath)'" Condition="$(OS) != 'Windows_NT'" />
   </Target>
 </Project>
