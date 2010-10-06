@@ -32,8 +32,8 @@
                  $(InputPath)**\*.suo;
                  $(InputPath)**\*.pidb;
                  $(InputPath)**\*.userprefs;
-                 $(InputPath)**\opentk-*.zip;
-                 $(InputPath)**\opentk-*.exe;
+                 $(InputPath)**\opentk*.zip;
+                 $(InputPath)**\opentk*.exe;
                  $(InputPath)**\vshost*.exe;
                  ">
         <Output TaskParameter="Include" ItemName="FileList" />
