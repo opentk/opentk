@@ -14,7 +14,7 @@ namespace Examples.Tutorial
 {
 
     [Example("Stencil CSG", ExampleCategory.OpenGL, "1.x", Documentation = "StencilCSG")]
-    partial class StencilCSG: GameWindow
+    partial class StencilCSG : GameWindow
     {
         #region Model Related
         DrawableShape OperandB;
@@ -31,11 +31,11 @@ namespace Examples.Tutorial
         float CameraZoom;
         float CameraRotX;
         float CameraRotY;
-        Vector3 EyePosition = new Vector3( 0f, 0f, 15f );
+        Vector3 EyePosition = new Vector3(0f, 0f, 15f);
 
         #region Window
         public StencilCSG()
-            : base( 800, 600, new GraphicsMode( new ColorFormat( 8, 8, 8, 8 ), 24, 8 ) ) // request 8-bit stencil buffer
+            : base(800, 600, new GraphicsMode(new ColorFormat(8, 8, 8, 8), 24, 8)) // request 8-bit stencil buffer
         {
             base.VSync = VSyncMode.Off;
             Keyboard.KeyDown += delegate(object sender, KeyboardKeyEventArgs e)
@@ -48,10 +48,10 @@ namespace Examples.Tutorial
             };
         }
 
-        protected override void OnResize(EventArgs e )
+        protected override void OnResize(EventArgs e)
         {
-            GL.Viewport( 0, 0, Width, Height );
-            GL.MatrixMode( MatrixMode.Projection );
+            GL.Viewport(0, 0, Width, Height);
+            GL.MatrixMode(MatrixMode.Projection);
             Matrix4 p = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, Width / (float)Height, 0.1f, 64.0f);
             GL.LoadMatrix(ref p);
         }
@@ -160,15 +160,15 @@ namespace Examples.Tutorial
 
         protected override void OnUnload(EventArgs e)
         {
-            GL.DeleteTextures( 1, ref Texture );
+            GL.DeleteTextures(1, ref Texture);
 
             OperandA.Dispose();
             OperandB.Dispose();
 
-            base.OnUnload( e );
+            base.OnUnload(e);
         }
 
-        protected override void OnUpdateFrame( FrameEventArgs e )
+        protected override void OnUpdateFrame(FrameEventArgs e)
         {
             #region Magic numbers for camera
             CameraRotX = -Mouse.X * .5f;
@@ -180,117 +180,117 @@ namespace Examples.Tutorial
         public void DrawOperandB()
         {
             GL.PushMatrix();
-            GL.Translate( Math.Cos(MySphereXOffset), -1f, Math.Cos(MySphereZOffset) );
+            GL.Translate(Math.Cos(MySphereXOffset), -1f, Math.Cos(MySphereZOffset));
             OperandB.Draw();
             GL.PopMatrix();
         }
 
         public void DrawOperandA()
         {
-            GL.Enable( EnableCap.Texture2D );
+            GL.Enable(EnableCap.Texture2D);
             OperandA.Draw();
-            GL.Disable( EnableCap.Texture2D );
+            GL.Disable(EnableCap.Texture2D);
         }
 
         public void RenderCsg()
         {
             // first pass
-            GL.Disable( EnableCap.StencilTest );
-           
-            GL.ColorMask( false, false, false, false );
-            GL.CullFace( CullFaceMode.Front );
+            GL.Disable(EnableCap.StencilTest);
+
+            GL.ColorMask(false, false, false, false);
+            GL.CullFace(CullFaceMode.Front);
             DrawOperandB();// draw front-faces into depth buffer
 
             // use stencil plane to find parts of b in a 
-            GL.DepthMask( false );
-            GL.Enable( EnableCap.StencilTest );
-            GL.StencilFunc( StencilFunction.Always, 0, 0 );
+            GL.DepthMask(false);
+            GL.Enable(EnableCap.StencilTest);
+            GL.StencilFunc(StencilFunction.Always, 0, 0);
 
-            GL.StencilOp( StencilOp.Keep, StencilOp.Keep, StencilOp.Incr );
-            GL.CullFace( CullFaceMode.Back );
+            GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Incr);
+            GL.CullFace(CullFaceMode.Back);
             DrawOperandA(); // increment the stencil where the front face of a is drawn
 
-            GL.StencilOp( StencilOp.Keep, StencilOp.Keep, StencilOp.Decr );
-            GL.CullFace( CullFaceMode.Front );
+            GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Decr);
+            GL.CullFace(CullFaceMode.Front);
             DrawOperandA(); // decrement the stencil buffer where the back face of a is drawn
 
-            GL.DepthMask( true );
-            GL.Disable( EnableCap.DepthTest );
+            GL.DepthMask(true);
+            GL.Disable(EnableCap.DepthTest);
 
-            GL.ColorMask( true, true, true, true );
-            GL.StencilFunc( StencilFunction.Notequal, 0, 1 );
+            GL.ColorMask(true, true, true, true);
+            GL.StencilFunc(StencilFunction.Notequal, 0, 1);
             DrawOperandB(); // draw the part of b that's in a
 
             // fix depth
-            GL.ColorMask( false, false, false, false );
-            GL.Enable( EnableCap.DepthTest );
-            GL.Disable( EnableCap.StencilTest );
-            GL.DepthFunc( DepthFunction.Always );
+            GL.ColorMask(false, false, false, false);
+            GL.Enable(EnableCap.DepthTest);
+            GL.Disable(EnableCap.StencilTest);
+            GL.DepthFunc(DepthFunction.Always);
             DrawOperandA();
-            GL.DepthFunc( DepthFunction.Less );
+            GL.DepthFunc(DepthFunction.Less);
 
             // second pass
-            GL.CullFace( CullFaceMode.Back );
+            GL.CullFace(CullFaceMode.Back);
             DrawOperandA();
 
-            GL.DepthMask( false );
-            GL.Enable( EnableCap.StencilTest );
+            GL.DepthMask(false);
+            GL.Enable(EnableCap.StencilTest);
 
-            GL.StencilFunc( StencilFunction.Always, 0, 0 );
-            GL.StencilOp( StencilOp.Keep, StencilOp.Keep, StencilOp.Incr );
+            GL.StencilFunc(StencilFunction.Always, 0, 0);
+            GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Incr);
             DrawOperandB(); // increment the stencil where the front face of b is drawn
 
-            GL.StencilOp( StencilOp.Keep, StencilOp.Keep, StencilOp.Decr );
-            GL.CullFace( CullFaceMode.Front );
+            GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Decr);
+            GL.CullFace(CullFaceMode.Front);
             DrawOperandB(); // decrement the stencil buffer where the back face of b is drawn
 
-            GL.DepthMask( true );
-            GL.Disable( EnableCap.DepthTest );
+            GL.DepthMask(true);
+            GL.Disable(EnableCap.DepthTest);
 
-            GL.ColorMask( true, true, true, true );
-            GL.StencilFunc( StencilFunction.Equal, 0, 1 );
-            GL.CullFace( CullFaceMode.Back );
+            GL.ColorMask(true, true, true, true);
+            GL.StencilFunc(StencilFunction.Equal, 0, 1);
+            GL.CullFace(CullFaceMode.Back);
             DrawOperandA(); // draw the part of a that's in b
 
-            GL.Enable( EnableCap.DepthTest );
+            GL.Enable(EnableCap.DepthTest);
         }
 
-        protected override void OnRenderFrame( FrameEventArgs e )
+        protected override void OnRenderFrame(FrameEventArgs e)
         {
-            this.Title = WindowTitle + "  FPS: " + ( 1f / e.Time ).ToString("0.");
+            this.Title = WindowTitle + "  FPS: " + (1f / e.Time).ToString("0.");
 
-            MySphereZOffset += (float)( e.Time * 3.1 );
-            MySphereXOffset += (float)( e.Time * 4.2 );
+            MySphereZOffset += (float)(e.Time * 3.1);
+            MySphereXOffset += (float)(e.Time * 4.2);
 
             #region Transform setup
-            GL.Clear( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit );
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
             // Camera
-            GL.MatrixMode( MatrixMode.Modelview );
-            Matrix4 mv = Matrix4.LookAt( EyePosition, Vector3.Zero, Vector3.UnitY );
+            GL.MatrixMode(MatrixMode.Modelview);
+            Matrix4 mv = Matrix4.LookAt(EyePosition, Vector3.Zero, Vector3.UnitY);
             GL.LoadMatrix(ref mv);
 
-            GL.Translate( 0f, 0f, CameraZoom );
-            GL.Rotate( CameraRotX, Vector3.UnitY );
-            GL.Rotate( CameraRotY, Vector3.UnitX );
+            GL.Translate(0f, 0f, CameraZoom);
+            GL.Rotate(CameraRotX, Vector3.UnitY);
+            GL.Rotate(CameraRotY, Vector3.UnitX);
             #endregion Transform setup
 
             RenderCsg();
 
             // ---------------------------------
 
-            if ( ShowDebugWireFrame )
+            if (ShowDebugWireFrame)
             {
                 GL.Color3(System.Drawing.Color.LightGray);
-                GL.Disable( EnableCap.StencilTest );
-                GL.Disable( EnableCap.Lighting );
+                GL.Disable(EnableCap.StencilTest);
+                GL.Disable(EnableCap.Lighting);
                 //GL.Disable( EnableCap.DepthTest );
-                GL.PolygonMode( MaterialFace.Front, PolygonMode.Line );
+                GL.PolygonMode(MaterialFace.Front, PolygonMode.Line);
                 DrawOperandB();
-                GL.PolygonMode( MaterialFace.Front, PolygonMode.Fill );
-                GL.Enable( EnableCap.DepthTest );
-                GL.Enable( EnableCap.Lighting );
-                GL.Enable( EnableCap.StencilTest );
+                GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
+                GL.Enable(EnableCap.DepthTest);
+                GL.Enable(EnableCap.Lighting);
+                GL.Enable(EnableCap.StencilTest);
             }
             this.SwapBuffers();
         }
@@ -298,12 +298,11 @@ namespace Examples.Tutorial
         [STAThread]
         static void Main()
         {
-            using ( StencilCSG example = new StencilCSG() )
+            using (StencilCSG example = new StencilCSG())
             {
                 Utilities.SetWindowTitle(example);
-                example.Run( 30.0, 0.0 );
+                example.Run(30.0, 0.0);
             }
         }
-
     }
 }

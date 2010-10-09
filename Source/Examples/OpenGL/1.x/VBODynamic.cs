@@ -9,11 +9,11 @@ namespace Examples.Tutorial
 {
 
     [Example("VBO Dynamic", ExampleCategory.OpenGL, "1.x", 4, Documentation = "VBODynamic")]
-     class T09_VBO_Dynamic: GameWindow
+    class T09_VBO_Dynamic : GameWindow
     {
         /// <summary>Creates a 800x600 window with the specified title.</summary>
-        public T09_VBO_Dynamic( )
-            : base(  800, 600 )
+        public T09_VBO_Dynamic()
+            : base(800, 600)
         {
             this.VSync = VSyncMode.Off;
         }
@@ -42,48 +42,48 @@ namespace Examples.Tutorial
         }
 
         uint VBOHandle;
-        #endregion Particles 
+        #endregion Particles
 
         /// <summary>Load resources here.</summary>
         /// <param name="e">Not used.</param>
-        protected override void OnLoad( EventArgs e )
+        protected override void OnLoad(EventArgs e)
         {
-            GL.ClearColor( .1f, 0f, .1f, 0f );
-            GL.Enable( EnableCap.DepthTest );
-           
+            GL.ClearColor(.1f, 0f, .1f, 0f);
+            GL.Enable(EnableCap.DepthTest);
+
             // Setup parameters for Points
-            GL.PointSize( 5f );
-            GL.Enable( EnableCap.PointSmooth );
-            GL.Hint( HintTarget.PointSmoothHint, HintMode.Nicest );
+            GL.PointSize(5f);
+            GL.Enable(EnableCap.PointSmooth);
+            GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
 
             // Setup VBO state
-            GL.EnableClientState( EnableCap.ColorArray );
-            GL.EnableClientState( EnableCap.VertexArray );
+            GL.EnableClientState(EnableCap.ColorArray);
+            GL.EnableClientState(EnableCap.VertexArray);
 
-            GL.GenBuffers( 1, out VBOHandle );
+            GL.GenBuffers(1, out VBOHandle);
 
             // Since there's only 1 VBO in the app, might aswell setup here.
-            GL.BindBuffer( BufferTarget.ArrayBuffer, VBOHandle );
-            GL.ColorPointer( 4, ColorPointerType.UnsignedByte, VertexC4ubV3f.SizeInBytes, (IntPtr) 0 );
-            GL.VertexPointer( 3, VertexPointerType.Float, VertexC4ubV3f.SizeInBytes, (IntPtr) (4*sizeof(byte)) );
+            GL.BindBuffer(BufferTarget.ArrayBuffer, VBOHandle);
+            GL.ColorPointer(4, ColorPointerType.UnsignedByte, VertexC4ubV3f.SizeInBytes, (IntPtr)0);
+            GL.VertexPointer(3, VertexPointerType.Float, VertexC4ubV3f.SizeInBytes, (IntPtr)(4 * sizeof(byte)));
 
-            Random rnd = new Random( );
+            Random rnd = new Random();
             Vector3 temp = Vector3.Zero;
-            
+
             // generate some random stuff for the particle system
-            for ( uint i = 0 ; i < MaxParticleCount ; i++ )
+            for (uint i = 0; i < MaxParticleCount; i++)
             {
-                VBO[i].R = (byte) rnd.Next( 0, 256 );
-                VBO[i].G = (byte) rnd.Next( 0, 256 );
-                VBO[i].B = (byte) rnd.Next( 0, 256 );
-                VBO[i].A = (byte) rnd.Next( 0, 256 ); // isn't actually used
+                VBO[i].R = (byte)rnd.Next(0, 256);
+                VBO[i].G = (byte)rnd.Next(0, 256);
+                VBO[i].B = (byte)rnd.Next(0, 256);
+                VBO[i].A = (byte)rnd.Next(0, 256); // isn't actually used
                 VBO[i].Position = Vector3.Zero; // all particles are born at the origin
 
                 // generate direction vector in the range [-0.25f...+0.25f] 
                 // that's slow enough so you can see particles 'disappear' when they are respawned
-                temp.X = (float) ( ( rnd.NextDouble( ) - 0.5 ) * 0.5f );
-                temp.Y = (float) ( ( rnd.NextDouble( ) - 0.5 ) * 0.5f );
-                temp.Z = (float) ( ( rnd.NextDouble( ) - 0.5 ) * 0.5f );
+                temp.X = (float)((rnd.NextDouble() - 0.5) * 0.5f);
+                temp.Y = (float)((rnd.NextDouble() - 0.5) * 0.5f);
+                temp.Z = (float)((rnd.NextDouble() - 0.5) * 0.5f);
                 ParticleAttributes[i].Direction = temp; // copy 
                 ParticleAttributes[i].Age = 0;
             }
@@ -94,7 +94,7 @@ namespace Examples.Tutorial
 
         protected override void OnUnload(EventArgs e)
         {
-            GL.DeleteBuffers( 1, ref VBOHandle );
+            GL.DeleteBuffers(1, ref VBOHandle);
         }
 
         /// <summary>
@@ -120,32 +120,33 @@ namespace Examples.Tutorial
         /// Called when it is time to setup the next frame. Add you game logic here.
         /// </summary>
         /// <param name="e">Contains timing information for framerate independent logic.</param>
-        protected override void OnUpdateFrame( FrameEventArgs e )
+        protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            if ( Keyboard[Key.Escape] )
+            if (Keyboard[Key.Escape])
             {
-                Exit( );
+                Exit();
             }
 
             // will update particles here. When using a Physics SDK, it's update rate is much higher than
             // the framerate and it would be a waste of cycles copying to the VBO more often than drawing it.
-            if ( VisibleParticleCount < MaxParticleCount )
+            if (VisibleParticleCount < MaxParticleCount)
                 VisibleParticleCount++;
 
             Vector3 temp;
 
-            for ( int i = MaxParticleCount - VisibleParticleCount ; i < MaxParticleCount ; i++ )
+            for (int i = MaxParticleCount - VisibleParticleCount; i < MaxParticleCount; i++)
             {
                 if (ParticleAttributes[i].Age >= MaxParticleCount)
                 {
                     // reset particle
                     ParticleAttributes[i].Age = 0;
                     VBO[i].Position = Vector3.Zero;
-                } else
+                }
+                else
                 {
                     ParticleAttributes[i].Age += (uint)Math.Max(ParticleAttributes[i].Direction.LengthFast * 10, 1);
-                    Vector3.Multiply( ref ParticleAttributes[i].Direction, (float) e.Time, out temp );
-                    Vector3.Add( ref VBO[i].Position, ref temp, out VBO[i].Position );
+                    Vector3.Multiply(ref ParticleAttributes[i].Direction, (float)e.Time, out temp);
+                    Vector3.Add(ref VBO[i].Position, ref temp, out VBO[i].Position);
                 }
             }
         }
@@ -154,27 +155,27 @@ namespace Examples.Tutorial
         /// Called when it is time to render the next frame. Add your rendering code here.
         /// </summary>
         /// <param name="e">Contains timing information.</param>
-        protected override void OnRenderFrame( FrameEventArgs e )
+        protected override void OnRenderFrame(FrameEventArgs e)
         {
-            this.Title = VisibleParticleCount + " Points. FPS: " + string.Format( "{0:F}", 1.0 / e.Time );
+            this.Title = VisibleParticleCount + " Points. FPS: " + string.Format("{0:F}", 1.0 / e.Time);
 
-            GL.Clear( ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit );
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            GL.PushMatrix( );
+            GL.PushMatrix();
 
-            GL.Translate( 0f, 0f, -5f );
+            GL.Translate(0f, 0f, -5f);
 
             // Tell OpenGL to discard old VBO when done drawing it and reserve memory _now_ for a new buffer.
             // without this, GL would wait until draw operations on old VBO are complete before writing to it
-            GL.BufferData( BufferTarget.ArrayBuffer, (IntPtr) ( VertexC4ubV3f.SizeInBytes * MaxParticleCount ), IntPtr.Zero, BufferUsageHint.StreamDraw );
+            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(VertexC4ubV3f.SizeInBytes * MaxParticleCount), IntPtr.Zero, BufferUsageHint.StreamDraw);
             // Fill newly allocated buffer
-            GL.BufferData( BufferTarget.ArrayBuffer, (IntPtr) ( VertexC4ubV3f.SizeInBytes * MaxParticleCount ), VBO, BufferUsageHint.StreamDraw );
+            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(VertexC4ubV3f.SizeInBytes * MaxParticleCount), VBO, BufferUsageHint.StreamDraw);
             // Only draw particles that are alive
-            GL.DrawArrays( BeginMode.Points, MaxParticleCount - VisibleParticleCount, VisibleParticleCount );
+            GL.DrawArrays(BeginMode.Points, MaxParticleCount - VisibleParticleCount, VisibleParticleCount);
 
-            GL.PopMatrix( );
+            GL.PopMatrix();
 
-            SwapBuffers( );
+            SwapBuffers();
         }
 
         /// <summary>

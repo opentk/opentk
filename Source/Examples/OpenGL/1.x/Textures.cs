@@ -22,7 +22,7 @@ namespace Examples.Tutorial
     /// <summary>
     /// Demonstrates simple OpenGL Texturing.
     /// </summary>
-    [Example("Texture mapping", ExampleCategory.OpenGL, "1.x", 5, Documentation="Textures")]
+    [Example("Texture mapping", ExampleCategory.OpenGL, "1.x", 5, Documentation = "Textures")]
     public class Textures : GameWindow
     {
         Bitmap bitmap = new Bitmap("Data/Textures/logo.jpg");
@@ -42,7 +42,7 @@ namespace Examples.Tutorial
             GL.Enable(EnableCap.Texture2D);
 
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
-            
+
             GL.GenTextures(1, out texture);
             GL.BindTexture(TextureTarget.Texture2D, texture);
 
@@ -51,7 +51,7 @@ namespace Examples.Tutorial
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0,
                 OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
-            
+
             bitmap.UnlockBits(data);
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
