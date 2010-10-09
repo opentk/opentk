@@ -269,24 +269,8 @@ namespace OpenTK.Graphics
         #region public static IGraphicsContext CurrentContext
 
         internal delegate ContextHandle GetCurrentContextDelegate();
-        internal static GetCurrentContextDelegate GetCurrentContext = delegate
-        {
-            // Note: this is a slow, generic fallback for use with DummyGLContext.
-            // Most other platforms can query the current context directly (via
-            // [Wgl|Glx|Agl|Egl].GetCurrentContext()) so the GraphicsContext
-            // constructor will replace this implementation with a platform-specific
-            // one, if it exists.
-            foreach (WeakReference weak_ref in available_contexts.Values)
-            {
-                IGraphicsContext context = (IGraphicsContext)weak_ref.Target;
-                if (context.IsCurrent)
-                {
-                    return (context as IGraphicsContextInternal).Context;
-                }
-            }
-
-            return ContextHandle.Zero;
-        };
+        internal static GetCurrentContextDelegate GetCurrentContext =
+            Platform.Factory.Default.CreateGetCurrentGraphicsContext();
 
         /// <summary>
         /// Gets the GraphicsContext that is current in the calling thread.
