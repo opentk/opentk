@@ -153,8 +153,8 @@ namespace Examples.Tutorial
             // 4) Call DrawElements. (Note: the last parameter is an offset into the element buffer
             //    and will usually be IntPtr.Zero).
 
-            GL.EnableClientState(EnableCap.ColorArray);
-            GL.EnableClientState(EnableCap.VertexArray);
+            GL.EnableClientState(ArrayCap.ColorArray);
+            GL.EnableClientState(ArrayCap.VertexArray);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, handle.VboID);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, handle.EboID);

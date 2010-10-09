@@ -717,9 +717,9 @@ namespace Examples.Tutorial
 
         void renderCubeVBO()
         {
-            GL.EnableClientState(EnableCap.VertexArray);
-            GL.EnableClientState(EnableCap.NormalArray);
-            GL.EnableClientState(EnableCap.TextureCoordArray);
+            GL.EnableClientState(ArrayCap.VertexArray);
+            GL.EnableClientState(ArrayCap.NormalArray);
+            GL.EnableClientState(ArrayCap.TextureCoordArray);
             //GL.ClientActiveTexture(TextureUnit.Texture0 + 0);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, vboCube);
@@ -737,9 +737,9 @@ namespace Examples.Tutorial
 
         void renderSphereVBO()
         {
-            GL.EnableClientState(EnableCap.VertexArray);
-            GL.EnableClientState(EnableCap.NormalArray);
-            GL.EnableClientState(EnableCap.TextureCoordArray);
+            GL.EnableClientState(ArrayCap.VertexArray);
+            GL.EnableClientState(ArrayCap.NormalArray);
+            GL.EnableClientState(ArrayCap.TextureCoordArray);
             //GL.ClientActiveTexture(TextureUnit.Texture0 + 0);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, vboSphere);

@@ -42,8 +42,8 @@ namespace Examples.Tutorial
             GL.Enable(EnableCap.DepthTest);
             //GL.Enable(GL.Enums.EnableCap.CULL_FACE);
             
-            GL.EnableClientState(EnableCap.VertexArray);
-            GL.EnableClientState(EnableCap.NormalArray);
+            GL.EnableClientState(ArrayCap.VertexArray);
+            GL.EnableClientState(ArrayCap.NormalArray);
             GL.VertexPointer(3, VertexPointerType.Float, 0, shape.Vertices);
             GL.NormalPointer(NormalPointerType.Float, 0, shape.Normals);
 
