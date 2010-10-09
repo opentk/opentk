@@ -311,17 +311,17 @@ namespace OpenTK.Platform.X11
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeModeLine
         {
-            short hdisplay;   /* Number of display pixels horizontally */
-            short hsyncstart; /* Horizontal sync start */
-            short hsyncend;   /* Horizontal sync end */
-            short htotal;     /* Total horizontal pixels */
-            short vdisplay;   /* Number of display pixels vertically */
-            short vsyncstart; /* Vertical sync start */
-            short vsyncend;   /* Vertical sync start */
-            short vtotal;     /* Total vertical pixels */
-            int flags;      /* Mode flags */
-            int privsize;   /* Size of private */
-            IntPtr _private;   /* Server privates */
+            public short hdisplay;   /* Number of display pixels horizontally */
+            public short hsyncstart; /* Horizontal sync start */
+            public short hsyncend;   /* Horizontal sync end */
+            public short htotal;     /* Total horizontal pixels */
+            public short vdisplay;   /* Number of display pixels vertically */
+            public short vsyncstart; /* Vertical sync start */
+            public short vsyncend;   /* Vertical sync start */
+            public short vtotal;     /* Total vertical pixels */
+            public int flags;      /* Mode flags */
+            public int privsize;   /* Size of private */
+            public IntPtr _private;   /* Server privates */
         }
 
         /// <summary>
@@ -472,12 +472,26 @@ namespace OpenTK.Platform.X11
             out int minor_version_return);
 
         [DllImport(_dll_name_vid)]
+        extern public static bool XF86VidModeGetModeLine(
+            Display display,
+            int screen,
+            out int dotclock_return,
+            out XF86VidModeModeLine modeline);
+
+        [DllImport(_dll_name_vid)]
         extern public static bool XF86VidModeGetAllModeLines(
             Display display,
             int screen,
             out int modecount_return,
             /*XF86VidModeModeInfo***  <-- yes, that's three *'s. */
             out IntPtr modesinfo);
+
+        [DllImport(_dll_name_vid)]
+        extern public static bool XF86VidModeGetViewPort(
+            Display display,
+            int screen,
+            out int x_return,
+            out int y_return);
 
         [DllImport(_dll_name_vid)]
         extern public static bool XF86VidModeSetViewPort(
@@ -489,12 +503,6 @@ namespace OpenTK.Platform.X11
         /*
 Bool XF86VidModeSetClientVersion(
     Display *display);
-
-Bool XF86VidModeGetModeLine(
-    Display *display,
-    int screen,
-    int *dotclock_return,
-    XF86VidModeModeLine *modeline);
 
 Bool XF86VidModeDeleteModeLine(
     Display *display,
@@ -511,7 +519,6 @@ Status XF86VidModeValidateModeLine(
     int screen,
     XF86VidModeModeLine *modeline);
 
-
 Bool XF86VidModeLockModeSwitch(
     Display *display,
     int screen,
@@ -521,13 +528,6 @@ Bool XF86VidModeGetMonitor(
     Display *display,
     int screen,
     XF86VidModeMonitor *monitor);
-
-Bool XF86VidModeGetViewPort(
-    Display *display,
-    int screen,
-    int *x_return,
-    int *y_return);
-
 
 XF86VidModeGetDotClocks(
     Display *display,
