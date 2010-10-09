@@ -116,7 +116,7 @@ namespace OpenTK.Platform.X11
                     deviceToScreen.Add(dev, 0 /*screen.ScreenNumber*/);
                 }
             }
-            return true;
+            return (devices.Count>0);
         }
 
         static bool QueryXRandR(List<DisplayDevice> devices)
