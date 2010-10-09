@@ -247,8 +247,8 @@ namespace Examples.Tutorial
             angle += rotation_speed * (float)e.Time;
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
-            GL.EnableClientState(EnableCap.VertexArray);
-            GL.EnableClientState(EnableCap.ColorArray);
+            GL.EnableClientState(ArrayCap.VertexArray);
+            GL.EnableClientState(ArrayCap.ColorArray);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertex_buffer_object);
             GL.VertexPointer(3, VertexPointerType.Float, 0, IntPtr.Zero);
