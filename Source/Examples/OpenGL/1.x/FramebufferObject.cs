@@ -17,7 +17,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Examples.Tutorial
 {
-    [Example("Framebuffer Objects", ExampleCategory.OpenGL, "1.x", Documentation="FramebufferObject")]
+    [Example("Framebuffer Objects", ExampleCategory.OpenGL, "1.x", Documentation = "FramebufferObject")]
     public class SimpleFBO : GameWindow
     {
         public SimpleFBO()
@@ -26,7 +26,7 @@ namespace Examples.Tutorial
         }
 
         Font sans = new Font(System.Drawing.FontFamily.GenericSansSerif, 16.0f);
-        
+
         uint ColorTexture;
         uint DepthTexture;
         uint FBOHandle;
@@ -62,7 +62,7 @@ namespace Examples.Tutorial
                      System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Exclamation);
                 Exit();
             }
-            
+
             GL.Enable(EnableCap.DepthTest);
             GL.ClearDepth(1.0f);
             GL.DepthFunc(DepthFunction.Lequal);
@@ -217,7 +217,7 @@ namespace Examples.Tutorial
         protected override void OnResize(EventArgs e)
         {
             GL.Viewport(0, 0, Width, Height);
-            
+
             double aspect_ratio = Width / (double)Height;
 
             OpenTK.Matrix4 perspective = OpenTK.Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)aspect_ratio, 1, 64);
@@ -242,7 +242,7 @@ namespace Examples.Tutorial
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            
+
             GL.PushMatrix();
             {
                 // Draw the Color Texture

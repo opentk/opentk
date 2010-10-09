@@ -43,7 +43,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Examples.Tutorial
 {
-    [Example("Display Lists", ExampleCategory.OpenGL, "1.x", 2, Documentation="DisplayLists")]
+    [Example("Display Lists", ExampleCategory.OpenGL, "1.x", 2, Documentation = "DisplayLists")]
     public class T07_Display_Lists_Flower : GameWindow
     {
         #region --- Fields ---
@@ -122,8 +122,8 @@ namespace Examples.Tutorial
 
             float aspect = this.ClientSize.Width / (float)this.ClientSize.Height;
 
-			Matrix4 projection_matrix;
-			Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspect, 1, 64, out projection_matrix);
+            Matrix4 projection_matrix;
+            Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspect, 1, 64, out projection_matrix);
 
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref projection_matrix);

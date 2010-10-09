@@ -11,7 +11,7 @@ namespace Examples.Tutorial
 {
 
     [Example("Texture Matrix Wormhole", ExampleCategory.OpenGL, "1.x", Documentation = "TextureMatrix")]
-  
+
     class TextureMatrix : GameWindow
     {
 
@@ -95,7 +95,7 @@ namespace Examples.Tutorial
                      ClearBufferMask.DepthBufferBit);
 
             GL.MatrixMode(MatrixMode.Texture);
-            GL.Translate(e.Time/2, -e.Time, 0f);
+            GL.Translate(e.Time / 2, -e.Time, 0f);
 
             Matrix4 modelview = Matrix4.LookAt(Vector3.Zero, Vector3.UnitZ, Vector3.UnitY);
             GL.MatrixMode(MatrixMode.Modelview);
@@ -136,9 +136,9 @@ namespace Examples.Tutorial
 
             Bitmap bitmap = new Bitmap(filename);
             BitmapData data = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-                GL.TexImage2D(Target, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
-                GL.Finish();
-                bitmap.UnlockBits(data);
+            GL.TexImage2D(Target, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+            GL.Finish();
+            bitmap.UnlockBits(data);
 
             if (GL.GetError() != ErrorCode.NoError)
                 throw new Exception("Error loading texture " + filename);

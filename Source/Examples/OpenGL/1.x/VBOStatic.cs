@@ -22,15 +22,15 @@ using System.Drawing;
 
 namespace Examples.Tutorial
 {
-    [Example("VBO Static", ExampleCategory.OpenGL, "1.x", 3, Documentation="VBOStatic")]
+    [Example("VBO Static", ExampleCategory.OpenGL, "1.x", 3, Documentation = "VBOStatic")]
     public class T08_VBO : GameWindow
     {
         const float rotation_speed = 180.0f;
         float angle;
-        
+
         struct Vbo { public int VboID, EboID, NumElements; }
         Vbo[] vbo = new Vbo[2];
-        
+
         VertexPositionColor[] CubeVertices = new VertexPositionColor[]
         {
                 new VertexPositionColor(-1.0f, -1.0f,  1.0f, Color.DarkRed),
