@@ -25,7 +25,7 @@ namespace Examples.Tutorial
     /// <summary>
     /// Demonstrates immediate mode rendering.
     /// </summary>
-    [Example("Immediate mode", ExampleCategory.OpenGL, "1.x", 1, Documentation="ImmediateMode")]
+    [Example("Immediate mode", ExampleCategory.OpenGL, "1.x", 1, Documentation = "ImmediateMode")]
     public class T03_Immediate_Mode_Cube : GameWindow
     {
         #region --- Fields ---
@@ -37,10 +37,11 @@ namespace Examples.Tutorial
 
         #region --- Constructor ---
 
-        public T03_Immediate_Mode_Cube() : base(800, 600, new GraphicsMode(16, 16))
-		{ } 
+        public T03_Immediate_Mode_Cube()
+            : base(800, 600, new GraphicsMode(16, 16))
+        { }
 
-		#endregion	
+        #endregion
 
         #region OnLoad
 
@@ -114,7 +115,7 @@ namespace Examples.Tutorial
             Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref lookat);
-            
+
             angle += rotation_speed * (float)e.Time;
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
