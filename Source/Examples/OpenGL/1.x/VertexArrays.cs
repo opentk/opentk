@@ -66,7 +66,7 @@ namespace Examples.Tutorial
             GL.ClearColor(Color.CadetBlue);
             GL.Enable(EnableCap.DepthTest);
             
-            GL.EnableClientState(EnableCap.VertexArray);
+            GL.EnableClientState(ArrayCap.VertexArray);
             //GL.EnableClientState(GL.Enums.EnableCap.COLOR_ARRAY);
             GL.VertexPointer(3, VertexPointerType.Float, 0, shape.Vertices);
             //GL.ColorPointer(4, GL.Enums.ColorPointerType.UNSIGNED_BYTE, 0, shape.Colors);
