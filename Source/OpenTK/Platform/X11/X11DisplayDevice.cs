@@ -198,7 +198,53 @@ namespace OpenTK.Platform.X11
 
         static bool QueryXF86(List<DisplayDevice> devices)
         {
-            return false;
+            int major;
+            int minor;
+
+            try
+            {
+                if (!API.XF86VidModeQueryVersion(API.DefaultDisplay, out major, out minor))
+                    return false;
+            }
+            catch (DllNotFoundException)
+            {
+                return false;
+            }
+            
+            int currentScreen = 0;
+            Debug.Print("Using XF86 v" + major.ToString() + "." + minor.ToString());
+
+            foreach (DisplayDevice dev in devices)
+            {
+                int count;
+
+                IntPtr srcArray;
+                API.XF86VidModeGetAllModeLines(API.DefaultDisplay, currentScreen, out count, out srcArray);
+                Debug.Print(count.ToString() + " modes detected on screen " + currentScreen.ToString());
+                IntPtr[] array = new IntPtr[count];
+                Marshal.Copy(srcArray, array, 0, count);
+                API.XF86VidModeModeInfo Mode = new API.XF86VidModeModeInfo();
+
+                int x;
+                int y;
+                API.XF86VidModeGetViewPort(API.DefaultDisplay, currentScreen, out x, out y);
+                List<DisplayResolution> resolutions = new List<DisplayResolution>();
+                for (int i = 0; i < count; i++)
+                {
+                    Mode = (API.XF86VidModeModeInfo)Marshal.PtrToStructure(array[i], typeof(API.XF86VidModeModeInfo));
+                    resolutions.Add(new DisplayResolution(x, y, Mode.hdisplay, Mode.vdisplay, 24, (Mode.dotclock * 1000F) / (Mode.vtotal * Mode.htotal)));
+                }
+
+                dev.AvailableResolutions = resolutions;
+                int pixelClock;
+                API.XF86VidModeModeLine currentMode;
+                API.XF86VidModeGetModeLine(API.DefaultDisplay, currentScreen, out pixelClock, out currentMode);
+                dev.Bounds = new Rectangle(x, y, currentMode.hdisplay, (currentMode.vdisplay == 0) ? currentMode.vsyncstart : currentMode.vdisplay);
+                dev.BitsPerPixel = FindCurrentDepth(currentScreen);
+                dev.RefreshRate = (pixelClock * 1000F) / (currentMode.vtotal * currentMode.htotal);
+                currentScreen++;
+            }
+            return true;
         }
 
         #region static int[] FindAvailableDepths(int screen)
