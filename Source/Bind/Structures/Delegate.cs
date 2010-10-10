@@ -79,6 +79,8 @@ namespace Bind.Structures
             ReturnType = new Type(d.ReturnType);
             Version = d.Version;
             //this.Version = !String.IsNullOrEmpty(d.Version) ? new string(d.Version.ToCharArray()) : "";
+            Deprecated = d.Deprecated;
+            DeprecatedVersion = d.DeprecatedVersion;
         }
 
         #endregion
@@ -276,6 +278,9 @@ namespace Bind.Structures
         }
 
         #endregion
+
+        public bool Deprecated { get; set; }
+        public string DeprecatedVersion { get; set; }
 
         #endregion
 
