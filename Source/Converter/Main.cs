@@ -74,22 +74,23 @@ namespace CHeaderToXML
                 string prefix = "gl";
                 string version = null;
                 HeaderType type = HeaderType.Header;
-                OptionSet opts = new OptionSet {
-                { "p=", "The {PREFIX} to remove from parsed functions and constants.  " +
-                    "Defaults to \"" + prefix + "\".",
-                    v => prefix = v },
-                { "v=", "The {VERSION} of the headers being parsed.",
-                    v => version = v },
-                { "t=", "The {TYPE} of the headers being parsed.",
-                    v => type = (HeaderType)Enum.Parse(typeof(HeaderType), v, true) },
-                { "?|h|help", "Show this message and exit.",
-                    v => showHelp = v != null },
-            };
+                OptionSet opts = new OptionSet
+                {
+                    { "p=", "The {PREFIX} to remove from parsed functions and constants.  " +
+                        "Defaults to \"" + prefix + "\".",
+                        v => prefix = v },
+                    { "v:", "The {VERSION} of the headers being parsed.",
+                        v => version = v },
+                    { "t:", "The {TYPE} of the headers being parsed.",
+                        v => type = (HeaderType)Enum.Parse(typeof(HeaderType), v, true) },
+                    { "?|h|help", "Show this message and exit.",
+                        v => showHelp = v != null },
+                };
                 var headers = opts.Parse(args);
                 var app = Path.GetFileName(Environment.GetCommandLineArgs()[0]);
                 if (showHelp)
                 {
-                    Console.WriteLine("usage: {0} -p:PREFIX -v:VERSION HEADERS", app);
+                    Console.WriteLine("usage: {0} -p:PREFIX -v:VERSION -t:TYPE HEADERS", app);
                     Console.WriteLine();
                     Console.WriteLine("Options:");
                     opts.WriteOptionDescriptions(Console.Out);
@@ -97,7 +98,7 @@ namespace CHeaderToXML
                     Console.WriteLine("HEADERS are the header files to parse into XML.");
                     return;
                 }
-                if (version == null)
+                if (prefix == null)
                 {
                     Console.WriteLine("{0}: missing required parameter -p.", app);
                     Console.WriteLine("Use '{0} --help' for usage.", app);
@@ -117,6 +118,8 @@ namespace CHeaderToXML
 
                 var settings = new XmlWriterSettings();
                 settings.Indent = true;
+                settings.Encoding = System.Text.Encoding.UTF8;
+                Console.OutputEncoding = System.Text.Encoding.UTF8;
 
                 using (var writer = XmlWriter.Create(Console.Out, settings))
                 {
