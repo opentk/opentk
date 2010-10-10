@@ -36,25 +36,13 @@ namespace CHeaderToXML
     // Todo: Fails to parse ES extension headers, which mix enum and function definitions.
 
     // Parses ES and CL header files.
-    sealed class ESCLParser
+    sealed class ESCLParser : Parser
     {
         Regex extensions = new Regex("(ARB|EXT|AMD|NV|OES|QCOM)", RegexOptions.RightToLeft | RegexOptions.Compiled);
         Regex array_size = new Regex(@"\[.+\]", RegexOptions.RightToLeft | RegexOptions.Compiled);
         Regex EnumToken  = new Regex(@"^#define \w+\s+\(?-?\w+\s?<?<?\s?-?\w*\)?$", RegexOptions.Compiled);
 
-        public ESCLParser()
-        {
-        }
-
-        public string Prefix {get; set;}
-        public string Version {get; set;}
-
-        public IEnumerable<XElement> Parse(string filename)
-        {
-            return Parse(File.ReadAllLines(filename));
-        }
-
-        public IEnumerable<XElement> Parse(string[] lines)
+        public override IEnumerable<XElement> Parse(string[] lines)
         {
             char[] splitters = new char[] { ' ', '\t', ',', '(', ')', ';', '\n', '\r' };
 
