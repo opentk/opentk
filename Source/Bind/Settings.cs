@@ -127,6 +127,8 @@ namespace Bind
             NoDebugHelpers = 0x800,
             /// <summary>Generate both typed and untyped ("All") signatures for enum parameters.</summary>
             KeepUntypedEnums = 0x1000,
+            /// <summary>Marks deprecated functions as [Obsolete]</summary>
+            AddDeprecationWarnings = 0x2000,
             Tao = ConstIntEnums |
                   NoAdvancedEnumProcessing |
                   NoPublicUnsafeFunctions |
@@ -140,6 +142,24 @@ namespace Bind
                   NoDocumentation | 
                   NoDebugHelpers
                   /*GenerateAllPermutations,*/
+        }
+
+        // Returns true if flag is enabled.
+        public static bool IsEnabled(Legacy flag)
+        {
+            return (Compatibility & flag) != (Legacy)0;
+        }
+
+        // Enables the specified flag.
+        public static void Enable(Legacy flag)
+        {
+            Compatibility |= flag;
+        }
+
+        // Disables the specified flag.
+        public static void Disable(Legacy flag)
+        {
+            Compatibility &= ~flag;
         }
 
         /// <summary>True if multiple tokens should be dropped (e.g. FooARB, FooEXT and FooSGI).</summary>
