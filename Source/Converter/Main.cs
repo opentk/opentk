@@ -41,8 +41,27 @@ namespace CHeaderToXML
 
         public int GetHashCode (XNode a)
         {
-            return ((XElement) a).Attribute("name").GetHashCode();
+            XElement e = (XElement)a;
+            if (e.Name == "enum" || e.Name == "token")
+            {
+                return ((XElement)a).Attribute("name").GetHashCode();
+            }
+            else if (e.Name == "use")
+            {
+                return ((XElement)a).Attribute("token").GetHashCode();
+            }
+            else
+            {
+                throw new InvalidOperationException(String.Format(
+                    "Unknown element type: {0}", e));
+            }
         }
+    }
+
+    enum HeaderType
+    {
+        Header,
+        Spec
     }
 
     class EntryPoint
@@ -54,12 +73,15 @@ namespace CHeaderToXML
                 bool showHelp = false;
                 string prefix = "gl";
                 string version = null;
+                HeaderType type = HeaderType.Header;
                 OptionSet opts = new OptionSet {
                 { "p=", "The {PREFIX} to remove from parsed functions and constants.  " +
                     "Defaults to \"" + prefix + "\".",
                     v => prefix = v },
                 { "v=", "The {VERSION} of the headers being parsed.",
                     v => version = v },
+                { "t=", "The {TYPE} of the headers being parsed.",
+                    v => type = (HeaderType)Enum.Parse(typeof(HeaderType), v, true) },
                 { "?|h|help", "Show this message and exit.",
                     v => showHelp = v != null },
             };
@@ -81,40 +103,17 @@ namespace CHeaderToXML
                     Console.WriteLine("Use '{0} --help' for usage.", app);
                     return;
                 }
-                var sigs = headers.Select(h => new ESCLParser
-                {
-                    Prefix = prefix,
-                    Version = version
-                }.Parse(h));
+                Parser parser =
+                    type == HeaderType.Header ? new ESCLParser { Prefix = prefix, Version = version } :
+                    type == HeaderType.Spec ? new GLParser { Prefix = prefix, Version = version } :
+                    (Parser)null;
+
+                var sigs = headers.Select(h => parser.Parse(h));
 
                 // Merge any duplicate enum entries (in case an enum is declared
                 // in multiple files with different entries in each file).
-                var entries = new Dictionary<string, XElement>();
-                foreach (var e in sigs.SelectMany(s => s).Where(s => s.Name.LocalName == "enum"))
-                {
-                    var name = (string)e.Attribute("name");
-                    if (entries.ContainsKey(name) && e.Name.LocalName == "enum")
-                    {
-                        var p = entries[name];
-                        var curTokens = p.Nodes().ToList();
-                        p.RemoveNodes();
-                        p.Add(curTokens.Concat(e.Nodes()).Distinct(new EnumTokenComparer()));
-                    }
-                    else
-                        entries.Add(name, e);
-                }
-
-                // sort enum tokens
-                foreach (var e in entries)
-                {
-                    if (e.Value.Name.LocalName != "enum")
-                        continue;
-                    var tokens = e.Value.Elements()
-                        .OrderBy(t => (string)t.Attribute("name"))
-                        .ToList();
-                    e.Value.RemoveNodes();
-                    e.Value.Add(tokens);
-                }
+                var entries = MergeDuplicates(sigs);
+                SortTokens(entries);
 
                 var settings = new XmlWriterSettings();
                 settings.Indent = true;
@@ -140,6 +139,39 @@ namespace CHeaderToXML
                     Console.ReadKey(true);
                 }
             }
+        }
+
+        private static void SortTokens(Dictionary<string, XElement> entries)
+        {
+            foreach (var e in entries)
+            {
+                if (e.Value.Name.LocalName != "enum")
+                    continue;
+                var tokens = e.Value.Elements()
+                    .OrderBy(t => (string)t.Attribute("name"))
+                    .ToList();
+                e.Value.RemoveNodes();
+                e.Value.Add(tokens);
+            }
+        }
+
+        private static Dictionary<string, XElement> MergeDuplicates(IEnumerable<IEnumerable<XElement>> sigs)
+        {
+            var entries = new Dictionary<string, XElement>();
+            foreach (var e in sigs.SelectMany(s => s).Where(s => s.Name.LocalName == "enum"))
+            {
+                var name = (string)e.Attribute("name");
+                if (entries.ContainsKey(name) && e.Name.LocalName == "enum")
+                {
+                    var p = entries[name];
+                    var curTokens = p.Nodes().ToList();
+                    p.RemoveNodes();
+                    p.Add(curTokens.Concat(e.Nodes()).Distinct(new EnumTokenComparer()));
+                }
+                else
+                    entries.Add(name, e);
+            }
+            return entries;
         }
     }
 }
