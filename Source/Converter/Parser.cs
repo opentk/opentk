@@ -21,17 +21,27 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System.Collections.Generic;
+using System.IO;
 using System.Xml.Linq;
 
 namespace CHeaderToXML
 {
     // The base class for a parser.
-    abstract class Parser : XDocument
+    abstract class Parser
     {
         // Defines a prefix that should be removed from methods and tokens in the XML files, e.g. "gl", "cl", etc.
-        protected string Prefix { get; set; }
+        public string Prefix { get; set; }
+        
+        // Defines the version of the spec files (optional).
+        public string Version { get; set; }
 
         // Implements the parsing logic for a specific input file.
-        protected abstract XDocument Parse(string[] lines);
+        public abstract IEnumerable<XElement> Parse(string[] lines);
+
+        public IEnumerable<XElement> Parse(string path)
+        {
+            return Parse(File.ReadAllLines(path));
+        }
     }
 }
