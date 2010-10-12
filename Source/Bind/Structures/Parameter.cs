@@ -328,10 +328,8 @@ namespace Bind.Structures
             if (Reference)
                 WrapperType |= WrapperTypes.ReferenceParameter;
 
-            if (Name == "params")
-                Name = "@params";
-            if (Name == "event")
-                Name = "@event";
+            if (Utilities.Keywords.Contains(Name))
+                Name = "@" + Name;
 
             // This causes problems with bool arrays
             //if (CurrentType.ToLower().Contains("bool"))
