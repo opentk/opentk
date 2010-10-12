@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace CHeaderToXML
 {
     class GLParser : Parser
     {
+        static readonly Regex extensions = new Regex(
+            "(ARB|EXT|ATI|NV|SUNX|SUN|SGIS|SGIX|SGI|MESA|3DFX|IBM|GREMEDY|HP|INTEL|PGI|INGR|APPLE|OML|I3D)",
+            RegexOptions.RightToLeft | RegexOptions.Compiled);
         static readonly char[] splitters = new char[] { ' ', '\t', ',', '(', ')', ';', '\n', '\r' };
 
         enum ParserModes { None, Enum, Func };
@@ -18,6 +21,7 @@ namespace CHeaderToXML
 
             foreach (string l in lines)
             {
+                // Clean up line for further processing and skip invalid lines.
                 string line = l.Replace('\t', ' ').Trim();
                 if (!IsValid(line))
                     continue;
@@ -34,16 +38,23 @@ namespace CHeaderToXML
                     
                     CurrentMode = ParserModes.Enum;
                 }
-                else if (words.First() == "function")
+                else if (line.StartsWith(words[0] + "("))
                 {
+                    // This is a new function definition
                     if (current != null)
                         yield return current;
 
+                    var match = extensions.Match(words[0]);
+                    string extension = match != null && String.IsNullOrEmpty(match.Value) ? "Core" : match.Value;
+                    current = new XElement("function",
+                        new XAttribute("name", words[0]),
+                        new XAttribute("extension", extension));
+
                     CurrentMode = ParserModes.Func;
-                    throw new NotImplementedException();
                 }
                 else if (current != null)
                 {
+                    // This is an addition to the current element (enum or function)
                     switch (CurrentMode)
                     {
                         case ParserModes.Enum:
@@ -68,7 +79,45 @@ namespace CHeaderToXML
                             break;
 
                         case ParserModes.Func:
-                            throw new NotImplementedException();
+                            switch (words[0])
+                            {
+                                case "return":  // Line denotes return value
+                                    current.Add(new XElement("returns",
+                                        new XAttribute("type", words[1])));
+                                    break;
+
+                                case "param":   // Line denotes parameter
+                                    int pointer = words[4].Contains("array") ? 1 : 0;
+                                    pointer += words[4].Contains("reference") ? 1 : 0;
+
+                                    var elem = new XElement("param",
+                                        new XAttribute("name", words[1]),
+                                        new XAttribute("type", words[2] + PointerLevel(pointer)),
+                                        new XAttribute("flow", words[3] == "in" ? "in" : "out"));
+                                    if (pointer > 0 && words.Length > 5 && words[5].Contains("[1]"))
+                                        elem.Add(new XAttribute("count", 1));
+
+                                    current.Add(elem);
+                                    break;
+
+                                case "version": // Line denotes function version (i.e. 1.0, 1.2, 1.5)
+                                    // GetTexParameterIivEXT and GetTexParameterIuivEXT define two(!) versions (why?)
+                                    var version = current.Attribute("version");
+                                    if (version == null)
+                                        current.Add(new XAttribute("version", words[1]));
+                                    else
+                                        version.Value = words[1];
+                                    break;
+
+                                case "category":
+                                    current.Add(new XAttribute("category", words[1]));
+                                    break;
+
+                                case "deprecated":
+                                    current.Add(new XAttribute("deprecated", words[1]));
+                                    break;
+                            }
+                            break;
                     }
                 }
             }
@@ -101,6 +150,20 @@ namespace CHeaderToXML
                 line.StartsWith("extension:") ||
                 line.StartsWith("alias:") ||
                 line.StartsWith("offset:"));
+        }
+
+        string PointerLevel(int pointer)
+        {
+            switch (pointer)
+            {
+                case 0: return String.Empty;
+                case 1: return "*";
+                case 2: return "**";
+                case 3: return "***";
+                case 4: return "****";
+                case 5: return "*****";
+                default: throw new NotImplementedException();
+            }
         }
     }
 }
