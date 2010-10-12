@@ -138,7 +138,7 @@ namespace Bind
                 switch (mode)
                 {
                     case GeneratorMode.GL2:
-                        Generator = new Generator();
+                        Generator = new GL4Generator("OpenGL", dirName);
                         break;
 
                     case GeneratorMode.ES10:
