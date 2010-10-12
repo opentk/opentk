@@ -139,6 +139,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="FuncProcessor.cs" />
     <Compile Include="GL2\GL4Generator.cs" />
     <Compile Include="IBind.cs">
       <SubType>Code</SubType>
@@ -155,6 +156,7 @@
     <Compile Include="BindStreamWriter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EnumProcessor.cs" />
     <Compile Include="Utilities.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -943,6 +945,11 @@
     </None>
     <None Include="Specifications\License.txt">
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Specifications\GL2\signatures.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>
