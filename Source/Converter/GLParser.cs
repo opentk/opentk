@@ -121,6 +121,11 @@ namespace CHeaderToXML
                     }
                 }
             }
+
+            if (current != null)
+            {
+                yield return current;
+            }
         }
 
         string[] SplitWords(string line)
