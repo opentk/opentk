@@ -394,7 +394,7 @@ namespace Bind.Structures
                         // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
                         if (Enum.GLEnums.ContainsKey(category))
                         {
-                            QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, Enum.TranslateName(category));
+                            QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, EnumProcessor.TranslateEnumName(category));
                         }
                         else
                         {

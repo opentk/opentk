@@ -127,7 +127,7 @@ namespace Bind.Structures
         public string Category
         {
             get { return _category; }
-            set { _category = Enum.TranslateName(value); }
+            set { _category = EnumProcessor.TranslateEnumName(value); }
         }
 
         #endregion
