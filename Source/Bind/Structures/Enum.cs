@@ -113,6 +113,17 @@ namespace Bind.Structures
         public IDictionary<string, Constant> ConstantCollection
         {
             get { return _constant_collection; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("value");
+                
+                _constant_collection.Clear();
+                foreach (var item in value)
+                {
+                    _constant_collection.Add(item.Key, item.Value);
+                }
+            }
         }
 
         #endregion
@@ -120,6 +131,7 @@ namespace Bind.Structures
         #region TranslateName
 
         // Translate the constant's name to match .Net naming conventions
+        [Obsolete]
         public static string TranslateName(string name)
         {
             if (String.IsNullOrEmpty(name))
@@ -223,6 +235,7 @@ namespace Bind.Structures
                 Utilities.Merge(this, e);
         }
 
+        [Obsolete]
         internal void Translate(XPathDocument overrides)
         {
             if (overrides == null)
@@ -247,7 +260,7 @@ namespace Bind.Structures
                         }
                     }
 
-                    name = Enum.TranslateName(name);
+                    name = EnumProcessor.TranslateEnumName(name);
                     if (name != e.Name)
                     {
                         keys_to_update.Add(e.Name);
