@@ -140,10 +140,46 @@ namespace Bind.ES
 
                         foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
                         {
-                            Constant c = new Constant(param.GetAttribute("name", String.Empty), param.GetAttribute("value", String.Empty));
+                            Constant c = null;
+                            switch (param.Name)
+                            {
+                                case "token":
+                                    c = new Constant
+                                    {
+                                        Name = param.GetAttribute("name", String.Empty),
+                                        Value = param.GetAttribute("value", String.Empty)
+                                    };
+                                    break;
+
+                                case "use":
+                                    c = new Constant
+                                    {
+                                        Name = param.GetAttribute("token", String.Empty),
+                                        Reference = param.GetAttribute("enum", String.Empty),
+                                        Value = param.GetAttribute("token", String.Empty),
+                                    };
+                                    break;
+
+                                default:
+                                    throw new NotSupportedException();
+                            }
                             Utilities.Merge(all, c);
-                            try { e.ConstantCollection.Add(c.Name, c); }
-                            catch (ArgumentException ex) { Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message); }
+                            try
+                            {
+                                if (!e.ConstantCollection.ContainsKey(c.Name))
+                                {
+                                    e.ConstantCollection.Add(c.Name, c);
+                                }
+                                else if (e.ConstantCollection[c.Name].Value != c.Value)
+                                {
+                                    Console.WriteLine("[Warning] Conflicting token {0}.{1} with value {2} != {3}",
+                                        e.Name, c.Name, e.ConstantCollection[c.Name].Value, c.Value);
+                                }
+                            }
+                            catch (ArgumentException ex)
+                            {
+                                Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message);
+                            }
                         }
 
                         Utilities.Merge(enums, e);
@@ -152,8 +188,9 @@ namespace Bind.ES
             }
 
             Utilities.Merge(enums, all);
-            enums.Translate(overrides);
-            return enums;
+            return new EnumProcessor(overrides).Process(enums);
+            //enums.Translate(overrides);
+            //return enums;
         }
     }
 }
