@@ -731,25 +731,31 @@ namespace Bind.GL2
             sw.WriteLine();
         }
 
+        // Cache the last doc processor to avoid processing the same file again and again
+        static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
+        static Dictionary<string, string> docfiles;
         private static void WriteDocumentation(BindStreamWriter sw, Function f)
         {
-            try
+            if (docfiles == null)
             {
-                string path = Path.Combine(Settings.DocPath, Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml");
-                if (!File.Exists(path))
-                    path = Path.Combine(Settings.DocPath, Settings.FunctionPrefix +
-                        f.TrimmedName + ".xml");
-
-                if (!File.Exists(path))
-                    path = Path.Combine(Settings.DocPath, Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml");
-
-                if (File.Exists(path))
+                docfiles = new Dictionary<string, string>();
+                foreach (string file in Directory.GetFiles(Settings.DocPath))
                 {
-                    DocProcessor doc_processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
-                    sw.WriteLine(doc_processor.ProcessFile(path));
+                    docfiles.Add(Path.GetFileName(file), file);
                 }
             }
-            catch (FileNotFoundException)
+            try
+            {
+                string file = Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
+                if (!docfiles.ContainsKey(file))
+                    file = Settings.FunctionPrefix + f.TrimmedName + ".xml";
+                if (!docfiles.ContainsKey(file))
+                    file = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
+                
+                if (docfiles.ContainsKey(file))
+                    sw.WriteLine(processor.ProcessFile(docfiles[file]));
+            }
+            catch
             { }
         }
 
