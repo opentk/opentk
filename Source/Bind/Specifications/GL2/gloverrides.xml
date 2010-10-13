@@ -897,6 +897,7 @@
       <token name="SAMPLER_BUFFER" value="0x8DC2" />
       <token name="SAMPLER_CUBE" value="0x8B60" />
       <token name="SAMPLER_CUBE_SHADOW" value="0x8DC5" />
+      <use enum="DataType" token="UNSIGNED_INT" />
       <token name="UNSIGNED_INT_SAMPLER_1D" value="0x8DD1" />
       <token name="UNSIGNED_INT_SAMPLER_1D_ARRAY" value="0x8DD6" />
       <token name="UNSIGNED_INT_SAMPLER_2D" value="0x8DD2" />
