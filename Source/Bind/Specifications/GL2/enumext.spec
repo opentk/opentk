@@ -7393,6 +7393,7 @@ VertexAttribParameter enum:
 
 ActiveUniformType enum:
 	SAMPLER_CUBE_SHADOW				= 0x8DC5
+	use DataType UNSIGNED_INT
 	UNSIGNED_INT_VEC2				= 0x8DC6
 	UNSIGNED_INT_VEC3				= 0x8DC7
 	UNSIGNED_INT_VEC4				= 0x8DC8
