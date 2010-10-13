@@ -356,7 +356,7 @@ namespace Bind.Structures
             Enum @enum;
             string s;
 
-
+            category = EnumProcessor.TranslateEnumName(category);
 
             // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
             // Otherwise, try to find it in the aux enums list. If it exists in neither, it is not an enum.
