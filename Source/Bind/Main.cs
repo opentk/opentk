@@ -25,9 +25,6 @@ namespace Bind
         ES11,
         ES20,
         CL10,
-        [Obsolete] Wgl,
-        [Obsolete] Glx,
-        [Obsolete] Glu,
     }
 
     static class MainClass
@@ -157,18 +154,6 @@ namespace Bind
                         Generator = new CLGenerator("CL10", dirName);
                         break;
                     
-                    case GeneratorMode.Wgl:
-                        Generator = new Wgl.Generator();
-                        break;
-
-                    case GeneratorMode.Glu:
-                        Generator = new Glu.Generator();
-                        break;
-
-                    case GeneratorMode.Glx:
-                        Generator = new Glx.Generator();
-                        break;
-
                     case GeneratorMode.GL3:
                         throw new NotImplementedException(String.Format("Mode {0} not implemented.", mode));
 

@@ -199,15 +199,6 @@
     <Compile Include="ES\ESGenerator.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Glx\Generator.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Glu\Generator.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Wgl\Generator.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
     </None>
