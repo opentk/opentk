@@ -742,9 +742,38 @@ namespace Bind.GL2
                     file = Settings.FunctionPrefix + f.TrimmedName + ".xml";
                 if (!docfiles.ContainsKey(file))
                     file = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
-                
+
+                string doc = null;
                 if (docfiles.ContainsKey(file))
-                    sw.WriteLine(processor.ProcessFile(docfiles[file]));
+                {
+                    doc = processor.ProcessFile(docfiles[file]);
+                }
+                if (doc == null)
+                {
+                    doc = "/// <summary></summary>";
+                }
+
+                int summary_start = doc.IndexOf("<summary>") + "<summary>".Length;
+                string warning = "[deprecated: v{0}]";
+                string category = "[requires: {0}]";
+                if (f.Deprecated)
+                {
+                    warning = String.Format(warning, f.DeprecatedVersion);
+                    doc = doc.Insert(summary_start, warning);
+                }
+
+                if (f.Extension != "Core" && !String.IsNullOrEmpty(f.Category))
+                {
+                    category = String.Format(category, f.Category);
+                    doc = doc.Insert(summary_start, category);
+                }
+                else if (!String.IsNullOrEmpty(f.Version))
+                {
+                    category = String.Format(category, "v" + f.Version);
+                    doc = doc.Insert(summary_start, category);
+                }
+                
+                sw.WriteLine(doc);
             }
             catch
             { }
