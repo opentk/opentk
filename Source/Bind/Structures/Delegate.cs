@@ -23,7 +23,6 @@ namespace Bind.Structures
     {
         //internal static DelegateCollection Delegates;
 
-        private static bool delegatesLoaded;
         bool? cls_compliance_overriden;
 
         protected static Regex endings = new Regex(@"((((d|f|fi)|u?[isb])_?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
@@ -34,34 +33,6 @@ namespace Bind.Structures
         // The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior. 
         internal static Regex endingsAddV = new Regex("^0", RegexOptions.Compiled);
 
-        
-        #region internal static void Initialize(string glSpec, string glSpecExt)
-
-        internal static DelegateCollection Initialize(string glSpec, string glSpecExt)
-        {
-                DelegateCollection delegates = new DelegateCollection();
-                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, glSpec))
-                {
-                    delegates = MainClass.Generator.ReadDelegates(sr);
-                }
-
-                if (!String.IsNullOrEmpty(glSpecExt))
-                {
-                    using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, glSpecExt))
-                    {
-                        foreach (Delegate d in MainClass.Generator.ReadDelegates(sr).Values)
-                        {
-                            Utilities.Merge(delegates, d);
-                        }
-                    }
-                }
-                delegatesLoaded = true;
-
-            return delegates;
-        }
-
-        #endregion
-        
         #region --- Constructors ---
 
         public Delegate()

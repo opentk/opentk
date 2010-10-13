@@ -16,7 +16,6 @@ namespace Bind.Structures
         #region Fields
 
         Delegate wrapped_delegate;
-        int index;
 
         #endregion
         
