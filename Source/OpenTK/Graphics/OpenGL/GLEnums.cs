@@ -77,6 +77,7 @@ namespace OpenTK.Graphics.OpenGL
     public enum ActiveUniformType : int
     {
         Int = ((int)0x1404),
+        UnsignedInt = ((int)0x1405),
         Float = ((int)0x1406),
         FloatVec2 = ((int)0x8B50),
         FloatVec3 = ((int)0x8B51),
