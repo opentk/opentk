@@ -67,6 +67,8 @@ namespace Bind.ES
                             d.Name = name;
                             d.Version = node.GetAttribute("version", String.Empty);
                             d.Category = node.GetAttribute("category", String.Empty);
+                            d.DeprecatedVersion = node.GetAttribute("deprecated", String.Empty);
+                            d.Deprecated = !String.IsNullOrEmpty(d.DeprecatedVersion);
                         }
 
                         foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
@@ -94,7 +96,7 @@ namespace Bind.ES
                                     break;
                             }
                         }
-                        //d.Translate(overrides);
+
                         delegates.Add(d);
                     }
                 }
