@@ -204,15 +204,15 @@ namespace Bind.Structures
 
         #endregion
 
-        // Returns true if parameter is an enum.
-        public bool IsEnum
-        {
-            get
-            {
-                return Enum.GLEnums.ContainsKey(CurrentType) ||
-                    Enum.AuxEnums.ContainsKey(CurrentType);
-            }
-        }
+        //// Returns true if parameter is an enum.
+        //public bool IsEnum
+        //{
+        //    get
+        //    {
+        //        return Enum.GLEnums.ContainsKey(CurrentType) ||
+        //            Enum.AuxEnums.ContainsKey(CurrentType);
+        //    }
+        //}
 
         #region IndirectionLevel
 
@@ -351,32 +351,34 @@ namespace Bind.Structures
 
         #region public virtual void Translate(XPathNavigator overrides, string category)
 
-        public virtual void Translate(XPathNavigator overrides, string category)
+        public virtual void Translate(XPathNavigator overrides, string category, EnumCollection enums)
         {
             Enum @enum;
             string s;
 
+
+
             // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
             // Otherwise, try to find it in the aux enums list. If it exists in neither, it is not an enum.
             // Special case for Boolean - it is an enum, but it is dumb to use that instead of the 'bool' type.
-            bool normal = false;
-            bool aux = false;
-            normal = Enum.GLEnums.TryGetValue(CurrentType, out @enum);
-            if (!normal)
-                aux = Enum.AuxEnums != null && Enum.AuxEnums.TryGetValue(CurrentType, out @enum);
+            bool normal = enums.TryGetValue(CurrentType, out @enum);
+            //bool aux = enums.TryGetValue(EnumProcessor.TranslateEnumName(CurrentType), out @enum);
 
             // Translate enum types
-            if ((normal || aux) && @enum.Name != "GLenum" && @enum.Name != "Boolean")
+            if ((normal /*|| aux*/) && @enum.Name != "GLenum" && @enum.Name != "Boolean")
             {
                 if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
+                {
                     QualifiedType = "int";
+                }
                 else
                 {
+                    //if (aux)
+                    //    CurrentType = EnumProcessor.TranslateEnumName(CurrentType);
+
 #warning "Unecessary code"
                     if (normal)
                         QualifiedType = CurrentType.Insert(0, String.Format("{0}.", Settings.EnumsOutput));
-                    else if (aux)
-                        QualifiedType = CurrentType.Insert(0, String.Format("{0}.", Settings.EnumsAuxOutput));
                 }
             }
             else if (GLTypes.TryGetValue(CurrentType, out s))
@@ -392,7 +394,7 @@ namespace Bind.Structures
                     else
                     {
                         // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
-                        if (Enum.GLEnums.ContainsKey(category))
+                        if (enums.ContainsKey(category))
                         {
                             QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, EnumProcessor.TranslateEnumName(category));
                         }
@@ -410,30 +412,7 @@ namespace Bind.Structures
                         case "string": QualifiedType = "String"; break;
                     }
 
-#warning "Stale code"
-                    // This is not enum, default translation:
-                    if (CurrentType == "PIXELFORMATDESCRIPTOR" || CurrentType == "LAYERPLANEDESCRIPTOR" ||
-                        CurrentType == "GLYPHMETRICSFLOAT")
-                    {
-                        if (Settings.Compatibility == Settings.Legacy.Tao)
-                            CurrentType = CurrentType.Insert(0, "Gdi.");
-                        else
-                        {
-                            if (CurrentType == "PIXELFORMATDESCRIPTOR")
-                                CurrentType = "PixelFormatDescriptor";
-                            else if (CurrentType == "LAYERPLANEDESCRIPTOR")
-                                CurrentType = "LayerPlaneDescriptor";
-                            else if (CurrentType == "GLYPHMETRICSFLOAT")
-                                CurrentType = "GlyphMetricsFloat";
-                        }
-                    }
-                    else if (CurrentType == "XVisualInfo")
-                    {
-                        //p.Pointer = false;
-                        //p.Reference = true;
-                    }
-                    else
-                        QualifiedType = s;
+                    QualifiedType = s;
                 }
             }
 
@@ -471,7 +450,7 @@ namespace Bind.Structures
             // guarantee a stable order between program executions.
             int result = this.CurrentType.CompareTo(other.CurrentType);
             if (result == 0)
-                result = Pointer.CompareTo(other.Pointer);
+                result = Pointer.CompareTo(other.Pointer); // Must come after array/ref, see issue [#1098]
             if (result == 0)
                 result = Reference.CompareTo(other.Reference);
             if (result == 0)

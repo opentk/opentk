@@ -65,22 +65,16 @@ namespace Bind.GL2
 
         public virtual void Process()
         {
-            // Matches functions that cannot have their trailing 'v' trimmed for CLS-Compliance reasons.
-            // Built through trial and error :)
-            //Function.endingsAddV =
-            //    new Regex(@"(Coord1|Attrib(I?)1(u?)|Stream1|Uniform2(u?)|(Point|Convolution|Transform|Sprite|List|Combiner|Tex)Parameter|Fog(Coord)?.*|VertexWeight|(Fragment)?Light(Model)?|Material|ReplacementCodeu?b?|Tex(Gen|Env)|Indexu?|TextureParameter.v)",
-            //    RegexOptions.Compiled);
+            var overrides  = new XPathDocument(Path.Combine(Settings.InputPath, functionOverridesFile));
 
             Type.Initialize(glTypemap, csTypemap);
-            Enum.Initialize(enumSpec, enumSpecExt);
-            Enum.GLEnums.Translate(new XPathDocument(Path.Combine(Settings.InputPath, functionOverridesFile)));
-            Function.Initialize();
-            Delegate.Initialize(glSpec, glSpecExt);
+            var enums = ReadEnums(new StreamReader(Path.Combine(Settings.InputPath, enumSpec)));
+            var delegates = ReadDelegates(new StreamReader(Path.Combine(Settings.InputPath, glSpec)));
 
-            WriteBindings(
-                Delegate.Delegates,
-                Function.Wrappers,
-                Enum.GLEnums);
+            enums = new EnumProcessor(overrides).Process(enums);
+            var wrappers = new FuncProcessor(overrides).Process(delegates, enums);
+
+            WriteBindings(delegates, wrappers, enums);
         }
 
         #endregion
@@ -170,8 +164,6 @@ namespace Bind.GL2
                         }
                     }
                     while (!specFile.EndOfStream);
-
-                    d.Translate(function_overrides);
 
                     delegates.Add(d);
                 }
@@ -454,7 +446,7 @@ namespace Bind.GL2
 
         #region void WriteBindings
 
-        public void WriteBindings(DelegateCollection delegates, FunctionCollection functions, EnumCollection enums)
+        public void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
         {
             Console.WriteLine("Writing bindings to {0}", Settings.OutputPath);
             if (!Directory.Exists(Settings.OutputPath))
@@ -486,7 +478,7 @@ namespace Bind.GL2
                 sw.WriteLine("{");
 
                 sw.Indent();
-                WriteEnums(sw, Enum.GLEnums);
+                WriteEnums(sw, enums);
                 sw.Unindent();
 
                 if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
@@ -511,7 +503,7 @@ namespace Bind.GL2
                 sw.WriteLine("using System.Runtime.InteropServices;");
 
                 sw.WriteLine("#pragma warning disable 0649");
-                WriteDelegates(sw, Delegate.Delegates);
+                WriteDelegates(sw, delegates);
 
                 sw.Unindent();
                 sw.WriteLine("}");
@@ -529,7 +521,7 @@ namespace Bind.GL2
                 sw.WriteLine("using System.Text;");
                 sw.WriteLine("using System.Runtime.InteropServices;");
 
-                WriteImports(sw, Delegate.Delegates);
+                WriteImports(sw, delegates);
 
                 sw.Unindent();
                 sw.WriteLine("}");
@@ -547,7 +539,7 @@ namespace Bind.GL2
                 sw.WriteLine("using System.Text;");
                 sw.WriteLine("using System.Runtime.InteropServices;");
 
-                WriteWrappers(sw, Function.Wrappers, Type.CSTypes);
+                WriteWrappers(sw, wrappers, Type.CSTypes);
 
                 sw.Unindent();
                 sw.WriteLine("}");

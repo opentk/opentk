@@ -83,6 +83,8 @@ namespace Bind.ES
                                     p.Name = param.GetAttribute("name", String.Empty);
 
                                     string element_count = param.GetAttribute("elementcount", String.Empty);
+                                    if (String.IsNullOrEmpty(element_count))
+                                        element_count = param.GetAttribute("count", String.Empty);
                                     if (!String.IsNullOrEmpty(element_count))
                                         p.ElementCount = Int32.Parse(element_count);
 
@@ -92,7 +94,7 @@ namespace Bind.ES
                                     break;
                             }
                         }
-                        d.Translate(overrides);
+                        //d.Translate(overrides);
                         delegates.Add(d);
                     }
                 }
@@ -188,9 +190,7 @@ namespace Bind.ES
             }
 
             Utilities.Merge(enums, all);
-            return new EnumProcessor(overrides).Process(enums);
-            //enums.Translate(overrides);
-            //return enums;
+            return enums;
         }
     }
 }

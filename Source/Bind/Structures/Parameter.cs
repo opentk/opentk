@@ -281,11 +281,11 @@ namespace Bind.Structures
 
         #endregion
 
-        #region override public void Translate(XPathNavigator overrides, string category)
+        #region Translate()
 
-        override public void Translate(XPathNavigator overrides, string category)
+        override public void Translate(XPathNavigator overrides, string category, EnumCollection enums)
         {
-            base.Translate(overrides, category);
+            base.Translate(overrides, category, enums);
 
             // Find out the necessary wrapper types.
             if (Pointer != 0)/* || CurrentType == "IntPtr")*/

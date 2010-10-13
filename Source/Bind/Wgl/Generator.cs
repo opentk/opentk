@@ -4,6 +4,7 @@
  */
 #endregion
 
+using System;
 using System.Diagnostics;
 using Bind.Structures;
 
@@ -47,19 +48,20 @@ namespace Bind.Wgl
 
         public override void Process()
         {
-            Type.Initialize(glTypemap, csTypemap);
-            Enum.Initialize(enumSpec, enumSpecExt);
-            Function.Initialize();
-            Delegate.Initialize(glSpec, glSpecExt);
+            throw new NotSupportedException();
+            //Type.Initialize(glTypemap, csTypemap);
+            //Enum.Initialize(enumSpec, enumSpecExt);
+            //Function.Initialize();
+            //Delegate.Initialize(glSpec, glSpecExt);
             
-            // Process enums and delegates - create wrappers.
-            Trace.WriteLine("Processing specs, please wait...");
-            //this.Translate();
+            //// Process enums and delegates - create wrappers.
+            //Trace.WriteLine("Processing specs, please wait...");
+            ////this.Translate();
 
-            WriteBindings(
-            	Delegate.Delegates,
-            	Function.Wrappers,
-            	Enum.GLEnums);
+            //WriteBindings(
+            //    Delegate.Delegates,
+            //    Function.Wrappers,
+            //    Enum.GLEnums);
         }
     }
 }
