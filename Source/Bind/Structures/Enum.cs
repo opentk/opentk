@@ -19,7 +19,6 @@ namespace Bind.Structures
     {
         static StringBuilder translator = new StringBuilder();
         string _name, _type;
-        static bool enumsLoaded;
 
         // Returns true if the enum contains a collection of flags, i.e. 1, 2, 4, 8, ...
         public bool IsFlagCollection
