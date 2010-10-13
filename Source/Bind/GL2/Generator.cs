@@ -723,7 +723,6 @@ namespace Bind.GL2
             sw.WriteLine();
         }
 
-        // Cache the last doc processor to avoid processing the same file again and again
         static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
         static Dictionary<string, string> docfiles;
         private static void WriteDocumentation(BindStreamWriter sw, Function f)
