@@ -36,7 +36,9 @@ namespace CHeaderToXML
     {
         public bool Equals (XNode a, XNode b)
         {
-            return ((XElement) a).Attribute("name").Equals(((XElement) b).Attribute("name"));
+            var a_attr = ((XElement)a).Attribute("name") ?? ((XElement)a).Attribute("token");
+            var b_attr = ((XElement)b).Attribute("name") ?? ((XElement)b).Attribute("token");
+            return a_attr.Value == b_attr.Value;
         }
 
         public int GetHashCode (XNode a)
@@ -44,11 +46,11 @@ namespace CHeaderToXML
             XElement e = (XElement)a;
             if (e.Name == "enum" || e.Name == "token")
             {
-                return ((XElement)a).Attribute("name").GetHashCode();
+                return ((XElement)a).Attribute("name").Value.GetHashCode();
             }
             else if (e.Name == "use")
             {
-                return ((XElement)a).Attribute("token").GetHashCode();
+                return ((XElement)a).Attribute("token").Value.GetHashCode();
             }
             else
             {
@@ -112,7 +114,7 @@ namespace CHeaderToXML
                     type == HeaderType.Spec ? new GLParser { Prefix = prefix, Version = version } :
                     (Parser)null;
 
-                var sigs = headers.Select(h => parser.Parse(h));
+                var sigs = headers.Select(h => parser.Parse(h)).ToList();
 
                 // Merge any duplicate enum entries (in case an enum is declared
                 // in multiple files with different entries in each file).
