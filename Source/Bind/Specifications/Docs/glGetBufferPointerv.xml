@@ -91,7 +91,7 @@
             <constant>GL_INVALID_OPERATION</constant> is generated if the reserved buffer object name 0 is bound to <parameter>target</parameter>.
         </para>
         <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetBufferParameteriv</function>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetBufferPointerv</function>
             is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
             and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
         </para>
