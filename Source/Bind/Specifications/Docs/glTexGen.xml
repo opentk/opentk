@@ -525,7 +525,7 @@
             that can produce dynamic contour lines on moving objects.
         </para>
         <para>
-            If <parameter>pname</parameter> is <constant>GL_SPHERE_MAP</constant> and <parameter>coord</parameter> is either
+            If the texture generation function is <constant>GL_SPHERE_MAP</constant> and <parameter>coord</parameter> is either
             <constant>GL_S</constant> or
             <constant>GL_T</constant>,
             <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
@@ -717,7 +717,7 @@
             plane equations are (0, 0, 0, 0).
         </para>
         <para>
-            When the <code>ARB_multitexture</code> extension is supported, <function>glTexGen</function> set the
+            When the <code>ARB_multitexture</code> extension is supported, <function>glTexGen</function> sets the
             texture generation parameters for the currently active texture unit,
             selected with <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>.
         </para>
