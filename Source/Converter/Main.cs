@@ -73,6 +73,7 @@ namespace CHeaderToXML
                 bool showHelp = false;
                 string prefix = "gl";
                 string version = null;
+                string path = null;
                 HeaderType type = HeaderType.Header;
                 OptionSet opts = new OptionSet
                 {
@@ -83,6 +84,8 @@ namespace CHeaderToXML
                         v => version = v },
                     { "t:", "The {TYPE} of the headers being parsed.",
                         v => type = (HeaderType)Enum.Parse(typeof(HeaderType), v, true) },
+                    { "o:", "The {PATH} to the output file.",
+                        v => path = v },
                     { "?|h|help", "Show this message and exit.",
                         v => showHelp = v != null },
                 };
@@ -119,9 +122,19 @@ namespace CHeaderToXML
                 var settings = new XmlWriterSettings();
                 settings.Indent = true;
                 settings.Encoding = System.Text.Encoding.UTF8;
-                Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-                using (var writer = XmlWriter.Create(Console.Out, settings))
+                TextWriter out_stream = null;
+                if (path == null)
+                {
+                    out_stream = Console.Out;
+                    Console.OutputEncoding = System.Text.Encoding.UTF8;
+                }
+                else
+                {
+                    out_stream = new StreamWriter(path, false);
+                }
+
+                using (var writer = XmlWriter.Create(out_stream, settings))
                 {
                     new XElement("signatures",
                         entries.Values.OrderBy(s => s.Attribute("name").Value),  // only enums
@@ -132,6 +145,8 @@ namespace CHeaderToXML
                     writer.Flush();
                     writer.Close();
                 }
+
+                out_stream.Dispose();
             }
             finally
             {
