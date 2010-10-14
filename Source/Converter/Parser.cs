@@ -23,6 +23,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Xml.Linq;
 
 namespace CHeaderToXML
@@ -41,7 +42,25 @@ namespace CHeaderToXML
 
         public IEnumerable<XElement> Parse(string path)
         {
-            return Parse(File.ReadAllLines(path));
+            string[] contents = null;
+            if (path.StartsWith("http://") || path.StartsWith("https://"))
+            {
+                // Download from the specified url into a temporary file
+                using (var wb = new WebClient())
+                {
+                    string filename = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
+                    wb.DownloadFile(path, filename);
+                    contents = File.ReadAllLines(filename);
+                    File.Delete(filename);
+                }
+            }
+            else
+            {
+                // The file is on disk, just read it directly
+                contents = File.ReadAllLines(path);
+            }
+
+            return Parse(contents);
         }
     }
 }
