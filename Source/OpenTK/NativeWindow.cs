@@ -49,6 +49,7 @@ namespace OpenTK
         private readonly INativeWindow implementation;
 
         private bool disposed, events;
+        private bool cursor_visible = true;
 
         #endregion
 
@@ -536,6 +537,23 @@ namespace OpenTK
             {
                 EnsureUndisposed();
                 implementation.Y = value;
+            }
+        }
+
+        #endregion
+
+        #region CursorVisible
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the mouse cursor is visible.
+        /// </summary>
+        public bool CursorVisible
+        {
+            get { return cursor_visible; }
+            set
+            {
+                cursor_visible = value;
+                implementation.CursorVisible = value;
             }
         }
 

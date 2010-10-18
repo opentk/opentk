@@ -837,6 +837,16 @@ namespace OpenTK.Platform.Windows
         public bool Exists { get { return exists; } }
 
         #endregion
+        
+        #region CursorVisible
+        
+        public bool CursorVisible
+        {
+            get { return true; }
+            set { }
+        }
+        
+        #endregion
 
         #region Close
 
