@@ -843,7 +843,7 @@ namespace OpenTK.Platform.Windows
         public bool CursorVisible
         {
             get { return true; }
-            set { }
+            set { Functions.ShowCursor(value); }
         }
         
         #endregion
