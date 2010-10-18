@@ -925,6 +925,12 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
+        public bool CursorVisible
+        {
+            get { return true; }
+            set { }
+        }
+
         public void Close()
         {
 			CancelEventArgs e = new CancelEventArgs();

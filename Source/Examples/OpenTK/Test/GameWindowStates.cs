@@ -23,6 +23,7 @@ namespace Examples.Tests
         bool mouse_in_window = false;
         bool viewport_changed = true;
         bool refresh_text = true;
+        bool move_window = false;
 
         public GameWindowStates()
             : base(800, 600)
@@ -38,7 +39,8 @@ namespace Examples.Tests
             Resize += delegate { refresh_text = true; };
             WindowBorderChanged += delegate { refresh_text = true; };
             WindowStateChanged += delegate { refresh_text = true; };
-            Mouse.Move += delegate { refresh_text = true; };
+            Mouse.Move += MouseMoveHandler;
+            Mouse.ButtonDown += MouseButtonHandler;
         }
 
         void KeyDownHandler(object sender, KeyboardKeyEventArgs e)
@@ -68,7 +70,33 @@ namespace Examples.Tests
                 case Key.Minus: Size -= new Size(16, 16); break;
             }
         }
-        
+
+        void MouseMoveHandler(object sender, MouseMoveEventArgs e)
+        {
+            refresh_text = true;
+
+            if (move_window)
+            {
+                Location = new Point(X + e.XDelta, Y + e.YDelta);
+            }
+        }
+
+        void MouseButtonHandler(object sender, MouseButtonEventArgs e)
+        {
+            refresh_text = true;
+
+            if (e.IsPressed)
+            {
+                CursorVisible = false;
+                move_window = true;
+            }
+            else
+            {
+                CursorVisible = true;
+                move_window = false;
+            }
+        }
+
         static int Clamp(int val, int min, int max)
         {
             return val > max ? max : val < min ? min : val;
@@ -97,6 +125,7 @@ namespace Examples.Tests
                     DrawString(gfx, String.Format("Focused: {0}.", this.Focused), line++);
                     DrawString(gfx, String.Format("Mouse {0} window.", mouse_in_window ? "inside" : "outside of"), line++);
                     DrawString(gfx, String.Format("Mouse position: {0}", new Vector3(Mouse.X, Mouse.Y, Mouse.Wheel)), line++);
+                    DrawString(gfx, String.Format("Mouse visible: {0}", CursorVisible), line++);
                     DrawString(gfx, String.Format("Window.Bounds: {0}", Bounds), line++);
                     DrawString(gfx, String.Format("Window.Location: {0}, Size: {1}", Location, Size), line++);
                     DrawString(gfx, String.Format("Window.{{X={0}, Y={1}, Width={2}, Height={3}}}", X, Y, Width, Height), line++);
