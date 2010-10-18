@@ -1300,6 +1300,38 @@ namespace OpenTK.Platform.X11
         
         #endregion
 
+        public bool CursorVisible
+        {
+            get { return true; }
+            set
+            {
+                if (value)
+                {
+                    using (new XLock(window.Display))
+                    {
+                        Functions.XUndefineCursor(window.Display, window.WindowHandle);
+                    }
+                }
+                else
+                {
+                    using (new XLock(window.Display))
+                    {
+                        XColor black, dummy;
+                        IntPtr cmap = Functions.XDefaultColormap(window.Display, window.Screen);
+                        Functions.XAllocNamedColor(window.Display, cmap, "black", out black, out dummy);
+                        IntPtr bmp_empty = Functions.XCreateBitmapFromData(window.Display,
+                            window.WindowHandle, new byte[,] { { 0 } });
+                        IntPtr cursor_empty = Functions.XCreatePixmapCursor(window.Display,
+                        bmp_empty, bmp_empty, ref black, ref black, 0, 0);
+
+                        Functions.XDefineCursor(window.Display, window.WindowHandle, cursor_empty);
+
+                        Functions.XFreeCursor(window.Display, cursor_empty);
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region --- INativeGLWindow Members ---

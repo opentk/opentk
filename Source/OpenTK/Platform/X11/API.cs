@@ -1562,6 +1562,26 @@ XF86VidModeGetGammaRampSize(
         #endregion
 
         #endregion
+
+        public static Pixmap XCreateBitmapFromData(Display display, Window d, byte[,] data)
+        {
+            if (data == null)
+                throw new ArgumentNullException("data");
+
+            unsafe
+            {
+                fixed (byte* pdata = data)
+                {
+                    return XCreateBitmapFromData(display, d, pdata, data.GetLength(0), data.GetLength(1));
+                }
+            }
+        }
+
+        [DllImport(X11Library)]
+        unsafe public static extern Pixmap XCreateBitmapFromData(Display display, Window d, byte* data, int width, int height);
+
+        [DllImport("libX11", EntryPoint = "XAllocColor")]
+        public static extern Status XAllocNamedColor(Display display, Colormap colormap, string color_name, out XColor screen_def_return, out XColor exact_def_return);
     }
     /*
     [StructLayout(LayoutKind.Sequential)]
