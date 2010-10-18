@@ -41,6 +41,7 @@ namespace Examples.Tests
             WindowStateChanged += delegate { refresh_text = true; };
             Mouse.Move += MouseMoveHandler;
             Mouse.ButtonDown += MouseButtonHandler;
+            Mouse.ButtonUp += MouseButtonHandler;
         }
 
         void KeyDownHandler(object sender, KeyboardKeyEventArgs e)
@@ -85,15 +86,18 @@ namespace Examples.Tests
         {
             refresh_text = true;
 
-            if (e.IsPressed)
+            if (e.Button == MouseButton.Left)
             {
-                CursorVisible = false;
-                move_window = true;
-            }
-            else
-            {
-                CursorVisible = true;
-                move_window = false;
+                if (e.IsPressed)
+                {
+                    CursorVisible = false;
+                    move_window = true;
+                }
+                else
+                {
+                    CursorVisible = true;
+                    move_window = false;
+                }
             }
         }
 
