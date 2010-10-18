@@ -694,8 +694,6 @@ namespace OpenTK.Platform.MacOS
 
         public Point PointToClient(Point point)
         {
-            IntPtr handle = window.WindowRef;
-
             Rect r = Carbon.API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
             Debug.Print("Rect: {0}", r);
 
@@ -703,8 +701,6 @@ namespace OpenTK.Platform.MacOS
         }
         public Point PointToScreen(Point point)
         {
-			IntPtr handle = window.WindowRef;
-
 			Rect r = Carbon.API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
 			Debug.Print("Rect: {0}", r);
 
