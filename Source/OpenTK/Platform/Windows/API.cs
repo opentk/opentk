@@ -957,6 +957,9 @@ namespace OpenTK.Platform.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         public static extern bool ClipCursor(ref RECT rcClip);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern bool ClipCursor(IntPtr rcClip);
+
         #region Async input
 
         #region GetCursorPos

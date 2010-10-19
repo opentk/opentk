@@ -93,6 +93,8 @@ namespace OpenTK.Platform.Windows
 
         KeyPressEventArgs key_press = new KeyPressEventArgs((char)0);
 
+        int cursor_visible_count = 0;
+
         #endregion
 
         #region Contructors
@@ -842,8 +844,27 @@ namespace OpenTK.Platform.Windows
         
         public bool CursorVisible
         {
-            get { return true; }
-            set { Functions.ShowCursor(value); }
+            get { return cursor_visible_count > 0; }
+            set
+            {
+                if (value && cursor_visible_count < 0)
+                {
+                    cursor_visible_count = Functions.ShowCursor(true);
+
+                    if (!Functions.ClipCursor(IntPtr.Zero))
+                        Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
+                            Marshal.GetLastWin32Error()));
+                }
+                else if (!value && cursor_visible_count >= 0)
+                {
+                    cursor_visible_count = Functions.ShowCursor(false);
+
+                    Win32Rectangle rect = Win32Rectangle.From(ClientRectangle);
+                    if (!Functions.ClipCursor(ref rect))
+                        Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
+                            Marshal.GetLastWin32Error()));
+                }
+            }
         }
         
         #endregion

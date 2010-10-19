@@ -48,7 +48,12 @@ namespace Examples.Tests
         {
             switch (e.Key)
             {
-                case OpenTK.Input.Key.Escape: this.Exit(); break;
+                case OpenTK.Input.Key.Escape:
+                    if (!CursorVisible)
+                        CursorVisible = true;
+                    else
+                        Exit();
+                    break;
 
                 case Key.Number1: WindowState = WindowState.Normal; break;
                 case Key.Number2: WindowState = WindowState.Maximized; break;
@@ -86,18 +91,9 @@ namespace Examples.Tests
         {
             refresh_text = true;
 
-            if (e.Button == MouseButton.Left)
+            if (e.Button == MouseButton.Left && e.IsPressed)
             {
-                if (e.IsPressed)
-                {
-                    CursorVisible = false;
-                    move_window = true;
-                }
-                else
-                {
-                    CursorVisible = true;
-                    move_window = false;
-                }
+                CursorVisible = false;
             }
         }
 
