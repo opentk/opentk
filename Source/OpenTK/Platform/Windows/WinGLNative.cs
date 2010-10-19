@@ -849,7 +849,11 @@ namespace OpenTK.Platform.Windows
             {
                 if (value && cursor_visible_count < 0)
                 {
-                    cursor_visible_count = Functions.ShowCursor(true);
+                    do
+                    {
+                        cursor_visible_count = Functions.ShowCursor(true);
+                    }
+                    while (cursor_visible_count < 0);
 
                     if (!Functions.ClipCursor(IntPtr.Zero))
                         Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
@@ -857,9 +861,13 @@ namespace OpenTK.Platform.Windows
                 }
                 else if (!value && cursor_visible_count >= 0)
                 {
-                    cursor_visible_count = Functions.ShowCursor(false);
+                    do
+                    {
+                        cursor_visible_count = Functions.ShowCursor(false);
+                    }
+                    while (cursor_visible_count >= 0);
 
-                    Win32Rectangle rect = Win32Rectangle.From(ClientRectangle);
+                    Win32Rectangle rect = Win32Rectangle.From(Bounds);
                     if (!Functions.ClipCursor(ref rect))
                         Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
                             Marshal.GetLastWin32Error()));
