@@ -119,6 +119,11 @@ namespace OpenTK.Platform
             return default_implementation.CreateKeyboardDriver();
         }
 
+        public OpenTK.Input.IMouseDriver CreateMouseDriver()
+        {
+            return default_implementation.CreateMouseDriver();
+        }
+
         class UnsupportedPlatform : IPlatformFactory
         {
             #region Fields
@@ -165,6 +170,11 @@ namespace OpenTK.Platform
             }
 
             public OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
+            {
+                throw new PlatformNotSupportedException(error_string);
+            }
+
+            public OpenTK.Input.IMouseDriver CreateMouseDriver()
             {
                 throw new PlatformNotSupportedException(error_string);
             }

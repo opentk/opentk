@@ -48,5 +48,7 @@ namespace OpenTK.Platform
         IGraphicsMode CreateGraphicsMode();
         
         OpenTK.Input.IKeyboardDriver CreateKeyboardDriver();
+
+        OpenTK.Input.IMouseDriver CreateMouseDriver();
     }
 }
