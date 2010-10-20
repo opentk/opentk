@@ -238,6 +238,16 @@ namespace OpenTK.Platform.X11
             get { return (IList<MouseDevice>)dummy_mice_list; } //return mouseDriver.Mouse;
         }
 
+        MouseState IMouseDriver.GetState()
+        {
+            throw new NotImplementedException();
+        }
+
+        MouseState IMouseDriver.GetState(int index)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region public IList<JoystickDevice> Joysticks

@@ -74,7 +74,12 @@ namespace OpenTK.Platform.MacOS
         {
             throw new NotImplementedException();
         }
-        
+
+        public virtual OpenTK.Input.IMouseDriver CreateMouseDriver()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

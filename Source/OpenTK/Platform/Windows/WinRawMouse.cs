@@ -52,6 +52,16 @@ namespace OpenTK.Platform.Windows
             get { return mice; }
         }
 
+        public MouseState GetState()
+        {
+            throw new NotImplementedException();
+        }
+
+        public MouseState GetState(int index)
+        {
+            throw new NotImplementedException();
+        }
+
         #region public int RegisterDevices()
 
         public int RegisterDevices()

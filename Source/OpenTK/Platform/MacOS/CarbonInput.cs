@@ -54,6 +54,16 @@ namespace OpenTK.Platform.MacOS
             get { return dummy_mice_list; }
         }
 
+        MouseState IMouseDriver.GetState()
+        {
+            throw new NotImplementedException();
+        }
+
+        MouseState IMouseDriver.GetState(int index)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region IJoystickDriver Members
