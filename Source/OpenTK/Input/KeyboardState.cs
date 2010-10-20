@@ -38,13 +38,10 @@ namespace OpenTK.Input
     {
         #region Fields
 
-        const int NumKeys = ((int)Key.LastKey + 16) / 32;
+        // Allocate enough ints to store all keyboard keys
+        const int NumInts = ((int)Key.LastKey + 31) / 32;
         // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
-        unsafe fixed int Keys[NumKeys];
-
-        #endregion
-
-        #region Constructors
+        unsafe fixed int Keys[NumInts];
 
         #endregion
 
@@ -126,9 +123,9 @@ namespace OpenTK.Input
             unsafe
             {
                 fixed (int* k1 = Keys)
-                fixed (int* k2 = Keys)
+                fixed (int* k2 = other.Keys)
                 {
-                    for (int i = 0; equal && i < NumKeys; i++)
+                    for (int i = 0; equal && i < NumInts; i++)
                         equal &= *(k1 + i) == *(k2 + i);
                 }
             }
