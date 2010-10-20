@@ -844,7 +844,7 @@ namespace OpenTK.Platform.Windows
         
         public bool CursorVisible
         {
-            get { return cursor_visible_count > 0; }
+            get { return cursor_visible_count > 0; } // Not used
             set
             {
                 if (value && cursor_visible_count < 0)
@@ -1184,6 +1184,16 @@ namespace OpenTK.Platform.Windows
         public IList<KeyboardDevice> Keyboard
         {
             get { return keyboards; }
+        }
+
+        public KeyboardState GetState()
+        {
+            throw new NotImplementedException();
+        }
+
+        public KeyboardState GetState(int index)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

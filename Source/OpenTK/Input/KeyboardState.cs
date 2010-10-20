@@ -26,7 +26,7 @@
  #endregion
 
 using System;
-using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Text;
 
 namespace OpenTK.Input
@@ -39,9 +39,8 @@ namespace OpenTK.Input
         #region Fields
 
         const int NumKeys = ((int)Key.LastKey + 16) / 32;
-        // Todo: The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
-        // Need to add a workaround using either ExplicitLayout or another trick.
-        //unsafe fixed int Keys[NumKeys];
+        // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
+        unsafe fixed int Keys[NumKeys];
 
         #endregion
 
@@ -57,7 +56,7 @@ namespace OpenTK.Input
         /// <param name="key">The <see cref="OpenTK.Input.Key"/> to check.</param>
         public bool IsKeyDown(Key key)
         {
-            return ReadBit((int)key) != 0;
+            return ReadBit((int)key);
         }
 
         /// <summary>
@@ -66,24 +65,50 @@ namespace OpenTK.Input
         /// <param name="key">The <see cref="OpenTK.Input.Key"/> to check.</param>
         public bool IsKeyUp(Key key)
         {
-            return ReadBit((int)key) == 0;
+            return !ReadBit((int)key);
         }
 
         #endregion
 
         #region Internal Members
 
-        internal int ReadBit(int offset)
+        internal bool ReadBit(int offset)
         {
-            return 0;
-            //unsafe { return (Keys[(offset / 32)] & (1 << (offset % 32))); }
+            int int_offset = offset / 32;
+            int bit_offset = offset % 32;
+            unsafe
+            {
+                fixed (int* k = Keys)
+                {
+                    return (*(k + int_offset) & (1 << bit_offset)) != 0u;
+                }
+            }
         }
 
-        internal enum BitValue { Zero = 0, One = 1 }
-        internal void WriteBit(int offset, BitValue bit)
+        internal void EnableBit(int offset)
         {
-            // Todo: this is completely broken.
-            //unsafe { Keys[offset / 32] = Keys[offset / 32] ^ (~(int)bit << (offset % 32)); }
+            int int_offset = offset / 32;
+            int bit_offset = offset % 32;
+            unsafe
+            {
+                fixed (int* k = Keys)
+                {
+                    *(k + int_offset) |= 1 << bit_offset;
+                }
+            }
+        }
+
+        internal void DisableBit(int offset)
+        {
+            int int_offset = offset / 32;
+            int bit_offset = offset % 32;
+            unsafe
+            {
+                fixed (int* k = Keys)
+                {
+                    *(k + int_offset) &= ~(1 << bit_offset);
+                }
+            }
         }
 
         #endregion
@@ -97,7 +122,17 @@ namespace OpenTK.Input
         /// <returns>True, if both instances are equal; false otherwise.</returns>
         public bool Equals(KeyboardState other)
         {
-            throw new NotImplementedException();
+            bool equal = true;
+            unsafe
+            {
+                fixed (int* k1 = Keys)
+                fixed (int* k2 = Keys)
+                {
+                    for (int i = 0; equal && i < NumKeys; i++)
+                        equal &= *(k1 + i) == *(k2 + i);
+                }
+            }
+            return equal;
         }
 
         #endregion

@@ -219,6 +219,16 @@ namespace OpenTK.Platform.X11
             get { return dummy_keyboard_list;  }//return keyboardDriver.Keyboard;
         }
 
+        public KeyboardState GetState()
+        {
+            throw new NotImplementedException();
+        }
+
+        public KeyboardState GetState(int index)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region public IList<Mouse> Mouse

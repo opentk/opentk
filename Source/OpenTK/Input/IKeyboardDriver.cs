@@ -19,5 +19,18 @@ namespace OpenTK.Input
         /// Gets the list of available KeyboardDevices.
         /// </summary>
         IList<KeyboardDevice> Keyboard { get; }
+
+        /// <summary>
+        /// Retrieves the KeyboardState for the default keyboard device.
+        /// </summary>
+        /// <returns>A <see cref="OpenTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
+        KeyboardState GetState();
+
+        /// <summary>
+        /// Retrieves the KeyboardState for the specified keyboard device.
+        /// </summary>
+        /// <param name="index">The index of the keyboard device.</param>
+        /// <returns>A <see cref="OpenTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
+        KeyboardState GetState(int index);
     }
 }
