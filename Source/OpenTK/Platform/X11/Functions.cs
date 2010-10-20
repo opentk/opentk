@@ -176,6 +176,12 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XTranslateCoordinates")]
         public extern static bool XTranslateCoordinates(IntPtr display, IntPtr src_w, IntPtr dest_w, int src_x, int src_y, out int intdest_x_return, out int dest_y_return, out IntPtr child_return);
 
+        [DllImport("libX11", EntryPoint = "XGrabKeyboard")]
+        public extern static int XGrabKeyboard(IntPtr display, IntPtr window, bool owner_events, GrabMode pointer_mode, GrabMode keyboard_mode, IntPtr timestamp);
+
+        [DllImport("libX11", EntryPoint = "XUngrabKeyboard")]
+        public extern static int XUngrabKeyboard(IntPtr display, IntPtr timestamp);
+
         [DllImport("libX11", EntryPoint = "XGetGeometry")]
         public extern static bool XGetGeometry(IntPtr display, IntPtr window, out IntPtr root, out int x, out int y, out int width, out int height, out int border_width, out int depth);
 

@@ -73,6 +73,16 @@ namespace OpenTK
             get { return inputDriver.Keyboard; }
         }
 
+        public KeyboardState GetState()
+        {
+            return inputDriver.GetState();
+        }
+
+        public KeyboardState GetState(int index)
+        {
+            return inputDriver.GetState(index);
+        }
+
         #endregion
 
         #region --- IMouseDriver Members ---

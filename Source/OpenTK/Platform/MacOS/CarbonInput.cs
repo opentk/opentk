@@ -35,6 +35,16 @@ namespace OpenTK.Platform.MacOS
             get { return dummy_keyboard_list; }
         }
 
+        public KeyboardState GetState()
+        {
+            throw new NotImplementedException();
+        }
+
+        public KeyboardState GetState(int index)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region IMouseDriver Members
