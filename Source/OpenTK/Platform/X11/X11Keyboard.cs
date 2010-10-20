@@ -35,7 +35,7 @@ namespace OpenTK.Platform.X11
     // Only one keyboard supported.
     sealed class X11Keyboard : IKeyboardDriver
     {
-        readonly X11WindowInfo window = new X11WindowInfo();
+        readonly X11WindowInfo window;
         readonly X11KeyMap keymap = new X11KeyMap();
         KeyboardState state = new KeyboardState();
 
@@ -50,6 +50,7 @@ namespace OpenTK.Platform.X11
             {
                 using (new XLock(API.DefaultDisplay))
                 {
+                    window = new X11WindowInfo();
                     window.Display = API.DefaultDisplay;
                     window.Screen = Functions.XDefaultScreen(window.Display);
                     window.RootWindow = Functions.XRootWindow(window.Display, window.Screen);
