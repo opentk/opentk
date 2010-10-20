@@ -113,6 +113,8 @@ namespace OpenTK.Platform.X11
         readonly char[] chars = new char[16];
         readonly KeyPressEventArgs KPEventArgs = new KeyPressEventArgs('\0');
 
+        readonly IntPtr EmptyCursor;
+
         #endregion
 
         #region Constructors
@@ -194,6 +196,8 @@ namespace OpenTK.Platform.X11
             RefreshWindowBounds(ref e);
 
             driver = new X11Input(window);
+
+            EmptyCursor = CreateEmptyCursor(window);
 
             Debug.WriteLine(String.Format("X11GLNative window created successfully (id: {0}).", Handle));
             Debug.Unindent();
@@ -675,6 +679,22 @@ namespace OpenTK.Platform.X11
                     Resize(this, EventArgs.Empty);
                 }
             }
+        }
+
+        static IntPtr CreateEmptyCursor(X11WindowInfo window)
+        {
+            IntPtr cursor = IntPtr.Zero;
+            using (new XLock(window.Display))
+            {
+                XColor black, dummy;
+                IntPtr cmap = Functions.XDefaultColormap(window.Display, window.Screen);
+                Functions.XAllocNamedColor(window.Display, cmap, "black", out black, out dummy);
+                IntPtr bmp_empty = Functions.XCreateBitmapFromData(window.Display,
+                    window.WindowHandle, new byte[,] { { 0 } });
+                cursor = Functions.XCreatePixmapCursor(window.Display,
+                    bmp_empty, bmp_empty, ref black, ref black, 0, 0);
+            }
+            return cursor;
         }
 
         #endregion
@@ -1302,7 +1322,7 @@ namespace OpenTK.Platform.X11
 
         public bool CursorVisible
         {
-            get { return true; }
+            get { return true; } // Not used
             set
             {
                 if (value)
@@ -1316,17 +1336,7 @@ namespace OpenTK.Platform.X11
                 {
                     using (new XLock(window.Display))
                     {
-                        XColor black, dummy;
-                        IntPtr cmap = Functions.XDefaultColormap(window.Display, window.Screen);
-                        Functions.XAllocNamedColor(window.Display, cmap, "black", out black, out dummy);
-                        IntPtr bmp_empty = Functions.XCreateBitmapFromData(window.Display,
-                            window.WindowHandle, new byte[,] { { 0 } });
-                        IntPtr cursor_empty = Functions.XCreatePixmapCursor(window.Display,
-                        bmp_empty, bmp_empty, ref black, ref black, 0, 0);
-
-                        Functions.XDefineCursor(window.Display, window.WindowHandle, cursor_empty);
-
-                        Functions.XFreeCursor(window.Display, cursor_empty);
+                        Functions.XDefineCursor(window.Display, window.WindowHandle, EmptyCursor);
                     }
                 }
             }
@@ -1553,6 +1563,7 @@ namespace OpenTK.Platform.X11
                         {
                             using (new XLock(window.Display))
                             {
+                                Functions.XFreeCursor(window.Display, EmptyCursor);
                                 Functions.XDestroyWindow(window.Display, window.WindowHandle);
                             }
 
