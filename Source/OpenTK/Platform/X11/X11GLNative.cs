@@ -1329,6 +1329,7 @@ namespace OpenTK.Platform.X11
                 {
                     using (new XLock(window.Display))
                     {
+                        Functions.XUngrabPointer(window.Display, IntPtr.Zero);
                         Functions.XUndefineCursor(window.Display, window.WindowHandle);
                     }
                 }
@@ -1337,6 +1338,11 @@ namespace OpenTK.Platform.X11
                     using (new XLock(window.Display))
                     {
                         Functions.XDefineCursor(window.Display, window.WindowHandle, EmptyCursor);
+                        Functions.XGrabPointer(window.Display, window.WindowHandle, true,
+                            EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask,
+                            GrabMode.GrabModeAsync, GrabMode.GrabModeAsync, window.WindowHandle, IntPtr.Zero,
+                            IntPtr.Zero);
+
                     }
                 }
             }
