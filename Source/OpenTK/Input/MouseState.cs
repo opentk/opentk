@@ -36,10 +36,76 @@ namespace OpenTK.Input
     /// </summary>
     public struct MouseState : IEquatable<MouseState>
     {
-        #region Constructors
+        #region Fields
 
-        internal MouseState(MouseButton[] buttons)
+        // Allocate enough ints to store all mouse buttons
+        const int NumInts = ((int)MouseButton.LastButton + 31) / 32;
+        // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
+        unsafe fixed int Buttons[NumInts];
+
+        #endregion
+
+        #region Public Members
+
+        /// <summary>
+        /// Gets a <see cref="System.Boolean"/> indicating whether this button is down.
+        /// </summary>
+        /// <param name="button">The <see cref="OpenTK.Input.MouseButton"/> to check.</param>
+        public bool IsKeyDown(MouseButton button)
         {
+            return ReadBit((int)button);
+        }
+
+        /// <summary>
+        /// Gets a <see cref="System.Boolean"/> indicating whether this button is up.
+        /// </summary>
+        /// <param name="button">The <see cref="OpenTK.Input.MouseButton"/> to check.</param>
+        public bool IsKeyUp(MouseButton button)
+        {
+            return !ReadBit((int)button);
+        }
+
+        #endregion
+
+        #region Internal Members
+
+        internal bool ReadBit(int offset)
+        {
+            int int_offset = offset / 32;
+            int bit_offset = offset % 32;
+            unsafe
+            {
+                fixed (int* b = Buttons)
+                {
+                    return (*(b + int_offset) & (1 << bit_offset)) != 0u;
+                }
+            }
+        }
+
+        internal void EnableBit(int offset)
+        {
+            int int_offset = offset / 32;
+            int bit_offset = offset % 32;
+            unsafe
+            {
+                fixed (int* b = Buttons)
+                {
+                    *(b + int_offset) |= 1 << bit_offset;
+                }
+            }
+        }
+
+        internal void DisableBit(int offset)
+        {
+            int int_offset = offset / 32;
+            int bit_offset = offset % 32;
+            unsafe
+            {
+                fixed (int* b = Buttons)
+                {
+                    *(b + int_offset) &= ~(1 << bit_offset);
+                }
+            }
         }
 
         #endregion
@@ -47,13 +113,23 @@ namespace OpenTK.Input
         #region IEquatable<MouseState> Members
 
         /// <summary>
-        /// Compares two MouseState instances for equality.
+        /// Compares two MouseState instances.
         /// </summary>
-        /// <param name="other">The instance to compare to.</param>
+        /// <param name="other">The instance to compare two.</param>
         /// <returns>True, if both instances are equal; false otherwise.</returns>
         public bool Equals(MouseState other)
         {
-            throw new NotImplementedException();
+            bool equal = true;
+            unsafe
+            {
+                fixed (int* b1 = Buttons)
+                fixed (int* b2 = other.Buttons)
+                {
+                    for (int i = 0; equal && i < NumInts; i++)
+                        equal &= *(b1 + i) == *(b2 + i);
+                }
+            }
+            return equal;
         }
 
         #endregion
