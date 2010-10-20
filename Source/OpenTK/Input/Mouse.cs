@@ -38,15 +38,8 @@ namespace OpenTK.Input
     {
         #region Fields
 
-        //static IMouseDriver driver;
-
-        #endregion
-
-        #region Constructors
-
-        static Mouse()
-        {
-        }
+        static readonly IMouseDriver driver =
+            Platform.Factory.Default.CreateMouseDriver();
 
         #endregion
 
@@ -55,11 +48,20 @@ namespace OpenTK.Input
         /// <summary>
         /// Retrieves the MouseState for the specified mouse device.
         /// </summary>
+        /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure containing the state of the mouse device.</returns>
+        public static MouseState GetState()
+        {
+            return driver.GetState();
+        }
+
+        /// <summary>
+        /// Retrieves the MouseState for the specified mouse device.
+        /// </summary>
         /// <param name="index">The index of the mouse device.</param>
         /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure containing the state of the mouse device.</returns>
         public static MouseState GetState(int index)
         {
-            throw new NotImplementedException();
+            return driver.GetState(index);
         }
 
         #endregion

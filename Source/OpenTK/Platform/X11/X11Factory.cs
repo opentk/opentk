@@ -83,6 +83,12 @@ namespace OpenTK.Platform.X11
             return new X11Keyboard(null);
         }
 
+        public virtual OpenTK.Input.IMouseDriver CreateMouseDriver()
+        {
+            //return new X11Mouse(null);
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

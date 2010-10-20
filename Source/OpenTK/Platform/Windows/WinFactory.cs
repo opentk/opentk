@@ -80,6 +80,11 @@ namespace OpenTK.Platform.Windows
             else
                 return new WMInput(null);
         }
+
+        public virtual OpenTK.Input.IMouseDriver CreateMouseDriver()
+        {
+            throw new NotImplementedException();
+        }
         
         #endregion
     }

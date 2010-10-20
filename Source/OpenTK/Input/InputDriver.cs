@@ -75,12 +75,12 @@ namespace OpenTK
 
         public KeyboardState GetState()
         {
-            return inputDriver.GetState();
+            return (inputDriver as IKeyboardDriver).GetState();
         }
 
         public KeyboardState GetState(int index)
         {
-            return inputDriver.GetState(index);
+            return (inputDriver as IKeyboardDriver).GetState(index);
         }
 
         #endregion
@@ -90,6 +90,16 @@ namespace OpenTK
         public IList<MouseDevice> Mouse
         {
             get { return inputDriver.Mouse; }
+        }
+
+        MouseState IMouseDriver.GetState()
+        {
+            throw new NotImplementedException();
+        }
+
+        MouseState IMouseDriver.GetState(int index)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
