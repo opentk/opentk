@@ -246,6 +246,16 @@ namespace OpenTK.Platform.Windows
             get { return keyboards; }
         }
 
+        public KeyboardState GetState()
+        {
+            throw new NotImplementedException();
+        }
+
+        public KeyboardState GetState(int index)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region IMouseDriver Members

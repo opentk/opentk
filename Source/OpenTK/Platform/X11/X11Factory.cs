@@ -80,7 +80,7 @@ namespace OpenTK.Platform.X11
 
         public virtual OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
         {
-            throw new NotImplementedException();
+            return new X11Keyboard(null);
         }
 
         #endregion
