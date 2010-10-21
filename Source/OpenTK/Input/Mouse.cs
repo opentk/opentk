@@ -61,6 +61,8 @@ namespace OpenTK.Input
         /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure containing the state of the mouse device.</returns>
         public static MouseState GetState(int index)
         {
+            if (index < 0)
+                throw new ArgumentOutOfRangeException("index");
             return driver.GetState(index);
         }
 
