@@ -77,13 +77,12 @@ namespace OpenTK.Platform.X11
 
         public MouseState GetState(int index)
         {
-
-            // X11Mouse supports a single mouse only
-            if (index < 0 || index > 1)
-                throw new ArgumentOutOfRangeException("index");
-
             ProcessEvents();
-            return mouse;
+            // X11Mouse supports only one device
+            if (index == 0)
+                return mouse;
+            else
+                return new MouseState();
         }
 
         void WriteBit(MouseButton offset, int enabled)
