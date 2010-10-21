@@ -75,6 +75,10 @@ namespace OpenTK.Platform.X11
 
         public KeyboardState GetState(int index)
         {
+            // X11Keyboard supports a single keyboard only
+            if (index < 0 || index > 1)
+                throw new ArgumentOutOfRangeException("index");
+
             ProcessEvents();
             return state;
         }
