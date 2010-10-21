@@ -14,16 +14,16 @@ using OpenTK.Input;
 
 namespace Examples.Tests
 {
-    [Example("GameWindow states", ExampleCategory.OpenTK, "Test", Documentation = "GameWindowStates")]
+    [Example("GameWindow States", ExampleCategory.OpenTK, "GameWindow", 4, Documentation = "GameWindowStates")]
     public class GameWindowStates : GameWindow
     {
-        static readonly Font TextFont = new Font(FontFamily.GenericSansSerif, 12);
+        static readonly Font TextFont = new Font(FontFamily.GenericSansSerif, 11);
         Bitmap TextBitmap = new Bitmap(512, 512);
         int texture;
         bool mouse_in_window = false;
         bool viewport_changed = true;
         bool refresh_text = true;
-        bool move_window = false;
+        MouseState mouse, mouse_old;
 
         public GameWindowStates()
             : base(800, 600)
@@ -80,11 +80,6 @@ namespace Examples.Tests
         void MouseMoveHandler(object sender, MouseMoveEventArgs e)
         {
             refresh_text = true;
-
-            if (move_window)
-            {
-                Location = new Point(X + e.XDelta, Y + e.YDelta);
-            }
         }
 
         void MouseButtonHandler(object sender, MouseButtonEventArgs e)
@@ -109,6 +104,11 @@ namespace Examples.Tests
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
+            mouse = OpenTK.Input.Mouse.GetState();
+            if (mouse != mouse_old)
+                refresh_text = true;
+            mouse_old = mouse;
+
             if (refresh_text)
             {
                 refresh_text = false;
@@ -118,14 +118,15 @@ namespace Examples.Tests
                     int line = 0;
 
                     gfx.Clear(Color.MidnightBlue);
-                    gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+                    gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
 
                     DrawString(gfx, String.Format("[1 - 4]: change WindowState (current: {0}).", this.WindowState), line++);
                     DrawString(gfx, String.Format("[5 - 7]: change WindowBorder (current: {0}).", this.WindowBorder), line++);
                     DrawString(gfx, String.Format("Focused: {0}.", this.Focused), line++);
                     DrawString(gfx, String.Format("Mouse {0} window.", mouse_in_window ? "inside" : "outside of"), line++);
-                    DrawString(gfx, String.Format("Mouse position: {0}", new Vector3(Mouse.X, Mouse.Y, Mouse.Wheel)), line++);
                     DrawString(gfx, String.Format("Mouse visible: {0}", CursorVisible), line++);
+                    DrawString(gfx, String.Format("Mouse position (absolute): {0}", new Vector3(Mouse.X, Mouse.Y, Mouse.Wheel)), line++);
+                    DrawString(gfx, String.Format("Mouse position (relative): {0}", new Vector3(mouse.X, mouse.Y, mouse.WheelPrecise)), line++);
                     DrawString(gfx, String.Format("Window.Bounds: {0}", Bounds), line++);
                     DrawString(gfx, String.Format("Window.Location: {0}, Size: {1}", Location, Size), line++);
                     DrawString(gfx, String.Format("Window.{{X={0}, Y={1}, Width={2}, Height={3}}}", X, Y, Width, Height), line++);
@@ -149,6 +150,8 @@ namespace Examples.Tests
             GL.ClearColor(Color.MidnightBlue);
 
             GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
 
             texture = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2D, texture);
