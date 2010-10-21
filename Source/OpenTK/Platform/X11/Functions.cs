@@ -94,7 +94,16 @@ namespace OpenTK.Platform.X11
         public extern static Bool XCheckWindowEvent(Display display, Window w, EventMask event_mask, ref XEvent event_return);
         [DllImport("libX11")]
         public extern static Bool XCheckTypedWindowEvent(Display display, Window w, XEventName event_type, ref XEvent event_return);
-        
+        [DllImport("libX11")]
+        public extern static Bool XCheckTypedEvent(Display display, XEventName event_type, out XEvent event_return);
+
+
+        public delegate Bool EventPredicate(IntPtr display, ref XEvent e, IntPtr arg);
+        [DllImport("libX11")]
+        public extern static Bool XIfEvent(Display display, ref XEvent e, IntPtr predicate, IntPtr arg );
+        [DllImport("libX11")]
+        public extern static Bool XCheckIfEvent(Display display, ref XEvent e, IntPtr predicate, IntPtr arg );
+
         [DllImport("libX11")]
         public extern static int XConnectionNumber(IntPtr diplay);
         [DllImport("libX11")]
@@ -325,7 +334,7 @@ namespace OpenTK.Platform.X11
         public extern static int XQueryBestCursor(IntPtr display, IntPtr drawable, int width, int height, out int best_width, out int best_height);
 
         [DllImport("libX11", EntryPoint = "XQueryExtension")]
-        public extern static int XQueryExtension(IntPtr display, string extension_name, ref int major, ref int first_event, ref int first_error);
+        public extern static int XQueryExtension(IntPtr display, string extension_name, out int major, out int first_event, out int first_error);
 
         [DllImport("libX11", EntryPoint = "XWhitePixel")]
         public extern static IntPtr XWhitePixel(IntPtr display, int screen_no);
@@ -461,6 +470,27 @@ namespace OpenTK.Platform.X11
 
         [DllImport("libX11")]
         public static extern int XRefreshKeyboardMapping(ref XMappingEvent event_map);
+
+        [DllImport("libX11")]
+        public static extern int XGetEventData(IntPtr display, ref XGenericEventCookie cookie);
+
+        [DllImport("libX11")]
+        public static extern void XFreeEventData(IntPtr display, ref XGenericEventCookie cookie);
+
+        [DllImport("libXi")]
+        static extern int XISelectEvents(IntPtr dpy, Window win, [In] XIEventMask[] masks, int num_masks);
+        [DllImport("libXi")]
+        static extern int XISelectEvents(IntPtr dpy, Window win, [In] ref XIEventMask masks, int num_masks);
+
+        public static int XISelectEvents(IntPtr dpy, Window win, XIEventMask[] masks)
+        {
+            return XISelectEvents(dpy, win, masks, masks.Length);
+        }
+
+        public static int XISelectEvents(IntPtr dpy, Window win, XIEventMask mask)
+        {
+            return XISelectEvents(dpy, win, ref mask, 1);
+        }
 
         static readonly IntPtr CopyFromParent = IntPtr.Zero;
 

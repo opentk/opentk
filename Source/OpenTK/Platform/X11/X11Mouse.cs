@@ -27,6 +27,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
@@ -60,6 +61,8 @@ namespace OpenTK.Platform.X11
                     //     IntPtr.Zero, IntPtr.Zero);
                     //Functions.XSelectInput(window.Display, window.RootWindow, new IntPtr((int)window.EventMask));
                 }
+
+                Debug.WriteLine("Using X11Mouse.");
             }
         }
 
