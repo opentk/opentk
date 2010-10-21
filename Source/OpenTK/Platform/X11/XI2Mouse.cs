@@ -37,8 +37,10 @@ namespace OpenTK.Platform.X11
     // This should be easy: just read the device id and route the data to the correct device.
     sealed class XI2Mouse : IMouseDriver
     {
-        MouseState state = new MouseState();
-        X11WindowInfo window;
+        List<MouseState> mice = new List<MouseState>();
+        Dictionary<int, int> rawids = new Dictionary<int, int>(); // maps raw ids to mouse ids
+        int first_mouse;
+        readonly X11WindowInfo window;
         readonly int XIOpCode;
 
         static readonly Functions.EventPredicate PredicateImpl = IsEventValid;
@@ -88,13 +90,19 @@ namespace OpenTK.Platform.X11
         public MouseState GetState()
         {
             ProcessEvents();
-            return state;
+            if (mice.Count > 0)
+                return mice[0];
+            else
+                return new MouseState();
         }
 
         public MouseState GetState(int index)
         {
             ProcessEvents();
-            return state;
+            if (mice.Count > index)
+                return mice[index];
+            else
+                return new MouseState();
         }
 
         void ProcessEvents()
@@ -114,7 +122,14 @@ namespace OpenTK.Platform.X11
                     {
                         XIRawEvent raw = (XIRawEvent)
                             Marshal.PtrToStructure(cookie.data, typeof(XIRawEvent));
-        
+
+                        if (!rawids.ContainsKey(raw.deviceid))
+                        {
+                            mice.Add(new MouseState());
+                            rawids.Add(raw.deviceid, mice.Count - 1);
+                        }
+                        MouseState state = mice[rawids[raw.deviceid]];
+
                         switch (raw.evtype)
                         {
                             case XIEventType.RawMotion:
@@ -162,6 +177,7 @@ namespace OpenTK.Platform.X11
                                 }
                                 break;
                         }
+                        mice[rawids[raw.deviceid]] = state;
                     }
                     Functions.XFreeEventData(window.Display, ref cookie);
                 }
