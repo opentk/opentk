@@ -42,6 +42,8 @@ namespace OpenTK.Input
         const int NumInts = ((int)MouseButton.LastButton + 31) / 32;
         // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
         unsafe fixed int Buttons[NumInts];
+        int x, y;
+        float wheel;
 
         #endregion
 
@@ -51,7 +53,7 @@ namespace OpenTK.Input
         /// Gets a <see cref="System.Boolean"/> indicating whether this button is down.
         /// </summary>
         /// <param name="button">The <see cref="OpenTK.Input.MouseButton"/> to check.</param>
-        public bool IsKeyDown(MouseButton button)
+        public bool IsButtonDown(MouseButton button)
         {
             return ReadBit((int)button);
         }
@@ -60,9 +62,149 @@ namespace OpenTK.Input
         /// Gets a <see cref="System.Boolean"/> indicating whether this button is up.
         /// </summary>
         /// <param name="button">The <see cref="OpenTK.Input.MouseButton"/> to check.</param>
-        public bool IsKeyUp(MouseButton button)
+        public bool IsButtonUp(MouseButton button)
         {
             return !ReadBit((int)button);
+        }
+
+        /// <summary>
+        /// Gets the absolute wheel position in integer units.
+        /// To support high-precision mice, it is recommended to use <see cref="WheelPrecise"/> instead.
+        /// </summary>
+        public int Wheel
+        {
+            get { return (int)Math.Round(wheel, MidpointRounding.AwayFromZero); }
+        }
+
+        /// <summary>
+        /// Gets the absolute wheel position in floating-point units.
+        /// </summary>
+        public float WheelPrecise
+        {
+            get { return wheel; }
+            internal set
+            {
+                wheel = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets an integer representing the absolute x position of the pointer, in window pixel coordinates.
+        /// </summary>
+        public int X
+        {
+            get { return x; }
+            internal set { x = value; }
+        }
+
+        /// <summary>
+        /// Gets an integer representing the absolute y position of the pointer, in window pixel coordinates.
+        /// </summary>
+        public int Y
+        {
+            get { return y; }
+            internal set { y = value; }
+        }
+
+        /// <summary>
+        /// Gets a System.Boolean indicating the state of the specified MouseButton.
+        /// </summary>
+        /// <param name="button">The MouseButton to check.</param>
+        /// <returns>True if the MouseButton is pressed, false otherwise.</returns>
+        public bool this[MouseButton button]
+        {
+            get
+            {
+                return IsButtonDown(button);
+            }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="System.Boolean" indicating whether the left mouse button is pressed.
+        /// This property is intended for XNA compatibility.
+        /// </summary>
+        public ButtonState LeftButton
+        {
+            get { return IsButtonDown(MouseButton.Left) ? ButtonState.Pressed : ButtonState.Released; }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="System.Boolean" indicating whether the middle mouse button is pressed.
+        /// This property is intended for XNA compatibility.
+        /// </summary>
+        public ButtonState MiddleButton
+        {
+            get { return IsButtonDown(MouseButton.Middle) ? ButtonState.Pressed : ButtonState.Released; }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="System.Boolean" indicating whether the right mouse button is pressed.
+        /// This property is intended for XNA compatibility.
+        /// </summary>
+        public ButtonState RightButton
+        {
+            get { return IsButtonDown(MouseButton.Right) ? ButtonState.Pressed : ButtonState.Released; }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="System.Boolean" indicating whether the first extra mouse button is pressed.
+        /// This property is intended for XNA compatibility.
+        /// </summary>
+        public ButtonState XButton1
+        {
+            get { return IsButtonDown(MouseButton.Button1) ? ButtonState.Pressed : ButtonState.Released; }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="System.Boolean" indicating whether the second extra mouse button is pressed.
+        /// This property is intended for XNA compatibility.
+        /// </summary>
+        public ButtonState XButton2
+        {
+            get { return IsButtonDown(MouseButton.Button2) ? ButtonState.Pressed : ButtonState.Released; }
+        }
+
+        /// <summary>
+        /// Gets the absolute wheel position in integer units. This property is intended for XNA compatibility.
+        /// To support high-precision mice, it is recommended to use <see cref="WheelPrecise"/> instead.
+        /// </summary>
+        public int ScrollWheelValue
+        {
+            get { return Wheel; }
+        }
+
+        /// <summary>
+        /// Checks whether two <see cref="MouseState" /> instances are equal.
+        /// </summary>
+        /// <param name="left">
+        /// A <see cref="MouseState"/> instance.
+        /// </param>
+        /// <param name="right">
+        /// A <see cref="MouseState"/> instance.
+        /// </param>
+        /// <returns>
+        /// True if both left is equal to right; false otherwise.
+        /// </returns>
+        public static bool operator ==(MouseState left, MouseState right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Checks whether two <see cref="MouseState" /> instances are not equal.
+        /// </summary>
+        /// <param name="left">
+        /// A <see cref="MouseState"/> instance.
+        /// </param>
+        /// <param name="right">
+        /// A <see cref="MouseState"/> instance.
+        /// </param>
+        /// <returns>
+        /// True if both left is not equal to right; false otherwise.
+        /// </returns>
+        public static bool operator !=(MouseState left, MouseState right)
+        {
+            return !left.Equals(right);
         }
 
         #endregion
@@ -128,6 +270,7 @@ namespace OpenTK.Input
                     for (int i = 0; equal && i < NumInts; i++)
                         equal &= *(b1 + i) == *(b2 + i);
                 }
+                equal &= X == other.X && Y == other.Y && WheelPrecise == other.WheelPrecise;
             }
             return equal;
         }
