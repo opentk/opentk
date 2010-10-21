@@ -36,6 +36,10 @@ using System.Runtime.InteropServices;
 // X11 Version
 namespace OpenTK.Platform.X11
 {
+    using Bool = System.Boolean;
+    using Time = System.IntPtr;
+    using Window = System.IntPtr;
+
     //
     // In the structures below, fields of type long are mapped to IntPtr.
     // This will work on all platforms where sizeof(long)==sizeof(void*), which
@@ -545,6 +549,29 @@ namespace OpenTK.Platform.X11
         public IntPtr pad23;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct XGenericEvent
+    {
+        public int type;         // of event. Always GenericEvent
+        public IntPtr serial;       // # of last request processed
+        public bool send_event;   // true if from SendEvent request
+        public IntPtr display;     // Display the event was read from
+        public int extension;    // major opcode of extension that caused the event
+        public int evtype;       // actual event type.
+    }
+
+    internal struct XGenericEventCookie
+    {
+        public int type;         // of event. Always GenericEvent
+        public IntPtr serial;       // # of last request processed
+        public bool send_event;   // true if from SendEvent request
+        public IntPtr display;     // Display the event was read from
+        public int extension;    // major opcode of extension that caused the event
+        public int evtype;       // actual event type.
+        public uint cookie;       // unique event cookie
+        public IntPtr data;        // actual event data
+    }
+
     [StructLayout(LayoutKind.Explicit)]
     internal struct XEvent
     {
@@ -612,6 +639,10 @@ namespace OpenTK.Platform.X11
         public XErrorEvent ErrorEvent;
         [FieldOffset(0)]
         public XKeymapEvent KeymapEvent;
+        [FieldOffset(0)]
+        public XGenericEvent GenericEvent;
+        [FieldOffset(0)]
+        public XGenericEventCookie GenericEventCookie;
 
         //[MarshalAs(System.Runtime.InteropServices.UnmanagedType.ByValArray, SizeConst=24)]
         //[ FieldOffset(0) ] public int[] pad;
@@ -753,6 +784,7 @@ namespace OpenTK.Platform.X11
         ColormapNotify = 32,
         ClientMessage = 33,
         MappingNotify = 34,
+        GenericEvent = 35,
 
         LASTEvent
     }
@@ -1622,5 +1654,165 @@ namespace OpenTK.Platform.X11
     {
         XYPixmap = 1,
         ZPixmap
+    }
+
+    // XInput2 structures
+
+    struct XIDeviceInfo
+    {
+        public int deviceid;
+        public IntPtr name; // byte*
+        public int use;
+        public int attachment;
+        public Bool enabled;
+        public int num_classes;
+        public IntPtr classes; // XIAnyClassInfo **
+    }
+
+    struct XIAnyClassInfo
+    {
+        public int type;
+        public int sourceid;
+    }
+
+    struct XIDeviceEvent
+    {
+        public int           type;         /* GenericEvent */
+        public IntPtr serial;       /* # of last request processed by server */
+        public bool          send_event;   /* true if this came from a SendEvent request */
+        public IntPtr display;     /* Display the event was read from */
+        public int           extension;    /* XI extension offset */
+        public XIEventType           evtype;
+        public Time          time;
+        public int           deviceid;
+        public int           sourceid;
+        public int           detail;
+        public Window        root;
+        public Window        @event;
+        public Window        child;
+        public double        root_x;
+        public double        root_y;
+        public double        event_x;
+        public double        event_y;
+        public int           flags;
+        public XIButtonState       buttons;
+        public XIValuatorState     valuators;
+        public XIModifierState     mods;
+        public XIGroupState        @group;
+    }
+
+    struct XIRawEvent
+    {
+        public int           type;         /* GenericEvent */
+        public IntPtr serial;       /* # of last request processed by server */
+        public Bool          send_event;   /* true if this came from a SendEvent request */
+        public IntPtr display;     /* Display the event was read from */
+        public int           extension;    /* XI extension offset */
+        public XIEventType           evtype;       /* XI_RawKeyPress, XI_RawKeyRelease, etc. */
+        public Time          time;
+        public int           deviceid;
+        public int           sourceid;
+        public int           detail;
+        public int           flags;
+        public XIValuatorState valuators;
+        public IntPtr raw_values; // double        *
+    }
+
+    struct XIButtonState
+    {
+        public int           mask_len;
+        public IntPtr mask; // byte*
+    }
+
+    struct XIModifierState
+    {
+        public int    @base;
+        public int    latched;
+        public int    locked;
+        public int    effective;
+    }
+
+    struct XIGroupState
+    {
+        public int    @base;
+        public int    latched;
+        public int    locked;
+        public int    effective;
+    }
+
+    struct XIValuatorState
+    {
+        public int           mask_len;
+        public IntPtr mask; // byte*
+        public IntPtr values; // double*
+    }
+
+    struct XIEventMask : IDisposable
+    {
+        public int deviceid; // 0 = XIAllDevices, 1 = XIAllMasterDevices
+        int mask_len;
+        unsafe XIEventMasks* mask;
+
+        public XIEventMask(int id, XIEventMasks m)
+        {
+            deviceid = id;
+            mask_len = sizeof(XIEventMasks);
+            unsafe
+            {
+                mask = (XIEventMasks*)Marshal.AllocHGlobal(mask_len);
+                *mask = m;
+            }
+        }
+
+        public void Dispose()
+        {
+            unsafe
+            {
+                Marshal.FreeHGlobal(new IntPtr((void*)mask));
+            }
+        }
+    }
+
+    enum XIEventType
+    {
+        DeviceChanged = 1,
+        KeyPress,
+        KeyRelease,
+        ButtonPress,
+        ButtonRelease,
+        Motion,
+        Enter,
+        Leave,
+        FocusIn,
+        FocusOut,
+        HierarchyChanged,
+        PropertyEvent,
+        RawKeyPress,
+        RawKeyRelease,
+        RawButtonPress,
+        RawButtonRelease,
+        RawMotion,
+        LastEvent = RawMotion
+    }
+
+    enum XIEventMasks
+    {
+        DeviceChangedMask =            (1 << (int)XIEventType.DeviceChanged),
+        KeyPressMask =                 (1 << (int)XIEventType.KeyPress),
+        KeyReleaseMask =               (1 << (int)XIEventType.KeyRelease),
+        ButtonPressMask =              (1 << (int)XIEventType.ButtonPress),
+        ButtonReleaseMask =            (1 << (int)XIEventType.ButtonRelease),
+        MotionMask =                   (1 << (int)XIEventType.Motion),
+        EnterMask =                    (1 << (int)XIEventType.Enter),
+        LeaveMask =                    (1 << (int)XIEventType.Leave),
+        FocusInMask =                  (1 << (int)XIEventType.FocusIn),
+        FocusOutMask =                 (1 << (int)XIEventType.FocusOut),
+        HierarchyChangedMask =         (1 << (int)XIEventType.HierarchyChanged),
+        PropertyEventMask =            (1 << (int)XIEventType.PropertyEvent),
+        RawKeyPressMask =              (1 << (int)XIEventType.RawKeyPress),
+        RawKeyReleaseMask =            (1 << (int)XIEventType.RawKeyRelease),
+        RawButtonPressMask =           (1 << (int)XIEventType.RawButtonPress),
+        RawButtonReleaseMask =         (1 << (int)XIEventType.RawButtonRelease),
+        RawMotionMask =                (1 << (int)XIEventType.RawMotion),
     }
 }
