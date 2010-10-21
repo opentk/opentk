@@ -85,6 +85,14 @@ namespace OpenTK.Platform.X11
 
         public virtual OpenTK.Input.IMouseDriver CreateMouseDriver()
         {
+            try
+            {
+                // Only supported on xorg 1.7 or higher.
+                return new XI2Mouse(null);
+            }
+            catch (NotSupportedException) { }
+
+            // Should always be supported.
             return new X11Mouse(null);
         }
 

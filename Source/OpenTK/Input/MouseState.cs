@@ -207,6 +207,44 @@ namespace OpenTK.Input
             return !left.Equals(right);
         }
 
+        /// <summary>
+        /// Compares to an object instance for equality.
+        /// </summary>
+        /// <param name="obj">
+        /// The <see cref="System.Object"/> to compare to.
+        /// </param>
+        /// <returns>
+        /// True if this instance is equal to obj; false otherwise.
+        /// </returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is MouseState)
+            {
+                return this == (MouseState)obj;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Generates a hashcode for the current instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.Int32"/> represting the hashcode for this instance.
+        /// </returns>
+        public override int GetHashCode()
+        {
+            unsafe
+            {
+                fixed (int* b = Buttons)
+                {
+                    return b->GetHashCode() ^ X.GetHashCode() ^ Y.GetHashCode() ^ WheelPrecise.GetHashCode();
+                }
+            }
+        }
+
         #endregion
 
         #region Internal Members
