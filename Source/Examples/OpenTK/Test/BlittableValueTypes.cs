@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.Reflection;
 using OpenTK;
 
+#pragma warning disable 0649 // Do not warn about unitialized fields, this is on purpose
+
 namespace Examples.Tests
 {
     struct Simple { public int Value; }
