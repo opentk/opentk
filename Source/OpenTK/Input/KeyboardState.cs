@@ -122,8 +122,8 @@ namespace OpenTK.Input
             bool equal = true;
             unsafe
             {
+                int* k2 = other.Keys;
                 fixed (int* k1 = Keys)
-                fixed (int* k2 = other.Keys)
                 {
                     for (int i = 0; equal && i < NumInts; i++)
                         equal &= *(k1 + i) == *(k2 + i);
