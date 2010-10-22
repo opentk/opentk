@@ -117,8 +117,8 @@ namespace Examples.Tests
                 {
                     int line = 0;
 
-                    gfx.Clear(Color.MidnightBlue);
-                    gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+                    gfx.Clear(Color.Black);
+                    gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
                     DrawString(gfx, String.Format("[1 - 4]: change WindowState (current: {0}).", this.WindowState), line++);
                     DrawString(gfx, String.Format("[5 - 7]: change WindowBorder (current: {0}).", this.WindowBorder), line++);
@@ -151,7 +151,7 @@ namespace Examples.Tests
 
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
+            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcColor);
 
             texture = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2D, texture);
