@@ -38,9 +38,10 @@ namespace OpenTK.Platform.Windows
             Debug.Indent();
 
             AssignHandle(parent.WindowHandle);
+            WinWindowInfo win = new WinWindowInfo(this.Handle, parent);
             Debug.Print("Input window attached to parent {0}", parent);
             keyboardDriver = new WinRawKeyboard(this.Handle);
-            mouseDriver = new WinRawMouse(this.Handle);
+            mouseDriver = new WinRawMouse();
             
             Debug.Unindent();
 
@@ -93,9 +94,7 @@ namespace OpenTK.Platform.Windows
                                 return;
 
                             case RawInputDeviceType.MOUSE:
-                                if (!mouseDriver.ProcessEvent(data))
-                                    Functions.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
-                                return;
+                                throw new NotSupportedException();
 
                             case RawInputDeviceType.HID:
                                 Functions.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);

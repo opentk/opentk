@@ -851,6 +851,9 @@ namespace OpenTK.Platform.Windows
         [DllImport("user32.dll", SetLastError = true)]
         public static extern BOOL BringWindowToTop(HWND hWnd);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern BOOL SetParent(HWND child, HWND newParent);
+
         #endregion
 
         #region Display settings
@@ -1353,17 +1356,6 @@ namespace OpenTK.Platform.Windows
         /// <remarks>
         /// GetRawInputData gets the raw input one RawInput structure at a time. In contrast, GetRawInputBuffer gets an array of RawInput structures.
         /// </remarks>
-        [CLSCompliant(false)]
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
-        internal static extern UINT GetRawInputData(
-            HRAWINPUT RawInput,
-            GetRawInputDataEnum Command,
-            [Out] LPVOID Data,
-            [In, Out] ref UINT Size,
-            UINT SizeHeader
-        );
-
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern INT GetRawInputData(
@@ -1395,23 +1387,22 @@ namespace OpenTK.Platform.Windows
         /// <remarks>
         /// GetRawInputData gets the raw input one RawInput structure at a time. In contrast, GetRawInputBuffer gets an array of RawInput structures.
         /// </remarks>
-        [CLSCompliant(false)]
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
-        internal static extern UINT GetRawInputData(
-            HRAWINPUT RawInput,
-            GetRawInputDataEnum Command,
-            /*[MarshalAs(UnmanagedType.LPStruct)]*/ [Out] out RawInput Data,
-            [In, Out] ref UINT Size,
-            UINT SizeHeader
-        );
-
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern INT GetRawInputData(
             HRAWINPUT RawInput,
             GetRawInputDataEnum Command,
             /*[MarshalAs(UnmanagedType.LPStruct)]*/ [Out] out RawInput Data,
+            [In, Out] ref INT Size,
+            INT SizeHeader
+        );
+
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        unsafe internal static extern INT GetRawInputData(
+            HRAWINPUT RawInput,
+            GetRawInputDataEnum Command,
+            RawInput* Data,
             [In, Out] ref INT Size,
             INT SizeHeader
         );
@@ -1487,7 +1478,7 @@ namespace OpenTK.Platform.Windows
 
     #region --- Constants ---
 
-        internal struct Constants
+        static class Constants
         {
             // Found in winuser.h
             internal const int KEYBOARD_OVERRUN_MAKE_CODE = 0xFF;
@@ -1574,6 +1565,8 @@ namespace OpenTK.Platform.Windows
             // (found in winuser.h)
             internal const int ENUM_REGISTRY_SETTINGS = -2;
             internal const int ENUM_CURRENT_SETTINGS = -1;
+
+            internal static readonly IntPtr MESSAGE_ONLY = new IntPtr(-3);
         }
 
         #endregion
@@ -2231,25 +2224,11 @@ namespace OpenTK.Platform.Windows
     /// <para>To get device specific information, call GetRawInputDeviceInfo with the hDevice from RAWINPUTHEADER.</para>
     /// <para>Raw input is available only when the application calls RegisterRawInputDevices with valid device specifications.</para>
     /// </remarks>
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct RawInput
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    struct RawInput
     {
-        internal RawInputHeader Header;
-        internal RawInputData Data;
-
-        internal byte[] ToByteArray()
-        {
-            unsafe
-            {
-                byte[] dump = new byte[API.RawInputSize];
-                fixed (RawInputDeviceType* ptr = &Header.Type)
-                {
-                    for (int i = 0; i < API.RawInputSize; i++)
-                        dump[i] = *((byte*)ptr + i);
-                    return dump;
-                }
-            }
-        }
+        public RawInputHeader Header;
+        public RawInputData Data;
     }
 
     [StructLayout(LayoutKind.Explicit)]
@@ -2350,38 +2329,9 @@ namespace OpenTK.Platform.Windows
     /// <summary>
     /// Contains information about the state of the mouse.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack=1)]
+    [StructLayout(LayoutKind.Explicit)]
     internal struct RawMouse
     {
-        //internal RawMouseFlags Flags;   // USHORT in winuser.h, but only INT works -- USHORT returns 0.
-        USHORT flags;
-        byte for_alignment;            // Not used -- used for alignment
-        /// <summary>
-        /// Reserved.
-        /// </summary>
-        //ULONG Buttons;
-        internal USHORT buttonFlags;
-        /// <summary>
-        /// If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.
-        /// </summary>
-        internal USHORT ButtonData;// { get { return (USHORT)((Buttons & 0xFFFF0000) >> 16); } }
-        /// <summary>
-        /// Raw state of the mouse buttons.
-        /// </summary>
-        internal ULONG RawButtons;
-        /// <summary>
-        /// Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
-        /// </summary>
-        internal LONG LastX;
-        /// <summary>
-        /// Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
-        /// </summary>
-        internal LONG LastY;
-        /// <summary>
-        /// Device-specific additional information for the event.
-        /// </summary>
-        internal ULONG ExtraInformation;
-
         /// <summary>
         /// Mouse state. This member can be any reasonable combination of the following. 
         /// MOUSE_ATTRIBUTES_CHANGED
@@ -2393,12 +2343,34 @@ namespace OpenTK.Platform.Windows
         /// MOUSE_VIRTUAL_DESKTOP
         /// Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).
         /// </summary>
-        internal RawMouseFlags Flags { get { return (RawMouseFlags)(flags); } }
+        [FieldOffset(0)] public RawMouseFlags Flags;  // USHORT in winuser.h, but only INT works -- USHORT returns 0.
+
+        [FieldOffset(4)] public RawInputMouseState ButtonFlags;
 
         /// <summary>
-        /// Transition state of the mouse buttons.
+        /// If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.
         /// </summary>
-        internal RawInputMouseState ButtonFlags { get { return (RawInputMouseState)(buttonFlags); } }
+        [FieldOffset(6)] public USHORT ButtonData;
+
+        /// <summary>
+        /// Raw state of the mouse buttons.
+        /// </summary>
+        [FieldOffset(8)] public ULONG RawButtons;
+
+        /// <summary>
+        /// Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
+        /// </summary>
+        [FieldOffset(12)] public LONG LastX;
+        
+        /// <summary>
+        /// Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
+        /// </summary>
+        [FieldOffset(16)] public LONG LastY;
+        
+        /// <summary>
+        /// Device-specific additional information for the event.
+        /// </summary>
+        [FieldOffset(20)] public ULONG ExtraInformation;
     }
 
     #endregion
@@ -2483,10 +2455,11 @@ namespace OpenTK.Platform.Windows
         /// Number of HID inputs in bRawData.
         /// </summary>
         internal DWORD Count;
-        /// <summary>
-        /// Raw input data as an array of bytes.
-        /// </summary>
-        internal BYTE RawData;
+        // The RawData field must be marshalled manually.
+        ///// <summary>
+        ///// Raw input data as an array of bytes.
+        ///// </summary>
+        //internal IntPtr RawData;
     }
 
     #endregion
@@ -3239,6 +3212,7 @@ namespace OpenTK.Platform.Windows
     /// <summary>
     /// Mouse indicator flags (found in winuser.h).
     /// </summary>
+    [Flags]
     internal enum RawMouseFlags : ushort
     {
         /// <summary>

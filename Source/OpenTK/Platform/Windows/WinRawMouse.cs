@@ -6,12 +6,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using OpenTK.Input;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
-using System.Drawing;
+using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
@@ -19,54 +18,64 @@ namespace OpenTK.Platform.Windows
     /// <summary>
     /// Contains methods to register for and process mouse WM_INPUT messages.
     /// </summary>
-    internal class WinRawMouse : IMouseDriver, IDisposable
+    internal class WinRawMouse : IMouseDriver
     {
-        private List<MouseDevice> mice = new List<MouseDevice>();
-        private IntPtr window;
-
-        #region --- Constructors ---
+        List<MouseState> mice;
+        Dictionary<ContextHandle, int> rawids; // ContextHandle instead of IntPtr for fast dictionary access
+        readonly INativeWindow native;
+        readonly IntPtr window;
+        readonly WindowProcedure WndProc;
+        readonly IntPtr OldWndProc;
 
         internal WinRawMouse()
-            : this(IntPtr.Zero)
-        {
-        }
-
-        internal WinRawMouse(IntPtr windowHandle)
         {
             Debug.WriteLine("Initializing mouse driver (WinRawMouse).");
             Debug.Indent();
 
-            this.window = windowHandle;
+            // Create a new message-only window to retrieve WM_INPUT messages.
+            native = new NativeWindow();
+            window = (native.WindowInfo as WinWindowInfo).WindowHandle;
+            //Functions.SetParent(window, Constants.MESSAGE_ONLY);
+            // Subclass the window to retrieve the events we are interested in.
+            WndProc = WindowProcedure;
+            OldWndProc = Functions.SetWindowLong(window, WndProc);
+            native.ProcessEvents();
 
-            RegisterDevices();
+            RegisterDevices(window, out mice, out rawids);
 
             Debug.Unindent();
         }
 
-        #endregion
+        #region IMouseDriver Members
 
-        #region --- IMouseDriver Members ---
-
-        public IList<MouseDevice> Mouse
-        {
-            get { return mice; }
-        }
+        public IList<MouseDevice> Mouse { get { throw new NotImplementedException(); } }
 
         public MouseState GetState()
         {
-            throw new NotImplementedException();
+            native.ProcessEvents();
+            if (mice.Count > 0)
+                return mice[0];
+            else
+                return new MouseState();
         }
 
         public MouseState GetState(int index)
         {
-            throw new NotImplementedException();
+            native.ProcessEvents();
+            if (index < mice.Count)
+                return mice[index];
+            else
+                return new MouseState();
         }
 
-        #region public int RegisterDevices()
+        #endregion
 
-        public int RegisterDevices()
+        static int RegisterDevices(IntPtr window, out List<MouseState> mice, out Dictionary<ContextHandle, int> rawids)
         {
             int count = WinRawInput.DeviceCount;
+            mice = new List<MouseState>();
+            rawids = new Dictionary<ContextHandle, int>();
+
             RawInputDeviceList[] ridl = new RawInputDeviceList[count];
             for (int i = 0; i < count; i++)
                 ridl[i] = new RawInputDeviceList();
@@ -114,22 +123,14 @@ namespace OpenTK.Platform.Windows
 
                     if (!String.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("mouse"))
                     {
-                        OpenTK.Input.MouseDevice mouse = new OpenTK.Input.MouseDevice();
-                        mouse.Description = deviceDesc;
-
-                        // Register the keyboard:
+                        // Register the device:
                         RawInputDeviceInfo info = new RawInputDeviceInfo();
                         int devInfoSize = API.RawInputDeviceInfoSize;
                         Functions.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICEINFO,
                                 info, ref devInfoSize);
 
-                        mouse.NumberOfButtons = info.Device.Mouse.NumberOfButtons;
-                        mouse.NumberOfWheels = info.Device.Mouse.HasHorizontalWheel ? 1 : 0;
-
-                        mouse.DeviceID = ridl[i].Device;//(IntPtr)info.Device.Mouse.Id;
-
-                        this.RegisterRawDevice(mouse);
-                        mice.Add(mouse);
+                        mice.Add(RegisterRawDevice(deviceDesc, window));
+                        rawids.Add(new ContextHandle(ridl[i].Device), mice.Count - 1);
                     }
                 }
             }
@@ -137,14 +138,9 @@ namespace OpenTK.Platform.Windows
             return count;
         }
 
-        #endregion
-
-        #endregion
-
-        #region internal void RegisterRawDevice(OpenTK.Input.Mouse mouse)
-
-        internal void RegisterRawDevice(OpenTK.Input.MouseDevice mouse)
+        static MouseState RegisterRawDevice(string device, IntPtr window)
         {
+            MouseState state = new MouseState();
             RawInputDevice[] rid = new RawInputDevice[1];
             // Mouse is 1/2 (page/id). See http://www.microsoft.com/whdc/device/input/HID_HWID.mspx
             rid[0] = new RawInputDevice();
@@ -164,106 +160,96 @@ namespace OpenTK.Platform.Windows
             }
             else
             {
-                Debug.Print("Registered mouse {0}", mouse.ToString());
+                Debug.Print("Registered mouse {0}", device);
                 Point p = new Point();
                 if (Functions.GetCursorPos(ref p))
-                    mouse.Position = p;
+                {
+                    state.X = p.X;
+                    state.Y = p.Y;
+                }
             }
+
+            return state;
         }
 
-        #endregion
-
-        #region internal bool ProcessEvent(API.RawInput rin)
-
-        /// <summary>
-        /// Processes raw input events.
-        /// </summary>
-        /// <param name="rin"></param>
-        /// <returns></returns>
-        internal bool ProcessEvent(RawInput rin)
+        IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            //MouseDevice mouse = mice.Find(delegate(MouseDevice m)
-            //{
-            //    return m.DeviceID == rin.Header.Device;
-            //});
-            MouseDevice mouse;
-            if (mice.Count > 0) mouse = mice[0];
-            else return false;
-
-            switch (rin.Header.Type)
+            switch (message)
             {
-                case RawInputDeviceType.MOUSE:
-                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.LEFT_BUTTON_DOWN) != 0) mouse[MouseButton.Left] = true;
-                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.LEFT_BUTTON_UP) != 0) mouse[MouseButton.Left] = false;
-                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_DOWN) != 0) mouse[MouseButton.Right] = true;
-                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_UP) != 0) mouse[MouseButton.Right] = false;
-                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_DOWN) != 0) mouse[MouseButton.Middle] = true;
-                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_UP) != 0) mouse[MouseButton.Middle] = false;
-                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.BUTTON_4_DOWN) != 0) mouse[MouseButton.Button1] = true;
-                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.BUTTON_4_UP) != 0) mouse[MouseButton.Button1] = false;
-                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0) mouse[MouseButton.Button2] = true;
-                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0) mouse[MouseButton.Button2] = false;
+                case WindowMessage.INPUT:
+                    int expected_size = 0, real_size = 0;
+                    RawInput data = new RawInput();
 
-                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.WHEEL) != 0)
-                        mouse.Wheel += (short)rin.Data.Mouse.ButtonData / 120;
-
-                    if ((rin.Data.Mouse.Flags & RawMouseFlags.MOUSE_MOVE_ABSOLUTE) != 0)
-                    {
-                        mouse.Position = new Point(rin.Data.Mouse.LastX, rin.Data.Mouse.LastY);
-                    }
-                    else
-                    {   // Seems like MOUSE_MOVE_RELATIVE is the default, unless otherwise noted.
-                        mouse.Position = new Point(mouse.X + rin.Data.Mouse.LastX,
-                                                                  mouse.Y + rin.Data.Mouse.LastY);
-                    }
-
-                    if ((rin.Data.Mouse.Flags & RawMouseFlags.MOUSE_VIRTUAL_DESKTOP) != 0)
-                        Debug.WriteLine(String.Format("Mouse {0} defines MOUSE_VIRTUAL_DESKTOP flag, please report at http://www.opentk.com", mouse.ToString()));
+                    // Get the size of the input buffer
+                    Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
+                        IntPtr.Zero, ref expected_size, API.RawInputHeaderSize);
                     
-                    return true;
+                    // Read the actual data
+                    unsafe
+                    {
+                        real_size = Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
+                            &data, ref expected_size, API.RawInputHeaderSize);
+                    }
+
+                    if (real_size == expected_size)
+                    {
+                        if (data.Header.Type == RawInputDeviceType.MOUSE)
+                        {
+                            if (ProcessEvent(data.Header.Device, data.Data.Mouse))
+                            {
+                                return IntPtr.Zero;
+                            }
+                        }
+                    }
+                    // We didn't handle this message after all, give it back to the old WndProc.
+                    goto default;
 
                 default:
-                    throw new ApplicationException("WinRawMouse driver received invalid data.");
+                    return Functions.CallWindowProc(OldWndProc, handle, message, wParam, lParam);
             }
         }
 
-        #endregion
-
-        #region public void Poll()
-
-        public void Poll()
+        bool ProcessEvent(IntPtr device, RawMouse raw)
         {
-        }
+            if (mice.Count == 0)
+                return false;
 
-        #endregion
+            ContextHandle handle = new ContextHandle(device);
+            MouseState mouse;
+            if (rawids.ContainsKey(handle))
+                mouse = mice[rawids[handle]];
+            else
+                return false;
 
-        #region --- IDisposable Members ---
+            if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_DOWN) != 0) mouse.EnableBit((int)MouseButton.Left);
+            if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_UP) != 0) mouse.DisableBit((int)MouseButton.Left);
+            if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_DOWN) != 0) mouse.EnableBit((int)MouseButton.Right);
+            if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_UP) != 0) mouse.DisableBit((int)MouseButton.Right);
+            if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_DOWN) != 0) mouse.EnableBit((int)MouseButton.Middle);
+            if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_UP) != 0) mouse.DisableBit((int)MouseButton.Middle);
+            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_DOWN) != 0) mouse.EnableBit((int)MouseButton.Button1);
+            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_UP) != 0) mouse.DisableBit((int)MouseButton.Button1);
+            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0) mouse.EnableBit((int)MouseButton.Button2);
+            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0) mouse.DisableBit((int)MouseButton.Button2);
 
-        private bool disposed;
+            if ((raw.ButtonFlags & RawInputMouseState.WHEEL) != 0)
+                mouse.WheelPrecise += (short)raw.ButtonData / 120.0f;
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool manual)
-        {
-            if (!disposed)
+            if ((raw.Flags & RawMouseFlags.MOUSE_MOVE_ABSOLUTE) != 0)
             {
-                if (manual)
-                {
-                    mice.Clear();
-                }
-                disposed = true;
+                mouse.X = raw.LastX;
+                mouse.Y = raw.LastY;
             }
+            else
+            {   // Seems like MOUSE_MOVE_RELATIVE is the default, unless otherwise noted.
+                mouse.X += raw.LastX;
+                mouse.Y += raw.LastY;
+            }
+
+            mice[rawids[handle]] = mouse;
+            return true;
         }
 
-        ~WinRawMouse()
-        {
-            Dispose(false);
-        }
 
-        #endregion
     }
 }
