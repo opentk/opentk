@@ -36,6 +36,9 @@ namespace OpenTK.Platform.Windows
 
     class WinFactory : IPlatformFactory 
     {
+        readonly object SyncRoot = new object();
+        IInputDriver2 inputDriver;
+
         #region IPlatformFactory Members
 
         public virtual INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
@@ -73,22 +76,34 @@ namespace OpenTK.Platform.Windows
 
         public virtual OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
         {
-            throw new NotImplementedException();            
-            // If Windows version is NT5 or higher, we are able to use raw input.
-            if (System.Environment.OSVersion.Version.Major >= 5)
-                return new WinRawKeyboard();
-            else
-                return new WMInput(null);
+
+            return InputDriver.KeyboardDriver;
         }
 
         public virtual OpenTK.Input.IMouseDriver CreateMouseDriver()
         {
-            if (System.Environment.OSVersion.Version.Major >= 5)
-                return new WinRawMouse();
-            else
-                return new WMInput(null);
+            return InputDriver.MouseDriver;
         }
         
         #endregion
+
+        IInputDriver2 InputDriver
+        {
+            get
+            {
+                lock (SyncRoot)
+                {
+                    if (inputDriver == null)
+                    {
+                        // If Windows version is NT5 or higher, we are able to use raw input.
+                        if (System.Environment.OSVersion.Version.Major >= 5)
+                            inputDriver = new WinRawInput();
+                        else
+                            inputDriver = new WMInput(null);
+                    }
+                    return inputDriver;
+                }
+            }
+        }
     }
 }
