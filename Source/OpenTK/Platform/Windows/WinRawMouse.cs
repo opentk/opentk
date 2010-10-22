@@ -1,7 +1,28 @@
-﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- */
+﻿#region License
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2010 the Open Toolkit library.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
 #endregion
 
 using System;
@@ -22,25 +43,17 @@ namespace OpenTK.Platform.Windows
     {
         List<MouseState> mice;
         Dictionary<ContextHandle, int> rawids; // ContextHandle instead of IntPtr for fast dictionary access
-        readonly INativeWindow native;
-        readonly IntPtr window;
-        readonly WindowProcedure WndProc;
-        readonly IntPtr OldWndProc;
+        readonly IntPtr Window;
 
-        internal WinRawMouse()
+        public WinRawMouse(IntPtr window)
         {
             Debug.WriteLine("Initializing mouse driver (WinRawMouse).");
             Debug.Indent();
 
-            // Create a new message-only window to retrieve WM_INPUT messages.
-            native = new NativeWindow();
-            window = (native.WindowInfo as WinWindowInfo).WindowHandle;
-            //Functions.SetParent(window, Constants.MESSAGE_ONLY);
-            // Subclass the window to retrieve the events we are interested in.
-            WndProc = WindowProcedure;
-            OldWndProc = Functions.SetWindowLong(window, WndProc);
-            native.ProcessEvents();
+            if (window == IntPtr.Zero)
+                throw new ArgumentNullException("window");
 
+            Window = window;
             RegisterDevices(window, out mice, out rawids);
 
             Debug.Unindent();
@@ -52,7 +65,6 @@ namespace OpenTK.Platform.Windows
 
         public MouseState GetState()
         {
-            native.ProcessEvents();
             if (mice.Count > 0)
                 return mice[0];
             else
@@ -61,7 +73,6 @@ namespace OpenTK.Platform.Windows
 
         public MouseState GetState(int index)
         {
-            native.ProcessEvents();
             if (index < mice.Count)
                 return mice[index];
             else
@@ -172,49 +183,14 @@ namespace OpenTK.Platform.Windows
             return state;
         }
 
-        IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
-        {
-            switch (message)
-            {
-                case WindowMessage.INPUT:
-                    int expected_size = 0, real_size = 0;
-                    RawInput data = new RawInput();
-
-                    // Get the size of the input buffer
-                    Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
-                        IntPtr.Zero, ref expected_size, API.RawInputHeaderSize);
-                    
-                    // Read the actual data
-                    unsafe
-                    {
-                        real_size = Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
-                            &data, ref expected_size, API.RawInputHeaderSize);
-                    }
-
-                    if (real_size == expected_size)
-                    {
-                        if (data.Header.Type == RawInputDeviceType.MOUSE)
-                        {
-                            if (ProcessEvent(data.Header.Device, data.Data.Mouse))
-                            {
-                                return IntPtr.Zero;
-                            }
-                        }
-                    }
-                    // We didn't handle this message after all, give it back to the old WndProc.
-                    goto default;
-
-                default:
-                    return Functions.CallWindowProc(OldWndProc, handle, message, wParam, lParam);
-            }
-        }
-
-        bool ProcessEvent(IntPtr device, RawMouse raw)
+        public bool ProcessMouseEvent(RawInput rin)
         {
             if (mice.Count == 0)
                 return false;
 
-            ContextHandle handle = new ContextHandle(device);
+            RawMouse raw = rin.Data.Mouse;
+            ContextHandle handle = new ContextHandle(rin.Header.Device);
+
             MouseState mouse;
             if (rawids.ContainsKey(handle))
                 mouse = mice[rawids[handle]];
@@ -249,7 +225,5 @@ namespace OpenTK.Platform.Windows
             mice[rawids[handle]] = mouse;
             return true;
         }
-
-
     }
 }

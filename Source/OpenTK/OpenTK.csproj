@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -131,6 +131,7 @@
     <Compile Include="DisplayDevice.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Input\IInputDriver2.cs" />
     <Compile Include="WindowBorder.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -549,9 +550,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Input\MouseState.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Input\InputDriver.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Input\GamePadState.cs">
