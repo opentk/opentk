@@ -856,7 +856,7 @@ namespace OpenTK.Platform.Windows
                     while (cursor_visible_count < 0);
 
                     if (!Functions.ClipCursor(IntPtr.Zero))
-                        Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
+                        Debug.WriteLine(String.Format("Failed to ungrab cursor. Error: {0}",
                             Marshal.GetLastWin32Error()));
                 }
                 else if (!value && cursor_visible_count >= 0)
@@ -867,7 +867,10 @@ namespace OpenTK.Platform.Windows
                     }
                     while (cursor_visible_count >= 0);
 
-                    Win32Rectangle rect = Win32Rectangle.From(Bounds);
+                    Win32Rectangle rect = Win32Rectangle.From(ClientRectangle);
+                    Point pos = PointToScreen(new Point(rect.left, rect.top));
+                    rect.left = pos.X;
+                    rect.top = pos.Y;
                     if (!Functions.ClipCursor(ref rect))
                         Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
                             Marshal.GetLastWin32Error()));
@@ -1064,7 +1067,7 @@ namespace OpenTK.Platform.Windows
         {
             if (!Functions.ScreenToClient(window.WindowHandle, ref point))
                 throw new InvalidOperationException(String.Format(
-                    "Could not convert point {0} from client to screen coordinates. Windows error: {1}",
+                    "Could not convert point {0} from screen to client coordinates. Windows error: {1}",
                     point.ToString(), Marshal.GetLastWin32Error()));
 
             return point;
@@ -1074,9 +1077,14 @@ namespace OpenTK.Platform.Windows
 
         #region PointToScreen
 
-        public Point PointToScreen(Point p)
+        public Point PointToScreen(Point point)
         {
-            throw new NotImplementedException();
+            if (!Functions.ClientToScreen(window.WindowHandle, ref point))
+                throw new InvalidOperationException(String.Format(
+                    "Could not convert point {0} from screen to client coordinates. Windows error: {1}",
+                    point.ToString(), Marshal.GetLastWin32Error()));
+
+            return point;
         }
 
         #endregion
