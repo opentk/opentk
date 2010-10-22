@@ -209,6 +209,10 @@ namespace OpenTK.Platform.Windows
                                 if (suppress_resize <= 0 && Resize != null)
                                     Resize(this, EventArgs.Empty);
                             }
+
+                            // Ensure cursor remains grabbed
+                            if (!CursorVisible)
+                                GrabCursor();
                         }
                     }
                     break;
@@ -228,6 +232,10 @@ namespace OpenTK.Platform.Windows
                         }
                     }
 
+                    // Ensure cursor remains grabbed
+                    if (!CursorVisible)
+                        GrabCursor();
+                    
                     break;
 
                 case WindowMessage.SIZE:
@@ -249,6 +257,10 @@ namespace OpenTK.Platform.Windows
                         if (WindowStateChanged != null)
                             WindowStateChanged(this, EventArgs.Empty);
                     }
+
+                    // Ensure cursor remains grabbed
+                    if (!CursorVisible)
+                        GrabCursor();
 
                     break;
 
@@ -630,6 +642,24 @@ namespace OpenTK.Platform.Windows
             suppress_resize--;
         }
 
+        void GrabCursor()
+        {
+            Win32Rectangle rect = Win32Rectangle.From(ClientRectangle);
+            Point pos = PointToScreen(new Point(rect.left, rect.top));
+            rect.left = pos.X;
+            rect.top = pos.Y;
+            if (!Functions.ClipCursor(ref rect))
+                Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
+                    Marshal.GetLastWin32Error()));
+        }
+
+        static void UngrabCursor()
+        {
+            if (!Functions.ClipCursor(IntPtr.Zero))
+                Debug.WriteLine(String.Format("Failed to ungrab cursor. Error: {0}",
+                    Marshal.GetLastWin32Error()));
+        }
+
         #endregion
 
         #region INativeWindow Members
@@ -844,7 +874,7 @@ namespace OpenTK.Platform.Windows
         
         public bool CursorVisible
         {
-            get { return cursor_visible_count > 0; } // Not used
+            get { return cursor_visible_count >= 0; } // Not used
             set
             {
                 if (value && cursor_visible_count < 0)
@@ -855,9 +885,7 @@ namespace OpenTK.Platform.Windows
                     }
                     while (cursor_visible_count < 0);
 
-                    if (!Functions.ClipCursor(IntPtr.Zero))
-                        Debug.WriteLine(String.Format("Failed to ungrab cursor. Error: {0}",
-                            Marshal.GetLastWin32Error()));
+                    UngrabCursor();
                 }
                 else if (!value && cursor_visible_count >= 0)
                 {
@@ -867,13 +895,7 @@ namespace OpenTK.Platform.Windows
                     }
                     while (cursor_visible_count >= 0);
 
-                    Win32Rectangle rect = Win32Rectangle.From(ClientRectangle);
-                    Point pos = PointToScreen(new Point(rect.left, rect.top));
-                    rect.left = pos.X;
-                    rect.top = pos.Y;
-                    if (!Functions.ClipCursor(ref rect))
-                        Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
-                            Marshal.GetLastWin32Error()));
+                    GrabCursor();
                 }
             }
         }
