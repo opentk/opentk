@@ -41,7 +41,7 @@ namespace OpenTK.Platform.X11
         Dictionary<int, int> rawids = new Dictionary<int, int>(); // maps raw ids to mouse ids
         int first_mouse;
         readonly X11WindowInfo window;
-        readonly int XIOpCode;
+        static int XIOpCode;
 
         static readonly Functions.EventPredicate PredicateImpl = IsEventValid;
         readonly IntPtr Predicate = Marshal.GetFunctionPointerForDelegate(PredicateImpl);
@@ -65,24 +65,39 @@ namespace OpenTK.Platform.X11
                 }
             }
 
-            using (new XLock(window.Display))
-            {
-                int major, ev, error;
-                if (Functions.XQueryExtension(window.Display, "XInputExtension", out major, out ev, out error) == 0)
-                {
-                    Debug.WriteLine("XInput2 not supported.");
-                    throw new NotSupportedException();
-                }
-                XIOpCode = major;
+            if (!IsSupported(window.Display))
+                throw new NotSupportedException("XInput2 not supported.");
 
-                using (XIEventMask mask = new XIEventMask(1, XIEventMasks.RawButtonPressMask |
+            using (XIEventMask mask = new XIEventMask(1, XIEventMasks.RawButtonPressMask |
                     XIEventMasks.RawButtonReleaseMask | XIEventMasks.RawMotionMask))
-                {
-                    Functions.XISelectEvents(window.Display, window.WindowHandle, mask);
-                }
+            {
+                Functions.XISelectEvents(window.Display, window.WindowHandle, mask);
             }
+
             Debug.WriteLine("Using XI2Mouse.");
         }
+
+        // Checks whether XInput2 is supported on the specified display.
+        // If a display is not specified, the default display is used.
+        internal static bool IsSupported(IntPtr display)
+        {
+            if (display == IntPtr.Zero)
+                display = API.DefaultDisplay;
+
+            using (new XLock(display))
+            {
+                int major, ev, error;
+                if (Functions.XQueryExtension(display, "XInputExtension", out major, out ev, out error) == 0)
+                {
+                    return false;
+                }
+                XIOpCode = major;
+            }
+
+            return true;
+        }
+
+        #region IMouseDriver Members
 
         // Todo: remove this
         public IList<MouseDevice> Mouse { get { throw new NotSupportedException(); } }
@@ -104,6 +119,8 @@ namespace OpenTK.Platform.X11
             else
                 return new MouseState();
         }
+
+        #endregion
 
         void ProcessEvents()
         {
