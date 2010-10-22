@@ -1,7 +1,28 @@
-﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- */
+﻿#region License
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2010 the Open Toolkit library.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
 #endregion
 
 #region --- Using directives ---
@@ -13,49 +34,51 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Windows.Forms;
 using OpenTK.Input;
+using System.Threading;
 
 #endregion
 
 namespace OpenTK.Platform.Windows
 {
     // Not complete.
-    sealed class WinRawInput : System.Windows.Forms.NativeWindow, IInputDriver
+    sealed class WinRawInput : IInputDriver, IInputDriver2
     {
         // Input event data.
-        RawInput data = new RawInput();
-        // The total number of input devices connected to this system.
-        static int deviceCount;
-        int rawInputStructSize = API.RawInputSize;
+        static RawInput data = new RawInput();
+        static readonly int rawInputStructSize = API.RawInputSize;
+        static readonly Thread InputThread = new Thread(ProcessEvents);
 
-        private WinRawKeyboard keyboardDriver;
-        private WinRawMouse mouseDriver;
+        static WinRawKeyboard keyboardDriver;
+        static WinRawMouse mouseDriver;
+        static readonly WinMMJoystick joystickDriver = new WinMMJoystick();
 
-        #region --- Constructors ---
+        static INativeWindow Native;
+        static WinWindowInfo Parent { get { return Native.WindowInfo as WinWindowInfo; } }
+        static readonly WindowProcedure WndProc = WindowProcedureImplementation;
+        static IntPtr OldWndProc;
 
-        internal WinRawInput(WinWindowInfo parent)
+        #region Constructors
+
+        public WinRawInput()
         {
-            Debug.WriteLine("Initalizing windows raw input driver.");
-            Debug.Indent();
+            InputThread.IsBackground = true;
+            InputThread.Start();
 
-            AssignHandle(parent.WindowHandle);
-            WinWindowInfo win = new WinWindowInfo(this.Handle, parent);
-            Debug.Print("Input window attached to parent {0}", parent);
-            keyboardDriver = new WinRawKeyboard(this.Handle);
-            mouseDriver = new WinRawMouse();
-            
-            Debug.Unindent();
-
-            //AllocateBuffer();
+            while (mouseDriver == null || keyboardDriver == null)
+                Thread.Sleep(0);
         }
 
         #endregion
 
-        #region internal static int DeviceCount
+        #region Public Members
 
-        internal static int DeviceCount
+        #region DeviceCount
+
+        public static int DeviceCount
         {
             get
             {
+                int deviceCount = 0;
                 Functions.GetRawInputDeviceList(null, ref deviceCount, API.RawInputDeviceListSize);
                 return deviceCount;
             }
@@ -63,72 +86,103 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region protected override void WndProc(ref Message msg)
+        #endregion
 
-        /// <summary>
-        /// Processes the input Windows Message, routing the buffer to the correct Keyboard, Mouse or HID.
-        /// </summary>
-        /// <param name="msg">The WM_INPUT message, containing the buffer on the input event.</param>
-        protected override void WndProc(ref Message msg)
+        #region Private Members
+
+        #region ConstructMessageWindow
+
+        static INativeWindow ConstructMessageWindow()
         {
-            switch ((WindowMessage)msg.Msg)
-            {
-                case WindowMessage.INPUT:
-                    int size = 0;
-                    // Get the size of the input buffer
-                    Functions.GetRawInputData(msg.LParam, GetRawInputDataEnum.INPUT,
-                        IntPtr.Zero, ref size, API.RawInputHeaderSize);
+            Debug.WriteLine("Initializing windows raw input driver.");
+            Debug.Indent();
 
-                    //if (buffer == null || API.RawInputSize < size)
-                    //{
-                    //    throw new ApplicationException("Critical error when processing raw windows input.");
-                    //}
-                    if (size == Functions.GetRawInputData(msg.LParam, GetRawInputDataEnum.INPUT,
-                            out data, ref size, API.RawInputHeaderSize))
-                    {
-                        switch (data.Header.Type)
-                        {
-                            case RawInputDeviceType.KEYBOARD:
-                                if (!keyboardDriver.ProcessKeyboardEvent(data))
-                                    Functions.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
-                                return;
+            // Create a new message-only window to retrieve WM_INPUT messages.
+            Native = new NativeWindow();
+            Native.ProcessEvents();
+            Functions.SetParent(Parent.WindowHandle, Constants.MESSAGE_ONLY);
+            Native.ProcessEvents();
 
-                            case RawInputDeviceType.MOUSE:
-                                throw new NotSupportedException();
+            // Subclass the window to retrieve the events we are interested in.
+            OldWndProc = Functions.SetWindowLong(Parent.WindowHandle, WndProc);
 
-                            case RawInputDeviceType.HID:
-                                Functions.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
-                                return;
+            Debug.Print("Input window attached to parent {0}", Parent);
+            keyboardDriver = new WinRawKeyboard(Parent.WindowHandle);
+            mouseDriver = new WinRawMouse(Parent.WindowHandle);
 
-                            default:
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        throw new ApplicationException(String.Format(
-                            "GetRawInputData returned invalid buffer. Windows error {0}. Please file a bug at http://opentk.sourceforge.net",
-                            Marshal.GetLastWin32Error()));
-                    }
-                    break;
-                
-                case WindowMessage.DESTROY:
-                    Debug.Print("Input window detached from parent {0}.", Handle);
-                    ReleaseHandle();
-                    break;
-
-                case WindowMessage.QUIT:
-                    Debug.WriteLine("Input window quit.");
-                    this.Dispose();
-                    break;
-            }
-
-            base.WndProc(ref msg);
+            Debug.Unindent();
+            return Native;
         }
 
         #endregion
 
-        #region --- IInputDriver Members ---
+        #region WindowProcedureImplementation
+
+        // Processes the input Windows Message, routing the buffer to the correct Keyboard, Mouse or HID.
+        static IntPtr WindowProcedureImplementation(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            switch (message)
+            {
+                case WindowMessage.INPUT:
+                    int size = 0;
+                    // Get the size of the input buffer
+                    Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
+                        IntPtr.Zero, ref size, API.RawInputHeaderSize);
+
+                    // Read the actual raw input structure
+                    if (size == Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
+                        out data, ref size, API.RawInputHeaderSize))
+                    {
+                        switch (data.Header.Type)
+                        {
+                            case RawInputDeviceType.KEYBOARD:
+                                if (keyboardDriver.ProcessKeyboardEvent(data))
+                                    return IntPtr.Zero;
+                                break;
+
+                            case RawInputDeviceType.MOUSE:
+                                if (mouseDriver.ProcessMouseEvent(data))
+                                    return IntPtr.Zero;
+                                break;
+
+                            case RawInputDeviceType.HID:
+                                break;
+                        }
+                    }
+                    break;
+            }
+            return Functions.CallWindowProc(OldWndProc, handle, message, wParam, lParam);
+        }
+
+        #endregion
+
+        #region ProcessEvents
+
+        static void ProcessEvents()
+        {
+            INativeWindow native = ConstructMessageWindow();
+
+            MSG msg = new MSG();
+            while (native.Exists)
+            {
+                int ret = Functions.GetMessage(ref msg, Parent.WindowHandle, 0, 0);
+                if (ret == -1)
+                {
+                    throw new PlatformException(String.Format(
+                        "An error happened while processing the message queue. Windows error: {0}",
+                        Marshal.GetLastWin32Error()));
+                }
+
+                Functions.TranslateMessage(ref msg);
+                Functions.DispatchMessage(ref msg);
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region IInputDriver Members
 
         #region IInputDriver Members
 
@@ -203,7 +257,7 @@ namespace OpenTK.Platform.Windows
 
         public IList<KeyboardDevice> Keyboard
         {
-            get { return keyboardDriver.Keyboard; }
+            get { return KeyboardDriver.Keyboard; }
         }
 
         public KeyboardState GetState()
@@ -222,7 +276,7 @@ namespace OpenTK.Platform.Windows
 
         public IList<MouseDevice> Mouse
         {
-            get { return mouseDriver.Mouse; }
+            get { return MouseDriver.Mouse; }
         }
 
         MouseState IMouseDriver.GetState()
@@ -248,7 +302,26 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region --- IDisposable Members ---
+        #region IInputDriver2 Members
+
+        public IMouseDriver MouseDriver
+        {
+            get { return mouseDriver; }
+        }
+
+        public IKeyboardDriver KeyboardDriver
+        {
+            get { return keyboardDriver; }
+        }
+
+        public IJoystickDriver JoystickDriver
+        {
+            get { return joystickDriver; }
+        }
+
+        #endregion
+
+        #region IDisposable Members
 
         private bool disposed;
 
@@ -265,7 +338,7 @@ namespace OpenTK.Platform.Windows
                 if (manual)
                 {
                     keyboardDriver.Dispose();
-                    this.ReleaseHandle();
+                    //mouseDriver.Dispose();
                 }
 
                 disposed = true;
@@ -274,6 +347,7 @@ namespace OpenTK.Platform.Windows
 
         ~WinRawInput()
         {
+            Debug.Print("[Warning] Resource leaked: {0}.", this);
             Dispose(false);
         }
 
