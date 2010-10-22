@@ -83,7 +83,10 @@ namespace OpenTK.Platform.Windows
 
         public virtual OpenTK.Input.IMouseDriver CreateMouseDriver()
         {
-            throw new NotImplementedException();
+            if (System.Environment.OSVersion.Version.Major >= 5)
+                return new WinRawMouse();
+            else
+                return new WMInput(null);
         }
         
         #endregion
