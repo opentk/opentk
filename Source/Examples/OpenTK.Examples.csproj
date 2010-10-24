@@ -143,6 +143,7 @@
     <Compile Include="ExampleInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="OpenGL\1.x\OpenGLDiagnostics.cs" />
     <Compile Include="SamplesTreeViewSorter.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -543,6 +544,7 @@
     <None Include="Data\Audio\the_ring_that_fell.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <EmbeddedResource Include="OpenGL\1.x\OpenGLDiagnostics.rtf" />
     <None Include="Resources\App.ico">
     </None>
     <None Include="..\OpenTK\OpenTK.dll.config">
