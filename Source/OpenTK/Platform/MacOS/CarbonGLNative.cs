@@ -144,6 +144,7 @@ namespace OpenTK.Platform.MacOS
 
             DisposeUPP();
 
+            Disposed(this, EventArgs.Empty);
         }
 
         ~CarbonGLNative()
@@ -419,11 +420,16 @@ namespace OpenTK.Platform.MacOS
                 case WindowEventKind.WindowBoundsChanged:
                     int thisWidth = Width;
                     int thisHeight = Height;
+                    int thisX = X;
+                    int thisY = Y;
 
                     LoadSize();
 
+                    if (thisX != X || thisY != Y)
+                        Move(this, EventArgs.Empty);
+
                     if (thisWidth != Width || thisHeight != Height)
-                        OnResize();
+                        Resize(this, EventArgs.Empty);
 
                     return OSStatus.EventNotHandled;
 
@@ -661,15 +667,6 @@ namespace OpenTK.Platform.MacOS
 			API.SizeWindow(window.WindowRef, width, height, true);
 		}
 		
-        protected void OnResize()
-        {
-            LoadSize();
-
-            if (Resize != null)
-            {
-                Resize(this, EventArgs.Empty);
-            }
-        }
 
         private void LoadSize()
         {
@@ -733,10 +730,16 @@ namespace OpenTK.Platform.MacOS
 
         public Icon Icon
         {
-			get { return mIcon; }
-            set {
-				SetIcon(value);
-			}
+            get { return mIcon; }
+            set
+            {
+                if (value != Icon)
+                {
+                    SetIcon(value);
+                    mIcon = value;
+                    IconChanged(this, EventArgs.Empty);
+                }
+            }
         }
 
 		private void SetIcon(Icon icon)
@@ -798,8 +801,12 @@ namespace OpenTK.Platform.MacOS
             }
             set
             {
-                API.SetWindowTitle(window.WindowRef, value);
-                title = value;
+                if (value != Title)
+                {
+                    API.SetWindowTitle(window.WindowRef, value);
+                    title = value;
+                    TitleChanged(this, EventArgs.Empty);
+                }
             }
         }
 
@@ -808,10 +815,15 @@ namespace OpenTK.Platform.MacOS
             get { return API.IsWindowVisible(window.WindowRef); }
             set
             {
-                if (value && Visible == false)
-                    Show();
-                else
-                    Hide();
+                if (value != Visible)
+                {
+                    if (value)
+                        Show();
+                    else
+                        Hide();
+
+                    VisibleChanged(this, EventArgs.Empty);
+                }
             }
         }
 
@@ -917,7 +929,8 @@ namespace OpenTK.Platform.MacOS
             set
             {
 				API.SizeWindow(window.WindowRef, (short)value.Width, (short)value.Height, true);
-				OnResize();
+                LoadSize();
+                Resize(this, EventArgs.Empty);
             }
         }
 
@@ -1019,9 +1032,9 @@ namespace OpenTK.Platform.MacOS
 			}
 
 
-			OnWindowStateChanged();
-
-			OnResize();
+            WindowStateChanged(this, EventArgs.Empty);
+            LoadSize();
+            Resize(this, EventArgs.Empty);
 		}
 
 		public WindowBorder WindowBorder
@@ -1048,8 +1061,7 @@ namespace OpenTK.Platform.MacOS
 											   WindowAttributes.Resizable | WindowAttributes.FullZoom);
 				}
 
-				if (WindowBorderChanged != null)
-					WindowBorderChanged(this, EventArgs.Empty);
+				WindowBorderChanged(this, EventArgs.Empty);
 			}
 		}
 
@@ -1057,76 +1069,65 @@ namespace OpenTK.Platform.MacOS
 
 		private void OnKeyPress(KeyPressEventArgs keyPressArgs)
 		{
-			if (KeyPress != null)
-				KeyPress(this, keyPressArgs);
+			KeyPress(this, keyPressArgs);
 		}
 
 
 		private void OnWindowStateChanged()
 		{
-			if (WindowStateChanged != null)
-				WindowStateChanged(this, EventArgs.Empty);
+			WindowStateChanged(this, EventArgs.Empty);
 		}
 
 		protected virtual void OnClosing(CancelEventArgs e)
 		{
-			if (Closing != null)
-				Closing(this, e);
+			Closing(this, e);
 		}
 
 		protected virtual void OnClosed()
 		{
-			if (Closed != null)
-				Closed(this, EventArgs.Empty);
+			Closed(this, EventArgs.Empty);
 		}
 
 
 		private void OnMouseLeave()
 		{
-			if (MouseLeave != null)
-				MouseLeave(this, EventArgs.Empty);
+			MouseLeave(this, EventArgs.Empty);
 		}
 
 		private void OnMouseEnter()
 		{
-			if (MouseEnter != null)
-				MouseEnter(this, EventArgs.Empty);
+			MouseEnter(this, EventArgs.Empty);
 		}
 
 		private void OnActivate()
 		{
 			mIsActive = true;
-			if (FocusedChanged != null)
-				FocusedChanged(this, EventArgs.Empty);
+			FocusedChanged(this, EventArgs.Empty);
 		}
 		private void OnDeactivate()
 		{
 			mIsActive = false;
-			if (FocusedChanged != null)
-				FocusedChanged(this, EventArgs.Empty);
+			FocusedChanged(this, EventArgs.Empty);
 		}
 
 		#endregion
 
-		public event EventHandler<EventArgs> Idle;
-        public event EventHandler<EventArgs> Load;
-        public event EventHandler<EventArgs> Unload;
-        public event EventHandler<EventArgs> Move;
-        public event EventHandler<EventArgs> Resize;
-        public event EventHandler<CancelEventArgs> Closing;
-        public event EventHandler<EventArgs> Closed;
-        public event EventHandler<EventArgs> Disposed;
-        public event EventHandler<EventArgs> IconChanged;
-        public event EventHandler<EventArgs> TitleChanged;
-        public event EventHandler<EventArgs> ClientSizeChanged;
-        public event EventHandler<EventArgs> VisibleChanged;
-        public event EventHandler<EventArgs> WindowInfoChanged;
-        public event EventHandler<EventArgs> FocusedChanged;
-        public event EventHandler<EventArgs> WindowBorderChanged;
-        public event EventHandler<EventArgs> WindowStateChanged;
-        public event EventHandler<KeyPressEventArgs> KeyPress;
-        public event EventHandler<EventArgs> MouseEnter;
-        public event EventHandler<EventArgs> MouseLeave;
+        public event EventHandler<EventArgs> Load = delegate { };
+        public event EventHandler<EventArgs> Unload = delegate { };
+        public event EventHandler<EventArgs> Move = delegate { };
+        public event EventHandler<EventArgs> Resize = delegate { };
+        public event EventHandler<CancelEventArgs> Closing = delegate { };
+        public event EventHandler<EventArgs> Closed = delegate { };
+        public event EventHandler<EventArgs> Disposed = delegate { };
+        public event EventHandler<EventArgs> IconChanged = delegate { };
+        public event EventHandler<EventArgs> TitleChanged = delegate { };
+        public event EventHandler<EventArgs> VisibleChanged = delegate { };
+        public event EventHandler<EventArgs> FocusedChanged = delegate { };
+        public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
+        public event EventHandler<EventArgs> WindowStateChanged = delegate { };
+        public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
+        public event EventHandler<EventArgs> MouseEnter = delegate { };
+        public event EventHandler<EventArgs> MouseLeave = delegate { };
 
         #endregion
     }
