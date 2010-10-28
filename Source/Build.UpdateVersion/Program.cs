@@ -26,20 +26,38 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace Build.UpdateVersion
 {
-	class Program
-	{
+    class Program
+    {
         const string Major = "1";
         const string Minor = "0";
 
+        static string RootDirectory;
+        static string SourceDirectory;
+
         public static void Main()
         {
+            string wdir = Environment.CurrentDirectory;
+            if (Directory.GetParent(wdir).Name == "Source")
+            {
+                // Running through msbuild inside Source/Build.UpdateVersion/
+                RootDirectory = "../..";
+                SourceDirectory = "..";
+            }
+            else
+            {
+                // Running manually inside Binaries/OpenTK/[Debug|Release]/
+                RootDirectory = "../../..";
+                SourceDirectory = "../../../Source";
+            }
+
             DateTime now = DateTime.UtcNow;
-            GenerateVersionInfo(now, "../../Version.txt");
-            GenerateAssemblyInfo(now, "../GlobalAssemblyInfo.cs");
+            GenerateVersionInfo(now, Path.Combine(RootDirectory, "Version.txt"));
+            GenerateAssemblyInfo(now, Path.Combine(SourceDirectory, "GlobalAssemblyInfo.cs"));
         }
 
         static void GenerateVersionInfo(DateTime now, string file)
@@ -54,7 +72,7 @@ namespace Build.UpdateVersion
                     version = lines[0];
                 }
             }
-            
+
             // If the file does not exist, create it.
             if (version == null)
             {
@@ -69,7 +87,9 @@ namespace Build.UpdateVersion
             // Revision number is defined as the fraction of the current day, expressed in seconds.
             double timespan = now.Subtract(new DateTime(2010, 1, 1)).TotalDays;
             string build = ((int)timespan).ToString();
-            string revision = ((int)((timespan - (int)timespan) * UInt16.MaxValue)).ToString();
+
+            string revision = RetrieveSvnRevision() ?? RetrieveBzrRevision() ?? RetrieveSeconds(timespan);
+            //string revision = RetrieveSvnRevision() ?? RetrieveSeconds(timespan);
 
             File.WriteAllLines(file, new string[]
             {
@@ -90,5 +110,59 @@ namespace Build.UpdateVersion
                 String.Format("[assembly: AssemblyFileVersion(\"{0}.{1}.{2}.{3}\")]", Major, Minor, build, revision),
             });
         }
-	}
+
+        static string RetrieveSeconds(double timespan)
+        {
+            string revision = ((int)((timespan - (int)timespan) * UInt16.MaxValue)).ToString();
+            return revision;
+        }
+
+        static string RetrieveSvnRevision()
+        {
+            try
+            {
+                string output = RunProcess("svn", "info", RootDirectory);
+
+                const string RevisionText = "Revision: ";
+                int index = output.IndexOf(RevisionText);
+                if (index > -1)
+                    return output.Substring(index + RevisionText.Length, 5)
+                        .Replace('\r', ' ').Replace('\n', ' ').Trim();
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Failed to retrieve svn revision. Error: {0}", e);
+            }
+            return null;
+        }
+
+        static string RetrieveBzrRevision()
+        {
+            try
+            {
+                string output = RunProcess("bzr", "revno", RootDirectory);
+                return output != null && !output.StartsWith("bzr") ? output : null;
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Failed to retrieve svn revision. Error: {0}", e);
+            }
+            return null;
+        }
+
+        static string RunProcess(string cmd, string args, string wdir)
+        {
+            ProcessStartInfo info = new ProcessStartInfo(cmd, args);
+            info.WorkingDirectory = wdir;
+            info.RedirectStandardOutput = true;
+            info.RedirectStandardError = true;
+            info.UseShellExecute = false;
+            Process p = new Process();
+            p.StartInfo = info;
+            p.Start();
+            p.WaitForExit();
+            string output = p.StandardOutput.ReadToEnd();
+            return output;
+        }
+    }
 }
