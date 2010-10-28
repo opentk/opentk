@@ -126,7 +126,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean" indicating whether the left mouse button is pressed.
+        /// Gets a <see cref="System.Boolean"/> indicating whether the left mouse button is pressed.
         /// This property is intended for XNA compatibility.
         /// </summary>
         public ButtonState LeftButton
@@ -135,7 +135,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean" indicating whether the middle mouse button is pressed.
+        /// Gets a <see cref="System.Boolean"/> indicating whether the middle mouse button is pressed.
         /// This property is intended for XNA compatibility.
         /// </summary>
         public ButtonState MiddleButton
@@ -144,7 +144,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean" indicating whether the right mouse button is pressed.
+        /// Gets a <see cref="System.Boolean"/> indicating whether the right mouse button is pressed.
         /// This property is intended for XNA compatibility.
         /// </summary>
         public ButtonState RightButton
@@ -153,7 +153,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean" indicating whether the first extra mouse button is pressed.
+        /// Gets a <see cref="System.Boolean"/> indicating whether the first extra mouse button is pressed.
         /// This property is intended for XNA compatibility.
         /// </summary>
         public ButtonState XButton1
@@ -162,7 +162,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean" indicating whether the second extra mouse button is pressed.
+        /// Gets a <see cref="System.Boolean"/> indicating whether the second extra mouse button is pressed.
         /// This property is intended for XNA compatibility.
         /// </summary>
         public ButtonState XButton2
