@@ -46,6 +46,7 @@ namespace OpenTK.Platform.Windows
         readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
         private List<KeyboardDevice> keyboards_old = new List<KeyboardDevice>();
         private IntPtr window;
+        readonly object UpdateLock = new object();
 
         #region --- Constructors ---
 
@@ -235,8 +236,11 @@ namespace OpenTK.Platform.Windows
                     break;
             }
 
-            keyboards[rawids[handle]] = keyboard;
-            return processed;
+            lock (UpdateLock)
+            {
+                keyboards[rawids[handle]] = keyboard;
+                return processed;
+            }
         }
 
         #endregion
@@ -264,20 +268,26 @@ namespace OpenTK.Platform.Windows
 
         public KeyboardState GetState()
         {
-            KeyboardState master = new KeyboardState();
-            foreach (KeyboardState ks in keyboards)
+            lock (UpdateLock)
             {
-                master.MergeBits(ks);
+                KeyboardState master = new KeyboardState();
+                foreach (KeyboardState ks in keyboards)
+                {
+                    master.MergeBits(ks);
+                }
+                return master;
             }
-            return master;
         }
 
         public KeyboardState GetState(int index)
         {
-            if (keyboards.Count > index)
-                return keyboards[index];
-            else
-                return new KeyboardState();
+            lock (UpdateLock)
+            {
+                if (keyboards.Count > index)
+                    return keyboards[index];
+                else
+                    return new KeyboardState();
+            }
         }
 
         #endregion

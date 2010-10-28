@@ -44,6 +44,7 @@ namespace OpenTK.Platform.Windows
         List<MouseState> mice;
         Dictionary<ContextHandle, int> rawids; // ContextHandle instead of IntPtr for fast dictionary access
         readonly IntPtr Window;
+        readonly object UpdateLock = new object();
 
         public WinRawMouse(IntPtr window)
         {
@@ -65,20 +66,26 @@ namespace OpenTK.Platform.Windows
 
         public MouseState GetState()
         {
-            MouseState master = new MouseState();
-            foreach (MouseState ms in mice)
+            lock (UpdateLock)
             {
-                master.MergeBits(ms);
+                MouseState master = new MouseState();
+                foreach (MouseState ms in mice)
+                {
+                    master.MergeBits(ms);
+                }
+                return master;
             }
-            return master;
         }
 
         public MouseState GetState(int index)
         {
-            if (mice.Count > index)
-                return mice[index];
-            else
-                return new MouseState();
+            lock (UpdateLock)
+            {
+                if (mice.Count > index)
+                    return mice[index];
+                else
+                    return new MouseState();
+            }
         }
 
         #endregion
@@ -226,8 +233,11 @@ namespace OpenTK.Platform.Windows
                 mouse.Y += raw.LastY;
             }
 
-            mice[rawids[handle]] = mouse;
-            return true;
+            lock (UpdateLock)
+            {
+                mice[rawids[handle]] = mouse;
+                return true;
+            }
         }
     }
 }
