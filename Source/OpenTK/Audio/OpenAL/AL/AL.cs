@@ -1272,15 +1272,37 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>This function generates one or more buffers, which contain audio buffer (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
         /// <param name="n">The number of buffers to be generated.</param>
         /// <param name="buffers">Pointer to an array of uint values which will store the names of the new buffers.</param>
-        [CLSCompliant(false)]
         [DllImport(AL.Lib, EntryPoint = "alGenBuffers", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity]
-        public static extern void GenBuffers(int n, out uint buffers);
+        unsafe public static extern void GenBuffers(int n, [Out] int* buffers);
 
         /// <summary>This function generates one or more buffers, which contain audio buffer (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
         /// <param name="n">The number of buffers to be generated.</param>
         /// <param name="buffers">Pointer to an array of uint values which will store the names of the new buffers.</param>
-        [DllImport(AL.Lib, EntryPoint = "alGenBuffers", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity]
-        public static extern void GenBuffers(int n, out int buffers);
+        [CLSCompliant(false)]
+        public static void GenBuffers(int n, out uint buffers)
+        {
+            unsafe
+            {
+                fixed (uint* pbuffers = &buffers)
+                {
+                    GenBuffers(n, pbuffers);
+                }
+            }
+        }
+
+        /// <summary>This function generates one or more buffers, which contain audio buffer (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
+        /// <param name="n">The number of buffers to be generated.</param>
+        /// <param name="buffers">Pointer to an array of uint values which will store the names of the new buffers.</param>
+        public static void GenBuffers(int n, out int buffers)
+        {
+            unsafe
+            {
+                fixed (int* pbuffers = &buffers)
+                {
+                    GenBuffers(n, pbuffers);
+                }
+            }
+        }
 
         /// <summary>This function generates one or more buffers, which contain audio data (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
         /// <param name="n">The number of buffers to be generated.</param>
@@ -1324,15 +1346,37 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
         /// <param name="n">The number of buffers to be deleted.</param>
         /// <param name="buffers">Pointer to an array of buffer names identifying the buffers to be deleted.</param>
-        [CLSCompliant(false)]
         [DllImport(AL.Lib, EntryPoint = "alDeleteBuffers", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern void DeleteBuffers(int n, [In] ref uint buffers);
+        unsafe public static extern void DeleteBuffers(int n, [In] int* buffers);
 
         /// <summary>This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
         /// <param name="n">The number of buffers to be deleted.</param>
         /// <param name="buffers">Pointer to an array of buffer names identifying the buffers to be deleted.</param>
-        [DllImport(AL.Lib, EntryPoint = "alDeleteBuffers", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern void DeleteBuffers(int n, [In] ref int buffers);
+        [CLSCompliant(false)]
+        public static void DeleteBuffers(int n, [In] ref uint buffers)
+        {
+            unsafe
+            {
+                fixed (uint* pbuffers = &buffers)
+                {
+                    DeleteBuffers(n, pbuffers);
+                }
+            }
+        }
+
+        /// <summary>This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
+        /// <param name="n">The number of buffers to be deleted.</param>
+        /// <param name="buffers">Pointer to an array of buffer names identifying the buffers to be deleted.</param>
+        public static void DeleteBuffers(int n, [In] ref int buffers)
+        {
+            unsafe
+            {
+                fixed (int* pbuffers = &buffers)
+                {
+                    DeleteBuffers(n, pbuffers);
+                }
+            }
+        }
 
         /// <summary>This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
         /// <param name="buffers">Pointer to a buffer name identifying the buffer to be deleted.</param>
