@@ -208,6 +208,19 @@ namespace OpenTK.Input
             }
         }
 
+        internal void MergeBits(KeyboardState other)
+        {
+            unsafe
+            {
+                int* k2 = other.Keys;
+                fixed (int* k1 = Keys)
+                {
+                    for (int i = 0; i < NumInts; i++)
+                        *(k1 + i) |= *(k2 + i);
+                }
+            }
+        }
+
         #endregion
 
         #region Private Members
