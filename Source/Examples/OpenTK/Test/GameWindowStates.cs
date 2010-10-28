@@ -24,6 +24,7 @@ namespace Examples.Tests
         bool viewport_changed = true;
         bool refresh_text = true;
         MouseState mouse, mouse_old;
+        KeyboardState keyboard, keyboard_old;
 
         public GameWindowStates()
             : base(800, 600)
@@ -39,6 +40,7 @@ namespace Examples.Tests
             Resize += delegate { refresh_text = true; };
             WindowBorderChanged += delegate { refresh_text = true; };
             WindowStateChanged += delegate { refresh_text = true; };
+            FocusedChanged += delegate { refresh_text = true; };
             Mouse.Move += MouseMoveHandler;
             Mouse.ButtonDown += MouseButtonHandler;
             Mouse.ButtonUp += MouseButtonHandler;
@@ -108,6 +110,10 @@ namespace Examples.Tests
             if (mouse != mouse_old)
                 refresh_text = true;
             mouse_old = mouse;
+            keyboard = OpenTK.Input.Keyboard.GetState();
+            if (keyboard != keyboard_old)
+                refresh_text = true;
+            keyboard = keyboard_old;
 
             if (refresh_text)
             {
