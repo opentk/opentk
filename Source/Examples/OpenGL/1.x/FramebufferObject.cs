@@ -21,7 +21,7 @@ namespace Examples.Tutorial
     public class SimpleFBO : GameWindow
     {
         public SimpleFBO()
-            : base(800, 600)
+            : base(800, 400)
         {
         }
 
@@ -33,24 +33,7 @@ namespace Examples.Tutorial
 
         const int TextureSize = 512;
 
-        #region Randoms
-
-        Random rnd = new Random();
-        public const float scale = 3f;
-
-        /// <summary>Returns a random Float in the range [-0.5*scale..+0.5*scale]</summary>
-        public float GetRandom()
-        {
-            return (float)(rnd.NextDouble() - 0.5) * scale;
-        }
-
-        /// <summary>Returns a random Float in the range [0..1]</summary>
-        public float GetRandom0to1()
-        {
-            return (float)rnd.NextDouble();
-        }
-
-        #endregion Randoms
+        Examples.Shapes.DrawableShape Object;
 
         protected override void OnLoad(EventArgs e)
         {
@@ -63,13 +46,14 @@ namespace Examples.Tutorial
                 Exit();
             }
 
+            Object = new Shapes.TorusKnot(256, 16, 0.2, 7,8, 1, true);
+
             GL.Enable(EnableCap.DepthTest);
             GL.ClearDepth(1.0f);
             GL.DepthFunc(DepthFunction.Lequal);
 
-            GL.Disable(EnableCap.CullFace);
-            GL.PolygonMode(MaterialFace.Back, PolygonMode.Line);
-
+            GL.Enable(EnableCap.CullFace);
+            
             // Create Color Tex
             GL.GenTextures(1, out ColorTexture);
             GL.BindTexture(TextureTarget.Texture2D, ColorTexture);
@@ -176,20 +160,24 @@ namespace Examples.Tutorial
                 GL.ClearColor(1f, 0f, 0f, 0f);
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-                // smack 50 random triangles into the FBO's textures
-                GL.Begin(BeginMode.Triangles);
-                {
-                    for (int i = 0; i < 50; i++)
-                    {
-                        GL.Color3(GetRandom0to1(), GetRandom0to1(), GetRandom0to1());
-                        GL.Vertex3(GetRandom(), GetRandom(), GetRandom());
-                        GL.Color3(GetRandom0to1(), GetRandom0to1(), GetRandom0to1());
-                        GL.Vertex3(GetRandom(), GetRandom(), GetRandom());
-                        GL.Color3(GetRandom0to1(), GetRandom0to1(), GetRandom0to1());
-                        GL.Vertex3(GetRandom(), GetRandom(), GetRandom());
-                    }
-                }
-                GL.End();
+                OpenTK.Matrix4 perspective = OpenTK.Matrix4.CreatePerspectiveFieldOfView( MathHelper.PiOver4, TextureSize / (float)TextureSize, 2.5f, 6f );
+                GL.MatrixMode( MatrixMode.Projection );
+                GL.LoadMatrix( ref perspective );
+
+                Matrix4 lookat = Matrix4.LookAt( 0f, 0f, 4.5f, 0f, 0f, 0f, 0f, 1f, 0f );
+                GL.MatrixMode( MatrixMode.Modelview );
+                GL.LoadMatrix( ref lookat );
+
+                // draw some complex object into the FBO's textures
+                GL.Enable( EnableCap.Lighting );
+                GL.Enable( EnableCap.Light0 );
+                GL.Enable( EnableCap.ColorMaterial );
+                GL.Color3( 0f, 1f, 0f );
+                Object.Draw();
+                GL.Disable( EnableCap.ColorMaterial );
+                GL.Disable( EnableCap.Light0 );
+                GL.Disable( EnableCap.Lighting );
+                
             }
             GL.PopAttrib();
             GL.Ext.BindFramebuffer(FramebufferTarget.FramebufferExt, 0); // disable rendering into the FBO
@@ -203,6 +191,8 @@ namespace Examples.Tutorial
 
         protected override void OnUnload(EventArgs e)
         {
+            Object.Dispose();
+
             // Clean up what we allocated before exiting
             if (ColorTexture != 0)
                 GL.DeleteTextures(1, ref ColorTexture);
