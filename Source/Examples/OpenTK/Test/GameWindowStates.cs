@@ -113,7 +113,7 @@ namespace Examples.Tests
             keyboard = OpenTK.Input.Keyboard.GetState();
             if (keyboard != keyboard_old)
                 refresh_text = true;
-            keyboard = keyboard_old;
+            keyboard_old = keyboard;
 
             if (refresh_text)
             {
