@@ -39,13 +39,32 @@ namespace OpenTK.Input
         #region Fields
 
         // Allocate enough ints to store all keyboard keys
-        const int NumInts = ((int)Key.LastKey + 31) / 32;
+        const int IntSize = sizeof(int);
+        const int NumInts = ((int)Key.LastKey + IntSize - 1) / IntSize;
         // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
         unsafe fixed int Keys[NumInts];
 
         #endregion
 
         #region Public Members
+
+        /// <summary>
+        /// Gets a <see cref="System.Boolean"/> indicating whether the specified
+        /// <see cref="OpenTK.Input.Key"/> is pressed.
+        /// </summary>
+        /// <param name="key">The <see cref="OpenTK.Input.Key"/> to check.</param>
+        /// <returns>True if key is pressed; false otherwise.</returns>
+        public bool this[Key key]
+        {
+            get { return IsKeyDown(key); }
+            internal set
+            {
+                if (value)
+                    EnableBit((int)key);
+                else
+                    DisableBit((int)key);
+            }
+        }
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether this key is down.
@@ -71,6 +90,8 @@ namespace OpenTK.Input
 
         internal bool ReadBit(int offset)
         {
+            ValidateOffset(offset);
+
             int int_offset = offset / 32;
             int bit_offset = offset % 32;
             unsafe
@@ -84,6 +105,8 @@ namespace OpenTK.Input
 
         internal void EnableBit(int offset)
         {
+            ValidateOffset(offset);
+
             int int_offset = offset / 32;
             int bit_offset = offset % 32;
             unsafe
@@ -97,6 +120,8 @@ namespace OpenTK.Input
 
         internal void DisableBit(int offset)
         {
+            ValidateOffset(offset);
+
             int int_offset = offset / 32;
             int bit_offset = offset % 32;
             unsafe
@@ -106,6 +131,16 @@ namespace OpenTK.Input
                     *(k + int_offset) &= ~(1 << bit_offset);
                 }
             }
+        }
+
+        #endregion
+
+        #region Private Members
+
+        static void ValidateOffset(int offset)
+        {
+            if (offset < 0 || offset >= NumInts * IntSize)
+                throw new ArgumentOutOfRangeException("offset");
         }
 
         #endregion
