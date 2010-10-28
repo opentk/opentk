@@ -300,6 +300,23 @@ namespace OpenTK.Input
             }
         }
 
+        internal void MergeBits(MouseState other)
+        {
+            unsafe
+            {
+                int* b2 = other.Buttons;
+                fixed (int* b1 = Buttons)
+                {
+                    for (int i = 0; i < NumInts; i++)
+                        *(b1 + i) |= *(b2 + i);
+                }
+
+                WheelPrecise += other.WheelPrecise;
+                X += other.X;
+                Y += other.Y;
+            }
+        }
+
         #endregion
 
         #region Private Members

@@ -65,10 +65,12 @@ namespace OpenTK.Platform.Windows
 
         public MouseState GetState()
         {
-            if (mice.Count > 0)
-                return mice[0];
-            else
-                return new MouseState();
+            MouseState master = new MouseState();
+            foreach (MouseState ms in mice)
+            {
+                master.MergeBits(ms);
+            }
+            return master;
         }
 
         public MouseState GetState(int index)

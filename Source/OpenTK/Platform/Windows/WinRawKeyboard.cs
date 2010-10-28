@@ -68,7 +68,7 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region internal static void UpdateKeyboardList()
+        #region UpdateKeyboardList
 
         internal void UpdateKeyboardList()
         {
@@ -264,10 +264,12 @@ namespace OpenTK.Platform.Windows
 
         public KeyboardState GetState()
         {
-            if (keyboards.Count > 0)
-                return keyboards[0];
-            else
-                return new KeyboardState();
+            KeyboardState master = new KeyboardState();
+            foreach (KeyboardState ks in keyboards)
+            {
+                master.MergeBits(ks);
+            }
+            return master;
         }
 
         public KeyboardState GetState(int index)
