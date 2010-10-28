@@ -1006,6 +1006,15 @@ namespace OpenTK
 
         #region OnResize
 
+        /// <summary>
+        /// Called when this window is resized.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        /// <remarks>
+        /// You will typically wish to update your viewport whenever
+        /// the window is resized. See the
+        /// <see cref="OpenTK.Graphics.OpenGL.GL.Viewport"/> method.
+        /// </remarks>
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
