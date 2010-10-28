@@ -84,6 +84,81 @@ namespace OpenTK.Input
             return !ReadBit((int)key);
         }
 
+        /// <summary>
+        /// Checks whether two <see cref="KeyboardState" /> instances are equal.
+        /// </summary>
+        /// <param name="left">
+        /// A <see cref="KeyboardState"/> instance.
+        /// </param>
+        /// <param name="right">
+        /// A <see cref="KeyboardState"/> instance.
+        /// </param>
+        /// <returns>
+        /// True if both left is equal to right; false otherwise.
+        /// </returns>
+        public static bool operator ==(KeyboardState left, KeyboardState right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Checks whether two <see cref="KeyboardState" /> instances are not equal.
+        /// </summary>
+        /// <param name="left">
+        /// A <see cref="KeyboardState"/> instance.
+        /// </param>
+        /// <param name="right">
+        /// A <see cref="KeyboardState"/> instance.
+        /// </param>
+        /// <returns>
+        /// True if both left is not equal to right; false otherwise.
+        /// </returns>
+        public static bool operator !=(KeyboardState left, KeyboardState right)
+        {
+            return !left.Equals(right);
+        }
+
+        /// <summary>
+        /// Compares to an object instance for equality.
+        /// </summary>
+        /// <param name="obj">
+        /// The <see cref="System.Object"/> to compare to.
+        /// </param>
+        /// <returns>
+        /// True if this instance is equal to obj; false otherwise.
+        /// </returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is KeyboardState)
+            {
+                return this == (KeyboardState)obj;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Generates a hashcode for the current instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.Int32"/> represting the hashcode for this instance.
+        /// </returns>
+        public override int GetHashCode()
+        {
+            unsafe
+            {
+                fixed (int* k = Keys)
+                {
+                    int hashcode = 0;
+                    for (int i = 0; i < NumInts; i++)
+                        hashcode ^= (k + i)->GetHashCode();
+                    return hashcode;
+                }
+            }
+        }
+
         #endregion
 
         #region Internal Members
