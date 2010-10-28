@@ -40,30 +40,38 @@ namespace OpenTK.Input
 
         static readonly IMouseDriver driver =
             Platform.Factory.Default.CreateMouseDriver();
+        static readonly object SyncRoot = new object();
 
         #endregion
 
         #region Public Members
 
         /// <summary>
-        /// Retrieves the MouseState for the specified mouse device.
+        /// Retrieves the combined <see cref="OpenTK.Input.MouseState"/> for all specified mouse devices.
         /// </summary>
-        /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure containing the state of the mouse device.</returns>
+        /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure containing the combined state of all mouse devices.</returns>
         public static MouseState GetState()
         {
-            return driver.GetState();
+            lock (SyncRoot)
+            {
+                return driver.GetState();
+            }
         }
 
         /// <summary>
-        /// Retrieves the MouseState for the specified mouse device.
+        /// Retrieves the <see cref="OpenTK.Input.MouseState"/> for the specified mouse device.
         /// </summary>
         /// <param name="index">The index of the mouse device.</param>
-        /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure containing the state of the mouse device.</returns>
+        /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure containing the state for the specified mouse device.</returns>
         public static MouseState GetState(int index)
         {
             if (index < 0)
                 throw new ArgumentOutOfRangeException("index");
-            return driver.GetState(index);
+
+            lock (SyncRoot)
+            {
+                return driver.GetState(index);
+            }
         }
 
         #endregion

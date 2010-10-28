@@ -40,28 +40,38 @@ namespace OpenTK.Input
 
         static readonly IKeyboardDriver driver =
             Platform.Factory.Default.CreateKeyboardDriver();
+        static readonly object SyncRoot = new object();
 
         #endregion
 
         #region Public Members
 
         /// <summary>
-        /// Retrieves the KeyboardState for the default keyboard device.
+        /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.
         /// </summary>
-        /// <returns>A <see cref="OpenTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
+        /// <returns>A <see cref="OpenTK.Input.KeyboardState"/> structure containing the combined state for all keyboard devices.</returns>
         public static KeyboardState GetState()
         {
-            return driver.GetState();
+            lock (SyncRoot)
+            {
+                return driver.GetState();
+            }
         }
 
         /// <summary>
-        /// Retrieves the KeyboardState for the specified keyboard device.
+        /// Retrieves the <see cref="OpenTK.Input.KeyboardState"/> for the specified keyboard device.
         /// </summary>
         /// <param name="index">The index of the keyboard device.</param>
         /// <returns>A <see cref="OpenTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
         public static KeyboardState GetState(int index)
         {
-            return driver.GetState(index);
+            if (index < 0)
+                throw new ArgumentOutOfRangeException("index");
+
+            lock (SyncRoot)
+            {
+                return driver.GetState(index);
+            }
         }
 
         #endregion
