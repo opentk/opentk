@@ -1013,7 +1013,7 @@ namespace OpenTK
         /// <remarks>
         /// You will typically wish to update your viewport whenever
         /// the window is resized. See the
-        /// <see cref="OpenTK.Graphics.OpenGL.GL.Viewport"/> method.
+        /// <see cref="OpenTK.Graphics.OpenGL.GL.Viewport(int, int, int, int)"/> method.
         /// </remarks>
         protected override void OnResize(EventArgs e)
         {
