@@ -817,8 +817,8 @@ namespace OpenTK.Platform.Windows
             get
             {
                 sb_title.Remove(0, sb_title.Length);
-                if (Functions.GetWindowText(window.WindowHandle, sb_title, sb_title.MaxCapacity) == 0)
-                    Debug.Print("Failed to retrieve window title (window:{0}, reason:{2}).", window.WindowHandle, Marshal.GetLastWin32Error());
+                if (Functions.GetWindowText(window.WindowHandle, sb_title, sb_title.Capacity) == 0)
+                    Debug.Print("Failed to retrieve window title (window:{0}, reason:{1}).", window.WindowHandle, Marshal.GetLastWin32Error());
                 return sb_title.ToString();
             }
             set
