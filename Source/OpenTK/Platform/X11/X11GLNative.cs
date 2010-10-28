@@ -659,8 +659,7 @@ namespace OpenTK.Platform.X11
             if (Location != new_location)
             {
                 bounds.Location = new_location;
-                if (Move != null)
-                    Move(this, EventArgs.Empty);
+                Move(this, EventArgs.Empty);
             }
 
             // Note: width and height denote the internal (client) size.
@@ -673,11 +672,7 @@ namespace OpenTK.Platform.X11
                 bounds.Size = new_size;
                 client_rectangle.Size = new Size(e.ConfigureEvent.width, e.ConfigureEvent.height);
 
-                if (this.Resize != null)
-                {
-                    //Debug.WriteLine(new System.Diagnostics.StackTrace());
-                    Resize(this, EventArgs.Empty);
-                }
+                Resize(this, EventArgs.Empty);
             }
         }
 
@@ -723,8 +718,7 @@ namespace OpenTK.Platform.X11
                             bool previous_visible = visible;
                             visible = true;
                             if (visible != previous_visible)
-                                if (VisibleChanged != null)
-                                    VisibleChanged(this, EventArgs.Empty);
+                                VisibleChanged(this, EventArgs.Empty);
                         }
                         return;
 
@@ -733,8 +727,7 @@ namespace OpenTK.Platform.X11
                             bool previous_visible = visible;
                             visible = false;
                             if (visible != previous_visible)
-                                if (VisibleChanged != null)
-                                    VisibleChanged(this, EventArgs.Empty);
+                                VisibleChanged(this, EventArgs.Empty);
                         }
                         break;
 
@@ -747,8 +740,7 @@ namespace OpenTK.Platform.X11
                         {
                             Debug.WriteLine("Exit message received.");
                             CancelEventArgs ce = new CancelEventArgs();
-                            if (Closing != null)
-                                Closing(this, ce);
+                            Closing(this, ce);
 
                             if (!ce.Cancel)
                             {
@@ -769,8 +761,7 @@ namespace OpenTK.Platform.X11
                         Debug.WriteLine("Window destroyed");
                         exists = false;
 
-                        if (Closed != null)
-                            Closed(this, EventArgs.Empty);
+                        Closed(this, EventArgs.Empty);
 
                         return;
 
@@ -813,8 +804,7 @@ namespace OpenTK.Platform.X11
                             bool previous_focus = has_focus;
                             has_focus = true;
                             if (has_focus != previous_focus)
-                                if (FocusedChanged != null)
-                                    FocusedChanged(this, EventArgs.Empty);
+                                FocusedChanged(this, EventArgs.Empty);
                         }
                         break;
 
@@ -823,19 +813,16 @@ namespace OpenTK.Platform.X11
                             bool previous_focus = has_focus;
                             has_focus = false;
                             if (has_focus != previous_focus)
-                                if (FocusedChanged != null)
-                                    FocusedChanged(this, EventArgs.Empty);
+                                FocusedChanged(this, EventArgs.Empty);
                         }
                         break;
 
                     case XEventName.LeaveNotify:
-                        if (MouseLeave != null)
-                            MouseLeave(this, EventArgs.Empty);
+                        MouseLeave(this, EventArgs.Empty);
                         break;
 
                     case XEventName.EnterNotify:
-                        if (MouseEnter != null)
-                            MouseEnter(this, EventArgs.Empty);
+                        MouseEnter(this, EventArgs.Empty);
                         break;
 
                     case XEventName.MappingNotify:
@@ -850,8 +837,7 @@ namespace OpenTK.Platform.X11
                    case XEventName.PropertyNotify:
                         if (e.PropertyEvent.atom == _atom_net_wm_state)
                         {
-                            if (WindowStateChanged != null)
-                                WindowStateChanged(this, EventArgs.Empty);
+                            WindowStateChanged(this, EventArgs.Empty);
                         }
 
                         //if (e.PropertyEvent.atom == _atom_net_frame_extents)
@@ -1078,8 +1064,7 @@ namespace OpenTK.Platform.X11
                 }
 
                 icon = value;
-                if (IconChanged != null)
-                    IconChanged(this, EventArgs.Empty);
+                IconChanged(this, EventArgs.Empty);
             }
         }
 
@@ -1277,8 +1262,7 @@ namespace OpenTK.Platform.X11
                         break;
                 }
 
-                if (WindowBorderChanged != null)
-                    WindowBorderChanged(this, EventArgs.Empty);
+                WindowBorderChanged(this, EventArgs.Empty);
             }
         }
 
@@ -1286,37 +1270,37 @@ namespace OpenTK.Platform.X11
 
         #region Events
 
-        public event EventHandler<EventArgs> Load;
+        public event EventHandler<EventArgs> Load = delegate { };
 
-        public event EventHandler<EventArgs> Unload;
+        public event EventHandler<EventArgs> Unload = delegate { };
 
-        public event EventHandler<EventArgs> Move;
+        public event EventHandler<EventArgs> Move = delegate { };
 
-        public event EventHandler<EventArgs> Resize;
+        public event EventHandler<EventArgs> Resize = delegate { };
 
-        public event EventHandler<System.ComponentModel.CancelEventArgs> Closing;
+        public event EventHandler<System.ComponentModel.CancelEventArgs> Closing = delegate { };
 
-        public event EventHandler<EventArgs> Closed;
+        public event EventHandler<EventArgs> Closed = delegate { };
 
-        public event EventHandler<EventArgs> Disposed;
+        public event EventHandler<EventArgs> Disposed = delegate { };
 
-        public event EventHandler<EventArgs> IconChanged;
+        public event EventHandler<EventArgs> IconChanged = delegate { };
 
-        public event EventHandler<EventArgs> TitleChanged;
+        public event EventHandler<EventArgs> TitleChanged = delegate { };
 
-        public event EventHandler<EventArgs> VisibleChanged;
+        public event EventHandler<EventArgs> VisibleChanged = delegate { };
 
-        public event EventHandler<EventArgs> FocusedChanged;
+        public event EventHandler<EventArgs> FocusedChanged = delegate { };
 
-        public event EventHandler<EventArgs> WindowBorderChanged;
+        public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
 
-        public event EventHandler<EventArgs> WindowStateChanged;
+        public event EventHandler<EventArgs> WindowStateChanged = delegate { };
 
-        public event EventHandler<KeyPressEventArgs> KeyPress;
+        public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
 
-        public event EventHandler<EventArgs> MouseEnter;
+        public event EventHandler<EventArgs> MouseEnter = delegate { };
 
-        public event EventHandler<EventArgs> MouseLeave;
+        public event EventHandler<EventArgs> MouseLeave = delegate { };
         
         #endregion
 
@@ -1427,8 +1411,7 @@ namespace OpenTK.Platform.X11
                     }
                 }
 
-                if (TitleChanged != null)
-                    TitleChanged(this, EventArgs.Empty);
+                TitleChanged(this, EventArgs.Empty);
             }
         }
 

@@ -156,7 +156,7 @@ namespace OpenTK.Platform.Windows
                     else
                         focused = (wParam.ToInt64() & 0xFFFF) != 0;
 
-                    if (new_focused_state != Focused && FocusedChanged != null)
+                    if (new_focused_state != Focused)
                         FocusedChanged(this, EventArgs.Empty);
                     break;
 
@@ -188,8 +188,7 @@ namespace OpenTK.Platform.Windows
                             if (Location != new_location)
                             {
                                 bounds.Location = new_location;
-                                if (Move != null)
-                                    Move(this, EventArgs.Empty);
+                                Move(this, EventArgs.Empty);
                             }
 
                             Size new_size = new Size(pos->cx, pos->cy);
@@ -206,7 +205,7 @@ namespace OpenTK.Platform.Windows
                                     SetWindowPosFlags.NOZORDER | SetWindowPosFlags.NOOWNERZORDER |
                                     SetWindowPosFlags.NOACTIVATE | SetWindowPosFlags.NOSENDCHANGING);
 
-                                if (suppress_resize <= 0 && Resize != null)
+                                if (suppress_resize <= 0)
                                     Resize(this, EventArgs.Empty);
                             }
 
@@ -254,8 +253,7 @@ namespace OpenTK.Platform.Windows
                     if (new_state != windowState)
                     {
                         windowState = new_state;
-                        if (WindowStateChanged != null)
-                            WindowStateChanged(this, EventArgs.Empty);
+                        WindowStateChanged(this, EventArgs.Empty);
                     }
 
                     // Ensure cursor remains grabbed
@@ -274,8 +272,7 @@ namespace OpenTK.Platform.Windows
                     else
                         key_press.KeyChar = (char)wParam.ToInt64();
 
-                    if (KeyPress != null)
-                        KeyPress(this, key_press);
+                    KeyPress(this, key_press);
                     break;
 
                 case WindowMessage.MOUSEMOVE:
@@ -291,8 +288,7 @@ namespace OpenTK.Platform.Windows
                         mouse_outside_window = false;
                         EnableMouseTracking();
 
-                        if (MouseEnter != null)
-                            MouseEnter(this, EventArgs.Empty);
+                        MouseEnter(this, EventArgs.Empty);
                     }
                     break;
 
@@ -300,8 +296,7 @@ namespace OpenTK.Platform.Windows
                     mouse_outside_window = true;
                     // Mouse tracking is disabled automatically by the OS
 
-                    if (MouseLeave != null)
-                        MouseLeave(this, EventArgs.Empty);
+                    MouseLeave(this, EventArgs.Empty);
                     break;
 
                 case WindowMessage.MOUSEWHEEL:
@@ -453,13 +448,11 @@ namespace OpenTK.Platform.Windows
                 case WindowMessage.CLOSE:
                     System.ComponentModel.CancelEventArgs e = new System.ComponentModel.CancelEventArgs();
 
-                    if (Closing != null)
-                        Closing(this, e);
+                    Closing(this, e);
 
                     if (!e.Cancel)
                     {
-                        if (Unload != null)
-                            Unload(this, EventArgs.Empty);
+                        Unload(this, EventArgs.Empty);
 
                         DestroyWindow();
                         break;
@@ -474,8 +467,7 @@ namespace OpenTK.Platform.Windows
                     window.Dispose();
                     child_window.Dispose();
 
-                    if (Closed != null)
-                        Closed(this, EventArgs.Empty);
+                    Closed(this, EventArgs.Empty);
 
                     break;
 
@@ -795,11 +787,15 @@ namespace OpenTK.Platform.Windows
             }
             set
             {
-                icon = value;
-                if (window.WindowHandle != IntPtr.Zero)
+                if (value != icon)
                 {
-                    Functions.SendMessage(window.WindowHandle, WindowMessage.SETICON, (IntPtr)0, icon == null ? IntPtr.Zero : value.Handle);
-                    Functions.SendMessage(window.WindowHandle, WindowMessage.SETICON, (IntPtr)1, icon == null ? IntPtr.Zero : value.Handle);
+                    icon = value;
+                    if (window.WindowHandle != IntPtr.Zero)
+                    {
+                        Functions.SendMessage(window.WindowHandle, WindowMessage.SETICON, (IntPtr)0, icon == null ? IntPtr.Zero : value.Handle);
+                        Functions.SendMessage(window.WindowHandle, WindowMessage.SETICON, (IntPtr)1, icon == null ? IntPtr.Zero : value.Handle);
+                    }
+                    IconChanged(this, EventArgs.Empty);
                 }
             }
         }
@@ -829,8 +825,12 @@ namespace OpenTK.Platform.Windows
             }
             set
             {
-                if (!Functions.SetWindowText(window.WindowHandle, value))
-                    Debug.Print("Failed to change window title (window:{0}, new title:{1}, reason:{2}).", window.WindowHandle, value, Marshal.GetLastWin32Error());
+                if (Title != value)
+                {
+                    if (!Functions.SetWindowText(window.WindowHandle, value))
+                        Debug.Print("Failed to change window title (window:{0}, new title:{1}, reason:{2}).", window.WindowHandle, value, Marshal.GetLastWin32Error());
+                    TitleChanged(this, EventArgs.Empty);
+                }
             }
         }
 
@@ -846,18 +846,23 @@ namespace OpenTK.Platform.Windows
             }
             set
             {
-                if (value)
+                if (value != Visible)
                 {
-                    Functions.ShowWindow(window.WindowHandle, ShowWindowCommand.SHOW);
-                    if (invisible_since_creation)
+                    if (value)
                     {
-                        Functions.BringWindowToTop(window.WindowHandle);
-                        Functions.SetForegroundWindow(window.WindowHandle);
+                        Functions.ShowWindow(window.WindowHandle, ShowWindowCommand.SHOW);
+                        if (invisible_since_creation)
+                        {
+                            Functions.BringWindowToTop(window.WindowHandle);
+                            Functions.SetForegroundWindow(window.WindowHandle);
+                        }
                     }
-                }
-                else if (!value)
-                {
-                    Functions.ShowWindow(window.WindowHandle, ShowWindowCommand.HIDE);
+                    else if (!value)
+                    {
+                        Functions.ShowWindow(window.WindowHandle, ShowWindowCommand.HIDE);
+                    }
+
+                    VisibleChanged(this, EventArgs.Empty);
                 }
             }
         }
@@ -1076,8 +1081,7 @@ namespace OpenTK.Platform.Windows
 
                 WindowState = state;
 
-                if (WindowBorderChanged != null)
-                    WindowBorderChanged(this, EventArgs.Empty);
+                WindowBorderChanged(this, EventArgs.Empty);
             }
         }
 
@@ -1113,43 +1117,37 @@ namespace OpenTK.Platform.Windows
 
         #region Events
 
-        public event EventHandler<EventArgs> Idle;
+        public event EventHandler<EventArgs> Load =delegate { };
 
-        public event EventHandler<EventArgs> Load;
+        public event EventHandler<EventArgs> Unload = delegate { };
 
-        public event EventHandler<EventArgs> Unload;
+        public event EventHandler<EventArgs> Move = delegate { };
 
-        public event EventHandler<EventArgs> Move;
+        public event EventHandler<EventArgs> Resize = delegate { };
 
-        public event EventHandler<EventArgs> Resize;
+        public event EventHandler<System.ComponentModel.CancelEventArgs> Closing = delegate { };
 
-        public event EventHandler<System.ComponentModel.CancelEventArgs> Closing;
+        public event EventHandler<EventArgs> Closed = delegate { };
 
-        public event EventHandler<EventArgs> Closed;
+        public event EventHandler<EventArgs> Disposed = delegate { };
 
-        public event EventHandler<EventArgs> Disposed;
+        public event EventHandler<EventArgs> IconChanged = delegate { };
 
-        public event EventHandler<EventArgs> IconChanged;
+        public event EventHandler<EventArgs> TitleChanged = delegate { };
 
-        public event EventHandler<EventArgs> TitleChanged;
+        public event EventHandler<EventArgs> VisibleChanged = delegate { };
 
-        public event EventHandler<EventArgs> ClientSizeChanged;
+        public event EventHandler<EventArgs> FocusedChanged = delegate { };
 
-        public event EventHandler<EventArgs> VisibleChanged;
+        public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
 
-        public event EventHandler<EventArgs> WindowInfoChanged;
+        public event EventHandler<EventArgs> WindowStateChanged = delegate { };
 
-        public event EventHandler<EventArgs> FocusedChanged;
+        public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
 
-        public event EventHandler<EventArgs> WindowBorderChanged;
+        public event EventHandler<EventArgs> MouseEnter = delegate { };
 
-        public event EventHandler<EventArgs> WindowStateChanged;
-
-        public event EventHandler<KeyPressEventArgs> KeyPress;
-
-        public event EventHandler<EventArgs> MouseEnter;
-
-        public event EventHandler<EventArgs> MouseLeave;
+        public event EventHandler<EventArgs> MouseLeave = delegate { };
 
         #endregion
 
@@ -1280,6 +1278,7 @@ namespace OpenTK.Platform.Windows
                     Debug.Print("[Warning] INativeWindow leaked ({0}). Did you forget to call INativeWindow.Dispose()?", this);
                 }
 
+                Disposed(this, EventArgs.Empty);
                 disposed = true;
             }
         }
