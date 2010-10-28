@@ -33,6 +33,9 @@ using System.Drawing;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
+// Disable unused field warnings. This is interop, we don't use everything
+#pragma warning disable 0649
+
 // X11 Version
 namespace OpenTK.Platform.X11
 {
