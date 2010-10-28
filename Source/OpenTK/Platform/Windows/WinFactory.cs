@@ -76,7 +76,6 @@ namespace OpenTK.Platform.Windows
 
         public virtual OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
         {
-
             return InputDriver.KeyboardDriver;
         }
 
