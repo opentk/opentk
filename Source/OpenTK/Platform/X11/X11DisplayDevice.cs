@@ -39,7 +39,7 @@ namespace OpenTK.Platform.X11
             using (new XLock(API.DefaultDisplay))
             {
                 List<DisplayDevice> devices = new List<DisplayDevice>();
-                bool xinerama_supported = false;
+                xinerama_supported = false;
                 try
                 {
                     xinerama_supported = QueryXinerama(devices);
