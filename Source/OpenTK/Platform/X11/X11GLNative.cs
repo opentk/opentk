@@ -1270,10 +1270,6 @@ namespace OpenTK.Platform.X11
 
         #region Events
 
-        public event EventHandler<EventArgs> Load = delegate { };
-
-        public event EventHandler<EventArgs> Unload = delegate { };
-
         public event EventHandler<EventArgs> Move = delegate { };
 
         public event EventHandler<EventArgs> Resize = delegate { };

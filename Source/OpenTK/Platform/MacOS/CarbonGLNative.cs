@@ -1112,8 +1112,6 @@ namespace OpenTK.Platform.MacOS
 
 		#endregion
 
-        public event EventHandler<EventArgs> Load = delegate { };
-        public event EventHandler<EventArgs> Unload = delegate { };
         public event EventHandler<EventArgs> Move = delegate { };
         public event EventHandler<EventArgs> Resize = delegate { };
         public event EventHandler<CancelEventArgs> Closing = delegate { };
