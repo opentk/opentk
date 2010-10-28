@@ -566,72 +566,72 @@ namespace OpenTK
         /// <summary>
         /// Occurs after the window has closed.
         /// </summary>
-        public event EventHandler<EventArgs> Closed;
+        public event EventHandler<EventArgs> Closed = delegate { };
 
         /// <summary>
         /// Occurs when the window is about to close.
         /// </summary>
-        public event EventHandler<CancelEventArgs> Closing;
+        public event EventHandler<CancelEventArgs> Closing = delegate { };
 
         /// <summary>
         /// Occurs when the window is disposed.
         /// </summary>
-        public event EventHandler<EventArgs> Disposed;
+        public event EventHandler<EventArgs> Disposed = delegate { };
 
         /// <summary>
         /// Occurs when the <see cref="Focused"/> property of the window changes.
         /// </summary>
-        public event EventHandler<EventArgs> FocusedChanged;
+        public event EventHandler<EventArgs> FocusedChanged = delegate { };
 
         /// <summary>
         /// Occurs when the <see cref="Icon"/> property of the window changes. 
         /// </summary>
-        public event EventHandler<EventArgs> IconChanged;
+        public event EventHandler<EventArgs> IconChanged = delegate { };
 
         /// <summary>
         /// Occurs whenever a character is typed.
         /// </summary>
-        public event EventHandler<KeyPressEventArgs> KeyPress;
+        public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
 
         /// <summary>
         /// Occurs whenever the window is moved.
         /// </summary>
-        public event EventHandler<EventArgs> Move;
+        public event EventHandler<EventArgs> Move = delegate { };
 
         /// <summary>
         /// Occurs whenever the mouse cursor enters the window <see cref="Bounds"/>.
         /// </summary>
-        public event EventHandler<EventArgs> MouseEnter;
+        public event EventHandler<EventArgs> MouseEnter = delegate { };
         
         /// <summary>
         /// Occurs whenever the mouse cursor leaves the window <see cref="Bounds"/>.
         /// </summary>
-        public event EventHandler<EventArgs> MouseLeave;
+        public event EventHandler<EventArgs> MouseLeave = delegate { };
 
         /// <summary>
         /// Occurs whenever the window is resized.
         /// </summary>
-        public event EventHandler<EventArgs> Resize;
+        public event EventHandler<EventArgs> Resize = delegate { };
 
         /// <summary>
         /// Occurs when the <see cref="Title"/> property of the window changes.
         /// </summary>
-        public event EventHandler<EventArgs> TitleChanged;
+        public event EventHandler<EventArgs> TitleChanged = delegate { };
 
         /// <summary>
         /// Occurs when the <see cref="Visible"/> property of the window changes.
         /// </summary>
-        public event EventHandler<EventArgs> VisibleChanged;
+        public event EventHandler<EventArgs> VisibleChanged = delegate { };
 
         /// <summary>
         /// Occurs when the <see cref="WindowBorder"/> property of the window changes.
         /// </summary>
-        public event EventHandler<EventArgs> WindowBorderChanged;
+        public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
 
         /// <summary>
         /// Occurs when the <see cref="WindowState"/> property of the window changes.
         /// </summary>
-        public event EventHandler<EventArgs> WindowStateChanged;
+        public event EventHandler<EventArgs> WindowStateChanged = delegate { };
 
         #endregion
 
@@ -705,7 +705,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnClosed(EventArgs e)
         {
-            if (Closed != null) Closed(this, e);
+            Closed(this, e);
         }
 
         #endregion
@@ -720,7 +720,7 @@ namespace OpenTK
         /// Set e.Cancel to true in order to stop the NativeWindow from closing.</param>
         protected virtual void OnClosing(CancelEventArgs e)
         {
-            if (Closing != null) Closing(this, e);
+            Closing(this, e);
         }
 
         #endregion
@@ -733,7 +733,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnDisposed(EventArgs e)
         {
-            if (Disposed != null) Disposed(this, e);
+            Disposed(this, e);
         }
 
         #endregion
@@ -746,7 +746,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnFocusedChanged(EventArgs e)
         {
-            if (FocusedChanged != null) FocusedChanged(this, e);
+            FocusedChanged(this, e);
         }
 
         #endregion
@@ -759,7 +759,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnIconChanged(EventArgs e)
         {
-            if (IconChanged != null) IconChanged(this, e);
+            IconChanged(this, e);
         }
 
         #endregion
@@ -772,7 +772,7 @@ namespace OpenTK
         /// <param name="e">The <see cref="OpenTK.KeyPressEventArgs"/> for this event.</param>
         protected virtual void OnKeyPress(KeyPressEventArgs e)
         {
-            if (KeyPress != null) KeyPress(this, e);
+            KeyPress(this, e);
         }
 
         #endregion
@@ -785,7 +785,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnMove(EventArgs e)
         {
-            if (Move != null) Move(this, e);
+            Move(this, e);
         }
 
         #endregion
@@ -798,7 +798,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnMouseEnter(EventArgs e)
         {
-            if (MouseEnter != null) MouseEnter(this, e);
+            MouseEnter(this, e);
         }
 
         #endregion
@@ -811,7 +811,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnMouseLeave(EventArgs e)
         {
-            if (MouseLeave != null) MouseLeave(this, e);
+            MouseLeave(this, e);
         }
 
         #endregion
@@ -824,7 +824,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnResize(EventArgs e)
         {
-            if (Resize != null) Resize(this, e);
+            Resize(this, e);
         }
 
         #endregion
@@ -837,7 +837,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnTitleChanged(EventArgs e)
         {
-            if (TitleChanged != null) TitleChanged(this, e);
+            TitleChanged(this, e);
         }
 
         #endregion
@@ -850,7 +850,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnVisibleChanged(EventArgs e)
         {
-            if (VisibleChanged != null) VisibleChanged(this, e);
+            VisibleChanged(this, e);
         }
 
         #endregion
@@ -863,7 +863,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnWindowBorderChanged(EventArgs e)
         {
-            if (WindowBorderChanged != null) WindowBorderChanged(this, e);
+            WindowBorderChanged(this, e);
         }
 
         #endregion
@@ -876,7 +876,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnWindowStateChanged(EventArgs e)
         {
-            if (WindowStateChanged != null) WindowStateChanged(this, e);
+            WindowStateChanged(this, e);
         }
 
         #endregion

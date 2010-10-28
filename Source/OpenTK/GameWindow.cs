@@ -316,7 +316,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnLoad(EventArgs e)
         {
-            if (Load != null) Load(this, e);
+            Load(this, e);
         }
 
         #endregion
@@ -329,7 +329,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnUnload(EventArgs e)
         {
-            if (Unload != null) Unload(this, e);
+            Unload(this, e);
         }
 
         #endregion
@@ -929,22 +929,22 @@ namespace OpenTK
         /// <summary>
         /// Occurs before the window is displayed for the first time.
         /// </summary>
-        public event EventHandler<EventArgs> Load;
+        public event EventHandler<EventArgs> Load = delegate { };
 
         /// <summary>
         /// Occurs when it is time to render a frame.
         /// </summary>
-        public event EventHandler<FrameEventArgs> RenderFrame;
+        public event EventHandler<FrameEventArgs> RenderFrame = delegate { };
 
         /// <summary>
         /// Occurs before the window is destroyed.
         /// </summary>
-        public event EventHandler<EventArgs> Unload;
+        public event EventHandler<EventArgs> Unload = delegate { };
 
         /// <summary>
         /// Occurs when it is time to update a frame.
         /// </summary>
-        public event EventHandler<FrameEventArgs> UpdateFrame;
+        public event EventHandler<FrameEventArgs> UpdateFrame = delegate { };
 
         #endregion
 
@@ -973,7 +973,7 @@ namespace OpenTK
         /// </remarks>
         protected virtual void OnRenderFrame(FrameEventArgs e)
         {
-            if (RenderFrame != null) RenderFrame(this, e);
+            RenderFrame(this, e);
         }
 
         #endregion
@@ -989,7 +989,7 @@ namespace OpenTK
         /// </remarks>
         protected virtual void OnUpdateFrame(FrameEventArgs e)
         {
-            if (UpdateFrame != null) UpdateFrame(this, e);
+            UpdateFrame(this, e);
         }
 
         #endregion
