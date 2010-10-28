@@ -73,7 +73,7 @@ namespace OpenTK.Platform.Windows
 
         public MouseState GetState(int index)
         {
-            if (index < mice.Count)
+            if (mice.Count > index)
                 return mice[index];
             else
                 return new MouseState();
@@ -192,10 +192,12 @@ namespace OpenTK.Platform.Windows
             ContextHandle handle = new ContextHandle(rin.Header.Device);
 
             MouseState mouse;
-            if (rawids.ContainsKey(handle))
-                mouse = mice[rawids[handle]];
-            else
-                return false;
+            if (!rawids.ContainsKey(handle))
+            {
+                mice.Add(new MouseState());
+                rawids.Add(handle, mice.Count - 1);
+            }
+            mouse = mice[rawids[handle]];
 
             if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_DOWN) != 0) mouse.EnableBit((int)MouseButton.Left);
             if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_UP) != 0) mouse.DisableBit((int)MouseButton.Left);
