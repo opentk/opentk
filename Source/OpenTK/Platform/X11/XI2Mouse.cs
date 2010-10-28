@@ -39,7 +39,6 @@ namespace OpenTK.Platform.X11
     {
         List<MouseState> mice = new List<MouseState>();
         Dictionary<int, int> rawids = new Dictionary<int, int>(); // maps raw ids to mouse ids
-        int first_mouse;
         readonly X11WindowInfo window;
         static int XIOpCode;
 
