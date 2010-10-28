@@ -452,8 +452,6 @@ namespace OpenTK.Platform.Windows
 
                     if (!e.Cancel)
                     {
-                        Unload(this, EventArgs.Empty);
-
                         DestroyWindow();
                         break;
                     }
@@ -1116,10 +1114,6 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region Events
-
-        public event EventHandler<EventArgs> Load =delegate { };
-
-        public event EventHandler<EventArgs> Unload = delegate { };
 
         public event EventHandler<EventArgs> Move = delegate { };
 
