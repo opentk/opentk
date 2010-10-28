@@ -39,7 +39,8 @@ namespace OpenTK.Input
         #region Fields
 
         // Allocate enough ints to store all mouse buttons
-        const int NumInts = ((int)MouseButton.LastButton + 31) / 32;
+        const int IntSize = sizeof(int);
+        const int NumInts = ((int)MouseButton.LastButton + IntSize - 1) / IntSize;
         // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
         unsafe fixed int Buttons[NumInts];
         int x, y;
@@ -48,6 +49,24 @@ namespace OpenTK.Input
         #endregion
 
         #region Public Members
+
+        /// <summary>
+        /// Gets a <see cref="System.Boolean"/> indicating whether the specified
+        /// <see cref="OpenTK.Input.MouseButton"/> is pressed.
+        /// </summary>
+        /// <param name="button">The <see cref="OpenTK.Input.MouseButton"/> to check.</param>
+        /// <returns>True if key is pressed; false otherwise.</returns>
+        public bool this[MouseButton button]
+        {
+            get { return IsButtonDown(button); }
+            internal set
+            {
+                if (value)
+                    EnableBit((int)button);
+                else
+                    DisableBit((int)button);
+            }
+        }
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether this button is down.
@@ -104,19 +123,6 @@ namespace OpenTK.Input
         {
             get { return y; }
             internal set { y = value; }
-        }
-
-        /// <summary>
-        /// Gets a System.Boolean indicating the state of the specified MouseButton.
-        /// </summary>
-        /// <param name="button">The MouseButton to check.</param>
-        /// <returns>True if the MouseButton is pressed, false otherwise.</returns>
-        public bool this[MouseButton button]
-        {
-            get
-            {
-                return IsButtonDown(button);
-            }
         }
 
         /// <summary>
@@ -251,6 +257,8 @@ namespace OpenTK.Input
 
         internal bool ReadBit(int offset)
         {
+            ValidateOffset(offset);
+
             int int_offset = offset / 32;
             int bit_offset = offset % 32;
             unsafe
@@ -264,6 +272,8 @@ namespace OpenTK.Input
 
         internal void EnableBit(int offset)
         {
+            ValidateOffset(offset);
+
             int int_offset = offset / 32;
             int bit_offset = offset % 32;
             unsafe
@@ -277,6 +287,8 @@ namespace OpenTK.Input
 
         internal void DisableBit(int offset)
         {
+            ValidateOffset(offset);
+
             int int_offset = offset / 32;
             int bit_offset = offset % 32;
             unsafe
@@ -286,6 +298,16 @@ namespace OpenTK.Input
                     *(b + int_offset) &= ~(1 << bit_offset);
                 }
             }
+        }
+
+        #endregion
+
+        #region Private Members
+
+        static void ValidateOffset(int offset)
+        {
+            if (offset < 0 || offset >= NumInts * IntSize)
+                throw new ArgumentOutOfRangeException("offset");
         }
 
         #endregion
