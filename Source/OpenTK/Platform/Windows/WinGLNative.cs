@@ -411,7 +411,7 @@ namespace OpenTK.Platform.Windows
                         default:
                             if (!WMInput.KeyMap.ContainsKey((VirtualKeys)wParam))
                             {
-                                Debug.Print("Virtual key {0} ({1}) not mapped.", (VirtualKeys)wParam, (int)lParam);
+                                Debug.Print("Virtual key {0} ({1}) not mapped.", (VirtualKeys)wParam, (long)lParam);
                                 break;
                             }
                             else
