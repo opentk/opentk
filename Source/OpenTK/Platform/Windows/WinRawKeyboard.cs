@@ -41,7 +41,10 @@ namespace OpenTK.Platform.Windows
 {
     internal class WinRawKeyboard : IKeyboardDriver, IDisposable
     {
-        private List<KeyboardDevice> keyboards = new List<KeyboardDevice>();
+        readonly List<KeyboardState> keyboards = new List<KeyboardState>();
+        // ContextHandle instead of IntPtr for fast dictionary access
+        readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
+        private List<KeyboardDevice> keyboards_old = new List<KeyboardDevice>();
         private IntPtr window;
 
         #region --- Constructors ---
@@ -134,8 +137,11 @@ namespace OpenTK.Platform.Windows
                         //if (!keyboards.Contains(kb))
                         //{
                             this.RegisterKeyboardDevice(kb);
-                            keyboards.Add(kb);
+                            keyboards_old.Add(kb);
                         //}
+
+                        keyboards.Add(new KeyboardState());
+                        rawids.Add(new ContextHandle(ridl[i].Device), keyboards.Count - 1);
                     }
                 }
             }
@@ -181,58 +187,56 @@ namespace OpenTK.Platform.Windows
         /// <returns></returns>
         internal bool ProcessKeyboardEvent(RawInput rin)
         {
-            //Keyboard key = keyboards[0];
-            //rin.Header.Device;
-            switch (rin.Header.Type)
+            bool processed = false;
+
+            bool pressed =
+                rin.Data.Keyboard.Message == (int)WindowMessage.KEYDOWN ||
+                rin.Data.Keyboard.Message == (int)WindowMessage.SYSKEYDOWN;
+
+            ContextHandle handle = new ContextHandle(rin.Header.Device);
+            KeyboardState keyboard;
+            if (!rawids.ContainsKey(handle))
             {
-                case RawInputDeviceType.KEYBOARD:
-                    bool pressed =
-                        rin.Data.Keyboard.Message == (int)WindowMessage.KEYDOWN ||
-                        rin.Data.Keyboard.Message == (int)WindowMessage.SYSKEYDOWN;
-                    
-                    // Find the device where the button was pressed. It can be that the input notification
-                    // came not from a physical keyboard device but from a code-generated input message - in
-                    // that case, the event goes to the default (first) keyboard.
-                    // TODO: Send the event to all keyboards instead of the default one.
-                    // TODO: Optimize this! The predicate allocates way to much memory.
-                    //int index = keyboards.FindIndex(delegate(KeyboardDevice kb)
-                    //{
-                    //    return kb.DeviceID == rin.Header.Device;
-                    //});
-                    //if (index == -1) index = 0;
-                    int index;
-                    if (keyboards.Count > 0) index = 0;
-                    else return false;
+                keyboards.Add(new KeyboardState());
+                rawids.Add(handle, keyboards.Count - 1);
+            }
+            keyboard = keyboards[rawids[handle]];
 
-                    // Generic control, shift, alt keys may be sent instead of left/right.
-                    // It seems you have to explicitly register left/right events.
-                    switch (rin.Data.Keyboard.VKey)
-                    {
-                        case VirtualKeys.SHIFT:
-                            keyboards[index][Input.Key.ShiftLeft] = keyboards[index][Input.Key.ShiftRight] = pressed;
-                            return true;
+            // Generic control, shift, alt keys may be sent instead of left/right.
+            // It seems you have to explicitly register left/right events.
+            switch (rin.Data.Keyboard.VKey)
+            {
+                case VirtualKeys.SHIFT:
+                    keyboard[Input.Key.ShiftLeft] = keyboard[Input.Key.ShiftRight] = pressed;
+                    processed = true;
+                    break;
 
-                        case VirtualKeys.CONTROL:
-                            keyboards[index][Input.Key.ControlLeft] = keyboards[index][Input.Key.ControlRight] = pressed;
-                            return true;
+                case VirtualKeys.CONTROL:
+                    keyboard[Input.Key.ControlLeft] = keyboard[Input.Key.ControlRight] = pressed;
+                    processed = true;
+                    break;
 
-                        case VirtualKeys.MENU:
-                            keyboards[index][Input.Key.AltLeft] = keyboards[index][Input.Key.AltRight] = pressed;
-                            return true;
-
-                        default:
-                            if (!WMInput.KeyMap.ContainsKey(rin.Data.Keyboard.VKey))
-                                Debug.Print("Virtual key {0} ({1}) not mapped.",
-                                            rin.Data.Keyboard.VKey, (int)rin.Data.Keyboard.VKey);
-                            else
-                                keyboards[index][WMInput.KeyMap[rin.Data.Keyboard.VKey]] = pressed;
-                            
-                            return false;
-                    }
+                case VirtualKeys.MENU:
+                    keyboard[Input.Key.AltLeft] = keyboard[Input.Key.AltRight] = pressed;
+                    processed = true;
+                    break;
 
                 default:
-                    throw new ApplicationException("Windows raw keyboard driver received invalid data.");
+                    if (!WMInput.KeyMap.ContainsKey(rin.Data.Keyboard.VKey))
+                    {
+                        Debug.Print("Virtual key {0} ({1}) not mapped.",
+                                    rin.Data.Keyboard.VKey, (int)rin.Data.Keyboard.VKey);
+                    }
+                    else
+                    {
+                        keyboard[WMInput.KeyMap[rin.Data.Keyboard.VKey]] = pressed;
+                        processed = true;
+                    }
+                    break;
             }
+
+            keyboards[rawids[handle]] = keyboard;
+            return processed;
         }
 
         #endregion
@@ -255,17 +259,23 @@ namespace OpenTK.Platform.Windows
 
         public IList<KeyboardDevice> Keyboard
         {
-            get { return keyboards; }
+            get { return keyboards_old; }
         }
 
         public KeyboardState GetState()
         {
-            throw new NotImplementedException();
+            if (keyboards.Count > 0)
+                return keyboards[0];
+            else
+                return new KeyboardState();
         }
 
         public KeyboardState GetState(int index)
         {
-            throw new NotImplementedException();
+            if (keyboards.Count > index)
+                return keyboards[index];
+            else
+                return new KeyboardState();
         }
 
         #endregion
@@ -286,7 +296,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (manual)
                 {
-                    keyboards.Clear();
+                    keyboards_old.Clear();
                 }
                 disposed = true;
             }
