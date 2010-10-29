@@ -43,6 +43,7 @@ namespace OpenTK.Input
         const int NumInts = ((int)Key.LastKey + IntSize - 1) / IntSize;
         // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
         unsafe fixed int Keys[NumInts];
+        bool is_connected;
 
         #endregion
 
@@ -82,6 +83,12 @@ namespace OpenTK.Input
         public bool IsKeyUp(Key key)
         {
             return !ReadBit((int)key);
+        }
+
+        public bool IsConnected
+        {
+            get { return is_connected; }
+            internal set { is_connected = value; }
         }
 
         /// <summary>
@@ -219,6 +226,7 @@ namespace OpenTK.Input
                         *(k1 + i) |= *(k2 + i);
                 }
             }
+            IsConnected |= other.IsConnected;
         }
 
         #endregion

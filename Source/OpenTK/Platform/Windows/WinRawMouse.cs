@@ -28,7 +28,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using OpenTK.Input;
@@ -39,13 +38,15 @@ namespace OpenTK.Platform.Windows
     /// <summary>
     /// Contains methods to register for and process mouse WM_INPUT messages.
     /// </summary>
-    internal class WinRawMouse : IMouseDriver2
+    sealed class WinRawMouse : IMouseDriver2
     {
         readonly List<MouseState> mice = new List<MouseState>();
         readonly List<string> names = new List<string>(); 
         readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
         readonly IntPtr Window;
         readonly object UpdateLock = new object();
+
+        #region Constructors
 
         public WinRawMouse(IntPtr window)
         {
@@ -61,33 +62,9 @@ namespace OpenTK.Platform.Windows
             Debug.Unindent();
         }
 
-        #region IMouseDriver Members
-
-        public MouseState GetState()
-        {
-            lock (UpdateLock)
-            {
-                MouseState master = new MouseState();
-                foreach (MouseState ms in mice)
-                {
-                    master.MergeBits(ms);
-                }
-                return master;
-            }
-        }
-
-        public MouseState GetState(int index)
-        {
-            lock (UpdateLock)
-            {
-                if (mice.Count > index)
-                    return mice[index];
-                else
-                    return new MouseState();
-            }
-        }
-
         #endregion
+
+        #region Public Members
 
         public void RefreshDevices()
         {
@@ -134,8 +111,8 @@ namespace OpenTK.Platform.Windows
                         // mouse device by qeurying the registry.
                         RegistryKey regkey = FindRegistryKey(name);
                         string deviceDesc = (string)regkey.GetValue("DeviceDesc");
-                        deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
                         string deviceClass = (string)regkey.GetValue("Class");
+                        deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
 
                         if (!String.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("mouse"))
                         {
@@ -147,7 +124,7 @@ namespace OpenTK.Platform.Windows
                                 Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICEINFO,
                                         info, ref devInfoSize);
 
-                                RegisterRawDevice(deviceDesc, Window);
+                                RegisterRawDevice(Window, deviceDesc);
                                 MouseState state = new MouseState();
                                 state.IsConnected = true;
                                 mice.Add(state);
@@ -157,62 +134,6 @@ namespace OpenTK.Platform.Windows
                         }
                     }
                 }
-            }
-        }
-
-        static string GetDeviceName(RawInputDeviceList dev)
-        {
-            // get name size
-            uint size = 0;
-            Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
-
-            // get actual name
-            IntPtr name_ptr = Marshal.AllocHGlobal((IntPtr)size);
-            Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, name_ptr, ref size);
-            string name = Marshal.PtrToStringAnsi(name_ptr);
-            Marshal.FreeHGlobal(name_ptr);
-
-            return name;
-        }
-
-        static RegistryKey FindRegistryKey(string name)
-        {
-            // remove the \??\
-            name = name.Substring(4);
-
-            string[] split = name.Split('#');
-
-            string id_01 = split[0];    // ACPI (Class code)
-            string id_02 = split[1];    // PNP0303 (SubClass code)
-            string id_03 = split[2];    // 3&13c0b0c5&0 (Protocol code)
-            // The final part is the class GUID and is not needed here
-
-            string findme = string.Format(
-                @"System\CurrentControlSet\Enum\{0}\{1}\{2}",
-                id_01, id_02, id_03);
-
-            RegistryKey regkey = Registry.LocalMachine.OpenSubKey(findme);
-            return regkey;
-        }
-
-        static void RegisterRawDevice(string device, IntPtr window)
-        {
-            RawInputDevice[] rid = new RawInputDevice[1];
-            // Mouse is 1/2 (page/id). See http://www.microsoft.com/whdc/device/input/HID_HWID.mspx
-            rid[0] = new RawInputDevice();
-            rid[0].UsagePage = 1;
-            rid[0].Usage = 2;
-            rid[0].Flags = RawInputDeviceFlags.INPUTSINK;
-            rid[0].Target = window;
-
-            if (!Functions.RegisterRawInputDevices(rid, 1, API.RawInputDeviceSize))
-            {
-                Debug.Print("[Warning] Raw input registration failed with error: {0}. Device: {1}",
-                    Marshal.GetLastWin32Error(), rid[0].ToString());
-            }
-            else
-            {
-                Debug.Print("Registered mouse {0}", device);
             }
         }
 
@@ -259,5 +180,95 @@ namespace OpenTK.Platform.Windows
                 return true;
             }
         }
+
+        #endregion
+
+        #region Private Members
+
+        static string GetDeviceName(RawInputDeviceList dev)
+        {
+            // get name size
+            uint size = 0;
+            Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
+
+            // get actual name
+            IntPtr name_ptr = Marshal.AllocHGlobal((IntPtr)size);
+            Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, name_ptr, ref size);
+            string name = Marshal.PtrToStringAnsi(name_ptr);
+            Marshal.FreeHGlobal(name_ptr);
+
+            return name;
+        }
+
+        static RegistryKey FindRegistryKey(string name)
+        {
+            // remove the \??\
+            name = name.Substring(4);
+
+            string[] split = name.Split('#');
+
+            string id_01 = split[0];    // ACPI (Class code)
+            string id_02 = split[1];    // PNP0303 (SubClass code)
+            string id_03 = split[2];    // 3&13c0b0c5&0 (Protocol code)
+            // The final part is the class GUID and is not needed here
+
+            string findme = string.Format(
+                @"System\CurrentControlSet\Enum\{0}\{1}\{2}",
+                id_01, id_02, id_03);
+
+            RegistryKey regkey = Registry.LocalMachine.OpenSubKey(findme);
+            return regkey;
+        }
+
+        static void RegisterRawDevice(IntPtr window, string device)
+        {
+            RawInputDevice[] rid = new RawInputDevice[1];
+            // Mouse is 1/2 (page/id). See http://www.microsoft.com/whdc/device/input/HID_HWID.mspx
+            rid[0] = new RawInputDevice();
+            rid[0].UsagePage = 1;
+            rid[0].Usage = 2;
+            rid[0].Flags = RawInputDeviceFlags.INPUTSINK;
+            rid[0].Target = window;
+
+            if (!Functions.RegisterRawInputDevices(rid, 1, API.RawInputDeviceSize))
+            {
+                Debug.Print("[Warning] Raw input registration failed with error: {0}. Device: {1}",
+                    Marshal.GetLastWin32Error(), rid[0].ToString());
+            }
+            else
+            {
+                Debug.Print("Registered mouse {0}", device);
+            }
+        }
+
+        #endregion
+
+        #region IMouseDriver2 Members
+
+        public MouseState GetState()
+        {
+            lock (UpdateLock)
+            {
+                MouseState master = new MouseState();
+                foreach (MouseState ms in mice)
+                {
+                    master.MergeBits(ms);
+                }
+                return master;
+            }
+        }
+
+        public MouseState GetState(int index)
+        {
+            lock (UpdateLock)
+            {
+                if (mice.Count > index)
+                    return mice[index];
+                else
+                    return new MouseState();
+            }
+        }
+
+        #endregion
     }
 }
