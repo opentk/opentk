@@ -59,6 +59,7 @@ namespace OpenTK.Platform.Windows
     using RECT = OpenTK.Platform.Windows.Win32Rectangle;
     using WNDPROC = System.IntPtr;
     using LPDEVMODE = DeviceMode;
+    using HDEVNOTIFY = System.IntPtr;
 
     using HRESULT = System.IntPtr;
     using HMONITOR = System.IntPtr;
@@ -845,7 +846,7 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        [DllImport("user32.dll", SetLastError=true)]
+        [DllImport("user32.dll", SetLastError = true)]
         public static extern BOOL SetForegroundWindow(HWND hWnd);
 
         [DllImport("user32.dll", SetLastError = true)]
@@ -853,6 +854,13 @@ namespace OpenTK.Platform.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern BOOL SetParent(HWND child, HWND newParent);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern HDEVNOTIFY RegisterDeviceNotification(HANDLE hRecipient,
+            LPVOID NotificationFilter, DeviceNotification Flags);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern BOOL UnregisterDeviceNotification(HDEVNOTIFY Handle);
 
         #endregion
 
@@ -2794,6 +2802,30 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
+    #region BroadcastHeader
+
+    struct BroadcastHeader
+    {
+        public DWORD Size;
+        public DeviceBroadcastType DeviceType;
+        DWORD dbch_reserved;
+    }
+
+    #endregion
+
+    #region BroadcastDeviceInterface
+
+    struct BroadcastDeviceInterface
+    {
+        public DWORD Size;
+        public DeviceBroadcastType DeviceType;
+        DWORD dbcc_reserved;
+        public Guid ClassGuid;
+        public char dbcc_name;
+    }
+
+    #endregion
+
     #endregion
 
     #region --- Enums ---
@@ -4126,6 +4158,30 @@ namespace OpenTK.Platform.Windows
         ACTIVATEANDEAT = 2,
         NOACTIVATE = 3,
         NOACTIVATEANDEAT = 4,
+    }
+
+    #endregion
+
+    #region DeviceNotification
+
+    enum DeviceNotification
+    {
+        WINDOW_HANDLE = 0x00000000,
+        SERVICE_HANDLE = 0x00000001,
+        ALL_INTERFACE_CLASSES = 0x00000004,
+    }
+
+    #endregion
+
+    #region DeviceBroadcastType
+
+    enum DeviceBroadcastType
+    {
+        OEM = 0,
+        VOLUME = 2,
+        PORT = 3,
+        INTERFACE = 5,
+        HANDLE = 6,
     }
 
     #endregion

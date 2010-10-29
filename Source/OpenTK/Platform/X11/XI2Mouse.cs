@@ -35,7 +35,7 @@ namespace OpenTK.Platform.X11
 {
     // Todo: multi-mouse support. Right now we aggregate all data into a single mouse device.
     // This should be easy: just read the device id and route the data to the correct device.
-    sealed class XI2Mouse : IMouseDriver
+    sealed class XI2Mouse : IMouseDriver2
     {
         List<MouseState> mice = new List<MouseState>();
         Dictionary<int, int> rawids = new Dictionary<int, int>(); // maps raw ids to mouse ids

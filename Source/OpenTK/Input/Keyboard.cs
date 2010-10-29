@@ -38,7 +38,7 @@ namespace OpenTK.Input
     {
         #region Fields
 
-        static readonly IKeyboardDriver driver =
+        static readonly IKeyboardDriver2 driver =
             Platform.Factory.Default.CreateKeyboardDriver();
         static readonly object SyncRoot = new object();
 
@@ -49,7 +49,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.
         /// </summary>
-        /// <returns>A <see cref="OpenTK.Input.KeyboardState"/> structure containing the combined state for all keyboard devices.</returns>
+        /// <returns>An <see cref="OpenTK.Input.KeyboardState"/> structure containing the combined state for all keyboard devices.</returns>
         public static KeyboardState GetState()
         {
             lock (SyncRoot)
@@ -62,7 +62,7 @@ namespace OpenTK.Input
         /// Retrieves the <see cref="OpenTK.Input.KeyboardState"/> for the specified keyboard device.
         /// </summary>
         /// <param name="index">The index of the keyboard device.</param>
-        /// <returns>A <see cref="OpenTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
+        /// <returns>An <see cref="OpenTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
         public static KeyboardState GetState(int index)
         {
             if (index < 0)
@@ -75,5 +75,23 @@ namespace OpenTK.Input
         }
 
         #endregion
+
+        /// <summary>
+        /// Retrieves the device name for the keyboard device.
+        /// </summary>
+        /// <param name="index">The index of the keyboard device.</param>
+        /// <returns>A <see cref="System.String"/> with the name of the specified device or <see cref="System.String.Empty"/>.</returns>
+        /// <remarks>
+        /// <para>If no device exists at the specified index, the return value is <see cref="System.String.Empty"/>.</para></remarks>
+        public static string GetDeviceName(int index)
+        {
+            if (index < 0)
+                throw new ArgumentOutOfRangeException("index");
+
+            lock (SyncRoot)
+            {
+                return driver.GetDeviceName(index);
+            }
+        }
     }
 }

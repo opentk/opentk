@@ -34,8 +34,8 @@ namespace OpenTK.Input
     // Defines the interface for a 2nd generation input driver.
     interface IInputDriver2
     {
-        IMouseDriver MouseDriver { get; }
-        IKeyboardDriver KeyboardDriver { get; }
-        IJoystickDriver JoystickDriver { get; }
+        IMouseDriver2 MouseDriver { get; }
+        IKeyboardDriver2 KeyboardDriver { get; }
+        IGamePadDriver GamePadDriver { get; }
     }
 }

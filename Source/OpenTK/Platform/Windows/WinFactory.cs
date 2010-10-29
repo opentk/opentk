@@ -74,12 +74,12 @@ namespace OpenTK.Platform.Windows
             return new WinGraphicsMode();
         }
 
-        public virtual OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
+        public virtual OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
         {
             return InputDriver.KeyboardDriver;
         }
 
-        public virtual OpenTK.Input.IMouseDriver CreateMouseDriver()
+        public virtual OpenTK.Input.IMouseDriver2 CreateMouseDriver()
         {
             return InputDriver.MouseDriver;
         }

@@ -253,7 +253,6 @@ namespace OpenTK
 
         //event EventHandler<KeyEventArgs> KeyDown;
         //event EventHandler<KeyEventArgs> KeyUp;
-        
 
         //event EventHandler<DragEventArgs> DragDrop;
         //event EventHandler<DragEventArgs> DragEnter;
