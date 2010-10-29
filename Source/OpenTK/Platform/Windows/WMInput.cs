@@ -37,11 +37,11 @@ using System.Drawing;
 namespace OpenTK.Platform.Windows
 {
     // Input driver for legacy (pre XP) Windows platforms.
-    sealed class WMInput : System.Windows.Forms.NativeWindow, IInputDriver, IInputDriver2
+    sealed class WMInput : System.Windows.Forms.NativeWindow, IInputDriver2
     {
         #region --- Fields ---
 
-        WinMMJoystick joystick_driver = new WinMMJoystick();
+        WinMMJoystick gamepad_driver = new WinMMJoystick();
         // Driver supports only one keyboard and mouse;
         KeyboardDevice keyboard = new KeyboardDevice();
         MouseDevice mouse = new MouseDevice();
@@ -249,66 +249,6 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region --- IInputDriver Members ---
-
-        #region IInputDriver Members
-
-        public void Poll()
-        {
-            joystick_driver.Poll();
-        }
-
-        #endregion
-
-        #region IKeyboardDriver Members
-
-        public IList<KeyboardDevice> Keyboard
-        {
-            get { return keyboards; }
-        }
-
-        public KeyboardState GetState()
-        {
-            throw new NotImplementedException();
-        }
-
-        public KeyboardState GetState(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IMouseDriver Members
-
-        public IList<MouseDevice> Mouse
-        {
-            get { return mice; }
-        }
-
-        MouseState IMouseDriver.GetState()
-        {
-            throw new NotImplementedException();
-        }
-
-        MouseState IMouseDriver.GetState(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IJoystickDriver Members
-
-        public IList<JoystickDevice> Joysticks
-        {
-            get { return joystick_driver.Joysticks; }
-        }
-
-        #endregion
-
-        #endregion
-
         #region --- IDisposable Members ---
 
         private bool disposed;
@@ -337,19 +277,19 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        public IMouseDriver MouseDriver
+        public IMouseDriver2 MouseDriver
         {
             get { throw new NotImplementedException(); }
         }
 
-        public IKeyboardDriver KeyboardDriver
+        public IKeyboardDriver2 KeyboardDriver
         {
             get { throw new NotImplementedException(); }
         }
 
-        public IJoystickDriver JoystickDriver
+        public IGamePadDriver GamePadDriver
         {
-            get { return joystick_driver; }
+            get { throw new NotImplementedException(); }
         }
     }
 }

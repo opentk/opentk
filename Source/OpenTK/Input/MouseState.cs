@@ -45,6 +45,7 @@ namespace OpenTK.Input
         unsafe fixed int Buttons[NumInts];
         int x, y;
         float wheel;
+        bool is_connected;
 
         #endregion
 
@@ -177,6 +178,12 @@ namespace OpenTK.Input
         public int ScrollWheelValue
         {
             get { return Wheel; }
+        }
+
+        public bool IsConnected
+        {
+            get { return is_connected; }
+            internal set { is_connected = value; }
         }
 
         /// <summary>
@@ -314,6 +321,7 @@ namespace OpenTK.Input
                 WheelPrecise += other.WheelPrecise;
                 X += other.X;
                 Y += other.Y;
+                IsConnected |= other.IsConnected;
             }
         }
 

@@ -114,12 +114,12 @@ namespace OpenTK.Platform
             return default_implementation.CreateGraphicsMode();
         }
         
-        public OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
+        public OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
         {
             return default_implementation.CreateKeyboardDriver();
         }
 
-        public OpenTK.Input.IMouseDriver CreateMouseDriver()
+        public OpenTK.Input.IMouseDriver2 CreateMouseDriver()
         {
             return default_implementation.CreateMouseDriver();
         }
@@ -169,12 +169,12 @@ namespace OpenTK.Platform
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
+            public OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public OpenTK.Input.IMouseDriver CreateMouseDriver()
+            public OpenTK.Input.IMouseDriver2 CreateMouseDriver()
             {
                 throw new PlatformNotSupportedException(error_string);
             }

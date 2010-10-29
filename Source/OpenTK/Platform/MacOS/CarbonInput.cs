@@ -7,7 +7,7 @@ namespace OpenTK.Platform.MacOS
 {
     using Input;
 
-    class CarbonInput : IInputDriver
+    class CarbonInput : IInputDriver, IInputDriver2
     {
         List<KeyboardDevice> dummy_keyboard_list = new List<KeyboardDevice>(1);
         List<MouseDevice> dummy_mice_list = new List<MouseDevice>(1);
@@ -35,16 +35,6 @@ namespace OpenTK.Platform.MacOS
             get { return dummy_keyboard_list; }
         }
 
-        public KeyboardState GetState()
-        {
-            throw new NotImplementedException();
-        }
-
-        public KeyboardState GetState(int index)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
 
         #region IMouseDriver Members
@@ -52,16 +42,6 @@ namespace OpenTK.Platform.MacOS
         public IList<MouseDevice> Mouse
         {
             get { return dummy_mice_list; }
-        }
-
-        MouseState IMouseDriver.GetState()
-        {
-            throw new NotImplementedException();
-        }
-
-        MouseState IMouseDriver.GetState(int index)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
@@ -82,5 +62,20 @@ namespace OpenTK.Platform.MacOS
         }
 
         #endregion
+
+        public IMouseDriver2 MouseDriver
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IKeyboardDriver2 KeyboardDriver
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IGamePadDriver GamePadDriver
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

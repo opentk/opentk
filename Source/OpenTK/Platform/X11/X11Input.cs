@@ -219,16 +219,6 @@ namespace OpenTK.Platform.X11
             get { return dummy_keyboard_list;  }//return keyboardDriver.Keyboard;
         }
 
-        public KeyboardState GetState()
-        {
-            throw new NotImplementedException();
-        }
-
-        public KeyboardState GetState(int index)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
 
         #region public IList<Mouse> Mouse
@@ -236,16 +226,6 @@ namespace OpenTK.Platform.X11
         public IList<MouseDevice> Mouse
         {
             get { return (IList<MouseDevice>)dummy_mice_list; } //return mouseDriver.Mouse;
-        }
-
-        MouseState IMouseDriver.GetState()
-        {
-            throw new NotImplementedException();
-        }
-
-        MouseState IMouseDriver.GetState(int index)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

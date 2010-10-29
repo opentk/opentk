@@ -41,7 +41,7 @@ using System.Threading;
 namespace OpenTK.Platform.Windows
 {
     // Not complete.
-    sealed class WinRawInput : IInputDriver, IInputDriver2
+    sealed class WinRawInput : IInputDriver2
     {
         // Input event data.
         static RawInput data = new RawInput();
@@ -56,6 +56,9 @@ namespace OpenTK.Platform.Windows
         static WinWindowInfo Parent { get { return Native.WindowInfo as WinWindowInfo; } }
         static readonly WindowProcedure WndProc = WindowProcedureImplementation;
         static IntPtr OldWndProc;
+        
+        static IntPtr DevNotifyHandle;
+        static readonly Guid DeviceInterfaceHid = new Guid("4D1E55B2-F16F-11CF-88CB-001111000030");
 
         #region Constructors
 
@@ -102,6 +105,7 @@ namespace OpenTK.Platform.Windows
             Native.ProcessEvents();
             Functions.SetParent(Parent.WindowHandle, Constants.MESSAGE_ONLY);
             Native.ProcessEvents();
+            RegisterForDeviceNotifications();
 
             // Subclass the window to retrieve the events we are interested in.
             OldWndProc = Functions.SetWindowLong(Parent.WindowHandle, WndProc);
@@ -112,6 +116,21 @@ namespace OpenTK.Platform.Windows
 
             Debug.Unindent();
             return Native;
+        }
+
+        static void RegisterForDeviceNotifications()
+        {
+            BroadcastDeviceInterface bdi = new BroadcastDeviceInterface();
+            bdi.Size = BlittableValueType.StrideOf(bdi);
+            bdi.DeviceType = DeviceBroadcastType.INTERFACE;
+            bdi.ClassGuid = DeviceInterfaceHid;
+            unsafe
+            {
+                DevNotifyHandle = Functions.RegisterDeviceNotification(Parent.WindowHandle,
+                    new IntPtr((void*)&bdi), DeviceNotification.WINDOW_HANDLE);
+            }
+            if (DevNotifyHandle == IntPtr.Zero)
+                Debug.Print("[Warning] Failed to register for device notifications. Error: {0}", Marshal.GetLastWin32Error());
         }
 
         #endregion
@@ -150,6 +169,10 @@ namespace OpenTK.Platform.Windows
                         }
                     }
                     break;
+
+                case WindowMessage.DEVICECHANGE:
+                    mouseDriver.RefreshDevices();
+                    break;
             }
             return Functions.CallWindowProc(OldWndProc, handle, message, wParam, lParam);
         }
@@ -182,139 +205,19 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region IInputDriver Members
-
-        #region IInputDriver Members
-
-        public void Poll()
-        {
-            return;
-#if false
-            // We will do a buffered read for all input devices and route the RawInput structures
-            // to the correct 'ProcessData' handlers. First, we need to find out the size of the
-            // buffer to allocate for the structures. Then we allocate the buffer and read the
-            // structures, calling the correct handler for each one. Last, we free the allocated
-            // buffer.
-            int size = 0;
-            Functions.GetRawInputBuffer(IntPtr.Zero, ref size, API.RawInputHeaderSize);
-            size *= 256;
-            IntPtr rin_data = Marshal.AllocHGlobal(size);
-
-            while (true)
-            {
-                // Iterate reading all available RawInput structures and routing them to their respective
-                // handlers.
-                int num = Functions.GetRawInputBuffer(rin_data, ref size, API.RawInputHeaderSize);
-                if (num == 0)
-                    break;
-                else if (num < 0)
-                {
-                    /*int error = Marshal.GetLastWin32Error();
-                    if (error == 122)
-                    {
-                        // Enlarge the buffer, it was too small.
-                        AllocateBuffer();
-                    }
-                    else
-                    {
-                        throw new ApplicationException(String.Format(
-                            "GetRawInputBuffer failed with code: {0}", error));
-                    }*/
-                    Debug.Print("GetRawInputBuffer failed with code: {0}", Marshal.GetLastWin32Error());
-                    //AllocateBuffer();
-                    break;
-                }
-
-                RawInput[] rin_structs = new RawInput[num];
-                IntPtr next_rin = rin_data;
-                for (int i = 0; i < num; i++)
-                {
-                    rin_structs[i] = (RawInput)Marshal.PtrToStructure(next_rin, typeof(RawInput));
-
-                    switch (rin_structs[i].Header.Type)
-                    {
-                        case RawInputDeviceType.KEYBOARD:
-                            keyboardDriver.ProcessKeyboardEvent(rin_structs[i]);
-                            break;
-
-                        case RawInputDeviceType.MOUSE:
-                            mouseDriver.ProcessEvent(rin_structs[i]);
-                            break;
-                    }
-
-                    next_rin = Functions.NextRawInputStructure(next_rin);
-                }
-                Functions.DefRawInputProc(rin_structs, num, (uint)API.RawInputHeaderSize);
-            }
-
-            Marshal.FreeHGlobal(rin_data);
-#endif
-        }
-
-        #endregion
-
-        #region IKeyboardDriver Members
-
-        public IList<KeyboardDevice> Keyboard
-        {
-            get { return KeyboardDriver.Keyboard; }
-        }
-
-        public KeyboardState GetState()
-        {
-            throw new NotImplementedException();
-        }
-
-        public KeyboardState GetState(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IMouseDriver Members
-
-        public IList<MouseDevice> Mouse
-        {
-            get { return MouseDriver.Mouse; }
-        }
-
-        MouseState IMouseDriver.GetState()
-        {
-            throw new NotImplementedException();
-        }
-
-        MouseState IMouseDriver.GetState(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IJoystickDriver Members
-
-        public IList<JoystickDevice> Joysticks
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        #endregion
-
-        #endregion
-
         #region IInputDriver2 Members
 
-        public IMouseDriver MouseDriver
+        public IMouseDriver2 MouseDriver
         {
             get { return mouseDriver; }
         }
 
-        public IKeyboardDriver KeyboardDriver
+        public IKeyboardDriver2 KeyboardDriver
         {
             get { return keyboardDriver; }
         }
 
-        public IJoystickDriver JoystickDriver
+        public IGamePadDriver GamePadDriver
         {
             get { return joystickDriver; }
         }
@@ -337,10 +240,9 @@ namespace OpenTK.Platform.Windows
             {
                 if (manual)
                 {
-                    keyboardDriver.Dispose();
-                    //mouseDriver.Dispose();
                 }
 
+                Functions.UnregisterDeviceNotification(DevNotifyHandle);
                 disposed = true;
             }
         }

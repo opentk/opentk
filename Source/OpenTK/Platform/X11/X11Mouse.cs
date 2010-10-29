@@ -32,7 +32,7 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    sealed class X11Mouse : IMouseDriver
+    sealed class X11Mouse : IMouseDriver2
     {
         MouseState mouse = new MouseState();
         X11WindowInfo window;

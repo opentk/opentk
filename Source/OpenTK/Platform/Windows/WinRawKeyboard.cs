@@ -39,9 +39,10 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-    internal class WinRawKeyboard : IKeyboardDriver, IDisposable
+    internal class WinRawKeyboard : IKeyboardDriver2
     {
         readonly List<KeyboardState> keyboards = new List<KeyboardState>();
+        readonly List<string> names = new List<string>();
         // ContextHandle instead of IntPtr for fast dictionary access
         readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
         private List<KeyboardDevice> keyboards_old = new List<KeyboardDevice>();
@@ -142,6 +143,7 @@ namespace OpenTK.Platform.Windows
                         //}
 
                         keyboards.Add(new KeyboardState());
+                        names.Add(deviceDesc);
                         rawids.Add(new ContextHandle(ridl[i].Device), keyboards.Count - 1);
                     }
                 }
@@ -261,11 +263,6 @@ namespace OpenTK.Platform.Windows
 
         #region --- IKeyboardDriver Members ---
 
-        public IList<KeyboardDevice> Keyboard
-        {
-            get { return keyboards_old; }
-        }
-
         public KeyboardState GetState()
         {
             lock (UpdateLock)
@@ -290,33 +287,15 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region --- IDisposable Members ---
-
-        private bool disposed;
-
-        public void Dispose()
+        public string GetDeviceName(int index)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool manual)
-        {
-            if (!disposed)
+            lock (UpdateLock)
             {
-                if (manual)
-                {
-                    keyboards_old.Clear();
-                }
-                disposed = true;
+                if (names.Count > index)
+                    return names[index];
+                else
+                    return String.Empty;
             }
-        }
-
-        ~WinRawKeyboard()
-        {
-            Dispose(false);
         }
 
         #endregion

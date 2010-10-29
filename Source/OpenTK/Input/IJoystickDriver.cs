@@ -34,6 +34,7 @@ namespace OpenTK.Input
     /// <summary>
     /// Defines the interface for JoystickDevice drivers.
     /// </summary>
+    [Obsolete]
     public interface IJoystickDriver
     {
         /// <summary>

@@ -38,7 +38,7 @@ namespace OpenTK.Input
     {
         #region Fields
 
-        static readonly IMouseDriver driver =
+        static readonly IMouseDriver2 driver =
             Platform.Factory.Default.CreateMouseDriver();
         static readonly object SyncRoot = new object();
 

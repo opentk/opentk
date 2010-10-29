@@ -131,7 +131,10 @@
     <Compile Include="DisplayDevice.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Input\IGamePadDriver.cs" />
     <Compile Include="Input\IInputDriver2.cs" />
+    <Compile Include="Input\IKeyboardDriver2.cs" />
+    <Compile Include="Input\IMouseDriver2.cs" />
     <Compile Include="WindowBorder.cs">
       <SubType>Code</SubType>
     </Compile>

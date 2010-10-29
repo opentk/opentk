@@ -33,11 +33,13 @@ namespace OpenTK.Platform.X11
 {
     // Standard keyboard driver that relies on xlib input events.
     // Only one keyboard supported.
-    sealed class X11Keyboard : IKeyboardDriver
+    sealed class X11Keyboard : IKeyboardDriver2
     {
         readonly X11WindowInfo window;
         readonly X11KeyMap keymap = new X11KeyMap();
+        readonly static string name = "Core X11 keyboard";
         KeyboardState state = new KeyboardState();
+        
 
         // Can either attach itself to the specified window or can hook the root window.
         public X11Keyboard(X11WindowInfo win)
@@ -64,9 +66,6 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        // Todo: remove this
-        public IList<KeyboardDevice> Keyboard { get { throw new NotSupportedException(); } }
-
         public KeyboardState GetState()
         {
             ProcessEvents();
@@ -76,11 +75,19 @@ namespace OpenTK.Platform.X11
         public KeyboardState GetState(int index)
         {
             // X11Keyboard supports a single keyboard only
-            if (index < 0 || index > 1)
-                throw new ArgumentOutOfRangeException("index");
-
             ProcessEvents();
-            return state;
+            if (index == 0)
+                return state;
+            else
+                return new KeyboardState();
+        }
+
+        public string GetDeviceName(int index)
+        {
+            if (index == 0)
+                return name;
+            else
+                return String.Empty;
         }
 
         void ProcessEvents()
