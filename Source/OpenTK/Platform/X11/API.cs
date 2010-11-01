@@ -1638,6 +1638,19 @@ XF86VidModeGetGammaRampSize(
             Functions.XUnlockDisplay(Display);
         }
     }
+
+    // XAllowEvent modes
+    enum EventMode
+    {
+        AsyncPointer = 0,
+        SyncPointer,
+        ReplayPointer,
+        AsyncKeyboard,
+        SyncKeyboard,
+        ReplayKeyboard,
+        AsyncBoth,
+        SyncBoth
+    }
 }
 
 #pragma warning restore 3019
