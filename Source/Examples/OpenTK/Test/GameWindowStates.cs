@@ -104,6 +104,47 @@ namespace Examples.Tests
             gfx.DrawString(str, TextFont, Brushes.White, new PointF(0, line * TextFont.Height));
         }
 
+        static void DrawString(Graphics gfx, string str, int line, float offset)
+        {
+            gfx.DrawString(str, TextFont, Brushes.White, new PointF(offset, line * TextFont.Height));
+        }
+
+        static void DrawKeyboard(Graphics gfx, KeyboardState keyboard, int line)
+        {
+            const string str = "Keys pressed:";
+            float space = gfx.MeasureString(" ", TextFont).Width;
+            float offset = gfx.MeasureString(str, TextFont).Width + space;
+            DrawString(gfx, str, line);
+            for (int i = 0; i < (int)Key.LastKey; i++)
+            {
+                Key k = (Key)i;
+                if (keyboard[k])
+                {
+                    string key = k.ToString();
+                    DrawString(gfx, key, line, offset);
+                    offset += gfx.MeasureString(key, TextFont).Width + space;
+                }
+            }
+        }
+
+        static void DrawMouse(Graphics gfx, MouseState mouse, int line)
+        {
+            const string str = "Buttons pressed:";
+            float space = gfx.MeasureString(" ", TextFont).Width;
+            float offset = gfx.MeasureString(str, TextFont).Width + space;
+            DrawString(gfx, str, line);
+            for (int i = 0; i < (int)MouseButton.LastButton; i++)
+            {
+                MouseButton b = (MouseButton)i;
+                if (mouse[b])
+                {
+                    string button = b.ToString();
+                    DrawString(gfx, button, line, offset);
+                    offset += gfx.MeasureString(button, TextFont).Width + space;
+                }
+            }
+        }
+
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             mouse = OpenTK.Input.Mouse.GetState();
@@ -137,6 +178,8 @@ namespace Examples.Tests
                     DrawString(gfx, String.Format("Window.Location: {0}, Size: {1}", Location, Size), line++);
                     DrawString(gfx, String.Format("Window.{{X={0}, Y={1}, Width={2}, Height={3}}}", X, Y, Width, Height), line++);
                     DrawString(gfx, String.Format("Window.ClientRectangle: {0}", ClientRectangle), line++);
+                    DrawKeyboard(gfx, keyboard, line++);
+                    DrawMouse(gfx, mouse, line++);
                 }
             }
 
