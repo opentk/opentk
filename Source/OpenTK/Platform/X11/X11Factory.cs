@@ -80,14 +80,14 @@ namespace OpenTK.Platform.X11
 
         public virtual OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
         {
-            return new X11Keyboard(null);
+            return new X11Keyboard();
         }
 
         public virtual OpenTK.Input.IMouseDriver2 CreateMouseDriver()
         {
-            if (XI2Mouse.IsSupported(IntPtr.Zero))
-                return new XI2Mouse(null); // Requires xorg 1.7 or higher.
-            else
+            //if (XI2Mouse.IsSupported(IntPtr.Zero))
+            //    return new XI2Mouse(null); // Requires xorg 1.7 or higher.
+            //else
                 return new X11Mouse(null); // Always supported.
         }
 

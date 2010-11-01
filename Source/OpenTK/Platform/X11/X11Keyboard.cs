@@ -27,6 +27,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
@@ -35,35 +36,14 @@ namespace OpenTK.Platform.X11
     // Only one keyboard supported.
     sealed class X11Keyboard : IKeyboardDriver2
     {
-        readonly X11WindowInfo window;
-        readonly X11KeyMap keymap = new X11KeyMap();
+        readonly static X11KeyMap keymap = new X11KeyMap();
         readonly static string name = "Core X11 keyboard";
         KeyboardState state = new KeyboardState();
-        
+        readonly byte[] keys = new byte[32];
 
-        // Can either attach itself to the specified window or can hook the root window.
-        public X11Keyboard(X11WindowInfo win)
+        public X11Keyboard()
         {
-            if (win != null)
-            {
-                window = win;
-            }
-            else
-            {
-                using (new XLock(API.DefaultDisplay))
-                {
-                    window = new X11WindowInfo();
-                    window.Display = API.DefaultDisplay;
-                    window.Screen = Functions.XDefaultScreen(window.Display);
-                    window.RootWindow = Functions.XRootWindow(window.Display, window.Screen);
-                    window.WindowHandle = window.RootWindow;
-                    window.EventMask =EventMask.KeyPressMask | EventMask.KeyReleaseMask | EventMask.KeymapStateMask;
-
-                    Functions.XGrabKeyboard(window.Display, window.RootWindow, true,
-                        GrabMode.GrabModeAsync, GrabMode.GrabModeAsync, IntPtr.Zero);
-                    Functions.XSelectInput(window.Display, window.RootWindow, new IntPtr((int)window.EventMask));
-                }
-            }
+            Debug.WriteLine("Using X11Keyboard.");
         }
 
         public KeyboardState GetState()
@@ -92,48 +72,24 @@ namespace OpenTK.Platform.X11
 
         void ProcessEvents()
         {
-            XEvent e = new XEvent();
-
-            while (true)
+            IntPtr display = API.DefaultDisplay;
+            using (new XLock(display))
             {
-                using (new XLock(window.Display))
+                Functions.XQueryKeymap(display, keys);
+                for (int keycode = 8; keycode < 256; keycode++)
                 {
-                    if (!Functions.XCheckWindowEvent(window.Display, window.WindowHandle, window.EventMask, ref e))
-                        break;
+                    IntPtr keysym = Functions.XKeycodeToKeysym(display, (byte)keycode, 0);
+                    IntPtr keysym2 = Functions.XKeycodeToKeysym(display, (byte)keycode, 1);
+                    bool pressed = (keys[keycode >> 3] >> (keycode & 0x07) & 0x01) != 0;
 
-                    switch (e.type)
+                    Key key;
+                    if (keymap.TryGetValue((XKey)keysym, out key) ||
+                        keymap.TryGetValue((XKey)keysym2, out key))
                     {
-                        case XEventName.KeyPress:
-                        case XEventName.KeyRelease:
-                            bool pressed = e.type == XEventName.KeyPress;
-        
-                            IntPtr keysym = API.LookupKeysym(ref e.KeyEvent, 0);
-                            IntPtr keysym2 = API.LookupKeysym(ref e.KeyEvent, 1);
-        
-                            if (keymap.ContainsKey((XKey)keysym))
-                            {
-                                if (pressed)
-                                    state.EnableBit((int)keymap[(XKey)keysym]);
-                                else
-                                    state.DisableBit((int)keymap[(XKey)keysym]);
-                            }
-                            else if (keymap.ContainsKey((XKey)keysym2))
-                            {
-                                if (pressed)
-                                    state.EnableBit((int)keymap[(XKey)keysym2]);
-                                else
-                                    state.DisableBit((int)keymap[(XKey)keysym2]);
-                            }
-                            else
-                            {
-                                System.Diagnostics.Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.",
-                                    e.KeyEvent.keycode, (XKey)keysym, (XKey)keysym2);
-                            }
-                            break;
-
-                        case XEventName.KeymapNotify:
-                            System.Diagnostics.Debug.Print("Keymap event: {0}", e.KeymapEvent.key_vector0);
-                            break;
+                        if (pressed)
+                            state.EnableBit((int)key);
+                        else
+                            state.DisableBit((int)key);
                     }
                 }
             }
