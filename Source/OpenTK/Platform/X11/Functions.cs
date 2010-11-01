@@ -27,7 +27,7 @@ namespace OpenTK.Platform.X11
     using Mask = System.IntPtr;
     using Atom = System.IntPtr;
     using VisualID = System.IntPtr;
-    using Time = System.UInt32;
+    using Time = System.IntPtr;
     using KeyCode = System.Byte;    // Or maybe ushort?
 
     using Display = System.IntPtr;
@@ -185,11 +185,23 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XTranslateCoordinates")]
         public extern static bool XTranslateCoordinates(IntPtr display, IntPtr src_w, IntPtr dest_w, int src_x, int src_y, out int intdest_x_return, out int dest_y_return, out IntPtr child_return);
 
+
+        [DllImport("libX11")]
+        public extern static int XGrabKey(IntPtr display, int keycode, uint modifiers,
+            Window grab_window, bool owner_events, GrabMode pointer_mode, GrabMode keyboard_mode);
+
+        [DllImport("libX11")]
+        public extern static int XUngrabKey(IntPtr display, int keycode, uint modifiers, Window grab_window);
+
         [DllImport("libX11", EntryPoint = "XGrabKeyboard")]
-        public extern static int XGrabKeyboard(IntPtr display, IntPtr window, bool owner_events, GrabMode pointer_mode, GrabMode keyboard_mode, IntPtr timestamp);
+        public extern static int XGrabKeyboard(IntPtr display, IntPtr window, bool owner_events,
+            GrabMode pointer_mode, GrabMode keyboard_mode, IntPtr timestamp);
 
         [DllImport("libX11", EntryPoint = "XUngrabKeyboard")]
         public extern static int XUngrabKeyboard(IntPtr display, IntPtr timestamp);
+
+        [DllImport("libX11")]
+        public extern static int XAllowEvents(IntPtr display, EventMode event_mode, Time time);
 
         [DllImport("libX11", EntryPoint = "XGetGeometry")]
         public extern static bool XGetGeometry(IntPtr display, IntPtr window, out IntPtr root, out int x, out int y, out int width, out int height, out int border_width, out int depth);
@@ -469,6 +481,12 @@ namespace OpenTK.Platform.X11
             int bytes_buffer, [Out] KeySym[] keysym_return, IntPtr status_in_out);
 
         [DllImport("libX11")]
+        public static extern KeyCode XKeysymToKeycode(IntPtr display, KeySym keysym);
+
+        [DllImport("libX11")]
+        public static extern KeySym XKeycodeToKeysym(IntPtr display, KeyCode keycode, int index);
+
+        [DllImport("libX11")]
         public static extern int XRefreshKeyboardMapping(ref XMappingEvent event_map);
 
         [DllImport("libX11")]
@@ -491,6 +509,13 @@ namespace OpenTK.Platform.X11
         {
             return XISelectEvents(dpy, win, ref mask, 1);
         }
+
+        [DllImport("libXi")]
+        static extern Status XIGrabDevice(IntPtr display, int deviceid, Window grab_window, Time time,
+            Cursor cursor, int grab_mode, int paired_device_mode, Bool owner_events, XIEventMask[] mask);
+
+        [DllImport("libXi")]
+        static extern Status XIUngrabDevice(IntPtr display, int deviceid, Time time);
 
         static readonly IntPtr CopyFromParent = IntPtr.Zero;
 
