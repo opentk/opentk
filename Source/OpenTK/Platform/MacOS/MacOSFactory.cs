@@ -55,7 +55,7 @@ namespace OpenTK.Platform.MacOS
         public virtual IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new AglContext(handle, window, shareContext);
-        } 
+        }
 
         public virtual GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
@@ -79,7 +79,7 @@ namespace OpenTK.Platform.MacOS
         {
             throw new NotImplementedException();
         }
-
+        
         #endregion
     }
 }
