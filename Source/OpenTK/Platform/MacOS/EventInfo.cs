@@ -25,14 +25,17 @@ namespace OpenTK.Platform.MacOS.Carbon
         uint _eventKind;
         EventClass _eventClass;
 
-        public EventClass EventClass { get { return _eventClass; }}
-       
+        public EventClass EventClass
+        {
+            get { return _eventClass; }
+        }
+
         public WindowEventKind WindowEventKind
         {
             get
             {
                 if (EventClass == EventClass.Window)
-                    return (WindowEventKind) _eventKind;
+                    return (WindowEventKind)_eventKind;
                 else
                     throw new InvalidCastException("Event is not a Window event.");
             }
@@ -42,7 +45,7 @@ namespace OpenTK.Platform.MacOS.Carbon
             get
             {
                 if (EventClass == EventClass.Keyboard)
-                    return (KeyboardEventKind) _eventKind;
+                    return (KeyboardEventKind)_eventKind;
                 else
                     throw new InvalidCastException("Event is not a Keyboard event.");
             }
@@ -52,7 +55,7 @@ namespace OpenTK.Platform.MacOS.Carbon
             get
             {
                 if (EventClass == EventClass.Mouse)
-                    return (MouseEventKind) _eventKind;
+                    return (MouseEventKind)_eventKind;
                 else
                     throw new InvalidCastException("Event is not an Mouse event.");
             }
@@ -62,7 +65,7 @@ namespace OpenTK.Platform.MacOS.Carbon
             get
             {
                 if (EventClass == EventClass.Application)
-                    return (AppEventKind) _eventKind;
+                    return (AppEventKind)_eventKind;
                 else
                     throw new InvalidCastException("Event is not an Application event.");
             }
@@ -71,18 +74,18 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         public override string ToString()
         {
-            switch(EventClass)
+            switch (EventClass)
             {
-                case EventClass.Application:
-                    return "Event: App " + AppEventKind.ToString();
-                case EventClass.Keyboard:
-                    return "Event: Keyboard " + KeyboardEventKind.ToString();
-                case EventClass.Mouse:
-                    return "Event: Mouse " + MouseEventKind.ToString();
-                case EventClass.Window:
-                    return "Event: Window " + WindowEventKind.ToString();
+            case EventClass.Application:
+                return "Event: App " + AppEventKind.ToString();
+            case EventClass.Keyboard:
+                return "Event: Keyboard " + KeyboardEventKind.ToString();
+            case EventClass.Mouse:
+                return "Event: Mouse " + MouseEventKind.ToString();
+            case EventClass.Window:
+                return "Event: Window " + WindowEventKind.ToString();
             }
-
+            
             return "Event: Unknown Class " + EventClass.ToString() + "   kind: " + _eventKind.ToString();
         }
     }

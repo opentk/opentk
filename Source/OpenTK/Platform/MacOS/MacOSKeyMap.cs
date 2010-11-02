@@ -12,7 +12,7 @@ namespace OpenTK.Platform.MacOS
         public MacOSKeyMap()
         {
             // comments indicate members of the Key enum that are missing
-
+            
             Add(MacOSKeyCode.A, Key.A);
             // AltLeft
             // AltRight
@@ -127,7 +127,7 @@ namespace OpenTK.Platform.MacOS
             Add(MacOSKeyCode.X, Key.X);
             Add(MacOSKeyCode.Y, Key.Y);
             Add(MacOSKeyCode.Z, Key.Z);
-
+            
         }
     }
 }
