@@ -363,7 +363,5 @@ namespace OpenTK.Audio
             public static EaxReverb Chapel = new EaxReverb(26, 19.6f, 0.840f, -1000, -500, 0, 4.62f, 0.64f, 1.23f, -700, 0.032f, 0f, 0f, 0f, -200, 0.049f, 0f, 0f, 0f, 0.250f, 0f, 0.250f, 0.110f, -5f, 5000f, 250f, 0f, 0x3f);
             public static EaxReverb Smallwaterroom = new EaxReverb(26, 36.2f, 0.700f, -1000, -698, 0, 1.51f, 1.25f, 1.14f, -100, 0.020f, 0f, 0f, 0f, 300, 0.030f, 0f, 0f, 0f, 0.179f, 0.150f, 0.895f, 0.190f, -7f, 5000f, 250f, 0f, 0x0);
         }
-
-#pragma warning restore 1591
     }
 }
