@@ -65,17 +65,26 @@ namespace OpenTK.Platform.MacOS
 
         public IMouseDriver2 MouseDriver
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public IKeyboardDriver2 KeyboardDriver
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public IGamePadDriver GamePadDriver
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
