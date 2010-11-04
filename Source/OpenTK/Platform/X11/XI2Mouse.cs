@@ -45,23 +45,17 @@ namespace OpenTK.Platform.X11
         static readonly Functions.EventPredicate PredicateImpl = IsEventValid;
         readonly IntPtr Predicate = Marshal.GetFunctionPointerForDelegate(PredicateImpl);
 
-        // Can either attach itself to the specified window or can hook the root window.
-        public XI2Mouse(X11WindowInfo win)
+        public XI2Mouse()
         {
-            if (win != null)
+            Debug.WriteLine("Using XI2Mouse.");
+
+            using (new XLock(API.DefaultDisplay))
             {
-                window = win;
-            }
-            else
-            {
-                using (new XLock(API.DefaultDisplay))
-                {
-                    window = new X11WindowInfo();
-                    window.Display = API.DefaultDisplay;
-                    window.Screen = Functions.XDefaultScreen(window.Display);
-                    window.RootWindow = Functions.XRootWindow(window.Display, window.Screen);
-                    window.WindowHandle = window.RootWindow;
-                }
+                window = new X11WindowInfo();
+                window.Display = API.DefaultDisplay;
+                window.Screen = Functions.XDefaultScreen(window.Display);
+                window.RootWindow = Functions.XRootWindow(window.Display, window.Screen);
+                window.WindowHandle = window.RootWindow;
             }
 
             if (!IsSupported(window.Display))
@@ -72,8 +66,6 @@ namespace OpenTK.Platform.X11
             {
                 Functions.XISelectEvents(window.Display, window.WindowHandle, mask);
             }
-
-            Debug.WriteLine("Using XI2Mouse.");
         }
 
         // Checks whether XInput2 is supported on the specified display.
@@ -96,10 +88,7 @@ namespace OpenTK.Platform.X11
             return true;
         }
 
-        #region IMouseDriver Members
-
-        // Todo: remove this
-        public IList<MouseDevice> Mouse { get { throw new NotSupportedException(); } }
+        #region IMouseDriver2 Members
 
         public MouseState GetState()
         {
