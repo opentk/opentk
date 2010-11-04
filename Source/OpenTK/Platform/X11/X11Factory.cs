@@ -88,7 +88,7 @@ namespace OpenTK.Platform.X11
             //if (XI2Mouse.IsSupported(IntPtr.Zero))
             //    return new XI2Mouse(null); // Requires xorg 1.7 or higher.
             //else
-                return new X11Mouse(null); // Always supported.
+                return new X11Mouse(); // Always supported.
         }
 
         #endregion

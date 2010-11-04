@@ -36,6 +36,7 @@ namespace OpenTK.Platform.X11
                 this.Add(XKey.Super_R, Key.WinRight);
                 this.Add(XKey.Meta_L, Key.WinLeft);
                 this.Add(XKey.Meta_R, Key.WinRight);
+                this.Add(XKey.ISO_Level3_Shift, Key.AltRight); // Normally AltGr
 
                 this.Add(XKey.Menu, Key.Menu);
                 this.Add(XKey.Tab, Key.Tab);

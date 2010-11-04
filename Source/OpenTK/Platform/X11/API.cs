@@ -1142,6 +1142,8 @@ XF86VidModeGetGammaRampSize(
         Hyper_L                     = 0xffed,  /* Left hyper */
         Hyper_R                     = 0xffee,  /* Right hyper */
 
+        ISO_Level3_Shift = 0xfe03,
+
         /*
          * Latin 1
          * (ISO/IEC 8859-1 = Unicode U+0020..U+00FF)
@@ -1245,6 +1247,79 @@ XF86VidModeGetGammaRampSize(
         bar                         = 0x007c,  /* U+007C VERTICAL LINE */
         braceright                  = 0x007d,  /* U+007D RIGHT CURLY BRACKET */
         asciitilde                  = 0x007e,  /* U+007E TILDE */
+
+        // Extra keys
+
+        XF86AudioMute = 0x1008ff12,
+        XF86AudioLowerVolume = 0x1008ff11,
+        XF86AudioRaiseVolume = 0x1008ff13,
+        XF86PowerOff = 0x1008ff2a,
+        XF86Suspend = 0x1008ffa7,
+        XF86Copy = 0x1008ff57,
+        XF86Paste = 0x1008ff6d,
+        XF86Cut = 0x1008ff58,
+        XF86MenuKB = 0x1008ff65,
+        XF86Calculator = 0x1008ff1d,
+        XF86Sleep = 0x1008ff2f,
+        XF86WakeUp = 0x1008ff2b ,
+        XF86Explorer = 0x1008ff5d,
+        XF86Send = 0x1008ff7b,
+        XF86Xfer = 0x1008ff8a,
+        XF86Launch1 = 0x1008ff41,
+        XF86Launch2 =     0x1008ff42,
+        XF86Launch3 = 0x1008ff43,
+        XF86Launch4 =     0x1008ff44,
+        XF86Launch5 = 0x1008ff45,
+        XF86LaunchA = 0x1008ff4a,
+        XF86LaunchB = 0x1008ff4b,
+        XF86WWW = 0x1008ff2e,
+        XF86DOS = 0x1008ff5a,
+        XF86ScreenSaver = 0x1008ff2d,
+        XF86RotateWindows = 0x1008ff74,
+        XF86Mail = 0x1008ff19,
+        XF86Favorites = 0x1008ff30,
+        XF86MyComputer = 0x1008ff33,
+        XF86Back = 0x1008ff26,
+        XF86Forward = 0x1008ff27 ,
+        XF86Eject = 0x1008ff2c,
+        XF86AudioPlay = 0x1008ff14,
+        XF86AudioStop = 0x1008ff15,
+        XF86AudioPrev = 0x1008ff16,
+        XF86AudioNext = 0x1008ff17,
+        XF86AudioRecord = 0x1008ff1c,
+        XF86AudioPause =0x1008ff31,
+        XF86AudioRewind = 0x1008ff3e,
+        XF86AudioForward = 0x1008ff97,
+        XF86Phone = 0x1008ff6e,
+        XF86Tools = 0x1008ff81,
+        XF86HomePage = 0x1008ff18,
+        XF86Close = 0x1008ff56,
+        XF86Reload = 0x1008ff73,
+        XF86ScrollUp = 0x1008ff78,
+        XF86ScrollDown = 0x1008ff79,
+        XF86New = 0x1008ff68,
+        XF86TouchpadToggle = 0x1008ffa9,
+        XF86WebCam = 0x1008ff8f,
+        XF86Search = 0x1008ff1b,
+        XF86Finance = 0x1008ff3c,
+        XF86Shop = 0x1008ff36,
+        XF86MonBrightnessDown = 0x1008ff03,
+        XF86MonBrightnessUp = 0x1008ff02,
+        XF86AudioMedia = 0x1008ff32,
+        XF86Display = 0x1008ff59,
+        XF86KbdLightOnOff = 0x1008ff04,
+        XF86KbdBrightnessDown = 0x1008ff06,
+        XF86KbdBrightnessUp = 0x1008ff05,
+        XF86Reply = 0x1008ff72,
+        XF86MailForward = 0x1008ff90,
+        XF86Save = 0x1008ff77,
+        XF86Documents = 0x1008ff5b,
+        XF86Battery = 0x1008ff93,
+        XF86Bluetooth = 0x1008ff94,
+        XF86WLAN = 0x1008ff95,
+
+         SunProps = 0x1005ff70,
+         SunOpen = 0x1005ff73,
     }
 
     #endregion
