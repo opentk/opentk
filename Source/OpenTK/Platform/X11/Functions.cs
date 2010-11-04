@@ -108,8 +108,9 @@ namespace OpenTK.Platform.X11
         public extern static int XConnectionNumber(IntPtr diplay);
         [DllImport("libX11")]
         public extern static int XPending(IntPtr diplay);
+
         [DllImport("libX11", EntryPoint = "XSelectInput")]
-        public extern static IntPtr XSelectInput(IntPtr display, IntPtr window, IntPtr mask);
+        public extern static int XSelectInput(IntPtr display, IntPtr window, IntPtr mask);
 
         [DllImport("libX11", EntryPoint = "XDestroyWindow")]
         public extern static int XDestroyWindow(IntPtr display, IntPtr window);
@@ -178,6 +179,17 @@ namespace OpenTK.Platform.X11
 
         [DllImport("libX11", EntryPoint = "XUngrabPointer")]
         public extern static int XUngrabPointer(IntPtr display, IntPtr timestamp);
+
+        [DllImport("libX11", EntryPoint = "XGrabButton")]
+        public extern static int XGrabButton(IntPtr display,
+            int button, uint modifiers, Window grab_window,
+            Bool owner_events, EventMask event_mask,
+            GrabMode pointer_mode, GrabMode keyboard_mode,
+            Window confine_to, Cursor cursor);
+
+        [DllImport("libX11", EntryPoint = "XUngrabButton")]
+        public extern static int XUngrabButton(IntPtr display, uint button, uint
+              modifiers, Window grab_window);
 
         [DllImport("libX11", EntryPoint = "XQueryPointer")]
         public extern static bool XQueryPointer(IntPtr display, IntPtr window, out IntPtr root, out IntPtr child, out int root_x, out int root_y, out int win_x, out int win_y, out int keys_buttons);

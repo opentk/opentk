@@ -38,12 +38,36 @@ namespace OpenTK.Platform.X11
     {
         readonly static X11KeyMap keymap = new X11KeyMap();
         readonly static string name = "Core X11 keyboard";
-        KeyboardState state = new KeyboardState();
         readonly byte[] keys = new byte[32];
+        readonly int KeysymsPerKeycode;
+        KeyboardState state = new KeyboardState();
 
         public X11Keyboard()
         {
             Debug.WriteLine("Using X11Keyboard.");
+            state.IsConnected = true;
+
+            IntPtr display = API.DefaultDisplay;
+            using (new XLock(display))
+            {
+                // Find the number of keysyms per keycode.
+                int first = 0, last = 0;
+                API.DisplayKeycodes(display, ref first, ref last);
+                IntPtr keysym_ptr = API.GetKeyboardMapping(display, (byte)first, last - first + 1,
+                    ref KeysymsPerKeycode);
+                Functions.XFree(keysym_ptr);
+
+                try
+                {
+                    // Request that auto-repeat is only set on devices that support it physically.
+                    // This typically means that it's turned off for keyboards what we want).
+                    // We prefer this method over XAutoRepeatOff/On, because the latter needs to
+                    // be reset before the program exits.
+                    bool supported;
+                    Functions.XkbSetDetectableAutoRepeat(display, true, out supported);
+                }
+                catch { }
+            }
         }
 
         public KeyboardState GetState()
@@ -78,18 +102,20 @@ namespace OpenTK.Platform.X11
                 Functions.XQueryKeymap(display, keys);
                 for (int keycode = 8; keycode < 256; keycode++)
                 {
-                    IntPtr keysym = Functions.XKeycodeToKeysym(display, (byte)keycode, 0);
-                    IntPtr keysym2 = Functions.XKeycodeToKeysym(display, (byte)keycode, 1);
                     bool pressed = (keys[keycode >> 3] >> (keycode & 0x07) & 0x01) != 0;
-
                     Key key;
-                    if (keymap.TryGetValue((XKey)keysym, out key) ||
-                        keymap.TryGetValue((XKey)keysym2, out key))
+
+                    for (int mod = 0; mod < KeysymsPerKeycode; mod++)
                     {
-                        if (pressed)
-                            state.EnableBit((int)key);
-                        else
-                            state.DisableBit((int)key);
+                        IntPtr keysym = Functions.XKeycodeToKeysym(display, (byte)keycode, mod);
+                        if (keysym != IntPtr.Zero && keymap.TryGetValue((XKey)keysym, out key))
+                        {
+                            if (pressed)
+                                state.EnableBit((int)key);
+                            else
+                                state.DisableBit((int)key);
+                            break;
+                        }
                     }
                 }
             }
