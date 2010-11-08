@@ -25,50 +25,132 @@
 //
 #endregion
 
-#region --- Using directives ---
-
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
-using System.Windows.Forms;
-using OpenTK.Input;
+using System.Runtime.InteropServices;
 using System.Threading;
-
-#endregion
+using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-    // Not complete.
-    sealed class WinRawInput : IInputDriver2
+    sealed class WinRawInput : WinInputBase
     {
+        #region Fields
+
         // Input event data.
         static RawInput data = new RawInput();
         static readonly int rawInputStructSize = API.RawInputSize;
-        static readonly Thread InputThread = new Thread(ProcessEvents);
 
-        static WinRawKeyboard keyboardDriver;
-        static WinRawMouse mouseDriver;
-        static readonly WinMMJoystick joystickDriver = new WinMMJoystick();
+        WinRawKeyboard keyboard_driver;
+        WinRawMouse mouse_driver;
+        WinMMJoystick joystick_driver;
 
-        static INativeWindow Native;
-        static WinWindowInfo Parent { get { return Native.WindowInfo as WinWindowInfo; } }
-        static readonly WindowProcedure WndProc = WindowProcedureImplementation;
-        static IntPtr OldWndProc;
-        
-        static IntPtr DevNotifyHandle;
+        IntPtr DevNotifyHandle;
         static readonly Guid DeviceInterfaceHid = new Guid("4D1E55B2-F16F-11CF-88CB-001111000030");
+
+        #endregion
 
         #region Constructors
 
         public WinRawInput()
+            : base()
         {
-            InputThread.IsBackground = true;
-            InputThread.Start();
+            Debug.WriteLine("Using WinRawInput.");
+        }
 
-            while (mouseDriver == null || keyboardDriver == null)
-                Thread.Sleep(0);
+        #endregion
+
+        #region Private Members
+
+        static IntPtr RegisterForDeviceNotifications(WinWindowInfo parent)
+        {
+            IntPtr dev_notify_handle;
+            BroadcastDeviceInterface bdi = new BroadcastDeviceInterface();
+            bdi.Size = BlittableValueType.StrideOf(bdi);
+            bdi.DeviceType = DeviceBroadcastType.INTERFACE;
+            bdi.ClassGuid = DeviceInterfaceHid;
+            unsafe
+            {
+                dev_notify_handle = Functions.RegisterDeviceNotification(parent.WindowHandle,
+                    new IntPtr((void*)&bdi), DeviceNotification.WINDOW_HANDLE);
+            }
+            if (dev_notify_handle == IntPtr.Zero)
+                Debug.Print("[Warning] Failed to register for device notifications. Error: {0}", Marshal.GetLastWin32Error());
+
+            return dev_notify_handle;
+        }
+
+
+        #endregion
+
+        #region Protected Members
+
+        #region WindowProcedure
+
+        // Processes the input Windows Message, routing the buffer to the correct Keyboard, Mouse or HID.
+        protected override IntPtr WindowProcedure(
+            IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            switch (message)
+            {
+                case WindowMessage.INPUT:
+                    int size = 0;
+                    // Get the size of the input buffer
+                    Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
+                        IntPtr.Zero, ref size, API.RawInputHeaderSize);
+
+                    // Read the actual raw input structure
+                    if (size == Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
+                        out data, ref size, API.RawInputHeaderSize))
+                    {
+                        switch (data.Header.Type)
+                        {
+                            case RawInputDeviceType.KEYBOARD:
+                                if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(data))
+                                    return IntPtr.Zero;
+                                break;
+
+                            case RawInputDeviceType.MOUSE:
+                                if (((WinRawMouse)MouseDriver).ProcessMouseEvent(data))
+                                    return IntPtr.Zero;
+                                break;
+
+                            case RawInputDeviceType.HID:
+                                break;
+                        }
+                    }
+                    break;
+
+                case WindowMessage.DEVICECHANGE:
+                    ((WinRawKeyboard)KeyboardDriver).RefreshDevices();
+                    ((WinRawMouse)MouseDriver).RefreshDevices();
+                    break;
+            }
+            return base.WindowProcedure(handle, message, wParam, lParam);
+        }
+
+        #endregion
+
+        #region CreateDrivers
+
+        protected override void CreateDrivers()
+        {
+            keyboard_driver = new WinRawKeyboard(Parent.WindowHandle);
+            mouse_driver = new WinRawMouse(Parent.WindowHandle);
+            joystick_driver = new WinMMJoystick();
+
+            DevNotifyHandle = RegisterForDeviceNotifications(Parent);
+        }
+
+        #endregion
+
+        protected override void Dispose(bool manual)
+        {
+            if (!Disposed)
+            {
+                Functions.UnregisterDeviceNotification(DevNotifyHandle);
+                base.Dispose(manual);
+            }
         }
 
         #endregion
@@ -91,166 +173,21 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region Private Members
-
-        #region ConstructMessageWindow
-
-        static INativeWindow ConstructMessageWindow()
-        {
-            Debug.WriteLine("Initializing windows raw input driver.");
-            Debug.Indent();
-
-            // Create a new message-only window to retrieve WM_INPUT messages.
-            Native = new NativeWindow();
-            Native.ProcessEvents();
-            Functions.SetParent(Parent.WindowHandle, Constants.MESSAGE_ONLY);
-            Native.ProcessEvents();
-            RegisterForDeviceNotifications();
-
-            // Subclass the window to retrieve the events we are interested in.
-            OldWndProc = Functions.SetWindowLong(Parent.WindowHandle, WndProc);
-
-            Debug.Print("Input window attached to parent {0}", Parent);
-            keyboardDriver = new WinRawKeyboard(Parent.WindowHandle);
-            mouseDriver = new WinRawMouse(Parent.WindowHandle);
-
-            Debug.Unindent();
-            return Native;
-        }
-
-        static void RegisterForDeviceNotifications()
-        {
-            BroadcastDeviceInterface bdi = new BroadcastDeviceInterface();
-            bdi.Size = BlittableValueType.StrideOf(bdi);
-            bdi.DeviceType = DeviceBroadcastType.INTERFACE;
-            bdi.ClassGuid = DeviceInterfaceHid;
-            unsafe
-            {
-                DevNotifyHandle = Functions.RegisterDeviceNotification(Parent.WindowHandle,
-                    new IntPtr((void*)&bdi), DeviceNotification.WINDOW_HANDLE);
-            }
-            if (DevNotifyHandle == IntPtr.Zero)
-                Debug.Print("[Warning] Failed to register for device notifications. Error: {0}", Marshal.GetLastWin32Error());
-        }
-
-        #endregion
-
-        #region WindowProcedureImplementation
-
-        // Processes the input Windows Message, routing the buffer to the correct Keyboard, Mouse or HID.
-        static IntPtr WindowProcedureImplementation(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
-        {
-            switch (message)
-            {
-                case WindowMessage.INPUT:
-                    int size = 0;
-                    // Get the size of the input buffer
-                    Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
-                        IntPtr.Zero, ref size, API.RawInputHeaderSize);
-
-                    // Read the actual raw input structure
-                    if (size == Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
-                        out data, ref size, API.RawInputHeaderSize))
-                    {
-                        switch (data.Header.Type)
-                        {
-                            case RawInputDeviceType.KEYBOARD:
-                                if (keyboardDriver.ProcessKeyboardEvent(data))
-                                    return IntPtr.Zero;
-                                break;
-
-                            case RawInputDeviceType.MOUSE:
-                                if (mouseDriver.ProcessMouseEvent(data))
-                                    return IntPtr.Zero;
-                                break;
-
-                            case RawInputDeviceType.HID:
-                                break;
-                        }
-                    }
-                    break;
-
-                case WindowMessage.DEVICECHANGE:
-                    mouseDriver.RefreshDevices();
-                    break;
-            }
-            return Functions.CallWindowProc(OldWndProc, handle, message, wParam, lParam);
-        }
-
-        #endregion
-
-        #region ProcessEvents
-
-        static void ProcessEvents()
-        {
-            INativeWindow native = ConstructMessageWindow();
-
-            MSG msg = new MSG();
-            while (native.Exists)
-            {
-                int ret = Functions.GetMessage(ref msg, Parent.WindowHandle, 0, 0);
-                if (ret == -1)
-                {
-                    throw new PlatformException(String.Format(
-                        "An error happened while processing the message queue. Windows error: {0}",
-                        Marshal.GetLastWin32Error()));
-                }
-
-                Functions.TranslateMessage(ref msg);
-                Functions.DispatchMessage(ref msg);
-            }
-        }
-
-        #endregion
-
-        #endregion
-
         #region IInputDriver2 Members
 
-        public IMouseDriver2 MouseDriver
+        public override IKeyboardDriver2 KeyboardDriver
         {
-            get { return mouseDriver; }
+            get { return keyboard_driver; }
         }
 
-        public IKeyboardDriver2 KeyboardDriver
+        public override IMouseDriver2 MouseDriver
         {
-            get { return keyboardDriver; }
+            get { return mouse_driver; }
         }
 
-        public IGamePadDriver GamePadDriver
+        public override IGamePadDriver GamePadDriver
         {
-            get { return joystickDriver; }
-        }
-
-        #endregion
-
-        #region IDisposable Members
-
-        private bool disposed;
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool manual)
-        {
-            if (!disposed)
-            {
-                if (manual)
-                {
-                }
-
-                Functions.UnregisterDeviceNotification(DevNotifyHandle);
-                disposed = true;
-            }
-        }
-
-        ~WinRawInput()
-        {
-            Debug.Print("[Warning] Resource leaked: {0}.", this);
-            Dispose(false);
+            get { return joystick_driver; }
         }
 
         #endregion
