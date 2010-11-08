@@ -116,7 +116,6 @@
       <Name>System.Drawing</Name>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
       <Private>False</Private>
