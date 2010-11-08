@@ -38,18 +38,14 @@ using OpenTK.Input;
 namespace OpenTK.Platform.Windows
 {
     // Input driver for legacy (pre XP) Windows platforms.
-    // Supports a single mouse and keyboard through WM_MOUSE* and WM_KEY* events.
+    // Supports a single mouse and keyboard through async input.
     // Supports multiple joysticks through WinMM.
-    sealed class WMInput : 
-#if !ASYNC_INPUT
-        WinInputBase,
-#else
-        IInputDriver2,
-#endif
-        IMouseDriver2, IKeyboardDriver2, IGamePadDriver
+    sealed class WMInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2, IGamePadDriver
     {
         #region Fields
 
+        readonly object MouseLock = new object();
+        readonly object KeyboardLock = new object();
         readonly WinMMJoystick gamepad_driver = new WinMMJoystick();
         KeyboardState keyboard = new KeyboardState();
         MouseState mouse = new MouseState();
@@ -69,7 +65,7 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region Private Members
-#if ASYNC_INPUT
+
         void UpdateKeyboard()
         {
             for (int i = 0; i < 256; i++)
@@ -87,6 +83,8 @@ namespace OpenTK.Platform.Windows
         {
             POINT p = new POINT();
             Functions.GetCursorPos(ref p);
+            mouse.X = p.X;
+            mouse.Y = p.Y;
             // Note: we cannot poll the mouse wheel
             mouse[MouseButton.Left] = (Functions.GetAsyncKeyState(VirtualKeys.LBUTTON) >> 8) != 0;
             mouse[MouseButton.Middle] = (Functions.GetAsyncKeyState(VirtualKeys.RBUTTON) >> 8) != 0;
@@ -94,50 +92,22 @@ namespace OpenTK.Platform.Windows
             mouse[MouseButton.Button1] = (Functions.GetAsyncKeyState(VirtualKeys.XBUTTON1) >> 8) != 0;
             mouse[MouseButton.Button2] = (Functions.GetAsyncKeyState(VirtualKeys.XBUTTON2) >> 8) != 0;
         }
-#endif
-        #endregion
-
-        #region Protected Members
-
-        protected override IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
-        {
-            return base.WindowProcedure(handle, message, wParam, lParam);
-        }
-
-        protected override void CreateDrivers()
-        {
-            //keyboard.IsConnected = true;
-            //Native.KeyDown += delegate(object sender, KeyboardKeyEventArgs e)
-            //{
-            //    keyboard.EnableBit((int)e.Key);
-            //};
-            //Native.KeyUp += delegate(object sender, KeyboardKeyEventArgs e)
-            //{
-            //    keyboard.DisableBit((int)e.Key);
-            //};
-
-            //mouse.IsConnected = false;
-            // Todo: implement and hook INativeWindow.Mouse* events.
-            //Native.MouseMove += delegate(object sender, MouseMoveEventArgs e)
-            //{
-            //};
-        }
 
         #endregion
 
         #region IInputDriver2 Members
 
-        public override IKeyboardDriver2 KeyboardDriver
+        public IKeyboardDriver2 KeyboardDriver
         {
             get { return this; }
         }
 
-        public override IMouseDriver2 MouseDriver
+        public IMouseDriver2 MouseDriver
         {
             get { return this; }
         }
 
-        public override IGamePadDriver GamePadDriver
+        public IGamePadDriver GamePadDriver
         {
             get { return this; }
         }
@@ -148,15 +118,23 @@ namespace OpenTK.Platform.Windows
 
         public MouseState GetState()
         {
-            return mouse;
+            lock (MouseLock)
+            {
+                UpdateMouse();
+                return mouse;
+            }
         }
 
         public MouseState GetState(int index)
         {
-            if (index == 0)
-                return mouse;
-            else
-                return new MouseState();
+            lock (MouseLock)
+            {
+                UpdateMouse();
+                if (index == 0)
+                    return mouse;
+                else
+                    return new MouseState();
+            }
         }
 
         #endregion
@@ -165,15 +143,23 @@ namespace OpenTK.Platform.Windows
 
         KeyboardState IKeyboardDriver2.GetState()
         {
-            return keyboard;
+            lock (KeyboardLock)
+            {
+                UpdateKeyboard();
+                return keyboard;
+            }
         }
 
         KeyboardState IKeyboardDriver2.GetState(int index)
         {
-            if (index == 0)
-                return keyboard;
-            else
-                return new KeyboardState();
+            lock (KeyboardLock)
+            {
+                UpdateKeyboard();
+                if (index == 0)
+                    return keyboard;
+                else
+                    return new KeyboardState();
+            }
         }
 
         string IKeyboardDriver2.GetDeviceName(int index)
