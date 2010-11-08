@@ -95,10 +95,12 @@ namespace OpenTK.Platform.Windows
                     if (inputDriver == null)
                     {
                         // If Windows version is NT5 or higher, we are able to use raw input.
-                        if (System.Environment.OSVersion.Version.Major >= 5)
+                        if (System.Environment.OSVersion.Version.Major > 5 ||
+                            (System.Environment.OSVersion.Version.Major == 5 && 
+                            System.Environment.OSVersion.Version.Minor > 0))
                             inputDriver = new WinRawInput();
                         else
-                            inputDriver = new WMInput(null);
+                            inputDriver = new WMInput();
                     }
                     return inputDriver;
                 }
