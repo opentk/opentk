@@ -50,7 +50,7 @@ namespace OpenTK.Platform.Windows
 
         public WinRawMouse(IntPtr window)
         {
-            Debug.WriteLine("Initializing mouse driver (WinRawMouse).");
+            Debug.WriteLine("Using WinRawMouse.");
             Debug.Indent();
 
             if (window == IntPtr.Zero)
