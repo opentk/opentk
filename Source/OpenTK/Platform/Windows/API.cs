@@ -350,7 +350,7 @@ namespace OpenTK.Platform.Windows
         #region GetMessage
 
         /// <summary>
-        /// Low-level WINAPI function that retriives the next message in the queue.
+        /// Low-level WINAPI function that retrieves the next message in the queue.
         /// </summary>
         /// <param name="msg">The pending message (if any) is stored here.</param>
         /// <param name="windowHandle">Not used</param>
@@ -986,7 +986,7 @@ namespace OpenTK.Platform.Windows
         /// <para>The input desktop must be the current desktop when you call GetCursorPos. Call OpenInputDesktop to determine whether the current desktop is the input desktop. If it is not, call SetThreadDesktop with the HDESK returned by OpenInputDesktop to switch to that desktop.</para>
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
-        internal static extern BOOL GetCursorPos(ref Point point);
+        internal static extern BOOL GetCursorPos(ref POINT point);
 
         #endregion
 
