@@ -36,6 +36,7 @@ namespace OpenTK.Platform.Windows
 {
     sealed class WinRawKeyboard : IKeyboardDriver2
     {
+        static readonly WinKeyMap KeyMap = new WinKeyMap();
         readonly List<KeyboardState> keyboards = new List<KeyboardState>();
         readonly List<string> names = new List<string>();
         readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
@@ -46,7 +47,7 @@ namespace OpenTK.Platform.Windows
 
         public WinRawKeyboard(IntPtr windowHandle)
         {
-            Debug.WriteLine("Initializing keyboard driver (WinRawKeyboard).");
+            Debug.WriteLine("Using WinRawKeyboard.");
             Debug.Indent();
 
             this.window = windowHandle;
@@ -157,14 +158,14 @@ namespace OpenTK.Platform.Windows
                     break;
 
                 default:
-                    if (!WMInput.KeyMap.ContainsKey(rin.Data.Keyboard.VKey))
+                    if (!KeyMap.ContainsKey(rin.Data.Keyboard.VKey))
                     {
                         Debug.Print("Virtual key {0} ({1}) not mapped.",
                                     rin.Data.Keyboard.VKey, (int)rin.Data.Keyboard.VKey);
                     }
                     else
                     {
-                        keyboard[WMInput.KeyMap[rin.Data.Keyboard.VKey]] = pressed;
+                        keyboard[KeyMap[rin.Data.Keyboard.VKey]] = pressed;
                         processed = true;
                     }
                     break;
