@@ -50,6 +50,7 @@ namespace OpenTK
 
         private bool disposed, events;
         private bool cursor_visible = true;
+        private bool previous_cursor_visible = true;
 
         #endregion
 
@@ -589,9 +590,19 @@ namespace OpenTK
         public event EventHandler<EventArgs> IconChanged = delegate { };
 
         /// <summary>
+        /// Occurs whenever a keybord key is pressed.
+        /// </summary>
+        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown = delegate { };
+
+        /// <summary>
         /// Occurs whenever a character is typed.
         /// </summary>
         public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
+
+        /// <summary>
+        /// Occurs whenever a keyboard key is released.
+        /// </summary>
+        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyUp = delegate { };
 
         /// <summary>
         /// Occurs whenever the window is moved.
@@ -746,6 +757,20 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnFocusedChanged(EventArgs e)
         {
+            if (!Focused)
+            {
+                // Release cursor when losing focus, to ensure
+                // IDEs continue working as expected.
+                previous_cursor_visible = CursorVisible;
+                CursorVisible = true;
+            }
+            else if (!previous_cursor_visible)
+            {
+                // Make cursor invisible when focus is regained
+                // if cursor was invisible on previous focus loss.
+                previous_cursor_visible = true;
+                CursorVisible = false;
+            }
             FocusedChanged(this, e);
         }
 
@@ -764,6 +789,18 @@ namespace OpenTK
 
         #endregion
 
+        #region OnKeyDown
+
+        /// <summary>
+        /// Occurs whenever a keybord key is pressed.
+        /// </summary>
+        protected virtual void OnKeyDown(KeyboardKeyEventArgs e)
+        {
+            KeyDown(this, e);
+        }
+
+        #endregion
+
         #region OnKeyPress
 
         /// <summary>
@@ -773,6 +810,19 @@ namespace OpenTK
         protected virtual void OnKeyPress(KeyPressEventArgs e)
         {
             KeyPress(this, e);
+        }
+
+        #endregion
+
+        #region OnKeyUp
+
+        /// <summary>
+        /// Called when a keybord key is released.
+        /// </summary>
+        /// <param name="e">The <see cref="OpenTK.KeyboardKeyEventArgs"/> for this event.</param>
+        protected virtual void OnKeyUp(KeyboardKeyEventArgs e)
+        {
+            KeyUp(this, e);
         }
 
         #endregion
