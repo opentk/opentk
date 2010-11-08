@@ -45,6 +45,7 @@ namespace OpenTK.Platform.Windows
 
         // To avoid recursion when calling GraphicsMode.Default
         bool creating;
+        static readonly object SyncRoot = new object();
 
         #endregion
 
@@ -61,22 +62,26 @@ namespace OpenTK.Platform.Windows
         public GraphicsMode SelectGraphicsMode(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum,
                                                int buffers, bool stereo)
         {
-            GraphicsMode mode = null;
-            if (!creating)
+            lock (SyncRoot)
             {
-                try
+                GraphicsMode mode = null;
+                if (!creating)
                 {
                     creating = true;
-                    mode = SelectGraphicsModeARB(color, depth, stencil, samples, accum, buffers, stereo);
+                    try
+                    {
+                        mode = SelectGraphicsModeARB(color, depth, stencil, samples, accum, buffers, stereo);
+                    }
+                    finally
+                    {
+                        if (mode == null)
+                            mode = SelectGraphicsModePFD(color, depth, stencil, samples, accum, buffers, stereo);
+                    }
                 }
-                finally
-                {
-                    creating = false;
-                }
+
+                creating = false;
+                return mode;
             }
-            if (mode == null)
-                mode = SelectGraphicsModePFD(color, depth, stencil, samples, accum, buffers, stereo);
-            return mode;
         }
 
         #endregion
@@ -88,13 +93,13 @@ namespace OpenTK.Platform.Windows
         GraphicsMode SelectGraphicsModePFD(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum,
             int buffers, bool stereo)
         {
-            using (Control native_window = new Control())
-            using (WinWindowInfo window = new WinWindowInfo(native_window.Handle, null))
+            using (INativeWindow native_window = new NativeWindow())
             {
+                WinWindowInfo window = native_window.WindowInfo as WinWindowInfo;
                 IntPtr deviceContext = ((WinWindowInfo)window).DeviceContext;
                 Debug.WriteLine(String.Format("Device context: {0}", deviceContext));
 
-                Debug.Write("Selecting pixel format... ");
+                Debug.Write("Selecting pixel format (PFD)... ");
                 PixelFormatDescriptor pixelFormat = new PixelFormatDescriptor();
                 pixelFormat.Size = API.PixelFormatDescriptorSize;
                 pixelFormat.Version = API.PixelFormatDescriptorVersion;
@@ -155,7 +160,9 @@ namespace OpenTK.Platform.Windows
             int buffers, bool stereo)
         {
             using (INativeWindow native_window = new NativeWindow())
-            using (IGraphicsContext context = new GraphicsContext(new GraphicsMode(new ColorFormat(), 0, 0, 0, new ColorFormat(), 2, false), native_window.WindowInfo, 1, 0, GraphicsContextFlags.Default))
+            using (IGraphicsContext context = new WinGLContext(
+                new GraphicsMode(new IntPtr(2), new ColorFormat(), 0, 0, 0, new ColorFormat(), 2, false),
+                (WinWindowInfo)native_window.WindowInfo, null, 1, 0, GraphicsContextFlags.Default))
             {
                 WinWindowInfo window = (WinWindowInfo)native_window.WindowInfo;
 
@@ -249,7 +256,7 @@ namespace OpenTK.Platform.Windows
                     Debug.WriteLine("failed (pixel format attributes could not be determined).");
                     return null;
                 }
-                    
+
                 GraphicsMode mode = new GraphicsMode(new IntPtr(pixel[0]),
                     new ColorDepth(values[1], values[2], values[3], values[4]),
                     values[6],
@@ -269,4 +276,3 @@ namespace OpenTK.Platform.Windows
         #endregion
     }
 }
-
