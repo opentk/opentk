@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -116,10 +116,7 @@
       <Name>System.Drawing</Name>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Windows.Forms">
-      <Name>System.Windows.Forms</Name>
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
       <Private>False</Private>
@@ -132,10 +129,12 @@
     <Compile Include="DisplayDevice.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Graphics\GraphicsModeComparer.cs" />
     <Compile Include="Input\IGamePadDriver.cs" />
     <Compile Include="Input\IInputDriver2.cs" />
     <Compile Include="Input\IKeyboardDriver2.cs" />
     <Compile Include="Input\IMouseDriver2.cs" />
+    <Compile Include="Platform\Windows\WinInputBase.cs" />
     <Compile Include="WindowBorder.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -758,13 +757,13 @@
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
     </None>
-    <None Include="OpenTK.dll.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <Compile Include="Platform\X11\X11Keyboard.cs" />
     <Compile Include="Platform\X11\X11Mouse.cs" />
     <Compile Include="Input\ButtonState.cs" />
     <Compile Include="Platform\X11\XI2Mouse.cs" />
+    <EmbeddedResource Include="OpenTK.dll.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
