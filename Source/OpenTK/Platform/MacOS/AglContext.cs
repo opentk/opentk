@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Control = System.Windows.Forms.Control;
 
 namespace OpenTK.Platform.MacOS
 {
@@ -215,7 +214,10 @@ namespace OpenTK.Platform.MacOS
         {
             if (carbonWindow.IsControl == false)
                 return;
-            
+
+            // Todo: See if there is a way around using WinForms.
+            throw new NotImplementedException();
+#if false
             System.Windows.Forms.Control ctrl = Control.FromHandle(carbonWindow.WindowRef);
             
             if (ctrl.TopLevelControl == null)
@@ -247,7 +249,7 @@ namespace OpenTK.Platform.MacOS
             
             Agl.aglEnable(Handle.Handle, Agl.ParameterNames.AGL_BUFFER_RECT);
             MyAGLReportError("aglEnable");
-            
+#endif
         }
         void SetDrawable(CarbonWindowInfo carbonWindow)
         {
