@@ -1076,7 +1076,9 @@ namespace OpenTK.Platform.MacOS
         public event EventHandler<EventArgs> FocusedChanged = delegate { };
         public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
         public event EventHandler<EventArgs> WindowStateChanged = delegate { };
+        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown = delegate { };
         public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
+        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyUp = delegate { }; 
         public event EventHandler<EventArgs> MouseEnter = delegate { };
         public event EventHandler<EventArgs> MouseLeave = delegate { };
         
