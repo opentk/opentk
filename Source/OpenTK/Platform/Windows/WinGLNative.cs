@@ -49,9 +49,11 @@ namespace OpenTK.Platform.Windows
         const ExtendedWindowStyle ParentStyleEx = ExtendedWindowStyle.WindowEdge | ExtendedWindowStyle.ApplicationWindow;
         const ExtendedWindowStyle ChildStyleEx = 0;
 
+        static readonly WinKeyMap KeyMap = new WinKeyMap();
         readonly IntPtr Instance = Marshal.GetHINSTANCE(typeof(WinGLNative).Module);
         readonly IntPtr ClassName = Marshal.StringToHGlobalAuto(Guid.NewGuid().ToString());
         readonly WindowProcedure WindowProcedureDelegate;
+
         readonly uint ModalLoopTimerPeriod = 1;
         UIntPtr timer_handle;
         readonly Functions.TimerProc ModalLoopCallback;
@@ -78,16 +80,12 @@ namespace OpenTK.Platform.Windows
 
         const ClassStyle DefaultClassStyle = ClassStyle.OwnDC;
 
-        readonly IntPtr DefaultWindowProcedure =
-            Marshal.GetFunctionPointerForDelegate(new WindowProcedure(Functions.DefWindowProc));
-
         // Used for IInputDriver implementation
         WinMMJoystick joystick_driver = new WinMMJoystick();
         KeyboardDevice keyboard = new KeyboardDevice();
         MouseDevice mouse = new MouseDevice();
         IList<KeyboardDevice> keyboards = new List<KeyboardDevice>(1);
         IList<MouseDevice> mice = new List<MouseDevice>(1);
-        internal static readonly WinKeyMap KeyMap = new WinKeyMap();
         const long ExtendedBit = 1 << 24;           // Used to distinguish left and right control, alt and enter keys.
         static readonly uint ShiftRightScanCode = Functions.MapVirtualKey(VirtualKeys.RSHIFT, 0);         // Used to distinguish left and right shift keys.
 
@@ -95,44 +93,49 @@ namespace OpenTK.Platform.Windows
 
         int cursor_visible_count = 0;
 
+        static readonly object SyncRoot = new object();
+
         #endregion
 
         #region Contructors
 
         public WinGLNative(int x, int y, int width, int height, string title, GameWindowFlags options, DisplayDevice device)
         {
-            // This is the main window procedure callback. We need the callback in order to create the window, so
-            // don't move it below the CreateWindow calls.
-            WindowProcedureDelegate = WindowProcedure;
+            lock (SyncRoot)
+            {
+                // This is the main window procedure callback. We need the callback in order to create the window, so
+                // don't move it below the CreateWindow calls.
+                WindowProcedureDelegate = WindowProcedure;
 
-            //// This timer callback is called periodically when the window enters a sizing / moving modal loop.
-            //ModalLoopCallback = delegate(IntPtr handle, WindowMessage msg, UIntPtr eventId, int time)
-            //{
-            //    // Todo: find a way to notify the frontend that it should process queued up UpdateFrame/RenderFrame events.
-            //    if (Move != null)
-            //        Move(this, EventArgs.Empty);
-            //};
+                //// This timer callback is called periodically when the window enters a sizing / moving modal loop.
+                //ModalLoopCallback = delegate(IntPtr handle, WindowMessage msg, UIntPtr eventId, int time)
+                //{
+                //    // Todo: find a way to notify the frontend that it should process queued up UpdateFrame/RenderFrame events.
+                //    if (Move != null)
+                //        Move(this, EventArgs.Empty);
+                //};
 
-            // To avoid issues with Ati drivers on Windows 6+ with compositing enabled, the context will not be
-            // bound to the top-level window, but rather to a child window docked in the parent.
-            window = new WinWindowInfo(
-                CreateWindow(x, y, width, height, title, options, device, IntPtr.Zero), null);
-            child_window = new WinWindowInfo(
-                CreateWindow(0, 0, ClientSize.Width, ClientSize.Height, title, options, device, window.WindowHandle), window);
+                // To avoid issues with Ati drivers on Windows 6+ with compositing enabled, the context will not be
+                // bound to the top-level window, but rather to a child window docked in the parent.
+                window = new WinWindowInfo(
+                    CreateWindow(x, y, width, height, title, options, device, IntPtr.Zero), null);
+                child_window = new WinWindowInfo(
+                    CreateWindow(0, 0, ClientSize.Width, ClientSize.Height, title, options, device, window.WindowHandle), window);
 
-            exists = true;
+                exists = true;
 
-            keyboard.Description = "Standard Windows keyboard";
-            keyboard.NumberOfFunctionKeys = 12;
-            keyboard.NumberOfKeys = 101;
-            keyboard.NumberOfLeds = 3;
+                keyboard.Description = "Standard Windows keyboard";
+                keyboard.NumberOfFunctionKeys = 12;
+                keyboard.NumberOfKeys = 101;
+                keyboard.NumberOfLeds = 3;
 
-            mouse.Description = "Standard Windows mouse";
-            mouse.NumberOfButtons = 3;
-            mouse.NumberOfWheels = 1;
+                mouse.Description = "Standard Windows mouse";
+                mouse.NumberOfButtons = 3;
+                mouse.NumberOfWheels = 1;
 
-            keyboards.Add(keyboard);
-            mice.Add(mouse);
+                keyboards.Add(keyboard);
+                mice.Add(mouse);
+            }
         }
 
         #endregion
@@ -405,14 +408,14 @@ namespace OpenTK.Platform.Windows
                             return IntPtr.Zero;
 
                         default:
-                            if (!WMInput.KeyMap.ContainsKey((VirtualKeys)wParam))
+                            if (!KeyMap.ContainsKey((VirtualKeys)wParam))
                             {
                                 Debug.Print("Virtual key {0} ({1}) not mapped.", (VirtualKeys)wParam, (long)lParam);
                                 break;
                             }
                             else
                             {
-                                keyboard[WMInput.KeyMap[(VirtualKeys)wParam]] = pressed;
+                                keyboard[KeyMap[(VirtualKeys)wParam]] = pressed;
                             }
                             return IntPtr.Zero;
                     }
@@ -644,7 +647,7 @@ namespace OpenTK.Platform.Windows
                     Marshal.GetLastWin32Error()));
         }
 
-        static void UngrabCursor()
+        void UngrabCursor()
         {
             if (!Functions.ClipCursor(IntPtr.Zero))
                 Debug.WriteLine(String.Format("Failed to ungrab cursor. Error: {0}",
@@ -1117,31 +1120,20 @@ namespace OpenTK.Platform.Windows
         #region Events
 
         public event EventHandler<EventArgs> Move = delegate { };
-
         public event EventHandler<EventArgs> Resize = delegate { };
-
         public event EventHandler<System.ComponentModel.CancelEventArgs> Closing = delegate { };
-
         public event EventHandler<EventArgs> Closed = delegate { };
-
         public event EventHandler<EventArgs> Disposed = delegate { };
-
         public event EventHandler<EventArgs> IconChanged = delegate { };
-
         public event EventHandler<EventArgs> TitleChanged = delegate { };
-
         public event EventHandler<EventArgs> VisibleChanged = delegate { };
-
         public event EventHandler<EventArgs> FocusedChanged = delegate { };
-
         public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
-
         public event EventHandler<EventArgs> WindowStateChanged = delegate { };
-
+        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown = delegate { };
         public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
-
+        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyUp = delegate { }; 
         public event EventHandler<EventArgs> MouseEnter = delegate { };
-
         public event EventHandler<EventArgs> MouseLeave = delegate { };
 
         #endregion
