@@ -361,11 +361,12 @@ namespace OpenTK.Platform.Windows
                             // The behavior of this key is very strange. Unlike Control and Alt, there is no extended bit
                             // to distinguish between left and right keys. Moreover, pressing both keys and releasing one
                             // may result in both keys being held down (but not always).
-                            // The only reliably way to solve this was reported by BlueMonkMN at the forums: we should
+                            // The only reliable way to solve this was reported by BlueMonkMN at the forums: we should
                             // check the scancodes. It looks like GLFW does the same thing, so it should be reliable.
 
-                            // TODO: Not 100% reliable, when both keys are pressed at once.
-                            if (ShiftRightScanCode != 0)
+                            // Note: we release both keys when either shift is released.
+                            // Otherwise, the state of one key might be stuck to pressed.
+                            if (ShiftRightScanCode != 0 && pressed)
                             {
                                 unchecked
                                 {
@@ -377,8 +378,8 @@ namespace OpenTK.Platform.Windows
                             }
                             else
                             {
-                                // Should only fall here on Windows 9x and NT4.0-
-                                keyboard[Input.Key.ShiftLeft] = pressed;
+                                // Windows 9x and NT4.0 or key release event.
+                                keyboard[Input.Key.ShiftLeft] = keyboard[Input.Key.ShiftRight] = pressed;
                             }
                             return IntPtr.Zero;
 
