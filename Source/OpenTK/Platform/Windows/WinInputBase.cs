@@ -105,17 +105,16 @@ namespace OpenTK.Platform.Windows
             MSG msg = new MSG();
             while (Native.Exists)
             {
-                Native.ProcessEvents();
-                //int ret = Functions.GetMessage(ref msg, Parent.WindowHandle, 0, 0);
-                //if (ret == -1)
-                //{
-                //    throw new PlatformException(String.Format(
-                //        "An error happened while processing the message queue. Windows error: {0}",
-                //        Marshal.GetLastWin32Error()));
-                //}
+                int ret = Functions.GetMessage(ref msg, Parent.WindowHandle, 0, 0);
+                if (ret == -1)
+                {
+                    throw new PlatformException(String.Format(
+                        "An error happened while processing the message queue. Windows error: {0}",
+                        Marshal.GetLastWin32Error()));
+                }
 
-                //Functions.TranslateMessage(ref msg);
-                //Functions.DispatchMessage(ref msg);
+                Functions.TranslateMessage(ref msg);
+                Functions.DispatchMessage(ref msg);
             }
         }
 
