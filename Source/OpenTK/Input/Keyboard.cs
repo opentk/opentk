@@ -74,8 +74,6 @@ namespace OpenTK.Input
             }
         }
 
-        #endregion
-
         /// <summary>
         /// Retrieves the device name for the keyboard device.
         /// </summary>
@@ -93,5 +91,7 @@ namespace OpenTK.Input
                 return driver.GetDeviceName(index);
             }
         }
+
+         #endregion
     }
 }
