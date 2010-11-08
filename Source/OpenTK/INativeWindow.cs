@@ -230,9 +230,19 @@ namespace OpenTK
         event EventHandler<EventArgs> WindowStateChanged;
 
         /// <summary>
+        /// Occurs whenever a keybord key is pressed.
+        /// </summary>
+        event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown;
+
+        /// <summary>
         /// Occurs whenever a character is typed.
         /// </summary>
         event EventHandler<KeyPressEventArgs> KeyPress;
+        
+        /// <summary>
+        /// Occurs whenever a keyboard key is released.
+        /// </summary>
+        event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyUp;
 
         /// <summary>
         /// Occurs whenever the mouse cursor leaves the window <see cref="Bounds"/>.
@@ -250,9 +260,6 @@ namespace OpenTK
         //event EventHandler<MouseEventArgs> MouseUp;
         //event EventHandler<MouseEventArgs> MouseClick;
         //event EventHandler<MouseEventArgs> MouseDoubleClick;
-
-        //event EventHandler<KeyEventArgs> KeyDown;
-        //event EventHandler<KeyEventArgs> KeyUp;
 
         //event EventHandler<DragEventArgs> DragDrop;
         //event EventHandler<DragEventArgs> DragEnter;
