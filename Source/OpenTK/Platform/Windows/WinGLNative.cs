@@ -309,36 +309,45 @@ namespace OpenTK.Platform.Windows
                     break;
 
                 case WindowMessage.LBUTTONDOWN:
+                    Functions.SetCapture(window.WindowHandle);
                     mouse[MouseButton.Left] = true;
                     break;
 
                 case WindowMessage.MBUTTONDOWN:
+                    Functions.SetCapture(window.WindowHandle);
                     mouse[MouseButton.Middle] = true;
                     break;
 
                 case WindowMessage.RBUTTONDOWN:
+                    Functions.SetCapture(window.WindowHandle);
                     mouse[MouseButton.Right] = true;
                     break;
 
                 case WindowMessage.XBUTTONDOWN:
-                    mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) != (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = true;
+                    Functions.SetCapture(window.WindowHandle);
+                    mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) !=
+                        (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = true;
                     break;
 
                 case WindowMessage.LBUTTONUP:
+                    Functions.ReleaseCapture();
                     mouse[MouseButton.Left] = false;
                     break;
 
                 case WindowMessage.MBUTTONUP:
+                    Functions.ReleaseCapture();
                     mouse[MouseButton.Middle] = false;
                     break;
 
                 case WindowMessage.RBUTTONUP:
+                    Functions.ReleaseCapture();
                     mouse[MouseButton.Right] = false;
                     break;
 
                 case WindowMessage.XBUTTONUP:
-                    // TODO: Is this correct?
-                    mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) != (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = false;
+                    Functions.ReleaseCapture();
+                    mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) !=
+                        (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = false;
                     break;
 
                 // Keyboard events:
