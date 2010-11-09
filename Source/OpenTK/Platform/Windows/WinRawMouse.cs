@@ -147,7 +147,16 @@ namespace OpenTK.Platform.Windows
             {
                 RefreshDevices();
             }
-            mouse = mice[rawids[handle]];
+
+            if (mice.Count == 0)
+                return false;
+
+            // Note:For some reason, my Microsoft Digital 3000 keyboard reports 0
+            // as rin.Header.Device for the "zoom-in/zoom-out" buttons.
+            // That's problematic, because no device has a "0" id.
+            // As a workaround, we'll add those buttons to the first device (if any).
+            int mouse_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
+            mouse = mice[mouse_handle];
 
             if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_DOWN) != 0) mouse.EnableBit((int)MouseButton.Left);
             if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_UP) != 0) mouse.DisableBit((int)MouseButton.Left);
@@ -176,7 +185,7 @@ namespace OpenTK.Platform.Windows
 
             lock (UpdateLock)
             {
-                mice[rawids[handle]] = mouse;
+                mice[mouse_handle] = mouse;
                 return true;
             }
         }
