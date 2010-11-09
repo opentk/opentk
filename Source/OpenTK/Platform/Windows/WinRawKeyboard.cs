@@ -80,6 +80,16 @@ namespace OpenTK.Platform.Windows
                 // Discover keyboard devices:
                 foreach (RawInputDeviceList dev in ridl)
                 {
+                    ContextHandle id = new ContextHandle(dev.Device);
+                    if (rawids.ContainsKey(id))
+                    {
+                        // Device already registered, mark as connected
+                        KeyboardState state = keyboards[rawids[id]];
+                        state.IsConnected = true;
+                        keyboards[rawids[id]] = state;
+                        continue;
+                    }
+
                     string name = GetDeviceName(dev);
                     if (name.ToLower().Contains("root"))
                     {
@@ -136,7 +146,16 @@ namespace OpenTK.Platform.Windows
             {
                 RefreshDevices();
             }
-            keyboard = keyboards[rawids[handle]];
+
+            if (keyboards.Count == 0)
+                return false;
+
+            // Note:For some reason, my Microsoft Digital 3000 keyboard reports 0
+            // as rin.Header.Device for the "zoom-in/zoom-out" buttons.
+            // That's problematic, because no device has a "0" id.
+            // As a workaround, we'll add those buttons to the first device (if any).
+            int keyboard_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
+            keyboard = keyboards[keyboard_handle];
 
             // Generic control, shift, alt keys may be sent instead of left/right.
             // It seems you have to explicitly register left/right events.
@@ -173,7 +192,7 @@ namespace OpenTK.Platform.Windows
 
             lock (UpdateLock)
             {
-                keyboards[rawids[handle]] = keyboard;
+                keyboards[keyboard_handle] = keyboard;
                 return processed;
             }
         }
