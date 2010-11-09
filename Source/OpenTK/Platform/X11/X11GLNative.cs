@@ -1271,31 +1271,20 @@ namespace OpenTK.Platform.X11
         #region Events
 
         public event EventHandler<EventArgs> Move = delegate { };
-
         public event EventHandler<EventArgs> Resize = delegate { };
-
         public event EventHandler<System.ComponentModel.CancelEventArgs> Closing = delegate { };
-
         public event EventHandler<EventArgs> Closed = delegate { };
-
         public event EventHandler<EventArgs> Disposed = delegate { };
-
         public event EventHandler<EventArgs> IconChanged = delegate { };
-
         public event EventHandler<EventArgs> TitleChanged = delegate { };
-
         public event EventHandler<EventArgs> VisibleChanged = delegate { };
-
         public event EventHandler<EventArgs> FocusedChanged = delegate { };
-
         public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
-
         public event EventHandler<EventArgs> WindowStateChanged = delegate { };
-
-        public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
-
+        public event EventHandler<KeyboardKeyEventArgs> KeyDown = delegate { };
+		public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
+		public event EventHandler<KeyboardKeyEventArgs> KeyUp = delegate { };
         public event EventHandler<EventArgs> MouseEnter = delegate { };
-
         public event EventHandler<EventArgs> MouseLeave = delegate { };
         
         #endregion
