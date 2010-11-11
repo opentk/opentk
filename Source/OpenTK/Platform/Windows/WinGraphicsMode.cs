@@ -35,12 +35,10 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Windows
 {
-    internal class WinGraphicsMode : IGraphicsMode
+    class WinGraphicsMode : IGraphicsMode
     {
         #region Fields
 
-        // To avoid recursion when calling GraphicsMode.Default
-        bool creating;
         readonly List<GraphicsMode> modes = new List<GraphicsMode>();
         static readonly object SyncRoot = new object();
 
@@ -57,6 +55,9 @@ namespace OpenTK.Platform.Windows
                     modes.AddRange(GetModesARB(native));
                     if (modes.Count == 0)
                         modes.AddRange(GetModesPFD(native));
+                    if (modes.Count == 0)
+                        throw new GraphicsModeException(
+                            "No GraphicsMode available. This should never happen, please report a bug at http://www.opentk.com");
                 }
                 modes.Sort(new GraphicsModeComparer());
             }
@@ -79,6 +80,9 @@ namespace OpenTK.Platform.Windows
             } while (mode == null && RelaxParameters(
                 ref color, ref depth, ref stencil, ref samples, ref accum, ref buffers, ref stereo));
 
+            if (mode == null)
+                mode = modes[0];
+
             return mode;
         }
 
@@ -89,17 +93,15 @@ namespace OpenTK.Platform.Windows
             if (buffers != 2) { buffers = 2; return true; }
             if (accum != 0) { accum = 0; return true; }
             if (samples != 0) { samples = 0; return true; }
-            if (color == 32 && depth == 24 && stencil != 8) { color = 32; depth = 24; stencil = 8; return true; }
-            if (color == 32 && depth == 24 && stencil == 8) { color = 32; depth = 24; stencil = 0; return true; }
-            if (color == 32 && depth != 16) { color = 32; depth = 16; stencil = 0; return true; }
-            if (color == 24 && depth == 24 && stencil != 8) { color = 24; depth = 24; stencil = 8; return true; }
-            if (color == 24 && depth == 24 && stencil == 8) { color = 24; depth = 24; stencil = 0; return true; }
-            if (color == 24 && depth != 16) { color = 24; depth = 16; stencil = 0; return true; }
-            if (color == 16 && depth == 24 && stencil != 8) { color = 16; depth = 24; stencil = 8; return true; }
-            if (color == 16 && depth == 24 && stencil == 8) { color = 16; depth = 24; stencil = 0; return true; }
-            if (color == 16 && depth != 16) { color = 16; depth = 16; stencil = 0; return true; }
+            if (depth < 16) { depth = 16; return true; }
+            if (depth != 24) { depth = 24; return true; }
+            if (stencil > 0 && stencil != 8) { stencil = 8; return true; }
+            if (stencil == 8) { stencil = 0; return true; }
+            if (color < 8) { color = 8; return true; }
             if (color < 16) { color = 16; return true; }
-            return false;
+            if (color < 24) { color = 24; return true; }
+            if (color < 32 || color > 32) { color = 32; return true; }
+            return false; // We tried everything we could, no match found.
         }
 
         #endregion
