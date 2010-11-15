@@ -52,6 +52,28 @@ namespace OpenTK
         #region Constructors
 
         /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="value">The value that will initialize this instance.</param>
+        public Vector3h(Half value)
+        {
+            X = value;
+            Y = value;
+            Z = value;
+        }
+
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="value">The value that will initialize this instance.</param>
+        public Vector3h(Single value)
+        {
+            X = new Half(value);
+            Y = new Half(value);
+            Z = new Half(value);
+        }
+
+        /// <summary>
         /// The new Half3 instance will avoid conversion and copy directly from the Half parameters.
         /// </summary>
         /// <param name="x">An Half instance of a 16-bit half-precision floating-point number.</param>

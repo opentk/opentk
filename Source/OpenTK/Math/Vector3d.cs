@@ -57,6 +57,17 @@ namespace OpenTK
         #region Constructors
 
         /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="value">The value that will initialize this instance.</param>
+        public Vector3d(double value)
+        {
+            X = value;
+            Y = value;
+            Z = value;
+        }
+
+        /// <summary>
         /// Constructs a new Vector3.
         /// </summary>
         /// <param name="x">The x component of the Vector3.</param>
