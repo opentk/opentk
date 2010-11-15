@@ -51,6 +51,16 @@ namespace OpenTK
         #region Constructors
 
         /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="value">The value that will initialize this instance.</param>
+        public Vector2(float value)
+        {
+            X = value;
+            Y = value;
+        }
+
+        /// <summary>
         /// Constructs a new Vector2.
         /// </summary>
         /// <param name="x">The x coordinate of the net Vector2.</param>

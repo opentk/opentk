@@ -69,6 +69,16 @@ namespace OpenTK
 
         #region Constructors
 
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="value">The value that will initialize this instance.</param>
+        public Vector2d(double value)
+        {
+            X = value;
+            Y = value;
+        }
+
         /// <summary>Constructs left vector with the given coordinates.</summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
