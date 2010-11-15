@@ -89,7 +89,7 @@ namespace Build.UpdateVersion
             string build = ((int)timespan).ToString();
 
             string revision = RetrieveSvnRevision() ?? RetrieveBzrRevision() ?? RetrieveSeconds(timespan);
-            //string revision = RetrieveSvnRevision() ?? RetrieveSeconds(timespan);
+            revision = revision.Trim();
 
             File.WriteAllLines(file, new string[]
             {
