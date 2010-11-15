@@ -95,6 +95,18 @@ namespace OpenTK
         #region Constructors
 
         /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="value">The value that will initialize this instance.</param>
+        public Vector4d(double value)
+        {
+            X = value;
+            Y = value;
+            Z = value;
+            W = value;
+        }
+
+        /// <summary>
         /// Constructs a new Vector4d.
         /// </summary>
         /// <param name="x">The x component of the Vector4d.</param>
