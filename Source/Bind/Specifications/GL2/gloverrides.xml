@@ -1184,6 +1184,11 @@
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT14" />
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT15" />
     </enum>
+    <enum name="DrawElementsType">
+      <use enum="DataType" token="UNSIGNED_BYTE" />
+      <use enum="DataType" token="UNSIGNED_SHORT" />
+      <use enum="DataType" token="UNSIGNED_INT" />
+    </enum>
     <enum name="EnableCap">
       <use enum="ARB_framebuffer_sRGB" token="FRAMEBUFFER_SRGB" />
       <token name="COLOR_SUM" value="0x8458" />
@@ -1550,6 +1555,8 @@
       <token name="VERTEX_ARRAY_BUFFER_BINDING" value="0x8896" />
       <token name="VERTEX_ATTRIB_ARRAY_BUFFER_BINDING" value="0x889F" />
       <token name="WEIGHT_ARRAY_BUFFER_BINDING" value="0x889E" />
+      <use enum="VERSION_1_3" token="SAMPLES" />
+      <use enum="VERSION_1_3" token="SAMPLE_BUFFERS" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -1595,6 +1602,7 @@
       <token name="TEXTURE_SAMPLES" value="0x9106" />
       <token name="TEXTURE_SHARED_SIZE" value="0x8C3F" />
       <token name="TEXTURE_WRAP_R" value="0x8072" />
+      <use enum="VERSION_1_3" token="TEXTURE_COMPRESSED" />
     </enum>
     <enum name="HintTarget">
       <token name="FRAGMENT_SHADER_DERIVATIVE_HINT" value="0x8B8B" />
@@ -1757,6 +1765,15 @@
       <token name="SRGB_ALPHA" value="0x8C42" />
       <token name="SRGB8" value="0x8C41" />
       <token name="SRGB8_ALPHA8" value="0x8C43" />
+      <token name="ONE" value="1" />
+      <token name="TWO" value="2" />
+      <token name="THREE" value="3" />
+      <token name="FOUR" value="4" />
+      <use enum="PixelFormat" token="ALPHA" />
+      <use enum="PixelFormat" token="LUMINANCE" />
+      <use enum="PixelFormat" token="LUMINANCE_ALPHA" />
+      <use enum="PixelFormat" token="RGB" />
+      <use enum="PixelFormat" token="RGBA" />
     </enum>
     <enum name="PixelStoreParameter">
       <token name="PACK_IMAGE_HEIGHT" value="0x806C" />
@@ -1989,6 +2006,11 @@
       <use enum="PixelInternalFormat" token="RGBA16UI" />
       <use enum="PixelInternalFormat" token="RGBA32UI" />
     </enum>
+    <enum name="StencilFace">
+      <use enum="DrawBufferMode" token="FRONT" />
+      <use enum="DrawBufferMode" token="BACK" />
+      <use enum="DrawBufferMode" token="FRONT_AND_BACK" />
+    </enum>
     <enum name="StencilOp">
       <token name="DECR_WRAP" value="0x8508" />
       <token name="INCR_WRAP" value="0x8507" />
@@ -2146,6 +2168,8 @@
       <token name="TEXTURE_CUBE_MAP_POSITIVE_Y" value="0x8517" />
       <token name="TEXTURE_CUBE_MAP_POSITIVE_Z" value="0x8519" />
       <token name="TEXTURE_RECTANGLE" value="0x84F5" />
+      <use enum="ARB_texture_rectangle" token="TEXTURE_RECTANGLE_ARB" />
+      <use enum="NV_texture_rectangle" token="TEXTURE_RECTANGLE_NV" />
     </enum>
     <enum name="TextureTargetMultisample">
       <token name="PROXY_TEXTURE_2D_MULTISAMPLE" value="0x9101" />
