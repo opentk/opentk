@@ -205,17 +205,31 @@ namespace Bind.Structures
 
                 if (enums.ContainsKey(c.Reference) && enums[c.Reference].ConstantCollection.ContainsKey(c.Value))
                 {
-                    TranslateConstantWithReference(enums[c.Reference].ConstantCollection[c.Value] as Constant, enums, auxEnums);
-                    referenced_constant = (enums[c.Reference].ConstantCollection[c.Value] as Constant);
+                    // Transitively translate the referenced token
+                    // Todo: this may cause loops if two tokens reference each other.
+                    // Add a max reference depth and bail out?
+                    TranslateConstantWithReference(enums[c.Reference].ConstantCollection[c.Value], enums, auxEnums);
+                    referenced_constant = (enums[c.Reference].ConstantCollection[c.Value]);
                 }
                 else if (auxEnums != null && auxEnums.ContainsKey(c.Reference) && auxEnums[c.Reference].ConstantCollection.ContainsKey(c.Value))
                 {
-                    TranslateConstantWithReference(auxEnums[c.Reference].ConstantCollection[c.Value] as Constant, enums, auxEnums);
-                    referenced_constant = (auxEnums[c.Reference].ConstantCollection[c.Value] as Constant);
+                    // Legacy from previous generator incarnation.
+                    // Todo: merge everything into enums and get rid of auxEnums.
+                    TranslateConstantWithReference(auxEnums[c.Reference].ConstantCollection[c.Value], enums, auxEnums);
+                    referenced_constant = (auxEnums[c.Reference].ConstantCollection[c.Value]);
+                }
+                else if (enums.ContainsKey(Settings.CompleteEnumName) &&
+                    enums[Settings.CompleteEnumName].ConstantCollection.ContainsKey(c.Value))
+                {
+                    // Try the All enum
+                    var reference = enums[Settings.CompleteEnumName].ConstantCollection[c.Value];
+                    if (reference.Reference == null)
+                        referenced_constant = (enums[Settings.CompleteEnumName].ConstantCollection[c.Value]);
+                    else
+                        return false;
                 }
                 else
                 {
-                    Console.WriteLine("[Warning] Reference {0} not found for token {1}.", c.Reference, c);
                     return false;
                 }
                 //else throw new InvalidOperationException(String.Format("Unknown Enum \"{0}\" referenced by Constant \"{1}\"",
