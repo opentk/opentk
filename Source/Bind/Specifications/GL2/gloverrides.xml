@@ -506,6 +506,19 @@
         <type>ActiveUniformParameter</type>
       </param>
     </function>
+    
+    <!-- Version 3.3 -->
+    <function name="SamplerParameter" extension="Core">
+      <param name="pname">
+        <type>SamplerParameter</type>
+      </param>
+    </function>
+
+    <function name="GetSamplerParameter" extension="Core">
+      <param name="pname">
+        <type>SamplerParameter</type>
+      </param>
+    </function>
 
     <!-- Arb -->
 
@@ -1557,6 +1570,7 @@
       <token name="WEIGHT_ARRAY_BUFFER_BINDING" value="0x889E" />
       <use enum="VERSION_1_3" token="SAMPLES" />
       <use enum="VERSION_1_3" token="SAMPLE_BUFFERS" />
+      <use enum="VERSION_3_3" token="SAMPLER_BINDING" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -1958,6 +1972,20 @@
     <enum name="RenderbufferTarget">
       <use enum="ARB_framebuffer_object" token="RENDERBUFFER" />
       <token name="RENDERBUFFER_EXT" value="0x8D41" />
+    </enum>
+    <enum name="SamplerParameter">
+      <token name="TextureWrapS" value = "0x2802" />
+      <token name="TextureWrapT" value = "0x2803" />
+      <token name="TextureWrapR" value = "0x8072" />
+      <token name="TextureMinFilter" value = "0x2801" />
+      <token name="TextureMagFilter" value = "0x2800" />
+      <token name="TextureBorderColor" value = "0x1004" />
+      <token name="TextureMinLod" value = "0x813A" />
+      <token name="TextureMaxLod" value = "0x813B" />
+      <token name="TextureLodBias" value = "0x8501" />
+      <token name="TextureCompareMode" value = "0x884C" />
+      <token name="TextureCompareFunc" value = "0x884D" />
+      <token name="TextureMaxAnisotropyExt" value = "0x84FE" />
     </enum>
     <enum name="SeparableTarget">
       <token name="SEPARABLE_2D" value="0x8012" />
