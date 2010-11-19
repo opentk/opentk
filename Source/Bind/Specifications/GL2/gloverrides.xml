@@ -1838,6 +1838,7 @@
       <token name="PRIMITIVES_GENERATED" value="0x8C87" />
       <token name="SAMPLES_PASSED" value="0x8914" />
       <token name="TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN" value="0x8C88" />
+      <use enum="ARB_occlusion_query2" token="ANY_SAMPLES_PASSED" />
     </enum>
     <enum name="ReadBufferMode">
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
