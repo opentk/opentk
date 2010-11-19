@@ -358,6 +358,14 @@ namespace Bind.GL2
                 {
                     GLTypes.Add(words[0], "void");
                 }
+                else if (words[1] == "const" && words[2] == "GLubyte")
+                {
+                    GLTypes.Add(words[0], "String");
+                }
+                else if (words[1] == "struct")
+                {
+                    GLTypes.Add(words[0], words[2]);
+                }
                 else
                 {
                     GLTypes.Add(words[0], words[1]);
