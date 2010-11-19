@@ -302,7 +302,10 @@ namespace Bind
                 .Where(c => !Constant.TranslateConstantWithReference(c, enums, null))
                 .Select(c => c).ToList();
             foreach (var c in broken_references)
+            {
+                Console.WriteLine("[Warning] Reference {0} not found for token {1}.", c.Reference, c);
                 e.ConstantCollection.Remove(c.Name);
+            }
         }
 
         static bool IsValue(string test)

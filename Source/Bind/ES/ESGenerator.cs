@@ -176,8 +176,18 @@ namespace Bind.ES
                                 }
                                 else if (e.ConstantCollection[c.Name].Value != c.Value)
                                 {
-                                    Console.WriteLine("[Warning] Conflicting token {0}.{1} with value {2} != {3}",
-                                        e.Name, c.Name, e.ConstantCollection[c.Name].Value, c.Value);
+                                    var existing = e.ConstantCollection[c.Name];
+                                    if (existing.Reference != null && c.Reference == null)
+                                    {
+                                        e.ConstantCollection[c.Name] = c;
+                                    }
+                                    else if (existing.Reference == null && c.Reference != null)
+                                    { } // Keep existing
+                                    else
+                                    {
+                                        Console.WriteLine("[Warning] Conflicting token {0}.{1} with value {2} != {3}",
+                                            e.Name, c.Name, e.ConstantCollection[c.Name].Value, c.Value);
+                                    }
                                 }
                             }
                             catch (ArgumentException ex)
