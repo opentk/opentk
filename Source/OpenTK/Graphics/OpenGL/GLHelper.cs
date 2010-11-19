@@ -1020,4 +1020,12 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
     }
+
+    public delegate void DebugProcAmd(int id,
+        AmdDebugOutput category, AmdDebugOutput severity,
+        IntPtr length, string message, IntPtr userParam);
+
+    public delegate void DebugProcArb(int id,
+        ArbDebugOutput category, ArbDebugOutput severity,
+        IntPtr length, string message, IntPtr userParam);
 }
