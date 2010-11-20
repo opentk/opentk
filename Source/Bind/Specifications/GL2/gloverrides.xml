@@ -526,6 +526,133 @@
       </param>
     </function>
 
+    <function name="VertexP2" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="VertexP3" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="VertexP4" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="TexCoordP1" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="TexCoordP2" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="TexCoordP3" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="TexCoordP4" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="MultiTexCoordP1" extension="Core">
+      <param name="texture">
+        <type>TextureUnit</type>
+      </param>
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="MultiTexCoordP2" extension="Core">
+      <param name="texture">
+        <type>TextureUnit</type>
+      </param>
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="MultiTexCoordP3" extension="Core">
+      <param name="texture">
+        <type>TextureUnit</type>
+      </param>
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="MultiTexCoordP4" extension="Core">
+      <param name="texture">
+        <type>TextureUnit</type>
+      </param>
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="NormalP3" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="ColorP3" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="ColorP4" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="SecondaryColorP3" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="VertexAttribP1" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="VertexAttribP2" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="VertexAttribP3" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+    <function name="VertexAttribP4" extension="Core">
+      <param name="type">
+        <type>PackedPointerType</type>
+      </param>
+    </function>
+
+
     <!-- Arb -->
 
     <function name="VertexAttribPointer" extension="Arb">
@@ -837,6 +964,7 @@
         <type>VertexAttribParameterArb</type>
       </param>
     </function>
+
   </replace>
 
   <add>
@@ -1132,6 +1260,8 @@
     </enum>
     <enum name="ColorPointerType">
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
+      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
     </enum>
     <enum name="ColorTableParameterPName">
       <token name="COLOR_TABLE_BIAS" value="0x80D7" />
@@ -1704,6 +1834,8 @@
     </enum>
     <enum name="NormalPointerType">
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
+      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
     </enum>
     <enum name="PixelFormat">
       <use enum="ARB_texture_rg" token="RG" />
@@ -1880,6 +2012,10 @@
       <use enum="ARB_occlusion_query2" token="ANY_SAMPLES_PASSED" />
       <use enum="VERSION_3_3" token="TIME_ELAPSED" />
       <use enum="VERSION_3_3" token="TIMESTAMP" />
+    </enum>
+    <enum name="PackedPointerType">
+      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
     </enum>
     <enum name="ReadBufferMode">
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
@@ -2078,6 +2214,8 @@
     </enum>
     <enum name="TexCoordPointerType">
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
+      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
     </enum>
     <enum name="TextureBufferTarget">
       <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
@@ -2325,6 +2463,8 @@
       <use enum="DataType" token="FLOAT" />
       <use enum="DataType" token="DOUBLE" />
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
+      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
     </enum>
     <enum name="VertexAttribPointerTypeARB">
       <use enum="DataType" token="BYTE" />
@@ -2338,6 +2478,8 @@
     </enum>
     <enum name="VertexPointerType">
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
+      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
     </enum>
   </add>
 
