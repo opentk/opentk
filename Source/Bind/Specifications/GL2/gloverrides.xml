@@ -1793,6 +1793,7 @@
       <use enum="PixelFormat" token="LUMINANCE_ALPHA" />
       <use enum="PixelFormat" token="RGB" />
       <use enum="PixelFormat" token="RGBA" />
+      <use enum="VERSION_3_3" token="RGB10_A2UI" />
     </enum>
     <enum name="PixelStoreParameter">
       <token name="PACK_IMAGE_HEIGHT" value="0x806C" />
@@ -1973,6 +1974,7 @@
       <token name="STENCIL_INDEX16_EXT" value="0x8D49" />
       <token name="STENCIL_INDEX4_EXT" value="0x8D47" />
       <token name="STENCIL_INDEX8_EXT" value="0x8D48" />
+      <use enum="VERSION_3_3" token="RGB10_A2UI" />
     </enum>
     <enum name="RenderbufferTarget">
       <use enum="ARB_framebuffer_object" token="RENDERBUFFER" />
