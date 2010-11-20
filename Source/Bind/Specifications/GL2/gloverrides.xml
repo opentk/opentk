@@ -520,6 +520,12 @@
       </param>
     </function>
 
+    <function name="QueryCounter" extension="Core">
+      <param name="target">
+        <type>QueryCounterTarget</type>
+      </param>
+    </function>
+
     <!-- Arb -->
 
     <function name="VertexAttribPointer" extension="Arb">
@@ -1580,6 +1586,7 @@
       <use enum="VERSION_1_3" token="SAMPLE_BUFFERS" />
       <use enum="VERSION_3_3" token="SAMPLER_BINDING" />
       <use enum="VERSION_3_3" token="MAX_DUAL_SOURCE_DRAW_BUFFERS" />
+      <use enum="VERSION_3_3" token="TIMESTAMP" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -1863,11 +1870,16 @@
       <token name="FIRST_VERTEX_CONVENTION" value="0x8E4D" />
       <token name="LAST_VERTEX_CONVENTION" value="0x8E4E" />
     </enum>
-    <enum name="QueryTarget">
+    <enum name="QueryCounterTarget">
+      <use enum="VERSION_3_3" token="TIMESTAMP" />
+    </enum>
+      <enum name="QueryTarget">
       <token name="PRIMITIVES_GENERATED" value="0x8C87" />
       <token name="SAMPLES_PASSED" value="0x8914" />
       <token name="TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN" value="0x8C88" />
       <use enum="ARB_occlusion_query2" token="ANY_SAMPLES_PASSED" />
+      <use enum="VERSION_3_3" token="TIME_ELAPSED" />
+      <use enum="VERSION_3_3" token="TIMESTAMP" />
     </enum>
     <enum name="ReadBufferMode">
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
@@ -2286,6 +2298,7 @@
       <token name="ARRAY_TYPE" value="0x8625" />
       <token name="CURRENT_VERTEX_ATTRIB" value="0x8626" />
       <token name="VERTEX_ATTRIB_ARRAY_INTEGER" value="0x88FD" />
+      <use enum="VERSION_3_3" token="VERTEX_ATTRIB_ARRAY_DIVISOR" />
     </enum>
     <enum name="VertexAttribParameterARB">
       <token name="ARRAY_DIVISOR" value="0x88FE" />
