@@ -1012,12 +1012,20 @@
       <token name="CONSTANT_COLOR" value="0x8001" />
       <token name="ONE_MINUS_CONSTANT_ALPHA" value="0x8004" />
       <token name="ONE_MINUS_CONSTANT_COLOR" value="0x8002" />
+      <use enum="VERSION_3_3" token="SRC1_ALPHA" />
+      <use enum="VERSION_3_3" token="SRC1_COLOR" />
+      <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_ALPHA" />
+      <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_COLOR" />
     </enum>
     <enum name="BlendingFactorSrc">
       <token name="CONSTANT_ALPHA" value="0x8003" />
       <token name="CONSTANT_COLOR" value="0x8001" />
       <token name="ONE_MINUS_CONSTANT_ALPHA" value="0x8004" />
       <token name="ONE_MINUS_CONSTANT_COLOR" value="0x8002" />
+      <use enum="VERSION_3_3" token="SRC1_ALPHA" />
+      <use enum="VERSION_3_3" token="SRC1_COLOR" />
+      <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_ALPHA" />
+      <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_COLOR" />
     </enum>
     <enum name="BlitFramebufferFilter">
       <use enum="TextureMagFilter" token="LINEAR" />
@@ -1571,6 +1579,7 @@
       <use enum="VERSION_1_3" token="SAMPLES" />
       <use enum="VERSION_1_3" token="SAMPLE_BUFFERS" />
       <use enum="VERSION_3_3" token="SAMPLER_BINDING" />
+      <use enum="VERSION_3_3" token="MAX_DUAL_SOURCE_DRAW_BUFFERS" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
