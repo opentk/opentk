@@ -506,7 +506,7 @@
         <type>ActiveUniformParameter</type>
       </param>
     </function>
-    
+
     <!-- Version 3.3 -->
     <function name="SamplerParameter" extension="Core">
       <param name="pname">
@@ -1617,6 +1617,11 @@
       <token name="TEXTURE_SHARED_SIZE" value="0x8C3F" />
       <token name="TEXTURE_WRAP_R" value="0x8072" />
       <use enum="VERSION_1_3" token="TEXTURE_COMPRESSED" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_R" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_G" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_B" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_A" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_RGBA" />
     </enum>
     <enum name="HintTarget">
       <token name="FRAGMENT_SHADER_DERIVATIVE_HINT" value="0x8B8B" />
@@ -2173,6 +2178,11 @@
       <token name="TEXTURE_COMPARE_FUNC" value="0x884D" />
       <token name="TEXTURE_COMPARE_MODE" value="0x884C" />
       <token name="TEXTURE_LOD_BIAS" value="0x8501" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_R" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_G" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_B" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_A" />
+      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_RGBA" />
     </enum>
     <enum name="TextureTarget">
       <token name="PROXY_TEXTURE_1D_ARRAY" value="0x8C19" />
