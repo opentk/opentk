@@ -1154,7 +1154,7 @@ namespace OpenTK
         /// <param name="result">The transformed vector</param>
         public static void TransformPerspective(ref Vector3 vec, ref Matrix4 mat, out Vector3 result)
         {
-            Vector4 v = new Vector4(vec);
+            Vector4 v = new Vector4(vec, 1);
             Vector4.Transform(ref v, ref mat, out v);
             result.X = v.X / v.W;
             result.Y = v.Y / v.W;
