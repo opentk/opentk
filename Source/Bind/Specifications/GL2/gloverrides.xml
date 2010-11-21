@@ -653,6 +653,27 @@
     </function>
     
     <!-- Version 4.0 -->
+    <function name="BeginQueryIndexed" extension="Core">
+      <param name="target">
+        <type>QueryTarget</type>
+      </param>
+    </function>
+
+    <function name="EndQueryIndexed" extension="Core">
+      <param name="target">
+        <type>QueryTarget</type>
+      </param>
+    </function>
+
+    <function name="GetQueryIndexed" extension="Core">
+      <param name="target">
+        <type>QueryTarget</type>
+      </param>
+      <param name="pname">
+        <type>GetQueryParam</type>
+      </param>
+    </function>
+    
     <function name="BindTransformFeedback" extension="Core">
       <param name="target">
         <type>TransformFeedbackTarget</type>
@@ -664,7 +685,13 @@
         <type>BeginMode</type>
       </param>
     </function>
-    
+
+    <function name="DrawTransformFeedbackStream" extension="Core">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+
     <function name="GetSubroutineUniformLocation" extension="Core">
       <param name="shadertype">
         <type>ShaderType</type>
@@ -1884,6 +1911,8 @@
       <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK_BUFFER_PAUSED" />
       <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK_BUFFER_ACTIVE" />
       <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK_BINDING" />
+      <use enum="VERSION_4_0" token="MAX_TRANSFORM_FEEDBACK_BUFFERS" />
+      <use enum="VERSION_4_0" token="MAX_VERTEX_STREAMS" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
