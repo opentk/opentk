@@ -1166,6 +1166,10 @@
       <use enum="VERSION_4_0" token="DOUBLE_MAT3x4" />
       <use enum="VERSION_4_0" token="DOUBLE_MAT4x2" />
       <use enum="VERSION_4_0" token="DOUBLE_MAT4x3" />
+      <use enum="VERSION_4_0" token="SAMPLER_CUBE_MAP_ARRAY" />
+      <use enum="VERSION_4_0" token="SAMPLER_CUBE_MAP_ARRAY_SHADOW" />
+      <use enum="VERSION_4_0" token="INT_SAMPLER_CUBE_MAP_ARRAY" />
+      <use enum="VERSION_4_0" token="UNSIGNED_INT_SAMPLER_CUBE_MAP_ARRAY" />
     </enum>
     <enum name="ArrayCap">
       <use enum="GetPName" token="VERTEX_ARRAY" />
@@ -1861,6 +1865,7 @@
       <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_INPUT_COMPONENTS" />
       <use enum="VERSION_4_0" token="MAX_COMBINED_TESS_CONTROL_UNIFORM_COMPONENTS" />
       <use enum="VERSION_4_0" token="MAX_COMBINED_TESS_EVALUATION_UNIFORM_COMPONENTS" />
+      <use enum="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY_BINDING" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -2537,6 +2542,8 @@
       <token name="TEXTURE_RECTANGLE" value="0x84F5" />
       <use enum="ARB_texture_rectangle" token="TEXTURE_RECTANGLE_ARB" />
       <use enum="NV_texture_rectangle" token="TEXTURE_RECTANGLE_NV" />
+      <use enum="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY" />
+      <use enum="VERSION_4_0" token="PROXY_TEXTURE_CUBE_MAP_ARRAY" />
     </enum>
     <enum name="TextureTargetMultisample">
       <token name="PROXY_TEXTURE_2D_MULTISAMPLE" value="0x9101" />
