@@ -653,6 +653,18 @@
     </function>
     
     <!-- Version 4.0 -->
+    <function name="BindTransformFeedback" extension="Core">
+      <param name="target">
+        <type>TransformFeedbackTarget</type>
+      </param>
+    </function>
+
+    <function name="DrawTransformFeedback" extension="Core">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    
     <function name="GetSubroutineUniformLocation" extension="Core">
       <param name="shadertype">
         <type>ShaderType</type>
@@ -1869,6 +1881,9 @@
       <use enum="VERSION_4_0" token="MAX_PROGRAM_TEXTURE_GATHER_OFFSET" />
       <use enum="VERSION_4_0" token="MIN_PROGRAM_TEXTURE_GATHER_OFFSET" />
       <use enum="VERSION_4_0" token="MAX_PROGRAM_TEXTURE_GATHER_COMPONENTS" />
+      <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK_BUFFER_PAUSED" />
+      <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK_BUFFER_ACTIVE" />
+      <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK_BINDING" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -2596,6 +2611,9 @@
     <enum name="TransformFeedbackMode">
       <token name="INTERLEAVED_ATTRIBS" value="0x8C8C" />
       <token name="SEPARATE_ATTRIBS" value="0x8C8D" />
+    </enum>
+    <enum name="TransformFeedbackTarget">
+      <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK" />
     </enum>
     <enum name="VertexAttribI_PointerType">
       <use enum="DataType" token="BYTE" />
