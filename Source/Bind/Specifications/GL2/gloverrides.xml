@@ -2225,6 +2225,7 @@
     <enum name="TextureCompareMode">
       <token name="COMPARE_R_TO_TEXTURE" value="0x884E" />
       <token name="COMPARE_REF_TO_TEXTURE" value="GL_COMPARE_R_TO_TEXTURE_ARB" />
+      <use enum="VERSION_1_1" token="NONE" />
     </enum>
     <enum name="TextureEnvMode">
       <token name="COMBINE" value="0x8570" />
