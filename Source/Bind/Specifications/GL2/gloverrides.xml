@@ -1866,6 +1866,9 @@
       <use enum="VERSION_4_0" token="MAX_COMBINED_TESS_CONTROL_UNIFORM_COMPONENTS" />
       <use enum="VERSION_4_0" token="MAX_COMBINED_TESS_EVALUATION_UNIFORM_COMPONENTS" />
       <use enum="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY_BINDING" />
+      <use enum="VERSION_4_0" token="MAX_PROGRAM_TEXTURE_GATHER_OFFSET" />
+      <use enum="VERSION_4_0" token="MIN_PROGRAM_TEXTURE_GATHER_OFFSET" />
+      <use enum="VERSION_4_0" token="MAX_PROGRAM_TEXTURE_GATHER_COMPONENTS" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
