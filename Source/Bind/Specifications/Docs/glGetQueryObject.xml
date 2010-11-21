@@ -33,6 +33,22 @@
                 <paramdef>GLuint * <parameter>params</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetQueryObjecti64v</function></funcdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint64 * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetQueryObjectui64v</function></funcdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLuint64 * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
     </refsynopsisdiv>
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
@@ -109,7 +125,8 @@
             when issuing a new query, the results of the previous query are discarded.
         </para>
         <para>
-            <function>glGetQueryObject</function> is available only if the GL version is 1.5 or greater.
+            <function>glGetQueryObjecti64v</function> and <function>glGetQueryObjectui64v</function> are available only 
+            if the GL version is 3.3 or greater.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
@@ -123,18 +140,14 @@
             <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>id</parameter> is the name of a currently active 
             query object.
         </para>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetQueryObject</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
-        </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
             <citerefentry><refentrytitle>glBeginQuery</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glEndQuery</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glGetQueryiv</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glIsQuery</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glIsQuery</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glQueryCounter</refentrytitle></citerefentry>
         </para>
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>

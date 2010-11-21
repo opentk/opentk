@@ -134,17 +134,14 @@
     <refsect1 id="notes"><title>Notes</title>
         <para>
             Even if the depth buffer exists and the depth mask is non-zero, the
-            depth buffer is not updated if the depth test is disabled.
+            depth buffer is not updated if the depth test is disabled. In order to
+            unconditionally write to the depth buffer, the depth test should be enabled
+            and set to <constant>GL_ALWAYS</constant>.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
             <constant>GL_INVALID_ENUM</constant> is generated if <parameter>func</parameter> is not an accepted value.
-        </para>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glDepthFunc</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>

@@ -41,8 +41,6 @@
             <listitem>
                 <para>
                     Specifies a single-valued point parameter.
-                    <constant>GL_POINT_SIZE_MIN</constant>,
-                    <constant>GL_POINT_SIZE_MAX</constant>,
                     <constant>GL_POINT_FADE_THRESHOLD_SIZE</constant>, and
                     <constant>GL_POINT_SPRITE_COORD_ORIGIN</constant>
                     are accepted.
@@ -83,9 +81,6 @@
             <listitem>
                 <para>
                     Specifies a point parameter.
-                    <constant>GL_POINT_SIZE_MIN</constant>,
-                    <constant>GL_POINT_SIZE_MAX</constant>,
-                    <constant>GL_POINT_DISTANCE_ATTENUATION</constant>,
                     <constant>GL_POINT_FADE_THRESHOLD_SIZE</constant>, and
                     <constant>GL_POINT_SPRITE_COORD_ORIGIN</constant>
                     are accepted.
@@ -96,9 +91,7 @@
             <term><parameter>params</parameter></term>
             <listitem>
                 <para>
-                    Specifies the value or values to be assigned to <parameter>pname</parameter>.
-                    <constant>GL_POINT_DISTANCE_ATTENUATION</constant> requires an array of three values.
-                    All other parameters accept an array containing only a single value.
+                    Specifies the value to be assigned to <parameter>pname</parameter>..
                 </para>
             </listitem>
         </varlistentry>
@@ -110,26 +103,6 @@
         </para>
         <variablelist>
             <varlistentry>
-                <term><constant>GL_POINT_SIZE_MIN</constant></term>
-                <listitem>
-                    <para>
-                    </para>
-                    <para>
-                        <parameter>params</parameter> is a single floating-point value that specifies the minimum point size.  The default value is 0.0.
-                    </para>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_POINT_SIZE_MAX</constant></term>
-                <listitem>
-                    <para>
-                    </para>
-                    <para>
-                        <parameter>params</parameter> is a single floating-point value that specifies the maximum point size.  The default value is 1.0.
-                    </para>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
                 <term><constant>GL_POINT_FADE_THRESHOLD_SIZE</constant></term>
                 <listitem>
                     <para>
@@ -138,26 +111,6 @@
                         <parameter>params</parameter> is a single floating-point value that specifies the threshold value
                         to which point sizes are clamped if they exceed the specified value.  The
                         default value is 1.0.
-                    </para>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_POINT_DISTANCE_ATTENUATION</constant></term>
-                <listitem>
-                    <para>
-                    </para>
-                    <para>
-                        <parameter>params</parameter> is an array of three floating-point values that specify the
-                        coefficients used for scaling the computed point size.  The default values
-                        are 
-                        <inlineequation><mml:math>
-                            <!-- eqn: (1,  0,  0):-->
-                            <mml:mfenced open="(" close=")">
-                                <mml:mn>1</mml:mn>
-                                <mml:mn>0</mml:mn>
-                                <mml:mn>0</mml:mn>
-                            </mml:mfenced>
-                        </mml:math></inlineequation>.
                     </para>
                 </listitem>
             </varlistentry>
@@ -174,44 +127,19 @@
             </varlistentry>
         </variablelist>
     </refsect1>
-    <refsect1 id="notes"><title>Notes</title>
-        <para>
-            <function>glPointParameter</function> is available only if the GL version is 1.4 or greater.
-        </para>
-        <para>
-            <constant>GL_POINT_SPRITE_COORD_ORIGIN</constant> is available only if the GL version is 2.0 or greater.
-        </para>
-    </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
-            <constant>GL_INVALID_VALUE</constant> is generated If the value specified for
-            <constant>GL_POINT_SIZE_MIN</constant>, <constant>GL_POINT_SIZE_MAX</constant>, or
+            <constant>GL_INVALID_VALUE</constant> is generated if the value specified for
             <constant>GL_POINT_FADE_THRESHOLD_SIZE</constant> is less than zero.
         </para>
         <para>
             <constant>GL_INVALID_ENUM</constant> is generated If the value specified for
             <constant>GL_POINT_SPRITE_COORD_ORIGIN</constant> is not <constant>GL_LOWER_LEFT</constant> or <constant>GL_UPPER_LEFT</constant>.
         </para>
-        <para>
-            If the value for <constant>GL_POINT_SIZE_MIN</constant> is greater than
-            <constant>GL_POINT_SIZE_MAX</constant>, the point size after clamping is undefined, but no
-            error is generated.
-        </para>
-        <para>
-        </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_POINT_SIZE_MIN</constant>
-        </para>
-        <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_POINT_SIZE_MAX</constant>
-        </para>
-        <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_POINT_FADE_THRESHOLD_SIZE</constant>
-        </para>
-        <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_POINT_DISTANCE_ATTENUATION</constant>
         </para>
         <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_POINT_SPRITE_COORD_ORIGIN</constant>
@@ -225,7 +153,8 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc. Copyright <trademark class="copyright"></trademark> 2010
+            Khronos Group. This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

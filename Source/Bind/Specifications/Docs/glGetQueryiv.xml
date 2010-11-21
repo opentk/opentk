@@ -33,7 +33,9 @@
             <listitem>
                 <para>
                     Specifies a query object target.
-                    Must be <constant>GL_SAMPLES_PASSED</constant>.
+                    Must be <constant>GL_SAMPLES_PASSED</constant>, <constant>GL_ANY_SAMPLES_PASSED</constant>,
+                    <constant>GL_PRIMITIVES_GENERATED</constant>, <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>,
+                    <constant>GL_TIME_ELAPSED</constant>, or <constant>GL_TIMESTAMP</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -62,49 +64,23 @@
             specified by <parameter>target</parameter>.
         </para>
         <para>
-            <parameter>pname</parameter> names a specific query object target parameter.  When <parameter>target</parameter> is 
-            <constant>GL_SAMPLES_PASSED</constant>, <parameter>pname</parameter> can be as follows:
+            <parameter>pname</parameter> names a specific query object target parameter.  When <parameter>pname</parameter> is
+            <constant>GL_CURRENT_QUERY</constant>, the name of the currently active query for <parameter>target</parameter>,
+            or zero if no query is active, will be placed in <parameter>params</parameter>.
+            If <parameter>pname</parameter> is <constant>GL_QUERY_COUNTER_BITS</constant>, the implementation-dependent number
+            of bits used to hold the result of queries for <parameter>target</parameter> is returned in <parameter>params</parameter>.
         </para>
-        <variablelist>
-            <varlistentry>
-                <term><constant>GL_CURRENT_QUERY</constant></term>
-                <listitem>
-                    <para>
-                        <parameter>params</parameter> returns the name of the currently active occlusion query object.
-                        If no occlusion query is active, 0 is returned.  The initial value is 0.
-                    </para>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_QUERY_COUNTER_BITS</constant></term>
-                <listitem>
-                    <para>
-                        <parameter>params</parameter> returns the number of bits in the query counter used to accumulate passing samples.
-                        If the number of bits returned is 0, the implementation does not support a query counter, and the results 
-                        obtained from <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry> are useless.
-                    </para>
-                </listitem>
-            </varlistentry>
-        </variablelist>
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
         <para>
             If an error is generated,
             no change is made to the contents of <parameter>params</parameter>.
         </para>
-        <para>
-            <function>glGetQueryiv</function> is available only if the GL version is 1.5 or greater.
-        </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
             <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> or <parameter>pname</parameter> is not an
             accepted value.
-        </para>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetQueryiv</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
         </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>

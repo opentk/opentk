@@ -116,11 +116,11 @@
         </para>
         <para>
             The screen-aligned pixel rectangle with lower left corner at
-            (<parameter>x</parameter>,\ <parameter>y</parameter>) and with
+            (<parameter>x</parameter>, <parameter>y</parameter>) and with
             width <parameter>width</parameter> and height <parameter>height</parameter> replaces the portion of the
             texture array with x indices <parameter>xoffset</parameter> through 
             <inlineequation><mml:math>
-                <!-- eqn: xoffset  +  width  -  1:-->
+                <!-- eqn: xoffset  +  width  -  1: -->
                 <mml:mrow>
                     <mml:mi mathvariant="italic">xoffset</mml:mi>
                     <mml:mo>+</mml:mo>
@@ -131,7 +131,7 @@
             </mml:math></inlineequation>,
             inclusive, and y indices <parameter>yoffset</parameter> through 
             <inlineequation><mml:math>
-                <!-- eqn: yoffset  +  height  -  1:-->
+                <!-- eqn: yoffset  +  height  -  1: -->
                 <mml:mrow>
                     <mml:mi mathvariant="italic">yoffset</mml:mi>
                     <mml:mo>+</mml:mo>
@@ -144,11 +144,11 @@
         </para>
         <para>
             The pixels in the rectangle are processed exactly as if
-            <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry> had been called, but the process stops just before
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry> had been called, but the process stops just before
             final conversion.
             At this point, all pixel component values are clamped to the range 
             <inlineequation><mml:math>
-                <!-- eqn: [0,1]:-->
+                <!-- eqn: [0,1]: -->
                 <mml:mfenced open="[" close="]">
                     <mml:mn>0</mml:mn>
                     <mml:mn>1</mml:mn>
@@ -176,20 +176,7 @@
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
         <para>
-            <function>glCopyTexSubImage3D</function> is available only if the GL version is 1.2 or greater.
-        </para>
-        <para>
-            Texturing has no effect in color index mode.
-        </para>
-        <para>
-            <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glPixelTransfer</refentrytitle></citerefentry> modes affect texture images
-            in exactly the way they affect <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry>.
-        </para>
-        <para>
-            When the <code>ARB_imaging</code> extension is supported, the RGBA components
-            copied from the framebuffer may be processed by the imaging pipeline, as
-            if they were a two-dimensional texture.  See <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry> for
-            specific details.
+            <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry> modes affect texture images.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
@@ -206,7 +193,7 @@
         <para>
             <constant>GL_INVALID_VALUE</constant> may be generated if 
             <inlineequation><mml:math>
-                <!-- eqn: level  >  log sub 2(max):-->
+                <!-- eqn: level  >  log sub 2(max): -->
                 <mml:mrow>
                     <mml:mi mathvariant="italic">level</mml:mi>
                     <mml:mo>&gt;</mml:mo>
@@ -228,7 +215,7 @@
         <para>
             <constant>GL_INVALID_VALUE</constant> is generated if 
             <inlineequation><mml:math>
-                <!-- eqn: xoffset  <  -b:-->
+                <!-- eqn: xoffset  <  -b: -->
                 <mml:mrow>
                     <mml:mi mathvariant="italic">xoffset</mml:mi>
                     <mml:mo>&lt;</mml:mo>
@@ -239,7 +226,7 @@
                 </mml:mrow>
             </mml:math></inlineequation>,
             <inlineequation><mml:math>
-                <!-- eqn: (xoffset  +  width)  >  (w  - b):-->
+                <!-- eqn: (xoffset  +  width)  >  (w  - b): -->
                 <mml:mrow>
                     <mml:mfenced open="(" close=")">
                         <mml:mrow>
@@ -259,7 +246,7 @@
                 </mml:mrow>
             </mml:math></inlineequation>,
             <inlineequation><mml:math>
-                <!-- eqn: yoffset  <   -b:-->
+                <!-- eqn: yoffset  <   -b: -->
                 <mml:mrow>
                     <mml:mi mathvariant="italic">yoffset</mml:mi>
                     <mml:mo>&lt;</mml:mo>
@@ -270,7 +257,7 @@
                 </mml:mrow>
             </mml:math></inlineequation>,
             <inlineequation><mml:math>
-                <!-- eqn: (yoffset  +  height)  >  (h  - b):-->
+                <!-- eqn: (yoffset  +  height)  >  (h  - b): -->
                 <mml:mrow>
                     <mml:mfenced open="(" close=")">
                         <mml:mrow>
@@ -290,7 +277,7 @@
                 </mml:mrow>
             </mml:math></inlineequation>,
             <inlineequation><mml:math>
-                <!-- eqn: zoffset  <   -b:-->
+                <!-- eqn: zoffset  <   -b: -->
                 <mml:mrow>
                     <mml:mi mathvariant="italic">zoffset</mml:mi>
                     <mml:mo>&lt;</mml:mo>
@@ -302,7 +289,7 @@
             </mml:math></inlineequation>,
             or 
             <inlineequation><mml:math>
-                <!-- eqn: (zoffset  +  1)  >  (d  - b):-->
+                <!-- eqn: (zoffset  +  1)  >  (d  - b): -->
                 <mml:mrow>
                      <mml:mfenced open="(" close=")">
                         <mml:mrow>
@@ -339,32 +326,20 @@
             <inlineequation><mml:math><mml:mi mathvariant="italic">d</mml:mi></mml:math></inlineequation>
             include twice the border width.
         </para>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glCopyTexSubImage3D</function> is executed
-            between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
-            execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
-        </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
             <citerefentry><refentrytitle>glGetTexImage</refentrytitle></citerefentry>
         </para>
-        <para>
-            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_3D</constant>
-        </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
-            <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glPixelTransfer</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glReadBuffer</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glTexEnv</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glTexGen</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
