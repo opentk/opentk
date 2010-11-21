@@ -772,7 +772,38 @@
       </param>
     </function>
 
+    <function name="CreateShaderProgram" extension="Core">
+      <param name="type">
+        <type>ShaderType</type>
+      </param>
+    </function>
+
+    <function name="GetProgramPipelineiv" extension="Core">
+      <param name="pname">
+        <type>ProgramPipelineParameter</type>
+      </param>
+    </function>
+
+    <!-- also found Arb and Ext flavors -->
+    <function name="ProgramParameteri" extension="Core">
+      <param name="pname">
+        <type>AssemblyProgramParameterArb</type>
+      </param>
+    </function>
+
+    <function name="UseProgramStages" extension="Core">
+      <param name="stages">
+        <type>ProgramStageMask</type>
+      </param>
+    </function>
+    
     <!-- Arb -->
+
+    <function name="ProgramParameteri" extension="Arb">
+      <param name="pname">
+        <type>AssemblyProgramParameterArb</type>
+      </param>
+    </function>
 
     <function name="VertexAttribPointer" extension="Arb">
       <param name="type">
@@ -898,6 +929,12 @@
     </function>
 
     <!-- Ext -->
+
+    <function name="ProgramParameteri" extension="Ext">
+      <param name="pname">
+        <type>AssemblyProgramParameterArb</type>
+      </param>
+    </function>
 
     <function name="TangentPointer" extension="Ext">
       <param name="type">
@@ -1276,6 +1313,7 @@
       <token name="PROGRAM_TEX_INDIRECTIONS_ARB" value="0x8807" />
       <token name="PROGRAM_TEX_INSTRUCTIONS_ARB" value="0x8806" />
       <token name="PROGRAM_UNDER_NATIVE_LIMITS" value="0x88B6" />
+      <use enum="VERSION_4_1" token="PROGRAM_SEPARABLE" />
     </enum>
     <enum name="AssemblyProgramStringParameterARB">
       <token name="PROGRAM_STRING" value="0x8628" />
@@ -1927,6 +1965,7 @@
       <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK_BINDING" />
       <use enum="VERSION_4_0" token="MAX_TRANSFORM_FEEDBACK_BUFFERS" />
       <use enum="VERSION_4_0" token="MAX_VERTEX_STREAMS" />
+      <use enum="VERSION_4_1" token="PROGRAM_PIPELINE_BINDING" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -2224,6 +2263,18 @@
       <use enum="VERSION_4_0" token="TESS_GEN_SPACING" />
       <use enum="VERSION_4_0" token="TESS_GEN_VERTEX_ORDER" />
       <use enum="VERSION_4_0" token="TESS_GEN_POINT_MODE" />
+      <use enum="VERSION_4_1" token="PROGRAM_SEPARABLE" />
+    </enum>
+    <enum name="ProgramPipelineParameter">
+      <use enum="VERSION_4_1" token="ACTIVE_PROGRAM" />
+    </enum>
+    <enum name="ProgramStageMask">
+      <use enum="VERSION_4_1" token="VERTEX_SHADER_BIT" />
+      <use enum="VERSION_4_1" token="FRAGMENT_SHADER_BIT" />
+      <use enum="VERSION_4_1" token="GEOMETRY_SHADER_BIT" />
+      <use enum="VERSION_4_1" token="TESS_CONTROL_SHADER_BIT" />
+      <use enum="VERSION_4_1" token="TESS_EVALUATION_SHADER_BIT" />
+      <use enum="VERSION_4_1" token="ALL_SHADER_BITS" />
     </enum>
     <enum name="ProgramStageParameter">
       <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINES" />
