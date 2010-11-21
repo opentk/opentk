@@ -1501,7 +1501,7 @@ XF86VidModeGetGammaRampSize(
 
         [DllImport(XrandrLibrary)]
         public static extern Status XRRSetScreenConfig(Display dpy, XRRScreenConfiguration config,
-            Drawable draw, int size_index, ref Rotation rotation, Time timestamp);
+            Drawable draw, int size_index, Rotation rotation, Time timestamp);
 
         [DllImport(XrandrLibrary)]
         public static extern Status XRRSetScreenConfigAndRate(Display dpy, XRRScreenConfiguration config,

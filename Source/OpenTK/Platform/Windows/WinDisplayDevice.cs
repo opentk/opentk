@@ -1,37 +1,101 @@
-#region --- License ---
-/* Licensed under the MIT/X11 license.
- * Copyright (c) 2006-2008 the OpenTK team.
- * This notice may not be removed.
- * See license.txt for licensing detailed licensing details.
- */
+#region License
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2010 the Open Toolkit library.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
 #endregion
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-
-using OpenTK.Graphics;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
 
 namespace OpenTK.Platform.Windows
 {
-    internal class WinDisplayDeviceDriver : IDisplayDeviceDriver
+    sealed class WinDisplayDeviceDriver : DisplayDeviceBase
     {
-        static object display_lock = new object();
-        static Dictionary<DisplayDevice, string> available_device_names =
-            new Dictionary<DisplayDevice, string>();    // Needed for ChangeDisplaySettingsEx
+        readonly object display_lock = new object();
 
-        #region --- Constructors ---
+        #region Constructors
 
-        /// <summary>Queries available display devices and display resolutions.</summary>
-        static WinDisplayDeviceDriver()
+        public WinDisplayDeviceDriver()
+        {
+            RefreshDisplayDevices();
+            Microsoft.Win32.SystemEvents.DisplaySettingsChanged +=
+                HandleDisplaySettingsChanged;
+        }
+
+        #endregion
+
+        #region IDisplayDeviceDriver Members
+
+        #region TryChangeResolution
+
+        public sealed override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
+        {
+            DeviceMode mode = null;
+
+            if (resolution != null)
+            {
+                mode = new DeviceMode();
+                mode.PelsWidth = resolution.Width;
+                mode.PelsHeight = resolution.Height;
+                mode.BitsPerPel = resolution.BitsPerPixel;
+                mode.DisplayFrequency = (int)resolution.RefreshRate;
+                mode.Fields = Constants.DM_BITSPERPEL
+                    | Constants.DM_PELSWIDTH
+                    | Constants.DM_PELSHEIGHT
+                    | Constants.DM_DISPLAYFREQUENCY;
+            }
+
+            return Constants.DISP_CHANGE_SUCCESSFUL == 
+                Functions.ChangeDisplaySettingsEx((string)device.Id, mode, IntPtr.Zero,
+                    ChangeDisplaySettingsEnum.Fullscreen, IntPtr.Zero);
+        }
+
+        #endregion
+
+        #region TryRestoreResolution
+
+        public sealed override bool TryRestoreResolution(DisplayDevice device)
+        {
+            return TryChangeResolution(device, null);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Private Members
+
+        #region RefreshDisplayDevices
+
+        public void RefreshDisplayDevices()
         {
             lock (display_lock)
             {
-                // To minimize the need to add static methods to OpenTK.Graphics.DisplayDevice
-                // we only allow settings to be set through its constructor.
-                // Thus, we save all necessary parameters in temporary variables
+                AvailableDevices.Clear();
+
+                // We save all necessary parameters in temporary variables
                 // and construct the device when every needed detail is available.
                 // The main DisplayDevice constructor adds the newly constructed device
                 // to the list of available devices.
@@ -82,55 +146,36 @@ namespace OpenTK.Platform.Windows
                         opentk_dev_current_res,
                         opentk_dev_primary,
                         opentk_dev_available_res,
-                        opentk_dev_current_res.Bounds);
+                        opentk_dev_current_res.Bounds,
+                        dev1.DeviceName);
 
-                    available_device_names.Add(opentk_dev, dev1.DeviceName);
+                    AvailableDevices.Add(opentk_dev);
+
+                    if (opentk_dev_primary)
+                        Primary = opentk_dev;
+
+                    Debug.Print("DisplayDevice {0} ({1}) supports {2} resolutions.",
+                        device_count, opentk_dev.IsPrimary ? "primary" : "secondary", opentk_dev.AvailableResolutions.Count);
                 }
             }
         }
 
-        public WinDisplayDeviceDriver()
+        #endregion
+
+        #region HandleDisplaySettingsChanged
+
+        void HandleDisplaySettingsChanged(object sender, EventArgs e)
         {
+            RefreshDisplayDevices();
         }
 
         #endregion
 
-        #region --- IDisplayDeviceDriver Members ---
-
-        #region public bool TryChangeResolution(OpenTK.Graphics.DisplayDevice device, DisplayResolution resolution)
-
-        public bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
+        ~WinDisplayDeviceDriver()
         {
-            DeviceMode mode = null;
-
-            if (resolution != null)
-            {
-                mode = new DeviceMode();
-                mode.PelsWidth = resolution.Width;
-                mode.PelsHeight = resolution.Height;
-                mode.BitsPerPel = resolution.BitsPerPixel;
-                mode.DisplayFrequency = (int)resolution.RefreshRate;
-                mode.Fields = Constants.DM_BITSPERPEL
-                    | Constants.DM_PELSWIDTH
-                    | Constants.DM_PELSHEIGHT
-                    | Constants.DM_DISPLAYFREQUENCY;
-            }
-
-            return Constants.DISP_CHANGE_SUCCESSFUL == 
-                Functions.ChangeDisplaySettingsEx(available_device_names[device], mode, IntPtr.Zero,
-                    ChangeDisplaySettingsEnum.Fullscreen, IntPtr.Zero);
+            Microsoft.Win32.SystemEvents.DisplaySettingsChanged -=
+                HandleDisplaySettingsChanged;
         }
-
-        #endregion
-
-        #region public TryRestoreResolution TryRestoreResolution(OpenTK.Graphics.DisplayDevice device)
-
-        public bool TryRestoreResolution(DisplayDevice device)
-        {
-            return TryChangeResolution(device, null);
-        }
-
-        #endregion
 
         #endregion
     }
