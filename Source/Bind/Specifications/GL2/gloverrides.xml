@@ -1715,6 +1715,10 @@
       <token name="WEIGHT_ARRAY_BUFFER_BINDING" value="0x889E" />
       <use enum="VERSION_1_3" token="SAMPLES" />
       <use enum="VERSION_1_3" token="SAMPLE_BUFFERS" />
+      <use enum="VERSION_3_2" token="MAX_FRAGMENT_INPUT_COMPONENTS" />
+      <use enum="VERSION_3_2" token="MAX_GEOMETRY_INPUT_COMPONENTS" />
+      <use enum="VERSION_3_2" token="MAX_GEOMETRY_OUTPUT_COMPONENTS" />
+      <use enum="VERSION_3_2" token="MAX_VERTEX_OUTPUT_COMPONENTS" />
       <use enum="VERSION_3_3" token="SAMPLER_BINDING" />
       <use enum="VERSION_3_3" token="MAX_DUAL_SOURCE_DRAW_BUFFERS" />
       <use enum="VERSION_3_3" token="TIMESTAMP" />
