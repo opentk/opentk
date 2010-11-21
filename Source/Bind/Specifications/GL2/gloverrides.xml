@@ -651,7 +651,61 @@
         <type>PackedPointerType</type>
       </param>
     </function>
+    
+    <!-- Version 4.0 -->
+    <function name="GetSubroutineUniformLocation" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+    </function>
 
+    <function name="GetSubroutineIndex" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+    </function>
+
+    <function name="GetActiveSubroutineUniform" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+      <param name="pname">
+        <type>ActiveSubroutineUniformParameter</type>
+      </param>
+    </function>
+
+    <function name="GetActiveSubroutineUniformName" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+    </function>
+
+    <function name="GetActiveSubroutineName" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+    </function>
+
+    <function name="UniformSubroutines" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+    </function>
+
+    <function name="GetUniformSubroutine" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+    </function>
+
+    <function name="GetProgramStage" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+      <param name="pname">
+        <type>ProgramStageParameter</type>
+      </param>
+    </function>
 
     <!-- Arb -->
 
@@ -997,6 +1051,12 @@
       <use enum="VERSION_4_0" token="DOUBLE_MAT3x4" />
       <use enum="VERSION_4_0" token="DOUBLE_MAT4x2" />
       <use enum="VERSION_4_0" token="DOUBLE_MAT4x3" />
+    </enum>
+    <enum name="ActiveSubroutineUniformParameter">
+      <use enum="VERSION_4_0" token="NUM_COMPATIBLE_SUBROUTINES" />
+      <use enum="VERSION_4_0" token="COMPATIBLE_SUBROUTINES" />
+      <use enum="VERSION_4_0" token="UNIFORM_SIZE" />
+      <use enum="VERSION_4_0" token="UNIFORM_NAME_LENGTH" />
     </enum>
     <enum name="ActiveUniformBlockParameter">
       <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_BINDING" />
@@ -1409,7 +1469,7 @@
       <token name="VERTEX_PROGRAM_POINT_SIZE" value="0x8642" />
       <token name="VERTEX_PROGRAM_TWO_SIDE" value="0x8643" />
       <use enum="VERSION_3_1" token="TEXTURE_RECTANGLE" />
-      <token enum="VERSION_4_0" token="SAMPLE_SHADING" />
+      <use enum="VERSION_4_0" token="SAMPLE_SHADING" />
     </enum>
     <enum name="ErrorCode">
       <use enum="ARB_framebuffer_object" token="INVALID_FRAMEBUFFER_OPERATION" />
@@ -1764,8 +1824,10 @@
       <use enum="VERSION_4_0" token="MAX_FRAGMENT_INTERPOLATION_OFFSET" />
       <use enum="VERSION_4_0" token="FRAGMENT_INTERPOLATION_OFFSET_BITS" />
       <use enum="VERSION_4_0" token="MAX_VERTEX_STREAMS" />
-      <token enum="VERSION_4_0" token="SAMPLE_SHADING" />
-      <token enum="VERSION_4_0" token="MIN_SAMPLE_SHADING_VALUE" />
+      <use enum="VERSION_4_0" token="SAMPLE_SHADING" />
+      <use enum="VERSION_4_0" token="MIN_SAMPLE_SHADING_VALUE" />
+      <use enum="VERSION_4_0" token="MAX_SUBROUTINES" />
+      <use enum="VERSION_4_0" token="MAX_SUBROUTINE_UNIFORM_LOCATIONS" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -2047,6 +2109,13 @@
       <token name="TRANSFORM_FEEDBACK_VARYINGS" value="0x8C83" />
       <token name="VALIDATE_STATUS" value="0x8B83" />
       <use enum="VERSION_4_0" token="GEOMETRY_SHADER_INVOCATIONS" />
+    </enum>
+    <enum name="ProgramStageParameter">
+      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINES" />
+      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINE_UNIFORMS" />
+      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS" />
+      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINE_MAX_LENGTH" />
+      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINE_UNIFORM_MAX_LENGTH" />
     </enum>
     <enum name="ProvokingVertexMode">
       <token name="FIRST_VERTEX_CONVENTION" value="0x8E4D" />
