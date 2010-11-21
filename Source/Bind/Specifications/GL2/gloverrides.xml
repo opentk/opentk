@@ -1215,6 +1215,7 @@
       <token name="PIXEL_UNPACK_BUFFER" value="0x88EC" />
       <token name="TEXTURE_BUFFER" value="0x8C2A" />
       <token name="TRANSFORM_FEEDBACK_BUFFER" value="0x8C8E" />
+      <use enum="VERSION_4_0" token="DRAW_INDIRECT_BUFFER" />
     </enum>
     <enum name="BufferTargetARB">
       <token name="ARRAY_BUFFER" value="0x8892" />
@@ -1722,6 +1723,7 @@
       <use enum="VERSION_3_3" token="SAMPLER_BINDING" />
       <use enum="VERSION_3_3" token="MAX_DUAL_SOURCE_DRAW_BUFFERS" />
       <use enum="VERSION_3_3" token="TIMESTAMP" />
+      <use enum="VERSION_4_0" token="DRAW_INDIRECT_BUFFER_BINDING" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
