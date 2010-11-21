@@ -8,7 +8,8 @@ namespace Bind
 {
     class DocProcessor
     {
-        static readonly Regex remove_mathml = new Regex(@"<(mml:math)[^>]*?>(?:.|\n)*?</\s*\1\s*>",
+        static readonly Regex remove_mathml = new Regex(
+            @"<(mml:math|inlineequation)[^>]*?>(?:.|\n)*?</\s*\1\s*>",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
 
         static readonly XslCompiledTransform xslt = new XslCompiledTransform();
@@ -44,11 +45,25 @@ namespace Bind
                 int equation = removed.IndexOf("eqn");
                 if (equation > 0)
                 {
-                    Text = Text.Insert(m.Index,
-                        "<![CDATA[" +
-                        removed.Substring(equation + 4, removed.IndexOf(":-->") - equation - 4) +
-                        "]]>");
+                    // Find the start and end of the equation string
+                    int eqn_start = equation + 4;
+                    int eqn_end = removed.IndexOf(":-->") - equation - 4;
+                    if (eqn_end < 0)
+                    {
+                        // Note: a few docs from man4 delimit eqn end with ": -->"
+                        eqn_end = removed.IndexOf(": -->") - equation - 4;
+                    }
+                    if (eqn_end < 0)
+                    {
+                        Console.WriteLine("[Warning] Failed to find equation for mml.");
+                        goto next;
+                    }
+
+                    string eqn_substring = removed.Substring(eqn_start, eqn_end);
+                    Text = Text.Insert(m.Index, "<![CDATA[" + eqn_substring + "]]>");
                 }
+
+            next:
                 m = remove_mathml.Match(Text);
             }
 
