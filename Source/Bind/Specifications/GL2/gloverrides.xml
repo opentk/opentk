@@ -1340,6 +1340,9 @@
       <token name="PROGRAM_TEX_INDIRECTIONS_ARB" value="0x8807" />
       <token name="PROGRAM_TEX_INSTRUCTIONS_ARB" value="0x8806" />
       <token name="PROGRAM_UNDER_NATIVE_LIMITS" value="0x88B6" />
+      <use enum="VERSION_3_2" token="GEOMETRY_INPUT_TYPE" />
+      <use enum="VERSION_3_2" token="GEOMETRY_OUTPUT_TYPE" />
+      <use enum="VERSION_3_2" token="GEOMETRY_VERTICES_OUT" />
       <use enum="VERSION_4_1" token="PROGRAM_SEPARABLE" />
       <use enum="VERSION_4_1" token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
     </enum>
