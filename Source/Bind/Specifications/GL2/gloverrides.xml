@@ -758,6 +758,20 @@
       </param>
     </function>
 
+    <!-- Version 4.1 -->
+
+    <function name="VertexAttribLPointer" extension="Core">
+      <param name="type">
+        <type>VertexAttribDPointerType</type>
+      </param>
+    </function>
+
+    <function name="GetVertexAttribL" extension="Core">
+      <param name="pname">
+        <type>VertexAttribParameter</type>
+      </param>
+    </function>
+
     <!-- Arb -->
 
     <function name="VertexAttribPointer" extension="Arb">
@@ -2643,6 +2657,9 @@
     </enum>
     <enum name="TransformFeedbackTarget">
       <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK" />
+    </enum>
+    <enum name="VertexAttribD_PointerType">
+      <use enum="VERSION_4_1" token="DOUBLE" />
     </enum>
     <enum name="VertexAttribI_PointerType">
       <use enum="DataType" token="BYTE" />
