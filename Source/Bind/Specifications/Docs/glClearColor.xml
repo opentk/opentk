@@ -52,19 +52,12 @@
             and alpha values used by <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry> to clear the color buffers.
             Values specified by <function>glClearColor</function> are clamped to the range 
             <inlineequation><mml:math>
-                <!-- eqn: [0,1]:-->
+                <!-- eqn: [0,1]: -->
                 <mml:mfenced open="[" close="]">
                     <mml:mn>0</mml:mn>
                     <mml:mn>1</mml:mn>
                 </mml:mfenced>
             </mml:math></inlineequation>.
-        </para>
-    </refsect1>
-    <refsect1 id="errors"><title>Errors</title>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glClearColor</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>

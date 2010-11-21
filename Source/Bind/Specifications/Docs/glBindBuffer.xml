@@ -34,9 +34,14 @@
                     Specifies the target to which the buffer object is bound.
                     The symbolic constant must be
                     <constant>GL_ARRAY_BUFFER</constant>,
+                    <constant>GL_COPY_READ_BUFFER</constant>,
+                    <constant>GL_COPY_WRITE_BUFFER</constant>,
                     <constant>GL_ELEMENT_ARRAY_BUFFER</constant>,
-                    <constant>GL_PIXEL_PACK_BUFFER</constant>, or
-                    <constant>GL_PIXEL_UNPACK_BUFFER</constant>.
+                    <constant>GL_PIXEL_PACK_BUFFER</constant>,
+                    <constant>GL_PIXEL_UNPACK_BUFFER</constant>,
+                    <constant>GL_TEXTURE_BUFFER</constant>,
+                    <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant>, or
+                    <constant>GL_UNIFORM_BUFFER</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -52,26 +57,24 @@
     </refsect1>
     <refsect1 id="description"><title>Description</title>
         <para>
-            <function>glBindBuffer</function> lets you create or use a named buffer object. Calling <function>glBindBuffer</function> with
-            <parameter>target</parameter> set to
-            <constant>GL_ARRAY_BUFFER</constant>, <constant>GL_ELEMENT_ARRAY_BUFFER</constant>, <constant>GL_PIXEL_PACK_BUFFER</constant> or
-            <constant>GL_PIXEL_UNPACK_BUFFER</constant> and <parameter>buffer</parameter> set to the name
-            of the new buffer object binds the buffer object name to the target.
-            When a buffer object is bound to a target, the previous binding for that
+            <function>glBindBuffer</function> binds a buffer object to the specified buffer binding point. Calling <function>glBindBuffer</function> with
+            <parameter>target</parameter> set to one of the accepted symbolic constants and <parameter>buffer</parameter> set to the name
+            of a buffer object binds that buffer object name to the target. If no buffer object with name <parameter>buffer</parameter>
+            exists, one is created with that name. When a buffer object is bound to a target, the previous binding for that
             target is automatically broken.
         </para>
         <para>
             Buffer object names are unsigned integers. The value zero is reserved, but
             there is no default buffer object for each buffer object target. Instead, <parameter>buffer</parameter> set to zero
-            effectively unbinds any buffer object previously bound, and restores client memory usage for that buffer object target.
+            effectively unbinds any buffer object previously bound, and restores client memory usage for that buffer object target (if supported for that target).
             Buffer object names and the corresponding buffer object contents are local to
-            the shared display-list space (see <citerefentry><refentrytitle>glXCreateContext</refentrytitle></citerefentry>) of the current
+            the shared object space of the current
             GL rendering context;
             two rendering contexts share buffer object names only if they
-            also share display lists.
+            explicitly enable sharing between contexts through the appropriate GL windows interfaces functions.
         </para>
         <para>
-            You may use <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry> to generate a set of new buffer object names.
+            <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry> must be used to generate a set of unused buffer object names.
         </para>
         <para>
             The state of a buffer object immediately after it is first bound is an unmapped zero-sized memory buffer with
@@ -85,62 +88,63 @@
             <constant>GL_INVALID_OPERATION</constant> error.
         </para>
         <para>
-            When vertex array pointer state is changed, for example by a call to 
-            <citerefentry><refentrytitle>glNormalPointer</refentrytitle></citerefentry>, 
-            the current buffer object binding (<constant>GL_ARRAY_BUFFER_BINDING</constant>) is copied into the 
-            corresponding client state for the vertex array type being changed, for example 
-            <constant>GL_NORMAL_ARRAY_BUFFER_BINDING</constant>. While a non-zero buffer object is bound to the 
-            <constant>GL_ARRAY_BUFFER</constant> target, the vertex array pointer parameter that is traditionally
-            interpreted as a pointer to client-side memory is instead interpreted as an offset within the
+            When a non-zero buffer object is bound to the <constant>GL_ARRAY_BUFFER</constant> target, 
+            the vertex array pointer parameter is interpreted as an offset within the
             buffer object measured in basic machine units.
         </para>
         <para>
             While a non-zero buffer object is bound to the <constant>GL_ELEMENT_ARRAY_BUFFER</constant> target, 
             the indices parameter of <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>, 
-            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>, or 
-            <citerefentry><refentrytitle>glMultiDrawElements</refentrytitle></citerefentry> that is traditionally
-            interpreted as a pointer to client-side memory is instead interpreted as an offset within the
-            buffer object measured in basic machine units.
+            <citerefentry><refentrytitle>glDrawElementsInstanced</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElementsBaseVertex</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>, 
+            <citerefentry><refentrytitle>glDrawRangeElementsBaseVertex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultiDrawElements</refentrytitle></citerefentry>, or 
+            <citerefentry><refentrytitle>glMultiDrawElementsBaseVertex</refentrytitle></citerefentry> is interpreted as an 
+            offset within the buffer object measured in basic machine units.
         </para>
         <para>
             While a non-zero buffer object is bound to the <constant>GL_PIXEL_PACK_BUFFER</constant> target, 
             the following commands are affected: <citerefentry><refentrytitle>glGetCompressedTexImage</refentrytitle></citerefentry>, 
-            <citerefentry><refentrytitle>glGetConvolutionFilter</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glGetHistogram</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glGetMinmax</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glGetPixelMap</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glGetPolygonStipple</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glGetSeparableFilter</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glGetTexImage</refentrytitle></citerefentry>, and 
-            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>. The pointer parameter that is 
-            traditionally interpreted as a pointer to client-side memory where the pixels are to be packed is instead 
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>. The pointer parameter is
             interpreted as an offset within the buffer object measured in basic machine units.
         </para>
         <para>
             While a non-zero buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target, 
-            the following commands are affected: <citerefentry><refentrytitle>glBitmap</refentrytitle></citerefentry>, 
-            <citerefentry><refentrytitle>glColorSubTable</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glColorTable</refentrytitle></citerefentry>,
+            the following commands are affected: 
             <citerefentry><refentrytitle>glCompressedTexImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCompressedTexImage2D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCompressedTexImage3D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCompressedTexSubImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCompressedTexSubImage2D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCompressedTexSubImage3D</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glConvolutionFilter1D</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glConvolutionFilter2D</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glPixelMap</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glPolygonStipple</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glSeparableFilter2D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>, and 
-            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>. The pointer parameter that is 
-            traditionally interpreted as a pointer to client-side memory from which the pixels are to be unpacked is 
-            instead interpreted as an offset within the buffer object measured in basic machine units.
+            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>. The pointer parameter is 
+            interpreted as an offset within the buffer object measured in basic machine units.
+        </para>
+        <para>
+            The buffer targets <constant>GL_COPY_READ_BUFFER</constant> and <constant>GL_COPY_WRITE_BUFFER</constant>
+            are provided to allow <citerefentry><refentrytitle>glCopyBufferSubData</refentrytitle></citerefentry>
+            to be used without disturbing the state of other bindings. However, <citerefentry><refentrytitle>glCopyBufferSubData</refentrytitle></citerefentry>
+            may be used with any pair of buffer binding points.
+        </para>
+        <para>
+            The <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant> buffer binding point may be passed to <function>glBindBuffer</function>,
+            but will not directly affect transform feedback state. Instead, the indexed <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant>
+            bindings must be used through a call to <citerefentry><refentrytitle>glBindBufferBase</refentrytitle></citerefentry>
+            or <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry>. This will affect the generic
+            <constant>GL_TRANSFORM_FEEDABCK_BUFFER</constant> binding.
+        </para>
+        <para>
+            Likewise, the <constant>GL_UNIFORM_BUFFER</constant> buffer binding point may be used, but does not directly affect
+            uniform buffer state. <citerefentry><refentrytitle>glBindBufferBase</refentrytitle></citerefentry>
+            or <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry> must be used to bind a buffer to
+            an indexed uniform buffer binding point.
         </para>
         <para>
             A buffer object binding created with <function>glBindBuffer</function> remains active until a different
@@ -155,11 +159,8 @@
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
         <para>
-            <function>glBindBuffer</function> is available only if the GL version is 1.5 or greater.
-        </para>
-        <para>
-            <constant>GL_PIXEL_PACK_BUFFER</constant> and <constant>GL_PIXEL_UNPACK_BUFFER</constant> are 
-            available only if the GL version is 2.1 or greater.
+            The <constant>GL_COPY_READ_BUFFER</constant>, <constant>GL_UNIFORM_BUFFER</constant> and
+            <constant>GL_TEXTURE_BUFFER</constant> targets are available only if the GL version is 3.1 or greater.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
@@ -168,14 +169,19 @@
             values.
         </para>
         <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glBindBuffer</function> is executed
-            between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
-            execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>buffer</parameter> is not a name previously returned
+            from a call to <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry>.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_ARRAY_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COPY_READ_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COPY_WRITE_BUFFER_BINDING</constant>
         </para>
         <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_ELEMENT_ARRAY_BUFFER_BINDING</constant>
@@ -186,11 +192,21 @@
         <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_UNPACK_BUFFER_BINDING</constant>
         </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TRANSFORM_FEEDBACK_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_UNIFORM_BUFFER_BINDING</constant>
+        </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
-            <citerefentry><refentrytitle>glDeleteBuffers</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferBase</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteBuffers</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glIsBuffer</refentrytitle></citerefentry>
         </para>

@@ -14,7 +14,7 @@
     </refmeta>
     <refnamediv>
         <refname>glLogicOp</refname>
-        <refpurpose>specify a logical pixel operation for color index rendering</refpurpose>
+        <refpurpose>specify a logical pixel operation for rendering</refpurpose>
     </refnamediv>
     <refsynopsisdiv><title>C Specification</title>
         <funcsynopsis>
@@ -57,14 +57,13 @@
         <para>
             <function>glLogicOp</function> specifies a logical operation that,
             when enabled,
-            is applied between the incoming color index or RGBA color
-            and the color index or RGBA color at the corresponding location in the
+            is applied between the incoming RGBA color
+            and the RGBA color at the corresponding location in the
             frame buffer.
             To enable or disable the logical operation, call
             <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glDisable</refentrytitle></citerefentry>
-            using the symbolic constant <constant>GL_COLOR_LOGIC_OP</constant> for RGBA mode or
-            <constant>GL_INDEX_LOGIC_OP</constant> for color index mode. The initial value is
-            disabled for both operations.
+            using the symbolic constant <constant>GL_COLOR_LOGIC_OP</constant>. The initial value is
+            disabled.
         </para>
         <para>
         </para>
@@ -217,34 +216,30 @@
         <para>
             <parameter>opcode</parameter> is a symbolic constant chosen from the list above.
             In the explanation of the logical operations,
-            <emphasis>s</emphasis> represents the incoming color index and
-            <emphasis>d</emphasis> represents the index in the frame buffer.
+            <emphasis>s</emphasis> represents the incoming color and
+            <emphasis>d</emphasis> represents the color in the frame buffer.
             Standard C-language operators are used.
             As these bitwise operators suggest,
             the logical operation is applied independently to each bit pair of the
-            source and destination indices or colors.
+            source and destination colors.
         </para>
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
         <para>
-            Color index logical operations are always supported. RGBA logical
-            operations are supported only if the GL version is 1.1 or greater.
-        </para>
-        <para>
-            When more than one RGBA color or index buffer is enabled for drawing,
+            When more than one RGBA color buffer is enabled for drawing,
             logical operations are performed separately for each enabled buffer,
             using for the destination value the contents of that buffer
             (see <citerefentry><refentrytitle>glDrawBuffer</refentrytitle></citerefentry>).
+        </para>
+        <para>
+            Logic operations have no effect on floating point draw buffers. However, if
+            <constant>GL_COLOR_LOGIC_OP</constant> is enabled, blending is still disabled
+            in this case.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
             <constant>GL_INVALID_ENUM</constant> is generated if <parameter>opcode</parameter> is not an accepted value.
-        </para>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glLogicOp</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
@@ -252,12 +247,11 @@
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_LOGIC_OP_MODE</constant>.
         </para>
         <para>
-            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_COLOR_LOGIC_OP</constant> or <constant>GL_INDEX_LOGIC_OP</constant>.
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_COLOR_LOGIC_OP</constant>.
         </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
-            <citerefentry><refentrytitle>glAlphaFunc</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glDrawBuffer</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,

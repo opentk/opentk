@@ -41,12 +41,9 @@
                     <constant>GL_FRONT</constant>,
                     <constant>GL_BACK</constant>,
                     <constant>GL_LEFT</constant>,
-                    <constant>GL_RIGHT</constant>,
-                    <constant>GL_FRONT_AND_BACK</constant>, and
-                    <constant>GL_AUX</constant><emphasis>i</emphasis>,
-                    where <emphasis>i</emphasis> is between 0 and the value of <constant>GL_AUX_BUFFERS</constant> minus 1,
-                    are accepted.  (<constant>GL_AUX_BUFFERS</constant> is not the upper limit; use <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
-                    to query the number of available aux buffers.)
+                    <constant>GL_RIGHT</constant>, and
+                    <constant>GL_FRONT_AND_BACK</constant> 
+                    are accepted.
                     The initial value is <constant>GL_FRONT</constant> for single-buffered contexts,
                     and <constant>GL_BACK</constant> for double-buffered contexts.
                 </para>
@@ -157,14 +154,6 @@
                     </para>
                 </listitem>
             </varlistentry>
-            <varlistentry>
-                <term><constant>GL_AUX</constant><emphasis>i</emphasis></term>
-                <listitem>
-                    <para>
-                        Only auxiliary color buffer <emphasis>i</emphasis> is written.
-                    </para>
-                </listitem>
-            </varlistentry>
         </variablelist>
         <para>
             If more than one color buffer is selected for drawing,
@@ -189,14 +178,6 @@
             The context is selected at GL initialization.
         </para>
     </refsect1>
-    <refsect1 id="notes"><title>Notes</title>
-        <para>
-            It is always the case that <constant>GL_AUX</constant>
-            <inlineequation><mml:math><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>
-            = <constant>GL_AUX0</constant> + 
-            <inlineequation><mml:math><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>.
-        </para>
-    </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
             <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not an accepted value.
@@ -205,25 +186,17 @@
             <constant>GL_INVALID_OPERATION</constant> is generated if none of the buffers indicated
             by <parameter>mode</parameter> exists.
         </para>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glDrawBuffer</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
-        </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_DRAW_BUFFER</constant>
-        </para>
-        <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_AUX_BUFFERS</constant>
         </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
             <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glColorMask</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glIndexMask</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawBuffers</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glReadBuffer</refentrytitle></citerefentry>
         </para>

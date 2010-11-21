@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glDeleteTransformFeedbacks">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2010</year>
+                <holder>Khronos Group.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glDeleteTransformFeedbacks</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDeleteTransformFeedbacks</refname>
+        <refpurpose>delete transform feedback objects</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDeleteTransformFeedbacks</function></funcdef>
+                <paramdef>GLsizei <parameter>n</parameter></paramdef>
+                <paramdef>const GLuint *<parameter>ids</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>n</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of transform feedback objects to delete.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>ids</parameter></term>
+            <listitem>
+                <para>
+                    Specifies an array of names of transform feedback objects to delete.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glDeleteTransformFeedbacks</function> deletes the <parameter>n</parameter> transform feedback objects
+            whose names are stored in the array <parameter>ids</parameter>. Unused names in <parameter>ids</parameter> are
+            ignored, as is the name zero. After a transform feedback object is deleted, its name is again unused and it
+            has no contents. If an active transform feedback object is deleted, its name immediately becomes unused, but
+            the underlying object is not deleted until it is no longer active.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TRANSFORM_FEEDBACK_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenTransformFeedbacks</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBeginTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPauseTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glResumeTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEndTransformFeedback</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>

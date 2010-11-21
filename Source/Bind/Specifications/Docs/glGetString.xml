@@ -24,6 +24,15 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>const GLubyte* <function>glGetStringi</function></funcdef>
+                <paramdef>GLenum <parameter>name</parameter></paramdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -31,7 +40,17 @@
             <listitem>
                 <para>
                     Specifies a symbolic constant, one of
-                    <constant>GL_VENDOR</constant>, <constant>GL_RENDERER</constant>, <constant>GL_VERSION</constant>, <constant>GL_SHADING_LANGUAGE_VERSION</constant>, or <constant>GL_EXTENSIONS</constant>.
+                    <constant>GL_VENDOR</constant>, <constant>GL_RENDERER</constant>,
+                    <constant>GL_VERSION</constant>, or <constant>GL_SHADING_LANGUAGE_VERSION</constant>.
+                    Additionally, <function>glGetStringi</function> accepts the <constant>GL_EXTENSIONS</constant> token.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                    For <function>glGetStringi</function>, specifies the index of the string to return.
                 </para>
             </listitem>
         </varlistentry>
@@ -88,33 +107,29 @@
                     </para>
                 </listitem>
             </varlistentry>
+        </variablelist>
+        <para>
+            <function>glGetStringi</function> returns a pointer to a static string
+            indexed by <parameter>index</parameter>.
+            <parameter>name</parameter> can be one of the following:
+        </para>
+        <variablelist>
             <varlistentry>
                 <term><constant>GL_EXTENSIONS</constant></term>
                 <listitem>
                     <para>
                     </para>
                     <para>
-                        Returns a space-separated list of supported extensions to GL.
+                        For <function>glGetStringi</function> only, returns the extension string
+                        supported by the implementation at <parameter>index</parameter>.
                     </para>
                 </listitem>
             </varlistentry>
         </variablelist>
         <para>
-            Because the GL does not include queries for the performance
-            characteristics of an implementation, some applications are written to
-            recognize known platforms and modify their GL usage based on known
-            performance characteristics of these platforms.
             Strings <constant>GL_VENDOR</constant> and <constant>GL_RENDERER</constant> together uniquely specify
             a platform. They do not change from release to release and should be used
             by platform-recognition algorithms.
-        </para>
-        <para>
-            Some applications want to make use of features that
-            are not part of the standard GL. These features
-            may be implemented as extensions to the standard GL.
-            The <constant>GL_EXTENSIONS</constant> string is a space-separated
-            list of supported GL extensions.
-            (Extension names never contain a space character.)
         </para>
         <para>
             The <constant>GL_VERSION</constant> and <constant>GL_SHADING_LANGUAGE_VERSION</constant> strings begin with a version number.
@@ -140,12 +155,9 @@
             If an error is generated, <function>glGetString</function> returns 0.
         </para>
         <para>
-            The client and server may support different versions or extensions.
-            <function>glGetString</function> always returns a compatible version number or list of extensions.
+            The client and server may support different versions.
+            <function>glGetString</function> always returns a compatible version number.
             The release number always describes the server.
-        </para>
-        <para>
-            <constant>GL_SHADING_LANGUAGE_VERSION</constant> is available only if the GL version is 2.0 or greater.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
@@ -153,15 +165,15 @@
             <constant>GL_INVALID_ENUM</constant> is generated if <parameter>name</parameter> is not an accepted value.
         </para>
         <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetString</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+            <constant>GL_INVALID_VALUE</constant> is generated by <function>glGetStringi</function> if
+            <parameter>index</parameter> is outside the valid range for indexed state <parameter>name</parameter>.
         </para>
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc. Copyright <trademark class="copyright"></trademark> 2010
+            Khronos Group. This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

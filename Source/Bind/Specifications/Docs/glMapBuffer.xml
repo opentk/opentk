@@ -34,9 +34,14 @@
                     Specifies the target buffer object being mapped.
                     The symbolic constant must be
                     <constant>GL_ARRAY_BUFFER</constant>,
+                    <constant>GL_COPY_READ_BUFFER</constant>,
+                    <constant>GL_COPY_WRITE_BUFFER</constant>,
                     <constant>GL_ELEMENT_ARRAY_BUFFER</constant>,
-                    <constant>GL_PIXEL_PACK_BUFFER</constant>, or
-                    <constant>GL_PIXEL_UNPACK_BUFFER</constant>.
+                    <constant>GL_PIXEL_PACK_BUFFER</constant>,
+                    <constant>GL_PIXEL_UNPACK_BUFFER</constant>,
+                    <constant>GL_TEXTURE_BUFFER</constant>,
+                    <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant> or
+                    <constant>GL_UNIFORM_BUFFER</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -70,9 +75,14 @@
                     Specifies the target buffer object being unmapped.
                     The symbolic constant must be
                     <constant>GL_ARRAY_BUFFER</constant>,
+                    <constant>GL_COPY_READ_BUFFER</constant>,
+                    <constant>GL_COPY_WRITE_BUFFER</constant>,
                     <constant>GL_ELEMENT_ARRAY_BUFFER</constant>,
-                    <constant>GL_PIXEL_PACK_BUFFER</constant>, or
-                    <constant>GL_PIXEL_UNPACK_BUFFER</constant>.
+                    <constant>GL_PIXEL_PACK_BUFFER</constant>,
+                    <constant>GL_PIXEL_UNPACK_BUFFER</constant>,
+                    <constant>GL_TEXTURE_BUFFER</constant>,
+                    <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant> or
+                    <constant>GL_UNIFORM_BUFFER</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -115,22 +125,22 @@
             <function>glUnmapBuffer</function> returns <constant>GL_FALSE</constant>.
         </para>
         <para>
-            <function>glMapBuffer</function> and <function>glUnmapBuffer</function> are available only if the GL version is 1.5 or greater.
-        </para>
-        <para>
-            <constant>GL_PIXEL_PACK_BUFFER</constant> and <constant>GL_PIXEL_UNPACK_BUFFER</constant> are 
-            available only if the GL version is 2.1 or greater.
-        </para>
-        <para>
             Parameter values passed to GL commands may not be sourced from the returned pointer. No error will be generated,
             but results will be undefined and will likely vary across GL implementations.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
-            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not 
-            <constant>GL_ARRAY_BUFFER</constant>, <constant>GL_ELEMENT_ARRAY_BUFFER</constant>, 
-            <constant>GL_PIXEL_PACK_BUFFER</constant>, or <constant>GL_PIXEL_UNPACK_BUFFER</constant>.
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not
+            <constant>GL_ARRAY_BUFFER</constant>,
+            <constant>GL_COPY_READ_BUFFER</constant>,
+            <constant>GL_COPY_WRITE_BUFFER</constant>,
+            <constant>GL_ELEMENT_ARRAY_BUFFER</constant>,
+            <constant>GL_PIXEL_PACK_BUFFER</constant>,
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant>,
+            <constant>GL_TEXTURE_BUFFER</constant>,
+            <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant> or
+            <constant>GL_UNIFORM_BUFFER</constant>.
         </para>
         <para>
             <constant>GL_INVALID_ENUM</constant> is generated if <parameter>access</parameter> is not 
@@ -152,23 +162,20 @@
             <constant>GL_INVALID_OPERATION</constant> is generated if <function>glUnmapBuffer</function> is executed for
             a buffer object whose data store is not currently mapped.
         </para>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glMapBuffer</function> or <function>glUnmapBuffer</function> is executed
-            between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
-            execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
-        </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
             <citerefentry><refentrytitle>glGetBufferPointerv</refentrytitle></citerefentry> with argument <constant>GL_BUFFER_MAP_POINTER</constant>
         </para>
         <para>
-            <citerefentry><refentrytitle>glGetBufferParameteriv</refentrytitle></citerefentry> with argument <constant>GL_BUFFER_MAPPED</constant>,  <constant>GL_BUFFER_ACCESS</constant>, or <constant>GL_BUFFER_USAGE</constant>
+            <citerefentry><refentrytitle>glGetBufferParameter</refentrytitle></citerefentry> with argument <constant>GL_BUFFER_MAPPED</constant>,  <constant>GL_BUFFER_ACCESS</constant>, or <constant>GL_BUFFER_USAGE</constant>
         </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
             <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferBase</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glBufferData</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glBufferSubData</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glDeleteBuffers</refentrytitle></citerefentry>

@@ -34,7 +34,7 @@
             <listitem>
                 <para>
                     Specifies which texture is to be obtained.
-                    <constant>GL_TEXTURE_1D</constant>, <constant>GL_TEXTURE_2D</constant>, and <constant>GL_TEXTURE_3D</constant>
+                    <constant>GL_TEXTURE_1D</constant>, <constant>GL_TEXTURE_2D</constant>, <constant>GL_TEXTURE_3D</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
@@ -98,11 +98,6 @@
             texture or subtexture loading routine used for loading <parameter>target</parameter> textures.
         </para>
     </refsect1>
-    <refsect1 id="notes"><title>Notes</title>
-        <para>
-            <function>glGetCompressedTexImage</function> is available only if the GL version is 1.3 or greater.
-        </para>
-    </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
             <constant>GL_INVALID_VALUE</constant> is generated if <parameter>lod</parameter> is less than zero or greater
@@ -120,11 +115,6 @@
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
             <constant>GL_PIXEL_PACK_BUFFER</constant> target and the data would be packed to the buffer 
             object such that the memory writes required would exceed the data store size.
-        </para>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetCompressedTexImage</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
@@ -150,10 +140,7 @@
             <citerefentry><refentrytitle>glCompressedTexSubImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCompressedTexSubImage2D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCompressedTexSubImage3D</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glTexEnv</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glTexGen</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
@@ -161,7 +148,6 @@
             <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>
-            				     
         </para>
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>

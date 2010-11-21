@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glResumeTransformFeedback">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2010</year>
+                <holder>Khronos Group</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glResumeTransformFeedback</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glResumeTransformFeedback</refname>
+        <refpurpose>resume transform feedback operations</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glResumeTransformFeedback</function></funcdef>
+                <paramdef>void</paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glResumeTransformFeedback</function> resumes transform feedback operations on the currently active transform feedback
+            object. When transform feedback operations are paused, transform feedback is still considered active and changing most
+            transform feedback state related to the object results in an error. However, a new transform feedback object may be bound
+            while transform feedback is paused.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if the currently bound transform feedback object is not active or is not paused.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenTransformFeedbacks</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBeginTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPauseTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEndTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteTransformFeedbacks</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>

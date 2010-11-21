@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glBindBufferBase">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2010</year>
+                <holder>Khronos Group</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glBindBufferBase</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindBufferBase</refname>
+        <refpurpose>bind a buffer object to an indexed buffer target</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindBufferBase</function></funcdef>
+                <paramdef>GLenum<parameter>target</parameter></paramdef>
+                <paramdef>GLuint<parameter>index</parameter></paramdef>
+                <paramdef>GLuint<parameter>buffer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specify the target of the bind operation. <parameter>target</parameter> must be
+                    either <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant> or <constant>GL_UNIFORM_BUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                    Specify the index of the binding point within the array specified by <parameter>target</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    The name of a buffer object to bind to the specified binding point.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glBindBufferBase</function> binds the buffer object <parameter>buffer</parameter>
+            to the binding point at index <parameter>index</parameter> of the array of targets specified
+            by <parameter>target</parameter>. Each <parameter>target</parameter> represents an indexed
+            array of buffer binding points, as well as a single general binding point that can be used by
+            other buffer manipulation functions such as <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>
+            or <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>. In addition to binding
+            <parameter>buffer</parameter> to the indexed buffer binding target, <function>glBindBufferBase</function>
+            also binds <parameter>buffer</parameter> to the generic buffer binding point specified by <parameter>target</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>glBindBufferBase</function> is available only if the GL version is 3.0 or greater.
+        </para>
+        <para>
+            Calling <function>glBindBufferBase</function> is equivalent to calling
+            <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry> with <parameter>offset</parameter>
+            zero and <parameter>size</parameter> equal to the size of the buffer.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not
+            <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant> or <constant>GL_UNIFORM_BUFFER</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>index</parameter> is greater
+            than or equal to the number of <parameter>target</parameter>-specific indexed binding points.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>,
+        </para>
+    </refsect1>    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glDrawArraysIndirect">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2010</year>
+                <holder>Khronos Group.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glDrawTransformFeedback</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDrawArraysIndirect</refname>
+        <refpurpose>render primitives from array data, taking parameters from memory</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDrawArraysIndirect</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+                <paramdef>const void *<parameter>indirect</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies what kind of primitives to render.
+                    Symbolic constants
+                    <constant>GL_POINTS</constant>,
+                    <constant>GL_LINE_STRIP</constant>,
+                    <constant>GL_LINE_LOOP</constant>,
+                    <constant>GL_LINES</constant>,
+                    <constant>GL_LINE_STRIP_ADJACENCY</constant>,
+                    <constant>GL_LINES_ADJACENCY</constant>,
+                    <constant>GL_TRIANGLE_STRIP</constant>,
+                    <constant>GL_TRIANGLE_FAN</constant>,
+                    <constant>GL_TRIANGLES</constant>,
+                    <constant>GL_TRIANGLE_STRIP_ADJACENCY</constant>,
+                    <constant>GL_TRIANGLES_ADJACENCY</constant>, and
+                    <constant>GL_PATCHES</constant>
+                    are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>indirect</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of a structure containing the draw parameters.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glDrawArraysIndirect</function> specifies multiple geometric primitives
+            with very few subroutine calls. <function>glDrawArraysIndirect</function> behaves
+            similarly to <citerefentry><refentrytitle>glDrawArraysInstanced</refentrytitle></citerefentry>,
+            execpt that the parameters to <citerefentry><refentrytitle>glDrawArraysInstanced</refentrytitle></citerefentry>
+            are stored in memory at the address given by <parameter>indirect</parameter>.
+        </para>
+        <para>
+            The parameters addressed by <parameter>indirect</parameter> are packed into a structure
+            that takes the form (in C):
+            <programlisting><![CDATA[    typedef  struct {
+        uint  count;
+        uint  primCount;
+        uint  first;
+        uint  reservedMustBeZero;
+    } DrawArraysIndirectCommand;
+
+    const DrawArraysIndirectCommand  *cmd  = (const DrawArraysIndirectCommand  *)indirect;
+    glDrawArraysInstanced(mode,  cmd->first,  cmd->count,  cmd->primCount);]]></programlisting>
+        </para>
+        <para>
+            If a buffer is bound to the <constant>GL_INDIRECT_BUFFER</constant> binding at the time
+            of a call to <function>glDrawArraysIndirect</function>, <parameter>indirect</parameter>
+            is interpreted as an offset, in basic machine units, into that buffer and the parameter
+            data is read from the buffer rather than from client memory.
+        </para>
+        <para>
+            In contrast to <citerefentry><refentrytitle>glDrawArraysInstanced</refentrytitle></citerefentry>,
+            the <code>first</code> member of the parameter structure is unsigned, and out-of-range indices
+            do not generate an error. The results of the operation are undefined if the <code>reservedMustBeZero</code> member
+            of the parameter structure is non-zero. However, no error is generated in this case.
+        </para>
+        <para>
+            Vertex attributes that are modified by <function>glDrawArraysIndirect</function> have an
+            unspecified value after <function>glDrawArraysIndirect</function> returns. Attributes that aren't
+            modified remain well defined.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to an
+            enabled array or to the <constant>GL_INDIRECT_BUFFER</constant> binding and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a geometry shader is active and <parameter>mode</parameter>
+            is incompatible with the input primitive type of the geometry shader in the currently installed program object.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>mode</parameter> is <constant>GL_PATCHES</constant>
+            and no tessellation control shader is active.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArraysInstanced</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>
