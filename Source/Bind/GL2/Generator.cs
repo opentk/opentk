@@ -743,18 +743,20 @@ namespace Bind.GL2
                     docfiles.Add(Path.GetFileName(file), file);
                 }
             }
+
+            string docfile = null;
             try
             {
-                string file = Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
-                if (!docfiles.ContainsKey(file))
-                    file = Settings.FunctionPrefix + f.TrimmedName + ".xml";
-                if (!docfiles.ContainsKey(file))
-                    file = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
+                docfile = Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
+                if (!docfiles.ContainsKey(docfile))
+                    docfile = Settings.FunctionPrefix + f.TrimmedName + ".xml";
+                if (!docfiles.ContainsKey(docfile))
+                    docfile = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
 
                 string doc = null;
-                if (docfiles.ContainsKey(file))
+                if (docfiles.ContainsKey(docfile))
                 {
-                    doc = processor.ProcessFile(docfiles[file]);
+                    doc = processor.ProcessFile(docfiles[docfile]);
                 }
                 if (doc == null)
                 {
@@ -783,8 +785,10 @@ namespace Bind.GL2
                 
                 sw.WriteLine(doc);
             }
-            catch
-            { }
+            catch (Exception e)
+            {
+                Console.WriteLine("[Warning] Error processing file {0}: {1}", docfile, e.ToString());
+            }
         }
 
         #endregion
