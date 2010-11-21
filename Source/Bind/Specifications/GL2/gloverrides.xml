@@ -796,7 +796,22 @@
         <type>ProgramStageMask</type>
       </param>
     </function>
-    
+
+    <function name="GetShaderPrecisionFormat" extension="Core">
+      <param name="shadertype">
+        <type>ShaderType</type>
+      </param>
+      <param name="precisiontype">
+        <type>ShaderPrecisionType</type>
+      </param>
+    </function>
+
+    <function name="ShaderBinary" extension="Core">
+      <param name="binaryformat">
+        <type>BinaryFormat</type>
+      </param>
+    </function>
+
     <!-- Arb -->
 
     <function name="ProgramParameteri" extension="Arb">
@@ -1337,6 +1352,9 @@
       <token name="TRIANGLE_STRIP_ADJACENCY" value="0xD" />
       <token name="TRIANGLES_ADJACENCY" value="0xC" />
       <use enum="VERSION_4_0" token="PATCHES" />
+    </enum>
+    <enum name="BinaryFormat">
+      <!-- Tokens must be queried at runtime. -->
     </enum>
     <enum name="BlendEquationMode">
       <token name="FUNC_ADD" value="0x8006" />
@@ -1966,6 +1984,14 @@
       <use enum="VERSION_4_0" token="MAX_TRANSFORM_FEEDBACK_BUFFERS" />
       <use enum="VERSION_4_0" token="MAX_VERTEX_STREAMS" />
       <use enum="VERSION_4_1" token="PROGRAM_PIPELINE_BINDING" />
+      <use enum="VERSION_4_1" token="SHADER_COMPILER" />
+      <use enum="VERSION_4_1" token="SHADER_BINARY_FORMATS" />
+      <use enum="VERSION_4_1" token="NUM_SHADER_BINARY_FORMATS" />
+      <use enum="VERSION_4_1" token="MAX_VERTEX_UNIFORM_VECTORS" />
+      <use enum="VERSION_4_1" token="MAX_VARYING_VECTORS" />
+      <use enum="VERSION_4_1" token="MAX_FRAGMENT_UNIFORM_VECTORS" />
+      <use enum="VERSION_4_1" token="IMPLEMENTATION_COLOR_READ_TYPE" />
+      <use enum="VERSION_4_1" token="IMPLEMENTATION_COLOR_READ_FORMAT" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -2443,6 +2469,14 @@
       <token name="SHADER_SOURCE_LENGTH" value="0x8B88" />
       <token name="SHADER_TYPE" value="0x8B4F" />
     </enum>
+    <enum name="ShaderPrecisionType">
+      <use enum="VERSION_4_1" token="LOW_FLOAT" />
+      <use enum="VERSION_4_1" token="MEDIUM_FLOAT" />
+      <use enum="VERSION_4_1" token="HIGH_FLOAT" />
+      <use enum="VERSION_4_1" token="LOW_INT" />
+      <use enum="VERSION_4_1" token="MEDIUM_INT" />
+      <use enum="VERSION_4_1" token="HIGH_INT" />
+    </enum>
     <enum name="ShaderType">
       <token name="FRAGMENT_SHADER" value="0x8B30" />
       <token name="GEOMETRY_SHADER" value="0x8DD9" />
@@ -2757,6 +2791,7 @@
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
       <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
       <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+      <use enum="VERSION_4_1" token="FIXED" />
     </enum>
     <enum name="VertexAttribPointerTypeARB">
       <use enum="DataType" token="BYTE" />
