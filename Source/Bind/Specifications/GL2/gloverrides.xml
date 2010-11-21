@@ -1373,6 +1373,7 @@
       <token name="TEXTURE_CUBE_MAP_SEAMLESS" value="0x884F" />
       <token name="VERTEX_PROGRAM_POINT_SIZE" value="0x8642" />
       <token name="VERTEX_PROGRAM_TWO_SIDE" value="0x8643" />
+      <use enum="VERSION_3_1" token="TEXTURE_RECTANGLE" />
     </enum>
     <enum name="ErrorCode">
       <use enum="ARB_framebuffer_object" token="INVALID_FRAMEBUFFER_OPERATION" />
