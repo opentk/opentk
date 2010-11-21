@@ -2035,6 +2035,7 @@
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT13" />
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT14" />
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT15" />
+      <use enum="VERSION_1_1" token="NONE" />
     </enum>
     <enum name="RenderbufferParameterName">
       <use enum="ARB_framebuffer_object" token="RENDERBUFFER_SAMPLES" />
