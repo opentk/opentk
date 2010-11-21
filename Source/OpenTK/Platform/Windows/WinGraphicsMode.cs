@@ -44,7 +44,7 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region --- Constructors ---
+        #region Constructors
 
         public WinGraphicsMode()
         {

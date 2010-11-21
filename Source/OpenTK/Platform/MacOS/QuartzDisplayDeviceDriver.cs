@@ -1,25 +1,43 @@
+#region License
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2010 the Open Toolkit library.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using OpenTK.Platform.MacOS.Carbon;
 
 namespace OpenTK.Platform.MacOS
 {
-    using System.Drawing;
-    using Carbon;
-
-    class QuartzDisplayDeviceDriver : IDisplayDeviceDriver
+    sealed class QuartzDisplayDeviceDriver : DisplayDeviceBase
     {
         static object display_lock = new object();
 
-        static Dictionary<DisplayDevice, IntPtr> displayMap = new Dictionary<DisplayDevice, IntPtr>();
-
-        static IntPtr mainDisplay;
-        static internal IntPtr MainDisplay
-        {
-            get { return mainDisplay; }
-        }
-
-        static QuartzDisplayDeviceDriver()
+        public QuartzDisplayDeviceDriver()
         {
             lock (display_lock)
             {
@@ -51,9 +69,6 @@ namespace OpenTK.Platform.MacOS
                     // according to docs, first element in the array is always the
                     // main display.
                     bool primary = (i == 0);
-                    
-                    if (primary)
-                        mainDisplay = currentDisplay;
                     
                     // gets current settings
                     int currentWidth = CG.DisplayPixelsWide(currentDisplay);
@@ -97,22 +112,22 @@ namespace OpenTK.Platform.MacOS
                     
                     Debug.Print("Display {0} bounds: {1}", i, newRect);
                     
-                    DisplayDevice opentk_dev = new DisplayDevice(opentk_dev_current_res, primary, opentk_dev_available_res, newRect);
-                    
-                    displayMap.Add(opentk_dev, currentDisplay);
+                    DisplayDevice opentk_dev = new DisplayDevice(opentk_dev_current_res,
+                        primary, opentk_dev_available_res, newRect, currentDisplay);
+
+                    AvailableDevices.Add(opentk_dev);
+
+                    if (primary)
+                        Primary = opentk_dev;
                 }
                 
                 Debug.Unindent();
             }
         }
 
-
         static internal IntPtr HandleTo(DisplayDevice displayDevice)
         {
-            if (displayMap.ContainsKey(displayDevice))
-                return displayMap[displayDevice];
-            else
-                return IntPtr.Zero;
+            return (IntPtr)displayDevice.Id;
         }
 
         #region IDisplayDeviceDriver Members
@@ -120,9 +135,9 @@ namespace OpenTK.Platform.MacOS
         Dictionary<IntPtr, IntPtr> storedModes = new Dictionary<IntPtr, IntPtr>();
         List<IntPtr> displaysCaptured = new List<IntPtr>();
 
-        public bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
+        public sealed override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
-            IntPtr display = displayMap[device];
+            IntPtr display = HandleTo(device);
             IntPtr currentModePtr = CG.DisplayCurrentMode(display);
             
             if (storedModes.ContainsKey(display) == false)
@@ -160,9 +175,9 @@ namespace OpenTK.Platform.MacOS
             return false;
         }
 
-        public bool TryRestoreResolution(DisplayDevice device)
+        public sealed override bool TryRestoreResolution(DisplayDevice device)
         {
-            IntPtr display = displayMap[device];
+            IntPtr display = HandleTo(device);
             
             if (storedModes.ContainsKey(display))
             {
@@ -177,8 +192,7 @@ namespace OpenTK.Platform.MacOS
             
             return false;
         }
-        
+
         #endregion
-        
     }
 }
