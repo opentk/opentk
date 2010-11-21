@@ -1364,10 +1364,10 @@ namespace OpenTK
         /// <returns>True if the instances are equal; false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            if (!(obj is Vector3))
+            if (!(obj is Vector3d))
                 return false;
 
-            return this.Equals((Vector3)obj);
+            return this.Equals((Vector3d)obj);
         }
 
         #endregion
