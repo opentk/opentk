@@ -976,6 +976,19 @@
       <token name="FLOAT_VEC2" value="0x8B50" />
       <token name="FLOAT_VEC3" value="0x8B51" />
       <token name="FLOAT_VEC4" value="0x8B52" />
+      <use enum="VERSION_4_0" token="DOUBLE" />
+      <use enum="VERSION_4_0" token="DOUBLE_VEC2" />
+      <use enum="VERSION_4_0" token="DOUBLE_VEC3" />
+      <use enum="VERSION_4_0" token="DOUBLE_VEC4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT2" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT3" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT2x3" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT2x4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT3x2" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT3x4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT4x2" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT4x3" />
     </enum>
     <enum name="ActiveUniformBlockParameter">
       <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_BINDING" />
@@ -1058,6 +1071,19 @@
       <token name="UNSIGNED_INT_VEC2" value="0x8DC6" />
       <token name="UNSIGNED_INT_VEC3" value="0x8DC7" />
       <token name="UNSIGNED_INT_VEC4" value="0x8DC8" />
+      <use enum="VERSION_4_0" token="DOUBLE" />
+      <use enum="VERSION_4_0" token="DOUBLE_VEC2" />
+      <use enum="VERSION_4_0" token="DOUBLE_VEC3" />
+      <use enum="VERSION_4_0" token="DOUBLE_VEC4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT2" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT3" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT2x3" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT2x4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT3x2" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT3x4" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT4x2" />
+      <use enum="VERSION_4_0" token="DOUBLE_MAT4x3" />
     </enum>
     <enum name="ArrayCap">
       <use enum="GetPName" token="VERTEX_ARRAY" />
