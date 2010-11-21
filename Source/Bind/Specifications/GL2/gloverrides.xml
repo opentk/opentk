@@ -760,6 +760,18 @@
 
     <!-- Version 4.1 -->
 
+    <function name="GetFloati_v" extension="Core">
+      <param name="target">
+        <type>GetIndexedPName</type>
+      </param>
+    </function>
+
+    <function name="GetDoublei_v" extension="Core">
+      <param name="target">
+        <type>GetIndexedPName</type>
+      </param>
+    </function>
+
     <function name="VertexAttribLPointer" extension="Core">
       <param name="type">
         <type>VertexAttribDPointerType</type>
@@ -956,6 +968,30 @@
     </function>
 
     <!-- Ext -->
+
+    <function name="GetIntegerIndexed" extension="Ext">
+      <param name="target">
+        <type>GetIndexedPName</type>
+      </param>
+    </function>
+
+    <function name="EnableIndexed" extension="Ext">
+      <param name="target">
+        <type>IndexedEnableCap</type>
+      </param>
+    </function>
+
+    <function name="DisableIndexed" extension="Ext">
+      <param name="target">
+        <type>IndexedEnableCap</type>
+      </param>
+    </function>
+
+    <function name="IsEnabledIndexed" extension="Ext">
+      <param name="target">
+        <type>IndexedEnableCap</type>
+      </param>
+    </function>
 
     <function name="ProgramParameteri" extension="Ext">
       <param name="pname">
@@ -1782,6 +1818,9 @@
       <token name="TRANSFORM_FEEDBACK_BUFFER_BINDING" value="0x8C8F" />
       <token name="TRANSFORM_FEEDBACK_BUFFER_SIZE" value="0x8C85" />
       <token name="TRANSFORM_FEEDBACK_BUFFER_START" value="0x8C84" />
+      <use enum="VERSION_4_1" token="SCISSOR_BOX" />
+      <use enum="VERSION_4_1" token="VIEWPORT" />
+      <use enum="VERSION_4_1" token="DEPTH_RANGE" />
     </enum>
     <enum name="GetMinmaxParameterPName">
       <token name="MINMAX_FORMAT" value="0x802F" />
@@ -2010,6 +2049,11 @@
       <use enum="VERSION_4_1" token="IMPLEMENTATION_COLOR_READ_FORMAT" />
       <use enum="VERSION_4_1" token="NUM_PROGRAM_BINARY_FORMATS" />
       <use enum="VERSION_4_1" token="PROGRAM_BINARY_FORMATS" />
+      <use enum="VERSION_4_1" token="MAX_VIEWPORTS" />
+      <use enum="VERSION_4_1" token="VIEWPORT_SUBPIXEL_BITS" />
+      <use enum="VERSION_4_1" token="VIEWPORT_BOUNDS_RANGE" />
+      <use enum="VERSION_4_1" token="LAYER_PROVOKING_VERTEX" />
+      <use enum="VERSION_4_1" token="VIEWPORT_INDEX_PROVOKING_VERTEX" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -2073,6 +2117,7 @@
     </enum>
     <enum name="IndexedEnableCap">
       <use enum="GetPName" token="BLEND" />
+      <use enum="VERSION_4_1" token="SCISSOR_TEST" />
     </enum>
     <enum name="LightModelColorControl">
       <token name="SEPARATE_SPECULAR_COLOR" value="0x81FA" />
