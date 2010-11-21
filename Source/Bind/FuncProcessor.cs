@@ -27,6 +27,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.XPath;
@@ -111,6 +112,17 @@ namespace Bind
             return trimmed_name;
         }
 
+        static XPathNavigator GetFuncOverride(XPathNavigator nav, Delegate d)
+        {
+            string name = TrimName(d.Name, false);
+            string ext = d.Extension;
+
+            var function_override =
+                nav.SelectSingleNode(String.Format(Path, name, ext)) ??
+                nav.SelectSingleNode(String.Format(Path, d.Name, ext));
+            return function_override;
+        }
+
         // Translates the opengl return type to the equivalent C# type.
         //
         // First, we use the official typemap (gl.tm) to get the correct type.
@@ -122,10 +134,8 @@ namespace Bind
         // Return types must always be CLS-compliant, because .Net does not support overloading on return types.
         static void TranslateReturnType(XPathNavigator nav, Delegate d, EnumCollection enums)
         {
-            string name = TrimName(d.Name, false);
-            string ext = d.Extension;
+            var function_override = GetFuncOverride(nav, d);
 
-            var function_override = nav.SelectSingleNode(String.Format(Path, name, ext));
             if (function_override != null)
             {
                 XPathNavigator return_override = function_override.SelectSingleNode("returns");
@@ -168,11 +178,8 @@ namespace Bind
 
         static void TranslateParameters(XPathNavigator nav, Delegate d, EnumCollection enums)
         {
-            string name = TrimName(d.Name, false);
-            string ext = d.Extension;
-            ext = String.IsNullOrEmpty(ext) ? "Core" : ext;
+            var function_override = GetFuncOverride(nav, d);
 
-            var function_override = nav.SelectSingleNode(String.Format(Path, name, ext));
             for (int i = 0; i < d.Parameters.Count; i++)
             {
                 if (function_override != null)
