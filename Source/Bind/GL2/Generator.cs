@@ -779,7 +779,10 @@ namespace Bind.GL2
                 }
                 else if (!String.IsNullOrEmpty(f.Version))
                 {
-                    category = String.Format(category, "v" + f.Version);
+                    if (f.Category.StartsWith("VERSION"))
+                        category = String.Format(category, "v" + f.Version);
+                    else
+                        category = String.Format(category, "v" + f.Version + " and " + f.Category);
                     doc = doc.Insert(summary_start, category);
                 }
                 
