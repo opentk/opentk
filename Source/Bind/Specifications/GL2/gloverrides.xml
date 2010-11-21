@@ -707,6 +707,18 @@
       </param>
     </function>
 
+    <function name="PatchParameteri" extension="Core">
+      <param name="pname">
+        <type>PatchParameterInt</type>
+      </param>
+    </function>
+
+    <function name="PatchParameterfv" extension="Core">
+      <param name="pname">
+        <type>PatchParameterFloat</type>
+      </param>
+    </function>
+
     <!-- Arb -->
 
     <function name="VertexAttribPointer" extension="Arb">
@@ -1066,6 +1078,8 @@
       <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES" />
       <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER" />
       <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER" />
+      <use enum="VERSION_4_0" token="UNIFORM_BLOCK_REFERENCED_BY_TESS_CONTROL_SHADER" />
+      <use enum="VERSION_4_0" token="UNIFORM_BLOCK_REFERENCED_BY_TESS_EVALUATION_SHADER" />
     </enum>
     <enum name="ActiveUniformParameter">
       <use enum="ARB_uniform_buffer_object" token="UNIFORM_TYPE" />
@@ -1227,6 +1241,7 @@
       <token name="LINES_ADJACENCY" value="0xA" />
       <token name="TRIANGLE_STRIP_ADJACENCY" value="0xD" />
       <token name="TRIANGLES_ADJACENCY" value="0xC" />
+      <use enum="VERSION_4_0" token="PATCHES" />
     </enum>
     <enum name="BlendEquationMode">
       <token name="FUNC_ADD" value="0x8006" />
@@ -1828,6 +1843,24 @@
       <use enum="VERSION_4_0" token="MIN_SAMPLE_SHADING_VALUE" />
       <use enum="VERSION_4_0" token="MAX_SUBROUTINES" />
       <use enum="VERSION_4_0" token="MAX_SUBROUTINE_UNIFORM_LOCATIONS" />
+      <use enum="VERSION_4_0" token="PATCH_VERTICES" />
+      <use enum="VERSION_4_0" token="PATCH_DEFAULT_INNER_LEVEL" />
+      <use enum="VERSION_4_0" token="PATCH_DEFAULT_OUTER_LEVEL" />
+      <use enum="VERSION_4_0" token="MAX_TESS_GEN_LEVEL" />
+      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_UNIFORM_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_UNIFORM_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_TEXTURE_IMAGE_UNITS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_TEXTURE_IMAGE_UNITS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_OUTPUT_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_PATCH_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_TOTAL_OUTPUT_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_OUTPUT_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_UNIFORM_BLOCKS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_UNIFORM_BLOCKS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_INPUT_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_INPUT_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_COMBINED_TESS_CONTROL_UNIFORM_COMPONENTS" />
+      <use enum="VERSION_4_0" token="MAX_COMBINED_TESS_EVALUATION_UNIFORM_COMPONENTS" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -1947,6 +1980,17 @@
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
       <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
       <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+    </enum>
+    <enum name="PackedPointerType">
+      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+    </enum>
+    <enum name="PatchParameterInt">
+      <use enum="VERSION_4_0" token="PATCH_VERTICES" />
+    </enum>
+    <enum name="PatchParameterFloat">
+      <use enum="VERSION_4_0" token="PATCH_DEFAULT_INNER_LEVEL" />
+      <use enum="VERSION_4_0" token="PATCH_DEFAULT_OUTER_LEVEL" />
     </enum>
     <enum name="PixelFormat">
       <use enum="ARB_texture_rg" token="RG" />
@@ -2109,6 +2153,11 @@
       <token name="TRANSFORM_FEEDBACK_VARYINGS" value="0x8C83" />
       <token name="VALIDATE_STATUS" value="0x8B83" />
       <use enum="VERSION_4_0" token="GEOMETRY_SHADER_INVOCATIONS" />
+      <use enum="VERSION_4_0" token="TESS_CONTROL_OUTPUT_VERTICES" />
+      <use enum="VERSION_4_0" token="TESS_GEN_MODE" />
+      <use enum="VERSION_4_0" token="TESS_GEN_SPACING" />
+      <use enum="VERSION_4_0" token="TESS_GEN_VERTEX_ORDER" />
+      <use enum="VERSION_4_0" token="TESS_GEN_POINT_MODE" />
     </enum>
     <enum name="ProgramStageParameter">
       <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINES" />
@@ -2131,10 +2180,6 @@
       <use enum="ARB_occlusion_query2" token="ANY_SAMPLES_PASSED" />
       <use enum="VERSION_3_3" token="TIME_ELAPSED" />
       <use enum="VERSION_3_3" token="TIMESTAMP" />
-    </enum>
-    <enum name="PackedPointerType">
-      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
-      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
     </enum>
     <enum name="ReadBufferMode">
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
@@ -2286,7 +2331,8 @@
       <token name="GEOMETRY_SHADER" value="0x8DD9" />
       <token name="GEOMETRY_SHADER_EXT" value="0x8DD9" />
       <token name="VERTEX_SHADER" value="0x8B31" />
-    </enum>
+      <use enum="VERSION_4_0" token="TESS_EVALUATION_SHADER" />
+      <use enum="VERSION_4_0" token="TESS_CONTROL_SHADER" />    </enum>
     <enum name="SizedInternalFormat">
       <use enum="PixelInternalFormat" token="R8" />
       <use enum="PixelInternalFormat" token="R16" />
