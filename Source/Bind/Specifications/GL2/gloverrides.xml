@@ -976,6 +976,14 @@
       <token name="FLOAT_VEC2" value="0x8B50" />
       <token name="FLOAT_VEC3" value="0x8B51" />
       <token name="FLOAT_VEC4" value="0x8B52" />
+      <use enum="VERSION_2_0" token="INT" />
+      <use enum="VERSION_2_0" token="INT_VEC2" />
+      <use enum="VERSION_2_0" token="INT_VEC3" />
+      <use enum="VERSION_2_0" token="INT_VEC4" />
+      <use enum="VERSION_3_0" token="UNSIGNED_INT" />
+      <use enum="VERSION_3_0" token="UNSIGNED_INT_VEC2" />
+      <use enum="VERSION_3_0" token="UNSIGNED_INT_VEC3" />
+      <use enum="VERSION_3_0" token="UNSIGNED_INT_VEC4" />
       <use enum="VERSION_4_0" token="DOUBLE" />
       <use enum="VERSION_4_0" token="DOUBLE_VEC2" />
       <use enum="VERSION_4_0" token="DOUBLE_VEC3" />
