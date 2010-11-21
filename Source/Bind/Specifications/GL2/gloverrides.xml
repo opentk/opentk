@@ -1724,6 +1724,11 @@
       <use enum="VERSION_3_3" token="MAX_DUAL_SOURCE_DRAW_BUFFERS" />
       <use enum="VERSION_3_3" token="TIMESTAMP" />
       <use enum="VERSION_4_0" token="DRAW_INDIRECT_BUFFER_BINDING" />
+      <use enum="VERSION_4_0" token="MAX_GEOMETRY_SHADER_INVOCATIONS" />
+      <use enum="VERSION_4_0" token="MIN_FRAGMENT_INTERPOLATION_OFFSET" />
+      <use enum="VERSION_4_0" token="MAX_FRAGMENT_INTERPOLATION_OFFSET" />
+      <use enum="VERSION_4_0" token="FRAGMENT_INTERPOLATION_OFFSET_BITS" />
+      <use enum="VERSION_4_0" token="MAX_VERTEX_STREAMS" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -2004,6 +2009,7 @@
       <token name="TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH" value="0x8C76" />
       <token name="TRANSFORM_FEEDBACK_VARYINGS" value="0x8C83" />
       <token name="VALIDATE_STATUS" value="0x8B83" />
+      <use enum="VERSION_4_0" token="GEOMETRY_SHADER_INVOCATIONS" />
     </enum>
     <enum name="ProvokingVertexMode">
       <token name="FIRST_VERTEX_CONVENTION" value="0x8E4D" />
