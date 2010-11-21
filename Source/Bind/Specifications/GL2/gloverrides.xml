@@ -1409,6 +1409,7 @@
       <token name="VERTEX_PROGRAM_POINT_SIZE" value="0x8642" />
       <token name="VERTEX_PROGRAM_TWO_SIDE" value="0x8643" />
       <use enum="VERSION_3_1" token="TEXTURE_RECTANGLE" />
+      <token enum="VERSION_4_0" token="SAMPLE_SHADING" />
     </enum>
     <enum name="ErrorCode">
       <use enum="ARB_framebuffer_object" token="INVALID_FRAMEBUFFER_OPERATION" />
@@ -1763,6 +1764,8 @@
       <use enum="VERSION_4_0" token="MAX_FRAGMENT_INTERPOLATION_OFFSET" />
       <use enum="VERSION_4_0" token="FRAGMENT_INTERPOLATION_OFFSET_BITS" />
       <use enum="VERSION_4_0" token="MAX_VERTEX_STREAMS" />
+      <token enum="VERSION_4_0" token="SAMPLE_SHADING" />
+      <token enum="VERSION_4_0" token="MIN_SAMPLE_SHADING_VALUE" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
