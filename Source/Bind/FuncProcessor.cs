@@ -119,7 +119,8 @@ namespace Bind
 
             var function_override =
                 nav.SelectSingleNode(String.Format(Path, name, ext)) ??
-                nav.SelectSingleNode(String.Format(Path, d.Name, ext));
+                nav.SelectSingleNode(String.Format(Path, d.Name, ext)) ??
+                nav.SelectSingleNode(String.Format(Path, Utilities.StripGL2Extension(d.Name), ext));
             return function_override;
         }
 
