@@ -565,8 +565,6 @@ namespace OpenTK
                 throw new ArgumentOutOfRangeException("zNear");
             if (zFar <= 0)
                 throw new ArgumentOutOfRangeException("zFar");
-            if (zNear >= zFar)
-                throw new ArgumentOutOfRangeException("zNear");
 
             double yMax = zNear * System.Math.Tan(0.5 * fovy);
             double yMin = -yMax;
