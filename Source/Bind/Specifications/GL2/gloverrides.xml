@@ -812,6 +812,18 @@
       </param>
     </function>
 
+    <function name="ProgramBinary" extension="Core">
+      <param name="binaryFormat">
+        <type>BinaryFormat</type>
+      </param>
+    </function>
+
+    <function name="GetProgramBinary" extension="Core">
+      <param name="binaryFormat">
+        <type>BinaryFormat</type>
+      </param>
+    </function>
+
     <!-- Arb -->
 
     <function name="ProgramParameteri" extension="Arb">
@@ -1329,6 +1341,7 @@
       <token name="PROGRAM_TEX_INSTRUCTIONS_ARB" value="0x8806" />
       <token name="PROGRAM_UNDER_NATIVE_LIMITS" value="0x88B6" />
       <use enum="VERSION_4_1" token="PROGRAM_SEPARABLE" />
+      <use enum="VERSION_4_1" token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
     </enum>
     <enum name="AssemblyProgramStringParameterARB">
       <token name="PROGRAM_STRING" value="0x8628" />
@@ -1992,6 +2005,8 @@
       <use enum="VERSION_4_1" token="MAX_FRAGMENT_UNIFORM_VECTORS" />
       <use enum="VERSION_4_1" token="IMPLEMENTATION_COLOR_READ_TYPE" />
       <use enum="VERSION_4_1" token="IMPLEMENTATION_COLOR_READ_FORMAT" />
+      <use enum="VERSION_4_1" token="NUM_PROGRAM_BINARY_FORMATS" />
+      <use enum="VERSION_4_1" token="PROGRAM_BINARY_FORMATS" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -2290,6 +2305,8 @@
       <use enum="VERSION_4_0" token="TESS_GEN_VERTEX_ORDER" />
       <use enum="VERSION_4_0" token="TESS_GEN_POINT_MODE" />
       <use enum="VERSION_4_1" token="PROGRAM_SEPARABLE" />
+      <use enum="VERSION_4_1" token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
+      <use enum="VERSION_4_1" token="PROGRAM_BINARY_LENGTH" />
     </enum>
     <enum name="ProgramPipelineParameter">
       <use enum="VERSION_4_1" token="ACTIVE_PROGRAM" />
