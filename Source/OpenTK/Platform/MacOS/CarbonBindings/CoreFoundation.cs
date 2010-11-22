@@ -5,6 +5,8 @@ using System.Text;
 
 namespace OpenTK.Platform.MacOS.Carbon
 {
+    using CFRunLoop = System.IntPtr;
+
     struct CFArray
     {
         IntPtr arrayRef;
@@ -112,5 +114,8 @@ namespace OpenTK.Platform.MacOS.Carbon
             kCFNumberCGFloatType = 16,
             kCFNumberMaxType = 16
         };
+
+        [DllImport(appServices)]
+        internal static extern CFRunLoop CFRunLoopGetCurrent();
     }
 }
