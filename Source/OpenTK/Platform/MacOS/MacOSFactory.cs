@@ -77,7 +77,7 @@ namespace OpenTK.Platform.MacOS
 
         public virtual OpenTK.Input.IMouseDriver2 CreateMouseDriver()
         {
-            throw new NotImplementedException();
+            return new HIDInput();
         }
         
         #endregion
