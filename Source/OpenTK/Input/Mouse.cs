@@ -74,6 +74,23 @@ namespace OpenTK.Input
             }
         }
 
+        /// <summary>
+        ///Moves the mouse cursor to the specified screen position.
+        /// </summary>
+        /// <param name="x">
+        /// A <see cref="System.Double"/> that represents the absolute x position of the cursor in screen coordinates.
+        /// </param>
+        /// <param name="y">
+        /// A <see cref="System.Double"/> that represents the absolute y position of the cursor in screen coordinates.
+        /// </param>
+        public static void SetPosition(double x, double y)
+        {
+            lock (SyncRoot)
+            {
+                driver.SetPosition(x, y);
+            }
+        }
+
         #endregion
     }
 }

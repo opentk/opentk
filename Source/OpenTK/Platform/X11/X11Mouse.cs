@@ -61,6 +61,11 @@ namespace OpenTK.Platform.X11
                 return new MouseState();
         }
 
+        public void SetPosition(double x, double y)
+        {
+            throw new NotImplementedException();
+        }
+
         void WriteBit(MouseButton offset, int enabled)
         {
             if (enabled != 0)
