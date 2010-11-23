@@ -24,9 +24,9 @@ namespace OpenTK.Platform.Windows
             delegatesClass = wglClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
             importsClass = wglClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
 
-            // Ensure core entry points are ready prior to accessing any method.
-            // Resolves bug [#993]: "Possible bug in GraphicsContext.CreateDummyContext()" 
-            LoadAll();
+            //// Ensure core entry points are ready prior to accessing any method.
+            //// Resolves bug [#993]: "Possible bug in GraphicsContext.CreateDummyContext()" 
+            //LoadAll();
         }
 
         #endregion
@@ -41,6 +41,8 @@ namespace OpenTK.Platform.Windows
         private static Type importsClass;
 
         private static bool rebuildExtensionList = true;
+
+        static readonly object SyncRoot = new object();
 
         #endregion
 
@@ -108,7 +110,10 @@ namespace OpenTK.Platform.Windows
         /// </summary>
         public static void LoadAll()
         {
-            OpenTK.Platform.Utilities.LoadExtensions(typeof(Wgl));
+            lock (SyncRoot)
+            {
+                OpenTK.Platform.Utilities.LoadExtensions(typeof(Wgl));
+            }
         }
 
         #endregion
