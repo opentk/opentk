@@ -529,6 +529,12 @@ namespace OpenTK.Platform.X11
         [DllImport("libXi")]
         static extern Status XIUngrabDevice(IntPtr display, int deviceid, Time time);
 
+        [DllImport("libXi")]
+        public static extern Bool XIWarpPointer(Display display,
+            int deviceid, Window src_w, Window dest_w,
+            double src_x, double src_y, int src_width, int src_height,
+            double dest_x, double dest_y);
+
         static readonly IntPtr CopyFromParent = IntPtr.Zero;
 
         public static void SendNetWMMessage(X11WindowInfo window, IntPtr message_type, IntPtr l0, IntPtr l1, IntPtr l2)

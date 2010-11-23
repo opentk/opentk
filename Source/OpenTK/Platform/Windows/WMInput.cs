@@ -137,6 +137,11 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        public void SetPosition(double x, double y)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region IKeyboardDriver2 Members

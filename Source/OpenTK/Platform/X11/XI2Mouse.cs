@@ -39,11 +39,21 @@ namespace OpenTK.Platform.X11
     {
         List<MouseState> mice = new List<MouseState>();
         Dictionary<int, int> rawids = new Dictionary<int, int>(); // maps raw ids to mouse ids
-        readonly X11WindowInfo window;
+        internal readonly X11WindowInfo window;
         static int XIOpCode;
 
         static readonly Functions.EventPredicate PredicateImpl = IsEventValid;
         readonly IntPtr Predicate = Marshal.GetFunctionPointerForDelegate(PredicateImpl);
+
+        // Store information on a mouse warp event, so it can be ignored.
+        struct MouseWarp : IEquatable<MouseWarp>
+        {
+            public MouseWarp(double x, double y) { X = x; Y = y; }
+            double X, Y;
+            public bool Equals(MouseWarp warp) { return X == warp.X && Y == warp.Y; }
+        }
+        MouseWarp? mouse_warp_event;
+        int mouse_warp_event_count;
 
         public XI2Mouse()
         {
@@ -65,6 +75,7 @@ namespace OpenTK.Platform.X11
                     XIEventMasks.RawButtonReleaseMask | XIEventMasks.RawMotionMask))
             {
                 Functions.XISelectEvents(window.Display, window.WindowHandle, mask);
+                Functions.XISelectEvents(window.Display, window.RootWindow, mask);
             }
         }
 
@@ -110,7 +121,39 @@ namespace OpenTK.Platform.X11
                 return new MouseState();
         }
 
+        public void SetPosition(double x, double y)
+        {
+            using (new XLock(window.Display))
+            {
+//                Functions.XIWarpPointer(window.Display, 0,
+//                    IntPtr.Zero, window.RootWindow, 0, 0, 0, 0, x, y);
+                Functions.XWarpPointer(window.Display,
+                    IntPtr.Zero, window.RootWindow, 0, 0, 0, 0, (int)x, (int)y);
+
+                // Mark the expected warp-event so it can be ignored.
+                if (mouse_warp_event == null)
+                    mouse_warp_event_count = 0;
+                mouse_warp_event_count++;
+                mouse_warp_event = new MouseWarp((int)x, (int)y);
+            }
+
+            ProcessEvents();
+        }
+
         #endregion
+
+        bool CheckMouseWarp(double x, double y)
+        {
+            // Check if a mouse warp with the specified destination exists.
+            bool is_warp =
+                mouse_warp_event.HasValue &&
+                mouse_warp_event.Value.Equals(new MouseWarp((int)x, (int)y));
+
+            if (is_warp && --mouse_warp_event_count <= 0)
+                    mouse_warp_event = null;
+
+            return is_warp;
+        }
 
         void ProcessEvents()
         {
@@ -140,10 +183,21 @@ namespace OpenTK.Platform.X11
                         switch (raw.evtype)
                         {
                             case XIEventType.RawMotion:
+                                double x = 0, y = 0;
                                 if (IsBitSet(raw.valuators.mask, 0))
-                                    state.X += (int)BitConverter.Int64BitsToDouble(Marshal.ReadInt64(raw.raw_values, 0));
+                                {
+                                    x = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(raw.raw_values, 0));
+                                }
                                 if (IsBitSet(raw.valuators.mask, 1))
-                                    state.Y += (int)BitConverter.Int64BitsToDouble(Marshal.ReadInt64(raw.raw_values, 8));
+                                {
+                                    y = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(raw.raw_values, 8));
+                                }
+
+                                if (!CheckMouseWarp(x, y))
+                                {
+                                    state.X += (int)x;
+                                    state.Y += (int)y;
+                                }
                                 break;
 
                             case XIEventType.RawButtonPress:
