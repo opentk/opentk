@@ -32,17 +32,31 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
+    // Note: we cannot create a background window to retrieve events,
+    // because X11 doesn't deliver core pointer events to background
+    // windows (unless we grab, which will break *everything*).
+    // The only solution is to poll.
+    // Note 2: this driver only supports absolute positions.
+    // Note 3: polling means we cannot ignore move events generated
+    // through SetPosition. In short, this won't work as expected (we
+    // simply cannot deliver relative movement through this driver).
     sealed class X11Mouse : IMouseDriver2
     {
         readonly IntPtr display;
+        readonly IntPtr root_window;
         MouseState mouse = new MouseState();
 
-         // Can either attach itself to the specified window or can hook the root window.
+        // When the mouse warps, "detach" the current location
+        // from the pointer.
+        bool mouse_detached;
+        int mouse_detached_x, mouse_detached_y;
+
         public X11Mouse()
         {
             Debug.WriteLine("Using X11Mouse.");
             mouse.IsConnected = true;
             display = API.DefaultDisplay;
+            root_window = Functions.XRootWindow(display, Functions.XDefaultScreen(display));
         }
 
         public MouseState GetState()
@@ -63,7 +77,21 @@ namespace OpenTK.Platform.X11
 
         public void SetPosition(double x, double y)
         {
-            throw new NotImplementedException();
+            // Update the current location, otherwise the pointer
+            // may become locked (for instance, if we call
+            // SetPosition too often, like X11GLNative does).
+            ProcessEvents();
+
+            using (new XLock(display))
+            {
+                // Mark the expected warp-event so it can be ignored.
+                mouse_detached = true;
+                mouse_detached_x = (int)x;
+                mouse_detached_y = (int)y;
+
+                Functions.XWarpPointer(display,
+                    IntPtr.Zero, root_window, 0, 0, 0, 0, (int)x, (int)y);
+            }
         }
 
         void WriteBit(MouseButton offset, int enabled)
@@ -82,22 +110,34 @@ namespace OpenTK.Platform.X11
 
             using (new XLock(display))
             {
-                IntPtr window = Functions.XRootWindow(display, Functions.XDefaultScreen(display));
+                IntPtr window = root_window;
                 Functions.XQueryPointer(display, window, out root, out child,
                     out root_x, out root_y, out win_x, out win_y, out buttons);
 
-                mouse.X = root_x;
-                mouse.Y = root_y;
+                if (!mouse_detached)
+                {
+                    mouse.X = root_x;
+                    mouse.Y = root_y;
+                }
+                else
+                {
+                    mouse.X += (int)root_x - mouse_detached_x;
+                    mouse.Y += (int)root_y - mouse_detached_y;
+                    mouse_detached_x = root_x;
+                    mouse_detached_y = root_y;
+                }
                 WriteBit(MouseButton.Left, buttons & (int)MouseMask.Button1Mask);
                 WriteBit(MouseButton.Middle, buttons & (int)MouseMask.Button2Mask);
                 WriteBit(MouseButton.Right, buttons & (int)MouseMask.Button3Mask);
-                // Note: this will never work right. After spending a week on this, I simply don't care
-                // anymore. If someone can fix it, please do.
+                // Note: this will never work right, wheel events have a duration of 0
+                // (yes, zero). They are impposible to catch via polling.
+                // After spending a week on this, I simply don't care anymore.
+                // If someone can fix it, please do.
                 // Note 2: I have tried passively grabbing those buttons - no go (BadAccess).
-                if ((buttons & (int)MouseMask.Button4Mask) != 0)
-                   mouse.WheelPrecise++;
-                if ((buttons & (int)MouseMask.Button5Mask) != 0)
-                    mouse.WheelPrecise--;
+                //if ((buttons & (int)MouseMask.Button4Mask) != 0)
+                //   mouse.WheelPrecise++;
+                //if ((buttons & (int)MouseMask.Button5Mask) != 0)
+                //    mouse.WheelPrecise--;
                 WriteBit(MouseButton.Button1, buttons & (int)MouseMask.Button6Mask);
                 WriteBit(MouseButton.Button2, buttons & (int)MouseMask.Button7Mask);
                 WriteBit(MouseButton.Button3, buttons & (int)MouseMask.Button8Mask);
