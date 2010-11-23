@@ -125,8 +125,6 @@ namespace OpenTK.Platform.X11
         {
             using (new XLock(window.Display))
             {
-//                Functions.XIWarpPointer(window.Display, 0,
-//                    IntPtr.Zero, window.RootWindow, 0, 0, 0, 0, x, y);
                 Functions.XWarpPointer(window.Display,
                     IntPtr.Zero, window.RootWindow, 0, 0, 0, 0, (int)x, (int)y);
 
