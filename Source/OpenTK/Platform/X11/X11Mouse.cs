@@ -36,10 +36,13 @@ namespace OpenTK.Platform.X11
     // because X11 doesn't deliver core pointer events to background
     // windows (unless we grab, which will break *everything*).
     // The only solution is to poll.
-    // Note 2: this driver only supports absolute positions.
-    // Note 3: polling means we cannot ignore move events generated
-    // through SetPosition. In short, this won't work as expected (we
-    // simply cannot deliver relative movement through this driver).
+    // Note 2: this driver only supports absolute positions. Relative motion
+    // is faked through SetPosition. This is called automatically when
+    // NativeWindow.CursorVisible = false, otherwise it must be called
+    // by the user.
+    // Note 3: this driver cannot drive the mouse wheel reliably.
+    // See comments in ProcessEvents() for more information.
+    // (If someone knows of a solution, please tell!)
     sealed class X11Mouse : IMouseDriver2
     {
         readonly IntPtr display;
@@ -134,6 +137,7 @@ namespace OpenTK.Platform.X11
                 // After spending a week on this, I simply don't care anymore.
                 // If someone can fix it, please do.
                 // Note 2: I have tried passively grabbing those buttons - no go (BadAccess).
+                // Maybe I am doing something wrong with the grab.
                 //if ((buttons & (int)MouseMask.Button4Mask) != 0)
                 //   mouse.WheelPrecise++;
                 //if ((buttons & (int)MouseMask.Button5Mask) != 0)
