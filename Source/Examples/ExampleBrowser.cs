@@ -443,6 +443,8 @@ namespace Examples
         // Tries to detect the path that contains the source for the examples.
         static string FindSourcePath(string guess)
         {
+            guess = Path.GetDirectoryName(guess);
+
             // Typically, our working directory is either "[opentk]/Binaries/OpenTK/[config]" or "[opentk]".
             // The desired source path is "[opentk]/Source/Examples/[ExampleCategory]"
             if (CheckPath(ref guess))
