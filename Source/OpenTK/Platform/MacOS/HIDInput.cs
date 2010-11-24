@@ -40,6 +40,7 @@ namespace OpenTK.Platform.MacOS
     using CFString = System.IntPtr;
     using IOHIDDeviceRef = System.IntPtr;
     using IOHIDManagerRef = System.IntPtr;
+    using IOHIDValueRef = System.IntPtr;
     using IOOptionBits = System.IntPtr;
     using IOReturn = System.IntPtr;
 
@@ -48,16 +49,35 @@ namespace OpenTK.Platform.MacOS
         #region Fields
 
         readonly IOHIDManagerRef hidmanager;
-        readonly static NativeMethods.IOHIDDeviceCallback HandleDeviceAdded = delegate
-        {
-            Debug.WriteLine("Device added");
-        };
-        readonly static NativeMethods.IOHIDDeviceCallback HandleDeviceRemoved = delegate
-        {
-            Debug.WriteLine("Device Removed");
-        };
-        readonly static CFString RunLoopMode = CF.CFSTR("OPENTK_INPUT");
+        readonly static CFString InputLoopMode = CF.CFSTR("opentkRunLoopCheckDevicesMode");
         readonly static CFDictionary DeviceTypes = new CFDictionary();
+
+        readonly static NativeMethods.IOHIDDeviceCallback HandleDeviceAdded = delegate(
+            IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
+        {
+            Debug.Print("Device {0} discovered", device);
+
+            // IOReturn.Zero is kIOReturnSuccess
+            if (NativeMethods.IOHIDDeviceOpen(device, IOOptionBits.Zero) == IOReturn.Zero)
+            {
+                Debug.Print("Device {0} connected", device);
+
+                NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, HandleValue, IntPtr.Zero);
+                NativeMethods.IOHIDDeviceScheduleWithRunLoop(device, CF.CFRunLoopGetCurrent(), InputLoopMode);
+            }
+        };
+        readonly static NativeMethods.IOHIDDeviceCallback HandleDeviceRemoved = delegate(
+            IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
+        {
+            Debug.Print("Device {0} disconnected", device);
+            NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, null, IntPtr.Zero);
+            NativeMethods.IOHIDDeviceScheduleWithRunLoop(device, IntPtr.Zero, IntPtr.Zero);
+        };
+        readonly static NativeMethods.IOHIDValueCallback HandleValue = delegate(
+            IntPtr context, IOReturn res, IntPtr sender, IOHIDValueRef device)
+        {
+
+        };
 
         #endregion
 
@@ -80,19 +100,27 @@ namespace OpenTK.Platform.MacOS
             return NativeMethods.IOHIDManagerCreate(IntPtr.Zero, IntPtr.Zero);
         }
 
+        // Registers callbacks for device addition and removal. These callbacks
+        // are called when we run the loop in CheckDevicesMode
         static void RegisterHIDCallbacks(IOHIDManagerRef hidmanager)
         {
-            CFRunLoop runloop = Carbon.CF.CFRunLoopGetCurrent();
+            CFRunLoop runloop = CF.CFRunLoopGetCurrent();
 
             NativeMethods.IOHIDManagerRegisterDeviceMatchingCallback(
                 hidmanager, HandleDeviceAdded, IntPtr.Zero);
             NativeMethods.IOHIDManagerRegisterDeviceRemovalCallback(
                 hidmanager, HandleDeviceRemoved, IntPtr.Zero);
             NativeMethods.IOHIDManagerScheduleWithRunLoop(hidmanager,
-                runloop, RunLoopMode);
+                runloop, InputLoopMode);
 
             NativeMethods.IOHIDManagerSetDeviceMatching(hidmanager, DeviceTypes.Ref);
             NativeMethods.IOHIDManagerOpen(hidmanager, IOOptionBits.Zero);
+
+            while (CF.CFRunLoopRunInMode(InputLoopMode, 0, true) ==
+                CF.CFRunLoopExitReason.HandledSource)
+            {
+                // Do nothing. The real work is done in the Handle* callbacks above.
+            }
         }
 
         #endregion
@@ -107,6 +135,10 @@ namespace OpenTK.Platform.MacOS
         public MouseState GetState(int index)
         {
             return new MouseState();
+        }
+
+        public void SetPosition(double x, double y)
+        {
         }
 
         #endregion
@@ -151,8 +183,26 @@ namespace OpenTK.Platform.MacOS
                 IOHIDManagerRef manager,
                 IOOptionBits options) ;
 
+            [DllImport(hid)]
+            public static extern IOReturn IOHIDDeviceOpen(
+                IOHIDDeviceRef manager,
+                IOOptionBits opts);
+
+            [DllImport(hid)]
+            public static extern void IOHIDDeviceRegisterInputValueCallback(
+                IOHIDDeviceRef device,
+                IOHIDValueCallback callback,
+                IntPtr context);
+
+            [DllImport(hid)]
+            public static extern void IOHIDDeviceScheduleWithRunLoop(
+                IOHIDDeviceRef device,
+                CFRunLoop inCFRunLoop,
+                CFString inCFRunLoopMode);
+
 
             public delegate void IOHIDDeviceCallback(IntPtr ctx, IOReturn res, IntPtr sender, IOHIDDeviceRef device);
+            public delegate void IOHIDValueCallback(IntPtr ctx, IOReturn res, IntPtr sender, IOHIDValueRef val);
         }
 
         #endregion

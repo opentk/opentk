@@ -115,7 +115,21 @@ namespace OpenTK.Platform.MacOS.Carbon
             kCFNumberMaxType = 16
         };
 
+        public enum CFRunLoopExitReason
+        {
+            Finished = 1,
+            Stopped = 2,
+            TimedOut = 3,
+            HandledSource = 4
+        }
+
+        public static readonly IntPtr RunLoopModeDefault = CF.CFSTR("kCFRunLoopDefaultMode");
+
         [DllImport(appServices)]
         internal static extern CFRunLoop CFRunLoopGetCurrent();
+
+        [DllImport(appServices)]
+        internal static extern CFRunLoopExitReason CFRunLoopRunInMode(
+            IntPtr cfstrMode, double interval, bool returnAfterSourceHandled);
     }
 }
