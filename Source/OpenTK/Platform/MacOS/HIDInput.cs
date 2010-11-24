@@ -49,7 +49,11 @@ namespace OpenTK.Platform.MacOS
         #region Fields
 
         readonly IOHIDManagerRef hidmanager;
-        readonly static CFString InputLoopMode = CF.CFSTR("opentkRunLoopCheckDevicesMode");
+        //readonly static CFRunLoop RunLoop = CF.CFRunLoopGetCurrent();
+        //readonly static CFString InputLoopMode = CF.CFSTR("opentkInputMode");
+
+        readonly static CFRunLoop RunLoop = CF.CFRunLoopGetMain();
+        readonly static CFString InputLoopMode = CF.RunLoopModeDefault;
         readonly static CFDictionary DeviceTypes = new CFDictionary();
 
         readonly static NativeMethods.IOHIDDeviceCallback HandleDeviceAdded = delegate(
@@ -63,7 +67,8 @@ namespace OpenTK.Platform.MacOS
                 Debug.Print("Device {0} connected", device);
 
                 NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, HandleValue, IntPtr.Zero);
-                NativeMethods.IOHIDDeviceScheduleWithRunLoop(device, CF.CFRunLoopGetCurrent(), InputLoopMode);
+                NativeMethods.IOHIDDeviceScheduleWithRunLoop(device,
+                    RunLoop, InputLoopMode);
             }
         };
         readonly static NativeMethods.IOHIDDeviceCallback HandleDeviceRemoved = delegate(
@@ -71,12 +76,12 @@ namespace OpenTK.Platform.MacOS
         {
             Debug.Print("Device {0} disconnected", device);
             NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, null, IntPtr.Zero);
-            NativeMethods.IOHIDDeviceScheduleWithRunLoop(device, IntPtr.Zero, IntPtr.Zero);
+            //NativeMethods.IOHIDDeviceScheduleWithRunLoop(device, IntPtr.Zero, IntPtr.Zero);
         };
         readonly static NativeMethods.IOHIDValueCallback HandleValue = delegate(
-            IntPtr context, IOReturn res, IntPtr sender, IOHIDValueRef device)
+            IntPtr context, IOReturn res, IntPtr sender, IOHIDValueRef val)
         {
-
+            Debug.Print("Value {0}:{1} received", sender, val);
         };
 
         #endregion
@@ -104,23 +109,15 @@ namespace OpenTK.Platform.MacOS
         // are called when we run the loop in CheckDevicesMode
         static void RegisterHIDCallbacks(IOHIDManagerRef hidmanager)
         {
-            CFRunLoop runloop = CF.CFRunLoopGetCurrent();
-
             NativeMethods.IOHIDManagerRegisterDeviceMatchingCallback(
                 hidmanager, HandleDeviceAdded, IntPtr.Zero);
             NativeMethods.IOHIDManagerRegisterDeviceRemovalCallback(
                 hidmanager, HandleDeviceRemoved, IntPtr.Zero);
             NativeMethods.IOHIDManagerScheduleWithRunLoop(hidmanager,
-                runloop, InputLoopMode);
+                RunLoop, InputLoopMode);
 
             NativeMethods.IOHIDManagerSetDeviceMatching(hidmanager, DeviceTypes.Ref);
             NativeMethods.IOHIDManagerOpen(hidmanager, IOOptionBits.Zero);
-
-            while (CF.CFRunLoopRunInMode(InputLoopMode, 0, true) ==
-                CF.CFRunLoopExitReason.HandledSource)
-            {
-                // Do nothing. The real work is done in the Handle* callbacks above.
-            }
         }
 
         #endregion

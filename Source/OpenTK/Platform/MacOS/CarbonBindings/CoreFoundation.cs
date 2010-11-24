@@ -129,6 +129,9 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal static extern CFRunLoop CFRunLoopGetCurrent();
 
         [DllImport(appServices)]
+        internal static extern CFRunLoop CFRunLoopGetMain();
+
+        [DllImport(appServices)]
         internal static extern CFRunLoopExitReason CFRunLoopRunInMode(
             IntPtr cfstrMode, double interval, bool returnAfterSourceHandled);
     }
