@@ -297,7 +297,7 @@ namespace OpenTK.Platform.MacOS
         [DllImport(agl)] internal static extern AGLPixelFormat aglChoosePixelFormat(IntPtr gdevs, int ndev, int []attribs);
         [DllImport(agl)] internal static extern void aglDestroyPixelFormat(AGLPixelFormat pix);
         [DllImport(agl)] internal static extern AGLPixelFormat aglNextPixelFormat(AGLPixelFormat pix);
-        [DllImport(agl)] static extern byte aglDescribePixelFormat(AGLPixelFormat pix, int attrib, out int value);
+        [DllImport(agl)] internal static extern bool aglDescribePixelFormat(AGLPixelFormat pix, PixelFormatAttribute attrib, out int value);
         [Obsolete("Use aglDisplaysOfPixelFormat instead.")]
         [DllImport(agl)] static extern AGLDevice *aglDevicesOfPixelFormat(AGLPixelFormat pix, int *ndevs);
         
