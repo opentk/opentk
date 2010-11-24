@@ -137,8 +137,10 @@ namespace OpenTK
 
         /// <summary>
         /// Constructs a new Vector4 from the given Vector3.
+        /// The w component is initialized to 0.
         /// </summary>
         /// <param name="v">The Vector3 to copy components from.</param>
+        /// <remarks><seealso cref="Vector4(Vector3d, double)"/></remarks>
         public Vector4(Vector3 v)
         {
             X = v.X;
