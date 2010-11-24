@@ -42,10 +42,8 @@ namespace Examples
         #region Fields
 
         //PrivateFontCollection font_collection = new PrivateFontCollection();
-
         bool show_warning = true;
-
-        static readonly string SourcePath = FindSourcePath();
+        readonly string SourcePath;
 
         #endregion
 
@@ -53,6 +51,10 @@ namespace Examples
 
         public ExampleBrowser()
         {
+            SourcePath =
+                FindSourcePath(Directory.GetCurrentDirectory()) ??
+                FindSourcePath(Assembly.GetExecutingAssembly().Location);
+
             Font = SystemFonts.DialogFont;
 
             InitializeComponent();
@@ -121,7 +123,8 @@ namespace Examples
             const string no_docs = "Documentation has not been entered.";
             const string no_source = "Source code has not been entered.";
             
-            if (e.Node.Tag != null && !String.IsNullOrEmpty(((ExampleInfo)e.Node.Tag).Attribute.Documentation))
+            if (SourcePath != null && e.Node.Tag != null &&
+                !String.IsNullOrEmpty(((ExampleInfo)e.Node.Tag).Attribute.Documentation))
             {
                 string docs = null;
                 string source = null;
@@ -358,7 +361,10 @@ namespace Examples
 
             MethodInfo main =
                 e.Example.GetMethod("Main", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic) ??
-                e.Example.GetMethod("Main", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic, null, new Type[] { typeof(object), typeof(object) }, null);
+                e.Example.GetMethod("Main", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic, null, new Type[] {
+                typeof(object),
+                typeof(object)
+            }, null);
             if (main != null)
             {
                 try
@@ -371,31 +377,13 @@ namespace Examples
                     Trace.WriteLine(String.Format("Launching sample: \"{0}\"", e.Attribute.Title));
                     Trace.WriteLine(String.Empty);
 
-                    Thread thread = new Thread((ThreadStart)delegate
-                    {
-                        try
-                        {
-                            main.Invoke(null, null);
-                        }
-                        catch (TargetInvocationException expt)
-                        {
-                            string ex_info;
-                            if (expt.InnerException != null)
-                                ex_info = expt.InnerException.ToString();
-                            else
-                                ex_info = expt.ToString();
-                            MessageBox.Show(ex_info, "An OpenTK example encountered an error.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    AppDomain sandbox = AppDomain.CreateDomain("Sandbox");
+                    sandbox.DomainUnload += HandleSandboxDomainUnload;
 
-                            Debug.Print(expt.ToString());
-                        }
-                        catch (NullReferenceException expt)
-                        {
-                            MessageBox.Show(expt.ToString(), "The Example launcher failed to load the example.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                    });
-                    thread.IsBackground = true;
-                    thread.Start();
-                    thread.Join();
+                    SampleRunner runner = new SampleRunner(main);
+                    CrossAppDomainDelegate cross = new CrossAppDomainDelegate(runner.Invoke);
+                    sandbox.DoCallBack(cross);
+                    AppDomain.Unload(sandbox);
                 }
                 finally
                 {
@@ -412,31 +400,66 @@ namespace Examples
             }
         }
 
-        // Tries to detect the path that contains the source for the examples.
-        static string FindSourcePath()
+        static void HandleSandboxDomainUnload(object sender, EventArgs e)
         {
-            string current_dir = Directory.GetCurrentDirectory();
+            AppDomain sandbox = (AppDomain)sender;
+            sandbox.DomainUnload -= HandleSandboxDomainUnload;
+        }
 
+        [Serializable]
+        class SampleRunner
+        {
+            MethodInfo _main;
+
+            public SampleRunner(MethodInfo main)
+            {
+                _main = main;
+            }
+
+            public void Invoke()
+            {
+                try
+                {
+                    _main.Invoke(null, null);
+                }
+                catch (TargetInvocationException expt)
+                {
+                    string ex_info;
+                    if (expt.InnerException != null)
+                        ex_info = expt.InnerException.ToString();
+                    else
+                        ex_info = expt.ToString();
+                    //MessageBox.Show(ex_info, "An OpenTK example encountered an error.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    Trace.WriteLine(ex_info.ToString());
+                }
+                catch (Exception expt)
+                {
+                    Trace.WriteLine(expt.ToString());
+                }
+            }
+        }
+
+        // Tries to detect the path that contains the source for the examples.
+        static string FindSourcePath(string guess)
+        {
             // Typically, our working directory is either "[opentk]/Binaries/OpenTK/[config]" or "[opentk]".
             // The desired source path is "[opentk]/Source/Examples/[ExampleCategory]"
-
-            string guess = current_dir;
             if (CheckPath(ref guess))
                 return guess; // We were in [opentk] after all
 
-            guess = current_dir;
             for (int i = 0; i < 3; i++)
             {
                 DirectoryInfo dir = Directory.GetParent(guess);
-                if (!dir.Exists)
+                if (dir == null || !dir.Exists)
                     break;
                 guess = dir.FullName;
             }
-            
+
             if (CheckPath(ref guess))
                 return guess; // We were in [opentk]/Binaries/OpenTK/[config] after all
 
-            throw new DirectoryNotFoundException();
+            return null;
         }
 
         static bool CheckPath(ref string path)
