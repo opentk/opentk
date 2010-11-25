@@ -99,6 +99,14 @@ namespace OpenTK.Platform.MacOS.Carbon
     {
         public float X;
         public float Y;
+        public HIPoint(float x, float y)
+        {
+            X = x;
+            Y = y;
+        }
+        public HIPoint(double x, double y)
+            : this((float)x, (float)y)
+        { }
     }
     [StructLayout(LayoutKind.Sequential)]
     internal struct HISize

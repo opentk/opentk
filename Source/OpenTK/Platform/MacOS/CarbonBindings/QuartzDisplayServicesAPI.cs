@@ -12,6 +12,21 @@ namespace OpenTK.Platform.MacOS.Carbon
 
     }
 
+    enum CGError
+    {
+        Success = 0,
+        Failure = 1000,
+        IllegalArgument = 1001,
+        InvalidConnection = 1002,
+        InvalidContext = 1003,
+        CannotComplete = 1004,
+        NotImplemented = 1006,
+        RangeCheck = 1007,
+        TypeCheck = 1008,
+        InvalidOperation = 1010,
+        NoneAvailable = 1011,
+    }
+
     internal static class CG
     {
         const string appServices = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
@@ -50,5 +65,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         [DllImport(appServices, EntryPoint = "CGDisplaySwitchToMode")]
         internal static extern IntPtr DisplaySwitchToMode(IntPtr display, IntPtr displayMode);
 
+        [DllImport(appServices, EntryPoint = "CGWarpMouseCursorPosition")]
+        internal static extern CGError WarpMouseCursorPosition(HIPoint newCursorPosition);
     }
 }
