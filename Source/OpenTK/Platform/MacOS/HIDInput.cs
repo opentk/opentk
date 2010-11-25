@@ -48,6 +48,8 @@ namespace OpenTK.Platform.MacOS
     using IOOptionBits = System.IntPtr;
     using IOReturn = System.IntPtr;
 
+    // Requires Mac OS X 10.5 or higher.
+    // Todo: create a driver for older installations. Maybe use CGGetLastMouseDelta for that?
     class HIDInput : IMouseDriver2
     {
         #region Fields
@@ -195,7 +197,7 @@ namespace OpenTK.Platform.MacOS
 
         #region IMouseDriver2 Members
 
-        public MouseState GetState()
+        MouseState IMouseDriver2.GetState()
         {
             MouseState master = new MouseState();
             foreach (KeyValuePair<IntPtr, MouseState> item in MouseDevices)
@@ -206,7 +208,7 @@ namespace OpenTK.Platform.MacOS
             return master;
         }
 
-        public MouseState GetState(int index)
+        MouseState IMouseDriver2.GetState(int index)
         {
             IntPtr device;
             if (MouseIndexToDevice.TryGetValue(index, out device))
@@ -217,8 +219,9 @@ namespace OpenTK.Platform.MacOS
             return new MouseState();
         }
 
-        public void SetPosition(double x, double y)
+        void IMouseDriver2.SetPosition(double x, double y)
         {
+            CG.WarpMouseCursorPosition(new Carbon.HIPoint(x, y));
         }
 
         #endregion
