@@ -714,17 +714,31 @@ namespace OpenTK.Platform.MacOS.Carbon
             unsafe
             {
                 HIPoint* parm = &point;
-
                 OSStatus result = API.GetEventParameter(inEvent,
                         EventParamName.WindowMouseLocation, EventParamType.typeHIPoint, IntPtr.Zero,
                         (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(HIPoint)), IntPtr.Zero,
                         (IntPtr)parm);
-
                 pt = point;
 
                 return result;
             }
+        }
 
+        static internal OSStatus GetEventMouseDelta(IntPtr inEvent, out HIPoint pt)
+        {
+            HIPoint point;
+
+            unsafe
+            {
+                HIPoint* parm = &point;
+                OSStatus result = API.GetEventParameter(inEvent,
+                        EventParamName.MouseDelta, EventParamType.typeHIPoint, IntPtr.Zero,
+                        (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(HIPoint)), IntPtr.Zero,
+                        (IntPtr)parm);
+                pt = point;
+
+                return result;
+            }
         }
 
 		static internal OSStatus GetEventWindowRef(IntPtr inEvent, out IntPtr windowRef)
