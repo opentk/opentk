@@ -5,6 +5,8 @@ using System.Diagnostics;
 
 namespace OpenTK.Platform.MacOS.Carbon
 {
+    using CGDirectDisplayID = System.IntPtr;
+
     // Quartz Display services used here are available in MacOS X 10.3 and later.
 
     enum CGDisplayErr
@@ -67,5 +69,20 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         [DllImport(appServices, EntryPoint = "CGWarpMouseCursorPosition")]
         internal static extern CGError WarpMouseCursorPosition(HIPoint newCursorPosition);
+
+        [DllImport(appServices, EntryPoint = "CGCursorIsVisible")]
+        internal static extern bool CursorIsVisible();
+
+        [DllImport(appServices, EntryPoint = "CGDisplayShowCursor")]
+        internal static extern CGError DisplayShowCursor(CGDirectDisplayID display);
+
+        [DllImport(appServices, EntryPoint = "CGDisplayHideCursor")]
+        internal static extern CGError DisplayHideCursor(CGDirectDisplayID display);
+
+         [DllImport(appServices, EntryPoint = "CGAssociateMouseAndMouseCursorPosition")]
+        internal static extern CGError AssociateMouseAndMouseCursorPosition(bool connected);
+
+        [DllImport(appServices, EntryPoint="CGSetLocalEventsSuppressionInterval")]
+        internal static extern CGError SetLocalEventsSuppressionInterval(double seconds);
     }
 }
