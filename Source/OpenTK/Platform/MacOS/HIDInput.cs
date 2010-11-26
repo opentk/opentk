@@ -221,6 +221,7 @@ namespace OpenTK.Platform.MacOS
 
         void IMouseDriver2.SetPosition(double x, double y)
         {
+            CG.SetLocalEventsSuppressionInterval(0.0);
             CG.WarpMouseCursorPosition(new Carbon.HIPoint(x, y));
         }
 
