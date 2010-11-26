@@ -2,7 +2,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2009 the Open Toolkit library.
+// Copyright (c) 2006 - 2010 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,8 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 #endregion
+
+// Created by Erik Ylvisaker on 3/17/08.
 
 using System;
 using System.Collections.Generic;
@@ -306,61 +308,46 @@ namespace OpenTK.Platform.MacOS
         {
             switch (evt.EventClass)
             {
-            case EventClass.Window:
-                return ProcessWindowEvent(inCaller, inEvent, evt, userData);
-            
-            case EventClass.Mouse:
-                return ProcessMouseEvent(inCaller, inEvent, evt, userData);
-            
-            case EventClass.Keyboard:
-                return ProcessKeyboardEvent(inCaller, inEvent, evt, userData);
-            default:
-                
-                return OSStatus.EventNotHandled;
+                case EventClass.Window:
+                    return ProcessWindowEvent(inCaller, inEvent, evt, userData);
+
+                case EventClass.Mouse:
+                    return ProcessMouseEvent(inCaller, inEvent, evt, userData);
+
+                case EventClass.Keyboard:
+                    return ProcessKeyboardEvent(inCaller, inEvent, evt, userData);
+
+                default:
+                    return OSStatus.EventNotHandled;
             }
         }
 
         protected static OSStatus EventHandler(IntPtr inCaller, IntPtr inEvent, IntPtr userData)
         {
-            // bail out if the window passed in is not actually our window.
-            // I think this happens if using winforms with a GameWindow sometimes.
             if (mWindows.ContainsKey(userData) == false)
+            {
+                // Bail out if the window passed in is not actually our window.
+                // I think this happens if using winforms with a GameWindow sometimes.
                 return OSStatus.EventNotHandled;
-            
+            }
+
             WeakReference reference = mWindows[userData];
-            
-            // bail out if the CarbonGLNative window has been garbage collected.
             if (reference.IsAlive == false)
             {
+                // Bail out if the CarbonGLNative window has been garbage collected.
                 mWindows.Remove(userData);
                 return OSStatus.EventNotHandled;
             }
-            
+
             CarbonGLNative window = (CarbonGLNative)reference.Target;
-            EventInfo evt = new EventInfo(inEvent);
-            
-            //Debug.Print("Processing {0} event for {1}.", evt, window.window);
-            
             if (window == null)
             {
                 Debug.WriteLine("Window for event not found.");
                 return OSStatus.EventNotHandled;
             }
-            
-            switch (evt.EventClass)
-            {
-            case EventClass.Window:
-                return window.ProcessWindowEvent(inCaller, inEvent, evt, userData);
-            
-            case EventClass.Mouse:
-                return window.ProcessMouseEvent(inCaller, inEvent, evt, userData);
-            
-            case EventClass.Keyboard:
-                return window.ProcessKeyboardEvent(inCaller, inEvent, evt, userData);
-            default:
-                
-                return OSStatus.EventNotHandled;
-            }
+
+            EventInfo evt = new EventInfo(inEvent);
+            return window.DispatchEvent(inCaller, inEvent, evt, userData);
         }
 
         private OSStatus ProcessKeyboardEvent(IntPtr inCaller, IntPtr inEvent, EventInfo evt, IntPtr userData)
@@ -368,44 +355,39 @@ namespace OpenTK.Platform.MacOS
             System.Diagnostics.Debug.Assert(evt.EventClass == EventClass.Keyboard);
             MacOSKeyCode code = (MacOSKeyCode)0;
             char charCode = '\0';
-            
-            //Debug.Print("Processing keyboard event {0}", evt.KeyboardEventKind);
-            
+
             switch (evt.KeyboardEventKind)
             {
-            case KeyboardEventKind.RawKeyDown:
-            case KeyboardEventKind.RawKeyRepeat:
-            case KeyboardEventKind.RawKeyUp:
-                GetCharCodes(inEvent, out code, out charCode);
-                mKeyPressArgs.KeyChar = charCode;
-                break;
+                case KeyboardEventKind.RawKeyDown:
+                case KeyboardEventKind.RawKeyRepeat:
+                case KeyboardEventKind.RawKeyUp:
+                    GetCharCodes(inEvent, out code, out charCode);
+                    mKeyPressArgs.KeyChar = charCode;
+                    break;
             }
-            
+
             switch (evt.KeyboardEventKind)
             {
-            case KeyboardEventKind.RawKeyRepeat:
-                InputDriver.Keyboard[0].KeyRepeat = true;
-                goto case KeyboardEventKind.RawKeyDown;
-            
-            case KeyboardEventKind.RawKeyDown:
-                OnKeyPress(mKeyPressArgs);
-                InputDriver.Keyboard[0][Keymap[code]] = true;
-                return OSStatus.NoError;
-            
-            case KeyboardEventKind.RawKeyUp:
-                InputDriver.Keyboard[0][Keymap[code]] = false;
-                
-                return OSStatus.NoError;
-            
-            case KeyboardEventKind.RawKeyModifiersChanged:
-                ProcessModifierKey(inEvent);
-                return OSStatus.NoError;
-            default:
-                
-                return OSStatus.EventNotHandled;
+                case KeyboardEventKind.RawKeyRepeat:
+                    InputDriver.Keyboard[0].KeyRepeat = true;
+                    goto case KeyboardEventKind.RawKeyDown;
+
+                case KeyboardEventKind.RawKeyDown:
+                    OnKeyPress(mKeyPressArgs);
+                    InputDriver.Keyboard[0][Keymap[code]] = true;
+                    return OSStatus.NoError;
+
+                case KeyboardEventKind.RawKeyUp:
+                    InputDriver.Keyboard[0][Keymap[code]] = false;
+                    return OSStatus.NoError;
+
+                case KeyboardEventKind.RawKeyModifiersChanged:
+                    ProcessModifierKey(inEvent);
+                    return OSStatus.NoError;
+
+                default:
+                    return OSStatus.EventNotHandled;
             }
-            
-            
         }
 
         private OSStatus ProcessWindowEvent(IntPtr inCaller, IntPtr inEvent, EventInfo evt, IntPtr userData)
