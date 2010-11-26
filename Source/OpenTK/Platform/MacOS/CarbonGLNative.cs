@@ -578,7 +578,6 @@ namespace OpenTK.Platform.MacOS
             if (client.Y >= Height)
                 client.Y = Height - 1;
 
-            Debug.Print("[{0}:{1}]", client.X, client.Y);
             return client;
         }
 
