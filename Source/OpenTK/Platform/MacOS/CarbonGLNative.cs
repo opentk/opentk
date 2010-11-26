@@ -62,7 +62,8 @@ namespace OpenTK.Platform.MacOS
         private WindowBorder windowBorder = WindowBorder.Resizable;
         private WindowState windowState = WindowState.Normal;
 
-        static Dictionary<IntPtr, WeakReference> mWindows = new Dictionary<IntPtr, WeakReference>();
+        static Dictionary<IntPtr, WeakReference> mWindows =
+            new Dictionary<IntPtr, WeakReference>(new IntPtrEqualityComparer());
 
         KeyPressEventArgs mKeyPressArgs = new KeyPressEventArgs((char)0);
 
@@ -70,6 +71,10 @@ namespace OpenTK.Platform.MacOS
         bool mIsActive = false;
 
         Icon mIcon;
+
+        // Used to accumulate mouse motion when the cursor is hidden.
+        float mouse_rel_x;
+        float mouse_rel_y;
 
         #endregion
 
@@ -93,10 +98,11 @@ namespace OpenTK.Platform.MacOS
             Application.Initialize();
         }
 
-        CarbonGLNative() : this(WindowClass.Document, WindowAttributes.StandardDocument | WindowAttributes.StandardHandler | WindowAttributes.InWindowMenu | WindowAttributes.LiveResize)
+        CarbonGLNative() : this(WindowClass.Document,
+            WindowAttributes.StandardDocument | WindowAttributes.StandardHandler |
+            WindowAttributes.InWindowMenu | WindowAttributes.LiveResize)
         {
         }
-
 
         CarbonGLNative(WindowClass @class, WindowAttributes attrib)
         {
@@ -104,10 +110,14 @@ namespace OpenTK.Platform.MacOS
             mWindowAttrib = attrib;
         }
 
-        public CarbonGLNative(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public CarbonGLNative(int x, int y, int width, int height, string title,
+            GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
-            CreateNativeWindow(WindowClass.Document, WindowAttributes.StandardDocument | WindowAttributes.StandardHandler | WindowAttributes.InWindowMenu | WindowAttributes.LiveResize, new Rect((short)x, (short)y, (short)width, (short)height));
-            
+            CreateNativeWindow(WindowClass.Document,
+                WindowAttributes.StandardDocument | WindowAttributes.StandardHandler |
+                WindowAttributes.InWindowMenu | WindowAttributes.LiveResize,
+                new Rect((short)x, (short)y, (short)width, (short)height));
+
             mDisplayDevice = device;
         }
 
@@ -125,14 +135,16 @@ namespace OpenTK.Platform.MacOS
         {
             if (mIsDisposed)
                 return;
-            
+
             Debug.Print("Disposing of CarbonGLNative window.");
-            
+
+            CursorVisible = true;
             API.DisposeWindow(window.WindowRef);
-            
             mIsDisposed = true;
             mExists = false;
-            
+
+            CG.SetLocalEventsSuppressionInterval(0.25);
+
             if (disposing)
             {
                 mWindows.Remove(window.WindowRef);
@@ -140,9 +152,9 @@ namespace OpenTK.Platform.MacOS
                 window.Dispose();
                 window = null;
             }
-            
+
             DisposeUPP();
-            
+
             Disposed(this, EventArgs.Empty);
         }
 
@@ -199,8 +211,15 @@ namespace OpenTK.Platform.MacOS
         void ConnectEvents()
         {
             mInputDriver = new CarbonInput();
-            
-                
+
+            EventTypeSpec[] eventTypes = new EventTypeSpec[]
+            {
+                new EventTypeSpec(EventClass.Window, WindowEventKind.WindowClose),
+                new EventTypeSpec(EventClass.Window, WindowEventKind.WindowClosed),
+                new EventTypeSpec(EventClass.Window, WindowEventKind.WindowBoundsChanged),
+                new EventTypeSpec(EventClass.Window, WindowEventKind.WindowActivate),
+                new EventTypeSpec(EventClass.Window, WindowEventKind.WindowDeactivate),
+
                 //new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDown),
                 //new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseUp),
                 //new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseMoved),
@@ -208,17 +227,18 @@ namespace OpenTK.Platform.MacOS
                 //new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseEntered),
                 //new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseExited),
                 //new EventTypeSpec(EventClass.Mouse, MouseEventKind.WheelMoved),
-                
+
                 //new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyDown),
                 //new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyRepeat),
                 //new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyUp),
                 //new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyModifiersChanged),
-            EventTypeSpec[] eventTypes = new EventTypeSpec[] { new EventTypeSpec(EventClass.Window, WindowEventKind.WindowClose), new EventTypeSpec(EventClass.Window, WindowEventKind.WindowClosed), new EventTypeSpec(EventClass.Window, WindowEventKind.WindowBoundsChanged), new EventTypeSpec(EventClass.Window, WindowEventKind.WindowActivate), new EventTypeSpec(EventClass.Window, WindowEventKind.WindowDeactivate) };
+            };
             
             MacOSEventHandler handler = EventHandler;
             uppHandler = API.NewEventHandlerUPP(handler);
             
-            API.InstallWindowEventHandler(window.WindowRef, uppHandler, eventTypes, window.WindowRef, IntPtr.Zero);
+            API.InstallWindowEventHandler(window.WindowRef, uppHandler, eventTypes,
+                window.WindowRef, IntPtr.Zero);
             
             Application.WindowEventHandler = this;
         }
@@ -439,149 +459,124 @@ namespace OpenTK.Platform.MacOS
                 return OSStatus.EventNotHandled;
             }
         }
+
         protected OSStatus ProcessMouseEvent(IntPtr inCaller, IntPtr inEvent, EventInfo evt, IntPtr userData)
         {
             System.Diagnostics.Debug.Assert(evt.EventClass == EventClass.Mouse);
             MouseButton button = MouseButton.Primary;
             HIPoint pt = new HIPoint();
             HIPoint screenLoc = new HIPoint();
-            
+
+            IntPtr thisEventWindow;
+            API.GetEventWindowRef(inEvent, out thisEventWindow);
+
             OSStatus err = API.GetEventMouseLocation(inEvent, out screenLoc);
-            
             if (this.windowState == WindowState.Fullscreen)
             {
                 pt = screenLoc;
             }
-
-            else
+            else if (CursorVisible)
             {
                 err = API.GetEventWindowMouseLocation(inEvent, out pt);
+                pt.Y -= mTitlebarHeight;
+            }
+            else
+            {
+                err = API.GetEventMouseDelta(inEvent, out pt);
+                pt.X += mouse_rel_x;
+                pt.Y += mouse_rel_y;
+                pt = ConfineMouseToWindow(thisEventWindow, pt);
+                ResetMouseToWindowCenter();
+                mouse_rel_x = pt.X;
+                mouse_rel_y = pt.Y;
             }
             
-            if (err != OSStatus.NoError)
+            if (err != OSStatus.NoError && err != OSStatus.EventParameterNotFound)
             {
                 // this error comes up from the application event handler.
-                if (err != OSStatus.EventParameterNotFound)
-                {
-                    throw new MacOSException(err);
-                }
+                throw new MacOSException(err);
             }
             
             Point mousePosInClient = new Point((int)pt.X, (int)pt.Y);
-            if (this.windowState != WindowState.Fullscreen)
-            {
-                mousePosInClient.Y -= mTitlebarHeight;
-            }
-            
-            // check for enter/leave events
-            IntPtr thisEventWindow;
-            API.GetEventWindowRef(inEvent, out thisEventWindow);
             CheckEnterLeaveEvents(thisEventWindow, mousePosInClient);
             
             switch (evt.MouseEventKind)
             {
-            case MouseEventKind.MouseDown:
-                button = API.GetEventMouseButton(inEvent);
-                
-                switch (button)
-                {
-                case MouseButton.Primary:
-                    InputDriver.Mouse[0][OpenTK.Input.MouseButton.Left] = true;
-                    break;
-                
-                case MouseButton.Secondary:
-                    InputDriver.Mouse[0][OpenTK.Input.MouseButton.Right] = true;
-                    break;
-                
-                case MouseButton.Tertiary:
-                    InputDriver.Mouse[0][OpenTK.Input.MouseButton.Middle] = true;
-                    break;
-                }
+                case MouseEventKind.MouseDown:
+                case MouseEventKind.MouseUp:
+                    button = API.GetEventMouseButton(inEvent);
+                    bool pressed = evt.MouseEventKind == MouseEventKind.MouseDown;
 
-                
-                
-                return OSStatus.NoError;
-            
-            case MouseEventKind.MouseUp:
-                button = API.GetEventMouseButton(inEvent);
-                
-                switch (button)
-                {
-                case MouseButton.Primary:
-                    InputDriver.Mouse[0][OpenTK.Input.MouseButton.Left] = false;
-                    break;
-                
-                case MouseButton.Secondary:
-                    InputDriver.Mouse[0][OpenTK.Input.MouseButton.Right] = false;
-                    break;
-                
-                case MouseButton.Tertiary:
-                    InputDriver.Mouse[0][OpenTK.Input.MouseButton.Middle] = false;
-                    break;
-                }
-
-                
-                button = API.GetEventMouseButton(inEvent);
-                
-                return OSStatus.NoError;
-            
-            case MouseEventKind.WheelMoved:
-                
-                int delta = API.GetEventMouseWheelDelta(inEvent) / 3;
-                
-                InputDriver.Mouse[0].Wheel += delta;
-                
-                return OSStatus.NoError;
-            
-            case MouseEventKind.MouseMoved:
-            case MouseEventKind.MouseDragged:
-                
-                //Debug.Print("Mouse Location: {0}, {1}", pt.X, pt.Y);
-                
-                if (this.windowState == WindowState.Fullscreen)
-                {
-                    if (mousePosInClient.X != InputDriver.Mouse[0].X || mousePosInClient.Y != InputDriver.Mouse[0].Y)
+                    switch (button)
                     {
-                        InputDriver.Mouse[0].Position = mousePosInClient;
-                    }
-                }
+                        case MouseButton.Primary:
+                            InputDriver.Mouse[0][OpenTK.Input.MouseButton.Left] = pressed;
+                            break;
 
-                else
-                {
-                    // ignore clicks in the title bar
-                    if (pt.Y < 0)
-                        return OSStatus.EventNotHandled;
-                    
-                    if (mousePosInClient.X != InputDriver.Mouse[0].X || mousePosInClient.Y != InputDriver.Mouse[0].Y)
+                        case MouseButton.Secondary:
+                            InputDriver.Mouse[0][OpenTK.Input.MouseButton.Right] = pressed;
+                            break;
+
+                        case MouseButton.Tertiary:
+                            InputDriver.Mouse[0][OpenTK.Input.MouseButton.Middle] = pressed;
+                            break;
+                    }
+                    return OSStatus.NoError;
+
+                case MouseEventKind.WheelMoved:
+                    float delta = API.GetEventMouseWheelDelta(inEvent);
+                    InputDriver.Mouse[0].WheelPrecise += delta;
+                    return OSStatus.NoError;
+
+                case MouseEventKind.MouseMoved:
+                case MouseEventKind.MouseDragged:
+                    if (this.windowState == WindowState.Fullscreen)
                     {
-                        InputDriver.Mouse[0].Position = mousePosInClient;
+                        if (mousePosInClient.X != InputDriver.Mouse[0].X || mousePosInClient.Y != InputDriver.Mouse[0].Y)
+                        {
+                            InputDriver.Mouse[0].Position = mousePosInClient;
+                        }
                     }
-                }
+                    else
+                    {
+                        // ignore clicks in the title bar
+                        if (pt.Y < 0)
+                            return OSStatus.EventNotHandled;
 
-                
-                return OSStatus.EventNotHandled;
-            default:
-                
-                Debug.Print("{0}", evt);
-                
-                return OSStatus.EventNotHandled;
+                        if (mousePosInClient.X != InputDriver.Mouse[0].X || mousePosInClient.Y != InputDriver.Mouse[0].Y)
+                        {
+                            InputDriver.Mouse[0].Position = mousePosInClient;
+                        }
+                    }
+                    return OSStatus.EventNotHandled;
+
+                default:
+                    Debug.Print("{0}", evt);
+                    return OSStatus.EventNotHandled;
             }
+        }
+
+        void ResetMouseToWindowCenter()
+        {
+            OpenTK.Input.Mouse.SetPosition(
+                (Bounds.Left + Bounds.Right) / 2,
+                (Bounds.Top + Bounds.Bottom) / 2);
         }
 
         private void CheckEnterLeaveEvents(IntPtr eventWindowRef, Point pt)
         {
             if (window == null)
                 return;
-            
+
             bool thisIn = eventWindowRef == window.WindowRef;
-            
+
             if (pt.Y < 0)
                 thisIn = false;
-            
+
             if (thisIn != mMouseIn)
             {
                 mMouseIn = thisIn;
-                
+
                 if (mMouseIn)
                     OnMouseEnter();
                 else
@@ -589,11 +584,28 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
+        // Point in client (window) coordinates
+        private HIPoint ConfineMouseToWindow(IntPtr window, HIPoint client)
+        {
+            if (client.X < 0)
+                client.X = 0;
+            if (client.X >= Width)
+                client.X = Width - 1;
+            if (client.Y < 0)
+                client.Y = 0;
+            if (client.Y >= Height)
+                client.Y = Height - 1;
+
+            Debug.Print("[{0}:{1}]", client.X, client.Y);
+            return client;
+        }
+
         private static void GetCharCodes(IntPtr inEvent, out MacOSKeyCode code, out char charCode)
         {
             code = API.GetEventKeyboardKeyCode(inEvent);
             charCode = API.GetEventKeyboardChar(inEvent);
         }
+
         private void ProcessModifierKey(IntPtr inEvent)
         {
             MacOSKeyModifiers modifiers = API.GetEventKeyModifiers(inEvent);
@@ -662,7 +674,6 @@ namespace OpenTK.Platform.MacOS
             API.SizeWindow(window.WindowRef, width, height, true);
         }
 
-
         private void LoadSize()
         {
             if (WindowState == WindowState.Fullscreen)
@@ -687,15 +698,12 @@ namespace OpenTK.Platform.MacOS
         public Point PointToClient(Point point)
         {
             Rect r = Carbon.API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
-            Debug.Print("Rect: {0}", r);
-            
             return new Point(point.X - r.X, point.Y - r.Y);
         }
+
         public Point PointToScreen(Point point)
         {
             Rect r = Carbon.API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
-            Debug.Print("Rect: {0}", r);
-            
             return new Point(point.X + r.X, point.Y + r.Y);
         }
 
@@ -718,7 +726,6 @@ namespace OpenTK.Platform.MacOS
         {
             get { return mInputDriver; }
         }
-
 
         public Icon Icon
         {
@@ -892,8 +899,21 @@ namespace OpenTK.Platform.MacOS
 
         public bool CursorVisible
         {
-            get { return true; }
-            set { }
+            get { return CG.CursorIsVisible(); }
+            set
+            {
+                if (value)
+                {
+                    CG.DisplayShowCursor(IntPtr.Zero);
+                    CG.AssociateMouseAndMouseCursorPosition(true);
+                }
+                else
+                {
+                    CG.DisplayHideCursor(IntPtr.Zero);
+                    ResetMouseToWindowCenter();
+                    CG.AssociateMouseAndMouseCursorPosition(false);
+                }
+            }
         }
 
         public void Close()
