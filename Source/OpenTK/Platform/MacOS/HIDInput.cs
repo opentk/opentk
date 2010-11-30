@@ -50,7 +50,7 @@ namespace OpenTK.Platform.MacOS
 
     // Requires Mac OS X 10.5 or higher.
     // Todo: create a driver for older installations. Maybe use CGGetLastMouseDelta for that?
-    class HIDInput : IMouseDriver2
+    class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2
     {
         #region Fields
 
@@ -59,6 +59,10 @@ namespace OpenTK.Platform.MacOS
         readonly Dictionary<IntPtr, MouseState> MouseDevices =
             new Dictionary<IntPtr, MouseState>(new IntPtrEqualityComparer());
         readonly Dictionary<int, IntPtr> MouseIndexToDevice =
+            new Dictionary<int, IntPtr>();
+        readonly Dictionary<IntPtr, KeyboardState> KeyboardDevices =
+            new Dictionary<IntPtr, KeyboardState>(new IntPtrEqualityComparer());
+        readonly Dictionary<int, IntPtr> KeyboardIndexToDevice =
             new Dictionary<int, IntPtr>();
 
         readonly CFRunLoop RunLoop = CF.CFRunLoopGetMain();
@@ -75,7 +79,7 @@ namespace OpenTK.Platform.MacOS
 
         public HIDInput()
         {
-            Debug.Print("Using {0}.", typeof(HIDInput).Name);
+            Debug.Print("Using HIDInput.");
 
             HandleDeviceAdded = DeviceAdded;
             HandleDeviceRemoved = DeviceRemoved;
@@ -107,22 +111,52 @@ namespace OpenTK.Platform.MacOS
 
             NativeMethods.IOHIDManagerSetDeviceMatching(hidmanager, DeviceTypes.Ref);
             NativeMethods.IOHIDManagerOpen(hidmanager, IOOptionBits.Zero);
+
+            OpenTK.Platform.MacOS.Carbon.CF.CFRunLoopRunInMode(InputLoopMode, 0.0, true);
         }
 
         void DeviceAdded(IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
         {
-            Debug.Print("Device {0} discovered", device);
-
             if (NativeMethods.IOHIDDeviceOpen(device, IOOptionBits.Zero) == IOReturn.Zero)
             {
-                Debug.Print("Device {0} connected", device);
-
-                if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse))
+                if (NativeMethods.IOHIDDeviceConformsTo(device,
+                        HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse))
                 {
-                    MouseState state = new MouseState();
-                    state.IsConnected = true;
-                    MouseIndexToDevice.Add(MouseDevices.Count, device);
-                    MouseDevices.Add(device, state);
+                    if (!MouseDevices.ContainsKey(device))
+                    {
+                        Debug.Print("Mouse device {0} discovered", device);
+                        MouseState state = new MouseState();
+                        state.IsConnected = true;
+                        MouseIndexToDevice.Add(MouseDevices.Count, device);
+                        MouseDevices.Add(device, state);
+                    }
+                    else
+                    {
+                        Debug.Print("Mouse device {0} reconnected", device);
+                        MouseState state = MouseDevices[device];
+                        state.IsConnected = true;
+                        MouseDevices[device] = state;
+                    }
+                }
+
+                if (NativeMethods.IOHIDDeviceConformsTo(device,
+                        HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard))
+                {
+                    if (!KeyboardDevices.ContainsKey(device))
+                    {
+                        Debug.Print("Keyboard device {0} discovered", device);
+                        KeyboardState state = new KeyboardState();
+                        state.IsConnected = true;
+                        KeyboardIndexToDevice.Add(KeyboardDevices.Count, device);
+                        KeyboardDevices.Add(device, state);
+                    }
+                    else
+                    {
+                        Debug.Print("Keyboard device {0} reconnected", device);
+                        KeyboardState state = KeyboardDevices[device];
+                        state.IsConnected = true;
+                        KeyboardDevices[device] = state;
+                    }
                 }
 
                 NativeMethods.IOHIDDeviceRegisterInputValueCallback(device,
@@ -133,15 +167,26 @@ namespace OpenTK.Platform.MacOS
 
         void DeviceRemoved(IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
         {
-            Debug.Print("Device {0} disconnected", device);
-
             if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse) &&
                 MouseDevices.ContainsKey(device))
             {
+                Debug.Print("Mouse device {0} disconnected", device);
+
                 // Keep the device in case it comes back later on
                 MouseState state = MouseDevices[device];
                 state.IsConnected = false;
                 MouseDevices[device] = state;
+            }
+
+            if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard) &&
+                KeyboardDevices.ContainsKey(device))
+            {
+                Debug.Print("Keyboard device {0} disconnected", device);
+
+                // Keep the device in case it comes back later on
+                KeyboardState state = KeyboardDevices[device];
+                state.IsConnected = false;
+                KeyboardDevices[device] = state;
             }
 
             NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, null, IntPtr.Zero);
@@ -151,9 +196,14 @@ namespace OpenTK.Platform.MacOS
         void DeviceValueReceived(IntPtr context, IOReturn res, IntPtr sender, IOHIDValueRef val)
         {
             MouseState mouse;
+            KeyboardState keyboard;
             if (MouseDevices.TryGetValue(sender, out mouse))
             {
                 MouseDevices[sender] = UpdateMouse(mouse, val);
+            }
+            else if (KeyboardDevices.TryGetValue(sender, out keyboard))
+            {
+                KeyboardDevices[sender] = UpdateKeyboard(keyboard, val);
             }
         }
 
@@ -193,6 +243,39 @@ namespace OpenTK.Platform.MacOS
             return state;
         }
 
+        static KeyboardState UpdateKeyboard(KeyboardState state, IOHIDValueRef val)
+        {
+            IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
+            int v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
+            HIDPage page = NativeMethods.IOHIDElementGetUsagePage(elem);
+            int usage = NativeMethods.IOHIDElementGetUsage(elem);
+
+             switch (page)
+            {
+                case HIDPage.GenericDesktop:
+                case HIDPage.KeyboardOrKeypad:
+                    int raw = (int)usage;
+                    if (raw >= RawKeyMap.Length || raw < 0)
+                    {
+                        Debug.Print("[Warning] Key {0} not mapped.", raw);
+                        return state;
+                    }
+                    Key key = RawKeyMap[raw];
+                    state[key] = v_int != 0;
+                    break;
+            }
+
+            return state;
+        }
+
+        #endregion
+
+        #region IInputDriver2 Members
+
+        public IMouseDriver2 MouseDriver { get { return this; } }
+        public IKeyboardDriver2 KeyboardDriver { get { return this; } }
+        public IGamePadDriver GamePadDriver { get { throw new NotImplementedException(); } }
+
         #endregion
 
         #region IMouseDriver2 Members
@@ -227,11 +310,57 @@ namespace OpenTK.Platform.MacOS
 
         #endregion
 
+        #region IKeyboardDriver2
+
+        KeyboardState IKeyboardDriver2.GetState()
+        {
+            KeyboardState master = new KeyboardState();
+            foreach (KeyValuePair<IntPtr, KeyboardState> item in KeyboardDevices)
+            {
+                master.MergeBits(item.Value);
+            }
+
+            return master;
+        }
+
+        KeyboardState IKeyboardDriver2.GetState(int index)
+        {
+            IntPtr device;
+            if (KeyboardIndexToDevice.TryGetValue(index, out device))
+            {
+                return KeyboardDevices[device];
+            }
+
+            return new KeyboardState();
+        }
+
+        string IKeyboardDriver2.GetDeviceName(int index)
+        {
+            IntPtr device;
+            if (KeyboardIndexToDevice.TryGetValue(index, out device))
+            {
+                IntPtr vendor_id = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDVendorIDKey);
+                IntPtr product_id = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductIDKey);
+                // Todo: find out the real vendor/product name from the relevant ids.
+                return String.Format("{0}:{1}", vendor_id, product_id);
+            }
+            return String.Empty;
+        }
+
+        #endregion
+
         #region NativeMethods
 
         class NativeMethods
         {
             const string hid = "/System/Library/Frameworks/IOKit.framework/Versions/Current/IOKit";
+
+            public static readonly CFString IOHIDVendorIDKey = CF.CFSTR("VendorID");
+            public static readonly CFString IOHIDVendorIDSourceKey = CF.CFSTR("VendorIDSource");
+            public static readonly CFString IOHIDProductIDKey = CF.CFSTR("ProductID");
+            public static readonly CFString IOHIDVersionNumberKey = CF.CFSTR("VersionNumber");
+            public static readonly CFString IOHIDManufacturerKey = CF.CFSTR("Manufacturer");
+            public static readonly CFString IOHIDProductKey = CF.CFSTR("Product");
             public static readonly CFString IOHIDDeviceUsageKey = CF.CFSTR("DeviceUsage");
             public static readonly CFString IOHIDDeviceUsagePageKey = CF.CFSTR("DeviceUsagePage");
             public static readonly CFString IOHIDDeviceUsagePairsKey = CF.CFSTR("DeviceUsagePairs");
@@ -438,6 +567,369 @@ namespace OpenTK.Platform.MacOS
             /* ... */
             Button_65535  = 0xFFFF
         }
+
+        enum HIDKey
+        {
+            ErrorRollOver = 0x01, /* ErrorRollOver */
+            POSTFail  = 0x02, /* POSTFail */
+            ErrorUndefined    = 0x03, /* ErrorUndefined */
+            A = 0x04, /* a or A */
+            B = 0x05, /* b or B */
+            C = 0x06, /* c or C */
+            D = 0x07, /* d or D */
+            E = 0x08, /* e or E */
+            F = 0x09, /* f or F */
+            G = 0x0A, /* g or G */
+            H = 0x0B, /* h or H */
+            I = 0x0C, /* i or I */
+            J = 0x0D, /* j or J */
+            K = 0x0E, /* k or K */
+            L = 0x0F, /* l or L */
+            M = 0x10, /* m or M */
+            N = 0x11, /* n or N */
+            O = 0x12, /* o or O */
+            P = 0x13, /* p or P */
+            Q = 0x14, /* q or Q */
+            R = 0x15, /* r or R */
+            S = 0x16, /* s or S */
+            T = 0x17, /* t or T */
+            U = 0x18, /* u or U */
+            V = 0x19, /* v or V */
+            W = 0x1A, /* w or W */
+            X = 0x1B, /* x or X */
+            Y = 0x1C, /* y or Y */
+            Z = 0x1D, /* z or Z */
+            Number1 = 0x1E, /* 1 or ! */
+            Number2 = 0x1F, /* 2 or @ */
+            Number3 = 0x20, /* 3 or # */
+            Number4 = 0x21, /* 4 or $ */
+            Number5 = 0x22, /* 5 or % */
+            Number6 = 0x23, /* 6 or ^ */
+            Number7 = 0x24, /* 7 or & */
+            Number8 = 0x25, /* 8 or * */
+            Number9 = 0x26, /* 9 or ( */
+            Number0 = 0x27, /* 0 or ) */
+            ReturnOrEnter = 0x28, /* Return (Enter) */
+            Escape    = 0x29, /* Escape */
+            DeleteOrBackspace = 0x2A, /* Delete (Backspace) */
+            Tab   = 0x2B, /* Tab */
+            Spacebar  = 0x2C, /* Spacebar */
+            Hyphen    = 0x2D, /* - or _ */
+            EqualSign = 0x2E, /* = or + */
+            OpenBracket   = 0x2F, /* [ or { */
+            CloseBracket  = 0x30, /* ] or } */
+            Backslash = 0x31, /* \ or | */
+            NonUSPound    = 0x32, /* Non-US # or _ */
+            Semicolon = 0x33, /* ; or : */
+            Quote = 0x34, /* ' or " */
+            GraveAccentAndTilde   = 0x35, /* Grave Accent and Tilde */
+            Comma = 0x36, /* , or < */
+            Period    = 0x37, /* . or > */
+            Slash = 0x38, /* / or ? */
+            CapsLock  = 0x39, /* Caps Lock */
+            F1    = 0x3A, /* F1 */
+            F2    = 0x3B, /* F2 */
+            F3    = 0x3C, /* F3 */
+            F4    = 0x3D, /* F4 */
+            F5    = 0x3E, /* F5 */
+            F6    = 0x3F, /* F6 */
+            F7    = 0x40, /* F7 */
+            F8    = 0x41, /* F8 */
+            F9    = 0x42, /* F9 */
+            F10   = 0x43, /* F10 */
+            F11   = 0x44, /* F11 */
+            F12   = 0x45, /* F12 */
+            PrintScreen   = 0x46, /* Print Screen */
+            ScrollLock    = 0x47, /* Scroll Lock */
+            Pause = 0x48, /* Pause */
+            Insert    = 0x49, /* Insert */
+            Home  = 0x4A, /* Home */
+            PageUp    = 0x4B, /* Page Up */
+            DeleteForward = 0x4C, /* Delete Forward */
+            End   = 0x4D, /* End */
+            PageDown  = 0x4E, /* Page Down */
+            RightArrow    = 0x4F, /* Right Arrow */
+            LeftArrow = 0x50, /* Left Arrow */
+            DownArrow = 0x51, /* Down Arrow */
+            UpArrow   = 0x52, /* Up Arrow */
+            KeypadNumLock = 0x53, /* Keypad NumLock or Clear */
+            KeypadSlash   = 0x54, /* Keypad / */
+            KeypadAsterisk    = 0x55, /* Keypad * */
+            KeypadHyphen  = 0x56, /* Keypad - */
+            KeypadPlus    = 0x57, /* Keypad + */
+            KeypadEnter   = 0x58, /* Keypad Enter */
+            Keypad1   = 0x59, /* Keypad 1 or End */
+            Keypad2   = 0x5A, /* Keypad 2 or Down Arrow */
+            Keypad3   = 0x5B, /* Keypad 3 or Page Down */
+            Keypad4   = 0x5C, /* Keypad 4 or Left Arrow */
+            Keypad5   = 0x5D, /* Keypad 5 */
+            Keypad6   = 0x5E, /* Keypad 6 or Right Arrow */
+            Keypad7   = 0x5F, /* Keypad 7 or Home */
+            Keypad8   = 0x60, /* Keypad 8 or Up Arrow */
+            Keypad9   = 0x61, /* Keypad 9 or Page Up */
+            Keypad0   = 0x62, /* Keypad 0 or Insert */
+            KeypadPeriod  = 0x63, /* Keypad . or Delete */
+            NonUSBackslash    = 0x64, /* Non-US \ or | */
+            Application   = 0x65, /* Application */
+            Power = 0x66, /* Power */
+            KeypadEqualSign   = 0x67, /* Keypad = */
+            F13   = 0x68, /* F13 */
+            F14   = 0x69, /* F14 */
+            F15   = 0x6A, /* F15 */
+            F16   = 0x6B, /* F16 */
+            F17   = 0x6C, /* F17 */
+            F18   = 0x6D, /* F18 */
+            F19   = 0x6E, /* F19 */
+            F20   = 0x6F, /* F20 */
+            F21   = 0x70, /* F21 */
+            F22   = 0x71, /* F22 */
+            F23   = 0x72, /* F23 */
+            F24   = 0x73, /* F24 */
+            Execute   = 0x74, /* Execute */
+            Help  = 0x75, /* Help */
+            Menu  = 0x76, /* Menu */
+            Select    = 0x77, /* Select */
+            Stop  = 0x78, /* Stop */
+            Again = 0x79, /* Again */
+            Undo  = 0x7A, /* Undo */
+            Cut   = 0x7B, /* Cut */
+            Copy  = 0x7C, /* Copy */
+            Paste = 0x7D, /* Paste */
+            Find  = 0x7E, /* Find */
+            Mute  = 0x7F, /* Mute */
+            VolumeUp  = 0x80, /* Volume Up */
+            VolumeDown    = 0x81, /* Volume Down */
+            LockingCapsLock   = 0x82, /* Locking Caps Lock */
+            LockingNumLock    = 0x83, /* Locking Num Lock */
+            LockingScrollLock = 0x84, /* Locking Scroll Lock */
+            KeypadComma   = 0x85, /* Keypad Comma */
+            KeypadEqualSignAS400  = 0x86, /* Keypad Equal Sign for AS/400 */
+            International1    = 0x87, /* International1 */
+            International2    = 0x88, /* International2 */
+            International3    = 0x89, /* International3 */
+            International4    = 0x8A, /* International4 */
+            International5    = 0x8B, /* International5 */
+            International6    = 0x8C, /* International6 */
+            International7    = 0x8D, /* International7 */
+            International8    = 0x8E, /* International8 */
+            International9    = 0x8F, /* International9 */
+            LANG1 = 0x90, /* LANG1 */
+            LANG2 = 0x91, /* LANG2 */
+            LANG3 = 0x92, /* LANG3 */
+            LANG4 = 0x93, /* LANG4 */
+            LANG5 = 0x94, /* LANG5 */
+            LANG6 = 0x95, /* LANG6 */
+            LANG7 = 0x96, /* LANG7 */
+            LANG8 = 0x97, /* LANG8 */
+            LANG9 = 0x98, /* LANG9 */
+            AlternateErase    = 0x99, /* AlternateErase */
+            SysReqOrAttention = 0x9A, /* SysReq/Attention */
+            Cancel    = 0x9B, /* Cancel */
+            Clear = 0x9C, /* Clear */
+            Prior = 0x9D, /* Prior */
+            Return    = 0x9E, /* Return */
+            Separator = 0x9F, /* Separator */
+            Out   = 0xA0, /* Out */
+            Oper  = 0xA1, /* Oper */
+            ClearOrAgain  = 0xA2, /* Clear/Again */
+            CrSelOrProps  = 0xA3, /* CrSel/Props */
+            ExSel = 0xA4, /* ExSel */
+            /* 0xA5-0xDF Reserved */
+            LeftControl   = 0xE0, /* Left Control */
+            LeftShift = 0xE1, /* Left Shift */
+            LeftAlt   = 0xE2, /* Left Alt */
+            LeftGUI   = 0xE3, /* Left GUI */
+            RightControl  = 0xE4, /* Right Control */
+            RightShift    = 0xE5, /* Right Shift */
+            RightAlt  = 0xE6, /* Right Alt */
+            RightGUI  = 0xE7, /* Right GUI */
+            /* 0xE8-0xFFFF Reserved */
+            //_Reserved = 0xFFFF
+        }
+
+        // Maps HIDKey to OpenTK.Input.Key.
+        static readonly Key[] RawKeyMap = new Key[]
+        {
+            Key.Unknown,
+            Key.Unknown, /* ErrorRollOver */
+            Key.Unknown,  /* POSTFail */
+            Key.Unknown, /* ErrorUndefined */
+            Key.A, /* a or A */
+            Key.B, /* b or B */
+            Key.C, /* c or C */
+            Key.D, /* d or D */
+            Key.E, /* e or E */
+            Key.F, /* f or F */
+            Key.G, /* g or G */
+            Key.H, /* h or H */
+            Key.I, /* i or I */
+            Key.J, /* j or J */
+            Key.K, /* k or K */
+            Key.L, /* l or L */
+            Key.M, /* m or M */
+            Key.N, /* n or N */
+            Key.O, /* o or O */
+            Key.P, /* p or P */
+            Key.Q, /* q or Q */
+            Key.R, /* r or R */
+            Key.S, /* s or S */
+            Key.T, /* t or T */
+            Key.U, /* u or U */
+            Key.V, /* v or V */
+            Key.W, /* w or W */
+            Key.X, /* x or X */
+            Key.Y, /* y or Y */
+            Key.Z, /* z or Z */
+            Key.Number1, /* 1 or ! */
+            Key.Number2, /* 2 or @ */
+            Key.Number3, /* 3 or # */
+            Key.Number4, /* 4 or $ */
+            Key.Number5, /* 5 or % */
+            Key.Number6, /* 6 or ^ */
+            Key.Number7, /* 7 or & */
+            Key.Number8, /* 8 or * */
+            Key.Number9, /* 9 or ( */
+            Key.Number0, /* 0 or ) */
+            Key.Enter, /* Return (Enter) */
+            Key.Escape, /* Escape */
+            Key.BackSpace, /* Delete (Backspace) */
+            Key.Tab, /* Tab */
+            Key.Space, /* Spacebar */
+            Key.Minus, /* - or _ */
+            Key.Plus, /* = or + */
+            Key.BracketLeft, /* [ or { */
+            Key.BracketRight, /* ] or } */
+            Key.BackSlash, /* \ or | */
+            Key.Minus, /* Non-US # or _ */
+            Key.Semicolon, /* ; or : */
+            Key.Quote, /* ' or " */
+            Key.Tilde, /* Grave Accent and Tilde */
+            Key.Comma, /* , or < */
+            Key.Period, /* . or > */
+            Key.Slash, /* / or ? */
+            Key.CapsLock, /* Caps Lock */
+            Key.F1, /* F1 */
+            Key.F2, /* F2 */
+            Key.F3, /* F3 */
+            Key.F4, /* F4 */
+            Key.F5, /* F5 */
+            Key.F6, /* F6 */
+            Key.F7, /* F7 */
+            Key.F8, /* F8 */
+            Key.F9, /* F9 */
+            Key.F10, /* F10 */
+            Key.F11, /* F11 */
+            Key.F12, /* F12 */
+            Key.PrintScreen, /* Print Screen */
+            Key.ScrollLock, /* Scroll Lock */
+            Key.Pause, /* Pause */
+            Key.Insert, /* Insert */
+            Key.Home, /* Home */
+            Key.PageUp, /* Page Up */
+            Key.Delete, /* Delete Forward */
+            Key.End, /* End */
+            Key.PageDown, /* Page Down */
+            Key.Right, /* Right Arrow */
+            Key.Left, /* Left Arrow */
+            Key.Down, /* Down Arrow */
+            Key.Up, /* Up Arrow */
+            Key.NumLock, /* Keypad NumLock or Clear */
+            Key.KeypadDivide, /* Keypad / */
+            Key.KeypadMultiply, /* Keypad * */
+            Key.KeypadMinus, /* Keypad - */
+            Key.KeypadPlus, /* Keypad + */
+            Key.KeypadEnter, /* Keypad Enter */
+            Key.Keypad1, /* Keypad 1 or End */
+            Key.Keypad2, /* Keypad 2 or Down Arrow */
+            Key.Keypad3, /* Keypad 3 or Page Down */
+            Key.Keypad4, /* Keypad 4 or Left Arrow */
+            Key.Keypad5, /* Keypad 5 */
+            Key.Keypad6, /* Keypad 6 or Right Arrow */
+            Key.Keypad7, /* Keypad 7 or Home */
+            Key.Keypad8, /* Keypad 8 or Up Arrow */
+            Key.Keypad9, /* Keypad 9 or Page Up */
+            Key.Keypad0, /* Keypad 0 or Insert */
+            Key.KeypadDecimal, /* Keypad . or Delete */
+            Key.BackSlash, /* Non-US \ or | */
+            Key.Unknown, /* Application */
+            Key.Unknown, /* Power */
+            Key.Unknown, /* Keypad = */
+            Key.F13, /* F13 */
+            Key.F14, /* F14 */
+            Key.F15, /* F15 */
+            Key.F16, /* F16 */
+            Key.F17, /* F17 */
+            Key.F18, /* F18 */
+            Key.F19, /* F19 */
+            Key.F20, /* F20 */
+            Key.F21, /* F21 */
+            Key.F22, /* F22 */
+            Key.F23, /* F23 */
+            Key.F24, /* F24 */
+            Key.Unknown, /* Execute */
+            Key.Unknown, /* Help */
+            Key.Menu, /* Menu */
+            Key.Unknown, /* Select */
+            Key.Unknown, /* Stop */
+            Key.Unknown, /* Again */
+            Key.Unknown, /* Undo */
+            Key.Unknown, /* Cut */
+            Key.Unknown, /* Copy */
+            Key.Unknown, /* Paste */
+            Key.Unknown, /* Find */
+            Key.Unknown, /* Mute */
+            Key.Unknown, /* Volume Up */
+            Key.Unknown, /* Volume Down */
+            Key.CapsLock, /* Locking Caps Lock */
+            Key.NumLock , /* Locking Num Lock */
+            Key.ScrollLock, /* Locking Scroll Lock */
+            Key.KeypadDecimal, /* Keypad Comma */
+            Key.Unknown, /* Keypad Equal Sign for AS/400 */
+            Key.Unknown, /* International1 */
+            Key.Unknown, /* International2 */
+            Key.Unknown, /* International3 */
+            Key.Unknown, /* International4 */
+            Key.Unknown, /* International5 */
+            Key.Unknown, /* International6 */
+            Key.Unknown, /* International7 */
+            Key.Unknown, /* International8 */
+            Key.Unknown, /* International9 */
+            Key.Unknown, /* LANG1 */
+            Key.Unknown, /* LANG2 */
+            Key.Unknown, /* LANG3 */
+            Key.Unknown, /* LANG4 */
+            Key.Unknown, /* LANG5 */
+            Key.Unknown, /* LANG6 */
+            Key.Unknown, /* LANG7 */
+            Key.Unknown, /* LANG8 */
+            Key.Unknown, /* LANG9 */
+            Key.Unknown, /* AlternateErase */
+            Key.Unknown, /* SysReq/Attention */
+            Key.Unknown, /* Cancel */
+            Key.Unknown, /* Clear */
+            Key.Unknown, /* Prior */
+            Key.Enter, /* Return */
+            Key.Unknown, /* Separator */
+            Key.Unknown, /* Out */
+            Key.Unknown, /* Oper */
+            Key.Unknown, /* Clear/Again */
+            Key.Unknown, /* CrSel/Props */
+            Key.Unknown, /* ExSel */
+            /* 0xA5-0xDF Reserved */
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            Key.LControl, /* Left Control */
+            Key.LShift, /* Left Shift */
+            Key.LAlt, /* Left Alt */
+            Key.LWin, /* Left GUI */
+            Key.RControl, /* Right Control */
+            Key.RShift, /* Right Shift */
+            Key.RAlt, /* Right Alt */
+            Key.RWin, /* Right GUI */
+            /* 0xE8-0xFFFF Reserved */
+        };
 
         #endregion
     }
