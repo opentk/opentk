@@ -369,25 +369,37 @@ namespace OpenTK.Platform.MacOS
             switch (evt.KeyboardEventKind)
             {
                 case KeyboardEventKind.RawKeyRepeat:
-                    InputDriver.Keyboard[0].KeyRepeat = true;
-                    goto case KeyboardEventKind.RawKeyDown;
+                    if (InputDriver.Keyboard[0].KeyRepeat)
+                        goto case KeyboardEventKind.RawKeyDown;
+                    break;
 
                 case KeyboardEventKind.RawKeyDown:
-                    OnKeyPress(mKeyPressArgs);
-                    InputDriver.Keyboard[0][Keymap[code]] = true;
+                {
+                    OpenTK.Input.Key key;
+                    if (Keymap.TryGetValue(code, out key))
+                    {
+                        InputDriver.Keyboard[0][key] = true;
+                        OnKeyPress(mKeyPressArgs);
+                    }
                     return OSStatus.NoError;
+                }
 
                 case KeyboardEventKind.RawKeyUp:
-                    InputDriver.Keyboard[0][Keymap[code]] = false;
+                {
+                    OpenTK.Input.Key key;
+                    if (Keymap.TryGetValue(code, out key))
+                    {
+                        InputDriver.Keyboard[0][key] = false;
+                    }
                     return OSStatus.NoError;
+                }
 
                 case KeyboardEventKind.RawKeyModifiersChanged:
                     ProcessModifierKey(inEvent);
                     return OSStatus.NoError;
-
-                default:
-                    return OSStatus.EventNotHandled;
             }
+
+            return OSStatus.EventNotHandled;
         }
 
         private OSStatus ProcessWindowEvent(IntPtr inCaller, IntPtr inEvent, EventInfo evt, IntPtr userData)
