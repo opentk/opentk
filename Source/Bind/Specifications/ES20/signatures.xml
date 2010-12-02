@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <signatures>
   <enum name="AMDCompressed3DCTexture" type="int">
     <token name="3DC_X_AMD" value="0x87F9" />
@@ -24,6 +24,50 @@
   <enum name="AMDProgramBinaryZ400" type="int">
     <token name="AMD_program_binary_Z400" value="1" />
     <token name="Z400_BINARY_AMD" value="0x8740" />
+  </enum>
+  <enum name="ANGLEFramebufferBlit" type="int">
+    <token name="ANGLE_framebuffer_blit" value="1" />
+    <token name="DRAW_FRAMEBUFFER_ANGLE" value="0x8CA9" />
+    <token name="DRAW_FRAMEBUFFER_BINDING_ANGLE" value="0x8CA6" />
+    <token name="READ_FRAMEBUFFER_ANGLE" value="0x8CA8" />
+    <token name="READ_FRAMEBUFFER_BINDING_ANGLE" value="0x8CAA" />
+  </enum>
+  <enum name="ANGLEFramebufferMultisample" type="int">
+    <token name="ANGLE_framebuffer_multisample" value="1" />
+    <token name="FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_ANGLE" value="0x8D56" />
+    <token name="MAX_SAMPLES_ANGLE" value="0x8D57" />
+    <token name="RENDERBUFFER_SAMPLES_ANGLE" value="0x8CAB" />
+  </enum>
+  <enum name="APPLEFramebufferMultisample" type="int">
+    <token name="APPLE_framebuffer_multisample" value="1" />
+    <token name="DRAW_FRAMEBUFFER_APPLE" value="0x8CA9" />
+    <token name="DRAW_FRAMEBUFFER_BINDING_APPLE" value="0x8CA6" />
+    <token name="FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_APPLE" value="0x8D56" />
+    <token name="MAX_SAMPLES_APPLE" value="0x8D57" />
+    <token name="READ_FRAMEBUFFER_APPLE" value="0x8CA8" />
+    <token name="READ_FRAMEBUFFER_BINDING_APPLE" value="0x8CAA" />
+    <token name="RENDERBUFFER_SAMPLES_APPLE" value="0x8CAB" />
+  </enum>
+  <enum name="APPLERgb422" type="int">
+    <token name="APPLE_rgb_422" value="1" />
+    <token name="RGB_422_APPLE" value="0x8A1F" />
+    <token name="UNSIGNED_SHORT_8_8_APPLE" value="0x85BA" />
+    <token name="UNSIGNED_SHORT_8_8_REV_APPLE" value="0x85BB" />
+  </enum>
+  <enum name="APPLETextureFormatBGRA8888" type="int">
+    <token name="APPLE_texture_format_BGRA8888" value="1" />
+    <token name="BGRA_EXT" value="0x80E1" />
+  </enum>
+  <enum name="APPLETextureMaxLevel" type="int">
+    <token name="APPLE_texture_max_level" value="1" />
+    <token name="TEXTURE_MAX_LEVEL_APPLE" value="0x813D" />
+  </enum>
+  <enum name="ARMMaliShaderBinary" type="int">
+    <token name="ARM_mali_shader_binary" value="1" />
+    <token name="MALI_SHADER_BINARY_ARM" value="0x8F60" />
+  </enum>
+  <enum name="ARMRgba8" type="int">
+    <token name="ARM_rgba8" value="1" />
   </enum>
   <enum name="BeginMode" type="int">
     <token name="LINE_LOOP" value="0x0002" />
@@ -113,13 +157,38 @@
     <token name="NO_ERROR" value="0" />
     <token name="OUT_OF_MEMORY" value="0x0505" />
   </enum>
+  <enum name="EXTBlendMinmax" type="int">
+    <token name="EXT_blend_minmax" value="1" />
+    <token name="MAX_EXT" value="0x8008" />
+    <token name="MIN_EXT" value="0x8007" />
+  </enum>
+  <enum name="EXTDiscardFramebuffer" type="int">
+    <token name="COLOR_EXT" value="0x1800" />
+    <token name="DEPTH_EXT" value="0x1801" />
+    <token name="EXT_discard_framebuffer" value="1" />
+    <token name="STENCIL_EXT" value="0x1802" />
+  </enum>
+  <enum name="EXTReadFormatBgra" type="int">
+    <token name="BGRA_EXT" value="0x80E1" />
+    <token name="EXT_read_format_bgra" value="1" />
+    <token name="UNSIGNED_SHORT_1_5_5_5_REV_EXT" value="0x8366" />
+    <token name="UNSIGNED_SHORT_4_4_4_4_REV_EXT" value="0x8365" />
+  </enum>
+  <enum name="EXTShaderTextureLod" type="int">
+    <token name="EXT_shader_texture_lod" value="1" />
+  </enum>
+  <enum name="EXTTextureCompressionDxt1" type="int">
+    <token name="COMPRESSED_RGB_S3TC_DXT1_EXT" value="0x83F0" />
+    <token name="COMPRESSED_RGBA_S3TC_DXT1_EXT" value="0x83F1" />
+    <token name="EXT_texture_compression_dxt1" value="1" />
+  </enum>
   <enum name="EXTTextureFilterAnisotropic" type="int">
     <token name="EXT_texture_filter_anisotropic" value="1" />
     <token name="MAX_TEXTURE_MAX_ANISOTROPY_EXT" value="0x84FF" />
     <token name="TEXTURE_MAX_ANISOTROPY_EXT" value="0x84FE" />
   </enum>
   <enum name="EXTTextureFormatBGRA8888" type="int">
-    <token name="BGRA" value="0x80E1" />
+    <token name="BGRA_EXT" value="0x80E1" />
     <token name="EXT_texture_format_BGRA8888" value="1" />
   </enum>
   <enum name="EXTTextureType2101010REV" type="int">
@@ -226,11 +295,25 @@
   <enum name="HintTarget" type="int">
     <token name="GENERATE_MIPMAP_HINT" value="0x8192" />
   </enum>
+  <enum name="IMGMultisampledRenderToTexture" type="int">
+    <token name="FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_IMG" value="0x9134" />
+    <token name="IMG_multisampled_render_to_texture" value="1" />
+    <token name="MAX_SAMPLES_IMG" value="0x9135" />
+    <token name="RENDERBUFFER_SAMPLES_IMG" value="0x9133" />
+    <token name="TEXTURE_SAMPLES_IMG" value="0x9136" />
+  </enum>
+  <enum name="IMGProgramBinary" type="int">
+    <token name="IMG_program_binary" value="1" />
+    <token name="SGX_PROGRAM_BINARY_IMG" value="0x9130" />
+  </enum>
   <enum name="IMGReadFormat" type="int">
-    <token name="BGRA" value="0x80E1" />
+    <token name="BGRA_IMG" value="0x80E1" />
     <token name="IMG_read_format" value="1" />
-    <token name="UNSIGNED_SHORT_1_5_5_5_REV" value="0x8366" />
-    <token name="UNSIGNED_SHORT_4_4_4_4_REV" value="0x8365" />
+    <token name="UNSIGNED_SHORT_4_4_4_4_REV_IMG" value="0x8365" />
+  </enum>
+  <enum name="IMGShaderBinary" type="int">
+    <token name="IMG_shader_binary" value="1" />
+    <token name="SGX_BINARY_IMG" value="0x8C0A" />
   </enum>
   <enum name="IMGTextureCompressionPvrtc" type="int">
     <token name="COMPRESSED_RGB_PVRTC_2BPPV1_IMG" value="0x8C01" />
@@ -238,6 +321,22 @@
     <token name="COMPRESSED_RGBA_PVRTC_2BPPV1_IMG" value="0x8C03" />
     <token name="COMPRESSED_RGBA_PVRTC_4BPPV1_IMG" value="0x8C02" />
     <token name="IMG_texture_compression_pvrtc" value="1" />
+  </enum>
+  <enum name="NVCoverageSample" type="int">
+    <token name="COVERAGE_ALL_FRAGMENTS_NV" value="0x8ED5" />
+    <token name="COVERAGE_ATTACHMENT_NV" value="0x8ED2" />
+    <token name="COVERAGE_AUTOMATIC_NV" value="0x8ED7" />
+    <token name="COVERAGE_BUFFER_BIT_NV" value="0x8000" />
+    <token name="COVERAGE_BUFFERS_NV" value="0x8ED3" />
+    <token name="COVERAGE_COMPONENT_NV" value="0x8ED0" />
+    <token name="COVERAGE_COMPONENT4_NV" value="0x8ED1" />
+    <token name="COVERAGE_EDGE_FRAGMENTS_NV" value="0x8ED6" />
+    <token name="COVERAGE_SAMPLES_NV" value="0x8ED4" />
+    <token name="NV_coverage_sample" value="1" />
+  </enum>
+  <enum name="NVDepthNonlinear" type="int">
+    <token name="DEPTH_COMPONENT16_NONLINEAR_NV" value="0x8E2C" />
+    <token name="NV_depth_nonlinear" value="1" />
   </enum>
   <enum name="NVFence" type="int">
     <token name="ALL_COMPLETED_NV" value="0x84F2" />
@@ -278,6 +377,7 @@
   </enum>
   <enum name="OESElementIndexUint" type="int">
     <token name="OES_element_index_uint" value="1" />
+    <token name="UNSIGNED_INT" value="0x1405" />
   </enum>
   <enum name="OESFboRenderMipmap" type="int">
     <token name="OES_fbo_render_mipmap" value="1" />
@@ -346,6 +446,10 @@
   <enum name="OESTextureNpot" type="int">
     <token name="OES_texture_npot" value="1" />
   </enum>
+  <enum name="OESVertexArrayObject" type="int">
+    <token name="OES_vertex_array_object" value="1" />
+    <token name="VERTEX_ARRAY_BINDING_OES" value="0x85B5" />
+  </enum>
   <enum name="OESVertexHalfFloat" type="int">
     <token name="OES_vertex_half_float" value="1" />
   </enum>
@@ -373,9 +477,65 @@
   <enum name="QCOMDriverControl" type="int">
     <token name="QCOM_driver_control" value="1" />
   </enum>
+  <enum name="QCOMExtendedGet" type="int">
+    <token name="QCOM_extended_get" value="1" />
+    <token name="STATE_RESTORE" value="0x8BDC" />
+    <token name="TEXTURE_DEPTH_QCOM" value="0x8BD4" />
+    <token name="TEXTURE_FORMAT_QCOM" value="0x8BD6" />
+    <token name="TEXTURE_HEIGHT_QCOM" value="0x8BD3" />
+    <token name="TEXTURE_IMAGE_VALID_QCOM" value="0x8BD8" />
+    <token name="TEXTURE_INTERNAL_FORMAT_QCOM" value="0x8BD5" />
+    <token name="TEXTURE_NUM_LEVELS_QCOM" value="0x8BD9" />
+    <token name="TEXTURE_OBJECT_VALID_QCOM" value="0x8BDB" />
+    <token name="TEXTURE_TARGET_QCOM" value="0x8BDA" />
+    <token name="TEXTURE_TYPE_QCOM" value="0x8BD7" />
+    <token name="TEXTURE_WIDTH_QCOM" value="0x8BD2" />
+  </enum>
+  <enum name="QCOMExtendedGet2" type="int">
+    <token name="QCOM_extended_get2" value="1" />
+  </enum>
   <enum name="QCOMPerfmonGlobalMode" type="int">
     <token name="PERFMON_GLOBAL_MODE_QCOM" value="0x8FA0" />
     <token name="QCOM_perfmon_global_mode" value="1" />
+  </enum>
+  <enum name="QCOMTiledRendering" type="int">
+    <token name="COLOR_BUFFER_BIT0_QCOM" value="0x00000001" />
+    <token name="COLOR_BUFFER_BIT1_QCOM" value="0x00000002" />
+    <token name="COLOR_BUFFER_BIT2_QCOM" value="0x00000004" />
+    <token name="COLOR_BUFFER_BIT3_QCOM" value="0x00000008" />
+    <token name="COLOR_BUFFER_BIT4_QCOM" value="0x00000010" />
+    <token name="COLOR_BUFFER_BIT5_QCOM" value="0x00000020" />
+    <token name="COLOR_BUFFER_BIT6_QCOM" value="0x00000040" />
+    <token name="COLOR_BUFFER_BIT7_QCOM" value="0x00000080" />
+    <token name="DEPTH_BUFFER_BIT0_QCOM" value="0x00000100" />
+    <token name="DEPTH_BUFFER_BIT1_QCOM" value="0x00000200" />
+    <token name="DEPTH_BUFFER_BIT2_QCOM" value="0x00000400" />
+    <token name="DEPTH_BUFFER_BIT3_QCOM" value="0x00000800" />
+    <token name="DEPTH_BUFFER_BIT4_QCOM" value="0x00001000" />
+    <token name="DEPTH_BUFFER_BIT5_QCOM" value="0x00002000" />
+    <token name="DEPTH_BUFFER_BIT6_QCOM" value="0x00004000" />
+    <token name="DEPTH_BUFFER_BIT7_QCOM" value="0x00008000" />
+    <token name="MULTISAMPLE_BUFFER_BIT0_QCOM" value="0x01000000" />
+    <token name="MULTISAMPLE_BUFFER_BIT1_QCOM" value="0x02000000" />
+    <token name="MULTISAMPLE_BUFFER_BIT2_QCOM" value="0x04000000" />
+    <token name="MULTISAMPLE_BUFFER_BIT3_QCOM" value="0x08000000" />
+    <token name="MULTISAMPLE_BUFFER_BIT4_QCOM" value="0x10000000" />
+    <token name="MULTISAMPLE_BUFFER_BIT5_QCOM" value="0x20000000" />
+    <token name="MULTISAMPLE_BUFFER_BIT6_QCOM" value="0x40000000" />
+    <token name="MULTISAMPLE_BUFFER_BIT7_QCOM" value="0x80000000" />
+    <token name="QCOM_tiled_rendering" value="1" />
+    <token name="STENCIL_BUFFER_BIT0_QCOM" value="0x00010000" />
+    <token name="STENCIL_BUFFER_BIT1_QCOM" value="0x00020000" />
+    <token name="STENCIL_BUFFER_BIT2_QCOM" value="0x00040000" />
+    <token name="STENCIL_BUFFER_BIT3_QCOM" value="0x00080000" />
+    <token name="STENCIL_BUFFER_BIT4_QCOM" value="0x00100000" />
+    <token name="STENCIL_BUFFER_BIT5_QCOM" value="0x00200000" />
+    <token name="STENCIL_BUFFER_BIT6_QCOM" value="0x00400000" />
+    <token name="STENCIL_BUFFER_BIT7_QCOM" value="0x00800000" />
+  </enum>
+  <enum name="QCOMWriteonlyRendering" type="int">
+    <token name="QCOM_writeonly_rendering" value="1" />
+    <token name="WRITEONLY_RENDERING_QCOM" value="0x8823" />
   </enum>
   <enum name="ReadFormat" type="int">
     <token name="IMPLEMENTATION_COLOR_READ_FORMAT" value="0x8B9B" />
@@ -542,6 +702,9 @@
     <token name="SAMPLER_2D" value="0x8B5E" />
     <token name="SAMPLER_CUBE" value="0x8B60" />
   </enum>
+  <enum name="Unknown">
+    <token name="EXT_multi_draw_arrays" value="1" />
+  </enum>
   <enum name="VertexArrays" type="int">
     <token name="VERTEX_ATTRIB_ARRAY_BUFFER_BINDING" value="0x889F" />
     <token name="VERTEX_ATTRIB_ARRAY_ENABLED" value="0x8622" />
@@ -550,6 +713,10 @@
     <token name="VERTEX_ATTRIB_ARRAY_SIZE" value="0x8623" />
     <token name="VERTEX_ATTRIB_ARRAY_STRIDE" value="0x8624" />
     <token name="VERTEX_ATTRIB_ARRAY_TYPE" value="0x8625" />
+  </enum>
+  <enum name="VIVShaderBinary" type="int">
+    <token name="SHADER_BINARY_VIV" value="0x8FC4" />
+    <token name="VIV_shader_binary" value="1" />
   </enum>
   <function name="BeginPerfMonitorAMD" extension="AMD" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -582,7 +749,7 @@
     <param type="GLuint" name="group" flow="in" />
     <param type="GLuint" name="counter" flow="in" />
     <param type="GLenum" name="pname" flow="in" />
-    <param type="void*" name="data" flow="out" />
+    <param type="GLvoid*" name="data" flow="out" />
   </function>
   <function name="GetPerfMonitorCountersAMD" extension="AMD" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -598,7 +765,7 @@
     <param type="GLuint" name="counter" flow="in" />
     <param type="GLsizei" name="bufSize" flow="in" />
     <param type="GLsizei*" name="length" flow="out" />
-    <param type="char*" name="counterString" flow="out" />
+    <param type="GLchar*" name="counterString" flow="out" />
   </function>
   <function name="GetPerfMonitorGroupsAMD" extension="AMD" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -611,7 +778,7 @@
     <param type="GLuint" name="group" flow="in" />
     <param type="GLsizei" name="bufSize" flow="in" />
     <param type="GLsizei*" name="length" flow="out" />
-    <param type="char*" name="groupString" flow="out" />
+    <param type="GLchar*" name="groupString" flow="out" />
   </function>
   <function name="SelectPerfMonitorCountersAMD" extension="AMD" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -634,7 +801,7 @@
     <returns type="void" />
     <param type="GLuint" name="program" flow="in" />
     <param type="GLuint" name="index" flow="in" />
-    <param type="char*" name="name" flow="in" />
+    <param type="GLchar*" name="name" flow="in" />
   </function>
   <function name="BindBuffer" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -684,11 +851,24 @@
     <param type="GLenum" name="srcAlpha" flow="in" />
     <param type="GLenum" name="dstAlpha" flow="in" />
   </function>
+  <function name="BlitFramebufferANGLE" extension="Core" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLint" name="srcX0" flow="in" />
+    <param type="GLint" name="srcY0" flow="in" />
+    <param type="GLint" name="srcX1" flow="in" />
+    <param type="GLint" name="srcY1" flow="in" />
+    <param type="GLint" name="dstX0" flow="in" />
+    <param type="GLint" name="dstY0" flow="in" />
+    <param type="GLint" name="dstX1" flow="in" />
+    <param type="GLint" name="dstY1" flow="in" />
+    <param type="GLbitfield" name="mask" flow="in" />
+    <param type="GLenum" name="filter" flow="in" />
+  </function>
   <function name="BufferData" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
     <param type="GLenum" name="target" flow="in" />
     <param type="GLsizeiptr" name="size" flow="in" />
-    <param type="void*" name="data" flow="in" />
+    <param type="GLvoid*" name="data" flow="in" />
     <param type="GLenum" name="usage" flow="in" />
   </function>
   <function name="BufferSubData" extension="Core" profile="" category="2.0" version="2.0">
@@ -696,7 +876,7 @@
     <param type="GLenum" name="target" flow="in" />
     <param type="GLintptr" name="offset" flow="in" />
     <param type="GLsizeiptr" name="size" flow="in" />
-    <param type="void*" name="data" flow="in" />
+    <param type="GLvoid*" name="data" flow="in" />
   </function>
   <function name="CheckFramebufferStatus" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="GLenum" />
@@ -741,7 +921,7 @@
     <param type="GLsizei" name="height" flow="in" />
     <param type="GLint" name="border" flow="in" />
     <param type="GLsizei" name="imageSize" flow="in" />
-    <param type="void*" name="data" flow="in" />
+    <param type="GLvoid*" name="data" flow="in" />
   </function>
   <function name="CompressedTexSubImage2D" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -753,7 +933,7 @@
     <param type="GLsizei" name="height" flow="in" />
     <param type="GLenum" name="format" flow="in" />
     <param type="GLsizei" name="imageSize" flow="in" />
-    <param type="void*" name="data" flow="in" />
+    <param type="GLvoid*" name="data" flow="in" />
   </function>
   <function name="CopyTexImage2D" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -853,7 +1033,7 @@
     <param type="GLenum" name="mode" flow="in" />
     <param type="GLsizei" name="count" flow="in" />
     <param type="GLenum" name="type" flow="in" />
-    <param type="void*" name="indices" flow="in" />
+    <param type="GLvoid*" name="indices" flow="in" />
   </function>
   <function name="Enable" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -883,6 +1063,9 @@
     <param type="GLenum" name="textarget" flow="in" />
     <param type="GLuint" name="texture" flow="in" />
     <param type="GLint" name="level" flow="in" />
+  </function>
+  <function name="FramebufferTexture2DMultisampleIMG" extension="Core" profile="" category="2.0" version="2.0">
+    <returns type="void" />
   </function>
   <function name="FrontFace" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -920,7 +1103,7 @@
     <param type="GLsizei*" name="length" flow="out" />
     <param type="GLint*" name="size" flow="out" />
     <param type="GLenum*" name="type" flow="out" />
-    <param type="char*" name="name" flow="out" />
+    <param type="GLchar*" name="name" flow="out" />
   </function>
   <function name="GetActiveUniform" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -930,7 +1113,7 @@
     <param type="GLsizei*" name="length" flow="out" />
     <param type="GLint*" name="size" flow="out" />
     <param type="GLenum*" name="type" flow="out" />
-    <param type="char*" name="name" flow="out" />
+    <param type="GLchar*" name="name" flow="out" />
   </function>
   <function name="GetAttachedShaders" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -942,7 +1125,7 @@
   <function name="GetAttribLocation" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="int" />
     <param type="GLuint" name="program" flow="in" />
-    <param type="char*" name="name" flow="out" />
+    <param type="GLchar*" name="name" flow="out" />
   </function>
   <function name="GetBooleanv" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -980,7 +1163,7 @@
     <param type="GLuint" name="program" flow="in" />
     <param type="GLsizei" name="bufsize" flow="in" />
     <param type="GLsizei*" name="length" flow="out" />
-    <param type="char*" name="infolog" flow="out" />
+    <param type="GLchar*" name="infolog" flow="out" />
   </function>
   <function name="GetProgramiv" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -999,7 +1182,7 @@
     <param type="GLuint" name="shader" flow="in" />
     <param type="GLsizei" name="bufsize" flow="in" />
     <param type="GLsizei*" name="length" flow="out" />
-    <param type="char*" name="infolog" flow="out" />
+    <param type="GLchar*" name="infolog" flow="out" />
   </function>
   <function name="GetShaderiv" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -1019,7 +1202,7 @@
     <param type="GLuint" name="shader" flow="in" />
     <param type="GLsizei" name="bufsize" flow="in" />
     <param type="GLsizei*" name="length" flow="out" />
-    <param type="char*" name="source" flow="out" />
+    <param type="GLchar*" name="source" flow="out" />
   </function>
   <function name="GetString" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="GLubyte*" />
@@ -1052,7 +1235,7 @@
   <function name="GetUniformLocation" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="int" />
     <param type="GLuint" name="program" flow="in" />
-    <param type="char*" name="name" flow="out" />
+    <param type="GLchar*" name="name" flow="out" />
   </function>
   <function name="GetVertexAttribfv" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -1070,7 +1253,7 @@
     <returns type="void" />
     <param type="GLuint" name="index" flow="in" />
     <param type="GLenum" name="pname" flow="in" />
-    <param type="void**" name="pointer" flow="out" />
+    <param type="GLvoid**" name="pointer" flow="out" />
   </function>
   <function name="Hint" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -1131,7 +1314,7 @@
     <param type="GLsizei" name="height" flow="in" />
     <param type="GLenum" name="format" flow="in" />
     <param type="GLenum" name="type" flow="in" />
-    <param type="void*" name="pixels" flow="in" />
+    <param type="GLvoid*" name="pixels" flow="in" />
   </function>
   <function name="ReleaseShaderCompiler" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -1142,6 +1325,23 @@
     <param type="GLenum" name="internalformat" flow="in" />
     <param type="GLsizei" name="width" flow="in" />
     <param type="GLsizei" name="height" flow="in" />
+  </function>
+  <function name="RenderbufferStorageMultisampleANGLE" extension="Core" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLsizei" name="samples" flow="in" />
+    <param type="GLenum" name="internalformat" flow="in" />
+    <param type="GLsizei" name="width" flow="in" />
+    <param type="GLsizei" name="height" flow="in" />
+  </function>
+  <function name="RenderbufferStorageMultisampleAPPLE" extension="Core" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+  </function>
+  <function name="RenderbufferStorageMultisampleIMG" extension="Core" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+  </function>
+  <function name="ResolveMultisampleFramebufferAPPLE" extension="Core" profile="" category="2.0" version="2.0">
+    <returns type="void" />
   </function>
   <function name="SampleCoverage" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -1160,14 +1360,14 @@
     <param type="GLsizei" name="n" flow="in" />
     <param type="GLuint*" name="shaders" flow="in" />
     <param type="GLenum" name="binaryformat" flow="in" />
-    <param type="void*" name="binary" flow="in" />
+    <param type="GLvoid*" name="binary" flow="in" />
     <param type="GLsizei" name="length" flow="in" />
   </function>
   <function name="ShaderSource" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
     <param type="GLuint" name="shader" flow="in" />
     <param type="GLsizei" name="count" flow="in" />
-    <param type="char**" name="string" flow="in" />
+    <param type="GLchar**" name="string" flow="in" />
     <param type="GLint*" name="length" flow="in" />
   </function>
   <function name="StencilFunc" extension="Core" profile="" category="2.0" version="2.0">
@@ -1209,13 +1409,13 @@
     <returns type="void" />
     <param type="GLenum" name="target" flow="in" />
     <param type="GLint" name="level" flow="in" />
-    <param type="GLenum" name="internalformat" flow="in" />
+    <param type="GLint" name="internalformat" flow="in" />
     <param type="GLsizei" name="width" flow="in" />
     <param type="GLsizei" name="height" flow="in" />
     <param type="GLint" name="border" flow="in" />
     <param type="GLenum" name="format" flow="in" />
     <param type="GLenum" name="type" flow="in" />
-    <param type="void*" name="pixels" flow="in" />
+    <param type="GLvoid*" name="pixels" flow="in" />
   </function>
   <function name="TexParameterf" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -1251,7 +1451,7 @@
     <param type="GLsizei" name="height" flow="in" />
     <param type="GLenum" name="format" flow="in" />
     <param type="GLenum" name="type" flow="in" />
-    <param type="void*" name="pixels" flow="in" />
+    <param type="GLvoid*" name="pixels" flow="in" />
   </function>
   <function name="Uniform1f" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -1435,7 +1635,7 @@
     <param type="GLenum" name="type" flow="in" />
     <param type="GLboolean" name="normalized" flow="in" />
     <param type="GLsizei" name="stride" flow="in" />
-    <param type="void*" name="ptr" flow="in" />
+    <param type="GLvoid*" name="ptr" flow="in" />
   </function>
   <function name="Viewport" extension="Core" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -1444,37 +1644,53 @@
     <param type="GLsizei" name="width" flow="in" />
     <param type="GLsizei" name="height" flow="in" />
   </function>
+  <function name="DiscardFramebufferEXT" extension="EXT" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLsizei" name="numAttachments" flow="in" />
+    <param type="GLenum*" name="attachments" flow="in" />
+  </function>
+  <function name="MultiDrawArraysEXT" extension="EXT" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+  </function>
+  <function name="MultiDrawElementsEXT" extension="EXT" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLsizei" name="GLsizei" flow="in" />
+    <param type="GLvoid" name="GLvoid" flow="in" />
+  </function>
+  <function name="CoverageMaskNV" extension="NV" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLboolean" name="mask" flow="in" />
+  </function>
+  <function name="CoverageOperationNV" extension="NV" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLenum" name="operation" flow="in" />
+  </function>
   <function name="DeleteFencesNV" extension="NV" profile="" category="2.0" version="2.0">
     <returns type="void" />
-    <param type="GLsizei" name="n" flow="in" />
-    <param type="GLuint*" name="fences" flow="in" />
+    <param type="GLuint" name="GLuint" flow="in" />
   </function>
   <function name="FinishFenceNV" extension="NV" profile="" category="2.0" version="2.0">
     <returns type="void" />
-    <param type="GLuint" name="fence" flow="in" />
   </function>
   <function name="GenFencesNV" extension="NV" profile="" category="2.0" version="2.0">
     <returns type="void" />
-    <param type="GLsizei" name="n" flow="in" />
-    <param type="GLuint*" name="fences" flow="out" />
   </function>
   <function name="GetFenceivNV" extension="NV" profile="" category="2.0" version="2.0">
     <returns type="void" />
-    <param type="GLuint" name="fence" flow="in" />
-    <param type="GLint*" name="params" flow="out" />
   </function>
   <function name="IsFenceNV" extension="NV" profile="" category="2.0" version="2.0">
     <returns type="GLboolean" />
-    <param type="GLuint" name="fence" flow="in" />
   </function>
   <function name="SetFenceNV" extension="NV" profile="" category="2.0" version="2.0">
     <returns type="void" />
-    <param type="GLuint" name="fence" flow="in" />
-    <param type="GLenum" name="condition" flow="in" />
   </function>
   <function name="TestFenceNV" extension="NV" profile="" category="2.0" version="2.0">
     <returns type="GLboolean" />
-    <param type="GLuint" name="fence" flow="in" />
+  </function>
+  <function name="BindVertexArrayOES" extension="OES" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLuint" name="array" flow="in" />
   </function>
   <function name="CompressedTexImage3DOES" extension="OES" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -1486,7 +1702,7 @@
     <param type="GLsizei" name="depth" flow="in" />
     <param type="GLint" name="border" flow="in" />
     <param type="GLsizei" name="imageSize" flow="in" />
-    <param type="void*" name="data" flow="in" />
+    <param type="GLvoid*" name="data" flow="in" />
   </function>
   <function name="CompressedTexSubImage3DOES" extension="OES" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -1500,7 +1716,7 @@
     <param type="GLsizei" name="depth" flow="in" />
     <param type="GLenum" name="format" flow="in" />
     <param type="GLsizei" name="imageSize" flow="in" />
-    <param type="void*" name="data" flow="in" />
+    <param type="GLvoid*" name="data" flow="in" />
   </function>
   <function name="CopyTexSubImage3DOES" extension="OES" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -1513,6 +1729,11 @@
     <param type="GLint" name="y" flow="in" />
     <param type="GLsizei" name="width" flow="in" />
     <param type="GLsizei" name="height" flow="in" />
+  </function>
+  <function name="DeleteVertexArraysOES" extension="OES" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLsizei" name="n" flow="in" />
+    <param type="GLuint*" name="arrays" flow="in" />
   </function>
   <function name="EGLImageTargetRenderbufferStorageOES" extension="OES" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -1533,11 +1754,16 @@
     <param type="GLint" name="level" flow="in" />
     <param type="GLint" name="zoffset" flow="in" />
   </function>
+  <function name="GenVertexArraysOES" extension="OES" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLsizei" name="n" flow="in" />
+    <param type="GLuint*" name="arrays" flow="out" />
+  </function>
   <function name="GetBufferPointervOES" extension="OES" profile="" category="2.0" version="2.0">
     <returns type="void" />
     <param type="GLenum" name="target" flow="in" />
     <param type="GLenum" name="pname" flow="in" />
-    <param type="void**" name="params" flow="out" />
+    <param type="GLvoid**" name="params" flow="out" />
   </function>
   <function name="GetProgramBinaryOES" extension="OES" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -1545,7 +1771,11 @@
     <param type="GLsizei" name="bufSize" flow="in" />
     <param type="GLsizei*" name="length" flow="out" />
     <param type="GLenum*" name="binaryFormat" flow="out" />
-    <param type="void*" name="binary" flow="out" />
+    <param type="GLvoid*" name="binary" flow="out" />
+  </function>
+  <function name="IsVertexArrayOES" extension="OES" profile="" category="2.0" version="2.0">
+    <returns type="GLboolean" />
+    <param type="GLuint" name="array" flow="in" />
   </function>
   <function name="MapBufferOES" extension="OES" profile="" category="2.0" version="2.0">
     <returns type="void*" />
@@ -1556,7 +1786,7 @@
     <returns type="void" />
     <param type="GLuint" name="program" flow="in" />
     <param type="GLenum" name="binaryFormat" flow="in" />
-    <param type="void*" name="binary" flow="in" />
+    <param type="GLvoid*" name="binary" flow="in" />
     <param type="GLint" name="length" flow="in" />
   </function>
   <function name="TexImage3DOES" extension="OES" profile="" category="2.0" version="2.0">
@@ -1570,7 +1800,7 @@
     <param type="GLint" name="border" flow="in" />
     <param type="GLenum" name="format" flow="in" />
     <param type="GLenum" name="type" flow="in" />
-    <param type="void*" name="pixels" flow="in" />
+    <param type="GLvoid*" name="pixels" flow="in" />
   </function>
   <function name="TexSubImage3DOES" extension="OES" profile="" category="2.0" version="2.0">
     <returns type="void" />
@@ -1584,7 +1814,7 @@
     <param type="GLsizei" name="depth" flow="in" />
     <param type="GLenum" name="format" flow="in" />
     <param type="GLenum" name="type" flow="in" />
-    <param type="void*" name="pixels" flow="in" />
+    <param type="GLvoid*" name="pixels" flow="in" />
   </function>
   <function name="UnmapBufferOES" extension="OES" profile="" category="2.0" version="2.0">
     <returns type="GLboolean" />
@@ -1598,6 +1828,90 @@
     <returns type="void" />
     <param type="GLuint" name="driverControl" flow="in" />
   </function>
+  <function name="EndTilingQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLbitfield" name="preserveMask" flow="in" />
+  </function>
+  <function name="ExtGetBufferPointervQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLvoid**" name="params" flow="in" />
+  </function>
+  <function name="ExtGetBuffersQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLuint*" name="buffers" flow="in" />
+    <param type="GLint" name="maxBuffers" flow="in" />
+    <param type="GLint*" name="numBuffers" flow="in" />
+  </function>
+  <function name="ExtGetFramebuffersQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLuint*" name="framebuffers" flow="in" />
+    <param type="GLint" name="maxFramebuffers" flow="in" />
+    <param type="GLint*" name="numFramebuffers" flow="in" />
+  </function>
+  <function name="ExtGetProgramBinarySourceQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLuint" name="program" flow="in" />
+    <param type="GLenum" name="shadertype" flow="in" />
+    <param type="GLchar*" name="source" flow="in" />
+    <param type="GLint*" name="length" flow="in" />
+  </function>
+  <function name="ExtGetProgramsQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLuint*" name="programs" flow="in" />
+    <param type="GLint" name="maxPrograms" flow="in" />
+    <param type="GLint*" name="numPrograms" flow="in" />
+  </function>
+  <function name="ExtGetRenderbuffersQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLuint*" name="renderbuffers" flow="in" />
+    <param type="GLint" name="maxRenderbuffers" flow="in" />
+    <param type="GLint*" name="numRenderbuffers" flow="in" />
+  </function>
+  <function name="ExtGetShadersQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLuint*" name="shaders" flow="in" />
+    <param type="GLint" name="maxShaders" flow="in" />
+    <param type="GLint*" name="numShaders" flow="in" />
+  </function>
+  <function name="ExtGetTexLevelParameterivQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLuint" name="texture" flow="in" />
+    <param type="GLenum" name="face" flow="in" />
+    <param type="GLint" name="level" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLint*" name="params" flow="in" />
+  </function>
+  <function name="ExtGetTexSubImageQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLint" name="level" flow="in" />
+    <param type="GLint" name="xoffset" flow="in" />
+    <param type="GLint" name="yoffset" flow="in" />
+    <param type="GLint" name="zoffset" flow="in" />
+    <param type="GLsizei" name="width" flow="in" />
+    <param type="GLsizei" name="height" flow="in" />
+    <param type="GLsizei" name="depth" flow="in" />
+    <param type="GLenum" name="format" flow="in" />
+    <param type="GLenum" name="type" flow="in" />
+    <param type="GLvoid*" name="texels" flow="in" />
+  </function>
+  <function name="ExtGetTexturesQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLuint*" name="textures" flow="in" />
+    <param type="GLint" name="maxTextures" flow="in" />
+    <param type="GLint*" name="numTextures" flow="in" />
+  </function>
+  <function name="ExtIsProgramBinaryQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
+    <returns type="GLboolean" />
+    <param type="GLuint" name="program" flow="in" />
+  </function>
+  <function name="ExtTexObjectStateOverrideiQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLenum" name="target" flow="in" />
+    <param type="GLenum" name="pname" flow="in" />
+    <param type="GLint" name="param" flow="in" />
+  </function>
   <function name="GetDriverControlsQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
     <returns type="void" />
     <param type="GLint*" name="num" flow="out" />
@@ -1609,6 +1923,14 @@
     <param type="GLuint" name="driverControl" flow="in" />
     <param type="GLsizei" name="bufSize" flow="in" />
     <param type="GLsizei*" name="length" flow="out" />
-    <param type="char*" name="driverControlString" flow="out" />
+    <param type="GLchar*" name="driverControlString" flow="out" />
+  </function>
+  <function name="StartTilingQCOM" extension="QCOM" profile="" category="2.0" version="2.0">
+    <returns type="void" />
+    <param type="GLuint" name="x" flow="in" />
+    <param type="GLuint" name="y" flow="in" />
+    <param type="GLuint" name="width" flow="in" />
+    <param type="GLuint" name="height" flow="in" />
+    <param type="GLbitfield" name="preserveMask" flow="in" />
   </function>
 </signatures>
