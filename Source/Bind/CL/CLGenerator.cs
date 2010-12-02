@@ -16,7 +16,7 @@ namespace Bind.CL
         {
             glTypemap = null;
 
-			wrappersFile = "CL.cs";
+			Settings.WrappersFile = "CL.cs";
 
             Settings.FunctionPrefix = "cl";
             Settings.ConstantPrefix = "CL_";

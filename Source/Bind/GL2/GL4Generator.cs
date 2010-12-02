@@ -46,10 +46,10 @@ namespace Bind.GL2
             glSpecExt = String.Empty;
             functionOverridesFile = "GL2/gloverrides.xml";
 
-            importsFile = "GLCore.cs";
-            delegatesFile = "GLDelegates.cs";
-            enumsFile = "GLEnums.cs";
-            wrappersFile = "GL.cs";
+            Settings.ImportsFile = "GLCore.cs";
+            Settings.DelegatesFile = "GLDelegates.cs";
+            Settings.EnumsFile = "GLEnums.cs";
+            Settings.WrappersFile = "GL.cs";
             Settings.ImportsClass = "Core";
             Settings.DelegatesClass = "Delegates";
 

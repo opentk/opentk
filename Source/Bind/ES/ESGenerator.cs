@@ -27,10 +27,10 @@ namespace Bind.ES
             glSpecExt = String.Empty;
             functionOverridesFile = dirName + "/overrides.xml";
 
-            importsFile = "Core.cs";
-            delegatesFile = "Delegates.cs";
-            enumsFile = "Enums.cs";
-            wrappersFile = "ES.cs";
+            Settings.ImportsFile = "Core.cs";
+            Settings.DelegatesFile = "Delegates.cs";
+            Settings.EnumsFile = "Enums.cs";
+            Settings.WrappersFile = "ES.cs";
             Settings.ImportsClass = "Core";
             Settings.DelegatesClass = "Delegates";
 

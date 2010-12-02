@@ -41,19 +41,7 @@ namespace Bind
 
     sealed class CSharpSpecWriter : ISpecWriter
     {
-        readonly string wrappersFile;
-        readonly string enumsFile;
-        readonly string delegatesFile;
-        readonly string importsFile;
         readonly char[] numbers = "0123456789".ToCharArray();
-
-        public CSharpSpecWriter(string wrappersFile, string importsFile, string enumsFile, string delegatesFile)
-        {
-            this.wrappersFile = wrappersFile;
-            this.importsFile = importsFile;
-            this.enumsFile = enumsFile;
-            this.delegatesFile = delegatesFile;
-        }
 
         #region WriteBindings
 
@@ -156,10 +144,10 @@ namespace Bind
                 sw.WriteLine("}");
             }
 
-            string output_enums = Path.Combine(Settings.OutputPath, enumsFile);
-            string output_delegates = Path.Combine(Settings.OutputPath, delegatesFile);
-            string output_core = Path.Combine(Settings.OutputPath, importsFile);
-            string output_wrappers = Path.Combine(Settings.OutputPath, wrappersFile);
+            string output_enums = Path.Combine(Settings.OutputPath, Settings.EnumsFile);
+            string output_delegates = Path.Combine(Settings.OutputPath, Settings.DelegatesFile);
+            string output_core = Path.Combine(Settings.OutputPath, Settings.ImportsFile);
+            string output_wrappers = Path.Combine(Settings.OutputPath, Settings.WrappersFile);
 
             if (File.Exists(output_enums)) File.Delete(output_enums);
             if (File.Exists(output_delegates)) File.Delete(output_delegates);

@@ -33,6 +33,11 @@ namespace Bind
         public static string ConstantPrefix = "GL_";
         public static string EnumPrefix = "";
 
+        public static string ImportsFile = "Core.cs";
+        public static string DelegatesFile = "Delegates.cs";
+        public static string EnumsFile = "Enums.cs";
+        public static string WrappersFile = "GL.cs";
+
         // TODO: This code is too fragile.
         // Old enums code:
         public static string normalEnumsClassOverride = null;
