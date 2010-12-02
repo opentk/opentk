@@ -16,38 +16,10 @@ namespace Bind.Structures
         internal static Dictionary<string, string> GLTypes;
         internal static Dictionary<string, string> CSTypes;
 
-        private static bool typesLoaded;
-
         string current_qualifier = "", previous_qualifier = "";
 
-        #region internal static void Initialize(string glTypes, string csTypes)
-        
-        internal static void Initialize(string glTypes, string csTypes)
-        {
-            if (!typesLoaded)
-            {
-                if (GLTypes == null)
-                {
-                    using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, glTypes))
-                    {
-                        GLTypes = MainClass.Generator.ReadTypeMap(sr);
-                    }
-                }
-                if (CSTypes == null)
-                {
-                    using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, csTypes))
-                    {
-                        CSTypes = MainClass.Generator.ReadCSTypeMap(sr);
-                    }
-                }
-                typesLoaded = true;
-            }
-        }
-        
-        #endregion
-
         #region --- Constructors ---
-        
+
         public Type()
         {
         }
@@ -66,7 +38,7 @@ namespace Bind.Structures
                 ElementCount = t.ElementCount;
             }
         }
-        
+
         #endregion
 
         public string CurrentQualifier
@@ -81,7 +53,8 @@ namespace Bind.Structures
             private set { previous_qualifier = value; }
         }
 
-        public string QualifiedType {
+        public string QualifiedType
+        {
             get
             {
                 if (!String.IsNullOrEmpty(CurrentQualifier))
@@ -233,7 +206,7 @@ namespace Bind.Structures
             get
             {
                 bool compliant = true;
-                
+
                 switch (CurrentType.ToLower())
                 {
                     case "sbyte":
@@ -244,16 +217,16 @@ namespace Bind.Structures
                     case "uint16":
                     case "uint32":
                     case "uint64":
-                         compliant = false;
+                        compliant = false;
                         break;
-                
+
                     default:
                         compliant = Pointer == 0;
-                       break;
+                        break;
                 }
 
                 return compliant;
-                
+
                 /*
                 if (Pointer != 0)
                 {
@@ -265,7 +238,7 @@ namespace Bind.Structures
                 */
                 //return compliant && (!Pointer || CurrentType.Contains("IntPtr"));
                 //return compliant && !(Pointer && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) == Settings.Legacy.None));
-                
+
                 /*
                  * return !(
                     (Pointer && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) == Settings.Legacy.None ) ||
@@ -341,12 +314,12 @@ namespace Bind.Structures
         #endregion
 
         #region public override string ToString()
-        
+
         public override string ToString()
         {
             return QualifiedType;
         }
-        
+
         #endregion
 
         #region public virtual void Translate(XPathNavigator overrides, string category)
