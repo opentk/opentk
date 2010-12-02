@@ -6,7 +6,7 @@
 
 namespace Bind
 {
-    interface IBind : ISpecReader, ISpecWriter
+    interface IBind
     {
         void Process();
     }
