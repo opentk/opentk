@@ -29,11 +29,6 @@ namespace Bind.GL2
         protected static string glSpec = "GL2/gl.spec";
         protected static string glSpecExt = "";
 
-        protected static string importsFile = "GLCore.cs";
-        protected static string delegatesFile = "GLDelegates.cs";
-        protected static string enumsFile = "GLEnums.cs";
-        protected static string wrappersFile = "GL.cs";
-
         protected static string functionOverridesFile = "GL2/gloverrides.xml";
 
         protected static string loadAllFuncName = "LoadAll";
@@ -44,8 +39,7 @@ namespace Bind.GL2
         //protected static readonly Dictionary<string, string> doc_replacements;
 
         protected ISpecReader SpecReader = new XmlSpecReader(functionOverridesFile);
-        protected ISpecWriter SpecWriter = new CSharpSpecWriter(wrappersFile, importsFile,
-            enumsFile, delegatesFile);
+        protected ISpecWriter SpecWriter = new CSharpSpecWriter();
 
         #endregion
 
@@ -62,6 +56,11 @@ namespace Bind.GL2
             {
                 // Defaults
             }
+
+            Settings.ImportsFile = "GLCore.cs";
+            Settings.DelegatesFile = "GLDelegates.cs";
+            Settings.EnumsFile = "GLEnums.cs";
+            Settings.WrappersFile = "GL.cs";
         }
 
         #endregion
