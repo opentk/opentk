@@ -200,83 +200,91 @@ namespace Bind
             // Every single enum is merged into
 
             EnumCollection enums = new EnumCollection();
-            Enum all = new Enum() { Name = Settings.CompleteEnumName };
             XPathDocument specs = new XPathDocument(specFile);
             XPathDocument overrides = new XPathDocument(new StreamReader(
                 Path.Combine(Settings.InputPath, Settings.OverridesFile)));
 
-            foreach (XPathNavigator nav in new XPathNavigator[] {
-                specs.CreateNavigator().SelectSingleNode("/signatures/add"),
-                overrides.CreateNavigator().SelectSingleNode("/signatures/add") })
+            foreach (XPathNavigator nav in specs.CreateNavigator().Select("/signatures/add"))
             {
-                if (nav != null)
+                var new_enums = ReadEnums(nav);
+                Utilities.Merge(enums, new_enums);
+            }
+
+            return enums;
+        }
+
+        public EnumCollection ReadEnums(XPathNavigator nav)
+        {
+            EnumCollection enums = new EnumCollection();
+            Enum all = new Enum() { Name = Settings.CompleteEnumName };
+
+            if (nav != null)
+            {
+                foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
                 {
-                    foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
+                    Enum e = new Enum()
                     {
-                        Enum e = new Enum()
+                        Name = node.GetAttribute("name", String.Empty),
+                        Type = node.GetAttribute("type", String.Empty)
+                    };
+                    if (String.IsNullOrEmpty(e.Name))
+                        throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
+
+                    foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
+                    {
+                        Constant c = null;
+                        switch (param.Name)
                         {
-                            Name = node.GetAttribute("name", String.Empty),
-                            Type = node.GetAttribute("type", String.Empty)
-                        };
-                        if (String.IsNullOrEmpty(e.Name))
-                            throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
+                            case "token":
+                                c = new Constant
+                                {
+                                    Name = param.GetAttribute("name", String.Empty),
+                                    Value = param.GetAttribute("value", String.Empty)
+                                };
+                                break;
 
-                        foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
+                            case "use":
+                                c = new Constant
+                                {
+                                    Name = param.GetAttribute("token", String.Empty),
+                                    Reference = param.GetAttribute("enum", String.Empty),
+                                    Value = param.GetAttribute("token", String.Empty),
+                                };
+                                break;
+
+                            default:
+                                throw new NotSupportedException();
+                        }
+                        Utilities.Merge(all, c);
+                        try
                         {
-                            Constant c = null;
-                            switch (param.Name)
+                            if (!e.ConstantCollection.ContainsKey(c.Name))
                             {
-                                case "token":
-                                    c = new Constant
-                                    {
-                                        Name = param.GetAttribute("name", String.Empty),
-                                        Value = param.GetAttribute("value", String.Empty)
-                                    };
-                                    break;
-
-                                case "use":
-                                    c = new Constant
-                                    {
-                                        Name = param.GetAttribute("token", String.Empty),
-                                        Reference = param.GetAttribute("enum", String.Empty),
-                                        Value = param.GetAttribute("token", String.Empty),
-                                    };
-                                    break;
-
-                                default:
-                                    throw new NotSupportedException();
+                                e.ConstantCollection.Add(c.Name, c);
                             }
-                            Utilities.Merge(all, c);
-                            try
+                            else if (e.ConstantCollection[c.Name].Value != c.Value)
                             {
-                                if (!e.ConstantCollection.ContainsKey(c.Name))
+                                var existing = e.ConstantCollection[c.Name];
+                                if (existing.Reference != null && c.Reference == null)
                                 {
-                                    e.ConstantCollection.Add(c.Name, c);
+                                    e.ConstantCollection[c.Name] = c;
                                 }
-                                else if (e.ConstantCollection[c.Name].Value != c.Value)
+                                else if (existing.Reference == null && c.Reference != null)
+                                { } // Keep existing
+                                else
                                 {
-                                    var existing = e.ConstantCollection[c.Name];
-                                    if (existing.Reference != null && c.Reference == null)
-                                    {
-                                        e.ConstantCollection[c.Name] = c;
-                                    }
-                                    else if (existing.Reference == null && c.Reference != null)
-                                    { } // Keep existing
-                                    else
-                                    {
-                                        Console.WriteLine("[Warning] Conflicting token {0}.{1} with value {2} != {3}",
-                                            e.Name, c.Name, e.ConstantCollection[c.Name].Value, c.Value);
-                                    }
+                                    Console.WriteLine("[Warning] Conflicting token {0}.{1} with value {2} != {3}",
+                                        e.Name, c.Name, e.ConstantCollection[c.Name].Value, c.Value);
                                 }
-                            }
-                            catch (ArgumentException ex)
-                            {
-                                Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message);
                             }
                         }
-
-                        Utilities.Merge(enums, e);
+                        catch (ArgumentException ex)
+                        {
+                            Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message);
+                        }
                     }
+
+                    Utilities.Merge(enums, e);
                 }
             }
 
