@@ -38,7 +38,7 @@ namespace Bind
 {
     class FuncProcessor
     {
-        const string Path = "/overrides/replace/function[@name='{0}' and @extension='{1}']";
+        const string Path = "/signatures/replace/function[@name='{0}' and @extension='{1}']";
         static readonly Regex Endings =
             new Regex(@"((((d|f|fi)|u?[isb])_?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
         static readonly Regex EndingsNotToTrim =
@@ -59,6 +59,9 @@ namespace Bind
         {
             Console.WriteLine("Processing delegates.");
             var nav = Overrides.CreateNavigator();
+            ProcessDeleteOverrides(delegates, nav);
+            ProcessAddOverrides(delegates, nav);
+
             foreach (var d in delegates.Values)
             {
                 TranslateReturnType(nav, d, enums);
@@ -71,6 +74,26 @@ namespace Bind
             wrappers = CreateCLSCompliantWrappers(wrappers, enums);
             Console.WriteLine("Removing non-CLS compliant duplicates.");
             return MarkCLSCompliance(wrappers);
+        }
+
+        private void ProcessAddOverrides(DelegateCollection delegates, XPathNavigator nav)
+        {
+            var new_delegates = new XmlSpecReader().ReadDelegates(nav.SelectSingleNode("/signatures/add"));
+            Utilities.Merge(delegates, new_delegates);
+        }
+
+        private void ProcessDeleteOverrides(DelegateCollection delegates, XPathNavigator nav)
+        {
+            var del = nav.SelectSingleNode("/signatures/delete");
+            if (del != null)
+            {
+                foreach (XPathNavigator d in del.SelectChildren("function", String.Empty))
+                {
+                    string name = d.GetAttribute("name", String.Empty);
+                    if (delegates.ContainsKey(name))
+                        delegates.Remove(name);
+                }
+            }
         }
 
         // Trims unecessary suffices from the specified OpenGL function name.

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<overrides>
+<signatures>
 
   <replace>
     <function name="GetString" extension="Core">
@@ -7,4 +7,4 @@
     </function>
   </replace>
   
-</overrides>
+</signatures>
