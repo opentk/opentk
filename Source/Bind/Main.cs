@@ -88,7 +88,7 @@ namespace Bind
                             case "mode":
                                 {
                                     string arg = b[1].ToLower();
-                                    if (arg == "gl" || arg == "gl2")
+                                    if (arg == "gl" || arg == "gl2" || arg == "gl3" || arg == "gl4")
                                         mode = GeneratorMode.GL2;
                                     else if (arg == "es10")
                                         mode = GeneratorMode.ES10;
@@ -151,6 +151,7 @@ namespace Bind
 
                 switch (mode)
                 {
+                    case GeneratorMode.GL3:
                     case GeneratorMode.GL2:
                         Generator = new GL4Generator("OpenGL", dirName);
                         break;
@@ -171,9 +172,6 @@ namespace Bind
                         Generator = new CLGenerator("CL10", dirName);
                         break;
                     
-                    case GeneratorMode.GL3:
-                        throw new NotImplementedException(String.Format("Mode {0} not implemented.", mode));
-
                     case GeneratorMode.Unknown:
                     default:
                         Console.WriteLine("Please specify a generator mode (use '-mode:gl2/gl3/glu/wgl/glx])'");
