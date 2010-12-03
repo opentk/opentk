@@ -36,7 +36,9 @@ namespace Bind.ES
 
             Settings.OutputClass = "GL";
             Settings.OutputNamespace = "OpenTK.Graphics." + nsName;
-            Settings.OutputPath = Path.Combine(Settings.OutputPath, dirName);
+            Settings.DefaultOutputPath = Path.Combine(
+                Directory.GetParent(Settings.DefaultOutputPath).ToString(),
+                dirName);
         }
     }
 }

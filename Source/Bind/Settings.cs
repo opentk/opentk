@@ -13,20 +13,22 @@ namespace Bind
         // Disable BeforeFieldInit.
         static Settings() { }
 
-        public const string DefaultInputPath = "../../../Source/Bind/Specifications";
-        public const string DefaultOutputPath = "../../../Source/OpenTK/Graphics/OpenGL";
-        public const string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
-        public const string DefaultDocPath = "../../../Source/Bind/Specifications/Docs";
-        public const string DefaultDocFile = "ToInlineDocs.xslt";
-        public const string DefaultLicenseFile = "License.txt";
+        public static string DefaultInputPath = "../../../Source/Bind/Specifications";
+        public static string DefaultOutputPath = "../../../Source/OpenTK/Graphics/OpenGL";
+        public static string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
+        public static string DefaultDocPath = "../../../Source/Bind/Specifications/Docs";
+        public static string DefaultDocFile = "ToInlineDocs.xslt";
+        public static string DefaultLicenseFile = "License.txt";
+        public static string DefaultOverridesFile = "GL2/gloverrides.xml";
 
-        public static string InputPath = DefaultInputPath;
-        public static string OutputPath = DefaultOutputPath;
-        public static string OutputNamespace = DefaultOutputNamespace;
-        public static string DocPath = DefaultDocPath;
-        public static string DocFile = DefaultDocFile;
-        public static string LicenseFile = DefaultLicenseFile;
-        public static string OverridesFile = "GL2/gloverrides.xml";
+        static string inputPath, outputPath, outputNamespace, docPath, docFile, licenseFile, overridesFile;
+        public static string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
+        public static string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
+        public static string OutputNamespace { get { return outputNamespace ?? DefaultOutputNamespace; } set { outputNamespace = value; } }
+        public static string DocPath { get { return docPath ?? DefaultDocPath; } set { docPath = value; } }
+        public static string DocFile { get { return docFile ?? DefaultDocFile; } set { docFile = value; } }
+        public static string LicenseFile { get { return licenseFile ?? DefaultLicenseFile; } set { licenseFile = value; } }
+        public static string OverridesFile { get { return overridesFile ?? DefaultOverridesFile; } set { overridesFile = value; } }
 
         public static string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
         public static string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".
