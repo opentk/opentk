@@ -58,12 +58,11 @@ namespace Bind
 
             string temp_core_file = Path.GetTempFileName();
 
-            // Enums
             using (BindStreamWriter sw = new BindStreamWriter(temp_core_file))
             {
                 WriteLicense(sw);
 
-                sw.WriteLine("namespace {0}", Settings.OutputNamespace);
+                sw.WriteLine("namespace {0}", "gl");
                 sw.WriteLine("{");
                 sw.Indent();
 
@@ -71,13 +70,14 @@ namespace Bind
                 WriteEnums(sw, enums);
                 sw.Unindent();
 
-                WriteDelegates(sw, delegates);
+                //WriteDelegates(sw, delegates);
+                WriteWrappers(sw, wrappers, Type.CSTypes);
 
                 sw.Unindent();
                 sw.WriteLine("}");
             }
 
-            string output_core = Path.Combine(Settings.OutputPath, Settings.ImportsFile);
+            string output_core = Path.Combine(Settings.OutputPath, "gl.h");
             if (File.Exists(output_core))
                 File.Delete(output_core);
             File.Move(temp_core_file, output_core);
@@ -93,7 +93,7 @@ namespace Bind
 
             foreach (Delegate d in delegates.Values)
             {
-                sw.WriteLine("extern {0};", d.ToString());
+                sw.WriteLine("extern {0} {1}({2});", d.ReturnType, d.Name, d.Parameters);
             }
         }
 
@@ -111,6 +111,27 @@ namespace Bind
 
         public void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers, Dictionary<string, string> CSTypes)
         {
+            foreach (string extension in wrappers.Keys)
+            {
+                if (extension != "Core")
+                {
+                    sw.WriteLine("namespace {0}", extension);
+                    sw.WriteLine("{");
+                    sw.Indent();
+                }
+
+                foreach (Function f in wrappers[extension])
+                {
+                    sw.WriteLine("static {0} (* p{1})({2});", f.ReturnType, f.TrimmedName, f.Parameters);
+                    sw.WriteLine("extern p{0} {0};", f.TrimmedName);
+                }
+
+                if (extension != "Core")
+                {
+                    sw.Unindent();
+                    sw.WriteLine("}");
+                }
+            }
         }
 
         static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
@@ -195,31 +216,21 @@ namespace Bind
 
         public void WriteEnums(BindStreamWriter sw, EnumCollection enums)
         {
-            //sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
-            sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
-            sw.WriteLine();
-
-            Trace.WriteLine(String.Format("Writing enums to:\t{0}", Settings.EnumsOutput));
-
-            sw.WriteLine("namespace gl");
-            sw.WriteLine("{");
-            sw.Indent();
-
             foreach (Enum @enum in enums.Values)
             {
                 sw.Write("enum ");
                 sw.Write(@enum.Name);
                 sw.Write("{");
                 sw.Indent();
-                foreach (var c in @enum.ConstantCollection)
-                    sw.WriteLine(c);
+                foreach (var c in @enum.ConstantCollection.Values)
+                {
+                    sw.Write(c);
+                    sw.WriteLine(",");
+                }
                 sw.Unindent();
                 sw.WriteLine("};");
                 sw.WriteLine();
             }
-
-            sw.Unindent();
-            sw.WriteLine("}");
         }
 
         #endregion

@@ -82,24 +82,18 @@ namespace Bind
                                 {
                                     string arg = b[1].ToLower();
                                     if (arg == "cpp" || arg == "c++" || arg == "c")
+                                    {
                                         lang = GeneratorLanguage.Cpp;
+                                        Settings.DefaultOutputPath = "gl";
+                                        Settings.DefaultOutputNamespace = "gl";
+                                        Settings.EnumsNamespace = "gl";
+                                    }
                                     break;
                                 }
                             case "mode":
                                 {
                                     string arg = b[1].ToLower();
-                                    if (arg == "gl" || arg == "gl2" || arg == "gl3" || arg == "gl4")
-                                        mode = GeneratorMode.GL2;
-                                    else if (arg == "es10")
-                                        mode = GeneratorMode.ES10;
-                                    else if (arg == "es11")
-                                        mode = GeneratorMode.ES11;
-                                    else if (arg == "es20")
-                                        mode = GeneratorMode.ES20;
-                                    else if (arg == "cl" || arg == "cl10")
-                                        mode = GeneratorMode.CL10;
-                                    else
-                                        throw new NotImplementedException();
+                                    SetGeneratorMode(dirName, arg);
                                     if (b.Length > 2)
                                         dirName = b[2];
                                     break;
@@ -176,7 +170,6 @@ namespace Bind
                     default:
                         Console.WriteLine("Please specify a generator mode (use '-mode:gl2/gl3/glu/wgl/glx])'");
                         return;
-
                 }
 
                 Generator.Process();
@@ -214,6 +207,44 @@ namespace Bind
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine("The requested functionality is not implemented yet.");
+            }
+        }
+
+        private static void SetGeneratorMode(string dirName, string arg)
+        {
+            if (arg == "gl" || arg == "gl2" || arg == "gl3" || arg == "gl4")
+            {
+                mode = GeneratorMode.GL2;
+                Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
+            }
+            else if (arg == "es10")
+            {
+                mode = GeneratorMode.ES10;
+                Settings.DefaultOutputPath = Path.Combine(
+                    Directory.GetParent(Settings.DefaultOutputPath).ToString(),
+                    dirName);
+            }
+            else if (arg == "es11")
+            {
+                mode = GeneratorMode.ES11;
+                Settings.DefaultOutputPath = Path.Combine(
+                    Directory.GetParent(Settings.DefaultOutputPath).ToString(),
+                    dirName);
+            }
+            else if (arg == "es20")
+            {
+                mode = GeneratorMode.ES20;
+                Settings.DefaultOutputPath = Path.Combine(
+                    Directory.GetParent(Settings.DefaultOutputPath).ToString(),
+                    dirName);
+            }
+            else if (arg == "cl" || arg == "cl10")
+            {
+                mode = GeneratorMode.CL10;
+            }
+            else
+            {
+                throw new NotImplementedException();
             }
         }
 
