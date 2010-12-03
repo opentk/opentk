@@ -40,19 +40,12 @@ namespace Bind
 
     class XmlSpecReader : ISpecReader
     {
-        readonly string functionOverridesFile;
-
-        public XmlSpecReader(string functionOverridesFile)
-        {
-            this.functionOverridesFile = functionOverridesFile;
-        }
-
         public DelegateCollection ReadDelegates(StreamReader specFile)
         {
             DelegateCollection delegates = new DelegateCollection();
             XPathDocument specs = new XPathDocument(specFile);
             XPathDocument overrides = new XPathDocument(new StreamReader(
-                Path.Combine(Settings.InputPath, functionOverridesFile)));
+                Path.Combine(Settings.InputPath, Settings.OverridesFile)));
 
             foreach (XPathNavigator nav in new XPathNavigator[] {
                 specs.CreateNavigator().SelectSingleNode("/signatures"),
@@ -208,7 +201,8 @@ namespace Bind
             EnumCollection enums = new EnumCollection();
             Enum all = new Enum() { Name = Settings.CompleteEnumName };
             XPathDocument specs = new XPathDocument(specFile);
-            XPathDocument overrides = new XPathDocument(new StreamReader(Path.Combine(Settings.InputPath, functionOverridesFile)));
+            XPathDocument overrides = new XPathDocument(new StreamReader(
+                Path.Combine(Settings.InputPath, Settings.OverridesFile)));
 
             foreach (XPathNavigator nav in new XPathNavigator[] {
                 specs.CreateNavigator().SelectSingleNode("/signatures"),

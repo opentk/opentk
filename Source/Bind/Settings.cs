@@ -26,6 +26,7 @@ namespace Bind
         public static string DocPath = DefaultDocPath;
         public static string DocFile = DefaultDocFile;
         public static string LicenseFile = DefaultLicenseFile;
+        public static string OverridesFile = "GL2/gloverrides.xml";
 
         public static string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
         public static string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".

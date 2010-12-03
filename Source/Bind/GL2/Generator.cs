@@ -29,8 +29,6 @@ namespace Bind.GL2
         protected static string glSpec = "GL2/gl.spec";
         protected static string glSpecExt = "";
 
-        protected static string functionOverridesFile = "GL2/gloverrides.xml";
-
         protected static string loadAllFuncName = "LoadAll";
 
         protected static Regex enumToDotNet = new Regex("_[a-z|A-Z]?", RegexOptions.Compiled);
@@ -38,7 +36,7 @@ namespace Bind.GL2
         protected static readonly char[] numbers = "0123456789".ToCharArray();
         //protected static readonly Dictionary<string, string> doc_replacements;
 
-        protected ISpecReader SpecReader = new XmlSpecReader(functionOverridesFile);
+        protected ISpecReader SpecReader = new XmlSpecReader();
         protected ISpecWriter SpecWriter = new CSharpSpecWriter();
 
         #endregion
@@ -69,19 +67,20 @@ namespace Bind.GL2
 
         public virtual void Process()
         {
-            var overrides = new XPathDocument(Path.Combine(Settings.InputPath, functionOverridesFile));
+            var overrides = new XPathDocument(Path.Combine(Settings.InputPath, Settings.OverridesFile));
 
             using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, glTypemap))
-            {
                 Type.GLTypes = SpecReader.ReadTypeMap(sr);
-            }
             using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, csTypemap))
-            {
                 Type.CSTypes = SpecReader.ReadCSTypeMap(sr);
-            }
 
-            var enums = SpecReader.ReadEnums(new StreamReader(Path.Combine(Settings.InputPath, enumSpec)));
-            var delegates = SpecReader.ReadDelegates(new StreamReader(Path.Combine(Settings.InputPath, glSpec)));
+            EnumCollection enums;
+            using (var sr = new StreamReader(Path.Combine(Settings.InputPath, enumSpec)))
+                enums = SpecReader.ReadEnums(sr);
+
+            DelegateCollection delegates;
+            using (var sr = new StreamReader(Path.Combine(Settings.InputPath, glSpec)))
+                delegates = SpecReader.ReadDelegates(sr);
 
             enums = new EnumProcessor(overrides).Process(enums);
             var wrappers = new FuncProcessor(overrides).Process(delegates, enums);
