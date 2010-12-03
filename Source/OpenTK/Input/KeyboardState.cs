@@ -85,11 +85,28 @@ namespace OpenTK.Input
             return !ReadBit((int)key);
         }
 
+        /// <summary>
+        /// Gets a <see cref="System.Boolean"/> indicating whether this keyboard
+        /// is connected.
+        /// </summary>
         public bool IsConnected
         {
             get { return is_connected; }
             internal set { is_connected = value; }
         }
+
+#if false
+        // Disabled until the correct cross-platform API can be determined.
+        public bool IsLedOn(KeyboardLeds led)
+        {
+            return false;
+        }
+
+        public bool IsLedOff(KeyboardLeds led)
+        {
+            return false;
+        }
+#endif
 
         /// <summary>
         /// Checks whether two <see cref="KeyboardState" /> instances are equal.
