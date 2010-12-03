@@ -103,7 +103,16 @@ namespace OpenTK.Platform.Windows
                         RegistryKey regkey = GetRegistryKey(name);
                         string deviceDesc = (string)regkey.GetValue("DeviceDesc");
                         string deviceClass = (string)regkey.GetValue("Class");
-                        deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
+
+                        if (String.IsNullOrEmpty(deviceDesc))
+                        {
+                            Debug.Print("[Warning] Failed to retrieve device description, skipping this device.");
+                            continue;
+                        }
+                        else
+                        {
+                            deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
+                        }
 
                         if (!String.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("keyboard"))
                         {
