@@ -346,10 +346,8 @@ namespace Bind.Structures
                 }
                 else
                 {
-                    //if (aux)
-                    //    CurrentType = EnumProcessor.TranslateEnumName(CurrentType);
-
-#warning "Unecessary code"
+                    // Some functions and enums have the same names.
+                    // Make sure we reference the enums rather than the functions.
                     if (normal)
                         QualifiedType = CurrentType.Insert(0, String.Format("{0}.", Settings.EnumsOutput));
                 }

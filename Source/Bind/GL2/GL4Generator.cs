@@ -54,8 +54,6 @@ namespace Bind.GL2
             Settings.DelegatesClass = "Delegates";
 
             Settings.OutputClass = "GL";
-            Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
-            Settings.DefaultOutputPath = "../../../Source/OpenTK/Graphics/OpenGL";
         }
     }
 }
