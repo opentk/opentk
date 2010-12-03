@@ -139,6 +139,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CppSpecWriter.cs" />
     <Compile Include="CSharpSpecWriter.cs" />
     <Compile Include="FuncProcessor.cs" />
     <Compile Include="GL2\GL4Generator.cs" />
@@ -204,6 +205,7 @@
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
     </None>
+    <None Include="Specifications\GL2\gl.tm" />
     <None Include="Specifications\Glx\glx.spec">
     </None>
     <None Include="Specifications\Glx\glxenum.spec">
