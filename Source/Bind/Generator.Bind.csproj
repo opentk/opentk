@@ -204,12 +204,6 @@
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
     </None>
-    <None Include="Specifications\GL2\enum.spec">
-    </None>
-    <None Include="Specifications\GL2\gl.spec">
-    </None>
-    <None Include="Specifications\GL2\enumext.spec">
-    </None>
     <None Include="Specifications\Glx\glx.spec">
     </None>
     <None Include="Specifications\Glx\glxenum.spec">
@@ -231,8 +225,6 @@
     <None Include="Specifications\Wgl\wglenumext.spec">
     </None>
     <None Include="Specifications\csharp.tm">
-    </None>
-    <None Include="Specifications\GL2\gl.tm">
     </None>
     <None Include="Specifications\Glx\glx.tm">
     </None>
