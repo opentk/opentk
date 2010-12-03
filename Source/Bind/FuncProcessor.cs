@@ -76,13 +76,16 @@ namespace Bind
             return MarkCLSCompliance(wrappers);
         }
 
-        private void ProcessAddOverrides(DelegateCollection delegates, XPathNavigator nav)
+        void ProcessAddOverrides(DelegateCollection delegates, XPathNavigator nav)
         {
-            var new_delegates = new XmlSpecReader().ReadDelegates(nav.SelectSingleNode("/signatures/add"));
-            Utilities.Merge(delegates, new_delegates);
+            foreach (XPathNavigator add_node in nav.Select("/signatures/add"))
+            {
+                var new_delegates = new XmlSpecReader().ReadDelegates(add_node);
+                Utilities.Merge(delegates, new_delegates);
+            }
         }
 
-        private void ProcessDeleteOverrides(DelegateCollection delegates, XPathNavigator nav)
+        void ProcessDeleteOverrides(DelegateCollection delegates, XPathNavigator nav)
         {
             var del = nav.SelectSingleNode("/signatures/delete");
             if (del != null)

@@ -52,9 +52,35 @@ namespace Bind
         public EnumCollection Process(EnumCollection enums)
         {
             var nav = Overrides.CreateNavigator();
+            ProcessDeleteOverrides(enums, nav);
+            ProcessAddOverrides(enums, nav);
+
             enums = ProcessNames(enums, nav);
             enums = ProcessConstants(enums, nav);
             return enums;
+        }
+
+        void ProcessAddOverrides(EnumCollection enums, XPathNavigator nav)
+        {
+            foreach (XPathNavigator add_node in nav.Select("/signatures/add"))
+            {
+                var new_enums = new XmlSpecReader().ReadEnums(add_node);
+                Utilities.Merge(enums, new_enums);
+            }
+        }
+
+        void ProcessDeleteOverrides(EnumCollection enums, XPathNavigator nav)
+        {
+            var del = nav.SelectSingleNode("/signatures/delete");
+            if (del != null)
+            {
+                foreach (XPathNavigator d in del.SelectChildren("function", String.Empty))
+                {
+                    string name = d.GetAttribute("name", String.Empty);
+                    if (enums.ContainsKey(name))
+                        enums.Remove(name);
+                }
+            }
         }
 
         static EnumCollection ProcessNames(EnumCollection enums, XPathNavigator nav)
@@ -99,9 +125,16 @@ namespace Bind
             StringBuilder translator = new StringBuilder(name.Length);
 
             // Process according to these rules:
+            //     0. If name starts with a vendor name, make the first letter after that uppercase.
             //     1. if current char is '_', '-' remove it and make next char uppercase
             //     2. if current char is  or '0-9' keep it and make next char uppercase.
             //     3. if current character is uppercase make next char lowercase.
+            var ext = Utilities.GetGL2Extension(name);
+            if (ext != String.Empty)
+            {
+                name = name.Replace(ext.ToUpper(), ext);
+            }
+            
             bool is_after_underscore_or_number = true;
             bool is_previous_uppercase = false;
             foreach (char c in name)
@@ -141,7 +174,7 @@ namespace Bind
             translator.Replace("AttribIp", "AttribIP");
             translator.Replace("SRgb", "Srgb");
 
-            name = translator.ToString();
+            name = translator.ToString().Trim();
             if (name.StartsWith(Settings.EnumPrefix))
                 name = name.Substring(Settings.EnumPrefix.Length);
 
@@ -152,7 +185,7 @@ namespace Bind
         {
             foreach (var e in enums.Values)
             {
-                var processed_constants = new Dictionary<string, Constant>(e.ConstantCollection.Count);
+                var processed_constants = new SortedDictionary<string, Constant>();
                 foreach (Constant c in e.ConstantCollection.Values)
                 {
                     c.Name = TranslateConstantName(c.Name, false);
@@ -245,7 +278,7 @@ namespace Bind
             else
                 translator.Append(s);
 
-            return translator.ToString();
+            return translator.ToString().Trim();
         }
 
         public static string TranslateConstantValue(string value)
