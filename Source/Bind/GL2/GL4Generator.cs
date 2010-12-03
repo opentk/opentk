@@ -44,7 +44,7 @@ namespace Bind.GL2
             enumSpecExt = String.Empty;
             glSpec = "GL2/signatures.xml";
             glSpecExt = String.Empty;
-            functionOverridesFile = "GL2/gloverrides.xml";
+            Settings.OverridesFile = "GL2/gloverrides.xml";
 
             Settings.ImportsFile = "GLCore.cs";
             Settings.DelegatesFile = "GLDelegates.cs";

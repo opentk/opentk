@@ -25,7 +25,7 @@ namespace Bind.ES
             enumSpecExt = String.Empty;
             glSpec = dirName  + "/signatures.xml";
             glSpecExt = String.Empty;
-            functionOverridesFile = dirName + "/overrides.xml";
+            Settings.OverridesFile = dirName + "/overrides.xml";
 
             Settings.ImportsFile = "Core.cs";
             Settings.DelegatesFile = "Delegates.cs";
