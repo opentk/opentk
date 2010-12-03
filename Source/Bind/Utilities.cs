@@ -119,7 +119,16 @@ namespace Bind
 
         #endregion
 
-        #region internal static void Merge(EnumCollection enums, Bind.Structures.Enum t)
+        #region Merge
+
+        // Merges the specified enum collections.
+        internal static void Merge(EnumCollection enums, EnumCollection new_enums)
+        {
+            foreach (var e in new_enums)
+            {
+                Merge(enums, e.Value);
+            }
+        }
 
         /// <summary>
         /// Merges the given enum into the enum list. If an enum of the same name exists,
@@ -142,10 +151,6 @@ namespace Bind
                 }
             }
         }
-
-        #endregion
-
-        #region internal static Bind.Structures.Enum Merge(Bind.Structures.Enum s, Bind.Structures.Constant t)
 
         /// <summary>
         /// Places a new constant in the specified enum, if it doesn't already exist.
@@ -176,22 +181,19 @@ namespace Bind
             return s;
         }
 
-        #endregion
+        // Merges the specified enum collections.
+        internal static void Merge(DelegateCollection delegates, DelegateCollection new_delegates)
+        {
+            foreach (var d in new_delegates)
+            {
+                Merge(delegates, d.Value);
+            }
+        }
 
-        #region internal static void Merge(EnumCollection enums, Bind.Structures.Enum t)
-
-        /// <summary>
-        /// Merges the given enum into the enum list. If an enum of the same name exists,
-        /// it merges their respective constants.
-        /// </summary>
-        /// <param name="enums"></param>
-        /// <param name="t"></param>
+        // Merges the given delegate into the delegate list.
         internal static void Merge(DelegateCollection delegates, Delegate t)
         {
-            if (!delegates.ContainsKey(t.Name))
-            {
-                delegates.Add(t.Name, t);
-            }
+            delegates.Add(t.Name, t);
         }
 
         #endregion

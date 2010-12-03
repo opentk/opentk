@@ -20,6 +20,8 @@ namespace Bind.Structures
     public class Constant
     {
         static StringBuilder translator = new StringBuilder();
+        static readonly int MaxReferenceDepth = 8;
+        static int CurrentReferenceDepth = 0;
 
         #region PreviousName
 
@@ -199,6 +201,9 @@ namespace Bind.Structures
             if (enums == null)
                 throw new ArgumentNullException("enums");
 
+            if (++CurrentReferenceDepth >= MaxReferenceDepth)
+                throw new InvalidOperationException("Enum specification contains cycle");
+
             if (!String.IsNullOrEmpty(c.Reference))
             {
                 Constant referenced_constant;
@@ -226,10 +231,14 @@ namespace Bind.Structures
                     if (reference.Reference == null)
                         referenced_constant = (enums[Settings.CompleteEnumName].ConstantCollection[c.Value]);
                     else
+                    {
+                        --CurrentReferenceDepth;
                         return false;
+                    }
                 }
                 else
                 {
+                    --CurrentReferenceDepth;
                     return false;
                 }
                 //else throw new InvalidOperationException(String.Format("Unknown Enum \"{0}\" referenced by Constant \"{1}\"",
@@ -239,6 +248,7 @@ namespace Bind.Structures
                 c.Reference = null;
             }
 
+            --CurrentReferenceDepth;
             return true;
         }
 
