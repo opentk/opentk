@@ -139,11 +139,12 @@ namespace CHeaderToXML
                 using (var writer = XmlWriter.Create(out_stream, settings))
                 {
                     new XElement("signatures",
-                        entries.Values.OrderBy(s => s.Attribute("name").Value),  // only enums
-                        sigs.SelectMany(s => s).Where(s => s.Name.LocalName == "function")    // only functions
-                             .OrderBy(s => s.Attribute("extension").Value)
-                             .ThenBy(s => s.Attribute("name").Value)
-                    ).WriteTo(writer);
+                        new XElement("add",
+                            entries.Values.OrderBy(s => s.Attribute("name").Value),  // only enums
+                            sigs.SelectMany(s => s).Where(s => s.Name.LocalName == "function")    // only functions
+                                 .OrderBy(s => s.Attribute("extension").Value)
+                                 .ThenBy(s => s.Attribute("name").Value)
+                    )).WriteTo(writer);
                     writer.Flush();
                     writer.Close();
                 }
