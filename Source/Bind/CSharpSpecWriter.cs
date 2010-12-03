@@ -45,7 +45,12 @@ namespace Bind
 
         #region WriteBindings
 
-        public void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
+        public void WriteBindings(IBind generator)
+        {
+            WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
+        }
+
+        void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
         {
             Console.WriteLine("Writing bindings to {0}", Settings.OutputPath);
             if (!Directory.Exists(Settings.OutputPath))

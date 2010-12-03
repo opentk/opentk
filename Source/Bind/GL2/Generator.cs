@@ -37,7 +37,6 @@ namespace Bind.GL2
         //protected static readonly Dictionary<string, string> doc_replacements;
 
         protected ISpecReader SpecReader = new XmlSpecReader();
-        protected ISpecWriter SpecWriter = new CSharpSpecWriter();
 
         #endregion
 
@@ -63,7 +62,11 @@ namespace Bind.GL2
 
         #endregion
 
-        #region Process
+        #region IBind Members
+
+        public DelegateCollection Delegates { get; private set; }
+        public EnumCollection Enums { get; private set; }
+        public FunctionCollection Wrappers { get; private set; }
 
         public virtual void Process()
         {
@@ -73,19 +76,13 @@ namespace Bind.GL2
                 Type.GLTypes = SpecReader.ReadTypeMap(sr);
             using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, csTypemap))
                 Type.CSTypes = SpecReader.ReadCSTypeMap(sr);
-
-            EnumCollection enums;
             using (var sr = new StreamReader(Path.Combine(Settings.InputPath, enumSpec)))
-                enums = SpecReader.ReadEnums(sr);
-
-            DelegateCollection delegates;
+                Enums = SpecReader.ReadEnums(sr);
             using (var sr = new StreamReader(Path.Combine(Settings.InputPath, glSpec)))
-                delegates = SpecReader.ReadDelegates(sr);
+                Delegates = SpecReader.ReadDelegates(sr);
 
-            enums = new EnumProcessor(overrides).Process(enums);
-            var wrappers = new FuncProcessor(overrides).Process(delegates, enums);
-
-            SpecWriter.WriteBindings(delegates, wrappers, enums);
+            Enums = new EnumProcessor(overrides).Process(Enums);
+            Wrappers = new FuncProcessor(overrides).Process(Delegates, Enums);
         }
 
         #endregion

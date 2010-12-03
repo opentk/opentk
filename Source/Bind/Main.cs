@@ -27,10 +27,16 @@ namespace Bind
         CL10,
     }
 
+    enum GeneratorLanguage
+    {
+        CSharp,
+        Cpp
+    }
+
     static class MainClass
     {
         static GeneratorMode mode = GeneratorMode.GL2;
-
+        static GeneratorLanguage lang = GeneratorLanguage.CSharp;
         static internal IBind Generator;
 
         static void Main(string[] arguments)
@@ -70,23 +76,34 @@ namespace Bind
                             case "output":
                                 Settings.OutputPath = string.Join(Path.DirectorySeparatorChar.ToString(), b.Skip(1).ToArray());
                                 break;
+                            case "l":
+                            case "lang":
+                            case "language":
+                                {
+                                    string arg = b[1].ToLower();
+                                    if (arg == "cpp" || arg == "c++" || arg == "c")
+                                        lang = GeneratorLanguage.Cpp;
+                                    break;
+                                }
                             case "mode":
-                                string arg = b[1].ToLower();
-                                if (arg == "gl" || arg == "gl2")
-                                    mode = GeneratorMode.GL2;
-                                else if (arg == "es10")
-                                    mode = GeneratorMode.ES10;
-                                else if (arg == "es11")
-                                    mode = GeneratorMode.ES11;
-                                else if (arg == "es20")
-                                    mode = GeneratorMode.ES20;
-                                else if (arg=="cl" || arg == "cl10")
-                                    mode = GeneratorMode.CL10;
-                                else
-                                    throw new NotImplementedException();
-                                if (b.Length > 2)
-                                    dirName = b[2];
-                                break;
+                                {
+                                    string arg = b[1].ToLower();
+                                    if (arg == "gl" || arg == "gl2")
+                                        mode = GeneratorMode.GL2;
+                                    else if (arg == "es10")
+                                        mode = GeneratorMode.ES10;
+                                    else if (arg == "es11")
+                                        mode = GeneratorMode.ES11;
+                                    else if (arg == "es20")
+                                        mode = GeneratorMode.ES20;
+                                    else if (arg == "cl" || arg == "cl10")
+                                        mode = GeneratorMode.CL10;
+                                    else
+                                        throw new NotImplementedException();
+                                    if (b.Length > 2)
+                                        dirName = b[2];
+                                    break;
+                                }
                             case "namespace":
                             case "ns":
                                 Settings.OutputNamespace = b[1];
@@ -165,6 +182,19 @@ namespace Bind
                 }
 
                 Generator.Process();
+                ISpecWriter writer = null;
+                switch (lang)
+                {
+                    case GeneratorLanguage.Cpp:
+                        writer = new CppSpecWriter();
+                        break;
+
+                    case GeneratorLanguage.CSharp:
+                    default:
+                        writer = new CSharpSpecWriter();
+                        break;
+                }
+                writer.WriteBindings(Generator);
 
                 ticks = DateTime.Now.Ticks - ticks;
 
