@@ -40,71 +40,72 @@ namespace Bind
 
     class XmlSpecReader : ISpecReader
     {
-        public DelegateCollection ReadDelegates(StreamReader specFile)
+        #region Public Members
+
+        public DelegateCollection ReadDelegates(XPathNavigator specs)
         {
             DelegateCollection delegates = new DelegateCollection();
-            XPathDocument specs = new XPathDocument(specFile);
-            XPathDocument overrides = new XPathDocument(new StreamReader(
-                Path.Combine(Settings.InputPath, Settings.OverridesFile)));
 
-            foreach (XPathNavigator nav in new XPathNavigator[] {
-                specs.CreateNavigator().SelectSingleNode("/signatures"),
-                overrides.CreateNavigator().SelectSingleNode("/overrides/add") })
+            foreach (XPathNavigator node in specs.SelectChildren("function", String.Empty))
             {
-                if (nav != null)
+                var name = node.GetAttribute("name", String.Empty);
+
+                // Check whether we are adding to an existing delegate or creating a new one.
+                Delegate d = null;
+                if (delegates.ContainsKey(name))
                 {
-                    foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
+                    d = delegates[name];
+                }
+                else
+                {
+                    d = new Delegate();
+                    d.Name = name;
+                    d.Version = node.GetAttribute("version", String.Empty);
+                    d.Category = node.GetAttribute("category", String.Empty);
+                    d.DeprecatedVersion = node.GetAttribute("deprecated", String.Empty);
+                    d.Deprecated = !String.IsNullOrEmpty(d.DeprecatedVersion);
+                }
+
+                foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
+                {
+                    switch (param.Name)
                     {
-                        var name = node.GetAttribute("name", String.Empty);
+                        case "returns":
+                            d.ReturnType.CurrentType = param.GetAttribute("type", String.Empty);
+                            break;
 
-                        // Check whether we are adding to an existing delegate or creating a new one.
-                        Delegate d = null;
-                        if (delegates.ContainsKey(name))
-                        {
-                            d = delegates[name];
-                        }
-                        else
-                        {
-                            d = new Delegate();
-                            d.Name = name;
-                            d.Version = node.GetAttribute("version", String.Empty);
-                            d.Category = node.GetAttribute("category", String.Empty);
-                            d.DeprecatedVersion = node.GetAttribute("deprecated", String.Empty);
-                            d.Deprecated = !String.IsNullOrEmpty(d.DeprecatedVersion);
-                        }
+                        case "param":
+                            Parameter p = new Parameter();
+                            p.CurrentType = param.GetAttribute("type", String.Empty);
+                            p.Name = param.GetAttribute("name", String.Empty);
 
-                        foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
-                        {
-                            switch (param.Name)
-                            {
-                                case "returns":
-                                    d.ReturnType.CurrentType = param.GetAttribute("type", String.Empty);
-                                    break;
+                            string element_count = param.GetAttribute("elementcount", String.Empty);
+                            if (String.IsNullOrEmpty(element_count))
+                                element_count = param.GetAttribute("count", String.Empty);
+                            if (!String.IsNullOrEmpty(element_count))
+                                p.ElementCount = Int32.Parse(element_count);
 
-                                case "param":
-                                    Parameter p = new Parameter();
-                                    p.CurrentType = param.GetAttribute("type", String.Empty);
-                                    p.Name = param.GetAttribute("name", String.Empty);
+                            p.Flow = Parameter.GetFlowDirection(param.GetAttribute("flow", String.Empty));
 
-                                    string element_count = param.GetAttribute("elementcount", String.Empty);
-                                    if (String.IsNullOrEmpty(element_count))
-                                        element_count = param.GetAttribute("count", String.Empty);
-                                    if (!String.IsNullOrEmpty(element_count))
-                                        p.ElementCount = Int32.Parse(element_count);
-
-                                    p.Flow = Parameter.GetFlowDirection(param.GetAttribute("flow", String.Empty));
-
-                                    d.Parameters.Add(p);
-                                    break;
-                            }
-                        }
-
-                        delegates.Add(d);
+                            d.Parameters.Add(p);
+                            break;
                     }
                 }
+
+                delegates.Add(d);
             }
 
             return delegates;
+        }
+
+        #endregion
+
+        #region ISpecReader Members
+
+        public DelegateCollection ReadDelegates(StreamReader specFile)
+        {
+            XPathDocument specs = new XPathDocument(specFile);
+            return ReadDelegates(specs.CreateNavigator().SelectSingleNode("/signatures/add"));
         }
 
         public Dictionary<string, string> ReadTypeMap(StreamReader specFile)
@@ -205,8 +206,8 @@ namespace Bind
                 Path.Combine(Settings.InputPath, Settings.OverridesFile)));
 
             foreach (XPathNavigator nav in new XPathNavigator[] {
-                specs.CreateNavigator().SelectSingleNode("/signatures"),
-                overrides.CreateNavigator().SelectSingleNode("/overrides/add") })
+                specs.CreateNavigator().SelectSingleNode("/signatures/add"),
+                overrides.CreateNavigator().SelectSingleNode("/signatures/add") })
             {
                 if (nav != null)
                 {
@@ -282,5 +283,7 @@ namespace Bind
             Utilities.Merge(enums, all);
             return enums;
         }
+
+        #endregion
     }
 }
