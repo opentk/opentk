@@ -9217,7 +9217,7 @@ namespace OpenTK.Graphics.OpenGL
         TextureFixedSampleLocations = ((int)0x9107),
     }
 
-    public enum Gl3DfxMultisample : int
+    public enum Gl3dfxMultisample : int
     {
         MultisampleBit3Dfx = ((int)0x20000000),
         Multisample3Dfx = ((int)0x86B2),
@@ -9225,11 +9225,11 @@ namespace OpenTK.Graphics.OpenGL
         Samples3Dfx = ((int)0x86B4),
     }
 
-    public enum Gl3DfxTbuffer : int
+    public enum Gl3dfxTbuffer : int
     {
     }
 
-    public enum Gl3DfxTextureCompressionFxt1 : int
+    public enum Gl3dfxTextureCompressionFxt1 : int
     {
         CompressedRgbFxt13Dfx = ((int)0x86B0),
         CompressedRgbaFxt13Dfx = ((int)0x86B1),
