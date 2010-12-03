@@ -70,7 +70,7 @@ namespace Bind
     {
         public static readonly char[] Separators = { ' ', '\n', ',', '(', ')', ';', '#' };
         public static readonly Regex Extensions = new Regex(
-            "(ARB|EXT|ATI|NV|SUNX|SUN|SGIS|SGIX|SGI|MESA|3DFX|IBM|GREMEDY|HP|INTEL|PGI|INGR|APPLE|OML|I3D)",
+            "(ARB|EXT|ATIX|ATI|AMDX|AMD|NV|NVX|SUNX|SUN|SGIS|SGIX|SGI|MESAX|MESA|3DFX|IBM|GREMEDY|HP|INTEL|PGI|INGR|APPLE|OML|I3D|ARM|ANGLE|OES|QCOM)",
             RegexOptions.Compiled);
 
         #region internal StreamReader OpenSpecFile(string file)
@@ -202,30 +202,20 @@ namespace Bind
 
         internal static string GetGL2Extension(string name)
         {
-            if (name.EndsWith("3DFX")) { return "3dfx"; }
-            if (name.EndsWith("APPLE")) { return "Apple"; }
-            if (name.EndsWith("ARB")) { return "Arb"; }
-            if (name.EndsWith("AMD")) { return "Amd"; }
-            if (name.EndsWith("ATI")) { return "Ati"; }
-            if (name.EndsWith("ATIX")) { return "Atix"; }
-            if (name.EndsWith("EXT")) { return "Ext"; }
-            if (name.EndsWith("GREMEDY")) { return "Gremedy"; }
-            if (name.EndsWith("HP")) { return "HP"; }
-            if (name.EndsWith("I3D")) { return "I3d"; }
-            if (name.EndsWith("IBM")) { return "Ibm"; }
-            if (name.EndsWith("INGR")) { return "Ingr"; }
-            if (name.EndsWith("INTEL")) { return "Intel"; }
-            if (name.EndsWith("MESA")) { return "Mesa"; }
-            if (name.EndsWith("NV")) { return "NV"; }
-            if (name.EndsWith("OES")) { return "Oes"; }
-            if (name.EndsWith("OML")) { return "Oml"; }
-            if (name.EndsWith("PGI")) { return "Pgi"; }
-            if (name.EndsWith("SGI")) { return "Sgi"; }
-            if (name.EndsWith("SGIS")) { return "Sgis"; }
-            if (name.EndsWith("SGIX")) { return "Sgix"; }
-            if (name.EndsWith("SUN")) { return "Sun"; }
-            if (name.EndsWith("SUNX")) { return "Sunx"; }
-            return String.Empty;
+            var match = Extensions.Match(name);
+            if (match.Success)
+            {
+                string ext = match.Value;
+                if (ext.Length > 2)
+                {
+                    ext = ext[0] + ext.Substring(1).ToLower();
+                }
+                return ext;
+            }
+            else
+            {
+                return String.Empty;
+            }
         }
 
         #endregion
