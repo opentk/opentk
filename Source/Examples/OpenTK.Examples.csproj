@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -80,6 +80,10 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Documentation|AnyCPU'">
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
+    <DebugType>none</DebugType>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nsis|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -141,6 +145,10 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ExampleInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OpenGL\1.x\Anaglyph.cs" />
+    <Compile Include="OpenGL\1.x\OpenGLDiagnostics.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SamplesTreeViewSorter.cs">
@@ -543,6 +551,8 @@
     <None Include="Data\Audio\the_ring_that_fell.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <EmbeddedResource Include="OpenGL\1.x\OpenGLDiagnostics.rtf" />
+    <EmbeddedResource Include="OpenGL\1.x\Anaglyph.rtf" />
     <None Include="Resources\App.ico">
     </None>
     <None Include="..\OpenTK\OpenTK.dll.config">

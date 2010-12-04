@@ -932,7 +932,7 @@ namespace OpenTK.Graphics.OpenGL
 
         public static void TexEnv(TextureEnvTarget target, TextureEnvParameter pname, System.Drawing.Color color)
         {
-            Color4 c = new Color4(color);
+            Color4 c = new Color4(color.R, color.G, color.B, color.A);
             unsafe
             {
                 TexEnv(target, pname, &c.R);

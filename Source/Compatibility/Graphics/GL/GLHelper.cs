@@ -1312,11 +1312,6 @@ namespace OpenTK.Graphics
 
         #endregion
 
-#pragma warning restore 3019
-#pragma warning restore 1591
-#pragma warning restore 1572
-#pragma warning restore 1573
-
         #endregion
     }
 }

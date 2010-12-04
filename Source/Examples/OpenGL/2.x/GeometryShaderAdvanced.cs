@@ -730,9 +730,9 @@ namespace Examples.Tutorial
             //GL.Arb.DrawArraysInstanced(BeginMode.Triangles, 0, cubeData.Length/8, 1);
             GL.DrawArrays(BeginMode.Triangles, 0, cubeData.Length / (vboCubeStride / sizeof(float)));
 
-            GL.DisableClientState(EnableCap.VertexArray);
-            GL.DisableClientState(EnableCap.NormalArray);
-            GL.DisableClientState(EnableCap.TextureCoordArray);
+            GL.DisableClientState(ArrayCap.VertexArray);
+            GL.DisableClientState(ArrayCap.NormalArray);
+            GL.DisableClientState(ArrayCap.TextureCoordArray);
         }
 
         void renderSphereVBO()
@@ -753,9 +753,9 @@ namespace Examples.Tutorial
             //GL.Arb.DrawArraysInstanced(BeginMode.Triangles, 0, cubeData.Length/8, 1);
             //GL.DrawArrays(BeginMode.Triangles, 0, sphereData.Length / (vboSphereStride / sizeof(float)));
 
-            GL.DisableClientState(EnableCap.VertexArray);
-            GL.DisableClientState(EnableCap.NormalArray);
-            GL.DisableClientState(EnableCap.TextureCoordArray);
+            GL.DisableClientState(ArrayCap.VertexArray);
+            GL.DisableClientState(ArrayCap.NormalArray);
+            GL.DisableClientState(ArrayCap.TextureCoordArray);
         }
 
         void renderCubemap()

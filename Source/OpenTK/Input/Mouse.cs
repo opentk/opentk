@@ -38,28 +38,57 @@ namespace OpenTK.Input
     {
         #region Fields
 
-        //static IMouseDriver driver;
-
-        #endregion
-
-        #region Constructors
-
-        static Mouse()
-        {
-        }
+        static readonly IMouseDriver2 driver =
+            Platform.Factory.Default.CreateMouseDriver();
+        static readonly object SyncRoot = new object();
 
         #endregion
 
         #region Public Members
 
         /// <summary>
-        /// Retrieves the MouseState for the specified mouse device.
+        /// Retrieves the combined <see cref="OpenTK.Input.MouseState"/> for all specified mouse devices.
+        /// </summary>
+        /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure containing the combined state of all mouse devices.</returns>
+        public static MouseState GetState()
+        {
+            lock (SyncRoot)
+            {
+                return driver.GetState();
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the <see cref="OpenTK.Input.MouseState"/> for the specified mouse device.
         /// </summary>
         /// <param name="index">The index of the mouse device.</param>
-        /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure containing the state of the mouse device.</returns>
+        /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure containing the state for the specified mouse device.</returns>
         public static MouseState GetState(int index)
         {
-            throw new NotImplementedException();
+            if (index < 0)
+                throw new ArgumentOutOfRangeException("index");
+
+            lock (SyncRoot)
+            {
+                return driver.GetState(index);
+            }
+        }
+
+        /// <summary>
+        ///Moves the mouse cursor to the specified screen position.
+        /// </summary>
+        /// <param name="x">
+        /// A <see cref="System.Double"/> that represents the absolute x position of the cursor in screen coordinates.
+        /// </param>
+        /// <param name="y">
+        /// A <see cref="System.Double"/> that represents the absolute y position of the cursor in screen coordinates.
+        /// </param>
+        public static void SetPosition(double x, double y)
+        {
+            lock (SyncRoot)
+            {
+                driver.SetPosition(x, y);
+            }
         }
 
         #endregion

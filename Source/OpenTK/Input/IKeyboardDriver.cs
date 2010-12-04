@@ -13,6 +13,7 @@ namespace OpenTK.Input
     /// <summary>
     /// Defines the interface for KeyboardDevice drivers.
     /// </summary>
+    [Obsolete]
     public interface IKeyboardDriver
     {
         /// <summary>

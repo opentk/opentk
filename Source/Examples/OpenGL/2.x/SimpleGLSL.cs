@@ -261,8 +261,8 @@ namespace Examples.Tutorial
 
             //GL.DrawArrays(GL.Enums.BeginMode.POINTS, 0, shape.Vertices.Length);
 
-            GL.DisableClientState(EnableCap.VertexArray);
-            GL.DisableClientState(EnableCap.ColorArray);
+            GL.DisableClientState(ArrayCap.VertexArray);
+            GL.DisableClientState(ArrayCap.ColorArray);
             
 
             //int error = GL.GetError();

@@ -36,14 +36,14 @@ namespace OpenTK.Platform.MacOS
     /// <summary>
     /// Describes a Carbon window.
     /// </summary>
-    sealed class CarbonWindowInfo : IWindowInfo 
+    sealed class CarbonWindowInfo : IWindowInfo
     {
         IntPtr windowRef;
         bool ownHandle = false;
         bool disposed = false;
         bool isControl = false;
-		bool goFullScreenHack = false;
-		bool goWindowedHack = false;
+        bool goFullScreenHack = false;
+        bool goWindowedHack = false;
 
         #region Constructors
 
@@ -72,16 +72,16 @@ namespace OpenTK.Platform.MacOS
             get { return this.windowRef; }
         }
 
-		internal bool GoFullScreenHack
-		{
-			get { return goFullScreenHack; }
-			set { goFullScreenHack = value; }
-		}
-		internal bool GoWindowedHack
-		{
-			get { return goWindowedHack; }
-			set { goWindowedHack = value; }
-		}
+        internal bool GoFullScreenHack
+        {
+            get { return goFullScreenHack; }
+            set { goFullScreenHack = value; }
+        }
+        internal bool GoWindowedHack
+        {
+            get { return goWindowedHack; }
+            set { goWindowedHack = value; }
+        }
 
 
         /// <summary>
@@ -96,8 +96,7 @@ namespace OpenTK.Platform.MacOS
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {
-            return String.Format("MacOS.CarbonWindowInfo: Handle {0}",
-                this.WindowRef);
+            return String.Format("MacOS.CarbonWindowInfo: Handle {0}", this.WindowRef);
         }
 
         #endregion
@@ -113,19 +112,19 @@ namespace OpenTK.Platform.MacOS
         {
             if (disposed)
                 return;
-
+            
             if (disposing)
             {
-
+                
             }
-
+            
             if (ownHandle)
             {
                 Debug.Print("Disposing window {0}.", windowRef);
                 Carbon.API.DisposeWindow(this.windowRef);
                 windowRef = IntPtr.Zero;
             }
-
+            
             disposed = true;
         }
 
@@ -133,7 +132,7 @@ namespace OpenTK.Platform.MacOS
         {
             Dispose(false);
         }
-
+        
         #endregion
     }
 }
