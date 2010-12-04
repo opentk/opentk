@@ -56,7 +56,7 @@
             from the <emphasis>depth</emphasis> values of the appropriate vertices.
             The value of the offset is 
             <inlineequation><mml:math>
-                <!-- eqn: factor  *  DZ   +   r  *  units:-->
+                <!-- eqn: factor  *  DZ   +   r  *  units: -->
                 <mml:mrow>
                     <mml:mrow>
                         <mml:mi mathvariant="italic">factor</mml:mi>
@@ -73,7 +73,7 @@
             </mml:math></inlineequation>,
             where 
             <inlineequation><mml:math>
-                <!-- eqn: DZ:-->
+                <!-- eqn: DZ: -->
                 <mml:mi mathvariant="italic">DZ</mml:mi>
             </mml:math></inlineequation>
             is a measurement of the change in depth relative to the screen
@@ -87,25 +87,6 @@
         <para>
             <function>glPolygonOffset</function> is useful for rendering hidden-line images, for applying decals
             to surfaces, and for rendering solids with highlighted edges.
-        </para>
-    </refsect1>
-    <refsect1 id="notes"><title>Notes</title>
-        <para>
-            <function>glPolygonOffset</function> is available only if the GL version is 1.1 or greater.
-        </para>
-        <para>
-            <function>glPolygonOffset</function> has no effect on depth coordinates placed in the
-            feedback buffer.
-        </para>
-        <para>
-            <function>glPolygonOffset</function> has no effect on selection.
-        </para>
-    </refsect1>
-    <refsect1 id="errors"><title>Errors</title>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glPolygonOffset</function> is executed
-            between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
-            execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>

@@ -281,11 +281,11 @@ namespace Bind.Structures
 
         #endregion
 
-        #region override public void Translate(XPathNavigator overrides, string category)
+        #region Translate()
 
-        override public void Translate(XPathNavigator overrides, string category)
+        override public void Translate(XPathNavigator overrides, string category, EnumCollection enums)
         {
-            base.Translate(overrides, category);
+            base.Translate(overrides, category, enums);
 
             // Find out the necessary wrapper types.
             if (Pointer != 0)/* || CurrentType == "IntPtr")*/
@@ -328,10 +328,8 @@ namespace Bind.Structures
             if (Reference)
                 WrapperType |= WrapperTypes.ReferenceParameter;
 
-            if (Name == "params")
-                Name = "@params";
-            if (Name == "event")
-                Name = "@event";
+            if (Utilities.Keywords.Contains(Name))
+                Name = "@" + Name;
 
             // This causes problems with bool arrays
             //if (CurrentType.ToLower().Contains("bool"))

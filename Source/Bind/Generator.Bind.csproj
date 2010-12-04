@@ -122,6 +122,10 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CppSpecWriter.cs" />
+    <Compile Include="CSharpSpecWriter.cs" />
+    <Compile Include="FuncProcessor.cs" />
+    <Compile Include="GL2\GL4Generator.cs" />
     <Compile Include="IBind.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -137,6 +141,7 @@
     <Compile Include="BindStreamWriter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EnumProcessor.cs" />
     <Compile Include="Utilities.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -179,24 +184,11 @@
     <Compile Include="ES\ESGenerator.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Glx\Generator.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Glu\Generator.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Wgl\Generator.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="XmlSpecReader.cs" />
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
     </None>
-    <None Include="Specifications\GL2\enum.spec">
-    </None>
-    <None Include="Specifications\GL2\gl.spec">
-    </None>
-    <None Include="Specifications\GL2\enumext.spec">
-    </None>
+    <None Include="Specifications\GL2\gl.tm" />
     <None Include="Specifications\Glx\glx.spec">
     </None>
     <None Include="Specifications\Glx\glxenum.spec">
@@ -218,8 +210,6 @@
     <None Include="Specifications\Wgl\wglenumext.spec">
     </None>
     <None Include="Specifications\csharp.tm">
-    </None>
-    <None Include="Specifications\GL2\gl.tm">
     </None>
     <None Include="Specifications\Glx\glx.tm">
     </None>
@@ -924,6 +914,127 @@
     <None Include="Documentation\changelog.txt">
     </None>
     <None Include="Specifications\License.txt">
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Specifications\Docs\glActiveShaderProgram.xml" />
+    <None Include="Specifications\Docs\glBeginConditionalRender.xml" />
+    <None Include="Specifications\Docs\glBeginQueryIndexed.xml" />
+    <None Include="Specifications\Docs\glBeginTransformFeedback.xml" />
+    <None Include="Specifications\Docs\glBindBufferBase.xml" />
+    <None Include="Specifications\Docs\glBindBufferRange.xml" />
+    <None Include="Specifications\Docs\glBindFragDataLocation.xml" />
+    <None Include="Specifications\Docs\glBindFragDataLocationIndexed.xml" />
+    <None Include="Specifications\Docs\glBindFramebuffer.xml" />
+    <None Include="Specifications\Docs\glBindProgramPipeline.xml" />
+    <None Include="Specifications\Docs\glBindRenderbuffer.xml" />
+    <None Include="Specifications\Docs\glBindSampler.xml" />
+    <None Include="Specifications\Docs\glBindTransformFeedback.xml" />
+    <None Include="Specifications\Docs\glBindVertexArray.xml" />
+    <None Include="Specifications\Docs\glBlitFramebuffer.xml" />
+    <None Include="Specifications\Docs\glCheckFramebufferStatus.xml" />
+    <None Include="Specifications\Docs\glClampColor.xml" />
+    <None Include="Specifications\Docs\glClearBuffer.xml" />
+    <None Include="Specifications\Docs\glClientWaitSync.xml" />
+    <None Include="Specifications\Docs\glCopyBufferSubData.xml" />
+    <None Include="Specifications\Docs\glCreateShaderProgram.xml" />
+    <None Include="Specifications\Docs\glDeleteFramebuffers.xml" />
+    <None Include="Specifications\Docs\glDeleteProgramPipelines.xml" />
+    <None Include="Specifications\Docs\glDeleteRenderbuffers.xml" />
+    <None Include="Specifications\Docs\glDeleteSamplers.xml" />
+    <None Include="Specifications\Docs\glDeleteSync.xml" />
+    <None Include="Specifications\Docs\glDeleteTransformFeedbacks.xml" />
+    <None Include="Specifications\Docs\glDeleteVertexArrays.xml" />
+    <None Include="Specifications\Docs\glDepthRangeArray.xml" />
+    <None Include="Specifications\Docs\glDepthRangeIndexed.xml" />
+    <None Include="Specifications\Docs\glDrawArraysIndirect.xml" />
+    <None Include="Specifications\Docs\glDrawArraysInstanced.xml" />
+    <None Include="Specifications\Docs\glDrawElementsBaseVertex.xml" />
+    <None Include="Specifications\Docs\glDrawElementsIndirect.xml" />
+    <None Include="Specifications\Docs\glDrawElementsInstanced.xml" />
+    <None Include="Specifications\Docs\glDrawElementsInstancedBaseVertex.xml" />
+    <None Include="Specifications\Docs\glDrawRangeElementsBaseVertex.xml" />
+    <None Include="Specifications\Docs\glDrawTransformFeedback.xml" />
+    <None Include="Specifications\Docs\glDrawTransformFeedbackStream.xml" />
+    <None Include="Specifications\Docs\glFenceSync.xml" />
+    <None Include="Specifications\Docs\glFlushMappedBufferRange.xml" />
+    <None Include="Specifications\Docs\glFramebufferRenderbuffer.xml" />
+    <None Include="Specifications\Docs\glFramebufferTexture.xml" />
+    <None Include="Specifications\Docs\glFramebufferTextureFace.xml" />
+    <None Include="Specifications\Docs\glFramebufferTextureLayer.xml" />
+    <None Include="Specifications\Docs\glGenerateMipmap.xml" />
+    <None Include="Specifications\Docs\glGenFramebuffers.xml" />
+    <None Include="Specifications\Docs\glGenProgramPipelines.xml" />
+    <None Include="Specifications\Docs\glGenRenderbuffers.xml" />
+    <None Include="Specifications\Docs\glGenSamplers.xml" />
+    <None Include="Specifications\Docs\glGenTransformFeedbacks.xml" />
+    <None Include="Specifications\Docs\glGenVertexArrays.xml" />
+    <None Include="Specifications\Docs\glGetActiveSubroutineName.xml" />
+    <None Include="Specifications\Docs\glGetActiveSubroutineUniform.xml" />
+    <None Include="Specifications\Docs\glGetActiveSubroutineUniformName.xml" />
+    <None Include="Specifications\Docs\glGetActiveUniformBlock.xml" />
+    <None Include="Specifications\Docs\glGetActiveUniformBlockName.xml" />
+    <None Include="Specifications\Docs\glGetActiveUniformName.xml" />
+    <None Include="Specifications\Docs\glGetBufferParameter.xml" />
+    <None Include="Specifications\Docs\glGetFragDataIndex.xml" />
+    <None Include="Specifications\Docs\glGetFragDataLocation.xml" />
+    <None Include="Specifications\Docs\glGetFramebufferAttachmentParameter.xml" />
+    <None Include="Specifications\Docs\glGetMultisample.xml" />
+    <None Include="Specifications\Docs\glGetProgramBinary.xml" />
+    <None Include="Specifications\Docs\glGetProgramPipeline.xml" />
+    <None Include="Specifications\Docs\glGetProgramPipelineInfoLog.xml" />
+    <None Include="Specifications\Docs\glGetProgramStage.xml" />
+    <None Include="Specifications\Docs\glGetQueryIndexed.xml" />
+    <None Include="Specifications\Docs\glGetRenderbufferParameter.xml" />
+    <None Include="Specifications\Docs\glGetSamplerParameter.xml" />
+    <None Include="Specifications\Docs\glGetShaderPrecisionFormat.xml" />
+    <None Include="Specifications\Docs\glGetSubroutineIndex.xml" />
+    <None Include="Specifications\Docs\glGetSubroutineUniformLocation.xml" />
+    <None Include="Specifications\Docs\glGetSync.xml" />
+    <None Include="Specifications\Docs\glGetTransformFeedbackVarying.xml" />
+    <None Include="Specifications\Docs\glGetUniformBlockIndex.xml" />
+    <None Include="Specifications\Docs\glGetUniformIndices.xml" />
+    <None Include="Specifications\Docs\glGetUniformSubroutine.xml" />
+    <None Include="Specifications\Docs\glIsFramebuffer.xml" />
+    <None Include="Specifications\Docs\glIsProgramPipeline.xml" />
+    <None Include="Specifications\Docs\glIsRenderbuffer.xml" />
+    <None Include="Specifications\Docs\glIsSampler.xml" />
+    <None Include="Specifications\Docs\glIsSync.xml" />
+    <None Include="Specifications\Docs\glIsTransformFeedback.xml" />
+    <None Include="Specifications\Docs\glIsVertexArray.xml" />
+    <None Include="Specifications\Docs\glMapBufferRange.xml" />
+    <None Include="Specifications\Docs\glMultiDrawElementsBaseVertex.xml" />
+    <None Include="Specifications\Docs\glPatchParameter.xml" />
+    <None Include="Specifications\Docs\glPauseTransformFeedback.xml" />
+    <None Include="Specifications\Docs\glPrimitiveRestartIndex.xml" />
+    <None Include="Specifications\Docs\glProgramBinary.xml" />
+    <None Include="Specifications\Docs\glProgramParameter.xml" />
+    <None Include="Specifications\Docs\glProgramUniform.xml" />
+    <None Include="Specifications\Docs\glProvokingVertex.xml" />
+    <None Include="Specifications\Docs\glQueryCounter.xml" />
+    <None Include="Specifications\Docs\glReleaseShaderCompiler.xml" />
+    <None Include="Specifications\Docs\glRenderbufferStorage.xml" />
+    <None Include="Specifications\Docs\glRenderbufferStorageMultisample.xml" />
+    <None Include="Specifications\Docs\glResumeTransformFeedback.xml" />
+    <None Include="Specifications\Docs\glSampleMaski.xml" />
+    <None Include="Specifications\Docs\glSamplerParameter.xml" />
+    <None Include="Specifications\Docs\glScissorArray.xml" />
+    <None Include="Specifications\Docs\glScissorIndexed.xml" />
+    <None Include="Specifications\Docs\glShaderBinary.xml" />
+    <None Include="Specifications\Docs\glTexBuffer.xml" />
+    <None Include="Specifications\Docs\glTexImage2DMultisample.xml" />
+    <None Include="Specifications\Docs\glTexImage3DMultisample.xml" />
+    <None Include="Specifications\Docs\glTransformFeedbackVaryings.xml" />
+    <None Include="Specifications\Docs\glUniformBlockBinding.xml" />
+    <None Include="Specifications\Docs\glUniformSubroutines.xml" />
+    <None Include="Specifications\Docs\glUseProgramStages.xml" />
+    <None Include="Specifications\Docs\glValidateProgramPipeline.xml" />
+    <None Include="Specifications\Docs\glVertexAttribDivisor.xml" />
+    <None Include="Specifications\Docs\glViewportArray.xml" />
+    <None Include="Specifications\Docs\glViewportIndexed.xml" />
+    <None Include="Specifications\Docs\glWaitSync.xml" />
+    <None Include="Specifications\GL2\signatures.xml">
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />

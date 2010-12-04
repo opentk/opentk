@@ -97,22 +97,11 @@
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term><constant>GL_STACK_OVERFLOW</constant></term>
+                <term><constant>GL_INVALID_FRAMEBUFFER_OPERATION</constant></term>
                 <listitem>
                     <para>
-                        This command would cause a stack overflow.
-                        The offending command is ignored
-                        and has no other side effect than to set the error flag.
-                    </para>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_STACK_UNDERFLOW</constant></term>
-                <listitem>
-                    <para>
-                        This command would cause a stack underflow.
-                        The offending command is ignored
-                        and has no other side effect than to set the error flag.
+                        The framebuffer object is not complete. The offending command
+                        is ignored and has no other side effect than to set the error flag.
                     </para>
                 </listitem>
             </varlistentry>
@@ -127,16 +116,6 @@
                     </para>
                 </listitem>
             </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TABLE_TOO_LARGE</constant></term>
-                <listitem>
-                    <para>
-                        The specified table exceeds the implementation's maximum supported table
-                        size.  The offending command is ignored and has no other side effect
-                        than to set the error flag.
-                    </para>
-                </listitem>
-            </varlistentry>
         </variablelist>
         <para>
             When an error flag is set,
@@ -147,19 +126,6 @@
             or frame buffer contents.
             If the generating command returns a value, it returns 0.
             If <function>glGetError</function> itself generates an error, it returns 0.
-        </para>
-    </refsect1>
-    <refsect1 id="notes"><title>Notes</title>
-        <para>
-            <constant>GL_TABLE_TOO_LARGE</constant> was introduced in GL version 1.2.
-        </para>
-    </refsect1>
-    <refsect1 id="errors"><title>Errors</title>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetError</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
-            In this case, <function>glGetError</function> returns 0.
         </para>
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>

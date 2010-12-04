@@ -48,7 +48,7 @@
             The <constant>GL_BLEND_COLOR</constant> may be used to calculate the source and destination
             blending factors. The color components are clamped to the range 
             <inlineequation><mml:math>
-                <!-- eqn: [0,1]:-->
+                <!-- eqn: [0,1]: -->
                 <mml:mfenced open="[" close="]">
                     <mml:mn>0</mml:mn>
                     <mml:mn>1</mml:mn>
@@ -57,22 +57,6 @@
             before being stored. See <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry> for a complete description of the
             blending operations.
             Initially the <constant>GL_BLEND_COLOR</constant> is set to (0, 0, 0, 0).
-        </para>
-    </refsect1>
-    <refsect1 id="notes"><title>Notes</title>
-        <para>
-            <function>glBlendColor</function> is part of the <code>ARB_imaging</code> subset. <function>glBlendColor</function> is present only
-            if <code>ARB_imaging</code> is returned when <citerefentry><refentrytitle>glGetString</refentrytitle></citerefentry> is called with
-            <constant>GL_EXTENSIONS</constant> as its argument.
-        </para>
-    </refsect1>
-    <refsect1 id="errors"><title>Errors</title>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glBlendColor</function> is executed
-            between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
-            execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
-        </para>
-        <para>
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>

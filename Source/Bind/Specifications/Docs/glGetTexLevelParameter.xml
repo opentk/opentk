@@ -44,16 +44,31 @@
             <listitem>
                 <para>
                     Specifies the symbolic name of the target texture,
-                    either <constant>GL_TEXTURE_1D</constant>, <constant>GL_TEXTURE_2D</constant>, <constant>GL_TEXTURE_3D</constant>,
-                    <constant>GL_PROXY_TEXTURE_1D</constant>, <constant>GL_PROXY_TEXTURE_2D</constant>,
-                    <constant>GL_PROXY_TEXTURE_3D</constant>,
+                    one of
+                    <constant>GL_TEXTURE_1D</constant>,
+                    <constant>GL_TEXTURE_2D</constant>,
+                    <constant>GL_TEXTURE_3D</constant>,
+                    <constant>GL_TEXTURE_1D_ARRAY</constant>,
+                    <constant>GL_TEXTURE_2D_ARRAY</constant>,
+                    <constant>GL_TEXTURE_RECTANGLE</constant>,
+                    <constant>GL_TEXTURE_2D_MULTISAMPLE</constant>,
+                    <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>,
-                    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>, or
-                    <constant>GL_PROXY_TEXTURE_CUBE_MAP</constant>.
+                    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>,
+                    <constant>GL_PROXY_TEXTURE_1D</constant>,
+                    <constant>GL_PROXY_TEXTURE_2D</constant>,
+                    <constant>GL_PROXY_TEXTURE_3D</constant>,
+                    <constant>GL_PROXY_TEXTURE_1D_ARRAY</constant>,
+                    <constant>GL_PROXY_TEXTURE_2D_ARRAY</constant>,
+                    <constant>GL_PROXY_TEXTURE_RECTANGLE</constant>,
+                    <constant>GL_PROXY_TEXTURE_2D_MULTISAMPLE</constant>,
+                    <constant>GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>,
+                    <constant>GL_PROXY_TEXTURE_CUBE_MAP</constant>, or
+                    <constant>GL_TEXTURE_BUFFER</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -85,8 +100,6 @@
                     <constant>GL_TEXTURE_GREEN_SIZE</constant>,
                     <constant>GL_TEXTURE_BLUE_SIZE</constant>,
                     <constant>GL_TEXTURE_ALPHA_SIZE</constant>,
-                    <constant>GL_TEXTURE_LUMINANCE_SIZE</constant>,
-                    <constant>GL_TEXTURE_INTENSITY_SIZE</constant>,
                     <constant>GL_TEXTURE_DEPTH_SIZE</constant>,
                     <constant>GL_TEXTURE_COMPRESSED</constant>, and
                     <constant>GL_TEXTURE_COMPRESSED_IMAGE_SIZE</constant>
@@ -195,14 +208,37 @@
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term><constant>GL_TEXTURE_BORDER</constant></term>
+                <term><constant>GL_TEXTURE_RED_TYPE</constant>,</term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_GREEN_TYPE</constant>,</term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_BLUE_TYPE</constant>,</term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_ALPHA_TYPE</constant>,</term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_DEPTH_TYPE</constant></term>
                 <listitem>
                     <para>
                     </para>
                     <para>
-                        <parameter>params</parameter> returns a single value,
-                        the width in pixels of the border of the texture image. The initial value
-                        is 0.
+                        The data type used to store the component.
+                        The types <constant>GL_NONE</constant>, <constant>GL_SIGNED_NORMALIZED</constant>,
+                        <constant>GL_UNSIGNED_NORMALIZED</constant>, <constant>GL_FLOAT</constant>,
+                        <constant>GL_INT</constant>, and <constant>GL_UNSIGNED_INT</constant> may be returned
+                        to indicate signed normalized fixed-point, unsigned normalized fixed-point, floating-point, integer unnormalized, and
+                        unsigned integer unnormalized components, respectively.
                     </para>
                 </listitem>
             </varlistentry>
@@ -223,16 +259,6 @@
             </varlistentry>
             <varlistentry>
                 <term><constant>GL_TEXTURE_ALPHA_SIZE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_LUMINANCE_SIZE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_INTENSITY_SIZE</constant>,</term>
                 <listitem>
                 </listitem>
             </varlistentry>
@@ -281,33 +307,7 @@
             no change is made to the contents of <parameter>params</parameter>.
         </para>
         <para>
-            <constant>GL_TEXTURE_INTERNAL_FORMAT</constant> is available only if the GL version is
-            1.1 or greater. In version 1.0, use <constant>GL_TEXTURE_COMPONENTS</constant>
-            instead.
-        </para>
-        <para>
-            <constant>GL_PROXY_TEXTURE_1D</constant> and <constant>GL_PROXY_TEXTURE_2D</constant> are
-            available only if the GL version is 1.1 or greater.
-        </para>
-        <para>
-            <constant>GL_TEXTURE_3D</constant>, <constant>GL_PROXY_TEXTURE_3D</constant>, and <constant>GL_TEXTURE_DEPTH</constant>
-            are available only if the GL version is 1.2 or greater.
-        </para>
-        <para>
-            <constant>GL_TEXTURE_COMPRESSED</constant>,
-            <constant>GL_TEXTURE_COMPRESSED_IMAGE_SIZE</constant>,
-            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
-            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
-            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
-            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
-            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>,
-            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>, and
-            <constant>GL_PROXY_TEXTURE_CUBE_MAP</constant> are available only if the GL version is 1.3
-            or greater.
-        </para>
-        <para>
-            For OpenGL versions 1.3 and greater, or when the <code>ARB_multitexture</code> extension is supported, <function>glGetTexLevelParameter</function> returns
-            the texture level parameters for the active texture unit.
+            <function>glGetTexLevelParameter</function> returns the texture level parameters for the active texture unit.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
@@ -322,7 +322,7 @@
             <constant>GL_INVALID_VALUE</constant> may be generated if <parameter>level</parameter> is greater
             than 
             <inlineequation><mml:math>
-                <!-- eqn: log sub 2:-->
+                <!-- eqn: log sub 2: -->
                 <mml:msub><mml:mi mathvariant="italic">log</mml:mi>
                 <mml:mn>2</mml:mn>
                 </mml:msub>
@@ -331,9 +331,8 @@
             where <emphasis>max</emphasis> is the returned value of <constant>GL_MAX_TEXTURE_SIZE</constant>.
         </para>
         <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetTexLevelParameter</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>target</parameter> is <constant>GL_TEXTURE_BUFFER</constant>
+            and <parameter>level</parameter> is not zero.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if
@@ -350,8 +349,6 @@
             <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCopyTexSubImage3D</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glTexEnv</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glTexGen</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
@@ -364,7 +361,8 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc. Copyright <trademark class="copyright"></trademark> 2010
+            Khronos Group. This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

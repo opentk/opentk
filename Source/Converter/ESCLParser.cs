@@ -36,25 +36,13 @@ namespace CHeaderToXML
     // Todo: Fails to parse ES extension headers, which mix enum and function definitions.
 
     // Parses ES and CL header files.
-    sealed class ESCLParser
+    sealed class ESCLParser : Parser
     {
         Regex extensions = new Regex("(ARB|EXT|AMD|NV|OES|QCOM)", RegexOptions.RightToLeft | RegexOptions.Compiled);
         Regex array_size = new Regex(@"\[.+\]", RegexOptions.RightToLeft | RegexOptions.Compiled);
         Regex EnumToken  = new Regex(@"^#define \w+\s+\(?-?\w+\s?<?<?\s?-?\w*\)?$", RegexOptions.Compiled);
 
-        public ESCLParser()
-        {
-        }
-
-        public string Prefix {get; set;}
-        public string Version {get; set;}
-
-        public IEnumerable<XElement> Parse(string filename)
-        {
-            return Parse(File.ReadAllLines(filename));
-        }
-
-        public IEnumerable<XElement> Parse(string[] lines)
+        public override IEnumerable<XElement> Parse(string[] lines)
         {
             char[] splitters = new char[] { ' ', '\t', ',', '(', ')', ';', '\n', '\r' };
 
@@ -206,19 +194,10 @@ namespace CHeaderToXML
                 string funcname = null;
                 GetFunctionNameAndType(words, out funcname, out rettype);
 
-                var paramaters_string = Regex.Match(line, @"\(.*\)").Captures[0].Value.TrimStart('(').TrimEnd(')');
-
-                // This regex matches function parameters.
-                // The first part matches function pointers in the following format:
-                // '[return type] (*[function pointer name])([parameter list]) [parameter name]
-                // where [parameter name] may or may not be in comments.
-                // The second part (after the '|') matches parameters of the following formats:
-                // '[parameter type] [parameter name]', '[parameter type] [pointer] [parameter name]', 'const [parameter type][pointer] [parameter name]'
-                // where [parameter name] may be inside comments (/* ... */) and [pointer] is '', '*', '**', etc.
-                var get_param = new Regex(@"(\w+\s\(\*\w+\)\s*\(.*\)\s*(/\*.*?\*/|\w+)? | (const\s)?(\w+\s*)+\**\s*(/\*.*?\*/|\w+(\[.*?\])?)),?", RegexOptions.IgnorePatternWhitespace);
+                var parameters_string = Regex.Match(line, @"\(.*\)").Captures[0].Value.TrimStart('(').TrimEnd(')');
 
                 var parameters =
-                    (from item in get_param.Matches(paramaters_string).OfType<Match>()
+                    (from item in get_param.Matches(parameters_string).OfType<Match>()
                     select item.Captures[0].Value.TrimEnd(',')).ToList();
 
                 var fun =
@@ -229,43 +208,7 @@ namespace CHeaderToXML
                         Version = Version,
                         Extension = GetExtension(funcname),
                         Profile = String.Empty,
-                        Parameters =
-                            from item in get_param.Matches(paramaters_string).OfType<Match>().Select(m => m.Captures[0].Value.TrimEnd(','))
-                                //paramaters_string.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
-                            let tokens = item.Trim().Split(' ')
-                            let is_function_pointer = item.Contains("(*") // This only occurs in function pointers, e.g. void (*pfn_notify)() or void (*user_func)()
-                            let param_name =
-                                is_function_pointer ? tokens[1].TrimStart('(', '*').Split(')')[0] :
-                                (tokens.Last().Trim() != "*/" ? tokens.Last() : tokens[tokens.Length - 2]).Trim()
-                            let param_type =
-                                is_function_pointer ? "IntPtr" :
-                                (from t in tokens where t.Trim() != "const" && t.Trim() != "unsigned" select t).First().Trim()
-                            let has_array_size = array_size.IsMatch(param_name)
-                            let indirection_level =
-                                is_function_pointer ? 0 :
-                                (from c in param_name where c == '*' select c).Count() +
-                                (from c in param_type where c == '*' select c).Count() +
-                                (from t in tokens where t == "***" select t).Count() * 3 +
-                                (from t in tokens where t == "**" select t).Count() * 2 +
-                                (from t in tokens where t == "*" select t).Count() +
-                                (has_array_size ? 1 : 0)
-                            let pointers = new string[] { "*", "*", "*", "*" } // for adding indirection levels (pointers) to param_type
-                            where tokens.Length > 1
-                            select new
-                            {
-                                Name = (has_array_size ? array_size.Replace(param_name, "") : param_name).Replace("*", ""), // Pointers are placed into the parameter Type, not Name
-                                Type =
-                                    is_function_pointer ? param_type :
-                                    (tokens.Contains("unsigned") && !param_type.StartsWith("byte") ? "u" : "") +    // Make sure we don't ignore the unsigned part of unsigned parameters (e.g. unsigned int -> uint)
-                                    param_type.Replace("*", "") + String.Join("", pointers, 0, indirection_level),  // Normalize pointer indirection level (place as many asterisks as in indirection_level variable)
-                                Count = has_array_size ? Int32.Parse(array_size.Match(param_name).Value.Trim('[', ']')) : 0,
-                                Flow =
-                                    param_name.EndsWith("ret") ||
-                                    ((funcname.StartsWith("Get") || funcname.StartsWith("Gen")) &&
-                                     indirection_level > 0 &&
-                                     !(funcname.EndsWith("Info") || funcname.EndsWith("IDs") || funcname.EndsWith("ImageFormats"))) ? // OpenCL contains Get*[Info|IDs|ImageFormats] methods with 'in' pointer parameters
-                                    "out" : "in"
-                            }
+                        Parameters = GetParameters(funcname, parameters_string)
                     };
 
                 XElement func = new XElement("function", new XAttribute("name", fun.Name));
@@ -308,7 +251,6 @@ namespace CHeaderToXML
                 line.StartsWith("GLAPI") || line.StartsWith("EGLAPI") ||
                 line.StartsWith("extern CL_API_ENTRY"));
 
-
             var signatures = lines.Aggregate(
                 new List<XElement>(),
                 (List<XElement> acc, string line) =>
@@ -324,6 +266,73 @@ namespace CHeaderToXML
                     select elem);
 
             return signatures;
+        }
+
+        class Parameter
+        {
+            public string Name { get; set; }
+            public string Type { get; set; }
+            public int Count { get; set; }
+            public string Flow { get; set; }
+        }
+
+        // This regex matches function parameters.
+        // The first part matches function pointers in the following format:
+        // '[return type] (*[function pointer name])([parameter list]) [parameter name]
+        // where [parameter name] may or may not be in comments.
+        // The second part (after the '|') matches parameters of the following formats:
+        // '[parameter type] [parameter name]', '[parameter type] [pointer] [parameter name]', 'const [parameter type][pointer] [parameter name]'
+        // where [parameter name] may be inside comments (/* ... */) and [pointer] is '', '*', '**', etc.
+        static readonly Regex get_param = new Regex(
+            @"(\w+\s\(\*\w+\)\s*\(.*\)\s*(/\*.*?\*/|\w+)? | (const\s*)? (\w+\s*)+ (\**\s*\**) (/\*.*?\*/|\w+(\[.*?\])?)) ,?",
+            RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
+
+        IEnumerable<Parameter> GetParameters(string funcname, string parameters_string)
+        {
+            var parameters =
+                get_param.Matches(parameters_string).OfType<Match>().Select(m => m.Captures[0].Value.TrimEnd(','));
+
+            foreach (var item in parameters)
+            {
+                var tokens = item.Trim().Split(' ');
+                // This only occurs in function pointers, e.g. void (*pfn_notify)() or void (*user_func)()
+                var is_function_pointer = item.Contains("(*");
+                var param_name =
+                    is_function_pointer ? tokens[1].TrimStart('(', '*').Split(')')[0] :
+                    (tokens.Last().Trim() != "*/" ? tokens.Last() : tokens[tokens.Length - 2]).Trim();
+                var param_type =
+                    is_function_pointer ? "IntPtr" :
+                    (from t in tokens where t.Trim() != "const" && t.Trim() != "unsigned" select t).First().Trim();
+                var has_array_size = array_size.IsMatch(param_name);
+                var indirection_level =
+                    is_function_pointer ? 0 :
+                    (from c in param_name where c == '*' select c).Count() +
+                    (from c in param_type where c == '*' select c).Count() +
+                    (from t in tokens where t == "***" select t).Count() * 3 +
+                    (from t in tokens where t == "**" select t).Count() * 2 +
+                    (from t in tokens where t == "*" select t).Count() +
+                    (has_array_size ? 1 : 0);
+                // for adding indirection levels (pointers) to param_type
+                var pointers = new string[] { "*", "*", "*", "*" };
+
+                if (tokens.Length > 1)
+                {
+                    // Pointers are placed into the parameter Type, not Name
+                    var name = (has_array_size ? array_size.Replace(param_name, "") : param_name).Replace("*", "");
+                    var type = is_function_pointer ? param_type :
+                        (tokens.Contains("unsigned") && !param_type.StartsWith("byte") ? "u" : "") +    // Make sure we don't ignore the unsigned part of unsigned parameters (e.g. unsigned int -> uint)
+                        param_type.Replace("*", "") + String.Join("", pointers, 0, indirection_level);  // Normalize pointer indirection level (place as many asterisks as in indirection_level variable)
+                    var count = has_array_size ? Int32.Parse(array_size.Match(param_name).Value.Trim('[', ']')) : 0;
+                    var flow =
+                        param_name.EndsWith("ret") ||
+                        ((funcname.StartsWith("Get") || funcname.StartsWith("Gen")) &&
+                            indirection_level > 0 &&
+                            !(funcname.EndsWith("Info") || funcname.EndsWith("IDs") || funcname.EndsWith("ImageFormats"))) ? // OpenCL contains Get*[Info|IDs|ImageFormats] methods with 'in' pointer parameters
+                        "out" : "in";
+
+                    yield return new Parameter { Name = name, Type = type, Count = count, Flow = flow };
+                }
+            }
         }
 
         void GetFunctionNameAndType(string[] words, out string funcname, out string rettype)

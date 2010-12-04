@@ -188,7 +188,7 @@
             When incremented and decremented,
             values are clamped to 0 and 
             <inlineequation><mml:math>
-                <!-- eqn: 2 sup n - 1:-->
+                <!-- eqn: 2 sup n - 1: -->
                 <mml:mrow>
                     <mml:msup><mml:mn>2</mml:mn>
                     <mml:mi mathvariant="italic">n</mml:mi>
@@ -216,10 +216,6 @@
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
         <para>
-            <constant>GL_DECR_WRAP</constant> and <constant>GL_INCR_WRAP</constant> are available only if the GL
-            version is 1.4 or greater.
-        </para>
-        <para>
             Initially the stencil test is disabled.
             If there is no stencil buffer,
             no stencil modification can occur
@@ -235,12 +231,7 @@
     <refsect1 id="errors"><title>Errors</title>
         <para>
             <constant>GL_INVALID_ENUM</constant> is generated if <parameter>sfail</parameter>,
-            <parameter>dpfail</parameter>, or <parameter>dppass</parameter> is any value other than the eight defined constant values.
-        </para>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glStencilOp</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+            <parameter>dpfail</parameter>, or <parameter>dppass</parameter> is any value other than the defined constant values.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
@@ -257,7 +248,6 @@
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
-            <citerefentry><refentrytitle>glAlphaFunc</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,

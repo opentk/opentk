@@ -25,15 +25,18 @@ namespace Bind
         ES11,
         ES20,
         CL10,
-        [Obsolete] Wgl,
-        [Obsolete] Glx,
-        [Obsolete] Glu,
+    }
+
+    enum GeneratorLanguage
+    {
+        CSharp,
+        Cpp
     }
 
     static class MainClass
     {
         static GeneratorMode mode = GeneratorMode.GL2;
-
+        static GeneratorLanguage lang = GeneratorLanguage.CSharp;
         static internal IBind Generator;
 
         static void Main(string[] arguments)
@@ -73,23 +76,28 @@ namespace Bind
                             case "output":
                                 Settings.OutputPath = string.Join(Path.DirectorySeparatorChar.ToString(), b.Skip(1).ToArray());
                                 break;
+                            case "l":
+                            case "lang":
+                            case "language":
+                                {
+                                    string arg = b[1].ToLower();
+                                    if (arg == "cpp" || arg == "c++" || arg == "c")
+                                    {
+                                        lang = GeneratorLanguage.Cpp;
+                                        Settings.DefaultOutputPath = "gl";
+                                        Settings.DefaultOutputNamespace = "gl";
+                                        Settings.EnumsNamespace = "gl";
+                                    }
+                                    break;
+                                }
                             case "mode":
-                                string arg = b[1].ToLower();
-                                if (arg == "gl" || arg == "gl2")
-                                    mode = GeneratorMode.GL2;
-                                else if (arg == "es10")
-                                    mode = GeneratorMode.ES10;
-                                else if (arg == "es11")
-                                    mode = GeneratorMode.ES11;
-                                else if (arg == "es20")
-                                    mode = GeneratorMode.ES20;
-                                else if (arg=="cl" || arg == "cl10")
-                                    mode = GeneratorMode.CL10;
-                                else
-                                    throw new NotImplementedException();
-                                if (b.Length > 2)
-                                    dirName = b[2];
-                                break;
+                                {
+                                    string arg = b[1].ToLower();
+                                    SetGeneratorMode(dirName, arg);
+                                    if (b.Length > 2)
+                                        dirName = b[2];
+                                    break;
+                                }
                             case "namespace":
                             case "ns":
                                 Settings.OutputNamespace = b[1];
@@ -137,8 +145,9 @@ namespace Bind
 
                 switch (mode)
                 {
+                    case GeneratorMode.GL3:
                     case GeneratorMode.GL2:
-                        Generator = new Generator();
+                        Generator = new GL4Generator("OpenGL", dirName);
                         break;
 
                     case GeneratorMode.ES10:
@@ -157,35 +166,37 @@ namespace Bind
                         Generator = new CLGenerator("CL10", dirName);
                         break;
                     
-                    case GeneratorMode.Wgl:
-                        Generator = new Wgl.Generator();
-                        break;
-
-                    case GeneratorMode.Glu:
-                        Generator = new Glu.Generator();
-                        break;
-
-                    case GeneratorMode.Glx:
-                        Generator = new Glx.Generator();
-                        break;
-
-                    case GeneratorMode.GL3:
-                        throw new NotImplementedException(String.Format("Mode {0} not implemented.", mode));
-
                     case GeneratorMode.Unknown:
                     default:
                         Console.WriteLine("Please specify a generator mode (use '-mode:gl2/gl3/glu/wgl/glx])'");
                         return;
-
                 }
 
                 Generator.Process();
+                ISpecWriter writer = null;
+                switch (lang)
+                {
+                    case GeneratorLanguage.Cpp:
+                        writer = new CppSpecWriter();
+                        break;
+
+                    case GeneratorLanguage.CSharp:
+                    default:
+                        writer = new CSharpSpecWriter();
+                        break;
+                }
+                writer.WriteBindings(Generator);
 
                 ticks = DateTime.Now.Ticks - ticks;
 
                 Console.WriteLine();
                 Console.WriteLine("Bindings generated in {0} seconds.", ticks / (double)10000000.0);
                 Console.WriteLine();
+                if (Debugger.IsAttached)
+                {
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey(true);
+                }
             }
             catch (SecurityException e)
             {
@@ -196,6 +207,44 @@ namespace Bind
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine("The requested functionality is not implemented yet.");
+            }
+        }
+
+        private static void SetGeneratorMode(string dirName, string arg)
+        {
+            if (arg == "gl" || arg == "gl2" || arg == "gl3" || arg == "gl4")
+            {
+                mode = GeneratorMode.GL2;
+                Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
+            }
+            else if (arg == "es10")
+            {
+                mode = GeneratorMode.ES10;
+                Settings.DefaultOutputPath = Path.Combine(
+                    Directory.GetParent(Settings.DefaultOutputPath).ToString(),
+                    dirName);
+            }
+            else if (arg == "es11")
+            {
+                mode = GeneratorMode.ES11;
+                Settings.DefaultOutputPath = Path.Combine(
+                    Directory.GetParent(Settings.DefaultOutputPath).ToString(),
+                    dirName);
+            }
+            else if (arg == "es20")
+            {
+                mode = GeneratorMode.ES20;
+                Settings.DefaultOutputPath = Path.Combine(
+                    Directory.GetParent(Settings.DefaultOutputPath).ToString(),
+                    dirName);
+            }
+            else if (arg == "cl" || arg == "cl10")
+            {
+                mode = GeneratorMode.CL10;
+            }
+            else
+            {
+                throw new NotImplementedException();
             }
         }
 

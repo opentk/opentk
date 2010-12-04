@@ -38,10 +38,8 @@
                     <constant>GL_BACK_RIGHT</constant>,
                     <constant>GL_FRONT</constant>,
                     <constant>GL_BACK</constant>,
-                    <constant>GL_LEFT</constant>,
-                    <constant>GL_RIGHT</constant>, and
-                    <constant>GL_AUX</constant><emphasis>i</emphasis>,
-                    where <emphasis>i</emphasis> is between 0 and the value of <constant>GL_AUX_BUFFERS</constant> minus 1.
+                    <constant>GL_LEFT</constant>, and
+                    <constant>GL_RIGHT</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -51,11 +49,9 @@
         <para>
             <function>glReadBuffer</function> specifies a color buffer as the source for subsequent
             <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glCopyTexSubImage3D</refentrytitle></citerefentry>, and
-            <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry> commands.
+            <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>, and
+            <citerefentry><refentrytitle>glCopyTexSubImage3D</refentrytitle></citerefentry> commands.
             <parameter>mode</parameter> accepts one of twelve or more predefined values.
-            (<constant>GL_AUX0</constant> through <constant>GL_AUX3</constant> are always defined.)
             In a fully configured system,
             <constant>GL_FRONT</constant>,
             <constant>GL_LEFT</constant>, and
@@ -86,11 +82,6 @@
             <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>mode</parameter> specifies a buffer
             that does not exist.
         </para>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glReadBuffer</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
-        </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
@@ -99,7 +90,6 @@
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
-            <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>,

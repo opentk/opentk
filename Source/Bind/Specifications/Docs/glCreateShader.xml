@@ -24,7 +24,10 @@
 		<term><parameter>shaderType</parameter></term>
 		<listitem>
 		    <para>Specifies the type of shader to be created.
-		    Must be either <constant>GL_VERTEX_SHADER</constant>
+		    Must be one of <constant>GL_VERTEX_SHADER</constant>,
+		    <constant>GL_TESS_CONTROL_SHADER</constant>,
+		    <constant>GL_TESS_EVALUATION_SHADER</constant>,
+		    <constant>GL_GEOMETRY_SHADER</constant>,
 		    or <constant>GL_FRAGMENT_SHADER</constant>.</para>
 		</listitem>
 	    </varlistentry>
@@ -35,27 +38,29 @@
 	shader object and returns a non-zero value by which it can be
 	referenced. A shader object is used to maintain the source code
 	strings that define a shader. <parameter>shaderType</parameter>
-	indicates the type of shader to be created. Two types of shaders
+	indicates the type of shader to be created. Five types of shader
 	are supported. A shader of type
 	<constant>GL_VERTEX_SHADER</constant> is a shader that is
-	intended to run on the programmable vertex processor and replace
-	the fixed functionality vertex processing in OpenGL. A shader of
+	intended to run on the programmable vertex processor.
+	A shader of type <constant>GL_TESS_CONTROL_SHADER</constant> is a shader that
+	is intended to run on the programmable tessellation processor in the control stage.
+	A shader of type <constant>GL_TESS_EVALUATION_SHADER</constant> is a shader that
+	is intended to run on the programmable tessellation processor in the evaluation stage.
+	A shader of type
+	<constant>GL_GEOMETRY_SHADER</constant> is a shader that is intended to
+	run on the programmable geometry processor. A shader of
 	type <constant>GL_FRAGMENT_SHADER</constant> is a shader that is
-	intended to run on the programmable fragment processor and
-	replace the fixed functionality fragment processing in
-	OpenGL.</para>
+	intended to run on the programmable fragment processor.</para>
 
 	<para>When created, a shader object's
 	<constant>GL_SHADER_TYPE</constant> parameter is set to either
-	<constant>GL_VERTEX_SHADER</constant> or
-	<constant>GL_FRAGMENT_SHADER</constant>, depending on the value
+	<constant>GL_VERTEX_SHADER</constant>, <constant>GL_TESS_CONTROL_SHADER</constant>,
+	<constant>GL_TESS_EVALUATION_SHADER</constant>, <constant>GL_GEOMETRY_SHADER</constant>
+	or <constant>GL_FRAGMENT_SHADER</constant>, depending on the value
 	of <parameter>shaderType</parameter>.</para>
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
-	<para><function>glCreateShader</function> is available only if
-	the GL version is 2.0 or greater.</para>
-
-	<para>Like display lists and texture objects, the name space for
+	<para>Like buffer and texture objects, the name space for
 	shader objects may be shared across a set of contexts, as long
 	as the server sides of the contexts share the same address
 	space. If the name space is shared across contexts, any attached
@@ -73,12 +78,6 @@
 	<para><constant>GL_INVALID_ENUM</constant> is generated if
 	<parameter>shaderType</parameter> is not an accepted value.</para>
 
-	<para><constant>GL_INVALID_OPERATION</constant> is generated if
-	<function>glCreateShader</function> is executed between the
-	execution of
-	<citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-	and the corresponding execution of
-	<citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.</para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
 	<para><citerefentry><refentrytitle>glGetShader</refentrytitle></citerefentry>

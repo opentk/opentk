@@ -11,33 +11,11 @@ using System.Text.RegularExpressions;
 
 namespace Bind.Structures
 {
-    public class Function : Delegate, IEquatable<Function>, IComparable<Function>
+    class Function : Delegate, IEquatable<Function>, IComparable<Function>
     {
-        #region Static Members
-
-        internal static FunctionCollection Wrappers;
-
-        static bool loaded;
-        
-        #region internal static void Initialize()
-        
-        internal static void Initialize()
-        {
-            if (!loaded)
-            {
-                Wrappers = new FunctionCollection();
-                loaded = true;
-            }
-        }
-        
-        #endregion
-
-        #endregion
-
         #region Fields
 
         Delegate wrapped_delegate;
-        int index;
 
         #endregion
         
@@ -239,369 +217,6 @@ namespace Bind.Structures
 
         #endregion
 
-        #region public void WrapParameters(List<Function> wrappers)
-
-        public void WrapParameters(List<Function> wrappers)
-        {
-            Function f;
-
-            if (Parameters.HasPointerParameters)
-            {
-                Function _this = new Function(this);
-                // Array overloads
-                foreach (Parameter p in _this.Parameters)
-                {
-                    if (p.WrapperType == WrapperTypes.ArrayParameter && p.ElementCount != 1)
-                    {
-                        p.Reference = false;
-                        p.Array++;
-                        p.Pointer--;
-                    }
-                }
-                f = new Function(_this);
-                f.CreateBody(false);
-                wrappers.Add(f);
-                new Function(f).WrapVoidPointers(wrappers);
-
-                _this = new Function(this);
-                // Reference overloads
-                foreach (Parameter p in _this.Parameters)
-                {
-                    if (p.WrapperType == WrapperTypes.ArrayParameter)
-                    {
-                        p.Reference = true;
-                        p.Array--;
-                        p.Pointer--;
-                    }
-                }
-                f = new Function(_this);
-                f.CreateBody(false);
-                wrappers.Add(f);
-                new Function(f).WrapVoidPointers(wrappers);
-
-                _this = this;
-                // Pointer overloads
-                // Should be last to work around Intellisense bug, where
-                // array overloads are not reported if there is a pointer overload.
-                foreach (Parameter p in _this.Parameters)
-                {
-                    if (p.WrapperType == WrapperTypes.ArrayParameter)
-                    {
-                        p.Reference = false;
-                        //p.Array--;
-                        //p.Pointer++;
-                    }
-                }
-                f = new Function(_this);
-                f.CreateBody(false);
-                wrappers.Add(f);
-                new Function(f).WrapVoidPointers(wrappers);
-            }
-            else
-            {
-                f = new Function(this);
-                f.CreateBody(false);
-                wrappers.Add(f);
-            }
-        }
-
-        #endregion
-
-        #region public void WrapVoidPointers(List<Function> wrappers)
-
-        public void WrapVoidPointers(List<Function> wrappers)
-        {
-            if (index >= 0 && index < Parameters.Count)
-            {
-                if (Parameters[index].WrapperType == WrapperTypes.GenericParameter)
-                {
-                    // Recurse to the last parameter
-                    ++index;
-                    WrapVoidPointers(wrappers);
-                    --index;
-
-                    // On stack rewind, create generic wrappers
-                    Parameters[index].Reference = true;
-                    Parameters[index].Array = 0;
-                    Parameters[index].Pointer = 0;
-                    Parameters[index].Generic = true;
-                    Parameters[index].CurrentType = "T" + index.ToString();
-                    Parameters[index].Flow = FlowDirection.Undefined;
-                    Parameters.Rebuild = true;
-                    CreateBody(false);
-                    wrappers.Add(new Function(this));
-
-                    Parameters[index].Reference = false;
-                    Parameters[index].Array = 1;
-                    Parameters[index].Pointer = 0;
-                    Parameters[index].Generic = true;
-                    Parameters[index].CurrentType = "T" + index.ToString();
-                    Parameters[index].Flow = FlowDirection.Undefined;
-                    Parameters.Rebuild = true;
-                    CreateBody(false);
-                    wrappers.Add(new Function(this));
-
-                    Parameters[index].Reference = false;
-                    Parameters[index].Array = 2;
-                    Parameters[index].Pointer = 0;
-                    Parameters[index].Generic = true;
-                    Parameters[index].CurrentType = "T" + index.ToString();
-                    Parameters[index].Flow = FlowDirection.Undefined;
-                    Parameters.Rebuild = true;
-                    CreateBody(false);
-                    wrappers.Add(new Function(this));
-
-                    Parameters[index].Reference = false;
-                    Parameters[index].Array = 3;
-                    Parameters[index].Pointer = 0;
-                    Parameters[index].Generic = true;
-                    Parameters[index].CurrentType = "T" + index.ToString();
-                    Parameters[index].Flow = FlowDirection.Undefined;
-                    Parameters.Rebuild = true;
-                    CreateBody(false);
-                    wrappers.Add(new Function(this));
-                }
-                else
-                {
-                    // Recurse to the last parameter
-                    ++index;
-                    WrapVoidPointers(wrappers);
-                    --index;
-                }
-            }
-        }
-
-        #endregion
-
-        #region public void WrapReturnType()
-
-        public void WrapReturnType()
-        {
-            switch (ReturnType.WrapperType)
-            {
-                case WrapperTypes.StringReturnType:
-                    ReturnType.QualifiedType = "String";
-                    break;
-            }
-        }
-
-        #endregion
-
-        #region public void CreateBody(bool wantCLSCompliance)
-
-        readonly static List<string> handle_statements = new List<string>();
-        readonly static List<string> handle_release_statements = new List<string>();
-        readonly static List<string> fixed_statements = new List<string>();
-        readonly static List<string> assign_statements = new List<string>();
-
-        // For example, if parameter foo has indirection level = 1, then it
-        // is consumed as 'foo*' in the fixed_statements and the call string.
-        string[] indirection_levels = new string[] { "", "*", "**", "***", "****" };
-
-        public void CreateBody(bool wantCLSCompliance)
-        {
-            Function f = new Function(this);
-
-            f.Body.Clear();
-            handle_statements.Clear();
-            handle_release_statements.Clear();
-            fixed_statements.Clear();
-            assign_statements.Clear();
-
-            // Obtain pointers by pinning the parameters
-            foreach (Parameter p in f.Parameters)
-            {
-                if (p.NeedsPin)
-                {
-                    if (p.WrapperType == WrapperTypes.GenericParameter)
-                    {
-                        // Use GCHandle to obtain pointer to generic parameters and 'fixed' for arrays.
-                        // This is because fixed can only take the address of fields, not managed objects.
-                        handle_statements.Add(String.Format(
-                            "{0} {1}_ptr = {0}.Alloc({1}, GCHandleType.Pinned);",
-                            "GCHandle", p.Name));
-
-                        handle_release_statements.Add(String.Format("{0}_ptr.Free();", p.Name));
-
-                        // Due to the GCHandle-style pinning (which boxes value types), we need to assign the modified
-                        // value back to the reference parameter (but only if it has an out or in/out flow direction).
-                        if ((p.Flow == FlowDirection.Out || p.Flow == FlowDirection.Undefined) && p.Reference)
-                        {
-                            assign_statements.Add(String.Format(
-                                "{0} = ({1}){0}_ptr.Target;",
-                                p.Name, p.QualifiedType));
-                        }
-
-                        // Note! The following line modifies f.Parameters, *not* this.Parameters
-                        p.Name = "(IntPtr)" + p.Name + "_ptr.AddrOfPinnedObject()";
-                    }
-                    else if (p.WrapperType == WrapperTypes.PointerParameter ||
-                        p.WrapperType == WrapperTypes.ArrayParameter ||
-                        p.WrapperType == WrapperTypes.ReferenceParameter)
-                    {
-                        // A fixed statement is issued for all non-generic pointers, arrays and references.
-                        fixed_statements.Add(String.Format(
-                            "fixed ({0}{3} {1} = {2})",
-                            wantCLSCompliance && !p.CLSCompliant ? p.GetCLSCompliantType() : p.QualifiedType,
-                            p.Name + "_ptr",
-                            p.Array > 0 ? p.Name : "&" + p.Name,
-                            indirection_levels[p.IndirectionLevel]));
-
-                        if (p.Name == "pixels_ptr")
-                            System.Diagnostics.Debugger.Break();
-
-                        // Arrays are not value types, so we don't need to do anything for them.
-                        // Pointers are passed directly by value, so we don't need to assign them back either (they don't change).
-                        if ((p.Flow == FlowDirection.Out || p.Flow == FlowDirection.Undefined) && p.Reference)
-                        {
-                            assign_statements.Add(String.Format("{0} = *{0}_ptr;", p.Name));
-                        }
-
-                        p.Name = p.Name + "_ptr";
-                    }
-                    else
-                    {
-                        throw new ApplicationException("Unknown parameter type");
-                    }
-                }
-            }
-
-            // Automatic OpenGL error checking.
-            // See OpenTK.Graphics.ErrorHelper for more information.
-            // Make sure that no error checking is added to the GetError function,
-            // as that would cause infinite recursion!
-            if ((Settings.Compatibility & Settings.Legacy.NoDebugHelpers) == 0)
-            {
-                if (f.TrimmedName != "GetError")
-                {
-                    f.Body.Add("#if DEBUG");
-                    f.Body.Add("using (new ErrorHelper(GraphicsContext.CurrentContext))");
-                    f.Body.Add("{");
-                    if (f.TrimmedName == "Begin")
-                        f.Body.Add("GraphicsContext.CurrentContext.ErrorChecking = false;");
-                    f.Body.Add("#endif");
-                }
-            }
-
-            if (!f.Unsafe && fixed_statements.Count > 0)
-            {
-                f.Body.Add("unsafe");
-                f.Body.Add("{");
-                f.Body.Indent();
-            }
-            
-            if (fixed_statements.Count > 0)
-            {
-                f.Body.AddRange(fixed_statements);
-                f.Body.Add("{");
-                f.Body.Indent();
-            }
-            
-            if (handle_statements.Count > 0)
-            {
-                f.Body.AddRange(handle_statements);
-                f.Body.Add("try");
-                f.Body.Add("{");
-                f.Body.Indent();
-            }
-
-            // Hack: When creating untyped enum wrappers, it is possible that the wrapper uses an "All"
-            // enum, while the delegate uses a specific enum (e.g. "TextureUnit"). For this reason, we need
-            // to modify the parameters before generating the call string.
-            // Note: We cannot generate a callstring using WrappedDelegate directly, as its parameters will
-            // typically be different than the parameters of the wrapper. We need to modify the parameters
-            // of the wrapper directly.
-            if ((Settings.Compatibility & Settings.Legacy.KeepUntypedEnums) != 0)
-            {
-                int parameter_index = -1; // Used for comparing wrapper parameters with delegate parameters
-                foreach (Parameter p in f.Parameters)
-                {
-                    parameter_index++;
-                    if (p.IsEnum && p.QualifiedType != f.WrappedDelegate.Parameters[parameter_index].QualifiedType)
-                    {
-                        p.QualifiedType = f.WrappedDelegate.Parameters[parameter_index].QualifiedType;
-                    }
-                }
-            }
-
-            if (assign_statements.Count > 0)
-            {
-                // Call function
-                string method_call = f.CallString();
-                if (f.ReturnType.CurrentType.ToLower().Contains("void"))
-                    f.Body.Add(String.Format("{0};", method_call));
-                else if (ReturnType.CurrentType.ToLower().Contains("string"))
-                    f.Body.Add(String.Format("{0} {1} = null; unsafe {{ {1} = new string((sbyte*){2}); }}",
-                        ReturnType.QualifiedType, "retval", method_call));
-                else
-                    f.Body.Add(String.Format("{0} {1} = {2};", f.ReturnType.QualifiedType, "retval", method_call));
-
-                // Assign out parameters
-                f.Body.AddRange(assign_statements);
-
-                // Return
-                if (!f.ReturnType.CurrentType.ToLower().Contains("void"))
-                {
-                    f.Body.Add("return retval;");
-                }
-            }
-            else
-            {
-                // Call function and return
-                if (f.ReturnType.CurrentType.ToLower().Contains("void"))
-                    f.Body.Add(String.Format("{0};", f.CallString()));
-                else if (ReturnType.CurrentType.ToLower().Contains("string"))
-                    f.Body.Add(String.Format("unsafe {{ return new string((sbyte*){0}); }}",
-                        f.CallString()));
-                else
-                    f.Body.Add(String.Format("return {0};", f.CallString()));
-            }
-
-
-            // Free all allocated GCHandles
-            if (handle_statements.Count > 0)
-            {
-                f.Body.Unindent();
-                f.Body.Add("}");
-                f.Body.Add("finally");
-                f.Body.Add("{");
-                f.Body.Indent();
-
-                f.Body.AddRange(handle_release_statements);
-
-                f.Body.Unindent();
-                f.Body.Add("}");
-            }
-
-            if (!f.Unsafe && fixed_statements.Count > 0)
-            {
-                f.Body.Unindent();
-                f.Body.Add("}");
-            }
-
-            if (fixed_statements.Count > 0)
-            {
-                f.Body.Unindent();
-                f.Body.Add("}");
-            }
-
-            if ((Settings.Compatibility & Settings.Legacy.NoDebugHelpers) == 0)
-            {
-                if (f.TrimmedName != "GetError")
-                {
-                    f.Body.Add("#if DEBUG");
-                    if (f.TrimmedName == "End")
-                        f.Body.Add("GraphicsContext.CurrentContext.ErrorChecking = true;");
-                    f.Body.Add("}");
-                    f.Body.Add("#endif");
-                }
-            }
-
-            Body = f.Body;
-        }
-
-        #endregion
-
         #region IComparable<Function> Members
 
         public int CompareTo(Function other)
@@ -712,27 +327,27 @@ namespace Bind.Structures
         /// <param name="f">The Function to add.</param>
         public void AddChecked(Function f)
         {
-            if (Function.Wrappers.ContainsKey(f.Extension))
+            if (ContainsKey(f.Extension))
             {
-                int index = Function.Wrappers[f.Extension].IndexOf(f);
+                int index = this[f.Extension].IndexOf(f);
                 if (index == -1)
                 {
-                    Function.Wrappers.Add(f);
+                    Add(f);
                 }
                 else
                 {
-                    Function existing = Function.Wrappers[f.Extension][index];
+                    Function existing = this[f.Extension][index];
                     if ((existing.Parameters.HasUnsignedParameters && !unsignedFunctions.IsMatch(existing.Name) && unsignedFunctions.IsMatch(f.Name)) ||
                         (!existing.Parameters.HasUnsignedParameters && unsignedFunctions.IsMatch(existing.Name) && !unsignedFunctions.IsMatch(f.Name)))
                     {
-                        Function.Wrappers[f.Extension].RemoveAt(index);
-                        Function.Wrappers[f.Extension].Add(f);
+                        this[f.Extension].RemoveAt(index);
+                        this[f.Extension].Add(f);
                     }
                 }
             }
             else
             {
-                Function.Wrappers.Add(f);
+                Add(f);
             }
         }
     }

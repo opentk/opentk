@@ -23,6 +23,11 @@
                 <paramdef>GLclampd <parameter>nearVal</parameter></paramdef>
                 <paramdef>GLclampd <parameter>farVal</parameter></paramdef>
             </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glDepthRangef</function></funcdef>
+                <paramdef>GLclampf <parameter>nearVal</parameter></paramdef>
+                <paramdef>GLclampf <parameter>farVal</parameter></paramdef>
+            </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
     <!-- eqn: ignoring delim $$ -->
@@ -53,7 +58,7 @@
             After clipping and division by <emphasis>w</emphasis>,
             depth coordinates range from 
             <inlineequation><mml:math>
-                <!-- eqn: -1:-->
+                <!-- eqn: -1: -->
                 <mml:mn>-1</mml:mn>
             </mml:math></inlineequation>
             to 1,
@@ -79,7 +84,7 @@
             It is not necessary that <parameter>nearVal</parameter> be less than <parameter>farVal</parameter>.
             Reverse mappings such as 
             <inlineequation><mml:math>
-                <!-- eqn: nearVal  =  1:-->
+                <!-- eqn: nearVal  =  1: -->
                 <mml:mrow>
                     <mml:mi mathvariant="italic">nearVal</mml:mi>
                     <mml:mo>=</mml:mo>
@@ -88,7 +93,7 @@
             </mml:math></inlineequation>,
             and 
             <inlineequation><mml:math>
-                <!-- eqn: farVal  =  0:-->
+                <!-- eqn: farVal  =  0: -->
                 <mml:mrow>
                     <mml:mi mathvariant="italic">farVal</mml:mi>
                     <mml:mo>=</mml:mo>
@@ -96,13 +101,6 @@
                 </mml:mrow>
             </mml:math></inlineequation>
             are acceptable.
-        </para>
-    </refsect1>
-    <refsect1 id="errors"><title>Errors</title>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glDepthRange</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
