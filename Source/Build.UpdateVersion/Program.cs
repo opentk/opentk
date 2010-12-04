@@ -34,7 +34,7 @@ namespace Build.UpdateVersion
     class Program
     {
         const string Major = "1";
-        const string Minor = "0";
+        const string Minor = "1";
 
         static string RootDirectory;
         static string SourceDirectory;

@@ -26,8 +26,8 @@ PixelInternalFormat,    PixelInternalFormat
 GLsizeiptrARB,      IntPtr
 GLintptrARB,        IntPtr
 GLhandleARB,        UInt32
-GLhalfARB,          OpenTK.Half
-GLhalfNV,           OpenTK.Half
+GLhalfARB,          Half
+GLhalfNV,           Half
 GLcharARB,          Char
 
 # 64 bit types (introduced in 2.1)
@@ -63,6 +63,9 @@ VoidPointer,    void*
 float,          float
 int,            int
 #void,           *
+GLDEBUGPROCARB, DebugProcArb
+GLDEBUGPROCAMD , DebugProcAmd
+GLvdpauSurfaceNV, IntPtr
 
 # Glu types.
 Float64         double
@@ -99,6 +102,8 @@ GLeglImageOES, IntPtr
 
 
 # OpenCL types.
+_cl_context, IntPtr
+_cl_event, IntPtr
 cl_command_queue, IntPtr
 cl_context, IntPtr
 cl_device_id, IntPtr

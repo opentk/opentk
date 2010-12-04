@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glTexBuffer">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2010</year>
+                <holder>Khronos Group</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glTexBuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glTexBuffer</refname>
+        <refpurpose>attach the storage for a buffer object to the active buffer texture</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexBuffer</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalFormat</parameter></paramdef>
+                <paramdef>Gluint<parameter>buffer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target of the operation and must be <constant>GL_TEXTURE_BUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>internalFormat</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the internal format of the data in the store belonging to <parameter>buffer</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the buffer object whose storage to attach to the active buffer texture.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glTexBuffer</function> attaches the storage for the buffer object named <parameter>buffer</parameter> to the active
+            buffer texture, and specifies the internal format for the texel array found in the attached buffer object. If <parameter>buffer</parameter>
+            is zero, any buffer object attached to the buffer texture is detached and no new buffer object is attached. If <parameter>buffer</parameter>
+            is non-zero, it must be the name of an existing buffer object. <parameter>target</parameter> must be <constant>GL_TEXTURE_BUFFER</constant>.
+            <parameter>internalformat</parameter> specifies the storage format, and must be one of the following sized internal formats:
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="8" align="left">
+                <colspec colnum="1" colname="col1" colwidth="1*"/>
+                <colspec colnum="2" colname="col2" colwidth="2*"/>
+                <colspec colnum="3" colname="col3" colwidth="1.5*"/>
+                <colspec colnum="4" colname="col4" colwidth="1*"/>
+                <colspec colnum="5" colname="col5" colwidth="1*"/>
+                <colspec colnum="6" colname="col6" colwidth="2*"/>
+                <colspec colnum="7" colname="col7" colwidth="1.5*"/>
+                <colspec colnum="8" colname="col8" colwidth="1*"/>
+                <thead>
+                    <row>
+                        <entry morerows="1" rowsep="1" align="center"></entry>
+                        <entry morerows="1" rowsep="1" align="center"></entry>
+                        <entry morerows="1" rowsep="1" align="center"></entry>
+                        <entry morerows="1" rowsep="1" align="center"></entry>
+                        <entry namest="col5" nameend="col8" rowsep="1" align="left"><emphasis role="bold">
+                        Component
+                        </emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left"><emphasis role="bold">Sized Internal Format</emphasis></entry>
+                        <entry align="left"><emphasis role="bold">Base Type</emphasis></entry>
+                        <entry align="left"><emphasis role="bold">Components</emphasis></entry>
+                        <entry align="left"><emphasis role="bold">Norm</emphasis></entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                        <entry align="center">2</entry>
+                        <entry align="center">3</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_R8</constant></entry>
+                        <entry align="left">ubyte</entry>
+                        <entry align="left">1</entry>
+                        <entry align="left">YES</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_R16</constant></entry>
+                        <entry align="left">ushort</entry>
+                        <entry align="left">1</entry>
+                        <entry align="left">YES</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_R16F</constant></entry>
+                        <entry align="left">half</entry>
+                        <entry align="left">1</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_R32F</constant></entry>
+                        <entry align="left">float</entry>
+                        <entry align="left">1</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_R8I</constant></entry>
+                        <entry align="left">byte</entry>
+                        <entry align="left">1</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_R16I</constant></entry>
+                        <entry align="left">short</entry>
+                        <entry align="left">1</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_R32I</constant></entry>
+                        <entry align="left">int</entry>
+                        <entry align="left">1</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_R8UI</constant></entry>
+                        <entry align="left">ubyte</entry>
+                        <entry align="left">1</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_R16UI</constant></entry>
+                        <entry align="left">ushort</entry>
+                        <entry align="left">1</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_R32UI</constant></entry>
+                        <entry align="left">uint</entry>
+                        <entry align="left">1</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RG8</constant></entry>
+                        <entry align="left">ubyte</entry>
+                        <entry align="left">2</entry>
+                        <entry align="left">YES</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RG16</constant></entry>
+                        <entry align="left">ushort</entry>
+                        <entry align="left">2</entry>
+                        <entry align="left">YES</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RG16F</constant></entry>
+                        <entry align="left">half</entry>
+                        <entry align="left">2</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RG32F</constant></entry>
+                        <entry align="left">float</entry>
+                        <entry align="left">2</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RG8I</constant></entry>
+                        <entry align="left">byte</entry>
+                        <entry align="left">2</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RG16I</constant></entry>
+                        <entry align="left">short</entry>
+                        <entry align="left">2</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RG32I</constant></entry>
+                        <entry align="left">int</entry>
+                        <entry align="left">2</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RG8UI</constant></entry>
+                        <entry align="left">ubyte</entry>
+                        <entry align="left">2</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RG16UI</constant></entry>
+                        <entry align="left">ushort</entry>
+                        <entry align="left">2</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RG32UI</constant></entry>
+                        <entry align="left">uint</entry>
+                        <entry align="left">2</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">0</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RGB32F</constant></entry>
+                        <entry align="left">float</entry>
+                        <entry align="left">3</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">B</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RGB32I</constant></entry>
+                        <entry align="left">int</entry>
+                        <entry align="left">3</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">B</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RGB32UI</constant></entry>
+                        <entry align="left">uint</entry>
+                        <entry align="left">3</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">B</entry>
+                        <entry align="center">1</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RGBA8</constant></entry>
+                        <entry align="left">uint</entry>
+                        <entry align="left">4</entry>
+                        <entry align="left">YES</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">B</entry>
+                        <entry align="center">A</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RGBA16</constant></entry>
+                        <entry align="left">short</entry>
+                        <entry align="left">4</entry>
+                        <entry align="left">YES</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">B</entry>
+                        <entry align="center">A</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RGBA16F</constant></entry>
+                        <entry align="left">half</entry>
+                        <entry align="left">4</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">B</entry>
+                        <entry align="center">A</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RGBA32F</constant></entry>
+                        <entry align="left">float</entry>
+                        <entry align="left">4</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">B</entry>
+                        <entry align="center">A</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RGBA8I</constant></entry>
+                        <entry align="left">byte</entry>
+                        <entry align="left">4</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">B</entry>
+                        <entry align="center">A</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RGBA16I</constant></entry>
+                        <entry align="left">short</entry>
+                        <entry align="left">4</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">B</entry>
+                        <entry align="center">A</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RGBA32I</constant></entry>
+                        <entry align="left">int</entry>
+                        <entry align="left">4</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">B</entry>
+                        <entry align="center">A</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RGBA8UI</constant></entry>
+                        <entry align="left">ubyte</entry>
+                        <entry align="left">4</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">B</entry>
+                        <entry align="center">A</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RGBA16UI</constant></entry>
+                        <entry align="left">ushort</entry>
+                        <entry align="left">4</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">B</entry>
+                        <entry align="center">A</entry>
+                    </row>
+                    <row>
+                        <entry align="left"><constant>GL_RGBA32UI</constant></entry>
+                        <entry align="left">uint</entry>
+                        <entry align="left">4</entry>
+                        <entry align="left">NO</entry>
+                        <entry align="center">R</entry>
+                        <entry align="center">G</entry>
+                        <entry align="center">B</entry>
+                        <entry align="center">A</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            When a buffer object is attached to a buffer texture, the buffer object's data store
+            is taken as the texture's texel array.  The number of texels in the buffer texture's
+            texel array is given by
+        </para>
+        <inlineequation>
+            <mml:apply><mml:floor />
+                <mml:mfrac>
+                    <mml:mrow>
+                        <mml:mi>buffer_size</mml:mi>
+                    </mml:mrow>
+                    <mml:mrow>
+                        <mml:mi>components</mml:mi><mml:mo> </mml:mo><mml:csymbol><mml:mo>×</mml:mo></mml:csymbol><mml:mo> </mml:mo><mml:mi>sizeof</mml:mi><mml:mo>(</mml:mo><mml:mi>base_type</mml:mi><mml:mo>)</mml:mo>
+                    </mml:mrow>
+                </mml:mfrac>
+            </mml:apply>
+        </inlineequation>
+        <para>
+            where <emphasis>buffer_size</emphasis> is the size of the buffer object, in basic machine units and
+            components and base type are the element count and base data type for elements, as specified in the table above.
+            The number of texels in the texel array is then clamped to the implementation-dependent limit <constant>GL_MAX_TEXTURE_BUFFER_SIZE</constant>.
+            When a buffer texture is accessed in a shader, the results of a texel fetch are undefined if the specified texel coordinate is negative, or
+            greater than or equal to the clamped number of texels in the texel array.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not <constant>GL_TEXTURE_BUFFER</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>internalFormat</parameter> is not one of the accepted tokens.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>buffer</parameter> is not zero or the name of an existing buffer object.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>glTexBuffer</function> is available only if the GL version is 3.1 or greater.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+    <para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+    with argument <constant>GL_MAX_TEXTURE_BUFFER_SIZE</constant></para>
+    <para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+    with argument <constant>GL_TEXTURE_BINDING_BUFFER</constant></para>
+    <para><citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry>
+    with argument <constant>GL_TEXTURE_BUFFER_DATA_STORE_BINDING</constant></para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBufferData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenTextures</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteTextures</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>

@@ -31,10 +31,9 @@
             <listitem>
                 <para>
                     Bitwise OR of masks that indicate the buffers to be cleared.
-                    The four masks are
+                    The three masks are
                     <constant>GL_COLOR_BUFFER_BIT</constant>,
-                    <constant>GL_DEPTH_BUFFER_BIT</constant>,
-                    <constant>GL_ACCUM_BUFFER_BIT</constant>, and
+                    <constant>GL_DEPTH_BUFFER_BIT</constant>, and
                     <constant>GL_STENCIL_BUFFER_BIT</constant>.
                 </para>
             </listitem>
@@ -44,8 +43,8 @@
     <refsect1 id="description"><title>Description</title>
         <para>
             <function>glClear</function> sets the bitplane area of the window to values previously selected
-            by <function>glClearColor</function>, <function>glClearIndex</function>, <function>glClearDepth</function>,
-            <function>glClearStencil</function>, and <function>glClearAccum</function>.
+            by <function>glClearColor</function>, <function>glClearDepth</function>, and
+            <function>glClearStencil</function>.
             Multiple color buffers can be cleared simultaneously by selecting
             more than one buffer at a time using <citerefentry><refentrytitle>glDrawBuffer</refentrytitle></citerefentry>.
         </para>
@@ -87,14 +86,6 @@
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term><constant>GL_ACCUM_BUFFER_BIT</constant></term>
-                <listitem>
-                    <para>
-                        Indicates the accumulation buffer.
-                    </para>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
                 <term><constant>GL_STENCIL_BUFFER_BIT</constant></term>
                 <listitem>
                     <para>
@@ -116,24 +107,13 @@
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
-            <constant>GL_INVALID_VALUE</constant> is generated if any bit other than the four defined
+            <constant>GL_INVALID_VALUE</constant> is generated if any bit other than the three defined
             bits is set in <parameter>mask</parameter>.
-        </para>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glClear</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_ACCUM_CLEAR_VALUE</constant>
-        </para>
-        <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_DEPTH_CLEAR_VALUE</constant>
-        </para>
-        <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_INDEX_CLEAR_VALUE</constant>
         </para>
         <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COLOR_CLEAR_VALUE</constant>
@@ -144,10 +124,8 @@
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
-            <function>glClearAccum</function>,
             <function>glClearColor</function>,
             <function>glClearDepth</function>,
-            <function>glClearIndex</function>,
             <function>glClearStencil</function>,
             <citerefentry><refentrytitle>glColorMask</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glDepthMask</refentrytitle></citerefentry>,

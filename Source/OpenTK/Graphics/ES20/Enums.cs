@@ -70,16 +70,42 @@ namespace OpenTK.Graphics.ES20
         None = ((int)0),
         Zero = ((int)0),
         Points = ((int)0x0000),
+        ColorBufferBit0Qcom = ((int)0x00000001),
+        ColorBufferBit1Qcom = ((int)0x00000002),
+        ColorBufferBit2Qcom = ((int)0x00000004),
+        ColorBufferBit3Qcom = ((int)0x00000008),
+        ColorBufferBit4Qcom = ((int)0x00000010),
+        ColorBufferBit5Qcom = ((int)0x00000020),
+        ColorBufferBit6Qcom = ((int)0x00000040),
+        ColorBufferBit7Qcom = ((int)0x00000080),
         DepthBufferBit = ((int)0x00000100),
+        DepthBufferBit0Qcom = ((int)0x00000100),
+        DepthBufferBit1Qcom = ((int)0x00000200),
+        DepthBufferBit2Qcom = ((int)0x00000400),
         StencilBufferBit = ((int)0x00000400),
+        DepthBufferBit3Qcom = ((int)0x00000800),
+        DepthBufferBit4Qcom = ((int)0x00001000),
+        DepthBufferBit5Qcom = ((int)0x00002000),
         ColorBufferBit = ((int)0x00004000),
+        DepthBufferBit6Qcom = ((int)0x00004000),
+        DepthBufferBit7Qcom = ((int)0x00008000),
         Lines = ((int)0x0001),
+        StencilBufferBit0Qcom = ((int)0x00010000),
         LineLoop = ((int)0x0002),
+        StencilBufferBit1Qcom = ((int)0x00020000),
         LineStrip = ((int)0x0003),
         Triangles = ((int)0x0004),
+        StencilBufferBit2Qcom = ((int)0x00040000),
         TriangleStrip = ((int)0x0005),
         TriangleFan = ((int)0x0006),
+        StencilBufferBit3Qcom = ((int)0x00080000),
+        StencilBufferBit4Qcom = ((int)0x00100000),
+        StencilBufferBit5Qcom = ((int)0x00200000),
+        StencilBufferBit6Qcom = ((int)0x00400000),
+        StencilBufferBit7Qcom = ((int)0x00800000),
+        MultisampleBufferBit0Qcom = ((int)0x01000000),
         Never = ((int)0x0200),
+        MultisampleBufferBit1Qcom = ((int)0x02000000),
         Less = ((int)0x0201),
         Equal = ((int)0x0202),
         Lequal = ((int)0x0203),
@@ -96,6 +122,7 @@ namespace OpenTK.Graphics.ES20
         DstColor = ((int)0x0306),
         OneMinusDstColor = ((int)0x0307),
         SrcAlphaSaturate = ((int)0x0308),
+        MultisampleBufferBit2Qcom = ((int)0x04000000),
         Front = ((int)0x0404),
         Back = ((int)0x0405),
         FrontAndBack = ((int)0x0408),
@@ -104,6 +131,7 @@ namespace OpenTK.Graphics.ES20
         InvalidOperation = ((int)0x0502),
         OutOfMemory = ((int)0x0505),
         InvalidFramebufferOperation = ((int)0x0506),
+        MultisampleBufferBit3Qcom = ((int)0x08000000),
         Cw = ((int)0x0900),
         Ccw = ((int)0x0901),
         LineWidth = ((int)0x0B21),
@@ -143,6 +171,7 @@ namespace OpenTK.Graphics.ES20
         DepthBits = ((int)0x0D56),
         StencilBits = ((int)0x0D57),
         Texture2D = ((int)0x0DE1),
+        MultisampleBufferBit4Qcom = ((int)0x10000000),
         DontCare = ((int)0x1100),
         Fastest = ((int)0x1101),
         Nicest = ((int)0x1102),
@@ -156,6 +185,9 @@ namespace OpenTK.Graphics.ES20
         Fixed = ((int)0x140C),
         Invert = ((int)0x150A),
         Texture = ((int)0x1702),
+        ColorExt = ((int)0x1800),
+        DepthExt = ((int)0x1801),
+        StencilExt = ((int)0x1802),
         StencilIndex = ((int)0x1901),
         DepthComponent = ((int)0x1902),
         Alpha = ((int)0x1906),
@@ -171,6 +203,7 @@ namespace OpenTK.Graphics.ES20
         Renderer = ((int)0x1F01),
         Version = ((int)0x1F02),
         Extensions = ((int)0x1F03),
+        MultisampleBufferBit5Qcom = ((int)0x20000000),
         Nearest = ((int)0x2600),
         Linear = ((int)0x2601),
         NearestMipmapNearest = ((int)0x2700),
@@ -183,12 +216,17 @@ namespace OpenTK.Graphics.ES20
         TextureWrapT = ((int)0x2803),
         Repeat = ((int)0x2901),
         PolygonOffsetUnits = ((int)0x2A00),
+        MultisampleBufferBit6Qcom = ((int)0x40000000),
+        CoverageBufferBitNv = ((int)0x8000),
+        MultisampleBufferBit7Qcom = unchecked((int)0x80000000),
         ConstantColor = ((int)0x8001),
         OneMinusConstantColor = ((int)0x8002),
         ConstantAlpha = ((int)0x8003),
         OneMinusConstantAlpha = ((int)0x8004),
         BlendColor = ((int)0x8005),
         FuncAdd = ((int)0x8006),
+        MinExt = ((int)0x8007),
+        MaxExt = ((int)0x8008),
         BlendEquation = ((int)0x8009),
         BlendEquationRgb = ((int)0X8009),
         FuncSubtract = ((int)0x800A),
@@ -216,17 +254,22 @@ namespace OpenTK.Graphics.ES20
         BlendSrcRgb = ((int)0x80C9),
         BlendDstAlpha = ((int)0x80CA),
         BlendSrcAlpha = ((int)0x80CB),
-        Bgra = ((int)0x80E1),
+        BgraExt = ((int)0x80E1),
+        BgraImg = ((int)0x80E1),
         ClampToEdge = ((int)0x812F),
+        TextureMaxLevelApple = ((int)0x813D),
         GenerateMipmapHint = ((int)0x8192),
         DepthComponent16 = ((int)0x81A5),
         DepthComponent24Oes = ((int)0x81A6),
         DepthComponent32Oes = ((int)0x81A7),
         UnsignedShort565 = ((int)0x8363),
-        UnsignedShort4444Rev = ((int)0x8365),
-        UnsignedShort1555Rev = ((int)0x8366),
+        UnsignedShort4444RevExt = ((int)0x8365),
+        UnsignedShort4444RevImg = ((int)0x8365),
+        UnsignedShort1555RevExt = ((int)0x8366),
         UnsignedInt2101010RevExt = ((int)0x8368),
         MirroredRepeat = ((int)0x8370),
+        CompressedRgbS3tcDxt1Ext = ((int)0x83F0),
+        CompressedRgbaS3tcDxt1Ext = ((int)0x83F1),
         AliasedPointSizeRange = ((int)0x846D),
         AliasedLineWidthRange = ((int)0x846E),
         Texture0 = ((int)0x84C0),
@@ -281,6 +324,9 @@ namespace OpenTK.Graphics.ES20
         TextureCubeMapPositiveZ = ((int)0x8519),
         TextureCubeMapNegativeZ = ((int)0x851A),
         MaxCubeMapTextureSize = ((int)0x851C),
+        VertexArrayBindingOes = ((int)0x85B5),
+        UnsignedShort88Apple = ((int)0x85BA),
+        UnsignedShort88RevApple = ((int)0x85BB),
         VertexAttribArrayEnabled = ((int)0x8622),
         VertexAttribArraySize = ((int)0x8623),
         VertexAttribArrayStride = ((int)0x8624),
@@ -294,14 +340,15 @@ namespace OpenTK.Graphics.ES20
         BufferSize = ((int)0x8764),
         BufferUsage = ((int)0x8765),
         AtcRgbaInterpolatedAlphaAmd = ((int)0x87EE),
-        GL_3DcXAmd = ((int)0x87F9),
-        GL_3DcXyAmd = ((int)0x87FA),
+        Gl3DcXAmd = ((int)0x87F9),
+        Gl3DcXyAmd = ((int)0x87FA),
         NumProgramBinaryFormatsOes = ((int)0x87FE),
         ProgramBinaryFormatsOes = ((int)0x87FF),
         StencilBackFunc = ((int)0x8800),
         StencilBackFail = ((int)0x8801),
         StencilBackPassDepthFail = ((int)0x8802),
         StencilBackPassDepthPass = ((int)0x8803),
+        WriteonlyRenderingQcom = ((int)0x8823),
         BlendEquationAlpha = ((int)0x883D),
         MaxVertexAttribs = ((int)0x8869),
         VertexAttribArrayNormalized = ((int)0x886A),
@@ -319,6 +366,7 @@ namespace OpenTK.Graphics.ES20
         StaticDraw = ((int)0x88E4),
         DynamicDraw = ((int)0x88E8),
         Depth24Stencil8Oes = ((int)0x88F0),
+        Rgb422Apple = ((int)0x8A1F),
         FragmentShader = ((int)0x8B30),
         VertexShader = ((int)0x8B31),
         MaxVertexTextureImageUnits = ((int)0x8B4C),
@@ -373,17 +421,39 @@ namespace OpenTK.Graphics.ES20
         PerfmonResultAvailableAmd = ((int)0x8BC4),
         PerfmonResultSizeAmd = ((int)0x8BC5),
         PerfmonResultAmd = ((int)0x8BC6),
+        TextureWidthQcom = ((int)0x8BD2),
+        TextureHeightQcom = ((int)0x8BD3),
+        TextureDepthQcom = ((int)0x8BD4),
+        TextureInternalFormatQcom = ((int)0x8BD5),
+        TextureFormatQcom = ((int)0x8BD6),
+        TextureTypeQcom = ((int)0x8BD7),
+        TextureImageValidQcom = ((int)0x8BD8),
+        TextureNumLevelsQcom = ((int)0x8BD9),
+        TextureTargetQcom = ((int)0x8BDA),
+        TextureObjectValidQcom = ((int)0x8BDB),
+        StateRestore = ((int)0x8BDC),
         CompressedRgbPvrtc4Bppv1Img = ((int)0x8C00),
         CompressedRgbPvrtc2Bppv1Img = ((int)0x8C01),
         CompressedRgbaPvrtc4Bppv1Img = ((int)0x8C02),
         CompressedRgbaPvrtc2Bppv1Img = ((int)0x8C03),
+        SgxBinaryImg = ((int)0x8C0A),
         AtcRgbAmd = ((int)0x8C92),
         AtcRgbaExplicitAlphaAmd = ((int)0x8C93),
         StencilBackRef = ((int)0x8CA3),
         StencilBackValueMask = ((int)0x8CA4),
         StencilBackWritemask = ((int)0x8CA5),
+        DrawFramebufferBindingAngle = ((int)0x8CA6),
+        DrawFramebufferBindingApple = ((int)0x8CA6),
         FramebufferBinding = ((int)0x8CA6),
         RenderbufferBinding = ((int)0x8CA7),
+        ReadFramebufferAngle = ((int)0x8CA8),
+        ReadFramebufferApple = ((int)0x8CA8),
+        DrawFramebufferAngle = ((int)0x8CA9),
+        DrawFramebufferApple = ((int)0x8CA9),
+        ReadFramebufferBindingAngle = ((int)0x8CAA),
+        ReadFramebufferBindingApple = ((int)0x8CAA),
+        RenderbufferSamplesAngle = ((int)0x8CAB),
+        RenderbufferSamplesApple = ((int)0x8CAB),
         FramebufferAttachmentObjectType = ((int)0x8CD0),
         FramebufferAttachmentObjectName = ((int)0x8CD1),
         FramebufferAttachmentTextureLevel = ((int)0x8CD2),
@@ -411,6 +481,10 @@ namespace OpenTK.Graphics.ES20
         RenderbufferAlphaSize = ((int)0x8D53),
         RenderbufferDepthSize = ((int)0x8D54),
         RenderbufferStencilSize = ((int)0x8D55),
+        FramebufferIncompleteMultisampleAngle = ((int)0x8D56),
+        FramebufferIncompleteMultisampleApple = ((int)0x8D56),
+        MaxSamplesAngle = ((int)0x8D57),
+        MaxSamplesApple = ((int)0x8D57),
         HalfFloatOes = ((int)0x8D61),
         Rgb565 = ((int)0x8D62),
         Etc1Rgb8Oes = ((int)0x8D64),
@@ -428,17 +502,52 @@ namespace OpenTK.Graphics.ES20
         MaxVertexUniformVectors = ((int)0x8DFB),
         MaxVaryingVectors = ((int)0x8DFC),
         MaxFragmentUniformVectors = ((int)0x8DFD),
+        DepthComponent16NonlinearNv = ((int)0x8E2C),
+        CoverageComponentNv = ((int)0x8ED0),
+        CoverageComponent4Nv = ((int)0x8ED1),
+        CoverageAttachmentNv = ((int)0x8ED2),
+        CoverageBuffersNv = ((int)0x8ED3),
+        CoverageSamplesNv = ((int)0x8ED4),
+        CoverageAllFragmentsNv = ((int)0x8ED5),
+        CoverageEdgeFragmentsNv = ((int)0x8ED6),
+        CoverageAutomaticNv = ((int)0x8ED7),
+        MaliShaderBinaryArm = ((int)0x8F60),
         PerfmonGlobalModeQcom = ((int)0x8FA0),
+        ShaderBinaryViv = ((int)0x8FC4),
+        SgxProgramBinaryImg = ((int)0x9130),
+        RenderbufferSamplesImg = ((int)0x9133),
+        FramebufferIncompleteMultisampleImg = ((int)0x9134),
+        MaxSamplesImg = ((int)0x9135),
+        TextureSamplesImg = ((int)0x9136),
         AmdCompressed3DcTexture = ((int)1),
         AmdCompressedAtcTexture = ((int)1),
         AmdPerformanceMonitor = ((int)1),
         AmdProgramBinaryZ400 = ((int)1),
+        AngleFramebufferBlit = ((int)1),
+        AngleFramebufferMultisample = ((int)1),
+        AppleFramebufferMultisample = ((int)1),
+        AppleRgb422 = ((int)1),
+        AppleTextureFormatBgra8888 = ((int)1),
+        AppleTextureMaxLevel = ((int)1),
+        ArmMaliShaderBinary = ((int)1),
+        ArmRgba8 = ((int)1),
         EsVersion20 = ((int)1),
+        ExtBlendMinmax = ((int)1),
+        ExtDiscardFramebuffer = ((int)1),
+        ExtMultiDrawArrays = ((int)1),
+        ExtReadFormatBgra = ((int)1),
+        ExtShaderTextureLod = ((int)1),
+        ExtTextureCompressionDxt1 = ((int)1),
         ExtTextureFilterAnisotropic = ((int)1),
         ExtTextureFormatBgra8888 = ((int)1),
         ExtTextureType2101010Rev = ((int)1),
+        ImgMultisampledRenderToTexture = ((int)1),
+        ImgProgramBinary = ((int)1),
         ImgReadFormat = ((int)1),
+        ImgShaderBinary = ((int)1),
         ImgTextureCompressionPvrtc = ((int)1),
+        NvCoverageSample = ((int)1),
+        NvDepthNonlinear = ((int)1),
         NvFence = ((int)1),
         OesCompressedEtc1Rgb8Texture = ((int)1),
         OesCompressedPalettedTexture = ((int)1),
@@ -462,22 +571,28 @@ namespace OpenTK.Graphics.ES20
         OesTextureHalfFloat = ((int)1),
         OesTextureHalfFloatLinear = ((int)1),
         OesTextureNpot = ((int)1),
+        OesVertexArrayObject = ((int)1),
         OesVertexHalfFloat = ((int)1),
         OesVertexType1010102 = ((int)1),
         One = ((int)1),
         QcomDriverControl = ((int)1),
+        QcomExtendedGet = ((int)1),
+        QcomExtendedGet2 = ((int)1),
         QcomPerfmonGlobalMode = ((int)1),
+        QcomTiledRendering = ((int)1),
+        QcomWriteonlyRendering = ((int)1),
         True = ((int)1),
+        VivShaderBinary = ((int)1),
     }
 
-    public enum Amdcompressed3Dctexture : int
+    public enum AmdCompressed3Dctexture : int
     {
-        GL_3DcXAmd = ((int)0x87F9),
-        GL_3DcXyAmd = ((int)0x87FA),
+        Gl3DcXAmd = ((int)0x87F9),
+        Gl3DcXyAmd = ((int)0x87FA),
         AmdCompressed3DcTexture = ((int)1),
     }
 
-    public enum AmdcompressedAtctexture : int
+    public enum AmdCompressedAtctexture : int
     {
         AtcRgbaInterpolatedAlphaAmd = ((int)0x87EE),
         AtcRgbAmd = ((int)0x8C92),
@@ -485,7 +600,7 @@ namespace OpenTK.Graphics.ES20
         AmdCompressedAtcTexture = ((int)1),
     }
 
-    public enum AmdperformanceMonitor : int
+    public enum AmdPerformanceMonitor : int
     {
         CounterTypeAmd = ((int)0x8BC0),
         CounterRangeAmd = ((int)0x8BC1),
@@ -497,10 +612,70 @@ namespace OpenTK.Graphics.ES20
         AmdPerformanceMonitor = ((int)1),
     }
 
-    public enum AmdprogramBinaryZ400 : int
+    public enum AmdProgramBinaryZ400 : int
     {
         Z400BinaryAmd = ((int)0x8740),
         AmdProgramBinaryZ400 = ((int)1),
+    }
+
+    public enum AngleFramebufferBlit : int
+    {
+        DrawFramebufferBindingAngle = ((int)0x8CA6),
+        ReadFramebufferAngle = ((int)0x8CA8),
+        DrawFramebufferAngle = ((int)0x8CA9),
+        ReadFramebufferBindingAngle = ((int)0x8CAA),
+        AngleFramebufferBlit = ((int)1),
+    }
+
+    public enum AngleFramebufferMultisample : int
+    {
+        RenderbufferSamplesAngle = ((int)0x8CAB),
+        FramebufferIncompleteMultisampleAngle = ((int)0x8D56),
+        MaxSamplesAngle = ((int)0x8D57),
+        AngleFramebufferMultisample = ((int)1),
+    }
+
+    public enum AppleFramebufferMultisample : int
+    {
+        DrawFramebufferBindingApple = ((int)0x8CA6),
+        ReadFramebufferApple = ((int)0x8CA8),
+        DrawFramebufferApple = ((int)0x8CA9),
+        ReadFramebufferBindingApple = ((int)0x8CAA),
+        RenderbufferSamplesApple = ((int)0x8CAB),
+        FramebufferIncompleteMultisampleApple = ((int)0x8D56),
+        MaxSamplesApple = ((int)0x8D57),
+        AppleFramebufferMultisample = ((int)1),
+    }
+
+    public enum AppleRgb422 : int
+    {
+        UnsignedShort88Apple = ((int)0x85BA),
+        UnsignedShort88RevApple = ((int)0x85BB),
+        Rgb422Apple = ((int)0x8A1F),
+        AppleRgb422 = ((int)1),
+    }
+
+    public enum AppleTextureFormatBgra8888 : int
+    {
+        BgraExt = ((int)0x80E1),
+        AppleTextureFormatBgra8888 = ((int)1),
+    }
+
+    public enum AppleTextureMaxLevel : int
+    {
+        TextureMaxLevelApple = ((int)0x813D),
+        AppleTextureMaxLevel = ((int)1),
+    }
+
+    public enum ArmMaliShaderBinary : int
+    {
+        MaliShaderBinaryArm = ((int)0x8F60),
+        ArmMaliShaderBinary = ((int)1),
+    }
+
+    public enum ArmRgba8 : int
+    {
+        ArmRgba8 = ((int)1),
     }
 
     public enum BeginMode : int
@@ -680,20 +855,55 @@ namespace OpenTK.Graphics.ES20
         InvalidFramebufferOperation = ((int)0X0506),
     }
 
-    public enum ExttextureFilterAnisotropic : int
+    public enum ExtBlendMinmax : int
+    {
+        MinExt = ((int)0x8007),
+        MaxExt = ((int)0x8008),
+        ExtBlendMinmax = ((int)1),
+    }
+
+    public enum ExtDiscardFramebuffer : int
+    {
+        ColorExt = ((int)0x1800),
+        DepthExt = ((int)0x1801),
+        StencilExt = ((int)0x1802),
+        ExtDiscardFramebuffer = ((int)1),
+    }
+
+    public enum ExtReadFormatBgra : int
+    {
+        BgraExt = ((int)0x80E1),
+        UnsignedShort4444RevExt = ((int)0x8365),
+        UnsignedShort1555RevExt = ((int)0x8366),
+        ExtReadFormatBgra = ((int)1),
+    }
+
+    public enum ExtShaderTextureLod : int
+    {
+        ExtShaderTextureLod = ((int)1),
+    }
+
+    public enum ExtTextureCompressionDxt1 : int
+    {
+        CompressedRgbS3tcDxt1Ext = ((int)0x83F0),
+        CompressedRgbaS3tcDxt1Ext = ((int)0x83F1),
+        ExtTextureCompressionDxt1 = ((int)1),
+    }
+
+    public enum ExtTextureFilterAnisotropic : int
     {
         TextureMaxAnisotropyExt = ((int)0x84FE),
         MaxTextureMaxAnisotropyExt = ((int)0x84FF),
         ExtTextureFilterAnisotropic = ((int)1),
     }
 
-    public enum ExttextureFormatBgra8888 : int
+    public enum ExtTextureFormatBgra8888 : int
     {
-        Bgra = ((int)0x80E1),
+        BgraExt = ((int)0x80E1),
         ExtTextureFormatBgra8888 = ((int)1),
     }
 
-    public enum ExttextureType2101010Rev : int
+    public enum ExtTextureType2101010Rev : int
     {
         UnsignedInt2101010RevExt = ((int)0x8368),
         ExtTextureType2101010Rev = ((int)1),
@@ -886,12 +1096,32 @@ namespace OpenTK.Graphics.ES20
         GenerateMipmapHint = ((int)0x8192),
     }
 
+    public enum ImgmultisampledRenderToTexture : int
+    {
+        RenderbufferSamplesImg = ((int)0x9133),
+        FramebufferIncompleteMultisampleImg = ((int)0x9134),
+        MaxSamplesImg = ((int)0x9135),
+        TextureSamplesImg = ((int)0x9136),
+        ImgMultisampledRenderToTexture = ((int)1),
+    }
+
+    public enum ImgprogramBinary : int
+    {
+        SgxProgramBinaryImg = ((int)0x9130),
+        ImgProgramBinary = ((int)1),
+    }
+
     public enum ImgreadFormat : int
     {
-        Bgra = ((int)0x80E1),
-        UnsignedShort4444Rev = ((int)0x8365),
-        UnsignedShort1555Rev = ((int)0x8366),
+        BgraImg = ((int)0x80E1),
+        UnsignedShort4444RevImg = ((int)0x8365),
         ImgReadFormat = ((int)1),
+    }
+
+    public enum ImgshaderBinary : int
+    {
+        SgxBinaryImg = ((int)0x8C0A),
+        ImgShaderBinary = ((int)1),
     }
 
     public enum ImgtextureCompressionPvrtc : int
@@ -903,6 +1133,26 @@ namespace OpenTK.Graphics.ES20
         ImgTextureCompressionPvrtc = ((int)1),
     }
 
+    public enum NvcoverageSample : int
+    {
+        CoverageBufferBitNv = ((int)0x8000),
+        CoverageComponentNv = ((int)0x8ED0),
+        CoverageComponent4Nv = ((int)0x8ED1),
+        CoverageAttachmentNv = ((int)0x8ED2),
+        CoverageBuffersNv = ((int)0x8ED3),
+        CoverageSamplesNv = ((int)0x8ED4),
+        CoverageAllFragmentsNv = ((int)0x8ED5),
+        CoverageEdgeFragmentsNv = ((int)0x8ED6),
+        CoverageAutomaticNv = ((int)0x8ED7),
+        NvCoverageSample = ((int)1),
+    }
+
+    public enum NvdepthNonlinear : int
+    {
+        DepthComponent16NonlinearNv = ((int)0x8E2C),
+        NvDepthNonlinear = ((int)1),
+    }
+
     public enum Nvfence : int
     {
         AllCompletedNv = ((int)0x84F2),
@@ -911,13 +1161,13 @@ namespace OpenTK.Graphics.ES20
         NvFence = ((int)1),
     }
 
-    public enum OescompressedEtc1Rgb8Texture : int
+    public enum OesCompressedEtc1Rgb8Texture : int
     {
         Etc1Rgb8Oes = ((int)0x8D64),
         OesCompressedEtc1Rgb8Texture = ((int)1),
     }
 
-    public enum OescompressedPalettedTexture : int
+    public enum OesCompressedPalettedTexture : int
     {
         Palette4Rgb8Oes = ((int)0x8B90),
         Palette4Rgba8Oes = ((int)0x8B91),
@@ -932,44 +1182,45 @@ namespace OpenTK.Graphics.ES20
         OesCompressedPalettedTexture = ((int)1),
     }
 
-    public enum Oesdepth24 : int
+    public enum OesDepth24 : int
     {
         DepthComponent24Oes = ((int)0x81A6),
         OesDepth24 = ((int)1),
     }
 
-    public enum Oesdepth32 : int
+    public enum OesDepth32 : int
     {
         DepthComponent32Oes = ((int)0x81A7),
         OesDepth32 = ((int)1),
     }
 
-    public enum OesdepthTexture : int
+    public enum OesDepthTexture : int
     {
         OesDepthTexture = ((int)1),
     }
 
-    public enum Oeseglimage : int
+    public enum OesEglimage : int
     {
         OesEglImage = ((int)1),
     }
 
-    public enum OeselementIndexUint : int
+    public enum OesElementIndexUint : int
     {
+        UnsignedInt = ((int)0x1405),
         OesElementIndexUint = ((int)1),
     }
 
-    public enum OesfboRenderMipmap : int
+    public enum OesFboRenderMipmap : int
     {
         OesFboRenderMipmap = ((int)1),
     }
 
-    public enum OesfragmentPrecisionHigh : int
+    public enum OesFragmentPrecisionHigh : int
     {
         OesFragmentPrecisionHigh = ((int)1),
     }
 
-    public enum OesgetProgramBinary : int
+    public enum OesGetProgramBinary : int
     {
         ProgramBinaryLengthOes = ((int)0x8741),
         NumProgramBinaryFormatsOes = ((int)0x87FE),
@@ -977,7 +1228,7 @@ namespace OpenTK.Graphics.ES20
         OesGetProgramBinary = ((int)1),
     }
 
-    public enum Oesmapbuffer : int
+    public enum OesMapbuffer : int
     {
         WriteOnlyOes = ((int)0x88B9),
         BufferAccessOes = ((int)0x88BB),
@@ -986,7 +1237,7 @@ namespace OpenTK.Graphics.ES20
         OesMapbuffer = ((int)1),
     }
 
-    public enum OespackedDepthStencil : int
+    public enum OesPackedDepthStencil : int
     {
         DepthStencilOes = ((int)0x84F9),
         UnsignedInt248Oes = ((int)0x84FA),
@@ -994,32 +1245,32 @@ namespace OpenTK.Graphics.ES20
         OesPackedDepthStencil = ((int)1),
     }
 
-    public enum Oesrgb8Rgba8 : int
+    public enum OesRgb8Rgba8 : int
     {
         Rgb8Oes = ((int)0x8051),
         Rgba8Oes = ((int)0x8058),
         OesRgb8Rgba8 = ((int)1),
     }
 
-    public enum OesstandardDerivatives : int
+    public enum OesStandardDerivatives : int
     {
         FragmentShaderDerivativeHintOes = ((int)0x8B8B),
         OesStandardDerivatives = ((int)1),
     }
 
-    public enum Oesstencil1 : int
+    public enum OesStencil1 : int
     {
         StencilIndex1Oes = ((int)0x8D46),
         OesStencil1 = ((int)1),
     }
 
-    public enum Oesstencil4 : int
+    public enum OesStencil4 : int
     {
         StencilIndex4Oes = ((int)0x8D47),
         OesStencil4 = ((int)1),
     }
 
-    public enum Oestexture3D : int
+    public enum OesTexture3D : int
     {
         TextureBinding3DOes = ((int)0x806A),
         Texture3DOes = ((int)0x806F),
@@ -1030,38 +1281,44 @@ namespace OpenTK.Graphics.ES20
         OesTexture3D = ((int)1),
     }
 
-    public enum OestextureFloat : int
+    public enum OesTextureFloat : int
     {
         OesTextureFloat = ((int)1),
     }
 
-    public enum OestextureFloatLinear : int
+    public enum OesTextureFloatLinear : int
     {
         OesTextureFloatLinear = ((int)1),
     }
 
-    public enum OestextureHalfFloat : int
+    public enum OesTextureHalfFloat : int
     {
         HalfFloatOes = ((int)0x8D61),
         OesTextureHalfFloat = ((int)1),
     }
 
-    public enum OestextureHalfFloatLinear : int
+    public enum OesTextureHalfFloatLinear : int
     {
         OesTextureHalfFloatLinear = ((int)1),
     }
 
-    public enum OestextureNpot : int
+    public enum OesTextureNpot : int
     {
         OesTextureNpot = ((int)1),
     }
 
-    public enum OesvertexHalfFloat : int
+    public enum OesVertexArrayObject : int
+    {
+        VertexArrayBindingOes = ((int)0x85B5),
+        OesVertexArrayObject = ((int)1),
+    }
+
+    public enum OesVertexHalfFloat : int
     {
         OesVertexHalfFloat = ((int)1),
     }
 
-    public enum OesvertexType1010102 : int
+    public enum OesVertexType1010102 : int
     {
         UnsignedInt1010102Oes = ((int)0x8DF6),
         Int1010102Oes = ((int)0x8DF7),
@@ -1119,15 +1376,79 @@ namespace OpenTK.Graphics.ES20
         ActiveAttributeMaxLength = ((int)0X8b8a),
     }
 
-    public enum QcomdriverControl : int
+    public enum QcomDriverControl : int
     {
         QcomDriverControl = ((int)1),
     }
 
-    public enum QcomperfmonGlobalMode : int
+    public enum QcomExtendedGet : int
+    {
+        TextureWidthQcom = ((int)0x8BD2),
+        TextureHeightQcom = ((int)0x8BD3),
+        TextureDepthQcom = ((int)0x8BD4),
+        TextureInternalFormatQcom = ((int)0x8BD5),
+        TextureFormatQcom = ((int)0x8BD6),
+        TextureTypeQcom = ((int)0x8BD7),
+        TextureImageValidQcom = ((int)0x8BD8),
+        TextureNumLevelsQcom = ((int)0x8BD9),
+        TextureTargetQcom = ((int)0x8BDA),
+        TextureObjectValidQcom = ((int)0x8BDB),
+        StateRestore = ((int)0x8BDC),
+        QcomExtendedGet = ((int)1),
+    }
+
+    public enum QcomExtendedGet2 : int
+    {
+        QcomExtendedGet2 = ((int)1),
+    }
+
+    public enum QcomPerfmonGlobalMode : int
     {
         PerfmonGlobalModeQcom = ((int)0x8FA0),
         QcomPerfmonGlobalMode = ((int)1),
+    }
+
+    public enum QcomTiledRendering : int
+    {
+        ColorBufferBit0Qcom = ((int)0x00000001),
+        ColorBufferBit1Qcom = ((int)0x00000002),
+        ColorBufferBit2Qcom = ((int)0x00000004),
+        ColorBufferBit3Qcom = ((int)0x00000008),
+        ColorBufferBit4Qcom = ((int)0x00000010),
+        ColorBufferBit5Qcom = ((int)0x00000020),
+        ColorBufferBit6Qcom = ((int)0x00000040),
+        ColorBufferBit7Qcom = ((int)0x00000080),
+        DepthBufferBit0Qcom = ((int)0x00000100),
+        DepthBufferBit1Qcom = ((int)0x00000200),
+        DepthBufferBit2Qcom = ((int)0x00000400),
+        DepthBufferBit3Qcom = ((int)0x00000800),
+        DepthBufferBit4Qcom = ((int)0x00001000),
+        DepthBufferBit5Qcom = ((int)0x00002000),
+        DepthBufferBit6Qcom = ((int)0x00004000),
+        DepthBufferBit7Qcom = ((int)0x00008000),
+        StencilBufferBit0Qcom = ((int)0x00010000),
+        StencilBufferBit1Qcom = ((int)0x00020000),
+        StencilBufferBit2Qcom = ((int)0x00040000),
+        StencilBufferBit3Qcom = ((int)0x00080000),
+        StencilBufferBit4Qcom = ((int)0x00100000),
+        StencilBufferBit5Qcom = ((int)0x00200000),
+        StencilBufferBit6Qcom = ((int)0x00400000),
+        StencilBufferBit7Qcom = ((int)0x00800000),
+        MultisampleBufferBit0Qcom = ((int)0x01000000),
+        MultisampleBufferBit1Qcom = ((int)0x02000000),
+        MultisampleBufferBit2Qcom = ((int)0x04000000),
+        MultisampleBufferBit3Qcom = ((int)0x08000000),
+        MultisampleBufferBit4Qcom = ((int)0x10000000),
+        MultisampleBufferBit5Qcom = ((int)0x20000000),
+        MultisampleBufferBit6Qcom = ((int)0x40000000),
+        MultisampleBufferBit7Qcom = unchecked((int)0x80000000),
+        QcomTiledRendering = ((int)1),
+    }
+
+    public enum QcomWriteonlyRendering : int
+    {
+        WriteonlyRenderingQcom = ((int)0x8823),
+        QcomWriteonlyRendering = ((int)1),
     }
 
     public enum ReadFormat : int
@@ -1388,6 +1709,11 @@ namespace OpenTK.Graphics.ES20
         SamplerCube = ((int)0x8B60),
     }
 
+    public enum Unknown : int
+    {
+        ExtMultiDrawArrays = ((int)1),
+    }
+
     public enum VertexArrays : int
     {
         VertexAttribArrayEnabled = ((int)0x8622),
@@ -1423,6 +1749,12 @@ namespace OpenTK.Graphics.ES20
         UnsignedShort = ((int)0X1403),
         Float = ((int)0X1406),
         Fixed = ((int)0X140c),
+    }
+
+    public enum VivshaderBinary : int
+    {
+        ShaderBinaryViv = ((int)0x8FC4),
+        VivShaderBinary = ((int)1),
     }
 
 }

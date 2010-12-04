@@ -36,7 +36,12 @@
                     <constant>GL_TEXTURE_1D</constant>,
                     <constant>GL_TEXTURE_2D</constant>,
                     <constant>GL_TEXTURE_3D</constant>, or
-                    <constant>GL_TEXTURE_CUBE_MAP</constant>.
+                    <constant>GL_TEXTURE_1D_ARRAY</constant>,
+                    <constant>GL_TEXTURE_2D_ARRAY</constant>,
+                    <constant>GL_TEXTURE_RECTANGLE</constant>,
+                    <constant>GL_TEXTURE_CUBE_MAP</constant>,
+                    <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or
+                    <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -54,40 +59,41 @@
         <para>
             <function>glBindTexture</function> lets you create or use a named texture. Calling <function>glBindTexture</function> with
             <parameter>target</parameter> set to
-            <constant>GL_TEXTURE_1D</constant>, <constant>GL_TEXTURE_2D</constant>, <constant>GL_TEXTURE_3D</constant> or
-            <constant>GL_TEXTURE_CUBE_MAP</constant> and <parameter>texture</parameter> set to the name
-            of the new texture binds the texture name to the target.
-            When a texture is bound to a target, the previous binding for that
-            target is automatically broken.
+            <constant>GL_TEXTURE_1D</constant>, <constant>GL_TEXTURE_2D</constant>, <constant>GL_TEXTURE_3D</constant>, or
+            <constant>GL_TEXTURE_1D_ARRAY</constant>, <constant>GL_TEXTURE_2D_ARRAY</constant>, <constant>GL_TEXTURE_RECTANGLE</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP</constant>, <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>
+            and <parameter>texture</parameter> set to the name of the new texture binds the texture name to the target.
+            When a texture is bound to a target, the previous binding for that target is automatically broken.
         </para>
         <para>
             Texture names are unsigned integers. The value zero is reserved to
             represent the default texture for each texture target.
             Texture names and the corresponding texture contents are local to
-            the shared display-list space (see <citerefentry><refentrytitle>glXCreateContext</refentrytitle></citerefentry>) of the current
-            GL rendering context;
+            the shared object space of the current GL rendering context;
             two rendering contexts share texture names only if they
-            also share display lists.
+            explicitly enable sharing between contexts through the appropriate GL windows interfaces functions.
         </para>
         <para>
-            You may use <citerefentry><refentrytitle>glGenTextures</refentrytitle></citerefentry> to generate a set of new texture names.
+            You must use <citerefentry><refentrytitle>glGenTextures</refentrytitle></citerefentry> to generate a set of new texture names.
         </para>
         <para>
             When a texture is first bound, it assumes the specified target:
             A texture first bound to <constant>GL_TEXTURE_1D</constant> becomes one-dimensional texture, a
             texture first bound to <constant>GL_TEXTURE_2D</constant> becomes two-dimensional texture, a
-            texture first bound to <constant>GL_TEXTURE_3D</constant> becomes three-dimensional texture, and a
-            texture first bound to <constant>GL_TEXTURE_CUBE_MAP</constant>
-            becomes a cube-mapped texture. The state of a one-dimensional texture
-            immediately after it is first bound is equivalent to the state of the
-            default <constant>GL_TEXTURE_1D</constant> at GL initialization, and similarly for two-
-            and three-dimensional textures and cube-mapped textures.
+            texture first bound to <constant>GL_TEXTURE_3D</constant> becomes three-dimensional texture, a
+            texture first bound to <constant>GL_TEXTURE_1D_ARRAY</constant> becomes one-dimensional array texture, a
+            texture first bound to <constant>GL_TEXTURE_2D_ARRAY</constant> becomes two-dimensional arary texture, a
+            texture first bound to <constant>GL_TEXTURE_RECTANGLE</constant> becomes rectangle texture, a,
+            texture first bound to <constant>GL_TEXTURE_CUBE_MAP</constant> becomes a cube-mapped texture, a
+            texture first bound to <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> becomes a two-dimensional multisampled texture, and a
+            texture first bound to <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant> becomes a two-dimensional multisampled array texture.
+            The state of a one-dimensional texture immediately after it is first bound is equivalent to the state of the
+            default <constant>GL_TEXTURE_1D</constant> at GL initialization, and similarly for the other texture types.
         </para>
         <para>
             While a texture is bound, GL operations on the target to which it is
             bound affect the bound texture, and queries of the target to which it
-            is bound return state from the bound texture. If texture mapping is active
-            on the target to which a texture is bound, the bound texture is used.
+            is bound return state from the bound texture. 
             In effect, the texture targets become aliases for the textures currently
             bound to them, and the texture name zero refers to the default textures
             that were bound to them at initialization.
@@ -101,20 +107,14 @@
             Once created, a named texture may be re-bound to its same original target as often as needed.
             It is usually much faster to use <function>glBindTexture</function> to bind an existing named
             texture to one of the texture targets than it is to reload the texture image
-            using <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>, or <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>.
-            For additional control over performance, use
-            <citerefentry><refentrytitle>glPrioritizeTextures</refentrytitle></citerefentry>.
-        </para>
-        <para>
-            <function>glBindTexture</function> is included in display lists.
+            using <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry> or another similar function.
         </para>
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
         <para>
-            <function>glBindTexture</function> is available only if the GL version is 1.1 or greater.
-        </para>
-        <para>
-            <constant>GL_TEXTURE_CUBE_MAP</constant> is available only if the GL version is 1.3 or greater.
+            The <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> and <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant> targets are available
+            only if the GL version is 3.2 or higher.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
@@ -123,37 +123,34 @@
             values.
         </para>
         <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>texture</parameter> was previously created with a target
-            that doesn't match that of <parameter>target</parameter>.
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>target</parameter> is not a name returned from
+            a previous call to <citerefentry><refentrytitle>glGenTextures</refentrytitle></citerefentry>.
         </para>
         <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glBindTexture</function> is executed
-            between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
-            execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>texture</parameter> was previously created with a target
+            that doesn't match that of <parameter>target</parameter>.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_BINDING_1D</constant>
-        </para>
-        <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_BINDING_2D</constant>
-        </para>
-        <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_BINDING_3D</constant>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_BINDING_1D</constant>,
+            <constant>GL_TEXTURE_BINDING_2D</constant>, <constant>GL_TEXTURE_BINDING_3D</constant>, <constant>GL_TEXTURE_BINDING_1D_ARRAY</constant>,
+            <constant>GL_TEXTURE_BINDING_2D_ARRAY</constant>, <constant>GL_TEXTURE_BINDING_RECTANGLE</constant>, <constant>GL_TEXTURE_BINDING_2D_MULTISAMPLE</constant>,
+            or <constant>GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY</constant>.
         </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
-            <citerefentry><refentrytitle>glAreTexturesResident</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glDeleteTextures</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glGenTextures</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glGetTexParameter</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glIsTexture</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glPrioritizeTextures</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2DMultisample</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3DMultisample</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
         </para>
     </refsect1>

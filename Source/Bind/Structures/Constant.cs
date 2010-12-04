@@ -20,6 +20,8 @@ namespace Bind.Structures
     public class Constant
     {
         static StringBuilder translator = new StringBuilder();
+        static readonly int MaxReferenceDepth = 8;
+        static int CurrentReferenceDepth = 0;
 
         #region PreviousName
 
@@ -47,11 +49,10 @@ namespace Bind.Structures
             get { return _name; }
             set 
             {
-                if (!String.IsNullOrEmpty(value))
-                    _name = Translate(value.Trim(), false);
-                else _name = value;
-                
-                PreviousName = value;
+                if (String.IsNullOrEmpty(value))
+                    throw new ArgumentNullException("value");
+                PreviousName = _name;
+                _name = value;
             }
         }
 
@@ -66,48 +67,16 @@ namespace Bind.Structures
         /// </summary>
         public string Value
         {
-            get 
+            get
             {
                 return _value;
             }
             set
             {
-                if (!String.IsNullOrEmpty(value))
-                {
-                    value = value.Trim();
+                if (String.IsNullOrEmpty(value))
+                    throw new ArgumentNullException("value");
 
-                    if (value.ToLower() == " 0xffffffffffffffff") Debugger.Break();
-                    // Check whether this value is a number and make sure the Unchecked property is set correctly.
-                    ulong number;
-                    if (value.ToLower().StartsWith("0x"))
-                    {
-                        // Trim the unsigned or long specifiers used in C constants ('u' or 'ull').
-                        if (value.ToLower().EndsWith("ull"))
-                            value = value.Substring(0, value.Length - 3);
-                        if (value.ToLower().EndsWith("u"))
-                            value = value.Substring(0, value.Length - 1);
-                    }
-                    if (UInt64.TryParse(value.ToLower().Replace("0x", String.Empty), NumberStyles.AllowHexSpecifier, null, out number))
-                    {
-                        // The value is a number, check if it should be unchecked.
-                        if (number > 0x7FFFFFFF)
-                            Unchecked = true;
-                    }
-                    else
-                    {
-                        // The value is not a number. Strip the prefix.
-                        if (value.StartsWith(Settings.ConstantPrefix))
-                            value = value.Substring(Settings.ConstantPrefix.Length);
-
-                        // If the name now starts with a digit (doesn't matter whether we
-                        // stripped "GL_" above), add a "GL_" prefix.
-                        // (e.g. GL_4_BYTES).
-                        if (Char.IsDigit(value[0]))
-                            value = Settings.ConstantPrefix + value;
-                    }
-                }
-
-                _value = Translate(value, true);
+                _value = value;
             }
         }
 
@@ -127,7 +96,7 @@ namespace Bind.Structures
             set
             {
                 if (!String.IsNullOrEmpty(value))
-                    _reference = Enum.TranslateName(value.Trim());
+                    _reference = EnumProcessor.TranslateEnumName(value.Trim());
                 else _reference = value;
             }
         }
@@ -136,12 +105,17 @@ namespace Bind.Structures
 
         #region public bool Unchecked
 
-        private bool @unchecked;
-
         public bool Unchecked
         {
-            get { return @unchecked; }
-            set { @unchecked = value; }
+            get
+            {
+                // Check if the value is a number larger than Int32.MaxValue.
+                ulong number;
+                string test = Value;
+                return UInt64.TryParse(test.ToLower().Replace("0x", String.Empty),
+                    NumberStyles.AllowHexSpecifier, null, out number) &&
+                    number > Int32.MaxValue; 
+            }
         }
 
         #endregion
@@ -170,6 +144,7 @@ namespace Bind.Structures
 
         #region Translate
 
+        [Obsolete]
         public static string Translate(string s, bool isValue)
         {
             translator.Remove(0, translator.Length);
@@ -221,23 +196,49 @@ namespace Bind.Structures
         /// <returns>True if the reference was found; false otherwise.</returns>
         public static bool TranslateConstantWithReference(Constant c, EnumCollection enums, EnumCollection auxEnums)
         {
+            if (c == null)
+                throw new ArgumentNullException("c");
+            if (enums == null)
+                throw new ArgumentNullException("enums");
+
+            if (++CurrentReferenceDepth >= MaxReferenceDepth)
+                throw new InvalidOperationException("Enum specification contains cycle");
+
             if (!String.IsNullOrEmpty(c.Reference))
             {
                 Constant referenced_constant;
 
                 if (enums.ContainsKey(c.Reference) && enums[c.Reference].ConstantCollection.ContainsKey(c.Value))
                 {
-                    TranslateConstantWithReference(enums[c.Reference].ConstantCollection[c.Value] as Constant, enums, auxEnums);
-                    referenced_constant = (enums[c.Reference].ConstantCollection[c.Value] as Constant);
+                    // Transitively translate the referenced token
+                    // Todo: this may cause loops if two tokens reference each other.
+                    // Add a max reference depth and bail out?
+                    TranslateConstantWithReference(enums[c.Reference].ConstantCollection[c.Value], enums, auxEnums);
+                    referenced_constant = (enums[c.Reference].ConstantCollection[c.Value]);
                 }
-                else if (auxEnums.ContainsKey(c.Reference) && auxEnums[c.Reference].ConstantCollection.ContainsKey(c.Value))
+                else if (auxEnums != null && auxEnums.ContainsKey(c.Reference) && auxEnums[c.Reference].ConstantCollection.ContainsKey(c.Value))
                 {
-                    TranslateConstantWithReference(auxEnums[c.Reference].ConstantCollection[c.Value] as Constant, enums, auxEnums);
-                    referenced_constant = (auxEnums[c.Reference].ConstantCollection[c.Value] as Constant);
+                    // Legacy from previous generator incarnation.
+                    // Todo: merge everything into enums and get rid of auxEnums.
+                    TranslateConstantWithReference(auxEnums[c.Reference].ConstantCollection[c.Value], enums, auxEnums);
+                    referenced_constant = (auxEnums[c.Reference].ConstantCollection[c.Value]);
+                }
+                else if (enums.ContainsKey(Settings.CompleteEnumName) &&
+                    enums[Settings.CompleteEnumName].ConstantCollection.ContainsKey(c.Value))
+                {
+                    // Try the All enum
+                    var reference = enums[Settings.CompleteEnumName].ConstantCollection[c.Value];
+                    if (reference.Reference == null)
+                        referenced_constant = (enums[Settings.CompleteEnumName].ConstantCollection[c.Value]);
+                    else
+                    {
+                        --CurrentReferenceDepth;
+                        return false;
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("[Warning] Reference {0} not found for token {1}.", c.Reference, c);
+                    --CurrentReferenceDepth;
                     return false;
                 }
                 //else throw new InvalidOperationException(String.Format("Unknown Enum \"{0}\" referenced by Constant \"{1}\"",
@@ -245,9 +246,9 @@ namespace Bind.Structures
 
                 c.Value = referenced_constant.Value;
                 c.Reference = null;
-                c.Unchecked = referenced_constant.Unchecked;
             }
 
+            --CurrentReferenceDepth;
             return true;
         }
 

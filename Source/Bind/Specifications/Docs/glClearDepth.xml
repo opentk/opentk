@@ -22,6 +22,10 @@
                 <funcdef>void <function>glClearDepth</function></funcdef>
                 <paramdef>GLclampd <parameter>depth</parameter></paramdef>
             </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glClearDepthf</function></funcdef>
+                <paramdef>GLclampf <parameter>depth</parameter></paramdef>
+            </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
     <refsect1 id="parameters"><title>Parameters</title>
@@ -42,19 +46,12 @@
             <function>glClearDepth</function> specifies the depth value used by <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry> to clear the depth buffer.
             Values specified by <function>glClearDepth</function> are clamped to the range 
             <inlineequation><mml:math>
-                <!-- eqn: [0,1]:-->
+                <!-- eqn: [0,1]: -->
                 <mml:mfenced open="[" close="]">
                     <mml:mn>0</mml:mn>
                     <mml:mn>1</mml:mn>
                 </mml:mfenced>
             </mml:math></inlineequation>.
-        </para>
-    </refsect1>
-    <refsect1 id="errors"><title>Errors</title>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glClearDepth</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>

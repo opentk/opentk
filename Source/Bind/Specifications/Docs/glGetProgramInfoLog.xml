@@ -83,9 +83,6 @@
 	0.</para>
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
-	<para><function>glGetProgramInfoLog</function> is available only
-	if the GL version is 2.0 or greater.</para>
-
 	<para>The information log for a program object is the OpenGL
 	implementer's primary mechanism for conveying information about
 	linking and validating. Therefore, the information log can be
@@ -105,12 +102,6 @@
 	<para><constant>GL_INVALID_VALUE</constant> is generated if
 	<parameter>maxLength</parameter> is less than 0.</para>
 
-	<para><constant>GL_INVALID_OPERATION</constant> is generated if
-	<function>glGetProgramInfoLog</function> is executed between the
-	execution of
-	<citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-	and the corresponding execution of
-	<citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.</para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
 	<para><citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>

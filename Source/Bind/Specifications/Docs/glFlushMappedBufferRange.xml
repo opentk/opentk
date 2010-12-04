@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glFlushMappedBufferRange">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2010</year>
+                <holder>Khronos Group</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glFlushMappedBufferRange</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glFlushMappedBufferRange</refname>
+        <refpurpose>indicate modifications to a range of a mapped buffer</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLsync <function>glFlushMappedBufferRange</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLintptr <parameter>offset</parameter></paramdef>
+                <paramdef>GLsizeiptr <parameter>length</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target of the flush operation. <parameter>target</parameter> must be <constant>GL_ARRAY_BUFFER</constant>,
+                    <constant>GL_COPY_READ_BUFFER</constant>, <constant>GL_COPY_WRITE_BUFFER</constant>, <constant>GL_ELEMENT_ARRAY_BUFFER</constant>,
+                    <constant>GL_PIXEL_PACK_BUFFER</constant>, <constant>GL_PIXEL_UNPACK_BUFFER</constant>, <constant>GL_TEXTURE_BUFFER</constant>,
+                    <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant>, or <constant>GL_UNIFORM_BUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>offset</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the start of the buffer subrange, in basic machine units.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the length of the buffer subrange, in basic machine units.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glFlushMappedBufferRange</function> indicates that modifications have been made to a range of a mapped buffer.
+            The buffer must previously have been mapped with the <constant>GL_MAP_FLUSH_EXPLICIT</constant> flag. <parameter>offset</parameter>
+            and <parameter>length</parameter> indicate the modified subrange of the mapping, in basic units. The specified subrange to flush
+            is relative to the start of the currently mapped range of the buffer. <function>glFlushMappedBufferRange</function> may be called
+            multiple times to indicate distinct subranges of the mapping which require flushing.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>offset</parameter> or <parameter>length</parameter>
+            is negative, or if <parameter>offset</parameter> + <parameter>length</parameter> exceeds the size of the mapping.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if zero is bound to <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if the buffer bound to <parameter>target</parameter> is not
+            mapped, or is mapped without the <constant>GL_MAP_FLUSH_EXPLICIT</constant> flag.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glMapBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>

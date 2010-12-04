@@ -253,10 +253,6 @@
         </variablelist>
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
-	<para>
-            <function>glStencilFuncSeparate</function> is available only if
-            the GL version is 2.0 or greater.
-        </para>
         <para>
             Initially, the stencil test is disabled.
             If there is no stencil buffer,
@@ -268,11 +264,6 @@
         <para>
             <constant>GL_INVALID_ENUM</constant> is generated if <parameter>func</parameter> is not one of the eight
             accepted values.
-        </para>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glStencilFuncSeparate</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
@@ -289,7 +280,6 @@
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
-            <citerefentry><refentrytitle>glAlphaFunc</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,

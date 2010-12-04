@@ -149,7 +149,7 @@
             <parameter>pname</parameter> must be <constant>GL_TEXTURE_LOD_BIAS</constant>.  When <parameter>target</parameter> is
             <constant>GL_TEXTURE_ENV</constant>, <parameter>pname</parameter> can be <constant>GL_TEXTURE_ENV_MODE</constant>,
             <constant>GL_TEXTURE_ENV_COLOR</constant>, <constant>GL_COMBINE_RGB</constant>, <constant>GL_COMBINE_ALPHA</constant>,
-            <constant>GL_RGB_SCALE</constant>, <constant>GL_ALPHA_SCALE</constant>, 
+            <constant>GL_RGB_SCALE</constant>, <constant>GL_ALPHA_SCALE</constant>,
             <constant>GL_SRC0_RGB</constant>, <constant>GL_SRC1_RGB</constant>, <constant>GL_SRC2_RGB</constant>,
             <constant>GL_SRC0_ALPHA</constant>, <constant>GL_SRC1_ALPHA</constant>, or <constant>GL_SRC2_ALPHA</constant>.
         </para>
@@ -179,7 +179,7 @@
             <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
             <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">I</mml:mi>
             <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>
-            to texture source components.  
+            to texture source components.
             <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">C</mml:mi>
             <mml:mi mathvariant="italic">s</mml:mi></mml:msub></mml:math></inlineequation>
             and
@@ -325,17 +325,17 @@
             The following table shows how the RGBA color is produced for each
             of the first five texture functions that can be chosen.
             <inlineequation><mml:math><mml:mi mathvariant="italic">C</mml:mi></mml:math></inlineequation>
-            is a triple of color values (RGB) and 
+            is a triple of color values (RGB) and
             <inlineequation><mml:math><mml:mi mathvariant="italic">A</mml:mi></mml:math></inlineequation>
             is the associated alpha value.
             RGBA values extracted from a texture image are in the range [0,1].
-            The subscript 
+            The subscript
             <inlineequation><mml:math><mml:mi mathvariant="italic">p</mml:mi></mml:math></inlineequation>
             refers to the color computed from the previous texture stage (or the incoming fragment if processing texture stage 0),
-            the subscript 
+            the subscript
             <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
             to the texture source color,
-            the subscript 
+            the subscript
             <inlineequation><mml:math><mml:mi mathvariant="italic">c</mml:mi></mml:math></inlineequation>
             to the texture environment color,
             and the subscript
@@ -1392,12 +1392,12 @@
             <constant>GL_SRC0_RGB</constant>, <constant>GL_SRC1_RGB</constant>, <constant>GL_SRC2_RGB</constant>,
             <constant>GL_SRC0_ALPHA</constant>, <constant>GL_SRC1_ALPHA</constant>, and <constant>GL_SRC2_ALPHA</constant>,
             are combined to produce a final texture color. In the following tables,
-            <constant>GL_SRC0_c</constant> is represented by 
+            <constant>GL_SRC0_c</constant> is represented by
             <inlineequation><mml:math><mml:mi mathvariant="italic">Arg0</mml:mi></mml:math></inlineequation>,
             <constant>GL_SRC1_c</constant> is
-            represented by 
+            represented by
             <inlineequation><mml:math><mml:mi mathvariant="italic">Arg1</mml:mi></mml:math></inlineequation>,
-            and <constant>GL_SRC2_c</constant> is represented by 
+            and <constant>GL_SRC2_c</constant> is represented by
             <inlineequation><mml:math><mml:mi mathvariant="italic">Arg2</mml:mi></mml:math></inlineequation>.
         </para>
         <para>
@@ -1524,10 +1524,14 @@
                     <row>
                         <entry align="left">
                         <constant>GL_DOT3_RGB</constant>
+                        or
+                        <constant>GL_DOT3_RGBA</constant>
                         </entry>
                         <entry align="left">
+                        <!-- eqn: 4  *  ((({Arg0 sub r}  -  0.5) * ({Arg1 sub r} - 0.5)) +
+                                         (({Arg0 sub g}  -  0.5) * ({Arg1 sub g} - 0.5)) +
+                                         (({Arg0 sub b}  -  0.5) * ({Arg1 sub b} - 0.5)):-->
                         <inlineequation><mml:math>
-                            <!-- eqn: 4  *  (({Arg0 sub r}  -  0.5) * ({Arg1 sub r} - 0.5)):-->
                             <mml:mrow>
                                 <mml:mn>4</mml:mn>
                                 <mml:mo>&times;</mml:mo>
@@ -1535,106 +1539,90 @@
                                     <mml:mrow>
                                         <mml:mfenced open="(" close=")">
                                             <mml:mrow>
-                                                <mml:mfenced open="" close="">
-                                                    <mml:msub><mml:mi mathvariant="italic">Arg0</mml:mi>
-                                                    <mml:mi mathvariant="italic">r</mml:mi>
-                                                    </mml:msub>
+                                                <mml:mfenced open="(" close=")">
+                                                    <mml:mrow>
+                                                        <mml:mfenced open="" close="">
+                                                            <mml:msub><mml:mi mathvariant="italic">Arg0</mml:mi>
+                                                            <mml:mi mathvariant="italic">r</mml:mi>
+                                                            </mml:msub>
+                                                        </mml:mfenced>
+                                                        <mml:mo>-</mml:mo>
+                                                        <mml:mn>0.5</mml:mn>
+                                                    </mml:mrow>
                                                 </mml:mfenced>
-                                                <mml:mo>-</mml:mo>
-                                                <mml:mn>0.5</mml:mn>
+                                                <mml:mo>&times;</mml:mo>
+                                                <mml:mfenced open="(" close=")">
+                                                    <mml:mrow>
+                                                        <mml:mfenced open="" close="">
+                                                            <mml:msub><mml:mi mathvariant="italic">Arg1</mml:mi>
+                                                            <mml:mi mathvariant="italic">r</mml:mi>
+                                                            </mml:msub>
+                                                        </mml:mfenced>
+                                                        <mml:mo>-</mml:mo>
+                                                        <mml:mn>0.5</mml:mn>
+                                                    </mml:mrow>
+                                                </mml:mfenced>
                                             </mml:mrow>
                                         </mml:mfenced>
-                                        <mml:mo>&times;</mml:mo>
+                                        <mml:mo>+</mml:mo>
                                         <mml:mfenced open="(" close=")">
                                             <mml:mrow>
-                                                <mml:mfenced open="" close="">
-                                                    <mml:msub><mml:mi mathvariant="italic">Arg1</mml:mi>
-                                                    <mml:mi mathvariant="italic">r</mml:mi>
-                                                    </mml:msub>
+                                                <mml:mfenced open="(" close=")">
+                                                    <mml:mrow>
+                                                        <mml:mfenced open="" close="">
+                                                            <mml:msub><mml:mi mathvariant="italic">Arg0</mml:mi>
+                                                            <mml:mi mathvariant="italic">g</mml:mi>
+                                                            </mml:msub>
+                                                        </mml:mfenced>
+                                                        <mml:mo>-</mml:mo>
+                                                        <mml:mn>0.5</mml:mn>
+                                                    </mml:mrow>
                                                 </mml:mfenced>
-                                                <mml:mo>-</mml:mo>
-                                                <mml:mn>0.5</mml:mn>
+                                                <mml:mo>&times;</mml:mo>
+                                                <mml:mfenced open="(" close=")">
+                                                    <mml:mrow>
+                                                        <mml:mfenced open="" close="">
+                                                            <mml:msub><mml:mi mathvariant="italic">Arg1</mml:mi>
+                                                            <mml:mi mathvariant="italic">g</mml:mi>
+                                                            </mml:msub>
+                                                        </mml:mfenced>
+                                                        <mml:mo>-</mml:mo>
+                                                        <mml:mn>0.5</mml:mn>
+                                                    </mml:mrow>
+                                                </mml:mfenced>
+                                            </mml:mrow>
+                                        </mml:mfenced>
+                                        <mml:mo>+</mml:mo>
+                                        <mml:mfenced open="(" close=")">
+                                            <mml:mrow>
+                                                <mml:mfenced open="(" close=")">
+                                                    <mml:mrow>
+                                                        <mml:mfenced open="" close="">
+                                                            <mml:msub><mml:mi mathvariant="italic">Arg0</mml:mi>
+                                                            <mml:mi mathvariant="italic">b</mml:mi>
+                                                            </mml:msub>
+                                                        </mml:mfenced>
+                                                        <mml:mo>-</mml:mo>
+                                                        <mml:mn>0.5</mml:mn>
+                                                    </mml:mrow>
+                                                </mml:mfenced>
+                                                <mml:mo>&times;</mml:mo>
+                                                <mml:mfenced open="(" close=")">
+                                                    <mml:mrow>
+                                                        <mml:mfenced open="" close="">
+                                                            <mml:msub><mml:mi mathvariant="italic">Arg1</mml:mi>
+                                                            <mml:mi mathvariant="italic">b</mml:mi>
+                                                            </mml:msub>
+                                                        </mml:mfenced>
+                                                        <mml:mo>-</mml:mo>
+                                                        <mml:mn>0.5</mml:mn>
+                                                    </mml:mrow>
+                                                </mml:mfenced>
                                             </mml:mrow>
                                         </mml:mfenced>
                                     </mml:mrow>
                                 </mml:mfenced>
                             </mml:mrow>
-                        </mml:math></inlineequation>
-                        +
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        or
-                        </entry>
-                        <entry align="left">
-                        <inlineequation><mml:math>
-                            <!-- eqn: (({Arg0 sub g}  -  0.5) * ({Arg1 sub g} - 0.5)):-->
-                            <mml:mfenced open="(" close=")">
-                                <mml:mrow>
-                                    <mml:mfenced open="(" close=")">
-                                        <mml:mrow>
-                                            <mml:mfenced open="" close="">
-                                                <mml:msub><mml:mi mathvariant="italic">Arg0</mml:mi>
-                                                <mml:mi mathvariant="italic">g</mml:mi>
-                                                </mml:msub>
-                                            </mml:mfenced>
-                                            <mml:mo>-</mml:mo>
-                                            <mml:mn>0.5</mml:mn>
-                                        </mml:mrow>
-                                    </mml:mfenced>
-                                    <mml:mo>&times;</mml:mo>
-                                    <mml:mfenced open="(" close=")">
-                                        <mml:mrow>
-                                            <mml:mfenced open="" close="">
-                                                <mml:msub><mml:mi mathvariant="italic">Arg1</mml:mi>
-                                                <mml:mi mathvariant="italic">g</mml:mi>
-                                                </mml:msub>
-                                            </mml:mfenced>
-                                            <mml:mo>-</mml:mo>
-                                            <mml:mn>0.5</mml:mn>
-                                        </mml:mrow>
-                                    </mml:mfenced>
-                                </mml:mrow>
-                            </mml:mfenced>
-                        </mml:math></inlineequation>
-                        +
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_DOT3_RGBA</constant>
-                        </entry>
-                        <entry align="left">
-                        <inlineequation><mml:math>
-                            <!-- eqn: (({Arg0 sub b}  -  0.5) * ({Arg1 sub b} - 0.5)):-->
-                            <mml:mfenced open="(" close=")">
-                                <mml:mrow>
-                                    <mml:mfenced open="(" close=")">
-                                        <mml:mrow>
-                                            <mml:mfenced open="" close="">
-                                                <mml:msub><mml:mi mathvariant="italic">Arg0</mml:mi>
-                                                <mml:mi mathvariant="italic">b</mml:mi>
-                                                </mml:msub>
-                                            </mml:mfenced>
-                                            <mml:mo>-</mml:mo>
-                                            <mml:mn>0.5</mml:mn>
-                                        </mml:mrow>
-                                    </mml:mfenced>
-                                    <mml:mo>&times;</mml:mo>
-                                    <mml:mfenced open="(" close=")">
-                                        <mml:mrow>
-                                            <mml:mfenced open="" close="">
-                                                <mml:msub><mml:mi mathvariant="italic">Arg1</mml:mi>
-                                                <mml:mi mathvariant="italic">b</mml:mi>
-                                                </mml:msub>
-                                            </mml:mfenced>
-                                            <mml:mo>-</mml:mo>
-                                            <mml:mn>0.5</mml:mn>
-                                        </mml:mrow>
-                                    </mml:mfenced>
-                                </mml:mrow>
-                            </mml:mfenced>
                         </mml:math></inlineequation>
                         </entry>
                     </row>
@@ -1771,7 +1759,7 @@
             </tgroup>
         </informaltable>
         <para>
-            In the following tables, the value 
+            In the following tables, the value
             <inlineequation><mml:math>
                 <!-- eqn: C sub s:-->
                 <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
@@ -1779,7 +1767,7 @@
                 </mml:msub>
             </mml:math></inlineequation>
             represents the color sampled
-            from the currently bound texture, 
+            from the currently bound texture,
             <inlineequation><mml:math>
                 <!-- eqn: C sub c:-->
                 <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
@@ -1787,7 +1775,7 @@
                 </mml:msub>
             </mml:math></inlineequation>
             represents the constant
-            texture-environment color, 
+            texture-environment color,
             <inlineequation><mml:math>
                 <!-- eqn: C sub f:-->
                 <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
@@ -1795,7 +1783,7 @@
                 </mml:msub>
             </mml:math></inlineequation>
             represents the primary color of the
-            incoming fragment, and 
+            incoming fragment, and
             <inlineequation><mml:math>
                 <!-- eqn: C sub p:-->
                 <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
@@ -1803,7 +1791,7 @@
                 </mml:msub>
             </mml:math></inlineequation>
             represents the color computed from the
-            previous texture stage or 
+            previous texture stage or
             <inlineequation><mml:math>
                 <!-- eqn: C sub f:-->
                 <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
@@ -1816,20 +1804,20 @@
                 <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
                 <mml:mi mathvariant="italic">s</mml:mi>
                 </mml:msub>
-            </mml:math></inlineequation>, 
+            </mml:math></inlineequation>,
             <inlineequation><mml:math>
                 <!-- eqn: A sub c:-->
                 <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
                 <mml:mi mathvariant="italic">c</mml:mi>
                 </mml:msub>
-            </mml:math></inlineequation>, 
+            </mml:math></inlineequation>,
             <inlineequation><mml:math>
                 <!-- eqn: A sub f:-->
                 <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
                 <mml:mi mathvariant="italic">f</mml:mi>
                 </mml:msub>
             </mml:math></inlineequation>,
-            and 
+            and
             <inlineequation><mml:math>
                 <!-- eqn: A sub p:-->
                 <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
@@ -1840,8 +1828,8 @@
             alpha values.
         </para>
         <para>
-            The following table describes the values assigned to 
-            <inlineequation><mml:math><mml:mi mathvariant="italic">Arg0</mml:mi></mml:math></inlineequation>, 
+            The following table describes the values assigned to
+            <inlineequation><mml:math><mml:mi mathvariant="italic">Arg0</mml:mi></mml:math></inlineequation>,
             <inlineequation><mml:math><mml:mi mathvariant="italic">Arg1</mml:mi></mml:math></inlineequation>,
             and
             <inlineequation><mml:math><mml:mi mathvariant="italic">Arg2</mml:mi></mml:math></inlineequation>
@@ -2257,14 +2245,14 @@
             </tgroup>
         </informaltable>
         <para>
-            For <constant>GL_TEXTUREn</constant> sources, 
+            For <constant>GL_TEXTUREn</constant> sources,
             <inlineequation><mml:math>
                 <!-- eqn: C sub s:-->
                 <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
                 <mml:mi mathvariant="italic">s</mml:mi>
                 </mml:msub>
             </mml:math></inlineequation>
-            and 
+            and
             <inlineequation><mml:math>
                 <!-- eqn: A sub s:-->
                 <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
@@ -2272,12 +2260,12 @@
                 </mml:msub>
             </mml:math></inlineequation>
             represent the color
-            and alpha, respectively, produced from texture stage 
+            and alpha, respectively, produced from texture stage
             <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>.
         </para>
         <para>
-            The follow table describes the values assigned to 
-            <inlineequation><mml:math><mml:mi mathvariant="italic">Arg0</mml:mi></mml:math></inlineequation>, 
+            The follow table describes the values assigned to
+            <inlineequation><mml:math><mml:mi mathvariant="italic">Arg0</mml:mi></mml:math></inlineequation>,
             <inlineequation><mml:math><mml:mi mathvariant="italic">Arg1</mml:mi></mml:math></inlineequation>,
             and
             <inlineequation><mml:math><mml:mi mathvariant="italic">Arg2</mml:mi></mml:math></inlineequation>
@@ -2505,7 +2493,7 @@
         <para>
             The RGB and alpha results of the texture function are multipled by the
             values of <constant>GL_RGB_SCALE</constant> and <constant>GL_ALPHA_SCALE</constant>, respectively, and
-            clamped to the range 
+            clamped to the range
             <inlineequation><mml:math>
                 <!-- eqn: [0, 1]:-->
                 <mml:mfenced open="[" close="]">
@@ -2540,7 +2528,7 @@
             <constant>GL_TEXTURE_ENV_COLOR</constant> defaults to (0, 0, 0, 0).
         </para>
         <para>
-            If <parameter>target</parameter> is <constant>GL_POINT_SPRITE</constant> and <parameter>pname</parameter> is <constant>GL_COORD_REPLACE</constant>, the boolean value specified 
+            If <parameter>target</parameter> is <constant>GL_POINT_SPRITE</constant> and <parameter>pname</parameter> is <constant>GL_COORD_REPLACE</constant>, the boolean value specified
             is used to either enable or disable point sprite texture coordinate replacement. The default value is <constant>GL_FALSE</constant>.
         </para>
     </refsect1>

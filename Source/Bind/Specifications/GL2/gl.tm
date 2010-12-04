@@ -1,4 +1,4 @@
-AccumOp,*,*,			    GLenum,*,*
+﻿AccumOp,*,*,			    GLenum,*,*
 AlphaFunction,*,*,		    GLenum,*,*
 AttribMask,*,*,			    GLbitfield,*,*
 BeginMode,*,*,			    GLenum,*,*
@@ -197,7 +197,7 @@ StencilFunction,*,*,		    GLenum,*,*
 StencilFaceDirection,*,*,	    GLenum,*,*
 StencilOp,*,*,			    GLenum,*,*
 StencilValue,*,*,		    GLint,*,*
-String,*,*,			    GLstring,*,*		# OpenTK
+String,*,*,			    const GLubyte *,*,*
 StringName,*,*,			    GLenum,*,*
 TangentPointerTypeEXT,*,*,	    GLenum,*,*
 TessCallback,*,*,		    GLenum,*,*
@@ -284,25 +284,27 @@ Half16NV,*,*,			    GLhalfNV,*,*
 PixelDataRangeTargetNV,*,*,	    GLenum,*,*
 # Generic types for as-yet-unspecified enums
 TypeEnum,*,*,			    GLenum,*,*
+GLbitfield,*,*,			    GLbitfield,*,*
 GLenum,*,*,			    GLenum,*,*
+Int64,*,*,			    GLint64,*,*
+UInt64,*,*,			    GLuint64,*,*
+# Object handle & data pointers
 handleARB,*,*,			    GLhandleARB,*,*
 charARB,*,*,			    GLcharARB,*,*
 charPointerARB,*,*,		    GLcharARB*,*,*
+sync,*,*,			    GLsync,*,*,
 # EXT_timer_query
 Int64EXT,*,*,			    GLint64EXT,*,*
 UInt64EXT,*,*,			    GLuint64EXT,*,*
 # EXT_direct_state_access
-#FramebufferAttachment,*,*,	    GLenum,*,*			# OpenTK: already exists
 FramebufferAttachmentParameterName,*,*, GLenum,*,*
 Framebuffer,*,*,		    GLuint,*,*
 FramebufferStatus,*,*,		    GLenum,*,*
-#FramebufferTarget,*,*,		    GLenum,*,*					# OpenTK: already exists
 GetFramebufferParameter,*,*,	    GLenum,*,*
 Intptr,*,*,			    GLintptr,*,*
 ProgramFormat,*,*,		    GLenum,*,*
 ProgramProperty,*,*,		    GLenum,*,*
 ProgramStringProperty,*,*,	    GLenum,*,*
-#ProgramTarget,*,*,		    GLenum,*,*							# OpenTK: already exists
 Renderbuffer,*,*,		    GLuint,*,*
 RenderbufferParameterName,*,*,	    GLenum,*,*
 Sizeiptr,*,*,			    GLsizeiptr,*,*
@@ -315,3 +317,12 @@ BufferAccessMask,*,*,		    GLbitfield,*,*
 # NV_explicit_multisample
 GetMultisamplePNameNV,*,*,	    GLenum,*,*
 SampleMaskNV,*,*,		    GLbitfield,*,*
+# ARB_debug_output
+GLDEBUGPROCARB,*,*,		    GLDEBUGPROCARB,*,*
+# AMD_debug_output
+GLDEBUGPROCAMD,*,*,		    GLDEBUGPROCAMD,*,*
+# NV_vdpau_interop
+vdpauSurfaceNV,*,*,		    GLvdpauSurfaceNV,*,*,
+# External API types
+cl_context,*,*,			    struct _cl_context *,*,*
+cl_event,*,*,			    struct _cl_event *,*,*

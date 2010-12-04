@@ -4,10 +4,14 @@
  */
 #endregion
 
+using Bind.Structures;
 namespace Bind
 {
-    interface IBind : ISpecReader, ISpecWriter
+    interface IBind
     {
+        DelegateCollection Delegates { get; }
+        EnumCollection Enums { get; }
+        FunctionCollection Wrappers { get; }
         void Process();
     }
 }

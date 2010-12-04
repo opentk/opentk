@@ -36,7 +36,12 @@
             <listitem>
                 <para>
                     Specifies which texture is to be obtained.
-                    <constant>GL_TEXTURE_1D</constant>, <constant>GL_TEXTURE_2D</constant>, <constant>GL_TEXTURE_3D</constant>,
+                    <constant>GL_TEXTURE_1D</constant>,
+                    <constant>GL_TEXTURE_2D</constant>,
+                    <constant>GL_TEXTURE_3D</constant>,
+                    <constant>GL_TEXTURE_1D_ARRAY</constant>,
+                    <constant>GL_TEXTURE_2D_ARRAY</constant>,
+                    <constant>GL_TEXTURE_RECTANGLE</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
@@ -67,16 +72,25 @@
                 <para>
                     Specifies a pixel format for the returned data.
                     The supported formats are
+                    <constant>GL_STENCIL_INDEX</constant>,
+                    <constant>GL_DEPTH_COMPONENT</constant>,
+                    <constant>GL_DEPTH_STENCIL</constant>,
                     <constant>GL_RED</constant>,
                     <constant>GL_GREEN</constant>,
                     <constant>GL_BLUE</constant>,
-                    <constant>GL_ALPHA</constant>,
+                    <constant>GL_RG</constant>,
                     <constant>GL_RGB</constant>,
-                    <constant>GL_BGR</constant>,
                     <constant>GL_RGBA</constant>,
+                    <constant>GL_BGR</constant>,
                     <constant>GL_BGRA</constant>,
-                    <constant>GL_LUMINANCE</constant>, and
-                    <constant>GL_LUMINANCE_ALPHA</constant>.
+                    <constant>GL_RED_INTEGER</constant>,
+                    <constant>GL_GREEN_INTEGER</constant>,
+                    <constant>GL_BLUE_INTEGER</constant>,
+                    <constant>GL_RG_INTEGER</constant>,
+                    <constant>GL_RGB_INTEGER</constant>,
+                    <constant>GL_RGBA_INTEGER</constant>,
+                    <constant>GL_BGR_INTEGER</constant>,
+                    <constant>GL_BGRA_INTEGER</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -92,6 +106,7 @@
                     <constant>GL_SHORT</constant>,
                     <constant>GL_UNSIGNED_INT</constant>,
                     <constant>GL_INT</constant>,
+                    <constant>GL_HALF_FLOAT</constant>,
                     <constant>GL_FLOAT</constant>,
                     <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
                     <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
@@ -103,8 +118,12 @@
                     <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
                     <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
                     <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
-                    <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, and
-                    <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>.
+                    <constant>GL_UNSIGNED_INT_10_10_10_2</constant>,
+                    <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>,
+                    <constant>GL_UNSIGNED_INT_24_8</constant>,
+                    <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant>,
+                    <constant>GL_UNSIGNED_INT_5_9_9_9_REV</constant>, and
+                    <constant>GL_FLOAT_32_UNSIGNED_INT_24_8_REV</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -124,13 +143,15 @@
             <function>glGetTexImage</function> returns a texture image into <parameter>img</parameter>.
             <parameter>target</parameter> specifies whether the desired texture image is one specified by
             <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry> (<constant>GL_TEXTURE_1D</constant>),
-            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry> (<constant>GL_TEXTURE_2D</constant> or any of
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry> (<constant>GL_TEXTURE_1D_ARRAY</constant>, <constant>GL_TEXTURE_RECTANGLE</constant>,
+            <constant>GL_TEXTURE_2D</constant> or any of
             <constant>GL_TEXTURE_CUBE_MAP_*</constant>),
             or
-            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry> (<constant>GL_TEXTURE_3D</constant>).
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry> (<constant>GL_TEXTURE_2D_ARRAY</constant>,
+            <constant>GL_TEXTURE_3D</constant>).
             <parameter>level</parameter> specifies the level-of-detail number of the desired image.
             <parameter>format</parameter> and <parameter>type</parameter> specify the format and type of the desired image array.
-            See the reference pages <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry>
+            See the reference page for <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>
             for a description of the acceptable values for the <parameter>format</parameter> and <parameter>type</parameter>
             parameters, respectively.
         </para>
@@ -147,16 +168,9 @@
             when called with the same <parameter>format</parameter> and <parameter>type</parameter>,
             with <emphasis>x</emphasis> and <emphasis>y</emphasis> set to 0,
             <emphasis>width</emphasis> set to the width of the texture image
-            (including border if one was specified),
             and <emphasis>height</emphasis> set to 1 for 1D images,
             or to the height of the texture image
-            (including border if one was specified)
             for 2D images.
-            Because the internal texture image is an RGBA image,
-            pixel formats <constant>GL_COLOR_INDEX</constant>,
-            <constant>GL_STENCIL_INDEX</constant>,
-            and <constant>GL_DEPTH_COMPONENT</constant> are not accepted,
-            and pixel type <constant>GL_BITMAP</constant> is not accepted.
         </para>
         <para>
             If the selected texture image does not contain four components,
@@ -192,25 +206,7 @@
             no change is made to the contents of <parameter>img</parameter>.
         </para>
         <para>
-            The types <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
-            <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
-            <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
-            <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>,
-            <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
-            <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
-            <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
-            <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
-            <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
-            <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
-            <constant>GL_UNSIGNED_INT_10_10_10_2</constant>,
-            <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>,
-            and the formats
-            <constant>GL_BGR</constant>, and <constant>GL_BGRA</constant> are available only if the GL version is
-            1.2 or greater.
-        </para>
-        <para>
-            For OpenGL versions 1.3 and greater, or when the <code>ARB_multitexture</code> extension is supported, <function>glGetTexImage</function> returns
-            the texture image for the active texture unit.
+            <function>glGetTexImage</function> returns the texture image for the active texture unit.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
@@ -225,7 +221,7 @@
             <constant>GL_INVALID_VALUE</constant> may be generated if <parameter>level</parameter> is greater
             than 
             <inlineequation><mml:math>
-                <!-- eqn: log sub 2 (max):-->
+                <!-- eqn: log sub 2 (max): -->
                 <mml:mrow>
                     <mml:msub><mml:mi mathvariant="italic">log</mml:mi>
                     <mml:mn>2</mml:mn>
@@ -244,8 +240,9 @@
             <constant>GL_INVALID_OPERATION</constant> is returned if <parameter>type</parameter> is one of
             <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
             <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
-            <constant>GL_UNSIGNED_SHORT_5_6_5</constant>, or
-            <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant> and <parameter>format</parameter> is not <constant>GL_RGB</constant>.
+            <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>, or
+            <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant> and <parameter>format</parameter> is not <constant>GL_RGB</constant>.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is returned if <parameter>type</parameter> is one of
@@ -255,8 +252,9 @@
             <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
             <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
             <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
-            <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, or
-            <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>, and <parameter>format</parameter> is neither <constant>GL_RGBA</constant>
+            <constant>GL_UNSIGNED_INT_10_10_10_2</constant>,
+            <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>, or
+            <constant>GL_UNSIGNED_INT_5_9_9_9_REV</constant> and <parameter>format</parameter> is neither <constant>GL_RGBA</constant>
             or <constant>GL_BGRA</constant>.
         </para>
         <para>
@@ -273,11 +271,6 @@
             <constant>GL_PIXEL_PACK_BUFFER</constant> target and <parameter>img</parameter> is not evenly divisible 
             into the number of bytes needed to store in memory a datum indicated by <parameter>type</parameter>.
         </para>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetTexImage</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
-        </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
@@ -285,9 +278,6 @@
         </para>
         <para>
             <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_HEIGHT</constant>
-        </para>
-        <para>
-            <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_BORDER</constant>
         </para>
         <para>
             <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_INTERNAL_FORMAT</constant>
@@ -302,10 +292,7 @@
     <refsect1 id="seealso"><title>See Also</title>
         <para>
             <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glTexEnv</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glTexGen</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
@@ -318,7 +305,8 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc. Copyright <trademark class="copyright"></trademark> 2010
+            Khronos Group. This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

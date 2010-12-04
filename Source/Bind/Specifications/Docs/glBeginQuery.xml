@@ -34,7 +34,9 @@
                 <para>
                     Specifies the target type of query object established between
                     <function>glBeginQuery</function> and the subsequent <citerefentry><refentrytitle>glEndQuery</refentrytitle></citerefentry>.
-                    The symbolic constant must be <constant>GL_SAMPLES_PASSED</constant>.
+                    The symbolic constant must be one of <constant>GL_SAMPLES_PASSED</constant>, <constant>GL_ANY_SAMPLES_PASSED</constant>,
+                    <constant>GL_PRIMITIVES_GENERATED</constant>, <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, or
+                    <constant>GL_TIME_ELAPSED</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -64,7 +66,9 @@
             <listitem>
                 <para>
                     Specifies the target type of query object to be concluded.
-                    The symbolic constant must be <constant>GL_SAMPLES_PASSED</constant>.
+                    The symbolic constant must be one of <constant>GL_SAMPLES_PASSED</constant>, <constant>GL_ANY_SAMPLES_PASSED</constant>,
+                    <constant>GL_PRIMITIVES_GENERATED</constant>, <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, or
+                    <constant>GL_TIME_ELAPSED</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -73,13 +77,60 @@
     <refsect1 id="description"><title>Description</title>
         <para>
             <function>glBeginQuery</function> and <citerefentry><refentrytitle>glEndQuery</refentrytitle></citerefentry> delimit the
-            boundaries of a query object.  If a query object with name <parameter>id</parameter> does not yet exist it is created.
+            boundaries of a query object.  <parameter>query</parameter> must be a name previously returned from a call to
+            <citerefentry><refentrytitle>glGenQueries</refentrytitle></citerefentry>. If a query object with name <parameter>id</parameter>
+            does not yet exist it is created with the type determined by <parameter>target</parameter>. <parameter>target</parameter> must
+            be one of <constant>GL_SAMPLES_PASSED</constant>, <constant>GL_ANY_SAMPLES_PASSED</constant>, <constant>GL_PRIMITIVES_GENERATED</constant>,
+            <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, or <constant>GL_TIME_ELAPSED</constant>. The behavior of the query
+            object depends on its type and is as follows.
         </para>
         <para>
+            If <parameter>target</parameter> is <constant>GL_SAMPLES_PASSED</constant>, <parameter>target</parameter> must be an unused name,
+            or the name of an existing occlusion query object.
             When <function>glBeginQuery</function> is executed, the query object's samples-passed counter is reset to 0.  Subsequent
-            rendering will increment the counter once for every sample that passes the depth test.  When <function>glEndQuery</function>
+            rendering will increment the counter for every sample that passes the depth test.  If the value of <constant>GL_SAMPLE_BUFFERS</constant>
+            is 0, then the samples-passed count is incremented by 1 for each fragment. If the value of <constant>GL_SAMPLE_BUFFERS</constant>
+            is 1, then the samples-passed count is incremented by the number of samples whose coverage bit is set. However, implementations, at their
+            discression may instead increase the samples-passed count by the value of <constant>GL_SAMPLES</constant> if any sample in the fragment
+            is covered. When <function>glEndQuery</function>
             is executed, the samples-passed counter is assigned to the query object's result value.  This value can be queried by
             calling <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry> with <parameter>pname</parameter>
+            <constant>GL_QUERY_RESULT</constant>.
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_ANY_SAMPLES_PASSED</constant>, <parameter>target</parameter> must be an unused name,
+            or the name of an existing boolean occlusion query object.
+            When <function>glBeginQuery</function> is executed, the query object's samples-passed flag is reset to <constant>GL_FALSE</constant>.
+            Subsequent rendering causes the flag to be set to <constant>GL_TRUE</constant> if any sample passes the depth test.  When
+            <function>glEndQuery</function> is executed, the samples-passed flag is assigned to the query object's result value.  This value can
+            be queried by calling <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry> with <parameter>pname</parameter>
+            <constant>GL_QUERY_RESULT</constant>.
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_PRIMITIVES_GENERATED</constant>, <parameter>target</parameter> must be an unused
+            name, or the name of an existing primitive query object previously bound to the <constant>GL_PRIMITIVES_GENERATED</constant> query binding.
+            When <function>glBeginQuery</function> is executed, the query object's primitives-generated counter is reset to 0.  Subsequent
+            rendering will increment the counter once for every vertex that is emitted from the geometry shader, or from the vertex shader if
+            no geometry shader is present.  When <function>glEndQuery</function> is executed, the primitives-generated counter is assigned to
+            the query object's result value.  This value can be queried by calling <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry> with <parameter>pname</parameter>
+            <constant>GL_QUERY_RESULT</constant>.
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, <parameter>target</parameter> must be
+            an unused name, or the name of an existing primitive query object previously bound to the <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>
+            query binding. When <function>glBeginQuery</function> is executed, the query object's primitives-written counter is reset to 0.  Subsequent
+            rendering will increment the counter once for every vertex that is written into the bound transform feedback buffer(s).  If transform feedback
+            mode is not activated between the call to <function>glBeginQuery</function> and <function>glEndQuery</function>, the counter will not be
+            incremented.  When <function>glEndQuery</function> is executed, the primitives-written counter is assigned to
+            the query object's result value.  This value can be queried by calling <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry> with <parameter>pname</parameter>
+            <constant>GL_QUERY_RESULT</constant>.
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_TIME_ELAPSED</constant>, <parameter>target</parameter> must be
+            an unused name, or the name of an existing timer query object previously bound to the <constant>GL_TIME_ELAPSED</constant>
+            query binding. When <function>glBeginQuery</function> is executed, the query object's time counter is reset to 0.  When <function>glEndQuery</function>
+            is executed, the elapsed server time that has passed since the call to <function>glBeginQuery</function> is written into the query object's
+            time counter.  This value can be queried by calling <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry> with <parameter>pname</parameter>
             <constant>GL_QUERY_RESULT</constant>.
         </para>
         <para>
@@ -90,28 +141,29 @@
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
         <para>
-            If the samples-passed count exceeds the maximum value representable in the number of available bits, as reported by
-            <citerefentry><refentrytitle>glGetQueryiv</refentrytitle></citerefentry> with <parameter>pname</parameter>
+            If the query target's count exceeds the maximum value representable in the number of available bits, as reported by
+            <citerefentry><refentrytitle>glGetQueryiv</refentrytitle></citerefentry> with <parameter>target</parameter> set to the
+            appropriate query target and <parameter>pname</parameter>
             <constant>GL_QUERY_COUNTER_BITS</constant>, the count becomes undefined.
         </para>
         <para>
-            An implementation may support 0 bits in its samples-passed counter, in which case query results are always undefined
+            An implementation may support 0 bits in its counter, in which case query results are always undefined
             and essentially useless.
         </para>
         <para>
-            When <constant>GL_SAMPLE_BUFFERS</constant> is 0, the samples-passed counter will increment once for each fragment that passes
-            the depth test.  When <constant>GL_SAMPLE_BUFFERS</constant> is 1, an implementation may either increment the samples-passed
-            counter individually for each sample of a fragment that passes the depth test, or it may choose to increment the counter for
-            all samples of a fragment if any one of them passes the depth test.
+            When <constant>GL_SAMPLE_BUFFERS</constant> is 0, the samples-passed counter of an occlusion query will increment once for each
+            fragment that passes the depth test.  When <constant>GL_SAMPLE_BUFFERS</constant> is 1, an implementation may either increment
+            the samples-passed counter individually for each sample of a fragment that passes the depth test, or it may choose to increment
+            the counter for all samples of a fragment if any one of them passes the depth test.
         </para>
         <para>
-            <function>glBeginQuery</function> and <citerefentry><refentrytitle>glEndQuery</refentrytitle></citerefentry>
-            are available only if the GL version is 1.5 or greater.
+            The query targets <constant>GL_ANY_SAMPLES_PASSED</constant>, and <constant>GL_TIME_ELAPSED</constant> are availale only if
+            the GL version is 3.3 or higher.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
-            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not <constant>GL_SAMPLES_PASSED</constant>.
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not one of the accepted tokens.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if <function>glBeginQuery</function> is executed while
@@ -128,10 +180,8 @@
             <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>id</parameter> is the name of an already active query object.
         </para>
         <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glBeginQuery</function> or
-            <citerefentry><refentrytitle>glEndQuery</refentrytitle></citerefentry> is executed between the execution of
-            <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding execution of
-            <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>id</parameter> refers to an existing query object whose type
+            does not does not match <parameter>target</parameter>.
         </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>

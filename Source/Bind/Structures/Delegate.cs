@@ -19,11 +19,10 @@ namespace Bind.Structures
     /// Represents an opengl function.
     /// The return value, function name, function parameters and opengl version can be retrieved or set.
     /// </summary>
-    public class Delegate : IComparable<Delegate>
+    class Delegate : IComparable<Delegate>
     {
-        internal static DelegateCollection Delegates;
+        //internal static DelegateCollection Delegates;
 
-        private static bool delegatesLoaded;
         bool? cls_compliance_overriden;
 
         protected static Regex endings = new Regex(@"((((d|f|fi)|u?[isb])_?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
@@ -34,36 +33,6 @@ namespace Bind.Structures
         // The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior. 
         internal static Regex endingsAddV = new Regex("^0", RegexOptions.Compiled);
 
-        
-        #region internal static void Initialize(string glSpec, string glSpecExt)
-        
-        internal static void Initialize(string glSpec, string glSpecExt)
-        {
-            if (!delegatesLoaded)
-            {
-                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, glSpec))
-                {
-                    Delegates = MainClass.Generator.ReadDelegates(sr);
-                }
-
-                if (!String.IsNullOrEmpty(glSpecExt))
-                {
-                    using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, glSpecExt))
-                    {
-                        foreach (Delegate d in MainClass.Generator.ReadDelegates(sr).Values)
-                        {
-                            Utilities.Merge(Delegates, d);
-                        }
-                    }
-                }
-                Console.WriteLine("Enforcing CLS compliance.");
-                MarkCLSCompliance(Function.Wrappers);
-                delegatesLoaded = true;
-            }
-        }
-
-        #endregion
-        
         #region --- Constructors ---
 
         public Delegate()
@@ -79,6 +48,8 @@ namespace Bind.Structures
             ReturnType = new Type(d.ReturnType);
             Version = d.Version;
             //this.Version = !String.IsNullOrEmpty(d.Version) ? new string(d.Version.ToCharArray()) : "";
+            Deprecated = d.Deprecated;
+            DeprecatedVersion = d.DeprecatedVersion;
         }
 
         #endregion
@@ -125,7 +96,7 @@ namespace Bind.Structures
         public string Category
         {
             get { return _category; }
-            set { _category = Enum.TranslateName(value); }
+            set { _category = value; }
         }
 
         #endregion
@@ -259,8 +230,6 @@ namespace Bind.Structures
 
         public string Extension
         {
-            //get { return _extension; }
-            //set { _extension = value; }
             get
             {
                 if (!String.IsNullOrEmpty(Name))
@@ -277,12 +246,14 @@ namespace Bind.Structures
 
         #endregion
 
+        public bool Deprecated { get; set; }
+        public string DeprecatedVersion { get; set; }
+
         #endregion
 
-        #region --- Strings ---
-
-        #region public string CallString()
-
+        /// <summary>
+        /// Returns a string that represents an invocation of this delegate.
+        /// </summary>
         public string CallString()
         {
             StringBuilder sb = new StringBuilder();
@@ -296,14 +267,10 @@ namespace Bind.Structures
             return sb.ToString();
         }
 
-        #endregion
-
         /// <summary>
         /// Returns a string representing the full non-delegate declaration without decorations.
         /// (ie "(unsafe) void glXxxYyy(int a, float b, IntPtr c)"
         /// </summary>
-        #region public string DeclarationString()
-
         public string DeclarationString()
         {
             StringBuilder sb = new StringBuilder();
@@ -316,10 +283,6 @@ namespace Bind.Structures
 
             return sb.ToString();
         }
-
-        #endregion
-
-        #region override public string ToString()
 
         /// <summary>
         /// Returns a string representing the full delegate declaration without decorations.
@@ -339,8 +302,6 @@ namespace Bind.Structures
             return sb.ToString();
         }
 
-        #endregion
-
         public Delegate GetCLSCompliantDelegate()
         {
             Delegate f = new Delegate(this);
@@ -354,286 +315,6 @@ namespace Bind.Structures
 
             return f;
         }
-
-        #endregion
-
-        #region --- Wrapper Creation ---
-
-        #region MarkCLSCompliance
-
-        static void MarkCLSCompliance(FunctionCollection collection)
-        {
-            foreach (List<Function> wrappers in Function.Wrappers.Values)
-            {
-            restart:
-                for (int i = 0; i < wrappers.Count; i++)
-                {
-                    for (int j = i + 1; j < wrappers.Count; j++)
-                    {
-                        if (wrappers[i].TrimmedName == wrappers[j].TrimmedName && wrappers[i].Parameters.Count == wrappers[j].Parameters.Count)
-                        {
-                            bool function_i_is_problematic = false;
-                            bool function_j_is_problematic = false;
-
-                            int k;
-                            for (k = 0; k < wrappers[i].Parameters.Count; k++)
-                            {
-                                if (wrappers[i].Parameters[k].CurrentType != wrappers[j].Parameters[k].CurrentType)
-                                    break;
-
-                                if (wrappers[i].Parameters[k].DiffersOnlyOnReference(wrappers[j].Parameters[k]))
-                                    if (wrappers[i].Parameters[k].Reference)
-                                        function_i_is_problematic = true;
-                                    else
-                                        function_j_is_problematic = true;
-                            }
-
-                            if (k == wrappers[i].Parameters.Count)
-                            {
-                                if (function_i_is_problematic)
-                                    wrappers.RemoveAt(i);
-                                //wrappers[i].CLSCompliant = false;
-                                if (function_j_is_problematic)
-                                    wrappers.RemoveAt(j);
-                                //wrappers[j].CLSCompliant = false;
-
-                                if (function_i_is_problematic || function_j_is_problematic)
-                                    goto restart;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        #endregion
-
-        #region CreateWrappers
-
-        void CreateWrappers()
-        {
-            List<Function> wrappers = new List<Function>();
-            CreateNormalWrappers(wrappers);
-
-            // Generate wrappers using the untyped enum parameters, if necessary.
-            if ((Settings.Compatibility & Settings.Legacy.KeepUntypedEnums) != 0)
-            {
-                CreateUntypedEnumWrappers(wrappers);
-            }
-            
-            // Add CLS-compliant overloads for non-CLS compliant wrappers.
-            CreateCLSCompliantWrappers(wrappers);
-        }
-
-        private static void CreateCLSCompliantWrappers(List<Function> wrappers)
-        {
-            // If the function is not CLS-compliant (e.g. it contains unsigned parameters)
-            // we need to create a CLS-Compliant overload. However, we should only do this
-            // iff the opengl function does not contain unsigned/signed overloads itself
-            // to avoid redefinitions.
-            foreach (Function f in wrappers)
-            {
-                Function.Wrappers.AddChecked(f);
-
-                if (!f.CLSCompliant)
-                {
-                    Function cls = new Function(f);
-
-                    cls.Body.Clear();
-                    cls.CreateBody(true);
-
-                    bool modified = false;
-                    for (int i = 0; i < f.Parameters.Count; i++)
-                    {
-                        cls.Parameters[i].CurrentType = cls.Parameters[i].GetCLSCompliantType();
-                        if (cls.Parameters[i].CurrentType != f.Parameters[i].CurrentType)
-                            modified = true;
-                    }
-
-                    if (modified)
-                        Function.Wrappers.AddChecked(cls);
-                }
-            }
-        }
-
-        private void CreateUntypedEnumWrappers(List<Function> wrappers)
-        {
-            Function f = new Function(this);
-            var modified = false;
-            f.Parameters = new ParameterCollection(f.Parameters.Select(p =>
-            {
-                if (p.IsEnum && p.CurrentType != Settings.CompleteEnumName)
-                {
-                    p.CurrentType = Settings.CompleteEnumName;
-                    modified = true;
-                }
-                return p;
-            }));
-            if (modified)
-            {
-                f.WrapReturnType();
-                f.WrapParameters(wrappers);
-            }
-        }
-
-        void CreateNormalWrappers(List<Function> wrappers)
-        {
-            Function f = new Function(this);
-            f.WrapReturnType();
-            f.WrapParameters(wrappers);
-        }
-
-        #endregion
-
-        #region TrimName
-
-        // Trims unecessary suffices from the specified OpenGL function name.
-        protected static string TrimName(string name, bool keep_extension)
-        {
-            string trimmed_name = Utilities.StripGL2Extension(name);
-            string extension = Utilities.GetGL2Extension(name);
-
-            // Note: some endings should not be trimmed, for example: 'b' from Attrib.
-            // Check the endingsNotToTrim regex for details.
-            Match m = endingsNotToTrim.Match(trimmed_name);
-            if ((m.Index + m.Length) != trimmed_name.Length)
-            {
-                m = endings.Match(trimmed_name);
-
-                if (m.Length > 0 && m.Index + m.Length == trimmed_name.Length)
-                {
-                    // Only trim endings, not internal matches.
-                    if (m.Value[m.Length - 1] == 'v' && endingsAddV.IsMatch(name) &&
-                        !name.StartsWith("Get") && !name.StartsWith("MatrixIndex"))
-                    {
-                        // Only trim ending 'v' when there is a number
-                        trimmed_name = trimmed_name.Substring(0, m.Index) + "v";
-                    }
-                    else
-                    {
-                        if (!trimmed_name.EndsWith("xedv"))
-                            trimmed_name = trimmed_name.Substring(0, m.Index);
-                        else
-                            trimmed_name = trimmed_name.Substring(0, m.Index + 1);
-                    }
-                }
-            }
-
-            if (keep_extension)
-                return trimmed_name + extension;
-            else
-                return trimmed_name;
-        }
-
-        #endregion
-
-        #region TranslateReturnType
-
-        // Translates the opengl return type to the equivalent C# type.
-        //
-        // First, we use the official typemap (gl.tm) to get the correct type.
-        // Then we override this, when it is:
-        // 1) A string (we have to use Marshal.PtrToStringAnsi, to avoid heap corruption)
-        // 2) An array (translates to IntPtr)
-        // 3) A generic object or void* (translates to IntPtr)
-        // 4) A GLenum (translates to int on Legacy.Tao or GL.Enums.GLenum otherwise).
-        // Return types must always be CLS-compliant, because .Net does not support overloading on return types.
-        void TranslateReturnType(XPathNavigator overrides, XPathNavigator function_override)
-        {
-            if (function_override != null)
-            {
-                XPathNavigator return_override = function_override.SelectSingleNode("returns");
-                if (return_override != null)
-                {
-                    ReturnType.CurrentType = return_override.Value;
-                }
-            }
-
-            ReturnType.Translate(overrides, Category);
-
-            if (ReturnType.CurrentType.ToLower().Contains("void") && ReturnType.Pointer != 0)
-            {
-                ReturnType.QualifiedType = "System.IntPtr";
-                ReturnType.WrapperType = WrapperTypes.GenericReturnType;
-            }
-
-            if (ReturnType.CurrentType.ToLower().Contains("string"))
-            {
-                ReturnType.QualifiedType = "System.IntPtr";
-                ReturnType.WrapperType = WrapperTypes.StringReturnType;
-            }
-
-            if (ReturnType.CurrentType.ToLower().Contains("object"))
-            {
-                ReturnType.QualifiedType = "System.IntPtr";
-                ReturnType.WrapperType |= WrapperTypes.GenericReturnType;
-            }
-
-            if (ReturnType.CurrentType.Contains("GLenum"))
-            {
-                if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
-                    ReturnType.QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, Settings.CompleteEnumName);
-                else
-                    ReturnType.QualifiedType = "int";
-            }
-
-            ReturnType.CurrentType = ReturnType.GetCLSCompliantType();
-        }
-
-        #endregion
-
-        #region TranslateParameters
-
-        protected virtual void TranslateParameters(XPathNavigator overrides, XPathNavigator function_override)
-        {
-            for (int i = 0; i < Parameters.Count; i++)
-            {
-                if (function_override != null)
-                {
-                    XPathNavigator param_override = function_override.SelectSingleNode(String.Format("param[@name='{0}']", Parameters[i].Name));
-                    if (param_override != null)
-                    {
-                        foreach (XPathNavigator node in param_override.SelectChildren(XPathNodeType.Element))
-                        {
-                            switch (node.Name)
-                            {
-                                case "type": Parameters[i].CurrentType = (string)node.TypedValue; break;
-                                case "name": Parameters[i].Name = (string)node.TypedValue; break;
-                                case "flow":  Parameters[i].Flow = Parameter.GetFlowDirection((string)node.TypedValue); break;
-                            }
-                        }
-                    }
-                }
-
-                Parameters[i].Translate(overrides, Category);
-                if (Parameters[i].CurrentType == "UInt16" && Name.Contains("LineStipple"))
-                    Parameters[i].WrapperType = WrapperTypes.UncheckedParameter;
-
-                // Special case: these functions take a string[] that should stay as is.
-                // Todo: move to gloverrides.xml
-                //if (Name.Contains("ShaderSource") && Parameters[i].CurrentType.ToLower().Contains("string"))
-                //    Parameters[i].Array = 1;
-            }
-        }
-
-        #endregion
-
-        internal void Translate(XPathDocument overrides)
-        {
-            if (overrides == null)
-                throw new ArgumentNullException("overrides");
-
-            string path = "/overrides/replace/function[@name='{0}' and @extension='{1}']";
-            string name = TrimName(Name, false);
-            XPathNavigator function_override = overrides.CreateNavigator().SelectSingleNode(String.Format(path, name, Extension));
-
-            TranslateReturnType(overrides.CreateNavigator(), function_override);
-            TranslateParameters(overrides.CreateNavigator(), function_override);
-
-            CreateWrappers();
-        }
-
-        #endregion
 
         #region IComparable<Delegate> Members
 

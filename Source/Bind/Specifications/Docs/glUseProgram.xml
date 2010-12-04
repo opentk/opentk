@@ -46,88 +46,14 @@
 	<para>A program object will contain an executable that will run
 	on the vertex processor if it contains one or more shader
 	objects of type <constant>GL_VERTEX_SHADER</constant> that have
-	been successfully compiled and linked. Similarly, a program
-	object will contain an executable that will run on the fragment
-	processor if it contains one or more shader objects of type
+	been successfully compiled and linked. A program object will contain an
+	executable that will run on the geometry processor if it contains one or
+	more shader objects of type <constant>GL_GEOMETRY_SHADER</constant> that
+	have been successfully compiled and linked.
+	Similarly, a program object will contain an executable that will run on the
+	fragment processor if it contains one or more shader objects of type
 	<constant>GL_FRAGMENT_SHADER</constant> that have been
 	successfully compiled and linked.</para>
-
-	<para>Successfully installing an executable on a programmable
-	processor will cause the corresponding fixed functionality of
-	OpenGL to be disabled. Specifically, if an executable is
-	installed on the vertex processor, the OpenGL fixed
-	functionality will be disabled as follows.</para>
-
-	<itemizedlist>
-	    <listitem>
-		<para>The modelview matrix is not applied to vertex
-		coordinates.</para>
-	    </listitem>
-	    <listitem>
-		<para>The projection matrix is not applied to vertex
-		coordinates.</para>
-	    </listitem>
-	    <listitem>
-		<para>The texture matrices are not applied to texture
-		coordinates.</para>
-	    </listitem>
-	    <listitem>
-		<para>Normals are not transformed to eye
-		coordinates.</para>
-	    </listitem>
-	    <listitem>
-		<para>Normals are not rescaled or normalized.</para>
-	    </listitem>
-	    <listitem>
-		<para>Normalization of
-		<constant>GL_AUTO_NORMAL</constant> evaluated normals is
-		not performed.</para>
-	    </listitem>
-	    <listitem>
-		<para>Texture coordinates are not generated
-		automatically.</para>
-	    </listitem>
-	    <listitem>
-		<para>Per-vertex lighting is not performed.</para>
-	    </listitem>
-	    <listitem>
-		<para>Color material computations are not
-		performed.</para>
-	    </listitem>
-	    <listitem>
-		<para>Color index lighting is not performed.</para>
-	    </listitem>
-	    <listitem>
-		<para>This list also applies when setting the current
-		raster position.</para>
-	    </listitem>
-	</itemizedlist>
-
-	<para>The executable that is installed on the vertex processor
-	is expected to implement any or all of the desired functionality
-	from the preceding list. Similarly, if an executable is
-	installed on the fragment processor, the OpenGL fixed
-	functionality will be disabled as follows.</para>
-
-	<itemizedlist>
-	    <listitem>
-		<para>Texture environment and texture functions are not
-		applied.</para>
-	    </listitem>
-	    <listitem>
-		<para>Texture application is not applied.</para>
-	    </listitem>
-	    <listitem>
-		<para>Color sum is not applied.</para>
-	    </listitem>
-	    <listitem>
-		<para>Fog is not applied.</para>
-	    </listitem>
-	</itemizedlist>
-
-	<para>Again, the fragment shader that is installed is expected
-	to implement any or all of the desired functionality from the
-	preceding list.</para>
 
 	<para>While a program object is in use, applications are free to
 	modify attached shader objects, compile attached shader objects,
@@ -146,30 +72,17 @@
 	from use. After it is removed from use, it cannot be made part
 	of current state until it has been successfully relinked.</para>
 
-	<para>If <parameter>program</parameter> contains shader objects
-	of type <constant>GL_VERTEX_SHADER</constant> but it does not
-	contain shader objects of type
-	<constant>GL_FRAGMENT_SHADER</constant>, an executable will be
-	installed on the vertex processor, but fixed functionality will
-	be used for fragment processing. Similarly, if
-	<parameter>program</parameter> contains shader objects of type
-	<constant>GL_FRAGMENT_SHADER</constant> but it does not contain
-	shader objects of type <constant>GL_VERTEX_SHADER</constant>, an
-	executable will be installed on the fragment processor, but
-	fixed functionality will be used for vertex processing. If
-	<parameter>program</parameter> is 0, the programmable processors
-	will be disabled, and fixed functionality will be used for both
-	vertex and fragment processing.</para>
+	<para>If <parameter>program</parameter> is zero, then the current rendering
+	state refers to an <emphasis>invalid</emphasis> program object and the
+	results of shader execution are undefined. However, this is not an error.</para>
+	
+	<para>If <parameter>program</parameter> does not
+	contain shader objects of type <constant>GL_FRAGMENT_SHADER</constant>, an
+	executable will be installed on the vertex, and possibly geometry processors,
+	but the results of fragment shader execution will be undefined.</para>
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
-	<para><function>glUseProgram</function> is available only if the
-	GL version is 2.0 or greater.</para>
-
-	<para>While a program object is in use, the state that controls
-	the disabled fixed functionality may also be updated using the
-	normal OpenGL calls.</para>
-
-	<para>Like display lists and texture objects, the name space for
+	<para>Like buffer and texture objects, the name space for
 	program objects may be shared across a set of contexts, as long
 	as the server sides of the contexts share the same address
 	space. If the name space is shared across contexts, any attached
@@ -192,13 +105,10 @@
 	<para><constant>GL_INVALID_OPERATION</constant> is generated if
 	<parameter>program</parameter> could not be made part of current
 	state.</para>
-
+	
 	<para><constant>GL_INVALID_OPERATION</constant> is generated if
-	<function>glUseProgram</function> is executed between the
-	execution of
-	<citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-	and the corresponding execution of
-	<citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.</para>
+	transform feedback mode is active.</para>
+
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
 	<para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
@@ -236,7 +146,7 @@
 	<para><citerefentry><refentrytitle>glIsProgram</refentrytitle></citerefentry></para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
-	<para><citerefentry><refentrytitle>gllAttachShader</refentrytitle></citerefentry>,
+	<para><citerefentry><refentrytitle>glAttachShader</refentrytitle></citerefentry>,
 	<citerefentry><refentrytitle>glBindAttribLocation</refentrytitle></citerefentry>,
 	<citerefentry><refentrytitle>glCompileShader</refentrytitle></citerefentry>,
 	<citerefentry><refentrytitle>glCreateProgram</refentrytitle></citerefentry>,

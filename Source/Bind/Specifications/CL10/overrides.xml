@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<overrides>
+<signatures>
 
   <replace>
     <enum name="Unknown">
@@ -48,4 +48,4 @@
     </function>
   </replace>
 
-</overrides>
+</signatures>

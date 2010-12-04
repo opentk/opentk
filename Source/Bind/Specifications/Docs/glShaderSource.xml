@@ -75,9 +75,6 @@
 	the specified shader object.</para>
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
-	<para><function>glShaderSource</function> is available only if
-	the GL version is 2.0 or greater.</para>
-
 	<para>OpenGL copies the shader source code strings when
 	<function>glShaderSource</function> is called, so an application
 	may free its copy of the source code strings immediately after
@@ -94,12 +91,6 @@
 	<para><constant>GL_INVALID_VALUE</constant> is generated if
 	<parameter>count</parameter> is less than 0.</para>
 
-	<para><constant>GL_INVALID_OPERATION</constant> is generated if
-	<function>glShaderSource</function> is executed between the
-	execution of
-	<citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-	and the corresponding execution of
-	<citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.</para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
 	<para><citerefentry><refentrytitle>glGetShader</refentrytitle></citerefentry>
