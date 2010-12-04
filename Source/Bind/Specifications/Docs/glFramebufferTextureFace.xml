@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glFramebufferTextureFace">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2010</year>
+                <holder>Khronos Group</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glFramebufferTextureFace</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glFramebufferTextureFace</refname>
+        <refpurpose>attach a face of a cube map texture as a logical buffer to the currently bound framebuffer</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glFramebufferTextureFace</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>attachment</parameter></paramdef>
+                <paramdef>GLuint <parameter>texture</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+                <paramdef>GLenum <parameter>face</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the framebuffer target. <parameter>target</parameter> must be <constant>GL_DRAW_FRAMEBUFFER</constant>,
+                    <constant>GL_READ_FRAMEBUFFER</constant>, or <constant>GL_FRAMEBUFFER</constant>. <constant>GL_FRAMEBUFFER</constant>
+                    is equivalent to <constant>GL_DRAW_FRAMEBUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>attachment</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the attachment point of the framebuffer. <parameter>attachment</parameter> must be
+                    <constant>GL_COLOR_ATTACHMENT<emphasis>i</emphasis></constant>, <constant>GL_DEPTH_ATTACHMENT</constant>,
+                    <constant>GL_STENCIL_ATTACHMENT</constant> or <constant>GL_DEPTH_STENCIL_ATTACHMMENT</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>texture</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the texture object to attach to the framebuffer attachment point named by <parameter>attachment</parameter>.
+                    <parameter>texture</parameter> must be the name of an existing cube-map texture.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>level</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the mipmap level of <parameter>texture</parameter> to attach.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>face</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the face of <parameter>texture</parameter> to attach.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glFramebufferTextureFace</function> operates like <citerefentry><refentrytitle>glFramebufferTexture</refentrytitle></citerefentry>,
+            except that only a single face of a cube map texture, given by <parameter>face</parameter>, is attached to the attachment point.
+            <parameter>face</parameter> must be <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>, <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>, <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>, <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
+            or <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>. <parameter>texture</parameter> must either be zero, or the name of an existing cube map texture.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not one of the accepted tokens.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>attachment</parameter> is not one of the accepted tokens.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>face</parameter> is not one of the accepted tokens.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if zero is bound to <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>texture</parameter> is not zero or the name of an existing cube map texture.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenFramebuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindFramebuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenRenderbuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferTextureLayer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>

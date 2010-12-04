@@ -13,25 +13,33 @@ namespace Bind
         // Disable BeforeFieldInit.
         static Settings() { }
 
-        public const string DefaultInputPath = "../../../Source/Bind/Specifications";
-        public const string DefaultOutputPath = "../../../Source/OpenTK/Graphics/OpenGL";
-        public const string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
-        public const string DefaultDocPath = "../../../Source/Bind/Specifications/Docs";
-        public const string DefaultDocFile = "ToInlineDocs.xslt";
-        public const string DefaultLicenseFile = "License.txt";
+        public static string DefaultInputPath = "../../../Source/Bind/Specifications";
+        public static string DefaultOutputPath = "../../../Source/OpenTK/Graphics/OpenGL";
+        public static string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
+        public static string DefaultDocPath = "../../../Source/Bind/Specifications/Docs";
+        public static string DefaultDocFile = "ToInlineDocs.xslt";
+        public static string DefaultLicenseFile = "License.txt";
+        public static string DefaultOverridesFile = "GL2/gloverrides.xml";
 
-        public static string InputPath = DefaultInputPath;
-        public static string OutputPath = DefaultOutputPath;
-        public static string OutputNamespace = DefaultOutputNamespace;
-        public static string DocPath = DefaultDocPath;
-        public static string DocFile = DefaultDocFile;
-        public static string LicenseFile = DefaultLicenseFile;
+        static string inputPath, outputPath, outputNamespace, docPath, docFile, licenseFile, overridesFile;
+        public static string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
+        public static string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
+        public static string OutputNamespace { get { return outputNamespace ?? DefaultOutputNamespace; } set { outputNamespace = value; } }
+        public static string DocPath { get { return docPath ?? DefaultDocPath; } set { docPath = value; } }
+        public static string DocFile { get { return docFile ?? DefaultDocFile; } set { docFile = value; } }
+        public static string LicenseFile { get { return licenseFile ?? DefaultLicenseFile; } set { licenseFile = value; } }
+        public static string OverridesFile { get { return overridesFile ?? DefaultOverridesFile; } set { overridesFile = value; } }
 
         public static string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
         public static string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".
         public static string FunctionPrefix = "gl";
         public static string ConstantPrefix = "GL_";
         public static string EnumPrefix = "";
+
+        public static string ImportsFile = "Core.cs";
+        public static string DelegatesFile = "Delegates.cs";
+        public static string EnumsFile = "Enums.cs";
+        public static string WrappersFile = "GL.cs";
 
         // TODO: This code is too fragile.
         // Old enums code:
@@ -127,6 +135,8 @@ namespace Bind
             NoDebugHelpers = 0x800,
             /// <summary>Generate both typed and untyped ("All") signatures for enum parameters.</summary>
             KeepUntypedEnums = 0x1000,
+            /// <summary>Marks deprecated functions as [Obsolete]</summary>
+            AddDeprecationWarnings = 0x2000,
             Tao = ConstIntEnums |
                   NoAdvancedEnumProcessing |
                   NoPublicUnsafeFunctions |
@@ -140,6 +150,24 @@ namespace Bind
                   NoDocumentation | 
                   NoDebugHelpers
                   /*GenerateAllPermutations,*/
+        }
+
+        // Returns true if flag is enabled.
+        public static bool IsEnabled(Legacy flag)
+        {
+            return (Compatibility & flag) != (Legacy)0;
+        }
+
+        // Enables the specified flag.
+        public static void Enable(Legacy flag)
+        {
+            Compatibility |= flag;
+        }
+
+        // Disables the specified flag.
+        public static void Disable(Legacy flag)
+        {
+            Compatibility &= ~flag;
         }
 
         /// <summary>True if multiple tokens should be dropped (e.g. FooARB, FooEXT and FooSGI).</summary>

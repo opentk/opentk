@@ -63,6 +63,9 @@ namespace OpenTK.Graphics.ES20
             internal delegate void BindTexture(OpenTK.Graphics.ES20.TextureTarget target, UInt32 texture);
             internal static BindTexture glBindTexture;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void BindVertexArrayOES(UInt32 array);
+            internal static BindVertexArrayOES glBindVertexArrayOES;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendColor(Single red, Single green, Single blue, Single alpha);
             internal static BlendColor glBlendColor;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -77,6 +80,9 @@ namespace OpenTK.Graphics.ES20
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFuncSeparate(OpenTK.Graphics.ES20.BlendingFactorSrc srcRGB, OpenTK.Graphics.ES20.BlendingFactorDest dstRGB, OpenTK.Graphics.ES20.BlendingFactorSrc srcAlpha, OpenTK.Graphics.ES20.BlendingFactorDest dstAlpha);
             internal static BlendFuncSeparate glBlendFuncSeparate;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void BlitFramebufferANGLE(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, UInt32 mask, OpenTK.Graphics.ES20.All filter);
+            internal static BlitFramebufferANGLE glBlitFramebufferANGLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BufferData(OpenTK.Graphics.ES20.BufferTarget target, IntPtr size, IntPtr data, OpenTK.Graphics.ES20.BufferUsage usage);
             internal static BufferData glBufferData;
@@ -126,6 +132,12 @@ namespace OpenTK.Graphics.ES20
             internal delegate void CopyTexSubImage3DOES(OpenTK.Graphics.ES20.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
             internal static CopyTexSubImage3DOES glCopyTexSubImage3DOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void CoverageMaskNV(bool mask);
+            internal static CoverageMaskNV glCoverageMaskNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void CoverageOperationNV(OpenTK.Graphics.ES20.All operation);
+            internal static CoverageOperationNV glCoverageOperationNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Int32 CreateProgram();
             internal static CreateProgram glCreateProgram;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -159,6 +171,9 @@ namespace OpenTK.Graphics.ES20
             internal unsafe delegate void DeleteTextures(Int32 n, UInt32* textures);
             internal unsafe static DeleteTextures glDeleteTextures;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void DeleteVertexArraysOES(Int32 n, UInt32* arrays);
+            internal unsafe static DeleteVertexArraysOES glDeleteVertexArraysOES;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DepthFunc(OpenTK.Graphics.ES20.DepthFunction func);
             internal static DepthFunc glDepthFunc;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -179,6 +194,9 @@ namespace OpenTK.Graphics.ES20
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DisableVertexAttribArray(UInt32 index);
             internal static DisableVertexAttribArray glDisableVertexAttribArray;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void DiscardFramebufferEXT(OpenTK.Graphics.ES20.All target, Int32 numAttachments, OpenTK.Graphics.ES20.All* attachments);
+            internal unsafe static DiscardFramebufferEXT glDiscardFramebufferEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawArrays(OpenTK.Graphics.ES20.BeginMode mode, Int32 first, Int32 count);
             internal static DrawArrays glDrawArrays;
@@ -204,6 +222,45 @@ namespace OpenTK.Graphics.ES20
             internal delegate void EndPerfMonitorAMD(UInt32 monitor);
             internal static EndPerfMonitorAMD glEndPerfMonitorAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void EndTilingQCOM(UInt32 preserveMask);
+            internal static EndTilingQCOM glEndTilingQCOM;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void ExtGetBufferPointervQCOM(OpenTK.Graphics.ES20.All target, IntPtr @params);
+            internal static ExtGetBufferPointervQCOM glExtGetBufferPointervQCOM;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void ExtGetBuffersQCOM(UInt32* buffers, Int32 maxBuffers, Int32* numBuffers);
+            internal unsafe static ExtGetBuffersQCOM glExtGetBuffersQCOM;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void ExtGetFramebuffersQCOM(UInt32* framebuffers, Int32 maxFramebuffers, Int32* numFramebuffers);
+            internal unsafe static ExtGetFramebuffersQCOM glExtGetFramebuffersQCOM;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void ExtGetProgramBinarySourceQCOM(UInt32 program, OpenTK.Graphics.ES20.All shadertype, String source, Int32* length);
+            internal unsafe static ExtGetProgramBinarySourceQCOM glExtGetProgramBinarySourceQCOM;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void ExtGetProgramsQCOM(UInt32* programs, Int32 maxPrograms, Int32* numPrograms);
+            internal unsafe static ExtGetProgramsQCOM glExtGetProgramsQCOM;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void ExtGetRenderbuffersQCOM(UInt32* renderbuffers, Int32 maxRenderbuffers, Int32* numRenderbuffers);
+            internal unsafe static ExtGetRenderbuffersQCOM glExtGetRenderbuffersQCOM;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void ExtGetShadersQCOM(UInt32* shaders, Int32 maxShaders, Int32* numShaders);
+            internal unsafe static ExtGetShadersQCOM glExtGetShadersQCOM;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void ExtGetTexLevelParameterivQCOM(UInt32 texture, OpenTK.Graphics.ES20.All face, Int32 level, OpenTK.Graphics.ES20.All pname, Int32* @params);
+            internal unsafe static ExtGetTexLevelParameterivQCOM glExtGetTexLevelParameterivQCOM;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void ExtGetTexSubImageQCOM(OpenTK.Graphics.ES20.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, IntPtr texels);
+            internal static ExtGetTexSubImageQCOM glExtGetTexSubImageQCOM;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void ExtGetTexturesQCOM(UInt32* textures, Int32 maxTextures, Int32* numTextures);
+            internal unsafe static ExtGetTexturesQCOM glExtGetTexturesQCOM;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate bool ExtIsProgramBinaryQCOM(UInt32 program);
+            internal static ExtIsProgramBinaryQCOM glExtIsProgramBinaryQCOM;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void ExtTexObjectStateOverrideiQCOM(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All pname, Int32 param);
+            internal static ExtTexObjectStateOverrideiQCOM glExtTexObjectStateOverrideiQCOM;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Finish();
             internal static Finish glFinish;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -218,6 +275,9 @@ namespace OpenTK.Graphics.ES20
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FramebufferTexture2D(OpenTK.Graphics.ES20.FramebufferTarget target, OpenTK.Graphics.ES20.FramebufferSlot attachment, OpenTK.Graphics.ES20.TextureTarget textarget, UInt32 texture, Int32 level);
             internal static FramebufferTexture2D glFramebufferTexture2D;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void FramebufferTexture2DMultisampleIMG();
+            internal static FramebufferTexture2DMultisampleIMG glFramebufferTexture2DMultisampleIMG;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FramebufferTexture3DOES(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All attachment, OpenTK.Graphics.ES20.All textarget, UInt32 texture, Int32 level, Int32 zoffset);
             internal static FramebufferTexture3DOES glFramebufferTexture3DOES;
@@ -245,6 +305,9 @@ namespace OpenTK.Graphics.ES20
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GenTextures(Int32 n, [OutAttribute] UInt32* textures);
             internal unsafe static GenTextures glGenTextures;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GenVertexArraysOES(Int32 n, [OutAttribute] UInt32* arrays);
+            internal unsafe static GenVertexArraysOES glGenVertexArraysOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetActiveAttrib(UInt32 program, UInt32 index, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.ES20.ActiveAttribType* type, [OutAttribute] StringBuilder name);
             internal unsafe static GetActiveAttrib glGetActiveAttrib;
@@ -276,7 +339,7 @@ namespace OpenTK.Graphics.ES20
             internal delegate OpenTK.Graphics.ES20.ErrorCode GetError();
             internal static GetError glGetError;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetFenceivNV(UInt32 fence, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetFenceivNV(UInt32 fence, OpenTK.Graphics.ES20.All pname, [OutAttribute] Int32* @params);
             internal unsafe static GetFenceivNV glGetFenceivNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetFloatv(OpenTK.Graphics.ES20.GetPName pname, [OutAttribute] Single* @params);
@@ -384,6 +447,9 @@ namespace OpenTK.Graphics.ES20
             internal delegate bool IsTexture(UInt32 texture);
             internal static IsTexture glIsTexture;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate bool IsVertexArrayOES(UInt32 array);
+            internal static IsVertexArrayOES glIsVertexArrayOES;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void LineWidth(Single width);
             internal static LineWidth glLineWidth;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -392,6 +458,12 @@ namespace OpenTK.Graphics.ES20
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate System.IntPtr MapBufferOES(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All access);
             internal unsafe static MapBufferOES glMapBufferOES;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void MultiDrawArraysEXT(OpenTK.Graphics.ES20.All mode, Int32* first, Int32* count, Int32 primcount);
+            internal unsafe static MultiDrawArraysEXT glMultiDrawArraysEXT;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void MultiDrawElementsEXT(OpenTK.Graphics.ES20.All mode, Int32* first, OpenTK.Graphics.ES20.All type, IntPtr indices, Int32 primcount);
+            internal unsafe static MultiDrawElementsEXT glMultiDrawElementsEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void PixelStorei(OpenTK.Graphics.ES20.PixelStoreParameter pname, Int32 param);
             internal static PixelStorei glPixelStorei;
@@ -411,6 +483,18 @@ namespace OpenTK.Graphics.ES20
             internal delegate void RenderbufferStorage(OpenTK.Graphics.ES20.RenderbufferTarget target, OpenTK.Graphics.ES20.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             internal static RenderbufferStorage glRenderbufferStorage;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void RenderbufferStorageMultisampleANGLE(OpenTK.Graphics.ES20.All target, Int32 samples, OpenTK.Graphics.ES20.All internalformat, Int32 width, Int32 height);
+            internal static RenderbufferStorageMultisampleANGLE glRenderbufferStorageMultisampleANGLE;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void RenderbufferStorageMultisampleAPPLE();
+            internal static RenderbufferStorageMultisampleAPPLE glRenderbufferStorageMultisampleAPPLE;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void RenderbufferStorageMultisampleIMG();
+            internal static RenderbufferStorageMultisampleIMG glRenderbufferStorageMultisampleIMG;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void ResolveMultisampleFramebufferAPPLE();
+            internal static ResolveMultisampleFramebufferAPPLE glResolveMultisampleFramebufferAPPLE;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void SampleCoverage(Single value, bool invert);
             internal static SampleCoverage glSampleCoverage;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -428,6 +512,9 @@ namespace OpenTK.Graphics.ES20
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void ShaderSource(UInt32 shader, Int32 count, String[] @string, Int32* length);
             internal unsafe static ShaderSource glShaderSource;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void StartTilingQCOM(UInt32 x, UInt32 y, UInt32 width, UInt32 height, UInt32 preserveMask);
+            internal static StartTilingQCOM glStartTilingQCOM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void StencilFunc(OpenTK.Graphics.ES20.StencilFunction func, Int32 @ref, UInt32 mask);
             internal static StencilFunc glStencilFunc;

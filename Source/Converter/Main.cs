@@ -36,13 +36,34 @@ namespace CHeaderToXML
     {
         public bool Equals (XNode a, XNode b)
         {
-            return ((XElement) a).Attribute("name").Equals(((XElement) b).Attribute("name"));
+            var a_attr = ((XElement)a).Attribute("name") ?? ((XElement)a).Attribute("token");
+            var b_attr = ((XElement)b).Attribute("name") ?? ((XElement)b).Attribute("token");
+            return a_attr.Value == b_attr.Value;
         }
 
         public int GetHashCode (XNode a)
         {
-            return ((XElement) a).Attribute("name").GetHashCode();
+            XElement e = (XElement)a;
+            if (e.Name == "enum" || e.Name == "token")
+            {
+                return ((XElement)a).Attribute("name").Value.GetHashCode();
+            }
+            else if (e.Name == "use")
+            {
+                return ((XElement)a).Attribute("token").Value.GetHashCode();
+            }
+            else
+            {
+                throw new InvalidOperationException(String.Format(
+                    "Unknown element type: {0}", e));
+            }
         }
+    }
+
+    enum HeaderType
+    {
+        Header,
+        Spec
     }
 
     class EntryPoint
@@ -54,20 +75,27 @@ namespace CHeaderToXML
                 bool showHelp = false;
                 string prefix = "gl";
                 string version = null;
-                OptionSet opts = new OptionSet {
-                { "p=", "The {PREFIX} to remove from parsed functions and constants.  " +
-                    "Defaults to \"" + prefix + "\".",
-                    v => prefix = v },
-                { "v=", "The {VERSION} of the headers being parsed.",
-                    v => version = v },
-                { "?|h|help", "Show this message and exit.",
-                    v => showHelp = v != null },
-            };
+                string path = null;
+                HeaderType type = HeaderType.Header;
+                OptionSet opts = new OptionSet
+                {
+                    { "p=", "The {PREFIX} to remove from parsed functions and constants.  " +
+                        "Defaults to \"" + prefix + "\".",
+                        v => prefix = v },
+                    { "v:", "The {VERSION} of the headers being parsed.",
+                        v => version = v },
+                    { "t:", "The {TYPE} of the headers being parsed.",
+                        v => type = (HeaderType)Enum.Parse(typeof(HeaderType), v, true) },
+                    { "o:", "The {PATH} to the output file.",
+                        v => path = v },
+                    { "?|h|help", "Show this message and exit.",
+                        v => showHelp = v != null },
+                };
                 var headers = opts.Parse(args);
                 var app = Path.GetFileName(Environment.GetCommandLineArgs()[0]);
                 if (showHelp)
                 {
-                    Console.WriteLine("usage: {0} -p:PREFIX -v:VERSION HEADERS", app);
+                    Console.WriteLine("usage: {0} -p:PREFIX -v:VERSION -t:TYPE HEADERS", app);
                     Console.WriteLine();
                     Console.WriteLine("Options:");
                     opts.WriteOptionDescriptions(Console.Out);
@@ -75,61 +103,53 @@ namespace CHeaderToXML
                     Console.WriteLine("HEADERS are the header files to parse into XML.");
                     return;
                 }
-                if (version == null)
+                if (prefix == null)
                 {
                     Console.WriteLine("{0}: missing required parameter -p.", app);
                     Console.WriteLine("Use '{0} --help' for usage.", app);
                     return;
                 }
-                var sigs = headers.Select(h => new ESCLParser
-                {
-                    Prefix = prefix,
-                    Version = version
-                }.Parse(h));
+                Parser parser =
+                    type == HeaderType.Header ? new ESCLParser { Prefix = prefix, Version = version } :
+                    type == HeaderType.Spec ? new GLParser { Prefix = prefix, Version = version } :
+                    (Parser)null;
+
+                var sigs = headers.Select(h => parser.Parse(h)).ToList();
 
                 // Merge any duplicate enum entries (in case an enum is declared
                 // in multiple files with different entries in each file).
-                var entries = new Dictionary<string, XElement>();
-                foreach (var e in sigs.SelectMany(s => s).Where(s => s.Name.LocalName == "enum"))
-                {
-                    var name = (string)e.Attribute("name");
-                    if (entries.ContainsKey(name) && e.Name.LocalName == "enum")
-                    {
-                        var p = entries[name];
-                        var curTokens = p.Nodes().ToList();
-                        p.RemoveNodes();
-                        p.Add(curTokens.Concat(e.Nodes()).Distinct(new EnumTokenComparer()));
-                    }
-                    else
-                        entries.Add(name, e);
-                }
-
-                // sort enum tokens
-                foreach (var e in entries)
-                {
-                    if (e.Value.Name.LocalName != "enum")
-                        continue;
-                    var tokens = e.Value.Elements()
-                        .OrderBy(t => (string)t.Attribute("name"))
-                        .ToList();
-                    e.Value.RemoveNodes();
-                    e.Value.Add(tokens);
-                }
+                var entries = MergeDuplicates(sigs);
+                SortTokens(entries);
 
                 var settings = new XmlWriterSettings();
                 settings.Indent = true;
+                settings.Encoding = System.Text.Encoding.UTF8;
 
-                using (var writer = XmlWriter.Create(Console.Out, settings))
+                TextWriter out_stream = null;
+                if (path == null)
+                {
+                    out_stream = Console.Out;
+                    Console.OutputEncoding = System.Text.Encoding.UTF8;
+                }
+                else
+                {
+                    out_stream = new StreamWriter(path, false);
+                }
+
+                using (var writer = XmlWriter.Create(out_stream, settings))
                 {
                     new XElement("signatures",
-                        entries.Values.OrderBy(s => s.Attribute("name").Value),  // only enums
-                        sigs.SelectMany(s => s).Where(s => s.Name.LocalName == "function")    // only functions
-                             .OrderBy(s => s.Attribute("extension").Value)
-                             .ThenBy(s => s.Attribute("name").Value)
-                    ).WriteTo(writer);
+                        new XElement("add",
+                            entries.Values.OrderBy(s => s.Attribute("name").Value),  // only enums
+                            sigs.SelectMany(s => s).Where(s => s.Name.LocalName == "function")    // only functions
+                                 .OrderBy(s => s.Attribute("extension").Value)
+                                 .ThenBy(s => s.Attribute("name").Value)
+                    )).WriteTo(writer);
                     writer.Flush();
                     writer.Close();
                 }
+
+                out_stream.Dispose();
             }
             finally
             {
@@ -140,6 +160,39 @@ namespace CHeaderToXML
                     Console.ReadKey(true);
                 }
             }
+        }
+
+        private static void SortTokens(Dictionary<string, XElement> entries)
+        {
+            foreach (var e in entries)
+            {
+                if (e.Value.Name.LocalName != "enum")
+                    continue;
+                var tokens = e.Value.Elements()
+                    .OrderBy(t => (string)t.Attribute("name"))
+                    .ToList();
+                e.Value.RemoveNodes();
+                e.Value.Add(tokens);
+            }
+        }
+
+        private static Dictionary<string, XElement> MergeDuplicates(IEnumerable<IEnumerable<XElement>> sigs)
+        {
+            var entries = new Dictionary<string, XElement>();
+            foreach (var e in sigs.SelectMany(s => s).Where(s => s.Name.LocalName == "enum"))
+            {
+                var name = (string)e.Attribute("name");
+                if (entries.ContainsKey(name) && e.Name.LocalName == "enum")
+                {
+                    var p = entries[name];
+                    var curTokens = p.Nodes().ToList();
+                    p.RemoveNodes();
+                    p.Add(curTokens.Concat(e.Nodes()).Distinct(new EnumTokenComparer()));
+                }
+                else
+                    entries.Add(name, e);
+            }
+            return entries;
         }
     }
 }

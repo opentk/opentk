@@ -77,17 +77,9 @@
             with <parameter>face</parameter> set to <constant>GL_FRONT_AND_BACK</constant>.
         </para>
     </refsect1>
-    <refsect1 id="notes"><title>Notes</title>
-	<para>
-            <function>glStencilMaskSeparate</function> is available only if
-            the GL version is 2.0 or greater.
-        </para>
-    </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glStencilMaskSeparate</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>face</parameter> is not one of the accepted tokens.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
@@ -101,7 +93,6 @@
         <para>
             <citerefentry><refentrytitle>glColorMask</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glDepthMask</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glIndexMask</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glStencilFuncSeparate</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glStencilMask</refentrytitle></citerefentry>,

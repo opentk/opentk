@@ -46,10 +46,7 @@
 	context.</para>
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
-	<para><function>glCreateProgram</function> is available only if
-	the GL version is 2.0 or greater.</para>
-
-	<para>Like display lists and texture objects, the name space for
+	<para>Like buffer and texture objects, the name space for
 	program objects may be shared across a set of contexts, as long
 	as the server sides of the contexts share the same address
 	space. If the name space is shared across contexts, any attached
@@ -63,12 +60,6 @@
     <refsect1 id="errors"><title>Errors</title>
 	<para>This function returns 0 if an error occurs creating the program object.</para>
 
-	<para><constant>GL_INVALID_OPERATION</constant> is generated if
-	<function>glCreateProgram</function> is executed between the
-	execution of
-	<citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-	and the corresponding execution of
-	<citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.</para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
 	<para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>

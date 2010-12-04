@@ -43,6 +43,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glAccum", ExactSpelling = true)]
             internal extern static void Accum(OpenTK.Graphics.OpenGL.AccumOp op, Single value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glActiveProgramEXT", ExactSpelling = true)]
+            internal extern static void ActiveProgramEXT(UInt32 program);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glActiveShaderProgram", ExactSpelling = true)]
+            internal extern static void ActiveShaderProgram(UInt32 pipeline, UInt32 program);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glActiveStencilFaceEXT", ExactSpelling = true)]
             internal extern static void ActiveStencilFaceEXT(OpenTK.Graphics.OpenGL.ExtStencilTwoSide face);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -121,6 +127,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBeginQueryARB", ExactSpelling = true)]
             internal extern static void BeginQueryARB(OpenTK.Graphics.OpenGL.ArbOcclusionQuery target, UInt32 id);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBeginQueryIndexed", ExactSpelling = true)]
+            internal extern static void BeginQueryIndexed(OpenTK.Graphics.OpenGL.QueryTarget target, UInt32 index, UInt32 id);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBeginTransformFeedback", ExactSpelling = true)]
             internal extern static void BeginTransformFeedback(OpenTK.Graphics.OpenGL.BeginFeedbackMode primitiveMode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -132,6 +141,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBeginVertexShaderEXT", ExactSpelling = true)]
             internal extern static void BeginVertexShaderEXT();
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBeginVideoCaptureNV", ExactSpelling = true)]
+            internal extern static void BeginVideoCaptureNV(UInt32 video_capture_slot);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindAttribLocation", ExactSpelling = true)]
             internal extern static void BindAttribLocation(UInt32 program, UInt32 index, String name);
@@ -175,6 +187,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindFragDataLocationEXT", ExactSpelling = true)]
             internal extern static void BindFragDataLocationEXT(UInt32 program, UInt32 color, String name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindFragDataLocationIndexed", ExactSpelling = true)]
+            internal extern static void BindFragDataLocationIndexed(UInt32 program, UInt32 colorNumber, UInt32 index, String name);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindFragmentShaderATI", ExactSpelling = true)]
             internal extern static void BindFragmentShaderATI(UInt32 id);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -183,6 +198,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindFramebufferEXT", ExactSpelling = true)]
             internal extern static void BindFramebufferEXT(OpenTK.Graphics.OpenGL.FramebufferTarget target, UInt32 framebuffer);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindImageTextureEXT", ExactSpelling = true)]
+            internal extern static void BindImageTextureEXT(UInt32 index, UInt32 texture, Int32 level, bool layered, Int32 layer, OpenTK.Graphics.OpenGL.ExtShaderImageLoadStore access, Int32 format);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindLightParameterEXT", ExactSpelling = true)]
             internal extern static Int32 BindLightParameterEXT(OpenTK.Graphics.OpenGL.LightName light, OpenTK.Graphics.OpenGL.LightParameter value);
@@ -202,11 +220,17 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindProgramNV", ExactSpelling = true)]
             internal extern static void BindProgramNV(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, UInt32 id);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindProgramPipeline", ExactSpelling = true)]
+            internal extern static void BindProgramPipeline(UInt32 pipeline);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindRenderbuffer", ExactSpelling = true)]
             internal extern static void BindRenderbuffer(OpenTK.Graphics.OpenGL.RenderbufferTarget target, UInt32 renderbuffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindRenderbufferEXT", ExactSpelling = true)]
             internal extern static void BindRenderbufferEXT(OpenTK.Graphics.OpenGL.RenderbufferTarget target, UInt32 renderbuffer);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindSampler", ExactSpelling = true)]
+            internal extern static void BindSampler(UInt32 unit, UInt32 sampler);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindTexGenParameterEXT", ExactSpelling = true)]
             internal extern static Int32 BindTexGenParameterEXT(OpenTK.Graphics.OpenGL.TextureUnit unit, OpenTK.Graphics.OpenGL.TextureCoordName coord, OpenTK.Graphics.OpenGL.TextureGenParameter value);
@@ -220,6 +244,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindTextureUnitParameterEXT", ExactSpelling = true)]
             internal extern static Int32 BindTextureUnitParameterEXT(OpenTK.Graphics.OpenGL.TextureUnit unit, OpenTK.Graphics.OpenGL.ExtVertexShader value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindTransformFeedback", ExactSpelling = true)]
+            internal extern static void BindTransformFeedback(OpenTK.Graphics.OpenGL.TransformFeedbackTarget target, UInt32 id);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindTransformFeedbackNV", ExactSpelling = true)]
             internal extern static void BindTransformFeedbackNV(OpenTK.Graphics.OpenGL.NvTransformFeedback2 target, UInt32 id);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -231,6 +258,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindVertexShaderEXT", ExactSpelling = true)]
             internal extern static void BindVertexShaderEXT(UInt32 id);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindVideoCaptureStreamBufferNV", ExactSpelling = true)]
+            internal extern static void BindVideoCaptureStreamBufferNV(UInt32 video_capture_slot, UInt32 stream, OpenTK.Graphics.OpenGL.NvVideoCapture frame_region, IntPtr offset);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindVideoCaptureStreamTextureNV", ExactSpelling = true)]
+            internal extern static void BindVideoCaptureStreamTextureNV(UInt32 video_capture_slot, UInt32 stream, OpenTK.Graphics.OpenGL.NvVideoCapture frame_region, OpenTK.Graphics.OpenGL.NvVideoCapture target, UInt32 texture);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBinormal3bEXT", ExactSpelling = true)]
             internal extern static void Binormal3bEXT(SByte bx, SByte by, SByte bz);
@@ -281,7 +314,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void BlendEquationEXT(OpenTK.Graphics.OpenGL.ExtBlendMinmax mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationi", ExactSpelling = true)]
-            internal extern static void BlendEquationi(UInt32 buf, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend mode);
+            internal extern static void BlendEquationi(UInt32 buf, OpenTK.Graphics.OpenGL.Version40 mode);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationiARB", ExactSpelling = true)]
+            internal extern static void BlendEquationiARB(UInt32 buf, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationIndexedAMD", ExactSpelling = true)]
             internal extern static void BlendEquationIndexedAMD(UInt32 buf, OpenTK.Graphics.OpenGL.AmdDrawBuffersBlend mode);
@@ -295,6 +331,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationSeparatei", ExactSpelling = true)]
             internal extern static void BlendEquationSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL.BlendEquationMode modeRGB, OpenTK.Graphics.OpenGL.BlendEquationMode modeAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationSeparateiARB", ExactSpelling = true)]
+            internal extern static void BlendEquationSeparateiARB(UInt32 buf, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend modeRGB, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend modeAlpha);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationSeparateIndexedAMD", ExactSpelling = true)]
             internal extern static void BlendEquationSeparateIndexedAMD(UInt32 buf, OpenTK.Graphics.OpenGL.AmdDrawBuffersBlend modeRGB, OpenTK.Graphics.OpenGL.AmdDrawBuffersBlend modeAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -302,7 +341,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void BlendFunc(OpenTK.Graphics.OpenGL.BlendingFactorSrc sfactor, OpenTK.Graphics.OpenGL.BlendingFactorDest dfactor);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFunci", ExactSpelling = true)]
-            internal extern static void BlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend src, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend dst);
+            internal extern static void BlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL.Version40 src, OpenTK.Graphics.OpenGL.Version40 dst);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFunciARB", ExactSpelling = true)]
+            internal extern static void BlendFunciARB(UInt32 buf, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend src, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend dst);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFuncIndexedAMD", ExactSpelling = true)]
             internal extern static void BlendFuncIndexedAMD(UInt32 buf, OpenTK.Graphics.OpenGL.AmdDrawBuffersBlend src, OpenTK.Graphics.OpenGL.AmdDrawBuffersBlend dst);
@@ -314,7 +356,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void BlendFuncSeparateEXT(OpenTK.Graphics.OpenGL.ExtBlendFuncSeparate sfactorRGB, OpenTK.Graphics.OpenGL.ExtBlendFuncSeparate dfactorRGB, OpenTK.Graphics.OpenGL.ExtBlendFuncSeparate sfactorAlpha, OpenTK.Graphics.OpenGL.ExtBlendFuncSeparate dfactorAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFuncSeparatei", ExactSpelling = true)]
-            internal extern static void BlendFuncSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend srcRGB, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend dstRGB, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend srcAlpha, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend dstAlpha);
+            internal extern static void BlendFuncSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL.Version40 srcRGB, OpenTK.Graphics.OpenGL.Version40 dstRGB, OpenTK.Graphics.OpenGL.Version40 srcAlpha, OpenTK.Graphics.OpenGL.Version40 dstAlpha);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFuncSeparateiARB", ExactSpelling = true)]
+            internal extern static void BlendFuncSeparateiARB(UInt32 buf, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend srcRGB, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend dstRGB, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend srcAlpha, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend dstAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFuncSeparateIndexedAMD", ExactSpelling = true)]
             internal extern static void BlendFuncSeparateIndexedAMD(UInt32 buf, OpenTK.Graphics.OpenGL.AmdDrawBuffersBlend srcRGB, OpenTK.Graphics.OpenGL.AmdDrawBuffersBlend dstRGB, OpenTK.Graphics.OpenGL.AmdDrawBuffersBlend srcAlpha, OpenTK.Graphics.OpenGL.AmdDrawBuffersBlend dstAlpha);
@@ -327,6 +372,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlitFramebufferEXT", ExactSpelling = true)]
             internal extern static void BlitFramebufferEXT(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, OpenTK.Graphics.OpenGL.ClearBufferMask mask, OpenTK.Graphics.OpenGL.ExtFramebufferBlit filter);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBufferAddressRangeNV", ExactSpelling = true)]
+            internal extern static void BufferAddressRangeNV(OpenTK.Graphics.OpenGL.NvVertexBufferUnifiedMemory pname, UInt32 index, UInt64 address, IntPtr length);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBufferData", ExactSpelling = true)]
             internal extern static void BufferData(OpenTK.Graphics.OpenGL.BufferTarget target, IntPtr size, IntPtr data, OpenTK.Graphics.OpenGL.BufferUsageHint usage);
@@ -397,6 +445,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearDepthdNV", ExactSpelling = true)]
             internal extern static void ClearDepthdNV(Double depth);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearDepthf", ExactSpelling = true)]
+            internal extern static void ClearDepthf(Single d);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearIndex", ExactSpelling = true)]
             internal extern static void ClearIndex(Single c);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -446,10 +497,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void Color3fVertex3fvSUN(Single* c, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColor3hNV", ExactSpelling = true)]
-            internal extern static void Color3hNV(OpenTK.Half red, OpenTK.Half green, OpenTK.Half blue);
+            internal extern static void Color3hNV(Half red, Half green, Half blue);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColor3hvNV", ExactSpelling = true)]
-            internal extern static unsafe void Color3hvNV(OpenTK.Half* v);
+            internal extern static unsafe void Color3hvNV(Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColor3i", ExactSpelling = true)]
             internal extern static void Color3i(Int32 red, Int32 green, Int32 blue);
@@ -506,10 +557,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void Color4fv(Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColor4hNV", ExactSpelling = true)]
-            internal extern static void Color4hNV(OpenTK.Half red, OpenTK.Half green, OpenTK.Half blue, OpenTK.Half alpha);
+            internal extern static void Color4hNV(Half red, Half green, Half blue, Half alpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColor4hvNV", ExactSpelling = true)]
-            internal extern static unsafe void Color4hvNV(OpenTK.Half* v);
+            internal extern static unsafe void Color4hvNV(Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColor4i", ExactSpelling = true)]
             internal extern static void Color4i(Int32 red, Int32 green, Int32 blue, Int32 alpha);
@@ -553,6 +604,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColor4usv", ExactSpelling = true)]
             internal extern static unsafe void Color4usv(UInt16* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorFormatNV", ExactSpelling = true)]
+            internal extern static void ColorFormatNV(Int32 size, OpenTK.Graphics.OpenGL.NvVertexBufferUnifiedMemory type, Int32 stride);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorFragmentOp1ATI", ExactSpelling = true)]
             internal extern static void ColorFragmentOp1ATI(OpenTK.Graphics.OpenGL.AtiFragmentShader op, UInt32 dst, UInt32 dstMask, UInt32 dstMod, UInt32 arg1, UInt32 arg1Rep, UInt32 arg1Mod);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -573,6 +627,18 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorMaterial", ExactSpelling = true)]
             internal extern static void ColorMaterial(OpenTK.Graphics.OpenGL.MaterialFace face, OpenTK.Graphics.OpenGL.ColorMaterialParameter mode);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorP3ui", ExactSpelling = true)]
+            internal extern static void ColorP3ui(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 color);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorP3uiv", ExactSpelling = true)]
+            internal extern static unsafe void ColorP3uiv(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* color);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorP4ui", ExactSpelling = true)]
+            internal extern static void ColorP4ui(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 color);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorP4uiv", ExactSpelling = true)]
+            internal extern static unsafe void ColorP4uiv(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* color);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorPointer", ExactSpelling = true)]
             internal extern static void ColorPointer(Int32 size, OpenTK.Graphics.OpenGL.ColorPointerType type, Int32 stride, IntPtr pointer);
@@ -639,6 +705,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCompileShaderARB", ExactSpelling = true)]
             internal extern static void CompileShaderARB(UInt32 shaderObj);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCompileShaderIncludeARB", ExactSpelling = true)]
+            internal extern static unsafe void CompileShaderIncludeARB(UInt32 shader, Int32 count, String[] path, Int32* length);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCompressedMultiTexImage1DEXT", ExactSpelling = true)]
             internal extern static void CompressedMultiTexImage1DEXT(OpenTK.Graphics.OpenGL.TextureUnit texunit, OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, Int32 width, Int32 border, Int32 imageSize, IntPtr bits);
@@ -775,6 +844,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyConvolutionFilter2DEXT", ExactSpelling = true)]
             internal extern static void CopyConvolutionFilter2DEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyImageSubDataNV", ExactSpelling = true)]
+            internal extern static void CopyImageSubDataNV(UInt32 srcName, OpenTK.Graphics.OpenGL.NvCopyImage srcTarget, Int32 srcLevel, Int32 srcX, Int32 srcY, Int32 srcZ, UInt32 dstName, OpenTK.Graphics.OpenGL.NvCopyImage dstTarget, Int32 dstLevel, Int32 dstX, Int32 dstY, Int32 dstZ, Int32 width, Int32 height, Int32 depth);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyMultiTexImage1DEXT", ExactSpelling = true)]
             internal extern static void CopyMultiTexImage1DEXT(OpenTK.Graphics.OpenGL.TextureUnit texunit, OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, Int32 x, Int32 y, Int32 width, Int32 border);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -850,6 +922,15 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCreateShaderObjectARB", ExactSpelling = true)]
             internal extern static Int32 CreateShaderObjectARB(OpenTK.Graphics.OpenGL.ArbShaderObjects shaderType);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCreateShaderProgramEXT", ExactSpelling = true)]
+            internal extern static Int32 CreateShaderProgramEXT(OpenTK.Graphics.OpenGL.ExtSeparateShaderObjects type, String @string);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCreateShaderProgramv", ExactSpelling = true)]
+            internal extern static Int32 CreateShaderProgramv(OpenTK.Graphics.OpenGL.ShaderType type, Int32 count, String[] strings);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCreateSyncFromCLeventARB", ExactSpelling = true)]
+            internal extern static IntPtr CreateSyncFromCLeventARB(IntPtr context, IntPtr @event, UInt32 flags);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCullFace", ExactSpelling = true)]
             internal extern static void CullFace(OpenTK.Graphics.OpenGL.CullFaceMode mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -861,6 +942,24 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCurrentPaletteMatrixARB", ExactSpelling = true)]
             internal extern static void CurrentPaletteMatrixARB(Int32 index);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageCallbackAMD", ExactSpelling = true)]
+            internal extern static void DebugMessageCallbackAMD(DebugProcAmd callback, [OutAttribute] IntPtr userParam);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageCallbackARB", ExactSpelling = true)]
+            internal extern static void DebugMessageCallbackARB(DebugProcArb callback, IntPtr userParam);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageControlARB", ExactSpelling = true)]
+            internal extern static unsafe void DebugMessageControlARB(OpenTK.Graphics.OpenGL.ArbDebugOutput source, OpenTK.Graphics.OpenGL.ArbDebugOutput type, OpenTK.Graphics.OpenGL.ArbDebugOutput severity, Int32 count, UInt32* ids, bool enabled);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageEnableAMD", ExactSpelling = true)]
+            internal extern static unsafe void DebugMessageEnableAMD(OpenTK.Graphics.OpenGL.AmdDebugOutput category, OpenTK.Graphics.OpenGL.AmdDebugOutput severity, Int32 count, UInt32* ids, bool enabled);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageInsertAMD", ExactSpelling = true)]
+            internal extern static void DebugMessageInsertAMD(OpenTK.Graphics.OpenGL.AmdDebugOutput category, OpenTK.Graphics.OpenGL.AmdDebugOutput severity, UInt32 id, Int32 length, String buf);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageInsertARB", ExactSpelling = true)]
+            internal extern static void DebugMessageInsertARB(OpenTK.Graphics.OpenGL.ArbDebugOutput source, OpenTK.Graphics.OpenGL.ArbDebugOutput type, UInt32 id, OpenTK.Graphics.OpenGL.ArbDebugOutput severity, Int32 length, String buf);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeformationMap3dSGIX", ExactSpelling = true)]
             internal extern static unsafe void DeformationMap3dSGIX(OpenTK.Graphics.OpenGL.SgixPolynomialFfd target, Double u1, Double u2, Int32 ustride, Int32 uorder, Double v1, Double v2, Int32 vstride, Int32 vorder, Double w1, Double w2, Int32 wstride, Int32 worder, Double* points);
@@ -898,6 +997,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteLists", ExactSpelling = true)]
             internal extern static void DeleteLists(UInt32 list, Int32 range);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteNamedStringARB", ExactSpelling = true)]
+            internal extern static void DeleteNamedStringARB(Int32 namelen, String name);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteNamesAMD", ExactSpelling = true)]
+            internal extern static unsafe void DeleteNamesAMD(OpenTK.Graphics.OpenGL.AmdNameGenDelete identifier, UInt32 num, UInt32* names);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteObjectARB", ExactSpelling = true)]
             internal extern static void DeleteObjectARB(UInt32 obj);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -909,6 +1014,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteProgram", ExactSpelling = true)]
             internal extern static void DeleteProgram(UInt32 program);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteProgramPipelines", ExactSpelling = true)]
+            internal extern static unsafe void DeleteProgramPipelines(Int32 n, UInt32* pipelines);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteProgramsARB", ExactSpelling = true)]
             internal extern static unsafe void DeleteProgramsARB(Int32 n, UInt32* programs);
@@ -928,6 +1036,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteRenderbuffersEXT", ExactSpelling = true)]
             internal extern static unsafe void DeleteRenderbuffersEXT(Int32 n, UInt32* renderbuffers);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteSamplers", ExactSpelling = true)]
+            internal extern static unsafe void DeleteSamplers(Int32 count, UInt32* samplers);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteShader", ExactSpelling = true)]
             internal extern static void DeleteShader(UInt32 shader);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -939,6 +1050,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteTexturesEXT", ExactSpelling = true)]
             internal extern static unsafe void DeleteTexturesEXT(Int32 n, UInt32* textures);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteTransformFeedbacks", ExactSpelling = true)]
+            internal extern static unsafe void DeleteTransformFeedbacks(Int32 n, UInt32* ids);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteTransformFeedbacksNV", ExactSpelling = true)]
             internal extern static unsafe void DeleteTransformFeedbacksNV(Int32 n, UInt32* ids);
@@ -967,8 +1081,17 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDepthRange", ExactSpelling = true)]
             internal extern static void DepthRange(Double near, Double far);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDepthRangeArrayv", ExactSpelling = true)]
+            internal extern static unsafe void DepthRangeArrayv(UInt32 first, Int32 count, Double* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDepthRangedNV", ExactSpelling = true)]
             internal extern static void DepthRangedNV(Double zNear, Double zFar);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDepthRangef", ExactSpelling = true)]
+            internal extern static void DepthRangef(Single n, Single f);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDepthRangeIndexed", ExactSpelling = true)]
+            internal extern static void DepthRangeIndexed(UInt32 index, Double n, Double f);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDetachObjectARB", ExactSpelling = true)]
             internal extern static void DetachObjectARB(UInt32 containerObj, UInt32 attachedObj);
@@ -992,7 +1115,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void Disablei(OpenTK.Graphics.OpenGL.IndexedEnableCap target, UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDisableIndexedEXT", ExactSpelling = true)]
-            internal extern static void DisableIndexedEXT(OpenTK.Graphics.OpenGL.ExtDrawBuffers2 target, UInt32 index);
+            internal extern static void DisableIndexedEXT(OpenTK.Graphics.OpenGL.IndexedEnableCap target, UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDisableVariantClientStateEXT", ExactSpelling = true)]
             internal extern static void DisableVariantClientStateEXT(UInt32 id);
@@ -1011,6 +1134,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawArraysEXT", ExactSpelling = true)]
             internal extern static void DrawArraysEXT(OpenTK.Graphics.OpenGL.BeginMode mode, Int32 first, Int32 count);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawArraysIndirect", ExactSpelling = true)]
+            internal extern static void DrawArraysIndirect(OpenTK.Graphics.OpenGL.ArbDrawIndirect mode, IntPtr indirect);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawArraysInstanced", ExactSpelling = true)]
             internal extern static void DrawArraysInstanced(OpenTK.Graphics.OpenGL.BeginMode mode, Int32 first, Int32 count, Int32 primcount);
@@ -1045,6 +1171,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElementsBaseVertex", ExactSpelling = true)]
             internal extern static void DrawElementsBaseVertex(OpenTK.Graphics.OpenGL.BeginMode mode, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 basevertex);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElementsIndirect", ExactSpelling = true)]
+            internal extern static void DrawElementsIndirect(OpenTK.Graphics.OpenGL.ArbDrawIndirect mode, OpenTK.Graphics.OpenGL.ArbDrawIndirect type, IntPtr indirect);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElementsInstanced", ExactSpelling = true)]
             internal extern static void DrawElementsInstanced(OpenTK.Graphics.OpenGL.BeginMode mode, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 primcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -1078,11 +1207,20 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawRangeElementsEXT", ExactSpelling = true)]
             internal extern static void DrawRangeElementsEXT(OpenTK.Graphics.OpenGL.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawTransformFeedback", ExactSpelling = true)]
+            internal extern static void DrawTransformFeedback(OpenTK.Graphics.OpenGL.BeginMode mode, UInt32 id);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawTransformFeedbackNV", ExactSpelling = true)]
             internal extern static void DrawTransformFeedbackNV(OpenTK.Graphics.OpenGL.NvTransformFeedback2 mode, UInt32 id);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawTransformFeedbackStream", ExactSpelling = true)]
+            internal extern static void DrawTransformFeedbackStream(OpenTK.Graphics.OpenGL.BeginMode mode, UInt32 id, UInt32 stream);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEdgeFlag", ExactSpelling = true)]
             internal extern static void EdgeFlag(bool flag);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEdgeFlagFormatNV", ExactSpelling = true)]
+            internal extern static void EdgeFlagFormatNV(Int32 stride);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEdgeFlagPointer", ExactSpelling = true)]
             internal extern static void EdgeFlagPointer(Int32 stride, IntPtr pointer);
@@ -1115,7 +1253,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void Enablei(OpenTK.Graphics.OpenGL.IndexedEnableCap target, UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEnableIndexedEXT", ExactSpelling = true)]
-            internal extern static void EnableIndexedEXT(OpenTK.Graphics.OpenGL.ExtDrawBuffers2 target, UInt32 index);
+            internal extern static void EnableIndexedEXT(OpenTK.Graphics.OpenGL.IndexedEnableCap target, UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEnableVariantClientStateEXT", ExactSpelling = true)]
             internal extern static void EnableVariantClientStateEXT(UInt32 id);
@@ -1156,6 +1294,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEndQueryARB", ExactSpelling = true)]
             internal extern static void EndQueryARB(OpenTK.Graphics.OpenGL.ArbOcclusionQuery target);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEndQueryIndexed", ExactSpelling = true)]
+            internal extern static void EndQueryIndexed(OpenTK.Graphics.OpenGL.QueryTarget target, UInt32 index);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEndTransformFeedback", ExactSpelling = true)]
             internal extern static void EndTransformFeedback();
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -1167,6 +1308,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEndVertexShaderEXT", ExactSpelling = true)]
             internal extern static void EndVertexShaderEXT();
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEndVideoCaptureNV", ExactSpelling = true)]
+            internal extern static void EndVideoCaptureNV(UInt32 video_capture_slot);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEvalCoord1d", ExactSpelling = true)]
             internal extern static void EvalCoord1d(Double u);
@@ -1249,6 +1393,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFlushMappedBufferRangeAPPLE", ExactSpelling = true)]
             internal extern static void FlushMappedBufferRangeAPPLE(OpenTK.Graphics.OpenGL.BufferTarget target, IntPtr offset, IntPtr size);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFlushMappedNamedBufferRangeEXT", ExactSpelling = true)]
+            internal extern static void FlushMappedNamedBufferRangeEXT(UInt32 buffer, IntPtr offset, IntPtr length);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFlushPixelDataRangeNV", ExactSpelling = true)]
             internal extern static void FlushPixelDataRangeNV(OpenTK.Graphics.OpenGL.NvPixelDataRange target);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -1279,6 +1426,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFogCoordfEXT", ExactSpelling = true)]
             internal extern static void FogCoordfEXT(Single coord);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFogCoordFormatNV", ExactSpelling = true)]
+            internal extern static void FogCoordFormatNV(OpenTK.Graphics.OpenGL.NvVertexBufferUnifiedMemory type, Int32 stride);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFogCoordfv", ExactSpelling = true)]
             internal extern static unsafe void FogCoordfv(Single* coord);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -1286,10 +1436,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void FogCoordfvEXT(Single* coord);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFogCoordhNV", ExactSpelling = true)]
-            internal extern static void FogCoordhNV(OpenTK.Half fog);
+            internal extern static void FogCoordhNV(Half fog);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFogCoordhvNV", ExactSpelling = true)]
-            internal extern static unsafe void FogCoordhvNV(OpenTK.Half* fog);
+            internal extern static unsafe void FogCoordhvNV(Half* fog);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFogCoordPointer", ExactSpelling = true)]
             internal extern static void FogCoordPointer(OpenTK.Graphics.OpenGL.FogPointerType type, Int32 stride, IntPtr pointer);
@@ -1396,9 +1546,6 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFramebufferTextureEXT", ExactSpelling = true)]
             internal extern static void FramebufferTextureEXT(OpenTK.Graphics.OpenGL.FramebufferTarget target, OpenTK.Graphics.OpenGL.FramebufferAttachment attachment, UInt32 texture, Int32 level);
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFramebufferTextureFace", ExactSpelling = true)]
-            internal extern static void FramebufferTextureFace(OpenTK.Graphics.OpenGL.Version32 target, OpenTK.Graphics.OpenGL.Version32 attachment, UInt32 texture, Int32 level, OpenTK.Graphics.OpenGL.Version32 face);
-            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFramebufferTextureFaceARB", ExactSpelling = true)]
             internal extern static void FramebufferTextureFaceARB(OpenTK.Graphics.OpenGL.FramebufferTarget target, OpenTK.Graphics.OpenGL.FramebufferAttachment attachment, UInt32 texture, Int32 level, OpenTK.Graphics.OpenGL.TextureTarget face);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -1468,11 +1615,17 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenLists", ExactSpelling = true)]
             internal extern static Int32 GenLists(Int32 range);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenNamesAMD", ExactSpelling = true)]
+            internal extern static unsafe void GenNamesAMD(OpenTK.Graphics.OpenGL.AmdNameGenDelete identifier, UInt32 num, [OutAttribute] UInt32* names);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenOcclusionQueriesNV", ExactSpelling = true)]
             internal extern static unsafe void GenOcclusionQueriesNV(Int32 n, [OutAttribute] UInt32* ids);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenPerfMonitorsAMD", ExactSpelling = true)]
             internal extern static unsafe void GenPerfMonitorsAMD(Int32 n, [OutAttribute] UInt32* monitors);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenProgramPipelines", ExactSpelling = true)]
+            internal extern static unsafe void GenProgramPipelines(Int32 n, [OutAttribute] UInt32* pipelines);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenProgramsARB", ExactSpelling = true)]
             internal extern static unsafe void GenProgramsARB(Int32 n, [OutAttribute] UInt32* programs);
@@ -1492,6 +1645,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenRenderbuffersEXT", ExactSpelling = true)]
             internal extern static unsafe void GenRenderbuffersEXT(Int32 n, [OutAttribute] UInt32* renderbuffers);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenSamplers", ExactSpelling = true)]
+            internal extern static unsafe void GenSamplers(Int32 count, [OutAttribute] UInt32* samplers);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenSymbolsEXT", ExactSpelling = true)]
             internal extern static Int32 GenSymbolsEXT(OpenTK.Graphics.OpenGL.ExtVertexShader datatype, OpenTK.Graphics.OpenGL.ExtVertexShader storagetype, OpenTK.Graphics.OpenGL.ExtVertexShader range, UInt32 components);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -1500,6 +1656,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenTexturesEXT", ExactSpelling = true)]
             internal extern static unsafe void GenTexturesEXT(Int32 n, [OutAttribute] UInt32* textures);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenTransformFeedbacks", ExactSpelling = true)]
+            internal extern static unsafe void GenTransformFeedbacks(Int32 n, [OutAttribute] UInt32* ids);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenTransformFeedbacksNV", ExactSpelling = true)]
             internal extern static unsafe void GenTransformFeedbacksNV(Int32 n, [OutAttribute] UInt32* ids);
@@ -1518,6 +1677,15 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetActiveAttribARB", ExactSpelling = true)]
             internal extern static unsafe void GetActiveAttribARB(UInt32 programObj, UInt32 index, Int32 maxLength, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.OpenGL.ArbVertexShader* type, [OutAttribute] StringBuilder name);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetActiveSubroutineName", ExactSpelling = true)]
+            internal extern static unsafe void GetActiveSubroutineName(UInt32 program, OpenTK.Graphics.OpenGL.ShaderType shadertype, UInt32 index, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder name);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetActiveSubroutineUniformiv", ExactSpelling = true)]
+            internal extern static unsafe void GetActiveSubroutineUniformiv(UInt32 program, OpenTK.Graphics.OpenGL.ShaderType shadertype, UInt32 index, OpenTK.Graphics.OpenGL.ActiveSubroutineUniformParameter pname, [OutAttribute] Int32* values);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetActiveSubroutineUniformName", ExactSpelling = true)]
+            internal extern static unsafe void GetActiveSubroutineUniformName(UInt32 program, OpenTK.Graphics.OpenGL.ShaderType shadertype, UInt32 index, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetActiveUniform", ExactSpelling = true)]
             internal extern static unsafe void GetActiveUniform(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.OpenGL.ActiveUniformType* type, [OutAttribute] StringBuilder name);
@@ -1575,6 +1743,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetBufferParameterivARB", ExactSpelling = true)]
             internal extern static unsafe void GetBufferParameterivARB(OpenTK.Graphics.OpenGL.ArbVertexBufferObject target, OpenTK.Graphics.OpenGL.BufferParameterNameArb pname, [OutAttribute] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetBufferParameterui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void GetBufferParameterui64vNV(OpenTK.Graphics.OpenGL.NvShaderBufferLoad target, OpenTK.Graphics.OpenGL.NvShaderBufferLoad pname, [OutAttribute] UInt64* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetBufferPointerv", ExactSpelling = true)]
             internal extern static void GetBufferPointerv(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.BufferPointer pname, [OutAttribute] IntPtr @params);
@@ -1663,8 +1834,17 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetConvolutionParameterivEXT", ExactSpelling = true)]
             internal extern static unsafe void GetConvolutionParameterivEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.ExtConvolution pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDebugMessageLogAMD", ExactSpelling = true)]
+            internal extern static unsafe Int32 GetDebugMessageLogAMD(UInt32 count, Int32 bufsize, [OutAttribute] OpenTK.Graphics.OpenGL.AmdDebugOutput* categories, [OutAttribute] UInt32* severities, [OutAttribute] UInt32* ids, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder message);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDebugMessageLogARB", ExactSpelling = true)]
+            internal extern static unsafe Int32 GetDebugMessageLogARB(UInt32 count, Int32 bufsize, [OutAttribute] OpenTK.Graphics.OpenGL.ArbDebugOutput* sources, [OutAttribute] OpenTK.Graphics.OpenGL.ArbDebugOutput* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL.ArbDebugOutput* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDetailTexFuncSGIS", ExactSpelling = true)]
             internal extern static unsafe void GetDetailTexFuncSGIS(OpenTK.Graphics.OpenGL.TextureTarget target, [OutAttribute] Single* points);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDoublei_v", ExactSpelling = true)]
+            internal extern static unsafe void GetDoublei_v(OpenTK.Graphics.OpenGL.GetIndexedPName target, UInt32 index, [OutAttribute] Double* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDoubleIndexedvEXT", ExactSpelling = true)]
             internal extern static unsafe void GetDoubleIndexedvEXT(OpenTK.Graphics.OpenGL.ExtDirectStateAccess target, UInt32 index, [OutAttribute] Double* data);
@@ -1684,6 +1864,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFinalCombinerInputParameterivNV", ExactSpelling = true)]
             internal extern static unsafe void GetFinalCombinerInputParameterivNV(OpenTK.Graphics.OpenGL.NvRegisterCombiners variable, OpenTK.Graphics.OpenGL.NvRegisterCombiners pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFloati_v", ExactSpelling = true)]
+            internal extern static unsafe void GetFloati_v(OpenTK.Graphics.OpenGL.GetIndexedPName target, UInt32 index, [OutAttribute] Single* data);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFloatIndexedvEXT", ExactSpelling = true)]
             internal extern static unsafe void GetFloatIndexedvEXT(OpenTK.Graphics.OpenGL.ExtDirectStateAccess target, UInt32 index, [OutAttribute] Single* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -1692,6 +1875,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFogFuncSGIS", ExactSpelling = true)]
             internal extern static unsafe void GetFogFuncSGIS([OutAttribute] Single* points);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFragDataIndex", ExactSpelling = true)]
+            internal extern static Int32 GetFragDataIndex(UInt32 program, String name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFragDataLocation", ExactSpelling = true)]
             internal extern static Int32 GetFragDataLocation(UInt32 program, String name);
@@ -1719,6 +1905,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFramebufferParameterivEXT", ExactSpelling = true)]
             internal extern static unsafe void GetFramebufferParameterivEXT(UInt32 framebuffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess pname, [OutAttribute] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetGraphicsResetStatusARB", ExactSpelling = true)]
+            internal extern static OpenTK.Graphics.OpenGL.ArbRobustness GetGraphicsResetStatusARB();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetHandleARB", ExactSpelling = true)]
             internal extern static Int32 GetHandleARB(OpenTK.Graphics.OpenGL.ArbShaderObjects pname);
@@ -1763,7 +1952,13 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void GetIntegeri_v(OpenTK.Graphics.OpenGL.GetIndexedPName target, UInt32 index, [OutAttribute] Int32* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetIntegerIndexedvEXT", ExactSpelling = true)]
-            internal extern static unsafe void GetIntegerIndexedvEXT(OpenTK.Graphics.OpenGL.ExtDrawBuffers2 target, UInt32 index, [OutAttribute] Int32* data);
+            internal extern static unsafe void GetIntegerIndexedvEXT(OpenTK.Graphics.OpenGL.GetIndexedPName target, UInt32 index, [OutAttribute] Int32* data);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetIntegerui64i_vNV", ExactSpelling = true)]
+            internal extern static unsafe void GetIntegerui64i_vNV(OpenTK.Graphics.OpenGL.NvVertexBufferUnifiedMemory value, UInt32 index, [OutAttribute] UInt64* result);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetIntegerui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void GetIntegerui64vNV(OpenTK.Graphics.OpenGL.NvShaderBufferLoad value, [OutAttribute] UInt64* result);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetIntegerv", ExactSpelling = true)]
             internal extern static unsafe void GetIntegerv(OpenTK.Graphics.OpenGL.GetPName pname, [OutAttribute] Int32* @params);
@@ -1891,6 +2086,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetNamedBufferParameterivEXT", ExactSpelling = true)]
             internal extern static unsafe void GetNamedBufferParameterivEXT(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetNamedBufferParameterui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void GetNamedBufferParameterui64vNV(UInt32 buffer, OpenTK.Graphics.OpenGL.NvShaderBufferLoad pname, [OutAttribute] UInt64* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetNamedBufferPointervEXT", ExactSpelling = true)]
             internal extern static void GetNamedBufferPointervEXT(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess pname, [OutAttribute] IntPtr @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -1920,6 +2118,66 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetNamedRenderbufferParameterivEXT", ExactSpelling = true)]
             internal extern static unsafe void GetNamedRenderbufferParameterivEXT(UInt32 renderbuffer, OpenTK.Graphics.OpenGL.RenderbufferParameterName pname, [OutAttribute] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetNamedStringARB", ExactSpelling = true)]
+            internal extern static unsafe void GetNamedStringARB(Int32 namelen, String name, Int32 bufSize, [OutAttribute] Int32* stringlen, [OutAttribute] StringBuilder @string);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetNamedStringivARB", ExactSpelling = true)]
+            internal extern static unsafe void GetNamedStringivARB(Int32 namelen, String name, OpenTK.Graphics.OpenGL.ArbShadingLanguageInclude pname, [OutAttribute] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnColorTableARB", ExactSpelling = true)]
+            internal extern static void GetnColorTableARB(OpenTK.Graphics.OpenGL.ArbRobustness target, OpenTK.Graphics.OpenGL.ArbRobustness format, OpenTK.Graphics.OpenGL.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr table);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnCompressedTexImageARB", ExactSpelling = true)]
+            internal extern static void GetnCompressedTexImageARB(OpenTK.Graphics.OpenGL.ArbRobustness target, Int32 lod, Int32 bufSize, [OutAttribute] IntPtr img);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnConvolutionFilterARB", ExactSpelling = true)]
+            internal extern static void GetnConvolutionFilterARB(OpenTK.Graphics.OpenGL.ArbRobustness target, OpenTK.Graphics.OpenGL.ArbRobustness format, OpenTK.Graphics.OpenGL.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr image);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnHistogramARB", ExactSpelling = true)]
+            internal extern static void GetnHistogramARB(OpenTK.Graphics.OpenGL.ArbRobustness target, bool reset, OpenTK.Graphics.OpenGL.ArbRobustness format, OpenTK.Graphics.OpenGL.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr values);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnMapdvARB", ExactSpelling = true)]
+            internal extern static unsafe void GetnMapdvARB(OpenTK.Graphics.OpenGL.ArbRobustness target, OpenTK.Graphics.OpenGL.ArbRobustness query, Int32 bufSize, [OutAttribute] Double* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnMapfvARB", ExactSpelling = true)]
+            internal extern static unsafe void GetnMapfvARB(OpenTK.Graphics.OpenGL.ArbRobustness target, OpenTK.Graphics.OpenGL.ArbRobustness query, Int32 bufSize, [OutAttribute] Single* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnMapivARB", ExactSpelling = true)]
+            internal extern static unsafe void GetnMapivARB(OpenTK.Graphics.OpenGL.ArbRobustness target, OpenTK.Graphics.OpenGL.ArbRobustness query, Int32 bufSize, [OutAttribute] Int32* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnMinmaxARB", ExactSpelling = true)]
+            internal extern static void GetnMinmaxARB(OpenTK.Graphics.OpenGL.ArbRobustness target, bool reset, OpenTK.Graphics.OpenGL.ArbRobustness format, OpenTK.Graphics.OpenGL.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr values);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnPixelMapfvARB", ExactSpelling = true)]
+            internal extern static unsafe void GetnPixelMapfvARB(OpenTK.Graphics.OpenGL.ArbRobustness map, Int32 bufSize, [OutAttribute] Single* values);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnPixelMapuivARB", ExactSpelling = true)]
+            internal extern static unsafe void GetnPixelMapuivARB(OpenTK.Graphics.OpenGL.ArbRobustness map, Int32 bufSize, [OutAttribute] UInt32* values);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnPixelMapusvARB", ExactSpelling = true)]
+            internal extern static unsafe void GetnPixelMapusvARB(OpenTK.Graphics.OpenGL.ArbRobustness map, Int32 bufSize, [OutAttribute] UInt16* values);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnPolygonStippleARB", ExactSpelling = true)]
+            internal extern static unsafe void GetnPolygonStippleARB(Int32 bufSize, [OutAttribute] Byte* pattern);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnSeparableFilterARB", ExactSpelling = true)]
+            internal extern static void GetnSeparableFilterARB(OpenTK.Graphics.OpenGL.ArbRobustness target, OpenTK.Graphics.OpenGL.ArbRobustness format, OpenTK.Graphics.OpenGL.ArbRobustness type, Int32 rowBufSize, [OutAttribute] IntPtr row, Int32 columnBufSize, [OutAttribute] IntPtr column, [OutAttribute] IntPtr span);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnTexImageARB", ExactSpelling = true)]
+            internal extern static void GetnTexImageARB(OpenTK.Graphics.OpenGL.ArbRobustness target, Int32 level, OpenTK.Graphics.OpenGL.ArbRobustness format, OpenTK.Graphics.OpenGL.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr img);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnUniformdvARB", ExactSpelling = true)]
+            internal extern static unsafe void GetnUniformdvARB(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Double* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnUniformfvARB", ExactSpelling = true)]
+            internal extern static unsafe void GetnUniformfvARB(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnUniformivARB", ExactSpelling = true)]
+            internal extern static unsafe void GetnUniformivARB(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnUniformuivARB", ExactSpelling = true)]
+            internal extern static unsafe void GetnUniformuivARB(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] UInt32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetObjectBufferfvATI", ExactSpelling = true)]
             internal extern static unsafe void GetObjectBufferfvATI(UInt32 buffer, OpenTK.Graphics.OpenGL.AtiVertexArrayObject pname, [OutAttribute] Single* @params);
@@ -1987,6 +2245,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetPolygonStipple", ExactSpelling = true)]
             internal extern static unsafe void GetPolygonStipple([OutAttribute] Byte* mask);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetProgramBinary", ExactSpelling = true)]
+            internal extern static unsafe void GetProgramBinary(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.OpenGL.BinaryFormat* binaryFormat, [OutAttribute] IntPtr binary);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetProgramEnvParameterdvARB", ExactSpelling = true)]
             internal extern static unsafe void GetProgramEnvParameterdvARB(OpenTK.Graphics.OpenGL.ArbVertexProgram target, UInt32 index, [OutAttribute] Double* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -2035,17 +2296,35 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetProgramParameterfvNV", ExactSpelling = true)]
             internal extern static unsafe void GetProgramParameterfvNV(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, UInt32 index, OpenTK.Graphics.OpenGL.AssemblyProgramParameterArb pname, [OutAttribute] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetProgramPipelineInfoLog", ExactSpelling = true)]
+            internal extern static unsafe void GetProgramPipelineInfoLog(UInt32 pipeline, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infoLog);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetProgramPipelineiv", ExactSpelling = true)]
+            internal extern static unsafe void GetProgramPipelineiv(UInt32 pipeline, OpenTK.Graphics.OpenGL.ProgramPipelineParameter pname, [OutAttribute] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetProgramStageiv", ExactSpelling = true)]
+            internal extern static unsafe void GetProgramStageiv(UInt32 program, OpenTK.Graphics.OpenGL.ShaderType shadertype, OpenTK.Graphics.OpenGL.ProgramStageParameter pname, [OutAttribute] Int32* values);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetProgramStringARB", ExactSpelling = true)]
             internal extern static void GetProgramStringARB(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, OpenTK.Graphics.OpenGL.AssemblyProgramParameterArb pname, [OutAttribute] IntPtr @string);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetProgramStringNV", ExactSpelling = true)]
             internal extern static unsafe void GetProgramStringNV(UInt32 id, OpenTK.Graphics.OpenGL.NvVertexProgram pname, [OutAttribute] Byte* program);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetProgramSubroutineParameteruivNV", ExactSpelling = true)]
+            internal extern static unsafe void GetProgramSubroutineParameteruivNV(OpenTK.Graphics.OpenGL.NvGpuProgram5 target, UInt32 index, [OutAttribute] UInt32* param);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetQueryIndexediv", ExactSpelling = true)]
+            internal extern static unsafe void GetQueryIndexediv(OpenTK.Graphics.OpenGL.QueryTarget target, UInt32 index, OpenTK.Graphics.OpenGL.GetQueryParam pname, [OutAttribute] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetQueryiv", ExactSpelling = true)]
             internal extern static unsafe void GetQueryiv(OpenTK.Graphics.OpenGL.QueryTarget target, OpenTK.Graphics.OpenGL.GetQueryParam pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetQueryivARB", ExactSpelling = true)]
             internal extern static unsafe void GetQueryivARB(OpenTK.Graphics.OpenGL.ArbOcclusionQuery target, OpenTK.Graphics.OpenGL.ArbOcclusionQuery pname, [OutAttribute] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetQueryObjecti64v", ExactSpelling = true)]
+            internal extern static unsafe void GetQueryObjecti64v(UInt32 id, OpenTK.Graphics.OpenGL.ArbTimerQuery pname, [OutAttribute] Int64* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetQueryObjecti64vEXT", ExactSpelling = true)]
             internal extern static unsafe void GetQueryObjecti64vEXT(UInt32 id, OpenTK.Graphics.OpenGL.ExtTimerQuery pname, [OutAttribute] Int64* @params);
@@ -2055,6 +2334,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetQueryObjectivARB", ExactSpelling = true)]
             internal extern static unsafe void GetQueryObjectivARB(UInt32 id, OpenTK.Graphics.OpenGL.ArbOcclusionQuery pname, [OutAttribute] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetQueryObjectui64v", ExactSpelling = true)]
+            internal extern static unsafe void GetQueryObjectui64v(UInt32 id, OpenTK.Graphics.OpenGL.ArbTimerQuery pname, [OutAttribute] UInt64* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetQueryObjectui64vEXT", ExactSpelling = true)]
             internal extern static unsafe void GetQueryObjectui64vEXT(UInt32 id, OpenTK.Graphics.OpenGL.ExtTimerQuery pname, [OutAttribute] UInt64* @params);
@@ -2071,6 +2353,18 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetRenderbufferParameterivEXT", ExactSpelling = true)]
             internal extern static unsafe void GetRenderbufferParameterivEXT(OpenTK.Graphics.OpenGL.RenderbufferTarget target, OpenTK.Graphics.OpenGL.RenderbufferParameterName pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSamplerParameterfv", ExactSpelling = true)]
+            internal extern static unsafe void GetSamplerParameterfv(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameter pname, [OutAttribute] Single* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSamplerParameterIiv", ExactSpelling = true)]
+            internal extern static unsafe void GetSamplerParameterIiv(UInt32 sampler, OpenTK.Graphics.OpenGL.ArbSamplerObjects pname, [OutAttribute] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSamplerParameterIuiv", ExactSpelling = true)]
+            internal extern static unsafe void GetSamplerParameterIuiv(UInt32 sampler, OpenTK.Graphics.OpenGL.ArbSamplerObjects pname, [OutAttribute] UInt32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSamplerParameteriv", ExactSpelling = true)]
+            internal extern static unsafe void GetSamplerParameteriv(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameter pname, [OutAttribute] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSeparableFilter", ExactSpelling = true)]
             internal extern static void GetSeparableFilter(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [OutAttribute] IntPtr column, [OutAttribute] IntPtr span);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -2082,6 +2376,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetShaderiv", ExactSpelling = true)]
             internal extern static unsafe void GetShaderiv(UInt32 shader, OpenTK.Graphics.OpenGL.ShaderParameter pname, [OutAttribute] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetShaderPrecisionFormat", ExactSpelling = true)]
+            internal extern static unsafe void GetShaderPrecisionFormat(OpenTK.Graphics.OpenGL.ShaderType shadertype, OpenTK.Graphics.OpenGL.ShaderPrecisionType precisiontype, [OutAttribute] Int32* range, [OutAttribute] Int32* precision);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetShaderSource", ExactSpelling = true)]
             internal extern static unsafe void GetShaderSource(UInt32 shader, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder source);
@@ -2097,6 +2394,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetStringi", ExactSpelling = true)]
             internal extern static System.IntPtr GetStringi(OpenTK.Graphics.OpenGL.StringName name, UInt32 index);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSubroutineIndex", ExactSpelling = true)]
+            internal extern static Int32 GetSubroutineIndex(UInt32 program, OpenTK.Graphics.OpenGL.ShaderType shadertype, String name);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSubroutineUniformLocation", ExactSpelling = true)]
+            internal extern static Int32 GetSubroutineUniformLocation(UInt32 program, OpenTK.Graphics.OpenGL.ShaderType shadertype, String name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSynciv", ExactSpelling = true)]
             internal extern static unsafe void GetSynciv(IntPtr sync, OpenTK.Graphics.OpenGL.ArbSync pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
@@ -2194,11 +2497,17 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformBufferSizeEXT", ExactSpelling = true)]
             internal extern static Int32 GetUniformBufferSizeEXT(UInt32 program, Int32 location);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformdv", ExactSpelling = true)]
+            internal extern static unsafe void GetUniformdv(UInt32 program, Int32 location, [OutAttribute] Double* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformfv", ExactSpelling = true)]
             internal extern static unsafe void GetUniformfv(UInt32 program, Int32 location, [OutAttribute] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformfvARB", ExactSpelling = true)]
             internal extern static unsafe void GetUniformfvARB(UInt32 programObj, Int32 location, [OutAttribute] Single* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformi64vNV", ExactSpelling = true)]
+            internal extern static unsafe void GetUniformi64vNV(UInt32 program, Int32 location, [OutAttribute] Int64* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformIndices", ExactSpelling = true)]
             internal extern static unsafe void GetUniformIndices(UInt32 program, Int32 uniformCount, String[] uniformNames, [OutAttribute] UInt32* uniformIndices);
@@ -2217,6 +2526,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformOffsetEXT", ExactSpelling = true)]
             internal extern static IntPtr GetUniformOffsetEXT(UInt32 program, Int32 location);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformSubroutineuiv", ExactSpelling = true)]
+            internal extern static unsafe void GetUniformSubroutineuiv(OpenTK.Graphics.OpenGL.ShaderType shadertype, Int32 location, [OutAttribute] UInt32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void GetUniformui64vNV(UInt32 program, Int32 location, [OutAttribute] UInt64* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformuiv", ExactSpelling = true)]
             internal extern static unsafe void GetUniformuiv(UInt32 program, Int32 location, [OutAttribute] UInt32* @params);
@@ -2290,6 +2605,18 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVertexAttribivNV", ExactSpelling = true)]
             internal extern static unsafe void GetVertexAttribivNV(UInt32 index, OpenTK.Graphics.OpenGL.NvVertexProgram pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVertexAttribLdv", ExactSpelling = true)]
+            internal extern static unsafe void GetVertexAttribLdv(UInt32 index, OpenTK.Graphics.OpenGL.VertexAttribParameter pname, [OutAttribute] Double* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVertexAttribLdvEXT", ExactSpelling = true)]
+            internal extern static unsafe void GetVertexAttribLdvEXT(UInt32 index, OpenTK.Graphics.OpenGL.ExtVertexAttrib64bit pname, [OutAttribute] Double* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVertexAttribLi64vNV", ExactSpelling = true)]
+            internal extern static unsafe void GetVertexAttribLi64vNV(UInt32 index, OpenTK.Graphics.OpenGL.NvVertexAttribInteger64bit pname, [OutAttribute] Int64* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVertexAttribLui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void GetVertexAttribLui64vNV(UInt32 index, OpenTK.Graphics.OpenGL.NvVertexAttribInteger64bit pname, [OutAttribute] UInt64* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVertexAttribPointerv", ExactSpelling = true)]
             internal extern static void GetVertexAttribPointerv(UInt32 index, OpenTK.Graphics.OpenGL.VertexAttribPointerParameter pname, [OutAttribute] IntPtr pointer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -2298,6 +2625,18 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVertexAttribPointervNV", ExactSpelling = true)]
             internal extern static void GetVertexAttribPointervNV(UInt32 index, OpenTK.Graphics.OpenGL.NvVertexProgram pname, [OutAttribute] IntPtr pointer);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVideoCaptureivNV", ExactSpelling = true)]
+            internal extern static unsafe void GetVideoCaptureivNV(UInt32 video_capture_slot, OpenTK.Graphics.OpenGL.NvVideoCapture pname, [OutAttribute] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVideoCaptureStreamdvNV", ExactSpelling = true)]
+            internal extern static unsafe void GetVideoCaptureStreamdvNV(UInt32 video_capture_slot, UInt32 stream, OpenTK.Graphics.OpenGL.NvVideoCapture pname, [OutAttribute] Double* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVideoCaptureStreamfvNV", ExactSpelling = true)]
+            internal extern static unsafe void GetVideoCaptureStreamfvNV(UInt32 video_capture_slot, UInt32 stream, OpenTK.Graphics.OpenGL.NvVideoCapture pname, [OutAttribute] Single* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVideoCaptureStreamivNV", ExactSpelling = true)]
+            internal extern static unsafe void GetVideoCaptureStreamivNV(UInt32 video_capture_slot, UInt32 stream, OpenTK.Graphics.OpenGL.NvVideoCapture pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVideoi64vNV", ExactSpelling = true)]
             internal extern static unsafe void GetVideoi64vNV(UInt32 video_slot, OpenTK.Graphics.OpenGL.NvPresentVideo pname, [OutAttribute] Int64* @params);
@@ -2371,6 +2710,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIndexf", ExactSpelling = true)]
             internal extern static void Indexf(Single c);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIndexFormatNV", ExactSpelling = true)]
+            internal extern static void IndexFormatNV(OpenTK.Graphics.OpenGL.NvVertexBufferUnifiedMemory type, Int32 stride);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIndexFuncEXT", ExactSpelling = true)]
             internal extern static void IndexFuncEXT(OpenTK.Graphics.OpenGL.ExtIndexFunc func, Single @ref);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -2431,6 +2773,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsBufferARB", ExactSpelling = true)]
             internal extern static bool IsBufferARB(UInt32 buffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsBufferResidentNV", ExactSpelling = true)]
+            internal extern static bool IsBufferResidentNV(OpenTK.Graphics.OpenGL.NvShaderBufferLoad target);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsEnabled", ExactSpelling = true)]
             internal extern static bool IsEnabled(OpenTK.Graphics.OpenGL.EnableCap cap);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -2438,7 +2783,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static bool IsEnabledi(OpenTK.Graphics.OpenGL.IndexedEnableCap target, UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsEnabledIndexedEXT", ExactSpelling = true)]
-            internal extern static bool IsEnabledIndexedEXT(OpenTK.Graphics.OpenGL.ExtDrawBuffers2 target, UInt32 index);
+            internal extern static bool IsEnabledIndexedEXT(OpenTK.Graphics.OpenGL.IndexedEnableCap target, UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsFenceAPPLE", ExactSpelling = true)]
             internal extern static bool IsFenceAPPLE(UInt32 fence);
@@ -2455,6 +2800,15 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsList", ExactSpelling = true)]
             internal extern static bool IsList(UInt32 list);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsNameAMD", ExactSpelling = true)]
+            internal extern static bool IsNameAMD(OpenTK.Graphics.OpenGL.AmdNameGenDelete identifier, UInt32 name);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsNamedBufferResidentNV", ExactSpelling = true)]
+            internal extern static bool IsNamedBufferResidentNV(UInt32 buffer);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsNamedStringARB", ExactSpelling = true)]
+            internal extern static bool IsNamedStringARB(Int32 namelen, String name);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsObjectBufferATI", ExactSpelling = true)]
             internal extern static bool IsObjectBufferATI(UInt32 buffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -2470,6 +2824,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsProgramNV", ExactSpelling = true)]
             internal extern static bool IsProgramNV(UInt32 id);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsProgramPipeline", ExactSpelling = true)]
+            internal extern static bool IsProgramPipeline(UInt32 pipeline);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsQuery", ExactSpelling = true)]
             internal extern static bool IsQuery(UInt32 id);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -2482,6 +2839,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsRenderbufferEXT", ExactSpelling = true)]
             internal extern static bool IsRenderbufferEXT(UInt32 renderbuffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsSampler", ExactSpelling = true)]
+            internal extern static bool IsSampler(UInt32 sampler);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsShader", ExactSpelling = true)]
             internal extern static bool IsShader(UInt32 shader);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -2493,6 +2853,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsTextureEXT", ExactSpelling = true)]
             internal extern static bool IsTextureEXT(UInt32 texture);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsTransformFeedback", ExactSpelling = true)]
+            internal extern static bool IsTransformFeedback(UInt32 id);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsTransformFeedbackNV", ExactSpelling = true)]
             internal extern static bool IsTransformFeedbackNV(UInt32 id);
@@ -2599,6 +2962,18 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glLogicOp", ExactSpelling = true)]
             internal extern static void LogicOp(OpenTK.Graphics.OpenGL.LogicOp opcode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMakeBufferNonResidentNV", ExactSpelling = true)]
+            internal extern static void MakeBufferNonResidentNV(OpenTK.Graphics.OpenGL.NvShaderBufferLoad target);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMakeBufferResidentNV", ExactSpelling = true)]
+            internal extern static void MakeBufferResidentNV(OpenTK.Graphics.OpenGL.NvShaderBufferLoad target, OpenTK.Graphics.OpenGL.NvShaderBufferLoad access);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMakeNamedBufferNonResidentNV", ExactSpelling = true)]
+            internal extern static void MakeNamedBufferNonResidentNV(UInt32 buffer);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMakeNamedBufferResidentNV", ExactSpelling = true)]
+            internal extern static void MakeNamedBufferResidentNV(UInt32 buffer, OpenTK.Graphics.OpenGL.NvShaderBufferLoad access);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMap1d", ExactSpelling = true)]
             internal extern static unsafe void Map1d(OpenTK.Graphics.OpenGL.MapTarget target, Double u1, Double u2, Int32 stride, Int32 order, Double* points);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -2637,6 +3012,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMapNamedBufferEXT", ExactSpelling = true)]
             internal extern static unsafe System.IntPtr MapNamedBufferEXT(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess access);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMapNamedBufferRangeEXT", ExactSpelling = true)]
+            internal extern static unsafe System.IntPtr MapNamedBufferRangeEXT(UInt32 buffer, IntPtr offset, IntPtr length, OpenTK.Graphics.OpenGL.BufferAccessMask access);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMapObjectBufferATI", ExactSpelling = true)]
             internal extern static unsafe System.IntPtr MapObjectBufferATI(UInt32 buffer);
@@ -2743,6 +3121,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMatrixTranslatefEXT", ExactSpelling = true)]
             internal extern static void MatrixTranslatefEXT(OpenTK.Graphics.OpenGL.MatrixMode mode, Single x, Single y, Single z);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMemoryBarrierEXT", ExactSpelling = true)]
+            internal extern static void MemoryBarrierEXT(UInt32 barriers);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMinmax", ExactSpelling = true)]
             internal extern static void Minmax(OpenTK.Graphics.OpenGL.MinmaxTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, bool sink);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -2752,11 +3133,14 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMinSampleShading", ExactSpelling = true)]
             internal extern static void MinSampleShading(Single value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMinSampleShadingARB", ExactSpelling = true)]
+            internal extern static void MinSampleShadingARB(Single value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawArrays", ExactSpelling = true)]
-            internal extern static unsafe void MultiDrawArrays(OpenTK.Graphics.OpenGL.BeginMode mode, [OutAttribute] Int32* first, [OutAttribute] Int32* count, Int32 primcount);
+            internal extern static unsafe void MultiDrawArrays(OpenTK.Graphics.OpenGL.BeginMode mode, Int32* first, Int32* count, Int32 primcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawArraysEXT", ExactSpelling = true)]
-            internal extern static unsafe void MultiDrawArraysEXT(OpenTK.Graphics.OpenGL.BeginMode mode, [OutAttribute] Int32* first, [OutAttribute] Int32* count, Int32 primcount);
+            internal extern static unsafe void MultiDrawArraysEXT(OpenTK.Graphics.OpenGL.BeginMode mode, Int32* first, Int32* count, Int32 primcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawElementArrayAPPLE", ExactSpelling = true)]
             internal extern static unsafe void MultiDrawElementArrayAPPLE(OpenTK.Graphics.OpenGL.BeginMode mode, Int32* first, Int32* count, Int32 primcount);
@@ -2807,10 +3191,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void MultiTexCoord1fvARB(OpenTK.Graphics.OpenGL.TextureUnit target, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord1hNV", ExactSpelling = true)]
-            internal extern static void MultiTexCoord1hNV(OpenTK.Graphics.OpenGL.TextureUnit target, OpenTK.Half s);
+            internal extern static void MultiTexCoord1hNV(OpenTK.Graphics.OpenGL.TextureUnit target, Half s);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord1hvNV", ExactSpelling = true)]
-            internal extern static unsafe void MultiTexCoord1hvNV(OpenTK.Graphics.OpenGL.TextureUnit target, OpenTK.Half* v);
+            internal extern static unsafe void MultiTexCoord1hvNV(OpenTK.Graphics.OpenGL.TextureUnit target, Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord1i", ExactSpelling = true)]
             internal extern static void MultiTexCoord1i(OpenTK.Graphics.OpenGL.TextureUnit target, Int32 s);
@@ -2861,10 +3245,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void MultiTexCoord2fvARB(OpenTK.Graphics.OpenGL.TextureUnit target, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord2hNV", ExactSpelling = true)]
-            internal extern static void MultiTexCoord2hNV(OpenTK.Graphics.OpenGL.TextureUnit target, OpenTK.Half s, OpenTK.Half t);
+            internal extern static void MultiTexCoord2hNV(OpenTK.Graphics.OpenGL.TextureUnit target, Half s, Half t);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord2hvNV", ExactSpelling = true)]
-            internal extern static unsafe void MultiTexCoord2hvNV(OpenTK.Graphics.OpenGL.TextureUnit target, OpenTK.Half* v);
+            internal extern static unsafe void MultiTexCoord2hvNV(OpenTK.Graphics.OpenGL.TextureUnit target, Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord2i", ExactSpelling = true)]
             internal extern static void MultiTexCoord2i(OpenTK.Graphics.OpenGL.TextureUnit target, Int32 s, Int32 t);
@@ -2915,10 +3299,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void MultiTexCoord3fvARB(OpenTK.Graphics.OpenGL.TextureUnit target, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord3hNV", ExactSpelling = true)]
-            internal extern static void MultiTexCoord3hNV(OpenTK.Graphics.OpenGL.TextureUnit target, OpenTK.Half s, OpenTK.Half t, OpenTK.Half r);
+            internal extern static void MultiTexCoord3hNV(OpenTK.Graphics.OpenGL.TextureUnit target, Half s, Half t, Half r);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord3hvNV", ExactSpelling = true)]
-            internal extern static unsafe void MultiTexCoord3hvNV(OpenTK.Graphics.OpenGL.TextureUnit target, OpenTK.Half* v);
+            internal extern static unsafe void MultiTexCoord3hvNV(OpenTK.Graphics.OpenGL.TextureUnit target, Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord3i", ExactSpelling = true)]
             internal extern static void MultiTexCoord3i(OpenTK.Graphics.OpenGL.TextureUnit target, Int32 s, Int32 t, Int32 r);
@@ -2969,10 +3353,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void MultiTexCoord4fvARB(OpenTK.Graphics.OpenGL.TextureUnit target, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord4hNV", ExactSpelling = true)]
-            internal extern static void MultiTexCoord4hNV(OpenTK.Graphics.OpenGL.TextureUnit target, OpenTK.Half s, OpenTK.Half t, OpenTK.Half r, OpenTK.Half q);
+            internal extern static void MultiTexCoord4hNV(OpenTK.Graphics.OpenGL.TextureUnit target, Half s, Half t, Half r, Half q);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord4hvNV", ExactSpelling = true)]
-            internal extern static unsafe void MultiTexCoord4hvNV(OpenTK.Graphics.OpenGL.TextureUnit target, OpenTK.Half* v);
+            internal extern static unsafe void MultiTexCoord4hvNV(OpenTK.Graphics.OpenGL.TextureUnit target, Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord4i", ExactSpelling = true)]
             internal extern static void MultiTexCoord4i(OpenTK.Graphics.OpenGL.TextureUnit target, Int32 s, Int32 t, Int32 r, Int32 q);
@@ -2997,6 +3381,30 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord4svARB", ExactSpelling = true)]
             internal extern static unsafe void MultiTexCoord4svARB(OpenTK.Graphics.OpenGL.TextureUnit target, Int16* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoordP1ui", ExactSpelling = true)]
+            internal extern static void MultiTexCoordP1ui(OpenTK.Graphics.OpenGL.TextureUnit texture, OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoordP1uiv", ExactSpelling = true)]
+            internal extern static unsafe void MultiTexCoordP1uiv(OpenTK.Graphics.OpenGL.TextureUnit texture, OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoordP2ui", ExactSpelling = true)]
+            internal extern static void MultiTexCoordP2ui(OpenTK.Graphics.OpenGL.TextureUnit texture, OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoordP2uiv", ExactSpelling = true)]
+            internal extern static unsafe void MultiTexCoordP2uiv(OpenTK.Graphics.OpenGL.TextureUnit texture, OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoordP3ui", ExactSpelling = true)]
+            internal extern static void MultiTexCoordP3ui(OpenTK.Graphics.OpenGL.TextureUnit texture, OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoordP3uiv", ExactSpelling = true)]
+            internal extern static unsafe void MultiTexCoordP3uiv(OpenTK.Graphics.OpenGL.TextureUnit texture, OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoordP4ui", ExactSpelling = true)]
+            internal extern static void MultiTexCoordP4ui(OpenTK.Graphics.OpenGL.TextureUnit texture, OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoordP4uiv", ExactSpelling = true)]
+            internal extern static unsafe void MultiTexCoordP4uiv(OpenTK.Graphics.OpenGL.TextureUnit texture, OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoordPointerEXT", ExactSpelling = true)]
             internal extern static void MultiTexCoordPointerEXT(OpenTK.Graphics.OpenGL.TextureUnit texunit, Int32 size, OpenTK.Graphics.OpenGL.TexCoordPointerType type, Int32 stride, IntPtr pointer);
@@ -3094,6 +3502,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNamedBufferSubDataEXT", ExactSpelling = true)]
             internal extern static void NamedBufferSubDataEXT(UInt32 buffer, IntPtr offset, IntPtr size, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNamedCopyBufferSubDataEXT", ExactSpelling = true)]
+            internal extern static void NamedCopyBufferSubDataEXT(UInt32 readBuffer, UInt32 writeBuffer, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNamedFramebufferRenderbufferEXT", ExactSpelling = true)]
             internal extern static void NamedFramebufferRenderbufferEXT(UInt32 framebuffer, OpenTK.Graphics.OpenGL.FramebufferAttachment attachment, OpenTK.Graphics.OpenGL.RenderbufferTarget renderbuffertarget, UInt32 renderbuffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -3160,6 +3571,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNamedRenderbufferStorageMultisampleEXT", ExactSpelling = true)]
             internal extern static void NamedRenderbufferStorageMultisampleEXT(UInt32 renderbuffer, Int32 samples, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNamedStringARB", ExactSpelling = true)]
+            internal extern static void NamedStringARB(OpenTK.Graphics.OpenGL.ArbShadingLanguageInclude type, Int32 namelen, String name, Int32 stringlen, String @string);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNewList", ExactSpelling = true)]
             internal extern static void NewList(UInt32 list, OpenTK.Graphics.OpenGL.ListMode mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -3191,10 +3605,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void Normal3fVertex3fvSUN(Single* n, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNormal3hNV", ExactSpelling = true)]
-            internal extern static void Normal3hNV(OpenTK.Half nx, OpenTK.Half ny, OpenTK.Half nz);
+            internal extern static void Normal3hNV(Half nx, Half ny, Half nz);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNormal3hvNV", ExactSpelling = true)]
-            internal extern static unsafe void Normal3hvNV(OpenTK.Half* v);
+            internal extern static unsafe void Normal3hvNV(Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNormal3i", ExactSpelling = true)]
             internal extern static void Normal3i(Int32 nx, Int32 ny, Int32 nz);
@@ -3207,6 +3621,15 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNormal3sv", ExactSpelling = true)]
             internal extern static unsafe void Normal3sv(Int16* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNormalFormatNV", ExactSpelling = true)]
+            internal extern static void NormalFormatNV(OpenTK.Graphics.OpenGL.NvVertexBufferUnifiedMemory type, Int32 stride);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNormalP3ui", ExactSpelling = true)]
+            internal extern static void NormalP3ui(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNormalP3uiv", ExactSpelling = true)]
+            internal extern static unsafe void NormalP3uiv(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNormalPointer", ExactSpelling = true)]
             internal extern static void NormalPointer(OpenTK.Graphics.OpenGL.NormalPointerType type, Int32 stride, IntPtr pointer);
@@ -3251,10 +3674,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void NormalStream3svATI(OpenTK.Graphics.OpenGL.AtiVertexStreams stream, Int16* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glObjectPurgeableAPPLE", ExactSpelling = true)]
-            internal extern static System.IntPtr ObjectPurgeableAPPLE(OpenTK.Graphics.OpenGL.AppleObjectPurgeable objectType, UInt32 name, OpenTK.Graphics.OpenGL.AppleObjectPurgeable option);
+            internal extern static OpenTK.Graphics.OpenGL.AppleObjectPurgeable ObjectPurgeableAPPLE(OpenTK.Graphics.OpenGL.AppleObjectPurgeable objectType, UInt32 name, OpenTK.Graphics.OpenGL.AppleObjectPurgeable option);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glObjectUnpurgeableAPPLE", ExactSpelling = true)]
-            internal extern static System.IntPtr ObjectUnpurgeableAPPLE(OpenTK.Graphics.OpenGL.AppleObjectPurgeable objectType, UInt32 name, OpenTK.Graphics.OpenGL.AppleObjectPurgeable option);
+            internal extern static OpenTK.Graphics.OpenGL.AppleObjectPurgeable ObjectUnpurgeableAPPLE(OpenTK.Graphics.OpenGL.AppleObjectPurgeable objectType, UInt32 name, OpenTK.Graphics.OpenGL.AppleObjectPurgeable option);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glOrtho", ExactSpelling = true)]
             internal extern static void Ortho(Double left, Double right, Double bottom, Double top, Double zNear, Double zFar);
@@ -3264,6 +3687,15 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPassThrough", ExactSpelling = true)]
             internal extern static void PassThrough(Single token);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPatchParameterfv", ExactSpelling = true)]
+            internal extern static unsafe void PatchParameterfv(OpenTK.Graphics.OpenGL.PatchParameterFloat pname, Single* values);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPatchParameteri", ExactSpelling = true)]
+            internal extern static void PatchParameteri(OpenTK.Graphics.OpenGL.PatchParameterInt pname, Int32 value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPauseTransformFeedback", ExactSpelling = true)]
+            internal extern static void PauseTransformFeedback();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPauseTransformFeedbackNV", ExactSpelling = true)]
             internal extern static void PauseTransformFeedbackNV();
@@ -3418,6 +3850,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPrioritizeTexturesEXT", ExactSpelling = true)]
             internal extern static unsafe void PrioritizeTexturesEXT(Int32 n, UInt32* textures, Single* priorities);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramBinary", ExactSpelling = true)]
+            internal extern static void ProgramBinary(UInt32 program, OpenTK.Graphics.OpenGL.BinaryFormat binaryFormat, IntPtr binary, Int32 length);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramBufferParametersfvNV", ExactSpelling = true)]
             internal extern static unsafe void ProgramBufferParametersfvNV(OpenTK.Graphics.OpenGL.NvParameterBufferObject target, UInt32 buffer, UInt32 index, Int32 count, Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -3518,121 +3953,379 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void ProgramParameter4fvNV(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, UInt32 index, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramParameteri", ExactSpelling = true)]
-            internal extern static void ProgramParameteri(UInt32 program, OpenTK.Graphics.OpenGL.Version32 pname, Int32 value);
+            internal extern static void ProgramParameteri(UInt32 program, OpenTK.Graphics.OpenGL.AssemblyProgramParameterArb pname, Int32 value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramParameteriARB", ExactSpelling = true)]
-            internal extern static void ProgramParameteriARB(UInt32 program, OpenTK.Graphics.OpenGL.ArbGeometryShader4 pname, Int32 value);
+            internal extern static void ProgramParameteriARB(UInt32 program, OpenTK.Graphics.OpenGL.AssemblyProgramParameterArb pname, Int32 value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramParameteriEXT", ExactSpelling = true)]
-            internal extern static void ProgramParameteriEXT(UInt32 program, OpenTK.Graphics.OpenGL.ExtGeometryShader4 pname, Int32 value);
+            internal extern static void ProgramParameteriEXT(UInt32 program, OpenTK.Graphics.OpenGL.AssemblyProgramParameterArb pname, Int32 value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramParameters4dvNV", ExactSpelling = true)]
-            internal extern static unsafe void ProgramParameters4dvNV(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, UInt32 index, UInt32 count, Double* v);
+            internal extern static unsafe void ProgramParameters4dvNV(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, UInt32 index, Int32 count, Double* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramParameters4fvNV", ExactSpelling = true)]
-            internal extern static unsafe void ProgramParameters4fvNV(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, UInt32 index, UInt32 count, Single* v);
+            internal extern static unsafe void ProgramParameters4fvNV(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, UInt32 index, Int32 count, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramStringARB", ExactSpelling = true)]
             internal extern static void ProgramStringARB(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, OpenTK.Graphics.OpenGL.ArbVertexProgram format, Int32 len, IntPtr @string);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramSubroutineParametersuivNV", ExactSpelling = true)]
+            internal extern static unsafe void ProgramSubroutineParametersuivNV(OpenTK.Graphics.OpenGL.NvGpuProgram5 target, Int32 count, UInt32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1d", ExactSpelling = true)]
+            internal extern static void ProgramUniform1d(UInt32 program, Int32 location, Double v0);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1dEXT", ExactSpelling = true)]
+            internal extern static void ProgramUniform1dEXT(UInt32 program, Int32 location, Double x);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1dv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform1dv(UInt32 program, Int32 location, Int32 count, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform1dvEXT(UInt32 program, Int32 location, Int32 count, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1f", ExactSpelling = true)]
+            internal extern static void ProgramUniform1f(UInt32 program, Int32 location, Single v0);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1fEXT", ExactSpelling = true)]
             internal extern static void ProgramUniform1fEXT(UInt32 program, Int32 location, Single v0);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1fv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform1fv(UInt32 program, Int32 location, Int32 count, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1fvEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniform1fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1i", ExactSpelling = true)]
+            internal extern static void ProgramUniform1i(UInt32 program, Int32 location, Int32 v0);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1i64NV", ExactSpelling = true)]
+            internal extern static void ProgramUniform1i64NV(UInt32 program, Int32 location, Int64 x);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1i64vNV", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform1i64vNV(UInt32 program, Int32 location, Int32 count, Int64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1iEXT", ExactSpelling = true)]
             internal extern static void ProgramUniform1iEXT(UInt32 program, Int32 location, Int32 v0);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1iv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform1iv(UInt32 program, Int32 location, Int32 count, Int32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1ivEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniform1ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1ui", ExactSpelling = true)]
+            internal extern static void ProgramUniform1ui(UInt32 program, Int32 location, UInt32 v0);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1ui64NV", ExactSpelling = true)]
+            internal extern static void ProgramUniform1ui64NV(UInt32 program, Int32 location, UInt64 x);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1ui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform1ui64vNV(UInt32 program, Int32 location, Int32 count, UInt64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1uiEXT", ExactSpelling = true)]
             internal extern static void ProgramUniform1uiEXT(UInt32 program, Int32 location, UInt32 v0);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1uiv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform1uiv(UInt32 program, Int32 location, Int32 count, UInt32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform1uivEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniform1uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2d", ExactSpelling = true)]
+            internal extern static void ProgramUniform2d(UInt32 program, Int32 location, Double v0, Double v1);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2dEXT", ExactSpelling = true)]
+            internal extern static void ProgramUniform2dEXT(UInt32 program, Int32 location, Double x, Double y);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2dv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform2dv(UInt32 program, Int32 location, Int32 count, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform2dvEXT(UInt32 program, Int32 location, Int32 count, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2f", ExactSpelling = true)]
+            internal extern static void ProgramUniform2f(UInt32 program, Int32 location, Single v0, Single v1);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2fEXT", ExactSpelling = true)]
             internal extern static void ProgramUniform2fEXT(UInt32 program, Int32 location, Single v0, Single v1);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2fv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform2fv(UInt32 program, Int32 location, Int32 count, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2fvEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniform2fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2i", ExactSpelling = true)]
+            internal extern static void ProgramUniform2i(UInt32 program, Int32 location, Int32 v0, Int32 v1);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2i64NV", ExactSpelling = true)]
+            internal extern static void ProgramUniform2i64NV(UInt32 program, Int32 location, Int64 x, Int64 y);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2i64vNV", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform2i64vNV(UInt32 program, Int32 location, Int32 count, Int64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2iEXT", ExactSpelling = true)]
             internal extern static void ProgramUniform2iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2iv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform2iv(UInt32 program, Int32 location, Int32 count, Int32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2ivEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniform2ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2ui", ExactSpelling = true)]
+            internal extern static void ProgramUniform2ui(UInt32 program, Int32 location, UInt32 v0, UInt32 v1);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2ui64NV", ExactSpelling = true)]
+            internal extern static void ProgramUniform2ui64NV(UInt32 program, Int32 location, UInt64 x, UInt64 y);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2ui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform2ui64vNV(UInt32 program, Int32 location, Int32 count, UInt64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2uiEXT", ExactSpelling = true)]
             internal extern static void ProgramUniform2uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2uiv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform2uiv(UInt32 program, Int32 location, Int32 count, UInt32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform2uivEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniform2uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3d", ExactSpelling = true)]
+            internal extern static void ProgramUniform3d(UInt32 program, Int32 location, Double v0, Double v1, Double v2);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3dEXT", ExactSpelling = true)]
+            internal extern static void ProgramUniform3dEXT(UInt32 program, Int32 location, Double x, Double y, Double z);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3dv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform3dv(UInt32 program, Int32 location, Int32 count, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform3dvEXT(UInt32 program, Int32 location, Int32 count, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3f", ExactSpelling = true)]
+            internal extern static void ProgramUniform3f(UInt32 program, Int32 location, Single v0, Single v1, Single v2);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3fEXT", ExactSpelling = true)]
             internal extern static void ProgramUniform3fEXT(UInt32 program, Int32 location, Single v0, Single v1, Single v2);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3fv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform3fv(UInt32 program, Int32 location, Int32 count, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3fvEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniform3fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3i", ExactSpelling = true)]
+            internal extern static void ProgramUniform3i(UInt32 program, Int32 location, Int32 v0, Int32 v1, Int32 v2);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3i64NV", ExactSpelling = true)]
+            internal extern static void ProgramUniform3i64NV(UInt32 program, Int32 location, Int64 x, Int64 y, Int64 z);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3i64vNV", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform3i64vNV(UInt32 program, Int32 location, Int32 count, Int64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3iEXT", ExactSpelling = true)]
             internal extern static void ProgramUniform3iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1, Int32 v2);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3iv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform3iv(UInt32 program, Int32 location, Int32 count, Int32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3ivEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniform3ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3ui", ExactSpelling = true)]
+            internal extern static void ProgramUniform3ui(UInt32 program, Int32 location, UInt32 v0, UInt32 v1, UInt32 v2);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3ui64NV", ExactSpelling = true)]
+            internal extern static void ProgramUniform3ui64NV(UInt32 program, Int32 location, UInt64 x, UInt64 y, UInt64 z);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3ui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform3ui64vNV(UInt32 program, Int32 location, Int32 count, UInt64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3uiEXT", ExactSpelling = true)]
             internal extern static void ProgramUniform3uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1, UInt32 v2);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3uiv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform3uiv(UInt32 program, Int32 location, Int32 count, UInt32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform3uivEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniform3uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4d", ExactSpelling = true)]
+            internal extern static void ProgramUniform4d(UInt32 program, Int32 location, Double v0, Double v1, Double v2, Double v3);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4dEXT", ExactSpelling = true)]
+            internal extern static void ProgramUniform4dEXT(UInt32 program, Int32 location, Double x, Double y, Double z, Double w);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4dv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform4dv(UInt32 program, Int32 location, Int32 count, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform4dvEXT(UInt32 program, Int32 location, Int32 count, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4f", ExactSpelling = true)]
+            internal extern static void ProgramUniform4f(UInt32 program, Int32 location, Single v0, Single v1, Single v2, Single v3);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4fEXT", ExactSpelling = true)]
             internal extern static void ProgramUniform4fEXT(UInt32 program, Int32 location, Single v0, Single v1, Single v2, Single v3);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4fv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform4fv(UInt32 program, Int32 location, Int32 count, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4fvEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniform4fvEXT(UInt32 program, Int32 location, Int32 count, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4i", ExactSpelling = true)]
+            internal extern static void ProgramUniform4i(UInt32 program, Int32 location, Int32 v0, Int32 v1, Int32 v2, Int32 v3);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4i64NV", ExactSpelling = true)]
+            internal extern static void ProgramUniform4i64NV(UInt32 program, Int32 location, Int64 x, Int64 y, Int64 z, Int64 w);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4i64vNV", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform4i64vNV(UInt32 program, Int32 location, Int32 count, Int64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4iEXT", ExactSpelling = true)]
             internal extern static void ProgramUniform4iEXT(UInt32 program, Int32 location, Int32 v0, Int32 v1, Int32 v2, Int32 v3);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4iv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform4iv(UInt32 program, Int32 location, Int32 count, Int32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4ivEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniform4ivEXT(UInt32 program, Int32 location, Int32 count, Int32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4ui", ExactSpelling = true)]
+            internal extern static void ProgramUniform4ui(UInt32 program, Int32 location, UInt32 v0, UInt32 v1, UInt32 v2, UInt32 v3);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4ui64NV", ExactSpelling = true)]
+            internal extern static void ProgramUniform4ui64NV(UInt32 program, Int32 location, UInt64 x, UInt64 y, UInt64 z, UInt64 w);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4ui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform4ui64vNV(UInt32 program, Int32 location, Int32 count, UInt64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4uiEXT", ExactSpelling = true)]
             internal extern static void ProgramUniform4uiEXT(UInt32 program, Int32 location, UInt32 v0, UInt32 v1, UInt32 v2, UInt32 v3);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4uiv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniform4uiv(UInt32 program, Int32 location, Int32 count, UInt32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniform4uivEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniform4uivEXT(UInt32 program, Int32 location, Int32 count, UInt32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix2dv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix2dv(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix2dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix2dvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix2fv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix2fv(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix2fvEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniformMatrix2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix2x3dv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix2x3dv(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix2x3dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix2x3dvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix2x3fv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix2x3fv(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix2x3fvEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniformMatrix2x3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix2x4dv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix2x4dv(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix2x4dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix2x4dvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix2x4fv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix2x4fv(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix2x4fvEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniformMatrix2x4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix3dv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix3dv(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix3dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix3dvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix3fv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix3fv(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix3fvEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniformMatrix3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix3x2dv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix3x2dv(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix3x2dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix3x2dvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix3x2fv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix3x2fv(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix3x2fvEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniformMatrix3x2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix3x4dv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix3x4dv(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix3x4dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix3x4dvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix3x4fv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix3x4fv(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix3x4fvEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniformMatrix3x4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix4dv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix4dv(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix4dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix4dvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix4fv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix4fv(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix4fvEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniformMatrix4fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix4x2dv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix4x2dv(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix4x2dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix4x2dvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix4x2fv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix4x2fv(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix4x2fvEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniformMatrix4x2fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix4x3dv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix4x3dv(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix4x3dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix4x3dvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix4x3fv", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformMatrix4x3fv(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformMatrix4x3fvEXT", ExactSpelling = true)]
             internal extern static unsafe void ProgramUniformMatrix4x3fvEXT(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformui64NV", ExactSpelling = true)]
+            internal extern static void ProgramUniformui64NV(UInt32 program, Int32 location, UInt64 value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramUniformui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void ProgramUniformui64vNV(UInt32 program, Int32 location, Int32 count, UInt64* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramVertexLimitNV", ExactSpelling = true)]
             internal extern static void ProgramVertexLimitNV(OpenTK.Graphics.OpenGL.NvGeometryProgram4 target, Int32 limit);
@@ -3657,6 +4350,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPushName", ExactSpelling = true)]
             internal extern static void PushName(UInt32 name);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glQueryCounter", ExactSpelling = true)]
+            internal extern static void QueryCounter(UInt32 id, OpenTK.Graphics.OpenGL.QueryCounterTarget target);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glRasterPos2d", ExactSpelling = true)]
             internal extern static void RasterPos2d(Double x, Double y);
@@ -3736,6 +4432,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glReadInstrumentsSGIX", ExactSpelling = true)]
             internal extern static void ReadInstrumentsSGIX(Int32 marker);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glReadnPixelsARB", ExactSpelling = true)]
+            internal extern static void ReadnPixelsARB(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.ArbRobustness format, OpenTK.Graphics.OpenGL.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr data);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glReadPixels", ExactSpelling = true)]
             internal extern static void ReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -3765,6 +4464,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glReferencePlaneSGIX", ExactSpelling = true)]
             internal extern static unsafe void ReferencePlaneSGIX(Double* equation);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glReleaseShaderCompiler", ExactSpelling = true)]
+            internal extern static void ReleaseShaderCompiler();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glRenderbufferStorage", ExactSpelling = true)]
             internal extern static void RenderbufferStorage(OpenTK.Graphics.OpenGL.RenderbufferTarget target, OpenTK.Graphics.OpenGL.RenderbufferStorage internalformat, Int32 width, Int32 height);
@@ -3871,6 +4573,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glResizeBuffersMESA", CharSet = CharSet.Auto)]
             internal extern static void ResizeBuffersMESA();
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glResumeTransformFeedback", ExactSpelling = true)]
+            internal extern static void ResumeTransformFeedback();
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glResumeTransformFeedbackNV", ExactSpelling = true)]
             internal extern static void ResumeTransformFeedbackNV();
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -3907,6 +4612,24 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSamplePatternSGIS", ExactSpelling = true)]
             internal extern static void SamplePatternSGIS(OpenTK.Graphics.OpenGL.SgisMultisample pattern);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSamplerParameterf", ExactSpelling = true)]
+            internal extern static void SamplerParameterf(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameter pname, Single param);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSamplerParameterfv", ExactSpelling = true)]
+            internal extern static unsafe void SamplerParameterfv(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameter pname, Single* param);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSamplerParameteri", ExactSpelling = true)]
+            internal extern static void SamplerParameteri(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameter pname, Int32 param);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSamplerParameterIiv", ExactSpelling = true)]
+            internal extern static unsafe void SamplerParameterIiv(UInt32 sampler, OpenTK.Graphics.OpenGL.ArbSamplerObjects pname, Int32* param);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSamplerParameterIuiv", ExactSpelling = true)]
+            internal extern static unsafe void SamplerParameterIuiv(UInt32 sampler, OpenTK.Graphics.OpenGL.ArbSamplerObjects pname, UInt32* param);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSamplerParameteriv", ExactSpelling = true)]
+            internal extern static unsafe void SamplerParameteriv(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameter pname, Int32* param);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glScaled", ExactSpelling = true)]
             internal extern static void Scaled(Double x, Double y, Double z);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -3915,6 +4638,15 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glScissor", ExactSpelling = true)]
             internal extern static void Scissor(Int32 x, Int32 y, Int32 width, Int32 height);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glScissorArrayv", ExactSpelling = true)]
+            internal extern static unsafe void ScissorArrayv(UInt32 first, Int32 count, Int32* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glScissorIndexed", ExactSpelling = true)]
+            internal extern static void ScissorIndexed(UInt32 index, Int32 left, Int32 bottom, Int32 width, Int32 height);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glScissorIndexedv", ExactSpelling = true)]
+            internal extern static unsafe void ScissorIndexedv(UInt32 index, Int32* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSecondaryColor3b", ExactSpelling = true)]
             internal extern static void SecondaryColor3b(SByte red, SByte green, SByte blue);
@@ -3953,10 +4685,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void SecondaryColor3fvEXT(Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSecondaryColor3hNV", ExactSpelling = true)]
-            internal extern static void SecondaryColor3hNV(OpenTK.Half red, OpenTK.Half green, OpenTK.Half blue);
+            internal extern static void SecondaryColor3hNV(Half red, Half green, Half blue);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSecondaryColor3hvNV", ExactSpelling = true)]
-            internal extern static unsafe void SecondaryColor3hvNV(OpenTK.Half* v);
+            internal extern static unsafe void SecondaryColor3hvNV(Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSecondaryColor3i", ExactSpelling = true)]
             internal extern static void SecondaryColor3i(Int32 red, Int32 green, Int32 blue);
@@ -4018,6 +4750,15 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSecondaryColor3usvEXT", ExactSpelling = true)]
             internal extern static unsafe void SecondaryColor3usvEXT(UInt16* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSecondaryColorFormatNV", ExactSpelling = true)]
+            internal extern static void SecondaryColorFormatNV(Int32 size, OpenTK.Graphics.OpenGL.NvVertexBufferUnifiedMemory type, Int32 stride);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSecondaryColorP3ui", ExactSpelling = true)]
+            internal extern static void SecondaryColorP3ui(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 color);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSecondaryColorP3uiv", ExactSpelling = true)]
+            internal extern static unsafe void SecondaryColorP3uiv(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* color);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSecondaryColorPointer", ExactSpelling = true)]
             internal extern static void SecondaryColorPointer(Int32 size, OpenTK.Graphics.OpenGL.ColorPointerType type, Int32 stride, IntPtr pointer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -4056,6 +4797,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glShadeModel", ExactSpelling = true)]
             internal extern static void ShadeModel(OpenTK.Graphics.OpenGL.ShadingModel mode);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glShaderBinary", ExactSpelling = true)]
+            internal extern static unsafe void ShaderBinary(Int32 count, UInt32* shaders, OpenTK.Graphics.OpenGL.BinaryFormat binaryformat, IntPtr binary, Int32 length);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glShaderOp1EXT", ExactSpelling = true)]
             internal extern static void ShaderOp1EXT(OpenTK.Graphics.OpenGL.ExtVertexShader op, UInt32 res, UInt32 arg1);
@@ -4097,7 +4841,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void StencilFunc(OpenTK.Graphics.OpenGL.StencilFunction func, Int32 @ref, UInt32 mask);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glStencilFuncSeparate", ExactSpelling = true)]
-            internal extern static void StencilFuncSeparate(OpenTK.Graphics.OpenGL.StencilFace face, OpenTK.Graphics.OpenGL.StencilFunction func, Int32 @ref, UInt32 mask);
+            internal extern static void StencilFuncSeparate(OpenTK.Graphics.OpenGL.Version20 face, OpenTK.Graphics.OpenGL.StencilFunction func, Int32 @ref, UInt32 mask);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glStencilFuncSeparateATI", ExactSpelling = true)]
             internal extern static void StencilFuncSeparateATI(OpenTK.Graphics.OpenGL.StencilFunction frontfunc, OpenTK.Graphics.OpenGL.StencilFunction backfunc, Int32 @ref, UInt32 mask);
@@ -4208,10 +4952,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void TexCoord1fv(Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoord1hNV", ExactSpelling = true)]
-            internal extern static void TexCoord1hNV(OpenTK.Half s);
+            internal extern static void TexCoord1hNV(Half s);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoord1hvNV", ExactSpelling = true)]
-            internal extern static unsafe void TexCoord1hvNV(OpenTK.Half* v);
+            internal extern static unsafe void TexCoord1hvNV(Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoord1i", ExactSpelling = true)]
             internal extern static void TexCoord1i(Int32 s);
@@ -4268,10 +5012,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void TexCoord2fVertex3fvSUN(Single* tc, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoord2hNV", ExactSpelling = true)]
-            internal extern static void TexCoord2hNV(OpenTK.Half s, OpenTK.Half t);
+            internal extern static void TexCoord2hNV(Half s, Half t);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoord2hvNV", ExactSpelling = true)]
-            internal extern static unsafe void TexCoord2hvNV(OpenTK.Half* v);
+            internal extern static unsafe void TexCoord2hvNV(Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoord2i", ExactSpelling = true)]
             internal extern static void TexCoord2i(Int32 s, Int32 t);
@@ -4298,10 +5042,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void TexCoord3fv(Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoord3hNV", ExactSpelling = true)]
-            internal extern static void TexCoord3hNV(OpenTK.Half s, OpenTK.Half t, OpenTK.Half r);
+            internal extern static void TexCoord3hNV(Half s, Half t, Half r);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoord3hvNV", ExactSpelling = true)]
-            internal extern static unsafe void TexCoord3hvNV(OpenTK.Half* v);
+            internal extern static unsafe void TexCoord3hvNV(Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoord3i", ExactSpelling = true)]
             internal extern static void TexCoord3i(Int32 s, Int32 t, Int32 r);
@@ -4340,10 +5084,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void TexCoord4fVertex4fvSUN(Single* tc, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoord4hNV", ExactSpelling = true)]
-            internal extern static void TexCoord4hNV(OpenTK.Half s, OpenTK.Half t, OpenTK.Half r, OpenTK.Half q);
+            internal extern static void TexCoord4hNV(Half s, Half t, Half r, Half q);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoord4hvNV", ExactSpelling = true)]
-            internal extern static unsafe void TexCoord4hvNV(OpenTK.Half* v);
+            internal extern static unsafe void TexCoord4hvNV(Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoord4i", ExactSpelling = true)]
             internal extern static void TexCoord4i(Int32 s, Int32 t, Int32 r, Int32 q);
@@ -4356,6 +5100,33 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoord4sv", ExactSpelling = true)]
             internal extern static unsafe void TexCoord4sv(Int16* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoordFormatNV", ExactSpelling = true)]
+            internal extern static void TexCoordFormatNV(Int32 size, OpenTK.Graphics.OpenGL.NvVertexBufferUnifiedMemory type, Int32 stride);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoordP1ui", ExactSpelling = true)]
+            internal extern static void TexCoordP1ui(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoordP1uiv", ExactSpelling = true)]
+            internal extern static unsafe void TexCoordP1uiv(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoordP2ui", ExactSpelling = true)]
+            internal extern static void TexCoordP2ui(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoordP2uiv", ExactSpelling = true)]
+            internal extern static unsafe void TexCoordP2uiv(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoordP3ui", ExactSpelling = true)]
+            internal extern static void TexCoordP3ui(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoordP3uiv", ExactSpelling = true)]
+            internal extern static unsafe void TexCoordP3uiv(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoordP4ui", ExactSpelling = true)]
+            internal extern static void TexCoordP4ui(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 coords);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoordP4uiv", ExactSpelling = true)]
+            internal extern static unsafe void TexCoordP4uiv(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoordPointer", ExactSpelling = true)]
             internal extern static void TexCoordPointer(Int32 size, OpenTK.Graphics.OpenGL.TexCoordPointerType type, Int32 stride, IntPtr pointer);
@@ -4471,6 +5242,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexSubImage4DSGIS", ExactSpelling = true)]
             internal extern static void TexSubImage4DSGIS(OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 woffset, Int32 width, Int32 height, Int32 depth, Int32 size4d, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTextureBarrierNV", ExactSpelling = true)]
+            internal extern static void TextureBarrierNV();
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTextureBufferEXT", ExactSpelling = true)]
             internal extern static void TextureBufferEXT(UInt32 texture, OpenTK.Graphics.OpenGL.TextureTarget target, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, UInt32 buffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -4534,6 +5308,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTransformFeedbackAttribsNV", ExactSpelling = true)]
             internal extern static unsafe void TransformFeedbackAttribsNV(UInt32 count, Int32* attribs, OpenTK.Graphics.OpenGL.NvTransformFeedback bufferMode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTransformFeedbackStreamAttribsNV", ExactSpelling = true)]
+            internal extern static unsafe void TransformFeedbackStreamAttribsNV(Int32 count, Int32* attribs, Int32 nbuffers, Int32* bufstreams, OpenTK.Graphics.OpenGL.NvTransformFeedback bufferMode);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTransformFeedbackVaryings", ExactSpelling = true)]
             internal extern static void TransformFeedbackVaryings(UInt32 program, Int32 count, String[] varyings, OpenTK.Graphics.OpenGL.TransformFeedbackMode bufferMode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -4541,13 +5318,19 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void TransformFeedbackVaryingsEXT(UInt32 program, Int32 count, String[] varyings, OpenTK.Graphics.OpenGL.ExtTransformFeedback bufferMode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTransformFeedbackVaryingsNV", ExactSpelling = true)]
-            internal extern static void TransformFeedbackVaryingsNV(UInt32 program, Int32 count, String[] varyings, OpenTK.Graphics.OpenGL.NvTransformFeedback bufferMode);
+            internal extern static unsafe void TransformFeedbackVaryingsNV(UInt32 program, Int32 count, Int32* locations, OpenTK.Graphics.OpenGL.NvTransformFeedback bufferMode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTranslated", ExactSpelling = true)]
             internal extern static void Translated(Double x, Double y, Double z);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTranslatef", ExactSpelling = true)]
             internal extern static void Translatef(Single x, Single y, Single z);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform1d", ExactSpelling = true)]
+            internal extern static void Uniform1d(Int32 location, Double x);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform1dv", ExactSpelling = true)]
+            internal extern static unsafe void Uniform1dv(Int32 location, Int32 count, Double* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform1f", ExactSpelling = true)]
             internal extern static void Uniform1f(Int32 location, Single v0);
@@ -4564,6 +5347,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform1i", ExactSpelling = true)]
             internal extern static void Uniform1i(Int32 location, Int32 v0);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform1i64NV", ExactSpelling = true)]
+            internal extern static void Uniform1i64NV(Int32 location, Int64 x);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform1i64vNV", ExactSpelling = true)]
+            internal extern static unsafe void Uniform1i64vNV(Int32 location, Int32 count, Int64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform1iARB", ExactSpelling = true)]
             internal extern static void Uniform1iARB(Int32 location, Int32 v0);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -4576,6 +5365,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform1ui", ExactSpelling = true)]
             internal extern static void Uniform1ui(Int32 location, UInt32 v0);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform1ui64NV", ExactSpelling = true)]
+            internal extern static void Uniform1ui64NV(Int32 location, UInt64 x);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform1ui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void Uniform1ui64vNV(Int32 location, Int32 count, UInt64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform1uiEXT", ExactSpelling = true)]
             internal extern static void Uniform1uiEXT(Int32 location, UInt32 v0);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -4584,6 +5379,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform1uivEXT", ExactSpelling = true)]
             internal extern static unsafe void Uniform1uivEXT(Int32 location, Int32 count, UInt32* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform2d", ExactSpelling = true)]
+            internal extern static void Uniform2d(Int32 location, Double x, Double y);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform2dv", ExactSpelling = true)]
+            internal extern static unsafe void Uniform2dv(Int32 location, Int32 count, Double* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform2f", ExactSpelling = true)]
             internal extern static void Uniform2f(Int32 location, Single v0, Single v1);
@@ -4600,6 +5401,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform2i", ExactSpelling = true)]
             internal extern static void Uniform2i(Int32 location, Int32 v0, Int32 v1);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform2i64NV", ExactSpelling = true)]
+            internal extern static void Uniform2i64NV(Int32 location, Int64 x, Int64 y);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform2i64vNV", ExactSpelling = true)]
+            internal extern static unsafe void Uniform2i64vNV(Int32 location, Int32 count, Int64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform2iARB", ExactSpelling = true)]
             internal extern static void Uniform2iARB(Int32 location, Int32 v0, Int32 v1);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -4612,6 +5419,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform2ui", ExactSpelling = true)]
             internal extern static void Uniform2ui(Int32 location, UInt32 v0, UInt32 v1);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform2ui64NV", ExactSpelling = true)]
+            internal extern static void Uniform2ui64NV(Int32 location, UInt64 x, UInt64 y);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform2ui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void Uniform2ui64vNV(Int32 location, Int32 count, UInt64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform2uiEXT", ExactSpelling = true)]
             internal extern static void Uniform2uiEXT(Int32 location, UInt32 v0, UInt32 v1);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -4620,6 +5433,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform2uivEXT", ExactSpelling = true)]
             internal extern static unsafe void Uniform2uivEXT(Int32 location, Int32 count, UInt32* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform3d", ExactSpelling = true)]
+            internal extern static void Uniform3d(Int32 location, Double x, Double y, Double z);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform3dv", ExactSpelling = true)]
+            internal extern static unsafe void Uniform3dv(Int32 location, Int32 count, Double* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform3f", ExactSpelling = true)]
             internal extern static void Uniform3f(Int32 location, Single v0, Single v1, Single v2);
@@ -4636,6 +5455,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform3i", ExactSpelling = true)]
             internal extern static void Uniform3i(Int32 location, Int32 v0, Int32 v1, Int32 v2);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform3i64NV", ExactSpelling = true)]
+            internal extern static void Uniform3i64NV(Int32 location, Int64 x, Int64 y, Int64 z);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform3i64vNV", ExactSpelling = true)]
+            internal extern static unsafe void Uniform3i64vNV(Int32 location, Int32 count, Int64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform3iARB", ExactSpelling = true)]
             internal extern static void Uniform3iARB(Int32 location, Int32 v0, Int32 v1, Int32 v2);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -4648,6 +5473,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform3ui", ExactSpelling = true)]
             internal extern static void Uniform3ui(Int32 location, UInt32 v0, UInt32 v1, UInt32 v2);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform3ui64NV", ExactSpelling = true)]
+            internal extern static void Uniform3ui64NV(Int32 location, UInt64 x, UInt64 y, UInt64 z);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform3ui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void Uniform3ui64vNV(Int32 location, Int32 count, UInt64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform3uiEXT", ExactSpelling = true)]
             internal extern static void Uniform3uiEXT(Int32 location, UInt32 v0, UInt32 v1, UInt32 v2);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -4656,6 +5487,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform3uivEXT", ExactSpelling = true)]
             internal extern static unsafe void Uniform3uivEXT(Int32 location, Int32 count, UInt32* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform4d", ExactSpelling = true)]
+            internal extern static void Uniform4d(Int32 location, Double x, Double y, Double z, Double w);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform4dv", ExactSpelling = true)]
+            internal extern static unsafe void Uniform4dv(Int32 location, Int32 count, Double* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform4f", ExactSpelling = true)]
             internal extern static void Uniform4f(Int32 location, Single v0, Single v1, Single v2, Single v3);
@@ -4672,6 +5509,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform4i", ExactSpelling = true)]
             internal extern static void Uniform4i(Int32 location, Int32 v0, Int32 v1, Int32 v2, Int32 v3);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform4i64NV", ExactSpelling = true)]
+            internal extern static void Uniform4i64NV(Int32 location, Int64 x, Int64 y, Int64 z, Int64 w);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform4i64vNV", ExactSpelling = true)]
+            internal extern static unsafe void Uniform4i64vNV(Int32 location, Int32 count, Int64* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform4iARB", ExactSpelling = true)]
             internal extern static void Uniform4iARB(Int32 location, Int32 v0, Int32 v1, Int32 v2, Int32 v3);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -4683,6 +5526,12 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform4ui", ExactSpelling = true)]
             internal extern static void Uniform4ui(Int32 location, UInt32 v0, UInt32 v1, UInt32 v2, UInt32 v3);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform4ui64NV", ExactSpelling = true)]
+            internal extern static void Uniform4ui64NV(Int32 location, UInt64 x, UInt64 y, UInt64 z, UInt64 w);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform4ui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void Uniform4ui64vNV(Int32 location, Int32 count, UInt64* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform4uiEXT", ExactSpelling = true)]
             internal extern static void Uniform4uiEXT(Int32 location, UInt32 v0, UInt32 v1, UInt32 v2, UInt32 v3);
@@ -4699,17 +5548,29 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformBufferEXT", ExactSpelling = true)]
             internal extern static void UniformBufferEXT(UInt32 program, Int32 location, UInt32 buffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix2dv", ExactSpelling = true)]
+            internal extern static unsafe void UniformMatrix2dv(Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix2fv", ExactSpelling = true)]
             internal extern static unsafe void UniformMatrix2fv(Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix2fvARB", ExactSpelling = true)]
             internal extern static unsafe void UniformMatrix2fvARB(Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix2x3dv", ExactSpelling = true)]
+            internal extern static unsafe void UniformMatrix2x3dv(Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix2x3fv", ExactSpelling = true)]
             internal extern static unsafe void UniformMatrix2x3fv(Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix2x4dv", ExactSpelling = true)]
+            internal extern static unsafe void UniformMatrix2x4dv(Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix2x4fv", ExactSpelling = true)]
             internal extern static unsafe void UniformMatrix2x4fv(Int32 location, Int32 count, bool transpose, Single* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix3dv", ExactSpelling = true)]
+            internal extern static unsafe void UniformMatrix3dv(Int32 location, Int32 count, bool transpose, Double* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix3fv", ExactSpelling = true)]
             internal extern static unsafe void UniformMatrix3fv(Int32 location, Int32 count, bool transpose, Single* value);
@@ -4717,11 +5578,20 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix3fvARB", ExactSpelling = true)]
             internal extern static unsafe void UniformMatrix3fvARB(Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix3x2dv", ExactSpelling = true)]
+            internal extern static unsafe void UniformMatrix3x2dv(Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix3x2fv", ExactSpelling = true)]
             internal extern static unsafe void UniformMatrix3x2fv(Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix3x4dv", ExactSpelling = true)]
+            internal extern static unsafe void UniformMatrix3x4dv(Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix3x4fv", ExactSpelling = true)]
             internal extern static unsafe void UniformMatrix3x4fv(Int32 location, Int32 count, bool transpose, Single* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix4dv", ExactSpelling = true)]
+            internal extern static unsafe void UniformMatrix4dv(Int32 location, Int32 count, bool transpose, Double* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix4fv", ExactSpelling = true)]
             internal extern static unsafe void UniformMatrix4fv(Int32 location, Int32 count, bool transpose, Single* value);
@@ -4729,11 +5599,26 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix4fvARB", ExactSpelling = true)]
             internal extern static unsafe void UniformMatrix4fvARB(Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix4x2dv", ExactSpelling = true)]
+            internal extern static unsafe void UniformMatrix4x2dv(Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix4x2fv", ExactSpelling = true)]
             internal extern static unsafe void UniformMatrix4x2fv(Int32 location, Int32 count, bool transpose, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix4x3dv", ExactSpelling = true)]
+            internal extern static unsafe void UniformMatrix4x3dv(Int32 location, Int32 count, bool transpose, Double* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformMatrix4x3fv", ExactSpelling = true)]
             internal extern static unsafe void UniformMatrix4x3fv(Int32 location, Int32 count, bool transpose, Single* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformSubroutinesuiv", ExactSpelling = true)]
+            internal extern static unsafe void UniformSubroutinesuiv(OpenTK.Graphics.OpenGL.ShaderType shadertype, Int32 count, UInt32* indices);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformui64NV", ExactSpelling = true)]
+            internal extern static void Uniformui64NV(Int32 location, UInt64 value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void Uniformui64vNV(Int32 location, Int32 count, UInt64* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUnlockArraysEXT", ExactSpelling = true)]
             internal extern static void UnlockArraysEXT();
@@ -4759,11 +5644,20 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUseProgramObjectARB", ExactSpelling = true)]
             internal extern static void UseProgramObjectARB(UInt32 programObj);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUseProgramStages", ExactSpelling = true)]
+            internal extern static void UseProgramStages(UInt32 pipeline, OpenTK.Graphics.OpenGL.ProgramStageMask stages, UInt32 program);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUseShaderProgramEXT", ExactSpelling = true)]
+            internal extern static void UseShaderProgramEXT(OpenTK.Graphics.OpenGL.ExtSeparateShaderObjects type, UInt32 program);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glValidateProgram", ExactSpelling = true)]
             internal extern static void ValidateProgram(UInt32 program);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glValidateProgramARB", ExactSpelling = true)]
             internal extern static void ValidateProgramARB(UInt32 programObj);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glValidateProgramPipeline", ExactSpelling = true)]
+            internal extern static void ValidateProgramPipeline(UInt32 pipeline);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVariantArrayObjectATI", ExactSpelling = true)]
             internal extern static void VariantArrayObjectATI(UInt32 id, OpenTK.Graphics.OpenGL.AtiVertexArrayObject type, Int32 stride, UInt32 buffer, UInt32 offset);
@@ -4795,6 +5689,36 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVariantusvEXT", ExactSpelling = true)]
             internal extern static unsafe void VariantusvEXT(UInt32 id, UInt16* addr);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVDPAUFiniNV", ExactSpelling = true)]
+            internal extern static void VDPAUFiniNV();
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVDPAUGetSurfaceivNV", ExactSpelling = true)]
+            internal extern static unsafe void VDPAUGetSurfaceivNV(IntPtr surface, OpenTK.Graphics.OpenGL.NvVdpauInterop pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVDPAUInitNV", ExactSpelling = true)]
+            internal extern static void VDPAUInitNV(IntPtr vdpDevice, IntPtr getProcAddress);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVDPAUIsSurfaceNV", ExactSpelling = true)]
+            internal extern static void VDPAUIsSurfaceNV(IntPtr surface);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVDPAUMapSurfacesNV", ExactSpelling = true)]
+            internal extern static unsafe void VDPAUMapSurfacesNV(Int32 numSurfaces, IntPtr* surfaces);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVDPAURegisterOutputSurfaceNV", ExactSpelling = true)]
+            internal extern static unsafe IntPtr VDPAURegisterOutputSurfaceNV([OutAttribute] IntPtr vdpSurface, OpenTK.Graphics.OpenGL.NvVdpauInterop target, Int32 numTextureNames, UInt32* textureNames);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVDPAURegisterVideoSurfaceNV", ExactSpelling = true)]
+            internal extern static unsafe IntPtr VDPAURegisterVideoSurfaceNV([OutAttribute] IntPtr vdpSurface, OpenTK.Graphics.OpenGL.NvVdpauInterop target, Int32 numTextureNames, UInt32* textureNames);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVDPAUSurfaceAccessNV", ExactSpelling = true)]
+            internal extern static void VDPAUSurfaceAccessNV(IntPtr surface, OpenTK.Graphics.OpenGL.NvVdpauInterop access);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVDPAUUnmapSurfacesNV", ExactSpelling = true)]
+            internal extern static unsafe void VDPAUUnmapSurfacesNV(Int32 numSurface, IntPtr* surfaces);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVDPAUUnregisterSurfaceNV", ExactSpelling = true)]
+            internal extern static void VDPAUUnregisterSurfaceNV(IntPtr surface);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertex2d", ExactSpelling = true)]
             internal extern static void Vertex2d(Double x, Double y);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -4808,10 +5732,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void Vertex2fv(Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertex2hNV", ExactSpelling = true)]
-            internal extern static void Vertex2hNV(OpenTK.Half x, OpenTK.Half y);
+            internal extern static void Vertex2hNV(Half x, Half y);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertex2hvNV", ExactSpelling = true)]
-            internal extern static unsafe void Vertex2hvNV(OpenTK.Half* v);
+            internal extern static unsafe void Vertex2hvNV(Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertex2i", ExactSpelling = true)]
             internal extern static void Vertex2i(Int32 x, Int32 y);
@@ -4838,10 +5762,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void Vertex3fv(Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertex3hNV", ExactSpelling = true)]
-            internal extern static void Vertex3hNV(OpenTK.Half x, OpenTK.Half y, OpenTK.Half z);
+            internal extern static void Vertex3hNV(Half x, Half y, Half z);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertex3hvNV", ExactSpelling = true)]
-            internal extern static unsafe void Vertex3hvNV(OpenTK.Half* v);
+            internal extern static unsafe void Vertex3hvNV(Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertex3i", ExactSpelling = true)]
             internal extern static void Vertex3i(Int32 x, Int32 y, Int32 z);
@@ -4868,10 +5792,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void Vertex4fv(Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertex4hNV", ExactSpelling = true)]
-            internal extern static void Vertex4hNV(OpenTK.Half x, OpenTK.Half y, OpenTK.Half z, OpenTK.Half w);
+            internal extern static void Vertex4hNV(Half x, Half y, Half z, Half w);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertex4hvNV", ExactSpelling = true)]
-            internal extern static unsafe void Vertex4hvNV(OpenTK.Half* v);
+            internal extern static unsafe void Vertex4hvNV(Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertex4i", ExactSpelling = true)]
             internal extern static void Vertex4i(Int32 x, Int32 y, Int32 z, Int32 w);
@@ -4893,6 +5817,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexArrayRangeNV", ExactSpelling = true)]
             internal extern static void VertexArrayRangeNV(Int32 length, IntPtr pointer);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexArrayVertexAttribLOffsetEXT", ExactSpelling = true)]
+            internal extern static void VertexArrayVertexAttribLOffsetEXT(UInt32 vaobj, UInt32 buffer, UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.ExtVertexAttrib64bit type, Int32 stride, IntPtr offset);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttrib1d", ExactSpelling = true)]
             internal extern static void VertexAttrib1d(UInt32 index, Double x);
@@ -4931,10 +5858,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void VertexAttrib1fvNV(UInt32 index, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttrib1hNV", ExactSpelling = true)]
-            internal extern static void VertexAttrib1hNV(UInt32 index, OpenTK.Half x);
+            internal extern static void VertexAttrib1hNV(UInt32 index, Half x);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttrib1hvNV", ExactSpelling = true)]
-            internal extern static unsafe void VertexAttrib1hvNV(UInt32 index, OpenTK.Half* v);
+            internal extern static unsafe void VertexAttrib1hvNV(UInt32 index, Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttrib1s", ExactSpelling = true)]
             internal extern static void VertexAttrib1s(UInt32 index, Int16 x);
@@ -4991,10 +5918,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void VertexAttrib2fvNV(UInt32 index, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttrib2hNV", ExactSpelling = true)]
-            internal extern static void VertexAttrib2hNV(UInt32 index, OpenTK.Half x, OpenTK.Half y);
+            internal extern static void VertexAttrib2hNV(UInt32 index, Half x, Half y);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttrib2hvNV", ExactSpelling = true)]
-            internal extern static unsafe void VertexAttrib2hvNV(UInt32 index, OpenTK.Half* v);
+            internal extern static unsafe void VertexAttrib2hvNV(UInt32 index, Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttrib2s", ExactSpelling = true)]
             internal extern static void VertexAttrib2s(UInt32 index, Int16 x, Int16 y);
@@ -5051,10 +5978,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void VertexAttrib3fvNV(UInt32 index, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttrib3hNV", ExactSpelling = true)]
-            internal extern static void VertexAttrib3hNV(UInt32 index, OpenTK.Half x, OpenTK.Half y, OpenTK.Half z);
+            internal extern static void VertexAttrib3hNV(UInt32 index, Half x, Half y, Half z);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttrib3hvNV", ExactSpelling = true)]
-            internal extern static unsafe void VertexAttrib3hvNV(UInt32 index, OpenTK.Half* v);
+            internal extern static unsafe void VertexAttrib3hvNV(UInt32 index, Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttrib3s", ExactSpelling = true)]
             internal extern static void VertexAttrib3s(UInt32 index, Int16 x, Int16 y, Int16 z);
@@ -5117,10 +6044,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void VertexAttrib4fvNV(UInt32 index, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttrib4hNV", ExactSpelling = true)]
-            internal extern static void VertexAttrib4hNV(UInt32 index, OpenTK.Half x, OpenTK.Half y, OpenTK.Half z, OpenTK.Half w);
+            internal extern static void VertexAttrib4hNV(UInt32 index, Half x, Half y, Half z, Half w);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttrib4hvNV", ExactSpelling = true)]
-            internal extern static unsafe void VertexAttrib4hvNV(UInt32 index, OpenTK.Half* v);
+            internal extern static unsafe void VertexAttrib4hvNV(UInt32 index, Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttrib4iv", ExactSpelling = true)]
             internal extern static unsafe void VertexAttrib4iv(UInt32 index, Int32* v);
@@ -5215,8 +6142,14 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribArrayObjectATI", ExactSpelling = true)]
             internal extern static void VertexAttribArrayObjectATI(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.AtiVertexAttribArrayObject type, bool normalized, Int32 stride, UInt32 buffer, UInt32 offset);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribDivisor", ExactSpelling = true)]
+            internal extern static void VertexAttribDivisor(UInt32 index, UInt32 divisor);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribDivisorARB", ExactSpelling = true)]
             internal extern static void VertexAttribDivisorARB(UInt32 index, UInt32 divisor);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribFormatNV", ExactSpelling = true)]
+            internal extern static void VertexAttribFormatNV(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.NvVertexBufferUnifiedMemory type, bool normalized, Int32 stride);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribI1i", ExactSpelling = true)]
             internal extern static void VertexAttribI1i(UInt32 index, Int32 x);
@@ -5338,11 +6271,143 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribI4usvEXT", ExactSpelling = true)]
             internal extern static unsafe void VertexAttribI4usvEXT(UInt32 index, UInt16* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribIFormatNV", ExactSpelling = true)]
+            internal extern static void VertexAttribIFormatNV(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.NvVertexBufferUnifiedMemory type, Int32 stride);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribIPointer", ExactSpelling = true)]
             internal extern static void VertexAttribIPointer(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.VertexAttribIPointerType type, Int32 stride, IntPtr pointer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribIPointerEXT", ExactSpelling = true)]
             internal extern static void VertexAttribIPointerEXT(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.NvVertexProgram4 type, Int32 stride, IntPtr pointer);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL1d", ExactSpelling = true)]
+            internal extern static void VertexAttribL1d(UInt32 index, Double x);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL1dEXT", ExactSpelling = true)]
+            internal extern static void VertexAttribL1dEXT(UInt32 index, Double x);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL1dv", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL1dv(UInt32 index, Double* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL1dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL1dvEXT(UInt32 index, Double* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL1i64NV", ExactSpelling = true)]
+            internal extern static void VertexAttribL1i64NV(UInt32 index, Int64 x);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL1i64vNV", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL1i64vNV(UInt32 index, Int64* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL1ui64NV", ExactSpelling = true)]
+            internal extern static void VertexAttribL1ui64NV(UInt32 index, UInt64 x);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL1ui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL1ui64vNV(UInt32 index, UInt64* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL2d", ExactSpelling = true)]
+            internal extern static void VertexAttribL2d(UInt32 index, Double x, Double y);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL2dEXT", ExactSpelling = true)]
+            internal extern static void VertexAttribL2dEXT(UInt32 index, Double x, Double y);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL2dv", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL2dv(UInt32 index, Double* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL2dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL2dvEXT(UInt32 index, Double* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL2i64NV", ExactSpelling = true)]
+            internal extern static void VertexAttribL2i64NV(UInt32 index, Int64 x, Int64 y);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL2i64vNV", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL2i64vNV(UInt32 index, Int64* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL2ui64NV", ExactSpelling = true)]
+            internal extern static void VertexAttribL2ui64NV(UInt32 index, UInt64 x, UInt64 y);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL2ui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL2ui64vNV(UInt32 index, UInt64* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL3d", ExactSpelling = true)]
+            internal extern static void VertexAttribL3d(UInt32 index, Double x, Double y, Double z);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL3dEXT", ExactSpelling = true)]
+            internal extern static void VertexAttribL3dEXT(UInt32 index, Double x, Double y, Double z);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL3dv", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL3dv(UInt32 index, Double* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL3dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL3dvEXT(UInt32 index, Double* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL3i64NV", ExactSpelling = true)]
+            internal extern static void VertexAttribL3i64NV(UInt32 index, Int64 x, Int64 y, Int64 z);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL3i64vNV", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL3i64vNV(UInt32 index, Int64* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL3ui64NV", ExactSpelling = true)]
+            internal extern static void VertexAttribL3ui64NV(UInt32 index, UInt64 x, UInt64 y, UInt64 z);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL3ui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL3ui64vNV(UInt32 index, UInt64* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL4d", ExactSpelling = true)]
+            internal extern static void VertexAttribL4d(UInt32 index, Double x, Double y, Double z, Double w);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL4dEXT", ExactSpelling = true)]
+            internal extern static void VertexAttribL4dEXT(UInt32 index, Double x, Double y, Double z, Double w);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL4dv", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL4dv(UInt32 index, Double* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL4dvEXT", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL4dvEXT(UInt32 index, Double* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL4i64NV", ExactSpelling = true)]
+            internal extern static void VertexAttribL4i64NV(UInt32 index, Int64 x, Int64 y, Int64 z, Int64 w);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL4i64vNV", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL4i64vNV(UInt32 index, Int64* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL4ui64NV", ExactSpelling = true)]
+            internal extern static void VertexAttribL4ui64NV(UInt32 index, UInt64 x, UInt64 y, UInt64 z, UInt64 w);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribL4ui64vNV", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribL4ui64vNV(UInt32 index, UInt64* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribLFormatNV", ExactSpelling = true)]
+            internal extern static void VertexAttribLFormatNV(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.NvVertexAttribInteger64bit type, Int32 stride);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribLPointer", ExactSpelling = true)]
+            internal extern static void VertexAttribLPointer(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.VertexAttribDPointerType type, Int32 stride, IntPtr pointer);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribLPointerEXT", ExactSpelling = true)]
+            internal extern static void VertexAttribLPointerEXT(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.ExtVertexAttrib64bit type, Int32 stride, IntPtr pointer);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribP1ui", ExactSpelling = true)]
+            internal extern static void VertexAttribP1ui(UInt32 index, OpenTK.Graphics.OpenGL.PackedPointerType type, bool normalized, UInt32 value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribP1uiv", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribP1uiv(UInt32 index, OpenTK.Graphics.OpenGL.PackedPointerType type, bool normalized, UInt32* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribP2ui", ExactSpelling = true)]
+            internal extern static void VertexAttribP2ui(UInt32 index, OpenTK.Graphics.OpenGL.PackedPointerType type, bool normalized, UInt32 value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribP2uiv", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribP2uiv(UInt32 index, OpenTK.Graphics.OpenGL.PackedPointerType type, bool normalized, UInt32* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribP3ui", ExactSpelling = true)]
+            internal extern static void VertexAttribP3ui(UInt32 index, OpenTK.Graphics.OpenGL.PackedPointerType type, bool normalized, UInt32 value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribP3uiv", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribP3uiv(UInt32 index, OpenTK.Graphics.OpenGL.PackedPointerType type, bool normalized, UInt32* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribP4ui", ExactSpelling = true)]
+            internal extern static void VertexAttribP4ui(UInt32 index, OpenTK.Graphics.OpenGL.PackedPointerType type, bool normalized, UInt32 value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribP4uiv", ExactSpelling = true)]
+            internal extern static unsafe void VertexAttribP4uiv(UInt32 index, OpenTK.Graphics.OpenGL.PackedPointerType type, bool normalized, UInt32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribPointer", ExactSpelling = true)]
             internal extern static void VertexAttribPointer(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.VertexAttribPointerType type, bool normalized, Int32 stride, IntPtr pointer);
@@ -5360,7 +6425,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void VertexAttribs1fvNV(UInt32 index, Int32 count, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribs1hvNV", ExactSpelling = true)]
-            internal extern static unsafe void VertexAttribs1hvNV(UInt32 index, Int32 n, OpenTK.Half* v);
+            internal extern static unsafe void VertexAttribs1hvNV(UInt32 index, Int32 n, Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribs1svNV", ExactSpelling = true)]
             internal extern static unsafe void VertexAttribs1svNV(UInt32 index, Int32 count, Int16* v);
@@ -5372,7 +6437,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void VertexAttribs2fvNV(UInt32 index, Int32 count, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribs2hvNV", ExactSpelling = true)]
-            internal extern static unsafe void VertexAttribs2hvNV(UInt32 index, Int32 n, OpenTK.Half* v);
+            internal extern static unsafe void VertexAttribs2hvNV(UInt32 index, Int32 n, Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribs2svNV", ExactSpelling = true)]
             internal extern static unsafe void VertexAttribs2svNV(UInt32 index, Int32 count, Int16* v);
@@ -5384,7 +6449,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void VertexAttribs3fvNV(UInt32 index, Int32 count, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribs3hvNV", ExactSpelling = true)]
-            internal extern static unsafe void VertexAttribs3hvNV(UInt32 index, Int32 n, OpenTK.Half* v);
+            internal extern static unsafe void VertexAttribs3hvNV(UInt32 index, Int32 n, Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribs3svNV", ExactSpelling = true)]
             internal extern static unsafe void VertexAttribs3svNV(UInt32 index, Int32 count, Int16* v);
@@ -5396,7 +6461,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void VertexAttribs4fvNV(UInt32 index, Int32 count, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribs4hvNV", ExactSpelling = true)]
-            internal extern static unsafe void VertexAttribs4hvNV(UInt32 index, Int32 n, OpenTK.Half* v);
+            internal extern static unsafe void VertexAttribs4hvNV(UInt32 index, Int32 n, Half* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribs4svNV", ExactSpelling = true)]
             internal extern static unsafe void VertexAttribs4svNV(UInt32 index, Int32 count, Int16* v);
@@ -5412,6 +6477,27 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexBlendEnviATI", ExactSpelling = true)]
             internal extern static void VertexBlendEnviATI(OpenTK.Graphics.OpenGL.AtiVertexStreams pname, Int32 param);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexFormatNV", ExactSpelling = true)]
+            internal extern static void VertexFormatNV(Int32 size, OpenTK.Graphics.OpenGL.NvVertexBufferUnifiedMemory type, Int32 stride);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexP2ui", ExactSpelling = true)]
+            internal extern static void VertexP2ui(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexP2uiv", ExactSpelling = true)]
+            internal extern static unsafe void VertexP2uiv(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexP3ui", ExactSpelling = true)]
+            internal extern static void VertexP3ui(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexP3uiv", ExactSpelling = true)]
+            internal extern static unsafe void VertexP3uiv(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexP4ui", ExactSpelling = true)]
+            internal extern static void VertexP4ui(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32 value);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexP4uiv", ExactSpelling = true)]
+            internal extern static unsafe void VertexP4uiv(OpenTK.Graphics.OpenGL.PackedPointerType type, UInt32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexPointer", ExactSpelling = true)]
             internal extern static void VertexPointer(Int32 size, OpenTK.Graphics.OpenGL.VertexPointerType type, Int32 stride, IntPtr pointer);
@@ -5528,16 +6614,37 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void VertexWeightfvEXT(Single* weight);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexWeighthNV", ExactSpelling = true)]
-            internal extern static void VertexWeighthNV(OpenTK.Half weight);
+            internal extern static void VertexWeighthNV(Half weight);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexWeighthvNV", ExactSpelling = true)]
-            internal extern static unsafe void VertexWeighthvNV(OpenTK.Half* weight);
+            internal extern static unsafe void VertexWeighthvNV(Half* weight);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexWeightPointerEXT", ExactSpelling = true)]
             internal extern static void VertexWeightPointerEXT(Int32 size, OpenTK.Graphics.OpenGL.ExtVertexWeighting type, Int32 stride, IntPtr pointer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVideoCaptureNV", ExactSpelling = true)]
+            internal extern static unsafe OpenTK.Graphics.OpenGL.NvVideoCapture VideoCaptureNV(UInt32 video_capture_slot, [OutAttribute] UInt32* sequence_num, [OutAttribute] UInt64* capture_time);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVideoCaptureStreamParameterdvNV", ExactSpelling = true)]
+            internal extern static unsafe void VideoCaptureStreamParameterdvNV(UInt32 video_capture_slot, UInt32 stream, OpenTK.Graphics.OpenGL.NvVideoCapture pname, Double* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVideoCaptureStreamParameterfvNV", ExactSpelling = true)]
+            internal extern static unsafe void VideoCaptureStreamParameterfvNV(UInt32 video_capture_slot, UInt32 stream, OpenTK.Graphics.OpenGL.NvVideoCapture pname, Single* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVideoCaptureStreamParameterivNV", ExactSpelling = true)]
+            internal extern static unsafe void VideoCaptureStreamParameterivNV(UInt32 video_capture_slot, UInt32 stream, OpenTK.Graphics.OpenGL.NvVideoCapture pname, Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glViewport", ExactSpelling = true)]
             internal extern static void Viewport(Int32 x, Int32 y, Int32 width, Int32 height);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glViewportArrayv", ExactSpelling = true)]
+            internal extern static unsafe void ViewportArrayv(UInt32 first, Int32 count, Single* v);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glViewportIndexedf", ExactSpelling = true)]
+            internal extern static void ViewportIndexedf(UInt32 index, Single x, Single y, Single w, Single h);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glViewportIndexedfv", ExactSpelling = true)]
+            internal extern static unsafe void ViewportIndexedfv(UInt32 index, Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glWaitSync", ExactSpelling = true)]
             internal extern static void WaitSync(IntPtr sync, UInt32 flags, UInt64 timeout);

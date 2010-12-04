@@ -43,7 +43,7 @@
             <function>glClearStencil</function> specifies the index used by <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry> to clear the stencil buffer.
             <parameter>s</parameter> is masked with 
             <inlineequation><mml:math>
-                <!-- eqn: 2 sup m - 1:-->
+                <!-- eqn: 2 sup m - 1: -->
                 <mml:mrow>
                     <mml:msup><mml:mn>2</mml:mn>
                     <mml:mi mathvariant="italic">m</mml:mi>
@@ -55,13 +55,6 @@
             where 
             <inlineequation><mml:math><mml:mi mathvariant="italic">m</mml:mi></mml:math></inlineequation>
             is the number of bits in the stencil buffer.
-        </para>
-    </refsect1>
-    <refsect1 id="errors"><title>Errors</title>
-        <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glClearStencil</function>
-            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
-            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>

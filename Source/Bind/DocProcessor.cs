@@ -8,11 +8,15 @@ namespace Bind
 {
     class DocProcessor
     {
-        static readonly Regex remove_mathml = new Regex(@"<(mml:math)[^>]*?>(?:.|\n)*?</\s*\1\s*>",
+        static readonly Regex remove_mathml = new Regex(
+            @"<(mml:math|inlineequation)[^>]*?>(?:.|\n)*?</\s*\1\s*>",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
 
         static readonly XslCompiledTransform xslt = new XslCompiledTransform();
         static readonly XmlReaderSettings settings = new XmlReaderSettings();
+
+        string Text;
+        string LastFile;
 
         public DocProcessor(string transform_file)
         {
@@ -27,35 +31,54 @@ namespace Bind
         // Todo: Some files include more than 1 function - find a way to map these extra functions.
         public string ProcessFile(string file)
         {
-            string text = File.ReadAllText(file);
+            if (LastFile == file)
+                return Text;
 
-            Match m = remove_mathml.Match(text);
+            LastFile = file;
+            Text = File.ReadAllText(file);
+
+            Match m = remove_mathml.Match(Text);
             while (m.Length > 0)
             {
-                string removed = text.Substring(m.Index, m.Length);
-                text = text.Remove(m.Index, m.Length);
+                string removed = Text.Substring(m.Index, m.Length);
+                Text = Text.Remove(m.Index, m.Length);
                 int equation = removed.IndexOf("eqn");
                 if (equation > 0)
                 {
-                    text = text.Insert(m.Index,
-                        "<![CDATA[" +
-                        removed.Substring(equation + 4, removed.IndexOf(":-->") - equation - 4) +
-                        "]]>");
+                    // Find the start and end of the equation string
+                    int eqn_start = equation + 4;
+                    int eqn_end = removed.IndexOf(":-->") - equation - 4;
+                    if (eqn_end < 0)
+                    {
+                        // Note: a few docs from man4 delimit eqn end with ": -->"
+                        eqn_end = removed.IndexOf(": -->") - equation - 4;
+                    }
+                    if (eqn_end < 0)
+                    {
+                        Console.WriteLine("[Warning] Failed to find equation for mml.");
+                        goto next;
+                    }
+
+                    string eqn_substring = removed.Substring(eqn_start, eqn_end);
+                    Text = Text.Insert(m.Index, "<![CDATA[" + eqn_substring + "]]>");
                 }
-                m = remove_mathml.Match(text);
+
+            next:
+                m = remove_mathml.Match(Text);
             }
 
             XmlReader doc = null;
             try
             {
                 // The pure XmlReader is ~20x faster than the XmlTextReader.
-                doc = XmlReader.Create(new StringReader(text), settings);
+                doc = XmlReader.Create(new StringReader(Text), settings);
                 //doc = new XmlTextReader(new StringReader(text));
                 
                 using (StringWriter sw = new StringWriter())
                 {
                     xslt.Transform(doc, null, sw);
-                    return sw.ToString().TrimEnd('\n');
+                    Text = sw.ToString().TrimEnd('\n');
+                    return Text;
                 }
             }
             catch (XmlException e)
