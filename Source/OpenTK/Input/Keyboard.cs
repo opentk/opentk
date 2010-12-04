@@ -38,41 +38,64 @@ namespace OpenTK.Input
     {
         #region Fields
 
-        //static IKeyboardDriver driver;
-
-        #endregion
-
-        #region Constructors
-
-        static Keyboard()
-        {
-            throw new NotImplementedException();
-            //driver = Platform.Factory.Default.CreateKeyboardDriver();
-        }
+        static readonly IKeyboardDriver2 driver =
+            Platform.Factory.Default.CreateKeyboardDriver();
+        static readonly object SyncRoot = new object();
 
         #endregion
 
         #region Public Members
 
         /// <summary>
-        /// Retrieves the KeyboardState for the default keyboard device.
+        /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.
         /// </summary>
-        /// <returns>A <see cref="OpenTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
+        /// <returns>An <see cref="OpenTK.Input.KeyboardState"/> structure containing the combined state for all keyboard devices.</returns>
         public static KeyboardState GetState()
         {
-            return new KeyboardState();
+            lock (SyncRoot)
+            {
+                return driver.GetState();
+            }
         }
 
         /// <summary>
-        /// Retrieves the KeyboardState for the specified keyboard device.
+        /// Retrieves the <see cref="OpenTK.Input.KeyboardState"/> for the specified keyboard device.
         /// </summary>
         /// <param name="index">The index of the keyboard device.</param>
-        /// <returns>A <see cref="OpenTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
+        /// <returns>An <see cref="OpenTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
         public static KeyboardState GetState(int index)
         {
-            return new KeyboardState();
+            if (index < 0)
+                throw new ArgumentOutOfRangeException("index");
+
+            lock (SyncRoot)
+            {
+                return driver.GetState(index);
+            }
         }
 
-        #endregion
+#if false
+        // Disabled until a correct, cross-platform API can be defined.
+
+        /// <summary>
+        /// Retrieves the device name for the keyboard device.
+        /// </summary>
+        /// <param name="index">The index of the keyboard device.</param>
+        /// <returns>A <see cref="System.String"/> with the name of the specified device or <see cref="System.String.Empty"/>.</returns>
+        /// <remarks>
+        /// <para>If no device exists at the specified index, the return value is <see cref="System.String.Empty"/>.</para></remarks>
+        public static string GetDeviceName(int index)
+        {
+            if (index < 0)
+                throw new ArgumentOutOfRangeException("index");
+
+            lock (SyncRoot)
+            {
+                return driver.GetDeviceName(index);
+            }
+        }
+#endif
+
+         #endregion
     }
 }

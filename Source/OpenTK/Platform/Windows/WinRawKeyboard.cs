@@ -1,130 +1,247 @@
-﻿#region --- License ---
-/* Copyright (c) 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- */
+﻿#region License
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2010 the Open Toolkit library.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
 #endregion
-
-#region --- Using directives ---
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using OpenTK.Input;
 
-#endregion
-
 namespace OpenTK.Platform.Windows
 {
-    internal class WinRawKeyboard : IKeyboardDriver, IDisposable
+    sealed class WinRawKeyboard : IKeyboardDriver2
     {
-        private List<KeyboardDevice> keyboards = new List<KeyboardDevice>();
-        private IntPtr window;
+        static readonly WinKeyMap KeyMap = new WinKeyMap();
+        readonly List<KeyboardState> keyboards = new List<KeyboardState>();
+        readonly List<string> names = new List<string>();
+        readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
+        readonly IntPtr window;
+        readonly object UpdateLock = new object();
 
-        #region --- Constructors ---
+        #region Constructors
 
-        internal WinRawKeyboard()
-            : this(IntPtr.Zero)
+        public WinRawKeyboard(IntPtr windowHandle)
         {
-        }
-
-        internal WinRawKeyboard(IntPtr windowHandle)
-        {
-            Debug.WriteLine("Initializing keyboard driver (WinRawKeyboard).");
+            Debug.WriteLine("Using WinRawKeyboard.");
             Debug.Indent();
 
             this.window = windowHandle;
-
-            UpdateKeyboardList();
+            RefreshDevices();
 
             Debug.Unindent();
         }
 
         #endregion
 
-        #region internal static void UpdateKeyboardList()
+        #region Public Members
 
-        internal void UpdateKeyboardList()
+        public void RefreshDevices()
         {
-            int count = WinRawInput.DeviceCount;
-            RawInputDeviceList[] ridl = new RawInputDeviceList[count];
-            for (int i = 0; i < count; i++)
-                ridl[i] = new RawInputDeviceList();
-            Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
-
-            // Discover keyboard devices:
-            for (int i = 0; i < count; i++)
+            lock (UpdateLock)
             {
-                uint size = 0;
-                Functions.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
-                IntPtr name_ptr = Marshal.AllocHGlobal((IntPtr)size);
-                Functions.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICENAME, name_ptr, ref size);
-                string name = Marshal.PtrToStringAnsi(name_ptr);
-                Marshal.FreeHGlobal(name_ptr);
-                if (name.ToLower().Contains("root"))
+                for (int i = 0; i < keyboards.Count; i++)
                 {
-                    // This is a terminal services device, skip it.
-                    continue;
+                    KeyboardState state = keyboards[i];
+                    state.IsConnected = false;
+                    keyboards[i] = state;
                 }
-                else if (ridl[i].Type == RawInputDeviceType.KEYBOARD || ridl[i].Type == RawInputDeviceType.HID)
+
+                int count = WinRawInput.DeviceCount;
+                RawInputDeviceList[] ridl = new RawInputDeviceList[count];
+                for (int i = 0; i < count; i++)
+                    ridl[i] = new RawInputDeviceList();
+                Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
+
+                // Discover keyboard devices:
+                foreach (RawInputDeviceList dev in ridl)
                 {
-                    // This is a keyboard or USB keyboard device. In the latter case, discover if it really is a
-                    // keyboard device by qeurying the registry.
-
-                    // remove the \??\
-                    name = name.Substring(4);
-
-                    string[] split = name.Split('#');
-
-                    string id_01 = split[0];    // ACPI (Class code)
-                    string id_02 = split[1];    // PNP0303 (SubClass code)
-                    string id_03 = split[2];    // 3&13c0b0c5&0 (Protocol code)
-                    // The final part is the class GUID and is not needed here
-
-                    string findme = string.Format(
-                        @"System\CurrentControlSet\Enum\{0}\{1}\{2}",
-                        id_01, id_02, id_03);
-
-                    RegistryKey regkey = Registry.LocalMachine.OpenSubKey(findme);
-
-                    string deviceDesc =
-                        (string)regkey.GetValue("DeviceDesc");
-                    string deviceClass =
-                        (string)regkey.GetValue("Class");
-                    if (!String.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("keyboard"))
+                    ContextHandle id = new ContextHandle(dev.Device);
+                    if (rawids.ContainsKey(id))
                     {
-                        KeyboardDevice kb = new KeyboardDevice();
-                        kb.Description = deviceDesc;
+                        // Device already registered, mark as connected
+                        KeyboardState state = keyboards[rawids[id]];
+                        state.IsConnected = true;
+                        keyboards[rawids[id]] = state;
+                        continue;
+                    }
 
-                        // Register the keyboard:
-                        RawInputDeviceInfo info = new RawInputDeviceInfo();
-                        int devInfoSize = API.RawInputDeviceInfoSize;
-                        Functions.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICEINFO,
-                                info, ref devInfoSize);
+                    string name = GetDeviceName(dev);
+                    if (name.ToLower().Contains("root"))
+                    {
+                        // This is a terminal services device, skip it.
+                        continue;
+                    }
+                    else if (dev.Type == RawInputDeviceType.KEYBOARD || dev.Type == RawInputDeviceType.HID)
+                    {
+                        // This is a keyboard or USB keyboard device. In the latter case, discover if it really is a
+                        // keyboard device by qeurying the registry.
+                        RegistryKey regkey = GetRegistryKey(name);
+                        string deviceDesc = (string)regkey.GetValue("DeviceDesc");
+                        string deviceClass = (string)regkey.GetValue("Class");
 
-                        kb.NumberOfLeds = info.Device.Keyboard.NumberOfIndicators;
-                        kb.NumberOfFunctionKeys = info.Device.Keyboard.NumberOfFunctionKeys;
-                        kb.NumberOfKeys = info.Device.Keyboard.NumberOfKeysTotal;
-                        //kb.DeviceID = (info.Device.Keyboard.Type << 32) + info.Device.Keyboard.SubType;
-                        kb.DeviceID = ridl[i].Device;
+                        if (String.IsNullOrEmpty(deviceDesc))
+                        {
+                            Debug.Print("[Warning] Failed to retrieve device description, skipping this device.");
+                            continue;
+                        }
+                        else
+                        {
+                            deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
+                        }
 
-                        //if (!keyboards.Contains(kb))
-                        //{
-                            this.RegisterKeyboardDevice(kb);
-                            keyboards.Add(kb);
-                        //}
+                        if (!String.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("keyboard"))
+                        {
+                            // Register the keyboard:
+                            RawInputDeviceInfo info = new RawInputDeviceInfo();
+                            int devInfoSize = API.RawInputDeviceInfoSize;
+                            Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICEINFO,
+                                    info, ref devInfoSize);
+
+                            //KeyboardDevice kb = new KeyboardDevice();
+                            //kb.Description = deviceDesc;
+                            //kb.NumberOfLeds = info.Device.Keyboard.NumberOfIndicators;
+                            //kb.NumberOfFunctionKeys = info.Device.Keyboard.NumberOfFunctionKeys;
+                            //kb.NumberOfKeys = info.Device.Keyboard.NumberOfKeysTotal;
+                            //kb.DeviceID = dev.Device;
+
+                            RegisterKeyboardDevice(window, deviceDesc);
+                            KeyboardState state = new KeyboardState();
+                            state.IsConnected = true;
+                            keyboards.Add(state);
+                            names.Add(deviceDesc);
+                            rawids.Add(new ContextHandle(dev.Device), keyboards.Count - 1);
+                        }
                     }
                 }
             }
         }
 
+        public bool ProcessKeyboardEvent(RawInput rin)
+        {
+            bool processed = false;
+
+            bool pressed =
+                rin.Data.Keyboard.Message == (int)WindowMessage.KEYDOWN ||
+                rin.Data.Keyboard.Message == (int)WindowMessage.SYSKEYDOWN;
+
+            ContextHandle handle = new ContextHandle(rin.Header.Device);
+            KeyboardState keyboard;
+            if (!rawids.ContainsKey(handle))
+            {
+                RefreshDevices();
+            }
+
+            if (keyboards.Count == 0)
+                return false;
+
+            // Note:For some reason, my Microsoft Digital 3000 keyboard reports 0
+            // as rin.Header.Device for the "zoom-in/zoom-out" buttons.
+            // That's problematic, because no device has a "0" id.
+            // As a workaround, we'll add those buttons to the first device (if any).
+            int keyboard_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
+            keyboard = keyboards[keyboard_handle];
+
+            // Generic control, shift, alt keys may be sent instead of left/right.
+            // It seems you have to explicitly register left/right events.
+            switch (rin.Data.Keyboard.VKey)
+            {
+                case VirtualKeys.SHIFT:
+                    keyboard[Input.Key.ShiftLeft] = keyboard[Input.Key.ShiftRight] = pressed;
+                    processed = true;
+                    break;
+
+                case VirtualKeys.CONTROL:
+                    keyboard[Input.Key.ControlLeft] = keyboard[Input.Key.ControlRight] = pressed;
+                    processed = true;
+                    break;
+
+                case VirtualKeys.MENU:
+                    keyboard[Input.Key.AltLeft] = keyboard[Input.Key.AltRight] = pressed;
+                    processed = true;
+                    break;
+
+                default:
+                    if (!KeyMap.ContainsKey(rin.Data.Keyboard.VKey))
+                    {
+                        Debug.Print("Virtual key {0} ({1}) not mapped.",
+                                    rin.Data.Keyboard.VKey, (int)rin.Data.Keyboard.VKey);
+                    }
+                    else
+                    {
+                        keyboard[KeyMap[rin.Data.Keyboard.VKey]] = pressed;
+                        processed = true;
+                    }
+                    break;
+            }
+
+            lock (UpdateLock)
+            {
+                keyboards[keyboard_handle] = keyboard;
+                return processed;
+            }
+        }
+
         #endregion
 
-        #region internal void RegisterKeyboardDevice(Keyboard kb)
+        #region Private Members
 
-        internal void RegisterKeyboardDevice(KeyboardDevice kb)
+        static RegistryKey GetRegistryKey(string name)
+        {
+            // remove the \??\
+            name = name.Substring(4);
+
+            string[] split = name.Split('#');
+
+            string id_01 = split[0];    // ACPI (Class code)
+            string id_02 = split[1];    // PNP0303 (SubClass code)
+            string id_03 = split[2];    // 3&13c0b0c5&0 (Protocol code)
+            // The final part is the class GUID and is not needed here
+
+            string findme = string.Format(
+                @"System\CurrentControlSet\Enum\{0}\{1}\{2}",
+                id_01, id_02, id_03);
+
+            RegistryKey regkey = Registry.LocalMachine.OpenSubKey(findme);
+            return regkey;
+        }
+
+        static string GetDeviceName(RawInputDeviceList dev)
+        {
+            uint size = 0;
+            Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
+            IntPtr name_ptr = Marshal.AllocHGlobal((IntPtr)size);
+            Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, name_ptr, ref size);
+            string name = Marshal.PtrToStringAnsi(name_ptr);
+            Marshal.FreeHGlobal(name_ptr);
+            return name;
+        }
+
+        static void RegisterKeyboardDevice(IntPtr window, string name)
         {
             RawInputDevice[] rid = new RawInputDevice[1];
             // Keyboard is 1/6 (page/id). See http://www.microsoft.com/whdc/device/input/HID_HWID.mspx
@@ -136,134 +253,52 @@ namespace OpenTK.Platform.Windows
 
             if (!Functions.RegisterRawInputDevices(rid, 1, API.RawInputDeviceSize))
             {
-                throw new ApplicationException(
-                    String.Format(
-                        "Raw input registration failed with error: {0}. Device: {1}",
-                        Marshal.GetLastWin32Error(),
-                        rid[0].ToString())
-                );
+                Debug.Print("[Warning] Raw input registration failed with error: {0}. Device: {1}",
+                    Marshal.GetLastWin32Error(), rid[0].ToString());
             }
             else
             {
-                Debug.Print("Registered keyboard {0}", kb.ToString());
+                Debug.Print("Registered keyboard {0}", name);
             }
         }
 
         #endregion
 
-        #region internal bool ProcessKeyboardEvent(API.RawInput rin)
+        #region IKeyboardDriver2 Members
 
-        /// <summary>
-        /// Processes raw input events.
-        /// </summary>
-        /// <param name="rin"></param>
-        /// <returns></returns>
-        internal bool ProcessKeyboardEvent(RawInput rin)
+        public KeyboardState GetState()
         {
-            //Keyboard key = keyboards[0];
-            //rin.Header.Device;
-            switch (rin.Header.Type)
+            lock (UpdateLock)
             {
-                case RawInputDeviceType.KEYBOARD:
-                    bool pressed =
-                        rin.Data.Keyboard.Message == (int)WindowMessage.KEYDOWN ||
-                        rin.Data.Keyboard.Message == (int)WindowMessage.SYSKEYDOWN;
-                    
-                    // Find the device where the button was pressed. It can be that the input notification
-                    // came not from a physical keyboard device but from a code-generated input message - in
-                    // that case, the event goes to the default (first) keyboard.
-                    // TODO: Send the event to all keyboards instead of the default one.
-                    // TODO: Optimize this! The predicate allocates way to much memory.
-                    //int index = keyboards.FindIndex(delegate(KeyboardDevice kb)
-                    //{
-                    //    return kb.DeviceID == rin.Header.Device;
-                    //});
-                    //if (index == -1) index = 0;
-                    int index;
-                    if (keyboards.Count > 0) index = 0;
-                    else return false;
-
-                    // Generic control, shift, alt keys may be sent instead of left/right.
-                    // It seems you have to explicitly register left/right events.
-                    switch (rin.Data.Keyboard.VKey)
-                    {
-                        case VirtualKeys.SHIFT:
-                            keyboards[index][Input.Key.ShiftLeft] = keyboards[index][Input.Key.ShiftRight] = pressed;
-                            return true;
-
-                        case VirtualKeys.CONTROL:
-                            keyboards[index][Input.Key.ControlLeft] = keyboards[index][Input.Key.ControlRight] = pressed;
-                            return true;
-
-                        case VirtualKeys.MENU:
-                            keyboards[index][Input.Key.AltLeft] = keyboards[index][Input.Key.AltRight] = pressed;
-                            return true;
-
-                        default:
-                            if (!WMInput.KeyMap.ContainsKey(rin.Data.Keyboard.VKey))
-                                Debug.Print("Virtual key {0} ({1}) not mapped.",
-                                            rin.Data.Keyboard.VKey, (int)rin.Data.Keyboard.VKey);
-                            else
-                                keyboards[index][WMInput.KeyMap[rin.Data.Keyboard.VKey]] = pressed;
-                            
-                            return false;
-                    }
-
-                default:
-                    throw new ApplicationException("Windows raw keyboard driver received invalid data.");
-            }
-        }
-
-        #endregion
-
-        #region --- IInputDevice Members ---
-
-        public string Description
-        {
-            get { throw new Exception("The method or operation is not implemented."); }
-        }
-
-        public Input.InputDeviceType DeviceType
-        {
-            get { return Input.InputDeviceType.Keyboard; }
-        }
-
-        #endregion
-
-        #region --- IKeyboardDriver Members ---
-
-        public IList<KeyboardDevice> Keyboard
-        {
-            get { return keyboards; }
-        }
-
-        #endregion
-
-        #region --- IDisposable Members ---
-
-        private bool disposed;
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool manual)
-        {
-            if (!disposed)
-            {
-                if (manual)
+                KeyboardState master = new KeyboardState();
+                foreach (KeyboardState ks in keyboards)
                 {
-                    keyboards.Clear();
+                    master.MergeBits(ks);
                 }
-                disposed = true;
+                return master;
             }
         }
 
-        ~WinRawKeyboard()
+        public KeyboardState GetState(int index)
         {
-            Dispose(false);
+            lock (UpdateLock)
+            {
+                if (keyboards.Count > index)
+                    return keyboards[index];
+                else
+                    return new KeyboardState();
+            }
+        }
+
+        public string GetDeviceName(int index)
+        {
+            lock (UpdateLock)
+            {
+                if (names.Count > index)
+                    return names[index];
+                else
+                    return String.Empty;
+            }
         }
 
         #endregion

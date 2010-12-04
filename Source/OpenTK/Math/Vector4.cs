@@ -97,6 +97,18 @@ namespace OpenTK
         #region Constructors
 
         /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="value">The value that will initialize this instance.</param>
+        public Vector4(float value)
+        {
+            X = value;
+            Y = value;
+            Z = value;
+            W = value;
+        }
+
+        /// <summary>
         /// Constructs a new Vector4.
         /// </summary>
         /// <param name="x">The x component of the Vector4.</param>
@@ -125,8 +137,10 @@ namespace OpenTK
 
         /// <summary>
         /// Constructs a new Vector4 from the given Vector3.
+        /// The w component is initialized to 0.
         /// </summary>
         /// <param name="v">The Vector3 to copy components from.</param>
+        /// <remarks><seealso cref="Vector4(Vector3, float)"/></remarks>
         public Vector4(Vector3 v)
         {
             X = v.X;

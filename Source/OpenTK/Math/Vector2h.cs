@@ -47,6 +47,26 @@ namespace OpenTK
         #region Constructors
 
         /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="value">The value that will initialize this instance.</param>
+        public Vector2h(Half value)
+        {
+            X = value;
+            Y = value;
+        }
+
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="value">The value that will initialize this instance.</param>
+        public Vector2h(Single value)
+        {
+            X = new Half(value);
+            Y = new Half(value);
+        }
+
+        /// <summary>
         /// The new Half2 instance will avoid conversion and copy directly from the Half parameters.
         /// </summary>
         /// <param name="x">An Half instance of a 16-bit half-precision floating-point number.</param>

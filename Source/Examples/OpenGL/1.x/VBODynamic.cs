@@ -57,8 +57,8 @@ namespace Examples.Tutorial
             GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
 
             // Setup VBO state
-            GL.EnableClientState(EnableCap.ColorArray);
-            GL.EnableClientState(EnableCap.VertexArray);
+            GL.EnableClientState(ArrayCap.ColorArray);
+            GL.EnableClientState(ArrayCap.VertexArray);
 
             GL.GenBuffers(1, out VBOHandle);
 

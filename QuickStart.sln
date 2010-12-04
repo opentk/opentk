@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickStart", "Source\QuickStart\QuickStart.csproj", "{90762BBE-CB23-42FF-9D3E-486D2F6CA485}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AnyCPU = Debug|AnyCPU
+		Release|AnyCPU = Release|AnyCPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90762BBE-CB23-42FF-9D3E-486D2F6CA485}.Debug|AnyCPU.ActiveCfg = Debug|Any CPU
+		{90762BBE-CB23-42FF-9D3E-486D2F6CA485}.Debug|AnyCPU.Build.0 = Debug|Any CPU
+		{90762BBE-CB23-42FF-9D3E-486D2F6CA485}.Release|AnyCPU.ActiveCfg = Release|Any CPU
+		{90762BBE-CB23-42FF-9D3E-486D2F6CA485}.Release|AnyCPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Source\QuickStart\QuickStart.csproj
+	EndGlobalSection
+EndGlobal

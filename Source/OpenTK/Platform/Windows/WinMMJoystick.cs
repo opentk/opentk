@@ -36,7 +36,7 @@ using System.Diagnostics;
 
 namespace OpenTK.Platform.Windows
 {
-    sealed class WinMMJoystick : IJoystickDriver
+    sealed class WinMMJoystick : IJoystickDriver, IGamePadDriver
     {
         #region Fields
 

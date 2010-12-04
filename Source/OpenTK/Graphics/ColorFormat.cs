@@ -1,9 +1,28 @@
-﻿#region --- License ---
-/* Licensed under the MIT/X11 license.
- * Copyright (c) 2006-2008 the OpenTK Team.
- * This notice may not be removed from any source distribution.
- * See license.txt for licensing detailed licensing details.
- */
+﻿#region License
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2010 the Open Toolkit library.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
 #endregion
 
 using System;
@@ -17,13 +36,13 @@ namespace OpenTK.Graphics
     /// <para>A ColorFormat contains Red, Green, Blue and Alpha components that descibe
     /// the allocated bits per pixel for the corresponding color.</para>
     /// </remarks>
-    public struct ColorFormat
+    public struct ColorFormat : IComparable<ColorFormat>
     {
         byte red, green, blue, alpha;
         bool isIndexed;
         int bitsPerPixel;
 
-        #region --- Constructors ---
+        #region Constructors
 
         /// <summary>
         /// Constructs a new ColorFormat with the specified aggregate bits per pixel.
@@ -96,7 +115,7 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region --- Public Methods ---
+        #region Public Members
 
         /// <summary>Gets the bits per pixel for the Red channel.</summary>
         public int Red { get { return red; } private set { red = (byte)value; } }
@@ -111,9 +130,11 @@ namespace OpenTK.Graphics
         /// <summary>Gets the sum of Red, Green, Blue and Alpha bits per pixel.</summary>
         public int BitsPerPixel { get { return bitsPerPixel; } private set { bitsPerPixel = value; } }
 
+        public static readonly ColorFormat Empty = new ColorFormat(0);
+
         #endregion
 
-        #region --- Operator Overloads ---
+        #region Operator Overloads
 
         /// <summary>
         /// Converts the specified bpp into a new ColorFormat.
@@ -132,7 +153,32 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region --- Overrides ---
+        #region IComparable<ColorFormat> Members
+
+        /// <summary>
+        /// Compares two instances.
+        /// </summary>
+        /// <param name="other">The other instance.</param>
+        /// <returns>
+        /// Zero if this instance is equal to other;
+        /// a positive value  if this instance is greater than other;
+        /// a negative value otherwise.
+        /// </returns>
+        public int CompareTo(ColorFormat other)
+        {
+            int result = BitsPerPixel.CompareTo(other.BitsPerPixel);
+            if (result != 0)
+                return result;
+            result = IsIndexed.CompareTo(other.IsIndexed);
+            if (result != 0)
+                return result;
+            result = Alpha.CompareTo(other.Alpha);
+            return result;
+        }
+
+        #endregion
+
+        #region Overrides
 
         /// <summary>
         /// Indicates whether this instance and a specified object are equal.
@@ -174,6 +220,50 @@ namespace OpenTK.Graphics
         public static bool operator !=(ColorFormat left, ColorFormat right)
         {
             return !(left == right);
+        }
+
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The left operand.</param>
+        /// <param name="right">The right operand.</param>
+        /// <returns>True if left is greater than right; false otherwise.</returns>
+        public static bool operator >(ColorFormat left, ColorFormat right)
+        {
+            return left.CompareTo(right) > 0;
+        }
+
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The left operand.</param>
+        /// <param name="right">The right operand.</param>
+        /// <returns>True if left is greater than or equal to right; false otherwise.</returns>
+        public static bool operator >=(ColorFormat left, ColorFormat right)
+        {
+            return left.CompareTo(right) >= 0;
+        }
+
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The left operand.</param>
+        /// <param name="right">The right operand.</param>
+        /// <returns>True if left is less than right; false otherwise.</returns>
+        public static bool operator <(ColorFormat left, ColorFormat right)
+        {
+            return left.CompareTo(right) < 0;
+        }
+
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The left operand.</param>
+        /// <param name="right">The right operand.</param>
+        /// <returns>True if left is less than or equal to right; false otherwise.</returns>
+        public static bool operator <=(ColorFormat left, ColorFormat right)
+        {
+            return left.CompareTo(right) <= 0;
         }
 
         /// <summary>

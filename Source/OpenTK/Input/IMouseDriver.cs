@@ -13,6 +13,7 @@ namespace OpenTK.Input
     /// <summary>
     /// Defines the interface for MouseDevice drivers.
     /// </summary>
+    [Obsolete]
     public interface IMouseDriver
     {
         /// <summary>

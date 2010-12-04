@@ -59,6 +59,17 @@ namespace OpenTK
         #region Constructors
 
         /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="value">The value that will initialize this instance.</param>
+        public Vector3(float value)
+        {
+            X = value;
+            Y = value;
+            Z = value;
+        }
+
+        /// <summary>
         /// Constructs a new Vector3.
         /// </summary>
         /// <param name="x">The x component of the Vector3.</param>
@@ -1143,7 +1154,7 @@ namespace OpenTK
         /// <param name="result">The transformed vector</param>
         public static void TransformPerspective(ref Vector3 vec, ref Matrix4 mat, out Vector3 result)
         {
-            Vector4 v = new Vector4(vec);
+            Vector4 v = new Vector4(vec, 1);
             Vector4.Transform(ref v, ref mat, out v);
             result.X = v.X / v.W;
             result.Y = v.Y / v.W;

@@ -54,7 +54,10 @@ namespace OpenTK.Platform.X11
         const int _min_width = 30, _min_height = 30;
 
         X11WindowInfo window = new X11WindowInfo();
+
+        // Legacy input support
         X11Input driver;
+        MouseDevice mouse;
 
         // Window manager hints for fullscreen windows.
         // Not used right now (the code is written, but is not 64bit-correct), but could be useful for older WMs which
@@ -107,11 +110,17 @@ namespace OpenTK.Platform.X11
         bool isExiting;
 
         bool _decorations_hidden = false;
+        bool cursor_visible = true;
+        int mouse_rel_x, mouse_rel_y;
 
          // Keyboard input
         readonly byte[] ascii = new byte[16];
         readonly char[] chars = new char[16];
         readonly KeyPressEventArgs KPEventArgs = new KeyPressEventArgs('\0');
+
+        readonly IntPtr EmptyCursor;
+
+        public static bool MouseWarpActive = false;
 
         #endregion
 
@@ -194,6 +203,9 @@ namespace OpenTK.Platform.X11
             RefreshWindowBounds(ref e);
 
             driver = new X11Input(window);
+            mouse = driver.Mouse[0];
+
+            EmptyCursor = CreateEmptyCursor(window);
 
             Debug.WriteLine(String.Format("X11GLNative window created successfully (id: {0}).", Handle));
             Debug.Unindent();
@@ -655,8 +667,7 @@ namespace OpenTK.Platform.X11
             if (Location != new_location)
             {
                 bounds.Location = new_location;
-                if (Move != null)
-                    Move(this, EventArgs.Empty);
+                Move(this, EventArgs.Empty);
             }
 
             // Note: width and height denote the internal (client) size.
@@ -669,12 +680,35 @@ namespace OpenTK.Platform.X11
                 bounds.Size = new_size;
                 client_rectangle.Size = new Size(e.ConfigureEvent.width, e.ConfigureEvent.height);
 
-                if (this.Resize != null)
-                {
-                    //Debug.WriteLine(new System.Diagnostics.StackTrace());
-                    Resize(this, EventArgs.Empty);
-                }
+                Resize(this, EventArgs.Empty);
             }
+        }
+
+        static IntPtr CreateEmptyCursor(X11WindowInfo window)
+        {
+            IntPtr cursor = IntPtr.Zero;
+            using (new XLock(window.Display))
+            {
+                XColor black, dummy;
+                IntPtr cmap = Functions.XDefaultColormap(window.Display, window.Screen);
+                Functions.XAllocNamedColor(window.Display, cmap, "black", out black, out dummy);
+                IntPtr bmp_empty = Functions.XCreateBitmapFromData(window.Display,
+                    window.WindowHandle, new byte[,] { { 0 } });
+                cursor = Functions.XCreatePixmapCursor(window.Display,
+                    bmp_empty, bmp_empty, ref black, ref black, 0, 0);
+            }
+            return cursor;
+        }
+
+        static void SetMouseClamped(MouseDevice mouse, int x, int y,
+            int left, int top, int width, int height)
+        {
+            // Clamp mouse to the specified rectangle.
+            x = Math.Max(x, left);
+            x = Math.Min(x, width);
+            y = Math.Max(y, top);
+            y = Math.Min(y, height);
+            mouse.Position = new Point(x, y);
         }
 
         #endregion
@@ -703,8 +737,7 @@ namespace OpenTK.Platform.X11
                             bool previous_visible = visible;
                             visible = true;
                             if (visible != previous_visible)
-                                if (VisibleChanged != null)
-                                    VisibleChanged(this, EventArgs.Empty);
+                                VisibleChanged(this, EventArgs.Empty);
                         }
                         return;
 
@@ -713,8 +746,7 @@ namespace OpenTK.Platform.X11
                             bool previous_visible = visible;
                             visible = false;
                             if (visible != previous_visible)
-                                if (VisibleChanged != null)
-                                    VisibleChanged(this, EventArgs.Empty);
+                                VisibleChanged(this, EventArgs.Empty);
                         }
                         break;
 
@@ -727,8 +759,7 @@ namespace OpenTK.Platform.X11
                         {
                             Debug.WriteLine("Exit message received.");
                             CancelEventArgs ce = new CancelEventArgs();
-                            if (Closing != null)
-                                Closing(this, ce);
+                            Closing(this, ce);
 
                             if (!ce.Cancel)
                             {
@@ -749,8 +780,7 @@ namespace OpenTK.Platform.X11
                         Debug.WriteLine("Window destroyed");
                         exists = false;
 
-                        if (Closed != null)
-                            Closed(this, EventArgs.Empty);
+                        Closed(this, EventArgs.Empty);
 
                         return;
 
@@ -783,6 +813,45 @@ namespace OpenTK.Platform.X11
                         break;
                         
                     case XEventName.MotionNotify:
+                    {
+                        // Try to detect and ignore events from XWarpPointer, below.
+                        // This heuristic will fail if the user actually moves the pointer
+                        // to the dead center of the window. Fortunately, this situation
+                        // is very very uncommon. Todo: Can this be remedied?
+                        int x = e.MotionEvent.x;
+                        int y =e.MotionEvent.y;
+                        int middle_x = (Bounds.Left + Bounds.Right) / 2;
+                        int middle_y = (Bounds.Top + Bounds.Bottom) / 2;
+                        Point screen_xy = PointToScreen(new Point(x, y));
+                        if (!CursorVisible && MouseWarpActive &&
+                            screen_xy.X == middle_x && screen_xy.Y == middle_y)
+                        {
+                            MouseWarpActive = false;
+                            mouse_rel_x = x;
+                            mouse_rel_y = y;
+                        }
+                        else if (!CursorVisible)
+                        {
+                            SetMouseClamped(mouse,
+                                mouse.X + x - mouse_rel_x,
+                                mouse.Y + y - mouse_rel_y,
+                                0, 0, Width, Height);
+                            mouse_rel_x = x;
+                            mouse_rel_y = y;
+
+                            // Warp cursor to center of window.
+                            MouseWarpActive = true;
+                            Mouse.SetPosition(middle_x, middle_y);
+                        }
+                        else
+                        {
+                            SetMouseClamped(mouse, x, y, 0, 0, Width, Height);
+                            mouse_rel_x = x;
+                            mouse_rel_y = y;
+                        }
+                        break;
+                    }
+
                     case XEventName.ButtonPress:
                     case XEventName.ButtonRelease:
                         driver.ProcessEvent(ref e);
@@ -793,8 +862,7 @@ namespace OpenTK.Platform.X11
                             bool previous_focus = has_focus;
                             has_focus = true;
                             if (has_focus != previous_focus)
-                                if (FocusedChanged != null)
-                                    FocusedChanged(this, EventArgs.Empty);
+                                FocusedChanged(this, EventArgs.Empty);
                         }
                         break;
 
@@ -803,19 +871,19 @@ namespace OpenTK.Platform.X11
                             bool previous_focus = has_focus;
                             has_focus = false;
                             if (has_focus != previous_focus)
-                                if (FocusedChanged != null)
-                                    FocusedChanged(this, EventArgs.Empty);
+                                FocusedChanged(this, EventArgs.Empty);
                         }
                         break;
 
                     case XEventName.LeaveNotify:
-                        if (MouseLeave != null)
+                        if (CursorVisible)
+                        {
                             MouseLeave(this, EventArgs.Empty);
+                        }
                         break;
 
                     case XEventName.EnterNotify:
-                        if (MouseEnter != null)
-                            MouseEnter(this, EventArgs.Empty);
+                        MouseEnter(this, EventArgs.Empty);
                         break;
 
                     case XEventName.MappingNotify:
@@ -830,8 +898,7 @@ namespace OpenTK.Platform.X11
                    case XEventName.PropertyNotify:
                         if (e.PropertyEvent.atom == _atom_net_wm_state)
                         {
-                            if (WindowStateChanged != null)
-                                WindowStateChanged(this, EventArgs.Empty);
+                            WindowStateChanged(this, EventArgs.Empty);
                         }
 
                         //if (e.PropertyEvent.atom == _atom_net_frame_extents)
@@ -1058,8 +1125,7 @@ namespace OpenTK.Platform.X11
                 }
 
                 icon = value;
-                if (IconChanged != null)
-                    IconChanged(this, EventArgs.Empty);
+                IconChanged(this, EventArgs.Empty);
             }
         }
 
@@ -1257,8 +1323,7 @@ namespace OpenTK.Platform.X11
                         break;
                 }
 
-                if (WindowBorderChanged != null)
-                    WindowBorderChanged(this, EventArgs.Empty);
+                WindowBorderChanged(this, EventArgs.Empty);
             }
         }
 
@@ -1266,39 +1331,48 @@ namespace OpenTK.Platform.X11
 
         #region Events
 
-        public event EventHandler<EventArgs> Load;
-
-        public event EventHandler<EventArgs> Unload;
-
-        public event EventHandler<EventArgs> Move;
-
-        public event EventHandler<EventArgs> Resize;
-
-        public event EventHandler<System.ComponentModel.CancelEventArgs> Closing;
-
-        public event EventHandler<EventArgs> Closed;
-
-        public event EventHandler<EventArgs> Disposed;
-
-        public event EventHandler<EventArgs> IconChanged;
-
-        public event EventHandler<EventArgs> TitleChanged;
-
-        public event EventHandler<EventArgs> VisibleChanged;
-
-        public event EventHandler<EventArgs> FocusedChanged;
-
-        public event EventHandler<EventArgs> WindowBorderChanged;
-
-        public event EventHandler<EventArgs> WindowStateChanged;
-
-        public event EventHandler<KeyPressEventArgs> KeyPress;
-
-        public event EventHandler<EventArgs> MouseEnter;
-
-        public event EventHandler<EventArgs> MouseLeave;
+        public event EventHandler<EventArgs> Move = delegate { };
+        public event EventHandler<EventArgs> Resize = delegate { };
+        public event EventHandler<System.ComponentModel.CancelEventArgs> Closing = delegate { };
+        public event EventHandler<EventArgs> Closed = delegate { };
+        public event EventHandler<EventArgs> Disposed = delegate { };
+        public event EventHandler<EventArgs> IconChanged = delegate { };
+        public event EventHandler<EventArgs> TitleChanged = delegate { };
+        public event EventHandler<EventArgs> VisibleChanged = delegate { };
+        public event EventHandler<EventArgs> FocusedChanged = delegate { };
+        public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
+        public event EventHandler<EventArgs> WindowStateChanged = delegate { };
+        public event EventHandler<KeyboardKeyEventArgs> KeyDown = delegate { };
+		public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
+		public event EventHandler<KeyboardKeyEventArgs> KeyUp = delegate { };
+        public event EventHandler<EventArgs> MouseEnter = delegate { };
+        public event EventHandler<EventArgs> MouseLeave = delegate { };
         
         #endregion
+
+        public bool CursorVisible
+        {
+            get { return cursor_visible; }
+            set
+            {
+                if (value)
+                {
+                    using (new XLock(window.Display))
+                    {
+                        Functions.XUndefineCursor(window.Display, window.WindowHandle);
+                        cursor_visible = true;
+                    }
+                }
+                else
+                {
+                    using (new XLock(window.Display))
+                    {
+                        Functions.XDefineCursor(window.Display, window.WindowHandle, EmptyCursor);
+                        cursor_visible = false;
+                    }
+                }
+            }
+        }
 
         #endregion
 
@@ -1379,8 +1453,7 @@ namespace OpenTK.Platform.X11
                     }
                 }
 
-                if (TitleChanged != null)
-                    TitleChanged(this, EventArgs.Empty);
+                TitleChanged(this, EventArgs.Empty);
             }
         }
 
@@ -1521,6 +1594,7 @@ namespace OpenTK.Platform.X11
                         {
                             using (new XLock(window.Display))
                             {
+                                Functions.XFreeCursor(window.Display, EmptyCursor);
                                 Functions.XDestroyWindow(window.Display, window.WindowHandle);
                             }
 

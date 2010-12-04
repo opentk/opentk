@@ -27,7 +27,7 @@ namespace OpenTK.Platform.X11
     using Mask = System.IntPtr;
     using Atom = System.IntPtr;
     using VisualID = System.IntPtr;
-    using Time = System.UInt32;
+    using Time = System.IntPtr;
     using KeyCode = System.Byte;    // Or maybe ushort?
 
     using Display = System.IntPtr;
@@ -94,13 +94,23 @@ namespace OpenTK.Platform.X11
         public extern static Bool XCheckWindowEvent(Display display, Window w, EventMask event_mask, ref XEvent event_return);
         [DllImport("libX11")]
         public extern static Bool XCheckTypedWindowEvent(Display display, Window w, XEventName event_type, ref XEvent event_return);
-        
+        [DllImport("libX11")]
+        public extern static Bool XCheckTypedEvent(Display display, XEventName event_type, out XEvent event_return);
+
+
+        public delegate Bool EventPredicate(IntPtr display, ref XEvent e, IntPtr arg);
+        [DllImport("libX11")]
+        public extern static Bool XIfEvent(Display display, ref XEvent e, IntPtr predicate, IntPtr arg );
+        [DllImport("libX11")]
+        public extern static Bool XCheckIfEvent(Display display, ref XEvent e, IntPtr predicate, IntPtr arg );
+
         [DllImport("libX11")]
         public extern static int XConnectionNumber(IntPtr diplay);
         [DllImport("libX11")]
         public extern static int XPending(IntPtr diplay);
+
         [DllImport("libX11", EntryPoint = "XSelectInput")]
-        public extern static IntPtr XSelectInput(IntPtr display, IntPtr window, IntPtr mask);
+        public extern static int XSelectInput(IntPtr display, IntPtr window, IntPtr mask);
 
         [DllImport("libX11", EntryPoint = "XDestroyWindow")]
         public extern static int XDestroyWindow(IntPtr display, IntPtr window);
@@ -170,11 +180,40 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XUngrabPointer")]
         public extern static int XUngrabPointer(IntPtr display, IntPtr timestamp);
 
+        [DllImport("libX11", EntryPoint = "XGrabButton")]
+        public extern static int XGrabButton(IntPtr display,
+            int button, uint modifiers, Window grab_window,
+            Bool owner_events, EventMask event_mask,
+            GrabMode pointer_mode, GrabMode keyboard_mode,
+            Window confine_to, Cursor cursor);
+
+        [DllImport("libX11", EntryPoint = "XUngrabButton")]
+        public extern static int XUngrabButton(IntPtr display, uint button, uint
+              modifiers, Window grab_window);
+
         [DllImport("libX11", EntryPoint = "XQueryPointer")]
         public extern static bool XQueryPointer(IntPtr display, IntPtr window, out IntPtr root, out IntPtr child, out int root_x, out int root_y, out int win_x, out int win_y, out int keys_buttons);
 
         [DllImport("libX11", EntryPoint = "XTranslateCoordinates")]
         public extern static bool XTranslateCoordinates(IntPtr display, IntPtr src_w, IntPtr dest_w, int src_x, int src_y, out int intdest_x_return, out int dest_y_return, out IntPtr child_return);
+
+
+        [DllImport("libX11")]
+        public extern static int XGrabKey(IntPtr display, int keycode, uint modifiers,
+            Window grab_window, bool owner_events, GrabMode pointer_mode, GrabMode keyboard_mode);
+
+        [DllImport("libX11")]
+        public extern static int XUngrabKey(IntPtr display, int keycode, uint modifiers, Window grab_window);
+
+        [DllImport("libX11", EntryPoint = "XGrabKeyboard")]
+        public extern static int XGrabKeyboard(IntPtr display, IntPtr window, bool owner_events,
+            GrabMode pointer_mode, GrabMode keyboard_mode, IntPtr timestamp);
+
+        [DllImport("libX11", EntryPoint = "XUngrabKeyboard")]
+        public extern static int XUngrabKeyboard(IntPtr display, IntPtr timestamp);
+
+        [DllImport("libX11")]
+        public extern static int XAllowEvents(IntPtr display, EventMode event_mode, Time time);
 
         [DllImport("libX11", EntryPoint = "XGetGeometry")]
         public extern static bool XGetGeometry(IntPtr display, IntPtr window, out IntPtr root, out int x, out int y, out int width, out int height, out int border_width, out int depth);
@@ -319,7 +358,7 @@ namespace OpenTK.Platform.X11
         public extern static int XQueryBestCursor(IntPtr display, IntPtr drawable, int width, int height, out int best_width, out int best_height);
 
         [DllImport("libX11", EntryPoint = "XQueryExtension")]
-        public extern static int XQueryExtension(IntPtr display, string extension_name, ref int major, ref int first_event, ref int first_error);
+        public extern static int XQueryExtension(IntPtr display, string extension_name, out int major, out int first_event, out int first_error);
 
         [DllImport("libX11", EntryPoint = "XWhitePixel")]
         public extern static IntPtr XWhitePixel(IntPtr display, int screen_no);
@@ -454,7 +493,47 @@ namespace OpenTK.Platform.X11
             int bytes_buffer, [Out] KeySym[] keysym_return, IntPtr status_in_out);
 
         [DllImport("libX11")]
+        public static extern KeyCode XKeysymToKeycode(IntPtr display, KeySym keysym);
+
+        [DllImport("libX11")]
+        public static extern KeySym XKeycodeToKeysym(IntPtr display, KeyCode keycode, int index);
+
+        [DllImport("libX11")]
         public static extern int XRefreshKeyboardMapping(ref XMappingEvent event_map);
+
+        [DllImport("libX11")]
+        public static extern int XGetEventData(IntPtr display, ref XGenericEventCookie cookie);
+
+        [DllImport("libX11")]
+        public static extern void XFreeEventData(IntPtr display, ref XGenericEventCookie cookie);
+
+        [DllImport("libXi")]
+        static extern int XISelectEvents(IntPtr dpy, Window win, [In] XIEventMask[] masks, int num_masks);
+        [DllImport("libXi")]
+        static extern int XISelectEvents(IntPtr dpy, Window win, [In] ref XIEventMask masks, int num_masks);
+
+        public static int XISelectEvents(IntPtr dpy, Window win, XIEventMask[] masks)
+        {
+            return XISelectEvents(dpy, win, masks, masks.Length);
+        }
+
+        public static int XISelectEvents(IntPtr dpy, Window win, XIEventMask mask)
+        {
+            return XISelectEvents(dpy, win, ref mask, 1);
+        }
+
+        [DllImport("libXi")]
+        static extern Status XIGrabDevice(IntPtr display, int deviceid, Window grab_window, Time time,
+            Cursor cursor, int grab_mode, int paired_device_mode, Bool owner_events, XIEventMask[] mask);
+
+        [DllImport("libXi")]
+        static extern Status XIUngrabDevice(IntPtr display, int deviceid, Time time);
+
+        [DllImport("libXi")]
+        public static extern Bool XIWarpPointer(Display display,
+            int deviceid, Window src_w, Window dest_w,
+            double src_x, double src_y, int src_width, int src_height,
+            double dest_x, double dest_y);
 
         static readonly IntPtr CopyFromParent = IntPtr.Zero;
 

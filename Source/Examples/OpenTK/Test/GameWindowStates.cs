@@ -14,15 +14,17 @@ using OpenTK.Input;
 
 namespace Examples.Tests
 {
-    [Example("GameWindow states", ExampleCategory.OpenTK, "Test", Documentation = "GameWindowStates")]
+    [Example("GameWindow States", ExampleCategory.OpenTK, "GameWindow", 4, Documentation = "GameWindowStates")]
     public class GameWindowStates : GameWindow
     {
-        static readonly Font TextFont = new Font(FontFamily.GenericSansSerif, 12);
+        static readonly Font TextFont = new Font(FontFamily.GenericSansSerif, 11);
         Bitmap TextBitmap = new Bitmap(512, 512);
         int texture;
         bool mouse_in_window = false;
         bool viewport_changed = true;
         bool refresh_text = true;
+        MouseState mouse, mouse_old;
+        KeyboardState keyboard, keyboard_old;
 
         public GameWindowStates()
             : base(800, 600)
@@ -38,14 +40,22 @@ namespace Examples.Tests
             Resize += delegate { refresh_text = true; };
             WindowBorderChanged += delegate { refresh_text = true; };
             WindowStateChanged += delegate { refresh_text = true; };
-            Mouse.Move += delegate { refresh_text = true; };
+            FocusedChanged += delegate { refresh_text = true; };
+            Mouse.Move += MouseMoveHandler;
+            Mouse.ButtonDown += MouseButtonHandler;
+            Mouse.ButtonUp += MouseButtonHandler;
         }
 
         void KeyDownHandler(object sender, KeyboardKeyEventArgs e)
         {
             switch (e.Key)
             {
-                case OpenTK.Input.Key.Escape: this.Exit(); break;
+                case OpenTK.Input.Key.Escape:
+                    if (!CursorVisible)
+                        CursorVisible = true;
+                    else
+                        Exit();
+                    break;
 
                 case Key.Number1: WindowState = WindowState.Normal; break;
                 case Key.Number2: WindowState = WindowState.Maximized; break;
@@ -68,7 +78,22 @@ namespace Examples.Tests
                 case Key.Minus: Size -= new Size(16, 16); break;
             }
         }
-        
+
+        void MouseMoveHandler(object sender, MouseMoveEventArgs e)
+        {
+            refresh_text = true;
+        }
+
+        void MouseButtonHandler(object sender, MouseButtonEventArgs e)
+        {
+            refresh_text = true;
+
+            if (e.Button == MouseButton.Left && e.IsPressed)
+            {
+                CursorVisible = false;
+            }
+        }
+
         static int Clamp(int val, int min, int max)
         {
             return val > max ? max : val < min ? min : val;
@@ -79,8 +104,58 @@ namespace Examples.Tests
             gfx.DrawString(str, TextFont, Brushes.White, new PointF(0, line * TextFont.Height));
         }
 
+        static void DrawString(Graphics gfx, string str, int line, float offset)
+        {
+            gfx.DrawString(str, TextFont, Brushes.White, new PointF(offset, line * TextFont.Height));
+        }
+
+        static void DrawKeyboard(Graphics gfx, KeyboardState keyboard, int line)
+        {
+            const string str = "Keys pressed:";
+            float space = gfx.MeasureString(" ", TextFont).Width;
+            float offset = gfx.MeasureString(str, TextFont).Width + space;
+            DrawString(gfx, str, line);
+            for (int i = 0; i < (int)Key.LastKey; i++)
+            {
+                Key k = (Key)i;
+                if (keyboard[k])
+                {
+                    string key = k.ToString();
+                    DrawString(gfx, key, line, offset);
+                    offset += gfx.MeasureString(key, TextFont).Width + space;
+                }
+            }
+        }
+
+        static void DrawMouse(Graphics gfx, MouseState mouse, int line)
+        {
+            const string str = "Buttons pressed:";
+            float space = gfx.MeasureString(" ", TextFont).Width;
+            float offset = gfx.MeasureString(str, TextFont).Width + space;
+            DrawString(gfx, str, line);
+            for (int i = 0; i < (int)MouseButton.LastButton; i++)
+            {
+                MouseButton b = (MouseButton)i;
+                if (mouse[b])
+                {
+                    string button = b.ToString();
+                    DrawString(gfx, button, line, offset);
+                    offset += gfx.MeasureString(button, TextFont).Width + space;
+                }
+            }
+        }
+
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
+            mouse = OpenTK.Input.Mouse.GetState();
+            if (mouse != mouse_old)
+                refresh_text = true;
+            mouse_old = mouse;
+            keyboard = OpenTK.Input.Keyboard.GetState();
+            if (keyboard != keyboard_old)
+                refresh_text = true;
+            keyboard_old = keyboard;
+
             if (refresh_text)
             {
                 refresh_text = false;
@@ -89,18 +164,22 @@ namespace Examples.Tests
                 {
                     int line = 0;
 
-                    gfx.Clear(Color.MidnightBlue);
+                    gfx.Clear(Color.Black);
                     gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
                     DrawString(gfx, String.Format("[1 - 4]: change WindowState (current: {0}).", this.WindowState), line++);
                     DrawString(gfx, String.Format("[5 - 7]: change WindowBorder (current: {0}).", this.WindowBorder), line++);
                     DrawString(gfx, String.Format("Focused: {0}.", this.Focused), line++);
                     DrawString(gfx, String.Format("Mouse {0} window.", mouse_in_window ? "inside" : "outside of"), line++);
-                    DrawString(gfx, String.Format("Mouse position: {0}", new Vector3(Mouse.X, Mouse.Y, Mouse.Wheel)), line++);
+                    DrawString(gfx, String.Format("Mouse visible: {0}", CursorVisible), line++);
+                    DrawString(gfx, String.Format("Mouse position (absolute): {0}", new Vector3(Mouse.X, Mouse.Y, Mouse.Wheel)), line++);
+                    DrawString(gfx, String.Format("Mouse position (relative): {0}", new Vector3(mouse.X, mouse.Y, mouse.WheelPrecise)), line++);
                     DrawString(gfx, String.Format("Window.Bounds: {0}", Bounds), line++);
                     DrawString(gfx, String.Format("Window.Location: {0}, Size: {1}", Location, Size), line++);
                     DrawString(gfx, String.Format("Window.{{X={0}, Y={1}, Width={2}, Height={3}}}", X, Y, Width, Height), line++);
                     DrawString(gfx, String.Format("Window.ClientRectangle: {0}", ClientRectangle), line++);
+                    DrawKeyboard(gfx, keyboard, line++);
+                    DrawMouse(gfx, mouse, line++);
                 }
             }
 
@@ -120,6 +199,8 @@ namespace Examples.Tests
             GL.ClearColor(Color.MidnightBlue);
 
             GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcColor);
 
             texture = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2D, texture);

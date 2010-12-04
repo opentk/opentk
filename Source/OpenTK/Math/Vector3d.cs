@@ -57,6 +57,17 @@ namespace OpenTK
         #region Constructors
 
         /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="value">The value that will initialize this instance.</param>
+        public Vector3d(double value)
+        {
+            X = value;
+            Y = value;
+            Z = value;
+        }
+
+        /// <summary>
         /// Constructs a new Vector3.
         /// </summary>
         /// <param name="x">The x component of the Vector3.</param>
@@ -1141,7 +1152,7 @@ namespace OpenTK
         /// <param name="result">The transformed vector</param>
         public static void TransformPerspective(ref Vector3d vec, ref Matrix4d mat, out Vector3d result)
         {
-            Vector4d v = new Vector4d(vec);
+            Vector4d v = new Vector4d(vec, 1);
             Vector4d.Transform(ref v, ref mat, out v);
             result.X = v.X / v.W;
             result.Y = v.Y / v.W;
@@ -1353,10 +1364,10 @@ namespace OpenTK
         /// <returns>True if the instances are equal; false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            if (!(obj is Vector3))
+            if (!(obj is Vector3d))
                 return false;
 
-            return this.Equals((Vector3)obj);
+            return this.Equals((Vector3d)obj);
         }
 
         #endregion
