@@ -134,7 +134,7 @@ namespace Bind
                 var deprecated = wrappers[ext].Where(f => f.Deprecated);
 
                 last_delegate = null;
-                for (var current = forward_compatible; current != deprecated; current = deprecated)
+                foreach (var current in new IEnumerable<Function>[] { forward_compatible, deprecated })
                 {
                     foreach (var function in current)
                     {
@@ -143,9 +143,9 @@ namespace Bind
                         last_delegate = function.WrappedDelegate;
 
                         if (ext == "Core")
-                            sw.WriteLine("{0}::p{1} {0}::{1} = 0;", Settings.GLClass, function.Name);
+                            sw.WriteLine("{0}::Delegates::p{1} {0}::Delegates::{1} = 0;", Settings.GLClass, function.Name);
                         else
-                            sw.WriteLine("{0}::{1}::p{2} {0}::{1}::{2} = 0;", Settings.GLClass,
+                            sw.WriteLine("{0}::{1}::Delegates::p{2} {0}::{1}::Delegates::{2} = 0;", Settings.GLClass,
                                 function.Extension, function.Name);
                     }
                     sw.WriteLine("#ifdef {0}", AllowDeprecated);
@@ -164,14 +164,14 @@ namespace Bind
                     path = Settings.GLClass;
                 else
                     path = String.Format("{0}::{1}", Settings.GLClass, ext);
-                sw.WriteLine("{0}::Init()", path);
+                sw.WriteLine("void {0}::Init()", path);
                 sw.WriteLine("{");
                 sw.Indent();
 
                 var forward_compatible = wrappers[ext].Where(f => !f.Deprecated);
                 var deprecated = wrappers[ext].Where(f => f.Deprecated);
 
-                for (var current = forward_compatible; current != deprecated; current = deprecated)
+                foreach (var current in new IEnumerable<Function>[] { forward_compatible, deprecated })
                 {
                     last_delegate = null;
                     foreach (var function in wrappers[ext])
@@ -254,7 +254,7 @@ namespace Bind
                 sw.WriteLine("struct Delegates");
                 sw.WriteLine("{");
                 sw.Indent();
-                for (var current = forward_compatible; current != deprecated; current = deprecated)
+                foreach (var current in new IEnumerable<Function>[] { forward_compatible, deprecated })
                 {
                     last_delegate = null;
                     foreach (var f in current)
@@ -272,7 +272,7 @@ namespace Bind
                 // Write wrappers
                 sw.WriteLine("public:");
                 sw.WriteLine("static void Init();");
-                for (var current = forward_compatible; current != deprecated; current = deprecated)
+                foreach (var current in new IEnumerable<Function>[] { forward_compatible, deprecated })
                 {
                     last_delegate = null;
                     foreach (var f in current)
