@@ -58,9 +58,10 @@ namespace Bind
 
             Settings.DefaultOutputNamespace = "OpenTK";
 
-            string temp_core_file = Path.GetTempFileName();
+            string temp_header_file = Path.GetTempFileName();
+            string temp_cpp_file = Path.GetTempFileName();
 
-            using (BindStreamWriter sw = new BindStreamWriter(temp_core_file))
+            using (BindStreamWriter sw = new BindStreamWriter(temp_header_file))
             {
                 WriteLicense(sw);
 
@@ -75,10 +76,54 @@ namespace Bind
                 sw.WriteLine("}");
             }
 
-            string output_core = Path.Combine(Settings.OutputPath, "gl.h");
-            if (File.Exists(output_core))
-                File.Delete(output_core);
-            File.Move(temp_core_file, output_core);
+            using (BindStreamWriter sw = new BindStreamWriter(temp_cpp_file))
+            {
+                WriteLicense(sw);
+
+                sw.WriteLine("namespace {0}", Settings.OutputNamespace);
+                sw.WriteLine("{");
+                sw.Indent();
+
+                WriteLoader(sw, wrappers, Type.CSTypes);
+
+                sw.Unindent();
+                sw.WriteLine("}");
+            }
+
+            string output_header = Path.Combine(Settings.OutputPath, "gl++.h");
+            string output_cpp = Path.Combine(Settings.OutputPath, "gl++.cpp");
+            if (File.Exists(output_header))
+                File.Delete(output_header);
+            File.Move(temp_header_file, output_header);
+            if (File.Exists(output_cpp))
+                File.Delete(output_cpp);
+            File.Move(temp_cpp_file, output_cpp);
+        }
+
+        #endregion
+
+        #region WriteLoader
+
+        void WriteLoader(BindStreamWriter sw, FunctionCollection wrappers,
+            Dictionary<string, string> CSTypes)
+        {
+            foreach (var ext in wrappers.Keys)
+            {
+                if (ext == "Core")
+                    sw.WriteLine("{0}::{0}()", Settings.GLClass);
+                else
+                    sw.WriteLine("{0}::{1}::{1}()", Settings.GLClass, ext);
+                sw.WriteLine("{");
+                sw.Indent();
+
+                foreach (var function in wrappers[ext])
+                {
+                    sw.WriteLine("{0} = GetAddress(\"{1}\");", function.TrimmedName, function.Name);
+                }
+
+                sw.Unindent();
+                sw.WriteLine("}");
+            }
         }
 
         #endregion
@@ -87,12 +132,7 @@ namespace Bind
 
         public void WriteDelegates(BindStreamWriter sw, DelegateCollection delegates)
         {
-            Trace.WriteLine(String.Format("Writing delegates to:\t{0}", Settings.OutputNamespace));
-
-            foreach (Delegate d in delegates.Values)
-            {
-                sw.WriteLine("extern {0} {1}({2});", d.ReturnType, d.Name, d.Parameters);
-            }
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -101,6 +141,7 @@ namespace Bind
 
         public void WriteImports(BindStreamWriter sw, DelegateCollection delegates)
         {
+            throw new NotImplementedException();
         }
 
         #endregion
