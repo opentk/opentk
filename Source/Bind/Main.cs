@@ -223,6 +223,7 @@ namespace Bind
                 Settings.DefaultOutputPath = Path.Combine(
                     Directory.GetParent(Settings.DefaultOutputPath).ToString(),
                     dirName);
+                Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES10";
             }
             else if (arg == "es11")
             {
@@ -230,6 +231,7 @@ namespace Bind
                 Settings.DefaultOutputPath = Path.Combine(
                     Directory.GetParent(Settings.DefaultOutputPath).ToString(),
                     dirName);
+                Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
             }
             else if (arg == "es20")
             {
@@ -237,6 +239,7 @@ namespace Bind
                 Settings.DefaultOutputPath = Path.Combine(
                     Directory.GetParent(Settings.DefaultOutputPath).ToString(),
                     dirName);
+                Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
             }
             else if (arg == "cl" || arg == "cl10")
             {

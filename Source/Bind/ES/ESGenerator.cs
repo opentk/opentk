@@ -35,7 +35,6 @@ namespace Bind.ES
             Settings.DelegatesClass = "Delegates";
 
             Settings.OutputClass = "GL";
-            Settings.OutputNamespace = "OpenTK.Graphics." + nsName;
         }
     }
 }
