@@ -265,7 +265,7 @@ namespace Bind.Structures
                 return "";
             return String.Format("{0} = {1}((int){2}{3})",
                 Name, Unchecked ? "unchecked" : "",
-                !String.IsNullOrEmpty(Reference) ? Reference + "." : "", Value);
+                !String.IsNullOrEmpty(Reference) ? Reference + Settings.NamespaceSeparator : "", Value);
 
             //return String.Format("{0} = {1}((int){2})", Name, Unchecked ? "unchecked" : "", Value);
         }

@@ -169,7 +169,8 @@ namespace Bind
             if (d.ReturnType.CurrentType.Contains("GLenum"))
             {
                 if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
-                    d.ReturnType.QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, Settings.CompleteEnumName);
+                    d.ReturnType.QualifiedType = String.Format("{0}{1}{2}",
+                        Settings.EnumsOutput, Settings.NamespaceSeparator, Settings.CompleteEnumName);
                 else
                     d.ReturnType.QualifiedType = "int";
             }
