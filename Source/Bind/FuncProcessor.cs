@@ -150,19 +150,19 @@ namespace Bind
 
             if (d.ReturnType.CurrentType.ToLower().Contains("void") && d.ReturnType.Pointer != 0)
             {
-                d.ReturnType.QualifiedType = "System.IntPtr";
+                d.ReturnType.QualifiedType = "IntPtr";
                 d.ReturnType.WrapperType = WrapperTypes.GenericReturnType;
             }
 
             if (d.ReturnType.CurrentType.ToLower().Contains("string"))
             {
-                d.ReturnType.QualifiedType = "System.IntPtr";
+                d.ReturnType.QualifiedType = "IntPtr";
                 d.ReturnType.WrapperType = WrapperTypes.StringReturnType;
             }
 
             if (d.ReturnType.CurrentType.ToLower() == "object")
             {
-                d.ReturnType.QualifiedType = "System.IntPtr";
+                d.ReturnType.QualifiedType = "IntPtr";
                 d.ReturnType.WrapperType |= WrapperTypes.GenericReturnType;
             }
 
