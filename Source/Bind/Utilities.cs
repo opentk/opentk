@@ -89,9 +89,22 @@ namespace Bind
 
         #endregion
 
-        #region C# keywords
+        #region Keywords
 
-        public static readonly List<string> Keywords = new List<string>(
+        public static List<string> Keywords
+        {
+            get
+            {
+                switch (Settings.Language)
+                {
+                    case GeneratorLanguage.CSharp: return CSharpKeywords;
+                    case GeneratorLanguage.Cpp: return CppKeywords;
+                    default: throw new NotImplementedException();
+                }
+            }
+        }
+
+        static readonly List<string> CSharpKeywords = new List<string>(
             new string[]
             {
                 "abstract", "event", "new", "struct",
@@ -116,6 +129,8 @@ namespace Bind
                 "enum", "namespace", "string"
             }
         );
+
+        static readonly List<string> CppKeywords = new List<string>();
 
         #endregion
 

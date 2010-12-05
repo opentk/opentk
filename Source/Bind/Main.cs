@@ -36,7 +36,6 @@ namespace Bind
     static class MainClass
     {
         static GeneratorMode mode = GeneratorMode.GL2;
-        static GeneratorLanguage lang = GeneratorLanguage.CSharp;
         static internal IBind Generator;
 
         static void Main(string[] arguments)
@@ -83,10 +82,10 @@ namespace Bind
                                     string arg = b[1].ToLower();
                                     if (arg == "cpp" || arg == "c++" || arg == "c")
                                     {
-                                        lang = GeneratorLanguage.Cpp;
+                                        Settings.Language = GeneratorLanguage.Cpp;
                                         Settings.DefaultOutputPath = "gl";
-                                        Settings.DefaultOutputNamespace = "gl";
-                                        Settings.EnumsNamespace = "gl";
+                                        Settings.DefaultOutputNamespace = "OpenTK";
+                                        Settings.EnumsNamespace = "";
                                     }
                                     break;
                                 }
@@ -174,7 +173,7 @@ namespace Bind
 
                 Generator.Process();
                 ISpecWriter writer = null;
-                switch (lang)
+                switch (Settings.Language)
                 {
                     case GeneratorLanguage.Cpp:
                         writer = new CppSpecWriter();

@@ -178,5 +178,7 @@ namespace Bind
         }
         
         public static string WindowsGDI = "OpenTK.Platform.Windows.API";
+
+        public static GeneratorLanguage Language { get; set; }
     }
 }
