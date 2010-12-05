@@ -56,21 +56,19 @@ namespace Bind
             if (!Directory.Exists(Settings.OutputPath))
                 Directory.CreateDirectory(Settings.OutputPath);
 
+            Settings.DefaultOutputNamespace = "OpenTK";
+
             string temp_core_file = Path.GetTempFileName();
 
             using (BindStreamWriter sw = new BindStreamWriter(temp_core_file))
             {
                 WriteLicense(sw);
 
-                sw.WriteLine("namespace {0}", "gl");
+                sw.WriteLine("namespace {0}", Settings.OutputNamespace);
                 sw.WriteLine("{");
                 sw.Indent();
 
-                sw.Indent();
                 WriteEnums(sw, enums);
-                sw.Unindent();
-
-                //WriteDelegates(sw, delegates);
                 WriteWrappers(sw, wrappers, Type.CSTypes);
 
                 sw.Unindent();
@@ -111,27 +109,41 @@ namespace Bind
 
         public void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers, Dictionary<string, string> CSTypes)
         {
+            sw.WriteLine("struct {0}", Settings.GLClass);
+            sw.WriteLine("{");
+            sw.Indent();
+
             foreach (string extension in wrappers.Keys)
             {
                 if (extension != "Core")
                 {
-                    sw.WriteLine("namespace {0}", extension);
+                    sw.WriteLine("struct {0}", extension);
                     sw.WriteLine("{");
                     sw.Indent();
                 }
 
+                Delegate last_delegate = null;
                 foreach (Function f in wrappers[extension])
                 {
-                    sw.WriteLine("static {0} (* p{1})({2});", f.ReturnType, f.TrimmedName, f.Parameters);
-                    sw.WriteLine("extern p{0} {0};", f.TrimmedName);
+                    var d = f.WrappedDelegate;
+                    // Avoid multiple definitions of the same function
+                    if (d != last_delegate)
+                    {
+                        last_delegate = d;
+                        sw.WriteLine("static {0} (*p{1})({2});", d.ReturnType, f.TrimmedName, d.Parameters);
+                        sw.WriteLine("extern p{0} {0};", f.TrimmedName);
+                    }
                 }
 
                 if (extension != "Core")
                 {
                     sw.Unindent();
-                    sw.WriteLine("}");
+                    sw.WriteLine("};");
                 }
             }
+
+            sw.Unindent();
+            sw.WriteLine("};");
         }
 
         static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
@@ -218,15 +230,23 @@ namespace Bind
         {
             foreach (Enum @enum in enums.Values)
             {
-                sw.Write("enum ");
+                sw.Write("struct ");
                 sw.Write(@enum.Name);
-                sw.Write("{");
+                sw.Write(" : Enumeration<");
+                sw.Write(@enum.Name);
+                sw.WriteLine(">");
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("enum ");
+                sw.WriteLine("{");
                 sw.Indent();
                 foreach (var c in @enum.ConstantCollection.Values)
                 {
                     sw.Write(c);
                     sw.WriteLine(",");
                 }
+                sw.Unindent();
+                sw.WriteLine("};");
                 sw.Unindent();
                 sw.WriteLine("};");
                 sw.WriteLine();
