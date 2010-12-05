@@ -60,7 +60,7 @@ namespace Bind
                 {
                     if (a.StartsWith("--") || a.StartsWith("-") || a.StartsWith("/"))
                     {
-                        string[] b = a.Split(new char[] { '-', '/', ':', '=' }, StringSplitOptions.RemoveEmptyEntries);
+                        string[] b = a.Split(new char[] { '-', ':', '=' }, StringSplitOptions.RemoveEmptyEntries);
                         switch (b[0])
                         {
                             case "?":
