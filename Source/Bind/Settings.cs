@@ -35,6 +35,7 @@ namespace Bind
         public static string FunctionPrefix = "gl";
         public static string ConstantPrefix = "GL_";
         public static string EnumPrefix = "";
+        public static string NamespaceSeparator = ".";
 
         public static string ImportsFile = "Core.cs";
         public static string DelegatesFile = "Delegates.cs";
@@ -51,14 +52,14 @@ namespace Bind
             {
                 return
                     normalEnumsClassOverride == null ?
-                        String.IsNullOrEmpty(NestedEnumsClass) ? OutputClass : OutputClass + "." + NestedEnumsClass :
+                        String.IsNullOrEmpty(NestedEnumsClass) ? OutputClass : OutputClass + NamespaceSeparator + NestedEnumsClass :
                         normalEnumsClassOverride;
             }
         }
  
         public static string AuxEnumsClass 
         {
-            get { return GLClass + "." + NestedEnumsClass; }
+            get { return GLClass + NamespaceSeparator + NestedEnumsClass; }
         }
 
         public static string EnumsOutput
@@ -66,9 +67,9 @@ namespace Bind
             get
             {
                 if ((Compatibility & Legacy.NestedEnums) != Legacy.None)
-                    return OutputNamespace + "." + OutputClass + "." + NestedEnumsClass;
+                    return OutputNamespace + NamespaceSeparator + OutputClass + NamespaceSeparator + NestedEnumsClass;
                 else
-                    return String.IsNullOrEmpty(EnumsNamespace) ? OutputNamespace : OutputNamespace + "." + EnumsNamespace;
+                    return String.IsNullOrEmpty(EnumsNamespace) ? OutputNamespace : OutputNamespace + NamespaceSeparator + EnumsNamespace;
             }
         }
 
@@ -77,9 +78,9 @@ namespace Bind
             get
             {
                 if ((Compatibility & Legacy.NestedEnums) != Legacy.None)
-                    return OutputNamespace + "." + GLClass + "." + NestedEnumsClass;
+                    return OutputNamespace + NamespaceSeparator + GLClass + NamespaceSeparator + NestedEnumsClass;
                 else
-                    return OutputNamespace + "." + EnumsNamespace;
+                    return OutputNamespace + NamespaceSeparator + EnumsNamespace;
             }
         }
 

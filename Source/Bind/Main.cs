@@ -86,6 +86,7 @@ namespace Bind
                                         Settings.DefaultOutputPath = "gl";
                                         Settings.DefaultOutputNamespace = "OpenTK";
                                         Settings.EnumsNamespace = "";
+                                        Settings.NamespaceSeparator = "::";
                                     }
                                     break;
                                 }

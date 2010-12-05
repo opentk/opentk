@@ -58,7 +58,7 @@ namespace Bind.Structures
             get
             {
                 if (!String.IsNullOrEmpty(CurrentQualifier))
-                    return String.Format("{0}.{1}", CurrentQualifier, CurrentType);
+                    return String.Format("{0}{1}{2}", CurrentQualifier, Settings.NamespaceSeparator, CurrentType);
                 else
                     return CurrentType;
             }
@@ -367,11 +367,13 @@ namespace Bind.Structures
                         // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
                         if (enums.ContainsKey(category))
                         {
-                            QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, EnumProcessor.TranslateEnumName(category));
+                            QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
+                                Settings.NamespaceSeparator, EnumProcessor.TranslateEnumName(category));
                         }
                         else
                         {
-                            QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, Settings.CompleteEnumName);
+                            QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
+                                Settings.NamespaceSeparator, Settings.CompleteEnumName);
                         }
                     }
                 }
