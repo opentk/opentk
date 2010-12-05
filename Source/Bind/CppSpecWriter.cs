@@ -74,6 +74,7 @@ namespace Bind
             {
                 WriteLicense(sw);
 
+                sw.WriteLine("#include \"gldef++.h\"");
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
                 sw.WriteLine("{");
                 sw.Indent();
@@ -96,6 +97,7 @@ namespace Bind
             {
                 WriteLicense(sw);
 
+                sw.WriteLine("#include \"gldef++.cpp\"");
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
                 sw.WriteLine("{");
                 sw.Indent();
@@ -123,8 +125,6 @@ namespace Bind
         void WriteLoader(BindStreamWriter sw, FunctionCollection wrappers,
             Dictionary<string, string> CSTypes)
         {
-            sw.WriteLine("#include \"gl++def.cpp\"");
-
             // Used to avoid multiple declarations of the same function
             Delegate last_delegate = null;
 
@@ -261,7 +261,12 @@ namespace Bind
                     last_delegate = null;
                     foreach (var f in current)
                     {
-                        sw.WriteLine("static inline {0} {1}{2}", f.ReturnType, f.TrimmedName, f.Parameters);
+                        if (last_delegate == f.WrappedDelegate)
+                            continue;
+                        last_delegate = f.WrappedDelegate;
+
+                        sw.WriteLine("static inline {0} {1}{2}", f.WrappedDelegate.Parameters,
+                            f.TrimmedName, f.WrappedDelegate.Parameters);
                         sw.WriteLine("{");
                         sw.Indent();
                         //WriteMethodBody(sw, f);
