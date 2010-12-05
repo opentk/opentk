@@ -42,6 +42,7 @@ namespace Bind
     sealed class CppSpecWriter : ISpecWriter
     {
         readonly char[] numbers = "0123456789".ToCharArray();
+        const string AllowDeprecated = "ALLOW_DEPRECATED_GL";
 
         #region WriteBindings
 
@@ -107,19 +108,62 @@ namespace Bind
         void WriteLoader(BindStreamWriter sw, FunctionCollection wrappers,
             Dictionary<string, string> CSTypes)
         {
+            // Used to avoid multiple declarations of the same function
+            Delegate last_delegate = null;
+
+            // Declare all functions
+            foreach (var ext in wrappers.Keys)
+            {
+                var forward_compatible = wrappers[ext].Where(f => !f.Deprecated);
+                var deprecated = wrappers[ext].Where(f => f.Deprecated);
+
+                last_delegate = null;
+                for (var current = forward_compatible; current != deprecated; current = deprecated)
+                {
+                    foreach (var function in current)
+                    {
+                        if (function.WrappedDelegate == last_delegate)
+                            continue;
+                        last_delegate = function.WrappedDelegate;
+
+                        if (ext == "Core")
+                            sw.WriteLine("{0}::{1} = 0;", Settings.GLClass, function.TrimmedName);
+                        else
+                            sw.WriteLine("{0}::{1}::{2} = 0;", Settings.GLClass, function.Extension, function.TrimmedName);
+                    }
+                    sw.WriteLine("#ifdef {0}", AllowDeprecated);
+                }
+                sw.WriteLine("#endif");
+            }
+            sw.WriteLine();
+
+            // Add Init() methods
             foreach (var ext in wrappers.Keys)
             {
                 if (ext == "Core")
-                    sw.WriteLine("{0}::{0}()", Settings.GLClass);
+                    sw.WriteLine("{0}::Init()", Settings.GLClass);
                 else
-                    sw.WriteLine("{0}::{1}::{1}()", Settings.GLClass, ext);
+                    sw.WriteLine("{0}::{1}::Init()", Settings.GLClass, ext);
                 sw.WriteLine("{");
                 sw.Indent();
 
-                foreach (var function in wrappers[ext])
+                var forward_compatible = wrappers[ext].Where(f => !f.Deprecated);
+                var deprecated = wrappers[ext].Where(f => f.Deprecated);
+
+                for (var current = forward_compatible; current != deprecated; current = deprecated)
                 {
-                    sw.WriteLine("{0} = GetAddress(\"{1}\");", function.TrimmedName, function.Name);
+                    last_delegate = null;
+                    foreach (var function in wrappers[ext])
+                    {
+                          if (function.WrappedDelegate == last_delegate)
+                            continue;
+                        last_delegate = function.WrappedDelegate;
+
+                        sw.WriteLine("{0} = (p{0})GetAddress(\"{1}\");", function.TrimmedName, function.Name);
+                    }
+                    sw.WriteLine("#ifdef {0}", AllowDeprecated);
                 }
+                sw.WriteLine("#endif");
 
                 sw.Unindent();
                 sw.WriteLine("}");
@@ -148,7 +192,8 @@ namespace Bind
 
         #region WriteWrappers
 
-        public void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers, Dictionary<string, string> CSTypes)
+        public void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers,
+            Dictionary<string, string> CSTypes)
         {
             sw.WriteLine("struct {0}", Settings.GLClass);
             sw.WriteLine("{");
@@ -163,19 +208,21 @@ namespace Bind
                     sw.Indent();
                 }
 
+                sw.WriteLine("static void Init();");
+
                 // Avoid multiple definitions of the same function
                 Delegate last_delegate = null;
 
                 // Write forward-compatible functions
-                foreach (Function f in wrappers[extension].Where(f => !f.Deprecated).Select(f => f))
+                foreach (Function f in wrappers[extension].Where(f => !f.Deprecated))
                 {
                     WriteDelegate(sw, f, ref last_delegate);
                 }
 
                 // Write deprecated functions
-                sw.WriteLine("#ifdef ALLOW_DEPRECATED_GL");
+                sw.WriteLine("#ifdef {0}", AllowDeprecated);
                 sw.Indent();
-                foreach (Function f in wrappers[extension].Where(f => !f.Deprecated).Select(f => f))
+                foreach (Function f in wrappers[extension].Where(f => !f.Deprecated))
                 {
                     WriteDelegate(sw, f, ref last_delegate);
                 }
@@ -200,7 +247,7 @@ namespace Bind
             if (d != last_delegate)
             {
                 last_delegate = d;
-                sw.WriteLine("static {0} (*p{1})({2});", d.ReturnType, f.TrimmedName, d.Parameters);
+                sw.WriteLine("static {0} (*p{1}){2};", d.ReturnType, f.TrimmedName, d.Parameters);
                 sw.WriteLine("extern p{0} {0};", f.TrimmedName);
             }
         }
@@ -289,20 +336,15 @@ namespace Bind
         {
             foreach (Enum @enum in enums.Values)
             {
-                sw.Write("struct ");
-                sw.Write(@enum.Name);
-                sw.Write(" : Enumeration<");
-                sw.Write(@enum.Name);
-                sw.WriteLine(">");
+                sw.WriteLine("struct {0} : Enumeration<{0}>", @enum.Name);
                 sw.WriteLine("{");
                 sw.Indent();
-                sw.WriteLine("enum ");
+                sw.WriteLine("enum");
                 sw.WriteLine("{");
                 sw.Indent();
                 foreach (var c in @enum.ConstantCollection.Values)
                 {
-                    sw.Write(c);
-                    sw.WriteLine(",");
+                    sw.WriteLine("{0},", c);
                 }
                 sw.Unindent();
                 sw.WriteLine("};");
