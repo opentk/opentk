@@ -159,10 +159,12 @@ namespace Bind
             // Add Init() methods
             foreach (var ext in wrappers.Keys)
             {
+                string path = null;
                 if (ext == "Core")
-                    sw.WriteLine("{0}::Delegates::Init()", Settings.GLClass);
+                    path = Settings.GLClass;
                 else
-                    sw.WriteLine("{0}::{1}::Delegates::Init()", Settings.GLClass, ext);
+                    path = String.Format("{0}::{1}", Settings.GLClass, ext);
+                sw.WriteLine("{0}::Init()", path);
                 sw.WriteLine("{");
                 sw.Indent();
 
@@ -178,8 +180,8 @@ namespace Bind
                             continue;
                         last_delegate = function.WrappedDelegate;
 
-                        sw.WriteLine("{0} = (p{0})GetAddress(\"gl{0}\");",
-                             function.WrappedDelegate.Name);
+                        sw.WriteLine("{0}::Delegates::{1} = ({0}::Delegates::p{1})GetAddress(\"gl{1}\");",
+                             path, function.WrappedDelegate.Name);
                     }
                     sw.WriteLine("#ifdef {0}", AllowDeprecated);
                     sw.Indent();
@@ -247,26 +249,32 @@ namespace Bind
                 var forward_compatible = wrappers[extension].Where(f => !f.Deprecated);
                 var deprecated = wrappers[extension].Where(f => f.Deprecated);
 
+                // Write delegates
+                sw.WriteLine("private:");
+                sw.WriteLine("struct Delegates");
+                sw.WriteLine("{");
+                sw.Indent();
                 for (var current = forward_compatible; current != deprecated; current = deprecated)
                 {
-                    // Write delegates
                     last_delegate = null;
-
-                    sw.WriteLine("private:");
-                    sw.WriteLine("struct Delegates");
-                    sw.WriteLine("{");
-                    sw.Indent();
-                    sw.WriteLine("static void Init();");
                     foreach (var f in current)
                     {
                          WriteDelegate(sw, f.WrappedDelegate, ref last_delegate);
                     }
-                    sw.Unindent();
-                    sw.WriteLine("};");
+                    sw.WriteLine("#ifdef {0}", AllowDeprecated);
+                    sw.Indent();
+                }
+                sw.Unindent();
+                sw.WriteLine("#endif");
+                sw.Unindent();
+                sw.WriteLine("};");
 
-                    // Write wrappers
+                // Write wrappers
+                sw.WriteLine("public:");
+                sw.WriteLine("static void Init();");
+                for (var current = forward_compatible; current != deprecated; current = deprecated)
+                {
                     last_delegate = null;
-                    sw.WriteLine("public:");
                     foreach (var f in current)
                     {
                         if (last_delegate == f.WrappedDelegate)
