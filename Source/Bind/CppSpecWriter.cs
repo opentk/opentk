@@ -122,18 +122,24 @@ namespace Bind
                     sw.Indent();
                 }
 
+                // Avoid multiple definitions of the same function
                 Delegate last_delegate = null;
-                foreach (Function f in wrappers[extension])
+
+                // Write forward-compatible functions
+                foreach (Function f in wrappers[extension].Where(f => !f.Deprecated).Select(f => f))
                 {
-                    var d = f.WrappedDelegate;
-                    // Avoid multiple definitions of the same function
-                    if (d != last_delegate)
-                    {
-                        last_delegate = d;
-                        sw.WriteLine("static {0} (*p{1})({2});", d.ReturnType, f.TrimmedName, d.Parameters);
-                        sw.WriteLine("extern p{0} {0};", f.TrimmedName);
-                    }
+                    WriteDelegate(sw, f, ref last_delegate);
                 }
+
+                // Write deprecated functions
+                sw.WriteLine("#ifdef ALLOW_DEPRECATED_GL");
+                sw.Indent();
+                foreach (Function f in wrappers[extension].Where(f => !f.Deprecated).Select(f => f))
+                {
+                    WriteDelegate(sw, f, ref last_delegate);
+                }
+                sw.Unindent();
+                sw.WriteLine("#endif");
 
                 if (extension != "Core")
                 {
@@ -144,6 +150,18 @@ namespace Bind
 
             sw.Unindent();
             sw.WriteLine("};");
+        }
+
+        private static void WriteDelegate(BindStreamWriter sw, Function f, ref Delegate last_delegate)
+        {
+            var d = f.WrappedDelegate;
+            // Avoid multiple definitions of the same function
+            if (d != last_delegate)
+            {
+                last_delegate = d;
+                sw.WriteLine("static {0} (*p{1})({2});", d.ReturnType, f.TrimmedName, d.Parameters);
+                sw.WriteLine("extern p{0} {0};", f.TrimmedName);
+            }
         }
 
         static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
