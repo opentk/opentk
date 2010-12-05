@@ -610,7 +610,7 @@ namespace Bind.Structures
                         {
                             if (((Settings.Compatibility & Settings.Legacy.TurnVoidPointersToIntPtr) != Settings.Legacy.None) &&
                                 p.Pointer != 0 && p.CurrentType.Contains("void"))
-                                sb.Append("(System.IntPtr)");
+                                sb.Append("(IntPtr)");
                             else
                             {
                                 sb.Append("(");
