@@ -136,6 +136,12 @@ namespace Bind
                 last_delegate = null;
                 foreach (var current in new IEnumerable<Function>[] { forward_compatible, deprecated })
                 {
+                    if (current == deprecated)
+                    {
+                        sw.WriteLine("#ifdef {0}", AllowDeprecated);
+                        sw.Indent();
+                    }
+
                     foreach (var function in current)
                     {
                         if (function.WrappedDelegate == last_delegate)
@@ -148,11 +154,13 @@ namespace Bind
                             sw.WriteLine("{0}::{1}::Delegates::p{2} {0}::{1}::Delegates::{2} = 0;", Settings.GLClass,
                                 function.Extension, function.Name);
                     }
-                    sw.WriteLine("#ifdef {0}", AllowDeprecated);
-                    sw.Indent();
+
+                    if (current == deprecated)
+                    {
+                        sw.Unindent();
+                        sw.WriteLine("#endif");
+                    }
                 }
-                sw.Unindent();
-                sw.WriteLine("#endif");
             }
             sw.WriteLine();
 
@@ -173,6 +181,12 @@ namespace Bind
 
                 foreach (var current in new IEnumerable<Function>[] { forward_compatible, deprecated })
                 {
+                    if (current == deprecated)
+                    {
+                        sw.WriteLine("#ifdef {0}", AllowDeprecated);
+                        sw.Indent();
+                    }
+
                     last_delegate = null;
                     foreach (var function in wrappers[ext])
                     {
@@ -183,12 +197,13 @@ namespace Bind
                         sw.WriteLine("{0}::Delegates::{1} = ({0}::Delegates::p{1})GetAddress(\"gl{1}\");",
                              path, function.WrappedDelegate.Name);
                     }
-                    sw.WriteLine("#ifdef {0}", AllowDeprecated);
-                    sw.Indent();
-                }
-                sw.Unindent();
-                sw.WriteLine("#endif");
 
+                   if (current == deprecated)
+                    {
+                        sw.Unindent();
+                        sw.WriteLine("#endif");
+                    }
+                }
                 sw.Unindent();
                 sw.WriteLine("}");
             }
@@ -256,16 +271,24 @@ namespace Bind
                 sw.Indent();
                 foreach (var current in new IEnumerable<Function>[] { forward_compatible, deprecated })
                 {
+                    if (current == deprecated)
+                    {
+                        sw.WriteLine("#ifdef {0}", AllowDeprecated);
+                        sw.Indent();
+                    }
+
                     last_delegate = null;
                     foreach (var f in current)
                     {
                          WriteDelegate(sw, f.WrappedDelegate, ref last_delegate);
                     }
-                    sw.WriteLine("#ifdef {0}", AllowDeprecated);
-                    sw.Indent();
+
+                    if (current == deprecated)
+                    {
+                        sw.Unindent();
+                        sw.WriteLine("#endif");
+                    }
                 }
-                sw.Unindent();
-                sw.WriteLine("#endif");
                 sw.Unindent();
                 sw.WriteLine("};");
 
@@ -274,6 +297,12 @@ namespace Bind
                 sw.WriteLine("static void Init();");
                 foreach (var current in new IEnumerable<Function>[] { forward_compatible, deprecated })
                 {
+                    if (current == deprecated)
+                    {
+                        sw.WriteLine("#ifdef {0}", AllowDeprecated);
+                        sw.Indent();
+                    }
+
                     last_delegate = null;
                     foreach (var f in current)
                     {
@@ -292,11 +321,13 @@ namespace Bind
                         sw.Unindent();
                         sw.WriteLine("}");
                     }
-                    sw.WriteLine("#ifdef {0}", AllowDeprecated);
-                    sw.Indent();
+
+                    if (current == deprecated)
+                    {
+                        sw.Unindent();
+                        sw.WriteLine("#endif");
+                    }
                 }
-                sw.Unindent();
-                sw.WriteLine("#endif");
 
                 if (extension != "Core")
                 {
