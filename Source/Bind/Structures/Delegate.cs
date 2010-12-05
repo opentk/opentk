@@ -259,7 +259,7 @@ namespace Bind.Structures
             StringBuilder sb = new StringBuilder();
 
             sb.Append(Settings.DelegatesClass);
-            sb.Append(".");
+            sb.Append(Settings.NamespaceSeparator);
             sb.Append(Settings.FunctionPrefix);
             sb.Append(Name);
             sb.Append(Parameters.CallString());
