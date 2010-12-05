@@ -57,6 +57,14 @@ namespace Bind
             if (!Directory.Exists(Settings.OutputPath))
                 Directory.CreateDirectory(Settings.OutputPath);
 
+            // Hack: Fix 3dfx extension category so it doesn't start with a digit
+            if (wrappers.ContainsKey("3dfx"))
+            {
+                var three_dee_fx = wrappers["3dfx"];
+                wrappers.Remove("3dfx");
+                wrappers.Add("T3dfx", three_dee_fx);
+            }
+
             Settings.DefaultOutputNamespace = "OpenTK";
 
             string temp_header_file = Path.GetTempFileName();
