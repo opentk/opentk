@@ -208,6 +208,7 @@ namespace Bind
             {
                 last_delegate = d;
                 var parameters = d.Parameters.ToString()
+                    .Replace("String[]", "String*")
                     .Replace("[OutAttribute]", String.Empty);
                 sw.WriteLine("typedef {0} (*p{1}){2};", d.ReturnType, d.Name, parameters);
                 sw.WriteLine("static p{0} {0};", d.Name);
@@ -261,7 +262,7 @@ namespace Bind
                          WriteDelegate(sw, f.WrappedDelegate, ref last_delegate);
                     }
                     sw.Unindent();
-                    sw.WriteLine("}");
+                    sw.WriteLine("};");
 
                     // Write wrappers
                     last_delegate = null;
@@ -273,6 +274,7 @@ namespace Bind
                         last_delegate = f.WrappedDelegate;
 
                         var parameters  = f.WrappedDelegate.Parameters.ToString()
+                            .Replace("String[]", "String*")
                             .Replace("[OutAttribute]", String.Empty);
                         sw.WriteLine("static inline {0} {1}{2}", f.WrappedDelegate.ReturnType,
                             f.TrimmedName, parameters);
@@ -294,17 +296,16 @@ namespace Bind
                     sw.WriteLine("};");
                 }
             }
-
-            sw.Unindent();
-            sw.WriteLine("};");
         }
 
         static void WriteMethodBody(BindStreamWriter sw, Function f)
         {
+            var callstring =  f.Parameters.CallString()
+                .Replace("String[]", "String*");
             if (f.ReturnType != null && !f.ReturnType.ToString().ToLower().Contains("void"))
-                sw.WriteLine("return Delegates::{0}{1};", f.WrappedDelegate.Name, f.Parameters.CallString());
+                sw.WriteLine("return Delegates::{0}{1};", f.WrappedDelegate.Name, callstring);
             else
-                sw.WriteLine("Delegates::{0}{1};", f.WrappedDelegate.Name, f.Parameters.CallString());
+                sw.WriteLine("Delegates::{0}{1};", f.WrappedDelegate.Name, callstring);
         }
 
         static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
