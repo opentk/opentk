@@ -84,7 +84,6 @@ namespace Bind
                 sw.WriteLine("struct {0}", Settings.GLClass);
                 sw.WriteLine("{");
                 sw.Indent();
-                WriteDelegates(sw, delegates);
                 WriteWrappers(sw, wrappers, Type.CSTypes);
                 sw.Unindent();
                 sw.WriteLine("};");
@@ -161,9 +160,9 @@ namespace Bind
             foreach (var ext in wrappers.Keys)
             {
                 if (ext == "Core")
-                    sw.WriteLine("{0}::Init()", Settings.GLClass);
+                    sw.WriteLine("{0}::Delegates::Init()", Settings.GLClass);
                 else
-                    sw.WriteLine("{0}::{1}::Init()", Settings.GLClass, ext);
+                    sw.WriteLine("{0}::{1}::Delegates::Init()", Settings.GLClass, ext);
                 sw.WriteLine("{");
                 sw.Indent();
 
@@ -199,14 +198,7 @@ namespace Bind
 
         public void WriteDelegates(BindStreamWriter sw, DelegateCollection delegates)
         {
-            sw.WriteLine("private:");
-
-            // Avoid multiple definitions of the same function
-            Delegate last_delegate = null;
-            foreach (var d in delegates)
-            {
-                WriteDelegate(sw, d.Value, ref last_delegate);
-            }
+            throw new NotSupportedException();
         }
 
         static void WriteDelegate(BindStreamWriter sw, Delegate d, ref Delegate last_delegate)
@@ -215,7 +207,8 @@ namespace Bind
             if (d != last_delegate)
             {
                 last_delegate = d;
-                sw.WriteLine("typedef {0} (*p{1}){2};", d.ReturnType, d.Name, d.Parameters);
+                var parameters = d.Parameters.ToString().Replace(".", "::");
+                sw.WriteLine("typedef {0} (*p{1}){2};", d.ReturnType, d.Name, parameters);
                 sw.WriteLine("static p{0} {0};", d.Name);
             }
         }
@@ -226,7 +219,7 @@ namespace Bind
 
         public void WriteImports(BindStreamWriter sw, DelegateCollection delegates)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         #endregion
@@ -236,8 +229,6 @@ namespace Bind
         public void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers,
             Dictionary<string, string> CSTypes)
         {
-            sw.WriteLine("public:");
-
             foreach (string extension in wrappers.Keys)
             {
                 if (extension != "Core")
@@ -246,8 +237,6 @@ namespace Bind
                     sw.WriteLine("{");
                     sw.Indent();
                 }
-
-                sw.WriteLine("static void Init();");
 
                 // Avoid multiple definitions of the same function
                 Delegate last_delegate = null;
@@ -258,18 +247,36 @@ namespace Bind
 
                 for (var current = forward_compatible; current != deprecated; current = deprecated)
                 {
+                    // Write delegates
                     last_delegate = null;
+
+                    sw.WriteLine("private:");
+                    sw.WriteLine("struct Delegates");
+                    sw.WriteLine("{");
+                    sw.Indent();
+                    sw.WriteLine("static void Init();");
+                    foreach (var f in current)
+                    {
+                         WriteDelegate(sw, f.WrappedDelegate, ref last_delegate);
+                    }
+                    sw.Unindent();
+                    sw.WriteLine("}");
+
+                    // Write wrappers
+                    last_delegate = null;
+                    sw.WriteLine("public:");
                     foreach (var f in current)
                     {
                         if (last_delegate == f.WrappedDelegate)
                             continue;
                         last_delegate = f.WrappedDelegate;
 
-                        sw.WriteLine("static inline {0} {1}{2}", f.WrappedDelegate.Parameters,
-                            f.TrimmedName, f.WrappedDelegate.Parameters);
+                        var parameters  = f.WrappedDelegate.Parameters.ToString().Replace(".", "::");
+                        sw.WriteLine("static inline {0} {1}{2}", f.WrappedDelegate.ReturnType,
+                            f.TrimmedName, parameters);
                         sw.WriteLine("{");
                         sw.Indent();
-                        //WriteMethodBody(sw, f);
+                        WriteMethodBody(sw, f);
                         sw.Unindent();
                         sw.WriteLine("}");
                     }
@@ -288,6 +295,14 @@ namespace Bind
 
             sw.Unindent();
             sw.WriteLine("};");
+        }
+
+        static void WriteMethodBody(BindStreamWriter sw, Function f)
+        {
+            if (f.ReturnType != null)
+                sw.WriteLine("return Delegates::{0}{1}", f.WrappedDelegate.Name, f.CallString());
+            else
+                sw.WriteLine("Delegates::{0}{1}", f.WrappedDelegate.Name, f.CallString());
         }
 
         static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
@@ -382,7 +397,11 @@ namespace Bind
                 sw.Indent();
                 foreach (var c in @enum.ConstantCollection.Values)
                 {
-                    sw.WriteLine("{0},", c);
+                    // C++ doesn't have the concept of "unchecked", so remove this.
+                    if (!c.Unchecked)
+                        sw.WriteLine("{0},", c);
+                    else
+                        sw.WriteLine("{0},", c.ToString().Replace("unchecked", String.Empty));
                 }
                 sw.Unindent();
                 sw.WriteLine("};");
