@@ -74,7 +74,6 @@ namespace Bind
             {
                 WriteLicense(sw);
 
-                sw.WriteLine("#include \"gldef++.h\"");
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
                 sw.WriteLine("{");
                 sw.Indent();
@@ -96,7 +95,6 @@ namespace Bind
             {
                 WriteLicense(sw);
 
-                sw.WriteLine("#include \"gldef++.cpp\"");
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
                 sw.WriteLine("{");
                 sw.Indent();
@@ -107,8 +105,8 @@ namespace Bind
                 sw.WriteLine("}");
             }
 
-            string output_header = Path.Combine(Settings.OutputPath, "gl++.h");
-            string output_cpp = Path.Combine(Settings.OutputPath, "gl++.cpp");
+            string output_header = Path.Combine(Settings.OutputPath, "gldef++.h");
+            string output_cpp = Path.Combine(Settings.OutputPath, "gldef++.cpp");
             if (File.Exists(output_header))
                 File.Delete(output_header);
             File.Move(temp_header_file, output_header);
@@ -431,10 +429,7 @@ namespace Bind
         {
             foreach (Enum @enum in enums.Values)
             {
-                sw.WriteLine("struct {0} : Enumeration<{0}>", @enum.Name);
-                sw.WriteLine("{");
-                sw.Indent();
-                sw.WriteLine("enum");
+                sw.WriteLine("ENUM({0})", @enum.Name);
                 sw.WriteLine("{");
                 sw.Indent();
                 foreach (var c in @enum.ConstantCollection.Values)
@@ -447,8 +442,7 @@ namespace Bind
                 }
                 sw.Unindent();
                 sw.WriteLine("};");
-                sw.Unindent();
-                sw.WriteLine("};");
+                sw.WriteLine("END_ENUM({0})", @enum.Name);
                 sw.WriteLine();
             }
         }
