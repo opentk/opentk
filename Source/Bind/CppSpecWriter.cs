@@ -44,6 +44,16 @@ namespace Bind
         readonly char[] numbers = "0123456789".ToCharArray();
         const string AllowDeprecated = "ALLOW_DEPRECATED_GL";
         const string DigitPrefix = "T"; // Prefix for identifiers that start with a digit
+        const string OutputFileCpp = "glcore++.cpp";
+        const string OutputFileHeader = "glcore++.h";
+        const string OutputFileHeaderCompat = "glcompat++.h";
+        const string OutputFileHeaderEnums = "glenums++.h";
+
+        BindStreamWriter sw_h = new BindStreamWriter(Path.GetTempFileName());
+        BindStreamWriter sw_cpp = new BindStreamWriter(Path.GetTempFileName());
+        BindStreamWriter sw_h_compat = new BindStreamWriter(Path.GetTempFileName());
+        BindStreamWriter sw_cpp_compat = new BindStreamWriter(Path.GetTempFileName());
+        BindStreamWriter sw_h_enums = new BindStreamWriter(Path.GetTempFileName());
 
         #region WriteBindings
 
@@ -52,7 +62,7 @@ namespace Bind
             WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
         }
 
-         void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
+        void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
         {
             Console.WriteLine("Writing bindings to {0}", Settings.OutputPath);
             if (!Directory.Exists(Settings.OutputPath))
@@ -68,102 +78,183 @@ namespace Bind
 
             Settings.DefaultOutputNamespace = "OpenTK";
 
-            string temp_header_file = Path.GetTempFileName();
-            string temp_cpp_file = Path.GetTempFileName();
-
-            using (BindStreamWriter sw = new BindStreamWriter(temp_header_file))
+            // Enums
+            using (var sw = sw_h_enums)
             {
-                sw.WriteLine("#ifndef GLDEFPP_H");
-                sw.WriteLine("#define GLDEFPP_H");
-                sw.WriteLine("#pragma once");
-
-                WriteLicense(sw);
-
-                sw.WriteLine("namespace {0}", Settings.OutputNamespace);
-                sw.WriteLine("{");
-                sw.Indent();
-
                 WriteEnums(sw, enums);
-
-                sw.WriteLine("struct {0}", Settings.GLClass);
-                sw.WriteLine("{");
-                sw.Indent();
-                WriteWrappers(sw, wrappers, Type.CSTypes);
-                sw.Unindent();
-                sw.WriteLine("};");
-
-                sw.Unindent();
-                sw.WriteLine("}");
-
-                sw.WriteLine("#endif");
+                sw.Flush();
+                sw.Close();
             }
 
-            using (BindStreamWriter sw = new BindStreamWriter(temp_cpp_file))
+            // Core definitions
+            using (var sw = sw_h)
             {
-                WriteLicense(sw);
-
-                sw.WriteLine("namespace {0}", Settings.OutputNamespace);
-                sw.WriteLine("{");
-                sw.Indent();
-
-                WriteLoader(sw, wrappers, Type.CSTypes);
-
-                sw.Unindent();
-                sw.WriteLine("}");
+                WriteDefinitions(sw, enums, wrappers, Type.CSTypes, false);
+                sw.Flush();
+                sw.Close();
             }
 
-            string output_header = Path.Combine(Settings.OutputPath, "gldef++.h");
-            string output_cpp = Path.Combine(Settings.OutputPath, "gldef++.cpp");
-            if (File.Exists(output_header))
-                File.Delete(output_header);
-            File.Move(temp_header_file, output_header);
-            if (File.Exists(output_cpp))
-                File.Delete(output_cpp);
-            File.Move(temp_cpp_file, output_cpp);
+            // Compatibility definitions
+            using (var sw = sw_h_compat)
+            {
+                WriteDefinitions(sw, enums, wrappers, Type.CSTypes, true);
+                sw.Flush();
+                sw.Close();
+            }
+
+            // Core & compatibility declarations
+            using (var sw = sw_cpp)
+            {
+                WriteDeclarations(sw, wrappers, Type.CSTypes);
+                sw.Flush();
+                sw.Close();
+            }
+
+            string output_header = Path.Combine(Settings.OutputPath, OutputFileHeader);
+            string output_cpp = Path.Combine(Settings.OutputPath, OutputFileCpp);
+            string output_header_compat = Path.Combine(Settings.OutputPath, OutputFileHeaderCompat);
+            string output_header_enums = Path.Combine(Settings.OutputPath, OutputFileHeaderEnums);
+
+            Move(sw_h.File, output_header);
+            Move(sw_cpp.File, output_cpp);
+            Move(sw_h_compat.File, output_header_compat);
+            Move(sw_h_enums.File, output_header_enums);
+        }
+
+        void Move(string file, string dest)
+        {
+            if (File.Exists(dest))
+                File.Delete(dest);
+            File.Move(file, dest);
         }
 
         #endregion
 
-        #region WriteLoader
+        #region WriteDefinitions
 
-        void WriteLoader(BindStreamWriter sw, FunctionCollection wrappers,
-            Dictionary<string, string> CSTypes)
+        void WriteDefinitions(BindStreamWriter sw,
+            EnumCollection enums, FunctionCollection wrappers,
+            Dictionary<string, string> CSTypes, bool deprecated_only)
         {
+            sw.WriteLine("#pragma once");
+            if (!deprecated_only)
+            {
+                sw.WriteLine("#ifndef GLCOREPP_H");
+                sw.WriteLine("#define GLCOREPP_H");
+            }
+            else
+            {
+                sw.WriteLine("#ifndef GLCOMPATPP_H");
+                sw.WriteLine("#define GLCOMPATPP_H");
+            }
+            sw.WriteLine();
+            WriteLicense(sw);
+
+            sw.WriteLine("namespace {0}", Settings.OutputNamespace);
+            sw.WriteLine("{");
+            sw.Indent();
+            sw.WriteLine("namespace {0}", Settings.GLClass);
+            sw.WriteLine("{");
+            sw.Indent();
+
+            foreach (string extension in wrappers.Keys)
+            {
+                if (extension != "Core")
+                {
+                    sw.WriteLine("namespace {0}", extension);
+                    sw.WriteLine("{");
+                    sw.Indent();
+                }
+
+                // Avoid multiple definitions of the same function
+                Delegate last_delegate = null;
+
+                // Write delegates
+                sw.WriteLine("namespace Delegates");
+                sw.WriteLine("{");
+                sw.Indent();
+                var functions = wrappers[extension].Where(f => f.Deprecated == deprecated_only);
+                last_delegate = null;
+                foreach (var f in functions)
+                {
+                    WriteDelegate(sw, f.WrappedDelegate, ref last_delegate);
+                }
+
+                sw.Unindent();
+                sw.WriteLine("};");
+
+                // Write wrappers
+                sw.WriteLine("void Init();");
+                last_delegate = null;
+                foreach (var f in functions)
+                {
+                    if (last_delegate == f.WrappedDelegate)
+                        continue;
+                    last_delegate = f.WrappedDelegate;
+
+                    var parameters = f.WrappedDelegate.Parameters.ToString()
+                        .Replace("String[]", "String*")
+                        .Replace("[OutAttribute]", String.Empty);
+                    sw.WriteLine("inline {0} {1}{2}", f.WrappedDelegate.ReturnType,
+                        f.TrimmedName, parameters);
+                    sw.WriteLine("{");
+                    sw.Indent();
+                    WriteMethodBody(sw, f);
+                    sw.Unindent();
+                    sw.WriteLine("}");
+                }
+
+                if (extension != "Core")
+                {
+                    sw.Unindent();
+                    sw.WriteLine("};");
+                }
+            }
+
+            sw.Unindent();
+            sw.WriteLine("};");
+
+            sw.Unindent();
+            sw.WriteLine("}");
+
+            sw.WriteLine("#endif");
+        }
+
+        #endregion
+
+        #region WriteDeclarations
+
+        void WriteDeclarations(BindStreamWriter sw, FunctionCollection wrappers,
+           Dictionary<string, string> CSTypes)
+        {
+            sw.WriteLine("#ifdef GLPP_INTERNAL_COMPILE_DECLARATIONS");
+
+            WriteLicense(sw);
+
+            sw.WriteLine("namespace {0}", Settings.OutputNamespace);
+            sw.WriteLine("{");
+            sw.Indent();
+
             sw.WriteLine("using namespace Internals;");
 
             // Used to avoid multiple declarations of the same function
             Delegate last_delegate = null;
 
-            // Declare all functions
+            // Declare all functions (deprecated and core).
+            // This is necessary for projects that wish to move from
+            // deprecated APIs to core piece-by-piece.
             foreach (var ext in wrappers.Keys)
             {
-                var forward_compatible = wrappers[ext].Where(f => !f.Deprecated);
-                var deprecated = wrappers[ext].Where(f => f.Deprecated);
-
                 last_delegate = null;
-                foreach (var current in new IEnumerable<Function>[] { forward_compatible, deprecated })
+                var functions = wrappers[ext];
+                foreach (var function in functions)
                 {
-                    if (current == deprecated)
-                    {
-                        sw.WriteLine("#ifdef {0}", AllowDeprecated);
-                        sw.Indent();
-                    }
+                    if (function.WrappedDelegate == last_delegate)
+                        continue;
+                    last_delegate = function.WrappedDelegate;
 
-                    foreach (var function in current)
-                    {
-                        if (function.WrappedDelegate == last_delegate)
-                            continue;
-                        last_delegate = function.WrappedDelegate;
-
-                        string path = GetNamespace(ext);
-                        sw.WriteLine("{0}::Delegates::p{1} {0}::Delegates::{1} = 0;", path, function.Name);
-                    }
-
-                    if (current == deprecated)
-                    {
-                        sw.Unindent();
-                        sw.WriteLine("#endif");
-                    }
+                    string path = GetNamespace(ext);
+                    sw.WriteLine("{0}::Delegates::p{1} {0}::Delegates::{1} = 0;", path, function.Name);
                 }
             }
             sw.WriteLine();
@@ -177,37 +268,25 @@ namespace Bind
                 sw.WriteLine("{");
                 sw.Indent();
 
-                var forward_compatible = wrappers[ext].Where(f => !f.Deprecated);
-                var deprecated = wrappers[ext].Where(f => f.Deprecated);
-
-                foreach (var current in new IEnumerable<Function>[] { forward_compatible, deprecated })
+                last_delegate = null;
+                var functions = wrappers[ext];
+                foreach (var function in functions)
                 {
-                    if (current == deprecated)
-                    {
-                        sw.WriteLine("#ifdef {0}", AllowDeprecated);
-                        sw.Indent();
-                    }
+                    if (function.WrappedDelegate == last_delegate)
+                        continue;
+                    last_delegate = function.WrappedDelegate;
 
-                    last_delegate = null;
-                    foreach (var function in wrappers[ext])
-                    {
-                          if (function.WrappedDelegate == last_delegate)
-                            continue;
-                        last_delegate = function.WrappedDelegate;
-
-                        sw.WriteLine("{0}::Delegates::{1} = ({0}::Delegates::p{1})GetAddress(\"gl{1}\");",
-                             path, function.WrappedDelegate.Name);
-                    }
-
-                   if (current == deprecated)
-                    {
-                        sw.Unindent();
-                        sw.WriteLine("#endif");
-                    }
+                    sw.WriteLine("{0}::Delegates::{1} = ({0}::Delegates::p{1})GetAddress(\"gl{1}\");",
+                         path, function.WrappedDelegate.Name);
                 }
                 sw.Unindent();
                 sw.WriteLine("}");
             }
+
+            sw.Unindent();
+            sw.WriteLine("}");
+
+            sw.WriteLine("#endif");
         }
 
         static string GetNamespace(string ext)
@@ -216,6 +295,67 @@ namespace Bind
                 return Settings.GLClass;
             else
                 return String.Format("{0}::{1}", Settings.GLClass, Char.IsDigit(ext[0]) ? DigitPrefix + ext : ext);
+        }
+
+        #endregion
+
+        #region ISpecWriter Members
+
+        #region WriteEnums
+
+        public void WriteEnums(BindStreamWriter sw, EnumCollection enums)
+        {
+            sw.WriteLine("#pragma once");
+            sw.WriteLine("#ifndef GLENUMSPP_H");
+            sw.WriteLine("#define GLENUMSPP_H");
+            sw.WriteLine();
+            WriteLicense(sw);
+
+            sw.WriteLine("namespace {0}", Settings.OutputNamespace);
+            sw.WriteLine("{");
+            sw.Indent();
+
+            foreach (Enum @enum in enums.Values)
+            {
+                sw.WriteLine("struct {0} : Enumeration<{0}>", @enum.Name);
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("inline {0}(int value) : Enumeration<{0}>(value) {{ }}", @enum.Name);
+                sw.WriteLine("enum");
+                sw.WriteLine("{");
+                sw.Indent();
+                foreach (var c in @enum.ConstantCollection.Values)
+                {
+                    // C++ doesn't have the concept of "unchecked", so remove this.
+                    if (!c.Unchecked)
+                        sw.WriteLine("{0},", c);
+                    else
+                        sw.WriteLine("{0},", c.ToString().Replace("unchecked", String.Empty));
+                }
+                sw.Unindent();
+                sw.WriteLine("};");
+                sw.Unindent();
+                sw.WriteLine("};");
+                sw.WriteLine();
+            }
+
+            sw.Unindent();
+            sw.WriteLine("}");
+
+            sw.WriteLine("#endif");
+        }
+
+        #endregion
+
+        #region WriteTypes
+
+        public void WriteTypes(BindStreamWriter sw, Dictionary<string, string> CSTypes)
+        {
+            sw.WriteLine();
+            foreach (string s in CSTypes.Keys)
+            {
+                sw.WriteLine("typedef {0} {1};", s, CSTypes[s]);
+            }
         }
 
         #endregion
@@ -237,7 +377,7 @@ namespace Bind
                     .Replace("String[]", "String*")
                     .Replace("[OutAttribute]", String.Empty);
                 sw.WriteLine("typedef {0} (*p{1}){2};", d.ReturnType, d.Name, parameters);
-                sw.WriteLine("static p{0} {0};", d.Name);
+                sw.WriteLine("extern p{0} {0};", d.Name);
             }
         }
 
@@ -257,98 +397,12 @@ namespace Bind
         public void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers,
             Dictionary<string, string> CSTypes)
         {
-            foreach (string extension in wrappers.Keys)
-            {
-                if (extension != "Core")
-                {
-                    sw.WriteLine("struct {0}", extension);
-                    sw.WriteLine("{");
-                    sw.Indent();
-                }
-
-                // Avoid multiple definitions of the same function
-                Delegate last_delegate = null;
-
-                // Write forward-compatible functions
-                var forward_compatible = wrappers[extension].Where(f => !f.Deprecated);
-                var deprecated = wrappers[extension].Where(f => f.Deprecated);
-
-                // Write delegates
-                sw.WriteLine("private:");
-                sw.WriteLine("struct Delegates");
-                sw.WriteLine("{");
-                sw.Indent();
-                foreach (var current in new IEnumerable<Function>[] { forward_compatible, deprecated })
-                {
-                    if (current == deprecated)
-                    {
-                        sw.WriteLine("#ifdef {0}", AllowDeprecated);
-                        sw.Indent();
-                    }
-
-                    last_delegate = null;
-                    foreach (var f in current)
-                    {
-                         WriteDelegate(sw, f.WrappedDelegate, ref last_delegate);
-                    }
-
-                    if (current == deprecated)
-                    {
-                        sw.Unindent();
-                        sw.WriteLine("#endif");
-                    }
-                }
-                sw.Unindent();
-                sw.WriteLine("};");
-
-                // Write wrappers
-                sw.WriteLine("public:");
-                sw.WriteLine("static void Init();");
-                foreach (var current in new IEnumerable<Function>[] { forward_compatible, deprecated })
-                {
-                    if (current == deprecated)
-                    {
-                        sw.WriteLine("#ifdef {0}", AllowDeprecated);
-                        sw.Indent();
-                    }
-
-                    last_delegate = null;
-                    foreach (var f in current)
-                    {
-                        if (last_delegate == f.WrappedDelegate)
-                            continue;
-                        last_delegate = f.WrappedDelegate;
-
-                        var parameters  = f.WrappedDelegate.Parameters.ToString()
-                            .Replace("String[]", "String*")
-                            .Replace("[OutAttribute]", String.Empty);
-                        sw.WriteLine("static inline {0} {1}{2}", f.WrappedDelegate.ReturnType,
-                            f.TrimmedName, parameters);
-                        sw.WriteLine("{");
-                        sw.Indent();
-                        WriteMethodBody(sw, f);
-                        sw.Unindent();
-                        sw.WriteLine("}");
-                    }
-
-                    if (current == deprecated)
-                    {
-                        sw.Unindent();
-                        sw.WriteLine("#endif");
-                    }
-                }
-
-                if (extension != "Core")
-                {
-                    sw.Unindent();
-                    sw.WriteLine("};");
-                }
-            }
+            throw new NotSupportedException();
         }
 
         static void WriteMethodBody(BindStreamWriter sw, Function f)
         {
-            var callstring =  f.Parameters.CallString()
+            var callstring = f.Parameters.CallString()
                 .Replace("String[]", "String*");
             if (f.ReturnType != null && !f.ReturnType.ToString().ToLower().Contains("void"))
                 sw.WriteLine("return Delegates::{0}{1};", f.WrappedDelegate.Name, callstring);
@@ -420,48 +474,6 @@ namespace Bind
         }
 
         #endregion
-
-        #region WriteTypes
-
-        public void WriteTypes(BindStreamWriter sw, Dictionary<string, string> CSTypes)
-        {
-            sw.WriteLine();
-            foreach (string s in CSTypes.Keys)
-            {
-                sw.WriteLine("typedef {0} {1};", s, CSTypes[s]);
-            }
-        }
-
-        #endregion
-
-        #region WriteEnums
-
-        public void WriteEnums(BindStreamWriter sw, EnumCollection enums)
-        {
-            foreach (Enum @enum in enums.Values)
-            {
-                sw.WriteLine("struct {0} : Enumeration<{0}>", @enum.Name);
-                sw.WriteLine("{");
-                sw.Indent();
-                sw.WriteLine("inline {0}(int value) : Enumeration<{0}>(value) {{ }}", @enum.Name);
-                sw.WriteLine("enum");
-                sw.WriteLine("{");
-                sw.Indent();
-                foreach (var c in @enum.ConstantCollection.Values)
-                {
-                    // C++ doesn't have the concept of "unchecked", so remove this.
-                    if (!c.Unchecked)
-                        sw.WriteLine("{0},", c);
-                    else
-                        sw.WriteLine("{0},", c.ToString().Replace("unchecked", String.Empty));
-                }
-                sw.Unindent();
-                sw.WriteLine("};");
-                sw.Unindent();
-                sw.WriteLine("};");
-                sw.WriteLine();
-            }
-        }
 
         #endregion
 
