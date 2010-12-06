@@ -72,6 +72,10 @@ namespace Bind
 
             using (BindStreamWriter sw = new BindStreamWriter(temp_header_file))
             {
+                sw.WriteLine("#ifndef GLDEFPP_H");
+                sw.WriteLine("#define GLDEFPP_H");
+                sw.WriteLine("#pragma once");
+
                 WriteLicense(sw);
 
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
@@ -89,6 +93,8 @@ namespace Bind
 
                 sw.Unindent();
                 sw.WriteLine("}");
+
+                sw.WriteLine("#endif");
             }
 
             using (BindStreamWriter sw = new BindStreamWriter(temp_cpp_file))
