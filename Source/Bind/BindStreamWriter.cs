@@ -18,9 +18,12 @@ namespace Bind
         Regex splitLines = new Regex(Environment.NewLine, RegexOptions.Compiled);
         //Regex splitLines = new Regex("(\r\n|\n\r|\n|\r)", RegexOptions.Compiled);
 
+        public readonly string File;
+
         public BindStreamWriter(string file)
             : base(file)
         {
+            File = file;
         }
 
         public void Indent()
