@@ -440,7 +440,11 @@ namespace Bind
         {
             foreach (Enum @enum in enums.Values)
             {
-                sw.WriteLine("ENUM({0})", @enum.Name);
+                sw.WriteLine("struct {0} : Enumeration<{0}>", @enum.Name);
+                sw.WriteLine("{");
+                sw.Indent();
+                sw.WriteLine("inline {0}(int value) : Enumeration<{0}>(value) {{ }}", @enum.Name);
+                sw.WriteLine("enum");
                 sw.WriteLine("{");
                 sw.Indent();
                 foreach (var c in @enum.ConstantCollection.Values)
@@ -453,7 +457,8 @@ namespace Bind
                 }
                 sw.Unindent();
                 sw.WriteLine("};");
-                sw.WriteLine("END_ENUM({0})", @enum.Name);
+                sw.Unindent();
+                sw.WriteLine("};");
                 sw.WriteLine();
             }
         }
