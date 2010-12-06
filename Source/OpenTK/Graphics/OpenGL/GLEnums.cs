@@ -1,8 +1,7 @@
-#region License
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2009 the Open Toolkit library.
+// Copyright (c) 2006 - 2010 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +22,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
+
+
 
 using System;
 
@@ -9217,7 +9217,7 @@ namespace OpenTK.Graphics.OpenGL
         TextureFixedSampleLocations = ((int)0x9107),
     }
 
-    public enum Gl3dfxMultisample : int
+    public enum Gl3DfxMultisample : int
     {
         MultisampleBit3Dfx = ((int)0x20000000),
         Multisample3Dfx = ((int)0x86B2),
@@ -9225,11 +9225,11 @@ namespace OpenTK.Graphics.OpenGL
         Samples3Dfx = ((int)0x86B4),
     }
 
-    public enum Gl3dfxTbuffer : int
+    public enum Gl3DfxTbuffer : int
     {
     }
 
-    public enum Gl3dfxTextureCompressionFxt1 : int
+    public enum Gl3DfxTextureCompressionFxt1 : int
     {
         CompressedRgbFxt13Dfx = ((int)0x86B0),
         CompressedRgbaFxt13Dfx = ((int)0x86B1),

@@ -1,8 +1,7 @@
-#region License
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2009 the Open Toolkit library.
+// Copyright (c) 2006 - 2010 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +22,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
+
+
 
 namespace OpenTK.Graphics.OpenGL
 {
@@ -2388,10 +2388,10 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetSharpenTexFuncSGIS(OpenTK.Graphics.OpenGL.TextureTarget target, [OutAttribute] Single* points);
             internal unsafe static GetSharpenTexFuncSGIS glGetSharpenTexFuncSGIS;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate System.IntPtr GetString(OpenTK.Graphics.OpenGL.StringName name);
+            internal delegate IntPtr GetString(OpenTK.Graphics.OpenGL.StringName name);
             internal static GetString glGetString;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate System.IntPtr GetStringi(OpenTK.Graphics.OpenGL.StringName name, UInt32 index);
+            internal delegate IntPtr GetStringi(OpenTK.Graphics.OpenGL.StringName name, UInt32 index);
             internal static GetStringi glGetStringi;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Int32 GetSubroutineIndex(UInt32 program, OpenTK.Graphics.OpenGL.ShaderType shadertype, String name);
@@ -2985,13 +2985,13 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void Map2f(OpenTK.Graphics.OpenGL.MapTarget target, Single u1, Single u2, Int32 ustride, Int32 uorder, Single v1, Single v2, Int32 vstride, Int32 vorder, Single* points);
             internal unsafe static Map2f glMap2f;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate System.IntPtr MapBuffer(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.BufferAccess access);
+            internal unsafe delegate IntPtr MapBuffer(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.BufferAccess access);
             internal unsafe static MapBuffer glMapBuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate System.IntPtr MapBufferARB(OpenTK.Graphics.OpenGL.BufferTargetArb target, OpenTK.Graphics.OpenGL.ArbVertexBufferObject access);
+            internal unsafe delegate IntPtr MapBufferARB(OpenTK.Graphics.OpenGL.BufferTargetArb target, OpenTK.Graphics.OpenGL.ArbVertexBufferObject access);
             internal unsafe static MapBufferARB glMapBufferARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate System.IntPtr MapBufferRange(OpenTK.Graphics.OpenGL.BufferTarget target, IntPtr offset, IntPtr length, OpenTK.Graphics.OpenGL.BufferAccessMask access);
+            internal unsafe delegate IntPtr MapBufferRange(OpenTK.Graphics.OpenGL.BufferTarget target, IntPtr offset, IntPtr length, OpenTK.Graphics.OpenGL.BufferAccessMask access);
             internal unsafe static MapBufferRange glMapBufferRange;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void MapControlPointsNV(OpenTK.Graphics.OpenGL.NvEvaluators target, UInt32 index, OpenTK.Graphics.OpenGL.NvEvaluators type, Int32 ustride, Int32 vstride, Int32 uorder, Int32 vorder, bool packed, IntPtr points);
@@ -3009,13 +3009,13 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void MapGrid2f(Int32 un, Single u1, Single u2, Int32 vn, Single v1, Single v2);
             internal static MapGrid2f glMapGrid2f;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate System.IntPtr MapNamedBufferEXT(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess access);
+            internal unsafe delegate IntPtr MapNamedBufferEXT(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess access);
             internal unsafe static MapNamedBufferEXT glMapNamedBufferEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate System.IntPtr MapNamedBufferRangeEXT(UInt32 buffer, IntPtr offset, IntPtr length, OpenTK.Graphics.OpenGL.BufferAccessMask access);
+            internal unsafe delegate IntPtr MapNamedBufferRangeEXT(UInt32 buffer, IntPtr offset, IntPtr length, OpenTK.Graphics.OpenGL.BufferAccessMask access);
             internal unsafe static MapNamedBufferRangeEXT glMapNamedBufferRangeEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate System.IntPtr MapObjectBufferATI(UInt32 buffer);
+            internal unsafe delegate IntPtr MapObjectBufferATI(UInt32 buffer);
             internal unsafe static MapObjectBufferATI glMapObjectBufferATI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void MapParameterfvNV(OpenTK.Graphics.OpenGL.NvEvaluators target, OpenTK.Graphics.OpenGL.NvEvaluators pname, Single* @params);
