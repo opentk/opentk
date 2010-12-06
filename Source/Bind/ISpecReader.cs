@@ -12,9 +12,9 @@ namespace Bind
 {
     interface ISpecReader
     {
-        DelegateCollection ReadDelegates(StreamReader specFile);
-        EnumCollection ReadEnums(StreamReader specFile);
-        Dictionary<string, string> ReadTypeMap(StreamReader specFile);
-        Dictionary<string, string> ReadCSTypeMap(StreamReader specFile);
+        DelegateCollection ReadDelegates(string file);
+        EnumCollection ReadEnums(string file);
+        Dictionary<string, string> ReadTypeMap(string file);
+        Dictionary<string, string> ReadCSTypeMap(string file);
     }
 }
