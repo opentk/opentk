@@ -38,7 +38,7 @@ namespace Bind
 {
     class FuncProcessor
     {
-        const string Path = "/overrides/replace/function[@name='{0}' and @extension='{1}']";
+        const string Path = "/signatures/replace/function[@name='{0}' and @extension='{1}']";
         static readonly Regex Endings =
             new Regex(@"((((d|f|fi)|u?[isb])_?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
         static readonly Regex EndingsNotToTrim =
