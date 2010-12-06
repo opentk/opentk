@@ -28,6 +28,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.XPath;
@@ -45,9 +46,9 @@ namespace Bind
             new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flag|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs)", RegexOptions.Compiled | RegexOptions.RightToLeft);
         static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
 
-        XPathDocument Overrides { get; set; }
+        StreamReader Overrides { get; set; }
 
-        public FuncProcessor(XPathDocument overrides)
+        public FuncProcessor(StreamReader overrides)
         {
             if (overrides == null)
                 throw new ArgumentNullException("overrides");
@@ -58,7 +59,7 @@ namespace Bind
         public FunctionCollection Process(DelegateCollection delegates, EnumCollection enums)
         {
             Console.WriteLine("Processing delegates.");
-            var nav = Overrides.CreateNavigator();
+            var nav = new XPathDocument(Overrides).CreateNavigator();
             foreach (var d in delegates.Values)
             {
                 TranslateReturnType(nav, d, enums);
@@ -70,6 +71,8 @@ namespace Bind
             Console.WriteLine("Creating CLS compliant overloads.");
             wrappers = CreateCLSCompliantWrappers(wrappers, enums);
             Console.WriteLine("Removing non-CLS compliant duplicates.");
+
+            Overrides.BaseStream.Seek(0, SeekOrigin.Begin);
             return MarkCLSCompliance(wrappers);
         }
 

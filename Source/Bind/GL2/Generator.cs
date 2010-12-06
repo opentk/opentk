@@ -70,19 +70,26 @@ namespace Bind.GL2
 
         public virtual void Process()
         {
-            var overrides = new XPathDocument(Path.Combine(Settings.InputPath, Settings.OverridesFile));
+            using (var overrides = new StreamReader(Path.Combine(Settings.InputPath, Settings.OverridesFile)))
+            {
+                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, glTypemap))
+                    Type.GLTypes = SpecReader.ReadTypeMap(sr);
+                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, csTypemap))
+                    Type.CSTypes = SpecReader.ReadCSTypeMap(sr);
+                using (var sr = new StreamReader(Path.Combine(Settings.InputPath, enumSpec)))
+                {
+                    Enums = SpecReader.ReadEnums(sr);
+                    Utilities.Merge(Enums, SpecReader.ReadEnums(overrides));
+                }
+                using (var sr = new StreamReader(Path.Combine(Settings.InputPath, glSpec)))
+                {
+                    Delegates = SpecReader.ReadDelegates(sr);
+                    Utilities.Merge(Delegates, SpecReader.ReadDelegates(overrides));
+                }
 
-            using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, glTypemap))
-                Type.GLTypes = SpecReader.ReadTypeMap(sr);
-            using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, csTypemap))
-                Type.CSTypes = SpecReader.ReadCSTypeMap(sr);
-            using (var sr = new StreamReader(Path.Combine(Settings.InputPath, enumSpec)))
-                Enums = SpecReader.ReadEnums(sr);
-            using (var sr = new StreamReader(Path.Combine(Settings.InputPath, glSpec)))
-                Delegates = SpecReader.ReadDelegates(sr);
-
-            Enums = new EnumProcessor(overrides).Process(Enums);
-            Wrappers = new FuncProcessor(overrides).Process(Delegates, Enums);
+                Enums = new EnumProcessor(overrides).Process(Enums);
+                Wrappers = new FuncProcessor(overrides).Process(Delegates, Enums);
+            }
         }
 
         #endregion

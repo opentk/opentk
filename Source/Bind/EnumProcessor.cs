@@ -26,22 +26,23 @@
 #endregion
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml.XPath;
 using Bind.Structures;
 using Enum = Bind.Structures.Enum;
-using System.Globalization;
 
 namespace Bind
 {
     class EnumProcessor
     {
         const string Path = "/signatures/replace/enum[@name='{0}']";
-        XPathDocument Overrides { get; set; }
+        StreamReader Overrides { get; set; }
 
-        public EnumProcessor(XPathDocument overrides)
+        public EnumProcessor(StreamReader overrides)
         {
             if (overrides == null)
                 throw new ArgumentNullException("overrides");
@@ -51,9 +52,10 @@ namespace Bind
 
         public EnumCollection Process(EnumCollection enums)
         {
-            var nav = Overrides.CreateNavigator();
+            var nav = new XPathDocument(Overrides).CreateNavigator();
             enums = ProcessNames(enums, nav);
             enums = ProcessConstants(enums, nav);
+            Overrides.BaseStream.Seek(0, SeekOrigin.Begin);
             return enums;
         }
 
