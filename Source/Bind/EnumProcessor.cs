@@ -38,7 +38,7 @@ namespace Bind
 {
     class EnumProcessor
     {
-        const string Path = "/overrides/replace/enum[@name='{0}']";
+        const string Path = "/signatures/replace/enum[@name='{0}']";
         XPathDocument Overrides { get; set; }
 
         public EnumProcessor(XPathDocument overrides)
