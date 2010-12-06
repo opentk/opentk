@@ -13,6 +13,7 @@ using System.Security;
 using Bind.CL;
 using Bind.ES;
 using Bind.GL2;
+using System.Text.RegularExpressions;
 
 namespace Bind
 {
@@ -56,12 +57,16 @@ namespace Bind
 
             try
             {
-                foreach (string a in arguments)
+                var split = new Regex(@"-\w+", RegexOptions.Compiled);
+                foreach (var argument in arguments)
                 {
-                    if (a.StartsWith("--") || a.StartsWith("-") || a.StartsWith("/"))
+                    string a = argument.Replace("--", "-").Trim();
+                    var match = split.Match(a);
+                    if (match.Success)
                     {
-                        string[] b = a.Split(new char[] { '-', ':', '=' }, StringSplitOptions.RemoveEmptyEntries);
-                        switch (b[0])
+                        string opt = match.Value.Substring(1).Trim();
+                        string val = a.Substring(match.Value.Length + 1).Trim();
+                        switch (opt)
                         {
                             case "?":
                             case "help":
@@ -69,17 +74,17 @@ namespace Bind
                                 return;
                             case "in":
                             case "input":
-                                Settings.InputPath = string.Join(Path.DirectorySeparatorChar.ToString(), b.Skip(1).ToArray());
+                                Settings.InputPath = val;
                                 break;
                             case "out":
                             case "output":
-                                Settings.OutputPath = string.Join(Path.DirectorySeparatorChar.ToString(), b.Skip(1).ToArray());
+                                Settings.OutputPath = val;
                                 break;
                             case "l":
                             case "lang":
                             case "language":
                                 {
-                                    string arg = b[1].ToLower();
+                                    string arg = val.ToLower();
                                     if (arg == "cpp" || arg == "c++" || arg == "c")
                                     {
                                         Settings.Language = GeneratorLanguage.Cpp;
@@ -92,33 +97,32 @@ namespace Bind
                                 }
                             case "mode":
                                 {
-                                    string arg = b[1].ToLower();
+                                    string arg = val.ToLower();
                                     SetGeneratorMode(dirName, arg);
-                                    if (b.Length > 2)
-                                        dirName = b[2];
+                                    dirName = val;
                                     break;
                                 }
                             case "namespace":
                             case "ns":
-                                Settings.OutputNamespace = b[1];
+                                Settings.OutputNamespace = val;
                                 break;
                             case "class":
-                                Settings.OutputClass = b[1];
+                                Settings.OutputClass = val;
                                 break;
                             case "gl":
-                                Settings.GLClass = b[1];
+                                Settings.GLClass = val;
                                 break;
                             case "legacy":
                             case "o":
                             case "option":
-                                Settings.Compatibility |= b[1].ToLower() == "tao" ? Settings.Legacy.Tao : Settings.Legacy.None;
-                                Settings.Compatibility |= b[1].ToLower() == "simple_enums" ? Settings.Legacy.NoAdvancedEnumProcessing : Settings.Legacy.None;
-                                Settings.Compatibility |= b[1].ToLower() == "safe" ? Settings.Legacy.NoPublicUnsafeFunctions : Settings.Legacy.None;
+                                Settings.Compatibility |= val.ToLower() == "tao" ? Settings.Legacy.Tao : Settings.Legacy.None;
+                                Settings.Compatibility |= val.ToLower() == "simple_enums" ? Settings.Legacy.NoAdvancedEnumProcessing : Settings.Legacy.None;
+                                Settings.Compatibility |= val.ToLower() == "safe" ? Settings.Legacy.NoPublicUnsafeFunctions : Settings.Legacy.None;
                                 //Settings.Compatibility |= b[1].ToLower().Contains("novoid") ? Settings.Legacy.TurnVoidPointersToIntPtr : Settings.Legacy.None;
-                                Settings.Compatibility |= b[1].ToLower() == "permutations" ? Settings.Legacy.GenerateAllPermutations : Settings.Legacy.None;
-                                Settings.Compatibility |= b[1].ToLower() == "enums_in_class" ? Settings.Legacy.NestedEnums : Settings.Legacy.None;
-                                Settings.Compatibility |= b[1].ToLower() == "nodocs" ? Settings.Legacy.NoDocumentation : Settings.Legacy.None;
-                                Settings.Compatibility |= b[1].ToLower() == "keep_untyped_enums" ? Settings.Legacy.KeepUntypedEnums : Settings.Legacy.None;
+                                Settings.Compatibility |= val.ToLower() == "permutations" ? Settings.Legacy.GenerateAllPermutations : Settings.Legacy.None;
+                                Settings.Compatibility |= val.ToLower() == "enums_in_class" ? Settings.Legacy.NestedEnums : Settings.Legacy.None;
+                                Settings.Compatibility |= val.ToLower() == "nodocs" ? Settings.Legacy.NoDocumentation : Settings.Legacy.None;
+                                Settings.Compatibility |= val.ToLower() == "keep_untyped_enums" ? Settings.Legacy.KeepUntypedEnums : Settings.Legacy.None;
                                 break;
                             default:
                                 throw new ArgumentException(
