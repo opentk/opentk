@@ -43,6 +43,7 @@ namespace Bind
     {
         readonly char[] numbers = "0123456789".ToCharArray();
         const string AllowDeprecated = "ALLOW_DEPRECATED_GL";
+        const string DigitPrefix = "T"; // Prefix for identifiers that start with a digit
 
         #region WriteBindings
 
@@ -62,7 +63,7 @@ namespace Bind
             {
                 var three_dee_fx = wrappers["3dfx"];
                 wrappers.Remove("3dfx");
-                wrappers.Add("T3dfx", three_dee_fx);
+                wrappers.Add(DigitPrefix + "3dfx", three_dee_fx);
             }
 
             Settings.DefaultOutputNamespace = "OpenTK";
@@ -128,6 +129,8 @@ namespace Bind
         void WriteLoader(BindStreamWriter sw, FunctionCollection wrappers,
             Dictionary<string, string> CSTypes)
         {
+            sw.WriteLine("using namespace Internals;");
+
             // Used to avoid multiple declarations of the same function
             Delegate last_delegate = null;
 
@@ -152,11 +155,8 @@ namespace Bind
                             continue;
                         last_delegate = function.WrappedDelegate;
 
-                        if (ext == "Core")
-                            sw.WriteLine("{0}::Delegates::p{1} {0}::Delegates::{1} = 0;", Settings.GLClass, function.Name);
-                        else
-                            sw.WriteLine("{0}::{1}::Delegates::p{2} {0}::{1}::Delegates::{2} = 0;", Settings.GLClass,
-                                function.Extension, function.Name);
+                        string path = GetNamespace(ext);
+                        sw.WriteLine("{0}::Delegates::p{1} {0}::Delegates::{1} = 0;", path, function.Name);
                     }
 
                     if (current == deprecated)
@@ -171,11 +171,8 @@ namespace Bind
             // Add Init() methods
             foreach (var ext in wrappers.Keys)
             {
-                string path = null;
-                if (ext == "Core")
-                    path = Settings.GLClass;
-                else
-                    path = String.Format("{0}::{1}", Settings.GLClass, ext);
+                string path = GetNamespace(ext);
+
                 sw.WriteLine("void {0}::Init()", path);
                 sw.WriteLine("{");
                 sw.Indent();
@@ -211,6 +208,14 @@ namespace Bind
                 sw.Unindent();
                 sw.WriteLine("}");
             }
+        }
+
+        static string GetNamespace(string ext)
+        {
+            if (ext == "Core")
+                return Settings.GLClass;
+            else
+                return String.Format("{0}::{1}", Settings.GLClass, Char.IsDigit(ext[0]) ? DigitPrefix + ext : ext);
         }
 
         #endregion
