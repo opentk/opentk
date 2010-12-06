@@ -102,115 +102,118 @@ namespace Bind
 
         #region ISpecReader Members
 
-        public DelegateCollection ReadDelegates(StreamReader specFile)
+        public DelegateCollection ReadDelegates(string file)
         {
-            XPathDocument specs = new XPathDocument(specFile);
+            var specs = new XPathDocument(file);
             var delegates = ReadDelegates(specs.CreateNavigator().SelectSingleNode("/signatures/add"));
-            specFile.BaseStream.Seek(0, SeekOrigin.Begin);
             return delegates;
         }
 
-        public Dictionary<string, string> ReadTypeMap(StreamReader specFile)
+        public Dictionary<string, string> ReadTypeMap(string file)
         {
-            Console.WriteLine("Reading opengl types.");
-            Dictionary<string, string> GLTypes = new Dictionary<string, string>();
+            using (var sr = new StreamReader(file))
+            {
+                Console.WriteLine("Reading opengl types.");
+                Dictionary<string, string> GLTypes = new Dictionary<string, string>();
 
-            if (specFile == null)
+                if (sr == null)
+                    return GLTypes;
+
+                do
+                {
+                    string line = sr.ReadLine();
+
+                    if (String.IsNullOrEmpty(line) || line.StartsWith("#"))
+                        continue;
+
+                    string[] words = line.Split(" ,*\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+                    if (words[0].ToLower() == "void")
+                    {
+                        // Special case for "void" -> "". We make it "void" -> "void"
+                        GLTypes.Add(words[0], "void");
+                    }
+                    else if (words[0] == "VoidPointer" || words[0] == "ConstVoidPointer")
+                    {
+                        // "(Const)VoidPointer" -> "void*"
+                        GLTypes.Add(words[0], "void*");
+                    }
+                    else if (words[0] == "CharPointer" || words[0] == "charPointerARB")
+                    {
+                        // The typematching logic cannot handle pointers to pointers, e.g. CharPointer* -> char** -> string* -> string[].
+                        // Hence we give it a push.
+                        // Note: When both CurrentType == "String" and Pointer == true, the typematching is hardcoded to use
+                        // String[] or StringBuilder[].
+                        GLTypes.Add(words[0], "String");
+                    }
+                    /*else if (words[0].Contains("Pointer"))
+                    {
+                        GLTypes.Add(words[0], words[1].Replace("Pointer", "*"));
+                    }*/
+                    else if (words[1].Contains("GLvoid"))
+                    {
+                        GLTypes.Add(words[0], "void");
+                    }
+                    else if (words[1] == "const" && words[2] == "GLubyte")
+                    {
+                        GLTypes.Add(words[0], "String");
+                    }
+                    else if (words[1] == "struct")
+                    {
+                        GLTypes.Add(words[0], words[2]);
+                    }
+                    else
+                    {
+                        GLTypes.Add(words[0], words[1]);
+                    }
+                }
+                while (!sr.EndOfStream);
+
                 return GLTypes;
-
-            do
-            {
-                string line = specFile.ReadLine();
-
-                if (String.IsNullOrEmpty(line) || line.StartsWith("#"))
-                    continue;
-
-                string[] words = line.Split(" ,*\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-
-                if (words[0].ToLower() == "void")
-                {
-                    // Special case for "void" -> "". We make it "void" -> "void"
-                    GLTypes.Add(words[0], "void");
-                }
-                else if (words[0] == "VoidPointer" || words[0] == "ConstVoidPointer")
-                {
-                    // "(Const)VoidPointer" -> "void*"
-                    GLTypes.Add(words[0], "void*");
-                }
-                else if (words[0] == "CharPointer" || words[0] == "charPointerARB")
-                {
-                    // The typematching logic cannot handle pointers to pointers, e.g. CharPointer* -> char** -> string* -> string[].
-                    // Hence we give it a push.
-                    // Note: When both CurrentType == "String" and Pointer == true, the typematching is hardcoded to use
-                    // String[] or StringBuilder[].
-                    GLTypes.Add(words[0], "String");
-                }
-                /*else if (words[0].Contains("Pointer"))
-                {
-                    GLTypes.Add(words[0], words[1].Replace("Pointer", "*"));
-                }*/
-                else if (words[1].Contains("GLvoid"))
-                {
-                    GLTypes.Add(words[0], "void");
-                }
-                else if (words[1] == "const" && words[2] == "GLubyte")
-                {
-                    GLTypes.Add(words[0], "String");
-                }
-                else if (words[1] == "struct")
-                {
-                    GLTypes.Add(words[0], words[2]);
-                }
-                else
-                {
-                    GLTypes.Add(words[0], words[1]);
-                }
             }
-            while (!specFile.EndOfStream);
-
-            return GLTypes;
         }
 
-        public Dictionary<string, string> ReadCSTypeMap(StreamReader specFile)
+        public Dictionary<string, string> ReadCSTypeMap(string file)
         {
-            Dictionary<string, string> CSTypes = new Dictionary<string, string>();
-            Console.WriteLine("Reading C# types.");
-
-            while (!specFile.EndOfStream)
+            using (var sr = new StreamReader(file))
             {
-                string line = specFile.ReadLine();
-                if (String.IsNullOrEmpty(line) || line.StartsWith("#"))
-                    continue;
+                Dictionary<string, string> CSTypes = new Dictionary<string, string>();
+                Console.WriteLine("Reading C# types.");
 
-                string[] words = line.Split(" ,\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                if (words.Length < 2)
-                    continue;
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    if (String.IsNullOrEmpty(line) || line.StartsWith("#"))
+                        continue;
 
-                if (((Settings.Compatibility & Settings.Legacy.NoBoolParameters) != Settings.Legacy.None) && words[1] == "bool")
-                    words[1] = "Int32";
+                    string[] words = line.Split(" ,\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    if (words.Length < 2)
+                        continue;
 
-                CSTypes.Add(words[0], words[1]);
+                    if (((Settings.Compatibility & Settings.Legacy.NoBoolParameters) != Settings.Legacy.None) && words[1] == "bool")
+                        words[1] = "Int32";
+
+                    CSTypes.Add(words[0], words[1]);
+                }
+
+                return CSTypes;
             }
-
-            return CSTypes;
         }
 
-        public EnumCollection ReadEnums(StreamReader specFile)
+        public EnumCollection ReadEnums(string file)
         {
             // First, read all enum definitions from spec and override file.
             // Afterwards, read all token/enum overrides from overrides file.
             // Every single enum is merged into
 
             EnumCollection enums = new EnumCollection();
-            XPathDocument specs = new XPathDocument(specFile);
-
+            var specs = new XPathDocument(file);
             foreach (XPathNavigator nav in specs.CreateNavigator().Select("/signatures/add"))
             {
                 var new_enums = ReadEnums(nav);
                 Utilities.Merge(enums, new_enums);
             }
 
-            specFile.BaseStream.Seek(0, SeekOrigin.Begin);
             return enums;
         }
 

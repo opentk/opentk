@@ -46,9 +46,9 @@ namespace Bind
             new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flag|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs)", RegexOptions.Compiled | RegexOptions.RightToLeft);
         static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
 
-        StreamReader Overrides { get; set; }
+        string Overrides { get; set; }
 
-        public FuncProcessor(StreamReader overrides)
+        public FuncProcessor(string overrides)
         {
             if (overrides == null)
                 throw new ArgumentNullException("overrides");
@@ -72,7 +72,6 @@ namespace Bind
             wrappers = CreateCLSCompliantWrappers(wrappers, enums);
             Console.WriteLine("Removing non-CLS compliant duplicates.");
 
-            Overrides.BaseStream.Seek(0, SeekOrigin.Begin);
             return MarkCLSCompliance(wrappers);
         }
 

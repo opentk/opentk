@@ -40,9 +40,9 @@ namespace Bind
     class EnumProcessor
     {
         const string Path = "/signatures/replace/enum[@name='{0}']";
-        StreamReader Overrides { get; set; }
+        string Overrides { get; set; }
 
-        public EnumProcessor(StreamReader overrides)
+        public EnumProcessor(string overrides)
         {
             if (overrides == null)
                 throw new ArgumentNullException("overrides");
@@ -55,7 +55,6 @@ namespace Bind
             var nav = new XPathDocument(Overrides).CreateNavigator();
             enums = ProcessNames(enums, nav);
             enums = ProcessConstants(enums, nav);
-            Overrides.BaseStream.Seek(0, SeekOrigin.Begin);
             return enums;
         }
 
