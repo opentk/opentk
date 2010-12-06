@@ -105,7 +105,9 @@ namespace Bind
         public DelegateCollection ReadDelegates(StreamReader specFile)
         {
             XPathDocument specs = new XPathDocument(specFile);
-            return ReadDelegates(specs.CreateNavigator().SelectSingleNode("/signatures/add"));
+            var delegates = ReadDelegates(specs.CreateNavigator().SelectSingleNode("/signatures/add"));
+            specFile.BaseStream.Seek(0, SeekOrigin.Begin);
+            return delegates;
         }
 
         public Dictionary<string, string> ReadTypeMap(StreamReader specFile)
@@ -201,8 +203,6 @@ namespace Bind
 
             EnumCollection enums = new EnumCollection();
             XPathDocument specs = new XPathDocument(specFile);
-            XPathDocument overrides = new XPathDocument(new StreamReader(
-                Path.Combine(Settings.InputPath, Settings.OverridesFile)));
 
             foreach (XPathNavigator nav in specs.CreateNavigator().Select("/signatures/add"))
             {
@@ -210,6 +210,7 @@ namespace Bind
                 Utilities.Merge(enums, new_enums);
             }
 
+            specFile.BaseStream.Seek(0, SeekOrigin.Begin);
             return enums;
         }
 
