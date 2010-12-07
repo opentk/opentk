@@ -376,7 +376,7 @@ namespace Bind
                 var parameters = d.Parameters.ToString()
                     .Replace("String[]", "String*")
                     .Replace("[OutAttribute]", String.Empty);
-                sw.WriteLine("typedef {0} (*p{1}){2};", d.ReturnType, d.Name, parameters);
+                sw.WriteLine("typedef {0} (APIENTRY *p{1}){2};", d.ReturnType, d.Name, parameters);
                 sw.WriteLine("extern p{0} {0};", d.Name);
             }
         }
