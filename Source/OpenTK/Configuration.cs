@@ -239,7 +239,7 @@ namespace OpenTK
             try
             {
                 Assembly asm = Assembly.GetAssembly(typeof(Configuration));
-                name = asm.GetName().Name;
+                name = asm.GetName().Name; // In case someone embeds OpenTK into another dll.
                 monopath = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.Personal),
                     ".mono");
@@ -252,8 +252,10 @@ namespace OpenTK
                 CreatePath(outpath);
 
                 Debug.Print("Loading embedded config.");
-                // Note: the dll name is hardcoded
-                Stream str = asm.GetManifestResourceStream("OpenTK.dll.config");
+                // Note: the resource name and namespace are hardcoded.
+                // This will fail if someone recompiles OpenTK with a different namespace
+                // (not *our* problem, though).
+                Stream str = asm.GetManifestResourceStream("OpenTK.OpenTK.dll.config");
                 if (str != null)
                 {
                     using (str)
