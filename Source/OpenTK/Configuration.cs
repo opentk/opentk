@@ -39,69 +39,15 @@ namespace OpenTK
     public static class Configuration
     {
         static bool runningOnWindows, runningOnUnix, runningOnX11, runningOnMacOS, runningOnLinux, runningOnMono;
+        volatile static bool initialized;
+        readonly static object InitLock = new object();
 
-        #region --- Constructors ---
+        #region Constructors
 
         // Detects the underlying OS and runtime.
         static Configuration()
         {
-            if (System.Environment.OSVersion.Platform == PlatformID.Win32NT ||
-                System.Environment.OSVersion.Platform == PlatformID.Win32S ||
-                System.Environment.OSVersion.Platform == PlatformID.Win32Windows ||
-                System.Environment.OSVersion.Platform == PlatformID.WinCE)
-                runningOnWindows = true;
-            else if (System.Environment.OSVersion.Platform == PlatformID.Unix ||
-                     System.Environment.OSVersion.Platform == (PlatformID)4)
-            {
-                // Distinguish between Linux, Mac OS X and other Unix operating systems.
-                string kernel_name = DetectUnixKernel();
-                switch (kernel_name)
-                {
-                    case null:
-                    case "":
-                        throw new PlatformNotSupportedException(
-                            "Unknown platform. Please file a bug report at http://www.opentk.com/node/add/project-issue/opentk");
-
-                    case "Linux":
-                        runningOnLinux = runningOnUnix = true;
-                        break;
-
-                    case "Darwin":
-                        runningOnMacOS = runningOnUnix = true;
-                        break;
-
-                    default:
-                        runningOnUnix = true;
-                        break;
-                }
-            }
-            else
-                throw new PlatformNotSupportedException("Unknown platform. Please report this error at http://www.opentk.com.");
-
-            // Detect whether X is present.
-            // Hack: it seems that this check will cause X to initialize itself on Mac OS X Leopard and newer.
-            // We don't want that (we'll be using the native interfaces anyway), so we'll avoid this check
-            // when we detect Mac OS X.
-            if (!RunningOnMacOS)
-            {
-                try { runningOnX11 = OpenTK.Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
-                catch { }
-            }
-
-            // Detect the Mono runtime (code taken from http://mono.wikia.com/wiki/Detecting_if_program_is_running_in_Mono).
-            Type t = Type.GetType("Mono.Runtime");
-            if (t != null)
-                runningOnMono = true;
-            
-            Debug.Print("Detected configuration: {0} / {1}",
-                RunningOnWindows ? "Windows" : RunningOnLinux ? "Linux" : RunningOnMacOS ? "MacOS" :
-                runningOnUnix ? "Unix" : RunningOnX11 ? "X11" : "Unknown Platform",
-                RunningOnMono ? "Mono" : ".Net");
-
-            if (RunningOnMono && !RunningOnWindows)
-            {
-                WriteConfigFile();
-            }
+            Toolkit.Init();
         }
 
         #endregion
@@ -215,7 +161,82 @@ namespace OpenTK
 
         #endregion
 
-         #region Private Methods
+        #region Internal Methods
+
+        internal static void Init()
+        {
+            lock (InitLock)
+            {
+                if (!initialized)
+                {
+                    initialized = true;
+
+                    if (System.Environment.OSVersion.Platform == PlatformID.Win32NT ||
+                        System.Environment.OSVersion.Platform == PlatformID.Win32S ||
+                        System.Environment.OSVersion.Platform == PlatformID.Win32Windows ||
+                        System.Environment.OSVersion.Platform == PlatformID.WinCE)
+                        runningOnWindows = true;
+
+                    // Write config file before using any p/invokes, otherwise Mono won't pick it up.
+                    if (!RunningOnWindows)
+                    {
+                        WriteConfigFile();
+                    }
+
+                    else if (System.Environment.OSVersion.Platform == PlatformID.Unix ||
+                             System.Environment.OSVersion.Platform == (PlatformID)4)
+                    {
+                        // Distinguish between Linux, Mac OS X and other Unix operating systems.
+                        string kernel_name = DetectUnixKernel();
+                        switch (kernel_name)
+                        {
+                            case null:
+                            case "":
+                                throw new PlatformNotSupportedException(
+                                    "Unknown platform. Please file a bug report at http://www.opentk.com/node/add/project-issue/opentk");
+
+                            case "Linux":
+                                runningOnLinux = runningOnUnix = true;
+                                break;
+
+                            case "Darwin":
+                                runningOnMacOS = runningOnUnix = true;
+                                break;
+
+                            default:
+                                runningOnUnix = true;
+                                break;
+                        }
+                    }
+                    else
+                        throw new PlatformNotSupportedException("Unknown platform. Please report this error at http://www.opentk.com.");
+
+                    // Detect whether X is present.
+                    // Hack: it seems that this check will cause X to initialize itself on Mac OS X Leopard and newer.
+                    // We don't want that (we'll be using the native interfaces anyway), so we'll avoid this check
+                    // when we detect Mac OS X.
+                    if (!RunningOnMacOS)
+                    {
+                        try { runningOnX11 = OpenTK.Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
+                        catch { }
+                    }
+
+                    // Detect the Mono runtime (code taken from http://mono.wikia.com/wiki/Detecting_if_program_is_running_in_Mono).
+                    Type t = Type.GetType("Mono.Runtime");
+                    if (t != null)
+                        runningOnMono = true;
+
+                    Debug.Print("Detected configuration: {0} / {1}",
+                        RunningOnWindows ? "Windows" : RunningOnLinux ? "Linux" : RunningOnMacOS ? "MacOS" :
+                        runningOnUnix ? "Unix" : RunningOnX11 ? "X11" : "Unknown Platform",
+                        RunningOnMono ? "Mono" : ".Net");
+                }
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
 
         // Creates path on disk if it doesn't already exist
         static void CreatePath(string path)
@@ -234,6 +255,7 @@ namespace OpenTK
             string monopath = null;
             string asmpath = null;
             string outpath = null;
+            string file_old = null;
             string file = null;
 
             try
@@ -245,7 +267,8 @@ namespace OpenTK
                     ".mono");
                 asmpath = Path.Combine(monopath, "assemblies");
                 outpath = Path.Combine(asmpath, name);
-                file = Path.ChangeExtension(name, "dll.config");
+                file_old = Path.ChangeExtension(name, "dll.config"); // For mono version prior to 1.9
+                file = Path.ChangeExtension(name, "config"); // For mono 1.9 and higher
                 Debug.Print("to {0}/{1}.", outpath, file);
                 CreatePath(monopath);
                 CreatePath(asmpath);
@@ -262,8 +285,9 @@ namespace OpenTK
                     {
                         byte[] buffer = new byte[str.Length];
                         str.Read(buffer, 0, buffer.Length);
-                        string config = System.Text.UnicodeEncoding.Unicode.GetString(buffer);
+                        string config = System.Text.UnicodeEncoding.Default.GetString(buffer);
                         System.IO.File.WriteAllText(Path.Combine(outpath, file), config);
+                        System.IO.File.WriteAllText(Path.Combine(outpath, file_old), config);
                     }
                     Debug.Print("Success!");
                 }
