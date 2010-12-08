@@ -36,6 +36,9 @@ namespace OpenTK
     /// </summary>
     public sealed class Toolkit
     {
+        volatile static bool initialized;
+        static readonly object InitLock = new object();
+
         #region Constructors
 
         Toolkit() { }
@@ -58,9 +61,17 @@ namespace OpenTK
         /// </remarks>
         public static void Init()
         {
-            // The actual initialization takes place in the platform-specific factory
-            // constructors.
-            new Platform.Factory();
+            lock (InitLock)
+            {
+                if (!initialized)
+                {
+                    initialized = true;
+                    Configuration.Init();
+                    // The actual initialization takes place in the platform-specific factory
+                    // constructors.
+                    new Platform.Factory();
+                }
+            }
         }
 
         #endregion
