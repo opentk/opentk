@@ -94,7 +94,6 @@ namespace Examples
             imageListSampleCategories.Images.Add("3.x", Resources.v3x);
             imageListSampleCategories.Images.Add("4.x", Resources.v4x);
 
-            Debug.Listeners.Add(new TextBoxTraceListener(textBoxOutput));
             treeViewSamples.TreeViewNodeSorter = new SamplesTreeViewSorter();
 
             LoadSamplesFromAssembly(Assembly.GetExecutingAssembly());
@@ -354,7 +353,7 @@ namespace Examples
             return -1;
         }
 
-        static void RunSample(Control parent, ExampleInfo e)
+        void RunSample(Control parent, ExampleInfo e)
         {
             if (e == null)
                 return;
@@ -389,6 +388,7 @@ namespace Examples
                 {
                     if (parent != null)
                     {
+                        textBoxOutput.Text = File.ReadAllText("debug.log");
                         parent.Visible = true;
                         Application.DoEvents();
                     }
