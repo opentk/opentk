@@ -97,11 +97,16 @@ namespace OpenTK
                 RunningOnWindows ? "Windows" : RunningOnLinux ? "Linux" : RunningOnMacOS ? "MacOS" :
                 runningOnUnix ? "Unix" : RunningOnX11 ? "X11" : "Unknown Platform",
                 RunningOnMono ? "Mono" : ".Net");
+
+            if (RunningOnMono && !RunningOnWindows)
+            {
+                WriteConfigFile();
+            }
         }
 
         #endregion
 
-        #region --- Public Methods ---
+        #region Public Methods
 
         #region public static bool RunningOnWindows
 
@@ -207,6 +212,69 @@ namespace OpenTK
         #endregion
 
         #endregion
+
+        #endregion
+
+         #region Private Methods
+
+        // Creates path on disk if it doesn't already exist
+        static void CreatePath(string path)
+        {
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+        }
+
+        // Write OpenTK.dll.config to disk when running on non-Windows platforms.
+        // Mono will automatically load the config from ~/.mono/assemblies/OpenTK,
+        // which is great when the user forgets to copy the file on his own
+        static void WriteConfigFile()
+        {
+            Debug.Write("Writing config file ");
+            string name = null;
+            string monopath = null;
+            string asmpath = null;
+            string outpath = null;
+            string file = null;
+
+            try
+            {
+                Assembly asm = Assembly.GetAssembly(typeof(Configuration));
+                name = asm.GetName().Name;
+                monopath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.Personal),
+                    ".mono");
+                asmpath = Path.Combine(monopath, "assemblies");
+                outpath = Path.Combine(asmpath, name);
+                file = Path.ChangeExtension(name, "dll.config");
+                Debug.Print("to {0}/{1}.", outpath, file);
+                CreatePath(monopath);
+                CreatePath(asmpath);
+                CreatePath(outpath);
+
+                Debug.Print("Loading embedded config.");
+                // Note: the dll name is hardcoded
+                Stream str = asm.GetManifestResourceStream("OpenTK.dll.config");
+                if (str != null)
+                {
+                    using (str)
+                    {
+                        byte[] buffer = new byte[str.Length];
+                        str.Read(buffer, 0, buffer.Length);
+                        string config = System.Text.UnicodeEncoding.Unicode.GetString(buffer);
+                        System.IO.File.WriteAllText(Path.Combine(outpath, file), config);
+                    }
+                    Debug.Print("Success!");
+                }
+                else
+                {
+                    Debug.Print("[Warning] Failed, embedded config not found.");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Print("[Warning] Failed to write {0} to \"{1}\". Error: {2}", file, outpath, e);
+            }
+        }
 
         #endregion
     }
