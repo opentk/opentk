@@ -420,7 +420,16 @@ namespace Examples
             {
                 try
                 {
-                    _main.Invoke(null, null);
+                    using (TextWriterTraceListener dbg = new TextWriterTraceListener("debug.log"))
+                    {
+                        Trace.Listeners.Add(dbg);
+                        Trace.Listeners.Add(new ConsoleTraceListener());
+
+                        _main.Invoke(null, null);
+
+                        dbg.Flush();
+                        dbg.Close();
+                    }
                 }
                 catch (TargetInvocationException expt)
                 {
