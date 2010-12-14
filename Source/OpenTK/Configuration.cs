@@ -175,14 +175,9 @@ namespace OpenTK
                         System.Environment.OSVersion.Platform == PlatformID.Win32S ||
                         System.Environment.OSVersion.Platform == PlatformID.Win32Windows ||
                         System.Environment.OSVersion.Platform == PlatformID.WinCE)
-                        runningOnWindows = true;
-
-                    // Write config file before using any p/invokes, otherwise Mono won't pick it up.
-                    if (!RunningOnWindows)
                     {
-                        WriteConfigFile();
+                        runningOnWindows = true;
                     }
-
                     else if (System.Environment.OSVersion.Platform == PlatformID.Unix ||
                              System.Environment.OSVersion.Platform == (PlatformID)4)
                     {
@@ -231,74 +226,6 @@ namespace OpenTK
                         runningOnUnix ? "Unix" : RunningOnX11 ? "X11" : "Unknown Platform",
                         RunningOnMono ? "Mono" : ".Net");
                 }
-            }
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        // Creates path on disk if it doesn't already exist
-        static void CreatePath(string path)
-        {
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-        }
-
-        // Write OpenTK.dll.config to disk when running on non-Windows platforms.
-        // Mono will automatically load the config from ~/.mono/assemblies/OpenTK,
-        // which is great when the user forgets to copy the file on his own
-        static void WriteConfigFile()
-        {
-            Debug.Write("Writing config file ");
-            string name = null;
-            string monopath = null;
-            string asmpath = null;
-            string outpath = null;
-            string file_old = null;
-            string file = null;
-
-            try
-            {
-                Assembly asm = Assembly.GetAssembly(typeof(Configuration));
-                name = asm.GetName().Name; // In case someone embeds OpenTK into another dll.
-                monopath = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.Personal),
-                    ".mono");
-                asmpath = Path.Combine(monopath, "assemblies");
-                outpath = Path.Combine(asmpath, name);
-                file_old = Path.ChangeExtension(name, "dll.config"); // For mono version prior to 1.9
-                file = Path.ChangeExtension(name, "config"); // For mono 1.9 and higher
-                Debug.Print("to {0}/{1}.", outpath, file);
-                CreatePath(monopath);
-                CreatePath(asmpath);
-                CreatePath(outpath);
-
-                Debug.Print("Loading embedded config.");
-                // Note: the resource name and namespace are hardcoded.
-                // This will fail if someone recompiles OpenTK with a different namespace
-                // (not *our* problem, though).
-                Stream str = asm.GetManifestResourceStream("OpenTK.OpenTK.dll.config");
-                if (str != null)
-                {
-                    using (str)
-                    {
-                        byte[] buffer = new byte[str.Length];
-                        str.Read(buffer, 0, buffer.Length);
-                        string config = System.Text.UnicodeEncoding.Default.GetString(buffer);
-                        System.IO.File.WriteAllText(Path.Combine(outpath, file), config);
-                        System.IO.File.WriteAllText(Path.Combine(outpath, file_old), config);
-                    }
-                    Debug.Print("Success!");
-                }
-                else
-                {
-                    Debug.Print("[Warning] Failed, embedded config not found.");
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.Print("[Warning] Failed to write {0} to \"{1}\". Error: {2}", file, outpath, e);
             }
         }
 
