@@ -72,12 +72,7 @@ namespace OpenTK.Platform.Egl
                 throw new GraphicsModeException(String.Format("Failed to initialize display connection, error {0}", Egl.GetError()));
 
             int num_configs;
-            if (!Egl.GetConfigs(display, null, 0, out num_configs))
-            {
-                throw new GraphicsModeException(String.Format("Failed to retrieve GraphicsMode configurations, error {0}", Egl.GetError()));
-            }
-
-            if (!Egl.ChooseConfig(display, attribList, configs, configs.Length, out num_configs))
+            if (!Egl.ChooseConfig(display, attribList, configs, configs.Length, out num_configs) || num_configs == 0)
             {
                 throw new GraphicsModeException(String.Format("Failed to retrieve GraphicsMode, error {0}", Egl.GetError()));
             }
