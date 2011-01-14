@@ -43,6 +43,14 @@ namespace OpenTK.Platform.Egl
             { 
                 //Egl.SURFACE_TYPE, Egl.WINDOW_BIT,
 
+                // Context creation will fail unless one of these bits is set. Hopefully, setting all bits will not
+                // cause any ugly side-effects.
+                // If this doesn't work, we'll have to use Egl.GetConfigs and implement our own selection logic,
+                // because we the exact ES version is not known when selecting a graphics context.
+                // (See WinGraphicsMode.cs for an selection logic implementation).
+                // Todo: add Egl.OPENVG_BIT here if we ever add OpenVG bindings.
+                Egl.RENDERABLE_TYPE, Egl.OPENGL_ES_BIT | Egl.OPENGL_ES2_BIT | Egl.OPENGL_BIT,
+
                 Egl.RED_SIZE, color.Red, 
                 Egl.GREEN_SIZE, color.Green, 
                 Egl.BLUE_SIZE, color.Blue,
