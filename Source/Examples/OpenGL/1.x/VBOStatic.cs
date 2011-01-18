@@ -1,8 +1,6 @@
-﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- */
-#endregion
+﻿// This code was written for the OpenTK library and has been released
+// to the Public Domain.
+// It is provided "as is" without express or implied warranty of any kind.
 
 #region --- Using directives ---
 
