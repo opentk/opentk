@@ -61,7 +61,13 @@ namespace OpenTK.Platform.Egl
 
             WindowInfo = window;
 
-            Mode = new EglGraphicsMode().SelectGraphicsMode(mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples, mode.AccumulatorFormat, mode.Buffers, mode.Stereo);
+            // Select an EGLConfig that matches the desired mode. We cannot use the 'mode'
+            // parameter directly, since it may have originated on a different system (e.g. GLX)
+            // and it may not support the desired renderer.
+            Mode = new EglGraphicsMode().SelectGraphicsMode(mode.ColorFormat,
+                mode.Depth, mode.Stencil, mode.Samples, mode.AccumulatorFormat,
+                mode.Buffers, mode.Stereo,
+                major > 1 ? RenderableFlags.ES2 : RenderableFlags.ES);
             if (!Mode.Index.HasValue)
                 throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
             IntPtr config = Mode.Index.Value;
