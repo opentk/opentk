@@ -36,20 +36,28 @@ namespace OpenTK.Platform.Egl
     {
         #region IGraphicsMode Members
 
-        public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers, bool stereo)
+        public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil,
+            int samples, ColorFormat accum, int buffers, bool stereo)
+        {
+            // According to the EGL specs, the ES flag should select ES 1.0 or higher, which
+            // makes sense as a default. EglContext.cs checks 
+            return SelectGraphicsMode(color, depth, stencil, samples, accum, buffers, stereo,
+                RenderableFlags.ES);
+        }
+
+        #endregion
+
+        #region Public Members
+
+        public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil,
+            int samples, ColorFormat accum, int buffers, bool stereo,
+            RenderableFlags renderable_flags)
         {
             IntPtr[] configs = new IntPtr[1];
             int[] attribList = new int[] 
             { 
                 //Egl.SURFACE_TYPE, Egl.WINDOW_BIT,
-
-                // Context creation will fail unless one of these bits is set. Hopefully, setting all bits will not
-                // cause any ugly side-effects.
-                // If this doesn't work, we'll have to use Egl.GetConfigs and implement our own selection logic,
-                // because we the exact ES version is not known when selecting a graphics context.
-                // (See WinGraphicsMode.cs for an selection logic implementation).
-                // Todo: add Egl.OPENVG_BIT here if we ever add OpenVG bindings.
-                Egl.RENDERABLE_TYPE, Egl.OPENGL_ES_BIT | Egl.OPENGL_ES2_BIT | Egl.OPENGL_BIT,
+                Egl.RENDERABLE_TYPE, (int)renderable_flags,
 
                 Egl.RED_SIZE, color.Red, 
                 Egl.GREEN_SIZE, color.Green, 

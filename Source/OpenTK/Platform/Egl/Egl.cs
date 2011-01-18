@@ -2,7 +2,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2009 the Open Toolkit library.
+// Copyright (c) 2006 - 2011 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,15 @@ namespace OpenTK.Platform.Egl
     using EGLDisplay = IntPtr;
     using EGLSurface = IntPtr;
     using EGLClientBuffer = IntPtr;
+
+    [Flags]
+    enum RenderableFlags
+    {
+        ES = Egl.OPENGL_ES_BIT,
+        ES2 = Egl.OPENGL_ES2_BIT,
+        GL = Egl.OPENGL_BIT,
+        VG = Egl.OPENVG_BIT,
+    }
 
     static partial class Egl
     {
