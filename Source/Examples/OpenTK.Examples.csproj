@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -151,6 +151,7 @@
     <Compile Include="OpenGL\1.x\OpenGLDiagnostics.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="OpenGL\1.x\TextRendering.cs" />
     <Compile Include="SamplesTreeViewSorter.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -553,6 +554,7 @@
     </None>
     <EmbeddedResource Include="OpenGL\1.x\OpenGLDiagnostics.rtf" />
     <EmbeddedResource Include="OpenGL\1.x\Anaglyph.rtf" />
+    <EmbeddedResource Include="OpenGL\1.x\TextRendering.rtf" />
     <None Include="Resources\App.ico">
     </None>
     <None Include="..\OpenTK\OpenTK.dll.config">
