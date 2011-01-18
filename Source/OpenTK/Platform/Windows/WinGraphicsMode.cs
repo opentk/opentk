@@ -215,34 +215,40 @@ namespace OpenTK.Platform.Windows
                 {
                     (int)WGL_ARB_pixel_format.AccelerationArb,
                     (int)WGL_ARB_pixel_format.FullAccelerationArb,
+                    (int)WGL_ARB_pixel_format.SupportOpenglArb, 1,
+                    (int)WGL_ARB_pixel_format.DrawToWindowArb, 1,
                     0, 0
                 };
 
                 int[] num_formats = new int[1];
-                Wgl.Arb.ChoosePixelFormat(window.DeviceContext, attribs_values, null, 0, null, num_formats);
-                int[] pixel = new int[num_formats[0]];
-
-                if (Wgl.Arb.ChoosePixelFormat(window.DeviceContext, attribs_values, null, pixel.Length, pixel, num_formats))
+                // Get the number of available formats
+                if (Wgl.Arb.ChoosePixelFormat(window.DeviceContext, attribs_values, null, 0, null, num_formats))
                 {
-                    foreach (int p in pixel)
+                    // Create an array big enough to hold all available formats and get those formats
+                    int[] pixel = new int[num_formats[0]];
+                    
+                    if (Wgl.Arb.ChoosePixelFormat(window.DeviceContext, attribs_values, null, pixel.Length, pixel, num_formats))
                     {
-                        // Find out what we really got as a format:
-                        if (!Wgl.Arb.GetPixelFormatAttrib(window.DeviceContext, p, 0, attribs.Length - 1, attribs, values))
+                        foreach (int p in pixel)
                         {
-                            Debug.Print("[Warning] Failed to detect attributes for PixelFormat:{0}.", p);
-                            continue;
+                            // Find out what we really got as a format:
+                            if (!Wgl.Arb.GetPixelFormatAttrib(window.DeviceContext, p, 0, attribs.Length - 1, attribs, values))
+                            {
+                                Debug.Print("[Warning] Failed to detect attributes for PixelFormat:{0}.", p);
+                                continue;
+                            }
+
+                            GraphicsMode mode = new GraphicsMode(new IntPtr(p),
+                                new ColorFormat(values[1], values[2], values[3], values[4]),
+                                values[6],
+                                values[7],
+                                values[8] != 0 ? values[9] : 0,
+                                new ColorFormat(values[10], values[11], values[12], values[13]),
+                                values[15] == 1 ? 2 : 1,
+                                values[16] == 1 ? true : false);
+
+                            yield return mode;
                         }
-
-                        GraphicsMode mode = new GraphicsMode(new IntPtr(p),
-                            new ColorFormat(values[1], values[2], values[3], values[4]),
-                            values[6],
-                            values[7],
-                            values[8] != 0 ? values[9] : 0,
-                            new ColorFormat(values[10], values[11], values[12], values[13]),
-                            values[15] == 1 ? 2 : 1,
-                            values[16] == 1 ? true : false);
-
-                        yield return mode;
                     }
                 }
             }
