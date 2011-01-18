@@ -1,4 +1,8 @@
-﻿using System;
+﻿// This code was written for the OpenTK library and has been released
+// to the Public Domain.
+// It is provided "as is" without express or implied warranty of any kind.
+
+using System;
 using System.IO;
 using System.Drawing;
 using System.Diagnostics;
