@@ -14,5 +14,8 @@
     <function name="GetProgramInfoLog" extension="Core">
       <param name="infolog"><flow>out</flow></param>
     </function>
+    <function name="GetShaderInfoLog" extension="Core">
+      <param name="infolog"><flow>out</flow></param>
+    </function>
   </replace>
 </overrides>
