@@ -236,6 +236,28 @@ namespace OpenTK
             return radians * radToDeg;
         }
 
+        /// <summary>
+        /// Convert degrees to radians
+        /// </summary>
+        /// <param name="degrees">An angle in degrees</param>
+        /// <returns>The angle expressed in radians</returns>
+        public static double DegreesToRadians(double degrees)
+        {
+            const double degToRad = System.Math.PI / 180.0;
+            return degrees * degToRad;
+        }
+
+        /// <summary>
+        /// Convert radians to degrees
+        /// </summary>
+        /// <param name="radians">An angle in radians</param>
+        /// <returns>The angle expressed in degrees</returns>
+        public static double RadiansToDegrees(double radians)
+        {
+            const double radToDeg = 180.0 / System.Math.PI;
+            return radians * radToDeg;
+        }
+
         #endregion
 
         #region Swap
