@@ -141,23 +141,34 @@ namespace OpenTK.Platform.Windows
                 PixelFormatDescriptorFlags.SUPPORT_OPENGL |
                 PixelFormatDescriptorFlags.DRAW_TO_WINDOW;
 
-            int pixel = 0;
-            while (DescribePixelFormat(deviceContext, ++pixel, API.PixelFormatDescriptorSize, ref pfd) != 0)
+            // Make sure we don't turn off Aero on Vista and newer.
+            if (Environment.OSVersion.Version.Major >= 6)
             {
-                // Ignore non-accelerated formats.
-                if ((pfd.Flags & PixelFormatDescriptorFlags.GENERIC_FORMAT) != 0)
-                    continue;
+                pfd.Flags |= PixelFormatDescriptorFlags.SUPPORT_COMPOSITION;
+            }
 
-                GraphicsMode fmt = new GraphicsMode((IntPtr)pixel,
-                    new ColorFormat(pfd.RedBits, pfd.GreenBits, pfd.BlueBits, pfd.AlphaBits),
-                    pfd.DepthBits,
-                    pfd.StencilBits,
-                    0,
-                    new ColorFormat(pfd.AccumBits),
-                    (pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) != 0 ? 2 : 1,
-                    (pfd.Flags & PixelFormatDescriptorFlags.STEREO) != 0);
+            foreach (bool generic_allowed in new bool[] { false, true })
+            {
+                // Iterate through all accelerated formats first. Afterwards, iterate through non-accelerated formats.
+                // This should fix issue #2224, which causes OpenTK to fail on VMs without hardware acceleration.
+                int pixel = 0;
+                while (DescribePixelFormat(deviceContext, ++pixel, API.PixelFormatDescriptorSize, ref pfd) != 0)
+                {
+                    // Ignore non-accelerated formats.
+                    if (!generic_allowed && (pfd.Flags & PixelFormatDescriptorFlags.GENERIC_FORMAT) != 0)
+                        continue;
 
-                yield return fmt;
+                    GraphicsMode fmt = new GraphicsMode((IntPtr)pixel,
+                        new ColorFormat(pfd.RedBits, pfd.GreenBits, pfd.BlueBits, pfd.AlphaBits),
+                        pfd.DepthBits,
+                        pfd.StencilBits,
+                        0,
+                        new ColorFormat(pfd.AccumBits),
+                        (pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) != 0 ? 2 : 1,
+                        (pfd.Flags & PixelFormatDescriptorFlags.STEREO) != 0);
+
+                    yield return fmt;
+                }
             }
         }
 
