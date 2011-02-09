@@ -3055,6 +3055,7 @@ namespace OpenTK.Platform.Windows
         SWAP_LAYER_BUFFERS = 0x800,
         GENERIC_ACCELERATED = 0x1000,
         SUPPORT_DIRECTDRAW = 0x2000,
+        SUPPORT_COMPOSITION = 0x8000,
 
         // PixelFormatDescriptor flags for use in ChoosePixelFormat only
         DEPTH_DONTCARE = unchecked((int)0x20000000),
