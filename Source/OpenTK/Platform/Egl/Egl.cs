@@ -305,7 +305,7 @@ namespace OpenTK.Platform.Egl
         [return: MarshalAsAttribute(UnmanagedType.I1)]
         public static extern bool CopyBuffers(EGLDisplay dpy, EGLSurface surface, EGLNativePixmapType target);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglCopyBuffers")]
+        [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetProcAddress")]
         public static extern IntPtr GetProcAddress(string funcname);
 
         // Returns true if Egl drivers exist on the system.
