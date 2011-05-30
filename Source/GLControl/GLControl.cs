@@ -56,6 +56,10 @@ namespace OpenTK
         // the premature Resize event and raise it as soon as the handle
         // is ready.
         bool resize_event_suppressed;
+        // Indicates whether the control is in design mode. Due to issues
+        // wiith the DesignMode property and nested controls,we need to
+        // evaluate this in the constructor.
+        readonly bool design_mode;
 
         #region --- Constructors ---
 
@@ -95,6 +99,13 @@ namespace OpenTK
             this.major = major;
             this.minor = minor;
             this.flags = flags;
+
+            // Note: the DesignMode property may be incorrect when nesting controls.
+            // We use LicenseManager.UsageMode as a workaround (this only works in
+            // the constructor).
+            design_mode =
+                DesignMode ||
+                LicenseManager.UsageMode == LicenseUsageMode.Designtime;
 
             InitializeComponent();
         }
@@ -139,7 +150,7 @@ namespace OpenTK
             if (implementation != null)
                 implementation.WindowInfo.Dispose();
 
-            if (DesignMode)
+            if (design_mode)
                 implementation = new DummyGLControl();
             else
                 implementation = new GLControlFactory().CreateGLControl(format, this);
@@ -147,7 +158,7 @@ namespace OpenTK
             context = implementation.CreateContext(major, minor, flags);
             MakeCurrent();
 
-            if (!DesignMode)
+            if (!design_mode)
                 ((IGraphicsContextInternal)Context).LoadAll();
 
             // Deferred setting of vsync mode. See VSync property for more information.
@@ -193,7 +204,7 @@ namespace OpenTK
         {
             ValidateState();
 
-            if (DesignMode)
+            if (design_mode)
                 e.Graphics.Clear(BackColor);
 
             base.OnPaint(e);
