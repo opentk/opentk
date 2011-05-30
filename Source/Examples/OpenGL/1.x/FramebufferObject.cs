@@ -45,7 +45,7 @@ namespace Examples.Tutorial
             Object = new Shapes.TorusKnot(256, 16, 0.2, 7,8, 1, true);
 
             GL.Enable(EnableCap.DepthTest);
-            GL.ClearDepth(1.0f);
+            GL.ClearDepth(1.0);
             GL.DepthFunc(DepthFunction.Lequal);
 
             GL.Enable(EnableCap.CullFace);
