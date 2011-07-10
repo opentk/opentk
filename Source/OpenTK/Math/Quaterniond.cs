@@ -135,7 +135,7 @@ namespace OpenTK
         public Vector4d ToAxisAngle()
         {
             Quaterniond q = this;
-            if (q.W > 1.0f)
+            if (Math.Abs(q.W) > 1.0f)
                 q.Normalize();
 
             Vector4d result = new Vector4d();
