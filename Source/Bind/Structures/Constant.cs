@@ -17,7 +17,7 @@ namespace Bind.Structures
     /// can be retrieved or set. The value can be either a number, another constant
     /// or an alias to a constant 
     /// </summary>
-    public class Constant
+    public class Constant : IComparable<Constant>
     {
         static StringBuilder translator = new StringBuilder();
         static readonly int MaxReferenceDepth = 8;
@@ -25,13 +25,13 @@ namespace Bind.Structures
 
         #region PreviousName
 
-        string previous_name;
+        string original_name;
 
         // Gets the name prior to translation.
-        public string PreviousName
+        public string OriginalName
         {
-            get { return previous_name; }
-            private set { previous_name = value; }
+            get { return original_name; }
+            private set { original_name = value; }
         }
 
         #endregion
@@ -51,7 +51,10 @@ namespace Bind.Structures
             {
                 if (String.IsNullOrEmpty(value))
                     throw new ArgumentNullException("value");
-                PreviousName = _name;
+
+                if (OriginalName == null)
+                    OriginalName = _name;
+
                 _name = value;
             }
         }
@@ -259,6 +262,7 @@ namespace Bind.Structures
         /// (eg GL_XXX_YYY = (int)0xDEADBEEF or GL_XXX_YYY = GL_ZZZ.FOOBAR).
         /// </summary>
         /// <returns></returns>
+        [Obsolete("This belongs to the language-specific ISpecWriter implementations.")]
         public override string ToString()
         {
             if (String.IsNullOrEmpty(Name))
@@ -268,6 +272,18 @@ namespace Bind.Structures
                 !String.IsNullOrEmpty(Reference) ? Reference + Settings.NamespaceSeparator : "", Value);
 
             //return String.Format("{0} = {1}((int){2})", Name, Unchecked ? "unchecked" : "", Value);
+        }
+
+        #endregion
+
+        #region IComparable <Constant>Members
+
+        public int CompareTo(Constant other)
+        {
+            int ret = Value.CompareTo(other.Value);
+            if (ret == 0)
+                return Name.CompareTo(other.Name);
+            return ret;
         }
 
         #endregion
