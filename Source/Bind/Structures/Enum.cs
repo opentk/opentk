@@ -63,6 +63,7 @@ namespace Bind.Structures
             }
         }
 
+        [Obsolete("This code belongs to the various language-specific ISpecWriter implementations")]
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
