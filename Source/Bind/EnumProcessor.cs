@@ -183,7 +183,7 @@ namespace Bind
         {
             if (enum_override != null)
             {
-                XPathNavigator constant_override = enum_override.SelectSingleNode(String.Format("token[@name='{0}']", c.PreviousName)) ??
+                XPathNavigator constant_override = enum_override.SelectSingleNode(String.Format("token[@name='{0}']", c.OriginalName)) ??
                     enum_override.SelectSingleNode(String.Format("token[@name={0}]", c.Name));
                 if (constant_override != null)
                 {

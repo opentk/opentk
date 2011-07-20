@@ -82,7 +82,7 @@ namespace Bind
                 sw.WriteLine("{");
 
                 sw.Indent();
-                WriteEnums(sw, enums);
+                WriteEnums(sw, enums, wrappers);
                 sw.Unindent();
 
                 if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
@@ -169,7 +169,7 @@ namespace Bind
 
         #region WriteDelegates
 
-        public void WriteDelegates(BindStreamWriter sw, DelegateCollection delegates)
+        void WriteDelegates(BindStreamWriter sw, DelegateCollection delegates)
         {
             Trace.WriteLine(String.Format("Writing delegates to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.DelegatesClass));
 
@@ -405,13 +405,41 @@ namespace Bind
 
         #endregion
 
+        #region WriteConstants
+
+        void WriteConstants(BindStreamWriter sw, IEnumerable<Constant> constants)
+        {
+             // Make sure everything is sorted. This will avoid random changes between
+            // consecutive runs of the program.
+            constants = constants.OrderBy(c => c);
+
+            foreach (var c in constants)
+            {
+                if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
+                {
+                    sw.WriteLine("/// <summary>");
+                    sw.WriteLine("/// Original was " + Settings.ConstantPrefix + c.OriginalName + " = " + c.Value);
+                    sw.WriteLine("/// </summary>");
+                }
+
+                var str = String.Format("{0} = {1}((int){2}{3})", c.Name, c.Unchecked ? "unchecked" : "",
+                    !String.IsNullOrEmpty(c.Reference) ? c.Reference + Settings.NamespaceSeparator : "", c.Value);
+
+                sw.Write(str);
+                if (!String.IsNullOrEmpty(str))
+                    sw.WriteLine(",");
+            }
+        }
+
+        #endregion
+
         #region WriteEnums
 
-        public void WriteEnums(BindStreamWriter sw, EnumCollection enums)
+        void WriteEnums(BindStreamWriter sw, EnumCollection enums, FunctionCollection wrappers)
         {
             //sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
-            sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
-            sw.WriteLine();
+            //sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
+            //sw.WriteLine();
 
             if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
                 Trace.WriteLine(String.Format("Writing enums to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.NestedEnumsClass));
@@ -430,7 +458,31 @@ namespace Bind
 
                 foreach (Enum @enum in enums.Values)
                 {
-                    sw.Write(@enum);
+                    if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
+                    {
+                        // Document which functions use this enum.
+                        var functions =
+                            (from wrapper in wrappers
+                            from function in wrapper.Value
+                            from param in function.Parameters
+                            where param.CurrentType == @enum.Name
+                            select Settings.GLClass + (function.Extension != "Core" ? ("." + function.Extension) : "") + "." + function.TrimmedName)
+                            .Distinct();
+
+                        sw.WriteLine("/// <summary>");
+                        sw.WriteLine(String.Format("/// {0}", functions.Count() > 0 ?
+                            ("Used in " + String.Join(", ", functions.ToArray())) : "Not used directly."));
+                        sw.WriteLine("/// </summary>");
+                    }
+
+                    if (@enum.IsFlagCollection)
+                        sw.WriteLine("[Flags]");
+                    sw.WriteLine("public enum " + @enum.Name + " : " + @enum.Type);
+                    sw.WriteLine("{");
+                    sw.Indent();
+                    WriteConstants(sw, @enum.ConstantCollection.Values);
+                    sw.Unindent();
+                    sw.WriteLine("}");
                     sw.WriteLine();
                 }
 
