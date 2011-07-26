@@ -1819,6 +1819,7 @@
       <token name="TRANSFORM_FEEDBACK_BUFFER_BINDING" value="0x8C8F" />
       <token name="TRANSFORM_FEEDBACK_BUFFER_SIZE" value="0x8C85" />
       <token name="TRANSFORM_FEEDBACK_BUFFER_START" value="0x8C84" />
+      <use enum="VERSION_1_1" token="COLOR_WRITEMASK" />
       <use enum="VERSION_4_1" token="SCISSOR_BOX" />
       <use enum="VERSION_4_1" token="VIEWPORT" />
       <use enum="VERSION_4_1" token="DEPTH_RANGE" />
