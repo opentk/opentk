@@ -24440,6 +24440,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_ELEMENT_ARRAY_BUFFER = 0x8893
         /// </summary>
         ElementArrayBuffer = ((int)0x8893)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BUFFER = 0x8C2A
+        /// </summary>
+        TextureBuffer = ((int)0x8C2A)        ,
     }
 
     /// <summary>
@@ -33205,6 +33209,26 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_MAX_GEOMETRY_TEXTURE_IMAGE_UNITS = 0x8C29
         /// </summary>
         MaxGeometryTextureImageUnits = ((int)0x8C29)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BUFFER = 0x8C2A
+        /// </summary>
+        TextureBuffer = ((int)0x8C2A)        ,
+        /// <summary>
+        /// Original was GL_MAX_TEXTURE_BUFFER_SIZE = 0x8C2B
+        /// </summary>
+        MaxTextureBufferSize = ((int)0x8C2B)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BINDING_BUFFER = 0x8C2C
+        /// </summary>
+        TextureBindingBuffer = ((int)0x8C2C)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BUFFER_DATA_STORE_BINDING = 0x8C2D
+        /// </summary>
+        TextureBufferDataStoreBinding = ((int)0x8C2D)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BUFFER_FORMAT = 0x8C2E
+        /// </summary>
+        TextureBufferFormat = ((int)0x8C2E)        ,
         /// <summary>
         /// Original was GL_SAMPLE_SHADING = 0x8C36
         /// </summary>
