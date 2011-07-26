@@ -29,6 +29,10 @@
       <token name="NEVER" value="0x0200" />
       <token name="NOTEQUAL" value="0x0205" />
     </enum>
+    <enum name="AMD_blend_minmax_factor">
+      <token name="FACTOR_MAX_AMD" value="0x901D" />
+      <token name="FACTOR_MIN_AMD" value="0x901C" />
+    </enum>
     <enum name="AMD_compressed_3DC_texture">
       <token name="3DC_X_AMD" value="0x87F9" />
       <token name="3DC_XY_AMD" value="0x87FA" />
@@ -59,6 +63,7 @@
       <token name="DEPTH_CLAMP_NEAR_AMD" value="0x901E" />
     </enum>
     <enum name="AMD_draw_buffers_blend" />
+    <enum name="AMD_multi_draw_indirect" />
     <enum name="AMD_name_gen_delete">
       <token name="DATA_BUFFER_AMD" value="0x9151" />
       <token name="PERFORMANCE_MONITOR_AMD" value="0x9152" />
@@ -77,6 +82,9 @@
     </enum>
     <enum name="AMD_program_binary_Z400">
       <token name="Z400_BINARY_AMD" value="0x8740" />
+    </enum>
+    <enum name="AMD_sample_positions">
+      <token name="SUBSAMPLE_DISTANCE_AMD" value="0x883F" />
     </enum>
     <enum name="AMD_seamless_cubemap_per_texture">
       <use enum="ARB_seamless_cube_map" token="TEXTURE_CUBE_MAP_SEAMLESS" />
@@ -1744,6 +1752,9 @@
       <use enum="AlphaFunction" token="GEQUAL" />
       <use enum="AlphaFunction" token="ALWAYS" />
     </enum>
+    <enum name="DMP_shader_binary">
+      <token name="SHADER_BINARY_DMP" value="0x9250" />
+    </enum>
     <enum name="DrawBufferMode">
       <token name="AUX0" value="0x0409" />
       <token name="AUX1" value="0x040A" />
@@ -2032,6 +2043,10 @@
       <token name="FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT" value="0x8D56" />
       <token name="MAX_SAMPLES_EXT" value="0x8D57" />
       <token name="RENDERBUFFER_SAMPLES_EXT" value="0x8CAB" />
+    </enum>
+    <enum name="EXT_framebuffer_multisample_blit_scaled">
+      <token name="SCALED_RESOLVE_FASTEST_EXT" value="0x90BA" />
+      <token name="SCALED_RESOLVE_NICEST_EXT" value="0x90BB" />
     </enum>
     <enum name="EXT_framebuffer_object">
       <token name="COLOR_ATTACHMENT0" value="0x8CE0" />
@@ -2686,6 +2701,11 @@
       <token name="SRGB8_ALPHA8_EXT" value="0x8C43" />
       <token name="SRGB8_EXT" value="0x8C41" />
     </enum>
+    <enum name="EXT_texture_sRGB_decode">
+      <token name="DECODE_EXT" value="0x8A49" />
+      <token name="SKIP_DECODE_EXT" value="0x8A4A" />
+      <token name="TEXTURE_SRGB_DECODE_EXT" value="0x8A48" />
+    </enum>
     <enum name="EXT_texture_swizzle">
       <token name="TEXTURE_SWIZZLE_A_EXT" value="0x8E45" />
       <token name="TEXTURE_SWIZZLE_B_EXT" value="0x8E44" />
@@ -2904,6 +2924,9 @@
       <token name="VERTEX_WEIGHT_ARRAY_STRIDE_EXT" value="0x850F" />
       <token name="VERTEX_WEIGHT_ARRAY_TYPE_EXT" value="0x850E" />
       <token name="VERTEX_WEIGHTING_EXT" value="0x8509" />
+    </enum>
+    <enum name="EXT_x11_sync_object">
+      <token name="SYNC_X11_FENCE_EXT" value="0x90E1" />
     </enum>
     <enum name="FeedBackToken">
       <token name="BITMAP_TOKEN" value="0x0704" />
@@ -4178,6 +4201,10 @@
     <enum name="NV_texture_expand_normal">
       <token name="TEXTURE_UNSIGNED_REMAP_MODE_NV" value="0x888F" />
     </enum>
+    <enum name="NV_texture_multisample">
+      <token name="TEXTURE_COLOR_SAMPLES_NV" value="0x9046" />
+      <token name="TEXTURE_COVERAGE_SAMPLES_NV" value="0x9045" />
+    </enum>
     <enum name="NV_texture_rectangle">
       <token name="MAX_RECTANGLE_TEXTURE_SIZE_NV" value="0x84F8" />
       <token name="PROXY_TEXTURE_RECTANGLE_NV" value="0x84F7" />
@@ -5137,6 +5164,11 @@
       <token name="FILL" value="0x1B02" />
       <token name="LINE" value="0x1B01" />
       <token name="POINT" value="0x1B00" />
+    </enum>
+    <enum name="QCOM_alpha_test">
+      <token name="ALPHA_TEST_FUNC_QCOM" value="0x0BC1" />
+      <token name="ALPHA_TEST_QCOM" value="0x0BC0" />
+      <token name="ALPHA_TEST_REF_QCOM" value="0x0BC2" />
     </enum>
     <enum name="QCOM_driver_control">
       <token name="PERFMON_GLOBAL_MODE_QCOM" value="0x8FA0" />
@@ -12094,6 +12126,13 @@
       <param name="count" type="SizeI*" flow="in" />
       <param name="primcount" type="SizeI" flow="in" />
     </function>
+    <function name="MultiDrawArraysIndirectAMD" extension="Core" category="AMD_multi_draw_indirect" version="4.0">
+      <returns type="void" />
+      <param name="mode" type="GLenum" flow="in" />
+      <param name="indirect" type="Void*" flow="in" />
+      <param name="primcount" type="SizeI" flow="in" />
+      <param name="stride" type="SizeI" flow="in" />
+    </function>
     <function name="MultiDrawElements" extension="Core" category="VERSION_1_4" version="1.4">
       <returns type="void" />
       <param name="mode" type="BeginMode" flow="in" />
@@ -12110,6 +12149,14 @@
       <param name="indices" type="VoidPointer*" flow="in" />
       <param name="primcount" type="SizeI" flow="in" />
       <param name="basevertex" type="Int32*" flow="in" />
+    </function>
+    <function name="MultiDrawElementsIndirectAMD" extension="Core" category="AMD_multi_draw_indirect" version="4.0">
+      <returns type="void" />
+      <param name="mode" type="GLenum" flow="in" />
+      <param name="type" type="GLenum" flow="in" />
+      <param name="indirect" type="Void*" flow="in" />
+      <param name="primcount" type="SizeI" flow="in" />
+      <param name="stride" type="SizeI" flow="in" />
     </function>
     <function name="MultiTexCoord1d" extension="Core" category="VERSION_1_3_DEPRECATED" version="1.3" deprecated="3.1">
       <returns type="void" />
@@ -13405,6 +13452,12 @@
       <param name="type" type="PixelType" flow="in" />
       <param name="row" type="Void*" flow="in" />
       <param name="column" type="Void*" flow="in" />
+    </function>
+    <function name="SetMultisamplefvAMD" extension="Core" category="AMD_sample_positions" version="3.2">
+      <returns type="void" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="index" type="UInt32" flow="in" />
+      <param name="val" type="Float32*" flow="in" />
     </function>
     <function name="ShadeModel" extension="Core" category="VERSION_1_0_DEPRECATED" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -16368,6 +16421,12 @@
       <param name="width" type="SizeI" flow="in" />
       <param name="internalformat" type="PixelInternalFormat" flow="in" />
       <param name="sink" type="Boolean" flow="in" />
+    </function>
+    <function name="ImportSyncEXT" extension="EXT" category="EXT_x11_sync_object" version="3.2">
+      <returns type="sync" />
+      <param name="external_sync_type" type="GLenum" flow="in" />
+      <param name="external_sync" type="Intptr" flow="in" />
+      <param name="flags" type="GLbitfield" flow="in" />
     </function>
     <function name="IndexFuncEXT" extension="EXT" category="EXT_index_func" version="1.1">
       <returns type="void" />
@@ -19741,6 +19800,27 @@
       <param name="type" type="GLenum" flow="in" />
       <param name="stride" type="SizeI" flow="in" />
     </function>
+    <function name="TexImage2DMultisampleCoverageNV" extension="NV" category="NV_texture_multisample" version="4.1">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="coverageSamples" type="SizeI" flow="in" />
+      <param name="colorSamples" type="SizeI" flow="in" />
+      <param name="internalFormat" type="Int32" flow="in" />
+      <param name="width" type="SizeI" flow="in" />
+      <param name="height" type="SizeI" flow="in" />
+      <param name="fixedSampleLocations" type="Boolean" flow="in" />
+    </function>
+    <function name="TexImage3DMultisampleCoverageNV" extension="NV" category="NV_texture_multisample" version="4.1">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="coverageSamples" type="SizeI" flow="in" />
+      <param name="colorSamples" type="SizeI" flow="in" />
+      <param name="internalFormat" type="Int32" flow="in" />
+      <param name="width" type="SizeI" flow="in" />
+      <param name="height" type="SizeI" flow="in" />
+      <param name="depth" type="SizeI" flow="in" />
+      <param name="fixedSampleLocations" type="Boolean" flow="in" />
+    </function>
     <function name="TexRenderbufferNV" extension="NV" category="NV_explicit_multisample">
       <returns type="void" />
       <param name="target" type="TextureTarget" flow="in" />
@@ -19748,6 +19828,50 @@
     </function>
     <function name="TextureBarrierNV" extension="NV" category="NV_texture_barrier" version="1.2">
       <returns type="void" />
+    </function>
+    <function name="TextureImage2DMultisampleCoverageNV" extension="NV" category="NV_texture_multisample" version="4.1">
+      <returns type="void" />
+      <param name="texture" type="UInt32" flow="in" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="coverageSamples" type="SizeI" flow="in" />
+      <param name="colorSamples" type="SizeI" flow="in" />
+      <param name="internalFormat" type="Int32" flow="in" />
+      <param name="width" type="SizeI" flow="in" />
+      <param name="height" type="SizeI" flow="in" />
+      <param name="fixedSampleLocations" type="Boolean" flow="in" />
+    </function>
+    <function name="TextureImage2DMultisampleNV" extension="NV" category="NV_texture_multisample" version="4.1">
+      <returns type="void" />
+      <param name="texture" type="UInt32" flow="in" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="samples" type="SizeI" flow="in" />
+      <param name="internalFormat" type="Int32" flow="in" />
+      <param name="width" type="SizeI" flow="in" />
+      <param name="height" type="SizeI" flow="in" />
+      <param name="fixedSampleLocations" type="Boolean" flow="in" />
+    </function>
+    <function name="TextureImage3DMultisampleCoverageNV" extension="NV" category="NV_texture_multisample" version="4.1">
+      <returns type="void" />
+      <param name="texture" type="UInt32" flow="in" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="coverageSamples" type="SizeI" flow="in" />
+      <param name="colorSamples" type="SizeI" flow="in" />
+      <param name="internalFormat" type="Int32" flow="in" />
+      <param name="width" type="SizeI" flow="in" />
+      <param name="height" type="SizeI" flow="in" />
+      <param name="depth" type="SizeI" flow="in" />
+      <param name="fixedSampleLocations" type="Boolean" flow="in" />
+    </function>
+    <function name="TextureImage3DMultisampleNV" extension="NV" category="NV_texture_multisample" version="4.1">
+      <returns type="void" />
+      <param name="texture" type="UInt32" flow="in" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="samples" type="SizeI" flow="in" />
+      <param name="internalFormat" type="Int32" flow="in" />
+      <param name="width" type="SizeI" flow="in" />
+      <param name="height" type="SizeI" flow="in" />
+      <param name="depth" type="SizeI" flow="in" />
+      <param name="fixedSampleLocations" type="Boolean" flow="in" />
     </function>
     <function name="TrackMatrixNV" extension="NV" category="NV_vertex_program" version="1.2">
       <returns type="void" />
