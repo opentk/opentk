@@ -2701,6 +2701,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glImageTransformParameterivHP", ExactSpelling = true)]
             internal extern static unsafe void ImageTransformParameterivHP(OpenTK.Graphics.OpenGL.HpImageTransform target, OpenTK.Graphics.OpenGL.HpImageTransform pname, Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glImportSyncEXT", ExactSpelling = true)]
+            internal extern static IntPtr ImportSyncEXT(OpenTK.Graphics.OpenGL.ExtX11SyncObject external_sync_type, IntPtr external_sync, UInt32 flags);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIndexd", ExactSpelling = true)]
             internal extern static void Indexd(Double c);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -3142,6 +3145,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawArraysEXT", ExactSpelling = true)]
             internal extern static unsafe void MultiDrawArraysEXT(OpenTK.Graphics.OpenGL.BeginMode mode, Int32* first, Int32* count, Int32 primcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawArraysIndirectAMD", ExactSpelling = true)]
+            internal extern static void MultiDrawArraysIndirectAMD(OpenTK.Graphics.OpenGL.AmdMultiDrawIndirect mode, IntPtr indirect, Int32 primcount, Int32 stride);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawElementArrayAPPLE", ExactSpelling = true)]
             internal extern static unsafe void MultiDrawElementArrayAPPLE(OpenTK.Graphics.OpenGL.BeginMode mode, Int32* first, Int32* count, Int32 primcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -3153,6 +3159,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawElementsEXT", ExactSpelling = true)]
             internal extern static unsafe void MultiDrawElementsEXT(OpenTK.Graphics.OpenGL.BeginMode mode, Int32* count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 primcount);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawElementsIndirectAMD", ExactSpelling = true)]
+            internal extern static void MultiDrawElementsIndirectAMD(OpenTK.Graphics.OpenGL.AmdMultiDrawIndirect mode, OpenTK.Graphics.OpenGL.AmdMultiDrawIndirect type, IntPtr indirect, Int32 primcount, Int32 stride);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawRangeElementArrayAPPLE", ExactSpelling = true)]
             internal extern static unsafe void MultiDrawRangeElementArrayAPPLE(OpenTK.Graphics.OpenGL.BeginMode mode, UInt32 start, UInt32 end, Int32* first, Int32* count, Int32 primcount);
@@ -4795,6 +4804,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSetLocalConstantEXT", ExactSpelling = true)]
             internal extern static void SetLocalConstantEXT(UInt32 id, OpenTK.Graphics.OpenGL.ExtVertexShader type, IntPtr addr);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSetMultisamplefvAMD", ExactSpelling = true)]
+            internal extern static unsafe void SetMultisamplefvAMD(OpenTK.Graphics.OpenGL.AmdSamplePositions pname, UInt32 index, Single* val);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glShadeModel", ExactSpelling = true)]
             internal extern static void ShadeModel(OpenTK.Graphics.OpenGL.ShadingModel mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -5182,6 +5194,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexImage2DMultisample", ExactSpelling = true)]
             internal extern static void TexImage2DMultisample(OpenTK.Graphics.OpenGL.TextureTargetMultisample target, Int32 samples, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, bool fixedsamplelocations);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexImage2DMultisampleCoverageNV", ExactSpelling = true)]
+            internal extern static void TexImage2DMultisampleCoverageNV(OpenTK.Graphics.OpenGL.NvTextureMultisample target, Int32 coverageSamples, Int32 colorSamples, Int32 internalFormat, Int32 width, Int32 height, bool fixedSampleLocations);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexImage3D", ExactSpelling = true)]
             internal extern static void TexImage3D(OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -5190,6 +5205,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexImage3DMultisample", ExactSpelling = true)]
             internal extern static void TexImage3DMultisample(OpenTK.Graphics.OpenGL.TextureTargetMultisample target, Int32 samples, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexImage3DMultisampleCoverageNV", ExactSpelling = true)]
+            internal extern static void TexImage3DMultisampleCoverageNV(OpenTK.Graphics.OpenGL.NvTextureMultisample target, Int32 coverageSamples, Int32 colorSamples, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, bool fixedSampleLocations);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexImage4DSGIS", ExactSpelling = true)]
             internal extern static void TexImage4DSGIS(OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 size4d, Int32 border, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
@@ -5257,8 +5275,20 @@ namespace OpenTK.Graphics.OpenGL
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTextureImage2DEXT", ExactSpelling = true)]
             internal extern static void TextureImage2DEXT(UInt32 texture, OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTextureImage2DMultisampleCoverageNV", ExactSpelling = true)]
+            internal extern static void TextureImage2DMultisampleCoverageNV(UInt32 texture, OpenTK.Graphics.OpenGL.NvTextureMultisample target, Int32 coverageSamples, Int32 colorSamples, Int32 internalFormat, Int32 width, Int32 height, bool fixedSampleLocations);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTextureImage2DMultisampleNV", ExactSpelling = true)]
+            internal extern static void TextureImage2DMultisampleNV(UInt32 texture, OpenTK.Graphics.OpenGL.NvTextureMultisample target, Int32 samples, Int32 internalFormat, Int32 width, Int32 height, bool fixedSampleLocations);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTextureImage3DEXT", ExactSpelling = true)]
             internal extern static void TextureImage3DEXT(UInt32 texture, OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTextureImage3DMultisampleCoverageNV", ExactSpelling = true)]
+            internal extern static void TextureImage3DMultisampleCoverageNV(UInt32 texture, OpenTK.Graphics.OpenGL.NvTextureMultisample target, Int32 coverageSamples, Int32 colorSamples, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, bool fixedSampleLocations);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTextureImage3DMultisampleNV", ExactSpelling = true)]
+            internal extern static void TextureImage3DMultisampleNV(UInt32 texture, OpenTK.Graphics.OpenGL.NvTextureMultisample target, Int32 samples, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, bool fixedSampleLocations);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTextureLightEXT", ExactSpelling = true)]
             internal extern static void TextureLightEXT(OpenTK.Graphics.OpenGL.ExtLightTexture pname);
