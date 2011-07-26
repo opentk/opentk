@@ -1487,13 +1487,14 @@
       <token name="ELEMENT_ARRAY_BUFFER" value="0x8893" />
       <token name="PIXEL_PACK_BUFFER" value="0x88EB" />
       <token name="PIXEL_UNPACK_BUFFER" value="0x88EC" />
-      <token name="TEXTURE_BUFFER" value="0x8C2A" />
       <token name="TRANSFORM_FEEDBACK_BUFFER" value="0x8C8E" />
+      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
       <use enum="VERSION_4_0" token="DRAW_INDIRECT_BUFFER" />
     </enum>
     <enum name="BufferTargetARB">
       <token name="ARRAY_BUFFER" value="0x8892" />
       <token name="ELEMENT_ARRAY_BUFFER" value="0x8893" />
+      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" /> <!-- Arb_texture_buffer_object -->
     </enum>
     <enum name="BufferUsageARB">
       <token name="DYNAMIC_COPY" value="0x88EA" />
@@ -1994,6 +1995,11 @@
       <token name="WEIGHT_ARRAY_BUFFER_BINDING" value="0x889E" />
       <use enum="VERSION_1_3" token="SAMPLES" />
       <use enum="VERSION_1_3" token="SAMPLE_BUFFERS" />
+      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
+      <use enum="VERSION_3_1" token="MAX_TEXTURE_BUFFER_SIZE" />
+      <use enum="VERSION_3_1" token="TEXTURE_BINDING_BUFFER" />
+      <use enum="VERSION_3_1" token="TEXTURE_BUFFER_DATA_STORE_BINDING" />
+      <use enum="VERSION_3_1" token="TEXTURE_BUFFER_FORMAT" />
       <use enum="VERSION_3_2" token="MAX_FRAGMENT_INPUT_COMPONENTS" />
       <use enum="VERSION_3_2" token="MAX_GEOMETRY_INPUT_COMPONENTS" />
       <use enum="VERSION_3_2" token="MAX_GEOMETRY_OUTPUT_COMPONENTS" />
@@ -2742,7 +2748,6 @@
       <token name="TEXTURE_2D_MULTISAMPLE_ARRAY" value="0x9102" />
       <token name="TEXTURE_3D" value="0x806F" />
       <token name="TEXTURE_BINDING_CUBE_MAP" value="0x8514" />
-      <token name="TEXTURE_BUFFER" value="0x8C2A" />
       <token name="TEXTURE_CUBE_MAP" value="0x8513" />
       <token name="TEXTURE_CUBE_MAP_NEGATIVE_X" value="0x8516" />
       <token name="TEXTURE_CUBE_MAP_NEGATIVE_Y" value="0x8518" />
@@ -2753,6 +2758,7 @@
       <token name="TEXTURE_RECTANGLE" value="0x84F5" />
       <use enum="ARB_texture_rectangle" token="TEXTURE_RECTANGLE_ARB" />
       <use enum="NV_texture_rectangle" token="TEXTURE_RECTANGLE_NV" />
+      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
       <use enum="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY" />
       <use enum="VERSION_4_0" token="PROXY_TEXTURE_CUBE_MAP_ARRAY" />
     </enum>
