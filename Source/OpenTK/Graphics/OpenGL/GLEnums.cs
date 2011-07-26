@@ -31000,6 +31000,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         ScissorBox = ((int)0x0C10)        ,
         /// <summary>
+        /// Original was GL_COLOR_WRITEMASK = 0x0C23
+        /// </summary>
+        ColorWritemask = ((int)0x0C23)        ,
+        /// <summary>
         /// Original was GL_UNIFORM_BUFFER_BINDING = 0x8A28
         /// </summary>
         UniformBufferBinding = ((int)0x8A28)        ,
