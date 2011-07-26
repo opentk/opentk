@@ -236,6 +236,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         UniformBlockReferencedByVertexShader = ((int)0x8A44)        ,
         /// <summary>
+        /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER = 0x8A45
+        /// </summary>
+        UniformBlockReferencedByGeometryShader = ((int)0x8A45)        ,
+        /// <summary>
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER = 0x8A46
         /// </summary>
         UniformBlockReferencedByFragmentShader = ((int)0x8A46)        ,
