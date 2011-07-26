@@ -2700,6 +2700,9 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void ImageTransformParameterivHP(OpenTK.Graphics.OpenGL.HpImageTransform target, OpenTK.Graphics.OpenGL.HpImageTransform pname, Int32* @params);
             internal unsafe static ImageTransformParameterivHP glImageTransformParameterivHP;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate IntPtr ImportSyncEXT(OpenTK.Graphics.OpenGL.ExtX11SyncObject external_sync_type, IntPtr external_sync, UInt32 flags);
+            internal static ImportSyncEXT glImportSyncEXT;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Indexd(Double c);
             internal static Indexd glIndexd;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -3141,6 +3144,9 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void MultiDrawArraysEXT(OpenTK.Graphics.OpenGL.BeginMode mode, Int32* first, Int32* count, Int32 primcount);
             internal unsafe static MultiDrawArraysEXT glMultiDrawArraysEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void MultiDrawArraysIndirectAMD(OpenTK.Graphics.OpenGL.AmdMultiDrawIndirect mode, IntPtr indirect, Int32 primcount, Int32 stride);
+            internal static MultiDrawArraysIndirectAMD glMultiDrawArraysIndirectAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void MultiDrawElementArrayAPPLE(OpenTK.Graphics.OpenGL.BeginMode mode, Int32* first, Int32* count, Int32 primcount);
             internal unsafe static MultiDrawElementArrayAPPLE glMultiDrawElementArrayAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -3152,6 +3158,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void MultiDrawElementsEXT(OpenTK.Graphics.OpenGL.BeginMode mode, Int32* count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 primcount);
             internal unsafe static MultiDrawElementsEXT glMultiDrawElementsEXT;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void MultiDrawElementsIndirectAMD(OpenTK.Graphics.OpenGL.AmdMultiDrawIndirect mode, OpenTK.Graphics.OpenGL.AmdMultiDrawIndirect type, IntPtr indirect, Int32 primcount, Int32 stride);
+            internal static MultiDrawElementsIndirectAMD glMultiDrawElementsIndirectAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void MultiDrawRangeElementArrayAPPLE(OpenTK.Graphics.OpenGL.BeginMode mode, UInt32 start, UInt32 end, Int32* first, Int32* count, Int32 primcount);
             internal unsafe static MultiDrawRangeElementArrayAPPLE glMultiDrawRangeElementArrayAPPLE;
@@ -4794,6 +4803,9 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void SetLocalConstantEXT(UInt32 id, OpenTK.Graphics.OpenGL.ExtVertexShader type, IntPtr addr);
             internal static SetLocalConstantEXT glSetLocalConstantEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void SetMultisamplefvAMD(OpenTK.Graphics.OpenGL.AmdSamplePositions pname, UInt32 index, Single* val);
+            internal unsafe static SetMultisamplefvAMD glSetMultisamplefvAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ShadeModel(OpenTK.Graphics.OpenGL.ShadingModel mode);
             internal static ShadeModel glShadeModel;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -5181,6 +5193,9 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void TexImage2DMultisample(OpenTK.Graphics.OpenGL.TextureTargetMultisample target, Int32 samples, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, bool fixedsamplelocations);
             internal static TexImage2DMultisample glTexImage2DMultisample;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void TexImage2DMultisampleCoverageNV(OpenTK.Graphics.OpenGL.NvTextureMultisample target, Int32 coverageSamples, Int32 colorSamples, Int32 internalFormat, Int32 width, Int32 height, bool fixedSampleLocations);
+            internal static TexImage2DMultisampleCoverageNV glTexImage2DMultisampleCoverageNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexImage3D(OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
             internal static TexImage3D glTexImage3D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -5189,6 +5204,9 @@ namespace OpenTK.Graphics.OpenGL
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexImage3DMultisample(OpenTK.Graphics.OpenGL.TextureTargetMultisample target, Int32 samples, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
             internal static TexImage3DMultisample glTexImage3DMultisample;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void TexImage3DMultisampleCoverageNV(OpenTK.Graphics.OpenGL.NvTextureMultisample target, Int32 coverageSamples, Int32 colorSamples, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, bool fixedSampleLocations);
+            internal static TexImage3DMultisampleCoverageNV glTexImage3DMultisampleCoverageNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexImage4DSGIS(OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 size4d, Int32 border, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
             internal static TexImage4DSGIS glTexImage4DSGIS;
@@ -5256,8 +5274,20 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void TextureImage2DEXT(UInt32 texture, OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
             internal static TextureImage2DEXT glTextureImage2DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void TextureImage2DMultisampleCoverageNV(UInt32 texture, OpenTK.Graphics.OpenGL.NvTextureMultisample target, Int32 coverageSamples, Int32 colorSamples, Int32 internalFormat, Int32 width, Int32 height, bool fixedSampleLocations);
+            internal static TextureImage2DMultisampleCoverageNV glTextureImage2DMultisampleCoverageNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void TextureImage2DMultisampleNV(UInt32 texture, OpenTK.Graphics.OpenGL.NvTextureMultisample target, Int32 samples, Int32 internalFormat, Int32 width, Int32 height, bool fixedSampleLocations);
+            internal static TextureImage2DMultisampleNV glTextureImage2DMultisampleNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TextureImage3DEXT(UInt32 texture, OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
             internal static TextureImage3DEXT glTextureImage3DEXT;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void TextureImage3DMultisampleCoverageNV(UInt32 texture, OpenTK.Graphics.OpenGL.NvTextureMultisample target, Int32 coverageSamples, Int32 colorSamples, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, bool fixedSampleLocations);
+            internal static TextureImage3DMultisampleCoverageNV glTextureImage3DMultisampleCoverageNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void TextureImage3DMultisampleNV(UInt32 texture, OpenTK.Graphics.OpenGL.NvTextureMultisample target, Int32 samples, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, bool fixedSampleLocations);
+            internal static TextureImage3DMultisampleNV glTextureImage3DMultisampleNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TextureLightEXT(OpenTK.Graphics.OpenGL.ExtLightTexture pname);
             internal static TextureLightEXT glTextureLightEXT;
