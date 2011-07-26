@@ -1230,6 +1230,7 @@
       <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_ACTIVE_UNIFORMS" />
       <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES" />
       <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER" />
+      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER" />
       <use enum="ARB_uniform_buffer_object" token="UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER" />
       <use enum="VERSION_4_0" token="UNIFORM_BLOCK_REFERENCED_BY_TESS_CONTROL_SHADER" />
       <use enum="VERSION_4_0" token="UNIFORM_BLOCK_REFERENCED_BY_TESS_EVALUATION_SHADER" />
