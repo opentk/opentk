@@ -418,8 +418,8 @@ namespace OpenTK.Platform.iPhoneOS
             gl.Viewport(0, 0, newSize.Width, newSize.Height);
             gl.Scissor(0, 0, newSize.Width, newSize.Height);
 
-	    frameBufferWindow = new WeakReference(Window);
-	    frameBufferLayer = new WeakReference(Layer);
+            frameBufferWindow = new WeakReference(Window);
+            frameBufferLayer = new WeakReference(Layer);
         }
 
         protected virtual void ConfigureLayer(CAEAGLLayer eaglLayer)
@@ -524,91 +524,92 @@ namespace OpenTK.Platform.iPhoneOS
             GraphicsContext.SwapBuffers();
         }
 
-	TimeSpan timeout;
-	bool suspended;
+        TimeSpan timeout;
+        bool suspended;
         NSTimer timer;
 
-	WeakReference frameBufferWindow;
-	WeakReference frameBufferLayer;
+        WeakReference frameBufferWindow;
+        WeakReference frameBufferLayer;
 
         public void Run()
         {
             AssertValid();
-	    InvalidateTimer ();
+            InvalidateTimer ();
             CreateFrameBuffer();
             OnLoad(EventArgs.Empty);
-	    timeout = new TimeSpan (-1L);
-	    CreateTimer ();
+            timeout = new TimeSpan (-1L);
+            CreateTimer ();
         }
 
         public void Run(double updatesPerSecond)
         {
             AssertValid();
-	    if (updatesPerSecond < 0)
-		    throw new ArgumentException ("updatesPerSecond");
+            if (updatesPerSecond < 0)
+                    throw new ArgumentException ("updatesPerSecond");
             if (updatesPerSecond == 0.0) {
                 Run();
                 return;
             }
-	    InvalidateTimer ();
+            InvalidateTimer ();
             CreateFrameBuffer();
             OnLoad(EventArgs.Empty);
             // Can't use TimeSpan.FromSeconds() as that only has 1ms
             // resolution, and we need better (e.g. 60fps doesn't fit nicely
             // in 1ms resolution, but does in ticks).
             timeout = new TimeSpan ((long) (((1.0 * TimeSpan.TicksPerSecond) / updatesPerSecond) + 0.5));
-	    CreateTimer ();
+            CreateTimer ();
         }
 
         public void Stop()
         {
             AssertValid();
-	    InvalidateTimer ();
-	    suspended = false;
+            InvalidateTimer ();
+            suspended = false;
             OnUnload(EventArgs.Empty);
         }
 
-	void Suspend ()
-	{
-		InvalidateTimer ();
-		suspended = true;
-	}
+        void Suspend ()
+        {
+            InvalidateTimer ();
+            suspended = true;
+        }
 
-	void Resume ()
-	{
-		CreateTimer ();
-	}
+        void Resume ()
+        {
+            CreateTimer ();
+        }
 
-	void CreateTimer ()
-	{
-		if (timeout == new TimeSpan (-1))
-			timer = NSTimer.CreateTimer (TimeSpan.FromSeconds(0), ASAPRunIteration);
-		else
-			timer = NSTimer.CreateRepeatingScheduledTimer(timeout, RunIteration);
+        void CreateTimer ()
+        {
+            if (timeout == new TimeSpan (-1))
+                timer = NSTimer.CreateTimer (TimeSpan.FromSeconds(0), ASAPRunIteration);
+            else
+                timer = NSTimer.CreateRepeatingScheduledTimer(timeout, RunIteration);
 
-		suspended = false;
-	}
+            suspended = false;
+        }
 
-	void InvalidateTimer ()
-	{
-		if (timer != null) {
-			timer.Invalidate();
-			timer = null;
-		}
-	}
+        void InvalidateTimer ()
+        {
+            if (timer != null) {
+                timer.Invalidate();
+                timer = null;
+            }
+        }
 
         public override void WillMoveToWindow(UIWindow window)
         {
-		if (window == null && !suspended)
-			Suspend();
-		else if (window != null && suspended) {
-			if (frameBufferLayer != null && ((CALayer)frameBufferLayer.Target) != Layer ||
-			    frameBufferWindow != null && ((UIWindow)frameBufferWindow.Target) != window) {
-				CreateFrameBuffer ();
-			}
+            if (window == null && !suspended)
+                Suspend();
+            else if (window != null && suspended) {
+                if (frameBufferLayer != null && ((CALayer)frameBufferLayer.Target) != Layer ||
+                    frameBufferWindow != null && ((UIWindow)frameBufferWindow.Target) != window) {
 
-			Resume ();
-		}
+                    CreateFrameBuffer ();
+                }
+
+                Resume ();
+            }
         }
 
         DateTime prevUpdateTime;
@@ -617,11 +618,11 @@ namespace OpenTK.Platform.iPhoneOS
         FrameEventArgs updateEventArgs = new FrameEventArgs();
         FrameEventArgs renderEventArgs = new FrameEventArgs();
 
-	void ASAPRunIteration()
-	{
+        void ASAPRunIteration()
+        {
             RunIteration();
             timer = NSTimer.CreateTimer(TimeSpan.FromSeconds(0), ASAPRunIteration);
-	}
+        }
 
         void RunIteration()
         {
