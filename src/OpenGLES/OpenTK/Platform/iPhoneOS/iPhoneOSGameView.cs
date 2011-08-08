@@ -605,6 +605,7 @@ namespace OpenTK.Platform.iPhoneOS
                 if (frameBufferLayer != null && ((CALayer)frameBufferLayer.Target) != Layer ||
                     frameBufferWindow != null && ((UIWindow)frameBufferWindow.Target) != window) {
 
+                    DestroyFrameBuffer();
                     CreateFrameBuffer ();
                 }
 
