@@ -503,6 +503,9 @@ namespace OpenTK.Platform.iPhoneOS
                 if (displayLink != null) {
                     displayLink.Invalidate ();
                     displayLink = null;
+                } else if (timer != null) {
+                    timer.Invalidate ();
+                    timer = null;
                 }
                 DestroyFrameBuffer();
                 proxy = null;
