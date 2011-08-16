@@ -97,6 +97,31 @@ namespace OpenTK.Platform.iPhoneOS
     public class iPhoneOSGameView : UIView, IGameWindow
     {
         static Selector selRunIteration = new Selector ("runIteration");
+
+        [Register]
+        class iPhoneOSGameViewDisplayLinkProxy : NSObject {
+            iPhoneOSGameView view;
+
+            public iPhoneOSGameViewDisplayLinkProxy (iPhoneOSGameView view)
+            {
+                this.view = view;
+            }
+
+            [Export ("runIteration")]
+            [Preserve (Conditional = true)]
+            void RunIteration ()
+            {
+                view.RunIteration ();
+            }
+
+            protected void Dispose (bool disposing)
+            {
+                view = null;
+                base.Dispose (disposing);
+            }
+        }
+
+        iPhoneOSGameViewDisplayLinkProxy proxy;
         bool suspended;
         bool disposed;
 
@@ -108,12 +133,14 @@ namespace OpenTK.Platform.iPhoneOS
         public iPhoneOSGameView(NSCoder coder)
             : base(coder)
         {
+            proxy = new iPhoneOSGameViewDisplayLinkProxy (this);
         }
 
         [Export("initWithFrame:")]
         public iPhoneOSGameView(RectangleF frame)
             : base(frame)
         {
+            proxy = new iPhoneOSGameViewDisplayLinkProxy (this);
         }
 
         [Export ("layerClass")]
@@ -478,6 +505,7 @@ namespace OpenTK.Platform.iPhoneOS
                     displayLink = null;
                 }
                 DestroyFrameBuffer();
+                proxy = null;
             }
             base.Dispose (disposing);
             disposed = true;
@@ -583,7 +611,7 @@ namespace OpenTK.Platform.iPhoneOS
             if (displayLink != null)
                 displayLink.Invalidate ();
             
-            displayLink = CADisplayLink.Create (this, selRunIteration);
+            displayLink = CADisplayLink.Create (proxy, selRunIteration);
             displayLink.FrameInterval = frameInterval;
             displayLink.Paused = true;
             timeout = new TimeSpan (-1);
@@ -654,8 +682,7 @@ namespace OpenTK.Platform.iPhoneOS
         FrameEventArgs updateEventArgs = new FrameEventArgs();
         FrameEventArgs renderEventArgs = new FrameEventArgs();
 
-        [Export ("runIteration")]
-        protected void RunIteration ()
+        void RunIteration ()
         {
             var curUpdateTime = DateTime.Now;
             if (prevUpdateTime.Ticks == 0)
