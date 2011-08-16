@@ -543,18 +543,33 @@ namespace OpenTK.Platform.iPhoneOS
             Run (1);
         }
 
-        [Obsolete ("Use iPhoneOSGameView.Run (int frameInterval) instead.")]
+        TimeSpan timeout;
+        NSTimer timer;
+
         public void Run (double updatesPerSecond)
         {
             if (updatesPerSecond < 0.0)
                 throw new ArgumentException ("updatesPerSecond");
             
-            if (updatesPerSecond >= 60.0 || updatesPerSecond == 0.0) {
+            if (updatesPerSecond == 0.0) {
                 Run (1);
                 return;
             }
             
-            Run ((int) Math.Round (60.0 / updatesPerSecond, 0));
+            Suspend ();
+            if (displayLink != null) {
+                displayLink.Invalidate ();
+                displayLink = null;
+            }
+            
+            CreateFrameBuffer ();
+            OnLoad (EventArgs.Empty);
+            
+            // Can't use TimeSpan.FromSeconds() as that only has 1ms
+            // resolution, and we need better (e.g. 60fps doesn't fit nicely
+            // in 1ms resolution, but does in ticks).
+            timeout = new TimeSpan ((long) (((1.0 * TimeSpan.TicksPerSecond) / updatesPerSecond) + 0.5));
+            Resume ();
         }
 
         public void Run (int frameInterval)
@@ -564,14 +579,16 @@ namespace OpenTK.Platform.iPhoneOS
             if (frameInterval < 1)
                 throw new ArgumentException ("frameInterval");
             
+            Suspend ();
             if (displayLink != null)
                 displayLink.Invalidate ();
             
             displayLink = CADisplayLink.Create (this, selRunIteration);
             displayLink.FrameInterval = frameInterval;
             displayLink.Paused = true;
+            timeout = new TimeSpan (-1);
             suspended = true;
-        
+            
             displayLink.AddToRunLoop (NSRunLoop.Main, NSRunLoop.NSDefaultRunLoopMode);
             CreateFrameBuffer ();
             OnLoad (EventArgs.Empty);
@@ -581,10 +598,12 @@ namespace OpenTK.Platform.iPhoneOS
         public void Stop()
         {
             AssertValid();
-            Suspend ();
             if (displayLink != null) {
                 displayLink.Invalidate ();
                 displayLink = null;
+            } else if (timer != null) {
+                timer.Invalidate ();
+                timer = null;
             }
             suspended = false;
             OnUnload(EventArgs.Empty);
@@ -595,6 +614,10 @@ namespace OpenTK.Platform.iPhoneOS
             if (displayLink != null) {
                 displayLink.Paused = true;
                 suspended = true;
+            } else if (timer != null) {
+                timer.Invalidate ();
+                suspended = true;
+                timer = null;
             }
         }
 
@@ -602,6 +625,9 @@ namespace OpenTK.Platform.iPhoneOS
         {
             if (displayLink != null) {
                 displayLink.Paused = false;
+                suspended = false;
+            } else if (timeout != new TimeSpan (-1)) {
+                timer = NSTimer.CreateRepeatingScheduledTimer (timeout, RunIteration);
                 suspended = false;
             }
         }
