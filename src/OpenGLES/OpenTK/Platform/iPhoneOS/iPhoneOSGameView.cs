@@ -96,6 +96,8 @@ namespace OpenTK.Platform.iPhoneOS
 
     public class iPhoneOSGameView : UIView, IGameWindow
     {
+        static Selector selRunIteration = new Selector ("runIteration");
+        bool suspended;
         bool disposed;
 
         int framebuffer, renderbuffer;
@@ -162,6 +164,11 @@ namespace OpenTK.Platform.iPhoneOS
                 }
                 return null;
             }
+        }
+
+        CADisplayLink displayLink;
+        public CADisplayLink DisplayLink {
+            get { return displayLink; }
         }
 
         bool retainedBacking;
@@ -466,6 +473,10 @@ namespace OpenTK.Platform.iPhoneOS
             if (disposed)
                 return;
             if (disposing) {
+                if (displayLink != null) {
+                    displayLink.Invalidate ();
+                    displayLink = null;
+                }
                 DestroyFrameBuffer();
             }
             base.Dispose (disposing);
@@ -524,76 +535,74 @@ namespace OpenTK.Platform.iPhoneOS
             GraphicsContext.SwapBuffers();
         }
 
-        TimeSpan timeout;
-        bool suspended;
-        NSTimer timer;
-
         WeakReference frameBufferWindow;
         WeakReference frameBufferLayer;
 
         public void Run()
         {
-            AssertValid();
-            InvalidateTimer ();
-            CreateFrameBuffer();
-            OnLoad(EventArgs.Empty);
-            timeout = new TimeSpan (-1L);
-            CreateTimer ();
+            Run (1);
         }
 
-        public void Run(double updatesPerSecond)
+        [Obsolete ("Use iPhoneOSGameView.Run (int frameInterval) instead.")]
+        public void Run (double updatesPerSecond)
         {
-            AssertValid();
-            if (updatesPerSecond < 0)
-                    throw new ArgumentException ("updatesPerSecond");
-            if (updatesPerSecond == 0.0) {
-                Run();
+            if (updatesPerSecond < 0.0)
+                throw new ArgumentException ("updatesPerSecond");
+            
+            if (updatesPerSecond >= 60.0 || updatesPerSecond == 0.0) {
+                Run (1);
                 return;
             }
-            InvalidateTimer ();
-            CreateFrameBuffer();
-            OnLoad(EventArgs.Empty);
-            // Can't use TimeSpan.FromSeconds() as that only has 1ms
-            // resolution, and we need better (e.g. 60fps doesn't fit nicely
-            // in 1ms resolution, but does in ticks).
-            timeout = new TimeSpan ((long) (((1.0 * TimeSpan.TicksPerSecond) / updatesPerSecond) + 0.5));
-            CreateTimer ();
+            
+            Run ((int) Math.Round (60.0 / updatesPerSecond, 0));
+        }
+
+        public void Run (int frameInterval)
+        {
+            AssertValid ();
+            
+            if (frameInterval < 1)
+                throw new ArgumentException ("frameInterval");
+            
+            if (displayLink != null)
+                displayLink.Invalidate ();
+            
+            displayLink = CADisplayLink.Create (this, selRunIteration);
+            displayLink.FrameInterval = frameInterval;
+            displayLink.Paused = true;
+            suspended = true;
+        
+            displayLink.AddToRunLoop (NSRunLoop.Main, NSRunLoop.NSDefaultRunLoopMode);
+            CreateFrameBuffer ();
+            OnLoad (EventArgs.Empty);
+            Resume ();
         }
 
         public void Stop()
         {
             AssertValid();
-            InvalidateTimer ();
+            Suspend ();
+            if (displayLink != null) {
+                displayLink.Invalidate ();
+                displayLink = null;
+            }
             suspended = false;
             OnUnload(EventArgs.Empty);
         }
 
         void Suspend ()
         {
-            InvalidateTimer ();
-            suspended = true;
+            if (displayLink != null) {
+                displayLink.Paused = true;
+                suspended = true;
+            }
         }
 
         void Resume ()
         {
-            CreateTimer ();
-        }
-
-        void CreateTimer ()
-        {
-            if (timeout == new TimeSpan (-1))
-                timer = NSTimer.CreateTimer (TimeSpan.FromSeconds(0), ASAPRunIteration);
-            else
-                timer = NSTimer.CreateRepeatingScheduledTimer(timeout, RunIteration);
-
-            suspended = false;
-        }
-
-        void InvalidateTimer ()
-        {
-            if (timer != null) {
-                timer.Invalidate();
-                timer = null;
+            if (displayLink != null) {
+                displayLink.Paused = false;
+                suspended = false;
             }
         }
 
@@ -619,13 +628,8 @@ namespace OpenTK.Platform.iPhoneOS
         FrameEventArgs updateEventArgs = new FrameEventArgs();
         FrameEventArgs renderEventArgs = new FrameEventArgs();
 
-        void ASAPRunIteration()
-        {
-            RunIteration();
-            timer = NSTimer.CreateTimer(TimeSpan.FromSeconds(0), ASAPRunIteration);
-        }
-
-        void RunIteration()
+        [Export ("runIteration")]
+        protected void RunIteration ()
         {
             var curUpdateTime = DateTime.Now;
             if (prevUpdateTime.Ticks == 0)
