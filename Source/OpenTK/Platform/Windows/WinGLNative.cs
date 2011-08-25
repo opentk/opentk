@@ -647,10 +647,12 @@ namespace OpenTK.Platform.Windows
 
         void GrabCursor()
         {
-            Win32Rectangle rect = Win32Rectangle.From(ClientRectangle);
-            Point pos = PointToScreen(new Point(rect.left, rect.top));
+            Point pos = PointToScreen(new Point(ClientRectangle.X, ClientRectangle.Y));
+            Win32Rectangle rect = new Win32Rectangle();
             rect.left = pos.X;
+            rect.right = pos.X + ClientRectangle.Width;
             rect.top = pos.Y;
+            rect.bottom = pos.Y + ClientRectangle.Height;
             if (!Functions.ClipCursor(ref rect))
                 Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
                     Marshal.GetLastWin32Error()));

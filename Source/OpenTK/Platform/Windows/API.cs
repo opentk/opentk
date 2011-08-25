@@ -2635,13 +2635,6 @@ namespace OpenTK.Platform.Windows
     [StructLayout(LayoutKind.Sequential)]
     internal struct Win32Rectangle
     {
-        internal Win32Rectangle(int width, int height)
-        {
-            left = top = 0;
-            right = width;
-            bottom = height;
-        }
-
         /// <summary>
         /// Specifies the x-coordinate of the upper-left corner of the rectangle.
         /// </summary>
