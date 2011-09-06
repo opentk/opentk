@@ -19,7 +19,7 @@ namespace Examples.Shapes
         {
             Trace.Assert( pathsteps >= MINPathSteps, "A Path must have at least " + MINPathSteps + " Steps to form a volume." );
             Trace.Assert( shapevertices >= MINShapeVertices, "A Shape must contain at least " + MINShapeVertices + " Vertices to be considered valid and create a volume." );
-            Trace.Assert( TexCount > 1, "at least 1 Texture set is required." );
+            Trace.Assert( TexCount >= 1, "at least 1 Texture set is required." );
 
             PrimitiveMode = OpenTK.Graphics.OpenGL.BeginMode.TriangleStrip;
 
