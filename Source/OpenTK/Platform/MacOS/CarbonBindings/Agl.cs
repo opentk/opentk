@@ -425,15 +425,20 @@ namespace OpenTK.Platform.MacOS
         /*
          ** Per context options
          */
-        [DllImport(agl)] internal static extern byte aglEnable(AGLContext ctx, ParameterNames pname);
-        [DllImport(agl)] internal static extern byte aglDisable(AGLContext ctx, ParameterNames pname);
-        [DllImport(agl)] static extern byte aglIsEnabled(AGLContext ctx, GLenum pname);
         [DllImport(agl)]
-        internal static extern byte aglSetInteger(AGLContext ctx, ParameterNames pname, ref int @params);
+        internal static extern bool aglEnable(AGLContext ctx, ParameterNames pname);
         [DllImport(agl)]
-        internal static extern byte aglSetInteger(AGLContext ctx, ParameterNames pname, int []@params);
+        internal static extern bool aglDisable(AGLContext ctx, ParameterNames pname);
         [DllImport(agl)]
-        static extern byte aglGetInteger(AGLContext ctx, GLenum pname, int* @params);
+        static extern bool aglIsEnabled(AGLContext ctx, GLenum pname);
+        [DllImport(agl)]
+        internal static extern bool aglSetInteger(AGLContext ctx, ParameterNames pname, ref int param);
+        [DllImport(agl)]
+        internal static extern bool aglSetInteger(AGLContext ctx, ParameterNames pname, int[] @params);
+        //[DllImport(agl)]
+        //static extern bool aglGetInteger(AGLContext ctx, ParameterNames pname, int* @params);
+        [DllImport(agl)]
+        internal static extern bool aglGetInteger(AGLContext ctx, ParameterNames pname, out int param);
 
         /*
          ** Font function

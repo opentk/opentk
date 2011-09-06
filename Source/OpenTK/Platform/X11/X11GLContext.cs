@@ -30,7 +30,7 @@ namespace OpenTK.Platform.X11
         IntPtr display;
         X11WindowInfo currentWindow;
         bool vsync_supported;
-        int vsync_interval;
+        int swap_interval = 1; // As defined in GLX_SGI_swap_control
         bool glx_loaded;
 
         #endregion
@@ -348,13 +348,16 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region VSync
+        #region SwapInterval
 
-        public override bool VSync
+        public override int SwapInterval
         {
             get
             {
-                return vsync_supported && vsync_interval != 0;
+                if (vsync_supported)
+                    return swap_interval;
+                else
+                    return 0;
             }
             set
             {
@@ -362,12 +365,12 @@ namespace OpenTK.Platform.X11
                 {
                     ErrorCode error_code = 0;
                     using (new XLock(Display))
-                    {
-                        error_code = Glx.Sgi.SwapInterval(value ? 1 : 0);
-                    }
-                    if (error_code != X11.ErrorCode.NO_ERROR)
+                        error_code = Glx.Sgi.SwapInterval(value);
+
+                    if (error_code == X11.ErrorCode.NO_ERROR)
+                        swap_interval = value;
+                    else
                         Debug.Print("VSync = {0} failed, error code: {1}.", value, error_code);
-                    vsync_interval = value ? 1 : 0;
                 }
             }
         }

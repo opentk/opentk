@@ -39,7 +39,7 @@ namespace OpenTK.Platform.Egl
 
         EglWindowInfo WindowInfo;
         IntPtr HandleAsEGLContext { get { return Handle.Handle; } set { Handle = new ContextHandle(value); } }
-        bool vsync = true;   // Default vsync value is defined as 1 (true) in EGL.
+        int swap_interval = 1; // Default interval is defined as 1 in EGL.
 
         #endregion
 
@@ -117,18 +117,18 @@ namespace OpenTK.Platform.Egl
             get { return Egl.GetCurrentContext() == HandleAsEGLContext; }
         }
 
-        public override bool VSync
+        public override int SwapInterval
         {
             get
             {
                 // Egl.GetSwapInterval does not exist, so store and return the current interval.
                 // The default interval is defined as 1 (true).
-                return vsync;
+                return swap_interval;
             }
             set
             {
-                if (Egl.SwapInterval(WindowInfo.Display, value ? 1 : 0))
-                    vsync = value;
+                if (Egl.SwapInterval(WindowInfo.Display, value))
+                    swap_interval = value;
                 else
                     Debug.Print("[Warning] Egl.SwapInterval({0}, {1}) failed.", WindowInfo.Display, value);
             }

@@ -57,8 +57,20 @@ namespace OpenTK.Graphics
             get { return disposed; }
             protected set { disposed = value; }
         }
-        
-        public abstract bool VSync { get; set; }
+
+        public bool VSync
+        {
+            get { return SwapInterval > 0; }
+            set
+            {
+                if (value && SwapInterval <= 0)
+                    SwapInterval = 1;
+                else if (!value && SwapInterval > 0)
+                    SwapInterval = 0;
+            }
+        }
+
+        public abstract int SwapInterval { get; set; }
 
         public virtual void Update(IWindowInfo window) { }
 
