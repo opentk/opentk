@@ -518,9 +518,9 @@ namespace OpenTK
                     {
                         // Check if we have enough time for a vsync
                         if (RenderTime > 2.0 * TargetRenderPeriod)
-                            Context.VSync = false;
+                            Context.SwapInterval = 0;
                         else
-                            Context.VSync = true;
+                            Context.SwapInterval = 1;
                     }
 
                     render_period = render_args.Time = time;

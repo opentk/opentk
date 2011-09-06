@@ -44,7 +44,6 @@ namespace OpenTK.Platform.MacOS
 
     class AglContext : DesktopGraphicsContext
     {
-        bool mVSync = false;
         // Todo: keep track of which display adapter was specified when the context was created.
         // IntPtr displayID;
 
@@ -427,16 +426,24 @@ namespace OpenTK.Platform.MacOS
             get { return (Handle.Handle == Agl.aglGetCurrentContext()); }
         }
 
-        public override bool VSync
+        public override int SwapInterval
         {
-            get { return mVSync; }
+            get {
+                int swap_interval = 0;
+                if (Agl.aglGetInteger(Handle.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, out swap_interval))
+                {
+                    return swap_interval;
+                }
+                else
+                {
+                    MyAGLReportError("aglGetInteger");
+                    return 0;
+                }
+            }
             set
             {
-                int intVal = value ? 1 : 0;
-                
-                Agl.aglSetInteger(Handle.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, ref intVal);
-                
-                mVSync = value;
+                if (!Agl.aglSetInteger(Handle.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, ref value))
+                    MyAGLReportError("aglSetInteger");
             }
         }
 

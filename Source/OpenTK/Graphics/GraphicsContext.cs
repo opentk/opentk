@@ -461,12 +461,34 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether VSync is enabled.
+        /// [obsolete] Use SwapInterval property instead.
+        /// Gets or sets a value indicating whether VSync is enabled. When VSync is
+        /// enabled, <see cref="SwapBuffers()"/> calls will be synced to the refresh
+        /// rate of the <see cref="DisplayDevice"/> that contains improving visual
+        /// quality and reducing CPU usage. However, systems that cannot maintain
+        /// the requested rendering rate will suffer from large jumps in performance.
+        /// This can be counteracted by increasing the <see cref="SwapInterval"/>
+        /// value.
         /// </summary>
+        [Obsolete("Use SwapInterval property instead.")]
         public bool VSync
         {
             get { return implementation.VSync; }
             set { implementation.VSync = value;  }
+        }
+
+        /// <summary>
+        /// Gets or sets a positive integer in the range [1, n), indicating the number of
+        /// <see cref="DisplayDevice"/> refreshes between consecutive
+        /// <see cref="SwapBuffers()"/> calls. The maximum value for n is
+        /// implementation-dependent. The default value is 1.
+        /// This value will only affect instances where <see cref="VSync"/> is enabled.
+        /// Invalid values will be clamped to the valid range.
+        /// </summary>
+        public int SwapInterval
+        {
+            get { return implementation.SwapInterval; }
+            set { implementation.SwapInterval = value; }
         }
 
         /// <summary>

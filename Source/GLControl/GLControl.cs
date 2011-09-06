@@ -164,7 +164,7 @@ namespace OpenTK
             // Deferred setting of vsync mode. See VSync property for more information.
             if (initial_vsync_value.HasValue)
             {
-                Context.VSync = initial_vsync_value.Value;
+                Context.SwapInterval = initial_vsync_value.Value ? 1 : 0;
                 initial_vsync_value = null;
             }
 
@@ -331,7 +331,7 @@ namespace OpenTK
         /// <summary>
         /// Gets or sets a value indicating whether vsync is active for this GLControl.
         /// </summary>
-        [Description("Indicates whether GLControl updates are synced to the monitor's refresh.")]
+        [Description("Indicates whether GLControl updates are synced to the monitor's refresh rate.")]
         public bool VSync
         {
             get
