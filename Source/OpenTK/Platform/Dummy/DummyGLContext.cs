@@ -24,6 +24,7 @@ namespace OpenTK.Platform.Dummy
     {
         // This mode is not real. To receive a real mode we'd have to create a temporary context, which is not desirable!
         bool vsync;
+        int swap_interval;
         static int handle_count;
         Thread current_thread;
 
@@ -82,7 +83,17 @@ namespace OpenTK.Platform.Dummy
 
         public override IntPtr GetAddress(string function) { return IntPtr.Zero; }
 
-        public override bool VSync { get { return vsync; } set { vsync = value; } }
+        public override int SwapInterval
+        {
+            get
+            {
+                return swap_interval;
+            }
+            set
+            {
+                swap_interval = value;
+            }
+        }
 
         public override void Update(IWindowInfo window)
         { }

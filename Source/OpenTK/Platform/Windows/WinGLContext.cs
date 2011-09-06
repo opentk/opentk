@@ -203,18 +203,18 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public bool VSync
+        #region SwapInterval
 
-        /// <summary>
-        /// Gets or sets a System.Boolean indicating whether SwapBuffer calls are synced to the screen refresh rate.
-        /// </summary>
-        public override bool VSync
+        public override int SwapInterval
         {
             get
             {
                 lock (LoadLock)
                 {
-                    return vsync_supported && Wgl.Ext.GetSwapInterval() != 0;
+                    if (vsync_supported)
+                        return Wgl.Ext.GetSwapInterval();
+                    else
+                        return 0;
                 }
             }
             set
@@ -222,7 +222,7 @@ namespace OpenTK.Platform.Windows
                 lock (LoadLock)
                 {
                     if (vsync_supported)
-                        Wgl.Ext.SwapInterval(value ? 1 : 0);
+                        Wgl.Ext.SwapInterval(value);
                 }
             }
         }
