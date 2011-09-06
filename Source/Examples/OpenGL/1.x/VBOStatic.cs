@@ -57,14 +57,12 @@ namespace Examples.Tutorial
         {
             base.OnLoad(e);
 
-            string version = GL.GetString(StringName.Version);
-            int major = (int)version[0];
-            int minor = (int)version[2];
-            if (major <= 1 && minor < 5)
+            Version version = new Version(GL.GetString(StringName.Version).Substring(0, 3));
+            Version target = new Version(1, 5);
+            if (version < target)
             {
-                System.Windows.Forms.MessageBox.Show("You need at least OpenGL 1.5 to run this example. Aborting.", "VBOs not supported",
-                    System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Exclamation);
-                this.Exit();
+                throw new NotSupportedException(String.Format(
+                    "OpenGL {0} is required (you only have {1}).", target, version));
             }
 
             GL.ClearColor(System.Drawing.Color.MidnightBlue);

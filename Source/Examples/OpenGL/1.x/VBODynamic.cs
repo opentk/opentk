@@ -52,6 +52,16 @@ namespace Examples.Tutorial
         /// <param name="e">Not used.</param>
         protected override void OnLoad(EventArgs e)
         {
+            base.OnLoad(e);
+
+            Version version = new Version(GL.GetString(StringName.Version).Substring(0, 3));
+            Version target = new Version(1, 5);
+            if (version < target)
+            {
+                throw new NotSupportedException(String.Format(
+                    "OpenGL {0} is required (you only have {1}).", target, version));
+            }
+
             GL.ClearColor(.1f, 0f, .1f, 0f);
             GL.Enable(EnableCap.DepthTest);
 

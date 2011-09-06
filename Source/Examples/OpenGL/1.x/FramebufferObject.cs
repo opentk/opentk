@@ -33,12 +33,12 @@ namespace Examples.Tutorial
 
         protected override void OnLoad(EventArgs e)
         {
-            if (!GL.GetString(StringName.Extensions).Contains("EXT_framebuffer_object"))
+            base.OnLoad(e);
+
+            if (!GL.GetString(StringName.Extensions).Contains("GL_EXT_framebuffer_object"))
             {
-                System.Windows.Forms.MessageBox.Show(
-                     "Your video card does not support Framebuffer Objects. Please update your drivers.",
-                     "FBOs not supported",
-                     System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Exclamation);
+                throw new NotSupportedException(
+                     "GL_EXT_framebuffer_object extension is required. Please update your drivers.");
                 Exit();
             }
 
