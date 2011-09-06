@@ -123,8 +123,9 @@ namespace Examples.Tutorial
             GL.GenTextures(1, out texture);
             GL.BindTexture(Target, texture);
 
-            float version = Single.Parse(GL.GetString(StringName.Version).Substring(0, 3), System.Globalization.CultureInfo.InvariantCulture);
-            if (version >= 1.4)
+            Version version = new Version(GL.GetString(StringName.Version).Substring(0, 3));
+            Version target = new Version(1, 4);
+            if (version >= target)
             {
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.GenerateMipmap, (int)All.True);
                 GL.TexParameter(Target, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);

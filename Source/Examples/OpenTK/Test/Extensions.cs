@@ -21,7 +21,7 @@ using System.Text.RegularExpressions;
 
 namespace Examples.WinForms
 {
-    [Example("OpenGL Extensions", ExampleCategory.OpenTK, "Test", Documentation="Extensions")]
+    [Example("OpenGL Extensions", ExampleCategory.OpenTK, "Test", Documentation="Extensions", Visible = false)]
     public partial class Extensions : Form
     {
         #region Fields
