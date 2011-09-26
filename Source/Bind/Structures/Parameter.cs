@@ -158,8 +158,8 @@ namespace Bind.Structures
         bool generic;
         public bool Generic
         {
-            get { return generic; }
-            set { generic = value; }
+            get { return generic; }
+            set { generic = value; }
         }
 
         #endregion
