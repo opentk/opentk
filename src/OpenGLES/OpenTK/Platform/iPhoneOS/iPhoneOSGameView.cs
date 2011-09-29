@@ -94,34 +94,101 @@ namespace OpenTK.Platform.iPhoneOS
         }
     }
 
-    public class iPhoneOSGameView : UIView, IGameWindow
-    {
+    interface ITimeSource {
+        void Suspend ();
+        void Resume ();
+
+        void Invalidate ();
+    }
+
+    [Register]
+    class CADisplayLinkTimeSource : NSObject, ITimeSource {
         static Selector selRunIteration = new Selector ("runIteration");
 
-        [Register]
-        class iPhoneOSGameViewDisplayLinkProxy : NSObject {
-            iPhoneOSGameView view;
+        iPhoneOSGameView view;
+        CADisplayLink displayLink;
 
-            public iPhoneOSGameViewDisplayLinkProxy (iPhoneOSGameView view)
-            {
-                this.view = view;
-            }
+        public CADisplayLinkTimeSource (iPhoneOSGameView view, int frameInterval)
+        {
+            this.view = view;
 
-            [Export ("runIteration")]
-            [Preserve (Conditional = true)]
-            void RunIteration ()
-            {
-                view.RunIteration ();
-            }
+            if (displayLink != null)
+                displayLink.Invalidate ();
 
-            protected void Dispose (bool disposing)
-            {
-                view = null;
-                base.Dispose (disposing);
+            displayLink = CADisplayLink.Create (this, selRunIteration);
+            displayLink.FrameInterval = frameInterval;
+            displayLink.Paused = true;
+        }
+
+        public void Suspend ()
+        {
+            displayLink.Paused = true;
+        }
+
+        public void Resume ()
+        {
+            displayLink.Paused = false;
+            displayLink.AddToRunLoop (NSRunLoop.Main, NSRunLoop.NSDefaultRunLoopMode);
+        }
+
+        public void Invalidate ()
+        {
+            if (displayLink != null) {
+                displayLink.Invalidate ();
+                displayLink = null;
             }
         }
 
-        iPhoneOSGameViewDisplayLinkProxy proxy;
+        [Export ("runIteration")]
+        [Preserve (Conditional = true)]
+        void RunIteration ()
+        {
+            view.RunIteration ();
+        }
+    }
+
+    class NSTimerTimeSource : ITimeSource {
+
+        TimeSpan timeout;
+        NSTimer timer;
+
+        iPhoneOSGameView view;
+
+        public NSTimerTimeSource (iPhoneOSGameView view, double updatesPerSecond)
+        {
+            this.view = view;
+
+            // Can't use TimeSpan.FromSeconds() as that only has 1ms
+            // resolution, and we need better (e.g. 60fps doesn't fit nicely
+            // in 1ms resolution, but does in ticks).
+            timeout = new TimeSpan ((long) (((1.0 * TimeSpan.TicksPerSecond) / updatesPerSecond) + 0.5));
+        }
+
+        public void Suspend ()
+        {
+            if (timer != null) {
+                timer.Invalidate ();
+                timer = null;
+            }
+        }
+
+        public void Resume ()
+        {
+            if (timeout != new TimeSpan (-1))
+                timer = NSTimer.CreateRepeatingScheduledTimer (timeout, view.RunIteration);
+        }
+
+        public void Invalidate ()
+        {
+            if (timer != null) {
+                timer.Invalidate ();
+                timer = null;
+            }
+        }
+    }
+
+    public class iPhoneOSGameView : UIView, IGameWindow
+    {
         bool suspended;
         bool disposed;
 
@@ -129,18 +196,24 @@ namespace OpenTK.Platform.iPhoneOS
 
         GLCalls gl;
 
+        ITimeSource timesource;
+        System.Diagnostics.Stopwatch stopwatch;
+        TimeSpan prevUpdateTime;
+        TimeSpan prevRenderTime;
+
+
         [Export("initWithCoder:")]
         public iPhoneOSGameView(NSCoder coder)
             : base(coder)
         {
-            proxy = new iPhoneOSGameViewDisplayLinkProxy (this);
+            stopwatch = new System.Diagnostics.Stopwatch ();
         }
 
         [Export("initWithFrame:")]
         public iPhoneOSGameView(RectangleF frame)
             : base(frame)
         {
-            proxy = new iPhoneOSGameViewDisplayLinkProxy (this);
+            stopwatch = new System.Diagnostics.Stopwatch ();
         }
 
         [Export ("layerClass")]
@@ -191,11 +264,6 @@ namespace OpenTK.Platform.iPhoneOS
                 }
                 return null;
             }
-        }
-
-        CADisplayLink displayLink;
-        public CADisplayLink DisplayLink {
-            get { return displayLink; }
         }
 
         bool retainedBacking;
@@ -500,15 +568,13 @@ namespace OpenTK.Platform.iPhoneOS
             if (disposed)
                 return;
             if (disposing) {
-                if (displayLink != null) {
-                    displayLink.Invalidate ();
-                    displayLink = null;
-                } else if (timer != null) {
-                    timer.Invalidate ();
-                    timer = null;
-                }
+		    if (timesource != null)
+			    timesource.Invalidate ();
+		    timesource = null;
+		    if (stopwatch != null)
+			    stopwatch.Stop();
+		    stopwatch = null;
                 DestroyFrameBuffer();
-                proxy = null;
             }
             base.Dispose (disposing);
             disposed = true;
@@ -574,9 +640,6 @@ namespace OpenTK.Platform.iPhoneOS
             RunWithFrameInterval (1);
         }
 
-        TimeSpan timeout;
-        NSTimer timer;
-
         public void Run (double updatesPerSecond)
         {
             if (updatesPerSecond < 0.0)
@@ -587,20 +650,14 @@ namespace OpenTK.Platform.iPhoneOS
                 return;
             }
             
-            Suspend ();
-            if (displayLink != null) {
-                displayLink.Invalidate ();
-                displayLink = null;
-            }
-            
+	    if (timesource != null)
+		    timesource.Invalidate ();
+
+	    timesource = new NSTimerTimeSource (this, updatesPerSecond);
+
             CreateFrameBuffer ();
             OnLoad (EventArgs.Empty);
-            
-            // Can't use TimeSpan.FromSeconds() as that only has 1ms
-            // resolution, and we need better (e.g. 60fps doesn't fit nicely
-            // in 1ms resolution, but does in ticks).
-            timeout = new TimeSpan ((long) (((1.0 * TimeSpan.TicksPerSecond) / updatesPerSecond) + 0.5));
-            Resume ();
+	    Start ();
         }
 
         public void RunWithFrameInterval (int frameInterval)
@@ -609,58 +666,45 @@ namespace OpenTK.Platform.iPhoneOS
             
             if (frameInterval < 1)
                 throw new ArgumentException ("frameInterval");
-            
-            Suspend ();
-            if (displayLink != null)
-                displayLink.Invalidate ();
-            
-            displayLink = CADisplayLink.Create (proxy, selRunIteration);
-            displayLink.FrameInterval = frameInterval;
-            displayLink.Paused = true;
-            timeout = new TimeSpan (-1);
-            suspended = true;
-            
-            displayLink.AddToRunLoop (NSRunLoop.Main, NSRunLoop.NSDefaultRunLoopMode);
+
+	    if (timesource != null)
+		    timesource.Invalidate ();
+
+	    timesource = new CADisplayLinkTimeSource (this, frameInterval);
+
             CreateFrameBuffer ();
             OnLoad (EventArgs.Empty);
-            Resume ();
+            Start ();
         }
+
+	void Start ()
+	{
+	    prevUpdateTime = TimeSpan.Zero;
+	    prevRenderTime = TimeSpan.Zero;
+	    Resume ();
+	}
 
         public void Stop()
         {
             AssertValid();
-            if (displayLink != null) {
-                displayLink.Invalidate ();
-                displayLink = null;
-            } else if (timer != null) {
-                timer.Invalidate ();
-                timer = null;
-            }
+	    timesource.Invalidate ();
+	    timesource = null;
             suspended = false;
             OnUnload(EventArgs.Empty);
         }
 
         void Suspend ()
         {
-            if (displayLink != null) {
-                displayLink.Paused = true;
-                suspended = true;
-            } else if (timer != null) {
-                timer.Invalidate ();
-                suspended = true;
-                timer = null;
-            }
+            timesource.Suspend ();
+            stopwatch.Stop();
+            suspended = true;
         }
 
         void Resume ()
         {
-            if (displayLink != null) {
-                displayLink.Paused = false;
-                suspended = false;
-            } else if (timeout != new TimeSpan (-1)) {
-                timer = NSTimer.CreateRepeatingScheduledTimer (timeout, RunIteration);
-                suspended = false;
-            }
+            timesource.Resume ();
+            stopwatch.Start();
+            suspended = false;
         }
 
         public override void WillMoveToWindow(UIWindow window)
@@ -679,16 +723,13 @@ namespace OpenTK.Platform.iPhoneOS
             }
         }
 
-        DateTime prevUpdateTime;
-        DateTime prevRenderTime;
-
         FrameEventArgs updateEventArgs = new FrameEventArgs();
         FrameEventArgs renderEventArgs = new FrameEventArgs();
 
-        void RunIteration ()
+        internal void RunIteration ()
         {
-            var curUpdateTime = DateTime.Now;
-            if (prevUpdateTime.Ticks == 0)
+            var curUpdateTime = stopwatch.Elapsed;
+            if (prevUpdateTime == TimeSpan.Zero)
                 prevUpdateTime = curUpdateTime;
             var t = (curUpdateTime - prevUpdateTime).TotalSeconds;
             updateEventArgs.Time = t;
@@ -697,8 +738,8 @@ namespace OpenTK.Platform.iPhoneOS
 
             gl.BindFramebuffer(All.FramebufferOes, framebuffer);
 
-            var curRenderTime = DateTime.Now;
-            if (prevRenderTime.Ticks == 0)
+            var curRenderTime = stopwatch.Elapsed;
+            if (prevRenderTime == TimeSpan.Zero)
                 prevRenderTime = curRenderTime;
             t = (curRenderTime - prevRenderTime).TotalSeconds;
             renderEventArgs.Time = t;
