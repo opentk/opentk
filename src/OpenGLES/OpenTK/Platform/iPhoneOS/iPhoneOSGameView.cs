@@ -571,7 +571,7 @@ namespace OpenTK.Platform.iPhoneOS
 
         public void Run()
         {
-            Run (1);
+            RunWithFrameInterval (1);
         }
 
         TimeSpan timeout;
@@ -583,7 +583,7 @@ namespace OpenTK.Platform.iPhoneOS
                 throw new ArgumentException ("updatesPerSecond");
             
             if (updatesPerSecond == 0.0) {
-                Run (1);
+                RunWithFrameInterval (1);
                 return;
             }
             
@@ -603,7 +603,7 @@ namespace OpenTK.Platform.iPhoneOS
             Resume ();
         }
 
-        public void Run (int frameInterval)
+        public void RunWithFrameInterval (int frameInterval)
         {
             AssertValid ();
             
