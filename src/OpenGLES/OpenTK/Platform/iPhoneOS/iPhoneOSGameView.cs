@@ -5,6 +5,7 @@
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
+// Copyright 2011 Xamarin Inc. All rights reserved.
 #endregion
 
 using System;
@@ -568,12 +569,12 @@ namespace OpenTK.Platform.iPhoneOS
             if (disposed)
                 return;
             if (disposing) {
-		    if (timesource != null)
-			    timesource.Invalidate ();
-		    timesource = null;
-		    if (stopwatch != null)
-			    stopwatch.Stop();
-		    stopwatch = null;
+                if (timesource != null)
+			        timesource.Invalidate ();
+                timesource = null;
+                if (stopwatch != null)
+			        stopwatch.Stop();
+                stopwatch = null;
                 DestroyFrameBuffer();
             }
             base.Dispose (disposing);
@@ -687,22 +688,26 @@ namespace OpenTK.Platform.iPhoneOS
         public void Stop()
         {
             AssertValid();
-	    timesource.Invalidate ();
-	    timesource = null;
+            if (timesource != null) {
+                timesource.Invalidate ();
+                timesource = null;
+            }
             suspended = false;
             OnUnload(EventArgs.Empty);
         }
 
         void Suspend ()
         {
-            timesource.Suspend ();
+            if (timesource != null)
+                timesource.Suspend ();
             stopwatch.Stop();
             suspended = true;
         }
 
         void Resume ()
         {
-            timesource.Resume ();
+            if (timesource != null)
+                timesource.Resume ();
             stopwatch.Start();
             suspended = false;
         }
