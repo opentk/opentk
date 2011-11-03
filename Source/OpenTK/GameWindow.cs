@@ -441,7 +441,13 @@ namespace OpenTK
             // Cap the maximum time drift to 1 second (e.g. when the process is suspended).
             double time = update_watch.Elapsed.TotalSeconds;
             if (time <= 0)
+            {
+                // Protect against negative Stopwatch.Elapsed values.
+                // See http://connect.microsoft.com/VisualStudio/feedback/details/94083/stopwatch-returns-negative-elapsed-time
+                update_watch.Reset();
+                update_watch.Start();
                 return;
+            }
             if (time > 1.0)
                 time = 1.0;
 
@@ -451,7 +457,7 @@ namespace OpenTK
                 next_update -= time;
                 update_args.Time = time;
                 OnUpdateFrameInternal(update_args);
-                time = update_time = update_watch.Elapsed.TotalSeconds - time;
+                time = update_time = Math.Max(update_watch.Elapsed.TotalSeconds, 0) - time;
                 // Stopwatches are not accurate over long time periods.
                 // We accumulate the total elapsed time into the time variable
                 // while reseting the Stopwatch frequently.
@@ -486,13 +492,19 @@ namespace OpenTK
         {
             // Cap the maximum time drift to 1 second (e.g. when the process is suspended).
             double time = render_watch.Elapsed.TotalSeconds;
+            if (time <= 0)
+            {
+                // Protect against negative Stopwatch.Elapsed values.
+                // See http://connect.microsoft.com/VisualStudio/feedback/details/94083/stopwatch-returns-negative-elapsed-time
+                render_watch.Reset();
+                render_watch.Start();
+                return;
+            }
             if (time > 1.0)
                 time = 1.0;
-            if (time <= 0)
-                return;
             double time_left = next_render - time;
 
-            if (time_left <= 0.0)
+            if (time_left <= 0.0 && time > 0)
             {
                 // Schedule next render event. The 1 second cap ensures
                 // the process does not appear to hang.
