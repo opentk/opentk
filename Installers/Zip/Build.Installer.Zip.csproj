@@ -28,6 +28,8 @@
                  $(InputPath)**\obj\**\*.*;
                  $(InputPath)Installers\Zip\opentk\**\*.*;
                  $(InputPath)Documentation\Source\**\*.*;
+		 $(InputPath)Automation\**\*.*;
+		 $(InputPath)Old\**\*.*;
                  $(InputPath)**\OpenTK*.xml;
                  $(InputPath)**\*.suo;
                  $(InputPath)**\*.pidb;
