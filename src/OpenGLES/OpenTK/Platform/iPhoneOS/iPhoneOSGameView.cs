@@ -661,6 +661,12 @@ namespace OpenTK.Platform.iPhoneOS
 	    Start ();
         }
 
+	[Obsolete ("Use either Run (float updatesPerSecond) or RunWithFrameInterval (int frameInterval)")]
+	public void Run (int frameInterval)
+	{
+		RunWithFrameInterval (frameInterval);
+	}
+
         public void RunWithFrameInterval (int frameInterval)
         {
             AssertValid ();
