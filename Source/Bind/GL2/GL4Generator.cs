@@ -38,7 +38,7 @@ namespace Bind.GL2
 			: base(name, dirname)
         {
             glTypemap = "GL2/gl.tm";
-            csTypemap = "csharp.tm";
+            csTypemap = Settings.LanguageTypeMapFile;
 
             enumSpec = "GL2/signatures.xml";
             enumSpecExt = String.Empty;
