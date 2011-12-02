@@ -104,7 +104,9 @@ namespace Bind
         static void WriteWrapper(Function f, BindStreamWriter sw)
         {
             var parameters = f.WrappedDelegate.Parameters.ToString()
-            .Replace("[OutAttribute]", String.Empty);
+                .Replace("[OutAttribute]", String.Empty);
+            sw.WriteLine("{0} {1}{2}", f.WrappedDelegate.ReturnType,
+                f.TrimmedName, parameters);
             sw.WriteLine("{");
             sw.Indent();
             WriteMethodBody(sw, f);
@@ -163,7 +165,8 @@ namespace Bind
             if (ext == "Core")
                 return Settings.GLClass;
             else
-                return String.Format("{0}::{1}", Settings.GLClass, Char.IsDigit(ext[0]) ? DigitPrefix + ext : ext);
+                return String.Format("{1}{0}{2}", Settings.NamespaceSeparator,
+                    Settings.GLClass, Char.IsDigit(ext[0]) ? DigitPrefix + ext : ext);
         }
 
         #region WriteEnums
@@ -228,12 +231,11 @@ namespace Bind
 
         static void WriteMethodBody(BindStreamWriter sw, Function f)
         {
-
             var callstring = f.Parameters.CallString();
             if (f.ReturnType != null && !f.ReturnType.ToString().ToLower().Contains("void"))
-                sw.WriteLine("return GLES20::{0}(){1};", f.WrappedDelegate.Name, callstring);
+                sw.WriteLine("return GLES20.{0}(){1};", f.WrappedDelegate.Name, callstring);
             else
-                sw.WriteLine("GLES20::{0}(){1};", f.WrappedDelegate.Name, callstring);
+                sw.WriteLine("GLES20.{0}(){1};", f.WrappedDelegate.Name, callstring);
         }
 
         static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
