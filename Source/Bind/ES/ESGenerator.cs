@@ -19,7 +19,7 @@ namespace Bind.ES
                 dirName = nsName;
 
             glTypemap = "GL2/gl.tm";
-            csTypemap = "csharp.tm";
+            csTypemap = Settings.LanguageTypeMapFile;
 
             enumSpec = dirName + "/signatures.xml";
             enumSpecExt = String.Empty;

@@ -91,6 +91,7 @@ namespace Bind
                                         Settings.Language = GeneratorLanguage.Cpp;
                                         Settings.DefaultOutputPath = "gl";
                                         Settings.DefaultOutputNamespace = "OpenTK";
+                                        // Settings.DefaultLanguageTypeMapFile = "cpp.tm"; // Todo: create this file!
                                         Settings.EnumsNamespace = "";
                                         Settings.NamespaceSeparator = "::";
                                     }
@@ -99,6 +100,7 @@ namespace Bind
                                         Settings.Language = GeneratorLanguage.Java;
                                         Settings.DefaultOutputPath = "gl";
                                         Settings.DefaultOutputNamespace = "com.opentk";
+                                        Settings.DefaultLanguageTypeMapFile = "java.tm";
                                         Settings.EnumsNamespace = "";
                                         Settings.NamespaceSeparator = ".";
                                     }
