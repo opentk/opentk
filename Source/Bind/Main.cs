@@ -31,7 +31,8 @@ namespace Bind
     enum GeneratorLanguage
     {
         CSharp,
-        Cpp
+        Cpp,
+        Java
     }
 
     static class MainClass
@@ -92,6 +93,14 @@ namespace Bind
                                         Settings.DefaultOutputNamespace = "OpenTK";
                                         Settings.EnumsNamespace = "";
                                         Settings.NamespaceSeparator = "::";
+                                    }
+                                    else if (arg == "java")
+                                    {
+                                        Settings.Language = GeneratorLanguage.Java;
+                                        Settings.DefaultOutputPath = "gl";
+                                        Settings.DefaultOutputNamespace = "com.opentk";
+                                        Settings.EnumsNamespace = "";
+                                        Settings.NamespaceSeparator = ".";
                                     }
                                     break;
                                 }
@@ -182,6 +191,10 @@ namespace Bind
                 {
                     case GeneratorLanguage.Cpp:
                         writer = new CppSpecWriter();
+                        break;
+
+                    case GeneratorLanguage.Java:
+                        writer = new JavaSpecWriter();
                         break;
 
                     case GeneratorLanguage.CSharp:

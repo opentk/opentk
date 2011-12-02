@@ -99,6 +99,7 @@ namespace Bind
                 {
                     case GeneratorLanguage.CSharp: return CSharpKeywords;
                     case GeneratorLanguage.Cpp: return CppKeywords;
+                    case GeneratorLanguage.Java: return JavaKeywords;
                     default: throw new NotImplementedException();
                 }
             }
@@ -129,6 +130,21 @@ namespace Bind
                 "enum", "namespace", "string"
             }
         );
+
+        static readonly List<string> JavaKeywords = new List<string>(
+            new string[]
+            {
+                "abstract", "continue", "for", "new", "switch",
+                "assert", "default", "goto", "package", "synchronized",
+                "boolean", "do", "if", "private", "this",
+                "break", "double", "implements", "protected", "throw",
+                "byte", "else", "import", "public", "throws",
+                "case", "enum", "instanceof", "return", "transient",
+                "catch", "extends", "int", "short", "try",
+                "char", "final", "interface", "static", "void",
+                "class", "finally", "long", "strictfp", "volatile",
+                "const", "float", "native", "super", "while"
+            });
 
         static readonly List<string> CppKeywords = new List<string>();
 
