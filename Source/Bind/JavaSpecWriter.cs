@@ -93,32 +93,13 @@ namespace Bind
             File.Move(file, dest);
         }
 
-        static void WriteWrapper(Function f, BindStreamWriter sw)
-        {
-            var parameters = GenerateParameterString(f);
-            var generic_parameters = GenerateGenericParameterString(f);
-
-            if (!String.IsNullOrEmpty(generic_parameters))
-                sw.WriteLine("public static {0} {1}<{2}>({3})", f.ReturnType, f.TrimmedName,
-                    generic_parameters, parameters);
-            else
-                sw.WriteLine("public static {0} {1}({2})", f.ReturnType, f.TrimmedName,
-                    parameters);
-
-            sw.WriteLine("{");
-            sw.Indent();
-            WriteMethodBody(sw, f);
-            sw.Unindent();
-            sw.WriteLine("}");
-        }
-
         #endregion
 
         #region WriteDefinitions
 
         void WriteDefinitions(BindStreamWriter sw,
-        EnumCollection enums, FunctionCollection wrappers,
-        Dictionary<string, string> CSTypes)
+            EnumCollection enums, FunctionCollection wrappers,
+            Dictionary<string, string> CSTypes)
         {
             sw.WriteLine("public class {0}", Settings.GLClass);
             sw.WriteLine("{");
@@ -152,15 +133,6 @@ namespace Bind
 
         #endregion
 
-        static string GetNamespace(string ext)
-        {
-            if (ext == "Core")
-                return Settings.GLClass;
-            else
-                return String.Format("{1}{0}{2}", Settings.NamespaceSeparator,
-                    Settings.GLClass, Char.IsDigit(ext[0]) ? DigitPrefix + ext : ext);
-        }
-
         #region WriteEnums
 
         public void WriteEnums(BindStreamWriter sw, EnumCollection enums)
@@ -186,6 +158,25 @@ namespace Bind
         #endregion
 
         #region WriteWrappers
+
+        static void WriteWrapper(Function f, BindStreamWriter sw)
+        {
+            var parameters = GenerateParameterString(f);
+            var generic_parameters = GenerateGenericParameterString(f);
+
+            if (!String.IsNullOrEmpty(generic_parameters))
+                sw.WriteLine("public static {0} <1> {2}({3})", f.ReturnType, generic_parameters,
+                    f.TrimmedName, parameters);
+            else
+                sw.WriteLine("public static {0} {1}({2})", f.ReturnType, f.TrimmedName,
+                    parameters);
+
+            sw.WriteLine("{");
+            sw.Indent();
+            WriteMethodBody(sw, f);
+            sw.Unindent();
+            sw.WriteLine("}");
+        }
 
         static void WriteMethodBody(BindStreamWriter sw, Function f)
         {
