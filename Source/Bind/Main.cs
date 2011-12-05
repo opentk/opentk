@@ -94,6 +94,7 @@ namespace Bind
                                         // Settings.DefaultLanguageTypeMapFile = "cpp.tm"; // Todo: create this file!
                                         Settings.EnumsNamespace = "";
                                         Settings.NamespaceSeparator = "::";
+                                        Settings.DefaultKeywordEscapeCharacter = "_";
                                     }
                                     else if (arg == "java")
                                     {
@@ -103,6 +104,7 @@ namespace Bind
                                         Settings.DefaultLanguageTypeMapFile = "java.tm";
                                         Settings.EnumsNamespace = "";
                                         Settings.NamespaceSeparator = ".";
+                                        Settings.DefaultKeywordEscapeCharacter = "_";
                                     }
                                     break;
                                 }

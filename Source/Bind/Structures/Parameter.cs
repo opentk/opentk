@@ -52,25 +52,44 @@ namespace Bind.Structures
 
         #endregion
 
-        #region public string Name
+        #region RawName
 
-        string _name = String.Empty;
         /// <summary>
-        /// Gets or sets the name of the parameter.
+        /// Gets or sets the raw name of the parameter.
+        /// </summary>
+        public string RawName
+        {
+            get;
+            private set;
+        }
+
+        #endregion
+
+        #region Name
+
+        /// <summary>
+        /// Gets the name of the parameter. If the name matches a keyword of the current language,
+        /// then it is escaped with <see cref="Settings.KeywordEscapeCharacter"/>.
         /// </summary>
         public string Name
         {
-            get { return _name; }
+            get
+            {
+                if (Utilities.Keywords.Contains(RawName))
+                    return Settings.KeywordEscapeCharacter + RawName;
+                else
+                    return RawName;
+            }
             set
             {
-                if (_name != value)
+                if (RawName != value)
                 {
                     while (value.StartsWith("*"))
                     {
                         Pointer++;
                         value = value.Substring(1);
                     }
-                    _name = value;
+                    RawName = value;
                     rebuild = true;
                 }
             }
@@ -270,7 +289,7 @@ namespace Bind.Structures
                 if (!String.IsNullOrEmpty(Name))
                 {
                     sb.Append(" ");
-                    sb.Append(Utilities.Keywords.Contains(Name) ? "@" + Name : Name);
+                    sb.Append(Name);
                 }
 
                 rebuild = false;
@@ -329,7 +348,7 @@ namespace Bind.Structures
                 WrapperType |= WrapperTypes.ReferenceParameter;
 
             if (Utilities.Keywords.Contains(Name))
-                Name = "@" + Name;
+                Name = Settings.KeywordEscapeCharacter + Name;
 
             // This causes problems with bool arrays
             //if (CurrentType.ToLower().Contains("bool"))
@@ -626,7 +645,7 @@ namespace Bind.Structures
                         }
                     }
 
-                    sb.Append(Utilities.Keywords.Contains(p.Name) ? "@" + p.Name : p.Name);
+                    sb.Append(p.Name);
 
                     if (p.Unchecked)
                         sb.Append(")");
