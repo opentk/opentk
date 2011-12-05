@@ -143,7 +143,8 @@ namespace Bind
                 "catch", "extends", "int", "short", "try",
                 "char", "final", "interface", "static", "void",
                 "class", "finally", "long", "strictfp", "volatile",
-                "const", "float", "native", "super", "while"
+                "const", "float", "native", "super", "while",
+                "callback"
             });
 
         static readonly List<string> CppKeywords = new List<string>();
