@@ -74,6 +74,7 @@ namespace Bind
             RegexOptions.Compiled);
         public static readonly Regex Acronyms = new Regex(Extensions.ToString() + "|EGL|3TC|DXT|ES|RGBA|BGRA|RGB|BGR|ETC",
             RegexOptions.Compiled);
+
         #region internal StreamReader OpenSpecFile(string file)
 
         internal static StreamReader OpenSpecFile(string folder, string file)
