@@ -162,7 +162,7 @@ namespace Bind
         static void WriteWrapper(Function f, BindStreamWriter sw)
         {
             var valid = true;
-            var generic_parameters = GenerateGenericParameterString(f);
+            var generic_parameters = GenerateGenericTypeString(f);
             var parameters = GenerateParameterString(f, out valid);
             if (!valid)
                 return;
@@ -211,7 +211,10 @@ namespace Bind
                         else
                             sb.Append("Ref<");
 
-                        sb.Append(p.CurrentType);
+                        // Hack: primitive types cannot be used as type parameters in Java.
+                        // Ensure the first letter is upper-case in order to use the boxed versions
+                        // of primitive types (i.e. "Byte" rather than "byte" etc).
+                        sb.Append(Char.ToUpper(p.CurrentType[0]) + p.CurrentType.Substring(1));
                         sb.Append(">");
                     }
                     else if (p.Pointer > 0 && p.Array > 0)
@@ -246,9 +249,9 @@ namespace Bind
 
         #endregion
 
-        #region GenerateGenericParameterString
+        #region GenerateGenericTypeString
 
-        static string GenerateGenericParameterString(Function f)
+        static string GenerateGenericTypeString(Function f)
         {
             var parameters = f.Parameters.Where(p => p.Generic);
             if (parameters.Count() > 0)
