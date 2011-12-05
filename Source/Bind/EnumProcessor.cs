@@ -101,9 +101,10 @@ namespace Bind
 
             // Split on IHV names, to ensure that characters appearing after these name are uppercase.
             var match = Utilities.Acronyms.Match(name);
+            int offset = 0; // Everytime we insert a match, we must increase offset to compensate.
             while (match.Success)
             {
-                int insert_pos = match.Index + match.Length;
+                int insert_pos = match.Index + match.Length + offset++;
                 translator.Insert(insert_pos, "_");
                 match = match.NextMatch();
             }
@@ -117,7 +118,6 @@ namespace Bind
             //     4. if current char is lowercase, respect next char case.
             bool is_after_underscore_or_number = true;
             bool is_previous_uppercase = false;
-            int pos = 0;
             foreach (char c in name)
             {
                 char char_to_add;
