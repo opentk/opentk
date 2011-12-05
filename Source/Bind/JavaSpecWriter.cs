@@ -68,23 +68,15 @@ namespace Bind
                 wrappers.Add(DigitPrefix + "3dfx", three_dee_fx);
             }
 
-            Settings.DefaultOutputNamespace = "com.opentk";
-
             using (var sw = sw_h)
             {
                 WriteLicense(sw);
 
-                sw.WriteLine("namespace {0}", Settings.OutputNamespace);
-                sw.WriteLine("{");
-                sw.Indent();
+                sw.WriteLine("package {0}.{1};", Settings.OutputNamespace, Settings.GLClass);
+                sw.WriteLine();
 
-                //WriteGetAddress(sw);
-                //WriteTypes(sw);
-                WriteEnums(sw, enums);
                 WriteDefinitions(sw, enums, wrappers, Type.CSTypes);
-
-                sw.Unindent();
-                sw.WriteLine("}");
+                WriteEnums(sw, enums);
 
                 sw.Flush();
                 sw.Close();
@@ -103,10 +95,16 @@ namespace Bind
 
         static void WriteWrapper(Function f, BindStreamWriter sw)
         {
-            var parameters = f.WrappedDelegate.Parameters.ToString()
-                .Replace("[OutAttribute]", String.Empty);
-            sw.WriteLine("{0} {1}{2}", f.WrappedDelegate.ReturnType,
-                f.TrimmedName, parameters);
+            var parameters = GenerateParameterString(f);
+            var generic_parameters = GenerateGenericParameterString(f);
+
+            if (!String.IsNullOrEmpty(generic_parameters))
+                sw.WriteLine("public static {0} {1}<{2}>({3})", f.ReturnType, f.TrimmedName,
+                    generic_parameters, parameters);
+            else
+                sw.WriteLine("public static {0} {1}({2})", f.ReturnType, f.TrimmedName,
+                    parameters);
+
             sw.WriteLine("{");
             sw.Indent();
             WriteMethodBody(sw, f);
@@ -122,7 +120,7 @@ namespace Bind
         EnumCollection enums, FunctionCollection wrappers,
         Dictionary<string, string> CSTypes)
         {
-            sw.WriteLine("namespace {0}", Settings.GLClass);
+            sw.WriteLine("public class {0}", Settings.GLClass);
             sw.WriteLine("{");
             sw.Indent();
 
@@ -130,13 +128,10 @@ namespace Bind
             {
                 if (extension != "Core")
                 {
-                    sw.WriteLine("namespace {0}", extension);
+                    sw.WriteLine("public static class {0}", extension);
                     sw.WriteLine("{");
                     sw.Indent();
                 }
-
-                // Avoid multiple definitions of the same function
-                Delegate last_delegate = null;
 
                 // Write wrappers
                 foreach (var f in wrappers[extension])
@@ -147,12 +142,9 @@ namespace Bind
                 if (extension != "Core")
                 {
                     sw.Unindent();
-                    sw.WriteLine("};");
+                    sw.WriteLine("}");
                 }
             }
-
-            sw.Unindent();
-            sw.WriteLine("};");
 
             sw.Unindent();
             sw.WriteLine("}");
@@ -180,11 +172,10 @@ namespace Bind
                 sw.Indent();
                 foreach (var c in @enum.ConstantCollection.Values)
                 {
-                    // Java doesn't have the concept of "unchecked", so remove this.
-                    if (!c.Unchecked)
-                        sw.WriteLine("{0},", c);
-                    else
-                        sw.WriteLine("{0},", c.ToString().Replace("unchecked", String.Empty));
+                    sw.WriteLine(String.Format("{0} = {1}{2},",
+                        c.Name,
+                        !String.IsNullOrEmpty(c.Reference) ? (c.Reference + Settings.NamespaceSeparator) : "",
+                        c.Value));
                 }
                 sw.Unindent();
                 sw.WriteLine("}");
@@ -194,48 +185,15 @@ namespace Bind
 
         #endregion
 
-        #region WriteTypes
-
-        void WriteTypes(BindStreamWriter sw)
-        {
-            //sw.WriteLine(TypeDefinitions);
-        }
-
-        #endregion
-
-        #region WriteDelegate
-
-        static void WriteDelegate(BindStreamWriter sw, Delegate d, ref Delegate last_delegate)
-        {
-            // Avoid multiple definitions of the same function
-            if (d != last_delegate)
-            {
-                last_delegate = d;
-                var parameters = d.Parameters.ToString()
-                .Replace("String[]", "String*")
-                .Replace("[OutAttribute]", String.Empty);
-                sw.WriteLine("typedef {0} (APIENTRY *p{1}){2};", d.ReturnType, d.Name, parameters);
-                sw.WriteLine("inline p{0}& {0}()", d.Name);
-                sw.WriteLine("{");
-                sw.Indent();
-                sw.WriteLine("static p{0} address = 0;", d.Name);
-                sw.WriteLine("return address;");
-                sw.Unindent();
-                sw.WriteLine("}");
-            }
-        }
-
-        #endregion
-
         #region WriteWrappers
 
         static void WriteMethodBody(BindStreamWriter sw, Function f)
         {
-            var callstring = f.Parameters.CallString();
-            if (f.ReturnType != null && !f.ReturnType.ToString().ToLower().Contains("void"))
-                sw.WriteLine("return GLES20.{0}(){1};", f.WrappedDelegate.Name, callstring);
-            else
-                sw.WriteLine("GLES20.{0}(){1};", f.WrappedDelegate.Name, callstring);
+            //var callstring = f.Parameters.CallString();
+            //if (f.ReturnType != null && !f.ReturnType.ToString().ToLower().Contains("void"))
+            //    sw.WriteLine("return GLES20.{0}{1};", f.WrappedDelegate.Name, callstring);
+            //else
+            //    sw.WriteLine("GLES20.{0}{1};", f.WrappedDelegate.Name, callstring);
         }
 
         static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
@@ -309,6 +267,75 @@ namespace Bind
         {
             sw.WriteLine(File.ReadAllText(Path.Combine(Settings.InputPath, Settings.LicenseFile)));
             sw.WriteLine();
+        }
+
+        #endregion
+
+        #region GenerateParameterString
+
+        static string GenerateParameterString(Function f)
+        {
+            if (f == null)
+                throw new ArgumentNullException("f");
+
+            var sb = new StringBuilder();
+
+            if (f.Parameters.Count > 0)
+            {
+                foreach (var p in f.Parameters)
+                {
+                    if (p.Array == 0 || (p.Array > 0 && p.ElementCount != 1))
+                    {
+                        sb.Append(p.CurrentType);
+                        if (p.Array > 0)
+                            sb.Append("[]");
+                    }
+                    else if (p.Array > 0 && p.ElementCount == 1)
+                    {
+                        if (p.Flow == FlowDirection.Out)
+                            sb.Append("Out<");
+                        else
+                            sb.Append("Ref<");
+
+                        sb.Append(p.CurrentType);
+                        sb.Append(">");
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+
+                    sb.Append(" ");
+                    sb.Append(p.Name);
+                    sb.Append(", ");
+                }
+                sb.Remove(sb.Length - 2, 2);
+            }
+
+            return sb.ToString();
+        }
+
+        #endregion
+
+        #region GenerateGenericParameterString
+
+        static string GenerateGenericParameterString(Function f)
+        {
+            var parameters = f.Parameters.Where(p => p.Generic);
+            if (parameters.Count() > 0)
+            {
+                var sb = new StringBuilder();
+                foreach (var p in f.Parameters.Where(p => p.Generic))
+                {
+                    sb.Append(p.CurrentType);
+                }
+                if (parameters.Count() > 1)
+                    sb.Remove(sb.Length - 2, 2);
+
+                return sb.ToString();
+            }
+
+            return String.Empty;
         }
 
         #endregion
