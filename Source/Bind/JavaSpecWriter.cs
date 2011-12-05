@@ -76,7 +76,6 @@ namespace Bind
                 sw.WriteLine();
 
                 WriteDefinitions(sw, enums, wrappers, Type.CSTypes);
-                WriteEnums(sw, enums);
 
                 sw.Flush();
                 sw.Close();
@@ -127,6 +126,8 @@ namespace Bind
                 }
             }
 
+            WriteEnums(sw, enums);
+
             sw.Unindent();
             sw.WriteLine("}");
         }
@@ -142,13 +143,18 @@ namespace Bind
                 sw.WriteLine("public enum {0}", @enum.Name);
                 sw.WriteLine("{");
                 sw.Indent();
+                int count = @enum.ConstantCollection.Values.Count;
                 foreach (var c in @enum.ConstantCollection.Values)
                 {
-                    sw.WriteLine(String.Format("{0} = {1}{2},",
+                    sw.WriteLine(String.Format("{0}({1}{2}){3}",
                         c.Name,
                         !String.IsNullOrEmpty(c.Reference) ? (c.Reference + Settings.NamespaceSeparator) : "",
-                        c.Value));
+                        !String.IsNullOrEmpty(c.Reference) ? c.Value : c.Value.ToLower(),
+                        --count == 0 ? ";" : ","));
                 }
+                sw.WriteLine();
+                sw.WriteLine("{0} mValue;", @enum.Type);
+                sw.WriteLine("{0}({1} value) {{ mValue = value; }}", @enum.Name, @enum.Type);
                 sw.Unindent();
                 sw.WriteLine("}");
                 sw.WriteLine();
@@ -200,27 +206,41 @@ namespace Bind
             valid = true;
             var sb = new StringBuilder();
 
+            if (f.TrimmedName == "ExtGetBufferPointer")
+                ;// Debugger.Break();
+
             if (f.Parameters.Count > 0)
             {
                 foreach (var p in f.Parameters)
                 {
                     if (p.Reference)
                     {
-                        if (p.Flow == FlowDirection.Out)
-                            sb.Append("Out<");
+                        // Use a boxed type instead of primitives (i.e. "Byte" rather than "byte"), since
+                        // the former are reference types. We don't need to do anything for regular reference
+                        // types.
+                        // Hack: we do this by upper-casing the first letter of the type. This should work for
+                        // all primitive types, but won't work for enums and other reference types. In these
+                        // cases, we'll just ignore the reference overload.
+                        if (Char.IsLower(p.CurrentType[0]))
+                        {
+                            // Hack: Int -> Integer and Bool -> Boolean
+                            if (p.CurrentType == "int")
+                                sb.Append("Integer");
+                            else if (p.CurrentType == "bool")
+                                sb.Append("Boolean");
+                            else
+                                sb.Append(Char.ToUpper(p.CurrentType[0]) + p.CurrentType.Substring(1));
+                        }
                         else
-                            sb.Append("Ref<");
-
-                        // Hack: primitive types cannot be used as type parameters in Java.
-                        // Ensure the first letter is upper-case in order to use the boxed versions
-                        // of primitive types (i.e. "Byte" rather than "byte" etc).
-                        sb.Append(Char.ToUpper(p.CurrentType[0]) + p.CurrentType.Substring(1));
-                        sb.Append(">");
+                        {
+                            valid = false;
+                            return String.Empty;
+                        }
                     }
-                    else if (p.Pointer > 0 && p.Array > 0)
+                    else if (p.Array > 0)
                     {
                         sb.Append(p.CurrentType);
-                        if (p.Array > 0)
+                        for (int i = 0; i < p.Array; i++)
                             sb.Append("[]");
                     }
                     else if (p.Pointer > 0)
