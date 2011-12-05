@@ -74,6 +74,8 @@ namespace Bind
 
                 sw.WriteLine("package {0}.{1};", Settings.OutputNamespace, Settings.GLClass);
                 sw.WriteLine();
+                sw.WriteLine("import java.nio.*;");
+                sw.WriteLine();
 
                 WriteDefinitions(sw, enums, wrappers, Type.CSTypes);
 
@@ -144,17 +146,25 @@ namespace Bind
                 sw.WriteLine("{");
                 sw.Indent();
                 int count = @enum.ConstantCollection.Values.Count;
-                foreach (var c in @enum.ConstantCollection.Values)
+                if (count == 0)
                 {
-                    sw.WriteLine(String.Format("{0}({1}{2}){3}",
-                        c.Name,
-                        !String.IsNullOrEmpty(c.Reference) ? (c.Reference + Settings.NamespaceSeparator) : "",
-                        !String.IsNullOrEmpty(c.Reference) ? c.Value : c.Value.ToLower(),
-                        --count == 0 ? ";" : ","));
+                    // Java enums must have at least one value.
+                    sw.WriteLine("None;");
                 }
-                sw.WriteLine();
-                sw.WriteLine("{0} mValue;", @enum.Type);
-                sw.WriteLine("{0}({1} value) {{ mValue = value; }}", @enum.Name, @enum.Type);
+                else
+                {
+                    foreach (var c in @enum.ConstantCollection.Values)
+                    {
+                        sw.WriteLine(String.Format("{0}({1}{2}){3}",
+                            c.Name,
+                            !String.IsNullOrEmpty(c.Reference) ? (c.Reference + Settings.NamespaceSeparator) : "",
+                            !String.IsNullOrEmpty(c.Reference) ? c.Value : c.Value.ToLower(),
+                            --count == 0 ? ";" : ","));
+                    }
+                    sw.WriteLine();
+                    sw.WriteLine("{0} mValue;", @enum.Type);
+                    sw.WriteLine("{0}({1} value) {{ mValue = value; }}", @enum.Name, @enum.Type);
+                }
                 sw.Unindent();
                 sw.WriteLine("}");
                 sw.WriteLine();
@@ -170,14 +180,15 @@ namespace Bind
             var valid = true;
             var generic_parameters = GenerateGenericTypeString(f);
             var parameters = GenerateParameterString(f, out valid);
+            var ret_parameter = GenerateReturnParameterString(f);
             if (!valid)
                 return;
 
             if (!String.IsNullOrEmpty(generic_parameters))
                 sw.WriteLine("public static <{0}> {1} {2}({3})", generic_parameters,
-                    f.ReturnType, f.TrimmedName, parameters);
+                    ret_parameter, f.TrimmedName, parameters);
             else
-                sw.WriteLine("public static {0} {1}({2})", f.ReturnType, f.TrimmedName,
+                sw.WriteLine("public static {0} {1}({2})", ret_parameter, f.TrimmedName,
                     parameters);
 
             sw.WriteLine("{");
@@ -195,8 +206,6 @@ namespace Bind
             //else
             //    sw.WriteLine("GLES20.{0}{1};", f.WrappedDelegate.Name, callstring);
         }
-
-        #region GenerateParameterString
 
         static string GenerateParameterString(Function f, out bool valid)
         {
@@ -239,6 +248,13 @@ namespace Bind
                     }
                     else if (p.Array > 0)
                     {
+                        // Generic arrays are handled in the IntPtr case below.
+                        if (p.Generic)
+                        {
+                            valid = false;
+                            return String.Empty;
+                        }
+
                         sb.Append(p.CurrentType);
                         for (int i = 0; i < p.Array; i++)
                             sb.Append("[]");
@@ -249,6 +265,10 @@ namespace Bind
                         // Todo: maybe use one of the java.nio.* pointer classes?
                         valid = false;
                         return String.Empty;
+                    }
+                    else if (p.CurrentType == "IntPtr")
+                    {
+                        sb.Append("Buffer");
                     }
                     else
                     {
@@ -266,10 +286,6 @@ namespace Bind
 
             return sb.ToString();
         }
-
-        #endregion
-
-        #region GenerateGenericTypeString
 
         static string GenerateGenericTypeString(Function f)
         {
@@ -291,7 +307,13 @@ namespace Bind
             return String.Empty;
         }
 
-        #endregion
+        private static string GenerateReturnParameterString(Function f)
+        {
+            if (f.ReturnType.CurrentType == "IntPtr")
+                return "Buffer";
+            else
+                return f.ReturnType.CurrentType;
+        }
 
         static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
         static Dictionary<string, string> docfiles;
