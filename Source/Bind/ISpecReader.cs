@@ -12,8 +12,8 @@ namespace Bind
 {
     interface ISpecReader
     {
-        DelegateCollection ReadDelegates(string file);
-        EnumCollection ReadEnums(string file);
+        void ReadDelegates(string file, DelegateCollection delegates);
+        void ReadEnums(string file, EnumCollection enums);
         Dictionary<string, string> ReadTypeMap(string file);
         Dictionary<string, string> ReadCSTypeMap(string file);
     }
