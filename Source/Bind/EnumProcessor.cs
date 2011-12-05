@@ -97,14 +97,27 @@ namespace Bind
             if (Char.IsDigit(name[0]))
                 name = Settings.ConstantPrefix + name;
 
-            StringBuilder translator = new StringBuilder(name.Length);
+            StringBuilder translator = new StringBuilder(name);
+
+            // Split on IHV names, to ensure that characters appearing after these name are uppercase.
+            var match = Utilities.Acronyms.Match(name);
+            while (match.Success)
+            {
+                int insert_pos = match.Index + match.Length;
+                translator.Insert(insert_pos, "_");
+                match = match.NextMatch();
+            }
+            name = translator.ToString();
+            translator.Remove(0, translator.Length);
 
             // Process according to these rules:
             //     1. if current char is '_', '-' remove it and make next char uppercase
             //     2. if current char is  or '0-9' keep it and make next char uppercase.
-            //     3. if current character is uppercase make next char lowercase.
+            //     3. if current char is uppercase make next char lowercase.
+            //     4. if current char is lowercase, respect next char case.
             bool is_after_underscore_or_number = true;
             bool is_previous_uppercase = false;
+            int pos = 0;
             foreach (char c in name)
             {
                 char char_to_add;
