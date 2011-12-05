@@ -161,12 +161,15 @@ namespace Bind
 
         static void WriteWrapper(Function f, BindStreamWriter sw)
         {
-            var parameters = GenerateParameterString(f);
+            var valid = true;
             var generic_parameters = GenerateGenericParameterString(f);
+            var parameters = GenerateParameterString(f, out valid);
+            if (!valid)
+                return;
 
             if (!String.IsNullOrEmpty(generic_parameters))
-                sw.WriteLine("public static {0} <1> {2}({3})", f.ReturnType, generic_parameters,
-                    f.TrimmedName, parameters);
+                sw.WriteLine("public static <{0}> {1} {2}({3})", generic_parameters,
+                    f.ReturnType, f.TrimmedName, parameters);
             else
                 sw.WriteLine("public static {0} {1}({2})", f.ReturnType, f.TrimmedName,
                     parameters);
@@ -186,6 +189,86 @@ namespace Bind
             //else
             //    sw.WriteLine("GLES20.{0}{1};", f.WrappedDelegate.Name, callstring);
         }
+
+        #region GenerateParameterString
+
+        static string GenerateParameterString(Function f, out bool valid)
+        {
+            if (f == null)
+                throw new ArgumentNullException("f");
+
+            valid = true;
+            var sb = new StringBuilder();
+
+            if (f.Parameters.Count > 0)
+            {
+                foreach (var p in f.Parameters)
+                {
+                    if (p.Reference)
+                    {
+                        if (p.Flow == FlowDirection.Out)
+                            sb.Append("Out<");
+                        else
+                            sb.Append("Ref<");
+
+                        sb.Append(p.CurrentType);
+                        sb.Append(">");
+                    }
+                    else if (p.Pointer > 0 && p.Array > 0)
+                    {
+                        sb.Append(p.CurrentType);
+                        if (p.Array > 0)
+                            sb.Append("[]");
+                    }
+                    else if (p.Pointer > 0)
+                    {
+                        // Java does not support pointers
+                        // Todo: maybe use one of the java.nio.* pointer classes?
+                        valid = false;
+                        return String.Empty;
+                    }
+                    else
+                    {
+                        sb.Append(p.CurrentType);
+                    }
+
+                    sb.Append(" ");
+                    sb.Append(p.Name);
+                    sb.Append(", ");
+                }
+
+                if (f.Parameters.Count > 0)
+                    sb.Remove(sb.Length - 2, 2);
+            }
+
+            return sb.ToString();
+        }
+
+        #endregion
+
+        #region GenerateGenericParameterString
+
+        static string GenerateGenericParameterString(Function f)
+        {
+            var parameters = f.Parameters.Where(p => p.Generic);
+            if (parameters.Count() > 0)
+            {
+                var sb = new StringBuilder();
+                foreach (var p in f.Parameters.Where(p => p.Generic))
+                {
+                    sb.Append(p.CurrentType);
+                    sb.Append(", ");
+                }
+                if (parameters.Count() > 0)
+                    sb.Remove(sb.Length - 2, 2);
+
+                return sb.ToString();
+            }
+
+            return String.Empty;
+        }
+
+        #endregion
 
         static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
         static Dictionary<string, string> docfiles;
@@ -258,75 +341,6 @@ namespace Bind
         {
             sw.WriteLine(File.ReadAllText(Path.Combine(Settings.InputPath, Settings.LicenseFile)));
             sw.WriteLine();
-        }
-
-        #endregion
-
-        #region GenerateParameterString
-
-        static string GenerateParameterString(Function f)
-        {
-            if (f == null)
-                throw new ArgumentNullException("f");
-
-            var sb = new StringBuilder();
-
-            if (f.Parameters.Count > 0)
-            {
-                foreach (var p in f.Parameters)
-                {
-                    if (p.Array == 0 || (p.Array > 0 && p.ElementCount != 1))
-                    {
-                        sb.Append(p.CurrentType);
-                        if (p.Array > 0)
-                            sb.Append("[]");
-                    }
-                    else if (p.Array > 0 && p.ElementCount == 1)
-                    {
-                        if (p.Flow == FlowDirection.Out)
-                            sb.Append("Out<");
-                        else
-                            sb.Append("Ref<");
-
-                        sb.Append(p.CurrentType);
-                        sb.Append(">");
-                    }
-                    else
-                    {
-                        throw new Exception();
-                    }
-
-                    sb.Append(" ");
-                    sb.Append(p.Name);
-                    sb.Append(", ");
-                }
-                sb.Remove(sb.Length - 2, 2);
-            }
-
-            return sb.ToString();
-        }
-
-        #endregion
-
-        #region GenerateGenericParameterString
-
-        static string GenerateGenericParameterString(Function f)
-        {
-            var parameters = f.Parameters.Where(p => p.Generic);
-            if (parameters.Count() > 0)
-            {
-                var sb = new StringBuilder();
-                foreach (var p in f.Parameters.Where(p => p.Generic))
-                {
-                    sb.Append(p.CurrentType);
-                }
-                if (parameters.Count() > 1)
-                    sb.Remove(sb.Length - 2, 2);
-
-                return sb.ToString();
-            }
-
-            return String.Empty;
         }
 
         #endregion
