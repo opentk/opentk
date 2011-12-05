@@ -213,7 +213,7 @@ namespace Bind
             return s;
         }
 
-        // Merges the specified enum collections.
+        // Merges the specified delegate collections.
         internal static void Merge(DelegateCollection delegates, DelegateCollection new_delegates)
         {
             foreach (var d in new_delegates)
