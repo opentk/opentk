@@ -72,7 +72,7 @@ namespace Bind
         public static readonly Regex Extensions = new Regex(
             "ARB|EXT|ATIX|ATI|AMDX|AMD|NV|NVX|SUNX|SUN|SGIS|SGIX|SGI|MESAX|MESA|3DFX|IBM|GREMEDY|HP|INTEL|PGI|INGR|APPLE|OML|I3D|ARM|ANGLE|OES|QCOM|VIV|IMG",
             RegexOptions.Compiled);
-        public static readonly Regex Acronyms = new Regex(Extensions.ToString() + "|EGL|3TC|DXT|ES|RGBA|BGRA|RGB|BGR|ETC",
+        public static readonly Regex Acronyms = new Regex(Extensions.ToString() + "|EGL|3TC|DXT|ES|GL|CL|RGBA|BGRA|RGB|BGR|ETC",
             RegexOptions.Compiled);
 
         #region internal StreamReader OpenSpecFile(string file)
