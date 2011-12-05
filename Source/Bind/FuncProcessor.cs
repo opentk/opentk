@@ -189,7 +189,7 @@ namespace Bind
                 if (function_override != null)
                 {
                     XPathNavigator param_override = function_override.SelectSingleNode(
-                            String.Format("param[@name='{0}']", d.Parameters[i].Name));
+                            String.Format("param[@name='{0}']", d.Parameters[i].RawName));
                     if (param_override != null)
                     {
                         foreach (XPathNavigator node in param_override.SelectChildren(XPathNodeType.Element))
