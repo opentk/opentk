@@ -21,9 +21,10 @@ namespace Bind
         public static string DefaultLicenseFile = "License.txt";
         public static string DefaultOverridesFile = "GL2/gloverrides.xml";
         public static string DefaultLanguageTypeMapFile = "csharp.tm";
+        public static string DefaultKeywordEscapeCharacter = "@";
 
         static string inputPath, outputPath, outputNamespace, docPath, docFile, licenseFile, overridesFile,
-            languageTypeMapFile;
+            languageTypeMapFile, keywordEscapeCharacter;
         public static string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
         public static string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
         public static string OutputNamespace { get { return outputNamespace ?? DefaultOutputNamespace; } set { outputNamespace = value; } }
@@ -32,6 +33,7 @@ namespace Bind
         public static string LicenseFile { get { return licenseFile ?? DefaultLicenseFile; } set { licenseFile = value; } }
         public static string OverridesFile { get { return overridesFile ?? DefaultOverridesFile; } set { overridesFile = value; } }
         public static string LanguageTypeMapFile { get { return languageTypeMapFile ?? DefaultLanguageTypeMapFile; } set { languageTypeMapFile = value; } }
+        public static string KeywordEscapeCharacter { get { return keywordEscapeCharacter ?? DefaultKeywordEscapeCharacter; } set { keywordEscapeCharacter = value; } }
 
         public static string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
         public static string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".
