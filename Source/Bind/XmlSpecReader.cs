@@ -40,9 +40,23 @@ namespace Bind
 
     class XmlSpecReader : ISpecReader
     {
-        #region Public Members
+        #region ISpecReader Members
 
-        public DelegateCollection ReadDelegates(XPathNavigator specs)
+        public void ReadDelegates(string file, DelegateCollection delegates)
+        {
+            var specs = new XPathDocument(file);
+            foreach (XPathNavigator nav in specs.CreateNavigator().Select("/signatures/delete"))
+            {
+                foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
+                    delegates.Remove(node.GetAttribute("name", String.Empty));
+            }
+            foreach (XPathNavigator nav in specs.CreateNavigator().Select("/signatures/add"))
+            {
+                Utilities.Merge(delegates, ReadDelegates(nav));
+            }
+        }
+
+        private DelegateCollection ReadDelegates(XPathNavigator specs)
         {
             DelegateCollection delegates = new DelegateCollection();
 
@@ -98,15 +112,101 @@ namespace Bind
             return delegates;
         }
 
-        #endregion
-
-        #region ISpecReader Members
-
-        public DelegateCollection ReadDelegates(string file)
+        public void ReadEnums(string file, EnumCollection enums)
         {
+            // First, read all enum definitions from spec and override file.
+            // Afterwards, read all token/enum overrides from overrides file.
+            // Every single enum is merged into
+
             var specs = new XPathDocument(file);
-            var delegates = ReadDelegates(specs.CreateNavigator().SelectSingleNode("/signatures/add"));
-            return delegates;
+            foreach (XPathNavigator nav in specs.CreateNavigator().Select("/signatures/delete"))
+            {
+                foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
+                    enums.Remove(node.GetAttribute("name", String.Empty));
+            }
+            foreach (XPathNavigator nav in specs.CreateNavigator().Select("/signatures/add"))
+            {
+                Utilities.Merge(enums, ReadEnums(nav));
+            }
+        }
+
+        private EnumCollection ReadEnums(XPathNavigator nav)
+        {
+            EnumCollection enums = new EnumCollection();
+            Enum all = new Enum() { Name = Settings.CompleteEnumName };
+
+            if (nav != null)
+            {
+                foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
+                {
+                    Enum e = new Enum()
+                    {
+                        Name = node.GetAttribute("name", String.Empty),
+                        Type = node.GetAttribute("type", String.Empty)
+                    };
+                    if (String.IsNullOrEmpty(e.Name))
+                        throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
+
+                    foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
+                    {
+                        Constant c = null;
+                        switch (param.Name)
+                        {
+                            case "token":
+                                c = new Constant
+                                {
+                                    Name = param.GetAttribute("name", String.Empty),
+                                    Value = param.GetAttribute("value", String.Empty)
+                                };
+                                break;
+
+                            case "use":
+                                c = new Constant
+                                {
+                                    Name = param.GetAttribute("token", String.Empty),
+                                    Reference = param.GetAttribute("enum", String.Empty),
+                                    Value = param.GetAttribute("token", String.Empty),
+                                };
+                                break;
+
+                            default:
+                                throw new NotSupportedException();
+                        }
+                        Utilities.Merge(all, c);
+                        try
+                        {
+                            if (!e.ConstantCollection.ContainsKey(c.Name))
+                            {
+                                e.ConstantCollection.Add(c.Name, c);
+                            }
+                            else if (e.ConstantCollection[c.Name].Value != c.Value)
+                            {
+                                var existing = e.ConstantCollection[c.Name];
+                                if (existing.Reference != null && c.Reference == null)
+                                {
+                                    e.ConstantCollection[c.Name] = c;
+                                }
+                                else if (existing.Reference == null && c.Reference != null)
+                                { } // Keep existing
+                                else
+                                {
+                                    Console.WriteLine("[Warning] Conflicting token {0}.{1} with value {2} != {3}",
+                                        e.Name, c.Name, e.ConstantCollection[c.Name].Value, c.Value);
+                                }
+                            }
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message);
+                        }
+                    }
+
+                    Utilities.Merge(enums, e);
+                }
+            }
+
+            Utilities.Merge(enums, all);
+            return enums;
         }
 
         public Dictionary<string, string> ReadTypeMap(string file)
@@ -198,102 +298,6 @@ namespace Bind
 
                 return CSTypes;
             }
-        }
-
-        public EnumCollection ReadEnums(string file)
-        {
-            // First, read all enum definitions from spec and override file.
-            // Afterwards, read all token/enum overrides from overrides file.
-            // Every single enum is merged into
-
-            EnumCollection enums = new EnumCollection();
-            var specs = new XPathDocument(file);
-            foreach (XPathNavigator nav in specs.CreateNavigator().Select("/signatures/add"))
-            {
-                var new_enums = ReadEnums(nav);
-                Utilities.Merge(enums, new_enums);
-            }
-
-            return enums;
-        }
-
-        public EnumCollection ReadEnums(XPathNavigator nav)
-        {
-            EnumCollection enums = new EnumCollection();
-            Enum all = new Enum() { Name = Settings.CompleteEnumName };
-
-            if (nav != null)
-            {
-                foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
-                {
-                    Enum e = new Enum()
-                    {
-                        Name = node.GetAttribute("name", String.Empty),
-                        Type = node.GetAttribute("type", String.Empty)
-                    };
-                    if (String.IsNullOrEmpty(e.Name))
-                        throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
-
-                    foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
-                    {
-                        Constant c = null;
-                        switch (param.Name)
-                        {
-                            case "token":
-                                c = new Constant
-                                {
-                                    Name = param.GetAttribute("name", String.Empty),
-                                    Value = param.GetAttribute("value", String.Empty)
-                                };
-                                break;
-
-                            case "use":
-                                c = new Constant
-                                {
-                                    Name = param.GetAttribute("token", String.Empty),
-                                    Reference = param.GetAttribute("enum", String.Empty),
-                                    Value = param.GetAttribute("token", String.Empty),
-                                };
-                                break;
-
-                            default:
-                                throw new NotSupportedException();
-                        }
-                        Utilities.Merge(all, c);
-                        try
-                        {
-                            if (!e.ConstantCollection.ContainsKey(c.Name))
-                            {
-                                e.ConstantCollection.Add(c.Name, c);
-                            }
-                            else if (e.ConstantCollection[c.Name].Value != c.Value)
-                            {
-                                var existing = e.ConstantCollection[c.Name];
-                                if (existing.Reference != null && c.Reference == null)
-                                {
-                                    e.ConstantCollection[c.Name] = c;
-                                }
-                                else if (existing.Reference == null && c.Reference != null)
-                                { } // Keep existing
-                                else
-                                {
-                                    Console.WriteLine("[Warning] Conflicting token {0}.{1} with value {2} != {3}",
-                                        e.Name, c.Name, e.ConstantCollection[c.Name].Value, c.Value);
-                                }
-                            }
-                        }
-                        catch (ArgumentException ex)
-                        {
-                            Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message);
-                        }
-                    }
-
-                    Utilities.Merge(enums, e);
-                }
-            }
-
-            Utilities.Merge(enums, all);
-            return enums;
         }
 
         #endregion

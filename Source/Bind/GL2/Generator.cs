@@ -58,6 +58,10 @@ namespace Bind.GL2
             Settings.DelegatesFile = "GLDelegates.cs";
             Settings.EnumsFile = "GLEnums.cs";
             Settings.WrappersFile = "GL.cs";
+
+            Delegates = new DelegateCollection();
+            Enums = new EnumCollection();
+            Wrappers = new FunctionCollection();
         }
 
         #endregion
@@ -73,10 +77,10 @@ namespace Bind.GL2
             string overrides = Path.Combine(Settings.InputPath, Settings.OverridesFile);
             Type.GLTypes = SpecReader.ReadTypeMap(Path.Combine(Settings.InputPath, glTypemap));
             Type.CSTypes = SpecReader.ReadCSTypeMap(Path.Combine(Settings.InputPath, csTypemap));
-            Enums = SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec));
-            Utilities.Merge(Enums, SpecReader.ReadEnums(overrides));
-            Delegates = SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec));
-            Utilities.Merge(Delegates, SpecReader.ReadDelegates(overrides));
+            SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec), Enums);
+            SpecReader.ReadEnums(overrides, Enums);
+            SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates);
+            SpecReader.ReadDelegates(overrides, Delegates);
 
             Enums = new EnumProcessor(overrides).Process(Enums);
             Wrappers = new FuncProcessor(overrides).Process(Delegates, Enums);
