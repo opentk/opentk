@@ -55,6 +55,7 @@ namespace Bind
         #if defined(_WIN32)
         extern ""C""
         {
+           #define GLPP_APIENTRY __stdcall
             typedef int (*PROC)();
             extern void* __stdcall wglGetCurrentContext();
             extern PROC __stdcall wglGetProcAddress(const char *procname);
@@ -62,19 +63,18 @@ namespace Bind
         #elif !defined(__APPLE__)
         extern ""C""
         {
-            #define APIENTRY
+            #define GLPP_APIENTRY
             extern void* glXGetCurrentContext();
             extern void (*glXGetProcAddress(const char *procname))();
         }
         #endif
 
         #if defined(__APPLE__)
-            #define APIENTRY
+            #define GLPP_APIENTRY
             #include <stdlib.h>
             #include <string.h>
             #include <AvailabilityMacros.h>
 
-            #define APIENTRY
             extern ""C"" void* CGLGetCurrentContext();
 
             #ifdef MAC_OS_X_VERSION_10_3
@@ -112,7 +112,7 @@ namespace Bind
         #endif /* __APPLE__ */
 
         #if defined(__sgi) || defined (__sun)
-            #define APIENTRY
+            #define GLPP_APIENTRY
             #include <dlfcn.h>
             #include <stdio.h>
             #include <stdlib.h>
@@ -206,7 +206,10 @@ namespace Bind
     typedef double GLdouble;
     typedef double GLclampd;
     typedef void GLvoid;
-    typedef const char* GLstring;
+    typedef GLint* GLintptr;
+    typedef GLsizei* GLsizeiptr;
+
+typedef const char* GLstring;
     #if defined(_MSC_VER) && _MSC_VER < 1400
         typedef __int64 GLint64EXT;
         typedef unsigned __int64 GLuint64EXT;
@@ -217,6 +220,9 @@ namespace Bind
     typedef GLint64EXT  GLint64;
     typedef GLuint64EXT GLuint64;
     typedef struct __GLsync { } *GLsync;
+    typedef struct __GLhandleARB { } *GLhandleARB;
+    typedef GLintptr GLintptrARB;
+    typedef GLsizeiptr GLsizeiptrARB;
 
     typedef char GLchar;
     typedef void (*GLDEBUGPROCAMD)(GLuint id,
@@ -231,8 +237,8 @@ namespace Bind
 
     /* For GL_ARB_cl_event */
 
-    typedef struct _cl_context *cl_context;
-    typedef struct _cl_event *cl_event;
+    typedef struct cl_context *_cl_context;
+    typedef struct cl_event *_cl_event;
 
     //typedef GLsizei IntPtr;
     typedef void* IntPtr;
@@ -250,14 +256,17 @@ namespace Bind
     typedef char* StringBuilder;
     typedef GLDEBUGPROCAMD DebugProcAmd;
     typedef GLDEBUGPROCARB DebugProcArb;
+    typedef struct _GLvdpauSurfaceNV *GLvdpauSurfaceNV;
 
     struct Half
     {
     private:
-        UInt16 value;
+        GLushort value;
     public:
     };
-         ";
+    typedef Half GLhalf;
+    typedef GLhalf GLhalfNV;
+";
 
         #endregion
 
@@ -326,14 +335,17 @@ namespace Bind
 
         static Delegate WriteWrapper(Delegate last_delegate, Function f, BindStreamWriter sw)
         {
-            if (last_delegate == f.WrappedDelegate)
-                return last_delegate; // Multiple wrappers for the same delegate are not necessary in C++
+            //if (last_delegate == f.WrappedDelegate)
+            //    return last_delegate; // Multiple wrappers for the same delegate are not necessary in C++
+            
+            var valid = true;
+            var parameters = GenerateParameterString(f, true, out valid);
+            if (!valid)
+                return last_delegate;
+
             last_delegate = f.WrappedDelegate;
 
-            var parameters = f.WrappedDelegate.Parameters.ToString()
-                .Replace("String[]", "String*")
-                .Replace("[OutAttribute]", String.Empty);
-            sw.WriteLine("inline {0} {1}{2}", f.WrappedDelegate.ReturnType,
+            sw.WriteLine("inline {0} {1}({2})", f.WrappedDelegate.ReturnType,
                 f.TrimmedName, parameters);
             sw.WriteLine("{");
             sw.Indent();
@@ -341,6 +353,89 @@ namespace Bind
             sw.Unindent();
             sw.WriteLine("}");
             return last_delegate;
+        }
+
+        static string GenerateParameterString(Delegate d, bool check_validity, out bool valid)
+        {
+            if (d == null)
+                throw new ArgumentNullException("d");
+
+            valid = true;
+            var sb = new StringBuilder();
+
+            if (d.Parameters.Count > 0)
+            {
+                foreach (var p in d.Parameters)
+                {
+                    if (p.CurrentType.ToLower() == "string[]")
+                        p.CurrentType = "char**";
+                    if (p.CurrentType.ToLower() == "string")
+                        p.CurrentType = "char*";
+
+                    if (p.Reference)
+                    {
+                       if (/*check_validity &&*/ p.Generic)
+                        {
+                            // We don't need generic parameters in C++ and void& is illegal.
+                            valid = false;
+                            return String.Empty;
+                        }
+
+                        if (p.Flow != FlowDirection.Out)
+                            sb.Append("const ");
+                        sb.Append(p.QualifiedType);
+                        sb.Append('*', p.Array);
+                        sb.Append("&");
+                    }
+                    else if (p.Array > 0)
+                    {
+                        // Hack: generic parameters with array types are
+                        // not real (i.e. they are created by the generator
+                        // specifically for managed languages). We don't
+                        // need them in C++.
+                        // Todo: move C#/Java-specific code to their respective
+                        // classes, instead of the main generator.
+                        // Note: the 1-dimensional array is handled through the pointer case below.
+                        // (C# differentiates between arrays and pointers, C++ doesn't).
+                        if (check_validity && (p.Generic || p.Array == 1))
+                        {
+                            valid = false;
+                            return String.Empty;
+                        }
+
+                        if (p.Flow != FlowDirection.Out)
+                            sb.Append("const ");
+                        sb.Append(p.Generic ? "void" : p.QualifiedType); // We don't need generic parameters in C++.
+                        sb.Append('*', p.Array);
+                    }
+                    else if (p.Pointer > 0)
+                    {
+                        if (p.Flow != FlowDirection.Out)
+                            sb.Append("const ");
+                        sb.Append(p.Generic ? "void" : p.QualifiedType); // We don't need generic parameters in C++.
+                        sb.Append('*', p.Pointer);
+                    }
+                    else if (p.CurrentType == "IntPtr")
+                    {
+                        if (p.Flow != FlowDirection.Out)
+                            sb.Append("const ");
+                        sb.Append("void*");
+                    }
+                    else
+                    {
+                        sb.Append(p.QualifiedType);
+                    }
+
+                    sb.Append(" ");
+                    sb.Append(p.Name);
+                    sb.Append(", ");
+                }
+
+                if (d.Parameters.Count > 0)
+                    sb.Remove(sb.Length - 2, 2);
+            }
+
+            return sb.ToString();
         }
 
         static Delegate WriteInitDelegate(Delegate last_delegate, BindStreamWriter sw, Function f)
@@ -437,9 +532,6 @@ namespace Bind
 
             sw.Unindent();
             sw.WriteLine("};");
-
-            sw.Unindent();
-            sw.WriteLine("}");
         }
 
         #endregion
@@ -467,11 +559,10 @@ namespace Bind
                 sw.Indent();
                 foreach (var c in @enum.ConstantCollection.Values)
                 {
-                    // C++ doesn't have the concept of "unchecked", so remove this.
-                    if (!c.Unchecked)
-                        sw.WriteLine("{0},", c);
-                    else
-                        sw.WriteLine("{0},", c.ToString().Replace("unchecked", String.Empty));
+                    sw.WriteLine(String.Format("{0} = {1}{2},",
+                        c.Name,
+                        !String.IsNullOrEmpty(c.Reference) ? (c.Reference + Settings.NamespaceSeparator) : "",
+                        !String.IsNullOrEmpty(c.Reference) ? c.Value : c.Value.ToLower()));
                 }
                 sw.Unindent();
                 sw.WriteLine("};");
@@ -509,10 +600,9 @@ namespace Bind
             if (d != last_delegate)
             {
                 last_delegate = d;
-                var parameters = d.Parameters.ToString()
-                    .Replace("String[]", "String*")
-                    .Replace("[OutAttribute]", String.Empty);
-                sw.WriteLine("typedef {0} (APIENTRY *p{1}){2};", d.ReturnType, d.Name, parameters);
+                bool valid = true;
+                var parameters = GenerateParameterString(d, false, out valid);
+                sw.WriteLine("typedef {0} (GLPP_APIENTRY *p{1})({2});", d.ReturnType, d.Name, parameters);
                 sw.WriteLine("inline p{0}& {0}()", d.Name);
                 sw.WriteLine("{");
                 sw.Indent();
@@ -529,13 +619,29 @@ namespace Bind
 
         static void WriteMethodBody(BindStreamWriter sw, Function f)
         {
+            //var callstring = f.Parameters.CallString()
+            //    .Replace("String[]", "String*");
 
-            var callstring = f.Parameters.CallString()
-                .Replace("String[]", "String*");
+            var callstring = GenerateCallString(f);
+
             if (f.ReturnType != null && !f.ReturnType.ToString().ToLower().Contains("void"))
-                sw.WriteLine("return Delegates::{0}(){1};", f.WrappedDelegate.Name, callstring);
-            else
-                sw.WriteLine("Delegates::{0}(){1};", f.WrappedDelegate.Name, callstring);
+                sw.Write("return ");
+            sw.WriteLine("Delegates::{0}()({1});", f.WrappedDelegate.Name, callstring);
+        }
+
+        static object GenerateCallString(Function f)
+        {
+            var sb = new StringBuilder();
+            foreach (var p in f.Parameters)
+            {
+                if (p.Reference)
+                    sb.Append("&"); // Convert to pointer
+                sb.Append(p.Name);
+                sb.Append(", ");
+            }
+            if (f.Parameters.Count > 0)
+                sb.Remove(sb.Length - 2, 2);
+            return sb.ToString();
         }
 
         static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
