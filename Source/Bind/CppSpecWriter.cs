@@ -42,14 +42,13 @@ namespace Bind
     sealed class CppSpecWriter : ISpecWriter
     {
         readonly char[] numbers = "0123456789".ToCharArray();
-        const string AllowDeprecated = "ALLOW_DEPRECATED_GL";
+        const string AllowDeprecated = "GLPP_COMPATIBLE";
         const string DigitPrefix = "T"; // Prefix for identifiers that start with a digit
         const string OutputFileHeader = "gl++.h";
 
         #region Verbatim parts of output file
 
         const string GetAddressDefinition = @"
-
     namespace Internals
     {
         #if defined(_WIN32)
@@ -59,7 +58,25 @@ namespace Bind
             typedef int (*PROC)();
             extern void* __stdcall wglGetCurrentContext();
             extern PROC __stdcall wglGetProcAddress(const char *procname);
+            extern void* __stdcall LoadLibraryA(const char *libname);
+            extern PROC __stdcall GetProcAddress(void *module, const char *procname);
         }
+        inline void*& LoadGLAddress()
+        {
+            static void* address = LoadLibraryA(""opengl32.dll"");
+            return address;
+        }
+        inline void*& GetGLAddress()
+        {
+            static void* address = LoadGLAddress();
+            return address;
+        }
+        inline PROC winGetAddress(const char *procname)
+        {
+            PROC addr = GetProcAddress(GetGLAddress(), procname);
+            return addr ? addr : wglGetProcAddress(procname);
+        }
+
         #elif !defined(__APPLE__)
         extern ""C""
         {
@@ -145,7 +162,7 @@ namespace Bind
         inline void* GetAddress(const char* name)
         {
         #if defined(_WIN32)
-            return (void*)wglGetProcAddress(name);
+            return (void*)winGetAddress(name);
         #elif defined(__APPLE__)
             return (void*)NSGLGetProcAddress(name);
         #elif defined(__sgi) || defined(__sun)
