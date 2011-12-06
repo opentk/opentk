@@ -3,6 +3,7 @@
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
+// Copyright 2013 Xamarin Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -69,7 +70,9 @@ namespace OpenTK
                     Configuration.Init();
                     // The actual initialization takes place in the platform-specific factory
                     // constructors.
+#if !IPHONE
                     new Platform.Factory();
+#endif
                 }
             }
         }

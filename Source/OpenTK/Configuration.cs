@@ -3,6 +3,7 @@
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
+// Copyright 2013 Xamarin Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -212,8 +213,12 @@ namespace OpenTK
                     // when we detect Mac OS X.
                     if (!RunningOnMacOS)
                     {
+#if !IPHONE
                         try { runningOnX11 = OpenTK.Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
                         catch { }
+#else
+                runningOnX11 = false;
+#endif
                     }
 
                     // Detect the Mono runtime (code taken from http://mono.wikia.com/wiki/Detecting_if_program_is_running_in_Mono).
