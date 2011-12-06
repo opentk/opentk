@@ -206,6 +206,7 @@ namespace Bind
                         {
                             case "name": c.Name = (string)node.TypedValue; break;
                             case "value": c.Value = (string)node.TypedValue; break;
+                            case "reference": c.Reference = (string)node.TypedValue; break;
                         }
                     }
                 }
