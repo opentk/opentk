@@ -44572,6 +44572,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         Blend = ((int)0x0BE2)        ,
         /// <summary>
+        /// Original was GL_REPLACE = 0x1E01
+        /// </summary>
+        Replace = ((int)0x1E01)        ,
+        /// <summary>
         /// Original was GL_MODULATE = 0x2100
         /// </summary>
         Modulate = ((int)0x2100)        ,
