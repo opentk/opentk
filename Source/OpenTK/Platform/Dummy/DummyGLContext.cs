@@ -33,12 +33,12 @@ namespace OpenTK.Platform.Dummy
         public DummyGLContext()
             : this(new ContextHandle(new IntPtr(++handle_count)))
         {
-            Mode = new GraphicsMode(new IntPtr(2), 32, 16, 0, 0, 0, 2, false);
         }
         
         public DummyGLContext(ContextHandle handle)
         {
             Handle = handle;
+            Mode = new GraphicsMode(new IntPtr(2), 32, 16, 0, 0, 0, 2, false);
         }
 
         #endregion
