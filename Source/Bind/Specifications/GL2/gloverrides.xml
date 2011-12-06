@@ -2617,6 +2617,7 @@
     </enum>
     <enum name="TextureEnvMode">
       <token name="COMBINE" value="0x8570" />
+      <token name="REPLACE" value="0x1E01" />
     </enum>
     <enum name="TextureEnvModeCombine">
       <use enum="StencilOp" token="REPLACE" />
