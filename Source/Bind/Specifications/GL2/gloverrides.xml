@@ -2726,7 +2726,6 @@
       <token name="CLAMP_TO_EDGE" value="0x812F" />
       <token name="DEPTH_TEXTURE_MODE" value="0x884B" />
       <token name="GENERATE_MIPMAP" value="0x8191" />
-      <token name="RED" value="0x1903" />
       <token name="TEXTURE_COMPARE_FAIL_VALUE" value="0x80BF" />
       <token name="TEXTURE_COMPARE_FUNC" value="0x884D" />
       <token name="TEXTURE_COMPARE_MODE" value="0x884C" />

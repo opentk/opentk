@@ -45182,10 +45182,6 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         TextureBorderColor = ((int)0x1004)        ,
         /// <summary>
-        /// Original was GL_RED = 0x1903
-        /// </summary>
-        Red = ((int)0x1903)        ,
-        /// <summary>
         /// Original was GL_TEXTURE_MAG_FILTER = 0x2800
         /// </summary>
         TextureMagFilter = ((int)0x2800)        ,
