@@ -1,5 +1,6 @@
 #region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * Copyright 2013 Xamarin Inc
  * See license.txt for license info
  */
 #endregion
@@ -258,9 +259,15 @@ namespace Bind.Structures
         {
             StringBuilder sb = new StringBuilder();
 
+#if !IPHONE
             sb.Append(Settings.DelegatesClass);
+#else
+            sb.Append(Settings.ImportsClass);
+#endif
             sb.Append(Settings.NamespaceSeparator);
+#if !IPHONE
             sb.Append(Settings.FunctionPrefix);
+#endif
             sb.Append(Name);
             sb.Append(Parameters.CallString());
 
