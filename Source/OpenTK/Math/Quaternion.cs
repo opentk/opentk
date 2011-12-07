@@ -1,6 +1,7 @@
 #region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
+Copyright 2013 Xamarin Inc
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -66,6 +67,23 @@ namespace OpenTK
         public Quaternion(float x, float y, float z, float w)
             : this(new Vector3(x, y, z), w)
         { }
+
+        public Quaternion (ref Matrix3 matrix)
+        {
+            double scale = System.Math.Pow(matrix.Determinant, 1.0d / 3.0d);
+            float x, y, z;
+  
+            w = (float) (System.Math.Sqrt(System.Math.Max(0, scale + matrix[0, 0] + matrix[1, 1] + matrix[2, 2])) / 2);
+            x = (float) (System.Math.Sqrt(System.Math.Max(0, scale + matrix[0, 0] - matrix[1, 1] - matrix[2, 2])) / 2);
+            y = (float) (System.Math.Sqrt(System.Math.Max(0, scale - matrix[0, 0] + matrix[1, 1] - matrix[2, 2])) / 2);
+            z = (float) (System.Math.Sqrt(System.Math.Max(0, scale - matrix[0, 0] - matrix[1, 1] + matrix[2, 2])) / 2);
+
+            xyz = new Vector3 (x, y, z);
+
+            if (matrix[2, 1] - matrix[1, 2] < 0) X = -X;
+            if (matrix[0, 2] - matrix[2, 0] < 0) Y = -Y;
+            if (matrix[1, 0] - matrix[0, 1] < 0) Z = -Z;
+        }
 
         #endregion
 
