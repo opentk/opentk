@@ -1736,7 +1736,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void GetBooleanv(OpenTK.Graphics.OpenGL.GetPName pname, [OutAttribute] bool* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetBufferParameteri64v", ExactSpelling = true)]
-            internal extern static unsafe void GetBufferParameteri64v(OpenTK.Graphics.OpenGL.Version32 target, OpenTK.Graphics.OpenGL.Version32 pname, [OutAttribute] Int64* @params);
+            internal extern static unsafe void GetBufferParameteri64v(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.BufferParameterName pname, [OutAttribute] Int64* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetBufferParameteriv", ExactSpelling = true)]
             internal extern static unsafe void GetBufferParameteriv(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.BufferParameterName pname, [OutAttribute] Int32* @params);
@@ -2324,7 +2324,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void GetQueryivARB(OpenTK.Graphics.OpenGL.ArbOcclusionQuery target, OpenTK.Graphics.OpenGL.ArbOcclusionQuery pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetQueryObjecti64v", ExactSpelling = true)]
-            internal extern static unsafe void GetQueryObjecti64v(UInt32 id, OpenTK.Graphics.OpenGL.ArbTimerQuery pname, [OutAttribute] Int64* @params);
+            internal extern static unsafe void GetQueryObjecti64v(UInt32 id, OpenTK.Graphics.OpenGL.GetQueryObjectParam pname, [OutAttribute] Int64* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetQueryObjecti64vEXT", ExactSpelling = true)]
             internal extern static unsafe void GetQueryObjecti64vEXT(UInt32 id, OpenTK.Graphics.OpenGL.ExtTimerQuery pname, [OutAttribute] Int64* @params);
@@ -2336,7 +2336,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void GetQueryObjectivARB(UInt32 id, OpenTK.Graphics.OpenGL.ArbOcclusionQuery pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetQueryObjectui64v", ExactSpelling = true)]
-            internal extern static unsafe void GetQueryObjectui64v(UInt32 id, OpenTK.Graphics.OpenGL.ArbTimerQuery pname, [OutAttribute] UInt64* @params);
+            internal extern static unsafe void GetQueryObjectui64v(UInt32 id, OpenTK.Graphics.OpenGL.GetQueryObjectParam pname, [OutAttribute] UInt64* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetQueryObjectui64vEXT", ExactSpelling = true)]
             internal extern static unsafe void GetQueryObjectui64vEXT(UInt32 id, OpenTK.Graphics.OpenGL.ExtTimerQuery pname, [OutAttribute] UInt64* @params);
