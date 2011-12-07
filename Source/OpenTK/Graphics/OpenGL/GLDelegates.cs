@@ -1734,7 +1734,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetBooleanv(OpenTK.Graphics.OpenGL.GetPName pname, [OutAttribute] bool* @params);
             internal unsafe static GetBooleanv glGetBooleanv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetBufferParameteri64v(OpenTK.Graphics.OpenGL.Version32 target, OpenTK.Graphics.OpenGL.Version32 pname, [OutAttribute] Int64* @params);
+            internal unsafe delegate void GetBufferParameteri64v(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.BufferParameterName pname, [OutAttribute] Int64* @params);
             internal unsafe static GetBufferParameteri64v glGetBufferParameteri64v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetBufferParameteriv(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.BufferParameterName pname, [OutAttribute] Int32* @params);
@@ -2322,7 +2322,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetQueryivARB(OpenTK.Graphics.OpenGL.ArbOcclusionQuery target, OpenTK.Graphics.OpenGL.ArbOcclusionQuery pname, [OutAttribute] Int32* @params);
             internal unsafe static GetQueryivARB glGetQueryivARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetQueryObjecti64v(UInt32 id, OpenTK.Graphics.OpenGL.ArbTimerQuery pname, [OutAttribute] Int64* @params);
+            internal unsafe delegate void GetQueryObjecti64v(UInt32 id, OpenTK.Graphics.OpenGL.GetQueryObjectParam pname, [OutAttribute] Int64* @params);
             internal unsafe static GetQueryObjecti64v glGetQueryObjecti64v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetQueryObjecti64vEXT(UInt32 id, OpenTK.Graphics.OpenGL.ExtTimerQuery pname, [OutAttribute] Int64* @params);
@@ -2334,7 +2334,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetQueryObjectivARB(UInt32 id, OpenTK.Graphics.OpenGL.ArbOcclusionQuery pname, [OutAttribute] Int32* @params);
             internal unsafe static GetQueryObjectivARB glGetQueryObjectivARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetQueryObjectui64v(UInt32 id, OpenTK.Graphics.OpenGL.ArbTimerQuery pname, [OutAttribute] UInt64* @params);
+            internal unsafe delegate void GetQueryObjectui64v(UInt32 id, OpenTK.Graphics.OpenGL.GetQueryObjectParam pname, [OutAttribute] UInt64* @params);
             internal unsafe static GetQueryObjectui64v glGetQueryObjectui64v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetQueryObjectui64vEXT(UInt32 id, OpenTK.Graphics.OpenGL.ExtTimerQuery pname, [OutAttribute] UInt64* @params);

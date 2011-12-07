@@ -122,33 +122,7 @@ namespace Bind.Structures
                 }
                 else
                 {
-                    TrimmedName = Utilities.StripGL2Extension(value);
-
-                    Match m = endingsNotToTrim.Match(TrimmedName);
-                    if ((m.Index + m.Length) != TrimmedName.Length)
-                    {
-                        // Some endings should not be trimmed, for example: 'b' from Attrib
-
-                        m = endings.Match(TrimmedName);
-
-                        if (m.Length > 0 && m.Index + m.Length == TrimmedName.Length)
-                        {
-                            // Only trim endings, not internal matches.
-                            if (m.Value[m.Length - 1] == 'v' && endingsAddV.IsMatch(Name) &&
-                                !Name.StartsWith("Get") && !Name.StartsWith("MatrixIndex"))
-                            {
-                                // Only trim ending 'v' when there is a number
-                                TrimmedName = TrimmedName.Substring(0, m.Index) + "v";
-                            }
-                            else
-                            {
-                                if (!TrimmedName.EndsWith("xedv"))
-                                    TrimmedName = TrimmedName.Substring(0, m.Index);
-                                else
-                                    TrimmedName = TrimmedName.Substring(0, m.Index + 1);
-                            }
-                        }
-                    }
+                    TrimmedName = FuncProcessor.TrimName(Name, false);
                 }
             }
         }
