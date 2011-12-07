@@ -325,9 +325,16 @@ namespace CHeaderToXML
                     var count = has_array_size ? Int32.Parse(array_size.Match(param_name).Value.Trim('[', ']')) : 0;
                     var flow =
                         param_name.EndsWith("ret") ||
++ #if !IPHONE
                         ((funcname.StartsWith("Get") || funcname.StartsWith("Gen")) &&
                             indirection_level > 0 &&
                             !(funcname.EndsWith("Info") || funcname.EndsWith("IDs") || funcname.EndsWith("ImageFormats"))) ? // OpenCL contains Get*[Info|IDs|ImageFormats] methods with 'in' pointer parameters
+#else
+                                    // the above block was introduced in r2377, it breaks source compatibility for monotouch
+                                    // and in any case it looks wrong in some cases (such as GetRenderbufferParameterivOES)
+                                    // a better look at each method signature that changes is required
+                                     false ?
+#endif
                         "out" : "in";
 
                     yield return new Parameter { Name = name, Type = type, Count = count, Flow = flow };
