@@ -1943,7 +1943,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static Int32 GetInstrumentsSGIX();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetInteger64i_v", ExactSpelling = true)]
-            internal extern static unsafe void GetInteger64i_v(OpenTK.Graphics.OpenGL.Version32 target, UInt32 index, [OutAttribute] Int64* data);
+            internal extern static unsafe void GetInteger64i_v(OpenTK.Graphics.OpenGL.GetIndexedPName target, UInt32 index, [OutAttribute] Int64* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetInteger64v", ExactSpelling = true)]
             internal extern static unsafe void GetInteger64v(OpenTK.Graphics.OpenGL.ArbSync pname, [OutAttribute] Int64* @params);
