@@ -21602,7 +21602,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetQueryObjecti64, GL.GetQueryObjectui64
+    /// Not used directly.
     /// </summary>
     public enum ArbTimerQuery : int
     {
@@ -29280,7 +29280,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ext.GetQueryObjecti64, GL.Ext.GetQueryObjectui64
+    /// Used in GL.Ext.GetQueryObject
     /// </summary>
     public enum ExtTimerQuery : int
     {
@@ -36611,7 +36611,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.NV.GetVideoi64, GL.NV.GetVideo, GL.NV.GetVideoui64, GL.NV.PresentFrameDualFill, GL.NV.PresentFrameKeye
+    /// Used in GL.NV.GetVideo, GL.NV.PresentFrameDualFill, GL.NV.PresentFrameKeye
     /// </summary>
     public enum NvPresentVideo : int
     {
@@ -36911,7 +36911,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.NV.GetBufferParameterui64, GL.NV.GetIntegerui64, GL.NV.GetNamedBufferParameterui64, GL.NV.IsBufferResident, GL.NV.MakeBufferNonResident, GL.NV.MakeBufferResident, GL.NV.MakeNamedBufferResident
+    /// Used in GL.NV.GetBufferParameter, GL.NV.GetInteger, GL.NV.GetNamedBufferParameter, GL.NV.IsBufferResident, GL.NV.MakeBufferNonResident, GL.NV.MakeBufferResident, GL.NV.MakeNamedBufferResident
     /// </summary>
     public enum NvShaderBufferLoad : int
     {
@@ -37828,7 +37828,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.NV.GetVertexAttribLi64, GL.NV.GetVertexAttribLui64, GL.NV.VertexAttribLFormat
+    /// Used in GL.NV.GetVertexAttrib, GL.NV.VertexAttribLFormat
     /// </summary>
     public enum NvVertexAttribInteger64bit : int
     {
@@ -51169,7 +51169,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetBufferParameteri64, GL.GetInteger64
+    /// Used in GL.GetInteger64
     /// </summary>
     public enum Version32 : int
     {
