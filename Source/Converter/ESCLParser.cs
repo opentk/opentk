@@ -1,5 +1,6 @@
 //
 // Copyright (C) 2009 the Open Toolkit (http://www.opentk.com)
+// Copyright 2013 Xamarin Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -360,6 +361,27 @@ namespace CHeaderToXML
                     case "CL_API_ENTRY": // CL 1.0
                         inRettype = true;
                         break;
+#if IPHONE
+                    // apple extensions ?!?
+                    // there are things like this in glext.h:
+                    // GL_API GLvoid glPopGroupMarkerEXT(void)  __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_5_0);
+                    case "GLvoid": // ES 1.0
+                        words [i] = words [i].Substring (2);
+                        goto case "GLboolean";
+                    case "GLboolean": // ES 1.0
+                    case "GLuint": // ES 2.0
+                        if (words [i + 1].StartsWith ("gl") && char.IsUpper (words [i + 1][2])) {
+                            rettype += words [i];
+                            inRettype = false;
+                            funcname = words [i+1].Substring (Prefix.Length);
+                            quit = true;
+                            break;
+                        } else {
+                            if (inRettype)
+                                rettype += words [i];
+                            break;
+                        }
+#endif
                     case "APIENTRY":  // ES 1.0
                     case "GL_APIENTRY":  // ES 1.1 & 2.0
                     case "CL_API_CALL": // CL 1.0
