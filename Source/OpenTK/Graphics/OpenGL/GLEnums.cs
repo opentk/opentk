@@ -23046,7 +23046,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ati.AlphaFragmentOp1, GL.Ati.AlphaFragmentOp2, GL.Ati.AlphaFragmentOp3, GL.Ati.ColorFragmentOp1, GL.Ati.ColorFragmentOp2, GL.Ati.ColorFragmentOp3, GL.Ati.PassTexCoor, GL.Ati.SampleMap
+    /// Used in GL.Ati.AlphaFragmentOp1, GL.Ati.AlphaFragmentOp2, GL.Ati.AlphaFragmentOp3, GL.Ati.ColorFragmentOp1, GL.Ati.ColorFragmentOp2, GL.Ati.ColorFragmentOp3, GL.Ati.PassTexCoord, GL.Ati.SampleMap
     /// </summary>
     public enum AtiFragmentShader : int
     {
@@ -37767,7 +37767,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.NV.VDPAUGetSurface, GL.NV.VDPAURegisterOutputSurface, GL.NV.VDPAURegisterVideoSurface, GL.NV.VDPAUSurfaceAcces
+    /// Used in GL.NV.VDPAUGetSurface, GL.NV.VDPAURegisterOutputSurface, GL.NV.VDPAURegisterVideoSurface, GL.NV.VDPAUSurfaceAccess
     /// </summary>
     public enum NvVdpauInterop : int
     {
@@ -37843,7 +37843,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.NV.BufferAddressRange, GL.NV.ColorFormat, GL.NV.FogCoordFormat, GL.NV.GetIntegerui64, GL.NV.IndexFormat, GL.NV.NormalFormat, GL.NV.SecondaryColorFormat, GL.NV.TexCoordFormat, GL.NV.VertexAttribFormat, GL.NV.VertexAttribIFormat, GL.NV.VertexFormat
+    /// Used in GL.NV.BufferAddressRange, GL.NV.ColorFormat, GL.NV.FogCoordFormat, GL.NV.GetInteger, GL.NV.IndexFormat, GL.NV.NormalFormat, GL.NV.SecondaryColorFormat, GL.NV.TexCoordFormat, GL.NV.VertexAttribFormat, GL.NV.VertexAttribIFormat, GL.NV.VertexFormat
     /// </summary>
     public enum NvVertexBufferUnifiedMemory : int
     {
@@ -51169,7 +51169,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetInteger64
+    /// Not used directly.
     /// </summary>
     public enum Version32 : int
     {
