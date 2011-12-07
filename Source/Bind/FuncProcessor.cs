@@ -41,9 +41,9 @@ namespace Bind
     {
         const string Path = "/signatures/replace/function[@name='{0}' and @extension='{1}']";
         static readonly Regex Endings =
-            new Regex(@"((((d|f|fi)|(L?u?[isb]))_?(64)?v?)|(64)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+            new Regex(@"((((d|f|fi)|(L?(u?i?64)?u?[isb]))_?(64)?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
         static readonly Regex EndingsNotToTrim =
-            new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flag|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+            new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Attrib|Access|Coord|Flag|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs|Uniforms)", RegexOptions.Compiled | RegexOptions.RightToLeft);
         static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
 
         string Overrides { get; set; }
