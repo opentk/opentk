@@ -29,6 +29,31 @@ namespace OpenTK.Platform.iPhoneOS {
             EAGLContext = (EAGLContext) Runtime.GetNSObject(h.Handle);
         }
 
+        internal iPhoneOSGraphicsContext(ContextHandle handle, IWindowInfo window, IGraphicsContext sharedContext, int major, int minor, GraphicsContextFlags flags)
+        {
+            // ignore mode, window
+
+            iPhoneOSGraphicsContext shared = sharedContext as iPhoneOSGraphicsContext;
+
+            EAGLRenderingAPI version = 0;
+            if (major == 1 && minor == 1)
+                version = EAGLRenderingAPI.OpenGLES1;
+            else if (major == 2 && minor == 0)
+                version = EAGLRenderingAPI.OpenGLES2;
+            else
+                throw new ArgumentException (string.Format("Unsupported GLES version {0}.{1}.", major, minor));
+
+            if (handle.Handle == IntPtr.Zero) {
+                EAGLContext = shared != null && shared.EAGLContext != null
+                    ? new EAGLContext(version, shared.EAGLContext.ShareGroup)
+                    : new EAGLContext(version);
+                contextHandle = new ContextHandle(EAGLContext.Handle);
+            } else {
+                EAGLContext = (EAGLContext) Runtime.GetNSObject (handle.Handle);
+                contextHandle = handle;
+            }
+        }
+
         internal iPhoneOSGraphicsContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext sharedContext, int major, int minor, GraphicsContextFlags flags)
         {
             // ignore mode, window
@@ -91,6 +116,10 @@ namespace OpenTK.Platform.iPhoneOS {
         }
 
         void IGraphicsContextInternal.LoadAll()
+        {
+        }
+
+        void IGraphicsContext.LoadAll ()
         {
         }
 

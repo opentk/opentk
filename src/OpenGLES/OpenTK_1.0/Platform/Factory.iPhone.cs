@@ -52,6 +52,11 @@ namespace OpenTK.Platform
             return new iPhoneOS.iPhoneOSGraphicsContext(mode, window, shareContext, major, minor, flags);
         }
 
+        public IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        {
+            return new iPhoneOS.iPhoneOSGraphicsContext(handle, window, shareContext, major, minor, flags);
+        }
+
         public IGraphicsMode CreateGraphicsMode()
         {
             return new iPhoneOS.iPhoneOSGraphicsMode();
