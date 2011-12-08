@@ -1,6 +1,7 @@
 #region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
+Copyright 2013 Xamarin Inc
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -153,6 +154,20 @@ namespace OpenTK
         /// <param name="v">The Vector3d to copy components from.</param>
         /// <param name="w">The w component of the new Vector4.</param>
         public Vector4d(Vector3d v, double w)
+        {
+            X = v.X;
+            Y = v.Y;
+            Z = v.Z;
+            W = w;
+        }
+
+        /// <summary>
+        /// Constructs a new Vector4d from the specified Vector3 and w component.
+        /// </summary>
+        /// <param name="v">The Vector3 to copy components from.</param>
+        /// <param name="w">The w component of the new Vector4.</param>
+        [Obsolete ("Use the Vector4d (Vector3d, double) constructor instead")]
+        public Vector4d(Vector3 v, double w)
         {
             X = v.X;
             Y = v.Y;

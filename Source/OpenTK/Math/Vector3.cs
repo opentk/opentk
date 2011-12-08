@@ -1,6 +1,7 @@
 #region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
+Copyright 2013 Xamarin Inc
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -1092,6 +1093,16 @@ namespace OpenTK
             Vector3 result;
             Transform(ref vec, ref mat, out result);
             return result;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix</summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed vector</param>
+        public static void Transform(ref Vector3 vec, ref Matrix4 mat, out Vector4 result)
+        {
+            Vector4 v4 = new Vector4(vec.X, vec.Y, vec.Z, 1.0f);
+            Vector4.Transform(ref v4, ref mat, out result);
         }
 
         /// <summary>Transform a Vector by the given Matrix</summary>

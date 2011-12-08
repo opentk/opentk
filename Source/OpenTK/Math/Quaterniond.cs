@@ -1,6 +1,7 @@
 #region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
+Copyright 2013 Xamarin Inc
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -351,6 +352,17 @@ namespace OpenTK
         /// <param name="scale">The scalar.</param>
         /// <param name="result">A new instance containing the result of the calculation.</param>
         public static void Multiply(ref Quaterniond quaternion, double scale, out Quaterniond result)
+        {
+            result = new Quaterniond(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);
+        }
+
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="quaternion">The instance.</param>
+        /// <param name="scale">The scalar.</param>
+        /// <param name="result">A new instance containing the result of the calculation.</param>
+        public static void Multiply(ref Quaterniond quaternion, ref double scale, out Quaterniond result)
         {
             result = new Quaterniond(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);
         }
