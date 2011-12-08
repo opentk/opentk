@@ -755,7 +755,7 @@ namespace OpenTK.Platform.MacOS
                 
                 bitmap = new Bitmap(128, 128);
 #if MINIMAL
-                using (global::Graphics g = global::Graphics.FromImage(bitmap))
+                using (OpenTK.Minimal.Graphics g = OpenTK.Minimal.Graphics.FromImage(bitmap))
 #else
                 using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
 #endif
