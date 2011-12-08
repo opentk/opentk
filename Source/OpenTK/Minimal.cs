@@ -2175,23 +2175,28 @@ namespace OpenTK
     #endregion
 }
 
-#region Graphics
-
-sealed class Graphics : IDisposable
+// Need a different namespace to avoid clash with OpenTK.Graphics.
+namespace OpenTK.Minimal
 {
-    public static Graphics FromImage(OpenTK.Image img)
+    #region Graphics
+
+    sealed class Graphics : IDisposable
     {
-        return new Graphics();
+        public static Graphics FromImage(OpenTK.Image img)
+        {
+            return new Graphics();
+        }
+
+        public void Dispose()
+        { }
+
+        internal void DrawImage(OpenTK.Bitmap bitmap, int p, int p_2, int p_3, int p_4)
+        {
+        }
     }
 
-    public void Dispose()
-    { }
-
-    internal void DrawImage(OpenTK.Bitmap bitmap, int p, int p_2, int p_3, int p_4)
-    {
-    }
+    #endregion
 }
 
-#endregion
 
 #endif
