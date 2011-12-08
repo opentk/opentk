@@ -209,7 +209,7 @@ namespace OpenTK.Platform.MacOS
             
             ConnectEvents();
             
-            System.Diagnostics.Debug.Print("Attached window events.");
+            System.Diagnostics.Debug.WriteLine("Attached window events.");
         }
 
         void ConnectEvents()
