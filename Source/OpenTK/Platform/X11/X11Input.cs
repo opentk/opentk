@@ -6,12 +6,14 @@
 
 using System;
 using System.Collections.Generic;
+#if !MINIMAL
+using System.Drawing;
+#endif
 using System.Text;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 using OpenTK.Input;
-using System.Drawing;
 
 namespace OpenTK.Platform.X11
 {

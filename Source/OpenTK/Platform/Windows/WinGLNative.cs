@@ -33,7 +33,9 @@ using OpenTK.Graphics;
 using OpenTK.Input;
 using System.Collections.Generic;
 using System.IO;
+#if !MINIMAL
 using System.Drawing;
+#endif
 
 namespace OpenTK.Platform.Windows
 {

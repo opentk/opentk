@@ -29,12 +29,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+#if !MINIMAL
+using System.Drawing;
+#endif
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Graphics;
 using OpenTK.Input;
-using System.Drawing;
 
 namespace OpenTK.Platform.X11
 {
@@ -1083,7 +1085,7 @@ namespace OpenTK.Platform.X11
                 else
                 {
                     // Set _NET_WM_ICON
-                    System.Drawing.Bitmap bitmap = value.ToBitmap();
+                    Bitmap bitmap = value.ToBitmap();
                     int size = bitmap.Width * bitmap.Height + 2;
                     IntPtr[] data = new IntPtr[size];
                     int index = 0;

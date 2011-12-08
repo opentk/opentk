@@ -8,11 +8,13 @@
 
 using System;
 using System.Collections.Generic;
+#if !MINIMAL
+using System.Drawing;
+#endif
 using System.Text;
 
 using OpenTK.Input;
 using OpenTK.Graphics;
-using System.Drawing;
 
 namespace OpenTK.Platform
 {

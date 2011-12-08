@@ -31,7 +31,10 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+#if !MINIMAL
 using System.Drawing;
+#endif
+
 using EventTime = System.Double;
 
 
