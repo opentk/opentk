@@ -28,6 +28,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+#if !MINIMAL
+using Microsoft.Win32;
+#endif
 
 namespace OpenTK.Platform.Windows
 {
@@ -40,7 +43,7 @@ namespace OpenTK.Platform.Windows
         public WinDisplayDeviceDriver()
         {
             RefreshDisplayDevices();
-            Microsoft.Win32.SystemEvents.DisplaySettingsChanged +=
+            SystemEvents.DisplaySettingsChanged +=
                 HandleDisplaySettingsChanged;
         }
 
@@ -173,7 +176,7 @@ namespace OpenTK.Platform.Windows
 
         ~WinDisplayDeviceDriver()
         {
-            Microsoft.Win32.SystemEvents.DisplaySettingsChanged -=
+            SystemEvents.DisplaySettingsChanged -=
                 HandleDisplaySettingsChanged;
         }
 
