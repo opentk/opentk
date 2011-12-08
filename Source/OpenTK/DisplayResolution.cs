@@ -10,7 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+#if !MINIMAL
 using System.Drawing;
+#endif
 
 namespace OpenTK
 {

@@ -27,6 +27,9 @@
 
 using System;
 using System.Collections.Generic;
+#if !MINIMAL
+using System.Drawing;
+#endif
 using System.Text;
 using System.Xml.Serialization;
 
@@ -99,7 +102,7 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <param name="color">The System.Drawing.Color containing the component values.</param>
         [Obsolete("Use new Color4(r, g, b, a) instead.")]
-        public Color4(System.Drawing.Color color)
+        public Color4(Color color)
             : this(color.R, color.G, color.B, color.A)
         { }
 
@@ -150,7 +153,7 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <param name="color">The System.Drawing.Color to convert.</param>
         /// <returns>A new Color4 structure containing the converted components.</returns>
-        public static implicit operator Color4(System.Drawing.Color color)
+        public static implicit operator Color4(Color color)
         {
             return new Color4(color.R, color.G, color.B, color.A);
         }
@@ -160,9 +163,9 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <param name="color">The Color4 to convert.</param>
         /// <returns>A new System.Drawing.Color structure containing the converted components.</returns>
-        public static explicit operator System.Drawing.Color(Color4 color)
+        public static explicit operator Color(Color4 color)
         {
-            return System.Drawing.Color.FromArgb(
+            return Color.FromArgb(
                 (int)(color.A * Byte.MaxValue),
                 (int)(color.R * Byte.MaxValue),
                 (int)(color.G * Byte.MaxValue),

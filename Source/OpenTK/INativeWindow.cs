@@ -27,10 +27,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
-using OpenTK.Platform;
 using System.ComponentModel;
+#if !MINIMAL
+using System.Drawing;
+#endif
+using System.Text;
+using OpenTK.Platform;
 
 namespace OpenTK
 {

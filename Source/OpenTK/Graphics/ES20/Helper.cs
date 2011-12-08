@@ -27,6 +27,9 @@
 
 using System;
 using System.Collections.Generic;
+#if !MINIMAL
+using System.Drawing;
+#endif
 using System.Text;
 
 namespace OpenTK.Graphics.ES20
@@ -63,7 +66,7 @@ namespace OpenTK.Graphics.ES20
 
         #region public static void ClearColor() overloads
 
-        public static void ClearColor(System.Drawing.Color color)
+        public static void ClearColor(Color color)
         {
             GL.ClearColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
@@ -77,7 +80,7 @@ namespace OpenTK.Graphics.ES20
 
         #region public static void BlendColor() overloads
 
-        public static void BlendColor(System.Drawing.Color color)
+        public static void BlendColor(Color color)
         {
             GL.BlendColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
@@ -399,17 +402,17 @@ namespace OpenTK.Graphics.ES20
 
         #region Viewport
 
-        public static void Viewport(System.Drawing.Size size)
+        public static void Viewport(Size size)
         {
             GL.Viewport(0, 0, size.Width, size.Height);
         }
 
-        public static void Viewport(System.Drawing.Point location, System.Drawing.Size size)
+        public static void Viewport(Point location, Size size)
         {
             GL.Viewport(location.X, location.Y, size.Width, size.Height);
         }
 
-        public static void Viewport(System.Drawing.Rectangle rectangle)
+        public static void Viewport(Rectangle rectangle)
         {
             GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }

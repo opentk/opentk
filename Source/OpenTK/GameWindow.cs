@@ -29,7 +29,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+#if !MINIMAL
 using System.Drawing;
+#endif
 using System.Threading;
 using OpenTK.Graphics;
 using OpenTK.Input;
