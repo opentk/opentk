@@ -2173,6 +2173,15 @@ namespace OpenTK
     }
 
     #endregion
+
+    #region SystemEvents
+
+    sealed class SystemEvents
+    {
+        public static event EventHandler DisplaySettingsChanged;
+    }
+
+    #endregion
 }
 
 // Need a different namespace to avoid clash with OpenTK.Graphics.
