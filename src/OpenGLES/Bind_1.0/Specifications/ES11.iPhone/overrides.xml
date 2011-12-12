@@ -7,5 +7,13 @@
       <returns>String</returns>
     </function>
   </replace>
+  <add>
+    <enum name="All">
+       <token name="ImgTextureFormatBgra8888" value="0X0001" />
+    </enum>
+    <enum name="Unknown">
+       <token name="ImgTextureFormatBgra8888" value="0X0001" />
+    </enum>
+  </add>
   
 </overrides>
