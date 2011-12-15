@@ -18,16 +18,20 @@ namespace Examples.Tests
     {
         public static void Main()
         {
-            foreach (DisplayDevice dev in DisplayDevice.AvailableDisplays)
+            for (int i = 0; i < 6; i++)
             {
-                Trace.WriteLine(dev.ToString());
-                MessageBox.Show(dev.ToString());
-                dev.ChangeResolution(dev.SelectResolution(640, 480, 32, 60.0f));
-                Thread.Sleep(1000);
-                MessageBox.Show(dev.ToString());
-                dev.RestoreResolution();
-                Thread.Sleep(1000);
-                MessageBox.Show(dev.ToString());
+                DisplayDevice dev = DisplayDevice.GetDisplay(DisplayIndex.First + i);
+                if (dev != null)
+                {
+                    Trace.WriteLine(dev.ToString());
+                    MessageBox.Show(dev.ToString());
+                    dev.ChangeResolution(dev.SelectResolution(640, 480, 32, 60.0f));
+                    Thread.Sleep(1000);
+                    MessageBox.Show(dev.ToString());
+                    dev.RestoreResolution();
+                    Thread.Sleep(1000);
+                    MessageBox.Show(dev.ToString());
+                }
             }
         }
     }
