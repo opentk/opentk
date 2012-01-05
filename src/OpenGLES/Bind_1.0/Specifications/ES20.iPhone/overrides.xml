@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2013 Xamarin Inc -->
+<overrides>
+  <replace>
+    <function name="GetString" extension="Core">
+      <returns>String</returns>
+    </function>
+    <function name="ShaderSource" extension="Core">
+      <param name="string"><type>String*</type></param>
+    </function>
+    <function name="GetShaderSource" extension="Core">
+      <param name="source"><flow>out</flow></param>
+    </function>
+    <function name="GetProgramInfoLog" extension="Core">
+      <param name="infolog"><flow>out</flow></param>
+    </function>
+    <function name="GetShaderInfoLog" extension="Core">
+      <param name="infolog"><flow>out</flow></param>
+    </function>
+  </replace>
+</overrides>
