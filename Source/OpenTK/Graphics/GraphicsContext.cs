@@ -129,12 +129,17 @@ namespace OpenTK.Graphics
                         implementation = new Platform.Dummy.DummyGLContext();
 #else
                         implementation = Factory.Embedded.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags);
+                        GetCurrentContext = Factory.Embedded.CreateGetCurrentGraphicsContext();
 #endif
                     }
                     else
                     {
 #if !IPHONE
                         IPlatformFactory factory = null;
+#else
+                        Factory factory = null;
+                        GetCurrentContext = null;
+#endif
                         switch ((flags & GraphicsContextFlags.Embedded) == GraphicsContextFlags.Embedded)
                         {
                             case false: factory = Factory.Default; break;
@@ -156,14 +161,6 @@ namespace OpenTK.Graphics
                                 GetCurrentContext = temp;
                             }
                         }
-#else
-                        switch ((flags & GraphicsContextFlags.Embedded) == GraphicsContextFlags.Embedded)
-                        {
-                            case false: implementation = Factory.Default.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags); break;
-                            case true: implementation = Factory.Embedded.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags); break;
-                        }
-
-#endif
                     }
 
                     available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
