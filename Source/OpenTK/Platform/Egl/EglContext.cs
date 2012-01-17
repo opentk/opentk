@@ -3,6 +3,7 @@
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
+// Copyright 2013 Xamarin Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +30,9 @@ using System;
 
 using OpenTK.Graphics;
 using System.Diagnostics;
+#if !MOBILE
 using OpenTK.Platform.Windows;
+#endif
 
 namespace OpenTK.Platform.Egl
 {

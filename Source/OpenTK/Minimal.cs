@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright 2013 Xamarin Inc
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +10,7 @@ namespace OpenTK
     // minimal targets (e.g. MonoTouch).
     // Note: the "overriden" classes must not be fully qualified for this to work!
 
-#if IPHONE
+#if IPHONE || MOBILE
     // System.Diagnostics.Debug
     static class Debug
     {
