@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2013 Xamarin Inc -->
+<overrides>
+  <replace>
+    <function name="GetString" extension="Core">
+      <returns>String</returns>
+    </function>
+    <function name="ShaderSource" extension="Core">
+      <param name="string"><type>String*</type></param>
+    </function>
+    <function name="GetShaderSource" extension="Core">
+      <param name="source"><flow>out</flow></param>
+    </function>
+    <function name="GetProgramInfoLog" extension="Core">
+      <param name="infolog"><flow>out</flow></param>
+    </function>
+    <function name="GetShaderInfoLog" extension="Core">
+      <param name="infolog"><flow>out</flow></param>
+    </function>
+    <function name="Clear" extension="Core">
+      <param name="mask"><type>ClearBufferMask</type></param>
+    </function>
+  </replace>
+
+  <add>
+    <enum name="ActiveAttribType">
+      <token name="Float" value="0X1406" />
+      <token name="FloatVec2" value="0X8b50" />
+      <token name="FloatVec3" value="0X8b51" />
+      <token name="FloatVec4" value="0X8b52" />
+      <token name="FloatMat2" value="0X8b5a" />
+      <token name="FloatMat3" value="0X8b5b" />
+      <token name="FloatMat4" value="0X8b5c" />
+    </enum>
+
+    <enum name="ActiveUniformType">
+      <token name="Float" value="0X1406" />
+      <token name="FloatVec2" value="0X8b50" />
+      <token name="FloatVec3" value="0X8b51" />
+      <token name="FloatVec4" value="0X8b52" />
+      <token name="Int" value="0X1404" />
+      <token name="IntVec2" value="0X8b53" />
+      <token name="IntVec3" value="0X8b54" />
+      <token name="IntVec4" value="0X8b55" />
+      <token name="Bool" value="0X8b56" />
+      <token name="BoolVec2" value="0X8b57" />
+      <token name="BoolVec3" value="0X8b58" />
+      <token name="BoolVec4" value="0X8b59" />
+      <token name="FloatMat2" value="0X8b5a" />
+      <token name="FloatMat3" value="0X8b5b" />
+      <token name="FloatMat4" value="0X8b5c" />
+      <token name="Sampler2D" value="0X8b5e" />
+      <token name="SamplerCube" value="0X8b60" />
+    </enum>
+
+    <enum name="VertexAttribPointerType">
+      <token name="Byte" value="0X1400" />
+      <token name="UnsignedByte" value="0X1401" />
+      <token name="Short" value="0X1402" />
+      <token name="UnsignedShort" value="0X1403" />
+      <token name="Fixed" value="0X140c" />
+      <token name="Float" value="0X1406" />
+    </enum>
+
+    <enum name="VertexAttribPointerType">
+      <token name="Byte" value="0X1400" />
+      <token name="UnsignedByte" value="0X1401" />
+      <token name="Short" value="0X1402" />
+      <token name="UnsignedShort" value="0X1403" />
+      <token name="Fixed" value="0X140c" />
+      <token name="Float" value="0X1406" />
+    </enum>
+
+    <enum name="DrawElementsType">
+      <token name="UnsignedByte" value="0X1401" />
+      <token name="UnsignedShort" value="0X1403" />
+    </enum>
+
+    <enum name="ProgramParameter">
+      <token name="DeleteStatus" value="0X8b80" />
+      <token name="LinkStatus" value="0X8b82" />
+      <token name="ValidateStatus" value="0X8b83" />
+      <token name="InfoLogLength" value="0X8b84" />
+      <token name="AttachedShaders" value="0X8b85" />
+      <token name="ActiveAttributes" value="0X8b89" />
+      <token name="ActiveAttributeMaxLength" value="0X8b8a" />
+      <token name="ActiveUniforms" value="0X8b86" />
+      <token name="ActiveUniformMaxLength" value="0X8b87" />
+    </enum>
+
+    <enum name="ShaderParameter">
+      <token name="ShaderType" value="0X8b4f" remark="This output may be cast to the ShaderType enum." />
+      <token name="DeleteStatus" value="0X8b80" />
+      <token name="CompileStatus" value="0X8b81" />
+      <token name="InfoLogLength" value="0X8b84" />
+      <token name="ShaderSourceLength" value="0X8b88" />
+    </enum>
+  </add>
+</overrides>

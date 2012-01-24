@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2013 Xamarin Inc -->
+<overrides>
+
+  <replace>
+    <function name="GetString" extension="Core">
+      <returns>String</returns>
+    </function>
+
+    <function name="Clear" extension="Core">
+      <param name="mask"><type>ClearBufferMask</type></param>
+    </function>
+
+  </replace>
+
+</overrides>

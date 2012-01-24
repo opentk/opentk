@@ -3,6 +3,7 @@
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
+// Copyright 2013 Xamarin Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -45,16 +46,23 @@ namespace OpenTK.Platform
 
         static Factory()
         {
+#if MOBILE
+            if (Configuration.RunningOnAndroid) Default = new Android.AndroidFactory ();
+#else
             if (Configuration.RunningOnWindows) Default = new Windows.WinFactory();
             else if (Configuration.RunningOnMacOS) Default = new MacOS.MacOSFactory();
             else if (Configuration.RunningOnX11) Default = new X11.X11Factory();
+#endif
             else Default = new UnsupportedPlatform();
-
             if (Egl.Egl.IsSupported)
             {
+#if MOBILE
+                if (Configuration.RunningOnAndroid) Embedded = new Egl.EglAndroidPlatformFactory ();
+#else
                 if (Configuration.RunningOnWindows) Embedded = new Egl.EglWinPlatformFactory();
                 else if (Configuration.RunningOnMacOS) Embedded = new Egl.EglMacPlatformFactory();
                 else if (Configuration.RunningOnX11) Embedded = new Egl.EglX11PlatformFactory();
+#endif
                 else Embedded = new UnsupportedPlatform();
             }
             else Embedded = new UnsupportedPlatform();

@@ -39,7 +39,7 @@ namespace OpenTK
     /// <summary>Provides information about the underlying OS and runtime.</summary>
     public static class Configuration
     {
-        static bool runningOnWindows, runningOnUnix, runningOnX11, runningOnMacOS, runningOnLinux, runningOnMono;
+        static bool runningOnWindows, runningOnUnix, runningOnX11, runningOnMacOS, runningOnLinux, runningOnAndroid, runningOnMono;
         volatile static bool initialized;
         readonly static object InitLock = new object();
 
@@ -56,6 +56,13 @@ namespace OpenTK
         #region Public Methods
 
         #region public static bool RunningOnWindows
+
+        /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a Windows platform.</summary>
+        public static bool RunningOnAndroid { get { return runningOnAndroid; } }
+
+        #endregion
+
+		#region public static bool RunningOnWindows
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a Windows platform.</summary>
         public static bool RunningOnWindows { get { return runningOnWindows; } }
@@ -193,7 +200,10 @@ namespace OpenTK
 
                             case "Linux":
                                 runningOnLinux = runningOnUnix = true;
-                                break;
+#if MONODROID
+                                runningOnAndroid = true;
+#endif
+                           break;
 
                             case "Darwin":
                                 runningOnMacOS = runningOnUnix = true;
