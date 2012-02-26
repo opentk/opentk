@@ -204,7 +204,7 @@ namespace OpenTK
         /// </summary>
         event EventHandler<EventArgs> Disposed;
 
-#if !IPHONE
+#if !IPHONE && !MOBILE
         /// <summary>
         /// Occurs when the <see cref="Icon"/> property of the window changes. 
         /// </summary>

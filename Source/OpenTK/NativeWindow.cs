@@ -587,11 +587,12 @@ namespace OpenTK
         /// </summary>
         public event EventHandler<EventArgs> FocusedChanged = delegate { };
 
+#if !MOBILE
         /// <summary>
         /// Occurs when the <see cref="Icon"/> property of the window changes. 
         /// </summary>
         public event EventHandler<EventArgs> IconChanged = delegate { };
-
+#endif
         /// <summary>
         /// Occurs whenever a keybord key is pressed.
         /// </summary>
@@ -779,6 +780,7 @@ namespace OpenTK
 
         #endregion
 
+#if !MOBILE
         #region OnIconChanged
 
         /// <summary>
@@ -803,7 +805,7 @@ namespace OpenTK
         }
 
         #endregion
-
+#endif
         #region OnKeyPress
 
         /// <summary>
@@ -985,12 +987,13 @@ namespace OpenTK
 
         #endregion
 
+#if !MOBILE
         #region OnIconChangedInternal
 
         private void OnIconChangedInternal(object sender, EventArgs e) { OnIconChanged(e); }
 
         #endregion
-
+#endif
         #region OnKeyPressInternal
 
         private void OnKeyPressInternal(object sender, KeyPressEventArgs e) { OnKeyPress(e); }
@@ -1065,7 +1068,9 @@ namespace OpenTK
                     implementation.Closing += OnClosingInternal;
                     implementation.Disposed += OnDisposedInternal;
                     implementation.FocusedChanged += OnFocusedChangedInternal;
+#if !MOBILE
                     implementation.IconChanged += OnIconChangedInternal;
+#endif
                     implementation.KeyPress += OnKeyPressInternal;
                     implementation.MouseEnter += OnMouseEnterInternal;
                     implementation.MouseLeave += OnMouseLeaveInternal;
@@ -1083,7 +1088,9 @@ namespace OpenTK
                     implementation.Closing -= OnClosingInternal;
                     implementation.Disposed -= OnDisposedInternal;
                     implementation.FocusedChanged -= OnFocusedChangedInternal;
+#if !MOBILE
                     implementation.IconChanged -= OnIconChangedInternal;
+#endif
                     implementation.KeyPress -= OnKeyPressInternal;
                     implementation.MouseEnter -= OnMouseEnterInternal;
                     implementation.MouseLeave -= OnMouseLeaveInternal;
