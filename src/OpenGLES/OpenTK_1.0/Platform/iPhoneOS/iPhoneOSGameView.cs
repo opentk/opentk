@@ -36,9 +36,9 @@ namespace OpenTK.Platform.iPhoneOS
         public delegate void glDeleteFramebuffers(int n, ref int framebuffers);
         public delegate void glDeleteRenderbuffers(int n, ref int renderbuffers);
         public delegate void glFramebufferRenderbuffer(All target, All attachment, All renderbuffertarget, int renderbuffer);
-        public delegate void glGenFramebuffers(int n, ref int framebuffers);
-        public delegate void glGenRenderbuffers(int n, ref int renderbuffers);
-        public delegate void glGetInteger(All name, ref int value);
+        public delegate void glGenFramebuffers(int n, out int framebuffers);
+        public delegate void glGenRenderbuffers(int n, out int renderbuffers);
+        public delegate void glGetInteger(All name, out int value);
         public delegate void glScissor(int x, int y, int width, int height);
         public delegate void glViewport(int x, int y, int width, int height);
 
@@ -70,9 +70,9 @@ namespace OpenTK.Platform.iPhoneOS
                 DeleteFramebuffers      = (int n, ref int f)  => ES11.GL.Oes.DeleteFramebuffers(n, ref f),
                 DeleteRenderbuffers     = (int n, ref int r)  => ES11.GL.Oes.DeleteRenderbuffers(n, ref r),
                 FramebufferRenderbuffer = (t, a, rt, rb)      => ES11.GL.Oes.FramebufferRenderbuffer(t, a, rt, rb),
-                GenFramebuffers         = (int n, ref int f)  => ES11.GL.Oes.GenFramebuffers(n, ref f),
-                GenRenderbuffers        = (int n, ref int r)  => ES11.GL.Oes.GenRenderbuffers(n, ref r),
-                GetInteger              = (All n, ref int v)  => ES11.GL.GetInteger(n, ref v),
+                GenFramebuffers         = (int n, out int f)  => ES11.GL.Oes.GenFramebuffers(n, out f),
+                GenRenderbuffers        = (int n, out int r)  => ES11.GL.Oes.GenRenderbuffers(n, out r),
+                GetInteger              = (All n, out int v)  => ES11.GL.GetInteger(n, out v),
                 Scissor                 = (x, y, w, h)        => ES11.GL.Scissor(x, y, w, h),
                 Viewport                = (x, y, w, h)        => ES11.GL.Viewport(x, y, w, h),
             };
@@ -81,14 +81,14 @@ namespace OpenTK.Platform.iPhoneOS
         static GLCalls CreateES2()
         {
             return new GLCalls() {
-                BindFramebuffer         = (t, f)              => ES20.GL.BindFramebuffer((ES20.All) t, f),
-                BindRenderbuffer        = (t, r)              => ES20.GL.BindRenderbuffer((ES20.All) t, r),
+                BindFramebuffer         = (t, f)              => ES20.GL.BindFramebuffer((ES20.FramebufferTarget) t, f),
+                BindRenderbuffer        = (t, r)              => ES20.GL.BindRenderbuffer((ES20.RenderbufferTarget) t, r),
                 DeleteFramebuffers      = (int n, ref int f)  => ES20.GL.DeleteFramebuffers(n, ref f),
                 DeleteRenderbuffers     = (int n, ref int r)  => ES20.GL.DeleteRenderbuffers(n, ref r),
-                FramebufferRenderbuffer = (t, a, rt, rb)      => ES20.GL.FramebufferRenderbuffer((ES20.All) t, (ES20.All) a, (ES20.All) rt, rb),
-                GenFramebuffers         = (int n, ref int f)  => ES20.GL.GenFramebuffers(n, ref f),
-                GenRenderbuffers        = (int n, ref int r)  => ES20.GL.GenRenderbuffers(n, ref r),
-                GetInteger              = (All n, ref int v)  => ES20.GL.GetInteger((ES20.All) n, ref v),
+                FramebufferRenderbuffer = (t, a, rt, rb)      => ES20.GL.FramebufferRenderbuffer((ES20.FramebufferTarget) t, (ES20.FramebufferSlot) a, (ES20.RenderbufferTarget) rt, rb),
+                GenFramebuffers         = (int n, out int f)  => ES20.GL.GenFramebuffers(n, out f),
+                GenRenderbuffers        = (int n, out int r)  => ES20.GL.GenRenderbuffers(n, out r),
+                GetInteger              = (All n, out int v)  => ES20.GL.GetInteger((ES20.GetPName) n, out v),
                 Scissor                 = (x, y, w, h)        => ES20.GL.Scissor(x, y, w, h),
                 Viewport                = (x, y, w, h)        => ES20.GL.Viewport(x, y, w, h),
             };
@@ -496,10 +496,10 @@ namespace OpenTK.Platform.iPhoneOS
             gl = GLCalls.GetGLCalls(ContextRenderingApi);
 
             int oldFramebuffer = 0, oldRenderbuffer = 1;
-            gl.GetInteger(All.FramebufferBindingOes, ref oldFramebuffer);
-            gl.GetInteger(All.RenderbufferBindingOes, ref oldRenderbuffer);
+            gl.GetInteger(All.FramebufferBindingOes, out oldFramebuffer);
+            gl.GetInteger(All.RenderbufferBindingOes, out oldRenderbuffer);
 
-            gl.GenRenderbuffers(1, ref renderbuffer);
+            gl.GenRenderbuffers(1, out renderbuffer);
             gl.BindRenderbuffer(All.RenderbufferOes, renderbuffer);
 
             if (!EAGLContext.RenderBufferStorage((uint) All.RenderbufferOes, eaglLayer)) {
@@ -509,7 +509,7 @@ namespace OpenTK.Platform.iPhoneOS
                 throw new InvalidOperationException("Error with EAGLContext.RenderBufferStorage!");
             }
 
-            gl.GenFramebuffers (1, ref framebuffer);
+            gl.GenFramebuffers (1, out framebuffer);
             gl.BindFramebuffer (All.FramebufferOes, framebuffer);
             gl.FramebufferRenderbuffer (All.FramebufferOes, All.ColorAttachment0Oes, All.RenderbufferOes, renderbuffer);
 
