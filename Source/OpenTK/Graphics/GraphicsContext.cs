@@ -120,7 +120,7 @@ namespace OpenTK.Graphics
                     Debug.Print("GraphicsContextFlags: {0}", flags);
                     Debug.Print("Requested version: {0}.{1}", major, minor);
 
-                    IGraphicsContext shareContext = shareContext = FindSharedContext();
+                    IGraphicsContext shareContext = FindSharedContext();
                     
                     // Todo: Add a DummyFactory implementing IPlatformFactory.
                     if (designMode)
