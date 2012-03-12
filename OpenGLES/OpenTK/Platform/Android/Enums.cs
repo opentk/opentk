@@ -10,7 +10,7 @@
 using System;
 
 namespace OpenTK.Graphics {
-	public enum EAGLRenderingAPI {
+	public enum EGLRenderingAPI {
 		OpenGLES1 = 1,
 		OpenGLES2 = 2,
 	}

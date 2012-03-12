@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * Copyright 2013 Xamarin Inc
@@ -201,7 +201,12 @@ namespace OpenTK.Graphics
                 LazySelectGraphicsMode();
                 return color_format;
             }
-            private set { color_format = value; }
+#if MOBILE
+            internal
+#else
+            private
+#endif
+            set { color_format = value; }
         }
 
         #endregion
@@ -218,7 +223,12 @@ namespace OpenTK.Graphics
                 LazySelectGraphicsMode();
                 return accumulator_format;
             }
-            private set { accumulator_format = value; }
+#if MOBILE
+            internal
+#else
+            private
+#endif
+            set { accumulator_format = value; }
         }
 
         #endregion
@@ -236,7 +246,12 @@ namespace OpenTK.Graphics
                 LazySelectGraphicsMode();
                 return depth;
             }
-            private set { depth = value; }
+#if MOBILE
+            internal
+#else
+            private
+#endif
+            set { depth = value; }
         }
 
         #endregion
@@ -254,7 +269,12 @@ namespace OpenTK.Graphics
                 LazySelectGraphicsMode();
                 return stencil;
             }
-            private set { stencil = value; }
+#if MOBILE
+            internal
+#else
+            private
+#endif
+            set { stencil = value; }
         }
 
         #endregion
@@ -271,7 +291,12 @@ namespace OpenTK.Graphics
                 LazySelectGraphicsMode();
                 return samples;
             }
-            private set { samples = value; }
+#if MOBILE
+            internal
+#else
+            private
+#endif
+            set { samples = value; }
         }
 
         #endregion
@@ -288,7 +313,12 @@ namespace OpenTK.Graphics
                 LazySelectGraphicsMode();
                 return stereo;
             }
-            private set { stereo = value; }
+#if MOBILE
+            internal
+#else
+            private
+#endif
+            set { stereo = value; }
         }
 
         #endregion
@@ -306,7 +336,12 @@ namespace OpenTK.Graphics
                 LazySelectGraphicsMode();
                 return buffers;
             }
-            private set { buffers = value; }
+#if MOBILE
+            internal
+#else
+            private
+#endif
+			set { buffers = value; }
         }
 
         #endregion

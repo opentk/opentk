@@ -12,12 +12,13 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Android
 {
-	public class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
+	class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
 	{
 		static AndroidDisplayDeviceDriver ()
 		{
 			DisplayDevice dev = new DisplayDevice ();
 			dev.IsPrimary = true;
+			dev.BitsPerPixel = 16;
 		}
 
         public bool TryChangeResolution (DisplayDevice device, DisplayResolution resolution)
