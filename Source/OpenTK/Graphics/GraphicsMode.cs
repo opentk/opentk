@@ -198,7 +198,9 @@ namespace OpenTK.Graphics
         {
             get
             {
+#if !MOBILE
                 LazySelectGraphicsMode();
+#endif
                 return color_format;
             }
 #if MOBILE
@@ -220,7 +222,9 @@ namespace OpenTK.Graphics
         {
             get 
             {
+#if !MOBILE
                 LazySelectGraphicsMode();
+#endif
                 return accumulator_format;
             }
 #if MOBILE
@@ -243,7 +247,9 @@ namespace OpenTK.Graphics
         {
             get
             {
+#if !MOBILE
                 LazySelectGraphicsMode();
+#endif
                 return depth;
             }
 #if MOBILE
@@ -266,7 +272,9 @@ namespace OpenTK.Graphics
         {
             get
             {
+#if !MOBILE
                 LazySelectGraphicsMode();
+#endif
                 return stencil;
             }
 #if MOBILE
@@ -288,7 +296,9 @@ namespace OpenTK.Graphics
         {
             get
             {
+#if !MOBILE
                 LazySelectGraphicsMode();
+#endif
                 return samples;
             }
 #if MOBILE
@@ -310,7 +320,9 @@ namespace OpenTK.Graphics
         {
             get
             {
+#if !MOBILE
                 LazySelectGraphicsMode();
+#endif
                 return stereo;
             }
 #if MOBILE
@@ -333,7 +345,9 @@ namespace OpenTK.Graphics
         {
             get
             {
+#if !MOBILE
                 LazySelectGraphicsMode();
+#endif
                 return buffers;
             }
 #if MOBILE
