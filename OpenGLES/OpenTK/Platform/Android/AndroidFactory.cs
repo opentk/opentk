@@ -10,6 +10,7 @@
 using System;
 using System.Diagnostics;
 using OpenTK.Graphics;
+using Javax.Microedition.Khronos.Egl;
 
 namespace OpenTK.Platform.Android
 {
@@ -29,7 +30,7 @@ namespace OpenTK.Platform.Android
 
         public virtual IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-			throw new NotImplementedException ();
+			return new Android.AndroidGraphicsContext(mode, window, shareContext, major, minor, flags);
         }
 
         public virtual IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
@@ -41,6 +42,14 @@ namespace OpenTK.Platform.Android
         {
             return (GraphicsContext.GetCurrentContextDelegate)delegate
             {
+				try {
+					var egl = global::Android.Runtime.Extensions.JavaCast<IEGL10> (EGLContext.EGL);
+					var ctx = egl.EglGetCurrentContext ();
+					if (ctx != null && ctx != EGL10.EglNoContext)
+						return new ContextHandle (ctx.Handle);
+				} catch (Exception ex) {
+					global::Android.Util.Log.Error ("AndroidFactory", "Could not get the current EGLContext. {0}", ex);
+				}
                 return new ContextHandle(IntPtr.Zero);
             };
         }
