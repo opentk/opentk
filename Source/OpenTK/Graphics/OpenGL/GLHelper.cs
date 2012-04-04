@@ -747,13 +747,13 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region GenBuffers
+        #region GenBuffer
 
         /// <summary>[requires: v1.5]
         /// Generates a single buffer object name
         /// </summary>
         /// <returns>The generated buffer object name</returns>
-        public static int GenBuffers()
+        public static int GenBuffer()
         {
             int id;
             GenBuffers(1, out id);
@@ -762,13 +762,13 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region DeleteBuffers
+        #region DeleteBuffer
 
         /// <summary>[requires: v1.5]
         /// Deletes a single buffer object
         /// </summary>
         /// <param name="id">The buffer object to be deleted</param>
-        public static void DeleteBuffers(int id)
+        public static void DeleteBuffer(int id)
         {
             DeleteBuffers(1, ref id);
         }
@@ -778,20 +778,20 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         /// <param name="id">The buffer object to be deleted</param>
         [CLSCompliant(false)]
-        public static void DeleteBuffers(uint id)
+        public static void DeleteBuffer(uint id)
         {
             DeleteBuffers(1, ref id);
         }
 
         #endregion
 
-        #region GenFramebuffers
+        #region GenFramebuffer
 
         /// <summary>[requires: v3.0 and ARB_framebuffer_object]
         /// Generates a single framebuffer object name
         /// </summary>
         /// <returns>The generated framebuffer object name</returns>
-        public static int GenFramebuffers()
+        public static int GenFramebuffer()
         {
             int id;
             GenFramebuffers(1, out id);
@@ -800,13 +800,13 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region DeleteFramebuffers
+        #region DeleteFramebuffer
 
         /// <summary>[requires: v3.0 and ARB_framebuffer_object]
         /// Deletes a single framebuffer object
         /// </summary>
         /// <param name="id">The framebuffer object to be deleted</param>
-        public static void DeleteFramebuffers(int id)
+        public static void DeleteFramebuffer(int id)
         {
             DeleteFramebuffers(1, ref id);
         }
@@ -816,20 +816,20 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         /// <param name="id">The framebuffer object to be deleted</param>
         [CLSCompliant(false)]
-        public static void DeleteFramebuffers(uint id)
+        public static void DeleteFramebuffer(uint id)
         {
             DeleteFramebuffers(1, ref id);
         }
 
         #endregion
 
-        #region GenProgramPipelines
+        #region GenProgramPipeline
 
         /// <summary>[requires: v4.1 and ARB_separate_shader_objects]
         /// Generates a single single pipeline object name
         /// </summary>
         /// <returns>The generated single pipeline object name</returns>
-        public static int GenProgramPipelines()
+        public static int GenProgramPipeline()
         {
             int id;
             GenProgramPipelines(1, out id);
@@ -838,13 +838,13 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region DeleteProgramPipelines
+        #region DeleteProgramPipeline
 
         /// <summary>[requires: v4.1 and ARB_separate_shader_objects]
         /// Deletes a single program pipeline object
         /// </summary>
         /// <param name="id">The program pipeline object to be deleted</param>
-        public static void DeleteProgramPipelines(int id)
+        public static void DeleteProgramPipeline(int id)
         {
             DeleteProgramPipelines(1, ref id);
         }
@@ -854,20 +854,20 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         /// <param name="id">The program pipeline object to be deleted</param>
         [CLSCompliant(false)]
-        public static void DeleteProgramPipelines(uint id)
+        public static void DeleteProgramPipeline(uint id)
         {
             DeleteProgramPipelines(1, ref id);
         }
 
         #endregion
 
-        #region GenQueries
+        #region GenQuery
 
         /// <summary>[requires: v1.5]
         /// Generates a single query object name
         /// </summary>
         /// <returns>The generated query object name</returns>
-        public static int GenQueries()
+        public static int GenQuery()
         {
             int id;
             GenQueries(1, out id);
@@ -876,13 +876,13 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region DeleteQueries
+        #region DeleteQuery
 
         /// <summary>[requires: v1.5]
         /// Deletes a single query object
         /// </summary>
         /// <param name="id">The query object to be deleted</param>
-        public static void DeleteQueries(int id)
+        public static void DeleteQuery(int id)
         {
             DeleteQueries(1, ref id);
         }
@@ -892,20 +892,20 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         /// <param name="id">The query object to be deleted</param>
         [CLSCompliant(false)]
-        public static void DeleteQueries(uint id)
+        public static void DeleteQuery(uint id)
         {
             DeleteQueries(1, ref id);
         }
 
         #endregion
 
-        #region GenRenderbuffers
+        #region GenRenderbuffer
 
         /// <summary>[requires: v3.0 and ARB_framebuffer_object]
         /// Generates a single renderbuffer object name
         /// </summary>
         /// <returns>The generated renderbuffer object name</returns>
-        public static int GenRenderbuffers()
+        public static int GenRenderbuffer()
         {
             int id;
             GenRenderbuffers(1, out id);
@@ -914,13 +914,13 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region DeleteRenderbuffers
+        #region DeleteRenderbuffer
 
         /// <summary>[requires: v3.0 and ARB_framebuffer_object]
         /// Deletes a single renderbuffer object
         /// </summary>
         /// <param name="id">The renderbuffer object to be deleted</param>
-        public static void DeleteRenderbuffers(int id)
+        public static void DeleteRenderbuffer(int id)
         {
             DeleteRenderbuffers(1, ref id);
         }
@@ -930,20 +930,20 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         /// <param name="id">The renderbuffer object to be deleted</param>
         [CLSCompliant(false)]
-        public static void DeleteRenderbuffers(uint id)
+        public static void DeleteRenderbuffer(uint id)
         {
             DeleteRenderbuffers(1, ref id);
         }
 
         #endregion
 
-        #region GenSamplers
+        #region GenSampler
 
         /// <summary>
         /// Generates a single sampler object name
         /// </summary>
         /// <returns>The generated sampler object name</returns>
-        public static int GenSamplers()
+        public static int GenSampler()
         {
             int id;
             GenSamplers(1, out id);
@@ -952,13 +952,13 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region DeleteSamplers
+        #region DeleteSampler
 
         /// <summary>
         /// Deletes a single sampler object
         /// </summary>
         /// <param name="id">The sampler object to be deleted</param>
-        public static void DeleteSamplers(int id)
+        public static void DeleteSampler(int id)
         {
             DeleteSamplers(1, ref id);
         }
@@ -968,16 +968,19 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         /// <param name="id">The sampler object to be deleted</param>
         [CLSCompliant(false)]
-        public static void DeleteSamplers(uint id)
+        public static void DeleteSampler(uint id)
         {
             DeleteSamplers(1, ref id);
         }
 
         #endregion
 
-        #region public static int GenTexture()
+        #region GenTexture
 
-        [Obsolete("Use GenTextures instead.")]
+        /// <summary>[requires: v1.1]
+        /// Generate a single texture name
+        /// </summary>
+        /// <returns>The generated texture name</returns>
         public static int GenTexture()
         {
             int id;
@@ -989,53 +992,21 @@ namespace OpenTK.Graphics.OpenGL
 
         #region DeleteTexture
 
-        [Obsolete("Use DeleteTextures instead.")]
+        /// <summary>[requires: v1.1]
+        /// Delete a single texture name
+        /// </summary>
+        /// <param name="id">The texture to be deleted</param>
         public static void DeleteTexture(int id)
         {
             DeleteTextures(1, ref id);
         }
 
-        [Obsolete("Use DeleteTextures instead.")]
+        /// <summary>[requires: v1.1]
+        /// Delete a single texture name
+        /// </summary>
+        /// <param name="id">The texture to be deleted</param>
         [CLSCompliant(false)]
         public static void DeleteTexture(uint id)
-        {
-            DeleteTextures(1, ref id);
-        }
-
-        #endregion
-
-        #region GenTextures
-
-        /// <summary>[requires: v1.1]
-        /// Generate a single texture name
-        /// </summary>
-        /// <returns>The generated texture name</returns>
-        public static int GenTextures()
-        {
-            int id;
-            GenTextures(1, out id);
-            return id;
-        }
-
-        #endregion
-
-        #region DeleteTextures
-
-        /// <summary>[requires: v1.1]
-        /// Delete a single texture name
-        /// </summary>
-        /// <param name="id">The texture to be deleted</param>
-        public static void DeleteTextures(int id)
-        {
-            DeleteTextures(1, ref id);
-        }
-
-        /// <summary>[requires: v1.1]
-        /// Delete a single texture name
-        /// </summary>
-        /// <param name="id">The texture to be deleted</param>
-        [CLSCompliant(false)]
-        public static void DeleteTextures(uint id)
         {
             DeleteTextures(1, ref id);
         }
@@ -1080,13 +1051,13 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region GenVertexArrays
+        #region GenVertexArray
 
         /// <summary>[requires: v3.0 and ARB_vertex_array_object]
         /// Generates a single vertex array object name
         /// </summary>
         /// <returns>The generated vertex array object name</returns>
-        public static int GenVertexArrays()
+        public static int GenVertexArray()
         {
             int id;
             GenVertexArrays(1, out id);
@@ -1095,13 +1066,13 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region DeleteVertexArrays
+        #region DeleteVertexArray
 
         /// <summary>[requires: v3.0 and ARB_vertex_array_object]
         /// Deletes a single vertex array object
         /// </summary>
         /// <param name="id">The vertex array object to be deleted</param>
-        public static void DeleteVertexArrays(int id)
+        public static void DeleteVertexArray(int id)
         {
             DeleteVertexArrays(1, ref id);
         }
@@ -1111,7 +1082,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         /// <param name="id">The vertex array object to be deleted</param>
         [CLSCompliant(false)]
-        public static void DeleteVertexArrays(uint id)
+        public static void DeleteVertexArray(uint id)
         {
             DeleteVertexArrays(1, ref id);
         }
