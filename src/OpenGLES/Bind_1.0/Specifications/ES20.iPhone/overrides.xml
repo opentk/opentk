@@ -437,6 +437,7 @@
     <enum name="DrawElementsType">
       <token name="UnsignedByte" value="0X1401" />
       <token name="UnsignedShort" value="0X1403" />
+      <token name="UnsignedInt" value="0X1405" />
     </enum>
 
     <enum name="EnableCap">
