@@ -57,14 +57,6 @@ namespace OpenTK
 		///   to this <see cref="T:OpenTK.Platform.Android.AndroidGameView" />
 		///   instance.
 		/// </value>
-		/// <remarks>
-		///   <para>
-		///     Unless manually set, <c>GraphicsContext</c> will be
-		///     <see langword="null" /> until
-		///     <see cref="M:OpenTK.Platform.Android.AndroidGameView.CreateFrameBuffer" />
-		///     has been invoked.
-		///   </para>
-		/// </remarks>
 		IGraphicsContext ctx;
 		public IGraphicsContext GraphicsContext {
 			get {
@@ -79,94 +71,13 @@ namespace OpenTK
 		///   Controls whether the graphics context is recreated when the display
 		///   size changes.
 		/// </summary>
-		/// <value>
-		///   A <see cref="T:System.Boolean" /> which controls whether the
-		///   graphics context is recreated when the view's
-		///   <see cref="P:MonoTouch.UIKit.UIView.Bounds" /> changes.
-		/// </value>
 		/// <remarks>
 		/// </remarks>
 		public bool AutoResize { get; set; }
 
-
-		/// <summary>
-		///   Creates the framebuffer so that OpenGL operations can be performed.
-		/// </summary>
-		/// <remarks>
-		///   <para>
-		///     This method is invoked to create an
-		///     <see cref="T:OpenTK.Graphics.IGraphicsContext" />
-		///     implementation, create a
-		///     <see cref="T:MonoTouch.OpenGLES.EAGLContext" />, and initialize
-		///     the GL context so that a framebuffer and renderbuffer exist for
-		///     future GL calls.
-		///   </para>
-		///   <para>
-		///     This method is invoked by:
-		///     <see cref="M:OpenTK.Platform.Android.AndroidGameView.LayoutSubviews" />,
-		///     <see cref="M:OpenTK.Platform.Android.AndroidGameView.Run" />,
-		///     and
-		///     <see cref="M:OpenTK.Platform.Android.AndroidGameView.Run(System.Double)" />.
-		///   </para>
-		///   <block subset="none" type="behaviors">
-		///     This method performs the following operations:
-		///     <list type="number"><item><term>
-		///         The
-		///         <see cref="P:OpenTK.Platform.Android.AndroidGameView.GraphicsContext" />
-		///         is created, wihch in turns creates an <see cref="T:MonoTouch.OpenGLES.EAGLContext" />.
-		///         The <c>EAGLContext</c> can be retrieved through the
-		///         <see cref="P:OpenTK.Platform.Android.AndroidGameView.EAGLContext" />
-		///         property.
-		///       </term></item><item><term>
-		///         A renderbuffer is created and bound to the GL context as the
-		///         <c>RenderbufferOes</c> property.  The renderbuffer is
-		///         accessible via
-		///         via <see cref="P:OpenTK.Platform.Android.AndroidGameView.Renderbuffer" />.
-		///       </term></item><item><term><see cref="M:MonoTouch.OpenGLES.EAGLContext.RenderBufferStorage(System.UInt32,MonoTouch.CoreAnimation.CAEAGLLayer)" />
-		///         is invoked to bind the above renderbuffer to
-		///         <c>EAGLContext</c>.
-		///       </term></item><item><term>
-		///         A framebuffer is created and bound to the GL context as the
-		///         <c>FramebufferOes</c> property.  The framebuffer is accessible
-		///         via <see cref="P:OpenTK.Platform.Android.AndroidGameView.Framebuffer" />.
-		///       </term></item><item><term>
-		///         The framebuffer and renderbuffer are bound together:
-		///         <c>GL.Oes.FramebufferRenderbuffer (All.FramebufferOes, All.ColorAttachment0Oes, All.RenderbufferOes, renderbuffer);</c></term></item><item><term><see cref="P:OpenTK.Platform.Android.AndroidGameView.Size" />
-		///         is initialized based on the current
-		///         value.
-		///       </term></item><item><term><c>GL.Viewport(0, 0, Size.Width, Size.Height)</c> is invoked.
-		///       </term></item><item><term><c>GL.Scissor(0, 0, Size.Width, Size.Height)</c> is invoked.
-		///       </term></item></list></block>
-		///   <block subset="none" type="overrides">
-		///     <para>
-		///       Inheritors can override either
-		///       <see cref="M:OpenTK.Platform.Android.AndroidGameView.ConfigureLayer(MonoTouch.CoreAnimation.CAEAGLLayer)" />,
-		///       or this method to add additional construction logic (e.g. to add
-		///       a depth buffer).  If only the layer needs to be configured, then
-		///       override <c>ConfigureLayer</c>; otherwise, override this method
-		///       and call this implementation to create the framebuffer and
-		///       renderbuffer.
-		///     </para>
-		///   </block>
-		/// </remarks>
-		/// <exception cref="T:System.ArgumentException">
-		///   <para>
-		///     <see cref="P:OpenTK.Platform.Android.AndroidGameView.GLContextVersion" />
-		///     hasn't been initialized.
-		///   </para>
-		/// </exception>
-		/// <exception cref="T:System.InvalidOperationException">
-		///   <para>
-		///     <see cref="P:OpenTK.Platform.Android.AndroidGameView.LayerColorFormat" />
-		///     hasn't been initialized.
-		///   </para>
-		/// </exception>
-		/// <exception cref="T:System.ObjectDisposedException">
-		///   The instance has had
-		///   <see cref="M:OpenTK.Platform.Android.AndroidGameView.Dispose" />
-		///   invoked on it.
-		/// </exception>
-		protected abstract void CreateFrameBuffer ();
+		protected virtual void CreateFrameBuffer ()
+		{
+		}
 
 		Point INativeWindow.PointToClient (Point point)
 		{
@@ -240,7 +151,8 @@ namespace OpenTK
 		/// </summary>
 		protected virtual void OnLoad (EventArgs e)
 		{
-			if (Load != null) Load(this, e);
+			if (Load != null)
+				Load (this, e);
 		}
 
 		/// <summary>
@@ -315,7 +227,8 @@ namespace OpenTK
 		/// </remarks>
 		protected virtual void OnUnload (EventArgs e)
 		{
-			if (Unload != null) Unload(this, e);
+			if (Unload != null)
+				Unload (this, e);
 		}
 
 		/// <summary>
@@ -390,7 +303,8 @@ namespace OpenTK
 		/// </remarks>
 		protected virtual void OnUpdateFrame (FrameEventArgs e)
 		{
-			if (UpdateFrame != null) UpdateFrame(this, e);
+			if (UpdateFrame != null)
+				UpdateFrame (this, e);
 		}
 
 		/// <summary>
@@ -465,48 +379,14 @@ namespace OpenTK
 		/// </remarks>
 		protected virtual void OnRenderFrame (FrameEventArgs e)
 		{
-			if (RenderFrame != null) RenderFrame(this, e);
+			if (RenderFrame != null)
+				RenderFrame (this, e);
 		}
 
 		/// <summary>
 		///   Starts as-fast-as-possible run-loop processing.
 		/// </summary>
 		/// <remarks>
-		///   <para>
-		///     Invokes
-		///     <see cref="E:OpenTK.Platform.Android.AndroidGameView.CreateFrameBuffer" />,
-		///     raises the
-		///     <see cref="E:OpenTK.Platform.Android.AndroidGameView.Load" />
-		///     event, then begins run-loop processing.  Run-loop processing
-		///     consists of the following step (which happens for each frame):
-		///   </para>
-		///   <list type="number">
-		///     <item>
-		///       <term>
-		///       The <see cref="E:OpenTK.Platform.Android.AndroidGameView.UpdateFrame" />
-		///       event is raised.
-		///     </term>
-		///     </item>
-		///     <item>
-		///       <term>
-		///       The OpenGL frame buffer is re-bound to
-		///       <see cref="P:OpenTK.Platform.Android.AndroidGameView.Framebuffer" />.
-		///     </term>
-		///     </item>
-		///     <item>
-		///       <term>
-		///       The <see cref="E:OpenTK.Platform.Android.AndroidGameView.RenderFrame" />
-		///       event is raised.
-		///     </term>
-		///     </item>
-		///   </list>
-		///   <para>
-		///     Run-loop processing should not be used if a persistant layer is
-		///     used (i.e.
-		///     <see cref="P:OpenTK.Platform.Android.AndroidGameView.LayerRetainsBacking" />
-		///     is <see langword="false" />); the entire view should need to be
-		///     re-rendered on every frame.
-		///   </para>
 		///   <para>
 		///     In this <c>Run</c> overload, there is no delay between raising of the
 		///     <see cref="E:OpenTK.Platform.Android.AndroidGameView.RenderFrame" />
@@ -523,56 +403,14 @@ namespace OpenTK
 		/// </exception>
 		public abstract void Run ();
 
-		/// <param name="updatesPerSecond">
+		/// <param name="updateRate">
 		///   A <see cref="T:System.Double" /> containing the number of frames per
 		///   second that should be updated and rendered.
 		/// </param>
 		/// <summary>
-		///   Starts run-loop processing at a rate of <paramref name="updatesPerSecond" />
+		///   Starts run-loop processing at a rate of <paramref name="updateRate" />
 		///   frames per second.
 		/// </summary>
-		/// <remarks>
-		///   <para>
-		///     If <paramref name="updatesPerSecond" /> is <c>0.0</c>, then
-		///     <see cref="M:OpenTK.Platform.Android.AndroidGameView.Run" /> is
-		///     invoked and the method exits.
-		///   </para>
-		///   <para>
-		///     Invokes
-		///     <see cref="E:OpenTK.Platform.Android.AndroidGameView.CreateFrameBuffer" />,
-		///     raises the
-		///     <see cref="E:OpenTK.Platform.Android.AndroidGameView.Load" />
-		///     event, then begins run-loop processing.  Run-loop processing
-		///     consists of the following step (which happens for each frame):
-		///   </para>
-		///   <list type="number">
-		///     <item>
-		///       <term>
-		///       The <see cref="E:OpenTK.Platform.Android.AndroidGameView.UpdateFrame" />
-		///       event is raised.
-		///     </term>
-		///     </item>
-		///     <item>
-		///       <term>
-		///       The OpenGL frame buffer is re-bound to
-		///       <see cref="P:OpenTK.Platform.Android.AndroidGameView.Framebuffer" />.
-		///     </term>
-		///     </item>
-		///     <item>
-		///       <term>
-		///       The <see cref="E:OpenTK.Platform.Android.AndroidGameView.RenderFrame" />
-		///       event is raised.
-		///     </term>
-		///     </item>
-		///   </list>
-		///   <para>
-		///     Run-loop processing should not be used if a persistant layer is
-		///     used (i.e.
-		///     <see cref="P:OpenTK.Platform.Android.AndroidGameView.LayerRetainsBacking" />
-		///     is <see langword="false" />); the entire view should need to be
-		///     re-rendered on every frame.
-		///   </para>
-		/// </remarks>
 		/// <exception cref="T:System.ObjectDisposedException">
 		///   The instance has had
 		///   <see cref="M:OpenTK.Platform.Android.AndroidGameView.Dispose" />
@@ -707,21 +545,20 @@ namespace OpenTK
 		}
 
 		/// <summary>
-		///   Occurs when the view is disposed by a call to the
-		///   <see cref="M:MonoTouch.Foundation.NSObject.Dispose" /> method.
+		///   Occurs when the view is disposed
 		/// </summary>
 		/// <remarks>
 		/// </remarks>
 		public event EventHandler<EventArgs> Disposed;
 
-		/// <param name="e">
-		///   An <see cref="T:System.EventArgs" /> that contains the event data.
-		/// </param>
 		/// <summary>
 		///   Raises the
 		///   <see cref="E:OpenTK.Platform.Android.AndroidGameView.Disposed" />
 		///   event.
 		/// </summary>
+		/// <param name="e">
+		///   An <see cref="T:System.EventArgs" /> that contains the event data.
+		/// </param>
 		/// <remarks>
 		///   <para>
 		///     The <c>OnDisposed</c> method also allows derived classes to handle
@@ -733,7 +570,7 @@ namespace OpenTK
 		///     call the base class's <c>OnDisposed</c> method so that registered
 		///     delegates receive the event.
 		///   </block>
-		/// </remarks
+		/// </remarks>
 		protected virtual void OnDisposed (EventArgs e)
 		{
 			if (Disposed != null)
@@ -863,6 +700,26 @@ namespace OpenTK
 				WindowStateChanged (this, EventArgs.Empty);
 		}
 
+		/// <summary>
+		///   Invokes the
+		///   <see cref="M:OpenTK.Platform.Android.AndroidGameView.OnClosed(System.EventArgs)" />
+		///   event.
+		/// </summary>
+		/// <remarks>
+		///   This method only invokes the
+		///   <see cref="M:OpenTK.Platform.Android.AndroidGameView.OnClosed(System.EventArgs)" />
+		///   method.
+		/// </remarks>
+		/// <exception cref="T:System.ObjectDisposedException">
+		///   The instance has had
+		///   <see cref="M:OpenTK.Platform.Android.AndroidGameView.Dispose" />
+		///   invoked on it.
+		/// </exception>
+		public virtual void Close ()
+		{
+			OnClosed (EventArgs.Empty);
+		}
+
 		/// <summary>This member is not supported.</summary>
 		/// <remarks>
 		///   <para>
@@ -874,11 +731,11 @@ namespace OpenTK
 			remove { throw new NotSupportedException ();}
 		}
 
-		public int Width {
+		public virtual int Width {
 			get; set;
 		}
 
-		public int Height {
+		public virtual int Height {
 			get;
 			set;
 		}
@@ -903,36 +760,6 @@ namespace OpenTK
 		public event EventHandler<EventArgs> MouseLeave {
 			add { throw new NotSupportedException (); }
 			remove { throw new NotSupportedException (); }
-		}
-
-		/// <summary>This member is not supported.</summary>
-		/// <remarks>
-		///   <para>
-		///     Throws a <see cref="T:System.NotSupportedException" />.
-		///   </para>
-		/// </remarks>
-		event EventHandler<EventArgs> INativeWindow.IconChanged {
-			add { throw new NotSupportedException (); }
-			remove { throw new NotSupportedException (); }
-		}
-		/// <summary>
-		///   Invokes the
-		///   <see cref="M:OpenTK.Platform.Android.AndroidGameView.OnClosed(System.EventArgs)" />
-		///   event.
-		/// </summary>
-		/// <remarks>
-		///   This method only invokes the
-		///   <see cref="M:OpenTK.Platform.Android.AndroidGameView.OnClosed(System.EventArgs)" />
-		///   method.
-		/// </remarks>
-		/// <exception cref="T:System.ObjectDisposedException">
-		///   The instance has had
-		///   <see cref="M:OpenTK.Platform.Android.AndroidGameView.Dispose" />
-		///   invoked on it.
-		/// </exception>
-		public void Close ()
-		{
-			throw new NotImplementedException ();
 		}
 
 		/// <summary>This member is not supported.</summary>
@@ -1021,16 +848,12 @@ namespace OpenTK
 		///   A <see cref="T:OpenTK.Platform.IWindowInfo" /> which provides
 		///   information about the containing window.
 		/// </value>
-		/// <remarks>
-		///   <para>
-		///     Always returns <see langword="null" />.
-		///   </para>
 		/// <exception cref="T:System.ObjectDisposedException">
 		///   The instance has had
 		///   <see cref="M:OpenTK.Platform.Android.AndroidGameView.Dispose" />
 		///   invoked on it.
 		/// </exception>
-		public IWindowInfo WindowInfo {
+		public virtual IWindowInfo WindowInfo {
 			get {
 				throw new NotImplementedException ();
 			}
@@ -1048,12 +871,9 @@ namespace OpenTK
 		///     <see cref="F:OpenTK.WindowState.Normal" /> is always returned.
 		///   </para>
 		/// </remarks>
-		/// <exception cref="T:System.ObjectDisposedException">
-		///   The instance has had
-		///   <see cref="M:OpenTK.Platform.Android.AndroidGameView.Dispose" />
-		///   invoked on it.
+		/// <exception cref="T:System.NotImplementedException">
 		/// </exception>
-		public WindowState WindowState {
+		public virtual WindowState WindowState {
 			get {
 				throw new NotImplementedException ();
 			}
@@ -1077,12 +897,9 @@ namespace OpenTK
 		///     The setter is ignored.
 		///   </para>
 		/// </remarks>
-		/// <exception cref="T:System.ObjectDisposedException">
-		///   The instance has had
-		///   <see cref="M:OpenTK.Platform.Android.AndroidGameView.Dispose" />
-		///   invoked on it.
+		/// <exception cref="T:System.NotImplementedException">
 		/// </exception>
-		public WindowBorder WindowBorder {
+		public virtual WindowBorder WindowBorder {
 			get {
 				throw new NotImplementedException ();
 			}
@@ -1095,10 +912,10 @@ namespace OpenTK
 		/// <value>To be added.</value>
 		/// <remarks>
 		///   <para>
-		///     Throws a <see cref="T:System.NotSupportedException" />.
+		///     Throws a <see cref="T:System.NotImplementedException" />.
 		///   </para>
 		/// </remarks>
-		public Rectangle Bounds {
+		public virtual Rectangle Bounds {
 			get {
 				throw new NotImplementedException ();
 			}
@@ -1111,10 +928,10 @@ namespace OpenTK
 		/// <value>To be added.</value>
 		/// <remarks>
 		///   <para>
-		///     Throws a <see cref="T:System.NotSupportedException" />.
+		///     Throws a <see cref="T:System.NotImplementedException" />.
 		///   </para>
 		/// </remarks>
-		public Point Location {
+		public virtual Point Location {
 			get {
 				throw new NotImplementedException ();
 			}
@@ -1130,14 +947,9 @@ namespace OpenTK
 		///   A <see cref="T:System.Drawing.Size" /> which is the size of the
 		///   current view.
 		/// </value>
-		/// <remarks>
-		/// </remarks>
-		/// <exception cref="T:System.ObjectDisposedException">
-		///   The instance has had
-		///   <see cref="M:OpenTK.Platform.Android.AndroidGameView.Dispose" />
-		///   invoked on it.
+		/// <exception cref="T:System.NotImplementedException">
 		/// </exception>
-		public Size Size {
+		public virtual Size Size {
 			get {
 				throw new NotImplementedException ();
 			}
@@ -1147,7 +959,6 @@ namespace OpenTK
 		}
 
 		/// <summary>This member is not supported.</summary>
-		/// <value>To be added.</value>
 		/// <remarks>
 		///   <para>
 		///     Throws a <see cref="T:System.NotSupportedException" />.
@@ -1163,7 +974,6 @@ namespace OpenTK
 		}
 
 		/// <summary>This member is not supported.</summary>
-		/// <value>To be added.</value>
 		/// <remarks>
 		///   <para>
 		///     Throws a <see cref="T:System.NotSupportedException" />.
@@ -1179,7 +989,6 @@ namespace OpenTK
 		}
 
 		/// <summary>This member is not supported.</summary>
-		/// <value>To be added.</value>
 		/// <remarks>
 		///   <para>
 		///     Throws a <see cref="T:System.NotSupportedException" />.
@@ -1210,11 +1019,13 @@ namespace OpenTK
 			}
 		}
 
+#if OPENTK_1
 		public OpenTK.Input.IInputDriver InputDriver {
 			get {
 				throw new NotSupportedException ();
 			}
 		}
+#endif
 		#endregion
 	}
 }

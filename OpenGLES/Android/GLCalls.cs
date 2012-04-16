@@ -22,26 +22,50 @@ namespace OpenTK
 {
 	sealed class GLCalls
 	{
+#if OPENTK_0
+		public GLContextVersion Version;
+#else
+		public GLVersion Version;
+#endif
+
 		public delegate void glScissor (int x, int y, int width, int height);
 		public delegate void glViewport (int x, int y, int width, int height);
 
 		public glScissor Scissor;
 		public glViewport Viewport;
 
-		public static GLCalls GetGLCalls (EAGLRenderingAPI api)
+#if OPENTK_0
+		public static GLCalls GetGLCalls (GLContextVersion api)
 		{
 			switch (api) {
-			case EAGLRenderingAPI.OpenGLES1:
+			case GLContextVersion.Gles1_1:
 				return CreateES1 ();
-			case EAGLRenderingAPI.OpenGLES2:
+			case GLContextVersion.Gles2_0:
 				return CreateES2 ();
 			}
 			throw new ArgumentException ("api");
 		}
+#else
+		public static GLCalls GetGLCalls (GLVersion api)
+		{
+			switch (api) {
+			case GLVersion.ES1:
+				return CreateES1 ();
+			case GLVersion.ES2:
+				return CreateES2 ();
+			}
+			throw new ArgumentException ("api");
+		}
+#endif
 
 		public static GLCalls CreateES1 ()
 		{
 			return new GLCalls () {
+#if OPENTK_0
+				Version                 = GLContextVersion.Gles1_1,
+#else
+				Version                 = GLVersion.ES1,
+#endif
 				Scissor                 = (x, y, w, h)        => ES11.GL.Scissor(x, y, w, h),
 				Viewport                = (x, y, w, h)        => ES11.GL.Viewport(x, y, w, h),
 			};
@@ -50,6 +74,11 @@ namespace OpenTK
 		public static GLCalls CreateES2 ()
 		{
 			return new GLCalls () {
+#if OPENTK_0
+				Version                 = GLContextVersion.Gles2_0,
+#else
+				Version                 = GLVersion.ES2,
+#endif
 				Scissor                 = (x, y, w, h)        => ES20.GL.Scissor(x, y, w, h),
 				Viewport                = (x, y, w, h)        => ES20.GL.Viewport(x, y, w, h),
 				};
