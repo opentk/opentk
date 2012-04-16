@@ -118,7 +118,7 @@ namespace OpenTK.Platform.Android
 			UnloadInternal (EventArgs.Empty);
 		}
 
-		public void SurfaceChanged (ISurfaceHolder holder, int format, int w, int h)
+		public void SurfaceChanged (ISurfaceHolder holder, Format format, int w, int h)
 		{
 			log ("SurfaceChanged");
 
@@ -501,14 +501,10 @@ namespace OpenTK.Platform.Android
 
 #if OPENTK_0
 		GLContextVersion api;
+		public GLContextVersion GLContextVersion
 #else
 		GLVersion api;
-#endif
-		public
-#if OPENTK_0
-		GLContextVersion
-#else
-		ContextRenderingApi
+		public GLVersion ContextRenderingApi
 #endif
 		{
 			get {

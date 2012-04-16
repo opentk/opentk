@@ -85,7 +85,7 @@ namespace OpenTK.Platform.Android {
 #if OPENTK_0
 			major--;
 #endif
-			Init (mode, window, sharedContext, glesVersion, flags);
+			Init (mode, window, sharedContext, major, flags);
 		}
 
 		void Init (GraphicsMode mode, IWindowInfo win, IGraphicsContext sharedContext,
