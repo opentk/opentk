@@ -440,16 +440,20 @@ namespace OpenTK.Platform.Android
 
 			updateEventArgs = new FrameEventArgs ();
 			curUpdateTime = DateTime.Now;
-			var t = (curUpdateTime - prevUpdateTime).TotalSeconds;
-			updateEventArgs.Time = t < 0 ? 0 : t;
+			if (prevUpdateTime.Ticks != 0) {
+				var t = (curUpdateTime - prevUpdateTime).TotalSeconds;
+				updateEventArgs.Time = t < 0 ? 0 : t;
+			}
 
 			UpdateFrameInternal (updateEventArgs);
 			prevUpdateTime = curUpdateTime;
 
 			renderEventArgs = new FrameEventArgs ();
 			curRenderTime = DateTime.Now;
-			t = (curRenderTime - prevRenderTime).TotalSeconds;
-			renderEventArgs.Time = t < 0 ? 0 : t;
+			if (prevRenderTime.Ticks == 0) {
+				var t = (curRenderTime - prevRenderTime).TotalSeconds;
+				renderEventArgs.Time = t < 0 ? 0 : t;
+			}
 
 			RenderFrameInternal (renderEventArgs);
 			prevRenderTime = curRenderTime;
