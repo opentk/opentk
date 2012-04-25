@@ -112,10 +112,22 @@ namespace OpenTK.Platform.Android
 			}
 
 			List<int> configSpec = new List<int> {
-				EGL11.EglRedSize, ColorFormat.Red,
-				EGL11.EglGreenSize, ColorFormat.Green,
-				EGL11.EglBlueSize, ColorFormat.Blue
 			};
+
+			if (ColorFormat.Red > 0) {
+				configSpec.Add (EGL11.EglRedSize);
+				configSpec.Add (ColorFormat.Red);
+			}
+
+			if (ColorFormat.Green > 0) {
+				configSpec.Add (EGL11.EglGreenSize);
+				configSpec.Add (ColorFormat.Green);
+			}
+
+			if (ColorFormat.Blue > 0) {
+				configSpec.Add (EGL11.EglBlueSize);
+				configSpec.Add (ColorFormat.Blue);
+			}
 
 			if (ColorFormat.Alpha > 0) {
 				configSpec.Add (EGL11.EglAlphaSize);
