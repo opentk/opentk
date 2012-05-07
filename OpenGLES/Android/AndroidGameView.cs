@@ -34,7 +34,11 @@ using ES20 = OpenTK.Graphics.ES20;
 namespace OpenTK.Platform.Android
 {
 
+#if OPENTK_0
 	[Register ("opentk/platform/android/AndroidGameView")]
+#else
+	[Register ("opentk_1_0/platform/android/AndroidGameView")]
+#endif
 	public partial class AndroidGameView : GameViewBase, ISurfaceHolderCallback
 	{
 		bool disposed;

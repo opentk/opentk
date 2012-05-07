@@ -30,6 +30,11 @@ using ES20 = OpenTK.Graphics.ES20;
 
 namespace OpenTK
 {
+	#if OPENTK_0
+		[Register ("opentk/GameViewBase")]
+	#else
+		[Register ("opentk_1_0/GameViewBase")]
+	#endif
 	public abstract class GameViewBase : SurfaceView, IGameWindow
 	{
 		[Register (".ctor", "(Landroid/content/Context;)V", "")]
