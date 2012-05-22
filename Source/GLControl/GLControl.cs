@@ -41,7 +41,10 @@ using OpenTK.Graphics.OpenGL;
 namespace OpenTK
 {
     /// <summary>
-    /// Defines a UserControl with OpenGL rendering capabilities.
+    /// OpenGL-aware WinForms control.
+    /// The WinForms designer will always call the default constructor.
+    /// Inherit from this class and call one of its specialized constructors
+    /// to enable antialiasing or custom <see cref="GraphicsMode"/>s.
     /// </summary>
     public partial class GLControl : UserControl
     {
@@ -64,14 +67,14 @@ namespace OpenTK
         #region --- Constructors ---
 
         /// <summary>
-        /// Constructs a new GLControl.
+        /// Constructs a new instance.
         /// </summary>
         public GLControl()
             : this(GraphicsMode.Default)
         { }
 
         /// <summary>
-        /// Constructs a new GLControl with the specified GraphicsMode.
+        /// Constructs a new instance with the specified GraphicsMode.
         /// </summary>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the control.</param>
         public GLControl(GraphicsMode mode)
@@ -79,7 +82,7 @@ namespace OpenTK
         { }
 
         /// <summary>
-        /// Constructs a new GLControl with the specified GraphicsMode.
+        /// Constructs a new instance with the specified GraphicsMode.
         /// </summary>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the control.</param>
         /// <param name="major">The major version for the OpenGL GraphicsContext.</param>
