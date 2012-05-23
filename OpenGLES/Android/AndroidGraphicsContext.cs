@@ -128,7 +128,7 @@ namespace OpenTK.Platform.Android {
 						attrib_list);
 
 			if (EGLContext == EGL10.EglNoContext)
-				throw EglException.GenerateException ("EGL", egl);
+				throw EglException.GenerateException ("EglCreateContext == EGL10.EglNoContext", egl, null);
 
 			window.CreateSurface (EGLConfig);
 			MakeCurrent (window);
@@ -143,7 +143,7 @@ namespace OpenTK.Platform.Android {
 					case EGL11.EglContextLost:
 					break;
 					default:
-						throw EglException.GenerateException ("EglSwapBuffers", egl);
+						throw EglException.GenerateException ("EglSwapBuffers", egl, err);
 				}
 			}
 			return ret;
@@ -173,7 +173,7 @@ namespace OpenTK.Platform.Android {
 					case EGL11.EglContextLost:
 					break;
 					default:
-						throw EglException.GenerateException ("MakeCurrent", egl);
+						throw EglException.GenerateException ("MakeCurrent", egl, err);
 				}
 			}
 		}
@@ -265,13 +265,14 @@ namespace OpenTK.Platform.Android {
 
 	class EglException : InvalidOperationException
 	{
-		public static EglException GenerateException (string msg, IEGL10 egl)
+		public static EglException GenerateException (string msg, IEGL10 egl, int? error)
 		{
 			if (egl == null)
 				return new EglException (msg);
-			if (egl.EglGetError () == EGL10.EglSuccess)
+			error = error ?? egl.EglGetError ();
+			if (error == EGL10.EglSuccess)
 				return new EglException (msg);
-			return new EglException (String.Format ("{0} failed with error {1} (0x{1:x})", msg, egl.EglGetError()));
+			return new EglException (String.Format ("{0} failed with error {1} (0x{1:x})", msg, error.Value));
 		}
 
 		public EglException (string msg) : base(msg)
@@ -318,11 +319,11 @@ namespace OpenTK.Platform.Android {
 				eglDisplay = egl.EglGetDisplay (EGL10.EglDefaultDisplay);
 
 			if (eglDisplay == EGL10.EglNoDisplay)
-				throw EglException.GenerateException ("EglGetDisplay", egl);
+				throw EglException.GenerateException ("EglGetDisplay == EGL10.EglNoDisplay", egl, null);
 
 			int[] version = new int[2];
 			if (!egl.EglInitialize (eglDisplay, version)) {
-				throw EglException.GenerateException ("EglInitialize", egl);
+				throw EglException.GenerateException ("EglInitialize", egl, null);
 			}
 		}
 
@@ -336,7 +337,7 @@ namespace OpenTK.Platform.Android {
 			IEGL10 egl = EGLContext.EGL.JavaCast<IEGL10> ();
 			eglSurface = egl.EglCreateWindowSurface (eglDisplay, config, ((Java.Lang.Object)Holder), null);
 			if (eglSurface == null || eglSurface == EGL10.EglNoSurface)
-				throw EglException.GenerateException ("EglCreateWindowSurface", egl);
+				throw EglException.GenerateException ("EglCreateWindowSurface", egl, null);
 		}
 
 		public void CreatePBufferSurface (EGLConfig config)
@@ -344,7 +345,7 @@ namespace OpenTK.Platform.Android {
 			IEGL10 egl = EGLContext.EGL.JavaCast<IEGL10> ();
 			eglSurface = egl.EglCreatePbufferSurface (eglDisplay, config, null);
 			if (eglSurface == null || eglSurface == EGL10.EglNoSurface)
-				throw EglException.GenerateException ("EglCreatePBufferSurface", egl);
+				throw EglException.GenerateException ("EglCreatePBufferSurface", egl, null);
 		}
 
 /*
@@ -352,7 +353,7 @@ namespace OpenTK.Platform.Android {
 		{
 			Surface = egl.EglCreatePixmapSurface (Display, config, null ,null);
 			if (Surface == null || Surface == EGL10.EglNoSurface)
-				throw EglException.GenerateException ("EglCreatePixmapSurface", egl);
+				throw EglException.GenerateException ("EglCreatePixmapSurface", egl, null);
 		}
 */
 		public void DestroySurface ()

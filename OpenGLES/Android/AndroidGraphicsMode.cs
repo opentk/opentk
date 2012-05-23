@@ -108,7 +108,7 @@ namespace OpenTK.Platform.Android
 				if (display == null)
 					display = egl.EglGetDisplay (EGL11.EglDefaultDisplay);
 			} catch {
-				throw EglException.GenerateException ("Failed to get default display", egl);
+				throw EglException.GenerateException ("Failed to get default display", egl, null);
 			}
 
 			List<int> configSpec = new List<int> {
@@ -157,7 +157,7 @@ namespace OpenTK.Platform.Android
 
 			int[] num_configs = new int[1];
 			if (!egl.EglGetConfigs (display, null, 0, num_configs) || num_configs[0] < 1) {
-				throw EglException.GenerateException ("Failed to retrieve GraphicsMode configurations", egl);
+				throw EglException.GenerateException ("Failed to retrieve GraphicsMode configurations", egl, null);
 			}
 
 			EGLConfig[] configs = new EGLConfig[1];
@@ -173,7 +173,7 @@ namespace OpenTK.Platform.Android
 				};
 
 				if (!egl.EglChooseConfig (display, configSpec.ToArray(), configs, configs.Length, num_configs)) {
-					throw EglException.GenerateException ("Failed to find a valid GraphicsMode configuration", egl);
+					throw EglException.GenerateException ("Failed to find a valid GraphicsMode configuration", egl, null);
 				}
 			}
 
@@ -184,7 +184,7 @@ namespace OpenTK.Platform.Android
 #endif
 
 			if (active_config == null)
-				throw EglException.GenerateException ("Failed to find a valid GraphicsMode configuration", egl);
+				throw EglException.GenerateException ("Failed to find a valid GraphicsMode configuration", egl, null);
 
 			var r = GetAttrib (egl, display, active_config, EGL11.EglRedSize);
 			var g = GetAttrib (egl, display, active_config, EGL11.EglGreenSize);
