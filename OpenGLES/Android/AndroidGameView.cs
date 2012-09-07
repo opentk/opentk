@@ -93,7 +93,6 @@ namespace OpenTK.Platform.Android
 
 			// Add callback to get the SurfaceCreated etc events
 			mHolder.AddCallback (this);
-			mHolder.SetType (SurfaceType.Gpu);
 
 			pauseSignal = new ManualResetEvent (true);
 		}
