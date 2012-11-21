@@ -41,6 +41,9 @@ namespace OpenTK.Platform.iPhoneOS
         public delegate void glGetInteger(All name, out int value);
         public delegate void glScissor(int x, int y, int width, int height);
         public delegate void glViewport(int x, int y, int width, int height);
+        public delegate void glGetRenderBufferParameter(All target, All pname, out int p);
+        public delegate void glPixelStore(All pname, int param);
+        public delegate void glReadPixels(int x, int y, int width, int height, All format, All type, byte[] pixels);
 
         public glBindFramebuffer BindFramebuffer;
         public glBindRenderbuffer BindRenderbuffer;
@@ -52,6 +55,9 @@ namespace OpenTK.Platform.iPhoneOS
         public glGetInteger GetInteger;
         public glScissor Scissor;
         public glViewport Viewport;
+        public glGetRenderBufferParameter GetRenderbufferParameter;
+        public glPixelStore PixelStore;
+        public glReadPixels ReadPixels;
 
         public static GLCalls GetGLCalls(EAGLRenderingAPI api)
         {
@@ -75,6 +81,9 @@ namespace OpenTK.Platform.iPhoneOS
                 GetInteger              = (All n, out int v)  => ES11.GL.GetInteger(n, out v),
                 Scissor                 = (x, y, w, h)        => ES11.GL.Scissor(x, y, w, h),
                 Viewport                = (x, y, w, h)        => ES11.GL.Viewport(x, y, w, h),
+                GetRenderbufferParameter= (All t, All p, out int a) => ES11.GL.Oes.GetRenderbufferParameter (t, p, out a),
+                PixelStore              = (n, p)                    => ES11.GL.PixelStore(n, p),
+                ReadPixels              = (x, y, w, h, f, t, d)     => ES11.GL.ReadPixels(x, y, w, h, f, t, d),
             };
         }
 
@@ -91,6 +100,9 @@ namespace OpenTK.Platform.iPhoneOS
                 GetInteger              = (All n, out int v)  => ES20.GL.GetInteger((ES20.GetPName) n, out v),
                 Scissor                 = (x, y, w, h)        => ES20.GL.Scissor(x, y, w, h),
                 Viewport                = (x, y, w, h)        => ES20.GL.Viewport(x, y, w, h),
+                GetRenderbufferParameter= (All t, All p, out int a) => ES20.GL.GetRenderbufferParameter ((ES20.RenderbufferTarget) t, (ES20.RenderbufferParameterName) p, out a),
+                PixelStore              = (n, p)                    => ES20.GL.PixelStore((ES20.PixelStoreParameter) n, p),
+                ReadPixels              = (x, y, w, h, f, t, d)     => ES20.GL.ReadPixels(x, y, w, h, (ES20.PixelFormat) f, (ES20.PixelType) t, d),
             };
         }
     }
@@ -716,6 +728,68 @@ namespace OpenTK.Platform.iPhoneOS
                 timesource.Resume ();
             stopwatch.Start();
             suspended = false;
+        }
+
+        public UIImage Capture ()
+        {
+            // This is from: https://developer.apple.com/library/ios/#qa/qa2010/qa1704.html
+
+            int backingWidth, backingHeight;
+
+            // Bind the color renderbuffer used to render the OpenGL ES view
+            // If your application only creates a single color renderbuffer which is already bound at this point,
+            // this call is redundant, but it is needed if you're dealing with multiple renderbuffers.
+            // Note, replace "_colorRenderbuffer" with the actual name of the renderbuffer object defined in your class.
+            gl.BindRenderbuffer (All.RenderbufferOes, Renderbuffer);
+
+            // Get the size of the backing CAEAGLLayer
+            gl.GetRenderbufferParameter (All.RenderbufferOes, All.RenderbufferWidthOes, out backingWidth);
+            gl.GetRenderbufferParameter (All.RenderbufferOes, All.RenderbufferHeightOes, out backingHeight);
+
+            int width = backingWidth, height = backingHeight;
+            int dataLength = width * height * 4;
+            byte[] data = new byte [dataLength];
+
+            // Read pixel data from the framebuffer
+            gl.PixelStore (All.PackAlignment, 4);
+            gl.ReadPixels (0, 0, width, height, All.Rgba, All.UnsignedByte, data);
+
+            // Create a CGImage with the pixel data
+            // If your OpenGL ES content is opaque, use kCGImageAlphaNoneSkipLast to ignore the alpha channel
+            // otherwise, use kCGImageAlphaPremultipliedLast
+            using (var data_provider = new CGDataProvider (data, 0, data.Length)) {
+                using (var colorspace = CGColorSpace.CreateDeviceRGB ()) {
+                    using (var iref = new CGImage (width, height, 8, 32, width * 4, colorspace, 
+                                    (CGImageAlphaInfo) ((int) CGBitmapFlags.ByteOrder32Big | (int) CGImageAlphaInfo.PremultipliedLast),
+                                    data_provider, null, true, CGColorRenderingIntent.Default)) {
+
+                        // OpenGL ES measures data in PIXELS
+                        // Create a graphics context with the target size measured in POINTS
+                        int widthInPoints, heightInPoints;
+                        float scale = ContentScaleFactor;
+                        widthInPoints = (int) (width / scale);
+                        heightInPoints = (int) (height / scale);
+                        UIGraphics.BeginImageContextWithOptions (new System.Drawing.SizeF (widthInPoints, heightInPoints), false, scale);
+
+                        try {
+                            var cgcontext = UIGraphics.GetCurrentContext ();
+
+                            // UIKit coordinate system is upside down to GL/Quartz coordinate system
+                            // Flip the CGImage by rendering it to the flipped bitmap context
+                            // The size of the destination area is measured in POINTS
+                            cgcontext.SetBlendMode (CGBlendMode.Copy);
+                            cgcontext.DrawImage (new System.Drawing.RectangleF (0, 0, widthInPoints, heightInPoints), iref);
+
+                            // Retrieve the UIImage from the current context
+                            var image = UIGraphics.GetImageFromCurrentImageContext ();
+
+                            return image;
+                        } finally {
+                            UIGraphics.EndImageContext ();
+                        }
+                    }
+                }
+            }
         }
 
         public override void WillMoveToWindow(UIWindow window)
