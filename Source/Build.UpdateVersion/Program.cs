@@ -88,8 +88,11 @@ namespace Build.UpdateVersion
             double timespan = now.Subtract(new DateTime(2010, 1, 1)).TotalDays;
             string build = ((int)timespan).ToString();
 
-            string revision = RetrieveSvnRevision() ?? RetrieveBzrRevision() ?? RetrieveSeconds(timespan);
+            string revision = RetrieveGitRevision() ?? RetrieveSvnRevision() ?? RetrieveBzrRevision() ?? RetrieveSeconds(timespan);
             revision = revision.Trim();
+            
+            Console.WriteLine("Build timestamp was: " + build);
+            Console.WriteLine("Revision detected was: " + revision);
 
             File.WriteAllLines(file, new string[]
             {
@@ -116,6 +119,26 @@ namespace Build.UpdateVersion
             string revision = ((int)((timespan - (int)timespan) * UInt16.MaxValue)).ToString();
             return revision;
         }
+
+        static string RetrieveGitRevision()
+        {
+            try
+            {
+                string output = RunProcess("git", "log -1", RootDirectory);
+                
+                const string RevisionText = "commit ";
+                int index = output.IndexOf(RevisionText);
+                int endIndex = output.IndexOf("\n"); // since it's the first line...
+                if (index > -1)
+                    return output.Substring(index + RevisionText.Length, endIndex - index - RevisionText.Length).Trim();
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Failed to retrieve git revision. Error: {0}", e);
+            }
+            return null;
+        }
+
 
         static string RetrieveSvnRevision()
         {

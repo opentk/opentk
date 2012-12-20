@@ -41,7 +41,12 @@ namespace Examples
         public static void Main()
         {
             try
-            {
+            {   
+                // This seems to be useful enough to leave in for a while.
+                TextWriterTraceListener console = new TextWriterTraceListener(System.Console.Out);
+                Trace.Listeners.Add (console);
+                Debug.Listeners.Add (console);
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
