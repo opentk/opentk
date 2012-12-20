@@ -111,7 +111,15 @@ namespace OpenTK.Platform.Windows
                         // mouse device by qeurying the registry.
                         RegistryKey regkey = FindRegistryKey(name);
                         string deviceDesc = (string)regkey.GetValue("DeviceDesc");
-                        string deviceClass = (string)regkey.GetValue("Class");
+
+                       
+                        string deviceClass = (string)regkey.GetValue("Class") as string;
+                        if(deviceClass == null){
+                            // Added to address OpenTK issue 3198 with mouse on Windows 8
+                            string deviceClassGUID = (string)regkey.GetValue("ClassGUID");
+                            RegistryKey classGUIDKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
+                            deviceClass = classGUIDKey != null ? (string) classGUIDKey.GetValue("Class") : string.Empty;
+                        }
                         deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
 
                         if (!String.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("mouse"))
