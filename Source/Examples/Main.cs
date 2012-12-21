@@ -49,6 +49,8 @@ namespace Examples
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
+               // Examples.Tests.BasicMouseInput.Main ();
+
                 using (Form browser = new ExampleBrowser())
                 {
                     try
