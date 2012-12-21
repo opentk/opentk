@@ -40,7 +40,12 @@ namespace Examples.Tests
         {
             // Here's the big test!
             if(OpenTK.Input.Mouse.GetState()[MouseButton.Left]){
-                Console.WriteLine("You clicked the left mouse button!");
+                Console.WriteLine("The left mouse button is down!");
+            }
+
+            // While we are here, test keyboard.
+            if(OpenTK.Input.Keyboard.GetState()[Key.A]){
+                Console.WriteLine("The A key is down!");
             }
 
             if (Keyboard[OpenTK.Input.Key.Escape])
