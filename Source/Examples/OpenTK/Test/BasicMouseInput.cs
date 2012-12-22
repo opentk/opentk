@@ -45,7 +45,7 @@ namespace Examples.Tests
 
             // While we are here, test keyboard.
             if(OpenTK.Input.Keyboard.GetState()[Key.A]){
-                Console.WriteLine("The A key is down!");
+               Console.WriteLine("The A key is down!");
             }
 
             if (Keyboard[OpenTK.Input.Key.Escape])

@@ -254,13 +254,17 @@ namespace OpenTK.Platform.MacOS
             int v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
             HIDPage page = NativeMethods.IOHIDElementGetUsagePage(elem);
             int usage = NativeMethods.IOHIDElementGetUsage(elem);
+ 
+            // This will supress the debug printing below. Seems like it generates a lot of -1s. 
+            // Couldn't find any details in USB spec or Apple docs for this behavior.
+            if(usage < 0 ) return state;  
 
-             switch (page)
+            switch (page)
             {
                 case HIDPage.GenericDesktop:
                 case HIDPage.KeyboardOrKeypad:
-                    int raw = (int)usage;
-                    if (raw >= RawKeyMap.Length || raw < 0)
+                    int raw = (int) usage;
+                    if (raw >= RawKeyMap.Length)
                     {
                         Debug.Print("[Warning] Key {0} not mapped.", raw);
                         return state;
