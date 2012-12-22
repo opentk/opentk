@@ -31,7 +31,9 @@ namespace Examples.Tests
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            
+
+            this.Mouse.ButtonUp += (object sender, MouseButtonEventArgs buttonEvent) => Console.WriteLine("Mouse button up: " + buttonEvent.Button + " at: " + buttonEvent.Position);
+
             GL.ClearColor(Color.MidnightBlue);
             GL.Enable(EnableCap.DepthTest);
         }
@@ -43,6 +45,7 @@ namespace Examples.Tests
                 Console.WriteLine("The left mouse button is down!");
             }
 
+         
             // While we are here, test keyboard.
             if(OpenTK.Input.Keyboard.GetState()[Key.A]){
                Console.WriteLine("The A key is down!");
