@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
 
 namespace OpenTK
 {
@@ -830,6 +831,28 @@ namespace OpenTK
         }
 
         #endregion
+
+        #endregion
+
+        #region Swizzle
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2d with the X component of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2d Xx { get { return new Vector2d(X, X); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2d Yx { get { return new Vector2d(Y, X); } set { Y = value.X; X = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2d with the Y component of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2d Yy { get { return new Vector2d(Y, Y); } }
 
         #endregion
 

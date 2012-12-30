@@ -1010,6 +1010,14 @@ namespace OpenTK
 
         #region Swizzle
 
+        #region 2-component
+
+        /// <summary>
+        /// Gets an OpenTK.Vector2 with the X and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Xx { get { return new Vector2(X, X); } }
+
         /// <summary>
         /// Gets or sets an OpenTK.Vector2 with the X and Y components of this instance.
         /// </summary>
@@ -1017,10 +1025,2012 @@ namespace OpenTK
         public Vector2 Xy { get { return new Vector2(X, Y); } set { X = value.X; Y = value.Y; } }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3 with the X, Y and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector2 with the X and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Xz { get { return new Vector2(X, Z); } set { X = value.X; Z = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the X and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Xw { get { return new Vector2(X, W); } set { X = value.X; W = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the Y and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Yx { get { return new Vector2(Y, X); } set { Y = value.X; X = value.Y; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector2 with the Y and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Yy { get { return new Vector2(Y, Y); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the Y and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Yz { get { return new Vector2(Y, Z); } set { Y = value.X; Z = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the Y and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Yw { get { return new Vector2(Y, W); } set { Y = value.X; W = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the Z and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Zx { get { return new Vector2(Z, X); } set { Z = value.X; X = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the Z and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Zy { get { return new Vector2(Z, Y); } set { Z = value.X; Y = value.Y; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector2 with the Z and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Zz { get { return new Vector2(Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector2 with the Z and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Zw { get { return new Vector2(Z, W); } set { Z = value.X; W = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the W and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Wx { get { return new Vector2(W, X); } set { W = value.X; X = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the W and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Wy { get { return new Vector2(W, Y); } set { W = value.X; Y = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the W and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Wz { get { return new Vector2(W, Z); } set { W = value.X; Z = value.Y; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector2 with the W and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Ww { get { return new Vector2(W, W); } }
+
+        #endregion
+
+        #region 3-component
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the X, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xxx { get { return new Vector3(X, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the X, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xxy { get { return new Vector3(X, X, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the X, X and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xxz { get { return new Vector3(X, X, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the X, X and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xxw { get { return new Vector3(X, X, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the X, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xyx { get { return new Vector3(X, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the X, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xyy { get { return new Vector3(X, Y, Y); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3 Xyz { get { return new Vector3(X, Y, Z); } set { X = value.X; Y = value.Y; Z = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the X, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xyw { get { return new Vector3(X, Y, W); } set { X = value.X; Y = value.Y; W = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the X, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xzx { get { return new Vector3(X, Z, X); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the X, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xzy { get { return new Vector3(X, Z, Y); } set { X = value.X; Z = value.Y; Y = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the X, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xzz { get { return new Vector3(X, Z, Z); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the X, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xzw { get { return new Vector3(X, Z, W); } set { X = value.X; Z = value.Y; W = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the X, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xwx { get { return new Vector3(X, W, X); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the X, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xwy { get { return new Vector3(X, W, Y); } set { X = value.X; W = value.Y; Y = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the X, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xwz { get { return new Vector3(X, W, Z); } set { X = value.X; W = value.Y; Z = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the X, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xww { get { return new Vector3(X, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Y, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yxx { get { return new Vector3(Y, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Y, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yxy { get { return new Vector3(Y, X, Y); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Y, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yxz { get { return new Vector3(Y, X, Z); } set { Y = value.X; X = value.Y; Z = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Y, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yxw { get { return new Vector3(Y, X, W); } set { Y = value.X; X = value.Y; W = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Y, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yyx { get { return new Vector3(Y, Y, X); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Y, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yyy { get { return new Vector3(Y, Y, Y); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Y, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yyz { get { return new Vector3(Y, Y, Z); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Y, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yyw { get { return new Vector3(Y, Y, W); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Y, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yzx { get { return new Vector3(Y, Z, X); } set { Y = value.X; Z = value.Y; X = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Y, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yzy { get { return new Vector3(Y, Z, Y); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Y, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yzz { get { return new Vector3(Y, Z, Z); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Y, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yzw { get { return new Vector3(Y, Z, W); } set { Y = value.X; Z = value.Y; W = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Y, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Ywx { get { return new Vector3(Y, W, X); } set { Y = value.X; W = value.Y; X = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Y, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Ywy { get { return new Vector3(Y, W, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Y, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Ywz { get { return new Vector3(Y, W, Z); } set { Y = value.X; W = value.Y; Z = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Y, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yww { get { return new Vector3(Y, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Z, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zxx { get { return new Vector3(Z, X, X); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Z, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zxy { get { return new Vector3(Z, X, Y); } set { Z = value.X; X = value.Y; Y = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Z, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zxz { get { return new Vector3(Z, X, Z); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Z, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zxw { get { return new Vector3(Z, X, W); } set { Z = value.X; X = value.Y; W = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Z, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zyx { get { return new Vector3(Z, Y, X); } set { Z = value.X; Y = value.Y; X = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Z, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zyy { get { return new Vector3(Z, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Z, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zyz { get { return new Vector3(Z, Y, Z); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Z, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zyw { get { return new Vector3(Z, Y, W); } set { Z = value.X; Y = value.Y; W = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Z, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zzx { get { return new Vector3(Z, Z, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Z, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zzy { get { return new Vector3(Z, Z, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Z, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zzz { get { return new Vector3(Z, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Z, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zzw { get { return new Vector3(Z, Z, W); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Z, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zwx { get { return new Vector3(Z, W, X); } set { Z = value.X; W = value.Y; X = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Z, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zwy { get { return new Vector3(Z, W, Y); } set { Z = value.X; W = value.Y; Y = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Z, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zwz { get { return new Vector3(Z, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the Z, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zww { get { return new Vector3(Z, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the W, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wxx { get { return new Vector3(W, X, X); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the W, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wxy { get { return new Vector3(W, X, Y); } set { W = value.X; X = value.Y; Y = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the W, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wxz { get { return new Vector3(W, X, Z); } set { W = value.X; X = value.Y; Z = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the W, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wxw { get { return new Vector3(W, X, W); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the W, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wyx { get { return new Vector3(W, Y, X); } set { W = value.X; Y = value.Y; X = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the W, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wyy { get { return new Vector3(W, Y, Y); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the W, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wyz { get { return new Vector3(W, Y, Z); } set { W = value.X; Y = value.Y; Z = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the W, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wyw { get { return new Vector3(W, Y, W); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the W, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wzx { get { return new Vector3(W, Z, X); } set { W = value.X; Z = value.Y; X = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the W, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wzy { get { return new Vector3(W, Z, Y); } set { W = value.X; Z = value.Y; Y = value.Z; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the W, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wzz { get { return new Vector3(W, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the W, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wzw { get { return new Vector3(W, Z, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the W, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wwx { get { return new Vector3(W, W, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the W, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wwy { get { return new Vector3(W, W, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the W, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Wwz { get { return new Vector3(W, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector3 with the W, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Www { get { return new Vector3(W, W, W); } }
+
+        #endregion
+
+        #region 4-component
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxxx { get { return new Vector4(X, X, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxxy { get { return new Vector4(X, X, X, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, X and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxxz { get { return new Vector4(X, X, X, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, X and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxxw { get { return new Vector4(X, X, X, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxyx { get { return new Vector4(X, X, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxyy { get { return new Vector4(X, X, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxyz { get { return new Vector4(X, X, Y, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxyw { get { return new Vector4(X, X, Y, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxzx { get { return new Vector4(X, X, Z, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxzy { get { return new Vector4(X, X, Z, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxzz { get { return new Vector4(X, X, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxzw { get { return new Vector4(X, X, Z, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxwx { get { return new Vector4(X, X, W, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxwy { get { return new Vector4(X, X, W, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxwz { get { return new Vector4(X, X, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, X, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xxww { get { return new Vector4(X, X, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Y, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xyxx { get { return new Vector4(X, Y, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Y, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xyxy { get { return new Vector4(X, Y, X, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Y, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xyxz { get { return new Vector4(X, Y, X, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Y, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xyxw { get { return new Vector4(X, Y, X, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Y, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xyyx { get { return new Vector4(X, Y, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Y, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xyyy { get { return new Vector4(X, Y, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Y, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xyyz { get { return new Vector4(X, Y, Y, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Y, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xyyw { get { return new Vector4(X, Y, Y, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Y, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xyzx { get { return new Vector4(X, Y, Z, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Y, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xyzy { get { return new Vector4(X, Y, Z, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Y, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xyzz { get { return new Vector4(X, Y, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Y, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xywx { get { return new Vector4(X, Y, W, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Y, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xywy { get { return new Vector4(X, Y, W, Y); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the X, Y, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xywz { get { return new Vector4(X, Y, W, Z); } set { X = value.X; Y = value.Y; W = value.Z; Z = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Y, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xyww { get { return new Vector4(X, Y, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Z, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzxx { get { return new Vector4(X, Z, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Z, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzxy { get { return new Vector4(X, Z, X, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Z, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzxz { get { return new Vector4(X, Z, X, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Z, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzxw { get { return new Vector4(X, Z, X, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Z, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzyx { get { return new Vector4(X, Z, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Z, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzyy { get { return new Vector4(X, Z, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Z, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzyz { get { return new Vector4(X, Z, Y, Z); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the X, Z, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzyw { get { return new Vector4(X, Z, Y, W); } set { X = value.X; Z = value.Y; Y = value.Z; W = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Z, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzzx { get { return new Vector4(X, Z, Z, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Z, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzzy { get { return new Vector4(X, Z, Z, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Z, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzzz { get { return new Vector4(X, Z, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Z, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzzw { get { return new Vector4(X, Z, Z, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Z, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzwx { get { return new Vector4(X, Z, W, X); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the X, Z, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzwy { get { return new Vector4(X, Z, W, Y); } set { X = value.X; Z = value.Y; W = value.Z; Y = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Z, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzwz { get { return new Vector4(X, Z, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, Z, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xzww { get { return new Vector4(X, Z, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, W, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwxx { get { return new Vector4(X, W, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, W, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwxy { get { return new Vector4(X, W, X, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, W, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwxz { get { return new Vector4(X, W, X, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, W, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwxw { get { return new Vector4(X, W, X, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, W, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwyx { get { return new Vector4(X, W, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, W, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwyy { get { return new Vector4(X, W, Y, Y); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the X, W, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwyz { get { return new Vector4(X, W, Y, Z); } set { X = value.X; W = value.Y; Y = value.Z; Z = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, W, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwyw { get { return new Vector4(X, W, Y, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, W, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwzx { get { return new Vector4(X, W, Z, X); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the X, W, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwzy { get { return new Vector4(X, W, Z, Y); } set { X = value.X; W = value.Y; Z = value.Z; Y = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, W, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwzz { get { return new Vector4(X, W, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, W, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwzw { get { return new Vector4(X, W, Z, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, W, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwwx { get { return new Vector4(X, W, W, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, W, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwwy { get { return new Vector4(X, W, W, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, W, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwwz { get { return new Vector4(X, W, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the X, W, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Xwww { get { return new Vector4(X, W, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, X, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yxxx { get { return new Vector4(Y, X, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, X, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yxxy { get { return new Vector4(Y, X, X, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, X, X and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yxxz { get { return new Vector4(Y, X, X, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, X, X and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yxxw { get { return new Vector4(Y, X, X, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, X, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yxyx { get { return new Vector4(Y, X, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, X, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yxyy { get { return new Vector4(Y, X, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, X, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yxyz { get { return new Vector4(Y, X, Y, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, X, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yxyw { get { return new Vector4(Y, X, Y, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, X, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yxzx { get { return new Vector4(Y, X, Z, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, X, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yxzy { get { return new Vector4(Y, X, Z, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, X, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yxzz { get { return new Vector4(Y, X, Z, Z); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the Y, X, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Yxzw { get { return new Vector4(Y, X, Z, W); } set { Y = value.X; X = value.Y; Z = value.Z; W = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, X, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yxwx { get { return new Vector4(Y, X, W, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, X, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yxwy { get { return new Vector4(Y, X, W, Y); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the Y, X, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Yxwz { get { return new Vector4(Y, X, W, Z); } set { Y = value.X; X = value.Y; W = value.Z; Z = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, X, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yxww { get { return new Vector4(Y, X, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yyxx { get { return new Vector4(Y, Y, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yyxy { get { return new Vector4(Y, Y, X, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yyxz { get { return new Vector4(Y, Y, X, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yyxw { get { return new Vector4(Y, Y, X, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yyyx { get { return new Vector4(Y, Y, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yyyy { get { return new Vector4(Y, Y, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yyyz { get { return new Vector4(Y, Y, Y, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yyyw { get { return new Vector4(Y, Y, Y, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yyzx { get { return new Vector4(Y, Y, Z, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yyzy { get { return new Vector4(Y, Y, Z, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yyzz { get { return new Vector4(Y, Y, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yyzw { get { return new Vector4(Y, Y, Z, W); } set { X = value.X; Y = value.Y; Z = value.Z; W = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yywx { get { return new Vector4(Y, Y, W, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yywy { get { return new Vector4(Y, Y, W, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yywz { get { return new Vector4(Y, Y, W, Z); } set { X = value.X; Y = value.Y; W = value.Z; Z = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Y, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yyww { get { return new Vector4(Y, Y, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Z, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yzxx { get { return new Vector4(Y, Z, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Z, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yzxy { get { return new Vector4(Y, Z, X, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Z, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yzxz { get { return new Vector4(Y, Z, X, Z); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the Y, Z, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Yzxw { get { return new Vector4(Y, Z, X, W); } set { Y = value.X; Z = value.Y; X = value.Z; W = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Z, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yzyx { get { return new Vector4(Y, Z, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Z, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yzyy { get { return new Vector4(Y, Z, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Z, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yzyz { get { return new Vector4(Y, Z, Y, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Z, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yzyw { get { return new Vector4(Y, Z, Y, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Z, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yzzx { get { return new Vector4(Y, Z, Z, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Z, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yzzy { get { return new Vector4(Y, Z, Z, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Z, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yzzz { get { return new Vector4(Y, Z, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Z, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yzzw { get { return new Vector4(Y, Z, Z, W); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the Y, Z, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Yzwx { get { return new Vector4(Y, Z, W, X); } set { Y = value.X; Z = value.Y; W = value.Z; X = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Z, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yzwy { get { return new Vector4(Y, Z, W, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Z, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yzwz { get { return new Vector4(Y, Z, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, Z, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Yzww { get { return new Vector4(Y, Z, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, W, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Ywxx { get { return new Vector4(Y, W, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, W, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Ywxy { get { return new Vector4(Y, W, X, Y); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the Y, W, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Ywxz { get { return new Vector4(Y, W, X, Z); } set { Y = value.X; W = value.Y; X = value.Z; Z = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, W, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Ywxw { get { return new Vector4(Y, W, X, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, W, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Ywyx { get { return new Vector4(Y, W, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, W, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Ywyy { get { return new Vector4(Y, W, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, W, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Ywyz { get { return new Vector4(Y, W, Y, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, W, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Ywyw { get { return new Vector4(Y, W, Y, W); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the Y, W, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Ywzx { get { return new Vector4(Y, W, Z, X); } set { Y = value.X; W = value.Y; Z = value.Z; X = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, W, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Ywzy { get { return new Vector4(Y, W, Z, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, W, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Ywzz { get { return new Vector4(Y, W, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, W, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Ywzw { get { return new Vector4(Y, W, Z, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, W, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Ywwx { get { return new Vector4(Y, W, W, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, W, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Ywwy { get { return new Vector4(Y, W, W, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, W, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Ywwz { get { return new Vector4(Y, W, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Y, W, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Ywww { get { return new Vector4(Y, W, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, X, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zxxx { get { return new Vector4(Z, X, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, X, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zxxy { get { return new Vector4(Z, X, X, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, X, X and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zxxz { get { return new Vector4(Z, X, X, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, X, X and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zxxw { get { return new Vector4(Z, X, X, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, X, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zxyx { get { return new Vector4(Z, X, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, X, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zxyy { get { return new Vector4(Z, X, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, X, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zxyz { get { return new Vector4(Z, X, Y, Z); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the Z, X, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Zxyw { get { return new Vector4(Z, X, Y, W); } set { Z = value.X; X = value.Y; Y = value.Z; W = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, X, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zxzx { get { return new Vector4(Z, X, Z, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, X, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zxzy { get { return new Vector4(Z, X, Z, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, X, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zxzz { get { return new Vector4(Z, X, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, X, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zxzw { get { return new Vector4(Z, X, Z, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, X, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zxwx { get { return new Vector4(Z, X, W, X); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the Z, X, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Zxwy { get { return new Vector4(Z, X, W, Y); } set { Z = value.X; X = value.Y; W = value.Z; Y = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, X, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zxwz { get { return new Vector4(Z, X, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, X, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zxww { get { return new Vector4(Z, X, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Y, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zyxx { get { return new Vector4(Z, Y, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Y, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zyxy { get { return new Vector4(Z, Y, X, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Y, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zyxz { get { return new Vector4(Z, Y, X, Z); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the Z, Y, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Zyxw { get { return new Vector4(Z, Y, X, W); } set { Z = value.X; Y = value.Y; X = value.Z; W = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Y, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zyyx { get { return new Vector4(Z, Y, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Y, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zyyy { get { return new Vector4(Z, Y, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Y, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zyyz { get { return new Vector4(Z, Y, Y, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Y, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zyyw { get { return new Vector4(Z, Y, Y, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Y, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zyzx { get { return new Vector4(Z, Y, Z, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Y, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zyzy { get { return new Vector4(Z, Y, Z, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Y, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zyzz { get { return new Vector4(Z, Y, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Y, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zyzw { get { return new Vector4(Z, Y, Z, W); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the Z, Y, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Zywx { get { return new Vector4(Z, Y, W, X); } set { Z = value.X; Y = value.Y; W = value.Z; X = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Y, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zywy { get { return new Vector4(Z, Y, W, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Y, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zywz { get { return new Vector4(Z, Y, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Y, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zyww { get { return new Vector4(Z, Y, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzxx { get { return new Vector4(Z, Z, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzxy { get { return new Vector4(Z, Z, X, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzxz { get { return new Vector4(Z, Z, X, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzxw { get { return new Vector4(Z, Z, X, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzyx { get { return new Vector4(Z, Z, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzyy { get { return new Vector4(Z, Z, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzyz { get { return new Vector4(Z, Z, Y, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzyw { get { return new Vector4(Z, Z, Y, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzzx { get { return new Vector4(Z, Z, Z, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzzy { get { return new Vector4(Z, Z, Z, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzzz { get { return new Vector4(Z, Z, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzzw { get { return new Vector4(Z, Z, Z, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzwx { get { return new Vector4(Z, Z, W, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzwy { get { return new Vector4(Z, Z, W, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzwz { get { return new Vector4(Z, Z, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, Z, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zzww { get { return new Vector4(Z, Z, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, W, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zwxx { get { return new Vector4(Z, W, X, X); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the Z, W, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Zwxy { get { return new Vector4(Z, W, X, Y); } set { Z = value.X; W = value.Y; X = value.Z; Y = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, W, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zwxz { get { return new Vector4(Z, W, X, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, W, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zwxw { get { return new Vector4(Z, W, X, W); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the Z, W, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Zwyx { get { return new Vector4(Z, W, Y, X); } set { Z = value.X; W = value.Y; Y = value.Z; X = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, W, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zwyy { get { return new Vector4(Z, W, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, W, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zwyz { get { return new Vector4(Z, W, Y, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, W, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zwyw { get { return new Vector4(Z, W, Y, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, W, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zwzx { get { return new Vector4(Z, W, Z, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, W, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zwzy { get { return new Vector4(Z, W, Z, Y); } set { X = value.X; W = value.Y; Z = value.Z; Y = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, W, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zwzz { get { return new Vector4(Z, W, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, W, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zwzw { get { return new Vector4(Z, W, Z, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, W, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zwwx { get { return new Vector4(Z, W, W, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, W, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zwwy { get { return new Vector4(Z, W, W, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, W, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zwwz { get { return new Vector4(Z, W, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the Z, W, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Zwww { get { return new Vector4(Z, W, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, X, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wxxx { get { return new Vector4(W, X, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, X, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wxxy { get { return new Vector4(W, X, X, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, X, X and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wxxz { get { return new Vector4(W, X, X, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, X, X and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wxxw { get { return new Vector4(W, X, X, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, X, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wxyx { get { return new Vector4(W, X, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, X, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wxyy { get { return new Vector4(W, X, Y, Y); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the W, X, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Wxyz { get { return new Vector4(W, X, Y, Z); } set { W = value.X; X = value.Y; Y = value.Z; Z = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, X, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wxyw { get { return new Vector4(W, X, Y, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, X, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wxzx { get { return new Vector4(W, X, Z, X); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the W, X, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Wxzy { get { return new Vector4(W, X, Z, Y); } set { W = value.X; X = value.Y; Z = value.Z; Y = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, X, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wxzz { get { return new Vector4(W, X, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, X, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wxzw { get { return new Vector4(W, X, Z, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, X, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wxwx { get { return new Vector4(W, X, W, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, X, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wxwy { get { return new Vector4(W, X, W, Y); } }
+
+        /// <summary>
+        /// Getss an OpenTK.Vector4 with the W, X, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wxwz { get { return new Vector4(W, X, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, X, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wxww { get { return new Vector4(W, X, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Y, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wyxx { get { return new Vector4(W, Y, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Y, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wyxy { get { return new Vector4(W, Y, X, Y); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the W, Y, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Wyxz { get { return new Vector4(W, Y, X, Z); } set { W = value.X; Y = value.Y; X = value.Z; Z = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Y, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wyxw { get { return new Vector4(W, Y, X, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Y, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wyyx { get { return new Vector4(W, Y, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Y, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wyyy { get { return new Vector4(W, Y, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Y, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wyyz { get { return new Vector4(W, Y, Y, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Y, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wyyw { get { return new Vector4(W, Y, Y, W); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the W, Y, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Wyzx { get { return new Vector4(W, Y, Z, X); } set { W = value.X; Y = value.Y; Z = value.Z; X = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Y, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wyzy { get { return new Vector4(W, Y, Z, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Y, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wyzz { get { return new Vector4(W, Y, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Y, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wyzw { get { return new Vector4(W, Y, Z, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Y, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wywx { get { return new Vector4(W, Y, W, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Y, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wywy { get { return new Vector4(W, Y, W, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Y, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wywz { get { return new Vector4(W, Y, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Y, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wyww { get { return new Vector4(W, Y, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Z, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wzxx { get { return new Vector4(W, Z, X, X); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the W, Z, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Wzxy { get { return new Vector4(W, Z, X, Y); } set { W = value.X; Z = value.Y; X = value.Z; Y = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Z, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wzxz { get { return new Vector4(W, Z, X, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Z, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wzxw { get { return new Vector4(W, Z, X, W); } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector4 with the W, Z, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+		public Vector4 Wzyx { get { return new Vector4(W, Z, Y, X); } set { W = value.X; Z = value.Y; Y = value.Z; X = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Z, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wzyy { get { return new Vector4(W, Z, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Z, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wzyz { get { return new Vector4(W, Z, Y, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Z, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wzyw { get { return new Vector4(W, Z, Y, W); } set { X = value.X; Z = value.Y; Y = value.Z; W = value.W; } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Z, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wzzx { get { return new Vector4(W, Z, Z, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Z, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wzzy { get { return new Vector4(W, Z, Z, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Z, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wzzz { get { return new Vector4(W, Z, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Z, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wzzw { get { return new Vector4(W, Z, Z, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Z, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wzwx { get { return new Vector4(W, Z, W, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Z, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wzwy { get { return new Vector4(W, Z, W, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Z, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wzwz { get { return new Vector4(W, Z, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, Z, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wzww { get { return new Vector4(W, Z, W, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, X, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwxx { get { return new Vector4(W, W, X, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwxy { get { return new Vector4(W, W, X, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwxz { get { return new Vector4(W, W, X, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, X, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwxw { get { return new Vector4(W, W, X, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwyx { get { return new Vector4(W, W, Y, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, Y, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwyy { get { return new Vector4(W, W, Y, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, Y, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwyz { get { return new Vector4(W, W, Y, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, Y, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwyw { get { return new Vector4(W, W, Y, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwzx { get { return new Vector4(W, W, Z, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwzy { get { return new Vector4(W, W, Z, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, Z, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwzz { get { return new Vector4(W, W, Z, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, Z, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwzw { get { return new Vector4(W, W, Z, W); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, W, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwwx { get { return new Vector4(W, W, W, X); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, W, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwwy { get { return new Vector4(W, W, W, Y); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, W, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwwz { get { return new Vector4(W, W, W, Z); } }
+
+        /// <summary>
+        /// Gets an OpenTK.Vector4 with the W, W, W, and W components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector4 Wwww { get { return new Vector4(W, W, W, W); } }
+
+        #endregion
 
         #endregion
 
