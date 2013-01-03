@@ -558,6 +558,7 @@
     <Compile Include="OpenTK\Test\BasicMouseInput.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="OpenTK\Test\MatrixTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

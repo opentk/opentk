@@ -15,39 +15,53 @@
   <PropertyGroup>
     <ProjectGuid>{ADC34399-7613-44D2-90B2-19250F06FE7B}</ProjectGuid>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
     <InputPath>..\..\</InputPath>
     <OutputPath>.\opentk\</OutputPath>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Build.Installer.Zip</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Documentation|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>opentk\</OutputPath>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>opentk\</OutputPath>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>opentk\</OutputPath>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nsis|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>opentk\</OutputPath>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <Target Name="Build">
     <CallTarget Targets="CleanTreeCopy" />
     <!-- Make a clean copy of the source tree -->
-    <CreateItem
-        Include="$(InputPath)**\*.*"
-        Exclude="$(InputPath)**\.svn\**\*.*;
-                 $(InputPath)**\obj\**\*.*;
-                 $(InputPath)Installers\Zip\opentk\**\*.*;
-                 $(InputPath)Documentation\Source\**\*.*;
-		 $(InputPath)Automation\**\*.*;
-		 $(InputPath)Old\**\*.*;
-                 $(InputPath)**\OpenTK*.xml;
-                 $(InputPath)**\*.suo;
-                 $(InputPath)**\*.pidb;
-                 $(InputPath)**\*.userprefs;
-                 $(InputPath)**\opentk*.zip;
-                 $(InputPath)**\opentk*.exe;
-                 $(InputPath)**\vshost*.exe;
-                 ">
-        <Output TaskParameter="Include" ItemName="FileList" />
+    <CreateItem Include="$(InputPath)**\*.*" Exclude="$(InputPath)**\.svn\**\*.*;&#xD;&#xA;                 $(InputPath)**\obj\**\*.*;&#xD;&#xA;                 $(InputPath)Installers\Zip\opentk\**\*.*;&#xD;&#xA;                 $(InputPath)Documentation\Source\**\*.*;&#xD;&#xA;		 $(InputPath)Automation\**\*.*;&#xD;&#xA;		 $(InputPath)Old\**\*.*;&#xD;&#xA;                 $(InputPath)**\OpenTK*.xml;&#xD;&#xA;                 $(InputPath)**\*.suo;&#xD;&#xA;                 $(InputPath)**\*.pidb;&#xD;&#xA;                 $(InputPath)**\*.userprefs;&#xD;&#xA;                 $(InputPath)**\opentk*.zip;&#xD;&#xA;                 $(InputPath)**\opentk*.exe;&#xD;&#xA;                 $(InputPath)**\vshost*.exe;&#xD;&#xA;                 ">
+      <Output TaskParameter="Include" ItemName="FileList" />
     </CreateItem>
-    <Copy SourceFiles="@(FileList)" DestinationFiles="@(FileList->'$(OutputPath)%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="@(FileList)" DestinationFiles="@(FileList-&gt;'$(OutputPath)%(RecursiveDir)%(Filename)%(Extension)')" />
     <!-- Zip the copy of the source tree -->
     <Exec Command="7z a -tzip opentk.zip $(OutputPath)" />
     <!-- Copy the zip file to the root directory and add a date stamp -->
     <ReadLinesFromFile File="../../Version.txt">
-      <Output TaskParameter="Lines" ItemName="Version"/>
+      <Output TaskParameter="Lines" ItemName="Version" />
     </ReadLinesFromFile>
-    <Copy SourceFiles=".\opentk.zip" DestinationFiles="@(Version->'..\..\opentk-%(Identity).zip')" />
+    <Copy SourceFiles=".\opentk.zip" DestinationFiles="@(Version-&gt;'..\..\opentk-%(Identity).zip')" />
   </Target>
   <Target Name="Clean">
     <CreateItem Include=".\opentk.zip;..\..\opentk-*.zip">

@@ -49,7 +49,7 @@ namespace Examples
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-               // Examples.Tests.BasicMouseInput.Main ();
+                Examples.Tests.MatrixTest.Main ();
 
                 using (Form browser = new ExampleBrowser())
                 {
