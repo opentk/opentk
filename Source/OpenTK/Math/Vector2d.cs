@@ -92,6 +92,21 @@ namespace OpenTK
 
         #region Public Members
 
+        /// <summary>
+        /// Gets or sets the value at the index of the Vector.
+        /// </summary>
+        public double this[int index] {
+            get{
+                if(index == 0) return X;
+                else if(index == 1) return Y;
+                throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
+            } set{
+                if(index == 0) X = value;
+                else if(index == 1) Y = value;
+                throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+            }
+        }
+
         #region Instance
 
         #region public void Add()
