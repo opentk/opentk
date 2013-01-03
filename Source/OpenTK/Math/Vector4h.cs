@@ -389,7 +389,8 @@ namespace OpenTK
         /// <summary>Returns a string that contains this Half4's numbers in human-legible form.</summary>
         public override string ToString()
         {
-            return String.Format("({0}, {1}, {2}, {3})", X.ToString(), Y.ToString(), Z.ToString(), W.ToString());
+            string separator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+            return String.Format("({0}{4} {1}{4} {2}{4} {3})", X.ToString(), Y.ToString(), Z.ToString(), W.ToString(), separator);
         }
 
         #endregion ToString()

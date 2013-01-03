@@ -1155,7 +1155,8 @@ namespace OpenTK
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("({0}, {1}, {2}, {3})", X, Y, Z, W);
+            string separator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+            return String.Format("({0}{4} {1}{4} {2}{4} {3})", X, Y, Z, W, separator);
         }
 
         #endregion

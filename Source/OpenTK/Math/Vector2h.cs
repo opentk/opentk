@@ -315,7 +315,8 @@ namespace OpenTK
         /// <summary>Returns a string that contains this Half2's numbers in human-legible form.</summary>
         public override string ToString()
         {
-            return String.Format("({0}, {1})", X.ToString(), Y.ToString());
+            string separator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+            return String.Format("({0}{2} {1})", X, Y, separator);
         }
 
         #endregion ToString()

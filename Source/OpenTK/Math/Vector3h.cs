@@ -358,7 +358,8 @@ namespace OpenTK
         /// <summary>Returns a string that contains this Half3's numbers in human-legible form.</summary>
         public override string ToString()
         {
-            return String.Format("({0}, {1}, {2})", X.ToString(), Y.ToString(), Z.ToString());
+            string separator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+            return String.Format("({0}{3} {1}{3} {2})", X.ToString(), Y.ToString(), Z.ToString(), separator);
         }
 
         #endregion ToString()
