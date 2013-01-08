@@ -1335,14 +1335,14 @@ namespace OpenTK
 
         #region public override string ToString()
 
+        private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         /// <summary>
         /// Returns a System.String that represents the current Vector3.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            string separator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
-            return String.Format("({0}{3} {1}{3} {2})", X, Y, Z, separator);
+            return String.Format("({0}{3} {1}{3} {2})", X, Y, Z, listSeparator);
         }
 
         #endregion

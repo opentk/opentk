@@ -957,14 +957,14 @@ namespace OpenTK
 
         #region public override string ToString()
 
+        private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         /// <summary>
         /// Returns a System.String that represents the current instance.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            string separator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
-            return String.Format("({0}{2} {1})", X, Y, separator);
+            return String.Format("({0}{2} {1})", X, Y, listSeparator);
         }
 
         #endregion

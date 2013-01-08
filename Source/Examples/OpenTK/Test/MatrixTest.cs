@@ -24,7 +24,7 @@ namespace Examples.Tests
             Matrix4 translation = new Matrix4(new Vector4(1, 0, 0, 2), new Vector4(0, 1, 0, 3), new Vector4(0, 0, 1, -1), new Vector4(0, 0, 0, 1));
             Vector4 point = new Vector4(x, y, z, 1);
 
-             Vector4 result = Vector4.Transform(point, createdTranslation);
+            Vector4 result = Vector4.Transform(point, translation);
 
             Trace.WriteLine("Result should be: (3, 4, 0, 1) : " + result);
 
