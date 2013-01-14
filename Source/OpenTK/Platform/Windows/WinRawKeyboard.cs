@@ -102,7 +102,16 @@ namespace OpenTK.Platform.Windows
                         // keyboard device by qeurying the registry.
                         RegistryKey regkey = GetRegistryKey(name);
                         string deviceDesc = (string)regkey.GetValue("DeviceDesc");
+
                         string deviceClass = (string)regkey.GetValue("Class");
+            
+                        string deviceClassGUID = (string)regkey.GetValue("ClassGUID"); // for windows 8 support via OpenTK issue 3198
+
+                        // making a guess at backwards compatability. Not sure what older windows returns in these cases...
+                        if(deviceClass != null || deviceClass.Equals(string.Empty)){
+                            RegistryKey classGUIDKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
+                            deviceClass = classGUIDKey != null ? (string) classGUIDKey.GetValue("Class") : string.Empty;
+                        }
 
                         if (String.IsNullOrEmpty(deviceDesc))
                         {
