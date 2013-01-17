@@ -839,6 +839,32 @@ namespace OpenTK
 
         #endregion
 
+        #region PerpDot
+
+        /// <summary>
+        /// Calculate the perpendicular dot (scalar) product of two vectors
+        /// </summary>
+        /// <param name="left">First operand</param>
+        /// <param name="right">Second operand</param>
+        /// <returns>The perpendicular dot product of the two inputs</returns>
+        public static float PerpDot(Vector2 left, Vector2 right)
+        {
+            return left.X * right.Y - left.Y * right.X;
+        }
+
+        /// <summary>
+        /// Calculate the perpendicular dot (scalar) product of two vectors
+        /// </summary>
+        /// <param name="left">First operand</param>
+        /// <param name="right">Second operand</param>
+        /// <param name="result">The perpendicular dot product of the two inputs</param>
+        public static void PerpDot(ref Vector2 left, ref Vector2 right, out float result)
+        {
+            result = left.X * right.Y - left.Y * right.X;
+        }
+
+        #endregion
+
         #region Lerp
 
         /// <summary>
