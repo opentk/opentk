@@ -50,5 +50,7 @@ namespace OpenTK.Platform
         OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver();
 
         OpenTK.Input.IMouseDriver2 CreateMouseDriver();
+
+        OpenTK.Input.IGamePadDriver CreateGamePadDriver();
     }
 }

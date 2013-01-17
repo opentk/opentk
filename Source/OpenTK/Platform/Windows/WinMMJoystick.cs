@@ -87,7 +87,7 @@ namespace OpenTK.Platform.Windows
             if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
                 num_axes += 2;
 
-            stick = new JoystickDevice<WinMMJoyDetails>(number, num_axes, caps.NumButtons);            
+            stick = new JoystickDevice<WinMMJoyDetails>(number, num_axes, caps.NumButtons);
             stick.Details = new WinMMJoyDetails(num_axes);
 
             // Make sure to reverse the vertical axes, so that +1 points up and -1 points down.
@@ -427,5 +427,21 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion
+
+        //HACK implement
+        public GamePadState GetState()
+        {
+            throw new NotImplementedException();
+        }
+
+        public GamePadState GetState(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetDeviceName(int index)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -50,7 +50,7 @@ namespace OpenTK.Platform.MacOS
 
     // Requires Mac OS X 10.5 or higher.
     // Todo: create a driver for older installations. Maybe use CGGetLastMouseDelta for that?
-    class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2
+    class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2/*, IGamePadDriver*/
     {
         #region Fields
 

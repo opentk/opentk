@@ -124,6 +124,11 @@ namespace OpenTK.Platform
             return default_implementation.CreateMouseDriver();
         }
 
+        public OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+        {
+            return default_implementation.CreateGamePadDriver();
+        }
+
         class UnsupportedPlatform : IPlatformFactory
         {
             #region Fields
@@ -178,7 +183,12 @@ namespace OpenTK.Platform
             {
                 throw new PlatformNotSupportedException(error_string);
             }
-            
+
+            public OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+            {
+                throw new PlatformNotSupportedException(error_string);
+            }
+
             #endregion
         }
 

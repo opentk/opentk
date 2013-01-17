@@ -42,7 +42,7 @@ namespace OpenTK.Platform.Windows
     // Input driver for legacy (pre XP) Windows platforms.
     // Supports a single mouse and keyboard through async input.
     // Supports multiple joysticks through WinMM.
-    sealed class WMInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2, IGamePadDriver
+    sealed class WMInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2/*, IGamePadDriver*/ //HACK uncomment and implement
     {
         #region Fields
 
@@ -111,7 +111,7 @@ namespace OpenTK.Platform.Windows
 
         public IGamePadDriver GamePadDriver
         {
-            get { return this; }
+            get { return null; } //HACK return this when implemented.
         }
 
         #endregion

@@ -29,13 +29,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
     struct X11JoyDetails { }
 
-    sealed class X11Joystick : IJoystickDriver
+    sealed class X11Joystick : IJoystickDriver, IGamePadDriver
     {
         #region Fields
 
@@ -58,8 +59,8 @@ namespace OpenTK.Platform.X11
                 JoystickDevice stick = OpenJoystick(JoystickPath, number++);
                 if (stick != null)
                 {
-                    stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
-                        number, stick.Axis.Count, stick.Button.Count, JoystickPath);
+                    //stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
+                        //number, stick.Axis.Count, stick.Button.Count, JoystickPath);
                     sticks.Add(stick);
                 }
             }
@@ -70,8 +71,8 @@ namespace OpenTK.Platform.X11
                 JoystickDevice stick = OpenJoystick(JoystickPathLegacy, number++);
                 if (stick != null)
                 {
-                    stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
-                        number, stick.Axis.Count, stick.Button.Count, JoystickPathLegacy);
+                    //stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
+                        //number, stick.Axis.Count, stick.Button.Count, JoystickPathLegacy);
                     sticks.Add(stick);
                 }
             }
@@ -153,6 +154,11 @@ namespace OpenTK.Platform.X11
                 UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Buttons, ref buttons);
 
                 stick = new JoystickDevice<X11JoyDetails>(fd, axes, buttons);
+
+                StringBuilder sb = new StringBuilder(128);
+                UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Name128, sb);
+                stick.Description = sb.ToString();
+
                 Debug.Print("Found joystick on path {0}", path);
             }
             finally
@@ -186,7 +192,8 @@ namespace OpenTK.Platform.X11
         {
             Version = 0x80046a01,
             Axes = 0x80016a11,
-            Buttons = 0x80016a12
+            Buttons = 0x80016a12,
+            Name128 = (2u << 30) | (0x6A << 8) | (0x13 << 0) | (128 << 16) //JSIOCGNAME(128), which is _IOC(_IO_READ, 'j', 0x13, len)
         }
 
         static readonly string JoystickPath = "/dev/input/js";
@@ -202,6 +209,9 @@ namespace OpenTK.Platform.X11
         {
             [DllImport("libc", SetLastError = true)]
             public static extern int ioctl(int d, JoystickIoctlCode request, ref int data);
+
+            [DllImport("libc", SetLastError = true)]
+            public static extern int ioctl(int d, JoystickIoctlCode request, StringBuilder data);
 
             [DllImport("libc", SetLastError = true)]
             public static extern int open([MarshalAs(UnmanagedType.LPStr)]string pathname, OpenFlags flags);
@@ -248,5 +258,21 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
+
+        //HACK implement
+        public GamePadState GetState()
+        {
+            throw new NotImplementedException();
+        }
+
+        public GamePadState GetState(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetDeviceName(int index)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
