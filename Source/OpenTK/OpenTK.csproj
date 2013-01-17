@@ -767,6 +767,8 @@
     <Compile Include="Platform\MacOS\HIDInput.cs" />
     <Compile Include="IntPtrEqualityComparer.cs" />
     <Compile Include="Math\Matrix3.cs" />
+	<Compile Include="Input\GamePadButton.cs" />
+	<Compile Include="Input\GamePadAxis.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
