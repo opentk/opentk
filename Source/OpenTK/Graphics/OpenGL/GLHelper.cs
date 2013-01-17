@@ -300,17 +300,6 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
 
-        public static void UniformMatrix4(int location, bool transpose, ref Matrix4 matrix)
-        {
-            unsafe
-            {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
-                {
-                    GL.UniformMatrix4(location, 1, transpose, matrix_ptr);
-                }
-            }
-        }
-
         public static void Normal3(Vector3d normal)
         {
             GL.Normal3(normal.X, normal.Y, normal.Z);
@@ -463,6 +452,50 @@ namespace OpenTK.Graphics.OpenGL
         public static void Uniform4(int location, Quaternion quaternion)
         {
             GL.Uniform4(location, quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
+        }
+
+        public static void UniformMatrix3(int location, bool transpose, ref Matrix3 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix3(location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void UniformMatrix3(int location, bool transpose, ref Matrix3d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix3(location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void UniformMatrix4(int location, bool transpose, ref Matrix4 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix4(location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void UniformMatrix4(int location, bool transpose, ref Matrix4d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix4(location, 1, transpose, matrix_ptr);
+                }
+            }
         }
 
         #endregion

@@ -132,6 +132,7 @@
     <Compile Include="Input\IInputDriver2.cs" />
     <Compile Include="Input\IKeyboardDriver2.cs" />
     <Compile Include="Input\IMouseDriver2.cs" />
+    <Compile Include="Math\Matrix3.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
     <Compile Include="WindowBorder.cs">
