@@ -1213,12 +1213,6 @@ namespace OpenTK
         #region 2-component
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the X and X components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector2d Xx { get { return new Vector2d(X, X); } }
-
-        /// <summary>
         /// Gets or sets an OpenTK.Vector2d with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
@@ -1235,12 +1229,6 @@ namespace OpenTK
         /// </summary>
         [XmlIgnore]
         public Vector2d Yx { get { return new Vector2d(Y, X); } set { Y = value.X; X = value.Y; } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the Y and Y components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector2d Yy { get { return new Vector2d(Y, Y); } }
 
         /// <summary>
         /// Gets or sets an OpenTK.Vector2d with the Y and Z components of this instance.
@@ -1260,51 +1248,9 @@ namespace OpenTK
         [XmlIgnore]
         public Vector2d Zy { get { return new Vector2d(Z, Y); } set { Z = value.X; Y = value.Y; } }
 
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the Z and Z components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector2d Zz { get { return new Vector2d(Z, Z); } }
-
         #endregion
 
         #region 3-component
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, X, and X components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Xxx { get { return new Vector3d(X, X, X); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, X, and Y components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Xxy { get { return new Vector3d(X, X, Y); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, X and Z components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Xxz { get { return new Vector3d(X, X, Z); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, Y, and X components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Xyx { get { return new Vector3d(X, Y, X); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, Y, and Y components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Xyy { get { return new Vector3d(X, Y, Y); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, Z, and X components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Xzx { get { return new Vector3d(X, Z, X); } }
 
         /// <summary>
         /// Gets or sets an OpenTK.Vector3d with the X, Z, and Y components of this instance.
@@ -1313,46 +1259,10 @@ namespace OpenTK
         public Vector3d Xzy { get { return new Vector3d(X, Z, Y); } set { X = value.X; Z = value.Y; Y = value.Z; } }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, Z, and Z components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Xzz { get { return new Vector3d(X, Z, Z); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Y, X, and X components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Yxx { get { return new Vector3d(Y, X, X); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Y, X, and Y components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Yxy { get { return new Vector3d(Y, X, Y); } }
-
-        /// <summary>
         /// Gets or sets an OpenTK.Vector3d with the Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Yxz { get { return new Vector3d(Y, X, Z); } set { Y = value.X; X = value.Y; Z = value.Z; } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Y, Y, and X components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Yyx { get { return new Vector3d(Y, Y, X); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Y, Y, and Y components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Yyy { get { return new Vector3d(Y, Y, Y); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Y, Y, and Z components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Yyz { get { return new Vector3d(Y, Y, Z); } }
 
         /// <summary>
         /// Gets or sets an OpenTK.Vector3d with the Y, Z, and X components of this instance.
@@ -1361,70 +1271,16 @@ namespace OpenTK
         public Vector3d Yzx { get { return new Vector3d(Y, Z, X); } set { Y = value.X; Z = value.Y; X = value.Z; } }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Y, Z, and Y components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Yzy { get { return new Vector3d(Y, Z, Y); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Y, Z, and Z components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Yzz { get { return new Vector3d(Y, Z, Z); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Z, X, and X components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Zxx { get { return new Vector3d(Z, X, X); } }
-
-        /// <summary>
         /// Gets or sets an OpenTK.Vector3d with the Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Zxy { get { return new Vector3d(Z, X, Y); } set { Z = value.X; X = value.Y; Y = value.Z; } }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Z, X, and Z components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Zxz { get { return new Vector3d(Z, X, Z); } }
-
-        /// <summary>
         /// Gets or sets an OpenTK.Vector3d with the Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Zyx { get { return new Vector3d(Z, Y, X); } set { Z = value.X; Y = value.Y; X = value.Z; } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Z, Y, and Y components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Zyy { get { return new Vector3d(Z, Y, Y); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Z, Y, and Z components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Zyz { get { return new Vector3d(Z, Y, Z); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Z, Z, and X components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Zzx { get { return new Vector3d(Z, Z, X); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Z, Z, and Y components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Zzy { get { return new Vector3d(Z, Z, Y); } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Z, Z, and Z components of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector3d Zzz { get { return new Vector3d(Z, Z, Z); } }
 
         #endregion
 

@@ -976,22 +976,10 @@ namespace OpenTK
         #region Swizzle
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2 with the X component of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector2 Xx { get { return new Vector2(X, X); } }
-
-        /// <summary>
         /// Gets or sets an OpenTK.Vector2 with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2 Yx { get { return new Vector2(Y, X); } set { Y = value.X; X = value.Y; } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector2 with the Y component of this instance.
-        /// </summary>
-        [XmlIgnore]
-        public Vector2 Yy { get { return new Vector2(Y, Y); } }
 
         #endregion
 
