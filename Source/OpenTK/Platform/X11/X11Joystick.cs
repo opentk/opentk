@@ -89,7 +89,7 @@ namespace OpenTK.Platform.X11
 
         public IList<JoystickDevice> Joysticks
         {
-			get { Poll(); return sticks_readonly; }
+            get { Poll(); return sticks_readonly; }
         }
 
         public void Poll()
@@ -267,8 +267,8 @@ namespace OpenTK.Platform.X11
 
         public GamePadState GetState(int index)
         {
-			Poll();
-
+            Poll();
+            throw new NotImplementedException();
         }
 
         public string GetDeviceName(int index)

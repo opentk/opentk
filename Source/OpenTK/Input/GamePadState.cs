@@ -32,7 +32,7 @@ namespace OpenTK.Input
     /// <summary>
     /// Encapsulates the state of a GamePad device.
     /// </summary>
-	public struct GamePadState : IEquatable<GamePadState>
+    public struct GamePadState /*: IEquatable<GamePadState>*/
     {
 
     }
