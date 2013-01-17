@@ -348,8 +348,6 @@ namespace OpenTK
 
         #endregion
 
-        #endregion
-
         #region Static
 
         #region Fields
