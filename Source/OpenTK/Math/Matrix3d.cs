@@ -56,7 +56,7 @@ namespace OpenTK
         /// </summary>
         public static Matrix3d Identity = new Matrix3d(Vector3d.UnitX, Vector3d.UnitY, Vector3d.UnitZ);
         
-#endregion
+        #endregion
         
         #region Constructors
         
@@ -95,7 +95,7 @@ namespace OpenTK
             Row2 = new Vector3d(m20, m21, m22);
         }
         
-#endregion
+        #endregion
         
         #region Public Members
         
@@ -187,7 +187,7 @@ namespace OpenTK
         /// </summary>
         public double M33 { get { return Row2.Z; } set { Row2.Z = value; } }
         
-#endregion
+        #endregion
         
         #region Instance
         
@@ -198,7 +198,7 @@ namespace OpenTK
             this = Matrix3d.Invert(this);
         }
         
-#endregion
+        #endregion
         
         #region public void Transpose()
         
@@ -207,9 +207,9 @@ namespace OpenTK
             this = Matrix3d.Transpose(this);
         }
         
-#endregion
+        #endregion
         
-#endregion
+        #endregion
         
         #region Static
         
@@ -256,7 +256,7 @@ namespace OpenTK
             return result;
         }
         
-#endregion
+        #endregion
         
         #region CreateFromQuaternion
         
@@ -275,7 +275,7 @@ namespace OpenTK
             return result;
         }
         
-#endregion
+        #endregion
         
         #region CreateRotation[XYZ]
         
@@ -336,7 +336,7 @@ namespace OpenTK
             return result;
         }
         
-#endregion
+        #endregion
         
         #region CreateScale
         
@@ -419,7 +419,7 @@ namespace OpenTK
             result.Row2.Z = z;
         }
         
-#endregion
+        #endregion
         
         #region Multiply Functions
         
@@ -450,7 +450,7 @@ namespace OpenTK
             result.Row2.Z = ((lM31 * rM13) + (lM32 * rM23)) + (lM33 * rM33);
         }
         
-#endregion
+        #endregion
         
         #region Invert Functions
         
@@ -575,7 +575,7 @@ namespace OpenTK
             return result;
         }
         
-#endregion
+        #endregion
         
         #region Transpose
         
@@ -591,9 +591,9 @@ namespace OpenTK
             result.Row2 = mat.Column2;
         }
         
-#endregion
+        #endregion
         
-#endregion
+        #endregion
         
         #region Operators
         
@@ -612,7 +612,7 @@ namespace OpenTK
             return !left.Equals(right);
         }
         
-#endregion
+        #endregion
         
         #region Overrides
         
@@ -627,7 +627,7 @@ namespace OpenTK
             return String.Format("{0}\n{1}\n{2}", Row0, Row1, Row2);
         }
         
-#endregion
+        #endregion
         
         #region public override int GetHashCode()
         
@@ -640,7 +640,7 @@ namespace OpenTK
             return Row0.GetHashCode() ^ Row1.GetHashCode() ^ Row2.GetHashCode();
         }
         
-#endregion
+        #endregion
         
         #region public override bool Equals(object obj)
         
@@ -657,11 +657,11 @@ namespace OpenTK
             return this.Equals((Matrix3d)obj);
         }
         
-#endregion
+        #endregion
         
-#endregion
+        #endregion
         
-#endregion
+        #endregion
         
         #region IEquatable<Matrix3d> Members
         
@@ -673,6 +673,6 @@ namespace OpenTK
                     Row2 == other.Row2;
         }
         
-#endregion
+        #endregion
     }
 }
