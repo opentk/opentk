@@ -1214,9 +1214,9 @@ namespace OpenTK
         /// Calculate the inverse of the given matrix
         /// </summary>
         /// <param name="mat">The matrix to invert</param>
-        /// <returns>The inverse of the given matrix if it has one, or the input if it is singular</returns>
+        /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular</param>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
-        public static Matrix4 Invert(Matrix4 mat)
+        public static void Invert(ref Matrix4 mat, out Matrix4 result)
         {
             int[] colIdx = { 0, 0, 0, 0 };
             int[] rowIdx = { 0, 0, 0, 0 };
@@ -1251,7 +1251,8 @@ namespace OpenTK
                             }
                             else if (pivotIdx[k] > 0)
                             {
-                                return mat;
+                                result = mat;
+                                return;
                             }
                         }
                     }
@@ -1278,7 +1279,6 @@ namespace OpenTK
                 if (pivot == 0.0f)
                 {
                     throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
-                    //return mat;
                 }
 
                 // Scale row so it has a unit diagonal
@@ -1313,24 +1313,35 @@ namespace OpenTK
                 }
             }
 
-            mat.Row0.X = inverse[0, 0];
-            mat.Row0.Y = inverse[0, 1];
-            mat.Row0.Z = inverse[0, 2];
-            mat.Row0.W = inverse[0, 3];
-            mat.Row1.X = inverse[1, 0];
-            mat.Row1.Y = inverse[1, 1];
-            mat.Row1.Z = inverse[1, 2];
-            mat.Row1.W = inverse[1, 3];
-            mat.Row2.X = inverse[2, 0];
-            mat.Row2.Y = inverse[2, 1];
-            mat.Row2.Z = inverse[2, 2];
-            mat.Row2.W = inverse[2, 3];
-            mat.Row3.X = inverse[3, 0];
-            mat.Row3.Y = inverse[3, 1];
-            mat.Row3.Z = inverse[3, 2];
-            mat.Row3.W = inverse[3, 3];
+            result.Row0.X = inverse[0, 0];
+            result.Row0.Y = inverse[0, 1];
+            result.Row0.Z = inverse[0, 2];
+            result.Row0.W = inverse[0, 3];
+            result.Row1.X = inverse[1, 0];
+            result.Row1.Y = inverse[1, 1];
+            result.Row1.Z = inverse[1, 2];
+            result.Row1.W = inverse[1, 3];
+            result.Row2.X = inverse[2, 0];
+            result.Row2.Y = inverse[2, 1];
+            result.Row2.Z = inverse[2, 2];
+            result.Row2.W = inverse[2, 3];
+            result.Row3.X = inverse[3, 0];
+            result.Row3.Y = inverse[3, 1];
+            result.Row3.Z = inverse[3, 2];
+            result.Row3.W = inverse[3, 3];
+        }
 
-            return mat;
+        /// <summary>
+        /// Calculate the inverse of the given matrix
+        /// </summary>
+        /// <param name="mat">The matrix to invert</param>
+        /// <returns>The inverse of the given matrix if it has one, or the input if it is singular</returns>
+        /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
+        public static Matrix4 Invert(Matrix4 mat)
+        {
+            Matrix4 result;
+            Invert(ref mat, out result);
+            return result;
         }
 
         #endregion
