@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -133,6 +133,8 @@
     <Compile Include="Input\IKeyboardDriver2.cs" />
     <Compile Include="Input\IMouseDriver2.cs" />
     <Compile Include="Math\Matrix3.cs" />
+    <Compile Include="Math\Matrix3x4.cs" />
+    <Compile Include="Math\Matrix4x3.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
     <Compile Include="WindowBorder.cs">
@@ -766,8 +768,8 @@
     </EmbeddedResource>
     <Compile Include="Platform\MacOS\HIDInput.cs" />
     <Compile Include="IntPtrEqualityComparer.cs" />
-	<Compile Include="Input\GamePadButton.cs" />
-	<Compile Include="Input\GamePadAxis.cs" />
+    <Compile Include="Input\GamePadButton.cs" />
+    <Compile Include="Input\GamePadAxis.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
