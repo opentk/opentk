@@ -118,7 +118,6 @@ namespace OpenTK
         #region Properties
 
         /// <summary>
-        /// The determinant of this matrix
         /// Gets the determinant of this matrix.
         /// </summary>
         public float Determinant
@@ -1109,7 +1108,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <returns>A new instance that is the result of the multiplication</returns>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix4 Mult(Matrix4 left, Matrix4 right)
         {
             Matrix4 result;
@@ -1122,7 +1121,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <param name="result">A new instance that is the result of the multiplication</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix4 left, ref Matrix4 right, out Matrix4 result)
         {
             float lM11 = left.Row0.X, lM12 = left.Row0.Y, lM13 = left.Row0.Z, lM14 = left.Row0.W,

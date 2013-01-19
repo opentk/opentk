@@ -27,6 +27,9 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK
 {
+    /// <summary>
+    /// Represents a 2x2 matrix
+    /// </summary>
     public struct Matrix2 : IEquatable<Matrix2>
     {
         #region Fields
@@ -45,12 +48,24 @@ namespace OpenTK
 
         #region Constructors
 
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="row0">Top row of the matrix.</param>
+        /// <param name="row1">Bottom row of the matrix.</param>
         public Matrix2(Vector2 row0, Vector2 row1)
         {
             Row0 = row0;
             Row1 = row1;
         }
 
+        /// <summary>
+        /// Constructs a new instance
+        /// </summary>
+        /// <param name="m00">First item of the first row of the matrix.</param>
+        /// <param name="m01">Second item of the first row of the matrix.</param>
+        /// <param name="m10">First item of the second row of the matrix.</param>
+        /// <param name="m11">Second item of the second row of the matrix.</param>
         public Matrix2(
             float m00, float m01,
             float m10, float m11)
@@ -65,6 +80,9 @@ namespace OpenTK
 
         #region Properties
 
+        /// <summary>
+        /// Gets the determinant of this matrix.
+        /// </summary>
         public float Determinant
         {
             get
@@ -76,21 +94,42 @@ namespace OpenTK
             }
         }
 
+        /// <summary>
+        /// Gets the first column of this matrix.
+        /// </summary>
         public Vector2 Column0
         {
             get { return new Vector2(Row0.X, Row1.X); }
             set { Row0.X = value.X; Row1.X = value.Y; }
         }
 
+        /// <summary>
+        /// Gets the second column of this matrix.
+        /// </summary>
         public Vector2 Column1
         {
             get { return new Vector2(Row0.Y, Row1.Y); }
             set { Row0.Y = value.X; Row1.Y = value.Y; }
         }
 
+        /// <summary>
+        /// Gets or sets the value at row 1, column 1 of this instance.
+        /// </summary>
         public float M11 { get { return Row0.X; } set { Row0.X = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 1, column 2 of this instance.
+        /// </summary>
         public float M12 { get { return Row0.Y; } set { Row0.Y = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 2, column 1 of this instance.
+        /// </summary>
         public float M21 { get { return Row1.X; } set { Row1.X = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 2, column 2 of this instance.
+        /// </summary>
         public float M22 { get { return Row1.Y; } set { Row1.Y = value; } }
 
         #endregion
@@ -118,10 +157,467 @@ namespace OpenTK
 
         #endregion
 
+        #region Instance
+
+
+
+        #endregion
+
+        #region Static
+
+        #region CreateRotation
+
+        /// <summary>
+        /// Builds a rotation matrix.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <param name="result">The resulting Matrix2 instance.</param>
+        public static void CreateRotation(float angle, out Matrix2 result)
+        {
+            float cos = (float)System.Math.Cos(angle);
+            float sin = (float)System.Math.Sin(angle);
+
+            result.Row0.X = cos;
+            result.Row0.Y = sin;
+            result.Row1.X = -sin;
+            result.Row1.Y = cos;
+        }
+
+        /// <summary>
+        /// Builds a rotation matrix.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <returns>The resulting Matrix2 instance.</returns>
+        public static Matrix2 CreateRotation(float angle)
+        {
+            Matrix2 result;
+            CreateRotation(angle, out result);
+            return result;
+        }
+
+        #endregion
+
+        #region CreateScale
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="scale">Single scale factor for the x, y, and z axes.</param>
+        /// <param name="result">A scale matrix.</param>
+        public static void CreateScale(float scale, out Matrix2 result)
+        {
+            result.Row0.X = scale;
+            result.Row0.Y = 0;
+            result.Row1.X = 0;
+            result.Row1.Y = scale;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="scale">Single scale factor for the x and y axes.</param>
+        /// <returns>A scale matrix.</returns>
+        public static Matrix2 CreateScale(float scale)
+        {
+            Matrix2 result;
+            CreateScale(scale, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="scale">Scale factors for the x and y axes.</param>
+        /// <param name="result">A scale matrix.</param>
+        public static void CreateScale(Vector2 scale, out Matrix2 result)
+        {
+            result.Row0.X = scale.X;
+            result.Row0.Y = 0;
+            result.Row1.X = 0;
+            result.Row1.Y = scale.Y;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="scale">Scale factors for the x and y axes.</param>
+        /// <returns>A scale matrix.</returns>
+        public static Matrix2 CreateScale(Vector2 scale)
+        {
+            Matrix2 result;
+            CreateScale(scale, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="x">Scale factor for the x axis.</param>
+        /// <param name="y">Scale factor for the y axis.</param>
+        /// <param name="result">A scale matrix.</param>
+        public static void CreateScale(float x, float y, out Matrix2 result)
+        {
+            result.Row0.X = x;
+            result.Row0.Y = 0;
+            result.Row1.X = 0;
+            result.Row1.Y = y;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="x">Scale factor for the x axis.</param>
+        /// <param name="y">Scale factor for the y axis.</param>
+        /// <returns>A scale matrix.</returns>
+        public static Matrix2 CreateScale(float x, float y)
+        {
+            Matrix2 result;
+            CreateScale(x, y, out result);
+            return result;
+        }
+
+        #endregion
+
+        #region Multiply Functions
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
+        public static void Mult(ref Matrix2 left, ref Matrix2 right, out Matrix2 result)
+        {
+            float lM11 = left.Row0.X, lM12 = left.Row0.Y,
+                lM21 = left.Row1.X, lM22 = left.Row1.Y,
+                rM11 = right.Row0.X, rM12 = right.Row0.Y,
+                rM21 = right.Row1.X, rM22 = right.Row1.Y;
+
+            result.Row0.X = (lM11 * rM11) + (lM12 * rM21);
+            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22);
+            result.Row1.X = (lM21 * rM11) + (lM22 * rM21);
+            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22);
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
+        public static Matrix2 Mult(Matrix2 left, Matrix2 right)
+        {
+            Matrix2 result;
+            Mult(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
+        public static void Mult(ref Matrix2 left, ref Matrix2x3 right, out Matrix2x3 result)
+        {
+            float lM11 = left.Row0.X, lM12 = left.Row0.Y,
+                lM21 = left.Row1.X, lM22 = left.Row1.Y,
+                rM11 = right.Row0.X, rM12 = right.Row0.Y, rM13 = right.Row0.Z,
+                rM21 = right.Row1.X, rM22 = right.Row1.Y, rM23 = right.Row1.Z;
+
+            result.Row0.X = (lM11 * rM11) + (lM12 * rM21);
+            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22);
+            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23);
+            result.Row1.X = (lM21 * rM11) + (lM22 * rM21);
+            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22);
+            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23);
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
+        public static Matrix2x3 Mult(Matrix2 left, Matrix2x3 right)
+        {
+            Matrix2x3 result;
+            Mult(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
+        public static void Mult(ref Matrix2 left, ref Matrix2x4 right, out Matrix2x4 result)
+        {
+            float lM11 = left.Row0.X, lM12 = left.Row0.Y,
+                lM21 = left.Row1.X, lM22 = left.Row1.Y,
+                rM11 = right.Row0.X, rM12 = right.Row0.Y, rM13 = right.Row0.Z, rM14 = right.Row0.W,
+                rM21 = right.Row1.X, rM22 = right.Row1.Y, rM23 = right.Row1.Z, rM24 = right.Row1.W;
+
+            result.Row0.X = (lM11 * rM11) + (lM12 * rM21);
+            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22);
+            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23);
+            result.Row0.W = (lM11 * rM14) + (lM12 * rM24);
+            result.Row1.X = (lM21 * rM11) + (lM22 * rM21);
+            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22);
+            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23);
+            result.Row1.W = (lM21 * rM14) + (lM22 * rM24);
+        }
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
+        public static Matrix2x4 Mult(Matrix2 left, Matrix2x4 right)
+        {
+            Matrix2x4 result;
+            Mult(ref left, ref right, out result);
+            return result;
+        }
+
+        #endregion
+
+        #region Add
+
+        /// <summary>
+        /// Adds two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the addition.</param>
+        /// <param name="right">The right operand of the addition.</param>
+        /// <param name="result">A new instance that is the result of the addition.</param>
+        public static void Add(ref Matrix2 left, ref Matrix2 right, out Matrix2 result)
+        {
+            result.Row0.X = left.Row0.X + right.Row0.X;
+            result.Row0.Y = left.Row0.Y + right.Row0.Y;
+            result.Row1.X = left.Row1.X + right.Row1.X;
+            result.Row1.Y = left.Row1.Y + right.Row1.Y;
+        }
+
+        /// <summary>
+        /// Adds two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the addition.</param>
+        /// <param name="right">The right operand of the addition.</param>
+        /// <returns>A new instance that is the result of the addition.</returns>
+        public static Matrix2 Add(Matrix2 left, Matrix2 right)
+        {
+            Matrix2 result;
+            Add(ref left, ref right, out result);
+            return result;
+        }
+
+        #endregion
+
+        #region Subtract
+
+        /// <summary>
+        /// Subtracts two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the subtraction.</param>
+        /// <param name="right">The right operand of the subtraction.</param>
+        /// <param name="result">A new instance that is the result of the subtraction.</param>
+        public static void Subtract(ref Matrix2 left, ref Matrix2 right, out Matrix2 result)
+        {
+            result.Row0.X = left.Row0.X - right.Row0.X;
+            result.Row0.Y = left.Row0.Y - right.Row0.Y;
+            result.Row1.X = left.Row1.X - right.Row1.X;
+            result.Row1.Y = left.Row1.Y - right.Row1.Y;
+        }
+
+        /// <summary>
+        /// Subtracts two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the subtraction.</param>
+        /// <param name="right">The right operand of the subtraction.</param>
+        /// <returns>A new instance that is the result of the subtraction.</returns>
+        public static Matrix2 Subtract(Matrix2 left, Matrix2 right)
+        {
+            Matrix2 result;
+            Subtract(ref left, ref right, out result);
+            return result;
+        }
+
+        #endregion
+
+        #region Invert Functions
+
+        //TODO implement
+        
+        #endregion
+
+        #region Transpose
+
+        /// <summary>
+        /// Calculate the transpose of the given matrix.
+        /// </summary>
+        /// <param name="mat">The matrix to transpose.</param>
+        /// <param name="result">The transpose of the given matrix.</param>
+        public static void Transpose(ref Matrix2 mat, out Matrix2 result)
+        {
+            result.Row0.X = mat.Row0.X;
+            result.Row0.Y = mat.Row1.X;
+            result.Row1.X = mat.Row0.Y;
+            result.Row1.Y = mat.Row1.Y;
+        }
+
+        /// <summary>
+        /// Calculate the transpose of the given matrix.
+        /// </summary>
+        /// <param name="mat">The matrix to transpose.</param>
+        /// <returns>The transpose of the given matrix.</returns>
+        public static Matrix2 Transpose(Matrix2 mat)
+        {
+            Matrix2 result;
+            Transpose(ref mat, out result);
+            return result;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Operators
+
+        /// <summary>
+        /// Matrix multiplication
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix2 which holds the result of the multiplication</returns>
+        public static Matrix2 operator *(Matrix2 left, Matrix2 right)
+        {
+            return Matrix2.Mult(left, right);
+        }
+
+        /// <summary>
+        /// Matrix multiplication
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix2x3 which holds the result of the multiplication</returns>
+        public static Matrix2x3 operator *(Matrix2 left, Matrix2x3 right)
+        {
+            return Matrix2.Mult(left, right);
+        }
+
+        /// <summary>
+        /// Matrix multiplication
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix2x4 which holds the result of the multiplication</returns>
+        public static Matrix2x4 operator *(Matrix2 left, Matrix2x4 right)
+        {
+            return Matrix2.Mult(left, right);
+        }
+
+        /// <summary>
+        /// Matrix addition
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix2 which holds the result of the addition</returns>
+        public static Matrix2 operator +(Matrix2 left, Matrix2 right)
+        {
+            return Matrix2.Add(left, right);
+        }
+
+        /// <summary>
+        /// Matrix subtraction
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix2 which holds the result of the subtraction</returns>
+        public static Matrix2 operator -(Matrix2 left, Matrix2 right)
+        {
+            return Matrix2.Subtract(left, right);
+        }
+
+        /// <summary>
+        /// Compares two instances for equality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left equals right; false otherwise.</returns>
+        public static bool operator ==(Matrix2 left, Matrix2 right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left does not equal right; false otherwise.</returns>
+        public static bool operator !=(Matrix2 left, Matrix2 right)
+        {
+            return !left.Equals(right);
+        }
+
+        #endregion
+
+        #region Overloads
+
+        #region public override string ToString()
+
+        /// <summary>
+        /// Returns a System.String that represents the current Matrix4.
+        /// </summary>
+        /// <returns>The string representation of the matrix.</returns>
+        public override string ToString()
+        {
+            return String.Format("{0}\n{1}", Row0, Row1);
+        }
+
+        #endregion
+
+        #region public override int GetHashCode()
+
+        /// <summary>
+        /// Returns the hashcode for this instance.
+        /// </summary>
+        /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
+        public override int GetHashCode()
+        {
+            return Row0.GetHashCode() ^ Row1.GetHashCode();
+        }
+
+        #endregion
+
+        #region public override bool Equals(object obj)
+
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">The object to compare to.</param>
+        /// <returns>True if the instances are equal; false otherwise.</returns>
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Matrix2))
+                return false;
+
+            return this.Equals((Matrix2)obj);
+        }
+
+        #endregion
+
+        #endregion
+
         #endregion
 
         #region IEquatable<Matrix2> Members
 
+        /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
+        /// <param name="other">An matrix to compare with this matrix.</param>
+        /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         public bool Equals(Matrix2 other)
         {
             return

@@ -112,9 +112,8 @@ namespace OpenTK
                 m21 = Row1.X, m22 = Row1.Y, m23 = Row1.Z,
                 m31 = Row2.X, m32 = Row2.Y, m33 = Row2.Z;
                 
-                return
-                    m11 * m22 * m33 + m12 * m23 * m31 + m13 * m21 * m32
-                        - m13 * m22 * m31 - m11 * m23 * m32 - m12 * m21 * m33;
+                return m11 * m22 * m33 + m12 * m23 * m31 + m13 * m21 * m32
+                     - m13 * m22 * m31 - m11 * m23 * m32 - m12 * m21 * m33;
             }
         }
         
@@ -611,9 +610,15 @@ namespace OpenTK
         
         public static void Transpose(ref Matrix3 mat, out Matrix3 result)
         {
-            result.Row0 = mat.Column0;
-            result.Row1 = mat.Column1;
-            result.Row2 = mat.Column2;
+            result.Row0.X = mat.Row0.X;
+            result.Row0.Y = mat.Row1.X;
+            result.Row0.Z = mat.Row2.X;
+            result.Row1.X = mat.Row0.Y;
+            result.Row1.Y = mat.Row1.Y;
+            result.Row1.Z = mat.Row2.Y;
+            result.Row2.X = mat.Row0.Z;
+            result.Row2.Y = mat.Row1.Z;
+            result.Row2.Z = mat.Row2.Z;
         }
         
         #endregion

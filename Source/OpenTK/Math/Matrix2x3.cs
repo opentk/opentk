@@ -27,98 +27,230 @@ using System.Collections.Generic;
 
 namespace OpenTK
 {
-	public struct Matrix2x3 : IEquatable<Matrix2x3>
-	{
-		#region Fields
+    /// <summary>
+    /// Represents a 2x3 matrix.
+    /// </summary>
+    public struct Matrix2x3 : IEquatable<Matrix2x3>
+    {
+        #region Fields
 
-		public Vector3 Row0;
-		public Vector3 Row1;
+        /// <summary>
+        /// Top row of the matrix.
+        /// </summary>
+        public Vector3 Row0;
 
-		#endregion
+        /// <summary>
+        /// Bottom row of the matrix.
+        /// </summary>
+        public Vector3 Row1;
 
-		#region Constructors
+        #endregion
 
-		public Matrix2x3(Vector3 row0, Vector3 row1)
-		{
-			Row0 = row0;
-			Row1 = row1;
-		}
+        #region Constructors
 
-		public Matrix2x3(
-			float m00, float m01, float m02,
-			float m10, float m11, float m12)
-		{
-			Row0 = new Vector3(m00, m01, m02);
-			Row1 = new Vector3(m10, m11, m12);
-		}
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="row0">Top row of the matrix.</param>
+        /// <param name="row1">Bottom row of the matrix.</param>
+        public Matrix2x3(Vector3 row0, Vector3 row1)
+        {
+            Row0 = row0;
+            Row1 = row1;
+        }
 
-		#endregion
+        /// <summary>
+        /// Constructs a new instance
+        /// </summary>
+        /// <param name="m00">First item of the first row of the matrix.</param>
+        /// <param name="m01">Second item of the first row of the matrix.</param>
+        /// <param name="m02">Third item of the first row of the matrix.</param>
+        /// <param name="m10">First item of the second row of the matrix.</param>
+        /// <param name="m11">Second item of the second row of the matrix.</param>
+        /// <param name="m12">Third item of the second row of the matrix.</param>
+        public Matrix2x3(
+            float m00, float m01, float m02,
+            float m10, float m11, float m12)
+        {
+            Row0 = new Vector3(m00, m01, m02);
+            Row1 = new Vector3(m10, m11, m12);
+        }
 
-		#region Public Members
+        #endregion
 
-		#region Properties
+        #region Public Members
 
-		public Vector2 Column0
-		{
-			get { return new Vector2(Row0.X, Row1.X); }
-			set { Row0.X = value.X; Row1.X = value.Y; }
-		}
+        #region Properties
 
-		public Vector2 Column1
-		{
-			get { return new Vector2(Row0.Y, Row1.Y); }
-			set { Row0.Y = value.X; Row1.Y = value.Y; }
-		}
+        /// <summary>
+        /// Gets the first column of this matrix.
+        /// </summary>
+        public Vector2 Column0
+        {
+            get { return new Vector2(Row0.X, Row1.X); }
+            set { Row0.X = value.X; Row1.X = value.Y; }
+        }
 
-		public Vector2 Column2
-		{
-			get { return new Vector2(Row0.Z, Row1.Z); }
-			set { Row0.Z = value.X; Row1.Z = value.Y; }
-		}
+        /// <summary>
+        /// Gets the second column of this matrix.
+        /// </summary>
+        public Vector2 Column1
+        {
+            get { return new Vector2(Row0.Y, Row1.Y); }
+            set { Row0.Y = value.X; Row1.Y = value.Y; }
+        }
 
-		public float M11 { get { return Row0.X; } set { Row0.X = value; } }
-		public float M12 { get { return Row0.Y; } set { Row0.Y = value; } }
-		public float M13 { get { return Row0.Z; } set { Row0.Z = value; } }
-		public float M21 { get { return Row1.X; } set { Row1.X = value; } }
-		public float M22 { get { return Row1.Y; } set { Row1.Y = value; } }
-		public float M23 { get { return Row1.Z; } set { Row1.Z = value; } }
+        /// <summary>
+        /// Gets the third column of this matrix.
+        /// </summary>
+        public Vector2 Column2
+        {
+            get { return new Vector2(Row0.Z, Row1.Z); }
+            set { Row0.Z = value.X; Row1.Z = value.Y; }
+        }
 
-		#endregion
+        /// <summary>
+        /// Gets or sets the value at row 1, column 1 of this instance.
+        /// </summary>
+        public float M11 { get { return Row0.X; } set { Row0.X = value; } }
 
-		#region Indexers
+        /// <summary>
+        /// Gets or sets the value at row 1, column 2 of this instance.
+        /// </summary>
+        public float M12 { get { return Row0.Y; } set { Row0.Y = value; } }
 
-		/// <summary>
-		/// Gets or sets the value at a specified row and column.
-		/// </summary>
-		public float this[int rowIndex, int columnIndex]
-		{
-			get
-			{
-				if (rowIndex == 0) return Row0[columnIndex];
-				else if (rowIndex == 1) return Row1[columnIndex];
-				throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
-			}
-			set
-			{
-				if (rowIndex == 0) Row0[columnIndex] = value;
-				else if (rowIndex == 1) Row1[columnIndex] = value;
-				throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
-			}
-		}
+        /// <summary>
+        /// Gets or sets the value at row 1, column 3 of this instance.
+        /// </summary>
+        public float M13 { get { return Row0.Z; } set { Row0.Z = value; } }
 
-		#endregion
+        /// <summary>
+        /// Gets or sets the value at row 2, column 1 of this instance.
+        /// </summary>
+        public float M21 { get { return Row1.X; } set { Row1.X = value; } }
 
-		#endregion
+        /// <summary>
+        /// Gets or sets the value at row 2, column 2 of this instance.
+        /// </summary>
+        public float M22 { get { return Row1.Y; } set { Row1.Y = value; } }
 
-		#region IEquatable<Matrix2x3> Members
+        /// <summary>
+        /// Gets or sets the value at row 2, column 3 of this instance.
+        /// </summary>
+        public float M23 { get { return Row1.Z; } set { Row1.Z = value; } }
 
-		public bool Equals(Matrix2x3 other)
-		{
-			return
-				Row0 == other.Row0 &&
-				Row1 == other.Row1;
-		}
+        #endregion
 
-		#endregion
-	}
+        #region Indexers
+
+        /// <summary>
+        /// Gets or sets the value at a specified row and column.
+        /// </summary>
+        public float this[int rowIndex, int columnIndex]
+        {
+            get
+            {
+                if (rowIndex == 0) return Row0[columnIndex];
+                else if (rowIndex == 1) return Row1[columnIndex];
+                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+            }
+            set
+            {
+                if (rowIndex == 0) Row0[columnIndex] = value;
+                else if (rowIndex == 1) Row1[columnIndex] = value;
+                throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+            }
+        }
+
+        #endregion
+
+        #region Operators
+
+        /// <summary>
+        /// Compares two instances for equality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left equals right; false otherwise.</returns>
+        public static bool operator ==(Matrix2x3 left, Matrix2x3 right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left does not equal right; false otherwise.</returns>
+        public static bool operator !=(Matrix2x3 left, Matrix2x3 right)
+        {
+            return !left.Equals(right);
+        }
+
+        #endregion
+
+        #region Overrides
+
+        #region public override string ToString()
+
+        /// <summary>
+        /// Returns a System.String that represents the current Matrix2x3.
+        /// </summary>
+        /// <returns>The string representation of the matrix.</returns>
+        public override string ToString()
+        {
+            return String.Format("{0}\n{1}", Row0, Row1);
+        }
+
+        #endregion
+
+        #region public override int GetHashCode()
+
+        /// <summary>
+        /// Returns the hashcode for this instance.
+        /// </summary>
+        /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
+        public override int GetHashCode()
+        {
+            return Row0.GetHashCode() ^ Row1.GetHashCode();
+        }
+
+        #endregion
+
+        #region public override bool Equals(object obj)
+
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">The object to compare tresult.</param>
+        /// <returns>True if the instances are equal; false otherwise.</returns>
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Matrix2x3))
+                return false;
+
+            return this.Equals((Matrix2x3)obj);
+        }
+
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region IEquatable<Matrix2x3> Members
+
+        /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
+        /// <param name="other">An matrix to compare with this matrix.</param>
+        /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
+        public bool Equals(Matrix2x3 other)
+        {
+            return
+                Row0 == other.Row0 &&
+                Row1 == other.Row1;
+        }
+
+        #endregion
+    }
 }
