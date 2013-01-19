@@ -44,17 +44,17 @@ namespace OpenTK
         /// <summary>
         /// Defines a unit-length Vector2d that points towards the X-axis.
         /// </summary>
-        public static Vector2d UnitX = new Vector2d(1, 0);
+        public static readonly Vector2d UnitX = new Vector2d(1, 0);
 
         /// <summary>
         /// Defines a unit-length Vector2d that points towards the Y-axis.
         /// </summary>
-        public static Vector2d UnitY = new Vector2d(0, 1);
+        public static readonly Vector2d UnitY = new Vector2d(0, 1);
 
         /// <summary>
         /// Defines a zero-length Vector2d.
         /// </summary>
-        public static Vector2d Zero = new Vector2d(0, 0);
+        public static readonly Vector2d Zero = new Vector2d(0, 0);
 
         /// <summary>
         /// Defines an instance with all components set to 1.

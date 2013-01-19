@@ -59,7 +59,12 @@ namespace OpenTK
         /// <summary>
         /// The identity matrix.
         /// </summary>
-        public static Matrix4 Identity = new Matrix4(Vector4.UnitX, Vector4.UnitY, Vector4.UnitZ, Vector4.UnitW);
+        public static readonly Matrix4 Identity = new Matrix4(Vector4.UnitX, Vector4.UnitY, Vector4.UnitZ, Vector4.UnitW);
+
+        /// <summary>
+        /// The zero matrix.
+        /// </summary>
+        public static readonly Matrix4 Zero = new Matrix4(Vector4.Zero, Vector4.Zero, Vector4.Zero, Vector4.Zero);
 
         #endregion
 

@@ -44,6 +44,11 @@ namespace OpenTK
         /// </summary>
         public Vector3 Row1;
 
+        /// <summary>
+        /// The zero matrix.
+        /// </summary>
+        public static Matrix2x3 Zero = new Matrix2x3(Vector3.Zero, Vector3.Zero);
+
         #endregion
 
         #region Constructors
@@ -161,6 +166,15 @@ namespace OpenTK
                 throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
         }
+
+        #endregion
+
+        #region Instance
+        #endregion
+
+        #region Static
+
+
 
         #endregion
 

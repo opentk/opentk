@@ -31,9 +31,25 @@ namespace OpenTK
 	{
 		#region Fields
 
+		/// <summary>
+		/// Top row of the matrix.
+		/// </summary>
 		public Vector2 Row0;
+
+		/// <summary>
+		/// Second row of the matrix.
+		/// </summary>
 		public Vector2 Row1;
+
+		/// <summary>
+		/// Bottom row of the matrix.
+		/// </summary>
 		public Vector2 Row2;
+
+		/// <summary>
+		/// The zero matrix.
+		/// </summary>
+		public static Matrix3x2 Zero = new Matrix3x2(Vector2.Zero, Vector2.Zero, Vector2.Zero);
 
 		#endregion
 
@@ -105,6 +121,62 @@ namespace OpenTK
 				throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
 			}
 		}
+
+		#endregion
+
+		#region Instance
+		#endregion
+
+		#region Static
+		#endregion
+
+		#region Operators
+		#endregion
+
+		#region Overrides
+
+		#region public override string ToString()
+
+		/// <summary>
+		/// Returns a System.String that represents the current Matrix3d.
+		/// </summary>
+		/// <returns>The string representation of the matrix.</returns>
+		public override string ToString()
+		{
+			return String.Format("{0}\n{1}\n{2}", Row0, Row1, Row2);
+		}
+
+		#endregion
+
+		#region public override int GetHashCode()
+
+		/// <summary>
+		/// Returns the hashcode for this instance.
+		/// </summary>
+		/// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
+		public override int GetHashCode()
+		{
+			return Row0.GetHashCode() ^ Row1.GetHashCode() ^ Row2.GetHashCode();
+		}
+
+		#endregion
+
+		#region public override bool Equals(object obj)
+
+		/// <summary>
+		/// Indicates whether this instance and a specified object are equal.
+		/// </summary>
+		/// <param name="obj">The object to compare to.</param>
+		/// <returns>True if the instances are equal; false otherwise.</returns>
+		public override bool Equals(object obj)
+		{
+			if (!(obj is Matrix3x2))
+				return false;
+
+			return this.Equals((Matrix3x2)obj);
+		}
+
+		#endregion
 
 		#endregion
 

@@ -52,9 +52,9 @@ namespace OpenTK
 		public Vector4 Row2;
 
 		/// <summary>
-		/// The identity matrix
+		/// The zero matrix
 		/// </summary>
-		public static Matrix3x4 Identity = new Matrix3x4(Vector4.UnitX, Vector4.UnitY, Vector4.UnitZ);
+		public static Matrix3x4 Zero = new Matrix3x4(Vector4.Zero, Vector4.Zero, Vector4.Zero);
 
 		#endregion
 
@@ -355,11 +355,18 @@ namespace OpenTK
 			float cos = (float)System.Math.Cos(angle);
 			float sin = (float)System.Math.Sin(angle);
 
-			result = Identity;
+			result.Row0.X = 1;
+			result.Row0.Y = 0;
+			result.Row0.Z = 0;
+			result.Row0.W = 0;
+			result.Row1.X = 0;
 			result.Row1.Y = cos;
 			result.Row1.Z = sin;
+			result.Row1.W = 0;
+			result.Row2.X = 0;
 			result.Row2.Y = -sin;
 			result.Row2.Z = cos;
+			result.Row2.W = 0;
 		}
 
 		/// <summary>
@@ -384,11 +391,18 @@ namespace OpenTK
 			float cos = (float)System.Math.Cos(angle);
 			float sin = (float)System.Math.Sin(angle);
 
-			result = Identity;
 			result.Row0.X = cos;
+			result.Row0.Y = 0;
 			result.Row0.Z = -sin;
+			result.Row0.W = 0;
+			result.Row1.X = 0;
+			result.Row1.Y = 1;
+			result.Row1.Z = 0;
+			result.Row1.W = 0;
 			result.Row2.X = sin;
+			result.Row2.Y = 0;
 			result.Row2.Z = cos;
+			result.Row2.W = 0;
 		}
 
 		/// <summary>
@@ -413,11 +427,18 @@ namespace OpenTK
 			float cos = (float)System.Math.Cos(angle);
 			float sin = (float)System.Math.Sin(angle);
 
-			result = Identity;
 			result.Row0.X = cos;
 			result.Row0.Y = sin;
+			result.Row0.Z = 0;
+			result.Row0.W = 0;
 			result.Row1.X = -sin;
 			result.Row1.Y = cos;
+			result.Row1.Z = 0;
+			result.Row1.W = 0;
+			result.Row2.X = 0;
+			result.Row2.Y = 0;
+			result.Row2.Z = 1;
+			result.Row2.W = 0;
 		}
 
 		/// <summary>
@@ -445,9 +466,17 @@ namespace OpenTK
 		/// <param name="result">The resulting Matrix4 instance.</param>
 		public static void CreateTranslation(float x, float y, float z, out Matrix3x4 result)
 		{
-			result = Identity;
+			result.Row0.X = 1;
+			result.Row0.Y = 0;
+			result.Row0.Z = 0;
 			result.Row0.W = x;
+			result.Row1.X = 0;
+			result.Row1.Y = 1;
+			result.Row1.Z = 0;
 			result.Row1.W = y;
+			result.Row2.X = 0;
+			result.Row2.Y = 0;
+			result.Row2.Z = 1;
 			result.Row2.W = z;
 		}
 
@@ -458,9 +487,17 @@ namespace OpenTK
 		/// <param name="result">The resulting Matrix4 instance.</param>
 		public static void CreateTranslation(ref Vector3 vector, out Matrix3x4 result)
 		{
-			result = Identity;
+			result.Row0.X = 1;
+			result.Row0.Y = 0;
+			result.Row0.Z = 0;
 			result.Row0.W = vector.X;
+			result.Row1.X = 0;
+			result.Row1.Y = 1;
+			result.Row1.Z = 0;
 			result.Row1.W = vector.Y;
+			result.Row2.X = 0;
+			result.Row2.Y = 0;
+			result.Row2.Z = 1;
 			result.Row2.W = vector.Z;
 		}
 
@@ -523,10 +560,19 @@ namespace OpenTK
 		/// <returns>A scaling matrix</returns>
 		public static Matrix3x4 CreateScale(float x, float y, float z)
 		{
-			Matrix3x4 result = Identity;
+			Matrix3x4 result;
 			result.Row0.X = x;
+			result.Row0.Y = 0;
+			result.Row0.Z = 0;
+			result.Row0.W = 0;
+			result.Row1.X = 0;
 			result.Row1.Y = y;
+			result.Row1.Z = 0;
+			result.Row1.W = 0;
+			result.Row2.X = 0;
+			result.Row2.Y = 0;
 			result.Row2.Z = z;
+			result.Row2.W = 0;
 			return result;
 		}
 

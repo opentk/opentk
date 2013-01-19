@@ -44,6 +44,16 @@ namespace OpenTK
         /// </summary>
         public Vector2 Row1;
 
+        /// <summary>
+        /// The identity matrix.
+        /// </summary>
+        public static Matrix2 Identity = new Matrix2(Vector2.UnitX, Vector2.UnitY);
+
+        /// <summary>
+        /// The zero matrix.
+        /// </summary>
+        public static readonly Matrix2 Zero = new Matrix2(Vector2.Zero, Vector2.Zero);
+
         #endregion
 
         #region Constructors
@@ -281,6 +291,33 @@ namespace OpenTK
         #region Multiply Functions
 
         /// <summary>
+        /// Multiplies and instance by a scalar.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
+        public static void Mult(ref Matrix2 left, float right, out Matrix2 result)
+        {
+            result.Row0.X = left.Row0.X * right;
+            result.Row0.Y = left.Row0.Y * right;
+            result.Row1.X = left.Row1.X * right;
+            result.Row1.Y = left.Row1.Y * right;
+        }
+
+        /// <summary>
+        /// Multiplies and instance by a scalar.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
+        public static Matrix2 Mult(Matrix2 left, float right)
+        {
+            Matrix2 result;
+            Mult(ref left, right, out result);
+            return result;
+        }
+
+        /// <summary>
         /// Multiplies two instances.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
@@ -486,6 +523,28 @@ namespace OpenTK
         #region Operators
 
         /// <summary>
+        /// Scalar multiplication.
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix2 which holds the result of the multiplication</returns>
+        public static Matrix2 operator *(float left, Matrix2 right)
+        {
+            return Matrix2.Mult(right, left);
+        }
+
+        /// <summary>
+        /// Scalar multiplication.
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix2 which holds the result of the multiplication</returns>
+        public static Matrix2 operator *(Matrix2 left, float right)
+        {
+            return Matrix2.Mult(left, right);
+        }
+
+        /// <summary>
         /// Matrix multiplication
         /// </summary>
         /// <param name="left">left-hand operand</param>
@@ -564,7 +623,7 @@ namespace OpenTK
 
         #endregion
 
-        #region Overloads
+        #region Overrides
 
         #region public override string ToString()
 

@@ -54,7 +54,12 @@ namespace OpenTK
         /// <summary>
         /// The identity matrix.
         /// </summary>
-        public static Matrix3 Identity = new Matrix3(Vector3.UnitX, Vector3.UnitY, Vector3.UnitZ);
+        public static readonly Matrix3 Identity = new Matrix3(Vector3.UnitX, Vector3.UnitY, Vector3.UnitZ);
+
+        /// <summary>
+        /// The zero matrix.
+        /// </summary>
+        public static readonly Matrix3 Zero = new Matrix3(Vector3.Zero, Vector3.Zero, Vector3.Zero);
         
         #endregion
         

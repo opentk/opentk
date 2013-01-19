@@ -34,6 +34,11 @@ namespace OpenTK
 		public Vector4 Row0;
 		public Vector4 Row1;
 
+		/// <summary>
+		/// The zero matrix.
+		/// </summary>
+		public static Matrix2x4 Zero = new Matrix2x4(Vector4.Zero, Vector4.Zero);
+
 		#endregion
 
 		#region Constructors

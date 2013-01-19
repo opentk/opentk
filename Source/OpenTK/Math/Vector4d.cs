@@ -58,27 +58,27 @@ namespace OpenTK
         /// <summary>
         /// Defines a unit-length Vector4d that points towards the X-axis.
         /// </summary>
-        public static Vector4d UnitX = new Vector4d(1, 0, 0, 0);
+        public static readonly Vector4d UnitX = new Vector4d(1, 0, 0, 0);
 
         /// <summary>
         /// Defines a unit-length Vector4d that points towards the Y-axis.
         /// </summary>
-        public static Vector4d UnitY = new Vector4d(0, 1, 0, 0);
+        public static readonly Vector4d UnitY = new Vector4d(0, 1, 0, 0);
 
         /// <summary>
         /// Defines a unit-length Vector4d that points towards the Z-axis.
         /// </summary>
-        public static Vector4d UnitZ = new Vector4d(0, 0, 1, 0);
+        public static readonly Vector4d UnitZ = new Vector4d(0, 0, 1, 0);
 
         /// <summary>
         /// Defines a unit-length Vector4d that points towards the W-axis.
         /// </summary>
-        public static Vector4d UnitW = new Vector4d(0, 0, 0, 1);
+        public static readonly Vector4d UnitW = new Vector4d(0, 0, 0, 1);
 
         /// <summary>
         /// Defines a zero-length Vector4d.
         /// </summary>
-        public static Vector4d Zero = new Vector4d(0, 0, 0, 0);
+        public static readonly Vector4d Zero = new Vector4d(0, 0, 0, 0);
 
         /// <summary>
         /// Defines an instance with all components set to 1.
