@@ -118,24 +118,6 @@ namespace OpenTK
         #region Properties
 
         /// <summary>
-        /// Gets or sets the value at a specified row and column.
-        /// </summary>
-        public float this[int rowIndex, int columnIndex] { get{
-                if(rowIndex == 0) return Row0[columnIndex];
-                else if(rowIndex == 1) return Row1[columnIndex];
-                else if(rowIndex == 2) return Row2[columnIndex];
-                else if(rowIndex == 3) return Row3[columnIndex];
-                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
-            } set{
-                if(rowIndex == 0) Row0[columnIndex] = value;
-                else if(rowIndex == 1) Row1[columnIndex] = value;
-                else if(rowIndex == 2) Row2[columnIndex] = value;
-                else if(rowIndex == 3) Row3[columnIndex] = value;
-                throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
-            }
-        }
-
-        /// <summary>
         /// The determinant of this matrix
         /// Gets the determinant of this matrix.
         /// </summary>
@@ -164,6 +146,7 @@ namespace OpenTK
         public Vector4 Column0
         {
             get { return new Vector4(Row0.X, Row1.X, Row2.X, Row3.X); }
+            set { Row0.X = value.X; Row1.X = value.Y; Row2.X = value.Z; Row3.X = value.W; }
         }
 
         /// <summary>
@@ -172,6 +155,7 @@ namespace OpenTK
         public Vector4 Column1
         {
             get { return new Vector4(Row0.Y, Row1.Y, Row2.Y, Row3.Y); }
+            set { Row0.Y = value.X; Row1.Y = value.Y; Row2.Y = value.Z; Row3.Y = value.W; }
         }
 
         /// <summary>
@@ -180,6 +164,7 @@ namespace OpenTK
         public Vector4 Column2
         {
             get { return new Vector4(Row0.Z, Row1.Z, Row2.Z, Row3.Z); }
+            set { Row0.Z = value.X; Row1.Z = value.Y; Row2.Z = value.Z; Row3.Z = value.W; }
         }
 
         /// <summary>
@@ -188,6 +173,7 @@ namespace OpenTK
         public Vector4 Column3
         {
             get { return new Vector4(Row0.W, Row1.W, Row2.W, Row3.W); }
+            set { Row0.W = value.X; Row1.W = value.Y; Row2.W = value.Z; Row3.W = value.W; }
         }
 
         /// <summary>
@@ -269,6 +255,33 @@ namespace OpenTK
         /// Gets or sets the value at row 4, column 4 of this instance.
         /// </summary>
         public float M44 { get { return Row3.W; } set { Row3.W = value; } }
+
+        #endregion
+
+        #region Indexers
+
+        /// <summary>
+        /// Gets or sets the value at a specified row and column.
+        /// </summary>
+        public float this[int rowIndex, int columnIndex]
+        {
+            get
+            {
+                if (rowIndex == 0) return Row0[columnIndex];
+                else if (rowIndex == 1) return Row1[columnIndex];
+                else if (rowIndex == 2) return Row2[columnIndex];
+                else if (rowIndex == 3) return Row3[columnIndex];
+                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+            }
+            set
+            {
+                if (rowIndex == 0) Row0[columnIndex] = value;
+                else if (rowIndex == 1) Row1[columnIndex] = value;
+                else if (rowIndex == 2) Row2[columnIndex] = value;
+                else if (rowIndex == 3) Row3[columnIndex] = value;
+                throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+            }
+        }
 
         #endregion
 

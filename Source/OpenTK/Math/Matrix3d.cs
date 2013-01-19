@@ -188,11 +188,36 @@ namespace OpenTK
         public double M33 { get { return Row2.Z; } set { Row2.Z = value; } }
         
         #endregion
-        
+
+        #region Indexers
+
+        /// <summary>
+        /// Gets or sets the value at a specified row and column.
+        /// </summary>
+        public double this[int rowIndex, int columnIndex]
+        {
+            get
+            {
+                if (rowIndex == 0) return Row0[columnIndex];
+                else if (rowIndex == 1) return Row1[columnIndex];
+                else if (rowIndex == 2) return Row2[columnIndex];
+                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+            }
+            set
+            {
+                if (rowIndex == 0) Row0[columnIndex] = value;
+                else if (rowIndex == 1) Row1[columnIndex] = value;
+                else if (rowIndex == 2) Row2[columnIndex] = value;
+                throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+            }
+        }
+
+        #endregion
+
         #region Instance
-        
+
         #region public void Invert()
-        
+
         public void Invert()
         {
             this = Matrix3d.Invert(this);

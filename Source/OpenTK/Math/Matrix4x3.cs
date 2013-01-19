@@ -1,9 +1,31 @@
-﻿using System;
+﻿#region --- License ---
+/*
+Copyright (c) 2006 - 2008 The Open Toolkit library.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
+#endregion
+
+using System;
 using System.Runtime.InteropServices;
 
-using OpenTK;
-
-namespace TopHat.Mathematics
+namespace OpenTK
 {
 	/// <summary>
 	/// Represents a 3x4 Matrix
@@ -174,6 +196,33 @@ namespace TopHat.Mathematics
 		/// Gets or sets the value at row 4, column 3 of this instance.
 		/// </summary>
 		public float M43 { get { return Row3.Z; } set { Row3.Z = value; } }
+
+		#endregion
+
+		#region Indexers
+
+		/// <summary>
+		/// Gets or sets the value at a specified row and column.
+		/// </summary>
+		public float this[int rowIndex, int columnIndex]
+		{
+			get
+			{
+				if (rowIndex == 0) return Row0[columnIndex];
+				else if (rowIndex == 1) return Row1[columnIndex];
+				else if (rowIndex == 2) return Row2[columnIndex];
+				else if (rowIndex == 3) return Row3[columnIndex];
+				throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+			}
+			set
+			{
+				if (rowIndex == 0) Row0[columnIndex] = value;
+				else if (rowIndex == 1) Row1[columnIndex] = value;
+				else if (rowIndex == 2) Row2[columnIndex] = value;
+				else if (rowIndex == 3) Row3[columnIndex] = value;
+				throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+			}
+		}
 
 		#endregion
 
