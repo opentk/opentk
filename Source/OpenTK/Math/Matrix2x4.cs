@@ -27,6 +27,9 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK
 {
+    /// <summary>
+    /// Represents a 2x4 matrix.
+    /// </summary>
     public struct Matrix2x4 : IEquatable<Matrix2x4>
     {
         #region Fields
@@ -86,37 +89,80 @@ namespace OpenTK
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the first column of the matrix.
+        /// </summary>
         public Vector2 Column0
         {
             get { return new Vector2(Row0.X, Row1.X); }
             set { Row0.X = value.X; Row1.X = value.Y; }
         }
 
+        /// <summary>
+        /// Gets or sets the second column of the matrix.
+        /// </summary>
         public Vector2 Column1
         {
             get { return new Vector2(Row0.Y, Row1.Y); }
             set { Row0.Y = value.X; Row1.Y = value.Y; }
         }
 
+        /// <summary>
+        /// Gets or sets the third column of the matrix.
+        /// </summary>
         public Vector2 Column2
         {
             get { return new Vector2(Row0.Z, Row1.Z); }
             set { Row0.Z = value.X; Row1.Z = value.Y; }
         }
 
+        /// <summary>
+        /// Gets or sets the fourth column of the matrix.
+        /// </summary>
         public Vector2 Column3
         {
             get { return new Vector2(Row0.W, Row1.W); }
             set { Row0.W = value.X; Row1.W = value.Y; }
         }
 
+        /// <summary>
+        /// Gets or sets the value at row 1, column 1 of this instance.
+        /// </summary>
         public float M11 { get { return Row0.X; } set { Row0.X = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 1, column 2 of this instance.
+        /// </summary>
         public float M12 { get { return Row0.Y; } set { Row0.Y = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 1, column 3 of this instance.
+        /// </summary>
         public float M13 { get { return Row0.Z; } set { Row0.Z = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 1, column 4 of this instance.
+        /// </summary>
         public float M14 { get { return Row0.W; } set { Row0.W = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 2, column 1 of this instance.
+        /// </summary>
         public float M21 { get { return Row1.X; } set { Row1.X = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 2, column 2 of this instance.
+        /// </summary>
         public float M22 { get { return Row1.Y; } set { Row1.Y = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 2, column 3 of this instance.
+        /// </summary>
         public float M23 { get { return Row1.Z; } set { Row1.Z = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 2, column 4 of this instance.
+        /// </summary>
         public float M24 { get { return Row1.W; } set { Row1.W = value; } }
 
         #endregion
@@ -488,10 +534,6 @@ namespace OpenTK
 
         #endregion
 
-        #region Invert Functions
-
-        #endregion
-
         #region Transpose
 
         /// <summary>
@@ -681,6 +723,11 @@ namespace OpenTK
 
         #region IEquatable<Matrix2x4> Members
 
+        /// <summary>
+        /// Indicates whether the current matrix is equal to another matrix.
+        /// </summary>
+        /// <param name="other">An matrix to compare with this matrix.</param>
+        /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         public bool Equals(Matrix2x4 other)
         {
             return

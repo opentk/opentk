@@ -88,7 +88,7 @@ namespace OpenTK
         #region Properties
 
         /// <summary>
-        /// Gets the first column of this matrix.
+        /// Gets or sets the first column of this matrix.
         /// </summary>
         public Vector2 Column0
         {
@@ -97,7 +97,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Gets the second column of this matrix.
+        /// Gets or sets the second column of this matrix.
         /// </summary>
         public Vector2 Column1
         {
@@ -106,7 +106,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Gets the third column of this matrix.
+        /// Gets or sets the third column of this matrix.
         /// </summary>
         public Vector2 Column2
         {
@@ -499,10 +499,6 @@ namespace OpenTK
 
         #endregion
 
-        #region Invert Functions
-
-        #endregion
-
         #region Transpose
 
         /// <summary>
@@ -690,7 +686,9 @@ namespace OpenTK
 
         #region IEquatable<Matrix2x3> Members
 
-        /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
+        /// <summary>
+        /// Indicates whether the current matrix is equal to another matrix.
+        /// </summary>
         /// <param name="other">An matrix to compare with this matrix.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         public bool Equals(Matrix2x3 other)

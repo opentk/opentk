@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace OpenTK
 {
 	/// <summary>
-	/// Represents a 3x4 Matrix
+	/// Represents a 3x4 matrix.
 	/// </summary>
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential)]
@@ -70,7 +70,7 @@ namespace OpenTK
 		/// </summary>
 		/// <param name="row0">Top row of the matrix</param>
 		/// <param name="row1">Second row of the matrix</param>
-		/// <param name="row1">Third row of the matrix</param>
+		/// <param name="row2">Third row of the matrix</param>
 		/// <param name="row3">Bottom row of the matrix</param>
 		public Matrix4x3(Vector3 row0, Vector3 row1, Vector3 row2, Vector3 row3)
 		{
@@ -804,6 +804,10 @@ namespace OpenTK
 
 		#region public override string ToString()
 
+		/// <summary>
+		/// Returns a System.String that represents the current Matrix4x3.
+		/// </summary>
+		/// <returns>The string representation of the matrix.</returns>
 		public override string ToString()
 		{
 			return string.Format("{0}\n{1}\n{2}", Row0, Row1, Row2);
@@ -813,6 +817,10 @@ namespace OpenTK
 
 		#region public override int GetHashCode()
 
+		/// <summary>
+		/// Returns the hashcode for this instance.
+		/// </summary>
+		/// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
 		public override int GetHashCode()
 		{
 			return Row0.GetHashCode() ^ Row1.GetHashCode() ^ Row2.GetHashCode();
@@ -822,6 +830,11 @@ namespace OpenTK
 
 		#region public override bool Equals(object obj)
 
+		/// <summary>
+		/// Indicates whether this instance and a specified object are equal.
+		/// </summary>
+		/// <param name="obj">The object to compare tresult.</param>
+		/// <returns>True if the instances are equal; false otherwise.</returns>
 		public override bool Equals(object obj)
 		{
 			if (!(obj is Matrix4x3))

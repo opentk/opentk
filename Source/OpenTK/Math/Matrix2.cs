@@ -105,7 +105,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Gets the first column of this matrix.
+        /// Gets or sets the first column of this matrix.
         /// </summary>
         public Vector2 Column0
         {
@@ -114,7 +114,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Gets the second column of this matrix.
+        /// Gets or sets the second column of this matrix.
         /// </summary>
         public Vector2 Column1
         {

@@ -832,7 +832,9 @@ namespace OpenTK
 
 		#region IEquatable<Matrix3x4> Members
 
-		/// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
+		/// <summary>
+		/// Indicates whether the current matrix is equal to another matrix.
+		/// </summary>
 		/// <param name="other">An matrix to compare with this matrix.</param>
 		/// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
 		public bool Equals(Matrix3x4 other)

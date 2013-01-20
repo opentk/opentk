@@ -27,6 +27,9 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK
 {
+    /// <summary>
+    /// Represents a 3x2 matrix.
+    /// </summary>
     public struct Matrix3x2 : IEquatable<Matrix3x2>
     {
         #region Fields
@@ -93,23 +96,52 @@ namespace OpenTK
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the first column of this matrix.
+        /// </summary>
         public Vector3 Column0
         {
             get { return new Vector3(Row0.X, Row1.X, Row2.X); }
             set { Row0.X = value.X; Row1.X = value.Y; Row2.X = value.Z; }
         }
 
+        /// <summary>
+        /// Gets or sets the second column of this matrix.
+        /// </summary>
         public Vector3 Column1
         {
             get { return new Vector3(Row0.Y, Row1.Y, Row2.Y); }
             set { Row0.Y = value.X; Row1.Y = value.Y; Row2.Y = value.Z; }
         }
 
+        /// <summary>
+        /// Gets or sets the value at row 1, column 1 of this instance.
+        /// </summary>
         public float M11 { get { return Row0.X; } set { Row0.X = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 1, column 2 of this instance.
+        /// </summary>
         public float M12 { get { return Row0.Y; } set { Row0.Y = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 2, column 1 of this instance.
+        /// </summary>
         public float M21 { get { return Row1.X; } set { Row1.X = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 2, column 2 of this instance.
+        /// </summary>
         public float M22 { get { return Row1.Y; } set { Row1.Y = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 3, column 1 of this instance.
+        /// </summary>
         public float M31 { get { return Row2.X; } set { Row2.X = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 3, column 2 of this instance.
+        /// </summary>
         public float M32 { get { return Row2.Y; } set { Row2.Y = value; } }
 
         #endregion
@@ -478,10 +510,6 @@ namespace OpenTK
 
         #endregion
 
-        #region Invert Functions
-
-        #endregion
-
         #region Transpose
 
         /// <summary>
@@ -669,6 +697,11 @@ namespace OpenTK
 
         #region IEquatable<Matrix3x2> Members
 
+        /// <summary>
+        /// Indicates whether the current matrix is equal to another matrix.
+        /// </summary>
+        /// <param name="other">An matrix to compare with this matrix.</param>
+        /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         public bool Equals(Matrix3x2 other)
         {
             return
