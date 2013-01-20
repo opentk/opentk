@@ -27,24 +27,49 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK
 {
+	/// <summary>
+	/// Represents a 4x2 matrix.
+	/// </summary>
 	public struct Matrix4x2 : IEquatable<Matrix4x2>
 	{
 		#region Fields
 
+		/// <summary>
+		/// Top row of the matrix.
+		/// </summary>
 		public Vector2 Row0;
+
+		/// <summary>
+		/// Second row of the matrix.
+		/// </summary>
 		public Vector2 Row1;
+
+		/// <summary>
+		/// Third row of the matrix.
+		/// </summary>
 		public Vector2 Row2;
+
+		/// <summary>
+		/// Bottom row of the matrix.
+		/// </summary>
 		public Vector2 Row3;
 
 		/// <summary>
 		/// The zero matrix.
 		/// </summary>
-		public static Matrix4x2 Zero = new Matrix4x2(Vector2.Zero, Vector2.Zero, Vector2.Zero, Vector2.Zero);
+		public static readonly Matrix4x2 Zero = new Matrix4x2(Vector2.Zero, Vector2.Zero, Vector2.Zero, Vector2.Zero);
 
 		#endregion
 
 		#region Constructors
 
+		/// <summary>
+		/// Constructs a new instance.
+		/// </summary>
+		/// <param name="row0">Top row of the matrix.</param>
+		/// <param name="row1">Second row of the matrix.</param>
+		/// <param name="row2">Third row of the matrix.</param>
+		/// <param name="row3">Bottom row of the matrix.</param>
 		public Matrix4x2(Vector2 row0, Vector2 row1, Vector2 row2, Vector2 row3)
 		{
 			Row0 = row0;
@@ -53,6 +78,18 @@ namespace OpenTK
 			Row3 = row3;
 		}
 
+
+		/// <summary>
+		/// Constructs a new instance
+		/// </summary>
+		/// <param name="m00">First item of the first row of the matrix.</param>
+		/// <param name="m01">Second item of the first row of the matrix.</param>
+		/// <param name="m10">First item of the second row of the matrix.</param>
+		/// <param name="m11">Second item of the second row of the matrix.</param>
+		/// <param name="m20">First item of the third row of the matrix.</param>
+		/// <param name="m21">Second item of the third row of the matrix.</param>
+		/// <param name="m30">First item of the fourth row of the matrix.</param>
+		/// <param name="m31">Second item of the fourth row of the matrix.</param>
 		public Matrix4x2(
 			float m00, float m01,
 			float m10, float m11,
@@ -118,6 +155,279 @@ namespace OpenTK
 				throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
 			}
 		}
+
+		#endregion
+
+		#region Static
+
+		#region CreateRotation
+
+		/// <summary>
+		/// Builds a rotation matrix.
+		/// </summary>
+		/// <param name="angle">The counter-clockwise angle in radians.</param>
+		/// <param name="result">The resulting Matrix3x2 instance.</param>
+		public static void CreateRotation(float angle, out Matrix4x2 result)
+		{
+			float cos = (float)System.Math.Cos(angle);
+			float sin = (float)System.Math.Sin(angle);
+
+			result.Row0.X = cos;
+			result.Row0.Y = sin;
+			result.Row1.X = -sin;
+			result.Row1.Y = cos;
+			result.Row2.X = 0;
+			result.Row2.Y = 0;
+			result.Row3.X = 0;
+			result.Row3.Y = 0;
+		}
+
+		/// <summary>
+		/// Builds a rotation matrix.
+		/// </summary>
+		/// <param name="angle">The counter-clockwise angle in radians.</param>
+		/// <returns>The resulting Matrix3x2 instance.</returns>
+		public static Matrix4x2 CreateRotation(float angle)
+		{
+			Matrix4x2 result;
+			CreateRotation(angle, out result);
+			return result;
+		}
+
+		#endregion
+
+		#region CreateScale
+
+		/// <summary>
+		/// Creates a scale matrix.
+		/// </summary>
+		/// <param name="scale">Single scale factor for the x, y, and z axes.</param>
+		/// <param name="result">A scale matrix.</param>
+		public static void CreateScale(float scale, out Matrix4x2 result)
+		{
+			result.Row0.X = scale;
+			result.Row0.Y = 0;
+			result.Row1.X = 0;
+			result.Row1.Y = scale;
+			result.Row2.X = 0;
+			result.Row2.Y = 0;
+			result.Row3.X = 0;
+			result.Row3.Y = 0;
+		}
+
+		/// <summary>
+		/// Creates a scale matrix.
+		/// </summary>
+		/// <param name="scale">Single scale factor for the x and y axes.</param>
+		/// <returns>A scale matrix.</returns>
+		public static Matrix4x2 CreateScale(float scale)
+		{
+			Matrix4x2 result;
+			CreateScale(scale, out result);
+			return result;
+		}
+
+		/// <summary>
+		/// Creates a scale matrix.
+		/// </summary>
+		/// <param name="scale">Scale factors for the x and y axes.</param>
+		/// <param name="result">A scale matrix.</param>
+		public static void CreateScale(Vector2 scale, out Matrix4x2 result)
+		{
+			result.Row0.X = scale.X;
+			result.Row0.Y = 0;
+			result.Row1.X = 0;
+			result.Row1.Y = scale.Y;
+			result.Row2.X = 0;
+			result.Row2.Y = 0;
+			result.Row3.X = 0;
+			result.Row3.Y = 0;
+		}
+
+		/// <summary>
+		/// Creates a scale matrix.
+		/// </summary>
+		/// <param name="scale">Scale factors for the x and y axes.</param>
+		/// <returns>A scale matrix.</returns>
+		public static Matrix4x2 CreateScale(Vector2 scale)
+		{
+			Matrix4x2 result;
+			CreateScale(scale, out result);
+			return result;
+		}
+
+		/// <summary>
+		/// Creates a scale matrix.
+		/// </summary>
+		/// <param name="x">Scale factor for the x axis.</param>
+		/// <param name="y">Scale factor for the y axis.</param>
+		/// <param name="result">A scale matrix.</param>
+		public static void CreateScale(float x, float y, out Matrix4x2 result)
+		{
+			result.Row0.X = x;
+			result.Row0.Y = 0;
+			result.Row1.X = 0;
+			result.Row1.Y = y;
+			result.Row2.X = 0;
+			result.Row2.Y = 0;
+			result.Row3.X = 0;
+			result.Row3.Y = 0;
+		}
+
+		/// <summary>
+		/// Creates a scale matrix.
+		/// </summary>
+		/// <param name="x">Scale factor for the x axis.</param>
+		/// <param name="y">Scale factor for the y axis.</param>
+		/// <returns>A scale matrix.</returns>
+		public static Matrix4x2 CreateScale(float x, float y)
+		{
+			Matrix4x2 result;
+			CreateScale(x, y, out result);
+			return result;
+		}
+
+		#endregion
+
+		#region Multiply Functions
+
+		/// <summary>
+		/// Multiplies and instance by a scalar.
+		/// </summary>
+		/// <param name="left">The left operand of the multiplication.</param>
+		/// <param name="right">The right operand of the multiplication.</param>
+		/// <param name="result">A new instance that is the result of the multiplication.</param>
+		public static void Mult(ref Matrix4x2 left, float right, out Matrix4x2 result)
+		{
+			result.Row0.X = left.Row0.X * right;
+			result.Row0.Y = left.Row0.Y * right;
+			result.Row1.X = left.Row1.X * right;
+			result.Row1.Y = left.Row1.Y * right;
+			result.Row2.X = left.Row2.X * right;
+			result.Row2.Y = left.Row2.Y * right;
+			result.Row3.X = left.Row3.X * right;
+			result.Row3.Y = left.Row3.Y * right;
+		}
+
+		/// <summary>
+		/// Multiplies and instance by a scalar.
+		/// </summary>
+		/// <param name="left">The left operand of the multiplication.</param>
+		/// <param name="right">The right operand of the multiplication.</param>
+		/// <returns>A new instance that is the result of the multiplication.</returns>
+		public static Matrix4x2 Mult(Matrix4x2 left, float right)
+		{
+			Matrix4x2 result;
+			Mult(ref left, right, out result);
+			return result;
+		}
+
+		/// <summary>
+		/// Multiplies two instances.
+		/// </summary>
+		/// <param name="left">The left operand of the multiplication.</param>
+		/// <param name="right">The right operand of the multiplication.</param>
+		/// <param name="result">A new instance that is the result of the multiplication.</param>
+		public static void Mult(ref Matrix4x2 left, ref Matrix2 right, out Matrix4x2 result)
+		{
+			float lM11 = left.Row0.X, lM12 = left.Row0.Y,
+				lM21 = left.Row1.X, lM22 = left.Row1.Y,
+				lM31 = left.Row2.X, lM32 = left.Row2.Y,
+				lM41 = left.Row3.X, lM42 = left.Row3.Y,
+				rM11 = right.Row0.X, rM12 = right.Row0.Y,
+				rM21 = right.Row1.X, rM22 = right.Row1.Y;
+
+			result.Row0.X = (lM11 * rM11) + (lM12 * rM21);
+			result.Row0.Y = (lM11 * rM12) + (lM12 * rM22);
+			result.Row1.X = (lM21 * rM11) + (lM22 * rM21);
+			result.Row1.Y = (lM21 * rM12) + (lM22 * rM22);
+			result.Row2.X = (lM31 * rM11) + (lM32 * rM21);
+			result.Row2.Y = (lM31 * rM12) + (lM32 * rM22);
+			result.Row3.X = (lM41 * rM11) + (lM42 * rM21);
+			result.Row3.Y = (lM41 * rM12) + (lM42 * rM22);
+		}
+
+		/// <summary>
+		/// Multiplies two instances.
+		/// </summary>
+		/// <param name="left">The left operand of the multiplication.</param>
+		/// <param name="right">The right operand of the multiplication.</param>
+		/// <returns>A new instance that is the result of the multiplication.</returns>
+		public static Matrix4x2 Mult(Matrix4x2 left, Matrix2 right)
+		{
+			Matrix4x2 result;
+			Mult(ref left, ref right, out result);
+			return result;
+		}
+
+		#endregion
+
+		#region Add
+
+		#endregion
+
+		#region Subtact
+
+		#endregion
+
+		#region Invert Functions
+
+		#endregion
+
+		#region Transpose
+
+		#endregion
+
+		#endregion
+
+		#region Operators
+
+		#endregion
+
+		#region Overrides
+
+		#region public override string ToString()
+
+		/// <summary>
+		/// Returns a System.String that represents the current Matrix3d.
+		/// </summary>
+		/// <returns>The string representation of the matrix.</returns>
+		public override string ToString()
+		{
+			return String.Format("{0}\n{1}\n{2}\n{3}", Row0, Row1, Row2, Row3);
+		}
+
+		#endregion
+
+		#region public override int GetHashCode()
+
+		/// <summary>
+		/// Returns the hashcode for this instance.
+		/// </summary>
+		/// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
+		public override int GetHashCode()
+		{
+			return Row0.GetHashCode() ^ Row1.GetHashCode() ^ Row2.GetHashCode() ^ Row3.GetHashCode();
+		}
+
+		#endregion
+
+		#region public override bool Equals(object obj)
+
+		/// <summary>
+		/// Indicates whether this instance and a specified object are equal.
+		/// </summary>
+		/// <param name="obj">The object to compare to.</param>
+		/// <returns>True if the instances are equal; false otherwise.</returns>
+		public override bool Equals(object obj)
+		{
+			if (!(obj is Matrix4x2))
+				return false;
+
+			return this.Equals((Matrix4x2)obj);
+		}
+
+		#endregion
 
 		#endregion
 

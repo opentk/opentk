@@ -520,6 +520,18 @@ namespace OpenTK
             result.Row2.Y = mat.Row1.Z;
         }
 
+        /// <summary>
+        /// Calculate the transpose of the given matrix.
+        /// </summary>
+        /// <param name="mat">The matrix to transpose.</param>
+        /// <returns>The transpose of the given matrix.</returns>
+        public static Matrix3x2 Transpose(Matrix2x3 mat)
+        {
+            Matrix3x2 result;
+            Transpose(ref mat, out result);
+            return result;
+        }
+
         #endregion
 
         #endregion
