@@ -47,7 +47,7 @@ namespace OpenTK
         /// <summary>
         /// The identity matrix.
         /// </summary>
-        public static Matrix2 Identity = new Matrix2(Vector2.UnitX, Vector2.UnitY);
+        public static readonly Matrix2 Identity = new Matrix2(Vector2.UnitX, Vector2.UnitY);
 
         /// <summary>
         /// The zero matrix.
@@ -169,7 +169,17 @@ namespace OpenTK
 
         #region Instance
 
+        #region public void Transpose()
 
+        /// <summary>
+        /// Converts this instance to it's transpose.
+        /// </summary>
+        public void Transpose()
+        {
+            this = Matrix2.Transpose(this);
+        }
+
+        #endregion
 
         #endregion
 
@@ -530,7 +540,7 @@ namespace OpenTK
         /// <returns>A new Matrix2 which holds the result of the multiplication</returns>
         public static Matrix2 operator *(float left, Matrix2 right)
         {
-            return Matrix2.Mult(right, left);
+            return Mult(right, left);
         }
 
         /// <summary>
@@ -541,7 +551,7 @@ namespace OpenTK
         /// <returns>A new Matrix2 which holds the result of the multiplication</returns>
         public static Matrix2 operator *(Matrix2 left, float right)
         {
-            return Matrix2.Mult(left, right);
+            return Mult(left, right);
         }
 
         /// <summary>
@@ -552,7 +562,7 @@ namespace OpenTK
         /// <returns>A new Matrix2 which holds the result of the multiplication</returns>
         public static Matrix2 operator *(Matrix2 left, Matrix2 right)
         {
-            return Matrix2.Mult(left, right);
+            return Mult(left, right);
         }
 
         /// <summary>
@@ -563,7 +573,7 @@ namespace OpenTK
         /// <returns>A new Matrix2x3 which holds the result of the multiplication</returns>
         public static Matrix2x3 operator *(Matrix2 left, Matrix2x3 right)
         {
-            return Matrix2.Mult(left, right);
+            return Mult(left, right);
         }
 
         /// <summary>
@@ -574,7 +584,7 @@ namespace OpenTK
         /// <returns>A new Matrix2x4 which holds the result of the multiplication</returns>
         public static Matrix2x4 operator *(Matrix2 left, Matrix2x4 right)
         {
-            return Matrix2.Mult(left, right);
+            return Mult(left, right);
         }
 
         /// <summary>
@@ -585,7 +595,7 @@ namespace OpenTK
         /// <returns>A new Matrix2 which holds the result of the addition</returns>
         public static Matrix2 operator +(Matrix2 left, Matrix2 right)
         {
-            return Matrix2.Add(left, right);
+            return Add(left, right);
         }
 
         /// <summary>
@@ -596,7 +606,7 @@ namespace OpenTK
         /// <returns>A new Matrix2 which holds the result of the subtraction</returns>
         public static Matrix2 operator -(Matrix2 left, Matrix2 right)
         {
-            return Matrix2.Subtract(left, right);
+            return Subtract(left, right);
         }
 
         /// <summary>

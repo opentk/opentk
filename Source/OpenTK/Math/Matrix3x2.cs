@@ -55,6 +55,12 @@ namespace OpenTK
 
 		#region Constructors
 
+		/// <summary>
+		/// Constructs a new instance.
+		/// </summary>
+		/// <param name="row0">Top row of the matrix.</param>
+		/// <param name="row1">Second row of the matrix.</param>
+		/// <param name="row2">Bottom row of the matrix.</param>
 		public Matrix3x2(Vector2 row0, Vector2 row1, Vector2 row2)
 		{
 			Row0 = row0;
@@ -62,6 +68,15 @@ namespace OpenTK
 			Row2 = row2;
 		}
 
+		/// <summary>
+		/// Constructs a new instance
+		/// </summary>
+		/// <param name="m00">First item of the first row of the matrix.</param>
+		/// <param name="m01">Second item of the first row of the matrix.</param>
+		/// <param name="m10">First item of the second row of the matrix.</param>
+		/// <param name="m11">Second item of the second row of the matrix.</param>
+		/// <param name="m20">First item of the third row of the matrix.</param>
+		/// <param name="m21">Second item of the third row of the matrix.</param>
 		public Matrix3x2(
 			float m00, float m01,
 			float m10, float m11,
