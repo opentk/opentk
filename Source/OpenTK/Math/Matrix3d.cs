@@ -192,7 +192,10 @@ namespace OpenTK
         #region Instance
         
         #region public void Invert()
-        
+
+        /// <summary>
+        /// Converts this instance into its inverse.
+        /// </summary>
         public void Invert()
         {
             this = Matrix3d.Invert(this);
@@ -201,7 +204,10 @@ namespace OpenTK
         #endregion
         
         #region public void Transpose()
-        
+
+        /// <summary>
+        /// Converts this instance into its transpose.
+        /// </summary>
         public void Transpose()
         {
             this = Matrix3d.Transpose(this);
@@ -214,7 +220,13 @@ namespace OpenTK
         #region Static
         
         #region CreateFromAxisAngle
-        
+
+        /// <summary>
+        /// Build a rotation matrix from the specified axis/angle rotation.
+        /// </summary>
+        /// <param name="axis">The axis to rotate about.</param>
+        /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
+        /// <param name="result">A matrix instance.</param>
         public static void CreateFromAxisAngle(Vector3d axis, double angle, out Matrix3d result)
         {
             //normalize and create a local copy of the vector.
@@ -248,7 +260,13 @@ namespace OpenTK
             result.Row2.Y = tYZ + sinX;
             result.Row2.Z = tZZ + cos;
         }
-        
+
+        /// <summary>
+        /// Build a rotation matrix from the specified axis/angle rotation.
+        /// </summary>
+        /// <param name="axis">The axis to rotate about.</param>
+        /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
+        /// <returns>A matrix instance.</returns>
         public static Matrix3d CreateFromAxisAngle(Vector3d axis, double angle)
         {
             Matrix3d result;
@@ -259,7 +277,12 @@ namespace OpenTK
         #endregion
         
         #region CreateFromQuaternion
-        
+
+        /// <summary>
+        /// Build a rotation matrix from the specified quaternion.
+        /// </summary>
+        /// <param name="q">Quaternion to translate.</param>
+        /// <param name="result">Matrix result.</param>
         public static void CreateFromQuaternion(ref Quaterniond q, out Matrix3d result)
         {
             Vector3d axis;
@@ -267,7 +290,12 @@ namespace OpenTK
             q.ToAxisAngle(out axis, out angle);
             CreateFromAxisAngle(axis, angle, out result);
         }
-        
+
+        /// <summary>
+        /// Build a rotation matrix from the specified quaternion.
+        /// </summary>
+        /// <param name="q">Quaternion to translate.</param>
+        /// <returns>A matrix instance.</returns>
         public static Matrix3d CreateFromQuaternion(Quaterniond q)
         {
             Matrix3d result;
@@ -278,7 +306,12 @@ namespace OpenTK
         #endregion
         
         #region CreateRotation[XYZ]
-        
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the x-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <param name="result">The resulting Matrix3d instance.</param>
         public static void CreateRotationX(double angle, out Matrix3d result)
         {
             double cos = System.Math.Cos(angle);
@@ -290,14 +323,24 @@ namespace OpenTK
             result.Row2.Y = -sin;
             result.Row2.Z = cos;
         }
-        
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the x-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <returns>The resulting Matrix3d instance.</returns>
         public static Matrix3d CreateRotationX(double angle)
         {
             Matrix3d result;
             CreateRotationX(angle, out result);
             return result;
         }
-        
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the y-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <param name="result">The resulting Matrix3d instance.</param>
         public static void CreateRotationY(double angle, out Matrix3d result)
         {
             double cos = System.Math.Cos(angle);
@@ -309,14 +352,24 @@ namespace OpenTK
             result.Row2.X = sin;
             result.Row2.Z = cos;
         }
-        
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the y-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <returns>The resulting Matrix3d instance.</returns>
         public static Matrix3d CreateRotationY(double angle)
         {
             Matrix3d result;
             CreateRotationY(angle, out result);
             return result;
         }
-        
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the z-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <param name="result">The resulting Matrix3d instance.</param>
         public static void CreateRotationZ(double angle, out Matrix3d result)
         {
             double cos = System.Math.Cos(angle);
@@ -328,7 +381,12 @@ namespace OpenTK
             result.Row1.X = -sin;
             result.Row1.Y = cos;
         }
-        
+
+        /// <summary>
+        /// Builds a rotation matrix for a rotation around the z-axis.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <returns>The resulting Matrix3d instance.</returns>
         public static Matrix3d CreateRotationZ(double angle)
         {
             Matrix3d result;
@@ -410,7 +468,7 @@ namespace OpenTK
         /// <param name="x">Scale factor for the x axis.</param>
         /// <param name="y">Scale factor for the y axis.</param>
         /// <param name="z">Scale factor for the z axis.</param>
-        /// <param name="result">A scale matrix.</returns>
+        /// <param name="result">A scale matrix.</param>
         public static void CreateScale(double x, double y, double z, out Matrix3d result)
         {
             result = Identity;
@@ -422,14 +480,26 @@ namespace OpenTK
         #endregion
         
         #region Multiply Functions
-        
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication</returns>
         public static Matrix3d Mult(Matrix3d left, Matrix3d right)
         {
             Matrix3d result;
             Mult(ref left, ref right, out result);
             return result;
         }
-        
+
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication</param>
         public static void Mult(ref Matrix3d left, ref Matrix3d right, out Matrix3d result)
         {
             double lM11 = left.Row0.X, lM12 = left.Row0.Y, lM13 = left.Row0.Z,
@@ -578,12 +648,22 @@ namespace OpenTK
         #endregion
         
         #region Transpose
-        
+
+        /// <summary>
+        /// Calculate the transpose of the given matrix
+        /// </summary>
+        /// <param name="mat">The matrix to transpose</param>
+        /// <returns>The transpose of the given matrix</returns>
         public static Matrix3d Transpose(Matrix3d mat)
         {
             return new Matrix3d(mat.Column0, mat.Column1, mat.Column2);
         }
-        
+
+        /// <summary>
+        /// Calculate the transpose of the given matrix
+        /// </summary>
+        /// <param name="mat">The matrix to transpose</param>
+        /// <param name="result">The result of the calculation</param>
         public static void Transpose(ref Matrix3d mat, out Matrix3d result)
         {
             result.Row0 = mat.Column0;
@@ -596,17 +676,35 @@ namespace OpenTK
         #endregion
         
         #region Operators
-        
+
+        /// <summary>
+        /// Matrix multiplication
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix3d which holds the result of the multiplication</returns>
         public static Matrix3d operator *(Matrix3d left, Matrix3d right)
         {
             return Matrix3d.Mult(left, right);
         }
-        
+
+        /// <summary>
+        /// Compares two instances for equality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left equals right; false otherwise.</returns>
         public static bool operator ==(Matrix3d left, Matrix3d right)
         {
             return left.Equals(right);
         }
-        
+
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left does not equal right; false otherwise.</returns>
         public static bool operator !=(Matrix3d left, Matrix3d right)
         {
             return !left.Equals(right);
@@ -664,7 +762,10 @@ namespace OpenTK
         #endregion
         
         #region IEquatable<Matrix3d> Members
-        
+
+        /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
+        /// <param name="other">A matrix to compare with this matrix.</param>
+        /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         public bool Equals(Matrix3d other)
         {
             return
