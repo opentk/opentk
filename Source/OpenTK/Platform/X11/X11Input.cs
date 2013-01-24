@@ -157,20 +157,22 @@ namespace OpenTK.Platform.X11
                 case XEventName.KeyPress:
                 case XEventName.KeyRelease:
                     bool pressed = e.type == XEventName.KeyPress;
+                    XKey keysym = (XKey)API.LookupKeysym(ref e.KeyEvent, 0);
+                    XKey keysym2 = (XKey)API.LookupKeysym(ref e.KeyEvent, 1);
+                    Key key = Key.Unknown;
 
-                    IntPtr keysym = API.LookupKeysym(ref e.KeyEvent, 0);
-                    IntPtr keysym2 = API.LookupKeysym(ref e.KeyEvent, 1);
-
-                    if (keymap.ContainsKey((XKey)keysym))
-                        keyboard[keymap[(XKey)keysym]] = pressed;
-                    else if (keymap.ContainsKey((XKey)keysym2))
-                        keyboard[keymap[(XKey)keysym2]] = pressed;
+                    if (keymap.ContainsKey(keysym))
+                        key = keymap[keysym];
+                    else if (keymap.ContainsKey(keysym2))
+                        key = keymap[keysym2];
                     else
                         Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.KeyEvent.keycode, (XKey)keysym, (XKey)keysym2);
+
+                    keyboard.SetKey(key, (uint)e.KeyEvent.keycode, pressed);
                     break;
 
                 case XEventName.ButtonPress:
-                    if      (e.ButtonEvent.button == 1) mouse[OpenTK.Input.MouseButton.Left] = true;
+                    if (e.ButtonEvent.button == 1) mouse[OpenTK.Input.MouseButton.Left] = true;
                     else if (e.ButtonEvent.button == 2) mouse[OpenTK.Input.MouseButton.Middle] = true;
                     else if (e.ButtonEvent.button == 3) mouse[OpenTK.Input.MouseButton.Right] = true;
                     else if (e.ButtonEvent.button == 4) mouse.Wheel++;
@@ -190,7 +192,7 @@ namespace OpenTK.Platform.X11
                     break;
 
                 case XEventName.ButtonRelease:
-                    if      (e.ButtonEvent.button == 1) mouse[OpenTK.Input.MouseButton.Left] = false;
+                    if (e.ButtonEvent.button == 1) mouse[OpenTK.Input.MouseButton.Left] = false;
                     else if (e.ButtonEvent.button == 2) mouse[OpenTK.Input.MouseButton.Middle] = false;
                     else if (e.ButtonEvent.button == 3) mouse[OpenTK.Input.MouseButton.Right] = false;
                     else if (e.ButtonEvent.button == 6) mouse[OpenTK.Input.MouseButton.Button1] = false;

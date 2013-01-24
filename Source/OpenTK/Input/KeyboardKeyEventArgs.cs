@@ -46,6 +46,7 @@ namespace OpenTK.Input
         #region Fields
 
         Key key;
+        uint scancode;
 
         #endregion
 
@@ -63,6 +64,7 @@ namespace OpenTK.Input
         public KeyboardKeyEventArgs(KeyboardKeyEventArgs args)
         {
             Key = args.Key;
+            ScanCode = args.ScanCode;
         }
 
         #endregion
@@ -77,6 +79,16 @@ namespace OpenTK.Input
             get { return key; }
             internal set { key = value; }
         }
+
+        /// <summary>
+        /// Gets the scancode which generated this event.
+        /// </summary>
+        public uint ScanCode
+        {
+            get { return scancode; }
+            internal set { scancode = value; }
+        }
+
 
         #endregion
     }

@@ -180,31 +180,30 @@ namespace OpenTK.Platform.Windows
             switch (rin.Data.Keyboard.VKey)
             {
                 case VirtualKeys.SHIFT:
-                    keyboard[Input.Key.ShiftLeft] = keyboard[Input.Key.ShiftRight] = pressed;
+                    keyboard.SetKeyState(Key.ShiftLeft, (byte)WinGLNative.ShiftLeftScanCode, pressed);
+                    keyboard.SetKeyState(Key.ShiftRight, (byte)WinGLNative.ShiftRightScanCode, pressed);
                     processed = true;
                     break;
 
                 case VirtualKeys.CONTROL:
-                    keyboard[Input.Key.ControlLeft] = keyboard[Input.Key.ControlRight] = pressed;
+                    keyboard.SetKeyState(Key.ControlLeft, (byte)WinGLNative.ControlLeftScanCode, pressed);
+                    keyboard.SetKeyState(Key.ControlRight, (byte)WinGLNative.ControlRightScanCode, pressed);
                     processed = true;
                     break;
 
                 case VirtualKeys.MENU:
-                    keyboard[Input.Key.AltLeft] = keyboard[Input.Key.AltRight] = pressed;
+                    keyboard.SetKeyState(Key.AltLeft, (byte)WinGLNative.AltLeftScanCode, pressed);
+                    keyboard.SetKeyState(Key.AltRight, (byte)WinGLNative.AltRightScanCode, pressed);
                     processed = true;
                     break;
 
                 default:
-                    if (!KeyMap.ContainsKey(rin.Data.Keyboard.VKey))
-                    {
-                        Debug.Print("Virtual key {0} ({1}) not mapped.",
-                                    rin.Data.Keyboard.VKey, (int)rin.Data.Keyboard.VKey);
-                    }
-                    else
-                    {
-                        keyboard[KeyMap[rin.Data.Keyboard.VKey]] = pressed;
-                        processed = true;
-                    }
+                    Key key;
+                    KeyMap.TryGetValue(rin.Data.Keyboard.VKey, out key);
+                    if (key == Key.Unknown)
+                        Debug.Print("Virtual key {0} ({1}) not mapped.", rin.Data.Keyboard.VKey, (int)rin.Data.Keyboard.VKey);
+                    keyboard.SetKeyState(key, BitConverter.GetBytes(rin.Data.Keyboard.MakeCode)[0], pressed);
+                    processed = true;
                     break;
             }
 
