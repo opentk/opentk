@@ -821,7 +821,7 @@ namespace OpenTK
         /// <summary>
         /// Called when a keybord key is released.
         /// </summary>
-        /// <param name="e">The <see cref="OpenTK.KeyboardKeyEventArgs"/> for this event.</param>
+        /// <param name="e">The <see cref="OpenTK.Input.KeyboardKeyEventArgs"/> for this event.</param>
         protected virtual void OnKeyUp(KeyboardKeyEventArgs e)
         {
             KeyUp(this, e);

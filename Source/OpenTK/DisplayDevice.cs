@@ -322,9 +322,9 @@ namespace OpenTK
         #region GetDisplay
 
         /// <summary>
-        /// Gets the <see cref="DisplayDevice"/> for the specified <see cref="DeviceIndex"/>.
+        /// Gets the <see cref="DisplayDevice"/> for the specified <see cref="DisplayIndex"/>.
         /// </summary>
-        /// <param name="index">The <see cref="DeviceIndex"/> that defines the desired display.</param>
+        /// <param name="index">The <see cref="DisplayIndex"/> that defines the desired display.</param>
         /// <returns>A <see cref="DisplayDevice"/> or null, if no device corresponds to the specified index.</returns>
         public static DisplayDevice GetDisplay(DisplayIndex index)
         {

@@ -613,7 +613,7 @@ namespace OpenTK
         /// <param name="x">Scale factor for the x axis.</param>
         /// <param name="y">Scale factor for the y axis.</param>
         /// <param name="z">Scale factor for the z axis.</param>
-        /// <param name="result">A scale matrix.</returns>
+        /// <param name="result">A scale matrix.</param>
         public static void CreateScale(float x, float y, float z, out Matrix4 result)
         {
             result = Identity;
