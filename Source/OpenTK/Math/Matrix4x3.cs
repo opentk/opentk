@@ -745,17 +745,17 @@ namespace OpenTK
 
 		#region Transpose
 
-		/*public static Matrix3x4 Transpose(Matrix4x3 mat)
+		public static Matrix3x4 Transpose(Matrix4x3 mat)
 		{
 			return new Matrix3x4(mat.Column0, mat.Column1, mat.Column2);
 		}
 
-		public static void Transpose(ref Matrix4x3 mat, out Matrix4x3 result)
+		public static void Transpose(ref Matrix4x3 mat, out Matrix3x4 result)
 		{
 			result.Row0 = mat.Column0;
 			result.Row1 = mat.Column1;
 			result.Row2 = mat.Column2;
-		}*/
+		}
 
 		#endregion
 

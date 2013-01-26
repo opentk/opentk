@@ -181,6 +181,18 @@ namespace OpenTK
 
         #endregion
 
+        #region public void Invert()
+
+        /// <summary>
+        /// Converts this instance into its inverse.
+        /// </summary>
+        public void Invert()
+        {
+            this = Matrix2.Invert(this);
+        }
+
+        #endregion
+
         #endregion
 
         #region Static
@@ -495,7 +507,39 @@ namespace OpenTK
 
         #region Invert Functions
 
-        //TODO implement
+        /// <summary>
+        /// Calculate the inverse of the given matrix
+        /// </summary>
+        /// <param name="mat">The matrix to invert</param>
+        /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular</param>
+        /// <exception cref="InvalidOperationException">Thrown if the Matrix2 is singular.</exception>
+        public static void Invert(ref Matrix2 mat, out Matrix2 result)
+        {
+            float det = mat.Determinant;
+
+            if (det == 0)
+                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+
+            float invDet = 1f / det;
+
+            result.Row0.X = mat.Row1.Y * invDet;
+            result.Row0.Y = -mat.Row0.Y * invDet;
+            result.Row1.X = -mat.Row1.X * invDet;
+            result.Row1.Y = mat.Row0.X * invDet;
+        }
+
+        /// <summary>
+        /// Calculate the inverse of the given matrix
+        /// </summary>
+        /// <param name="mat">The matrix to invert</param>
+        /// <returns>The inverse of the given matrix if it has one, or the input if it is singular</returns>
+        /// <exception cref="InvalidOperationException">Thrown if the Matrix2 is singular.</exception>
+        public static Matrix2 Invert(Matrix2 mat)
+        {
+            Matrix2 result;
+            Invert(ref mat, out result);
+            return result;
+        }
         
         #endregion
 
