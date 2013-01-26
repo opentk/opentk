@@ -345,7 +345,7 @@ namespace OpenTK
         /// Builds a rotation matrix for a rotation around the x-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <param name="result">The resulting Matrix4 instance.</param>
+        /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationX(double angle, out Matrix4d result)
         {
             double cos = System.Math.Cos(angle);
@@ -361,7 +361,7 @@ namespace OpenTK
         /// Builds a rotation matrix for a rotation around the x-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <returns>The resulting Matrix4 instance.</returns>
+        /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateRotationX(double angle)
         {
             Matrix4d result;
@@ -373,7 +373,7 @@ namespace OpenTK
         /// Builds a rotation matrix for a rotation around the y-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <param name="result">The resulting Matrix4 instance.</param>
+        /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationY(double angle, out Matrix4d result)
         {
             double cos = System.Math.Cos(angle);
@@ -389,7 +389,7 @@ namespace OpenTK
         /// Builds a rotation matrix for a rotation around the y-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <returns>The resulting Matrix4 instance.</returns>
+        /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateRotationY(double angle)
         {
             Matrix4d result;
@@ -401,7 +401,7 @@ namespace OpenTK
         /// Builds a rotation matrix for a rotation around the z-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <param name="result">The resulting Matrix4 instance.</param>
+        /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationZ(double angle, out Matrix4d result)
         {
             double cos = System.Math.Cos(angle);
@@ -417,7 +417,7 @@ namespace OpenTK
         /// Builds a rotation matrix for a rotation around the z-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <returns>The resulting Matrix4 instance.</returns>
+        /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateRotationZ(double angle)
         {
             Matrix4d result;
@@ -1229,7 +1229,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="left">left-hand operand</param>
         /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix44 which holds the result of the multiplication</returns>
+        /// <returns>A new Matrix4d which holds the result of the multiplication</returns>
         public static Matrix4d operator *(Matrix4d left, Matrix4d right)
         {
             return Matrix4d.Mult(left, right);
@@ -1311,7 +1311,7 @@ namespace OpenTK
         #region IEquatable<Matrix4d> Members
 
         /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
-        /// <param name="other">An matrix to compare with this matrix.</param>
+        /// <param name="other">A matrix to compare with this matrix.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         public bool Equals(Matrix4d other)
         {
