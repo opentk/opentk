@@ -94,7 +94,18 @@ namespace OpenTK
             Row1 = new Vector3d(m10, m11, m12);
             Row2 = new Vector3d(m20, m21, m22);
         }
-        
+
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="matrix">A Matrix4d to take the upper-left 3x3 from.</param>
+        public Matrix3d(Matrix4d matrix)
+        {
+            Row0 = matrix.Row0.Xyz;
+            Row1 = matrix.Row1.Xyz;
+            Row2 = matrix.Row2.Xyz;
+        }
+
         #endregion
         
         #region Public Members

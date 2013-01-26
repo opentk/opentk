@@ -99,6 +99,17 @@ namespace OpenTK
             Row1 = new Vector3(m10, m11, m12);
             Row2 = new Vector3(m20, m21, m22);
         }
+
+        /// <summary>
+        /// Constructs a new instnace.
+        /// </summary>
+        /// <param name="matrix">A Matrix4 to take the upper-left 3x3 from.</param>
+        public Matrix3(Matrix4 matrix)
+        {
+            Row0 = matrix.Row0.Xyz;
+            Row1 = matrix.Row1.Xyz;
+            Row2 = matrix.Row2.Xyz;
+        }
         
         #endregion
         
