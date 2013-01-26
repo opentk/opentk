@@ -467,11 +467,33 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
 
+        public static void UniformMatrix2(int location, bool transpose, ref Matrix2d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix2(location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
         public static void UniformMatrix2x3(int location, bool transpose, ref Matrix2x3 matrix)
         {
             unsafe
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix2x3(location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void UniformMatrix2x3(int location, bool transpose, ref Matrix2x3d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
                     GL.UniformMatrix2x3(location, 1, transpose, matrix_ptr);
                 }
@@ -489,11 +511,33 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
 
+        public static void UniformMatrix2x4(int location, bool transpose, ref Matrix2x4d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix2x4(location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
         public static void UniformMatrix3x2(int location, bool transpose, ref Matrix3x2 matrix)
         {
             unsafe
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix3x2(location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void UniformMatrix3x2(int location, bool transpose, ref Matrix3x2d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
                     GL.UniformMatrix3x2(location, 1, transpose, matrix_ptr);
                 }
@@ -533,6 +577,17 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
 
+        public static void UniformMatrix3x4(int location, bool transpose, ref Matrix3x4d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix3x4(location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
         public static void UniformMatrix4x2(int location, bool transpose, ref Matrix4x2 matrix)
         {
             unsafe
@@ -544,11 +599,33 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
 
+        public static void UniformMatrix4x2(int location, bool transpose, ref Matrix4x2d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix4x2(location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
         public static void UniformMatrix4x3(int location, bool transpose, ref Matrix4x3 matrix)
         {
             unsafe
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix4x3(location, 1, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        public static void UniformMatrix4x3(int location, bool transpose, ref Matrix4x3d matrix)
+        {
+            unsafe
+            {
+                fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
                     GL.UniformMatrix4x3(location, 1, transpose, matrix_ptr);
                 }
