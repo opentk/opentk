@@ -584,6 +584,7 @@ namespace OpenTK
         #region Multiply Functions
 
         /// <summary>
+        /// This isn't quite a multiply, but the result may be useful in some situations.
         /// Multiplies two instances.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
@@ -597,6 +598,7 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// This isn't quite a multiply, but the result may be useful in some situations.
         /// Multiplies two instances.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>

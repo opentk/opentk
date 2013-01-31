@@ -101,7 +101,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Constructs a new instnace.
+        /// Constructs a new instance.
         /// </summary>
         /// <param name="matrix">A Matrix4 to take the upper-left 3x3 from.</param>
         public Matrix3(Matrix4 matrix)
