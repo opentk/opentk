@@ -25,7 +25,7 @@ namespace Examples.Tests
     {
 
         public BasicMouseInput()
-            : base(800, 600, GraphicsMode.Default)
+            : base(800, 600)
         { }
 
         protected override void OnLoad(EventArgs e)
@@ -42,6 +42,8 @@ namespace Examples.Tests
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
+            base.OnUpdateFrame(e);
+
             // Here's the big test!
             if(OpenTK.Input.Mouse.GetState()[MouseButton.Left]){
                 Console.WriteLine("The left mouse button is down!");
@@ -66,7 +68,7 @@ namespace Examples.Tests
      
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.Clear(ClearBufferMask.ColorBufferBit);
             SwapBuffers();
         }
 
@@ -78,7 +80,8 @@ namespace Examples.Tests
                 // Get the title and category  of this example using reflection.
                 ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
                 example.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
-                example.Run(30.0, 0.0);
+
+                example.Run(30.0);
             }
         }
 
