@@ -189,6 +189,17 @@ namespace OpenTK
 
         #endregion
 
+        /// <summary>
+        /// Returns a copy of the Quaternion scaled to unit length.
+        /// </summary>
+        /// <returns></returns>
+        public Quaternion Normalized()
+        {
+            Quaternion q = this;
+            q.Normalize();
+            return q;
+        }
+
         #region public void Normalize()
 
         /// <summary>

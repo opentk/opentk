@@ -259,6 +259,93 @@ namespace OpenTK
         /// Gets or sets the value at row 4, column 4 of this instance.
         /// </summary>
         public float M44 { get { return Row3.W; } set { Row3.W = value; } }
+        
+        /// <summary>
+        /// Returns a copy of this instance with scale transform removed.
+        /// </summary>
+        public Matrix4 Normalized()
+        {
+            Matrix4 m = this;
+            m.Normalize();
+            return m;
+        }
+
+        /// <summary>
+        /// Removes scale transform from this instance.
+        /// </summary>
+        public void Normalize()
+        {
+            Row0.Xyz = Row0.Xyz.Normalized();
+            Row1.Xyz = Row1.Xyz.Normalized();
+            Row2.Xyz = Row2.Xyz.Normalized();
+        }
+
+        /// <summary>
+        /// Gets the translation component of this instance.
+        /// </summary>
+        public Vector3 TranslationPart { get { return Row3.Xyz; } }
+
+        /// <summary>
+        /// Gets the scale component of this instance.
+        /// </summary>
+        public Vector3 ScalePart { get { return new Vector3 (Row0.Length, Row1.Length, Row2.Length); } }
+
+        /// <summary>
+        /// Gets the rotation component of this instance. The Matrix MUST be normalized first.
+        /// </summary>
+        public Quaternion RotationPart
+        {
+            get
+            {
+                Quaternion q = new Quaternion();
+
+                // Adapted from Blender
+                double trace = 0.25 * (Row0[0] + Row1[1] + Row2[2] + 1.0);
+
+                if (trace > 0.0f)
+                {
+                    double sq = Math.Sqrt(trace);
+
+                    q.W = (float)sq;
+                    sq = 1.0 / (4.0 * sq);
+                    q.X = (float)((Row1[2] - Row2[1]) * sq);
+                    q.Y = (float)((Row2[0] - Row0[2]) * sq);
+                    q.Z = (float)((Row0[1] - Row1[0]) * sq);
+                }
+                else if (Row0[0] > Row1[1] && Row0[0] > Row2[2])
+                {
+                    double sq = 2.0 * Math.Sqrt(1.0 + Row0[0] - Row1[1] - Row2[2]);
+
+                    q.X = (float)(0.25 * sq);
+                    sq = 1.0 / sq;
+                    q.W = (float)((Row2[1] - Row1[2]) * sq);
+                    q.Y = (float)((Row1[0] + Row0[1]) * sq);
+                    q.Z = (float)((Row2[0] + Row0[2]) * sq);
+                }
+                else if (Row1[1] > Row2[2])
+                {
+                    double sq = 2.0 * Math.Sqrt(1.0 + Row1[1] - Row0[0] - Row2[2]);
+
+                    q.Y = (float)(0.25 * sq);
+                    sq = 1.0 / sq;
+                    q.W = (float)((Row2[0] - Row0[2]) * sq);
+                    q.X = (float)((Row1[0] + Row0[1]) * sq);
+                    q.Z = (float)((Row2[1] + Row1[2]) * sq);
+                }
+                else
+                {
+                    double sq = 2.0 * Math.Sqrt(1.0 + Row2[2] - Row0[0] - Row1[1]);
+
+                    q.Z = (float)(0.25 * sq);
+                    sq = 1.0 / sq;
+                    q.W = (float)((Row1[0] - Row0[1]) * sq);
+                    q.X = (float)((Row2[0] + Row0[2]) * sq);
+                    q.Y = (float)((Row2[1] + Row1[2]) * sq);
+                }
+
+                return q.Normalized();
+            }
+        }
 
         #endregion
 

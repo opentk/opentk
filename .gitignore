@@ -3,6 +3,7 @@ Binaries/
 OpenTK.userprefs
 Source/GlobalAssemblyInfo.cs
 Version.txt
+Source/OpenTK/OpenTK.xml
 
 # OpenTK Resource files that seem like they should be ignored:
 Source/Compatibility/Properties/Resources.resources
