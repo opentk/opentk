@@ -281,6 +281,17 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Returns an inverted copy of this instance.
+        /// </summary>
+        public Matrix4 Inverted()
+        {
+            Matrix4 m = this;
+            if (m.Determinant != 0)
+                m.Invert();
+            return m;
+        }
+
+        /// <summary>
         /// Gets the translation component of this instance.
         /// </summary>
         public Vector3 TranslationPart { get { return Row3.Xyz; } }
@@ -343,7 +354,8 @@ namespace OpenTK
                     q.Y = (float)((Row2[1] + Row1[2]) * sq);
                 }
 
-                return q.Normalized();
+                q.Normalize();
+				return q;
             }
         }
 
