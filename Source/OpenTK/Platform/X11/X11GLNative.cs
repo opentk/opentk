@@ -994,6 +994,8 @@ namespace OpenTK.Platform.X11
             {
                 using (new XLock(window.Display))
                 {
+                    Functions.XMoveWindow(window.Display, window.WindowHandle,
+                        value.X, value.Y);
                     Functions.XResizeWindow(window.Display, window.WindowHandle,
                         value.Width, value.Height);
                 }
