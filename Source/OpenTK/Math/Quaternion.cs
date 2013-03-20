@@ -189,6 +189,34 @@ namespace OpenTK
 
         #endregion
 
+        /// <summary>
+        /// Returns a copy of the Quaternion scaled to unit length.
+        /// </summary>
+        public Quaternion Normalized()
+        {
+            Quaternion q = this;
+            q.Normalize();
+            return q;
+        }
+
+        /// <summary>
+        /// Reverses the rotation angle of this Quaterniond.
+        /// </summary>
+        public void Invert()
+        {
+            W = -W;
+        }
+
+        /// <summary>
+        /// Returns a copy of this Quaterniond with its rotation angle reversed.
+        /// </summary>
+        public Quaternion Inverted()
+        {
+            var q = this;
+            q.Invert();
+            return q;
+        }
+
         #region public void Normalize()
 
         /// <summary>
@@ -206,7 +234,7 @@ namespace OpenTK
         #region public void Conjugate()
 
         /// <summary>
-        /// Convert this quaternion to its conjugate
+        /// Inverts the Vector3 component of this Quaternion.
         /// </summary>
         public void Conjugate()
         {

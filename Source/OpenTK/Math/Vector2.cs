@@ -289,6 +289,16 @@ namespace OpenTK
 
         #endregion
 
+        /// <summary>
+        /// Returns a copy of the Vector2 scaled to unit length.
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 Normalized()
+        {
+            Vector2 v = this;
+            v.Normalize();
+            return v;
+        }
         #region public void Normalize()
 
         /// <summary>

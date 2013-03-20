@@ -52,6 +52,7 @@ namespace Examples
                 // The ExampleBrowser works pretty poorly on some platforms, so you may want to start examples directly. 
                 // for example: Examples.Tutorial.T12_GLSL_Parallax.Main ();
                 //  Examples.Tutorial.T10_GLSL_Cube.Main ();
+                Examples.Tests.BasicMouseInput.Main ();
 
                 using (Form browser = new ExampleBrowser())
                 {

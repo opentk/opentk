@@ -70,14 +70,12 @@ namespace OpenTK.Platform.Windows
 
         void UpdateKeyboard()
         {
-            for (int i = 0; i < 256; i++)
+            for (byte i = 0; i < byte.MaxValue; i++)
             {
-                VirtualKeys key = (VirtualKeys)i;
-                bool pressed = (Functions.GetAsyncKeyState(key) >> 8) != 0;
-                if (KeyMap.ContainsKey(key))
-                {
-                        keyboard[KeyMap[key]] = pressed;
-                }
+                bool pressed = (Functions.GetAsyncKeyState((VirtualKeys)i) >> 8) != 0;
+                Key key;
+                KeyMap.TryGetValue((VirtualKeys)i,out key);
+                keyboard.SetKeyState(key, i, pressed);
             }
         }
 

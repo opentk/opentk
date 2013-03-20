@@ -368,6 +368,7 @@ namespace OpenTK.Platform.MacOS
                     break;
             }
 
+            OpenTK.Input.Key key;
             switch (evt.KeyboardEventKind)
             {
                 case KeyboardEventKind.RawKeyRepeat:
@@ -376,25 +377,15 @@ namespace OpenTK.Platform.MacOS
                     break;
 
                 case KeyboardEventKind.RawKeyDown:
-                {
-                    OpenTK.Input.Key key;
-                    if (Keymap.TryGetValue(code, out key))
-                    {
-                        InputDriver.Keyboard[0][key] = true;
-                        OnKeyPress(mKeyPressArgs);
-                    }
+                    Keymap.TryGetValue(code, out key);
+                    InputDriver.Keyboard[0].SetKey(key, (uint)code, true);
+                    OnKeyPress(mKeyPressArgs);
                     return OSStatus.NoError;
-                }
 
                 case KeyboardEventKind.RawKeyUp:
-                {
-                    OpenTK.Input.Key key;
-                    if (Keymap.TryGetValue(code, out key))
-                    {
-                        InputDriver.Keyboard[0][key] = false;
-                    }
+                    Keymap.TryGetValue(code, out key);
+                    InputDriver.Keyboard[0].SetKey(key, (uint)code, false);
                     return OSStatus.NoError;
-                }
 
                 case KeyboardEventKind.RawKeyModifiersChanged:
                     ProcessModifierKey(inEvent);
@@ -614,21 +605,21 @@ namespace OpenTK.Platform.MacOS
             Debug.Print("Modifiers Changed: {0}", modifiers);
             
             Input.KeyboardDevice keyboard = InputDriver.Keyboard[0];
-            
+
             if (keyboard[OpenTK.Input.Key.AltLeft] ^ option)
-                keyboard[OpenTK.Input.Key.AltLeft] = option;
+                keyboard.SetKey(OpenTK.Input.Key.AltLeft, (uint)MacOSKeyModifiers.Option, option);
             
             if (keyboard[OpenTK.Input.Key.ShiftLeft] ^ shift)
-                keyboard[OpenTK.Input.Key.ShiftLeft] = shift;
+                keyboard.SetKey(OpenTK.Input.Key.ShiftLeft, (uint)MacOSKeyModifiers.Shift, shift);
             
             if (keyboard[OpenTK.Input.Key.WinLeft] ^ command)
-                keyboard[OpenTK.Input.Key.WinLeft] = command;
+                keyboard.SetKey(OpenTK.Input.Key.WinLeft, (uint)MacOSKeyModifiers.Command, command);
             
             if (keyboard[OpenTK.Input.Key.ControlLeft] ^ control)
-                keyboard[OpenTK.Input.Key.ControlLeft] = control;
+                keyboard.SetKey(OpenTK.Input.Key.ControlLeft, (uint)MacOSKeyModifiers.Control, control);
             
             if (keyboard[OpenTK.Input.Key.CapsLock] ^ caps)
-                keyboard[OpenTK.Input.Key.CapsLock] = caps;
+                keyboard.SetKey(OpenTK.Input.Key.CapsLock, (uint)MacOSKeyModifiers.CapsLock, caps);
             
         }
 

@@ -263,14 +263,12 @@ namespace OpenTK.Platform.MacOS
             {
                 case HIDPage.GenericDesktop:
                 case HIDPage.KeyboardOrKeypad:
-                    int raw = (int) usage;
-                    if (raw >= RawKeyMap.Length)
+                    if (usage >= RawKeyMap.Length)
                     {
-                        Debug.Print("[Warning] Key {0} not mapped.", raw);
+                        Debug.Print("[Warning] Key {0} not mapped.", usage);
                         return state;
                     }
-                    Key key = RawKeyMap[raw];
-                    state[key] = v_int != 0;
+                    state.SetKeyState(RawKeyMap[usage], (byte)usage, v_int != 0);
                     break;
             }
 
