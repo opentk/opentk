@@ -199,11 +199,17 @@ namespace OpenTK
             return q;
         }
 
+        /// <summary>
+        /// Reverses the rotation angle of this Quaterniond.
+        /// </summary>
         public void Invert()
         {
             W = -W;
         }
 
+        /// <summary>
+        /// Returns a copy of this Quaterniond with its rotation angle reversed.
+        /// </summary>
         public Quaternion Inverted()
         {
             var q = this;
@@ -228,7 +234,7 @@ namespace OpenTK
         #region public void Conjugate()
 
         /// <summary>
-        /// Convert this quaternion to its conjugate
+        /// Inverts the Vector3 component of this Quaternion.
         /// </summary>
         public void Conjugate()
         {

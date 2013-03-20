@@ -28,8 +28,9 @@ using System.Runtime.InteropServices;
 namespace OpenTK
 {
     /// <summary>
-    /// Represents a 4x4 Matrix
+    /// Represents a 4x4 matrix containing 3D rotation, scale, transform, and projection.
     /// </summary>
+    /// <seealso cref="Matrix4d"/>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix4 : IEquatable<Matrix4>
@@ -260,116 +261,6 @@ namespace OpenTK
         /// </summary>
         public float M44 { get { return Row3.W; } set { Row3.W = value; } }
         
-        /// <summary>
-        /// Returns a copy of this instance with scale transform removed.
-        /// </summary>
-        public Matrix4 Normalized()
-        {
-            Matrix4 m = this;
-            m.Normalize();
-            return m;
-        }
-
-        /// <summary>
-        /// Removes scale transform from this instance.
-        /// </summary>
-        public void Normalize()
-        {
-            var determinant = this.Determinant;
-            Row0 /= determinant;
-            Row1 /= determinant;
-            Row2 /= determinant;
-            Row3 /= determinant;
-        }
-
-        /// <summary>
-        /// Returns an inverted copy of this instance.
-        /// </summary>
-        public Matrix4 Inverted()
-        {
-            Matrix4 m = this;
-            if (m.Determinant != 0)
-                m.Invert();
-            return m;
-        }
-
-        /// <summary>
-        /// Returns the translation component of this instance.
-        /// </summary>
-        public Vector3 ExtractTranslation() { return Row3.Xyz; }
-
-        /// <summary>
-        /// Returns the scale component of this instance.
-        /// </summary>
-        public Vector3 ExtractScale() { return new Vector3 (Row0.Length, Row1.Length, Row2.Length); }
-
-        /// <summary>
-        /// Returns the rotation component of this instance. Quite slow.
-        /// </summary>
-        /// <param name="row_normalise">Whether the method should operate on a row-normalised (i.e. scale == 1) version of the Matrix. Pass false if you know it's already normalised.</param>
-        public Quaternion ExtractRotation(bool row_normalise = true)
-        {
-            var row0 = Row0.Xyz;
-            var row1 = Row1.Xyz;
-            var row2 = Row2.Xyz;
-
-            if (row_normalise)
-            {
-                if (row0.LengthSquared != 1) row0 = row0.Normalized();
-                if (row1.LengthSquared != 1) row1 = row1.Normalized();
-                if (row2.LengthSquared != 1) row2 = row2.Normalized();
-            }
-
-            // code below adapted from Blender
-
-            Quaternion q = new Quaternion();
-            double trace = 0.25 * (row0[0] + row1[1] + row2[2] + 1.0);
-
-            if (trace > 0)
-            {
-                double sq = Math.Sqrt(trace);
-
-                q.W = (float)sq;
-                sq = 1.0 / (4.0 * sq);
-                q.X = (float)((row1[2] - row2[1]) * sq);
-                q.Y = (float)((row2[0] - row0[2]) * sq);
-                q.Z = (float)((row0[1] - row1[0]) * sq);
-            }
-            else if (row0[0] > row1[1] && row0[0] > row2[2])
-            {
-                double sq = 2.0 * Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
-
-                q.X = (float)(0.25 * sq);
-                sq = 1.0 / sq;
-                q.W = (float)((row2[1] - row1[2]) * sq);
-                q.Y = (float)((row1[0] + row0[1]) * sq);
-                q.Z = (float)((row2[0] + row0[2]) * sq);
-            }
-            else if (row1[1] > row2[2])
-            {
-                double sq = 2.0 * Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
-
-                q.Y = (float)(0.25 * sq);
-                sq = 1.0 / sq;
-                q.W = (float)((row2[0] - row0[2]) * sq);
-                q.X = (float)((row1[0] + row0[1]) * sq);
-                q.Z = (float)((row2[1] + row1[2]) * sq);
-            }
-            else
-            {
-                double sq = 2.0 * Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
-
-                q.Z = (float)(0.25 * sq);
-                sq = 1.0 / sq;
-                q.W = (float)((row1[0] - row0[1]) * sq);
-                q.X = (float)((row2[0] + row0[2]) * sq);
-                q.Y = (float)((row2[1] + row1[2]) * sq);
-            }
-
-            q.Normalize();
-            return q;
-        }
-
         #endregion
 
         #region Indexers
@@ -424,6 +315,116 @@ namespace OpenTK
         }
 
         #endregion
+
+        /// <summary>
+        /// Returns a normalised copy of this instance.
+        /// </summary>
+        public Matrix4 Normalized()
+        {
+            Matrix4 m = this;
+            m.Normalize();
+            return m;
+        }
+
+        /// <summary>
+        /// Divides each element in the Matrix by the <see cref="Determinant"/>.
+        /// </summary>
+        public void Normalize()
+        {
+            var determinant = this.Determinant;
+            Row0 /= determinant;
+            Row1 /= determinant;
+            Row2 /= determinant;
+            Row3 /= determinant;
+        }
+
+        /// <summary>
+        /// Returns an inverted copy of this instance.
+        /// </summary>
+        public Matrix4 Inverted()
+        {
+            Matrix4 m = this;
+            if (m.Determinant != 0)
+                m.Invert();
+            return m;
+        }
+
+        /// <summary>
+        /// Returns the translation component of this instance.
+        /// </summary>
+        public Vector3 ExtractTranslation() { return Row3.Xyz; }
+
+        /// <summary>
+        /// Returns the scale component of this instance.
+        /// </summary>
+        public Vector3 ExtractScale() { return new Vector3(Row0.Length, Row1.Length, Row2.Length); }
+
+        /// <summary>
+        /// Returns the rotation component of this instance. Quite slow.
+        /// </summary>
+        /// <param name="row_normalise">Whether the method should row-normalise (i.e. remove scale from) the Matrix. Pass false if you know it's already normalised.</param>
+        public Quaternion ExtractRotation(bool row_normalise = true)
+        {
+            var row0 = Row0.Xyz;
+            var row1 = Row1.Xyz;
+            var row2 = Row2.Xyz;
+
+            if (row_normalise)
+            {
+                row0 = row0.Normalized();
+                row1 = row1.Normalized();
+                row2 = row2.Normalized();
+            }
+
+            // code below adapted from Blender
+
+            Quaternion q = new Quaternion();
+            double trace = 0.25 * (row0[0] + row1[1] + row2[2] + 1.0);
+
+            if (trace > 0)
+            {
+                double sq = Math.Sqrt(trace);
+
+                q.W = (float)sq;
+                sq = 1.0 / (4.0 * sq);
+                q.X = (float)((row1[2] - row2[1]) * sq);
+                q.Y = (float)((row2[0] - row0[2]) * sq);
+                q.Z = (float)((row0[1] - row1[0]) * sq);
+            }
+            else if (row0[0] > row1[1] && row0[0] > row2[2])
+            {
+                double sq = 2.0 * Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
+
+                q.X = (float)(0.25 * sq);
+                sq = 1.0 / sq;
+                q.W = (float)((row2[1] - row1[2]) * sq);
+                q.Y = (float)((row1[0] + row0[1]) * sq);
+                q.Z = (float)((row2[0] + row0[2]) * sq);
+            }
+            else if (row1[1] > row2[2])
+            {
+                double sq = 2.0 * Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
+
+                q.Y = (float)(0.25 * sq);
+                sq = 1.0 / sq;
+                q.W = (float)((row2[0] - row0[2]) * sq);
+                q.X = (float)((row1[0] + row0[1]) * sq);
+                q.Z = (float)((row2[1] + row1[2]) * sq);
+            }
+            else
+            {
+                double sq = 2.0 * Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
+
+                q.Z = (float)(0.25 * sq);
+                sq = 1.0 / sq;
+                q.W = (float)((row1[0] - row0[1]) * sq);
+                q.X = (float)((row2[0] + row0[2]) * sq);
+                q.Y = (float)((row2[1] + row1[2]) * sq);
+            }
+
+            q.Normalize();
+            return q;
+        }
 
         #endregion
 
