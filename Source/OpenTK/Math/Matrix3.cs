@@ -288,6 +288,29 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Returns a copy of this Matrix3 without scale.
+        /// </summary>
+        public Matrix3 ClearScale()
+        {
+            Matrix3 m = this;
+            m.Row0 = m.Row0.Normalized();
+            m.Row1 = m.Row1.Normalized();
+            m.Row2 = m.Row2.Normalized();
+            return m;
+        }
+        /// <summary>
+        /// Returns a copy of this Matrix3 without rotation.
+        /// </summary>
+        public Matrix3 ClearRotation()
+        {
+            Matrix3 m = this;
+            m.Row0 = new Vector3(m.Row0.Length, 0, 0);
+            m.Row1 = new Vector3(0, m.Row1.Length, 0);
+            m.Row2 = new Vector3(0, 0, m.Row2.Length);
+            return m;
+        }
+
+        /// <summary>
         /// Returns the scale component of this instance.
         /// </summary>
         public Vector3 ExtractScale() { return new Vector3(Row0.Length, Row1.Length, Row2.Length); }

@@ -138,6 +138,7 @@ namespace OpenTK
         public Vector4d  Column0
         {
             get { return new Vector4d (Row0.X, Row1.X, Row2.X, Row3.X); }
+            set { Row0.X = value.X; Row1.X = value.Y; Row2.X = value.Z; Row3.X = value.W; }
         }
 
         /// <summary>
@@ -146,6 +147,7 @@ namespace OpenTK
         public Vector4d  Column1
         {
             get { return new Vector4d (Row0.Y, Row1.Y, Row2.Y, Row3.Y); }
+            set { Row0.Y = value.X; Row1.Y = value.Y; Row2.Y = value.Z; Row3.Y = value.W; }
         }
 
         /// <summary>
@@ -154,6 +156,7 @@ namespace OpenTK
         public Vector4d  Column2
         {
             get { return new Vector4d (Row0.Z, Row1.Z, Row2.Z, Row3.Z); }
+            set { Row0.Z = value.X; Row1.Z = value.Y; Row2.Z = value.Z; Row3.Z = value.W; }
         }
 
         /// <summary>
@@ -162,6 +165,7 @@ namespace OpenTK
         public Vector4d  Column3
         {
             get { return new Vector4d (Row0.W, Row1.W, Row2.W, Row3.W); }
+            set { Row0.W = value.X; Row1.W = value.Y; Row2.W = value.Z; Row3.W = value.W; }
         }
 
         /// <summary>
@@ -333,6 +337,47 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Returns a copy of this Matrix4d without translation.
+        /// </summary>
+        public Matrix4d ClearTranslation()
+        {
+            Matrix4d m = this;
+            m.Row3.Xyz = Vector3d.Zero;
+            return m;
+        }
+        /// <summary>
+        /// Returns a copy of this Matrix4d without scale.
+        /// </summary>
+        public Matrix4d ClearScale()
+        {
+            Matrix4d m = this;
+            m.Row0.Xyz = m.Row0.Xyz.Normalized();
+            m.Row1.Xyz = m.Row1.Xyz.Normalized();
+            m.Row2.Xyz = m.Row2.Xyz.Normalized();
+            return m;
+        }
+        /// <summary>
+        /// Returns a copy of this Matrix4d without rotation.
+        /// </summary>
+        public Matrix4d ClearRotation()
+        {
+            Matrix4d m = this;
+            m.Row0.Xyz = new Vector3d(m.Row0.Xyz.Length, 0, 0);
+            m.Row1.Xyz = new Vector3d(0, m.Row1.Xyz.Length, 0);
+            m.Row2.Xyz = new Vector3d(0, 0, m.Row2.Xyz.Length);
+            return m;
+        }
+        /// <summary>
+        /// Returns a copy of this Matrix4d without projection.
+        /// </summary>
+        public Matrix4d ClearProjection()
+        {
+            Matrix4d m = this;
+            m.Column3 = Vector4d.Zero;
+            return m;
+        }
+
+        /// <summary>
         /// Returns the translation component of this instance.
         /// </summary>
         public Vector3d ExtractTranslation() { return Row3.Xyz; }
@@ -340,7 +385,7 @@ namespace OpenTK
         /// <summary>
         /// Returns the scale component of this instance.
         /// </summary>
-        public Vector3d ExtractScale() { return new Vector3d(Row0.Length, Row1.Length, Row2.Length); }
+        public Vector3d ExtractScale() { return new Vector3d(Row0.Xyz.Length, Row1.Xyz.Length, Row2.Xyz.Length); }
 
         /// <summary>
         /// Returns the rotation component of this instance. Quite slow.
@@ -408,6 +453,15 @@ namespace OpenTK
             q.Normalize();
             return q;
         }
+
+        /// <summary>
+        /// Returns the projection component of this instance.
+        /// </summary>
+        public Vector4d ExtractProjection()
+        {
+            return Column3;
+        }
+
 
         #endregion
 
