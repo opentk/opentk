@@ -283,6 +283,30 @@ namespace OpenTK
             return m;
         }
 
+
+        /// <summary>
+        /// Returns a copy of this Matrix3 without scale.
+        /// </summary>
+        public Matrix3d ClearScale()
+        {
+            Matrix3d m = this;
+            m.Row0 = m.Row0.Normalized();
+            m.Row1 = m.Row1.Normalized();
+            m.Row2 = m.Row2.Normalized();
+            return m;
+        }
+        /// <summary>
+        /// Returns a copy of this Matrix3 without rotation.
+        /// </summary>
+        public Matrix3d ClearRotation()
+        {
+            Matrix3d m = this;
+            m.Row0 = new Vector3d(m.Row0.Length, 0, 0);
+            m.Row1 = new Vector3d(0, m.Row1.Length, 0);
+            m.Row2 = new Vector3d(0, 0, m.Row2.Length);
+            return m;
+        }
+
         /// <summary>
         /// Returns the scale component of this instance.
         /// </summary>

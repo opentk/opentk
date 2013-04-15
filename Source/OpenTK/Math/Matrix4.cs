@@ -350,6 +350,47 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Returns a copy of this Matrix4 without translation.
+        /// </summary>
+        public Matrix4 ClearTranslation()
+        {
+            Matrix4 m = this;
+            m.Row3.Xyz = Vector3.Zero;
+            return m;
+        }
+        /// <summary>
+        /// Returns a copy of this Matrix4 without scale.
+        /// </summary>
+        public Matrix4 ClearScale()
+        {
+            Matrix4 m = this;
+            m.Row0.Xyz = m.Row0.Xyz.Normalized();
+            m.Row1.Xyz = m.Row1.Xyz.Normalized();
+            m.Row2.Xyz = m.Row2.Xyz.Normalized();
+            return m;
+        }
+        /// <summary>
+        /// Returns a copy of this Matrix4 without rotation.
+        /// </summary>
+        public Matrix4 ClearRotation()
+        {
+            Matrix4 m = this;
+            m.Row0.Xyz = new Vector3(m.Row0.Xyz.Length, 0, 0);
+            m.Row1.Xyz = new Vector3(0, m.Row1.Xyz.Length, 0);
+            m.Row2.Xyz = new Vector3(0, 0, m.Row2.Xyz.Length);
+            return m;
+        }
+        /// <summary>
+        /// Returns a copy of this Matrix4 without projection.
+        /// </summary>
+        public Matrix4 ClearProjection()
+        {
+            Matrix4 m = this;
+            m.Column3 = Vector4.Zero;
+            return m;
+        }
+
+        /// <summary>
         /// Returns the translation component of this instance.
         /// </summary>
         public Vector3 ExtractTranslation() { return Row3.Xyz; }
@@ -357,7 +398,7 @@ namespace OpenTK
         /// <summary>
         /// Returns the scale component of this instance.
         /// </summary>
-        public Vector3 ExtractScale() { return new Vector3(Row0.Length, Row1.Length, Row2.Length); }
+        public Vector3 ExtractScale() { return new Vector3(Row0.Xyz.Length, Row1.Xyz.Length, Row2.Xyz.Length); }
 
         /// <summary>
         /// Returns the rotation component of this instance. Quite slow.
@@ -424,6 +465,14 @@ namespace OpenTK
 
             q.Normalize();
             return q;
+        }
+
+        /// <summary>
+        /// Returns the projection component of this instance.
+        /// </summary>
+        public Vector4 ExtractProjection()
+        {
+            return Column3;
         }
 
         #endregion
