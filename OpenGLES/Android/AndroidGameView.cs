@@ -377,7 +377,10 @@ namespace OpenTK.Platform.Android
 						}
 					}
 				}
-			}, source.Token);
+			}, source.Token).ContinueWith ((t) => {
+				log ("Render Thread Exited");
+				source = null;
+			});
 		}
 
 		void StopThread ()
@@ -393,8 +396,6 @@ namespace OpenTK.Platform.Android
 
 			// if the render thread is paused, let it run so it exits
 			pauseSignal.Set ();
-			renderThread.Wait ();
-			source = null;
 			stopWatch.Stop ();
 		}
 
