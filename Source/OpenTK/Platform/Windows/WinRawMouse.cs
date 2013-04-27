@@ -198,8 +198,8 @@ namespace OpenTK.Platform.Windows
             }
             if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_DOWN) != 0)
             {
-	            mouse.EnableBit((int)MouseButton.Button1);
-	            Functions.SetCapture(Window);
+                mouse.EnableBit((int)MouseButton.Button1);
+                Functions.SetCapture(Window);
             }
             if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_UP) != 0)
             {
@@ -211,11 +211,11 @@ namespace OpenTK.Platform.Windows
                 mouse.EnableBit((int)MouseButton.Button2);
                 Functions.SetCapture(Window);
             }
-			if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0)
-			{
+            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0)
+            {
                 mouse.DisableBit((int)MouseButton.Button2);
                 Functions.ReleaseCapture();
-			}
+            }
 
             if ((raw.ButtonFlags & RawInputMouseState.WHEEL) != 0)
                 mouse.WheelPrecise += (short)raw.ButtonData / 120.0f;
