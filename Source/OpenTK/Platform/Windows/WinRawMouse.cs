@@ -145,8 +145,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        delegate void MouseButtonChangedHandler(MouseButton Button);
-
         public bool ProcessMouseEvent(RawInput rin)
         {
             RawMouse raw = rin.Data.Mouse;
@@ -169,23 +167,55 @@ namespace OpenTK.Platform.Windows
             mouse = mice[mouse_handle];
 
             // Set and release capture of the mouse to fix http://www.opentk.com/node/2133, Patch by Artfunkel
-            MouseButtonChangedHandler EnableBit = (Button) => { 
-                mouse.EnableBit((int)Button); Functions.SetCapture(Window);
-            };
-            MouseButtonChangedHandler DisableBit = (Button) => {
-                mouse.DisableBit((int)Button); Functions.ReleaseCapture();
-            };
-
-            if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_DOWN) != 0) EnableBit(MouseButton.Left);
-            if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_UP) != 0) DisableBit(MouseButton.Left);
-            if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_DOWN) != 0) EnableBit(MouseButton.Right);
-            if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_UP) != 0) DisableBit(MouseButton.Right);
-            if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_DOWN) != 0) EnableBit(MouseButton.Middle);
-            if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_UP) != 0) DisableBit(MouseButton.Middle);
-            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_DOWN) != 0) EnableBit(MouseButton.Button1);
-            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_UP) != 0) DisableBit(MouseButton.Button1);
-            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0) EnableBit(MouseButton.Button2);
-            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0) DisableBit(MouseButton.Button2);
+            if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_DOWN) != 0){
+                mouse.EnableBit((int)MouseButton.Left);
+                Functions.SetCapture(Window);
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_UP) != 0)
+            {
+                mouse.DisableBit((int)MouseButton.Left);
+                Functions.ReleaseCapture();
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_DOWN) != 0)
+            {
+                mouse.EnableBit((int)MouseButton.Right);
+                Functions.SetCapture(Window);
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_UP) != 0)
+            {
+                mouse.DisableBit((int)MouseButton.Right);
+                Functions.ReleaseCapture();
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_DOWN) != 0)
+            {
+                mouse.EnableBit((int)MouseButton.Middle);
+                Functions.SetCapture(Window);
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_UP) != 0)
+            {
+                mouse.DisableBit((int)MouseButton.Middle);
+                Functions.ReleaseCapture();
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_DOWN) != 0)
+            {
+                mouse.EnableBit((int)MouseButton.Button1);
+                Functions.SetCapture(Window);
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_UP) != 0)
+            {
+            	mouse.DisableBit((int)MouseButton.Button1);
+            	Functions.ReleaseCapture();
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0)
+            {
+                mouse.EnableBit((int)MouseButton.Button2);
+                Functions.SetCapture(Window);
+            }
+            if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0)
+            {
+                mouse.DisableBit((int)MouseButton.Button2);
+                Functions.ReleaseCapture();
+            }
 
             if ((raw.ButtonFlags & RawInputMouseState.WHEEL) != 0)
                 mouse.WheelPrecise += (short)raw.ButtonData / 120.0f;
