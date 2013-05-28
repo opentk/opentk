@@ -558,7 +558,7 @@ namespace OpenTK.Platform.iPhoneOS
             else
                 EAGLContext.SetCurrentContext(null);
 
-            EAGLContext.Dispose();
+            GraphicsContext.Dispose();
             GraphicsContext = null;
             gl = null;
         }
