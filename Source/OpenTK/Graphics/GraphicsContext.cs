@@ -588,7 +588,12 @@ namespace OpenTK.Graphics
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool manual)
+        ~GraphicsContext ()
+        {
+            Dispose (false);
+        }
+
+        void Dispose (bool disposing)
         {
             if (!IsDisposed)
             {
@@ -598,7 +603,7 @@ namespace OpenTK.Graphics
                     available_contexts.Remove((this as IGraphicsContextInternal).Context);
                 }
 
-                if (manual && !IsExternal)
+                if (!IsExternal)
                 {
                     if (implementation != null)
                         implementation.Dispose();
