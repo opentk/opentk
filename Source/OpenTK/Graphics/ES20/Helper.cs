@@ -358,9 +358,15 @@ namespace OpenTK.Graphics.ES20
 
         #endregion
 
-        #region public static void DeleteTexture(int id)
+        #region public static int GenTexture()
 
         public static void DeleteTexture(int id)
+        {
+            DeleteTextures(1, ref id);
+        }
+
+        [CLSCompliant(false)]
+        public static void DeleteTexture(uint id)
         {
             DeleteTextures(1, ref id);
         }
