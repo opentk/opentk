@@ -43,7 +43,9 @@ namespace OpenTK.Input
         const int NumInts = ((int)Key.LastKey + IntSize - 1) / IntSize;
         // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
         unsafe fixed int Keys[NumInts];
-        unsafe fixed int Codes[256];
+
+		const int CodesSize = 256;
+		unsafe fixed int Codes[CodesSize];
         bool is_connected;
 
         #endregion
@@ -282,7 +284,7 @@ namespace OpenTK.Input
                 int* c2 = other.Codes;
                 fixed (int* c1 = Codes)
                 {
-                    for (int i = 0; i < short.MaxValue; i++)
+                    for (int i = 0; i < CodesSize; i++)
                         *(c1 + i) |= *(c2 + i);
                 }
             }
