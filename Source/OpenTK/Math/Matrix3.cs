@@ -201,6 +201,28 @@ namespace OpenTK
         /// Gets or sets the value at row 3, column 3 of this instance.
         /// </summary>
         public float M33 { get { return Row2.Z; } set { Row2.Z = value; } }
+
+        /// <summary>
+        /// Gets or sets the values along the main diagonal of the matrix.
+        /// </summary>
+        public Vector3 Diagonal
+        {
+            get
+            {
+                return new Vector3(Row0.X, Row1.Y, Row2.Z);
+            }
+            set
+            {
+                Row0.X = value.X;
+                Row1.Y = value.Y;
+                Row2.Z = value.Z;
+            }
+        }
+
+        /// <summary>
+        /// Gets the trace of the matrix, the sum of the values along the diagonal.
+        /// </summary>
+        public float Trace { get { return Row0.X + Row1.Y + Row2.Z; } }
         
         #endregion
 
