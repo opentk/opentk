@@ -507,6 +507,78 @@ namespace OpenTK
 
         #endregion
 
+        #region FromMatrix
+
+        /// <summary>
+        /// Builds a quaternion from the given rotation matrix
+        /// </summary>
+        /// <param name="matrix">A rotation matrix</param>
+        /// <returns>The equivalent quaternion</returns>
+        public static Quaterniond FromMatrix(Matrix3d matrix)
+        {
+            Quaterniond result;
+            FromMatrix(ref matrix, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a quaternion from the given rotation matrix
+        /// </summary>
+        /// <param name="matrix">A rotation matrix</param>
+        /// <param name="result">The equivalent quaternion</param>
+        public static void FromMatrix(ref Matrix3d matrix, out Quaterniond result)
+        {
+            double trace = matrix.Trace;
+
+            if (trace > 0)
+            {
+                double s = Math.Sqrt(trace + 1) * 2;
+                double invS = 1.0 / s;
+
+                result.w = s * 0.25;
+                result.xyz.X = (matrix.Row2.Y - matrix.Row1.Z) * invS;
+                result.xyz.Y = (matrix.Row0.Z - matrix.Row2.X) * invS;
+                result.xyz.Z = (matrix.Row1.X - matrix.Row0.Y) * invS;
+            }
+            else
+            {
+                double m00 = matrix.Row0.X, m11 = matrix.Row1.Y, m22 = matrix.Row2.Z;
+
+                if (m00 > m11 && m00 > m22)
+                {
+                    double s = Math.Sqrt(1 + m00 - m11 - m22) * 2;
+                    double invS = 1.0 / s;
+
+                    result.w = (matrix.Row2.Y - matrix.Row1.Z) * invS;
+                    result.xyz.X = s * 0.25;
+                    result.xyz.Y = (matrix.Row0.Y + matrix.Row1.X) * invS;
+                    result.xyz.Z = (matrix.Row0.Z + matrix.Row2.X) * invS;
+                }
+                else if (m11 > m22)
+                {
+                    double s = Math.Sqrt(1 + m11 - m00 - m22) * 2;
+                    double invS = 1.0 / s;
+
+                    result.w = (matrix.Row0.Z - matrix.Row2.X) * invS;
+                    result.xyz.X = (matrix.Row0.Y + matrix.Row1.X) * invS;
+                    result.xyz.Y = s * 0.25;
+                    result.xyz.Z = (matrix.Row1.Z + matrix.Row2.Y) * invS;
+                }
+                else
+                {
+                    double s = Math.Sqrt(1 + m22 - m00 - m11) * 2;
+                    double invS = 1.0 / s;
+
+                    result.w = (matrix.Row1.X - matrix.Row0.Y) * invS;
+                    result.xyz.X = (matrix.Row0.Z + matrix.Row2.X) * invS;
+                    result.xyz.Y = (matrix.Row1.Z + matrix.Row2.Y) * invS;
+                    result.xyz.Z = s * 0.25;
+                }
+            }
+        }
+
+        #endregion
+
         #region Slerp
 
         /// <summary>

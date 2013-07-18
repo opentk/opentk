@@ -252,7 +252,7 @@ namespace OpenTK
         /// <summary>
         /// Defines the identity quaternion.
         /// </summary>
-        public static Quaternion Identity = new Quaternion(0, 0, 0, 1);
+        public static readonly Quaternion Identity = new Quaternion(0, 0, 0, 1);
 
         #endregion
 
@@ -507,6 +507,8 @@ namespace OpenTK
 
         #endregion
 
+        #region FromMatrix
+
         /// <summary>
         /// Builds a quaternion from the given rotation matrix
         /// </summary>
@@ -574,6 +576,8 @@ namespace OpenTK
                 }
             }
         }
+
+        #endregion
 
         #region Slerp
 
