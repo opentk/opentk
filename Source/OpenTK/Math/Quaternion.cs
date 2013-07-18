@@ -489,7 +489,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="axis">The axis to rotate about</param>
         /// <param name="angle">The rotation angle in radians</param>
-        /// <returns></returns>
+        /// <returns>The equivalent quaternion</returns>
         public static Quaternion FromAxisAngle(Vector3 axis, float angle)
         {
             if (axis.LengthSquared == 0.0f)
@@ -506,6 +506,74 @@ namespace OpenTK
         }
 
         #endregion
+
+        /// <summary>
+        /// Builds a quaternion from the given rotation matrix
+        /// </summary>
+        /// <param name="matrix">A rotation matrix</param>
+        /// <returns>The equivalent quaternion</returns>
+        public static Quaternion FromMatrix(Matrix3 matrix)
+        {
+            Quaternion result;
+            FromMatrix(ref matrix, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a quaternion from the given rotation matrix
+        /// </summary>
+        /// <param name="matrix">A rotation matrix</param>
+        /// <param name="result">The equivalent quaternion</param>
+        public static void FromMatrix(ref Matrix3 matrix, out Quaternion result)
+        {
+            float trace = matrix.Trace;
+
+            if (trace > 0)
+            {
+                float s = (float)Math.Sqrt(trace + 1) * 2;
+                float invS = 1f / s;
+
+                result.w = s * 0.25f;
+                result.xyz.X = (matrix.Row2.Y - matrix.Row1.Z) * invS;
+                result.xyz.Y = (matrix.Row0.Z - matrix.Row2.X) * invS;
+                result.xyz.Z = (matrix.Row1.X - matrix.Row0.Y) * invS;
+            }
+            else
+            {
+                float m00 = matrix.Row0.X, m11 = matrix.Row1.Y, m22 = matrix.Row2.Z;
+
+                if (m00 > m11 && m00 > m22)
+                {
+                    float s = (float)Math.Sqrt(1 + m00 - m11 - m22) * 2;
+                    float invS = 1f / s;
+
+                    result.w = (matrix.Row2.Y - matrix.Row1.Z) * invS;
+                    result.xyz.X = s * 0.25f;
+                    result.xyz.Y = (matrix.Row0.Y + matrix.Row1.X) * invS;
+                    result.xyz.Z = (matrix.Row0.Z + matrix.Row2.X) * invS;
+                }
+                else if (m11 > m22)
+                {
+                    float s = (float)Math.Sqrt(1 + m11 - m00 - m22) * 2;
+                    float invS = 1f / s;
+
+                    result.w = (matrix.Row0.Z - matrix.Row2.X) * invS;
+                    result.xyz.X = (matrix.Row0.Y + matrix.Row1.X) * invS;
+                    result.xyz.Y = s * 0.25f;
+                    result.xyz.Z = (matrix.Row1.Z + matrix.Row2.Y) * invS;
+                }
+                else
+                {
+                    float s = (float)Math.Sqrt(1 + m22 - m00 - m11) * 2;
+                    float invS = 1f / s;
+
+                    result.w = (matrix.Row1.X - matrix.Row0.Y) * invS;
+                    result.xyz.X = (matrix.Row0.Z + matrix.Row2.X) * invS;
+                    result.xyz.Y = (matrix.Row1.Z + matrix.Row2.Y) * invS;
+                    result.xyz.Z = s * 0.25f;
+                }
+            }
+        }
 
         #region Slerp
 

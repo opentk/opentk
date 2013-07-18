@@ -142,6 +142,27 @@ namespace OpenTK
         /// </summary>
         public double M22 { get { return Row1.Y; } set { Row1.Y = value; } }
 
+        /// <summary>
+        /// Gets or sets the values along the main diagonal of the matrix.
+        /// </summary>
+        public Vector2d Diagonal
+        {
+            get
+            {
+                return new Vector2d(Row0.X, Row1.Y);
+            }
+            set
+            {
+                Row0.X = value.X;
+                Row1.Y = value.Y;
+            }
+        }
+
+        /// <summary>
+        /// Gets the trace of the matrix, the sum of the values along the diagonal.
+        /// </summary>
+        public double Trace { get { return Row0.X + Row1.Y; } }
+
         #endregion
 
         #region Indexers

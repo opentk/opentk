@@ -261,6 +261,29 @@ namespace OpenTK
         /// </summary>
         public float M44 { get { return Row3.W; } set { Row3.W = value; } }
         
+        /// <summary>
+        /// Gets or sets the values along the main diagonal of the matrix.
+        /// </summary>
+        public Vector4 Diagonal
+        {
+            get
+            {
+                return new Vector4(Row0.X, Row1.Y, Row2.Z, Row3.W);
+            }
+            set
+            {
+                Row0.X = value.X;
+                Row1.Y = value.Y;
+                Row2.Z = value.Z;
+                Row3.W = value.W;
+            }
+        }
+
+        /// <summary>
+        /// Gets the trace of the matrix, the sum of the values along the diagonal.
+        /// </summary>
+        public float Trace { get { return Row0.X + Row1.Y + Row2.Z + Row3.W; } }
+
         #endregion
 
         #region Indexers
@@ -1266,6 +1289,68 @@ namespace OpenTK
 
         #endregion
 
+        #region Add Functions
+
+        /// <summary>
+        /// Adds two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the addition.</param>
+        /// <param name="right">The right operand of the addition.</param>
+        /// <returns>A new instance that is the result of the addition.</returns>
+        public static Matrix4 Add(Matrix4 left, Matrix4 right)
+        {
+            Matrix4 result;
+            Add(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Adds two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the addition.</param>
+        /// <param name="right">The right operand of the addition.</param>
+        /// <param name="result">A new instance that is the result of the addition.</param>
+        public static void Add(ref Matrix4 left, ref Matrix4 right, out Matrix4 result)
+        {
+            result.Row0 = left.Row0 + right.Row0;
+            result.Row1 = left.Row1 + right.Row1;
+            result.Row2 = left.Row2 + right.Row2;
+            result.Row3 = left.Row3 + right.Row3;
+        }
+
+        #endregion
+
+        #region Subtract Functions
+
+        /// <summary>
+        /// Subtracts one instance from another.
+        /// </summary>
+        /// <param name="left">The left operand of the subraction.</param>
+        /// <param name="right">The right operand of the subraction.</param>
+        /// <returns>A new instance that is the result of the subraction.</returns>
+        public static Matrix4 Subtract(Matrix4 left, Matrix4 right)
+        {
+            Matrix4 result;
+            Subtract(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Subtracts one instance from another.
+        /// </summary>
+        /// <param name="left">The left operand of the subraction.</param>
+        /// <param name="right">The right operand of the subraction.</param>
+        /// <param name="result">A new instance that is the result of the subraction.</param>
+        public static void Subtract(ref Matrix4 left, ref Matrix4 right, out Matrix4 result)
+        {
+            result.Row0 = left.Row0 - right.Row0;
+            result.Row1 = left.Row1 - right.Row1;
+            result.Row2 = left.Row2 - right.Row2;
+            result.Row3 = left.Row3 - right.Row3;
+        }
+
+        #endregion
+
         #region Multiply Functions
 
         /// <summary>
@@ -1314,6 +1399,33 @@ namespace OpenTK
             result.Row3.Y = (((lM41 * rM12) + (lM42 * rM22)) + (lM43 * rM32)) + (lM44 * rM42);
             result.Row3.Z = (((lM41 * rM13) + (lM42 * rM23)) + (lM43 * rM33)) + (lM44 * rM43);
             result.Row3.W = (((lM41 * rM14) + (lM42 * rM24)) + (lM43 * rM34)) + (lM44 * rM44);
+        }
+
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication</returns>
+        public static Matrix4 Mult(Matrix4 left, float right)
+        {
+            Matrix4 result;
+            Mult(ref left, right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication</param>
+        public static void Mult(ref Matrix4 left, float right, out Matrix4 result)
+        {
+            result.Row0 = left.Row0 * right;
+            result.Row1 = left.Row1 * right;
+            result.Row2 = left.Row2 * right;
+            result.Row3 = left.Row3 * right;
         }
 
         #endregion
@@ -1497,6 +1609,39 @@ namespace OpenTK
         public static Matrix4 operator *(Matrix4 left, Matrix4 right)
         {
             return Matrix4.Mult(left, right);
+        }
+
+        /// <summary>
+        /// Matrix-scalar multiplication
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix4 which holds the result of the multiplication</returns>
+        public static Matrix4 operator *(Matrix4 left, float right)
+        {
+            return Matrix4.Mult(left, right);
+        }
+
+        /// <summary>
+        /// Matrix addition
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix4 which holds the result of the addition</returns>
+        public static Matrix4 operator +(Matrix4 left, Matrix4 right)
+        {
+            return Matrix4.Add(left, right);
+        }
+
+        /// <summary>
+        /// Matrix subtraction
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix4 which holds the result of the subtraction</returns>
+        public static Matrix4 operator -(Matrix4 left, Matrix4 right)
+        {
+            return Matrix4.Subtract(left, right);
         }
 
         /// <summary>

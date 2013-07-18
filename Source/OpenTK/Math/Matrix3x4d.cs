@@ -196,6 +196,28 @@ namespace OpenTK
         /// </summary>
         public double M34 { get { return Row2.W; } set { Row2.W = value; } }
 
+        /// <summary>
+        /// Gets or sets the values along the main diagonal of the matrix.
+        /// </summary>
+        public Vector3d Diagonal
+        {
+            get
+            {
+                return new Vector3d(Row0.X, Row1.Y, Row2.Z);
+            }
+            set
+            {
+                Row0.X = value.X;
+                Row1.Y = value.Y;
+                Row2.Z = value.Z;
+            }
+        }
+
+        /// <summary>
+        /// Gets the trace of the matrix, the sum of the values along the diagonal.
+        /// </summary>
+        public double Trace { get { return Row0.X + Row1.Y + Row2.Z; } }
+
         #endregion
 
         #region Indexers
@@ -227,6 +249,9 @@ namespace OpenTK
 
         #region public void Invert()
 
+        /// <summary>
+        /// Converts this instance into its inverse.
+        /// </summary>
         public void Invert()
         {
             this = Matrix3x4d.Invert(this);
@@ -620,6 +645,12 @@ namespace OpenTK
             result.Row2.Z = (lM31 * rM13) + (lM32 * rM23) + (lM33 * rM33) + (lM34 * rM43);
         }
 
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication</returns>
         public static Matrix3x4d Mult(Matrix3x4d left, Matrix3x4d right)
         {
             Matrix3x4d result;
@@ -627,6 +658,12 @@ namespace OpenTK
             return result;
         }
 
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication</param>
         public static void Mult(ref Matrix3x4d left, ref Matrix3x4d right, out Matrix3x4d result)
         {
             double lM11 = left.Row0.X, lM12 = left.Row0.Y, lM13 = left.Row0.Z, lM14 = left.Row0.W,
@@ -659,6 +696,12 @@ namespace OpenTK
             result.Row2.W += lM34;*/
         }
 
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication</returns>
         public static Matrix3x4d Mult(Matrix3x4d left, double right)
         {
             Matrix3x4d result;
@@ -666,6 +709,12 @@ namespace OpenTK
             return result;
         }
 
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication</param>
         public static void Mult(ref Matrix3x4d left, double right, out Matrix3x4d result)
         {
             result.Row0 = left.Row0 * right;
@@ -677,6 +726,12 @@ namespace OpenTK
 
         #region Add Functions
 
+        /// <summary>
+        /// Adds two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the addition.</param>
+        /// <param name="right">The right operand of the addition.</param>
+        /// <returns>A new instance that is the result of the addition.</returns>
         public static Matrix3x4d Add(Matrix3x4d left, Matrix3x4d right)
         {
             Matrix3x4d result;
@@ -684,6 +739,12 @@ namespace OpenTK
             return result;
         }
 
+        /// <summary>
+        /// Adds two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the addition.</param>
+        /// <param name="right">The right operand of the addition.</param>
+        /// <param name="result">A new instance that is the result of the addition.</param>
         public static void Add(ref Matrix3x4d left, ref Matrix3x4d right, out Matrix3x4d result)
         {
             result.Row0 = left.Row0 + right.Row0;
@@ -695,6 +756,12 @@ namespace OpenTK
 
         #region Subtract Functions
 
+        /// <summary>
+        /// Subtracts one instance from another.
+        /// </summary>
+        /// <param name="left">The left operand of the subraction.</param>
+        /// <param name="right">The right operand of the subraction.</param>
+        /// <returns>A new instance that is the result of the subraction.</returns>
         public static Matrix3x4d Subtract(Matrix3x4d left, Matrix3x4d right)
         {
             Matrix3x4d result;
@@ -702,6 +769,12 @@ namespace OpenTK
             return result;
         }
 
+        /// <summary>
+        /// Subtracts one instance from another.
+        /// </summary>
+        /// <param name="left">The left operand of the subraction.</param>
+        /// <param name="right">The right operand of the subraction.</param>
+        /// <param name="result">A new instance that is the result of the subraction.</param>
         public static void Subtract(ref Matrix3x4d left, ref Matrix3x4d right, out Matrix3x4d result)
         {
             result.Row0 = left.Row0 - right.Row0;
@@ -713,6 +786,12 @@ namespace OpenTK
 
         #region Invert Functions
 
+        /// <summary>
+        /// Calculate the inverse of the given matrix
+        /// </summary>
+        /// <param name="mat">The matrix to invert</param>
+        /// <returns>The inverse of the given matrix if it has one, or the input if it is singular</returns>
+        /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
         public static Matrix3x4d Invert(Matrix3x4d mat)
         {
             Matrix3x4d result;
@@ -720,6 +799,12 @@ namespace OpenTK
             return result;
         }
 
+        /// <summary>
+        /// Calculate the inverse of the given matrix
+        /// </summary>
+        /// <param name="mat">The matrix to invert</param>
+        /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular</param>
+        /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
         public static void Invert(ref Matrix3x4d mat, out Matrix3x4d result)
         {
             Matrix3d inverseRotation = new Matrix3d(mat.Column0, mat.Column1, mat.Column2);
@@ -738,11 +823,21 @@ namespace OpenTK
 
         #region Transpose
 
+        /// <summary>
+        /// Calculate the transpose of the given matrix
+        /// </summary>
+        /// <param name="mat">The matrix to transpose</param>
+        /// <returns>The transpose of the given matrix</returns>
         public static Matrix4x3d Transpose(Matrix3x4d mat)
         {
             return new Matrix4x3d(mat.Column0, mat.Column1, mat.Column2, mat.Column3);
         }
 
+        /// <summary>
+        /// Calculate the transpose of the given matrix
+        /// </summary>
+        /// <param name="mat">The matrix to transpose</param>
+        /// <param name="result">The result of the calculation</param>
         public static void Transpose(ref Matrix3x4d mat, out Matrix4x3d result)
         {
             result.Row0 = mat.Column0;
@@ -757,36 +852,78 @@ namespace OpenTK
 
         #region Operators
 
+        /// <summary>
+        /// Matrix multiplication
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix3d which holds the result of the multiplication</returns>
         public static Matrix3d operator *(Matrix3x4d left, Matrix4x3d right)
         {
             return Matrix3x4d.Mult(left, right);
         }
 
+        /// <summary>
+        /// Matrix multiplication
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix3x4d which holds the result of the multiplication</returns>
         public static Matrix3x4d operator *(Matrix3x4d left, Matrix3x4d right)
         {
             return Matrix3x4d.Mult(left, right);
         }
 
+        /// <summary>
+        /// Matrix-scalar multiplication
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix3x4d which holds the result of the multiplication</returns>
         public static Matrix3x4d operator *(Matrix3x4d left, double right)
         {
             return Matrix3x4d.Mult(left, right);
         }
 
+        /// <summary>
+        /// Matrix addition
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix3x4d which holds the result of the addition</returns>
         public static Matrix3x4d operator +(Matrix3x4d left, Matrix3x4d right)
         {
             return Matrix3x4d.Add(left, right);
         }
 
+        /// <summary>
+        /// Matrix subtraction
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix3x4d which holds the result of the subtraction</returns>
         public static Matrix3x4d operator -(Matrix3x4d left, Matrix3x4d right)
         {
             return Matrix3x4d.Subtract(left, right);
         }
 
+        /// <summary>
+        /// Compares two instances for equality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left equals right; false otherwise.</returns>
         public static bool operator ==(Matrix3x4d left, Matrix3x4d right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left does not equal right; false otherwise.</returns>
         public static bool operator !=(Matrix3x4d left, Matrix3x4d right)
         {
             return !left.Equals(right);
@@ -798,6 +935,10 @@ namespace OpenTK
 
         #region public override string ToString()
 
+        /// <summary>
+        /// Returns a System.String that represents the current Matrix4.
+        /// </summary>
+        /// <returns>The string representation of the matrix.</returns>
         public override string ToString()
         {
             return string.Format("{0}\n{1}\n{2}", Row0, Row1, Row2);
@@ -807,6 +948,10 @@ namespace OpenTK
 
         #region public override int GetHashCode()
 
+        /// <summary>
+        /// Returns the hashcode for this instance.
+        /// </summary>
+        /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
         public override int GetHashCode()
         {
             return Row0.GetHashCode() ^ Row1.GetHashCode() ^ Row2.GetHashCode();
@@ -816,6 +961,11 @@ namespace OpenTK
 
         #region public override bool Equals(object obj)
 
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">The object to compare to.</param>
+        /// <returns>True if the instances are equal; false otherwise.</returns>
         public override bool Equals(object obj)
         {
             if (!(obj is Matrix3x4d))
