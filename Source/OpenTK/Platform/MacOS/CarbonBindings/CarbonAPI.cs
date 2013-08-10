@@ -246,6 +246,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         MouseEntered = 8,
         MouseExited = 9,
         WheelMoved = 10,
+        WheelScroll = 11,
     }
     internal enum MouseButton : short
     {
@@ -286,8 +287,11 @@ namespace OpenTK.Platform.MacOS.Carbon
         WindowMouseLocation = 0x776d6f75, // typeHIPoint
         MouseButton = 0x6d62746e,         // typeMouseButton
         ClickCount = 0x63636e74,          // typeUInt32
-        MouseWheelAxis = 0x6d776178,      // typeMouseWheelAxis
-        MouseWheelDelta = 0x6d77646c,     // typeSInt32
+        MouseWheelAxis = 0x6d776178,      // typeMouseWheelAxis   'mwax'
+        MouseWheelDelta = 0x6d77646c,     // typeSInt32           'mwdl'
+        MouseWheelSmoothVerticalDelta = 0x73617879,        // typeSInt32 'saxy'
+        MouseWheelSmoothHorizontalDelta = 0x73617878,      // typeSInt32 'saxx'
+        
         MouseDelta = 0x6d647461,          // typeHIPoint
 
         // Keyboard events
@@ -712,6 +716,52 @@ namespace OpenTK.Platform.MacOS.Carbon
 
             return (MouseButton)button;
         }
+        
+        internal struct ScrollDelta {
+        	internal float deltaX;
+            internal float deltaY;
+        }
+        
+        static internal ScrollDelta GetEventWheelScroll(IntPtr inEvent) 
+        {
+        	ScrollDelta scrolldelta = new ScrollDelta();
+        	Int32 delta;
+        	
+        	unsafe 
+        	{
+        		Int32* d = &delta;
+				OSStatus result;
+				
+				// vertical scroll Delta in pixels
+				result = API.GetEventParameter(inEvent,
+					 EventParamName.MouseWheelSmoothVerticalDelta, EventParamType.typeSInt32,
+					 IntPtr.Zero, (uint)sizeof(int), IntPtr.Zero, (IntPtr)d);
+
+				if (result == OSStatus.EventParameterNotFound) {
+					// it's okay for it to be simply missing...
+				} else if (result != OSStatus.NoError) {
+					throw new MacOSException(result);
+				} else {
+					scrolldelta.deltaY = delta / 20.0f;
+				}
+				
+				// horizontal scroll Delta in pixels
+				result = API.GetEventParameter(inEvent,
+					 EventParamName.MouseWheelSmoothHorizontalDelta, EventParamType.typeSInt32,
+					 IntPtr.Zero, (uint)sizeof(int), IntPtr.Zero, (IntPtr)d);
+
+				if (result == OSStatus.EventParameterNotFound) {
+					// it's okay for it to be simply missing...
+				} else if (result != OSStatus.NoError) {
+					throw new MacOSException(result);
+				} else {
+					scrolldelta.deltaY = delta / 20.0f;
+				}
+			}
+
+			return scrolldelta;
+        }
+        
 		static internal int GetEventMouseWheelDelta(IntPtr inEvent)
 		{
 			int delta;
