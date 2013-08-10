@@ -510,9 +510,19 @@ namespace OpenTK.Platform.MacOS
                     }
                     return OSStatus.NoError;
 
-                case MouseEventKind.WheelMoved:
-                    float delta = API.GetEventMouseWheelDelta(inEvent);
-                    InputDriver.Mouse[0].WheelPrecise += delta;
+                case MouseEventKind.WheelMoved:    // older, integer resolution only
+                    {
+                        // this is really an int, we use a float to avoid clipping the wheel value
+                        float delta = API.GetEventMouseWheelDelta (inEvent);
+                        InputDriver.Mouse[0].WheelPrecise += delta;
+                    }
+                    return OSStatus.NoError;
+
+                case MouseEventKind.WheelScroll:   // newer, more precise X and Y scroll
+                    {
+                        API.ScrollDelta delta = API.GetEventWheelScroll(inEvent);
+                        InputDriver.Mouse[0].WheelPrecise += delta.deltaY;
+                    }
                     return OSStatus.NoError;
 
                 case MouseEventKind.MouseMoved:

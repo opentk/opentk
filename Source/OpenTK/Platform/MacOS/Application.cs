@@ -85,10 +85,26 @@ namespace OpenTK.Platform.MacOS.Carbon
         static void ConnectEvents()
         {
             
-            EventTypeSpec[] eventTypes = new EventTypeSpec[] { new EventTypeSpec(EventClass.Application, AppEventKind.AppActivated), new EventTypeSpec(EventClass.Application, AppEventKind.AppDeactivated), new EventTypeSpec(EventClass.Application, AppEventKind.AppQuit), new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDown), new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseUp), new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseMoved), new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDragged), new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseEntered), new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseExited), new EventTypeSpec(EventClass.Mouse, MouseEventKind.WheelMoved),
+            EventTypeSpec[] eventTypes = new EventTypeSpec[] { 
+            	new EventTypeSpec(EventClass.Application, AppEventKind.AppActivated), 
+            	new EventTypeSpec(EventClass.Application, AppEventKind.AppDeactivated), 
+            	new EventTypeSpec(EventClass.Application, AppEventKind.AppQuit), 
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDown), 
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseUp), 
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseMoved), 
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDragged), 
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseEntered), 
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseExited), 
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.WheelMoved),
+            	new EventTypeSpec(EventClass.Mouse, MouseEventKind.WheelScroll),
             
             
-            new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyDown), new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyRepeat), new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyUp), new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyModifiersChanged), new EventTypeSpec(EventClass.AppleEvent, AppleEventKind.AppleEvent) };
+            	new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyDown), 
+            	new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyRepeat), 
+            	new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyUp), 
+            	new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyModifiersChanged), 
+            	new EventTypeSpec(EventClass.AppleEvent, AppleEventKind.AppleEvent), 
+            };
             
             MacOSEventHandler handler = EventHandler;
             uppHandler = API.NewEventHandlerUPP(handler);
