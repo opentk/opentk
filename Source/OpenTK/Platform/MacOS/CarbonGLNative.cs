@@ -617,19 +617,19 @@ namespace OpenTK.Platform.MacOS
             Input.KeyboardDevice keyboard = InputDriver.Keyboard[0];
 
             if (keyboard[OpenTK.Input.Key.AltLeft] ^ option)
-                keyboard.SetKey(OpenTK.Input.Key.AltLeft, (uint)MacOSKeyModifiers.Option, option);
+                keyboard.SetKey(OpenTK.Input.Key.AltLeft, (uint)MacOSKeyCode.OptionAlt, option);
             
             if (keyboard[OpenTK.Input.Key.ShiftLeft] ^ shift)
-                keyboard.SetKey(OpenTK.Input.Key.ShiftLeft, (uint)MacOSKeyModifiers.Shift, shift);
+                keyboard.SetKey(OpenTK.Input.Key.ShiftLeft, (uint)MacOSKeyCode.Shift, shift);
             
             if (keyboard[OpenTK.Input.Key.WinLeft] ^ command)
-                keyboard.SetKey(OpenTK.Input.Key.WinLeft, (uint)MacOSKeyModifiers.Command, command);
+                keyboard.SetKey(OpenTK.Input.Key.WinLeft, (uint)MacOSKeyCode.Command, command);
             
             if (keyboard[OpenTK.Input.Key.ControlLeft] ^ control)
-                keyboard.SetKey(OpenTK.Input.Key.ControlLeft, (uint)MacOSKeyModifiers.Control, control);
+                keyboard.SetKey(OpenTK.Input.Key.ControlLeft, (uint)MacOSKeyCode.Control, control);
             
             if (keyboard[OpenTK.Input.Key.CapsLock] ^ caps)
-                keyboard.SetKey(OpenTK.Input.Key.CapsLock, (uint)MacOSKeyModifiers.CapsLock, caps);
+                keyboard.SetKey(OpenTK.Input.Key.CapsLock, (uint)MacOSKeyCode.CapsLock, caps);
             
         }
 
