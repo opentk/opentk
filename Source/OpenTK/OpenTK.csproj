@@ -600,6 +600,9 @@
     <Compile Include="Math\Box2.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Math\Matrix3.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Math\Matrix4.cs">
       <SubType>Code</SubType>
     </Compile>
