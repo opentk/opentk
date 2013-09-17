@@ -31,6 +31,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 #if !MINIMAL
 using System.Drawing;
+#else
+using OpenTK.Minimal;
 #endif
 using System.Text;
 using OpenTK.Platform;
@@ -137,12 +139,12 @@ namespace OpenTK
         /// </summary>
         [Obsolete]
         OpenTK.Input.IInputDriver InputDriver { get; }
-#endif
 
         /// <summary>
         /// Gets or sets a value, indicating whether the mouse cursor is visible.
         /// </summary>
         bool CursorVisible { get; set; }
+#endif
 
 //        /// <summary>
 //        /// Gets or sets a value, indicating whether the mouse cursor is confined inside the window size.
@@ -239,20 +241,21 @@ namespace OpenTK
         event EventHandler<EventArgs> WindowStateChanged;
 
         /// <summary>
-        /// Occurs whenever a keybord key is pressed.
-        /// </summary>
-        event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown;
-
-#if !IPHONE
-        /// <summary>
         /// Occurs whenever a character is typed.
         /// </summary>
         event EventHandler<KeyPressEventArgs> KeyPress;
+
+#if !IPHONE
         
         /// <summary>
         /// Occurs whenever a keyboard key is released.
         /// </summary>
         event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyUp;
+
+        /// <summary>
+        /// Occurs whenever a keybord key is pressed.
+        /// </summary>
+        event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown;
 
         /// <summary>
         /// Occurs whenever the mouse cursor leaves the window <see cref="Bounds"/>.
