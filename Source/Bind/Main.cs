@@ -1,5 +1,6 @@
 #region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+// Copyright 2013 Xamarin Inc
  * See license.txt for license info
  */
 #endregion
@@ -110,9 +111,11 @@ namespace Bind
                                 }
                             case "mode":
                                 {
-                                    string arg = val.ToLower();
-                                    SetGeneratorMode(dirName, arg);
-                                    dirName = val;
+                                    string[] parts = val.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+                                    if (parts.Length < 1)
+                                       throw new NotImplementedException();
+                                    dirName = parts.Length > 1 ? parts[1] : "";
+                                    SetGeneratorMode(dirName, parts[0]);
                                     break;
                                 }
                             case "namespace":
