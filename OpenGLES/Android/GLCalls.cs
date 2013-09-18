@@ -17,6 +17,7 @@ using All  = OpenTK.Graphics.ES11.All;
 
 using ES11 = OpenTK.Graphics.ES11;
 using ES20 = OpenTK.Graphics.ES20;
+using ES30 = OpenTK.Graphics.ES30;
 
 namespace OpenTK
 {
@@ -42,6 +43,8 @@ namespace OpenTK
 				return CreateES1 ();
 			case GLContextVersion.Gles2_0:
 				return CreateES2 ();
+			case GLContextVersion.Gles3_0:
+				return CreateES3 ();
 			}
 			throw new ArgumentException ("api");
 		}
@@ -53,6 +56,8 @@ namespace OpenTK
 				return CreateES1 ();
 			case GLVersion.ES2:
 				return CreateES2 ();
+			case GLVersion.ES3:
+				return CreateES3 ();
 			}
 			throw new ArgumentException ("api");
 		}
@@ -81,6 +86,19 @@ namespace OpenTK
 #endif
 				Scissor                 = (x, y, w, h)        => ES20.GL.Scissor(x, y, w, h),
 				Viewport                = (x, y, w, h)        => ES20.GL.Viewport(x, y, w, h),
+				};
+		}
+
+		public static GLCalls CreateES3 ()
+		{
+			return new GLCalls () {
+#if OPENTK_0
+				Version                 = GLContextVersion.Gles3_0,
+#else
+				Version                 = GLVersion.ES3,
+#endif
+				Scissor                 = (x, y, w, h)        => ES30.GL.Scissor(x, y, w, h),
+				Viewport                = (x, y, w, h)        => ES30.GL.Viewport(x, y, w, h),
 				};
 		}
 	}

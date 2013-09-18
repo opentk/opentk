@@ -1,5 +1,6 @@
 ﻿#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * Copyright 2013 Xamarin Inc
  * See license.txt for license info
  */
 #endregion
@@ -186,7 +187,7 @@ namespace Bind.Structures
             return
                 !String.IsNullOrEmpty(TrimmedName) && !String.IsNullOrEmpty(other.TrimmedName) &&
                 TrimmedName == other.TrimmedName &&
-                Parameters.ToString(true) == other.Parameters.ToString(true);
+                Parameters.Signature == other.Parameters.Signature;
         }
 
         #endregion

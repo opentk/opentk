@@ -13,5 +13,6 @@ namespace OpenTK.Graphics {
 	public enum GLVersion {
 		ES1 = 1,
 		ES2 = 2,
+		ES3 = 3,
 	}
 }

@@ -26,6 +26,7 @@ namespace Bind
         ES10,
         ES11,
         ES20,
+        ES30,
         CL10,
     }
 
@@ -182,6 +183,10 @@ namespace Bind
                         Generator = new ESGenerator("ES20", dirName);
                         break;
 
+                    case GeneratorMode.ES30:
+                        Generator = new ESGenerator("ES30", dirName);
+                        break;
+
                     case GeneratorMode.CL10:
                         Generator = new CLGenerator("CL10", dirName);
                         break;
@@ -264,6 +269,14 @@ namespace Bind
                     Directory.GetParent(Settings.DefaultOutputPath).ToString(),
                     dirName);
                 Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
+            }
+            else if (arg == "es30")
+            {
+                mode = GeneratorMode.ES30;
+                Settings.DefaultOutputPath = Path.Combine(
+                    Directory.GetParent(Settings.DefaultOutputPath).ToString(),
+                    dirName);
+                Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES30";
             }
             else if (arg == "cl" || arg == "cl10")
             {

@@ -3,6 +3,7 @@
  // The Open Toolkit Library License
  //
  // Copyright (c) 2006 - 2009 the Open Toolkit library.
+ // Copyright 2013 Xamarin Inc
  //
  // Permission is hereby granted, free of charge, to any person obtaining a copy
  // of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +39,7 @@ namespace OpenTK.Platform
             new OpenTK.Graphics.ES10.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES11.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES20.GL().LoadEntryPoints();
+            new OpenTK.Graphics.ES30.GL().LoadEntryPoints();
         }
     }
 }

@@ -1,5 +1,6 @@
 #region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * Copyright 2013 Xamarin Inc
  * See license.txt for license info
  */
 #endregion
@@ -229,7 +230,7 @@ namespace Bind.Structures
 
         #region public string ToString(bool override_unsafe_setting)
 
-        public string ToString(bool override_unsafe_setting)
+        public string ToString(bool override_unsafe_setting, bool addName = true)
         {
             rebuild |= unsafe_allowed |= override_unsafe_setting;
             unsafe_allowed = override_unsafe_setting;
@@ -286,7 +287,7 @@ namespace Bind.Structures
                         sb.Append("]");
                     }
                 }
-                if (!String.IsNullOrEmpty(Name))
+                if (!String.IsNullOrEmpty(Name) && addName)
                 {
                     sb.Append(" ");
                     sb.Append(Name);
@@ -557,6 +558,26 @@ namespace Bind.Structures
         }
 
         #endregion
+
+		public string Signature {
+			get {
+				StringBuilder sb = new StringBuilder();
+				sb.Append("(");
+				if (Count > 0)
+				{
+					foreach (Parameter p in this)
+					{
+						sb.Append(p.ToString (true, false));
+						sb.Append(", ");
+					}
+					sb.Replace(", ", ")", sb.Length - 2, 2);
+				}
+				else
+					sb.Append(")");
+
+				return sb.ToString();
+			}
+		}
 
         #region void BuildToStringCache(bool override_unsafe_setting)
 

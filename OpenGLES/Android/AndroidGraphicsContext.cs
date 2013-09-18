@@ -53,7 +53,7 @@ namespace OpenTK.Platform.Android {
 		internal static AndroidGraphicsContext CreateGraphicsContext (GraphicsMode mode, IWindowInfo window,
 			IGraphicsContext sharedContext, int major, int minor, GraphicsContextFlags flags)
 		{
-			if (major < 1 || major > 2)
+			if (major < 1 || major > 3)
 				throw new ArgumentException (string.Format("Unsupported GLES version {0}.{1}.", major, minor));
 
 			return new AndroidGraphicsContext(mode, window, sharedContext, major, minor, flags);
@@ -67,7 +67,7 @@ namespace OpenTK.Platform.Android {
 		public AndroidGraphicsContext (GraphicsMode mode, IWindowInfo window, IGraphicsContext sharedContext,
 										int major, int minor, GraphicsContextFlags flags)
 		{
-			if (major < 1 || major > 2)
+			if (major < 1 || major > 3)
 				throw new ArgumentException (string.Format("Unsupported GLES version {0}.{1}.", major, minor));
 
 			Init (mode, window, sharedContext, major, flags);
@@ -119,8 +119,8 @@ namespace OpenTK.Platform.Android {
 			 */
 			int EglContextClientVersion = 0x3098;
 			int[] attrib_list = null;
-			if (major == 2)
-				attrib_list = new int [] {EglContextClientVersion, 2, EGL10.EglNone };
+			if (major >= 2)
+				attrib_list = new int [] {EglContextClientVersion, major, EGL10.EglNone };
 
 			EGLContext = egl.EglCreateContext (window.Display,
 						EGLConfig,
