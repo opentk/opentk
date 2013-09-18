@@ -3,6 +3,7 @@
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2010 the Open Toolkit library.
+// Copyright 2013 Xamarin Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -327,7 +328,7 @@ namespace Bind
             sw.WriteLine();
         }
 
-        static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
+        static DocProcessor processor = null;
         static Dictionary<string, string> docfiles;
         void WriteDocumentation(BindStreamWriter sw, Function f)
         {
@@ -352,6 +353,8 @@ namespace Bind
                 string doc = null;
                 if (docfiles.ContainsKey(docfile))
                 {
+                    if (processor == null)
+                        processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
                     doc = processor.ProcessFile(docfiles[docfile]);
                 }
                 if (doc == null)
