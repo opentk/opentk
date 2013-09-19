@@ -77,4 +77,65 @@ namespace OpenTK.Graphics.ES11
             }
         }
     }
+
+    [Obsolete]
+    public enum OesdrawTexture : int
+    {
+        TextureCropRectOes = ((int)0x8B9D),
+    }
+
+    [Obsolete]
+    public enum OesmatrixGet : int
+    {
+        ModelviewMatrixFloatAsIntBitsOes = ((int)0x898D),
+        ProjectionMatrixFloatAsIntBitsOes = ((int)0x898E),
+        TextureMatrixFloatAsIntBitsOes = ((int)0x898F),
+    }
+
+    [Obsolete]
+    public enum OesmatrixPalette : int
+    {
+        MaxVertexUnitsOes = ((int)0x86A4),
+        WeightArrayTypeOes = ((int)0x86A9),
+        WeightArrayStrideOes = ((int)0x86AA),
+        WeightArraySizeOes = ((int)0x86AB),
+        WeightArrayPointerOes = ((int)0x86AC),
+        WeightArrayOes = ((int)0x86AD),
+        MatrixPaletteOes = ((int)0x8840),
+        MaxPaletteMatricesOes = ((int)0x8842),
+        CurrentPaletteMatrixOes = ((int)0x8843),
+        MatrixIndexArrayOes = ((int)0x8844),
+        MatrixIndexArraySizeOes = ((int)0x8846),
+        MatrixIndexArrayTypeOes = ((int)0x8847),
+        MatrixIndexArrayStrideOes = ((int)0x8848),
+        MatrixIndexArrayPointerOes = ((int)0x8849),
+        WeightArrayBufferBindingOes = ((int)0x889E),
+        MatrixIndexArrayBufferBindingOes = ((int)0x8B9E),
+    }
+
+    [Obsolete]
+    public enum OespointSizeArray : int
+    {
+        PointSizeArrayTypeOes = ((int)0x898A),
+        PointSizeArrayStrideOes = ((int)0x898B),
+        PointSizeArrayPointerOes = ((int)0x898C),
+        PointSizeArrayOes = ((int)0x8B9C),
+        PointSizeArrayBufferBindingOes = ((int)0x8B9F),
+    }
+
+    [Obsolete]
+    public enum OespointSprite : int
+    {
+        PointSpriteOes = ((int)0x8861),
+        CoordReplaceOes = ((int)0x8862),
+    }
+
+    [Obsolete]
+    public enum OpenGlescoreVersions : int
+    {
+        VersionEsCl10 = ((int)1),
+        VersionEsCl11 = ((int)1),
+        VersionEsCm10 = ((int)1),
+        VersionEsCm11 = ((int)1),
+    }
 }
