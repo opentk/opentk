@@ -8,9 +8,7 @@
 #region --- Using Directives ---
 
 using System;
-#if !MINIMAL
 using System.Drawing;
-#endif
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Security;

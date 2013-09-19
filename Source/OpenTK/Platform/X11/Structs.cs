@@ -29,9 +29,7 @@
 using System;
 using System.ComponentModel;
 using System.Collections;
-#if !MINIMAL
 using System.Drawing;
-#endif
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 

@@ -28,14 +28,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-#if !MINIMAL
-using System.Drawing;
-#else
-using OpenTK.Minimal;
-#endif
 using System.Text;
+using System.Drawing;
 using OpenTK.Platform;
+using System.ComponentModel;
 
 namespace OpenTK
 {

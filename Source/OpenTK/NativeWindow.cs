@@ -27,9 +27,7 @@
 
 using System;
 using System.ComponentModel;
-#if !MINIMAL
 using System.Drawing;
-#endif
 using OpenTK.Graphics;
 using OpenTK.Input;
 using OpenTK.Platform;

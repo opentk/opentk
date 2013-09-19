@@ -28,9 +28,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-#if !MINIMAL
 using System.Drawing;
-#endif
 using System.Threading;
 using System.Text;
 

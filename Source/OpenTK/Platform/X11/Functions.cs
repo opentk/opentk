@@ -8,10 +8,6 @@
 
 using System;
 using System.Collections.Generic;
-#if !MINIMAL
-using System.Drawing;
-using System.Drawing.Imaging;
-#endif
 using System.Text;
 using System.Runtime.InteropServices;
 
@@ -598,15 +594,15 @@ namespace OpenTK.Platform.X11
                     (byte)(argb & 0xFF));
             }
         }
-        public static IntPtr CreatePixmapFromImage(Display display, Bitmap image) 
+        public static IntPtr CreatePixmapFromImage(Display display, System.Drawing.Bitmap image) 
         { 
             int width = image.Width;
             int height = image.Height;
             int size = width * height; 
 
-            BitmapData data = image.LockBits(new Rectangle(0, 0, width, height),
-                ImageLockMode.ReadOnly,
-                PixelFormat.Format32bppArgb);
+            System.Drawing.Imaging.BitmapData data = image.LockBits(new System.Drawing.Rectangle(0, 0, width, height),
+                System.Drawing.Imaging.ImageLockMode.ReadOnly,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             
             IntPtr ximage = XCreateImage(display, CopyFromParent, 24, ImageFormat.ZPixmap, 
                 0, data.Scan0, (uint)width, (uint)height, 32, 0); 
@@ -622,7 +618,7 @@ namespace OpenTK.Platform.X11
             return pixmap; 
         } 
         
-        public static IntPtr CreateMaskFromImage(Display display, Bitmap image) 
+        public static IntPtr CreateMaskFromImage(Display display, System.Drawing.Bitmap image) 
         { 
             int width = image.Width; 
             int height = image.Height; 
