@@ -307,7 +307,7 @@ namespace OpenTK
                 else if (rowIndex == 1) Row1[columnIndex] = value;
                 else if (rowIndex == 2) Row2[columnIndex] = value;
                 else if (rowIndex == 3) Row3[columnIndex] = value;
-                throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+                else throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
         }
 
