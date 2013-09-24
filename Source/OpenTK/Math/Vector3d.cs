@@ -131,7 +131,7 @@ namespace OpenTK
                 if(index == 0) X = value;
                 else if(index == 1) Y = value;
                 else if(index == 2) Z = value;
-                throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+                else throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
             }
         }
 

@@ -182,7 +182,7 @@ namespace OpenTK
             {
                 if (rowIndex == 0) Row0[columnIndex] = value;
                 else if (rowIndex == 1) Row1[columnIndex] = value;
-                throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+                else throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
         }
 
