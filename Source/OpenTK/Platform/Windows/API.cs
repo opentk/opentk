@@ -945,6 +945,30 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region SetProcessDPIAware
+
+        /// <summary>
+        /// Sets the current process as dots per inch (dpi) aware.
+        /// Note: SetProcessDPIAware is subject to a possible race condition
+        /// if a DLL caches dpi settings during initialization.
+        /// For this reason, it is recommended that dpi-aware be set through
+        /// the application (.exe) manifest rather than by calling SetProcessDPIAware.
+        /// </summary>
+        /// <returns>
+        /// If the function succeeds, the return value is true.
+        /// Otherwise, the return value is false.
+        /// </returns>
+        /// <remarks>
+        /// DLLs should accept the dpi setting of the host process
+        /// rather than call SetProcessDPIAware themselves.
+        /// To be set properly, dpiAware should be specified as part
+        /// of the application (.exe) manifest.
+        /// </remarks>
+        [DllImport("user32.dll")]
+        internal static extern BOOL SetProcessDPIAware();
+
+        #endregion
+
         #endregion
 
         #region Input functions

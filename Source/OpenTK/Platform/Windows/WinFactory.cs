@@ -27,6 +27,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace OpenTK.Platform.Windows
@@ -38,6 +39,17 @@ namespace OpenTK.Platform.Windows
     {
         readonly object SyncRoot = new object();
         IInputDriver2 inputDriver;
+
+        public WinFactory()
+        {
+            if (System.Environment.OSVersion.Version.Major >= 6)
+            {
+                // Enable high-dpi support
+                // Only available on Windows Vista and higher
+                bool result = Functions.SetProcessDPIAware();
+                Debug.Print("SetProcessDPIAware() returned {0}", result);
+            }
+        }
 
         #region IPlatformFactory Members
 
