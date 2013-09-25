@@ -91,6 +91,11 @@ namespace OpenTK.Platform.X11
                 return new X11Mouse(); // Always supported.
         }
 
+        public virtual OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+        {
+            return new X11Joystick();
+        }
+
         #endregion
     }
 }

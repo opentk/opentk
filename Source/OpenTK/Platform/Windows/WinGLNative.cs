@@ -89,7 +89,13 @@ namespace OpenTK.Platform.Windows
         IList<KeyboardDevice> keyboards = new List<KeyboardDevice>(1);
         IList<MouseDevice> mice = new List<MouseDevice>(1);
         const long ExtendedBit = 1 << 24;           // Used to distinguish left and right control, alt and enter keys.
-        static readonly uint ShiftRightScanCode = Functions.MapVirtualKey(VirtualKeys.RSHIFT, 0);         // Used to distinguish left and right shift keys.
+        
+        public static readonly uint ShiftLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LSHIFT, 0);
+        public static readonly uint ShiftRightScanCode = Functions.MapVirtualKey(VirtualKeys.RSHIFT, 0);
+        public static readonly uint ControlLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LCONTROL, 0);
+        public static readonly uint ControlRightScanCode = Functions.MapVirtualKey(VirtualKeys.RCONTROL, 0);
+        public static readonly uint AltLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LMENU, 0);
+        public static readonly uint AltRightScanCode = Functions.MapVirtualKey(VirtualKeys.RMENU, 0);
 
         KeyPressEventArgs key_press = new KeyPressEventArgs((char)0);
 
@@ -369,6 +375,8 @@ namespace OpenTK.Platform.Windows
                     // In this case, both keys will be reported as pressed.
 
                     bool extended = (lParam.ToInt64() & ExtendedBit) != 0;
+                    uint scancode = (uint)((lParam.ToInt64() >> 16) & 0xFF);
+                    Key key = Key.Unknown;
                     switch ((VirtualKeys)wParam)
                     {
                         case VirtualKeys.SHIFT:
@@ -382,55 +390,50 @@ namespace OpenTK.Platform.Windows
                             // Otherwise, the state of one key might be stuck to pressed.
                             if (ShiftRightScanCode != 0 && pressed)
                             {
-                                unchecked
-                                {
-                                    if (((lParam.ToInt64() >> 16) & 0xFF) == ShiftRightScanCode)
-                                        keyboard[Input.Key.ShiftRight] = pressed;
-                                    else
-                                        keyboard[Input.Key.ShiftLeft] = pressed;
-                                }
+                                if (scancode == ShiftRightScanCode)
+                                    key = Input.Key.ShiftRight;
+                                else
+                                    key = Input.Key.ShiftLeft;
                             }
                             else
                             {
                                 // Windows 9x and NT4.0 or key release event.
-                                keyboard[Input.Key.ShiftLeft] = keyboard[Input.Key.ShiftRight] = pressed;
+                                keyboard.SetKey(Input.Key.ShiftLeft, ShiftLeftScanCode, pressed);
+                                keyboard.SetKey(Input.Key.ShiftRight, ShiftRightScanCode, pressed);
                             }
-                            return IntPtr.Zero;
+                            break;
 
                         case VirtualKeys.CONTROL:
                             if (extended)
-                                keyboard[Input.Key.ControlRight] = pressed;
+                                key = Input.Key.ControlRight;
                             else
-                                keyboard[Input.Key.ControlLeft] = pressed;
-                            return IntPtr.Zero;
+                                key = Input.Key.ControlLeft;
+                            break;
 
                         case VirtualKeys.MENU:
                             if (extended)
-                                keyboard[Input.Key.AltRight] = pressed;
+                                key = Input.Key.AltRight;
                             else
-                                keyboard[Input.Key.AltLeft] = pressed;
-                            return IntPtr.Zero;
+                                key = Input.Key.AltLeft;
+                            break;
 
                         case VirtualKeys.RETURN:
                             if (extended)
-                                keyboard[Key.KeypadEnter] = pressed;
+                                key = Key.KeypadEnter;
                             else
-                                keyboard[Key.Enter] = pressed;
-                            return IntPtr.Zero;
+                                key = Key.Enter;
+                            break;
 
                         default:
                             if (!KeyMap.ContainsKey((VirtualKeys)wParam))
-                            {
                                 Debug.Print("Virtual key {0} ({1}) not mapped.", (VirtualKeys)wParam, (long)lParam);
-                                break;
-                            }
                             else
-                            {
-                                keyboard[KeyMap[(VirtualKeys)wParam]] = pressed;
-                            }
-                            return IntPtr.Zero;
+                                key = KeyMap[(VirtualKeys)wParam];
+                            break;
                     }
-                    break;
+
+                    keyboard.SetKey(key, scancode, pressed);
+                    return IntPtr.Zero;
 
                 case WindowMessage.SYSCHAR:
                     return IntPtr.Zero;
@@ -727,7 +730,11 @@ namespace OpenTK.Platform.Windows
             }
             set
             {
-                ClientSize = value.Size;
+                WindowStyle style = (WindowStyle)Functions.GetWindowLong(window.WindowHandle, GetWindowLongOffsets.STYLE);
+                Win32Rectangle rect = Win32Rectangle.From(value);
+                Functions.AdjustWindowRect(ref rect, style, false);
+                Location = new Point(rect.left, rect.top);
+                Size = new Size(rect.Width, rect.Height);
             }
         }
 

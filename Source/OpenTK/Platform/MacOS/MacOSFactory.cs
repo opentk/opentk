@@ -86,6 +86,11 @@ namespace OpenTK.Platform.MacOS
         {
             return InputDriver.MouseDriver;
         }
+
+        public virtual OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+        {
+            return InputDriver.GamePadDriver;
+        }
         
         #endregion
     }

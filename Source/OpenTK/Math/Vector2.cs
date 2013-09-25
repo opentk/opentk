@@ -24,6 +24,8 @@ SOFTWARE.
 
 using System;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
+
 namespace OpenTK
 {
     /// <summary>Represents a 2D vector using two single-precision floating-point numbers.</summary>
@@ -107,6 +109,21 @@ namespace OpenTK
         #endregion
 
         #region Public Members
+
+        /// <summary>
+        /// Gets or sets the value at the index of the Vector.
+        /// </summary>
+        public float this[int index] {
+            get{
+                if(index == 0) return X;
+                else if(index == 1) return Y;
+                throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
+            } set{
+                if(index == 0) X = value;
+                else if(index == 1) Y = value;
+                else throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+            }
+        }
 
         #region Instance
 
@@ -272,6 +289,16 @@ namespace OpenTK
 
         #endregion
 
+        /// <summary>
+        /// Returns a copy of the Vector2 scaled to unit length.
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 Normalized()
+        {
+            Vector2 v = this;
+            v.Normalize();
+            return v;
+        }
         #region public void Normalize()
 
         /// <summary>
@@ -824,6 +851,32 @@ namespace OpenTK
 
         #endregion
 
+        #region PerpDot
+
+        /// <summary>
+        /// Calculate the perpendicular dot (scalar) product of two vectors
+        /// </summary>
+        /// <param name="left">First operand</param>
+        /// <param name="right">Second operand</param>
+        /// <returns>The perpendicular dot product of the two inputs</returns>
+        public static float PerpDot(Vector2 left, Vector2 right)
+        {
+            return left.X * right.Y - left.Y * right.X;
+        }
+
+        /// <summary>
+        /// Calculate the perpendicular dot (scalar) product of two vectors
+        /// </summary>
+        /// <param name="left">First operand</param>
+        /// <param name="right">Second operand</param>
+        /// <param name="result">The perpendicular dot product of the two inputs</param>
+        public static void PerpDot(ref Vector2 left, ref Vector2 right, out float result)
+        {
+            result = left.X * right.Y - left.Y * right.X;
+        }
+
+        #endregion
+
         #region Lerp
 
         /// <summary>
@@ -927,6 +980,16 @@ namespace OpenTK
         }
 
         #endregion
+
+        #endregion
+
+        #region Swizzle
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the Y and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Yx { get { return new Vector2(Y, X); } set { Y = value.X; X = value.Y; } }
 
         #endregion
 
@@ -1038,13 +1101,14 @@ namespace OpenTK
 
         #region public override string ToString()
 
+        private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         /// <summary>
         /// Returns a System.String that represents the current Vector2.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("({0}, {1})", X, Y);
+            return String.Format("({0}{2} {1})", X, Y, listSeparator);
         }
 
         #endregion

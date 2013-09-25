@@ -119,6 +119,24 @@ namespace OpenTK
 
         #region Public Members
 
+
+        /// <summary>
+        /// Gets or sets the value at the index of the Vector.
+        /// </summary>
+        public float this[int index] {
+            get{
+                if(index == 0) return X;
+                else if(index == 1) return Y;
+                else if(index == 2) return Z;
+                throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
+            } set{
+                if(index == 0) X = value;
+                else if(index == 1) Y = value;
+                else if(index == 2) Z = value;
+                else throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+            }
+        }
+
         #region Instance
 
         #region public void Add()
@@ -258,6 +276,16 @@ namespace OpenTK
         }
 
         #endregion
+
+        /// <summary>
+        /// Returns a copy of the Vector3 scaled to unit length.
+        /// </summary>
+        public Vector3 Normalized()
+        {
+            Vector3 v = this;
+            v.Normalize();
+            return v;
+        }
 
         #region public void Normalize()
 
@@ -1195,11 +1223,79 @@ namespace OpenTK
 
         #region Swizzle
 
+        #region 2-component
+
         /// <summary>
         /// Gets or sets an OpenTK.Vector2 with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2 Xy { get { return new Vector2(X, Y); } set { X = value.X; Y = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the X and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Xz { get { return new Vector2(X, Z); } set { X = value.X; Z = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the Y and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Yx { get { return new Vector2(Y, X); } set { Y = value.X; X = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the Y and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Yz { get { return new Vector2(Y, Z); } set { Y = value.X; Z = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the Z and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Zx { get { return new Vector2(Z, X); } set { Z = value.X; X = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2 with the Z and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2 Zy { get { return new Vector2(Z, Y); } set { Z = value.X; Y = value.Y; } }
+
+        #endregion
+
+        #region 3-component
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the X, Z, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Xzy { get { return new Vector3(X, Z, Y); } set { X = value.X; Z = value.Y; Y = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Y, X, and Z components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yxz { get { return new Vector3(Y, X, Z); } set { Y = value.X; X = value.Y; Z = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Y, Z, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Yzx { get { return new Vector3(Y, Z, X); } set { Y = value.X; Z = value.Y; X = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Z, X, and Y components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zxy { get { return new Vector3(Z, X, Y); } set { Z = value.X; X = value.Y; Y = value.Z; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector3 with the Z, Y, and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector3 Zyx { get { return new Vector3(Z, Y, X); } set { Z = value.X; Y = value.Y; X = value.Z; } }
+
+        #endregion
 
         #endregion
 
@@ -1317,13 +1413,14 @@ namespace OpenTK
 
         #region public override string ToString()
 
+        private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         /// <summary>
         /// Returns a System.String that represents the current Vector3.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("({0}, {1}, {2})", X, Y, Z);
+            return String.Format("({0}{3} {1}{3} {2})", X, Y, Z, listSeparator);
         }
 
         #endregion

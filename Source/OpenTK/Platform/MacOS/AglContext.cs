@@ -475,6 +475,9 @@ namespace OpenTK.Platform.MacOS
             // I do not know MacOS allows us to destroy a context from a separate thread,
             // like the finalizer thread.  It's untested, but worst case is probably
             // an exception on application exit, which would be logged to the console.
+
+            // Actually, it seems to crash the mono runtime. -AMK 2013
+
             Debug.Print("Destroying context");
             if (Agl.aglDestroyContext(Handle.Handle) == true)
             {

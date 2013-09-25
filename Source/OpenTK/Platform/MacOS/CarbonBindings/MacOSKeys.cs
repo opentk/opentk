@@ -31,6 +31,9 @@ using System.Text;
 
 namespace OpenTK.Platform.MacOS.Carbon
 {
+	// 
+	// http://web.archive.org/web/20100501161453/http://www.classicteck.com/rbarticles/mackeyboard.php
+
     enum MacOSKeyCode
     {
         A = 0,
@@ -90,6 +93,13 @@ namespace OpenTK.Platform.MacOS.Carbon
         Backspace = 51,
         Return = 52,
         Esc = 53,
+        
+        Command = 55,
+        Shift = 56,
+        CapsLock = 57,
+        OptionAlt = 58,
+        Control = 59,
+        
         KeyPad_Decimal = 65,
         KeyPad_Multiply = 67,
         KeyPad_Add = 69,
@@ -107,6 +117,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         KeyPad_7 = 89,
         KeyPad_8 = 91,
         KeyPad_9 = 92,
+        
         F1 = 122,
         F2 = 120,
         F3 = 99,

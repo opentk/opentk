@@ -34,6 +34,7 @@ namespace OpenTK.Graphics.ES20
     #pragma warning disable 1591
     #pragma warning disable 1572
     #pragma warning disable 1573
+    #pragma warning disable 3006
 
     partial class GL
     {

@@ -41,9 +41,18 @@ namespace Examples
         public static void Main()
         {
             try
-            {
+            {   
+                // This seems to be useful enough to leave in for a while.
+                TextWriterTraceListener console = new TextWriterTraceListener(System.Console.Out);
+                Trace.Listeners.Add (console);
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+
+                // The ExampleBrowser works pretty poorly on some platforms, so you may want to start examples directly. 
+                // for example: Examples.Tutorial.T12_GLSL_Parallax.Main ();
+                //  Examples.Tutorial.T10_GLSL_Cube.Main ();
+                Examples.Tests.BasicMouseInput.Main ();
 
                 using (Form browser = new ExampleBrowser())
                 {

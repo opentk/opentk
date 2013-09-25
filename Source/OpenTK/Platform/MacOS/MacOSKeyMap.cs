@@ -118,10 +118,10 @@ namespace OpenTK.Platform.MacOS
             Add(MacOSKeyCode.Key_2, Key.Number2);
             Add(MacOSKeyCode.Key_3, Key.Number3);
             Add(MacOSKeyCode.Key_4, Key.Number4);
-            Add(MacOSKeyCode.Key_5, Key.Number4);
-            Add(MacOSKeyCode.Key_6, Key.Number5);
-            Add(MacOSKeyCode.Key_7, Key.Number6);
-            Add(MacOSKeyCode.Key_8, Key.Number7);
+            Add(MacOSKeyCode.Key_5, Key.Number5);
+            Add(MacOSKeyCode.Key_6, Key.Number6);
+            Add(MacOSKeyCode.Key_7, Key.Number7);
+            Add(MacOSKeyCode.Key_8, Key.Number8);
             Add(MacOSKeyCode.Key_9, Key.Number9);
             // Numlock
             Add(MacOSKeyCode.O, Key.O);

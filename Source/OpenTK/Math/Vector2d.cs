@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
 
 namespace OpenTK
 {
@@ -43,17 +44,17 @@ namespace OpenTK
         /// <summary>
         /// Defines a unit-length Vector2d that points towards the X-axis.
         /// </summary>
-        public static Vector2d UnitX = new Vector2d(1, 0);
+        public static readonly Vector2d UnitX = new Vector2d(1, 0);
 
         /// <summary>
         /// Defines a unit-length Vector2d that points towards the Y-axis.
         /// </summary>
-        public static Vector2d UnitY = new Vector2d(0, 1);
+        public static readonly Vector2d UnitY = new Vector2d(0, 1);
 
         /// <summary>
         /// Defines a zero-length Vector2d.
         /// </summary>
-        public static Vector2d Zero = new Vector2d(0, 0);
+        public static readonly Vector2d Zero = new Vector2d(0, 0);
 
         /// <summary>
         /// Defines an instance with all components set to 1.
@@ -91,6 +92,21 @@ namespace OpenTK
         #endregion
 
         #region Public Members
+
+        /// <summary>
+        /// Gets or sets the value at the index of the Vector.
+        /// </summary>
+        public double this[int index] {
+            get{
+                if(index == 0) return X;
+                else if(index == 1) return Y;
+                throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
+            } set{
+                if(index == 0) X = value;
+                else if(index == 1) Y = value;
+                else throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+            }
+        }
 
         #region Instance
 
@@ -232,6 +248,17 @@ namespace OpenTK
         }
 
         #endregion
+
+        /// <summary>
+        /// Returns a copy of the Vector2d scaled to unit length.
+        /// </summary>
+        /// <returns></returns>
+        public Vector2d Normalized()
+        {
+            Vector2d v = this;
+            v.Normalize();
+            return v;
+        }
 
         #region public void Normalize()
 
@@ -818,6 +845,16 @@ namespace OpenTK
 
         #endregion
 
+        #region Swizzle
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
+        /// </summary>
+        [XmlIgnore]
+        public Vector2d Yx { get { return new Vector2d(Y, X); } set { Y = value.X; X = value.Y; } }
+
+        #endregion
+
         #region Operators
 
         /// <summary>
@@ -942,13 +979,14 @@ namespace OpenTK
 
         #region public override string ToString()
 
+        private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         /// <summary>
         /// Returns a System.String that represents the current instance.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("({0}, {1})", X, Y);
+            return String.Format("({0}{2} {1})", X, Y, listSeparator);
         }
 
         #endregion

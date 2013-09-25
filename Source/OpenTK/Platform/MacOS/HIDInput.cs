@@ -50,7 +50,7 @@ namespace OpenTK.Platform.MacOS
 
     // Requires Mac OS X 10.5 or higher.
     // Todo: create a driver for older installations. Maybe use CGGetLastMouseDelta for that?
-    class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2
+    class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2/*, IGamePadDriver*/
     {
         #region Fields
 
@@ -124,7 +124,7 @@ namespace OpenTK.Platform.MacOS
                 {
                     if (!MouseDevices.ContainsKey(device))
                     {
-                        Debug.Print("Mouse device {0} discovered", device);
+                        Debug.Print("Mouse device {0:x} discovered, sender is {1:x}", device, sender);
                         MouseState state = new MouseState();
                         state.IsConnected = true;
                         MouseIndexToDevice.Add(MouseDevices.Count, device);
@@ -132,7 +132,7 @@ namespace OpenTK.Platform.MacOS
                     }
                     else
                     {
-                        Debug.Print("Mouse device {0} reconnected", device);
+                        Debug.Print("Mouse device {0:x} reconnected, sender is {1:x}", device, sender);
                         MouseState state = MouseDevices[device];
                         state.IsConnected = true;
                         MouseDevices[device] = state;
@@ -144,7 +144,7 @@ namespace OpenTK.Platform.MacOS
                 {
                     if (!KeyboardDevices.ContainsKey(device))
                     {
-                        Debug.Print("Keyboard device {0} discovered", device);
+                        Debug.Print("Keyboard device {0:x} discovered, sender is {1:x}", device, sender);
                         KeyboardState state = new KeyboardState();
                         state.IsConnected = true;
                         KeyboardIndexToDevice.Add(KeyboardDevices.Count, device);
@@ -152,15 +152,18 @@ namespace OpenTK.Platform.MacOS
                     }
                     else
                     {
-                        Debug.Print("Keyboard device {0} reconnected", device);
+                        Debug.Print("Keyboard device {0:x} reconnected, sender is {1:x}", device, sender);
                         KeyboardState state = KeyboardDevices[device];
                         state.IsConnected = true;
                         KeyboardDevices[device] = state;
                     }
                 }
 
+                // The device is not normally available in the InputValueCallback (HandleDeviceValueReceived), so we include
+                // the device identifier as the context variable, so we can identify it and figure out the device later.
+                // Thanks to Jase: http://www.opentk.com/node/2800
                 NativeMethods.IOHIDDeviceRegisterInputValueCallback(device,
-                    HandleDeviceValueReceived, IntPtr.Zero);
+                    HandleDeviceValueReceived, device);
                 NativeMethods.IOHIDDeviceScheduleWithRunLoop(device, RunLoop, InputLoopMode);
             }
         }
@@ -170,7 +173,7 @@ namespace OpenTK.Platform.MacOS
             if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse) &&
                 MouseDevices.ContainsKey(device))
             {
-                Debug.Print("Mouse device {0} disconnected", device);
+                Debug.Print("Mouse device {0:x} disconnected, sender is {1:x}", device, sender);
 
                 // Keep the device in case it comes back later on
                 MouseState state = MouseDevices[device];
@@ -181,7 +184,7 @@ namespace OpenTK.Platform.MacOS
             if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard) &&
                 KeyboardDevices.ContainsKey(device))
             {
-                Debug.Print("Keyboard device {0} disconnected", device);
+                Debug.Print("Keyboard device {0:x} disconnected, sender is {1:x}", device, sender);
 
                 // Keep the device in case it comes back later on
                 KeyboardState state = KeyboardDevices[device];
@@ -197,13 +200,15 @@ namespace OpenTK.Platform.MacOS
         {
             MouseState mouse;
             KeyboardState keyboard;
-            if (MouseDevices.TryGetValue(sender, out mouse))
+            if (MouseDevices.TryGetValue(context, out mouse))
             {
-                MouseDevices[sender] = UpdateMouse(mouse, val);
+                MouseDevices[context] = UpdateMouse(mouse, val);
             }
-            else if (KeyboardDevices.TryGetValue(sender, out keyboard))
+            else if (KeyboardDevices.TryGetValue(context, out keyboard))
             {
-                KeyboardDevices[sender] = UpdateKeyboard(keyboard, val);
+                KeyboardDevices[context] = UpdateKeyboard(keyboard, val);
+            }else{
+                //Debug.Print ("Device {0:x} not found in list of keyboards or mice", sender);
             }
         }
 
@@ -249,19 +254,21 @@ namespace OpenTK.Platform.MacOS
             int v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
             HIDPage page = NativeMethods.IOHIDElementGetUsagePage(elem);
             int usage = NativeMethods.IOHIDElementGetUsage(elem);
+ 
+            // This will supress the debug printing below. Seems like it generates a lot of -1s. 
+            // Couldn't find any details in USB spec or Apple docs for this behavior.
+            if(usage < 0 ) return state;  
 
-             switch (page)
+            switch (page)
             {
                 case HIDPage.GenericDesktop:
                 case HIDPage.KeyboardOrKeypad:
-                    int raw = (int)usage;
-                    if (raw >= RawKeyMap.Length || raw < 0)
+                    if (usage >= RawKeyMap.Length)
                     {
-                        Debug.Print("[Warning] Key {0} not mapped.", raw);
+                        Debug.Print("[Warning] Key {0} not mapped.", usage);
                         return state;
                     }
-                    Key key = RawKeyMap[raw];
-                    state[key] = v_int != 0;
+                    state.SetKeyState(RawKeyMap[usage], (byte)usage, v_int != 0);
                     break;
             }
 

@@ -28,8 +28,9 @@ using System.Runtime.InteropServices;
 namespace OpenTK
 {
     /// <summary>
-    /// Represents a 4x4 Matrix with double-precision components.
+    /// Represents a 4x4 matrix containing 3D rotation, scale, transform, and projection with double-precision components.
     /// </summary>
+    /// <seealso cref="Matrix4"/>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix4d : IEquatable<Matrix4d>
@@ -137,6 +138,7 @@ namespace OpenTK
         public Vector4d  Column0
         {
             get { return new Vector4d (Row0.X, Row1.X, Row2.X, Row3.X); }
+            set { Row0.X = value.X; Row1.X = value.Y; Row2.X = value.Z; Row3.X = value.W; }
         }
 
         /// <summary>
@@ -145,6 +147,7 @@ namespace OpenTK
         public Vector4d  Column1
         {
             get { return new Vector4d (Row0.Y, Row1.Y, Row2.Y, Row3.Y); }
+            set { Row0.Y = value.X; Row1.Y = value.Y; Row2.Y = value.Z; Row3.Y = value.W; }
         }
 
         /// <summary>
@@ -153,6 +156,7 @@ namespace OpenTK
         public Vector4d  Column2
         {
             get { return new Vector4d (Row0.Z, Row1.Z, Row2.Z, Row3.Z); }
+            set { Row0.Z = value.X; Row1.Z = value.Y; Row2.Z = value.Z; Row3.Z = value.W; }
         }
 
         /// <summary>
@@ -161,6 +165,7 @@ namespace OpenTK
         public Vector4d  Column3
         {
             get { return new Vector4d (Row0.W, Row1.W, Row2.W, Row3.W); }
+            set { Row0.W = value.X; Row1.W = value.Y; Row2.W = value.Z; Row3.W = value.W; }
         }
 
         /// <summary>
@@ -243,6 +248,56 @@ namespace OpenTK
         /// </summary>
         public double M44 { get { return Row3.W; } set { Row3.W = value; } }
 
+        /// <summary>
+        /// Gets or sets the values along the main diagonal of the matrix.
+        /// </summary>
+        public Vector4d Diagonal
+        {
+            get
+            {
+                return new Vector4d(Row0.X, Row1.Y, Row2.Z, Row3.W);
+            }
+            set
+            {
+                Row0.X = value.X;
+                Row1.Y = value.Y;
+                Row2.Z = value.Z;
+                Row3.W = value.W;
+            }
+        }
+
+        /// <summary>
+        /// Gets the trace of the matrix, the sum of the values along the diagonal.
+        /// </summary>
+        public double Trace { get { return Row0.X + Row1.Y + Row2.Z + Row3.W; } }
+
+        #endregion
+
+        #region Indexers
+
+        /// <summary>
+        /// Gets or sets the value at a specified row and column.
+        /// </summary>
+        public double this[int rowIndex, int columnIndex]
+        {
+            get
+            {
+                if (rowIndex == 0) return Row0[columnIndex];
+                else if (rowIndex == 1) return Row1[columnIndex];
+                else if (rowIndex == 2) return Row2[columnIndex];
+                else if (rowIndex == 3) return Row3[columnIndex];
+                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+            }
+            set
+            {
+                if (rowIndex == 0) Row0[columnIndex] = value;
+                else if (rowIndex == 1) Row1[columnIndex] = value;
+                else if (rowIndex == 2) Row2[columnIndex] = value;
+                else if (rowIndex == 3) Row3[columnIndex] = value;
+                else throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+            }
+        }
+
         #endregion
 
         #region Instance
@@ -270,6 +325,166 @@ namespace OpenTK
         }
 
         #endregion
+
+        /// <summary>
+        /// Returns a normalised copy of this instance.
+        /// </summary>
+        public Matrix4d Normalized()
+        {
+            Matrix4d m = this;
+            m.Normalize();
+            return m;
+        }
+
+        /// <summary>
+        /// Divides each element in the Matrix by the <see cref="Determinant"/>.
+        /// </summary>
+        public void Normalize()
+        {
+            var determinant = this.Determinant;
+            Row0 /= determinant;
+            Row1 /= determinant;
+            Row2 /= determinant;
+            Row3 /= determinant;
+        }
+
+        /// <summary>
+        /// Returns an inverted copy of this instance.
+        /// </summary>
+        public Matrix4d Inverted()
+        {
+            Matrix4d m = this;
+            if (m.Determinant != 0)
+                m.Invert();
+            return m;
+        }
+
+        /// <summary>
+        /// Returns a copy of this Matrix4d without translation.
+        /// </summary>
+        public Matrix4d ClearTranslation()
+        {
+            Matrix4d m = this;
+            m.Row3.Xyz = Vector3d.Zero;
+            return m;
+        }
+        /// <summary>
+        /// Returns a copy of this Matrix4d without scale.
+        /// </summary>
+        public Matrix4d ClearScale()
+        {
+            Matrix4d m = this;
+            m.Row0.Xyz = m.Row0.Xyz.Normalized();
+            m.Row1.Xyz = m.Row1.Xyz.Normalized();
+            m.Row2.Xyz = m.Row2.Xyz.Normalized();
+            return m;
+        }
+        /// <summary>
+        /// Returns a copy of this Matrix4d without rotation.
+        /// </summary>
+        public Matrix4d ClearRotation()
+        {
+            Matrix4d m = this;
+            m.Row0.Xyz = new Vector3d(m.Row0.Xyz.Length, 0, 0);
+            m.Row1.Xyz = new Vector3d(0, m.Row1.Xyz.Length, 0);
+            m.Row2.Xyz = new Vector3d(0, 0, m.Row2.Xyz.Length);
+            return m;
+        }
+        /// <summary>
+        /// Returns a copy of this Matrix4d without projection.
+        /// </summary>
+        public Matrix4d ClearProjection()
+        {
+            Matrix4d m = this;
+            m.Column3 = Vector4d.Zero;
+            return m;
+        }
+
+        /// <summary>
+        /// Returns the translation component of this instance.
+        /// </summary>
+        public Vector3d ExtractTranslation() { return Row3.Xyz; }
+
+        /// <summary>
+        /// Returns the scale component of this instance.
+        /// </summary>
+        public Vector3d ExtractScale() { return new Vector3d(Row0.Xyz.Length, Row1.Xyz.Length, Row2.Xyz.Length); }
+
+        /// <summary>
+        /// Returns the rotation component of this instance. Quite slow.
+        /// </summary>
+        /// <param name="row_normalise">Whether the method should row-normalise (i.e. remove scale from) the Matrix. Pass false if you know it's already normalised.</param>
+        public Quaterniond ExtractRotation(bool row_normalise = true)
+        {
+            var row0 = Row0.Xyz;
+            var row1 = Row1.Xyz;
+            var row2 = Row2.Xyz;
+
+            if (row_normalise)
+            {
+                row0 = row0.Normalized();
+                row1 = row1.Normalized();
+                row2 = row2.Normalized();
+            }
+
+            // code below adapted from Blender
+
+            Quaterniond q = new Quaterniond();
+            double trace = 0.25 * (row0[0] + row1[1] + row2[2] + 1.0);
+
+            if (trace > 0)
+            {
+                double sq = Math.Sqrt(trace);
+
+                q.W = sq;
+                sq = 1.0 / (4.0 * sq);
+                q.X = (row1[2] - row2[1]) * sq;
+                q.Y = (row2[0] - row0[2]) * sq;
+                q.Z = (row0[1] - row1[0]) * sq;
+            }
+            else if (row0[0] > row1[1] && row0[0] > row2[2])
+            {
+                double sq = 2.0 * Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
+
+                q.X = 0.25 * sq;
+                sq = 1.0 / sq;
+                q.W = (row2[1] - row1[2]) * sq;
+                q.Y = (row1[0] + row0[1]) * sq;
+                q.Z = (row2[0] + row0[2]) * sq;
+            }
+            else if (row1[1] > row2[2])
+            {
+                double sq = 2.0 * Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
+
+                q.Y = 0.25 * sq;
+                sq = 1.0 / sq;
+                q.W = (row2[0] - row0[2]) * sq;
+                q.X = (row1[0] + row0[1]) * sq;
+                q.Z = (row2[1] + row1[2]) * sq;
+            }
+            else
+            {
+                double sq = 2.0 * Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
+
+                q.Z = 0.25 * sq;
+                sq = 1.0 / sq;
+                q.W = (row1[0] - row0[1]) * sq;
+                q.X = (row2[0] + row0[2]) * sq;
+                q.Y = (row2[1] + row1[2]) * sq;
+            }
+
+            q.Normalize();
+            return q;
+        }
+
+        /// <summary>
+        /// Returns the projection component of this instance.
+        /// </summary>
+        public Vector4d ExtractProjection()
+        {
+            return Column3;
+        }
+
 
         #endregion
 
@@ -318,7 +533,7 @@ namespace OpenTK
         /// Builds a rotation matrix for a rotation around the x-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <param name="result">The resulting Matrix4 instance.</param>
+        /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationX(double angle, out Matrix4d result)
         {
             double cos = System.Math.Cos(angle);
@@ -334,7 +549,7 @@ namespace OpenTK
         /// Builds a rotation matrix for a rotation around the x-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <returns>The resulting Matrix4 instance.</returns>
+        /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateRotationX(double angle)
         {
             Matrix4d result;
@@ -346,7 +561,7 @@ namespace OpenTK
         /// Builds a rotation matrix for a rotation around the y-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <param name="result">The resulting Matrix4 instance.</param>
+        /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationY(double angle, out Matrix4d result)
         {
             double cos = System.Math.Cos(angle);
@@ -362,7 +577,7 @@ namespace OpenTK
         /// Builds a rotation matrix for a rotation around the y-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <returns>The resulting Matrix4 instance.</returns>
+        /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateRotationY(double angle)
         {
             Matrix4d result;
@@ -374,7 +589,7 @@ namespace OpenTK
         /// Builds a rotation matrix for a rotation around the z-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <param name="result">The resulting Matrix4 instance.</param>
+        /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationZ(double angle, out Matrix4d result)
         {
             double cos = System.Math.Cos(angle);
@@ -390,7 +605,7 @@ namespace OpenTK
         /// Builds a rotation matrix for a rotation around the z-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <returns>The resulting Matrix4 instance.</returns>
+        /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateRotationZ(double angle)
         {
             Matrix4d result;
@@ -670,6 +885,80 @@ namespace OpenTK
 
         #endregion
 
+        #region CreateFromQuaternion
+        /// <summary>
+        /// Build a rotation matrix from the specified quaternion.
+        /// </summary>
+        /// <param name="q">Quaternion to translate.</param>
+        /// <param name="m">Matrix result.</param>
+        public static void CreateFromQuaternion(ref Quaternion q,ref Matrix4 m)
+        {
+            m = Matrix4.Identity;
+            
+            float X = q.X;
+            float Y = q.Y;
+            float Z = q.Z;
+            float W = q.W;
+            
+            float xx = X * X;
+            float xy = X * Y;
+            float xz = X * Z;
+            float xw = X * W;
+            float yy = Y * Y;
+            float yz = Y * Z;
+            float yw = Y * W;
+            float zz = Z * Z;
+            float zw = Z * W;
+            
+            m.M11 = 1 - 2 * (yy + zz);
+            m.M21 = 2 * (xy - zw);
+            m.M31 = 2 * (xz + yw);
+            m.M12 = 2 * (xy + zw);
+            m.M22 = 1 - 2 * (xx + zz);
+            m.M32 = 2 * (yz - xw);
+            m.M13 = 2 * (xz - yw);
+            m.M23 = 2 * (yz + xw);
+            m.M33 = 1 - 2 * (xx + yy);
+        }
+        
+        /// <summary>
+        /// Build a rotation matrix from the specified quaternion.
+        /// </summary>
+        /// <param name="q">Quaternion to translate.</param>
+        /// <returns>A matrix instance.</returns>
+        public static Matrix4 CreateFromQuaternion(ref Quaternion q)
+        {
+            Matrix4 result = Matrix4.Identity;
+            
+            float X = q.X;
+            float Y = q.Y;
+            float Z = q.Z;
+            float W = q.W;
+            
+            float xx = X * X;
+            float xy = X * Y;
+            float xz = X * Z;
+            float xw = X * W;
+            float yy = Y * Y;
+            float yz = Y * Z;
+            float yw = Y * W;
+            float zz = Z * Z;
+            float zw = Z * W;
+            
+            result.M11 = 1 - 2 * (yy + zz);
+            result.M21 = 2 * (xy - zw);
+            result.M31 = 2 * (xz + yw);
+            result.M12 = 2 * (xy + zw);
+            result.M22 = 1 - 2 * (xx + zz);
+            result.M32 = 2 * (yz - xw);
+            result.M13 = 2 * (xz - yw);
+            result.M23 = 2 * (yz + xw);
+            result.M33 = 1 - 2 * (xx + yy);
+            return result;
+        }
+        
+        #endregion
+
         #region Obsolete Functions
 
         #region Translation Functions
@@ -922,6 +1211,68 @@ namespace OpenTK
 
         #endregion
 
+        #region Add Functions
+
+        /// <summary>
+        /// Adds two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the addition.</param>
+        /// <param name="right">The right operand of the addition.</param>
+        /// <returns>A new instance that is the result of the addition.</returns>
+        public static Matrix4d Add(Matrix4d left, Matrix4d right)
+        {
+            Matrix4d result;
+            Add(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Adds two instances.
+        /// </summary>
+        /// <param name="left">The left operand of the addition.</param>
+        /// <param name="right">The right operand of the addition.</param>
+        /// <param name="result">A new instance that is the result of the addition.</param>
+        public static void Add(ref Matrix4d left, ref Matrix4d right, out Matrix4d result)
+        {
+            result.Row0 = left.Row0 + right.Row0;
+            result.Row1 = left.Row1 + right.Row1;
+            result.Row2 = left.Row2 + right.Row2;
+            result.Row3 = left.Row3 + right.Row3;
+        }
+
+        #endregion
+
+        #region Subtract Functions
+
+        /// <summary>
+        /// Subtracts one instance from another.
+        /// </summary>
+        /// <param name="left">The left operand of the subraction.</param>
+        /// <param name="right">The right operand of the subraction.</param>
+        /// <returns>A new instance that is the result of the subraction.</returns>
+        public static Matrix4d Subtract(Matrix4d left, Matrix4d right)
+        {
+            Matrix4d result;
+            Subtract(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Subtracts one instance from another.
+        /// </summary>
+        /// <param name="left">The left operand of the subraction.</param>
+        /// <param name="right">The right operand of the subraction.</param>
+        /// <param name="result">A new instance that is the result of the subraction.</param>
+        public static void Subtract(ref Matrix4d left, ref Matrix4d right, out Matrix4d result)
+        {
+            result.Row0 = left.Row0 - right.Row0;
+            result.Row1 = left.Row1 - right.Row1;
+            result.Row2 = left.Row2 - right.Row2;
+            result.Row3 = left.Row3 - right.Row3;
+        }
+
+        #endregion
+
         #region Multiply Functions
 
         /// <summary>
@@ -970,6 +1321,33 @@ namespace OpenTK
             result.Row3.Y = (((lM41 * rM12) + (lM42 * rM22)) + (lM43 * rM32)) + (lM44 * rM42);
             result.Row3.Z = (((lM41 * rM13) + (lM42 * rM23)) + (lM43 * rM33)) + (lM44 * rM43);
             result.Row3.W = (((lM41 * rM14) + (lM42 * rM24)) + (lM43 * rM34)) + (lM44 * rM44);
+        }
+
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication</returns>
+        public static Matrix4d Mult(Matrix4d left, double right)
+        {
+            Matrix4d result;
+            Mult(ref left, right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication</param>
+        public static void Mult(ref Matrix4d left, double right, out Matrix4d result)
+        {
+            result.Row0 = left.Row0 * right;
+            result.Row1 = left.Row1 * right;
+            result.Row2 = left.Row2 * right;
+            result.Row3 = left.Row3 * right;
         }
 
         #endregion
@@ -1125,10 +1503,43 @@ namespace OpenTK
         /// </summary>
         /// <param name="left">left-hand operand</param>
         /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix44 which holds the result of the multiplication</returns>
+        /// <returns>A new Matrix4d which holds the result of the multiplication</returns>
         public static Matrix4d operator *(Matrix4d left, Matrix4d right)
         {
             return Matrix4d.Mult(left, right);
+        }
+
+        /// <summary>
+        /// Matrix-scalar multiplication
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix4d which holds the result of the multiplication</returns>
+        public static Matrix4d operator *(Matrix4d left, float right)
+        {
+            return Matrix4d.Mult(left, right);
+        }
+
+        /// <summary>
+        /// Matrix addition
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix4d which holds the result of the addition</returns>
+        public static Matrix4d operator +(Matrix4d left, Matrix4d right)
+        {
+            return Matrix4d.Add(left, right);
+        }
+
+        /// <summary>
+        /// Matrix subtraction
+        /// </summary>
+        /// <param name="left">left-hand operand</param>
+        /// <param name="right">right-hand operand</param>
+        /// <returns>A new Matrix4d which holds the result of the subtraction</returns>
+        public static Matrix4d operator -(Matrix4d left, Matrix4d right)
+        {
+            return Matrix4d.Subtract(left, right);
         }
 
         /// <summary>
@@ -1207,7 +1618,7 @@ namespace OpenTK
         #region IEquatable<Matrix4d> Members
 
         /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
-        /// <param name="other">An matrix to compare with this matrix.</param>
+        /// <param name="other">A matrix to compare with this matrix.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         public bool Equals(Matrix4d other)
         {
