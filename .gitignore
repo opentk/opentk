@@ -4,6 +4,8 @@ OpenTK.userprefs
 Source/GlobalAssemblyInfo.cs
 Version.txt
 Source/OpenTK/OpenTK.xml
+Source/GLControl/OpenTK.GLControl.xml
+Documentation/Source
 
 # OpenTK Resource files that seem like they should be ignored:
 Source/Compatibility/Properties/Resources.resources
