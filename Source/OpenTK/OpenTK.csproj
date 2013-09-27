@@ -786,6 +786,18 @@
     <None Include="Platform\SDL2\sdl2-cs\README" />
     <Compile Include="Platform\SDL2\sdl2-cs\src\LPUtf8StrMarshaler.cs" />
     <Compile Include="Platform\SDL2\sdl2-cs\src\SDL2.cs" />
+    <Compile Include="Platform\SDL2\Sdl2DisplayDeviceDriver.cs" />
+    <Compile Include="Platform\SDL2\Sdl2Factory.cs" />
+    <Compile Include="Platform\SDL2\Sdl2GraphicsContext.cs" />
+    <Compile Include="Platform\SDL2\Sdl2GraphicsMode.cs" />
+    <Compile Include="Platform\SDL2\Sdl2InputBase.cs" />
+    <Compile Include="Platform\SDL2\Sdl2Joystick.cs" />
+    <Compile Include="Platform\SDL2\Sdl2KeyMap.cs" />
+    <Compile Include="Platform\SDL2\Sdl2Keyboard.cs" />
+    <Compile Include="Platform\SDL2\Sdl2Mouse.cs" />
+    <Compile Include="Platform\SDL2\Sdl2NativeWindow.cs" />
+    <Compile Include="Platform\SDL2\Sdl2WindowInfo.cs" />
+    <Compile Include="Platform\MacOS\Cgl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
