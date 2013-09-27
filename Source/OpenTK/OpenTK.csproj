@@ -782,6 +782,10 @@
     <Compile Include="IntPtrEqualityComparer.cs" />
     <Compile Include="Input\GamePadButton.cs" />
     <Compile Include="Input\GamePadAxis.cs" />
+    <None Include="Platform\SDL2\sdl2-cs\LICENSE" />
+    <None Include="Platform\SDL2\sdl2-cs\README" />
+    <Compile Include="Platform\SDL2\sdl2-cs\src\LPUtf8StrMarshaler.cs" />
+    <Compile Include="Platform\SDL2\sdl2-cs\src\SDL2.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -790,4 +794,7 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Platform\SDL2\" />
+  </ItemGroup>
 </Project>

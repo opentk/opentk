@@ -28,7 +28,7 @@ using System;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace SDL2
+namespace OpenTK.Platform.SDL2
 {
 	internal unsafe class LPUtf8StrMarshaler : ICustomMarshaler
 	{
