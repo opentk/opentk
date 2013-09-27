@@ -40,7 +40,7 @@ namespace OpenTK.Platform.SDL2
             {
                 IntPtr current;
                 if (Configuration.RunningOnWindows)
-                    current = OpenTK.Platform.Windows.Wgl.GetCurrentContext();
+                    current = OpenTK.Platform.Windows.Wgl.Imports.GetCurrentContext();
                 else if (Configuration.RunningOnX11)
                     current = OpenTK.Platform.X11.Glx.GetCurrentContext();
                 else if (Configuration.RunningOnMacOS)
