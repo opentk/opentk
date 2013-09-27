@@ -108,6 +108,9 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\..\OpenTK.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
       <Name>System</Name>
@@ -484,6 +487,7 @@
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
     </None>
+    <None Include="app.manifest" />
     <None Include="Data\Poem.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
