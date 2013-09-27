@@ -23,6 +23,10 @@ namespace OpenTK.Platform.SDL2
         {
             SetGLAttributes(mode, shareContext, major, minor, flags);
             SdlContext = new ContextHandle(SDL.SDL_GL_CreateContext(window.Handle));
+            if (SdlContext == ContextHandle.Zero)
+            {
+                Debug.Print("SDL2 failed to create OpenGL context: {0}", SDL.SDL_GetError());
+            }
             Handle = GraphicsContext.GetCurrentContext();
         }
 
