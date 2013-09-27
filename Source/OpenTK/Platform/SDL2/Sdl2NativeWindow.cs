@@ -24,11 +24,14 @@ namespace OpenTK.Platform.SDL2
 
         static Sdl2KeyMap map = new Sdl2KeyMap();
 
-        public Sdl2NativeWindow(int x, int y, int width, int height, string title, GameWindowFlags options, DisplayDevice device)
+        public Sdl2NativeWindow(int x, int y, int width, int height,
+            string title, GameWindowFlags options, DisplayDevice device)
         {
             var bounds = device.Bounds;
             var flags = TranslateFlags(options);
-            IntPtr handle = SDL.SDL_CreateWindow(title, bounds.Left + x, bounds.Right + y, width, height, flags);
+            flags |= SDL.SDL_WindowFlags.SDL_WINDOW_OPENGL;
+            flags |= SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE;
+            IntPtr handle = SDL.SDL_CreateWindow(title, bounds.Left + x, bounds.Top + y, width, height, flags);
             window = new Sdl2WindowInfo(handle, null);
 
             keyboard.Description = "Standard Windows keyboard";
@@ -53,7 +56,7 @@ namespace OpenTK.Platform.SDL2
             switch (flags)
             {
                 case GameWindowFlags.Fullscreen:
-                    return SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN;
+                    return SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP;
                 
                 default:
                     return (SDL.SDL_WindowFlags)0;
@@ -129,6 +132,13 @@ namespace OpenTK.Platform.SDL2
                     Debug.Print("SDL2 unhandled event: {0}", e.type);
                     break;
             }
+        }
+
+        void DestroyWindow()
+        {
+            exists = false;
+            SDL.SDL_DestroyWindow(window.Handle);
+            window.Handle = IntPtr.Zero;
         }
 
         #endregion
@@ -225,9 +235,7 @@ namespace OpenTK.Platform.SDL2
                         Closing(this, close_args);
                         if (!close_args.Cancel)
                         {
-                            exists = false;
-                            SDL.SDL_DestroyWindow(window.Handle);
-                            window.Handle = IntPtr.Zero;
+                            DestroyWindow();
                         }
                         break;
 
@@ -360,9 +368,12 @@ namespace OpenTK.Platform.SDL2
                 switch (value)
                 {
                     case WindowState.Fullscreen:
-                        if (SDL.SDL_SetWindowFullscreen(window.Handle, (uint)SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) < 0)
+                        if (SDL.SDL_SetWindowFullscreen(window.Handle, (uint)SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP) < 0)
                         {
-                            SDL.SDL_SetWindowFullscreen(window.Handle, (uint)SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP);
+                            if (SDL.SDL_SetWindowFullscreen(window.Handle, (uint)SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) < 0)
+                            {
+                                Debug.Print("SDL2 failed to enter fullscreen mode: {0}", SDL.SDL_GetError());
+                            }
                         }
                         break;
 
@@ -610,7 +621,10 @@ namespace OpenTK.Platform.SDL2
             {
                 if (!disposed)
                 {
-                    Close();
+                    if (Exists)
+                    {
+                        DestroyWindow();
+                    }
                 }
                 else
                 {
