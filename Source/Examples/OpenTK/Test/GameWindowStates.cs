@@ -19,7 +19,7 @@ namespace Examples.Tests
     public class GameWindowStates : GameWindow
     {
         static readonly Font TextFont = new Font(FontFamily.GenericSansSerif, 11);
-        Bitmap TextBitmap = new Bitmap(512, 512);
+        Bitmap TextBitmap = new Bitmap(1024, 1024);
         int texture;
         bool mouse_in_window = false;
         bool viewport_changed = true;
