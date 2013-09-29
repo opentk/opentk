@@ -407,24 +407,37 @@ namespace OpenTK.Platform.SDL2
             }
             set
             {
-                IntPtr surface = IntPtr.Zero;
+                // Set the new icon, if any, or clear the current
+                // icon if null
                 if (value != null)
                 {
                     using (Bitmap bmp = value.ToBitmap())
                     {
+                        // Decode the icon into a SDL surface
                         var data = bmp.LockBits(
                             new Rectangle(0, 0, value.Width, value.Height),
                             ImageLockMode.ReadWrite,
                             PixelFormat.Format32bppArgb);
 
-                        surface = SDL.SDL_CreateRGBSurfaceFrom(
-                            data.Scan0, data.Width, data.Height, 32, data.Width * 4,
+                        IntPtr surface = SDL.SDL_CreateRGBSurfaceFrom(
+                            data.Scan0, data.Width, data.Height, 32, data.Stride,
                             0x00ff0000u, 0x0000ff00u, 0x000000ffu, 0xff000000u);
 
+                        // Update the window icon
+                        SDL.SDL_SetWindowIcon(window.Handle, surface);
+
+                        // Free the SDL surface as it is no longer needed
+                        SDL.SDL_FreeSurface(surface);
                         bmp.UnlockBits(data);
                     }
+
                 }
-                SDL.SDL_SetWindowIcon(window.Handle, surface);
+                else
+                {
+                    // Clear the window icon
+                    SDL.SDL_SetWindowIcon(window.Handle, IntPtr.Zero);
+                }
+
                 icon = value;
                 IconChanged(this, EventArgs.Empty);
             }
