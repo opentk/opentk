@@ -419,7 +419,7 @@ namespace OpenTK.Platform.SDL2
 
                         surface = SDL.SDL_CreateRGBSurfaceFrom(
                             data.Scan0, data.Width, data.Height, 32, data.Width * 4,
-                            0x0000ff00u, 0x00ff0000u, 0xff000000u, 0x000000ffu);
+                            0x00ff0000u, 0x0000ff00u, 0x000000ffu, 0xff000000u);
 
                         bmp.UnlockBits(data);
                     }
