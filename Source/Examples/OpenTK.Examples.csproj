@@ -608,6 +608,9 @@
   <ItemGroup>
     <None Include="Resources\v3x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Game.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
