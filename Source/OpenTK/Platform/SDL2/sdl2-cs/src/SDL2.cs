@@ -36,7 +36,7 @@ namespace OpenTK.Platform.SDL2
 	/// <summary>
 	/// Entry point for all SDL-related (non-extension) types and methods
 	/// </summary>
-	public static class SDL
+	static class SDL
 	{
 		#region SDL2# Variables
 		
