@@ -68,7 +68,7 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Gets or sets the handle of the window.
         /// </summary>
-        public IntPtr WindowHandle { get { return handle; } set { handle = value; } }
+        public IntPtr Handle { get { return handle; } set { handle = value; } }
 
         /// <summary>
         /// Gets or sets the Parent of the window (may be null).
@@ -83,8 +83,8 @@ namespace OpenTK.Platform.Windows
             get
             {
                 if (dc == IntPtr.Zero)
-                    dc = Functions.GetDC(this.WindowHandle);
-                    //dc = Functions.GetWindowDC(this.WindowHandle);
+                    dc = Functions.GetDC(this.Handle);
+                    //dc = Functions.GetWindowDC(this.Handle);
                 return dc;
             }
         }
@@ -96,7 +96,7 @@ namespace OpenTK.Platform.Windows
         public override string ToString()
         {
             return String.Format("Windows.WindowInfo: Handle {0}, Parent ({1})",
-                this.WindowHandle, this.Parent != null ? this.Parent.ToString() : "null");
+                this.Handle, this.Parent != null ? this.Parent.ToString() : "null");
         }
 
         /// <summary>Checks if <c>this</c> and <c>obj</c> reference the same win32 window.</summary>

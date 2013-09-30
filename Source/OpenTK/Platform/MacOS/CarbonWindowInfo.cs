@@ -67,7 +67,7 @@ namespace OpenTK.Platform.MacOS
         /// <summary>
         /// Gets the window reference for this instance.
         /// </summary>
-        internal IntPtr WindowRef
+        public IntPtr Handle
         {
             get { return this.windowRef; }
         }
@@ -96,7 +96,7 @@ namespace OpenTK.Platform.MacOS
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {
-            return String.Format("MacOS.CarbonWindowInfo: Handle {0}", this.WindowRef);
+            return String.Format("MacOS.CarbonWindowInfo: Handle {0}", this.Handle);
         }
 
         #endregion

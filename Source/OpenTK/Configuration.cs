@@ -47,7 +47,7 @@ namespace OpenTK
         // Detects the underlying OS and runtime.
         static Configuration()
         {
-            Toolkit.Init();
+            Init();
         }
 
         #endregion
@@ -75,6 +75,18 @@ namespace OpenTK
         public static bool RunningOnUnix
         {
             get { return runningOnUnix; }
+        }
+
+        #endregion
+
+        #region RunningOnSDL2
+
+        /// <summary>
+        /// Gets a System.Boolean indicating whether OpenTK is running on the SDL2 backend.
+        /// </summary>
+        public static bool RunningOnSdl2
+        {
+            get { return Sdl2Supported; }
         }
 
         #endregion
@@ -162,15 +174,22 @@ namespace OpenTK
             // Detect whether SDL2 is supported
             try
             {
-                var flags = OpenTK.Platform.SDL2.SDL.SDL_INIT_EVERYTHING;
-                flags &= ~OpenTK.Platform.SDL2.SDL.SDL_INIT_AUDIO;
-                if (OpenTK.Platform.SDL2.SDL.SDL_Init((uint)flags) == 0)
+                if (OpenTK.Platform.SDL2.SDL.SDL_WasInit(0) == 0)
                 {
-                    supported = true;
+                    var flags = OpenTK.Platform.SDL2.SDL.SDL_INIT_EVERYTHING;
+                    flags &= ~OpenTK.Platform.SDL2.SDL.SDL_INIT_AUDIO;
+                    if (OpenTK.Platform.SDL2.SDL.SDL_Init((uint)flags) == 0)
+                    {
+                        supported = true;
+                    }
+                    else
+                    {
+                        Debug.Print("SDL2 init failed with error: {0}", OpenTK.Platform.SDL2.SDL.SDL_GetError());
+                    }
                 }
                 else
                 {
-                    Debug.Print("SDL2 init failed with error: {0}", OpenTK.Platform.SDL2.SDL.SDL_GetError());
+                    supported = true;
                 }
             }
             catch (Exception e)
@@ -190,7 +209,13 @@ namespace OpenTK
 
         #region Internal Methods
 
-        internal static bool Sdl2Supported { get; private set; }
+        internal static bool Sdl2Supported
+        {
+            get
+            {
+                return DetectSdl2();
+            }
+        }
 
         internal static void Init()
         {
@@ -254,8 +279,6 @@ namespace OpenTK
                         RunningOnWindows ? "Windows" : RunningOnLinux ? "Linux" : RunningOnMacOS ? "MacOS" :
                         runningOnUnix ? "Unix" : RunningOnX11 ? "X11" : "Unknown Platform",
                         RunningOnMono ? "Mono" : ".Net");
-
-                    Sdl2Supported = DetectSdl2();
 
                     initialized = true;
                 }

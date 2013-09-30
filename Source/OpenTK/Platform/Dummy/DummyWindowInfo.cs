@@ -13,5 +13,10 @@ namespace OpenTK.Platform.Dummy
         }
 
         #endregion
+
+        public IntPtr Handle
+        {
+            get { return IntPtr.Zero; }
+        }
     }
 }

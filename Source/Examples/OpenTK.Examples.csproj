@@ -142,6 +142,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DependencyLoader.cs" />
     <Compile Include="ExampleInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -610,6 +611,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Game.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\Dependencies\openal.COPYING.txt">
+      <Link>Dependencies\openal.COPYING.txt</Link>
+    </Content>
+    <Content Include="..\..\Dependencies\SDL2.COPYING.txt">
+      <Link>Dependencies\SDL2.COPYING.txt</Link>
+    </Content>
+    <Content Include="..\..\Dependencies\x64\openal32.dll">
+      <Link>Dependencies\x64\openal32.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Dependencies\x64\SDL2.dll">
+      <Link>Dependencies\x64\SDL2.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Dependencies\x86\openal32.dll">
+      <Link>Dependencies\x86\openal32.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Dependencies\x86\SDL2.dll">
+      <Link>Dependencies\x86\SDL2.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -71,7 +71,7 @@ namespace OpenTK.Platform.Windows
             bdi.ClassGuid = DeviceInterfaceHid;
             unsafe
             {
-                dev_notify_handle = Functions.RegisterDeviceNotification(parent.WindowHandle,
+                dev_notify_handle = Functions.RegisterDeviceNotification(parent.Handle,
                     new IntPtr((void*)&bdi), DeviceNotification.WINDOW_HANDLE);
             }
             if (dev_notify_handle == IntPtr.Zero)
@@ -135,8 +135,8 @@ namespace OpenTK.Platform.Windows
 
         protected override void CreateDrivers()
         {
-            keyboard_driver = new WinRawKeyboard(Parent.WindowHandle);
-            mouse_driver = new WinRawMouse(Parent.WindowHandle);
+            keyboard_driver = new WinRawKeyboard(Parent.Handle);
+            mouse_driver = new WinRawMouse(Parent.Handle);
             joystick_driver = new WinMMJoystick();
 
             DevNotifyHandle = RegisterForDeviceNotifications(Parent);

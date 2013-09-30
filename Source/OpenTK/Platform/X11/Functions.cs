@@ -548,7 +548,7 @@ namespace OpenTK.Platform.X11
             xev = new XEvent();
             xev.ClientMessageEvent.type = XEventName.ClientMessage;
             xev.ClientMessageEvent.send_event = true;
-            xev.ClientMessageEvent.window = window.WindowHandle;
+            xev.ClientMessageEvent.window = window.Handle;
             xev.ClientMessageEvent.message_type = message_type;
             xev.ClientMessageEvent.format = 32;
             xev.ClientMessageEvent.ptr1 = l0;
@@ -568,14 +568,14 @@ namespace OpenTK.Platform.X11
             xev = new XEvent();
             xev.ClientMessageEvent.type = XEventName.ClientMessage;
             xev.ClientMessageEvent.send_event = true;
-            xev.ClientMessageEvent.window = window.WindowHandle;
+            xev.ClientMessageEvent.window = window.Handle;
             xev.ClientMessageEvent.message_type = message_type;
             xev.ClientMessageEvent.format = 32;
             xev.ClientMessageEvent.ptr1 = l0;
             xev.ClientMessageEvent.ptr2 = l1;
             xev.ClientMessageEvent.ptr3 = l2;
 
-            XSendEvent(window.Display, window.WindowHandle, false, new IntPtr((int)EventMask.NoEventMask), ref xev);
+            XSendEvent(window.Display, window.Handle, false, new IntPtr((int)EventMask.NoEventMask), ref xev);
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]

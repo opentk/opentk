@@ -53,7 +53,7 @@ namespace OpenTK.Platform.SDL2
 
         public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            return new Sdl2GraphicsContext(mode, (Sdl2WindowInfo)window, shareContext, major, minor, flags);
+            return new Sdl2GraphicsContext(mode, window, shareContext, major, minor, flags);
         }
 
         public IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)

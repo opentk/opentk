@@ -65,7 +65,7 @@ namespace OpenTK.Platform.X11
                 window.Display = API.DefaultDisplay;
                 window.Screen = Functions.XDefaultScreen(window.Display);
                 window.RootWindow = Functions.XRootWindow(window.Display, window.Screen);
-                window.WindowHandle = window.RootWindow;
+                window.Handle = window.RootWindow;
             }
 
             if (!IsSupported(window.Display))
@@ -74,7 +74,7 @@ namespace OpenTK.Platform.X11
             using (XIEventMask mask = new XIEventMask(1, XIEventMasks.RawButtonPressMask |
                     XIEventMasks.RawButtonReleaseMask | XIEventMasks.RawMotionMask))
             {
-                Functions.XISelectEvents(window.Display, window.WindowHandle, mask);
+                Functions.XISelectEvents(window.Display, window.Handle, mask);
                 Functions.XISelectEvents(window.Display, window.RootWindow, mask);
             }
         }

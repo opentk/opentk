@@ -211,7 +211,7 @@ namespace OpenTK.Platform.MacOS
 
         private IntPtr GetQuartzDevice(CarbonWindowInfo carbonWindow)
         {
-            IntPtr windowRef = carbonWindow.WindowRef;
+            IntPtr windowRef = carbonWindow.Handle;
             
             if (CarbonGLNative.WindowRefMap.ContainsKey(windowRef) == false)
                 return IntPtr.Zero;
@@ -286,13 +286,13 @@ namespace OpenTK.Platform.MacOS
             IntPtr windowPort;
             if (carbonWindow.IsControl)
             {
-                IntPtr controlOwner = API.GetControlOwner(carbonWindow.WindowRef);
+                IntPtr controlOwner = API.GetControlOwner(carbonWindow.Handle);
                 
                 windowPort = API.GetWindowPort(controlOwner);
             }
 
             else
-                windowPort = API.GetWindowPort(carbonWindow.WindowRef);
+                windowPort = API.GetWindowPort(carbonWindow.Handle);
             
             return windowPort;
         }
@@ -336,7 +336,7 @@ namespace OpenTK.Platform.MacOS
 
         private CarbonGLNative GetCarbonWindow(CarbonWindowInfo carbonWindow)
         {
-            WeakReference r = CarbonGLNative.WindowRefMap[carbonWindow.WindowRef];
+            WeakReference r = CarbonGLNative.WindowRefMap[carbonWindow.Handle];
             
             if (r.IsAlive)
             {

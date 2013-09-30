@@ -77,7 +77,7 @@ namespace OpenTK.Platform.X11
         #region --- Public Methods ---
 
         /// <summary>Gets or sets the handle of the window.</summary>
-        public IntPtr WindowHandle { get { return handle; } set { handle = value; } }
+        public IntPtr Handle { get { return handle; } set { handle = value; } }
         /// <summary>Gets or sets the parent of the window.</summary>
         public X11WindowInfo Parent { get { return parent; } set { parent = value; } }
         /// <summary>Gets or sets the X11 root window.</summary>
@@ -113,7 +113,7 @@ namespace OpenTK.Platform.X11
         public override string ToString()
         {
             return String.Format("X11.WindowInfo: Display {0}, Screen {1}, Handle {2}, Parent: ({3})",
-                this.Display, this.Screen, this.WindowHandle, this.Parent != null ? this.Parent.ToString() : "null");
+                this.Display, this.Screen, this.Handle, this.Parent != null ? this.Parent.ToString() : "null");
         }
 
         #endregion

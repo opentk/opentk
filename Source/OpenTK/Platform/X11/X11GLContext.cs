@@ -265,12 +265,12 @@ namespace OpenTK.Platform.X11
 
         public override void SwapBuffers()
         {
-            if (Display == IntPtr.Zero || currentWindow.WindowHandle == IntPtr.Zero)
+            if (Display == IntPtr.Zero || currentWindow.Handle == IntPtr.Zero)
                 throw new InvalidOperationException(
-                    String.Format("Window is invalid. Display ({0}), Handle ({1}).", Display, currentWindow.WindowHandle));
+                    String.Format("Window is invalid. Display ({0}), Handle ({1}).", Display, currentWindow.Handle));
             using (new XLock(Display))
             {
-                Glx.SwapBuffers(Display, currentWindow.WindowHandle);
+                Glx.SwapBuffers(Display, currentWindow.Handle);
             }
         }
 
@@ -308,14 +308,14 @@ namespace OpenTK.Platform.X11
                 bool result;
 
                 Debug.Write(String.Format("Making context {0} current on thread {1} (Display: {2}, Screen: {3}, Window: {4})... ",
-                        Handle, System.Threading.Thread.CurrentThread.ManagedThreadId, Display, w.Screen, w.WindowHandle));
+                        Handle, System.Threading.Thread.CurrentThread.ManagedThreadId, Display, w.Screen, w.Handle));
 
-                if (Display == IntPtr.Zero || w.WindowHandle == IntPtr.Zero || Handle == ContextHandle.Zero)
+                if (Display == IntPtr.Zero || w.Handle == IntPtr.Zero || Handle == ContextHandle.Zero)
                     throw new InvalidOperationException("Invalid display, window or context.");
 
                 using (new XLock(Display))
                 {
-                    result = Glx.MakeCurrent(Display, w.WindowHandle, Handle);
+                    result = Glx.MakeCurrent(Display, w.Handle, Handle);
                     if (result)
                     {
                         currentWindow = w;

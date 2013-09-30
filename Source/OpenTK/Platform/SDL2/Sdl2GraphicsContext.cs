@@ -34,22 +34,35 @@ namespace OpenTK.Platform.SDL2
 {
     class Sdl2GraphicsContext : DesktopGraphicsContext
     {
-        Sdl2WindowInfo Window { get; set; }
+        IWindowInfo Window { get; set; }
         ContextHandle SdlContext { get; set; }
 
-        public Sdl2GraphicsContext(Sdl2WindowInfo window)
+        public Sdl2GraphicsContext(IWindowInfo window)
         {
-            Window = window;
+            // It is possible to create a GraphicsContext on a window
+            // that is not owned by SDL (e.g. a GLControl). In that case,
+            // we need to use SDL_CreateWindowFrom in order to
+            // convert the foreign window to a SDL window.
+            if (window is Sdl2WindowInfo)
+            {
+                Window = window;
+            }
+            else
+            {
+                Window = new Sdl2WindowInfo(
+                    SDL.SDL_CreateWindowFrom(window.Handle),
+                    null);
+            }
         }
 
         public Sdl2GraphicsContext(GraphicsMode mode,
-            Sdl2WindowInfo window, IGraphicsContext shareContext,
+            IWindowInfo win, IGraphicsContext shareContext,
             int major, int minor,
             OpenTK.Graphics.GraphicsContextFlags flags)
-            : this(window)
+            : this(win)
         {
             SetGLAttributes(mode, shareContext, major, minor, flags);
-            SdlContext = new ContextHandle(SDL.SDL_GL_CreateContext(window.Handle));
+            SdlContext = new ContextHandle(SDL.SDL_GL_CreateContext(Window.Handle));
             if (SdlContext == ContextHandle.Zero)
             {
                 Debug.Print("SDL2 failed to create OpenGL context: {0}", SDL.SDL_GetError());

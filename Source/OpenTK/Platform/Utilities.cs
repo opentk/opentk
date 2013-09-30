@@ -210,7 +210,7 @@ namespace OpenTK.Platform
             Platform.X11.X11WindowInfo window = new OpenTK.Platform.X11.X11WindowInfo();
             window.Display = display;
             window.Screen = screen;
-            window.WindowHandle = windowHandle;
+            window.Handle = windowHandle;
             window.RootWindow = rootWindow;
             window.VisualInfo = (X11.XVisualInfo)Marshal.PtrToStructure(visualInfo, typeof(X11.XVisualInfo));
 
@@ -262,8 +262,21 @@ namespace OpenTK.Platform
 
         #endregion
 
+        #region CreateSdl2WindowInfo
+
+        /// <summary>
+        /// Creates an IWindowInfo instance for the windows platform.
+        /// </summary>
+        /// <param name="windowHandle">The handle of the window.</param>
+        /// <returns>A new IWindowInfo instance.</returns>
+        public static IWindowInfo CreateSdl2WindowInfo(IntPtr windowHandle)
+        {
+            return new OpenTK.Platform.SDL2.Sdl2WindowInfo(
+                SDL2.SDL.SDL_CreateWindowFrom(windowHandle), null);
+        }
+
         #endregion
 
-
+        #endregion
     }
 }
