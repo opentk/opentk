@@ -65,7 +65,7 @@ namespace OpenTK.Platform.SDL2
         static Sdl2NativeWindow()
         {
             // store the filter delegate to protect it from the GC
-            SDL.SDL_SetEventFilter(EventFilterDelegate, IntPtr.Zero);
+            SDL.SDL_AddEventWatch(EventFilterDelegate, IntPtr.Zero);
         }
 
         public Sdl2NativeWindow(int x, int y, int width, int height,

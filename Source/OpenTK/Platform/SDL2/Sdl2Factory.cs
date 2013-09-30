@@ -33,6 +33,8 @@ namespace OpenTK.Platform.SDL2
 {
     class Sdl2Factory : IPlatformFactory
     {
+        readonly IInputDriver2 InputDriver = new Sdl2InputBase();
+
         public Sdl2Factory()
         {
         }
@@ -86,17 +88,17 @@ namespace OpenTK.Platform.SDL2
 
         public IKeyboardDriver2 CreateKeyboardDriver()
         {
-            return new Sdl2Keyboard();
+            return InputDriver.KeyboardDriver;
         }
 
         public IMouseDriver2 CreateMouseDriver()
         {
-            return new Sdl2Mouse();
+            return InputDriver.MouseDriver;
         }
 
         public IGamePadDriver CreateGamePadDriver()
         {
-            return new Sdl2Joystick();
+            return InputDriver.GamePadDriver;
         }
 
         #endregion

@@ -32,25 +32,45 @@ namespace OpenTK.Platform.SDL2
 {
     class Sdl2Keyboard : IKeyboardDriver2
     {
+        static readonly Sdl2KeyMap KeyMap = new Sdl2KeyMap();
+        KeyboardState state;
+
         public Sdl2Keyboard()
         {
+            state.IsConnected = true;
         }
+
+        #region Public Members
+
+        public void ProcessKeyboardEvent(SDL.SDL_KeyboardEvent e)
+        {
+            Key key;
+            if (KeyMap.TryGetValue(e.keysym.sym, out key))
+            {
+                state.SetKeyState(key, (byte)e.keysym.scancode, e.state != 0);
+            }
+        }
+
+        #endregion
 
         #region IKeyboardDriver2 Members
 
         public KeyboardState GetState()
         {
-            return new KeyboardState();
+            return state;
         }
 
         public KeyboardState GetState(int index)
         {
-            return new KeyboardState();
+            if (index == 0)
+                return state;
+            else
+                return new KeyboardState();
         }
 
         public string GetDeviceName(int index)
         {
-            return String.Empty;
+            return "SDL2 Default Keyboard";
         }
 
         #endregion
