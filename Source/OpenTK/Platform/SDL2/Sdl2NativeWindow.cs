@@ -114,14 +114,20 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        static Key TranslateKey(SDL.SDL_Keycode key)
+        static Key TranslateKey(SDL.SDL_Scancode scan)
         {
             Key result = Key.Unknown;
-            if (map.ContainsKey(key))
+            if (map.ContainsKey(scan))
             {
-                result = map[key];
+                result = map[scan];
             }
             return result;
+        }
+
+        static Key TranslateKey(SDL.SDL_Keycode key)
+        {
+            SDL.SDL_Scancode scan = SDL.SDL_GetScancodeFromKey(key);
+            return TranslateKey(scan);
         }
 
         static int FilterEvents(IntPtr user_data, IntPtr e)
@@ -324,7 +330,7 @@ namespace OpenTK.Platform.SDL2
                     case SDL.SDL_EventType.SDL_KEYUP:
                         bool key_pressed = e.key.state == SDL.SDL_PRESSED;
                         var key = e.key.keysym;
-                        keyboard.SetKey(TranslateKey(key.sym), (uint)key.scancode, key_pressed);
+                        keyboard.SetKey(TranslateKey(key.scancode), (uint)key.scancode, key_pressed);
                         break;
 
                     case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:

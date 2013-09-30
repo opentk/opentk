@@ -45,9 +45,21 @@ namespace OpenTK.Platform.SDL2
         public void ProcessKeyboardEvent(SDL.SDL_KeyboardEvent e)
         {
             Key key;
-            if (KeyMap.TryGetValue(e.keysym.sym, out key))
+            bool pressed = e.state != 0;
+            if (KeyMap.TryGetValue(e.keysym.scancode, out key))
             {
-                state.SetKeyState(key, (byte)e.keysym.scancode, e.state != 0);
+                state.SetKeyState(key, (byte)e.keysym.scancode, pressed);
+            }
+
+            switch (e.keysym.mod)
+            {
+                case SDL.SDL_Keymod.KMOD_ALT:
+                    state.SetKeyState(Key.AltLeft, (byte)e.keysym.scancode, pressed);
+                    break;
+
+                case SDL.SDL_Keymod.KMOD_CAPS:
+                    state.SetKeyState(Key.CapsLock, (byte)e.keysym.scancode, pressed);
+                    break;
             }
         }
 
