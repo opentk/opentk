@@ -33,7 +33,7 @@ namespace OpenTK.Platform.SDL2
 {
     class Sdl2Factory : IPlatformFactory
     {
-        readonly IInputDriver2 InputDriver = new Sdl2InputBase();
+        readonly IInputDriver2 InputDriver = new Sdl2InputDriver();
 
         public Sdl2Factory()
         {

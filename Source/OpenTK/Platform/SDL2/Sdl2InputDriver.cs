@@ -33,13 +33,13 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2InputBase : IInputDriver2
+    class Sdl2InputDriver : IInputDriver2
     {
         readonly Sdl2Keyboard keyboard_driver = new Sdl2Keyboard();
         readonly Sdl2Mouse mouse_driver = new Sdl2Mouse();
         readonly SDL.SDL_EventFilter EventFilterDelegate;
 
-        public Sdl2InputBase()
+        public Sdl2InputDriver()
         {
             EventFilterDelegate = FilterInputEvents;
             SDL.SDL_AddEventWatch(EventFilterDelegate, IntPtr.Zero);
