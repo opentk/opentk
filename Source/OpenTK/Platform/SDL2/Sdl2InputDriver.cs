@@ -27,33 +27,57 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2InputBase : IInputDriver2
+    class Sdl2InputDriver : IInputDriver2
     {
-        Sdl2WindowInfo window;
-        readonly Thread thread;
-        readonly AutoResetEvent ready = new AutoResetEvent(false); 
+        readonly Sdl2Keyboard keyboard_driver = new Sdl2Keyboard();
+        readonly Sdl2Mouse mouse_driver = new Sdl2Mouse();
+        readonly SDL.SDL_EventFilter EventFilterDelegate;
 
-        public Sdl2InputBase()
+        public Sdl2InputDriver()
         {
-            window = new Sdl2WindowInfo(
-                SDL.SDL_CreateWindow("Hidden Input Window", 0, 0, 1, 1,
-                    SDL.SDL_WindowFlags.SDL_WINDOW_HIDDEN),
-                null);
+            EventFilterDelegate = FilterInputEvents;
+            SDL.SDL_AddEventWatch(EventFilterDelegate, IntPtr.Zero);
         }
 
         #region Private Members
 
-        void ProcessEvents()
+        int FilterInputEvents(IntPtr user_data, IntPtr e)
         {
-            SDL.SDL_Event e;
-            while (SDL.SDL_WaitEvent(out e) != 0)
+            SDL.SDL_Event ev;
+            unsafe
             {
+                ev = *(SDL.SDL_Event*)e;
             }
+
+            var type = (SDL.SDL_EventType)Marshal.ReadInt32(e);
+            switch (type)
+            {
+                case SDL.SDL_EventType.SDL_KEYDOWN:
+                case SDL.SDL_EventType.SDL_KEYUP:
+                    keyboard_driver.ProcessKeyboardEvent(ev.key);
+                    break;
+
+                case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
+                case SDL.SDL_EventType.SDL_MOUSEBUTTONUP:
+                    mouse_driver.ProcessMouseEvent(ev.button);
+                    break;
+
+                case SDL.SDL_EventType.SDL_MOUSEMOTION:
+                    mouse_driver.ProcessMouseEvent(ev.motion);
+                    break;
+
+                case SDL.SDL_EventType.SDL_MOUSEWHEEL:
+                    mouse_driver.ProcessWheelEvent(ev.wheel);
+                    break;
+            }
+
+            return 0;
         }
 
         #endregion
@@ -64,7 +88,7 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                throw new NotImplementedException();
+                return mouse_driver;
             }
         }
 
@@ -72,7 +96,7 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                throw new NotImplementedException();
+                return keyboard_driver;
             }
         }
 

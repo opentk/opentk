@@ -36,7 +36,7 @@ namespace OpenTK.Platform.SDL2
 	/// <summary>
 	/// Entry point for all SDL-related (non-extension) types and methods
 	/// </summary>
-	public static class SDL
+	static class SDL
 	{
 		#region SDL2# Variables
 		
@@ -4047,11 +4047,11 @@ namespace OpenTK.Platform.SDL2
 		 * with the current keyboard layout.
 		 */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SDL_GetKeyFromScancode(SDL_Scancode scancode);
+		public static extern SDL_Keycode SDL_GetKeyFromScancode(SDL_Scancode scancode);
 
 		/* Get the scancode for the given keycode */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SDL_GetScancodeFromKey(SDL_Keycode key);
+		public static extern SDL_Scancode SDL_GetScancodeFromKey(SDL_Keycode key);
 		
 		/* Wrapper for SDL_GetScancodeName */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
