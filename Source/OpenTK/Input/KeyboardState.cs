@@ -67,8 +67,8 @@ namespace OpenTK.Input
         /// Gets a <see cref="System.Boolean"/> indicating whether the specified
         /// <see cref="OpenTK.Input.Key"/> is pressed.
         /// </summary>
-        /// <param name="key">The <see cref="OpenTK.Input.Key"/> to check.</param>
-        /// <returns>True if key is pressed; false otherwise.</returns>
+        /// <param name="code">The scancode to check.</param>
+        /// <returns>True if code is pressed; false otherwise.</returns>
         public bool this[short code]
         {
             get { return IsKeyDown(code); }
