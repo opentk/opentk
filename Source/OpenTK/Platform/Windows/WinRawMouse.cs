@@ -120,7 +120,14 @@ namespace OpenTK.Platform.Windows
                             RegistryKey classGUIDKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
                             deviceClass = classGUIDKey != null ? (string) classGUIDKey.GetValue("Class") : string.Empty;
                         }
-                        deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
+
+                        // deviceDesc remained null on a new Win7 system - not sure why.
+                        // Since the description is not vital information, use a dummy description
+                        // when that happens.
+                        if (String.IsNullOrEmpty(deviceDesc))
+                            deviceDesc = "Windows Mouse " + mice.Count;
+                        else
+                            deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
 
                         if (!String.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("mouse"))
                         {
