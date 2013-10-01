@@ -124,7 +124,7 @@ namespace Build.UpdateVersion
         {
             try
             {
-                string output = RunProcess("git", "log -1", RootDirectory);
+                string output = RunProcess("git", "rev-list HEAD --count", RootDirectory);
                 
                 const string RevisionText = "commit ";
                 int index = output.IndexOf(RevisionText);
