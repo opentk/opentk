@@ -27,62 +27,75 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.IO;
-using System.Drawing;
 
 namespace Examples
 {
     static class Program
     {
-        static void EnableOpenTKHack()
+        static void LaunchExample(string type)
         {
-            // If OpenTK is not initialized before Windows.Forms,
-            // the program will crash on Mac OS X. This hack will
-            // enable OpenTK in a temporary AppDomain before entering
-            // the main program - this appears to be enough.
-            var domain = AppDomain.CreateDomain("sandbox");
-            domain.DoCallBack(() => {
-                using (OpenTK.Toolkit.Init())
+            using (TextWriterTraceListener dbg = new TextWriterTraceListener("debug.log"))
+            using (OpenTK.Toolkit.Init())
+            {
+                Trace.Listeners.Add(dbg);
+                Trace.Listeners.Add(new ConsoleTraceListener());
+
+                var example = Type.GetType(type);
+                if (example != null)
                 {
+                    example.InvokeMember("Main",
+                        BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic,
+                        null, null, null);
                 }
-            });
+
+                dbg.Flush();
+                dbg.Close();
+            }
         }
 
         [STAThread]
-        public static void Main()
+        public static void Main(string[] args)
         {
-            try
+            if (args.Length > 0)
             {
-                EnableOpenTKHack();
-
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-
-                using (Form browser = new ExampleBrowser())
-                {
-                    try
-                    {
-                        if (File.Exists("debug.log"))
-                            File.Delete("debug.log");
-                        if (File.Exists("trace.log"))
-                            File.Delete("trace.log");
-                    }
-                    catch (Exception expt)
-                    {
-                        MessageBox.Show("Could not access debug.log", expt.ToString());
-                    }
-
-                    Application.Run(browser);
-                }
+                LaunchExample(args[0]);
             }
-            catch (System.Security.SecurityException e)
+            else
             {
-                MessageBox.Show("The Example Launcher failed to start, due to insufficient permissions. This may happen if you execute the application from a network share.", "OpenTK Example Launcher failed to start.",
-                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                Trace.WriteLine(e.ToString());
+                try
+                {
+                    Application.EnableVisualStyles();
+                    Application.SetCompatibleTextRenderingDefault(false);
+
+                    using (Form browser = new ExampleBrowser())
+                    {
+                        try
+                        {
+                            if (File.Exists("debug.log"))
+                                File.Delete("debug.log");
+                            if (File.Exists("trace.log"))
+                                File.Delete("trace.log");
+                        }
+                        catch (Exception expt)
+                        {
+                            MessageBox.Show("Could not access debug.log", expt.ToString());
+                        }
+
+                        Application.Run(browser);
+                    }
+                }
+                catch (System.Security.SecurityException e)
+                {
+                    MessageBox.Show("The Example Launcher failed to start, due to insufficient permissions. This may happen if you execute the application from a network share.", "OpenTK Example Launcher failed to start.",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    Trace.WriteLine(e.ToString());
+                }
             }
         }
     }
