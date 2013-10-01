@@ -34,6 +34,7 @@ namespace OpenTK.Platform.SDL2
     class Sdl2Factory : IPlatformFactory
     {
         readonly IInputDriver2 InputDriver = new Sdl2InputDriver();
+        bool disposed;
 
         public Sdl2Factory()
         {
@@ -99,6 +100,33 @@ namespace OpenTK.Platform.SDL2
         public IGamePadDriver CreateGamePadDriver()
         {
             return InputDriver.GamePadDriver;
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    InputDriver.Dispose();
+                }
+                disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~Sdl2Factory()
+        {
+            Dispose(false);
         }
 
         #endregion

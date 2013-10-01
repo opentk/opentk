@@ -28,6 +28,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using OpenTK.Platform;
 
 namespace OpenTK
 {
@@ -36,6 +37,8 @@ namespace OpenTK
     /// </summary>
     public sealed class Toolkit
     {
+        static Factory platform_factory;
+
         volatile static bool initialized;
         static readonly object InitLock = new object();
 
@@ -59,7 +62,7 @@ namespace OpenTK
         /// Calling this method first ensures that OpenTK is given the chance to
         /// initialize itself and configure the platform correctly.
         /// </remarks>
-        public static void Init()
+        public static IDisposable Init()
         {
             lock (InitLock)
             {
@@ -69,9 +72,21 @@ namespace OpenTK
                     Configuration.Init();
                     // The actual initialization takes place in the platform-specific factory
                     // constructors.
-                    new Platform.Factory();
+                    platform_factory = new Platform.Factory();
+                    AppDomain.CurrentDomain.DomainUnload += Deinit;
                 }
+                return platform_factory;
             }
+        }
+
+        #endregion
+
+        #region Private Members
+
+        static void Deinit(object sender, EventArgs e)
+        {
+            AppDomain.CurrentDomain.DomainUnload -= Deinit;
+            platform_factory.Dispose();
         }
 
         #endregion

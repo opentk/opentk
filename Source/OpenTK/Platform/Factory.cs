@@ -27,6 +27,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace OpenTK.Platform
@@ -37,6 +38,7 @@ namespace OpenTK.Platform
     {
         #region Fields
 
+        bool disposed;
         static IPlatformFactory default_implementation, embedded_implementation;
 
         #endregion
@@ -133,7 +135,8 @@ namespace OpenTK.Platform
         class UnsupportedPlatform : IPlatformFactory
         {
             #region Fields
-            
+
+            bool disposed;
             static readonly string error_string = "Please, refer to http://www.opentk.com for more information.";
             
             #endregion
@@ -191,6 +194,72 @@ namespace OpenTK.Platform
             }
 
             #endregion
+
+            #region IDisposable Members
+
+            void Dispose(bool manual)
+            {
+                if (!disposed)
+                {
+                    if (manual)
+                    {
+                        // nothing to do
+                    }
+                    else
+                    {
+                        Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
+                    }
+                    disposed = true;
+                }
+            }
+
+            public void Dispose()
+            {
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            ~UnsupportedPlatform()
+            {
+                Dispose(false);
+            }
+
+            #endregion
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    Default.Dispose();
+                    if (Embedded != Default)
+                    {
+                        Embedded.Dispose();
+                    }
+                }
+                else
+                {
+                    Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
+                }
+                disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~Factory()
+        {
+            Dispose(false);
         }
 
         #endregion

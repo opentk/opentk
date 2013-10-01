@@ -37,6 +37,7 @@ namespace OpenTK.Platform.Windows
 
     class WinFactory : IPlatformFactory 
     {
+        bool disposed;
         readonly object SyncRoot = new object();
         IInputDriver2 inputDriver;
 
@@ -123,5 +124,36 @@ namespace OpenTK.Platform.Windows
                 }
             }
         }
+
+        #region IDisposable Members
+
+        void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    InputDriver.Dispose();
+                }
+                else
+                {
+                    Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
+                }
+                disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~WinFactory()
+        {
+            Dispose(false);
+        }
+
+        #endregion
     }
 }

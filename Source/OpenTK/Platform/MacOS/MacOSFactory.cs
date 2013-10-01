@@ -27,6 +27,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using OpenTK.Input;
 
@@ -38,6 +39,7 @@ namespace OpenTK.Platform.MacOS
     {
         #region Fields
 
+        bool disposed;
         readonly IInputDriver2 InputDriver = new HIDInput();
 
         #endregion
@@ -92,6 +94,37 @@ namespace OpenTK.Platform.MacOS
             return InputDriver.GamePadDriver;
         }
         
+        #endregion
+
+        #region IDisposable Members
+
+        void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    InputDriver.Dispose();
+                }
+                else
+                {
+                    Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
+                }
+                disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~MacOSFactory()
+        {
+            Dispose(false);
+        }
+
         #endregion
     }
 }

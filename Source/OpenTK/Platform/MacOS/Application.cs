@@ -120,28 +120,32 @@ namespace OpenTK.Platform.MacOS.Carbon
             
             switch (evt.EventClass)
             {
-            case EventClass.Application:
-                switch (evt.AppEventKind)
-                {
-                default:
-                    return OSStatus.EventNotHandled;
-                }
+                case EventClass.Application:
+                    switch (evt.AppEventKind)
+                    {
+                        case AppEventKind.AppQuit:
+                            API.RemoveEventHandler(uppHandler);
+                            return OSStatus.EventNotHandled;
+
+                        default:
+                            return OSStatus.EventNotHandled;
+                    }
 
             
-            case EventClass.AppleEvent:
+                case EventClass.AppleEvent:
                 // only event here is the apple event.
-                Debug.Print("Processing apple event.");
-                API.ProcessAppleEvent(inEvent);
-                break;
+                    Debug.Print("Processing apple event.");
+                    API.ProcessAppleEvent(inEvent);
+                    break;
             
-            case EventClass.Keyboard:
-            case EventClass.Mouse:
-                if (WindowEventHandler != null)
-                {
-                    return WindowEventHandler.DispatchEvent(inCaller, inEvent, evt, userData);
-                }
+                case EventClass.Keyboard:
+                case EventClass.Mouse:
+                    if (WindowEventHandler != null)
+                    {
+                        return WindowEventHandler.DispatchEvent(inCaller, inEvent, evt, userData);
+                    }
 
-                break;
+                    break;
             }
             
             return OSStatus.EventNotHandled;

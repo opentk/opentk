@@ -49,10 +49,11 @@ namespace OpenTK.Platform.Windows
         readonly object MouseLock = new object();
         readonly object KeyboardLock = new object();
         readonly WinMMJoystick gamepad_driver = new WinMMJoystick();
+        readonly WinKeyMap KeyMap = new WinKeyMap();
+
         KeyboardState keyboard = new KeyboardState();
         MouseState mouse = new MouseState();
-
-        readonly WinKeyMap KeyMap = new WinKeyMap();
+        bool disposed;
 
         #endregion
 
@@ -170,6 +171,37 @@ namespace OpenTK.Platform.Windows
         string IKeyboardDriver2.GetDeviceName(int index)
         {
             return "Default Windows Keyboard";
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    // Todo: implement this
+                }
+                else
+                {
+                    Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
+                }
+                disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~WMInput()
+        {
+            Dispose(false);
         }
 
         #endregion

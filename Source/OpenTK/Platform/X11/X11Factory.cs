@@ -33,6 +33,8 @@ namespace OpenTK.Platform.X11
 {
     class X11Factory : IPlatformFactory
     {
+        bool disposed;
+
         #region Constructors
 
         public X11Factory()
@@ -94,6 +96,37 @@ namespace OpenTK.Platform.X11
         public virtual OpenTK.Input.IGamePadDriver CreateGamePadDriver()
         {
             return new X11Joystick();
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    // nothing to do
+                }
+                else
+                {
+                    Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
+                }
+                disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~X11Factory()
+        {
+            Dispose(false);
         }
 
         #endregion

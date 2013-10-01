@@ -175,8 +175,8 @@ namespace OpenTK.Platform.MacOS
         {
             if (uppHandler != IntPtr.Zero)
             {
-                //API.RemoveEventHandler(uppHandler);
-                //API.DisposeEventHandlerUPP(uppHandler);
+                API.RemoveEventHandler(uppHandler);
+                API.DisposeEventHandlerUPP(uppHandler);
             }
             
             uppHandler = IntPtr.Zero;
@@ -925,8 +925,6 @@ namespace OpenTK.Platform.MacOS
                 return;
             
             OnClosed();
-            
-            Dispose();
         }
 
         public WindowState WindowState

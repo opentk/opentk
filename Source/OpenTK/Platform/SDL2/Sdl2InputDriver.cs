@@ -27,6 +27,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Input;
@@ -38,6 +39,7 @@ namespace OpenTK.Platform.SDL2
         readonly Sdl2Keyboard keyboard_driver = new Sdl2Keyboard();
         readonly Sdl2Mouse mouse_driver = new Sdl2Mouse();
         readonly SDL.SDL_EventFilter EventFilterDelegate;
+        bool disposed;
 
         public Sdl2InputDriver()
         {
@@ -106,6 +108,37 @@ namespace OpenTK.Platform.SDL2
             {
                 throw new NotImplementedException();
             }
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    SDL.SDL_DelEventWatch(EventFilterDelegate, IntPtr.Zero);
+                }
+                else
+                {
+                    Debug.WriteLine("Sdl2InputDriver leaked, did you forget to call Dispose()?");
+                }
+                disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~Sdl2InputDriver()
+        {
+            Dispose(false);
         }
 
         #endregion

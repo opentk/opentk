@@ -69,9 +69,11 @@ namespace OpenTK.Platform.MacOS
         readonly CFString InputLoopMode = CF.RunLoopModeDefault;
         readonly CFDictionary DeviceTypes = new CFDictionary();
 
-        readonly NativeMethods.IOHIDDeviceCallback HandleDeviceAdded;
-        readonly NativeMethods.IOHIDDeviceCallback HandleDeviceRemoved;
-        readonly NativeMethods.IOHIDValueCallback HandleDeviceValueReceived;
+        NativeMethods.IOHIDDeviceCallback HandleDeviceAdded;
+        NativeMethods.IOHIDDeviceCallback HandleDeviceRemoved;
+        NativeMethods.IOHIDValueCallback HandleDeviceValueReceived;
+
+        bool disposed;
 
         #endregion
 
@@ -164,6 +166,7 @@ namespace OpenTK.Platform.MacOS
                 // Thanks to Jase: http://www.opentk.com/node/2800
                 NativeMethods.IOHIDDeviceRegisterInputValueCallback(device,
                     HandleDeviceValueReceived, device);
+
                 NativeMethods.IOHIDDeviceScheduleWithRunLoop(device, RunLoop, InputLoopMode);
             }
         }
@@ -192,12 +195,19 @@ namespace OpenTK.Platform.MacOS
                 KeyboardDevices[device] = state;
             }
 
-            NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, null, IntPtr.Zero);
+            NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, IntPtr.Zero, IntPtr.Zero);
             NativeMethods.IOHIDDeviceUnscheduleWithRunLoop(device, RunLoop, InputLoopMode);
         }
 
         void DeviceValueReceived(IntPtr context, IOReturn res, IntPtr sender, IOHIDValueRef val)
         {
+            if (disposed)
+            {
+                Debug.Print("DeviceValueReceived({0}, {1}, {2}, {3}) called on disposed {4}",
+                    context, res, sender, val, GetType());
+                return;
+            }
+
             MouseState mouse;
             KeyboardState keyboard;
             if (MouseDevices.TryGetValue(context, out mouse))
@@ -383,11 +393,23 @@ namespace OpenTK.Platform.MacOS
                 IOHIDDeviceCallback inIOHIDDeviceCallback,
                 IntPtr inContext);
 
+            [DllImport(hid)]
+            public static extern void IOHIDManagerRegisterDeviceMatchingCallback(
+                IOHIDManagerRef inIOHIDManagerRef,
+                IntPtr inIOHIDDeviceCallback,
+                IntPtr inContext);
+
             // This routine will be called when a (matching) device is disconnected.
             [DllImport(hid)]
             public static extern void IOHIDManagerRegisterDeviceRemovalCallback(
                 IOHIDManagerRef inIOHIDManagerRef,
                 IOHIDDeviceCallback inIOHIDDeviceCallback,
+                IntPtr inContext);
+
+            [DllImport(hid)]
+            public static extern void IOHIDManagerRegisterDeviceRemovalCallback(
+                IOHIDManagerRef inIOHIDManagerRef,
+                IntPtr inIOHIDDeviceCallback,
                 IntPtr inContext);
 
             [DllImport(hid)]
@@ -426,6 +448,12 @@ namespace OpenTK.Platform.MacOS
             public static extern void IOHIDDeviceRegisterInputValueCallback(
                 IOHIDDeviceRef device,
                 IOHIDValueCallback callback,
+                IntPtr context);
+
+            [DllImport(hid)]
+            public static extern void IOHIDDeviceRegisterInputValueCallback(
+                IOHIDDeviceRef device,
+                IntPtr callback,
                 IntPtr context);
 
             [DllImport(hid)]
@@ -937,6 +965,59 @@ namespace OpenTK.Platform.MacOS
             Key.RWin, /* Right GUI */
             /* 0xE8-0xFFFF Reserved */
         };
+
+        #endregion
+
+        #region IDisposable Members
+
+
+        void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    NativeMethods.IOHIDManagerRegisterDeviceMatchingCallback(
+                        hidmanager, IntPtr.Zero, IntPtr.Zero);
+                    NativeMethods.IOHIDManagerRegisterDeviceRemovalCallback(
+                        hidmanager, IntPtr.Zero, IntPtr.Zero);
+                    NativeMethods.IOHIDManagerScheduleWithRunLoop(
+                        hidmanager, IntPtr.Zero, IntPtr.Zero);
+
+                    foreach (var device in MouseDevices.Keys)
+                    {
+                        NativeMethods.IOHIDDeviceRegisterInputValueCallback(
+                            device, IntPtr.Zero, IntPtr.Zero);
+                    }
+
+                    foreach (var device in KeyboardDevices.Keys)
+                    {
+                        NativeMethods.IOHIDDeviceRegisterInputValueCallback(
+                            device, IntPtr.Zero, IntPtr.Zero);
+                    }
+
+                    HandleDeviceAdded = null;
+                    HandleDeviceRemoved = null;
+                    HandleDeviceValueReceived = null;
+                }
+                else
+                {
+                    Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
+                }
+                disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~HIDInput()
+        {
+            Dispose(false);
+        }
 
         #endregion
     }

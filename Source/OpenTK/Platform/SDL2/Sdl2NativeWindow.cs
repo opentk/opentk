@@ -49,6 +49,7 @@ namespace OpenTK.Platform.SDL2
         WindowState previous_window_state = WindowState.Normal;
         WindowBorder window_border = WindowBorder.Resizable;
         Icon icon;
+        string window_title;
 
         KeyboardDevice keyboard = new KeyboardDevice();
         MouseDevice mouse = new MouseDevice();
@@ -84,6 +85,7 @@ namespace OpenTK.Platform.SDL2
             window = new Sdl2WindowInfo(handle, null);
             window_id = SDL.SDL_GetWindowID(handle);
             windows.Add(window_id, this);
+            window_title = title;
 
             keyboard.Description = "Standard Windows keyboard";
             keyboard.NumberOfFunctionKeys = 12;
@@ -227,6 +229,7 @@ namespace OpenTK.Platform.SDL2
         {
             exists = false;
 
+            SDL.SDL_DelEventWatch(EventFilterDelegate, IntPtr.Zero);
             if (windows.ContainsKey(window_id))
             {
                 windows.Remove(window_id);
@@ -245,10 +248,10 @@ namespace OpenTK.Platform.SDL2
             SDL.SDL_SetRelativeMouseMode(
                 grab ? SDL.SDL_bool.SDL_TRUE : SDL.SDL_bool.SDL_FALSE);
 
-            if (grab)
-            {
-                mouse.Position = new Point(0, 0);
-            }
+            //if (grab)
+            //{
+            //    mouse.Position = new Point(0, 0);
+            //}
         }
 
         // Hack to force WindowState events to be pumped
@@ -458,6 +461,7 @@ namespace OpenTK.Platform.SDL2
             set
             {
                 SDL.SDL_SetWindowTitle(window.Handle, value);
+                window_title = value;
             }
         }
 
