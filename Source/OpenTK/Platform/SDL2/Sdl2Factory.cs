@@ -26,6 +26,7 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using OpenTK.Graphics;
 using OpenTK.Input;
 
@@ -112,7 +113,12 @@ namespace OpenTK.Platform.SDL2
             {
                 if (manual)
                 {
+                    Debug.Print("Disposing {0}", GetType());
                     InputDriver.Dispose();
+                }
+                else
+                {
+                    Debug.WriteLine("Sdl2Factory leaked, did you forget to call Dispose()?");
                 }
                 disposed = true;
             }

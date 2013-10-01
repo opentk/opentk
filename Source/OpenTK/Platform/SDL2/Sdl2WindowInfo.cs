@@ -26,6 +26,7 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 
 namespace OpenTK.Platform.SDL2
 {
@@ -48,6 +49,7 @@ namespace OpenTK.Platform.SDL2
 
         public void Dispose()
         {
+            Debug.Print("Disposing {0}", GetType());
         }
 
         #endregion

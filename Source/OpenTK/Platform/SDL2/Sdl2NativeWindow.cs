@@ -56,18 +56,12 @@ namespace OpenTK.Platform.SDL2
         IList<KeyboardDevice> keyboards = new List<KeyboardDevice>(1);
         IList<MouseDevice> mice = new List<MouseDevice>(1);
 
-        static readonly SDL.SDL_EventFilter EventFilterDelegate = FilterEvents;
+        readonly SDL.SDL_EventFilter EventFilterDelegate = FilterEvents;
 
         static readonly Dictionary<uint, Sdl2NativeWindow> windows =
             new Dictionary<uint, Sdl2NativeWindow>();
 
         static readonly Sdl2KeyMap map = new Sdl2KeyMap();
-
-        static Sdl2NativeWindow()
-        {
-            // store the filter delegate to protect it from the GC
-            SDL.SDL_AddEventWatch(EventFilterDelegate, IntPtr.Zero);
-        }
 
         public Sdl2NativeWindow(int x, int y, int width, int height,
             string title, GameWindowFlags options, DisplayDevice device)
@@ -81,7 +75,11 @@ namespace OpenTK.Platform.SDL2
                 (flags & SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) != 0)
                 window_state = WindowState.Fullscreen;
 
-            IntPtr handle = SDL.SDL_CreateWindow(title, bounds.Left + x, bounds.Top + y, width, height, flags);
+            IntPtr handle;
+            lock (SDL.Sync)
+            {
+                handle = SDL.SDL_CreateWindow(title, bounds.Left + x, bounds.Top + y, width, height, flags);
+            }
             window = new Sdl2WindowInfo(handle, null);
             window_id = SDL.SDL_GetWindowID(handle);
             windows.Add(window_id, this);
@@ -98,6 +96,11 @@ namespace OpenTK.Platform.SDL2
 
             keyboards.Add(keyboard);
             mice.Add(mouse);
+
+            lock (SDL.Sync)
+            {
+                SDL.SDL_AddEventWatch(EventFilterDelegate, handle);
+            }
 
             exists = true;
         }
@@ -132,41 +135,151 @@ namespace OpenTK.Platform.SDL2
             return TranslateKey(scan);
         }
 
-        static int FilterEvents(IntPtr user_data, IntPtr e)
+        unsafe static int FilterEvents(IntPtr user_data, IntPtr e)
         {
-            var type = (SDL.SDL_EventType)Marshal.ReadInt32(e);
-            if (type == SDL.SDL_EventType.SDL_WINDOWEVENT)
-            {
-                unsafe
-                {
-                    SDL.SDL_Event ev = *(SDL.SDL_Event*)e;
+            bool processed = false;
 
-                    // Dispatch this event to the correct window
-                    Sdl2NativeWindow window;
+            try
+            {
+
+            Sdl2NativeWindow window = null;
+            SDL.SDL_Event ev = *(SDL.SDL_Event*)e;
+
+            switch (ev.type)
+            {
+                case SDL.SDL_EventType.SDL_WINDOWEVENT:
                     if (windows.TryGetValue(ev.window.windowID, out window))
                     {
-                        window.ProcessWindowEvent(ev.window);
+                        ProcessWindowEvent(window, ev.window);
+                        processed = true;
                     }
-                }
-                return 0; // event processed, drop from queue
+                    break;
+
+                case SDL.SDL_EventType.SDL_KEYDOWN:
+                case SDL.SDL_EventType.SDL_KEYUP:
+                    if (windows.TryGetValue(ev.key.windowID, out window))
+                    {
+                        ProcessKeyEvent(window, ev);
+                        processed = true;
+                    }
+                    break;
+
+                case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
+                case SDL.SDL_EventType.SDL_MOUSEBUTTONUP:
+                    if (windows.TryGetValue(ev.button.windowID, out window))
+                    {
+                        ProcessButtonEvent(window, ev);
+                        processed = true;
+                    }
+                    break;
+
+                case SDL.SDL_EventType.SDL_MOUSEMOTION:
+                    if (windows.TryGetValue(ev.motion.windowID, out window))
+                    {
+                        ProcessMotionEvent(window, ev);
+                        processed = true;
+                    }
+                    break;
+
+                case SDL.SDL_EventType.SDL_MOUSEWHEEL:
+                    if (windows.TryGetValue(ev.wheel.windowID, out window))
+                    {
+                        ProcessWheelEvent(window, ev);
+                        processed = true;
+                    }
+                    break;
+
+                case SDL.SDL_EventType.SDL_QUIT:
+                    /*
+                    if (windows.TryGetValue(ev.quit.windowID, out window))
+                    {
+
+                    }
+                    */
+                    break;
             }
-            return 1; // event not processed, add to queue
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.ToString());
+            }
+
+            return processed ? 0 : 1;
         }
 
-        void ProcessWindowEvent(SDL.SDL_WindowEvent e)
+        static void ProcessButtonEvent(Sdl2NativeWindow window, SDL.SDL_Event ev)
+        {
+            bool button_pressed = ev.button.state == SDL.SDL_PRESSED;
+            switch (ev.button.button)
+            {
+                case (byte)SDL.SDL_BUTTON_LEFT:
+                    window.mouse[MouseButton.Left] = button_pressed;
+                    break;
+
+                case (byte)SDL.SDL_BUTTON_MIDDLE:
+                    window.mouse[MouseButton.Middle] = button_pressed;
+                    break;
+                
+                case (byte)SDL.SDL_BUTTON_RIGHT:
+                    window.mouse[MouseButton.Right] = button_pressed;
+                    break;
+                
+                case (byte)SDL.SDL_BUTTON_X1:
+                    window.mouse[MouseButton.Button1] = button_pressed;
+                    break;
+                
+                case (byte)SDL.SDL_BUTTON_X2:
+                    window.mouse[MouseButton.Button2] = button_pressed;
+                    break;
+            }
+        }
+
+        static void ProcessKeyEvent(Sdl2NativeWindow window, SDL.SDL_Event ev)
+        {
+            bool key_pressed = ev.key.state == SDL.SDL_PRESSED;
+            var key = ev.key.keysym;
+            window.keyboard.SetKey(TranslateKey(key.scancode), (uint)key.scancode, key_pressed);
+        }
+
+        static void ProcessMotionEvent(Sdl2NativeWindow window, SDL.SDL_Event ev)
+        {
+            if (window.CursorVisible)
+            {
+                window.mouse.Position = new Point(ev.motion.x, ev.motion.y);
+            }
+            else
+            {
+                window.mouse.Position = new Point(
+                    window.mouse.X + ev.motion.xrel, 
+                    window.mouse.Y + ev.motion.yrel);
+            }
+        }
+
+        static void ProcessWheelEvent(Sdl2NativeWindow window, SDL.SDL_Event ev)
+        {
+            window.mouse.Wheel += ev.wheel.y;
+        }
+
+        static void ProcessWindowEvent(Sdl2NativeWindow window, SDL.SDL_WindowEvent e)
         {
             switch (e.windowEvent)
             {
                 case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE:
-                    Closed(this, EventArgs.Empty);
+                    var close_args = new System.ComponentModel.CancelEventArgs();
+                    window.Closing(window, close_args);
+                    if (!close_args.Cancel)
+                    {
+                        window.Closed(window, EventArgs.Empty);
+                        window.DestroyWindow();
+                    }
                     break;
 
                 case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_ENTER:
-                    MouseEnter(this, EventArgs.Empty);
+                    window.MouseEnter(window, EventArgs.Empty);
                     break;
 
                 case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_LEAVE:
-                    MouseLeave(this, EventArgs.Empty);
+                    window.MouseLeave(window, EventArgs.Empty);
                     break;
 
                 case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_EXPOSED:
@@ -174,49 +287,49 @@ namespace OpenTK.Platform.SDL2
                     break;
 
                 case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_GAINED:
-                    is_focused = true;
-                    FocusedChanged(this, EventArgs.Empty);
+                    window.is_focused = true;
+                    window.FocusedChanged(window, EventArgs.Empty);
                     break;
 
                 case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_LOST:
-                    is_focused = false;
-                    FocusedChanged(this, EventArgs.Empty);
+                    window.is_focused = false;
+                    window.FocusedChanged(window, EventArgs.Empty);
                     break;
 
                 case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_HIDDEN:
-                    is_visible = false;
-                    VisibleChanged(this, EventArgs.Empty);
+                    window.is_visible = false;
+                    window.VisibleChanged(window, EventArgs.Empty);
                     break;
 
                 case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_SHOWN:
-                    is_visible = true;
-                    VisibleChanged(this, EventArgs.Empty);
+                    window.is_visible = true;
+                    window.VisibleChanged(window, EventArgs.Empty);
                     break;
 
                 case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_MAXIMIZED:
-                    previous_window_state = window_state;
-                    window_state = OpenTK.WindowState.Maximized;
-                    WindowStateChanged(this, EventArgs.Empty);
+                    window.previous_window_state = window.window_state;
+                    window.window_state = OpenTK.WindowState.Maximized;
+                    window.WindowStateChanged(window, EventArgs.Empty);
                     break;
 
                 case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_MINIMIZED:
-                    previous_window_state = window_state;
-                    window_state = OpenTK.WindowState.Minimized;
-                    WindowStateChanged(this, EventArgs.Empty);
+                    window.previous_window_state = window.window_state;
+                    window.window_state = OpenTK.WindowState.Minimized;
+                    window.WindowStateChanged(window, EventArgs.Empty);
                     break;
 
                 case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_RESTORED:
-                    window_state = previous_window_state;
-                    WindowStateChanged(this, EventArgs.Empty);
+                    window.window_state = window.previous_window_state;
+                    window.WindowStateChanged(window, EventArgs.Empty);
                     break;
 
                 case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_MOVED:
-                    Move(this, EventArgs.Empty);
+                    window.Move(window, EventArgs.Empty);
                     break;
 
                 case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_RESIZED:
                 case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_SIZE_CHANGED:
-                    Resize(this, EventArgs.Empty);
+                    window.Resize(window, EventArgs.Empty);
                     break;
 
                 default:
@@ -229,12 +342,18 @@ namespace OpenTK.Platform.SDL2
         {
             exists = false;
 
-            SDL.SDL_DelEventWatch(EventFilterDelegate, IntPtr.Zero);
-            if (windows.ContainsKey(window_id))
+            if (window.Handle != IntPtr.Zero)
             {
-                windows.Remove(window_id);
+                lock (SDL.Sync)
+                {
+                    SDL.SDL_DestroyWindow(window.Handle);
+                    SDL.SDL_DelEventWatch(EventFilterDelegate, window.Handle);
+                    if (windows.ContainsKey(window_id))
+                    {
+                        windows.Remove(window_id);
+                    }
+                }
             }
-            SDL.SDL_DestroyWindow(window.Handle);
 
             window_id = 0;
             window.Handle = IntPtr.Zero;
@@ -247,20 +366,15 @@ namespace OpenTK.Platform.SDL2
                 grab ? SDL.SDL_bool.SDL_TRUE : SDL.SDL_bool.SDL_FALSE);
             SDL.SDL_SetRelativeMouseMode(
                 grab ? SDL.SDL_bool.SDL_TRUE : SDL.SDL_bool.SDL_FALSE);
-
-            //if (grab)
-            //{
-            //    mouse.Position = new Point(0, 0);
-            //}
         }
 
         // Hack to force WindowState events to be pumped
         void HideShowWindowHack()
         {
             SDL.SDL_HideWindow(window.Handle);
-            SDL.SDL_PumpEvents();
+            ProcessEvents();
             SDL.SDL_ShowWindow(window.Handle);
-            SDL.SDL_PumpEvents();
+            ProcessEvents();
         }
 
         // Revert to WindowState.Normal if necessary
@@ -284,7 +398,7 @@ namespace OpenTK.Platform.SDL2
                     break;
             }
 
-            SDL.SDL_PumpEvents();
+            ProcessEvents();
 
             window_state = WindowState.Normal;
         }
@@ -316,80 +430,24 @@ namespace OpenTK.Platform.SDL2
             {
                 Debug.Print("SDL2 destroying window {0}", window.Handle);
                 SDL.SDL_Event e = new SDL.SDL_Event();
-                e.type = SDL.SDL_EventType.SDL_QUIT;
-                SDL.SDL_PushEvent(ref e);
-                SDL.SDL_PumpEvents();
+                //e.type = SDL.SDL_EventType.SDL_QUIT;
+                e.type = SDL.SDL_EventType.SDL_WINDOWEVENT;
+                e.window.windowEvent = SDL.SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE;
+                e.window.windowID = window_id;
+                lock (SDL.Sync)
+                {
+                    SDL.SDL_PushEvent(ref e);
+                }
             }
         }
 
         public void ProcessEvents()
         {
-            SDL.SDL_Event e;
-            while (SDL.SDL_PollEvent(out e) != 0)
+            if (Exists)
             {
-                switch (e.type)
+                lock (SDL.Sync)
                 {
-                    case SDL.SDL_EventType.SDL_KEYDOWN:
-                    case SDL.SDL_EventType.SDL_KEYUP:
-                        bool key_pressed = e.key.state == SDL.SDL_PRESSED;
-                        var key = e.key.keysym;
-                        keyboard.SetKey(TranslateKey(key.scancode), (uint)key.scancode, key_pressed);
-                        break;
-
-                    case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
-                    case SDL.SDL_EventType.SDL_MOUSEBUTTONUP:
-                        bool button_pressed = e.button.state == SDL.SDL_PRESSED;
-                        switch (e.button.button)
-                        {
-                            case (byte)SDL.SDL_BUTTON_LEFT:
-                                mouse[MouseButton.Left] = button_pressed;
-                                break;
-                            
-                            case (byte)SDL.SDL_BUTTON_MIDDLE:
-                                mouse[MouseButton.Middle] = button_pressed;
-                                break;
-                            
-                            case (byte)SDL.SDL_BUTTON_RIGHT:
-                                mouse[MouseButton.Right] = button_pressed;
-                                break;
-
-                            case (byte)SDL.SDL_BUTTON_X1:
-                                mouse[MouseButton.Button1] = button_pressed;
-                                break;
-                                
-                            case (byte)SDL.SDL_BUTTON_X2:
-                                mouse[MouseButton.Button2] = button_pressed;
-                                break;
-                        }
-                        break;
-
-                    case SDL.SDL_EventType.SDL_MOUSEMOTION:
-                        if (CursorVisible)
-                        {
-                            mouse.Position = new Point(e.motion.x, e.motion.y);
-                        }
-                        else
-                        {
-                            mouse.Position = new Point(mouse.X + e.motion.xrel, mouse.Y + e.motion.yrel);
-                        }
-                        break;
-
-                    case SDL.SDL_EventType.SDL_MOUSEWHEEL:
-                        mouse.Wheel += e.wheel.y;
-                        break;
-
-                    case SDL.SDL_EventType.SDL_QUIT:
-                        var close_args = new System.ComponentModel.CancelEventArgs();
-                        Closing(this, close_args);
-                        if (!close_args.Cancel)
-                        {
-                            DestroyWindow();
-                        }
-                        break;
-
-                    case SDL.SDL_EventType.SDL_WINDOWEVENT:
-                        // do nothing (this is processed in the event filter)
-                        break;
+                    SDL.SDL_PumpEvents();
                 }
             }
         }
@@ -776,10 +834,11 @@ namespace OpenTK.Platform.SDL2
 
         void Dispose(bool manual)
         {
-            if (manual)
+            if (!disposed)
             {
-                if (!disposed)
+                if (manual)
                 {
+                    Debug.Print("Disposing {0}", GetType());
                     if (Exists)
                     {
                         DestroyWindow();
@@ -787,7 +846,7 @@ namespace OpenTK.Platform.SDL2
                 }
                 else
                 {
-                    Debug.Print("[Warning] INativeWindow leaked ({0}). Did you forget to call INativeWindow.Dispose()?", this);
+                    Debug.WriteLine("Sdl2NativeWindow leaked, did you forget to call Dispose()?");
                 }
                 disposed = true;
             }

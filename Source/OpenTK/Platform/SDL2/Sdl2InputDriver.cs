@@ -36,47 +36,62 @@ namespace OpenTK.Platform.SDL2
 {
     class Sdl2InputDriver : IInputDriver2
     {
+        readonly static Dictionary<IntPtr, Sdl2InputDriver> DriverHandles =
+            new Dictionary<IntPtr, Sdl2InputDriver>();
+
         readonly Sdl2Keyboard keyboard_driver = new Sdl2Keyboard();
         readonly Sdl2Mouse mouse_driver = new Sdl2Mouse();
-        readonly SDL.SDL_EventFilter EventFilterDelegate;
+        readonly SDL.SDL_EventFilter EventFilterDelegate = FilterInputEvents;
+
+        static int count;
         bool disposed;
 
         public Sdl2InputDriver()
         {
-            EventFilterDelegate = FilterInputEvents;
-            SDL.SDL_AddEventWatch(EventFilterDelegate, IntPtr.Zero);
+            lock (SDL.Sync)
+            {
+                IntPtr driver_handle = new IntPtr(count++);
+                DriverHandles.Add(driver_handle, this);
+                SDL.SDL_AddEventWatch(EventFilterDelegate, driver_handle);
+            }
         }
 
         #region Private Members
 
-        int FilterInputEvents(IntPtr user_data, IntPtr e)
+        unsafe static int FilterInputEvents(IntPtr driver_handle, IntPtr e)
         {
-            SDL.SDL_Event ev;
-            unsafe
+            try
             {
-                ev = *(SDL.SDL_Event*)e;
+                SDL.SDL_Event ev = *(SDL.SDL_Event*)e;
+
+                Sdl2InputDriver driver;
+                if (DriverHandles.TryGetValue(driver_handle, out driver))
+                {
+                    switch (ev.type)
+                    {
+                        case SDL.SDL_EventType.SDL_KEYDOWN:
+                        case SDL.SDL_EventType.SDL_KEYUP:
+                            driver.keyboard_driver.ProcessKeyboardEvent(ev.key);
+                            break;
+
+                        case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
+                        case SDL.SDL_EventType.SDL_MOUSEBUTTONUP:
+                            driver.mouse_driver.ProcessMouseEvent(ev.button);
+                            break;
+
+                        case SDL.SDL_EventType.SDL_MOUSEMOTION:
+                            driver.mouse_driver.ProcessMouseEvent(ev.motion);
+                            break;
+
+                        case SDL.SDL_EventType.SDL_MOUSEWHEEL:
+                            driver.mouse_driver.ProcessWheelEvent(ev.wheel);
+                            break;
+                    }
+                }
             }
-
-            var type = (SDL.SDL_EventType)Marshal.ReadInt32(e);
-            switch (type)
+            catch (Exception ex)
             {
-                case SDL.SDL_EventType.SDL_KEYDOWN:
-                case SDL.SDL_EventType.SDL_KEYUP:
-                    keyboard_driver.ProcessKeyboardEvent(ev.key);
-                    break;
-
-                case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
-                case SDL.SDL_EventType.SDL_MOUSEBUTTONUP:
-                    mouse_driver.ProcessMouseEvent(ev.button);
-                    break;
-
-                case SDL.SDL_EventType.SDL_MOUSEMOTION:
-                    mouse_driver.ProcessMouseEvent(ev.motion);
-                    break;
-
-                case SDL.SDL_EventType.SDL_MOUSEWHEEL:
-                    mouse_driver.ProcessWheelEvent(ev.wheel);
-                    break;
+                Debug.Print(ex.ToString());
             }
 
             return 0;
@@ -120,7 +135,11 @@ namespace OpenTK.Platform.SDL2
             {
                 if (manual)
                 {
-                    SDL.SDL_DelEventWatch(EventFilterDelegate, IntPtr.Zero);
+                    Debug.Print("Disposing {0}", GetType());
+                    lock (SDL.Sync)
+                    {
+                        SDL.SDL_DelEventWatch(EventFilterDelegate, IntPtr.Zero);
+                    }
                 }
                 else
                 {

@@ -37,7 +37,7 @@ namespace OpenTK.Platform.SDL2
         IWindowInfo Window { get; set; }
         ContextHandle SdlContext { get; set; }
 
-        public Sdl2GraphicsContext(IWindowInfo window)
+        Sdl2GraphicsContext(IWindowInfo window)
         {
             // It is possible to create a GraphicsContext on a window
             // that is not owned by SDL (e.g. a GLControl). In that case,
@@ -61,8 +61,11 @@ namespace OpenTK.Platform.SDL2
             OpenTK.Graphics.GraphicsContextFlags flags)
             : this(win)
         {
-            SetGLAttributes(mode, shareContext, major, minor, flags);
-            SdlContext = new ContextHandle(SDL.SDL_GL_CreateContext(Window.Handle));
+            lock (SDL.Sync)
+            {
+                SetGLAttributes(mode, shareContext, major, minor, flags);
+                SdlContext = new ContextHandle(SDL.SDL_GL_CreateContext(Window.Handle));
+            }
             if (SdlContext == ContextHandle.Zero)
             {
                 Debug.Print("SDL2 failed to create OpenGL context: {0}", SDL.SDL_GetError());
@@ -218,15 +221,19 @@ namespace OpenTK.Platform.SDL2
 
         void Dispose(bool manual)
         {
-            if (IsDisposed)
+            if (!IsDisposed)
             {
                 if (manual)
                 {
-                    SDL.SDL_GL_DeleteContext(SdlContext.Handle);
+                    Debug.Print("Disposing {0}", GetType());
+                    lock (SDL.Sync)
+                    {
+                        SDL.SDL_GL_DeleteContext(SdlContext.Handle);
+                    }
                 }
                 else
                 {
-                    Debug.Print("[Warning] IGraphicsContext leaked ({0}). Did you forget to call IGraphicsContext.Dispose()?", this);
+                    Debug.WriteLine("Sdl2GraphicsContext leaked, did you forget to call Dispose()?");
                 }
                 IsDisposed = true;
             }
