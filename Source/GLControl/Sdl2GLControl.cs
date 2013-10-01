@@ -44,17 +44,10 @@ namespace OpenTK
         {
             this.mode = mode;
             window_info = Utilities.CreateSdl2WindowInfo(control.Handle);
-            
-            // On windows, we must set the SDL_WINDOW_OPENGL flag
-            // otherwise context creation will fail.
-            if (Configuration.RunningOnWindows)
-            {
-                // Set SDL_WINDOW_OPENGL in the SDL_Window->flags field
-                int flags_offset = 52; // 2 * IntPtr.Size + 9 * sizeof(int);
-                uint flags = (uint)Marshal.ReadInt32(window_info.Handle, 20);
-                flags |= 2;
-                Marshal.WriteInt32(window_info.Handle, flags_offset, (int)flags);
-            }
+            // Fixme: SDL2 will refuse to create an OpenGL context on
+            // a window with the SDL_WINDOW_FOREIGN flag (i.e. windows
+            // that are passed to SDL2 through SDL_CreateWindowFrom).
+            // This must be fixed upstream.
         }
 
         public Graphics.IGraphicsContext CreateContext(int major, int minor, Graphics.GraphicsContextFlags flags)
