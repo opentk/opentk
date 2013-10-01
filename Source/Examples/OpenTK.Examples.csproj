@@ -564,6 +564,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="OpenTK\Test\MatrixTest.cs" />
+    <None Include="..\..\Dependencies\x86\libSDL2.dylib">
+      <Link>Dependencies\x86\libSDL2.dylib</Link>
+    </None>
+    <None Include="..\..\Dependencies\x64\libSDL2.dylib">
+      <Link>Dependencies\x64\libSDL2.dylib</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
