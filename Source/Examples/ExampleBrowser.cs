@@ -425,7 +425,10 @@ namespace Examples
                         Trace.Listeners.Add(dbg);
                         Trace.Listeners.Add(new ConsoleTraceListener());
 
-                        _main.Invoke(null, null);
+                        using (OpenTK.Toolkit.Init())
+                        {
+                            _main.Invoke(null, null);
+                        }
 
                         dbg.Flush();
                         dbg.Close();

@@ -37,14 +37,26 @@ namespace Examples
 {
     static class Program
     {
+        static void EnableOpenTKHack()
+        {
+            // If OpenTK is not initialized before Windows.Forms,
+            // the program will crash on Mac OS X. This hack will
+            // enable OpenTK in a temporary AppDomain before entering
+            // the main program - this appears to be enough.
+            var domain = AppDomain.CreateDomain("sandbox");
+            domain.DoCallBack(() => {
+                using (OpenTK.Toolkit.Init())
+                {
+                }
+            });
+        }
+
         [STAThread]
         public static void Main()
         {
             try
             {
-                // This seems to be useful enough to leave in for a while.
-                TextWriterTraceListener console = new TextWriterTraceListener(System.Console.Out);
-                Trace.Listeners.Add (console);
+                EnableOpenTKHack();
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
