@@ -45,7 +45,6 @@
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Documentation|AnyCPU' ">
-    <DebugType>none</DebugType>
     <DefineConstants>TRACE;</DefineConstants>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -55,12 +54,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
     <DefineConstants>TRACE;</DefineConstants>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nsis|AnyCPU' ">
-    <DebugType>none</DebugType>
     <DefineConstants>TRACE;</DefineConstants>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
