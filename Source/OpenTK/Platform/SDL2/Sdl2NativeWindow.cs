@@ -211,6 +211,15 @@ namespace OpenTK.Platform.SDL2
         static void ProcessButtonEvent(Sdl2NativeWindow window, SDL.SDL_Event ev)
         {
             bool button_pressed = ev.button.state == SDL.SDL_PRESSED;
+
+            // We need MouseUp events to be reported even if they occur
+            // outside the window. SetWindowGrab ensures we get them.
+            if (window.CursorVisible)
+            {
+                SDL.SDL_SetWindowGrab(window.window.Handle,
+                    button_pressed ? SDL.SDL_bool.SDL_TRUE : SDL.SDL_bool.SDL_FALSE);
+            }
+
             switch (ev.button.button)
             {
                 case (byte)SDL.SDL_BUTTON_LEFT:
@@ -244,16 +253,7 @@ namespace OpenTK.Platform.SDL2
 
         static void ProcessMotionEvent(Sdl2NativeWindow window, SDL.SDL_Event ev)
         {
-            if (window.CursorVisible)
-            {
                 window.mouse.Position = new Point(ev.motion.x, ev.motion.y);
-            }
-            else
-            {
-                window.mouse.Position = new Point(
-                    window.mouse.X + ev.motion.xrel, 
-                    window.mouse.Y + ev.motion.yrel);
-            }
         }
 
         static void ProcessWheelEvent(Sdl2NativeWindow window, SDL.SDL_Event ev)
