@@ -70,6 +70,7 @@ namespace OpenTK.Platform.SDL2
             var flags = TranslateFlags(options);
             flags |= SDL.SDL_WindowFlags.SDL_WINDOW_OPENGL;
             flags |= SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE;
+            flags |= SDL.SDL_WindowFlags.SDL_WINDOW_HIDDEN;
 
             if ((flags & SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP) != 0 ||
                 (flags & SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) != 0)
