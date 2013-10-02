@@ -180,8 +180,17 @@ namespace OpenTK.Platform.SDL2
 
         public override void MakeCurrent(IWindowInfo window)
         {
-            var sdl_window = window as Sdl2WindowInfo;
-            if (SDL.SDL_GL_MakeCurrent(sdl_window != null ? sdl_window.Handle : IntPtr.Zero, SdlContext.Handle) < 0)
+            int result = 0;
+            if (window != null)
+            {
+                result = SDL.SDL_GL_MakeCurrent(window.Handle, SdlContext.Handle);
+            }
+            else
+            {
+                result = SDL.SDL_GL_MakeCurrent(IntPtr.Zero, IntPtr.Zero);
+            }
+
+            if (result < 0)
             {
                 Debug.Print("SDL2 MakeCurrent failed with: {0}", SDL.SDL_GetError());
             }
