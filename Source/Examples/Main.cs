@@ -46,12 +46,33 @@ namespace Examples
                 Trace.Listeners.Add(dbg);
                 Trace.Listeners.Add(new ConsoleTraceListener());
 
-                var example = Type.GetType(type);
-                if (example != null)
+                try
                 {
-                    example.InvokeMember("Main",
-                        BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic,
-                        null, null, null);
+                    if (File.Exists("debug.log"))
+                        File.Delete("debug.log");
+                    if (File.Exists("trace.log"))
+                        File.Delete("trace.log");
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine(String.Format("Could not access debug.log", e.ToString()));
+                }
+
+                try
+                {
+                    var example = Type.GetType(type);
+                    if (example != null)
+                    {
+                        example.InvokeMember("Main",
+                            BindingFlags.InvokeMethod | BindingFlags.Static |
+                            BindingFlags.Public | BindingFlags.NonPublic,
+                            null, null, null);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine(String.Format("Exception occured in example {0}: {1}",
+                        type, e.ToString()));
                 }
 
                 dbg.Flush();
@@ -75,18 +96,6 @@ namespace Examples
 
                     using (Form browser = new ExampleBrowser())
                     {
-                        try
-                        {
-                            if (File.Exists("debug.log"))
-                                File.Delete("debug.log");
-                            if (File.Exists("trace.log"))
-                                File.Delete("trace.log");
-                        }
-                        catch (Exception expt)
-                        {
-                            MessageBox.Show("Could not access debug.log", expt.ToString());
-                        }
-
                         Application.Run(browser);
                     }
                 }
