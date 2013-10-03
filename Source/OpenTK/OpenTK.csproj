@@ -332,9 +332,6 @@
     <Compile Include="Platform\Windows\WinKeyMap.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\Windows\WMInput.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\Windows\WinGLNative.cs">
       <SubType>Code</SubType>
     </Compile>
