@@ -51,7 +51,10 @@ namespace OpenTK.Graphics
         /// </remarks>
         protected override IntPtr GetAddress(string funcname)
         {
-            return (GraphicsContext.CurrentContext as IGraphicsContextInternal).GetAddress(funcname);
+            var context = GraphicsContext.CurrentContext as IGraphicsContextInternal;
+            if (context == null)
+                throw new GraphicsContextMissingException();
+            return context != null ? context.GetAddress(funcname) : IntPtr.Zero;
         }
     }
 }
