@@ -53,7 +53,7 @@ namespace OpenTK.Platform.SDL2
             return new Sdl2DisplayDeviceDriver();
         }
 
-        public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        virtual public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new Sdl2GraphicsContext(mode, window, shareContext, major, minor, flags);
         }

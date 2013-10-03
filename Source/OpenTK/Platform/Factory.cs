@@ -53,14 +53,21 @@ namespace OpenTK.Platform
             else if (Configuration.RunningOnX11) Default = new X11.X11Factory();
             else Default = new UnsupportedPlatform();
 
-            if (Egl.Egl.IsSupported)
+            if (Configuration.Sdl2Supported)
+            {
+                Embedded = new Egl.EglSdl2PlatformFactory();
+            }
+            else if (Egl.Egl.IsSupported)
             {
                 if (Configuration.RunningOnWindows) Embedded = new Egl.EglWinPlatformFactory();
                 else if (Configuration.RunningOnMacOS) Embedded = new Egl.EglMacPlatformFactory();
                 else if (Configuration.RunningOnX11) Embedded = new Egl.EglX11PlatformFactory();
                 else Embedded = new UnsupportedPlatform();
             }
-            else Embedded = new UnsupportedPlatform();
+            else
+            {
+                Embedded = new UnsupportedPlatform();
+            }
 
             if (Default is UnsupportedPlatform && !(Embedded is UnsupportedPlatform))
                 Default = Embedded;

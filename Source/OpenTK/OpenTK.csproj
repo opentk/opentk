@@ -799,6 +799,7 @@
     <Compile Include="Platform\SDL2\Sdl2WindowInfo.cs" />
     <Compile Include="Platform\MacOS\Cgl.cs" />
     <Compile Include="Platform\SDL2\Sdl2.cs" />
+    <Compile Include="Platform\Egl\EglSdl2PlatformFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
