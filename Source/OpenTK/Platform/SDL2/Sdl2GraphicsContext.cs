@@ -68,7 +68,9 @@ namespace OpenTK.Platform.SDL2
             }
             if (SdlContext == ContextHandle.Zero)
             {
-                Debug.Print("SDL2 failed to create OpenGL context: {0}", SDL.SDL_GetError());
+                var error = SDL.SDL_GetError();
+                Debug.Print("SDL2 failed to create OpenGL context: {0}", error);
+                throw new GraphicsContextException(error);
             }
             Handle = GraphicsContext.GetCurrentContext();
         }
