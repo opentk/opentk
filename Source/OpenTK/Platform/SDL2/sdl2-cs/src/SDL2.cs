@@ -960,6 +960,7 @@ namespace OpenTK.Platform.SDL2
 			SDL_WINDOW_FULLSCREEN_DESKTOP =
 				(SDL_WINDOW_FULLSCREEN | 0x00001000),
 			SDL_WINDOW_FOREIGN =		0x00000800,
+            SDL_WINDOW_ALLOW_HIGHDPI = 0x00002000,
 		}
 		
 		public const int SDL_WINDOWPOS_UNDEFINED_MASK =	0x1FFF0000;
@@ -1341,7 +1342,10 @@ namespace OpenTK.Platform.SDL2
 		/* context refers to an SDL_GLContext */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_GL_DeleteContext(IntPtr context);
-		
+
+        [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SDL_GL_GetDrawableSize(IntPtr window, out int w, out int h);
+
 		/* IntPtr refers to a function pointer */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr SDL_GL_GetProcAddress(

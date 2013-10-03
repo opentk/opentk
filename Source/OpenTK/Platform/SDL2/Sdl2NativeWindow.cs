@@ -75,6 +75,7 @@ namespace OpenTK.Platform.SDL2
                 flags |= SDL.SDL_WindowFlags.SDL_WINDOW_OPENGL;
                 flags |= SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE;
                 flags |= SDL.SDL_WindowFlags.SDL_WINDOW_HIDDEN;
+                flags |= SDL.SDL_WindowFlags.SDL_WINDOW_ALLOW_HIGHDPI;
 
                 if ((flags & SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP) != 0 ||
                     (flags & SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) != 0)
@@ -249,7 +250,9 @@ namespace OpenTK.Platform.SDL2
 
         static void ProcessMotionEvent(Sdl2NativeWindow window, SDL.SDL_Event ev)
         {
-                window.mouse.Position = new Point(ev.motion.x, ev.motion.y);
+            float scale = window.ClientSize.Width / (float)window.Size.Width;
+            window.mouse.Position = new Point(
+                (int)(ev.motion.x * scale), (int)(ev.motion.y * scale));
         }
 
         static void ProcessWheelEvent(Sdl2NativeWindow window, SDL.SDL_Event ev)
@@ -779,11 +782,11 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                return Size.Width;
+                return ClientSize.Width;
             }
             set
             {
-                Size = new Size(value, Height);
+                ClientSize = new Size(value, Height);
             }
         }
 
@@ -791,11 +794,11 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                return Size.Height;
+                return ClientSize.Height;
             }
             set
             {
-                Size = new Size(Width, value);
+                ClientSize = new Size(Width, value);
             }
         }
 
@@ -803,15 +806,11 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                // Todo: SDL2 does not have any APIs to get
-                // the border size or the bounds of the window
-                // (everything is defined in terms of the client
-                // area)
-                return Bounds;
+                return new Rectangle(new Point(), ClientSize);
             }
             set
             {
-                Bounds = value;
+                ClientSize = value.Size;
             }
         }
 
@@ -819,11 +818,14 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                return Size;
+                int w, h;
+                SDL.SDL_GL_GetDrawableSize(window.Handle, out w, out h);
+                return new Size(w, h);
             }
             set
             {
-                Size = value;
+                float scale = Size.Width / (float)ClientSize.Width;
+                Size = new Size((int)(value.Width * scale), (int)(value.Height * scale));
             }
         }
 

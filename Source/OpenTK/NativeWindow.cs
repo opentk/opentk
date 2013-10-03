@@ -192,8 +192,10 @@ namespace OpenTK
         #region Bounds
 
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Rectangle"/> structure that contains the external bounds of this window, in screen coordinates.
-        /// External bounds include the title bar, borders and drawing area of the window.
+        /// Gets or sets a <see cref="System.Drawing.Rectangle"/> structure
+        /// that specifies the external bounds of this window, in screen coordinates.
+        /// The coordinates are specified in device-independent points and
+        /// include the title bar, borders and drawing area of the window.
         /// </summary>
         public Rectangle Bounds
         {
@@ -214,8 +216,9 @@ namespace OpenTK
         #region ClientRectangle
 
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Rectangle"/> structure that contains the internal bounds of this window, in client coordinates.
-        /// The internal bounds include the drawing area of the window, but exclude the titlebar and window borders.
+        /// Gets or sets a <see cref="System.Drawing.Rectangle"/> structure
+        /// that defines the bounds of the OpenGL surface, in window coordinates.
+        /// The coordinates are specified in device-dependent pixels.
         /// </summary>
         public Rectangle ClientRectangle
         {
@@ -236,7 +239,9 @@ namespace OpenTK
         #region ClientSize
 
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Size"/> structure that contains the internal size this window.
+        /// Gets or sets a <see cref="System.Drawing.Size"/> structure
+        /// that defines the size of the OpenGL surface in window coordinates.
+        /// The coordinates are specified in device-dependent pixels.
         /// </summary>
         public Size ClientSize
         {
@@ -288,7 +293,8 @@ namespace OpenTK
         #region Height
 
         /// <summary>
-        /// Gets or sets the external height of this window.
+        /// Gets or sets the height of the OpenGL surface in window coordinates.
+        /// The coordinates are specified in device-dependent pixels.
         /// </summary>
         public int Height
         {
@@ -431,7 +437,8 @@ namespace OpenTK
         #region Width
 
         /// <summary>
-        /// Gets or sets the external width of this window.
+        /// Gets or sets the height of the OpenGL surface in window coordinates.
+        /// The coordinates are specified in device-dependent pixels.
         /// </summary>
         public int Width
         {
@@ -506,7 +513,8 @@ namespace OpenTK
         #region X
 
         /// <summary>
-        /// Gets or sets the horizontal location of this window on the desktop.
+        /// Gets or sets the horizontal location of this window in screen coordinates.
+        /// The coordinates are specified in device-independent points.
         /// </summary>
         public int X
         {
@@ -527,7 +535,8 @@ namespace OpenTK
         #region Y
 
         /// <summary>
-        /// Gets or sets the vertical location of this window on the desktop.
+        /// Gets or sets the vertical location of this window in screen coordinates.
+        /// The coordinates are specified in device-independent points.
         /// </summary>
         public int Y
         {
