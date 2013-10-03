@@ -23,8 +23,8 @@ namespace Examples.Tutorial
     {
         #region Constructor
 
-        public SimpleES20Window()
-            : base(800, 600, new GraphicsMode(16, 16), "", GameWindowFlags.Default, DisplayDevice.Default, 2, 0, GraphicsContextFlags.Embedded)
+        public SimpleES20Window(GraphicsContextFlags flags)
+            : base(800, 600, new GraphicsMode(16, 16), "", GameWindowFlags.Default, DisplayDevice.Default, 2, 0, flags)
         { }
 
         #endregion
@@ -108,10 +108,25 @@ namespace Examples.Tutorial
         [STAThread]
         public static void Main()
         {
-            using (SimpleES20Window example = new SimpleES20Window())
+            SimpleES20Window example;
+            try
             {
-                Utilities.SetWindowTitle(example);
-                example.Run(30.0, 0.0);
+                example = new SimpleES20Window(GraphicsContextFlags.Default);
+
+                //example = new SimpleES20Window(GraphicsContextFlags.Embedded);
+            }
+            catch
+            {
+                example = new SimpleES20Window(GraphicsContextFlags.Default);
+            }
+
+            if (example != null)
+            {
+                using (example)
+                {
+                    Utilities.SetWindowTitle(example);
+                    example.Run(30.0, 0.0);
+                }
             }
         }
 
