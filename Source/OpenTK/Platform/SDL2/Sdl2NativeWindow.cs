@@ -38,6 +38,8 @@ namespace OpenTK.Platform.SDL2
 {
     class Sdl2NativeWindow : INativeWindow, IInputDriver
     {
+        readonly object sync = new object();
+
         Sdl2WindowInfo window;
         uint window_id;
         bool is_visible;
@@ -66,44 +68,44 @@ namespace OpenTK.Platform.SDL2
         public Sdl2NativeWindow(int x, int y, int width, int height,
             string title, GameWindowFlags options, DisplayDevice device)
         {
-            var bounds = device.Bounds;
-            var flags = TranslateFlags(options);
-            flags |= SDL.SDL_WindowFlags.SDL_WINDOW_OPENGL;
-            flags |= SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE;
-            flags |= SDL.SDL_WindowFlags.SDL_WINDOW_HIDDEN;
-
-            if ((flags & SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP) != 0 ||
-                (flags & SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) != 0)
-                window_state = WindowState.Fullscreen;
-
-            IntPtr handle;
-            lock (SDL.Sync)
+            lock (sync)
             {
-                handle = SDL.SDL_CreateWindow(title, bounds.Left + x, bounds.Top + y, width, height, flags);
+                var bounds = device.Bounds;
+                var flags = TranslateFlags(options);
+                flags |= SDL.SDL_WindowFlags.SDL_WINDOW_OPENGL;
+                flags |= SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE;
+                flags |= SDL.SDL_WindowFlags.SDL_WINDOW_HIDDEN;
+
+                if ((flags & SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP) != 0 ||
+                    (flags & SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) != 0)
+                    window_state = WindowState.Fullscreen;
+
+                IntPtr handle;
+                lock (SDL.Sync)
+                {
+                    handle = SDL.SDL_CreateWindow(title, bounds.Left + x, bounds.Top + y, width, height, flags);
+                    SDL.SDL_AddEventWatch(EventFilterDelegate, handle);
+                    SDL.SDL_PumpEvents();
+                }
+                window = new Sdl2WindowInfo(handle, null);
+                window_id = SDL.SDL_GetWindowID(handle);
+                windows.Add(window_id, this);
+                window_title = title;
+
+                keyboard.Description = "Standard keyboard";
+                keyboard.NumberOfFunctionKeys = 12;
+                keyboard.NumberOfKeys = 101;
+                keyboard.NumberOfLeds = 3;
+
+                mouse.Description = "Standard mouse";
+                mouse.NumberOfButtons = 3;
+                mouse.NumberOfWheels = 1;
+
+                keyboards.Add(keyboard);
+                mice.Add(mouse);
+
+                exists = true;
             }
-            window = new Sdl2WindowInfo(handle, null);
-            window_id = SDL.SDL_GetWindowID(handle);
-            windows.Add(window_id, this);
-            window_title = title;
-
-            keyboard.Description = "Standard Windows keyboard";
-            keyboard.NumberOfFunctionKeys = 12;
-            keyboard.NumberOfKeys = 101;
-            keyboard.NumberOfLeds = 3;
-
-            mouse.Description = "Standard Windows mouse";
-            mouse.NumberOfButtons = 3;
-            mouse.NumberOfWheels = 1;
-
-            keyboards.Add(keyboard);
-            mice.Add(mouse);
-
-            lock (SDL.Sync)
-            {
-                SDL.SDL_AddEventWatch(EventFilterDelegate, handle);
-            }
-
-            exists = true;
         }
 
         #region Private Members
@@ -142,63 +144,57 @@ namespace OpenTK.Platform.SDL2
 
             try
             {
+                Sdl2NativeWindow window = null;
+                SDL.SDL_Event ev = *(SDL.SDL_Event*)e;
 
-            Sdl2NativeWindow window = null;
-            SDL.SDL_Event ev = *(SDL.SDL_Event*)e;
+                switch (ev.type)
+                {
+                    case SDL.SDL_EventType.SDL_WINDOWEVENT:
+                        if (windows.TryGetValue(ev.window.windowID, out window))
+                        {
+                            ProcessWindowEvent(window, ev.window);
+                            processed = true;
+                        }
+                        break;
 
-            switch (ev.type)
-            {
-                case SDL.SDL_EventType.SDL_WINDOWEVENT:
-                    if (windows.TryGetValue(ev.window.windowID, out window))
-                    {
-                        ProcessWindowEvent(window, ev.window);
-                        processed = true;
-                    }
-                    break;
+                    case SDL.SDL_EventType.SDL_KEYDOWN:
+                    case SDL.SDL_EventType.SDL_KEYUP:
+                        if (windows.TryGetValue(ev.key.windowID, out window))
+                        {
+                            ProcessKeyEvent(window, ev);
+                            processed = true;
+                        }
+                        break;
 
-                case SDL.SDL_EventType.SDL_KEYDOWN:
-                case SDL.SDL_EventType.SDL_KEYUP:
-                    if (windows.TryGetValue(ev.key.windowID, out window))
-                    {
-                        ProcessKeyEvent(window, ev);
-                        processed = true;
-                    }
-                    break;
+                    case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
+                    case SDL.SDL_EventType.SDL_MOUSEBUTTONUP:
+                        if (windows.TryGetValue(ev.button.windowID, out window))
+                        {
+                            ProcessButtonEvent(window, ev);
+                            processed = true;
+                        }
+                        break;
 
-                case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
-                case SDL.SDL_EventType.SDL_MOUSEBUTTONUP:
-                    if (windows.TryGetValue(ev.button.windowID, out window))
-                    {
-                        ProcessButtonEvent(window, ev);
-                        processed = true;
-                    }
-                    break;
+                    case SDL.SDL_EventType.SDL_MOUSEMOTION:
+                        if (windows.TryGetValue(ev.motion.windowID, out window))
+                        {
+                            ProcessMotionEvent(window, ev);
+                            processed = true;
+                        }
+                        break;
 
-                case SDL.SDL_EventType.SDL_MOUSEMOTION:
-                    if (windows.TryGetValue(ev.motion.windowID, out window))
-                    {
-                        ProcessMotionEvent(window, ev);
-                        processed = true;
-                    }
-                    break;
+                    case SDL.SDL_EventType.SDL_MOUSEWHEEL:
+                        if (windows.TryGetValue(ev.wheel.windowID, out window))
+                        {
+                            ProcessWheelEvent(window, ev);
+                            processed = true;
+                        }
+                        break;
 
-                case SDL.SDL_EventType.SDL_MOUSEWHEEL:
-                    if (windows.TryGetValue(ev.wheel.windowID, out window))
-                    {
-                        ProcessWheelEvent(window, ev);
-                        processed = true;
-                    }
-                    break;
-
-                case SDL.SDL_EventType.SDL_QUIT:
-                    /*
-                    if (windows.TryGetValue(ev.quit.windowID, out window))
-                    {
-
-                    }
-                    */
-                    break;
-            }
+                    case SDL.SDL_EventType.SDL_QUIT:
+                        Debug.WriteLine("Sdl2 application quit");
+                        break;
+                }
             }
             catch (Exception ex)
             {
@@ -271,7 +267,7 @@ namespace OpenTK.Platform.SDL2
                     if (!close_args.Cancel)
                     {
                         window.Closed(window, EventArgs.Empty);
-                        window.DestroyWindow();
+                        //window.DestroyWindow();
                     }
                     break;
 
@@ -347,12 +343,12 @@ namespace OpenTK.Platform.SDL2
             {
                 lock (SDL.Sync)
                 {
-                    SDL.SDL_DestroyWindow(window.Handle);
                     SDL.SDL_DelEventWatch(EventFilterDelegate, window.Handle);
                     if (windows.ContainsKey(window_id))
                     {
                         windows.Remove(window_id);
                     }
+                    SDL.SDL_DestroyWindow(window.Handle);
                 }
             }
 
@@ -427,26 +423,29 @@ namespace OpenTK.Platform.SDL2
 
         public void Close()
         {
-            if (Exists)
+            lock (sync)
             {
-                Debug.Print("SDL2 destroying window {0}", window.Handle);
-                SDL.SDL_Event e = new SDL.SDL_Event();
-                //e.type = SDL.SDL_EventType.SDL_QUIT;
-                e.type = SDL.SDL_EventType.SDL_WINDOWEVENT;
-                e.window.windowEvent = SDL.SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE;
-                e.window.windowID = window_id;
-                lock (SDL.Sync)
+                if (Exists)
                 {
-                    SDL.SDL_PushEvent(ref e);
+                    Debug.Print("SDL2 destroying window {0}", window.Handle);
+
+                    SDL.SDL_Event e = new SDL.SDL_Event();
+                    e.type = SDL.SDL_EventType.SDL_WINDOWEVENT;
+                    e.window.windowEvent = SDL.SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE;
+                    e.window.windowID = window_id;
+                    lock (SDL.Sync)
+                    {
+                        SDL.SDL_PushEvent(ref e);
+                    }
                 }
             }
         }
 
         public void ProcessEvents()
         {
-            if (Exists)
+            lock (sync)
             {
-                lock (SDL.Sync)
+                if (Exists)
                 {
                     SDL.SDL_PumpEvents();
                 }
@@ -475,39 +474,45 @@ namespace OpenTK.Platform.SDL2
             }
             set
             {
-                // Set the new icon, if any, or clear the current
-                // icon if null
-                if (value != null)
+                lock (sync)
                 {
-                    using (Bitmap bmp = value.ToBitmap())
+                    if (Exists)
                     {
-                        // Decode the icon into a SDL surface
-                        var data = bmp.LockBits(
-                            new Rectangle(0, 0, value.Width, value.Height),
-                            ImageLockMode.ReadWrite,
-                            PixelFormat.Format32bppArgb);
+                        // Set the new icon, if any, or clear the current
+                        // icon if null
+                        if (value != null)
+                        {
+                            using (Bitmap bmp = value.ToBitmap())
+                            {
+                                // Decode the icon into a SDL surface
+                                var data = bmp.LockBits(
+                                    new Rectangle(0, 0, value.Width, value.Height),
+                                    ImageLockMode.ReadWrite,
+                                    PixelFormat.Format32bppArgb);
 
-                        IntPtr surface = SDL.SDL_CreateRGBSurfaceFrom(
-                            data.Scan0, data.Width, data.Height, 32, data.Stride,
-                            0x00ff0000u, 0x0000ff00u, 0x000000ffu, 0xff000000u);
+                                IntPtr surface = SDL.SDL_CreateRGBSurfaceFrom(
+                                    data.Scan0, data.Width, data.Height, 32, data.Stride,
+                                    0x00ff0000u, 0x0000ff00u, 0x000000ffu, 0xff000000u);
 
-                        // Update the window icon
-                        SDL.SDL_SetWindowIcon(window.Handle, surface);
+                                // Update the window icon
+                                SDL.SDL_SetWindowIcon(window.Handle, surface);
 
-                        // Free the SDL surface as it is no longer needed
-                        SDL.SDL_FreeSurface(surface);
-                        bmp.UnlockBits(data);
+                                // Free the SDL surface as it is no longer needed
+                                SDL.SDL_FreeSurface(surface);
+                                bmp.UnlockBits(data);
+                            }
+
+                        }
+                        else
+                        {
+                            // Clear the window icon
+                            SDL.SDL_SetWindowIcon(window.Handle, IntPtr.Zero);
+                        }
+
+                        icon = value;
+                        IconChanged(this, EventArgs.Empty);
                     }
-
                 }
-                else
-                {
-                    // Clear the window icon
-                    SDL.SDL_SetWindowIcon(window.Handle, IntPtr.Zero);
-                }
-
-                icon = value;
-                IconChanged(this, EventArgs.Empty);
             }
         }
 
@@ -515,12 +520,25 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                return SDL.SDL_GetWindowTitle(window.Handle);
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        return SDL.SDL_GetWindowTitle(window.Handle);
+                    }
+                    return String.Empty;
+                }
             }
             set
             {
-                SDL.SDL_SetWindowTitle(window.Handle, value);
-                window_title = value;
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        SDL.SDL_SetWindowTitle(window.Handle, value);
+                        window_title = value;
+                    }
+                }
             }
         }
 
@@ -540,10 +558,16 @@ namespace OpenTK.Platform.SDL2
             }
             set
             {
-                if (value)
-                    SDL.SDL_ShowWindow(window.Handle);
-                else
-                    SDL.SDL_HideWindow(window.Handle);
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        if (value)
+                            SDL.SDL_ShowWindow(window.Handle);
+                        else
+                            SDL.SDL_HideWindow(window.Handle);
+                    }
+                }
             }
         }
 
@@ -571,46 +595,50 @@ namespace OpenTK.Platform.SDL2
             }
             set
             {
-                if (WindowState == value)
+                lock (sync)
                 {
-                    return;
-                }
-
-                // Set the new WindowState
-                switch (value)
-                {
-                    case WindowState.Fullscreen:
-                        RestoreWindow();
-                        if (SDL.SDL_SetWindowFullscreen(window.Handle, (uint)SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP) < 0)
+                    if (Exists)
+                    {
+                        if (WindowState != value)
                         {
-                            if (SDL.SDL_SetWindowFullscreen(window.Handle, (uint)SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) < 0)
+                            // Set the new WindowState
+                            switch (value)
                             {
-                                Debug.Print("SDL2 failed to enter fullscreen mode: {0}", SDL.SDL_GetError());
+                                case WindowState.Fullscreen:
+                                    RestoreWindow();
+                                    if (SDL.SDL_SetWindowFullscreen(window.Handle, (uint)SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP) < 0)
+                                    {
+                                        if (SDL.SDL_SetWindowFullscreen(window.Handle, (uint)SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) < 0)
+                                        {
+                                            Debug.Print("SDL2 failed to enter fullscreen mode: {0}", SDL.SDL_GetError());
+                                        }
+                                    }
+                                    SDL.SDL_RaiseWindow(window.Handle);
+                                    // There is no "fullscreen" message in the event loop
+                                    // so we have to mark that ourselves
+                                    window_state = WindowState.Fullscreen;
+                                    break;
+
+                                case WindowState.Maximized:
+                                    RestoreWindow();
+                                    SDL.SDL_MaximizeWindow(window.Handle);
+                                    HideShowWindowHack();
+                                    break;
+
+                                case WindowState.Minimized:
+                                    SDL.SDL_MinimizeWindow(window.Handle);
+                                    break;
+
+                                case WindowState.Normal:
+                                    RestoreWindow();
+                                    break;
                             }
+
+                            if (!CursorVisible)
+                                GrabCursor(true);
                         }
-                        SDL.SDL_RaiseWindow(window.Handle);
-                        // There is no "fullscreen" message in the event loop
-                        // so we have to mark that ourselves
-                        window_state = WindowState.Fullscreen;
-                        break;
-
-                    case WindowState.Maximized:
-                        RestoreWindow();
-                        SDL.SDL_MaximizeWindow(window.Handle);
-                        HideShowWindowHack();
-                        break;
-
-                    case WindowState.Minimized:
-                        SDL.SDL_MinimizeWindow(window.Handle);
-                        break;
-
-                    case WindowState.Normal:
-                        RestoreWindow();
-                        break;
+                    }
                 }
-
-                if (!CursorVisible)
-                    GrabCursor(true);
             }
         }
 
@@ -622,26 +650,36 @@ namespace OpenTK.Platform.SDL2
             }
             set
             {
-                if (value != WindowBorder)
+                if (WindowBorder != value)
                 {
-                    switch (value)
+                    lock (sync)
                     {
-                        case WindowBorder.Resizable:
-                            SDL.SDL_SetWindowBordered(window.Handle, SDL.SDL_bool.SDL_TRUE);
-                            window_border = WindowBorder.Resizable;
-                            break;
+                        if (Exists)
+                        {
 
-                        case WindowBorder.Hidden:
-                            SDL.SDL_SetWindowBordered(window.Handle, SDL.SDL_bool.SDL_FALSE);
-                            window_border = WindowBorder.Hidden;
-                            break;
+                            switch (value)
+                            {
+                                case WindowBorder.Resizable:
+                                    SDL.SDL_SetWindowBordered(window.Handle, SDL.SDL_bool.SDL_TRUE);
+                                    window_border = WindowBorder.Resizable;
+                                    break;
 
-                        case WindowBorder.Fixed:
-                            Debug.WriteLine("SDL2 cannot change to fixed-size windows at runtime.");
-                            break;
+                                case WindowBorder.Hidden:
+                                    SDL.SDL_SetWindowBordered(window.Handle, SDL.SDL_bool.SDL_FALSE);
+                                    window_border = WindowBorder.Hidden;
+                                    break;
+
+                                case WindowBorder.Fixed:
+                                    Debug.WriteLine("SDL2 cannot change to fixed-size windows at runtime.");
+                                    break;
+                            }
+                        }
                     }
 
-                    WindowBorderChanged(this, EventArgs.Empty);
+                    if (Exists)
+                    {
+                        WindowBorderChanged(this, EventArgs.Empty);
+                    }
                 }
             }
         }
@@ -663,13 +701,26 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                int x, y;
-                SDL.SDL_GetWindowPosition(window.Handle, out x, out y);
-                return new Point(x, y);
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        int x, y;
+                        SDL.SDL_GetWindowPosition(window.Handle, out x, out y);
+                        return new Point(x, y);
+                    }
+                    return new Point();
+                }
             }
             set
             {
-                SDL.SDL_SetWindowPosition(window.Handle, value.X, value.Y);
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        SDL.SDL_SetWindowPosition(window.Handle, value.X, value.Y);
+                    }
+                }
             }
         }
 
@@ -677,13 +728,26 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                int w, h;
-                SDL.SDL_GetWindowSize(window.Handle, out w, out h);
-                return new Size(w, h);
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        int w, h;
+                        SDL.SDL_GetWindowSize(window.Handle, out w, out h);
+                        return new Size(w, h);
+                    }
+                    return new Size();
+                }
             }
             set
             {
-                SDL.SDL_SetWindowSize(window.Handle, value.Width, value.Height);
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        SDL.SDL_SetWindowSize(window.Handle, value.Width, value.Height);
+                    }
+                }
             }
         }
 
@@ -779,8 +843,14 @@ namespace OpenTK.Platform.SDL2
             }
             set
             {
-                GrabCursor(!value);
-                is_cursor_visible = value;
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        GrabCursor(!value);
+                        is_cursor_visible = value;
+                    }
+                }
             }
         }
 
@@ -790,7 +860,6 @@ namespace OpenTK.Platform.SDL2
 
         public void Poll()
         {
-            throw new NotImplementedException();
         }
 
         #endregion
@@ -840,9 +909,12 @@ namespace OpenTK.Platform.SDL2
                 if (manual)
                 {
                     Debug.Print("Disposing {0}", GetType());
-                    if (Exists)
+                    lock (sync)
                     {
-                        DestroyWindow();
+                        if (Exists)
+                        {
+                            DestroyWindow();
+                        }
                     }
                 }
                 else
