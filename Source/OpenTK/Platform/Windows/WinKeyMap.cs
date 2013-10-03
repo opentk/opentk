@@ -27,96 +27,214 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-    class WinKeyMap : Dictionary<VirtualKeys, Input.Key>
+    class WinKeyMap
     {
-        /// <summary>
-        /// Initializes the map between VirtualKeys and OpenTK.Key
-        /// </summary>
+        readonly Dictionary<int, Key> ScanMap = new Dictionary<int, Key>();
+
         public WinKeyMap()
         {
-            this.Add(VirtualKeys.ESCAPE, Key.Escape);
+            // 0 - 15
+            Append(Key.Unknown);
+            Append(Key.Escape);
 
-            // Function keys
-            for (int i = 0; i < 24; i++)
+            for (int i = 0; i < 9; i++)
+                Append(Key.Number1 + i);
+            Append(Key.Number0);
+
+            Append(Key.Minus);
+            Append(Key.Plus);
+            Append(Key.BackSpace);
+            Append(Key.Tab);
+
+            // 16-31
+            Append(Key.Q);
+            Append(Key.W);
+            Append(Key.E);
+            Append(Key.R);
+            Append(Key.T);
+            Append(Key.Y);
+            Append(Key.U);
+            Append(Key.I);
+            Append(Key.O);
+            Append(Key.P);
+            Append(Key.BracketLeft);
+            Append(Key.BracketRight);
+            Append(Key.Enter);
+            Append(Key.ControlLeft);
+            Append(Key.A);
+            Append(Key.S);
+
+            // 32 - 47
+            Append(Key.D);
+            Append(Key.F);
+            Append(Key.G);
+            Append(Key.H);
+            Append(Key.J);
+            Append(Key.K);
+            Append(Key.L);
+            Append(Key.Semicolon);
+            Append(Key.Quote);
+            Append(Key.Grave);
+            Append(Key.ShiftLeft);
+            Append(Key.BackSlash);
+            Append(Key.Z);
+            Append(Key.X);
+            Append(Key.C);
+            Append(Key.V);
+
+            // 48 - 63
+            Append(Key.B);
+            Append(Key.N);
+            Append(Key.M);
+            Append(Key.Comma);
+            Append(Key.Period);
+            Append(Key.Slash);
+            Append(Key.ShiftRight);
+            Append(Key.PrintScreen);
+            Append(Key.AltLeft);
+            Append(Key.Space);
+            Append(Key.CapsLock);
+            Append(Key.F1);
+            Append(Key.F2);
+            Append(Key.F3);
+            Append(Key.F4);
+            Append(Key.F5);
+
+            // 64 - 79
+            Append(Key.F6);
+            Append(Key.F7);
+            Append(Key.F8);
+            Append(Key.F9);
+            Append(Key.F10);
+            Append(Key.NumLock);
+            Append(Key.ScrollLock);
+            Append(Key.Home);
+            Append(Key.Up);
+            Append(Key.PageUp);
+            Append(Key.KeypadMinus);
+            Append(Key.Left);
+            Append(Key.Keypad5);
+            Append(Key.Right);
+            Append(Key.KeypadPlus);
+            Append(Key.End);
+
+            // 80 - 95
+            Append(Key.Down);
+            Append(Key.PageDown);
+            Append(Key.Insert);
+            Append(Key.Delete);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.NonUSBackSlash);
+            Append(Key.F11);
+            Append(Key.F12);
+            Append(Key.Pause);
+            Append(Key.Unknown);
+            Append(Key.WinLeft);
+            Append(Key.WinRight);
+            Append(Key.Menu);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+
+            // 96 - 111
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.F13);
+            Append(Key.F14);
+            Append(Key.F15);
+            Append(Key.F16);
+            Append(Key.F17);
+            Append(Key.F18);
+            Append(Key.F19);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+
+            // 112 - 127
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+            Append(Key.Unknown);
+        }
+
+        void Append(Key key)
+        {
+            ScanMap.Add(ScanMap.Count, key);
+        }
+
+        public Key TranslateKey(short scancode, VirtualKeys vkey, bool extended0, bool extended1, out bool is_valid)
+        {
+            is_valid = true;
+
+            Key key;
+            ScanMap.TryGetValue(scancode, out key);
+
+            if (!extended0)
             {
-                this.Add((VirtualKeys)((int)VirtualKeys.F1 + i), Key.F1 + i);
+                switch (key)
+                {
+                    case Key.Insert: key = Key.Keypad0; break;
+                    case Key.End: key = Key.Keypad1; break;
+                    case Key.Down: key = Key.Keypad2; break;
+                    case Key.PageDown: key = Key.Keypad3; break;
+                    case Key.Left: key = Key.Keypad4; break;
+                    case Key.Right: key = Key.Keypad6; break;
+                    case Key.Home: key = Key.Keypad7; break;
+                    case Key.Up: key = Key.Keypad8; break;
+                    case Key.PageUp: key = Key.Keypad9; break;
+                    case Key.PrintScreen: key = Key.KeypadMultiply; break;
+                    case Key.Delete: key = Key.KeypadDecimal; break;
+                    case Key.NumLock:
+                        if (vkey == VirtualKeys.Last)
+                            is_valid = false;
+                        else if (vkey == VirtualKeys.PAUSE)
+                            key = Key.Pause;
+                        break;
+                }
+            }
+            else
+            {
+                switch (key)
+                {
+                    case Key.Enter: key = Key.KeypadEnter; break;
+                    case Key.AltLeft: key = Key.AltRight; break;
+                    case Key.AltRight: key = Key.AltLeft; break;
+                    case Key.ControlLeft: key = Key.ControlRight; break;
+                    case Key.ControlRight: key = Key.ControlLeft; break;
+                    case Key.ShiftLeft: is_valid = false; break;
+                }
             }
 
-            // Number keys (0-9)
-            for (int i = 0; i <= 9; i++)
+            if (extended1)
             {
-                this.Add((VirtualKeys)(0x30 + i), Key.Number0 + i);
+                switch (key)
+                {
+                    case Key.ControlLeft: key = Key.Pause; break;
+                }
             }
 
-            // Letters (A-Z)
-            for (int i = 0; i < 26; i++)
-            {
-                this.Add((VirtualKeys)(0x41 + i), Key.A + i);
-            }
-
-            this.Add(VirtualKeys.TAB, Key.Tab);
-            this.Add(VirtualKeys.CAPITAL, Key.CapsLock);
-            this.Add(VirtualKeys.LCONTROL, Key.ControlLeft);
-            this.Add(VirtualKeys.LSHIFT, Key.ShiftLeft);
-            this.Add(VirtualKeys.LWIN, Key.WinLeft);
-            this.Add(VirtualKeys.LMENU, Key.AltLeft);
-            this.Add(VirtualKeys.SPACE, Key.Space);
-            this.Add(VirtualKeys.RMENU, Key.AltRight);
-            this.Add(VirtualKeys.RWIN, Key.WinRight);
-            this.Add(VirtualKeys.APPS, Key.Menu);
-            this.Add(VirtualKeys.RCONTROL, Key.ControlRight);
-            this.Add(VirtualKeys.RSHIFT, Key.ShiftRight);
-            this.Add(VirtualKeys.RETURN, Key.Enter);
-            this.Add(VirtualKeys.BACK, Key.BackSpace);
-
-            this.Add(VirtualKeys.OEM_1, Key.Semicolon);      // Varies by keyboard, ;: on Win2K/US
-            this.Add(VirtualKeys.OEM_2, Key.Slash);          // Varies by keyboard, /? on Win2K/US
-            this.Add(VirtualKeys.OEM_3, Key.Tilde);          // Varies by keyboard, `~ on Win2K/US
-            this.Add(VirtualKeys.OEM_4, Key.BracketLeft);    // Varies by keyboard, [{ on Win2K/US
-            this.Add(VirtualKeys.OEM_5, Key.BackSlash);      // Varies by keyboard, \| on Win2K/US
-            this.Add(VirtualKeys.OEM_6, Key.BracketRight);   // Varies by keyboard, ]} on Win2K/US
-            this.Add(VirtualKeys.OEM_7, Key.Quote);          // Varies by keyboard, '" on Win2K/US
-            this.Add(VirtualKeys.OEM_PLUS, Key.Plus);        // Invariant: +
-            this.Add(VirtualKeys.OEM_COMMA, Key.Comma);      // Invariant: ,
-            this.Add(VirtualKeys.OEM_MINUS, Key.Minus);      // Invariant: -
-            this.Add(VirtualKeys.OEM_PERIOD, Key.Period);    // Invariant: .
-
-            this.Add(VirtualKeys.HOME, Key.Home);
-            this.Add(VirtualKeys.END, Key.End);
-            this.Add(VirtualKeys.DELETE, Key.Delete);
-            this.Add(VirtualKeys.PRIOR, Key.PageUp);
-            this.Add(VirtualKeys.NEXT, Key.PageDown);
-            this.Add(VirtualKeys.PRINT, Key.PrintScreen);
-            this.Add(VirtualKeys.PAUSE, Key.Pause);
-            this.Add(VirtualKeys.NUMLOCK, Key.NumLock);
-
-            this.Add(VirtualKeys.SCROLL, Key.ScrollLock);
-            this.Add(VirtualKeys.SNAPSHOT, Key.PrintScreen);
-            this.Add(VirtualKeys.CLEAR, Key.Clear);
-            this.Add(VirtualKeys.INSERT, Key.Insert);
-
-            this.Add(VirtualKeys.SLEEP, Key.Sleep);
-
-            // Keypad
-            for (int i = 0; i <= 9; i++)
-            {
-                this.Add((VirtualKeys)((int)VirtualKeys.NUMPAD0 + i), Key.Keypad0 + i);
-            }
-            this.Add(VirtualKeys.DECIMAL, Key.KeypadDecimal);
-            this.Add(VirtualKeys.ADD, Key.KeypadAdd);
-            this.Add(VirtualKeys.SUBTRACT, Key.KeypadSubtract);
-            this.Add(VirtualKeys.DIVIDE, Key.KeypadDivide);
-            this.Add(VirtualKeys.MULTIPLY, Key.KeypadMultiply);
-
-            // Navigation
-            this.Add(VirtualKeys.UP, Key.Up);
-            this.Add(VirtualKeys.DOWN, Key.Down);
-            this.Add(VirtualKeys.LEFT, Key.Left);
-            this.Add(VirtualKeys.RIGHT, Key.Right);
+            return key;
         }
     }
 }
