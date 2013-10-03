@@ -64,7 +64,14 @@ namespace OpenTK.Platform.Windows
 
                 lock (LoadLock)
                 {
-                    if (!wgl_loaded)
+                    // On intel drivers, wgl entry points appear to change
+                    // when creating multiple contexts. As a workaround,
+                    // we reload Wgl entry points every time we create a
+                    // new context - this solves the issue without any apparent
+                    // side-effects (i.e. the old contexts can still be handled
+                    // using the new entry points.)
+                    // Sigh...
+                   // if (!wgl_loaded)
                     {
                         // We need to create a temp context in order to load wgl extensions (e.g. for multisampling or GL3).
                         // We cannot rely on OpenTK.Platform.Wgl until we create the context and call Wgl.LoadAll().
