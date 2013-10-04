@@ -31,22 +31,24 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    using Sdl2Joystick = JoystickDevice<Sdl2JoystickDetails>;
-
-    class Sdl2JoystickDetails
-    {
-        public IntPtr Handle { get; set; }
-        public float RangeMultiplier { get { return 1.0f / 32768.0f; } }
-    }
-
     class Sdl2JoystickDriver : IJoystickDriver, IGamePadDriver
     {
-        readonly List<Sdl2Joystick> joysticks = new List<Sdl2Joystick>();
+        struct Sdl2JoystickDetails
+        {
+            public IntPtr Handle { get; set; }
+            public float RangeMultiplier { get { return 1.0f / 32768.0f; } }
+            public int HatCount { get; set; }
+            public int BallCount { get; set; }
+        }
+
+        readonly List<JoystickDevice> joysticks = new List<JoystickDevice>();
         IList<JoystickDevice> joysticks_readonly;
 
         public Sdl2JoystickDriver()
         {
-            joysticks_readonly = (IList<JoystickDevice>)joysticks.AsReadOnly();
+            joysticks_readonly = joysticks.AsReadOnly();
+
+            RefreshJoysticks();
 
         }
 
@@ -62,12 +64,22 @@ namespace OpenTK.Platform.SDL2
                 JoystickDevice<Sdl2JoystickDetails> joystick = null;
                 int num_axes = 0;
                 int num_buttons = 0;
+                int num_hats = 0;
+                int num_balls = 0;
+
                 IntPtr handle = SDL.SDL_JoystickOpen(i);
                 if (handle != IntPtr.Zero)
                 {
                     num_axes = SDL.SDL_JoystickNumAxes(handle);
                     num_buttons = SDL.SDL_JoystickNumButtons(handle);
+                    num_hats = SDL.SDL_JoystickNumHats(handle);
+                    num_balls = SDL.SDL_JoystickNumBalls(handle);
+
                     joystick = new JoystickDevice<Sdl2JoystickDetails>(i, num_axes, num_buttons);
+                    joystick.Description = SDL.SDL_JoystickName(handle);
+                    joystick.Details.Handle = handle;
+                    joystick.Details.HatCount = num_hats;
+                    joystick.Details.BallCount = num_balls;
                     joysticks.Add(joystick);
                 }
             }
@@ -89,8 +101,9 @@ namespace OpenTK.Platform.SDL2
         public void Poll()
         {
             SDL.SDL_JoystickUpdate();
-            foreach (Sdl2Joystick joystick in joysticks)
+            foreach (var j in joysticks)
             {
+                var joystick = (JoystickDevice<Sdl2JoystickDetails>)j;
                 IntPtr handle = joystick.Details.Handle;
                 
                 for (int i = 0; i < joystick.Axis.Count; i++)

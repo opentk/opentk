@@ -58,6 +58,8 @@ namespace OpenTK.Platform.SDL2
         IList<KeyboardDevice> keyboards = new List<KeyboardDevice>(1);
         IList<MouseDevice> mice = new List<MouseDevice>(1);
 
+        readonly Sdl2JoystickDriver joystick_driver = new Sdl2JoystickDriver();
+
         readonly SDL.SDL_EventFilter EventFilterDelegate = FilterEvents;
 
         static readonly Dictionary<uint, Sdl2NativeWindow> windows =
@@ -862,6 +864,7 @@ namespace OpenTK.Platform.SDL2
 
         public void Poll()
         {
+            joystick_driver.Poll();
         }
 
         #endregion
@@ -872,7 +875,7 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                throw new NotImplementedException();
+                return joystick_driver.Joysticks;
             }
         }
 
