@@ -26,18 +26,30 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2Keyboard : IKeyboardDriver2
+    class Sdl2Keyboard : IKeyboardDriver2, IKeyboardDriver
     {
         static readonly Sdl2KeyMap KeyMap = new Sdl2KeyMap();
         KeyboardState state;
 
+        readonly List<KeyboardDevice> keyboards =
+            new List<KeyboardDevice>();
+        readonly IList<KeyboardDevice> keyboards_readonly;
+
         public Sdl2Keyboard()
         {
             state.IsConnected = true;
+
+            keyboards.Add(new KeyboardDevice());
+            keyboards[0].Description = "Standard keyboard";
+            keyboards[0].NumberOfFunctionKeys = 12;
+            keyboards[0].NumberOfKeys = 101;
+            keyboards[0].NumberOfLeds = 3;
+            keyboards_readonly = keyboards.AsReadOnly();
         }
 
         #region Private Members
@@ -74,9 +86,23 @@ namespace OpenTK.Platform.SDL2
         {
             Key key;
             bool pressed = e.state != 0;
-            if (KeyMap.TryGetValue(e.keysym.scancode, out key))
+            var scancode = e.keysym.scancode;
+            if (KeyMap.TryGetValue(scancode, out key))
             {
-                state.SetKeyState(key, (byte)e.keysym.scancode, pressed);
+                state.SetKeyState(key, (byte)scancode, pressed);
+                keyboards[0].SetKey(key, (byte)scancode, pressed);
+            }
+        }
+
+        #endregion
+
+        #region IKeyboardDriver Members
+
+        public IList<KeyboardDevice> Keyboard
+        {
+            get
+            {
+                return keyboards_readonly;
             }
         }
 

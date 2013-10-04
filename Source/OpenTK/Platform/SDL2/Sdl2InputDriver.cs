@@ -34,25 +34,33 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2InputDriver : IInputDriver2
+    class Sdl2InputDriver : IInputDriver2, IInputDriver
     {
         readonly static Dictionary<IntPtr, Sdl2InputDriver> DriverHandles =
             new Dictionary<IntPtr, Sdl2InputDriver>();
 
+        readonly IntPtr driver_handle;
+
         readonly Sdl2Keyboard keyboard_driver = new Sdl2Keyboard();
         readonly Sdl2Mouse mouse_driver = new Sdl2Mouse();
+        readonly Sdl2JoystickDriver joystick_driver = new Sdl2JoystickDriver();
+
         readonly SDL.SDL_EventFilter EventFilterDelegate = FilterInputEvents;
+        readonly IntPtr EventFilterPointer;
 
         static int count;
         bool disposed;
 
         public Sdl2InputDriver()
         {
+            EventFilterPointer = Marshal.GetFunctionPointerForDelegate(
+                EventFilterDelegate);
+
             lock (SDL.Sync)
             {
-                IntPtr driver_handle = new IntPtr(count++);
+                driver_handle = new IntPtr(count++);
                 DriverHandles.Add(driver_handle, this);
-                SDL.SDL_AddEventWatch(EventFilterDelegate, driver_handle);
+                SDL.SDL_AddEventWatch(EventFilterPointer, driver_handle);
             }
         }
 
@@ -99,6 +107,51 @@ namespace OpenTK.Platform.SDL2
 
         #endregion
 
+        #region IInputDriver Members
+
+        public void Poll()
+        {
+            joystick_driver.Poll();
+        }
+
+        #endregion
+
+        #region IJoystickDriver Members
+
+        public IList<JoystickDevice> Joysticks
+        {
+            get
+            {
+                return joystick_driver.Joysticks;
+            }
+        }
+
+        #endregion
+
+        #region IMouseDriver Members
+
+        public IList<MouseDevice> Mouse
+        {
+            get
+            {
+                return mouse_driver.Mouse;
+            }
+        }
+
+        #endregion
+
+        #region IKeyboardDriver Members
+
+        public IList<KeyboardDevice> Keyboard
+        {
+            get
+            {
+                return keyboard_driver.Keyboard;
+            }
+        }
+
+        #endregion
+
         #region IInputDriver2 Members
 
         public IMouseDriver2 MouseDriver
@@ -136,10 +189,12 @@ namespace OpenTK.Platform.SDL2
                 if (manual)
                 {
                     Debug.Print("Disposing {0}", GetType());
+                    joystick_driver.Dispose();
                     lock (SDL.Sync)
                     {
-                        SDL.SDL_DelEventWatch(EventFilterDelegate, IntPtr.Zero);
+                        SDL.SDL_DelEventWatch(EventFilterPointer, IntPtr.Zero);
                     }
+                    DriverHandles.Remove(driver_handle);
                 }
                 else
                 {

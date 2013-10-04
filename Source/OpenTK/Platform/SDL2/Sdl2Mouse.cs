@@ -26,18 +26,30 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2Mouse : IMouseDriver2
+    class Sdl2Mouse : IMouseDriver2, IMouseDriver
     {
         MouseState state;
+
+        readonly List<MouseDevice> mice =
+            new List<MouseDevice>();
+        readonly IList<MouseDevice> mice_readonly;
 
         public Sdl2Mouse()
         {
             state.IsConnected = true;
+
+            mice.Add(new MouseDevice());
+            mice[0].Description = "Standard mouse";
+            mice[0].NumberOfButtons = 3;
+            mice[0].NumberOfWheels = 1;
+            mice_readonly = mice.AsReadOnly();
         }
 
         #region Private Members
@@ -86,18 +98,33 @@ namespace OpenTK.Platform.SDL2
         public void ProcessWheelEvent(SDL.SDL_MouseWheelEvent wheel)
         {
             state.WheelPrecise += wheel.y;
+            mice[0].WheelPrecise += wheel.y;
         }
 
         public void ProcessMouseEvent(SDL.SDL_MouseMotionEvent motion)
         {
             state.X += motion.xrel;
             state.Y += motion.yrel;
+            mice[0].Position = new Point(motion.x, motion.y);
         }
 
         public void ProcessMouseEvent(SDL.SDL_MouseButtonEvent button)
         {
             bool pressed = button.state == SDL.SDL_PRESSED;
             SetButtonState(TranslateButton(button.button), pressed);
+            mice[0][TranslateButton(button.button)] = pressed;
+        }
+
+        #endregion
+
+        #region IMouseDriver Members
+
+        public IList<MouseDevice> Mouse
+        {
+            get
+            {
+                return mice_readonly;
+            }
         }
 
         #endregion

@@ -3400,12 +3400,26 @@ namespace OpenTK.Platform.SDL2
 			IntPtr userdata
 		);
 
+        /* userdata refers to a void* */
+        [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SDL_AddEventWatch(
+            IntPtr filter,
+            IntPtr userdata
+            );
+
 		/* userdata refers to a void* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_DelEventWatch(
 			SDL_EventFilter filter,
 			IntPtr userdata
 		);
+
+        /* userdata refers to a void* */
+        [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SDL_DelEventWatch(
+            IntPtr filter,
+            IntPtr userdata
+            );
 
 		/* userdata refers to a void* */
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]

@@ -53,12 +53,7 @@ namespace OpenTK.Platform.SDL2
         Icon icon;
         string window_title;
 
-        KeyboardDevice keyboard = new KeyboardDevice();
-        MouseDevice mouse = new MouseDevice();
-        IList<KeyboardDevice> keyboards = new List<KeyboardDevice>(1);
-        IList<MouseDevice> mice = new List<MouseDevice>(1);
-
-        readonly Sdl2JoystickDriver joystick_driver = new Sdl2JoystickDriver();
+        readonly IInputDriver input_driver = new Sdl2InputDriver();
 
         readonly SDL.SDL_EventFilter EventFilterDelegate = FilterEvents;
 
@@ -94,18 +89,6 @@ namespace OpenTK.Platform.SDL2
                 window_id = SDL.SDL_GetWindowID(handle);
                 windows.Add(window_id, this);
                 window_title = title;
-
-                keyboard.Description = "Standard keyboard";
-                keyboard.NumberOfFunctionKeys = 12;
-                keyboard.NumberOfKeys = 101;
-                keyboard.NumberOfLeds = 3;
-
-                mouse.Description = "Standard mouse";
-                mouse.NumberOfButtons = 3;
-                mouse.NumberOfWheels = 1;
-
-                keyboards.Add(keyboard);
-                mice.Add(mouse);
 
                 exists = true;
             }
@@ -220,7 +203,8 @@ namespace OpenTK.Platform.SDL2
             }
 
             switch (ev.button.button)
-            {
+            {/*
+
                 case (byte)SDL.SDL_BUTTON_LEFT:
                     window.mouse[MouseButton.Left] = button_pressed;
                     break;
@@ -240,6 +224,7 @@ namespace OpenTK.Platform.SDL2
                 case (byte)SDL.SDL_BUTTON_X2:
                     window.mouse[MouseButton.Button2] = button_pressed;
                     break;
+            */
             }
         }
 
@@ -247,19 +232,19 @@ namespace OpenTK.Platform.SDL2
         {
             bool key_pressed = ev.key.state == SDL.SDL_PRESSED;
             var key = ev.key.keysym;
-            window.keyboard.SetKey(TranslateKey(key.scancode), (uint)key.scancode, key_pressed);
+            //window.keyboard.SetKey(TranslateKey(key.scancode), (uint)key.scancode, key_pressed);
         }
 
         static void ProcessMotionEvent(Sdl2NativeWindow window, SDL.SDL_Event ev)
         {
             float scale = window.ClientSize.Width / (float)window.Size.Width;
-            window.mouse.Position = new Point(
-                (int)(ev.motion.x * scale), (int)(ev.motion.y * scale));
+            //window.mouse.Position = new Point(
+            //    (int)(ev.motion.x * scale), (int)(ev.motion.y * scale));
         }
 
         static void ProcessWheelEvent(Sdl2NativeWindow window, SDL.SDL_Event ev)
         {
-            window.mouse.Wheel += ev.wheel.y;
+            //window.mouse.Wheel += ev.wheel.y;
         }
 
         static void ProcessWindowEvent(Sdl2NativeWindow window, SDL.SDL_WindowEvent e)
@@ -835,7 +820,7 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                return this;
+                return input_driver;
             }
         }
 
@@ -864,7 +849,7 @@ namespace OpenTK.Platform.SDL2
 
         public void Poll()
         {
-            joystick_driver.Poll();
+            InputDriver.Poll();
         }
 
         #endregion
@@ -875,7 +860,7 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                return joystick_driver.Joysticks;
+                return InputDriver.Joysticks;
             }
         }
 
@@ -887,7 +872,7 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                return mice;
+                return InputDriver.Mouse;
             }
         }
 
@@ -899,7 +884,7 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                return keyboards;
+                return InputDriver.Keyboard;
             }
         }
 
@@ -911,22 +896,23 @@ namespace OpenTK.Platform.SDL2
         {
             if (!disposed)
             {
-                if (manual)
+                lock (sync)
                 {
-                    Debug.Print("Disposing {0}", GetType());
-                    lock (sync)
+                    if (manual)
                     {
+                        Debug.Print("Disposing {0}", GetType());
+                        InputDriver.Dispose();
                         if (Exists)
                         {
                             DestroyWindow();
                         }
                     }
+                    else
+                    {
+                        Debug.WriteLine("Sdl2NativeWindow leaked, did you forget to call Dispose()?");
+                    }
+                    disposed = true;
                 }
-                else
-                {
-                    Debug.WriteLine("Sdl2NativeWindow leaked, did you forget to call Dispose()?");
-                }
-                disposed = true;
             }
         }
 
