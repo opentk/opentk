@@ -27,11 +27,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2JoystickDriver : IJoystickDriver, IGamePadDriver
+    class Sdl2JoystickDriver : IJoystickDriver, IGamePadDriver, IDisposable
     {
         struct Sdl2JoystickDetails
         {
@@ -43,6 +44,7 @@ namespace OpenTK.Platform.SDL2
 
         readonly List<JoystickDevice> joysticks = new List<JoystickDevice>();
         IList<JoystickDevice> joysticks_readonly;
+        bool disposed = false;
 
         public Sdl2JoystickDriver()
         {
@@ -83,7 +85,6 @@ namespace OpenTK.Platform.SDL2
                     joysticks.Add(joystick);
                 }
             }
-
         }
 
         #endregion
@@ -142,6 +143,46 @@ namespace OpenTK.Platform.SDL2
         public string GetDeviceName(int index)
         {
             return String.Empty;
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    Debug.Print("Disposing {0}", GetType());
+
+                    foreach (var j in joysticks)
+                    {
+                        var joystick = (JoystickDevice<Sdl2JoystickDetails>)j;
+                        IntPtr handle = joystick.Details.Handle;
+                        SDL.SDL_JoystickClose(handle);
+                    }
+
+                    joysticks.Clear();
+                }
+                else
+                {
+                    Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
+                }
+                disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~Sdl2JoystickDriver()
+        {
+            Dispose(false);
         }
 
         #endregion
