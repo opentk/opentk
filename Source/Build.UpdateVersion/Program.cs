@@ -107,7 +107,7 @@ namespace Build.UpdateVersion
                 "",
                 "[assembly: AssemblyCompany(\"The Open Toolkit Library\")]",
                 "[assembly: AssemblyProduct(\"The Open Toolkit Library\")]",
-                "[assembly: AssemblyCopyright(\"Copyright © 2006 - 2010 the Open Toolkit Library\")]",
+                "[assembly: AssemblyCopyright(\"Copyright © 2006 - 2013 the Open Toolkit Library\")]",
                 "[assembly: AssemblyTrademark(\"OpenTK\")]",
                 String.Format("[assembly: AssemblyVersion(\"{0}.{1}.0.0\")]", Major, Minor),
                 String.Format("[assembly: AssemblyFileVersion(\"{0}.{1}.{2}.{3}\")]", Major, Minor, build, revision),
@@ -125,12 +125,7 @@ namespace Build.UpdateVersion
             try
             {
                 string output = RunProcess("git", "rev-list HEAD --count", RootDirectory);
-                
-                const string RevisionText = "commit ";
-                int index = output.IndexOf(RevisionText);
-                int endIndex = output.IndexOf("\n"); // since it's the first line...
-                if (index > -1)
-                    return output.Substring(index + RevisionText.Length, endIndex - index - RevisionText.Length).Trim();
+                return output.Trim(' ', '\n');
             }
             catch (Exception e)
             {
