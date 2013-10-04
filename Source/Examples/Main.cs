@@ -40,23 +40,22 @@ namespace Examples
     {
         static void LaunchExample(string type)
         {
+            try
+            {
+                if (File.Exists("debug.log"))
+                    File.Delete("debug.log");
+                if (File.Exists("trace.log"))
+                    File.Delete("trace.log");
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(String.Format("Could not access debug.log", e.ToString()));
+            }
+
             using (TextWriterTraceListener dbg = new TextWriterTraceListener("debug.log"))
             using (OpenTK.Toolkit.Init())
             {
                 Trace.Listeners.Add(dbg);
-                Trace.Listeners.Add(new ConsoleTraceListener());
-
-                try
-                {
-                    if (File.Exists("debug.log"))
-                        File.Delete("debug.log");
-                    if (File.Exists("trace.log"))
-                        File.Delete("trace.log");
-                }
-                catch (Exception e)
-                {
-                    Trace.WriteLine(String.Format("Could not access debug.log", e.ToString()));
-                }
 
                 try
                 {
@@ -75,6 +74,8 @@ namespace Examples
                         type, e.ToString()));
                 }
 
+                Trace.Listeners.Remove(dbg);
+
                 dbg.Flush();
                 dbg.Close();
             }
@@ -83,6 +84,8 @@ namespace Examples
         [STAThread]
         public static void Main(string[] args)
         {
+            Trace.Listeners.Add(new ConsoleTraceListener());
+
             if (args.Length > 0)
             {
                 LaunchExample(args[0]);
