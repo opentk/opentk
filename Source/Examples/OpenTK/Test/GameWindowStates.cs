@@ -45,6 +45,12 @@ namespace Examples.Tests
             Mouse.Move += MouseMoveHandler;
             Mouse.ButtonDown += MouseButtonHandler;
             Mouse.ButtonUp += MouseButtonHandler;
+            foreach (var joystick in Joysticks)
+            {
+                joystick.Move += delegate { refresh_text = true; };
+                joystick.ButtonDown += delegate { refresh_text = true; };
+                joystick.ButtonUp += delegate { refresh_text = true; };
+            }
         }
 
         void KeyDownHandler(object sender, KeyboardKeyEventArgs e)
@@ -146,12 +152,48 @@ namespace Examples.Tests
             }
         }
 
-        protected override void OnUpdateFrame(FrameEventArgs e)
+        static int DrawJoysticks(Graphics gfx, IList<JoystickDevice> joysticks, int line)
         {
+            float space = gfx.MeasureString(" ", TextFont).Width;
+
+            foreach (var joy in joysticks)
+            {
+                string str = String.Format("Joystick '{0}': ", joy.Description);
+                DrawString(gfx, str, line);
+
+                float offset = 0;
+                line++;
+                for (int i = 0; i < joy.Axis.Count; i++)
+                {
+                    string axis = joy.Axis[i].ToString();
+                    DrawString(gfx, axis, line, offset);
+                    offset += gfx.MeasureString(axis, TextFont).Width + space;
+                }
+
+                offset = 0;
+                line++;
+                for (int i = 0; i < joy.Button.Count; i++)
+                {
+                    string button = joy.Button[i].ToString();
+                    DrawString(gfx, button, line, offset);
+                    offset += gfx.MeasureString(button, TextFont).Width + space;
+                }
+
+                line++;
+            }
+
+            return line;
+        }
+
+        protected override void OnUpdateFrame(FrameEventArgs e)
+        {;
+            InputDriver.Poll();
+
             mouse = OpenTK.Input.Mouse.GetState();
             if (mouse != mouse_old)
                 refresh_text = true;
             mouse_old = mouse;
+
             keyboard = OpenTK.Input.Keyboard.GetState();
             if (keyboard != keyboard_old)
                 refresh_text = true;
@@ -177,10 +219,11 @@ namespace Examples.Tests
                     DrawString(gfx, String.Format("Mouse position (relative): {0}", new Vector3(mouse.X, mouse.Y, mouse.WheelPrecise)), line++);
                     DrawString(gfx, String.Format("Window.Bounds: {0}", Bounds), line++);
                     DrawString(gfx, String.Format("Window.Location: {0}, Size: {1}", Location, Size), line++);
-                    DrawString(gfx, String.Format("Window.{{X={0}, Y={1}, Width={2}, Height={3}}}", X, Y, Width, Height), line++);
+                    DrawString(gfx, String.Format("Window: {{X={0},Y={1},Width={2},Height={3}}}", X, Y, Width, Height), line++);
                     DrawString(gfx, String.Format("Window.ClientRectangle: {0}", ClientRectangle), line++);
                     DrawKeyboard(gfx, keyboard, line++);
                     DrawMouse(gfx, mouse, line++);
+                    line = DrawJoysticks(gfx, Joysticks, line++);
                 }
             }
 
