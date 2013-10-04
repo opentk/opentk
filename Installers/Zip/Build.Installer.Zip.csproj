@@ -49,14 +49,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <Target Name="Build">
-    <CallTarget Targets="CleanTreeCopy" />
-    <!-- Make a clean copy of the source tree -->
-    <CreateItem Include="$(InputPath)**\*.*" Exclude="$(InputPath)**\.svn\**\*.*;&#xD;&#xA;                 $(InputPath)**\obj\**\*.*;&#xD;&#xA;                 $(InputPath)Installers\Zip\opentk\**\*.*;&#xD;&#xA;                 $(InputPath)Documentation\Source\**\*.*;&#xD;&#xA;		 $(InputPath)Automation\**\*.*;&#xD;&#xA;		 $(InputPath)Old\**\*.*;&#xD;&#xA;                 $(InputPath)**\OpenTK*.xml;&#xD;&#xA;                 $(InputPath)**\*.suo;&#xD;&#xA;                 $(InputPath)**\*.pidb;&#xD;&#xA;                 $(InputPath)**\*.userprefs;&#xD;&#xA;                 $(InputPath)**\opentk*.zip;&#xD;&#xA;                 $(InputPath)**\opentk*.exe;&#xD;&#xA;                 $(InputPath)**\vshost*.exe;&#xD;&#xA;                 ">
-      <Output TaskParameter="Include" ItemName="FileList" />
-    </CreateItem>
-    <Copy SourceFiles="@(FileList)" DestinationFiles="@(FileList-&gt;'$(OutputPath)%(RecursiveDir)%(Filename)%(Extension)')" />
     <!-- Zip the copy of the source tree -->
-    <Exec Command="7z a -tzip opentk.zip $(OutputPath)" />
+    <Exec Command="7z a -tzip opentk.zip ../../* '-xr!opentk*.zip' '-xr!opentk*.exe' '-xr!.*' '-xr!obj' '-xr!Documentation/Source' '-xr!Automation' '-xr!*.suo' '-xr!*.pidb' '-xr!*.userprefs' '-xr!vshost*.exe'" />
     <!-- Copy the zip file to the root directory and add a date stamp -->
     <ReadLinesFromFile File="../../Version.txt">
       <Output TaskParameter="Lines" ItemName="Version" />
@@ -68,14 +62,9 @@
       <Output TaskParameter="Include" ItemName="FilesToDelete" />
     </CreateItem>
     <Delete Files="@(FilesToDelete)" />
-    <CallTarget Targets="CleanTreeCopy" />
   </Target>
   <Target Name="Rebuild">
     <CallTarget Targets="Clean" />
     <CallTarget Targets="Build" />
-  </Target>
-  <Target Name="CleanTreeCopy">
-    <RemoveDir Directories="$(OutputPath)" Condition="$(OS) == 'Windows_NT'" />
-    <Exec Command="rm -rf '$(OutputPath)'" Condition="$(OS) != 'Windows_NT'" />
   </Target>
 </Project>
