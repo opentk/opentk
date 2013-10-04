@@ -55,7 +55,7 @@ namespace OpenTK.Platform
 
             if (Configuration.Sdl2Supported)
             {
-                Embedded = new Egl.EglSdl2PlatformFactory();
+                Embedded = Default;
             }
             else if (Egl.Egl.IsSupported)
             {
