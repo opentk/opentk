@@ -161,7 +161,6 @@ namespace OpenTK.Platform.SDL2
 		/// <see cref="SDL_VideoInit()"/>) instead of <see cref="SDL_Init()"/> or <see cref="SDL_InitSubSystem()"/>, 
 		/// then you must use that subsystem's quit function (<see cref="SDL_VideoQuit()"/>) to shut it down 
 		/// before calling <see cref="SDL_Quit()"/>.</remarks>
-		/// <remarks>You can use this function with atexit() to en
 		/// <remarks>You still need to call <see cref="SDL_Quit()"/> even if you close all open subsystems with SDL_QuitSubSystem(). </remarks>
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void SDL_QuitSubSystem(uint flags);
@@ -298,19 +297,6 @@ namespace OpenTK.Platform.SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		[return : MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler), MarshalCookie = LPUtf8StrMarshaler.LeaveAllocated)]
 		public static extern string SDL_GetError();
-
-		/// <summary>
-		/// Use this function to set the SDL error string. 
-		/// </summary>
-		/// <param name="fmt">a printf() style message format string </param>
-		/// <param name="...">additional parameters matching % tokens in the fmt string, if any</param>
-		/// <remarks>Calling this function will replace any previous error message that was set.</remarks>
-		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SDL_SetError(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
-			__arglist
-		);
 		
 		#endregion
 		
@@ -379,143 +365,6 @@ namespace OpenTK.Platform.SDL2
 			int category,
 			SDL_LogPriority priority,
 			IntPtr message // const char*
-		);
-		
-		/// <summary>
-		/// Use this function to log a message with SDL_LOG_CATEGORY_APPLICATION and SDL_LOG_PRIORITY_INFO. 
-		/// </summary>
-		/// <param name="fmt">a printf() style message format string</param>
-		/// <param name="...">additional parameters matching % tokens in the fmt string, if any</param>
-		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SDL_Log(
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
-			__arglist
-		);
-		
-		/// <summary>
-		/// Use this function to log a message with SDL_LOG_PRIORITY_VERBOSE. 
-		/// </summary>
-		/// <param name="category">the category of the message; see Remarks for details</param>
-		/// <param name="fmt">a printf() style message format string</param>
-		/// <param name="...">additional parameters matching % tokens in the fmt string, if any</param>
-		/// <remarks>The category can be one of SDL_LOG_CATEGORY*</remarks>
-		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SDL_LogVerbose(
-			int category,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
-			__arglist
-		);
-		
-		/// <summary>
-		/// Use this function to log a message with SDL_LOG_PRIORITY_DEBUG. 
-		/// </summary>
-		/// <param name="category">the category of the message; see Remarks for details</param>
-		/// <param name="fmt">a printf() style message format string</param>
-		/// <param name="...">additional parameters matching % tokens in the fmt string, if any</param>
-		/// <remarks>The category can be one of SDL_LOG_CATEGORY*</remarks>
-		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SDL_LogDebug(
-			int category,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
-			__arglist
-		);
-		
-		/// <summary>
-		/// Use this function to log a message with SDL_LOG_PRIORITY_INFO. 
-		/// </summary>
-		/// <param name="category">the category of the message; see Remarks for details</param>
-		/// <param name="fmt">a printf() style message format string</param>
-		/// <param name="...">additional parameters matching % tokens in the fmt string, if any</param>
-		/// <remarks>The category can be one of SDL_LOG_CATEGORY*</remarks>
-		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SDL_LogInfo(
-			int category,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
-			__arglist
-		);
-		
-		/// <summary>
-		/// Use this function to log a message with SDL_LOG_PRIORITY_WARN. 
-		/// </summary>
-		/// <param name="category">the category of the message; see Remarks for details</param>
-		/// <param name="fmt">a printf() style message format string</param>
-		/// <param name="...">additional parameters matching % tokens in the fmt string, if any</param>
-		/// <remarks>The category can be one of SDL_LOG_CATEGORY*</remarks>
-		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SDL_LogWarn(
-			int category,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
-			__arglist
-		);
-		
-		/// <summary>
-		/// Use this function to log a message with SDL_LOG_PRIORITY_ERROR. 
-		/// </summary>
-		/// <param name="category">the category of the message; see Remarks for details</param>
-		/// <param name="fmt">a printf() style message format string</param>
-		/// <param name="...">additional parameters matching % tokens in the fmt string, if any</param>
-		/// <remarks>The category can be one of SDL_LOG_CATEGORY*</remarks>
-		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SDL_LogError(
-			int category,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
-			__arglist
-		);
-		
-		/// <summary>
-		/// Use this function to log a message with SDL_LOG_PRIORITY_CRITICAL. 
-		/// </summary>
-		/// <param name="category">the category of the message; see Remarks for details</param>
-		/// <param name="fmt">a printf() style message format string</param>
-		/// <param name="...">additional parameters matching % tokens in the fmt string, if any</param>
-		/// <remarks>The category can be one of SDL_LOG_CATEGORY*</remarks>
-		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SDL_LogCritical(
-			int category,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
-			__arglist
-		);
-		
-		/// <summary>
-		/// Use this function to log a message with the specified category and priority. 
-		/// </summary>
-		/// <param name="category">the category of the message; see Remarks for details</param>
-		/// <param name="priority">the priority of the message; see Remarks for details</param>
-		/// <param name="fmt">a printf() style message format string</param>
-		/// <param name="...">additional parameters matching % tokens in the fmt string, if any</param>
-		/// <remarks>The category can be one of SDL_LOG_CATEGORY*</remarks>
-		/// <remarks>The priority can be one of SDL_LOG_PRIORITY*</remarks>
-		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SDL_LogMessage(
-			int category,
-			SDL_LogPriority priority,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
-			__arglist
-		);
-		
-		/// <summary>
-		/// Use this function to log a message with the specified category and priority. 
-		/// This version of <see cref="SDL_LogMessage"/> uses a stdarg variadic argument list. 
-		/// </summary>
-		/// <param name="category">the category of the message; see Remarks for details</param>
-		/// <param name="priority">the priority of the message; see Remarks for details</param>
-		/// <param name="fmt">a printf() style message format string</param>
-		/// <param name="...">additional parameters matching % tokens in the fmt string, if any</param>
-		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void SDL_LogMessageV(
-			int category,
-			SDL_LogPriority priority,
-			[In()] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(LPUtf8StrMarshaler))]
-				string fmt,
-			__arglist
 		);
 		
 		/// <summary>
@@ -778,6 +627,10 @@ namespace OpenTK.Platform.SDL2
 			public byte major;
 			public byte minor;
 			public byte patch;
+            public int Number
+            {
+                get { return SDL_VERSIONNUM(major, minor, patch); }
+            }
 		}
 		
 		/// <summary>

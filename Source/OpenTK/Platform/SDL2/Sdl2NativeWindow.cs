@@ -72,7 +72,10 @@ namespace OpenTK.Platform.SDL2
                 flags |= SDL.SDL_WindowFlags.SDL_WINDOW_OPENGL;
                 flags |= SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE;
                 flags |= SDL.SDL_WindowFlags.SDL_WINDOW_HIDDEN;
-                flags |= SDL.SDL_WindowFlags.SDL_WINDOW_ALLOW_HIGHDPI;
+                if (SDL.Version.Number > 2000)
+                {
+                    flags |= SDL.SDL_WindowFlags.SDL_WINDOW_ALLOW_HIGHDPI;
+                }
 
                 if ((flags & SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP) != 0 ||
                     (flags & SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) != 0)
@@ -806,7 +809,16 @@ namespace OpenTK.Platform.SDL2
             get
             {
                 int w, h;
-                SDL.SDL_GL_GetDrawableSize(window.Handle, out w, out h);
+                if (SDL.Version.Number > 2000)
+                {
+                    // SDL > 2.0.0 supports SDL_GL_GetDrawableSize for
+                    // hidpi windows.
+                    SDL.SDL_GL_GetDrawableSize(window.Handle, out w, out h);
+                }
+                else
+                {
+                    SDL.SDL_GetWindowSize(window.Handle, out w, out h);
+                }
                 return new Size(w, h);
             }
             set

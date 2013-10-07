@@ -32,6 +32,12 @@ namespace OpenTK.Platform.SDL2
     partial class SDL
     {
         public readonly static object Sync = new object();
+		public readonly static SDL_version Version;
+
+		static SDL()
+		{
+			SDL.SDL_GetVersion(out Version);
+		}
     }
 }
 
