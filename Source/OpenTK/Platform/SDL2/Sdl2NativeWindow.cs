@@ -72,10 +72,7 @@ namespace OpenTK.Platform.SDL2
                 flags |= SDL.SDL_WindowFlags.SDL_WINDOW_OPENGL;
                 flags |= SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE;
                 flags |= SDL.SDL_WindowFlags.SDL_WINDOW_HIDDEN;
-                if (SDL.Version.Number > 2000)
-                {
-                    flags |= SDL.SDL_WindowFlags.SDL_WINDOW_ALLOW_HIGHDPI;
-                }
+                flags |= SDL.SDL_WindowFlags.SDL_WINDOW_ALLOW_HIGHDPI;
 
                 if ((flags & SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP) != 0 ||
                     (flags & SDL.SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) != 0)
