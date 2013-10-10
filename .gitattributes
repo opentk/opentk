@@ -1,0 +1,30 @@
+* text eol=crlf
+*.fs text
+*.cs text
+*.fsproj text
+*.csproj text
+*.sln text
+*.config text
+*.txt text
+*.xml text
+*.nsi text
+*.doxyfile text
+*.spec text
+*.tm text
+*.glsl text
+*.resx text
+
+*.dll binary
+*.exe binary
+*.so binary
+*.dylib binary
+*.snk binary
+*.bmp binary
+*.dds binary
+*.ico binary
+*.png binary
+*.jpg binary
+*.wav binary
+*.ogg binary
+*.zip binary
+
