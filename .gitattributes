@@ -27,4 +27,5 @@
 *.wav binary
 *.ogg binary
 *.zip binary
+*.pdf binary
 
