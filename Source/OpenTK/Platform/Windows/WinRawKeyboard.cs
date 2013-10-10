@@ -157,6 +157,13 @@ namespace OpenTK.Platform.Windows
             bool pressed =
                 rin.Data.Keyboard.Message == (int)WindowMessage.KEYDOWN ||
                 rin.Data.Keyboard.Message == (int)WindowMessage.SYSKEYDOWN;
+            var scancode = rin.Data.Keyboard.MakeCode;
+            var vkey = rin.Data.Keyboard.VKey;
+
+            bool extended0 = (int)(rin.Data.Keyboard.Flags & RawInputKeyboardDataFlags.E0) != 0;
+            bool extended1 = (int)(rin.Data.Keyboard.Flags & RawInputKeyboardDataFlags.E1) != 0;
+
+            bool is_valid = true;
 
             ContextHandle handle = new ContextHandle(rin.Header.Device);
             KeyboardState keyboard;
@@ -175,36 +182,12 @@ namespace OpenTK.Platform.Windows
             int keyboard_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
             keyboard = keyboards[keyboard_handle];
 
-            // Generic control, shift, alt keys may be sent instead of left/right.
-            // It seems you have to explicitly register left/right events.
-            switch (rin.Data.Keyboard.VKey)
+            Key key = KeyMap.TranslateKey(scancode, vkey, extended0, extended1, out is_valid);
+
+            if (is_valid)
             {
-                case VirtualKeys.SHIFT:
-                    keyboard.SetKeyState(Key.ShiftLeft, (byte)WinGLNative.ShiftLeftScanCode, pressed);
-                    keyboard.SetKeyState(Key.ShiftRight, (byte)WinGLNative.ShiftRightScanCode, pressed);
-                    processed = true;
-                    break;
-
-                case VirtualKeys.CONTROL:
-                    keyboard.SetKeyState(Key.ControlLeft, (byte)WinGLNative.ControlLeftScanCode, pressed);
-                    keyboard.SetKeyState(Key.ControlRight, (byte)WinGLNative.ControlRightScanCode, pressed);
-                    processed = true;
-                    break;
-
-                case VirtualKeys.MENU:
-                    keyboard.SetKeyState(Key.AltLeft, (byte)WinGLNative.AltLeftScanCode, pressed);
-                    keyboard.SetKeyState(Key.AltRight, (byte)WinGLNative.AltRightScanCode, pressed);
-                    processed = true;
-                    break;
-
-                default:
-                    Key key;
-                    KeyMap.TryGetValue(rin.Data.Keyboard.VKey, out key);
-                    if (key == Key.Unknown)
-                        Debug.Print("Virtual key {0} ({1}) not mapped.", rin.Data.Keyboard.VKey, (int)rin.Data.Keyboard.VKey);
-                    keyboard.SetKeyState(key, BitConverter.GetBytes(rin.Data.Keyboard.MakeCode)[0], pressed);
-                    processed = true;
-                    break;
+                keyboard.SetKeyState(key, (byte)scancode, pressed);
+                processed = true;
             }
 
             lock (UpdateLock)

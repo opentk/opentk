@@ -261,6 +261,8 @@ namespace OpenTK.Input
         KeypadPlus = KeypadAdd,
         /// <summary>The keypad decimal key.</summary>
         KeypadDecimal,
+        /// <summary>The keypad period key (equivalent to KeypadDecimal).</summary>
+        KeypadPeriod = KeypadDecimal,
         /// <summary>The keypad enter key.</summary>
         KeypadEnter,
     
@@ -343,6 +345,8 @@ namespace OpenTK.Input
         // Symbols
         /// <summary>The tilde key.</summary>
         Tilde,
+        /// <summary>The grave key (equivaent to Tilde).</summary>
+        Grave = Tilde,
         /// <summary>The minus key.</summary>
         Minus,
         //Equal,
@@ -368,6 +372,8 @@ namespace OpenTK.Input
         Slash,
         /// <summary>The backslash key.</summary>
         BackSlash,
+        /// <summary>The secondary backslash key.</summary>
+        NonUSBackSlash,
         /// <summary>Indicates the last available keyboard key.</summary>
         LastKey
     }

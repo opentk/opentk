@@ -43,6 +43,11 @@ namespace OpenTK.Platform.Windows
 
         public WinFactory()
         {
+            if (System.Environment.OSVersion.Version.Major <= 4)
+            {
+                throw new PlatformNotSupportedException("OpenTK requires Windows XP or higher");
+            }
+
             if (System.Environment.OSVersion.Version.Major >= 6)
             {
                 // Enable high-dpi support
@@ -112,13 +117,7 @@ namespace OpenTK.Platform.Windows
                 {
                     if (inputDriver == null)
                     {
-                        // If Windows version is NT5 or higher, we are able to use raw input.
-                        if (System.Environment.OSVersion.Version.Major > 5 ||
-                            (System.Environment.OSVersion.Version.Major == 5 && 
-                            System.Environment.OSVersion.Version.Minor > 0))
-                            inputDriver = new WinRawInput();
-                        else
-                            inputDriver = new WMInput();
+                        inputDriver = new WinRawInput();
                     }
                     return inputDriver;
                 }

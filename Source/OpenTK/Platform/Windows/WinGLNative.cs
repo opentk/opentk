@@ -375,64 +375,16 @@ namespace OpenTK.Platform.Windows
                     // In this case, both keys will be reported as pressed.
 
                     bool extended = (lParam.ToInt64() & ExtendedBit) != 0;
-                    uint scancode = (uint)((lParam.ToInt64() >> 16) & 0xFF);
-                    Key key = Key.Unknown;
-                    switch ((VirtualKeys)wParam)
+                    short scancode = (short)((lParam.ToInt64() >> 16) & 0xFF);
+                    VirtualKeys vkey = (VirtualKeys)wParam;
+                    bool is_valid;
+                    Key key = KeyMap.TranslateKey(scancode, vkey, extended, false, out is_valid);
+
+                    if (is_valid)
                     {
-                        case VirtualKeys.SHIFT:
-                            // The behavior of this key is very strange. Unlike Control and Alt, there is no extended bit
-                            // to distinguish between left and right keys. Moreover, pressing both keys and releasing one
-                            // may result in both keys being held down (but not always).
-                            // The only reliable way to solve this was reported by BlueMonkMN at the forums: we should
-                            // check the scancodes. It looks like GLFW does the same thing, so it should be reliable.
-
-                            // Note: we release both keys when either shift is released.
-                            // Otherwise, the state of one key might be stuck to pressed.
-                            if (ShiftRightScanCode != 0 && pressed)
-                            {
-                                if (scancode == ShiftRightScanCode)
-                                    key = Input.Key.ShiftRight;
-                                else
-                                    key = Input.Key.ShiftLeft;
-                            }
-                            else
-                            {
-                                // Windows 9x and NT4.0 or key release event.
-                                keyboard.SetKey(Input.Key.ShiftLeft, ShiftLeftScanCode, pressed);
-                                keyboard.SetKey(Input.Key.ShiftRight, ShiftRightScanCode, pressed);
-                            }
-                            break;
-
-                        case VirtualKeys.CONTROL:
-                            if (extended)
-                                key = Input.Key.ControlRight;
-                            else
-                                key = Input.Key.ControlLeft;
-                            break;
-
-                        case VirtualKeys.MENU:
-                            if (extended)
-                                key = Input.Key.AltRight;
-                            else
-                                key = Input.Key.AltLeft;
-                            break;
-
-                        case VirtualKeys.RETURN:
-                            if (extended)
-                                key = Key.KeypadEnter;
-                            else
-                                key = Key.Enter;
-                            break;
-
-                        default:
-                            if (!KeyMap.ContainsKey((VirtualKeys)wParam))
-                                Debug.Print("Virtual key {0} ({1}) not mapped.", (VirtualKeys)wParam, (long)lParam);
-                            else
-                                key = KeyMap[(VirtualKeys)wParam];
-                            break;
+                        keyboard.SetKey(key, (byte)scancode, pressed);
                     }
 
-                    keyboard.SetKey(key, scancode, pressed);
                     return IntPtr.Zero;
 
                 case WindowMessage.SYSCHAR:
