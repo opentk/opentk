@@ -47,7 +47,7 @@ namespace OpenTK.Platform.SDL2
 
             // Number keys (0-9)
             Add(Code.SDL_SCANCODE_0, Key.Number0);
-            for (int i = 1; i < 9; i++)
+            for (int i = 0; i < 9; i++)
             {
                 Add(Code.SDL_SCANCODE_1 + i, Key.Number1 + i);
             }
@@ -75,7 +75,7 @@ namespace OpenTK.Platform.SDL2
 
             Add(Code.SDL_SCANCODE_SEMICOLON, Key.Semicolon);      // Varies by keyboard, ;: on Win2K/US
             Add(Code.SDL_SCANCODE_SLASH, Key.Slash);          // Varies by keyboard, /? on Win2K/US
-            //Add(Code., Key.Tilde);          // Varies by keyboard, `~ on Win2K/US
+            Add(Code.SDL_SCANCODE_GRAVE, Key.Tilde);          // Varies by keyboard, `~ on Win2K/US
             Add(Code.SDL_SCANCODE_LEFTBRACKET, Key.BracketLeft);    // Varies by keyboard, [{ on Win2K/US
             Add(Code.SDL_SCANCODE_BACKSLASH, Key.BackSlash);      // Varies by keyboard, \| on Win2K/US
             Add(Code.SDL_SCANCODE_RIGHTBRACKET, Key.BracketRight);   // Varies by keyboard, ]} on Win2K/US
