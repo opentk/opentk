@@ -34,14 +34,16 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using OpenTK.Graphics;
-#if ANDROID || IPHONE || MINIMAL
-using OpenTK.Minimal;
-#endif
 
 namespace OpenTK.Platform.MacOS
 {
     using Carbon;
+#if ANDROID || IPHONE || MINIMAL
+    using Minimal;
     using Graphics = OpenTK.Minimal.Graphics;
+#else
+    using Graphics = System.Drawing.Graphics;
+#endif
 
     class CarbonGLNative : INativeWindow
     {
