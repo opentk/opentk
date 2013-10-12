@@ -31,15 +31,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-#if !MINIMAL
 using System.Drawing;
-#endif
 using System.Text;
+using OpenTK.Graphics;
+#if ANDROID || IPHONE || MINIMAL
+using OpenTK.Minimal;
+#endif
 
 namespace OpenTK.Platform.MacOS
 {
     using Carbon;
-    using Graphics;
+    using Graphics = OpenTK.Minimal.Graphics;
 
     class CarbonGLNative : INativeWindow
     {
@@ -755,11 +757,7 @@ namespace OpenTK.Platform.MacOS
                 int index;
                 
                 bitmap = new Bitmap(128, 128);
-#if MINIMAL
-                using (OpenTK.Minimal.Graphics g = OpenTK.Minimal.Graphics.FromImage(bitmap))
-#else
-                using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
-#endif
+                using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     g.DrawImage(icon.ToBitmap(), 0, 0, 128, 128);
                 }
