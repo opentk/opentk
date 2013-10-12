@@ -1526,6 +1526,7 @@ namespace OpenTK.Platform.Windows
             REGSAM samDesired,
             out PHKEY phkResult);
 
+        [DllImport("Advapi32.dll")]
         internal static extern int RegGetValue(
             HKEY hkey,
             [MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpSubKey,
