@@ -40,11 +40,6 @@ namespace OpenTK.Platform.SDL2
 	{
 		#region SDL2# Variables
 		
-		/// <summary>
-		/// Used by DllImport to load the native library.
-		/// </summary>
-		private const string nativeLibName = "SDL2.dll";
-		
 		#endregion
 		
 		#region SDL_stdinc.h
