@@ -441,11 +441,11 @@ namespace OpenTK
         /// </summary>
         /// <param name="location">The top-left corner of the RectangleF.</param>
         /// <param name="SizeF">The width and height of the RectangleF.</param>
-        public RectangleF(PointF location, SizeF SizeF)
+        public RectangleF(PointF location, SizeF size)
             : this()
         {
             Location = location;
-            SizeF = SizeF;
+            Size = size;
         }
 
         /// <summary>
@@ -1611,7 +1611,7 @@ namespace OpenTK
         {
             Width = width;
             Height = height;
-            stride = stride;
+            Stride = stride;
         }
 
         public IntPtr Scan0 { get { return IntPtr.Zero; } }
