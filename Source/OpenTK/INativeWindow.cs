@@ -28,9 +28,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-#if !MINIMAL
 using System.Drawing;
-#endif
 using System.Text;
 using OpenTK.Platform;
 
