@@ -29,7 +29,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+#if !(ANDROID || IPHONE || MINIMAL)
 using Microsoft.Win32;
+#endif
 using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows

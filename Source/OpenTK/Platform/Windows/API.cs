@@ -34,6 +34,8 @@ namespace OpenTK.Platform.Windows
     using HICON = System.IntPtr;
     using HBRUSH = System.IntPtr;
     using HCURSOR = System.IntPtr;
+    using HKEY = System.IntPtr;
+    using PHKEY = System.IntPtr;
 
     using LRESULT = System.IntPtr;
     using LPVOID = System.IntPtr;
@@ -70,6 +72,8 @@ namespace OpenTK.Platform.Windows
     using UINT_PTR = System.UIntPtr;
 
     using TIMERPROC = Functions.TimerProc;
+
+    using REGSAM = System.UInt32;
 
     #endregion
 
@@ -1511,6 +1515,27 @@ namespace OpenTK.Platform.Windows
         public static extern DWORD_PTR SHGetFileInfo(LPCTSTR pszPath, DWORD dwFileAttributes, ref SHFILEINFO psfi, UINT cbFileInfo, ShGetFileIconFlags uFlags);
 
         #endregion
+
+        #region Registry Functions
+
+        [DllImport("Advapi32.dll")]
+        internal static extern int RegOpenKeyEx(
+            HKEY hKey,
+            [MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpSubKey,
+            DWORD ulOptions,
+            REGSAM samDesired,
+            out PHKEY phkResult);
+
+        internal static extern int RegGetValue(
+            HKEY hkey,
+            [MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpSubKey,
+            [MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpValue,
+            DWORD dwFlags,
+            out DWORD pdwType,
+            StringBuilder pvData,
+            ref DWORD pcbData);
+
+        #endregion
     }
 
     #region --- Constants ---
@@ -1604,6 +1629,8 @@ namespace OpenTK.Platform.Windows
             internal const int ENUM_CURRENT_SETTINGS = -1;
 
             internal static readonly IntPtr MESSAGE_ONLY = new IntPtr(-3);
+
+            internal static readonly IntPtr HKEY_LOCAL_MACHINE = new IntPtr(0x80000002);
         }
 
         #endregion
@@ -2845,6 +2872,46 @@ namespace OpenTK.Platform.Windows
         public Guid ClassGuid;
         public char dbcc_name;
     }
+
+    #endregion
+
+    #region Registry
+
+#if ANDROID || IPHONE || MINIMAL
+
+    internal class RegistryKey
+    {
+        IntPtr hkey;
+
+        internal RegistryKey(IntPtr hkey)
+        {
+            this.hkey = hkey;
+        }
+
+        internal string GetValue(string subkey)
+        {
+            int type;
+            int data_size = 255;
+            StringBuilder data = new StringBuilder(data_size);
+            Functions.RegGetValue(hkey, subkey, "", 0xffff, out type, data, ref data_size);
+            return data.ToString();
+        }
+
+        internal RegistryKey OpenSubKey(string subkey)
+        {
+            IntPtr result;
+            Functions.RegOpenKeyEx(hkey, subkey, 0, 1, out result);
+            return new RegistryKey(result);
+        }
+    }
+
+    internal static class Registry
+    {
+        internal static readonly RegistryKey LocalMachine =
+            new RegistryKey(Constants.HKEY_LOCAL_MACHINE);
+    }
+
+#endif
 
     #endregion
 
