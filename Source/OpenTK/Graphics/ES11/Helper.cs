@@ -12,7 +12,7 @@ namespace OpenTK.Graphics.ES11
 
     public sealed partial class GL : GraphicsBindingsBase
     {
-        const string Library = "libGLES.dll";
+        const string Library = "GLESv1_CM";
         static readonly object sync_root = new object();
 
         #region --- Protected Members ---
