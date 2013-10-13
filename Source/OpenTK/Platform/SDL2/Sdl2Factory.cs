@@ -76,6 +76,8 @@ namespace OpenTK.Platform.SDL2
                     current = OpenTK.Platform.X11.Glx.GetCurrentContext();
                 else if (Configuration.RunningOnMacOS)
                     current = OpenTK.Platform.MacOS.Cgl.GetCurrentContext();
+                else if (Configuration.RunningOnAndroid)
+                    current = OpenTK.Platform.Egl.Egl.GetCurrentContext();
                 else
                     throw new NotSupportedException("Unknown platform, please report to http://www.opentk.com");
 
