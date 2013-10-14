@@ -254,6 +254,15 @@ namespace OpenTK.Platform.SDL2
 
         #endregion
 
+        #region Public Members
+
+        public static ContextHandle GetCurrentContext()
+        {
+            return new ContextHandle(SDL.GL.GetCurrentContext());
+        }
+
+        #endregion
+
         #region GraphicsContextBase Members
 
         public override void SwapBuffers()

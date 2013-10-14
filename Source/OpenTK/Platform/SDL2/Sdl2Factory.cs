@@ -69,19 +69,7 @@ namespace OpenTK.Platform.SDL2
             // so we need to implement our own.
             return (GraphicsContext.GetCurrentContextDelegate)delegate
             {
-                IntPtr current;
-                if (Configuration.RunningOnWindows)
-                    current = OpenTK.Platform.Windows.Wgl.Imports.GetCurrentContext();
-                else if (Configuration.RunningOnX11)
-                    current = OpenTK.Platform.X11.Glx.GetCurrentContext();
-                else if (Configuration.RunningOnMacOS)
-                    current = OpenTK.Platform.MacOS.Cgl.GetCurrentContext();
-                else if (Configuration.RunningOnAndroid)
-                    current = OpenTK.Platform.Egl.Egl.GetCurrentContext();
-                else
-                    throw new NotSupportedException("Unknown platform, please report to http://www.opentk.com");
-
-                return new ContextHandle(current);
+                return Sdl2GraphicsContext.GetCurrentContext();
             };
         }
 
