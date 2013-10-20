@@ -823,6 +823,10 @@
       <!-- Note: ShaderBinaryFormat must be queried at runtime, using
       GetInteger(GetPName.ShaderBinaryFormats) -->
     </enum>
+
+    <enum name="FramebufferObject">
+      <token name="StencilIndex" value="0x1901" />
+    </enum>
     
   </add>
 

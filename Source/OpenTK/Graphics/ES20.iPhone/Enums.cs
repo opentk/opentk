@@ -168,6 +168,7 @@ namespace OpenTK.Graphics.ES20
         ColorExt = ((int)0x1800),
         DepthExt = ((int)0x1801),
         StencilExt = ((int)0x1802),
+        StencilIndex = ((int)0x1901),
         DepthComponent = ((int)0x1902),
         RedExt = ((int)0x1903),
         Alpha = ((int)0x1906),
@@ -722,6 +723,7 @@ namespace OpenTK.Graphics.ES20
     {
         None = ((int)0),
         InvalidFramebufferOperation = ((int)0x0506),
+        StencilIndex = ((int)0x1901),
         Rgba4 = ((int)0x8056),
         Rgb5A1 = ((int)0x8057),
         DepthComponent16 = ((int)0x81A5),
