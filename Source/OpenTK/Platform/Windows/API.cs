@@ -1631,7 +1631,7 @@ namespace OpenTK.Platform.Windows
 
             internal static readonly IntPtr MESSAGE_ONLY = new IntPtr(-3);
 
-            internal static readonly IntPtr HKEY_LOCAL_MACHINE = new IntPtr(0x80000002);
+            internal static readonly IntPtr HKEY_LOCAL_MACHINE = new IntPtr(unchecked((int)0x80000002));
         }
 
         #endregion
