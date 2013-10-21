@@ -238,7 +238,8 @@ namespace Bind
                         // "(Const)VoidPointer" -> "void*"
                         GLTypes.Add(words[0], "void*");
                     }
-                    else if (words[0] == "CharPointer" || words[0] == "charPointerARB")
+                    else if (words[0] == "CharPointer" || words[0] == "charPointerARB" ||
+                             words[0] == "ConstCharPointer")
                     {
                         // The typematching logic cannot handle pointers to pointers, e.g. CharPointer* -> char** -> string* -> string[].
                         // Hence we give it a push.
