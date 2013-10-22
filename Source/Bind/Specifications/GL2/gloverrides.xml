@@ -924,6 +924,24 @@
       </param>
     </function>
     
+    <function name="FramebufferParameter" extension="Core">
+      <param name="target">
+        <type>FramebufferTarget</type>
+      </param>
+      <param name="pname">
+        <type>FramebufferDefaultParameter</type>
+      </param>
+    </function>
+
+    <function name="GetFramebufferParameter" extension="Core">
+      <param name="target">
+        <type>FramebufferTarget</type>
+      </param>
+      <param name="pname">
+        <type>FramebufferDefaultParameter</type>
+      </param>
+    </function>
+        
     <function name="GetProgramInterfaceiv" extension="Core">
       <param name="programInterface">
         <type>ProgramInterface</type>
@@ -2006,6 +2024,14 @@
       <token name="COLOR_ATTACHMENT9_EXT" value="0x8CE9" />
       <token name="DEPTH_ATTACHMENT_EXT" value="0x8D00" />
       <token name="STENCIL_ATTACHMENT_EXT" value="0x8D20" />
+      <use enum="VERSION_1_1" token="FRONT_LEFT" />
+      <use enum="VERSION_1_1" token="FRONT_RIGHT" />
+      <use enum="VERSION_1_1" token="BACK_LEFT" />
+      <use enum="VERSION_1_1" token="BACK_RIGHT" />
+      <use enum="VERSION_1_1" token="AUX0" />
+      <use enum="VERSION_1_1" token="AUX1" />
+      <use enum="VERSION_1_1" token="AUX2" />
+      <use enum="VERSION_1_1" token="AUX3" />
     </enum>
     <enum name="FramebufferAttachmentComponentType">
       <use enum="DataType" token="FLOAT" />
@@ -2018,6 +2044,13 @@
       <use enum="MatrixMode" token="TEXTURE" />
       <use enum="ARB_framebuffer_object" token="RENDERBUFFER" />
       <token name="NONE" value="0" />
+    </enum>
+    <enum name="FramebufferDefaultParameter">
+      <use enum="VERSION_4_3" token="FRAMEBUFFER_DEFAULT_WIDTH" />
+      <use enum="VERSION_4_3" token="FRAMEBUFFER_DEFAULT_HEIGHT" />
+      <use enum="VERSION_4_3" token="FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS" />
+      <use enum="VERSION_4_3" token="FRAMEBUFFER_DEFAULT_SAMPLES" />
+      <use enum="VERSION_4_3" token="FRAMEBUFFER_DEFAULT_LAYERS" />
     </enum>
     <enum name="FramebufferErrorCode">
       <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_COMPLETE" />

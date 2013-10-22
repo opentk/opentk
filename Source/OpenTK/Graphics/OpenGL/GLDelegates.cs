@@ -1665,7 +1665,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void FramebufferDrawBuffersEXT(UInt32 framebuffer, Int32 n, OpenTK.Graphics.OpenGL.DrawBufferMode* bufs);
             internal unsafe static FramebufferDrawBuffersEXT glFramebufferDrawBuffersEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FramebufferParameteri(OpenTK.Graphics.OpenGL.ArbFramebufferNoAttachments target, OpenTK.Graphics.OpenGL.ArbFramebufferNoAttachments pname, Int32 param);
+            internal delegate void FramebufferParameteri(OpenTK.Graphics.OpenGL.FramebufferTarget target, OpenTK.Graphics.OpenGL.FramebufferDefaultParameter pname, Int32 param);
             internal static FramebufferParameteri glFramebufferParameteri;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FramebufferReadBufferEXT(UInt32 framebuffer, OpenTK.Graphics.OpenGL.ReadBufferMode mode);
@@ -2088,7 +2088,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetFramebufferAttachmentParameterivEXT(OpenTK.Graphics.OpenGL.FramebufferTarget target, OpenTK.Graphics.OpenGL.FramebufferAttachment attachment, OpenTK.Graphics.OpenGL.FramebufferParameterName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetFramebufferAttachmentParameterivEXT glGetFramebufferAttachmentParameterivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetFramebufferParameteriv(OpenTK.Graphics.OpenGL.ArbFramebufferNoAttachments target, OpenTK.Graphics.OpenGL.ArbFramebufferNoAttachments pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetFramebufferParameteriv(OpenTK.Graphics.OpenGL.FramebufferTarget target, OpenTK.Graphics.OpenGL.FramebufferDefaultParameter pname, [OutAttribute] Int32* @params);
             internal unsafe static GetFramebufferParameteriv glGetFramebufferParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetFramebufferParameterivEXT(UInt32 framebuffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess pname, [OutAttribute] Int32* @params);

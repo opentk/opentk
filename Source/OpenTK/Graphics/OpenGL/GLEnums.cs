@@ -22222,7 +22222,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.FramebufferParameter, GL.GetFramebufferParameter, GL.Ext.GetNamedFramebufferParameter, GL.Ext.NamedFramebufferParameter
+    /// Used in GL.Ext.GetNamedFramebufferParameter, GL.Ext.NamedFramebufferParameter
     /// </summary>
     public enum ArbFramebufferNoAttachments : int
     {
@@ -35356,6 +35356,38 @@ namespace OpenTK.Graphics.OpenGL
     public enum FramebufferAttachment : int
     {
         /// <summary>
+        /// Original was GL_FRONT_LEFT = 0x0400
+        /// </summary>
+        FrontLeft = ((int)0x0400)        ,
+        /// <summary>
+        /// Original was GL_FRONT_RIGHT = 0x0401
+        /// </summary>
+        FrontRight = ((int)0x0401)        ,
+        /// <summary>
+        /// Original was GL_BACK_LEFT = 0x0402
+        /// </summary>
+        BackLeft = ((int)0x0402)        ,
+        /// <summary>
+        /// Original was GL_BACK_RIGHT = 0x0403
+        /// </summary>
+        BackRight = ((int)0x0403)        ,
+        /// <summary>
+        /// Original was GL_AUX0 = 0x0409
+        /// </summary>
+        Aux0 = ((int)0x0409)        ,
+        /// <summary>
+        /// Original was GL_AUX1 = 0x040A
+        /// </summary>
+        Aux1 = ((int)0x040A)        ,
+        /// <summary>
+        /// Original was GL_AUX2 = 0x040B
+        /// </summary>
+        Aux2 = ((int)0x040B)        ,
+        /// <summary>
+        /// Original was GL_AUX3 = 0x040C
+        /// </summary>
+        Aux3 = ((int)0x040C)        ,
+        /// <summary>
         /// Original was GL_DEPTH_STENCIL_ATTACHMENT = 0x821A
         /// </summary>
         DepthStencilAttachment = ((int)0x821A)        ,
@@ -35552,6 +35584,33 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
+    /// Used in GL.FramebufferParameter, GL.GetFramebufferParameter
+    /// </summary>
+    public enum FramebufferDefaultParameter : int
+    {
+        /// <summary>
+        /// Original was GL_FRAMEBUFFER_DEFAULT_WIDTH = 0x9310
+        /// </summary>
+        FramebufferDefaultWidth = ((int)0x9310)        ,
+        /// <summary>
+        /// Original was GL_FRAMEBUFFER_DEFAULT_HEIGHT = 0x9311
+        /// </summary>
+        FramebufferDefaultHeight = ((int)0x9311)        ,
+        /// <summary>
+        /// Original was GL_FRAMEBUFFER_DEFAULT_LAYERS = 0x9312
+        /// </summary>
+        FramebufferDefaultLayers = ((int)0x9312)        ,
+        /// <summary>
+        /// Original was GL_FRAMEBUFFER_DEFAULT_SAMPLES = 0x9313
+        /// </summary>
+        FramebufferDefaultSamples = ((int)0x9313)        ,
+        /// <summary>
+        /// Original was GL_FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS = 0x9314
+        /// </summary>
+        FramebufferDefaultFixedSampleLocations = ((int)0x9314)        ,
+    }
+
+    /// <summary>
     /// Not used directly.
     /// </summary>
     public enum FramebufferErrorCode : int
@@ -35714,7 +35773,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.FramebufferTexture, GL.Arb.FramebufferTextureFace, GL.Arb.FramebufferTextureLayer, GL.BindFramebuffer, GL.CheckFramebufferStatus, GL.FramebufferRenderbuffer, GL.FramebufferTexture, GL.FramebufferTexture1D, GL.FramebufferTexture2D, GL.FramebufferTexture3D, GL.FramebufferTextureLayer, GL.GetFramebufferAttachmentParameter, GL.Ext.BindFramebuffer, GL.Ext.CheckFramebufferStatus, GL.Ext.CheckNamedFramebufferStatus, GL.Ext.FramebufferRenderbuffer, GL.Ext.FramebufferTexture1D, GL.Ext.FramebufferTexture2D, GL.Ext.FramebufferTexture3D, GL.Ext.FramebufferTexture, GL.Ext.FramebufferTextureFace, GL.Ext.FramebufferTextureLayer, GL.Ext.GetFramebufferAttachmentParameter
+    /// Used in GL.Arb.FramebufferTexture, GL.Arb.FramebufferTextureFace, GL.Arb.FramebufferTextureLayer, GL.BindFramebuffer, GL.CheckFramebufferStatus, GL.FramebufferParameter, GL.FramebufferRenderbuffer, GL.FramebufferTexture, GL.FramebufferTexture1D, GL.FramebufferTexture2D, GL.FramebufferTexture3D, GL.FramebufferTextureLayer, GL.GetFramebufferAttachmentParameter, GL.GetFramebufferParameter, GL.Ext.BindFramebuffer, GL.Ext.CheckFramebufferStatus, GL.Ext.CheckNamedFramebufferStatus, GL.Ext.FramebufferRenderbuffer, GL.Ext.FramebufferTexture1D, GL.Ext.FramebufferTexture2D, GL.Ext.FramebufferTexture3D, GL.Ext.FramebufferTexture, GL.Ext.FramebufferTextureFace, GL.Ext.FramebufferTextureLayer, GL.Ext.GetFramebufferAttachmentParameter
     /// </summary>
     public enum FramebufferTarget : int
     {
