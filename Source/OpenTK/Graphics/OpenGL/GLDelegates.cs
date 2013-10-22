@@ -1839,7 +1839,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate Int32 GenVertexShadersEXT(UInt32 range);
             internal static GenVertexShadersEXT glGenVertexShadersEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetActiveAtomicCounterBufferiv(UInt32 program, UInt32 bufferIndex, OpenTK.Graphics.OpenGL.ArbShaderAtomicCounters pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetActiveAtomicCounterBufferiv(UInt32 program, UInt32 bufferIndex, OpenTK.Graphics.OpenGL.AtomicCounterBufferParameter pname, [OutAttribute] Int32* @params);
             internal unsafe static GetActiveAtomicCounterBufferiv glGetActiveAtomicCounterBufferiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetActiveAttrib(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.OpenGL.ActiveAttribType* type, [OutAttribute] StringBuilder name);
@@ -2310,7 +2310,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetNamedFramebufferParameterivEXT(UInt32 framebuffer, OpenTK.Graphics.OpenGL.ArbFramebufferNoAttachments pname, [OutAttribute] Int32* @params);
             internal unsafe static GetNamedFramebufferParameterivEXT glGetNamedFramebufferParameterivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetNamedProgramivEXT(UInt32 program, OpenTK.Graphics.OpenGL.ExtDirectStateAccess target, OpenTK.Graphics.OpenGL.ExtDirectStateAccess pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetNamedProgramivEXT(UInt32 program, OpenTK.Graphics.OpenGL.ExtDirectStateAccess target, OpenTK.Graphics.OpenGL.ProgramProperty pname, [OutAttribute] Int32* @params);
             internal unsafe static GetNamedProgramivEXT glGetNamedProgramivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetNamedProgramLocalParameterdvEXT(UInt32 program, OpenTK.Graphics.OpenGL.ExtDirectStateAccess target, UInt32 index, [OutAttribute] Double* @params);
@@ -2529,7 +2529,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetProgramInfoLog(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infoLog);
             internal unsafe static GetProgramInfoLog glGetProgramInfoLog;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetProgramInterfaceiv(UInt32 program, OpenTK.Graphics.OpenGL.ArbProgramInterfaceQuery programInterface, OpenTK.Graphics.OpenGL.ArbProgramInterfaceQuery pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetProgramInterfaceiv(UInt32 program, OpenTK.Graphics.OpenGL.ProgramInterface programInterface, OpenTK.Graphics.OpenGL.ProgramInterfaceParameter pname, [OutAttribute] Int32* @params);
             internal unsafe static GetProgramInterfaceiv glGetProgramInterfaceiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetProgramiv(UInt32 program, OpenTK.Graphics.OpenGL.ProgramParameter pname, [OutAttribute] Int32* @params);
@@ -2571,19 +2571,19 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetProgramPipelineiv(UInt32 pipeline, OpenTK.Graphics.OpenGL.ProgramPipelineParameter pname, [OutAttribute] Int32* @params);
             internal unsafe static GetProgramPipelineiv glGetProgramPipelineiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 GetProgramResourceIndex(UInt32 program, OpenTK.Graphics.OpenGL.ArbProgramInterfaceQuery programInterface, String name);
+            internal delegate Int32 GetProgramResourceIndex(UInt32 program, OpenTK.Graphics.OpenGL.ProgramInterface programInterface, String name);
             internal static GetProgramResourceIndex glGetProgramResourceIndex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetProgramResourceiv(UInt32 program, OpenTK.Graphics.OpenGL.ArbProgramInterfaceQuery programInterface, UInt32 index, Int32 propCount, OpenTK.Graphics.OpenGL.ArbProgramInterfaceQuery* props, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetProgramResourceiv(UInt32 program, OpenTK.Graphics.OpenGL.ProgramInterface programInterface, UInt32 index, Int32 propCount, OpenTK.Graphics.OpenGL.ProgramProperty* props, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* @params);
             internal unsafe static GetProgramResourceiv glGetProgramResourceiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 GetProgramResourceLocation(UInt32 program, OpenTK.Graphics.OpenGL.ArbProgramInterfaceQuery programInterface, String name);
+            internal delegate Int32 GetProgramResourceLocation(UInt32 program, OpenTK.Graphics.OpenGL.ProgramInterface programInterface, String name);
             internal static GetProgramResourceLocation glGetProgramResourceLocation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 GetProgramResourceLocationIndex(UInt32 program, OpenTK.Graphics.OpenGL.ArbProgramInterfaceQuery programInterface, String name);
+            internal delegate Int32 GetProgramResourceLocationIndex(UInt32 program, OpenTK.Graphics.OpenGL.ProgramInterface programInterface, String name);
             internal static GetProgramResourceLocationIndex glGetProgramResourceLocationIndex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetProgramResourceName(UInt32 program, OpenTK.Graphics.OpenGL.ArbProgramInterfaceQuery programInterface, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder name);
+            internal unsafe delegate void GetProgramResourceName(UInt32 program, OpenTK.Graphics.OpenGL.ProgramInterface programInterface, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder name);
             internal unsafe static GetProgramResourceName glGetProgramResourceName;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetProgramStageiv(UInt32 program, OpenTK.Graphics.OpenGL.ShaderType shadertype, OpenTK.Graphics.OpenGL.ProgramStageParameter pname, [OutAttribute] Int32* values);
@@ -3522,7 +3522,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void MatrixTranslatefEXT(OpenTK.Graphics.OpenGL.MatrixMode mode, Single x, Single y, Single z);
             internal static MatrixTranslatefEXT glMatrixTranslatefEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MemoryBarrier(UInt32 barriers);
+            internal delegate void MemoryBarrier(OpenTK.Graphics.OpenGL.MemoryBarrierFlags barriers);
             internal static MemoryBarrier glMemoryBarrier;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void MemoryBarrierEXT(UInt32 barriers);
@@ -4530,7 +4530,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void ProgramParameter4fvNV(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, UInt32 index, Single* v);
             internal unsafe static ProgramParameter4fvNV glProgramParameter4fvNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ProgramParameteri(UInt32 program, OpenTK.Graphics.OpenGL.AssemblyProgramParameterArb pname, Int32 value);
+            internal delegate void ProgramParameteri(UInt32 program, OpenTK.Graphics.OpenGL.ProgramParameterPName pname, Int32 value);
             internal static ProgramParameteri glProgramParameteri;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ProgramParameteriARB(UInt32 program, OpenTK.Graphics.OpenGL.AssemblyProgramParameterArb pname, Int32 value);

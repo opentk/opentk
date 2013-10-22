@@ -243,6 +243,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER = 0x8A46
         /// </summary>
         UniformBlockReferencedByFragmentShader = ((int)0x8A46)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_COMPUTE_SHADER = 0x90EC
+        /// </summary>
+        UniformBlockReferencedByComputeShader = ((int)0x90EC)        ,
     }
 
     /// <summary>
@@ -282,6 +286,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_UNIFORM_IS_ROW_MAJOR = 0x8A3E
         /// </summary>
         UniformIsRowMajor = ((int)0x8A3E)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_ATOMIC_COUNTER_BUFFER_INDEX = 0x92DA
+        /// </summary>
+        UniformAtomicCounterBufferIndex = ((int)0x92DA)        ,
     }
 
     /// <summary>
@@ -398,10 +406,6 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         FloatMat2x4 = ((int)0x8B66)        ,
         /// <summary>
-        /// Original was GL_FLOAT_MAT3x2 = 0x8B67
-        /// </summary>
-        FloatMat3x2 = ((int)0x8B67)        ,
-        /// <summary>
         /// Original was GL_FLOAT_MAT3x4 = 0x8B68
         /// </summary>
         FloatMat3x4 = ((int)0x8B68)        ,
@@ -514,42 +518,6 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         UnsignedIntSamplerBuffer = ((int)0x8DD8)        ,
         /// <summary>
-        /// Original was GL_DOUBLE_MAT2 = 0x8F46
-        /// </summary>
-        DoubleMat2 = ((int)0x8F46)        ,
-        /// <summary>
-        /// Original was GL_DOUBLE_MAT3 = 0x8F47
-        /// </summary>
-        DoubleMat3 = ((int)0x8F47)        ,
-        /// <summary>
-        /// Original was GL_DOUBLE_MAT4 = 0x8F48
-        /// </summary>
-        DoubleMat4 = ((int)0x8F48)        ,
-        /// <summary>
-        /// Original was GL_DOUBLE_MAT2x3 = 0x8F49
-        /// </summary>
-        DoubleMat2x3 = ((int)0x8F49)        ,
-        /// <summary>
-        /// Original was GL_DOUBLE_MAT2x4 = 0x8F4A
-        /// </summary>
-        DoubleMat2x4 = ((int)0x8F4A)        ,
-        /// <summary>
-        /// Original was GL_DOUBLE_MAT3x2 = 0x8F4B
-        /// </summary>
-        DoubleMat3x2 = ((int)0x8F4B)        ,
-        /// <summary>
-        /// Original was GL_DOUBLE_MAT3x4 = 0x8F4C
-        /// </summary>
-        DoubleMat3x4 = ((int)0x8F4C)        ,
-        /// <summary>
-        /// Original was GL_DOUBLE_MAT4x2 = 0x8F4D
-        /// </summary>
-        DoubleMat4x2 = ((int)0x8F4D)        ,
-        /// <summary>
-        /// Original was GL_DOUBLE_MAT4x3 = 0x8F4E
-        /// </summary>
-        DoubleMat4x3 = ((int)0x8F4E)        ,
-        /// <summary>
         /// Original was GL_DOUBLE_VEC2 = 0x8FFC
         /// </summary>
         DoubleVec2 = ((int)0x8FFC)        ,
@@ -578,6 +546,138 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         UnsignedIntSamplerCubeMapArray = ((int)0x900F)        ,
         /// <summary>
+        /// Original was GL_IMAGE_1D = 0x904C
+        /// </summary>
+        Image1D = ((int)0x904C)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_2D = 0x904D
+        /// </summary>
+        Image2D = ((int)0x904D)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_3D = 0x904E
+        /// </summary>
+        Image3D = ((int)0x904E)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_2D_RECT = 0x904F
+        /// </summary>
+        Image2DRect = ((int)0x904F)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_CUBE = 0x9050
+        /// </summary>
+        ImageCube = ((int)0x9050)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_BUFFER = 0x9051
+        /// </summary>
+        ImageBuffer = ((int)0x9051)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_1D_ARRAY = 0x9052
+        /// </summary>
+        Image1DArray = ((int)0x9052)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_2D_ARRAY = 0x9053
+        /// </summary>
+        Image2DArray = ((int)0x9053)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_CUBE_MAP_ARRAY = 0x9054
+        /// </summary>
+        ImageCubeMapArray = ((int)0x9054)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_2D_MULTISAMPLE = 0x9055
+        /// </summary>
+        Image2DMultisample = ((int)0x9055)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_2D_MULTISAMPLE_ARRAY = 0x9056
+        /// </summary>
+        Image2DMultisampleArray = ((int)0x9056)        ,
+        /// <summary>
+        /// Original was GL_INT_IMAGE_1D = 0x9057
+        /// </summary>
+        IntImage1D = ((int)0x9057)        ,
+        /// <summary>
+        /// Original was GL_INT_IMAGE_2D = 0x9058
+        /// </summary>
+        IntImage2D = ((int)0x9058)        ,
+        /// <summary>
+        /// Original was GL_INT_IMAGE_3D = 0x9059
+        /// </summary>
+        IntImage3D = ((int)0x9059)        ,
+        /// <summary>
+        /// Original was GL_INT_IMAGE_2D_RECT = 0x905A
+        /// </summary>
+        IntImage2DRect = ((int)0x905A)        ,
+        /// <summary>
+        /// Original was GL_INT_IMAGE_CUBE = 0x905B
+        /// </summary>
+        IntImageCube = ((int)0x905B)        ,
+        /// <summary>
+        /// Original was GL_INT_IMAGE_BUFFER = 0x905C
+        /// </summary>
+        IntImageBuffer = ((int)0x905C)        ,
+        /// <summary>
+        /// Original was GL_INT_IMAGE_1D_ARRAY = 0x905D
+        /// </summary>
+        IntImage1DArray = ((int)0x905D)        ,
+        /// <summary>
+        /// Original was GL_INT_IMAGE_2D_ARRAY = 0x905E
+        /// </summary>
+        IntImage2DArray = ((int)0x905E)        ,
+        /// <summary>
+        /// Original was GL_INT_IMAGE_CUBE_MAP_ARRAY = 0x905F
+        /// </summary>
+        IntImageCubeMapArray = ((int)0x905F)        ,
+        /// <summary>
+        /// Original was GL_INT_IMAGE_2D_MULTISAMPLE = 0x9060
+        /// </summary>
+        IntImage2DMultisample = ((int)0x9060)        ,
+        /// <summary>
+        /// Original was GL_INT_IMAGE_2D_MULTISAMPLE_ARRAY = 0x9061
+        /// </summary>
+        IntImage2DMultisampleArray = ((int)0x9061)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_IMAGE_1D = 0x9062
+        /// </summary>
+        UnsignedIntImage1D = ((int)0x9062)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_IMAGE_2D = 0x9063
+        /// </summary>
+        UnsignedIntImage2D = ((int)0x9063)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_IMAGE_3D = 0x9064
+        /// </summary>
+        UnsignedIntImage3D = ((int)0x9064)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_IMAGE_2D_RECT = 0x9065
+        /// </summary>
+        UnsignedIntImage2DRect = ((int)0x9065)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_IMAGE_CUBE = 0x9066
+        /// </summary>
+        UnsignedIntImageCube = ((int)0x9066)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_IMAGE_BUFFER = 0x9067
+        /// </summary>
+        UnsignedIntImageBuffer = ((int)0x9067)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_IMAGE_1D_ARRAY = 0x9068
+        /// </summary>
+        UnsignedIntImage1DArray = ((int)0x9068)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_IMAGE_2D_ARRAY = 0x9069
+        /// </summary>
+        UnsignedIntImage2DArray = ((int)0x9069)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_IMAGE_CUBE_MAP_ARRAY = 0x906A
+        /// </summary>
+        UnsignedIntImageCubeMapArray = ((int)0x906A)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE = 0x906B
+        /// </summary>
+        UnsignedIntImage2DMultisample = ((int)0x906B)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE_ARRAY = 0x906C
+        /// </summary>
+        UnsignedIntImage2DMultisampleArray = ((int)0x906C)        ,
+        /// <summary>
         /// Original was GL_SAMPLER_2D_MULTISAMPLE = 0x9108
         /// </summary>
         Sampler2DMultisample = ((int)0x9108)        ,
@@ -601,6 +701,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY = 0x910D
         /// </summary>
         UnsignedIntSampler2DMultisampleArray = ((int)0x910D)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_ATOMIC_COUNTER = 0x92DB
+        /// </summary>
+        UnsignedIntAtomicCounter = ((int)0x92DB)        ,
     }
 
     /// <summary>
@@ -23861,7 +23965,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetProgramInterface, GL.GetProgramResourceIndex, GL.GetProgramResource, GL.GetProgramResourceLocation, GL.GetProgramResourceLocationIndex, GL.GetProgramResourceName
+    /// Not used directly.
     /// </summary>
     public enum ArbProgramInterfaceQuery : int
     {
@@ -24224,7 +24328,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetActiveAtomicCounterBuffer
+    /// Not used directly.
     /// </summary>
     public enum ArbShaderAtomicCounters : int
     {
@@ -27240,7 +27344,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetProgram, GL.Arb.GetProgramString, GL.Arb.ProgramParameter, GL.ProgramParameter, GL.Ext.ProgramParameter, GL.NV.GetProgramParameter, GL.NV.GetTrackMatrix
+    /// Used in GL.Arb.GetProgram, GL.Arb.GetProgramString, GL.Arb.ProgramParameter, GL.Ext.ProgramParameter, GL.NV.GetProgramParameter, GL.NV.GetTrackMatrix
     /// </summary>
     public enum AssemblyProgramParameterArb : int
     {
@@ -28302,6 +28406,53 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_VERTEX_SOURCE_ATI = 0x8774
         /// </summary>
         VertexSourceAti = ((int)0x8774)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetActiveAtomicCounterBuffer
+    /// </summary>
+    public enum AtomicCounterBufferParameter : int
+    {
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER = 0x90ED
+        /// </summary>
+        AtomicCounterBufferReferencedByComputeShader = ((int)0x90ED)        ,
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER_BINDING = 0x92C1
+        /// </summary>
+        AtomicCounterBufferBinding = ((int)0x92C1)        ,
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER_DATA_SIZE = 0x92C4
+        /// </summary>
+        AtomicCounterBufferDataSize = ((int)0x92C4)        ,
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTERS = 0x92C5
+        /// </summary>
+        AtomicCounterBufferActiveAtomicCounters = ((int)0x92C5)        ,
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTER_INDICES = 0x92C6
+        /// </summary>
+        AtomicCounterBufferActiveAtomicCounterIndices = ((int)0x92C6)        ,
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_VERTEX_SHADER = 0x92C7
+        /// </summary>
+        AtomicCounterBufferReferencedByVertexShader = ((int)0x92C7)        ,
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_CONTROL_SHADER = 0x92C8
+        /// </summary>
+        AtomicCounterBufferReferencedByTessControlShader = ((int)0x92C8)        ,
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_EVALUATION_SHADER = 0x92C9
+        /// </summary>
+        AtomicCounterBufferReferencedByTessEvaluationShader = ((int)0x92C9)        ,
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_GEOMETRY_SHADER = 0x92CA
+        /// </summary>
+        AtomicCounterBufferReferencedByGeometryShader = ((int)0x92CA)        ,
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_FRAGMENT_SHADER = 0x92CB
+        /// </summary>
+        AtomicCounterBufferReferencedByFragmentShader = ((int)0x92CB)        ,
     }
 
     /// <summary>
@@ -40675,6 +40826,69 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
+    /// Used in GL.MemoryBarrier
+    /// </summary>
+    public enum MemoryBarrierFlags : int
+    {
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT = 0x00000001
+        /// </summary>
+        VertexAttribArrayBarrierBit = ((int)0x00000001)        ,
+        /// <summary>
+        /// Original was GL_ELEMENT_ARRAY_BARRIER_BIT = 0x00000002
+        /// </summary>
+        ElementArrayBarrierBit = ((int)0x00000002)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_BARRIER_BIT = 0x00000004
+        /// </summary>
+        UniformBarrierBit = ((int)0x00000004)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_FETCH_BARRIER_BIT = 0x00000008
+        /// </summary>
+        TextureFetchBarrierBit = ((int)0x00000008)        ,
+        /// <summary>
+        /// Original was GL_SHADER_IMAGE_ACCESS_BARRIER_BIT = 0x00000020
+        /// </summary>
+        ShaderImageAccessBarrierBit = ((int)0x00000020)        ,
+        /// <summary>
+        /// Original was GL_COMMAND_BARRIER_BIT = 0x00000040
+        /// </summary>
+        CommandBarrierBit = ((int)0x00000040)        ,
+        /// <summary>
+        /// Original was GL_PIXEL_BUFFER_BARRIER_BIT = 0x00000080
+        /// </summary>
+        PixelBufferBarrierBit = ((int)0x00000080)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_UPDATE_BARRIER_BIT = 0x00000100
+        /// </summary>
+        TextureUpdateBarrierBit = ((int)0x00000100)        ,
+        /// <summary>
+        /// Original was GL_BUFFER_UPDATE_BARRIER_BIT = 0x00000200
+        /// </summary>
+        BufferUpdateBarrierBit = ((int)0x00000200)        ,
+        /// <summary>
+        /// Original was GL_FRAMEBUFFER_BARRIER_BIT = 0x00000400
+        /// </summary>
+        FramebufferBarrierBit = ((int)0x00000400)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_BARRIER_BIT = 0x00000800
+        /// </summary>
+        TransformFeedbackBarrierBit = ((int)0x00000800)        ,
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BARRIER_BIT = 0x00001000
+        /// </summary>
+        AtomicCounterBarrierBit = ((int)0x00001000)        ,
+        /// <summary>
+        /// Original was GL_SHADER_STORAGE_BARRIER_BIT = 0x00002000
+        /// </summary>
+        ShaderStorageBarrierBit = ((int)0x00002000)        ,
+        /// <summary>
+        /// Original was GL_ALL_BARRIER_BITS = 0xFFFFFFFF
+        /// </summary>
+        AllBarrierBits = unchecked((int)0xFFFFFFFF)        ,
+    }
+
+    /// <summary>
     /// Not used directly.
     /// </summary>
     public enum MesaPackedDepthStencil : int
@@ -47715,6 +47929,120 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
+    /// Used in GL.GetProgramInterface, GL.GetProgramResourceIndex, GL.GetProgramResource, GL.GetProgramResourceLocation, GL.GetProgramResourceLocationIndex, GL.GetProgramResourceName
+    /// </summary>
+    public enum ProgramInterface : int
+    {
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_BUFFER = 0x8C8E
+        /// </summary>
+        TransformFeedbackBuffer = ((int)0x8C8E)        ,
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER = 0x92C0
+        /// </summary>
+        AtomicCounterBuffer = ((int)0x92C0)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM = 0x92E1
+        /// </summary>
+        Uniform = ((int)0x92E1)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_BLOCK = 0x92E2
+        /// </summary>
+        UniformBlock = ((int)0x92E2)        ,
+        /// <summary>
+        /// Original was GL_PROGRAM_INPUT = 0x92E3
+        /// </summary>
+        ProgramInput = ((int)0x92E3)        ,
+        /// <summary>
+        /// Original was GL_PROGRAM_OUTPUT = 0x92E4
+        /// </summary>
+        ProgramOutput = ((int)0x92E4)        ,
+        /// <summary>
+        /// Original was GL_BUFFER_VARIABLE = 0x92E5
+        /// </summary>
+        BufferVariable = ((int)0x92E5)        ,
+        /// <summary>
+        /// Original was GL_SHADER_STORAGE_BLOCK = 0x92E6
+        /// </summary>
+        ShaderStorageBlock = ((int)0x92E6)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_SUBROUTINE = 0x92E8
+        /// </summary>
+        VertexSubroutine = ((int)0x92E8)        ,
+        /// <summary>
+        /// Original was GL_TESS_CONTROL_SUBROUTINE = 0x92E9
+        /// </summary>
+        TessControlSubroutine = ((int)0x92E9)        ,
+        /// <summary>
+        /// Original was GL_TESS_EVALUATION_SUBROUTINE = 0x92EA
+        /// </summary>
+        TessEvaluationSubroutine = ((int)0x92EA)        ,
+        /// <summary>
+        /// Original was GL_GEOMETRY_SUBROUTINE = 0x92EB
+        /// </summary>
+        GeometrySubroutine = ((int)0x92EB)        ,
+        /// <summary>
+        /// Original was GL_FRAGMENT_SUBROUTINE = 0x92EC
+        /// </summary>
+        FragmentSubroutine = ((int)0x92EC)        ,
+        /// <summary>
+        /// Original was GL_COMPUTE_SUBROUTINE = 0x92ED
+        /// </summary>
+        ComputeSubroutine = ((int)0x92ED)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_SUBROUTINE_UNIFORM = 0x92EE
+        /// </summary>
+        VertexSubroutineUniform = ((int)0x92EE)        ,
+        /// <summary>
+        /// Original was GL_TESS_CONTROL_SUBROUTINE_UNIFORM = 0x92EF
+        /// </summary>
+        TessControlSubroutineUniform = ((int)0x92EF)        ,
+        /// <summary>
+        /// Original was GL_TESS_EVALUATION_SUBROUTINE_UNIFORM = 0x92F0
+        /// </summary>
+        TessEvaluationSubroutineUniform = ((int)0x92F0)        ,
+        /// <summary>
+        /// Original was GL_GEOMETRY_SUBROUTINE_UNIFORM = 0x92F1
+        /// </summary>
+        GeometrySubroutineUniform = ((int)0x92F1)        ,
+        /// <summary>
+        /// Original was GL_FRAGMENT_SUBROUTINE_UNIFORM = 0x92F2
+        /// </summary>
+        FragmentSubroutineUniform = ((int)0x92F2)        ,
+        /// <summary>
+        /// Original was GL_COMPUTE_SUBROUTINE_UNIFORM = 0x92F3
+        /// </summary>
+        ComputeSubroutineUniform = ((int)0x92F3)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_VARYING = 0x92F4
+        /// </summary>
+        TransformFeedbackVarying = ((int)0x92F4)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetProgramInterface
+    /// </summary>
+    public enum ProgramInterfaceParameter : int
+    {
+        /// <summary>
+        /// Original was GL_ACTIVE_RESOURCES = 0x92F5
+        /// </summary>
+        ActiveResources = ((int)0x92F5)        ,
+        /// <summary>
+        /// Original was GL_MAX_NAME_LENGTH = 0x92F6
+        /// </summary>
+        MaxNameLength = ((int)0x92F6)        ,
+        /// <summary>
+        /// Original was GL_MAX_NUM_ACTIVE_VARIABLES = 0x92F7
+        /// </summary>
+        MaxNumActiveVariables = ((int)0x92F7)        ,
+        /// <summary>
+        /// Original was GL_MAX_NUM_COMPATIBLE_SUBROUTINES = 0x92F8
+        /// </summary>
+        MaxNumCompatibleSubroutines = ((int)0x92F8)        ,
+    }
+
+    /// <summary>
     /// Used in GL.GetProgram
     /// </summary>
     public enum ProgramParameter : int
@@ -47728,13 +48056,21 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         ProgramSeparable = ((int)0x8258)        ,
         /// <summary>
-        /// Original was GL_PROGRAM_BINARY_LENGTH = 0x8741
-        /// </summary>
-        ProgramBinaryLength = ((int)0x8741)        ,
-        /// <summary>
         /// Original was GL_GEOMETRY_SHADER_INVOCATIONS = 0x887F
         /// </summary>
         GeometryShaderInvocations = ((int)0x887F)        ,
+        /// <summary>
+        /// Original was GL_GEOMETRY_VERTICES_OUT = 0x8916
+        /// </summary>
+        GeometryVerticesOut = ((int)0x8916)        ,
+        /// <summary>
+        /// Original was GL_GEOMETRY_INPUT_TYPE = 0x8917
+        /// </summary>
+        GeometryInputType = ((int)0x8917)        ,
+        /// <summary>
+        /// Original was GL_GEOMETRY_OUTPUT_TYPE = 0x8918
+        /// </summary>
+        GeometryOutputType = ((int)0x8918)        ,
         /// <summary>
         /// Original was GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH = 0x8A35
         /// </summary>
@@ -47792,18 +48128,6 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         TransformFeedbackVaryings = ((int)0x8C83)        ,
         /// <summary>
-        /// Original was GL_GEOMETRY_VERTICES_OUT = 0x8DDA
-        /// </summary>
-        GeometryVerticesOut = ((int)0x8DDA)        ,
-        /// <summary>
-        /// Original was GL_GEOMETRY_INPUT_TYPE = 0x8DDB
-        /// </summary>
-        GeometryInputType = ((int)0x8DDB)        ,
-        /// <summary>
-        /// Original was GL_GEOMETRY_OUTPUT_TYPE = 0x8DDC
-        /// </summary>
-        GeometryOutputType = ((int)0x8DDC)        ,
-        /// <summary>
         /// Original was GL_TESS_CONTROL_OUTPUT_VERTICES = 0x8E75
         /// </summary>
         TessControlOutputVertices = ((int)0x8E75)        ,
@@ -47823,6 +48147,29 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_TESS_GEN_POINT_MODE = 0x8E79
         /// </summary>
         TessGenPointMode = ((int)0x8E79)        ,
+        /// <summary>
+        /// Original was GL_MAX_COMPUTE_WORK_GROUP_SIZE = 0x91BF
+        /// </summary>
+        MaxComputeWorkGroupSize = ((int)0x91BF)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_ATOMIC_COUNTER_BUFFERS = 0x92D9
+        /// </summary>
+        ActiveAtomicCounterBuffers = ((int)0x92D9)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.ProgramParameter
+    /// </summary>
+    public enum ProgramParameterPName : int
+    {
+        /// <summary>
+        /// Original was GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257
+        /// </summary>
+        ProgramBinaryRetrievableHint = ((int)0x8257)        ,
+        /// <summary>
+        /// Original was GL_PROGRAM_SEPARABLE = 0x8258
+        /// </summary>
+        ProgramSeparable = ((int)0x8258)        ,
     }
 
     /// <summary>
@@ -47834,6 +48181,145 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_ACTIVE_PROGRAM = 0x8259
         /// </summary>
         ActiveProgram = ((int)0x8259)        ,
+        /// <summary>
+        /// Original was GL_FRAGMENT_SHADER = 0x8B30
+        /// </summary>
+        FragmentShader = ((int)0x8B30)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_SHADER = 0x8B31
+        /// </summary>
+        VertexShader = ((int)0x8B31)        ,
+        /// <summary>
+        /// Original was GL_VALIDATE_STATUS = 0x8B83
+        /// </summary>
+        ValidateStatus = ((int)0x8B83)        ,
+        /// <summary>
+        /// Original was GL_INFO_LOG_LENGTH = 0x8B84
+        /// </summary>
+        InfoLogLength = ((int)0x8B84)        ,
+        /// <summary>
+        /// Original was GL_GEOMETRY_SHADER = 0x8DD9
+        /// </summary>
+        GeometryShader = ((int)0x8DD9)        ,
+        /// <summary>
+        /// Original was GL_TESS_EVALUATION_SHADER = 0x8E87
+        /// </summary>
+        TessEvaluationShader = ((int)0x8E87)        ,
+        /// <summary>
+        /// Original was GL_TESS_CONTROL_SHADER = 0x8E88
+        /// </summary>
+        TessControlShader = ((int)0x8E88)        ,
+        /// <summary>
+        /// Original was GL_COMPUTE_SHADER = 0x91B9
+        /// </summary>
+        ComputeShader = ((int)0x91B9)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetProgramResource, GL.Ext.GetNamedProgram
+    /// </summary>
+    public enum ProgramProperty : int
+    {
+        /// <summary>
+        /// Original was GL_NUM_COMPATIBLE_SUBROUTINES = 0x8E4A
+        /// </summary>
+        NumCompatibleSubroutines = ((int)0x8E4A)        ,
+        /// <summary>
+        /// Original was GL_COMPATIBLE_SUBROUTINES = 0x8E4B
+        /// </summary>
+        CompatibleSubroutines = ((int)0x8E4B)        ,
+        /// <summary>
+        /// Original was GL_IS_PER_PATCH = 0x92E7
+        /// </summary>
+        IsPerPatch = ((int)0x92E7)        ,
+        /// <summary>
+        /// Original was GL_NAME_LENGTH = 0x92F9
+        /// </summary>
+        NameLength = ((int)0x92F9)        ,
+        /// <summary>
+        /// Original was GL_TYPE = 0x92FA
+        /// </summary>
+        Type = ((int)0x92FA)        ,
+        /// <summary>
+        /// Original was GL_ARRAY_SIZE = 0x92FB
+        /// </summary>
+        ArraySize = ((int)0x92FB)        ,
+        /// <summary>
+        /// Original was GL_OFFSET = 0x92FC
+        /// </summary>
+        Offset = ((int)0x92FC)        ,
+        /// <summary>
+        /// Original was GL_BLOCK_INDEX = 0x92FD
+        /// </summary>
+        BlockIndex = ((int)0x92FD)        ,
+        /// <summary>
+        /// Original was GL_ARRAY_STRIDE = 0x92FE
+        /// </summary>
+        ArrayStride = ((int)0x92FE)        ,
+        /// <summary>
+        /// Original was GL_MATRIX_STRIDE = 0x92FF
+        /// </summary>
+        MatrixStride = ((int)0x92FF)        ,
+        /// <summary>
+        /// Original was GL_IS_ROW_MAJOR = 0x9300
+        /// </summary>
+        IsRowMajor = ((int)0x9300)        ,
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER_INDEX = 0x9301
+        /// </summary>
+        AtomicCounterBufferIndex = ((int)0x9301)        ,
+        /// <summary>
+        /// Original was GL_BUFFER_BINDING = 0x9302
+        /// </summary>
+        BufferBinding = ((int)0x9302)        ,
+        /// <summary>
+        /// Original was GL_BUFFER_DATA_SIZE = 0x9303
+        /// </summary>
+        BufferDataSize = ((int)0x9303)        ,
+        /// <summary>
+        /// Original was GL_NUM_ACTIVE_VARIABLES = 0x9304
+        /// </summary>
+        NumActiveVariables = ((int)0x9304)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_VARIABLES = 0x9305
+        /// </summary>
+        ActiveVariables = ((int)0x9305)        ,
+        /// <summary>
+        /// Original was GL_REFERENCED_BY_VERTEX_SHADER = 0x9306
+        /// </summary>
+        ReferencedByVertexShader = ((int)0x9306)        ,
+        /// <summary>
+        /// Original was GL_REFERENCED_BY_TESS_CONTROL_SHADER = 0x9307
+        /// </summary>
+        ReferencedByTessControlShader = ((int)0x9307)        ,
+        /// <summary>
+        /// Original was GL_REFERENCED_BY_TESS_EVALUATION_SHADER = 0x9308
+        /// </summary>
+        ReferencedByTessEvaluationShader = ((int)0x9308)        ,
+        /// <summary>
+        /// Original was GL_REFERENCED_BY_GEOMETRY_SHADER = 0x9309
+        /// </summary>
+        ReferencedByGeometryShader = ((int)0x9309)        ,
+        /// <summary>
+        /// Original was GL_REFERENCED_BY_FRAGMENT_SHADER = 0x930A
+        /// </summary>
+        ReferencedByFragmentShader = ((int)0x930A)        ,
+        /// <summary>
+        /// Original was GL_TOP_LEVEL_ARRAY_SIZE = 0x930C
+        /// </summary>
+        TopLevelArraySize = ((int)0x930C)        ,
+        /// <summary>
+        /// Original was GL_TOP_LEVEL_ARRAY_STRIDE = 0x930D
+        /// </summary>
+        TopLevelArrayStride = ((int)0x930D)        ,
+        /// <summary>
+        /// Original was GL_LOCATION = 0x930E
+        /// </summary>
+        Location = ((int)0x930E)        ,
+        /// <summary>
+        /// Original was GL_LOCATION_INDEX = 0x930F
+        /// </summary>
+        LocationIndex = ((int)0x930F)        ,
     }
 
     /// <summary>
@@ -47862,6 +48348,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_TESS_EVALUATION_SHADER_BIT = 0x00000010
         /// </summary>
         TessEvaluationShaderBit = ((int)0x00000010)        ,
+        /// <summary>
+        /// Original was GL_COMPUTE_SHADER_BIT = 0x00000020
+        /// </summary>
+        ComputeShaderBit = ((int)0x00000020)        ,
         /// <summary>
         /// Original was GL_ALL_SHADER_BITS = 0xFFFFFFFF
         /// </summary>
@@ -50309,6 +50799,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_TESS_CONTROL_SHADER = 0x8E88
         /// </summary>
         TessControlShader = ((int)0x8E88)        ,
+        /// <summary>
+        /// Original was GL_COMPUTE_SHADER = 0x91B9
+        /// </summary>
+        ComputeShader = ((int)0x91B9)        ,
     }
 
     /// <summary>
