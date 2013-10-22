@@ -165,7 +165,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void BindBufferARB(OpenTK.Graphics.OpenGL.BufferTargetArb target, UInt32 buffer);
             internal static BindBufferARB glBindBufferARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindBufferBase(OpenTK.Graphics.OpenGL.BufferTarget target, UInt32 index, UInt32 buffer);
+            internal delegate void BindBufferBase(OpenTK.Graphics.OpenGL.BufferRangeTarget target, UInt32 index, UInt32 buffer);
             internal static BindBufferBase glBindBufferBase;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BindBufferBaseEXT(OpenTK.Graphics.OpenGL.ExtTransformFeedback target, UInt32 index, UInt32 buffer);
@@ -180,7 +180,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void BindBufferOffsetNV(OpenTK.Graphics.OpenGL.NvTransformFeedback target, UInt32 index, UInt32 buffer, IntPtr offset);
             internal static BindBufferOffsetNV glBindBufferOffsetNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindBufferRange(OpenTK.Graphics.OpenGL.BufferTarget target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
+            internal delegate void BindBufferRange(OpenTK.Graphics.OpenGL.BufferRangeTarget target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
             internal static BindBufferRange glBindBufferRange;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BindBufferRangeEXT(OpenTK.Graphics.OpenGL.ExtTransformFeedback target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
@@ -441,7 +441,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void ClearAccumxOES(int red, int green, int blue, int alpha);
             internal static ClearAccumxOES glClearAccumxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ClearBufferData(OpenTK.Graphics.OpenGL.ArbClearBufferObject target, OpenTK.Graphics.OpenGL.ArbClearBufferObject internalformat, OpenTK.Graphics.OpenGL.ArbClearBufferObject format, OpenTK.Graphics.OpenGL.ArbClearBufferObject type, IntPtr data);
+            internal delegate void ClearBufferData(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.ArbClearBufferObject type, IntPtr data);
             internal static ClearBufferData glClearBufferData;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ClearBufferfi(OpenTK.Graphics.OpenGL.ClearBuffer buffer, Int32 drawbuffer, Single depth, Int32 stencil);
@@ -453,7 +453,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void ClearBufferiv(OpenTK.Graphics.OpenGL.ClearBuffer buffer, Int32 drawbuffer, Int32* value);
             internal unsafe static ClearBufferiv glClearBufferiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ClearBufferSubData(OpenTK.Graphics.OpenGL.ArbClearBufferObject target, OpenTK.Graphics.OpenGL.ArbClearBufferObject internalformat, IntPtr offset, IntPtr size, OpenTK.Graphics.OpenGL.ArbClearBufferObject format, OpenTK.Graphics.OpenGL.ArbClearBufferObject type, IntPtr data);
+            internal delegate void ClearBufferSubData(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, IntPtr offset, IntPtr size, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.ArbClearBufferObject type, IntPtr data);
             internal static ClearBufferSubData glClearBufferSubData;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void ClearBufferuiv(OpenTK.Graphics.OpenGL.ClearBuffer buffer, Int32 drawbuffer, UInt32* value);

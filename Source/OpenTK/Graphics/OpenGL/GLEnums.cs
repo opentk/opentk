@@ -28873,6 +28873,18 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_BUFFER_MAPPED = 0x88BC
         /// </summary>
         BufferMapped = ((int)0x88BC)        ,
+        /// <summary>
+        /// Original was GL_BUFFER_ACCESS_FLAGS = 0x911F
+        /// </summary>
+        BufferAccessFlags = ((int)0x911F)        ,
+        /// <summary>
+        /// Original was GL_BUFFER_MAP_LENGTH = 0x9120
+        /// </summary>
+        BufferMapLength = ((int)0x9120)        ,
+        /// <summary>
+        /// Original was GL_BUFFER_MAP_OFFSET = 0x9121
+        /// </summary>
+        BufferMapOffset = ((int)0x9121)        ,
     }
 
     /// <summary>
@@ -28921,7 +28933,45 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Apple.BufferParameter, GL.Apple.FlushMappedBufferRange, GL.BindBuffer, GL.BindBufferBase, GL.BindBufferRange, GL.BufferData, GL.BufferSubData, GL.CopyBufferSubData, GL.FlushMappedBufferRange, GL.GetBufferParameter, GL.GetBufferPointer, GL.GetBufferSubData, GL.MapBuffer, GL.MapBufferRange, GL.UnmapBuffer
+    /// Used in GL.BindBufferBase, GL.BindBufferRange
+    /// </summary>
+    public enum BufferRangeTarget : int
+    {
+        /// <summary>
+        /// Original was GL_UNIFORM_BUFFER = 0x8A11
+        /// </summary>
+        UniformBuffer = ((int)0x8A11)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_BUFFER = 0x8C8E
+        /// </summary>
+        TransformFeedbackBuffer = ((int)0x8C8E)        ,
+        /// <summary>
+        /// Original was GL_SHADER_STORAGE_BUFFER = 0x90D2
+        /// </summary>
+        ShaderStorageBuffer = ((int)0x90D2)        ,
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER = 0x92C0
+        /// </summary>
+        AtomicCounterBuffer = ((int)0x92C0)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum BufferStorageFlags : int
+    {
+        /// <summary>
+        /// Original was GL_MAP_READ_BIT = 0x0001
+        /// </summary>
+        MapReadBit = ((int)0x0001)        ,
+        /// <summary>
+        /// Original was GL_MAP_WRITE_BIT = 0x0002
+        /// </summary>
+        MapWriteBit = ((int)0x0002)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.Apple.BufferParameter, GL.Apple.FlushMappedBufferRange, GL.BindBuffer, GL.BufferData, GL.BufferSubData, GL.ClearBufferData, GL.ClearBufferSubData, GL.CopyBufferSubData, GL.FlushMappedBufferRange, GL.GetBufferParameter, GL.GetBufferPointer, GL.GetBufferSubData, GL.MapBuffer, GL.MapBufferRange, GL.UnmapBuffer
     /// </summary>
     public enum BufferTarget : int
     {
@@ -28965,6 +29015,18 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_DRAW_INDIRECT_BUFFER = 0x8F3F
         /// </summary>
         DrawIndirectBuffer = ((int)0x8F3F)        ,
+        /// <summary>
+        /// Original was GL_SHADER_STORAGE_BUFFER = 0x90D2
+        /// </summary>
+        ShaderStorageBuffer = ((int)0x90D2)        ,
+        /// <summary>
+        /// Original was GL_DISPATCH_INDIRECT_BUFFER = 0x90EE
+        /// </summary>
+        DispatchIndirectBuffer = ((int)0x90EE)        ,
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER = 0x92C0
+        /// </summary>
+        AtomicCounterBuffer = ((int)0x92C0)        ,
     }
 
     /// <summary>
@@ -46268,7 +46330,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.CompressedTexSubImage1D, GL.Arb.CompressedTexSubImage2D, GL.Arb.CompressedTexSubImage3D, GL.ColorSubTable, GL.ColorTable, GL.CompressedTexSubImage1D, GL.CompressedTexSubImage2D, GL.CompressedTexSubImage3D, GL.ConvolutionFilter1D, GL.ConvolutionFilter2D, GL.DrawPixels, GL.GetColorTable, GL.GetConvolutionFilter, GL.GetHistogram, GL.GetMinmax, GL.GetSeparableFilter, GL.GetTexImage, GL.ReadPixels, GL.SeparableFilter2D, GL.TexImage1D, GL.TexImage2D, GL.TexImage3D, GL.TexSubImage1D, GL.TexSubImage2D, GL.TexSubImage3D, GL.Ext.ColorSubTable, GL.Ext.ColorTable, GL.Ext.CompressedMultiTexSubImage1D, GL.Ext.CompressedMultiTexSubImage2D, GL.Ext.CompressedMultiTexSubImage3D, GL.Ext.CompressedTextureSubImage1D, GL.Ext.CompressedTextureSubImage2D, GL.Ext.CompressedTextureSubImage3D, GL.Ext.ConvolutionFilter1D, GL.Ext.ConvolutionFilter2D, GL.Ext.GetColorTable, GL.Ext.GetConvolutionFilter, GL.Ext.GetHistogram, GL.Ext.GetMinmax, GL.Ext.GetMultiTexImage, GL.Ext.GetSeparableFilter, GL.Ext.GetTextureImage, GL.Ext.MultiTexImage1D, GL.Ext.MultiTexImage2D, GL.Ext.MultiTexImage3D, GL.Ext.MultiTexSubImage1D, GL.Ext.MultiTexSubImage2D, GL.Ext.MultiTexSubImage3D, GL.Ext.SeparableFilter2D, GL.Ext.TexImage3D, GL.Ext.TexSubImage1D, GL.Ext.TexSubImage2D, GL.Ext.TexSubImage3D, GL.Ext.TextureImage1D, GL.Ext.TextureImage2D, GL.Ext.TextureImage3D, GL.Ext.TextureSubImage1D, GL.Ext.TextureSubImage2D, GL.Ext.TextureSubImage3D, GL.Sgi.ColorTable, GL.Sgi.GetColorTable, GL.Sgis.TexImage4D, GL.Sgis.TexSubImage4D
+    /// Used in GL.Arb.CompressedTexSubImage1D, GL.Arb.CompressedTexSubImage2D, GL.Arb.CompressedTexSubImage3D, GL.ClearBufferData, GL.ClearBufferSubData, GL.ColorSubTable, GL.ColorTable, GL.CompressedTexSubImage1D, GL.CompressedTexSubImage2D, GL.CompressedTexSubImage3D, GL.ConvolutionFilter1D, GL.ConvolutionFilter2D, GL.DrawPixels, GL.GetColorTable, GL.GetConvolutionFilter, GL.GetHistogram, GL.GetMinmax, GL.GetSeparableFilter, GL.GetTexImage, GL.ReadPixels, GL.SeparableFilter2D, GL.TexImage1D, GL.TexImage2D, GL.TexImage3D, GL.TexSubImage1D, GL.TexSubImage2D, GL.TexSubImage3D, GL.Ext.ColorSubTable, GL.Ext.ColorTable, GL.Ext.CompressedMultiTexSubImage1D, GL.Ext.CompressedMultiTexSubImage2D, GL.Ext.CompressedMultiTexSubImage3D, GL.Ext.CompressedTextureSubImage1D, GL.Ext.CompressedTextureSubImage2D, GL.Ext.CompressedTextureSubImage3D, GL.Ext.ConvolutionFilter1D, GL.Ext.ConvolutionFilter2D, GL.Ext.GetColorTable, GL.Ext.GetConvolutionFilter, GL.Ext.GetHistogram, GL.Ext.GetMinmax, GL.Ext.GetMultiTexImage, GL.Ext.GetSeparableFilter, GL.Ext.GetTextureImage, GL.Ext.MultiTexImage1D, GL.Ext.MultiTexImage2D, GL.Ext.MultiTexImage3D, GL.Ext.MultiTexSubImage1D, GL.Ext.MultiTexSubImage2D, GL.Ext.MultiTexSubImage3D, GL.Ext.SeparableFilter2D, GL.Ext.TexImage3D, GL.Ext.TexSubImage1D, GL.Ext.TexSubImage2D, GL.Ext.TexSubImage3D, GL.Ext.TextureImage1D, GL.Ext.TextureImage2D, GL.Ext.TextureImage3D, GL.Ext.TextureSubImage1D, GL.Ext.TextureSubImage2D, GL.Ext.TextureSubImage3D, GL.Sgi.ColorTable, GL.Sgi.GetColorTable, GL.Sgis.TexImage4D, GL.Sgis.TexSubImage4D
     /// </summary>
     public enum PixelFormat : int
     {
@@ -46391,7 +46453,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.CompressedTexImage1D, GL.Arb.CompressedTexImage2D, GL.Arb.CompressedTexImage3D, GL.ColorTable, GL.CompressedTexImage1D, GL.CompressedTexImage2D, GL.CompressedTexImage3D, GL.ConvolutionFilter1D, GL.ConvolutionFilter2D, GL.CopyColorTable, GL.CopyConvolutionFilter1D, GL.CopyConvolutionFilter2D, GL.CopyTexImage1D, GL.CopyTexImage2D, GL.Histogram, GL.Minmax, GL.SeparableFilter2D, GL.TexImage1D, GL.TexImage2D, GL.TexImage2DMultisample, GL.TexImage3D, GL.TexImage3DMultisample, GL.Ext.ColorTable, GL.Ext.ConvolutionFilter1D, GL.Ext.ConvolutionFilter2D, GL.Ext.CopyConvolutionFilter1D, GL.Ext.CopyConvolutionFilter2D, GL.Ext.CopyTexImage1D, GL.Ext.CopyTexImage2D, GL.Ext.Histogram, GL.Ext.Minmax, GL.Ext.NamedRenderbufferStorage, GL.Ext.NamedRenderbufferStorageMultisampleCoverage, GL.Ext.NamedRenderbufferStorageMultisample, GL.Ext.SeparableFilter2D, GL.Ext.TexImage3D, GL.NV.RenderbufferStorageMultisampleCoverage, GL.Sgi.ColorTable, GL.Sgi.CopyColorTable, GL.Sgis.TexImage4D
+    /// Used in GL.Arb.CompressedTexImage1D, GL.Arb.CompressedTexImage2D, GL.Arb.CompressedTexImage3D, GL.ClearBufferData, GL.ClearBufferSubData, GL.ColorTable, GL.CompressedTexImage1D, GL.CompressedTexImage2D, GL.CompressedTexImage3D, GL.ConvolutionFilter1D, GL.ConvolutionFilter2D, GL.CopyColorTable, GL.CopyConvolutionFilter1D, GL.CopyConvolutionFilter2D, GL.CopyTexImage1D, GL.CopyTexImage2D, GL.Histogram, GL.Minmax, GL.SeparableFilter2D, GL.TexImage1D, GL.TexImage2D, GL.TexImage2DMultisample, GL.TexImage3D, GL.TexImage3DMultisample, GL.Ext.ColorTable, GL.Ext.ConvolutionFilter1D, GL.Ext.ConvolutionFilter2D, GL.Ext.CopyConvolutionFilter1D, GL.Ext.CopyConvolutionFilter2D, GL.Ext.CopyTexImage1D, GL.Ext.CopyTexImage2D, GL.Ext.Histogram, GL.Ext.Minmax, GL.Ext.NamedRenderbufferStorage, GL.Ext.NamedRenderbufferStorageMultisampleCoverage, GL.Ext.NamedRenderbufferStorageMultisample, GL.Ext.SeparableFilter2D, GL.Ext.TexImage3D, GL.NV.RenderbufferStorageMultisampleCoverage, GL.Sgi.ColorTable, GL.Sgi.CopyColorTable, GL.Sgis.TexImage4D
     /// </summary>
     public enum PixelInternalFormat : int
     {

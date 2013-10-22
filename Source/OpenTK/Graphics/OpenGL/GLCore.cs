@@ -167,7 +167,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void BindBufferARB(OpenTK.Graphics.OpenGL.BufferTargetArb target, UInt32 buffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindBufferBase", ExactSpelling = true)]
-            internal extern static void BindBufferBase(OpenTK.Graphics.OpenGL.BufferTarget target, UInt32 index, UInt32 buffer);
+            internal extern static void BindBufferBase(OpenTK.Graphics.OpenGL.BufferRangeTarget target, UInt32 index, UInt32 buffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindBufferBaseEXT", ExactSpelling = true)]
             internal extern static void BindBufferBaseEXT(OpenTK.Graphics.OpenGL.ExtTransformFeedback target, UInt32 index, UInt32 buffer);
@@ -182,7 +182,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void BindBufferOffsetNV(OpenTK.Graphics.OpenGL.NvTransformFeedback target, UInt32 index, UInt32 buffer, IntPtr offset);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindBufferRange", ExactSpelling = true)]
-            internal extern static void BindBufferRange(OpenTK.Graphics.OpenGL.BufferTarget target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
+            internal extern static void BindBufferRange(OpenTK.Graphics.OpenGL.BufferRangeTarget target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindBufferRangeEXT", ExactSpelling = true)]
             internal extern static void BindBufferRangeEXT(OpenTK.Graphics.OpenGL.ExtTransformFeedback target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
@@ -443,7 +443,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void ClearAccumxOES(int red, int green, int blue, int alpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearBufferData", ExactSpelling = true)]
-            internal extern static void ClearBufferData(OpenTK.Graphics.OpenGL.ArbClearBufferObject target, OpenTK.Graphics.OpenGL.ArbClearBufferObject internalformat, OpenTK.Graphics.OpenGL.ArbClearBufferObject format, OpenTK.Graphics.OpenGL.ArbClearBufferObject type, IntPtr data);
+            internal extern static void ClearBufferData(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.ArbClearBufferObject type, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearBufferfi", ExactSpelling = true)]
             internal extern static void ClearBufferfi(OpenTK.Graphics.OpenGL.ClearBuffer buffer, Int32 drawbuffer, Single depth, Int32 stencil);
@@ -455,7 +455,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void ClearBufferiv(OpenTK.Graphics.OpenGL.ClearBuffer buffer, Int32 drawbuffer, Int32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearBufferSubData", ExactSpelling = true)]
-            internal extern static void ClearBufferSubData(OpenTK.Graphics.OpenGL.ArbClearBufferObject target, OpenTK.Graphics.OpenGL.ArbClearBufferObject internalformat, IntPtr offset, IntPtr size, OpenTK.Graphics.OpenGL.ArbClearBufferObject format, OpenTK.Graphics.OpenGL.ArbClearBufferObject type, IntPtr data);
+            internal extern static void ClearBufferSubData(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, IntPtr offset, IntPtr size, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.ArbClearBufferObject type, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearBufferuiv", ExactSpelling = true)]
             internal extern static unsafe void ClearBufferuiv(OpenTK.Graphics.OpenGL.ClearBuffer buffer, Int32 drawbuffer, UInt32* value);
