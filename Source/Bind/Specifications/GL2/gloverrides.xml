@@ -2109,6 +2109,7 @@
     <enum name="GetQueryObjectParam">
       <token name="QUERY_RESULT" value="0x8866" />
       <token name="QUERY_RESULT_AVAILABLE" value="0x8867" />
+      <token name="QUERY_RESULT_NO_WAIT" value="0x9194" />
     </enum>
     <enum name="GetQueryParam">
       <token name="CURRENT_QUERY" value="0x8865" />
@@ -2455,7 +2456,8 @@
       <token name="TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN" value="0x8C88" />
       <use enum="ARB_occlusion_query2" token="ANY_SAMPLES_PASSED" />
       <use enum="VERSION_3_3" token="TIME_ELAPSED" />
-      <use enum="VERSION_3_3" token="TIMESTAMP" />
+      <use enum="VERSION_3_3" token="TIMESTAMP" /> <!-- only valid in GetQuery -->
+      <use enum="VERSION_4_3" token="ANY_SAMPLES_PASSED_CONSERVATIVE" />
     </enum>
     <enum name="ReadBufferMode">
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />

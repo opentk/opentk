@@ -19173,6 +19173,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         QueryBufferBindingAmd = ((int)0x9193)        ,
         /// <summary>
+        /// Original was GL_QUERY_RESULT_NO_WAIT = 0x9194
+        /// </summary>
+        QueryResultNoWait = ((int)0x9194)        ,
+        /// <summary>
         /// Original was GL_QUERY_RESULT_NO_WAIT_AMD = 0x9194
         /// </summary>
         QueryResultNoWaitAmd = ((int)0x9194)        ,
@@ -38384,6 +38388,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_QUERY_RESULT_AVAILABLE = 0x8867
         /// </summary>
         QueryResultAvailable = ((int)0x8867)        ,
+        /// <summary>
+        /// Original was GL_QUERY_RESULT_NO_WAIT = 0x9194
+        /// </summary>
+        QueryResultNoWait = ((int)0x9194)        ,
     }
 
     /// <summary>
@@ -47991,6 +47999,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN = 0x8C88
         /// </summary>
         TransformFeedbackPrimitivesWritten = ((int)0x8C88)        ,
+        /// <summary>
+        /// Original was GL_ANY_SAMPLES_PASSED_CONSERVATIVE = 0x8D6A
+        /// </summary>
+        AnySamplesPassedConservative = ((int)0x8D6A)        ,
         /// <summary>
         /// Original was GL_TIMESTAMP = 0x8E28
         /// </summary>
