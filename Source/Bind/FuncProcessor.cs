@@ -341,11 +341,22 @@ namespace Bind
                 // Array overloads
                 foreach (Parameter p in _this.Parameters)
                 {
-                    if (p.WrapperType == WrapperTypes.ArrayParameter && p.ElementCount != 1)
+                    if (p.WrapperType == WrapperTypes.ArrayParameter)
                     {
-                        p.Reference = false;
-                        p.Array++;
-                        p.Pointer--;
+                        if (p.ElementCount != 1)
+                        {
+                            // Create a proper array
+                            p.Reference = false;
+                            p.Array++;
+                            p.Pointer--;
+                        }
+                        else
+                        {
+                            // Create a reference
+                            p.Reference = true;
+                            p.Array--;
+                            p.Pointer--;
+                        }
                     }
                 }
                 f = new Function(_this);
@@ -373,7 +384,7 @@ namespace Bind
 
                 _this = func;
                 // Pointer overloads
-                // Should be last to work around Intellisense bug, where
+                // Should be last to work around an Intellisense bug, where
                 // array overloads are not reported if there is a pointer overload.
                 foreach (Parameter p in _this.Parameters)
                 {

@@ -63,8 +63,9 @@ VoidPointer,    void*
 float,          float
 int,            int
 #void,           *
+GLDEBUGPROC, DebugProc
 GLDEBUGPROCARB, DebugProcArb
-GLDEBUGPROCAMD , DebugProcAmd
+GLDEBUGPROCAMD, DebugProcAmd
 GLvdpauSurfaceNV, IntPtr
 
 # Glu types.
