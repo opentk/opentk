@@ -1183,6 +1183,35 @@
         <type>VertexAttribParameterArb</type>
       </param>
     </function>
+    
+    <!-- Version 4.4 -->
+    
+    <!-- Synchronization -->
+    <function name="FenceSync" extension="Core">
+      <param name="condition">
+        <type>SyncCondition</type>
+      </param>
+    </function>
+    
+    <function name="ClientWaitSync" extension="Core">
+      <returns>WaitSyncStatus</returns>
+      <param name="flags">
+        <type>WaitSyncFlags</type>
+      </param>
+    </function>
+
+    <function name="WaitSync" extension="Core">
+      <returns>WaitSyncStatus</returns>
+      <param name="flags">
+        <type>WaitSyncFlags</type>
+      </param>
+    </function>
+    
+    <function name="GetSynciv" extension="Core">
+      <param name="pname">
+          <type>SyncParameter</type>
+        </param>
+    </function>
 
   </replace>
 
@@ -1400,6 +1429,16 @@
       <use enum="BeginMode" token="Triangles" />
     </enum>
     <enum name="BeginMode">
+      <token name="LINE_LOOP" value="0x0002" />
+      <token name="LINE_STRIP" value="0x0003" />
+      <token name="LINES" value="0x0001" />
+      <token name="POINTS" value="0x0000" />
+      <token name="POLYGON" value="0x0009" />
+      <token name="QUAD_STRIP" value="0x0008" />
+      <token name="QUADS" value="0x0007" />
+      <token name="TRIANGLE_FAN" value="0x0006" />
+      <token name="TRIANGLE_STRIP" value="0x0005" />
+      <token name="TRIANGLES" value="0x0004" />
       <token name="LINE_STRIP_ADJACENCY" value="0xB" />
       <token name="LINES_ADJACENCY" value="0xA" />
       <token name="TRIANGLE_STRIP_ADJACENCY" value="0xD" />
@@ -2208,6 +2247,27 @@
       <token name="RED_INTEGER" value="0x8D94" />
       <token name="RGB_INTEGER" value="0x8D98" />
       <token name="RGBA_INTEGER" value="0x8D99" />
+      <use enum="EXT_abgr" token="ABGR_EXT" />
+      <use enum="EXT_cmyka" token="CMYK_EXT" />
+      <use enum="EXT_cmyka" token="CMYKA_EXT" />
+      <use enum="SGIX_icc_texture" token="R5_G6_B5_ICC_SGIX" />
+      <use enum="SGIX_icc_texture" token="R5_G6_B5_A8_ICC_SGIX" />
+      <use enum="SGIX_icc_texture" token="ALPHA16_ICC_SGIX" />
+      <use enum="SGIX_icc_texture" token="LUMINANCE16_ICC_SGIX" />
+      <use enum="SGIX_icc_texture" token="LUMINANCE16_ALPHA8_ICC_SGIX" />
+      <use enum="SGIX_ycrcb" token="YCRCB_422_SGIX" />
+      <use enum="SGIX_ycrcb" token="YCRCB_444_SGIX" />
+      <token name="ALPHA" value="0x1906" />
+      <token name="BLUE" value="0x1905" />
+      <token name="COLOR_INDEX" value="0x1900" />
+      <token name="DEPTH_COMPONENT" value="0x1902" />
+      <token name="GREEN" value="0x1904" />
+      <token name="LUMINANCE" value="0x1909" />
+      <token name="LUMINANCE_ALPHA" value="0x190A" />
+      <token name="RED" value="0x1903" />
+      <token name="RGB" value="0x1907" />
+      <token name="RGBA" value="0x1908" />
+      <token name="STENCIL_INDEX" value="0x1901" />
     </enum>
     <enum name="PixelInternalFormat">
       <use enum="PixelFormat" token="DEPTH_COMPONENT" />
@@ -2601,6 +2661,25 @@
     <enum name="StringName">
       <use enum="StringName" token="EXTENSIONS" />
       <token name="SHADING_LANGUAGE_VERSION" value="0x8B8C" />
+    </enum>
+    <enum name="SyncCondition">
+      <use enum="VERSION_4_1" token="SYNC_GPU_COMMANDS_COMPLETE" />
+    </enum>
+    <enum name="WaitSyncFlags">
+      <token name="DEFAULT" value="0" />
+      <use enum="VERSION_4_1" token="SYNC_FLUSH_COMMANDS_BIT" />
+    </enum>
+    <enum name="WaitSyncStatus">
+      <use token="ALREADY_SIGNALED" />
+      <use token="TIMEOUT_EXPIRED" />
+      <use token="CONDITION_SATISFIED" />
+      <use token="WAIT_FAILED" />
+    </enum>
+    <enum name="SyncParameter">
+      <use token="OBJECT_TYPE" />
+      <use token="SYNC_STATUS" />
+      <use token="SYNC_CONDITION" />
+      <use token="SYNC_FLAGS" />
     </enum>
     <enum name="TexCoordPointerType">
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
