@@ -42,6 +42,9 @@ namespace CHeaderToXML
         enum ParserModes { None, Enum, Func };
         ParserModes CurrentMode;
 
+        enum EntryModes { Core, Compatibility };
+        EntryModes CurrentEntryMode;
+
         public override IEnumerable<XElement> Parse(string[] lines)
         {
             XElement current = null;
@@ -64,6 +67,7 @@ namespace CHeaderToXML
                         new XAttribute("name", words[0]));
                     
                     CurrentMode = ParserModes.Enum;
+                    CurrentEntryMode = EntryModes.Core;
                 }
                 else if (line.StartsWith(words[0] + "("))
                 {
@@ -76,6 +80,11 @@ namespace CHeaderToXML
                     current = new XElement("function",
                         new XAttribute("name", words[0]),
                         new XAttribute("extension", extension));
+
+                    if (words[0].Contains("ShaderSource"))
+                    {
+                        System.Diagnostics.Debugger.Break();
+                    }
 
                     CurrentMode = ParserModes.Func;
                 }
@@ -90,12 +99,28 @@ namespace CHeaderToXML
                                 current.Add(new XElement("use",
                                     new XAttribute("enum", words[1]),
                                     new XAttribute("token", words[2])));
+                                    //new XAttribute("profile", CurrentEntryMode == EntryModes.Compatibility ?
+                                    //    "compatibility" : "core")));
                             }
                             else if (words[1] == "=")
                             {
                                 current.Add(new XElement("token",
                                     new XAttribute("name", words[0]),
                                     new XAttribute("value", words[2])));
+                                    //new XAttribute("profile", CurrentEntryMode == EntryModes.Compatibility ?
+                                    //    "compatibility" : "core")));
+                            }
+                            else if (words[0] == "profile:")
+                            {
+                                //CurrentEntryMode = words[1] == "compatibility" ?
+                                //    EntryModes.Compatibility : EntryModes.Core;
+                            }
+                            else if (words[0].Contains("future_use"))
+                            {
+                                // This is a bug in the 4.3 specs. Unfortunately,
+                                // Khronos is no longer accepting bug reports for
+                                // the .spec files.
+                                continue;
                             }
                             else
                             {
