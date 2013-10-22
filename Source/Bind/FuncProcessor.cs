@@ -64,6 +64,7 @@ namespace Bind
             {
                 TranslateReturnType(nav, d, enums);
                 TranslateParameters(nav, d, enums);
+                TranslateAttributes(nav, d, enums);
             }
 
             Console.WriteLine("Generating wrappers.");
@@ -213,6 +214,26 @@ namespace Bind
                 d.Parameters[i].Translate(nav, d.Category, enums);
                 if (d.Parameters[i].CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
                     d.Parameters[i].WrapperType = WrapperTypes.UncheckedParameter;
+            }
+        }
+
+        void TranslateAttributes(XPathNavigator nav, Delegate d, EnumCollection enums)
+        {
+            var function_override = GetFuncOverride(nav, d);
+
+            if (function_override != null)
+            {
+                var version_override = function_override.SelectSingleNode("version");
+                if (version_override != null)
+                {
+                    d.Version = version_override.Value;
+                }
+
+                var profile_override = function_override.SelectSingleNode("profile");
+                if (profile_override != null)
+                {
+                    Debug.Print("Profile override not yet implemented");
+                }
             }
         }
 
