@@ -2855,6 +2855,20 @@
     <enum name="SeparableTarget">
       <token name="SEPARABLE_2D" value="0x8012" />
     </enum>
+    <enum name="SGIX_icc_texture">
+      <token name="RGB_ICC_SGIX" value="0x8460" />
+      <token name="RGBA_ICC_SGIX" value="0x8461" />
+      <token name="ALPHA_ICC_SGIX" value="0x8462" />
+      <token name="LUMINANCE_ICC_SGIX" value="0x8463" />
+      <token name="INTENSITY_ICC_SGIX" value="0x8464" />
+      <token name="LUMINANCE_ALPHA_ICC_SGIX" value="0x8465" />
+      <token name="R5_G6_B5_ICC_SGIX" value="0x8466" />
+      <token name="R5_G6_B5_A8_ICC_SGIX" value="0x8467" />
+      <token name="ALPHA16_ICC_SGIX" value="0x8468" />
+      <token name="LUMINANCE16_ICC_SGIX" value="0x8469" />
+      <token name="INTENSITY16_ICC_SGIX" value="0x846A" />
+      <token name="LUMINANCE16_ALPHA8_ICC_SGIX" value="0x846B" />
+    </enum>
     <enum name="ShaderParameter">
       <token name="COMPILE_STATUS" value="0x8B81" />
       <token name="DELETE_STATUS" value="0x8B80" />

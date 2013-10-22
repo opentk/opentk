@@ -7749,6 +7749,54 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         CurrentRasterSecondaryColor = ((int)0x845F)        ,
         /// <summary>
+        /// Original was GL_RGB_ICC_SGIX = 0x8460
+        /// </summary>
+        RgbIccSgix = ((int)0x8460)        ,
+        /// <summary>
+        /// Original was GL_RGBA_ICC_SGIX = 0x8461
+        /// </summary>
+        RgbaIccSgix = ((int)0x8461)        ,
+        /// <summary>
+        /// Original was GL_ALPHA_ICC_SGIX = 0x8462
+        /// </summary>
+        AlphaIccSgix = ((int)0x8462)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE_ICC_SGIX = 0x8463
+        /// </summary>
+        LuminanceIccSgix = ((int)0x8463)        ,
+        /// <summary>
+        /// Original was GL_INTENSITY_ICC_SGIX = 0x8464
+        /// </summary>
+        IntensityIccSgix = ((int)0x8464)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE_ALPHA_ICC_SGIX = 0x8465
+        /// </summary>
+        LuminanceAlphaIccSgix = ((int)0x8465)        ,
+        /// <summary>
+        /// Original was GL_R5_G6_B5_ICC_SGIX = 0x8466
+        /// </summary>
+        R5G6B5IccSgix = ((int)0x8466)        ,
+        /// <summary>
+        /// Original was GL_R5_G6_B5_A8_ICC_SGIX = 0x8467
+        /// </summary>
+        R5G6B5A8IccSgix = ((int)0x8467)        ,
+        /// <summary>
+        /// Original was GL_ALPHA16_ICC_SGIX = 0x8468
+        /// </summary>
+        Alpha16IccSgix = ((int)0x8468)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE16_ICC_SGIX = 0x8469
+        /// </summary>
+        Luminance16IccSgix = ((int)0x8469)        ,
+        /// <summary>
+        /// Original was GL_INTENSITY16_ICC_SGIX = 0x846A
+        /// </summary>
+        Intensity16IccSgix = ((int)0x846A)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE16_ALPHA8_ICC_SGIX = 0x846B
+        /// </summary>
+        Luminance16Alpha8IccSgix = ((int)0x846B)        ,
+        /// <summary>
         /// Original was GL_ALIASED_POINT_SIZE_RANGE = 0x846D
         /// </summary>
         AliasedPointSizeRange = ((int)0x846D)        ,
@@ -46629,6 +46677,26 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         RgInteger = ((int)0x8228)        ,
         /// <summary>
+        /// Original was GL_R5_G6_B5_ICC_SGIX = 0x8466
+        /// </summary>
+        R5G6B5IccSgix = ((int)0x8466)        ,
+        /// <summary>
+        /// Original was GL_R5_G6_B5_A8_ICC_SGIX = 0x8467
+        /// </summary>
+        R5G6B5A8IccSgix = ((int)0x8467)        ,
+        /// <summary>
+        /// Original was GL_ALPHA16_ICC_SGIX = 0x8468
+        /// </summary>
+        Alpha16IccSgix = ((int)0x8468)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE16_ICC_SGIX = 0x8469
+        /// </summary>
+        Luminance16IccSgix = ((int)0x8469)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE16_ALPHA8_ICC_SGIX = 0x846B
+        /// </summary>
+        Luminance16Alpha8IccSgix = ((int)0x846B)        ,
+        /// <summary>
         /// Original was GL_DEPTH_STENCIL = 0x84F9
         /// </summary>
         DepthStencil = ((int)0x84F9)        ,
@@ -47039,6 +47107,54 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_COMPRESSED_RGBA_S3TC_DXT5_EXT = 0x83F3
         /// </summary>
         CompressedRgbaS3tcDxt5Ext = ((int)0x83F3)        ,
+        /// <summary>
+        /// Original was GL_RGB_ICC_SGIX = 0x8460
+        /// </summary>
+        RgbIccSgix = ((int)0x8460)        ,
+        /// <summary>
+        /// Original was GL_RGBA_ICC_SGIX = 0x8461
+        /// </summary>
+        RgbaIccSgix = ((int)0x8461)        ,
+        /// <summary>
+        /// Original was GL_ALPHA_ICC_SGIX = 0x8462
+        /// </summary>
+        AlphaIccSgix = ((int)0x8462)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE_ICC_SGIX = 0x8463
+        /// </summary>
+        LuminanceIccSgix = ((int)0x8463)        ,
+        /// <summary>
+        /// Original was GL_INTENSITY_ICC_SGIX = 0x8464
+        /// </summary>
+        IntensityIccSgix = ((int)0x8464)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE_ALPHA_ICC_SGIX = 0x8465
+        /// </summary>
+        LuminanceAlphaIccSgix = ((int)0x8465)        ,
+        /// <summary>
+        /// Original was GL_R5_G6_B5_ICC_SGIX = 0x8466
+        /// </summary>
+        R5G6B5IccSgix = ((int)0x8466)        ,
+        /// <summary>
+        /// Original was GL_R5_G6_B5_A8_ICC_SGIX = 0x8467
+        /// </summary>
+        R5G6B5A8IccSgix = ((int)0x8467)        ,
+        /// <summary>
+        /// Original was GL_ALPHA16_ICC_SGIX = 0x8468
+        /// </summary>
+        Alpha16IccSgix = ((int)0x8468)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE16_ICC_SGIX = 0x8469
+        /// </summary>
+        Luminance16IccSgix = ((int)0x8469)        ,
+        /// <summary>
+        /// Original was GL_INTENSITY16_ICC_SGIX = 0x846A
+        /// </summary>
+        Intensity16IccSgix = ((int)0x846A)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE16_ALPHA8_ICC_SGIX = 0x846B
+        /// </summary>
+        Luminance16Alpha8IccSgix = ((int)0x846B)        ,
         /// <summary>
         /// Original was GL_COMPRESSED_ALPHA = 0x84E9
         /// </summary>
@@ -50189,6 +50305,61 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_MAX_FRAMEZOOM_FACTOR_SGIX = 0x818D
         /// </summary>
         MaxFramezoomFactorSgix = ((int)0x818D)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum SgixIccTexture : int
+    {
+        /// <summary>
+        /// Original was GL_RGB_ICC_SGIX = 0x8460
+        /// </summary>
+        RgbIccSgix = ((int)0x8460)        ,
+        /// <summary>
+        /// Original was GL_RGBA_ICC_SGIX = 0x8461
+        /// </summary>
+        RgbaIccSgix = ((int)0x8461)        ,
+        /// <summary>
+        /// Original was GL_ALPHA_ICC_SGIX = 0x8462
+        /// </summary>
+        AlphaIccSgix = ((int)0x8462)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE_ICC_SGIX = 0x8463
+        /// </summary>
+        LuminanceIccSgix = ((int)0x8463)        ,
+        /// <summary>
+        /// Original was GL_INTENSITY_ICC_SGIX = 0x8464
+        /// </summary>
+        IntensityIccSgix = ((int)0x8464)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE_ALPHA_ICC_SGIX = 0x8465
+        /// </summary>
+        LuminanceAlphaIccSgix = ((int)0x8465)        ,
+        /// <summary>
+        /// Original was GL_R5_G6_B5_ICC_SGIX = 0x8466
+        /// </summary>
+        R5G6B5IccSgix = ((int)0x8466)        ,
+        /// <summary>
+        /// Original was GL_R5_G6_B5_A8_ICC_SGIX = 0x8467
+        /// </summary>
+        R5G6B5A8IccSgix = ((int)0x8467)        ,
+        /// <summary>
+        /// Original was GL_ALPHA16_ICC_SGIX = 0x8468
+        /// </summary>
+        Alpha16IccSgix = ((int)0x8468)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE16_ICC_SGIX = 0x8469
+        /// </summary>
+        Luminance16IccSgix = ((int)0x8469)        ,
+        /// <summary>
+        /// Original was GL_INTENSITY16_ICC_SGIX = 0x846A
+        /// </summary>
+        Intensity16IccSgix = ((int)0x846A)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE16_ALPHA8_ICC_SGIX = 0x846B
+        /// </summary>
+        Luminance16Alpha8IccSgix = ((int)0x846B)        ,
     }
 
     /// <summary>
