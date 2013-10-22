@@ -24506,7 +24506,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BindImageTexture
+    /// Not used directly.
     /// </summary>
     public enum ArbShaderImageLoadStore : int
     {
@@ -25430,7 +25430,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.TexBufferRange, GL.Ext.TextureBufferRange
+    /// Used in GL.Ext.TextureBufferRange
     /// </summary>
     public enum ArbTextureBufferRange : int
     {
@@ -26146,7 +26146,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.TexStorage1D, GL.TexStorage2D, GL.TexStorage3D, GL.Ext.TextureStorage1D, GL.Ext.TextureStorage2D, GL.Ext.TextureStorage3D
+    /// Used in GL.Ext.TextureStorage1D, GL.Ext.TextureStorage2D, GL.Ext.TextureStorage3D
     /// </summary>
     public enum ArbTextureStorage : int
     {
@@ -26157,7 +26157,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.TexStorage2DMultisample, GL.TexStorage3DMultisample, GL.Ext.TextureStorage2DMultisample, GL.Ext.TextureStorage3DMultisample
+    /// Used in GL.Ext.TextureStorage2DMultisample, GL.Ext.TextureStorage3DMultisample
     /// </summary>
     public enum ArbTextureStorageMultisample : int
     {
@@ -26191,7 +26191,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.TextureView
+    /// Not used directly.
     /// </summary>
     public enum ArbTextureView : int
     {
@@ -35780,6 +35780,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_TEXTURE_2D_ARRAY = 0x8C1A
         /// </summary>
         Texture2DArray = ((int)0x8C1A)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_ARRAY = 0x9009
+        /// </summary>
+        TextureCubeMapArray = ((int)0x9009)        ,
         /// <summary>
         /// Original was GL_TEXTURE_2D_MULTISAMPLE = 0x9100
         /// </summary>
@@ -46735,7 +46739,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.CompressedTexImage1D, GL.Arb.CompressedTexImage2D, GL.Arb.CompressedTexImage3D, GL.ClearBufferData, GL.ClearBufferSubData, GL.ColorTable, GL.CompressedTexImage1D, GL.CompressedTexImage2D, GL.CompressedTexImage3D, GL.ConvolutionFilter1D, GL.ConvolutionFilter2D, GL.CopyColorTable, GL.CopyConvolutionFilter1D, GL.CopyConvolutionFilter2D, GL.CopyTexImage1D, GL.CopyTexImage2D, GL.Histogram, GL.Minmax, GL.SeparableFilter2D, GL.TexImage1D, GL.TexImage2D, GL.TexImage2DMultisample, GL.TexImage3D, GL.TexImage3DMultisample, GL.Ext.ColorTable, GL.Ext.ConvolutionFilter1D, GL.Ext.ConvolutionFilter2D, GL.Ext.CopyConvolutionFilter1D, GL.Ext.CopyConvolutionFilter2D, GL.Ext.CopyTexImage1D, GL.Ext.CopyTexImage2D, GL.Ext.Histogram, GL.Ext.Minmax, GL.Ext.NamedRenderbufferStorage, GL.Ext.NamedRenderbufferStorageMultisampleCoverage, GL.Ext.NamedRenderbufferStorageMultisample, GL.Ext.SeparableFilter2D, GL.Ext.TexImage3D, GL.NV.RenderbufferStorageMultisampleCoverage, GL.Sgi.ColorTable, GL.Sgi.CopyColorTable, GL.Sgis.TexImage4D
+    /// Used in GL.Arb.CompressedTexImage1D, GL.Arb.CompressedTexImage2D, GL.Arb.CompressedTexImage3D, GL.ClearBufferData, GL.ClearBufferSubData, GL.ColorTable, GL.CompressedTexImage1D, GL.CompressedTexImage2D, GL.CompressedTexImage3D, GL.ConvolutionFilter1D, GL.ConvolutionFilter2D, GL.CopyColorTable, GL.CopyConvolutionFilter1D, GL.CopyConvolutionFilter2D, GL.CopyTexImage1D, GL.CopyTexImage2D, GL.Histogram, GL.Minmax, GL.SeparableFilter2D, GL.TexImage1D, GL.TexImage2D, GL.TexImage2DMultisample, GL.TexImage3D, GL.TexImage3DMultisample, GL.TextureView, GL.Ext.ColorTable, GL.Ext.ConvolutionFilter1D, GL.Ext.ConvolutionFilter2D, GL.Ext.CopyConvolutionFilter1D, GL.Ext.CopyConvolutionFilter2D, GL.Ext.CopyTexImage1D, GL.Ext.CopyTexImage2D, GL.Ext.Histogram, GL.Ext.Minmax, GL.Ext.NamedRenderbufferStorage, GL.Ext.NamedRenderbufferStorageMultisampleCoverage, GL.Ext.NamedRenderbufferStorageMultisample, GL.Ext.SeparableFilter2D, GL.Ext.TexImage3D, GL.NV.RenderbufferStorageMultisampleCoverage, GL.Sgi.ColorTable, GL.Sgi.CopyColorTable, GL.Sgis.TexImage4D
     /// </summary>
     public enum PixelInternalFormat : int
     {
@@ -47352,6 +47356,22 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         CompressedSignedRgRgtc2 = ((int)0x8DBE)        ,
         /// <summary>
+        /// Original was GL_R8_SNORM = 0x8F94
+        /// </summary>
+        R8Snorm = ((int)0x8F94)        ,
+        /// <summary>
+        /// Original was GL_RG8_SNORM = 0x8F95
+        /// </summary>
+        Rg8Snorm = ((int)0x8F95)        ,
+        /// <summary>
+        /// Original was GL_RGB8_SNORM = 0x8F96
+        /// </summary>
+        Rgb8Snorm = ((int)0x8F96)        ,
+        /// <summary>
+        /// Original was GL_RGBA8_SNORM = 0x8F97
+        /// </summary>
+        Rgba8Snorm = ((int)0x8F97)        ,
+        /// <summary>
         /// Original was GL_RGB10_A2UI = 0x906F
         /// </summary>
         Rgb10A2ui = ((int)0x906F)        ,
@@ -47561,6 +47581,38 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_UNPACK_SUBSAMPLE_RATE_SGIX = 0x85A1
         /// </summary>
         UnpackSubsampleRateSgix = ((int)0x85A1)        ,
+        /// <summary>
+        /// Original was GL_UNPACK_COMPRESSED_BLOCK_WIDTH = 0x9127
+        /// </summary>
+        UnpackCompressedBlockWidth = ((int)0x9127)        ,
+        /// <summary>
+        /// Original was GL_UNPACK_COMPRESSED_BLOCK_HEIGHT = 0x9128
+        /// </summary>
+        UnpackCompressedBlockHeight = ((int)0x9128)        ,
+        /// <summary>
+        /// Original was GL_UNPACK_COMPRESSED_BLOCK_DEPTH = 0x9129
+        /// </summary>
+        UnpackCompressedBlockDepth = ((int)0x9129)        ,
+        /// <summary>
+        /// Original was GL_UNPACK_COMPRESSED_BLOCK_SIZE = 0x912A
+        /// </summary>
+        UnpackCompressedBlockSize = ((int)0x912A)        ,
+        /// <summary>
+        /// Original was GL_PACK_COMPRESSED_BLOCK_WIDTH = 0x912B
+        /// </summary>
+        PackCompressedBlockWidth = ((int)0x912B)        ,
+        /// <summary>
+        /// Original was GL_PACK_COMPRESSED_BLOCK_HEIGHT = 0x912C
+        /// </summary>
+        PackCompressedBlockHeight = ((int)0x912C)        ,
+        /// <summary>
+        /// Original was GL_PACK_COMPRESSED_BLOCK_DEPTH = 0x912D
+        /// </summary>
+        PackCompressedBlockDepth = ((int)0x912D)        ,
+        /// <summary>
+        /// Original was GL_PACK_COMPRESSED_BLOCK_SIZE = 0x912E
+        /// </summary>
+        PackCompressedBlockSize = ((int)0x912E)        ,
     }
 
     /// <summary>
@@ -50992,7 +51044,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.TexBuffer
+    /// Used in GL.BindImageTexture, GL.TexBuffer, GL.TexBufferRange, GL.TexStorage1D, GL.TexStorage2D, GL.TexStorage2DMultisample, GL.TexStorage3D, GL.TexStorage3DMultisample
     /// </summary>
     public enum SizedInternalFormat : int
     {
@@ -51540,7 +51592,26 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.TexBuffer
+    /// Used in GL.BindImageTexture
+    /// </summary>
+    public enum TextureAccess : int
+    {
+        /// <summary>
+        /// Original was GL_READ_ONLY = 0x88B8
+        /// </summary>
+        ReadOnly = ((int)0x88B8)        ,
+        /// <summary>
+        /// Original was GL_WRITE_ONLY = 0x88B9
+        /// </summary>
+        WriteOnly = ((int)0x88B9)        ,
+        /// <summary>
+        /// Original was GL_READ_WRITE = 0x88BA
+        /// </summary>
+        ReadWrite = ((int)0x88BA)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.TexBuffer, GL.TexBufferRange
     /// </summary>
     public enum TextureBufferTarget : int
     {
@@ -52410,7 +52481,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.CompressedTexImage1D, GL.Arb.CompressedTexImage2D, GL.Arb.CompressedTexImage3D, GL.Arb.CompressedTexSubImage1D, GL.Arb.CompressedTexSubImage2D, GL.Arb.CompressedTexSubImage3D, GL.Arb.FramebufferTextureFace, GL.Arb.GetCompressedTexImage, GL.Arb.TexBuffer, GL.BindTexture, GL.CompressedTexImage1D, GL.CompressedTexImage2D, GL.CompressedTexImage3D, GL.CompressedTexSubImage1D, GL.CompressedTexSubImage2D, GL.CompressedTexSubImage3D, GL.CopyTexImage1D, GL.CopyTexImage2D, GL.CopyTexSubImage1D, GL.CopyTexSubImage2D, GL.CopyTexSubImage3D, GL.FramebufferTexture1D, GL.FramebufferTexture2D, GL.FramebufferTexture3D, GL.GetCompressedTexImage, GL.GetTexImage, GL.GetTexLevelParameter, GL.GetTexParameter, GL.GetTexParameterI, GL.TexImage1D, GL.TexImage2D, GL.TexImage3D, GL.TexParameter, GL.TexParameterI, GL.TexSubImage1D, GL.TexSubImage2D, GL.TexSubImage3D, GL.Ext.BindMultiTexture, GL.Ext.BindTexture, GL.Ext.CompressedMultiTexImage1D, GL.Ext.CompressedMultiTexImage2D, GL.Ext.CompressedMultiTexImage3D, GL.Ext.CompressedMultiTexSubImage1D, GL.Ext.CompressedMultiTexSubImage2D, GL.Ext.CompressedMultiTexSubImage3D, GL.Ext.CompressedTextureImage1D, GL.Ext.CompressedTextureImage2D, GL.Ext.CompressedTextureImage3D, GL.Ext.CompressedTextureSubImage1D, GL.Ext.CompressedTextureSubImage2D, GL.Ext.CompressedTextureSubImage3D, GL.Ext.CopyMultiTexImage1D, GL.Ext.CopyMultiTexImage2D, GL.Ext.CopyMultiTexSubImage1D, GL.Ext.CopyMultiTexSubImage2D, GL.Ext.CopyMultiTexSubImage3D, GL.Ext.CopyTexImage1D, GL.Ext.CopyTexImage2D, GL.Ext.CopyTexSubImage1D, GL.Ext.CopyTexSubImage2D, GL.Ext.CopyTexSubImage3D, GL.Ext.CopyTextureImage1D, GL.Ext.CopyTextureImage2D, GL.Ext.CopyTextureSubImage1D, GL.Ext.CopyTextureSubImage2D, GL.Ext.CopyTextureSubImage3D, GL.Ext.FramebufferTexture1D, GL.Ext.FramebufferTexture2D, GL.Ext.FramebufferTexture3D, GL.Ext.FramebufferTextureFace, GL.Ext.GenerateMultiTexMipmap, GL.Ext.GenerateTextureMipmap, GL.Ext.GetCompressedMultiTexImage, GL.Ext.GetCompressedTextureImage, GL.Ext.GetMultiTexImage, GL.Ext.GetMultiTexLevelParameter, GL.Ext.GetMultiTexParameter, GL.Ext.GetMultiTexParameterI, GL.Ext.GetTexParameterI, GL.Ext.GetTextureImage, GL.Ext.GetTextureLevelParameter, GL.Ext.GetTextureParameter, GL.Ext.GetTextureParameterI, GL.Ext.MultiTexBuffer, GL.Ext.MultiTexImage1D, GL.Ext.MultiTexImage2D, GL.Ext.MultiTexImage3D, GL.Ext.MultiTexParameter, GL.Ext.MultiTexParameterI, GL.Ext.MultiTexRenderbuffer, GL.Ext.MultiTexSubImage1D, GL.Ext.MultiTexSubImage2D, GL.Ext.MultiTexSubImage3D, GL.Ext.NamedFramebufferTexture1D, GL.Ext.NamedFramebufferTexture2D, GL.Ext.NamedFramebufferTexture3D, GL.Ext.NamedFramebufferTextureFace, GL.Ext.TexBuffer, GL.Ext.TexImage3D, GL.Ext.TexParameterI, GL.Ext.TexSubImage1D, GL.Ext.TexSubImage2D, GL.Ext.TexSubImage3D, GL.Ext.TextureBuffer, GL.Ext.TextureImage1D, GL.Ext.TextureImage2D, GL.Ext.TextureImage3D, GL.Ext.TextureParameter, GL.Ext.TextureParameterI, GL.Ext.TextureRenderbuffer, GL.Ext.TextureSubImage1D, GL.Ext.TextureSubImage2D, GL.Ext.TextureSubImage3D, GL.NV.TexRenderbuffer, GL.Sgis.DetailTexFunc, GL.Sgis.GetDetailTexFunc, GL.Sgis.GetSharpenTexFunc, GL.Sgis.GetTexFilterFunc, GL.Sgis.SharpenTexFunc, GL.Sgis.TexFilterFunc, GL.Sgis.TexImage4D, GL.Sgis.TexSubImage4D
+    /// Used in GL.Arb.CompressedTexImage1D, GL.Arb.CompressedTexImage2D, GL.Arb.CompressedTexImage3D, GL.Arb.CompressedTexSubImage1D, GL.Arb.CompressedTexSubImage2D, GL.Arb.CompressedTexSubImage3D, GL.Arb.FramebufferTextureFace, GL.Arb.GetCompressedTexImage, GL.Arb.TexBuffer, GL.BindTexture, GL.CompressedTexImage1D, GL.CompressedTexImage2D, GL.CompressedTexImage3D, GL.CompressedTexSubImage1D, GL.CompressedTexSubImage2D, GL.CompressedTexSubImage3D, GL.CopyTexImage1D, GL.CopyTexImage2D, GL.CopyTexSubImage1D, GL.CopyTexSubImage2D, GL.CopyTexSubImage3D, GL.FramebufferTexture1D, GL.FramebufferTexture2D, GL.FramebufferTexture3D, GL.GetCompressedTexImage, GL.GetTexImage, GL.GetTexLevelParameter, GL.GetTexParameter, GL.GetTexParameterI, GL.TexImage1D, GL.TexImage2D, GL.TexImage3D, GL.TexParameter, GL.TexParameterI, GL.TexSubImage1D, GL.TexSubImage2D, GL.TexSubImage3D, GL.TextureView, GL.Ext.BindMultiTexture, GL.Ext.BindTexture, GL.Ext.CompressedMultiTexImage1D, GL.Ext.CompressedMultiTexImage2D, GL.Ext.CompressedMultiTexImage3D, GL.Ext.CompressedMultiTexSubImage1D, GL.Ext.CompressedMultiTexSubImage2D, GL.Ext.CompressedMultiTexSubImage3D, GL.Ext.CompressedTextureImage1D, GL.Ext.CompressedTextureImage2D, GL.Ext.CompressedTextureImage3D, GL.Ext.CompressedTextureSubImage1D, GL.Ext.CompressedTextureSubImage2D, GL.Ext.CompressedTextureSubImage3D, GL.Ext.CopyMultiTexImage1D, GL.Ext.CopyMultiTexImage2D, GL.Ext.CopyMultiTexSubImage1D, GL.Ext.CopyMultiTexSubImage2D, GL.Ext.CopyMultiTexSubImage3D, GL.Ext.CopyTexImage1D, GL.Ext.CopyTexImage2D, GL.Ext.CopyTexSubImage1D, GL.Ext.CopyTexSubImage2D, GL.Ext.CopyTexSubImage3D, GL.Ext.CopyTextureImage1D, GL.Ext.CopyTextureImage2D, GL.Ext.CopyTextureSubImage1D, GL.Ext.CopyTextureSubImage2D, GL.Ext.CopyTextureSubImage3D, GL.Ext.FramebufferTexture1D, GL.Ext.FramebufferTexture2D, GL.Ext.FramebufferTexture3D, GL.Ext.FramebufferTextureFace, GL.Ext.GenerateMultiTexMipmap, GL.Ext.GenerateTextureMipmap, GL.Ext.GetCompressedMultiTexImage, GL.Ext.GetCompressedTextureImage, GL.Ext.GetMultiTexImage, GL.Ext.GetMultiTexLevelParameter, GL.Ext.GetMultiTexParameter, GL.Ext.GetMultiTexParameterI, GL.Ext.GetTexParameterI, GL.Ext.GetTextureImage, GL.Ext.GetTextureLevelParameter, GL.Ext.GetTextureParameter, GL.Ext.GetTextureParameterI, GL.Ext.MultiTexBuffer, GL.Ext.MultiTexImage1D, GL.Ext.MultiTexImage2D, GL.Ext.MultiTexImage3D, GL.Ext.MultiTexParameter, GL.Ext.MultiTexParameterI, GL.Ext.MultiTexRenderbuffer, GL.Ext.MultiTexSubImage1D, GL.Ext.MultiTexSubImage2D, GL.Ext.MultiTexSubImage3D, GL.Ext.NamedFramebufferTexture1D, GL.Ext.NamedFramebufferTexture2D, GL.Ext.NamedFramebufferTexture3D, GL.Ext.NamedFramebufferTextureFace, GL.Ext.TexBuffer, GL.Ext.TexImage3D, GL.Ext.TexParameterI, GL.Ext.TexSubImage1D, GL.Ext.TexSubImage2D, GL.Ext.TexSubImage3D, GL.Ext.TextureBuffer, GL.Ext.TextureImage1D, GL.Ext.TextureImage2D, GL.Ext.TextureImage3D, GL.Ext.TextureParameter, GL.Ext.TextureParameterI, GL.Ext.TextureRenderbuffer, GL.Ext.TextureSubImage1D, GL.Ext.TextureSubImage2D, GL.Ext.TextureSubImage3D, GL.NV.TexRenderbuffer, GL.Sgis.DetailTexFunc, GL.Sgis.GetDetailTexFunc, GL.Sgis.GetSharpenTexFunc, GL.Sgis.GetTexFilterFunc, GL.Sgis.SharpenTexFunc, GL.Sgis.TexFilterFunc, GL.Sgis.TexImage4D, GL.Sgis.TexSubImage4D
     /// </summary>
     public enum TextureTarget : int
     {
@@ -52573,6 +52644,91 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
+    /// Used in GL.TexStorage1D
+    /// </summary>
+    public enum TextureTarget1d : int
+    {
+        /// <summary>
+        /// Original was GL_TEXTURE_1D = 0x0DE0
+        /// </summary>
+        Texture1D = ((int)0x0DE0)        ,
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_1D = 0x8063
+        /// </summary>
+        ProxyTexture1D = ((int)0x8063)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.TexStorage2D
+    /// </summary>
+    public enum TextureTarget2d : int
+    {
+        /// <summary>
+        /// Original was GL_TEXTURE_2D = 0x0DE1
+        /// </summary>
+        Texture2D = ((int)0x0DE1)        ,
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_2D = 0x8064
+        /// </summary>
+        ProxyTexture2D = ((int)0x8064)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_RECTANGLE = 0x84F5
+        /// </summary>
+        TextureRectangle = ((int)0x84F5)        ,
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_RECTANGLE = 0x84F7
+        /// </summary>
+        ProxyTextureRectangle = ((int)0x84F7)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP = 0x8513
+        /// </summary>
+        TextureCubeMap = ((int)0x8513)        ,
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_CUBE_MAP = 0x851B
+        /// </summary>
+        ProxyTextureCubeMap = ((int)0x851B)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_1D_ARRAY = 0x8C18
+        /// </summary>
+        Texture1DArray = ((int)0x8C18)        ,
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_1D_ARRAY = 0x8C19
+        /// </summary>
+        ProxyTexture1DArray = ((int)0x8C19)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.TexStorage3D
+    /// </summary>
+    public enum TextureTarget3d : int
+    {
+        /// <summary>
+        /// Original was GL_TEXTURE_3D = 0x806F
+        /// </summary>
+        Texture3D = ((int)0x806F)        ,
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_3D = 0x8070
+        /// </summary>
+        ProxyTexture3D = ((int)0x8070)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP = 0x8513
+        /// </summary>
+        TextureCubeMap = ((int)0x8513)        ,
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_CUBE_MAP = 0x851B
+        /// </summary>
+        ProxyTextureCubeMap = ((int)0x851B)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_ARRAY = 0x8C1A
+        /// </summary>
+        Texture2DArray = ((int)0x8C1A)        ,
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_2D_ARRAY = 0x8C1B
+        /// </summary>
+        ProxyTexture2DArray = ((int)0x8C1B)        ,
+    }
+
+    /// <summary>
     /// Used in GL.TexImage2DMultisample, GL.TexImage3DMultisample
     /// </summary>
     public enum TextureTargetMultisample : int
@@ -52585,6 +52741,36 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE = 0x9101
         /// </summary>
         ProxyTexture2DMultisample = ((int)0x9101)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
+        /// </summary>
+        Texture2DMultisampleArray = ((int)0x9102)        ,
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9103
+        /// </summary>
+        ProxyTexture2DMultisampleArray = ((int)0x9103)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.TexStorage2DMultisample
+    /// </summary>
+    public enum TextureTargetMultisample2d : int
+    {
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_MULTISAMPLE = 0x9100
+        /// </summary>
+        Texture2DMultisample = ((int)0x9100)        ,
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE = 0x9101
+        /// </summary>
+        ProxyTexture2DMultisample = ((int)0x9101)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.TexStorage3DMultisample
+    /// </summary>
+    public enum TextureTargetMultisample3d : int
+    {
         /// <summary>
         /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
         /// </summary>

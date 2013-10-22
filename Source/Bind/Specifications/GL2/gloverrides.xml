@@ -849,6 +849,15 @@
     </function>
     
     <!-- Version 4.2 -->
+
+    <function name="BindImageTexture" extension="Core">
+      <param name="access">
+        <type>TextureAccess</type>
+      </param>
+      <param name="format">
+        <type>SizedInternalFormat</type>
+      </param>
+    </function>
     
     <function name="GetActiveAtomicCounterBuffer" extension="Core">
       <param name="pname">
@@ -859,6 +868,33 @@
     <function name="MemoryBarrier" extension="Core">
       <param name="barriers">
         <type>MemoryBarrierFlags</type>
+      </param>
+    </function>
+    
+    <function name="TexStorage1D" extension="Core">
+      <param name="target">
+        <type>TextureTarget1d</type>
+      </param>
+      <param name="internalformat">
+        <type>SizedInternalFormat</type>
+      </param>
+    </function>
+    
+    <function name="TexStorage2D" extension="Core">
+      <param name="target">
+        <type>TextureTarget2d</type>
+      </param>
+      <param name="internalformat">
+        <type>SizedInternalFormat</type>
+      </param>
+    </function>
+    
+    <function name="TexStorage3D" extension="Core">
+      <param name="target">
+        <type>TextureTarget3d</type>
+      </param>
+      <param name="internalformat">
+        <type>SizedInternalFormat</type>
       </param>
     </function>
     
@@ -927,6 +963,62 @@
     <function name="GetProgramResourceLocationIndex" extension="Core">
       <param name="programInterface">
         <type>ProgramInterface</type>
+      </param>
+    </function>
+    
+    <function name="TexBufferRange" extension="Core">
+      <param name="target">
+        <type>TextureBufferTarget</type>
+      </param>
+      <param name="internalformat">
+        <type>SizedInternalFormat</type>
+      </param>
+    </function>
+    
+    <function name="TexStorage2DMultisample" extension="Core">
+      <param name="target">
+        <type>TextureTargetMultisample2d</type>
+      </param>
+      <param name="internalformat">
+        <type>SizedInternalFormat</type>
+      </param>
+    </function>
+    
+    <function name="TexStorage3DMultisample" extension="Core">
+      <param name="target">
+        <type>TextureTargetMultisample3d</type>
+      </param>
+      <param name="internalformat">
+        <type>SizedInternalFormat</type>
+      </param>
+    </function>
+    
+    <function name="TextureView" extension="Core">
+      <param name="target">
+        <type>TextureTarget</type>
+      </param>
+      <param name="internalformat">
+        <type>PixelInternalFormat</type>
+      </param>
+    </function>
+    
+    <!-- Version 4.4 -->
+    
+    <function name="ClearTexImage" extension="Core">
+      <param name="format">
+        <type>PixelFormat</type>
+      </param>
+      <param name="type">
+        <type>TextureTarget3d</type>
+      </param>
+    </function>
+    
+    <function name="ClearTexSubImage" extension="Core">
+      <param name="format">
+        <type>PixelFormat</type>
+      </param>
+      <param name="type">
+        <type>TextureTarget3d</type>
       </param>
     </function>
 
@@ -1857,6 +1949,7 @@
       <token name="VERTEX_PROGRAM_POINT_SIZE" value="0x8642" />
       <token name="VERTEX_PROGRAM_TWO_SIDE" value="0x8643" />
       <use enum="VERSION_3_1" token="TEXTURE_RECTANGLE" />
+      <use enum="VERSION_3_2" token="TEXTURE_CUBE_MAP_SEAMLESS" />
       <use enum="VERSION_4_0" token="SAMPLE_SHADING" />
     </enum>
     <enum name="ErrorCode">
@@ -1984,6 +2077,7 @@
       <use enum="TextureTarget" token="TEXTURE_2D_MULTISAMPLE_ARRAY" />
       <use enum="TextureTarget" token="TEXTURE_3D" />
       <use enum="TextureTarget" token="TEXTURE_CUBE_MAP" />
+      <use enum="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY" />
     </enum>
     <enum name="GetColorTableParameterPName">
       <token name="COLOR_TABLE_ALPHA_SIZE" value="0x80DD" />
@@ -2480,10 +2574,6 @@
       <use enum="ARB_texture_rg" token="RG16UI" />
       <use enum="ARB_texture_rg" token="RG32I" />
       <use enum="ARB_texture_rg" token="RG32UI" />
-      <use enum="ARB_texture_compression_rgtc" token="COMPRESSED_RED_RGTC1" />
-      <use enum="ARB_texture_compression_rgtc" token="COMPRESSED_SIGNED_RED_RGTC1" />
-      <use enum="ARB_texture_compression_rgtc" token="COMPRESSED_RG_RGTC2" />
-      <use enum="ARB_texture_compression_rgtc" token="COMPRESSED_SIGNED_RG_RGTC2" />
       <use enum="ARB_framebuffer_object" token="DEPTH_STENCIL" />
       <use enum="ARB_framebuffer_object" token="DEPTH24_STENCIL8" />
       <token name="COMPRESSED_ALPHA" value="0x84E9" />
@@ -2544,13 +2634,46 @@
       <use enum="PixelFormat" token="LUMINANCE_ALPHA" />
       <use enum="PixelFormat" token="RGB" />
       <use enum="PixelFormat" token="RGBA" />
+      <use enum="VERSION_3_1" token="R8_SNORM" />
+      <use enum="VERSION_3_1" token="RG8_SNORM" />
+      <use enum="VERSION_3_1" token="RGB8_SNORM" />
+      <use enum="VERSION_3_1" token="RGBA8_SNORM" />
       <use enum="VERSION_3_3" token="RGB10_A2UI" />
+      <use enum="VERSION_4_3" token="COMPRESSED_RED_RGTC1" />
+      <use enum="VERSION_4_3" token="COMPRESSED_RG_RGTC2" />
+      <use enum="VERSION_4_3" token="COMPRESSED_SIGNED_RED_RGTC1" />
+      <use enum="VERSION_4_3" token="COMPRESSED_SIGNED_RG_RGTC2" />
+      <use enum="VERSION_4_4" token="COMPRESSED_RGBA_BPTC_UNORM" />
+      <use enum="VERSION_4_4" token="COMPRESSED_SRGB_BPTC_UNORM" />
+      <use enum="VERSION_4_4" token="COMPRESSED_ALPHA_BPTC_UNORM" />
+      <use enum="VERSION_4_4" token="COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT" />
+      <use enum="VERSION_4_4" token="COMPRESSED_RGB_BPTC_SIGNED_FLOAT" />
     </enum>
     <enum name="PixelStoreParameter">
-      <token name="PACK_IMAGE_HEIGHT" value="0x806C" />
-      <token name="PACK_SKIP_IMAGES" value="0x806B" />
-      <token name="UNPACK_IMAGE_HEIGHT" value="0x806E" />
-      <token name="UNPACK_SKIP_IMAGES" value="0x806D" />
+      <use enum="VERSION_1_1" token="PACK_SWAP_BYTES" />
+      <use enum="VERSION_1_1" token="PACK_LSB_FIRST" />
+      <use enum="VERSION_1_1" token="PACK_ROW_LENGTH" />
+      <use enum="VERSION_1_1" token="PACK_SKIP_IMAGES" />
+      <use enum="VERSION_1_1" token="PACK_SKIP_PIXELS" />
+      <use enum="VERSION_1_1" token="PACK_SKIP_ROWS" />
+      <use enum="VERSION_1_1" token="PACK_ALIGNMENT" />
+      <use enum="VERSION_1_2" token="PACK_IMAGE_HEIGHT" />
+      <use enum="VERSION_4_2" token="PACK_COMPRESSED_BLOCK_WIDTH" />
+      <use enum="VERSION_4_2" token="PACK_COMPRESSED_BLOCK_HEIGHT" />
+      <use enum="VERSION_4_2" token="PACK_COMPRESSED_BLOCK_DEPTH" />
+      <use enum="VERSION_4_2" token="PACK_COMPRESSED_BLOCK_SIZE" />
+      <use enum="VERSION_1_1" token="UNPACK_SWAP_BYTES" />
+      <use enum="VERSION_1_1" token="UNPACK_LSB_FIRST" />
+      <use enum="VERSION_1_1" token="UNPACK_ROW_LENGTH" />
+      <use enum="VERSION_1_1" token="UNPACK_SKIP_IMAGES" />
+      <use enum="VERSION_1_1" token="UNPACK_SKIP_PIXELS" />
+      <use enum="VERSION_1_1" token="UNPACK_SKIP_ROWS" />
+      <use enum="VERSION_1_1" token="UNPACK_ALIGNMENT" />
+      <use enum="VERSION_1_2" token="UNPACK_IMAGE_HEIGHT" />
+      <use enum="VERSION_4_2" token="UNPACK_COMPRESSED_BLOCK_WIDTH" />
+      <use enum="VERSION_4_2" token="UNPACK_COMPRESSED_BLOCK_HEIGHT" />
+      <use enum="VERSION_4_2" token="UNPACK_COMPRESSED_BLOCK_DEPTH" />
+      <use enum="VERSION_4_2" token="UNPACK_COMPRESSED_BLOCK_SIZE" />
     </enum>
     <enum name="PixelType">
       <use enum="ARB_framebuffer_object" token="UNSIGNED_INT_24_8" />
@@ -2957,6 +3080,11 @@
       <use token="SYNC_CONDITION" />
       <use token="SYNC_FLAGS" />
     </enum>
+    <enum name="TextureAccess">
+      <use enum="VERSION_1_5" token="READ_ONLY" />
+      <use enum="VERSION_1_5" token="WRITE_ONLY" />
+      <use enum="VERSION_1_5" token="READ_WRITE" />
+    </enum>
     <enum name="TexCoordPointerType">
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
       <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
@@ -3090,6 +3218,36 @@
       <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_B" />
       <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_A" />
       <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_RGBA" />
+    </enum>
+    <enum name="TextureTarget1d">
+      <use enum="VERSION_1_1" token="TEXTURE_1D" />
+      <use enum="VERSION_1_1" token="PROXY_TEXTURE_1D" />
+    </enum>
+    <enum name="TextureTarget2d">
+      <use enum="VERSION_1_1" token="TEXTURE_2D" />
+      <use enum="VERSION_1_3" token="TEXTURE_CUBE_MAP" />
+      <use enum="VERSION_3_0" token="TEXTURE_1D_ARRAY" />
+      <use enum="VERSION_3_1" token="TEXTURE_RECTANGLE" />
+      <use enum="VERSION_1_1" token="PROXY_TEXTURE_2D" />
+      <use enum="VERSION_1_3" token="PROXY_TEXTURE_CUBE_MAP" />
+      <use enum="VERSION_3_0" token="PROXY_TEXTURE_1D_ARRAY" />
+      <use enum="VERSION_3_1" token="PROXY_TEXTURE_RECTANGLE" />
+    </enum>
+    <enum name="TextureTarget3d">
+      <use enum="VERSION_1_2" token="TEXTURE_3D" />
+      <use enum="VERSION_1_3" token="TEXTURE_CUBE_MAP" />
+      <use enum="VERSION_3_0" token="TEXTURE_2D_ARRAY" />
+      <use enum="VERSION_1_2" token="PROXY_TEXTURE_3D" />
+      <use enum="VERSION_1_3" token="PROXY_TEXTURE_CUBE_MAP" />
+      <use enum="VERSION_3_0" token="PROXY_TEXTURE_2D_ARRAY" />
+    </enum>
+    <enum name="TextureTargetMultisample2d">
+      <use enum="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE" />
+      <use enum="VERSION_3_2" token="PROXY_TEXTURE_2D_MULTISAMPLE" />
+    </enum>
+    <enum name="TextureTargetMultisample3d">
+      <use enum="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE_ARRAY" />
+      <use enum="VERSION_3_2" token="PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY" />
     </enum>
     <enum name="TextureTarget">
       <token name="PROXY_TEXTURE_1D_ARRAY" value="0x8C19" />

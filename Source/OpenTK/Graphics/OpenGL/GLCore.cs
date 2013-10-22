@@ -209,7 +209,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void BindFramebufferEXT(OpenTK.Graphics.OpenGL.FramebufferTarget target, UInt32 framebuffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindImageTexture", ExactSpelling = true)]
-            internal extern static void BindImageTexture(UInt32 unit, UInt32 texture, Int32 level, bool layered, Int32 layer, OpenTK.Graphics.OpenGL.ArbShaderImageLoadStore access, OpenTK.Graphics.OpenGL.ArbShaderImageLoadStore format);
+            internal extern static void BindImageTexture(UInt32 unit, UInt32 texture, Int32 level, bool layered, Int32 layer, OpenTK.Graphics.OpenGL.TextureAccess access, OpenTK.Graphics.OpenGL.SizedInternalFormat format);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindImageTextureEXT", ExactSpelling = true)]
             internal extern static void BindImageTextureEXT(UInt32 index, UInt32 texture, Int32 level, bool layered, Int32 layer, OpenTK.Graphics.OpenGL.ExtShaderImageLoadStore access, Int32 format);
@@ -5582,7 +5582,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void TexBufferEXT(OpenTK.Graphics.OpenGL.TextureTarget target, OpenTK.Graphics.OpenGL.ExtTextureBufferObject internalformat, UInt32 buffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexBufferRange", ExactSpelling = true)]
-            internal extern static void TexBufferRange(OpenTK.Graphics.OpenGL.ArbTextureBufferRange target, OpenTK.Graphics.OpenGL.ArbTextureBufferRange internalformat, UInt32 buffer, IntPtr offset, IntPtr size);
+            internal extern static void TexBufferRange(OpenTK.Graphics.OpenGL.TextureBufferTarget target, OpenTK.Graphics.OpenGL.SizedInternalFormat internalformat, UInt32 buffer, IntPtr offset, IntPtr size);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexBumpParameterfvATI", ExactSpelling = true)]
             internal extern static unsafe void TexBumpParameterfvATI(OpenTK.Graphics.OpenGL.AtiEnvmapBumpmap pname, Single* param);
@@ -5945,19 +5945,19 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void TexRenderbufferNV(OpenTK.Graphics.OpenGL.TextureTarget target, UInt32 renderbuffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexStorage1D", ExactSpelling = true)]
-            internal extern static void TexStorage1D(OpenTK.Graphics.OpenGL.ArbTextureStorage target, Int32 levels, OpenTK.Graphics.OpenGL.ArbTextureStorage internalformat, Int32 width);
+            internal extern static void TexStorage1D(OpenTK.Graphics.OpenGL.TextureTarget1d target, Int32 levels, OpenTK.Graphics.OpenGL.SizedInternalFormat internalformat, Int32 width);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexStorage2D", ExactSpelling = true)]
-            internal extern static void TexStorage2D(OpenTK.Graphics.OpenGL.ArbTextureStorage target, Int32 levels, OpenTK.Graphics.OpenGL.ArbTextureStorage internalformat, Int32 width, Int32 height);
+            internal extern static void TexStorage2D(OpenTK.Graphics.OpenGL.TextureTarget2d target, Int32 levels, OpenTK.Graphics.OpenGL.SizedInternalFormat internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexStorage2DMultisample", ExactSpelling = true)]
-            internal extern static void TexStorage2DMultisample(OpenTK.Graphics.OpenGL.ArbTextureStorageMultisample target, Int32 samples, OpenTK.Graphics.OpenGL.ArbTextureStorageMultisample internalformat, Int32 width, Int32 height, bool fixedsamplelocations);
+            internal extern static void TexStorage2DMultisample(OpenTK.Graphics.OpenGL.TextureTargetMultisample2d target, Int32 samples, OpenTK.Graphics.OpenGL.SizedInternalFormat internalformat, Int32 width, Int32 height, bool fixedsamplelocations);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexStorage3D", ExactSpelling = true)]
-            internal extern static void TexStorage3D(OpenTK.Graphics.OpenGL.ArbTextureStorage target, Int32 levels, OpenTK.Graphics.OpenGL.ArbTextureStorage internalformat, Int32 width, Int32 height, Int32 depth);
+            internal extern static void TexStorage3D(OpenTK.Graphics.OpenGL.TextureTarget3d target, Int32 levels, OpenTK.Graphics.OpenGL.SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexStorage3DMultisample", ExactSpelling = true)]
-            internal extern static void TexStorage3DMultisample(OpenTK.Graphics.OpenGL.ArbTextureStorageMultisample target, Int32 samples, OpenTK.Graphics.OpenGL.ArbTextureStorageMultisample internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
+            internal extern static void TexStorage3DMultisample(OpenTK.Graphics.OpenGL.TextureTargetMultisample3d target, Int32 samples, OpenTK.Graphics.OpenGL.SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexStorageSparseAMD", ExactSpelling = true)]
             internal extern static void TexStorageSparseAMD(OpenTK.Graphics.OpenGL.AmdSparseTexture target, OpenTK.Graphics.OpenGL.AmdSparseTexture internalFormat, Int32 width, Int32 height, Int32 depth, Int32 layers, UInt32 flags);
@@ -6077,7 +6077,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void TextureSubImage3DEXT(UInt32 texture, OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTextureView", ExactSpelling = true)]
-            internal extern static void TextureView(UInt32 texture, OpenTK.Graphics.OpenGL.ArbTextureView target, UInt32 origtexture, OpenTK.Graphics.OpenGL.ArbTextureView internalformat, UInt32 minlevel, UInt32 numlevels, UInt32 minlayer, UInt32 numlayers);
+            internal extern static void TextureView(UInt32 texture, OpenTK.Graphics.OpenGL.TextureTarget target, UInt32 origtexture, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, UInt32 minlevel, UInt32 numlevels, UInt32 minlayer, UInt32 numlayers);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTrackMatrixNV", ExactSpelling = true)]
             internal extern static void TrackMatrixNV(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, UInt32 address, OpenTK.Graphics.OpenGL.NvVertexProgram matrix, OpenTK.Graphics.OpenGL.NvVertexProgram transform);

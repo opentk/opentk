@@ -207,7 +207,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void BindFramebufferEXT(OpenTK.Graphics.OpenGL.FramebufferTarget target, UInt32 framebuffer);
             internal static BindFramebufferEXT glBindFramebufferEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindImageTexture(UInt32 unit, UInt32 texture, Int32 level, bool layered, Int32 layer, OpenTK.Graphics.OpenGL.ArbShaderImageLoadStore access, OpenTK.Graphics.OpenGL.ArbShaderImageLoadStore format);
+            internal delegate void BindImageTexture(UInt32 unit, UInt32 texture, Int32 level, bool layered, Int32 layer, OpenTK.Graphics.OpenGL.TextureAccess access, OpenTK.Graphics.OpenGL.SizedInternalFormat format);
             internal static BindImageTexture glBindImageTexture;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BindImageTextureEXT(UInt32 index, UInt32 texture, Int32 level, bool layered, Int32 layer, OpenTK.Graphics.OpenGL.ExtShaderImageLoadStore access, Int32 format);
@@ -5580,7 +5580,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void TexBufferEXT(OpenTK.Graphics.OpenGL.TextureTarget target, OpenTK.Graphics.OpenGL.ExtTextureBufferObject internalformat, UInt32 buffer);
             internal static TexBufferEXT glTexBufferEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexBufferRange(OpenTK.Graphics.OpenGL.ArbTextureBufferRange target, OpenTK.Graphics.OpenGL.ArbTextureBufferRange internalformat, UInt32 buffer, IntPtr offset, IntPtr size);
+            internal delegate void TexBufferRange(OpenTK.Graphics.OpenGL.TextureBufferTarget target, OpenTK.Graphics.OpenGL.SizedInternalFormat internalformat, UInt32 buffer, IntPtr offset, IntPtr size);
             internal static TexBufferRange glTexBufferRange;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void TexBumpParameterfvATI(OpenTK.Graphics.OpenGL.AtiEnvmapBumpmap pname, Single* param);
@@ -5943,19 +5943,19 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void TexRenderbufferNV(OpenTK.Graphics.OpenGL.TextureTarget target, UInt32 renderbuffer);
             internal static TexRenderbufferNV glTexRenderbufferNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexStorage1D(OpenTK.Graphics.OpenGL.ArbTextureStorage target, Int32 levels, OpenTK.Graphics.OpenGL.ArbTextureStorage internalformat, Int32 width);
+            internal delegate void TexStorage1D(OpenTK.Graphics.OpenGL.TextureTarget1d target, Int32 levels, OpenTK.Graphics.OpenGL.SizedInternalFormat internalformat, Int32 width);
             internal static TexStorage1D glTexStorage1D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexStorage2D(OpenTK.Graphics.OpenGL.ArbTextureStorage target, Int32 levels, OpenTK.Graphics.OpenGL.ArbTextureStorage internalformat, Int32 width, Int32 height);
+            internal delegate void TexStorage2D(OpenTK.Graphics.OpenGL.TextureTarget2d target, Int32 levels, OpenTK.Graphics.OpenGL.SizedInternalFormat internalformat, Int32 width, Int32 height);
             internal static TexStorage2D glTexStorage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexStorage2DMultisample(OpenTK.Graphics.OpenGL.ArbTextureStorageMultisample target, Int32 samples, OpenTK.Graphics.OpenGL.ArbTextureStorageMultisample internalformat, Int32 width, Int32 height, bool fixedsamplelocations);
+            internal delegate void TexStorage2DMultisample(OpenTK.Graphics.OpenGL.TextureTargetMultisample2d target, Int32 samples, OpenTK.Graphics.OpenGL.SizedInternalFormat internalformat, Int32 width, Int32 height, bool fixedsamplelocations);
             internal static TexStorage2DMultisample glTexStorage2DMultisample;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexStorage3D(OpenTK.Graphics.OpenGL.ArbTextureStorage target, Int32 levels, OpenTK.Graphics.OpenGL.ArbTextureStorage internalformat, Int32 width, Int32 height, Int32 depth);
+            internal delegate void TexStorage3D(OpenTK.Graphics.OpenGL.TextureTarget3d target, Int32 levels, OpenTK.Graphics.OpenGL.SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth);
             internal static TexStorage3D glTexStorage3D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexStorage3DMultisample(OpenTK.Graphics.OpenGL.ArbTextureStorageMultisample target, Int32 samples, OpenTK.Graphics.OpenGL.ArbTextureStorageMultisample internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
+            internal delegate void TexStorage3DMultisample(OpenTK.Graphics.OpenGL.TextureTargetMultisample3d target, Int32 samples, OpenTK.Graphics.OpenGL.SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
             internal static TexStorage3DMultisample glTexStorage3DMultisample;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexStorageSparseAMD(OpenTK.Graphics.OpenGL.AmdSparseTexture target, OpenTK.Graphics.OpenGL.AmdSparseTexture internalFormat, Int32 width, Int32 height, Int32 depth, Int32 layers, UInt32 flags);
@@ -6075,7 +6075,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void TextureSubImage3DEXT(UInt32 texture, OpenTK.Graphics.OpenGL.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels);
             internal static TextureSubImage3DEXT glTextureSubImage3DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TextureView(UInt32 texture, OpenTK.Graphics.OpenGL.ArbTextureView target, UInt32 origtexture, OpenTK.Graphics.OpenGL.ArbTextureView internalformat, UInt32 minlevel, UInt32 numlevels, UInt32 minlayer, UInt32 numlayers);
+            internal delegate void TextureView(UInt32 texture, OpenTK.Graphics.OpenGL.TextureTarget target, UInt32 origtexture, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, UInt32 minlevel, UInt32 numlevels, UInt32 minlayer, UInt32 numlayers);
             internal static TextureView glTextureView;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TrackMatrixNV(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, UInt32 address, OpenTK.Graphics.OpenGL.NvVertexProgram matrix, OpenTK.Graphics.OpenGL.NvVertexProgram transform);
