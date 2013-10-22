@@ -520,6 +520,7 @@
     </function>
 
     <!-- Version 3.3 -->
+    
     <function name="SamplerParameter" extension="Core">
       <param name="pname">
         <type>SamplerParameter</type>
@@ -641,24 +642,28 @@
     </function>
 
     <function name="VertexAttribP1" extension="Core">
+      <version>3.3</version>
       <param name="type">
         <type>PackedPointerType</type>
       </param>
     </function>
 
-    <function name="VertexAttribP2" extension="Core">
+    <function name="VertexAttribP2" extension="Core" version="3.3">
+      <version>3.3</version>
       <param name="type">
         <type>PackedPointerType</type>
       </param>
     </function>
 
-    <function name="VertexAttribP3" extension="Core">
+    <function name="VertexAttribP3" extension="Core" version="3.3">
+      <version>3.3</version>
       <param name="type">
         <type>PackedPointerType</type>
       </param>
     </function>
 
-    <function name="VertexAttribP4" extension="Core">
+    <function name="VertexAttribP4" extension="Core" version="3.3">
+      <version>3.3</version>
       <param name="type">
         <type>PackedPointerType</type>
       </param>
