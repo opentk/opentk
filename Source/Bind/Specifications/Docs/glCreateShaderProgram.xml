@@ -91,14 +91,18 @@
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>pipeline</parameter> is not
-            a name previously returned from a call to <citerefentry><refentrytitle>glGenProgramPipelines</refentrytitle></citerefentry>
-            or if such a name has been deleted by a call to
-            <citerefentry><refentrytitle>glDeleteProgramPipelines</refentrytitle></citerefentry>.
+            <constant>GL_INVALID_ENUM</constant> is generated if if <parameter>type</parameter> is not
+            an accepted shader type.
         </para>
         <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>program</parameter> refers
-            to a program object that has not been successfully linked.
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>count</parameter> is
+            negative.
+        </para>
+        <para>
+            Other errors are generated if the supplied shader code fails to compile
+            and link, as described for the commands in the pseudocode sequence above,
+            but all such errors are generated without any side effects of executing those
+            commands.
         </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
@@ -111,7 +115,7 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group. 
+            Copyright <trademark class="copyright"></trademark> 2010-2012 Khronos Group. 
             This material may be distributed subject to the terms and conditions set forth in 
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.

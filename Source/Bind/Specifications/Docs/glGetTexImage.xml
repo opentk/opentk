@@ -208,6 +208,10 @@
         <para>
             <function>glGetTexImage</function> returns the texture image for the active texture unit.
         </para>
+        <para>
+            <constant>GL_STENCIL_INDEX</constant> is accepted for <parameter>format</parameter> only if the GL
+            version is 4.4 or greater.
+        </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
@@ -237,7 +241,7 @@
             is the returned value of <constant>GL_MAX_TEXTURE_SIZE</constant>.
         </para>
         <para>
-            <constant>GL_INVALID_OPERATION</constant> is returned if <parameter>type</parameter> is one of
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>type</parameter> is one of
             <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
             <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
             <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
@@ -245,7 +249,7 @@
             <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant> and <parameter>format</parameter> is not <constant>GL_RGB</constant>.
         </para>
         <para>
-            <constant>GL_INVALID_OPERATION</constant> is returned if <parameter>type</parameter> is one of
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>type</parameter> is one of
             <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
             <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
             <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
@@ -256,6 +260,11 @@
             <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>, or
             <constant>GL_UNSIGNED_INT_5_9_9_9_REV</constant> and <parameter>format</parameter> is neither <constant>GL_RGBA</constant>
             or <constant>GL_BGRA</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>format</parameter> is
+            <constant>GL_STENCIL_INDEX</constant> and the base internal format is not <constant>GL_STENCIL_INDEX</constant>
+            or <constant>GL_DEPTH_STENCIL</constant>.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
@@ -305,7 +314,7 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. Copyright <trademark class="copyright"></trademark> 2010
+            Silicon Graphics, Inc. Copyright <trademark class="copyright"></trademark> 2010-2013
             Khronos Group. This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.

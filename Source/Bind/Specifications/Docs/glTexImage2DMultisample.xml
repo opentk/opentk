@@ -5,7 +5,7 @@
     <refmeta>
         <refmetainfo>
             <copyright>
-                <year>2010</year>
+                <year>2013</year>
                 <holder>Khronos Group</holder>
             </copyright>
         </refmetainfo>
@@ -22,7 +22,7 @@
                 <funcdef>void <function>glTexImage2DMultisample</function></funcdef>
                 <paramdef>GLenum <parameter>target</parameter></paramdef>
                 <paramdef>GLsizei <parameter>samples</parameter></paramdef>
-                <paramdef>GLint <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
                 <paramdef>GLsizei <parameter>width</parameter></paramdef>
                 <paramdef>GLsizei <parameter>height</parameter></paramdef>
                 <paramdef>GLboolean <parameter>fixedsamplelocations</parameter></paramdef>
@@ -138,7 +138,7 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group. 
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group. 
             This material may be distributed subject to the terms and conditions set forth in 
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.

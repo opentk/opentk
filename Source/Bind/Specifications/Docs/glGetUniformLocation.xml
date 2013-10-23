@@ -48,8 +48,10 @@
     an array of structures, or a subcomponent of a vector or a
     matrix. This function returns -1 if <parameter>name</parameter>
     does not correspond to an active uniform variable in
-    <parameter>program</parameter> or if <parameter>name</parameter>
-    starts with the reserved prefix &quot;gl_&quot;.</para>
+    <parameter>program</parameter>, if <parameter>name</parameter>
+    starts with the reserved prefix &quot;gl_&quot;, or if
+    <parameter>name</parameter> is associated with an atomic counter or
+    a named uniform block.</para>
 
     <para>Uniform variables that are structures or arrays of
     structures may be queried by calling
@@ -114,7 +116,8 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2003-2005 3Dlabs Inc. Ltd. 
+            Copyright <trademark class="copyright"></trademark> 2003-2005 3Dlabs Inc. Ltd.
+            <trademark class="copyright"></trademark> 2011 Khronos Group.
             This material may be distributed subject to the terms and conditions set forth in 
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.

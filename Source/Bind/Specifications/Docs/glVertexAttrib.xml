@@ -98,9 +98,9 @@
         <funcprototype>
         <funcdef>void <function>glVertexAttribI3ui</function></funcdef>
         <paramdef>GLuint <parameter>index</parameter></paramdef>
-        <paramdef>GLoint <parameter>v0</parameter></paramdef>
-        <paramdef>GLoint <parameter>v1</parameter></paramdef>
-        <paramdef>GLoint <parameter>v2</parameter></paramdef>
+        <paramdef>GLuint <parameter>v0</parameter></paramdef>
+        <paramdef>GLuint <parameter>v1</parameter></paramdef>
+        <paramdef>GLuint <parameter>v2</parameter></paramdef>
         </funcprototype>
         <funcprototype>
         <funcdef>void <function>glVertexAttrib4f</function></funcdef>
@@ -463,16 +463,19 @@
         <term><parameter>type</parameter></term>
         <listitem>
             <para>Type of packing used on the data. This parameter must be
-                    <constant>GL_INT_10_10_10_2</constant> or <constant>GL_UNSIGNED_INT_10_10_10_2</constant>
-                    to specify signed or unsigned data, respectively.</para>
+                    <constant>GL_INT_2_10_10_10_REV</constant> or <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>,
+                    to specify signed or unsigned data, respectively, or <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant>
+                    to specify floating point data.</para>
         </listitem>
         </varlistentry>
         <varlistentry>
         <term><parameter>normalized</parameter></term>
         <listitem>
-            <para>If <constant>GL_TRUE</constant>, then the values are to be 
+            <para>If <constant>GL_TRUE</constant>, then the values are to be
                     converted to floating point values by normalizing. Otherwise,
-                    they are converted directly to floating point values.</para>
+                    they are converted directly to floating-point values.
+                    If <parameter>type</parameter> indicates a floating-pont format,
+                    then <parameter>normalized</parameter> value must be <constant>GL_FALSE</constant>.</para>
         </listitem>
         </varlistentry>
         <varlistentry>
@@ -610,6 +613,11 @@
         <para>
             <function>glVertexAttribL</function> versions are available only if the GL version is 4.1 or higher.
         </para>
+
+        <para>
+            <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant> is accepted for <parameter>type</parameter>
+            by <function>glVertexAttribP*</function> only if the GL version is 4.4 or higher.
+        </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
     <para><constant>GL_INVALID_VALUE</constant> is generated if
@@ -617,10 +625,11 @@
     <constant>GL_MAX_VERTEX_ATTRIBS</constant>.</para>
 
     <para><constant>GL_INVALID_ENUM</constant> is generated if
-    <function>glVertexAttribP</function> is used with a 
+    <function>glVertexAttribP*</function> is used with a 
         <parameter>type</parameter> other than
-    <constant>GL_INT_10_10_10_2</constant> or
-        <constant>GL_UNSIGNED_INT_10_10_10_2</constant>.</para>
+    <constant>GL_INT_2_10_10_10_REV</constant>,
+        <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>,
+        or <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant>.</para>
 
     <para><constant>GL_INVALID_ENUM</constant> is generated if
     <function>glVertexAttribL</function> is used with a 
@@ -651,7 +660,7 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 2003-2005 3Dlabs Inc. Ltd. 
-            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group.
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
             This material may be distributed subject to the terms and conditions set forth in 
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.

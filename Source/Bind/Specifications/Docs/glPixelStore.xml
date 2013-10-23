@@ -77,7 +77,10 @@
             <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry> as well as the unpacking of
             texture patterns (see <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>).
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>),
+            <citerefentry><refentrytitle>glCompressedTexImage1D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glCompressedTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexImage3D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glCompressedTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexSubImage2D</refentrytitle></citerefentry> or <citerefentry><refentrytitle>glCompressedTexSubImage1D</refentrytitle></citerefentry>.
         </para>
         <para>
             <parameter>pname</parameter> is a symbolic constant indicating the parameter to be set, and
@@ -1404,13 +1407,20 @@
             <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexSubImage1D</refentrytitle></citerefentry>.
         </para>
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc. <trademark class="copyright"></trademark> 2011
+            Khronos Group. This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

@@ -5,8 +5,8 @@
     <refmeta>
         <refmetainfo>
             <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
+                <year>2013</year>
+                <holder>Khronos Group</holder>
             </copyright>
         </refmetainfo>
         <refentrytitle>glCopyTexImage1D</refentrytitle>
@@ -68,6 +68,7 @@
                     <constant>GL_DEPTH_COMPONENT16</constant>,
                     <constant>GL_DEPTH_COMPONENT24</constant>,
                     <constant>GL_DEPTH_COMPONENT32</constant>,
+                    <constant>GL_STENCIL_INDEX8</constant>,
                     <constant>GL_RED</constant>,
                     <constant>GL_RG</constant>,
                     <constant>GL_RGB</constant>,
@@ -108,25 +109,6 @@
             <listitem>
                 <para>
                     Specifies the width of the texture image.
-                    Must be 0 or 
-                    <inlineequation><mml:math>
-                        <!-- eqn: 2 sup n  +  2 ( border ): -->
-                        <mml:mrow>
-                            <mml:msup><mml:mn>2</mml:mn>
-                            <mml:mi mathvariant="italic">n</mml:mi>
-                            </mml:msup>
-                            <mml:mo>+</mml:mo>
-                            <mml:mrow>
-                                <mml:mn>2</mml:mn>
-                                <mml:mo>&af;</mml:mo>
-                                <mml:mfenced open="(" close=")">
-                                    <mml:mi mathvariant="italic">border</mml:mi>
-                                </mml:mfenced>
-                            </mml:mrow>
-                        </mml:mrow>
-                    </mml:math></inlineequation>
-                    for some integer 
-                    <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>.
                     The height of the texture image is 1.
                 </para>
             </listitem>
@@ -135,8 +117,7 @@
             <term><parameter>border</parameter></term>
             <listitem>
                 <para>
-                    Specifies the width of the border.
-                    Must be either 0 or 1.
+                    Must be 0.
                 </para>
             </listitem>
         </varlistentry>
@@ -158,18 +139,7 @@
             </mml:math></inlineequation>
             and with a length of 
             <inlineequation><mml:math>
-                <!-- eqn: width  +  2 ( border ): -->
-                <mml:mrow>
-                    <mml:mi mathvariant="italic">width</mml:mi>
-                    <mml:mo>+</mml:mo>
-                    <mml:mrow>
-                        <mml:mn>2</mml:mn>
-                        <mml:mo>&af;</mml:mo>
-                        <mml:mfenced open="(" close=")">
-                            <mml:mi mathvariant="italic">border</mml:mi>
-                        </mml:mfenced>
-                    </mml:mrow>
-                </mml:mrow>
+                <mml:mi mathvariant="italic">width</mml:mi>
             </mml:math></inlineequation>
             defines the texture array
             at the mipmap level specified by <parameter>level</parameter>.
@@ -216,6 +186,10 @@
         <para>
             An image with 0 width indicates a NULL texture.
         </para>
+        <para>
+            <constant>GL_STENCIL_INDEX8</constant> is accepted for <parameter>internalformat</parameter> only
+            if the GL version is 4.4 or higher.
+        </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
@@ -249,27 +223,7 @@
             <constant>GL_MAX_TEXTURE_SIZE</constant>.
         </para>
         <para>
-            <constant>GL_INVALID_VALUE</constant> is generated if non-power-of-two textures are not supported and the <parameter>width</parameter> cannot be represented as 
-            <inlineequation><mml:math>
-                <!-- eqn: 2 sup n  +  2 ( border ): -->
-                <mml:mrow>
-                    <mml:msup><mml:mn>2</mml:mn>
-                    <mml:mi mathvariant="italic">n</mml:mi>
-                    </mml:msup>
-                    <mml:mo>+</mml:mo>
-                    <mml:mrow>
-                        <mml:mn>2</mml:mn>
-                        <mml:mo>&af;</mml:mo>
-                        <mml:mfenced open="(" close=")">
-                            <mml:mi mathvariant="italic">border</mml:mi>
-                        </mml:mfenced>
-                    </mml:mrow>
-                </mml:mrow>
-            </mml:math></inlineequation>
-            for some integer value of <emphasis>n</emphasis>.
-        </para>
-        <para>
-            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>border</parameter> is not 0 or 1.
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>border</parameter> is not 0.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>internalformat</parameter> is
@@ -299,7 +253,9 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2012-2013 Khronos Group.
+            This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

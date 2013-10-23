@@ -100,7 +100,7 @@
     <refsect1 id="description"><title>Description</title>
         <para>
             <function>glClearBuffer*</function> clears the specified buffer to the specified value(s). If <parameter>buffer</parameter> is
-            <constant>GL_COLOR</constant>, a particular draw buffer <constant>GL_DRAWBUFFER<parameter>i</parameter></constant> is specified
+            <constant>GL_COLOR</constant>, a particular draw buffer <constant>GL_DRAW_BUFFER<parameter>i</parameter></constant> is specified
             by passing <parameter>i</parameter> as <parameter>drawBuffer</parameter>. In this case, <parameter>value</parameter> points to
             a four-element vector specifying the R, G, B and A color to clear that draw buffer to. If <parameter>buffer</parameter> is
             one of <constant>GL_FRONT</constant>, <constant>GL_BACK</constant>, <constant>GL_LEFT</constant>, <constant>GL_RIGHT</constant>,
@@ -117,7 +117,7 @@
         <para>
             If <parameter>buffer</parameter> is <constant>GL_STENCIL</constant>, <parameter>drawBuffer</parameter> must be zero, and <parameter>value</parameter>
             points to a single value to clear the stencil buffer to. Only <function>glClearBufferiv</function> should be used to clear
-            stencil buffers. Masing and type conversion are performed in the same fashion as
+            stencil buffers. Masking and type conversion are performed in the same fashion as
             <citerefentry><refentrytitle>glClearStencil</refentrytitle></citerefentry>.
         </para>
         <para>

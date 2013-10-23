@@ -122,6 +122,63 @@
             (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a texture image is
             specified, <parameter>data</parameter> is treated as a byte offset into the buffer object's data store.
         </para>
+        <para>
+            If the compressed data are arranged into fixed-size blocks of texels, the pixel
+            storage modes can be used to select a sub-rectangle from a larger containing rectangle.
+            These pixel storage modes operate in the same way as they do for <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>.
+            In the following description, denote by <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:mrow></mml:math>,
+            <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:math>,
+            <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>h</mml:mi></mml:msub></mml:mrow></mml:math>, and
+            <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>d</mml:mi></mml:msub></mml:mrow></mml:math>,
+            the values of pixel storage modes <constant>GL_UNPACK_COMPRESSED_BLOCK_SIZE</constant>,
+            <constant>GL_UNPACK_COMPRESSED_BLOCK_WIDTH</constant>, <constant>GL_UNPACK_COMPRESSED_BLOCK_HEIGHT</constant>,
+            and <constant>GL_UNPACK_COMPRESSED_BLOCK_DEPTH</constant>, respectively.
+            <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:mrow></mml:math> is
+            the compressed block size in bytes; <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:math>,
+            <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>h</mml:mi></mml:msub></mml:mrow></mml:math>,
+            and <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>d</mml:mi></mml:msub></mml:mrow></mml:math> are the compressed block width, height, and depth in pixels.
+        </para>
+        <para>
+            By default the pixel storage modes <constant>GL_UNPACK_ROW_LENGTH</constant>,
+            <constant>GL_UNPACK_SKIP_ROWS</constant>, <constant>GL_UNPACK_SKIP_PIXELS</constant>,
+            <constant>GL_UNPACK_IMAGE_HEIGHT</constant> and <constant>GL_UNPACK_SKIP_IMAGES</constant>
+            are ignored for compressed images. To enable <constant>GL_UNPACK_SKIP_PIXELS</constant>
+            and <constant>GL_UNPACK_ROW_LENGTH</constant>, <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:mrow></mml:math>
+            and <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:math> must both be non-zero.
+            To also enable <constant>GL_UNPACK_SKIP_ROWS</constant> and <constant>GL_UNPACK_IMAGE_HEIGHT</constant>,
+            <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>h</mml:mi></mml:msub></mml:mrow></mml:math> must be non-zero.
+            To also enable <constant>GL_UNPACK_SKIP_IMAGES</constant>, <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>d</mml:mi></mml:msub></mml:mrow></mml:math>
+            must be non-zero. All parameters must be consistent with the compressed format to produce the desired results.
+        </para>
+        <para>
+            When selecting a sub-rectangle from a compressed image:
+            <itemizedlist>
+                <listitem>the value of <constant>GL_UNPACK_SKIP_PIXELS</constant> must be a multiple of <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:math>;</listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            <parameter>imageSize</parameter> must be equal to:
+        </para>
+        <para>
+<mml:math display = 'block'>
+  <mml:mrow>
+    <mml:msub>
+      <mml:mi>b</mml:mi>
+      <mml:mi>s</mml:mi>
+    </mml:msub>
+    <mml:mo lspace='2px' rspace='2px'>&times;</mml:mo>
+    <mml:mfenced open = '&lceil;' close = '&rceil;'>
+      <mml:mfrac>
+        <mml:mi>width</mml:mi>
+        <mml:msub>
+          <mml:mi>b</mml:mi>
+          <mml:mi>w</mml:mi>
+        </mml:msub>
+      </mml:mfrac>
+    </mml:mfenced>
+  </mml:mrow>
+</mml:math>
+        </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
@@ -208,7 +265,8 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc. <trademark class="copyright"></trademark> 2011
+            Khronos Group. This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

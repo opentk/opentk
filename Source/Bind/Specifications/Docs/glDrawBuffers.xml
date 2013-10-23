@@ -138,7 +138,7 @@
     <para><constant>GL_INVALID_ENUM</constant> is generated if the GL is bound
     to a framebuffer object and one or more of the values in <parameter>bufs</parameter>
     is anything other than <constant>GL_NONE</constant> or one of the
-    <constant>GL_COLOR_ATTACHMENTS<emphasis>n</emphasis></constant> tokens.</para>
+    <constant>GL_COLOR_ATTACHMENT<emphasis>n</emphasis></constant> tokens.</para>
 
     <para><constant>GL_INVALID_ENUM</constant> is generated if
     <parameter>n</parameter> is less than 0.</para>

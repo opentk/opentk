@@ -112,7 +112,7 @@
             <constant>GL_INVALID_VALUE</constant> is generated if <parameter>colorNumber</parameter> is greater than or equal to <constant>GL_MAX_DRAW_BUFFERS</constant>.
         </para>
         <para>
-            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>colorNumber</parameter> is greater than or equal to <constant>GL_MAX_DUAL_SOURCE_DRAW_BUFERS</constant>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>colorNumber</parameter> is greater than or equal to <constant>GL_MAX_DUAL_SOURCE_DRAW_BUFFERS</constant>
             and <parameter>index</parameter> is greater than or equal to one.
         </para>
         <para>

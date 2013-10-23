@@ -80,8 +80,9 @@
                     <constant>GL_RG</constant>,
                     <constant>GL_RGB</constant>,
                     <constant>GL_BGR</constant>,
-                    <constant>GL_RGBA</constant>, and
-                    <constant>GL_BGRA</constant>.
+                    <constant>GL_RGBA</constant>,
+                    <constant>GL_DEPTH_COMPONENT</constant>, and
+                    <constant>GL_STENCIL_INDEX</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -164,6 +165,10 @@
         <para>
             <function>glTexSubImage1D</function> specifies a one-dimensional subtexture for the current texture unit,
             specified with <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            <constant>GL_STENCIL_INDEX</constant> is accepted for <parameter>format</parameter> only if the GL version
+            is 4.4 or higher.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
@@ -264,6 +269,10 @@
             <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, or
             <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>
             and <parameter>format</parameter> is neither <constant>GL_RGBA</constant> nor <constant>GL_BGRA</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>format</parameter> is <constant>GL_STENCIL_INDEX</constant>
+            and the base internal format is not <constant>GL_STENCIL_INDEX</constant>.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the

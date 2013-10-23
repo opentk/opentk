@@ -20,9 +20,9 @@
         <funcsynopsis>
             <funcprototype>
                 <funcdef>void <function>glBindBufferBase</function></funcdef>
-                <paramdef>GLenum<parameter>target</parameter></paramdef>
-                <paramdef>GLuint<parameter>index</parameter></paramdef>
-                <paramdef>GLuint<parameter>buffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
@@ -33,7 +33,9 @@
             <listitem>
                 <para>
                     Specify the target of the bind operation. <parameter>target</parameter> must be
-                    either <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant> or <constant>GL_UNIFORM_BUFFER</constant>.
+                    one of <constant>GL_ATOMIC_COUNTER_BUFFER</constant>,
+                    <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant>, <constant>GL_UNIFORM_BUFFER</constant> or
+                    <constant>GL_SHADER_STORAGE_BUFFER</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -69,22 +71,31 @@
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
         <para>
-            <function>glBindBufferBase</function> is available only if the GL version is 3.0 or greater.
-        </para>
-        <para>
             Calling <function>glBindBufferBase</function> is equivalent to calling
             <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry> with <parameter>offset</parameter>
             zero and <parameter>size</parameter> equal to the size of the buffer.
+        </para>
+        <para>
+            The <constant>GL_ATOMIC_COUNTER_BUFER</constant> target is available only if the GL version is 4.2 or greater.
+        </para>
+        <para>
+            The <constant>GL_SHADER_STORAGE_BUFFER</constant> target is available only if the GL version is 4.3 or greater.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
             <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not
-            <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant> or <constant>GL_UNIFORM_BUFFER</constant>.
+            <constant>GL_ATOMIC_COUNTER_BUFFER</constant>,
+            <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant>, <constant>GL_UNIFORM_BUFFER</constant> or
+            <constant>GL_SHADER_STORAGE_BUFFER</constant>.
         </para>
         <para>
             <constant>GL_INVALID_VALUE</constant> is generated if <parameter>index</parameter> is greater
             than or equal to the number of <parameter>target</parameter>-specific indexed binding points.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>buffer</parameter> does
+            not have an associated data store, or if the size of that store is zero.
         </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
@@ -98,7 +109,7 @@
         </para>
     </refsect1>    <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group. 
+            Copyright <trademark class="copyright"></trademark> 2010-2011 Khronos Group. 
             This material may be distributed subject to the terms and conditions set forth in 
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.

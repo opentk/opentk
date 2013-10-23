@@ -24,7 +24,8 @@
 		<term><parameter>shaderType</parameter></term>
 		<listitem>
 		    <para>Specifies the type of shader to be created.
-		    Must be one of <constant>GL_VERTEX_SHADER</constant>,
+		    Must be one of <constant>GL_COMPUTE_SHADER</constant>,
+		    <constant>GL_VERTEX_SHADER</constant>,
 		    <constant>GL_TESS_CONTROL_SHADER</constant>,
 		    <constant>GL_TESS_EVALUATION_SHADER</constant>,
 		    <constant>GL_GEOMETRY_SHADER</constant>,
@@ -40,6 +41,8 @@
 	strings that define a shader. <parameter>shaderType</parameter>
 	indicates the type of shader to be created. Five types of shader
 	are supported. A shader of type
+	<constant>GL_COMPUTE_SHADER</constant> is a shader that is
+	intended to run on the programmable compute processor. A shader of type
 	<constant>GL_VERTEX_SHADER</constant> is a shader that is
 	intended to run on the programmable vertex processor.
 	A shader of type <constant>GL_TESS_CONTROL_SHADER</constant> is a shader that
@@ -54,7 +57,7 @@
 
 	<para>When created, a shader object's
 	<constant>GL_SHADER_TYPE</constant> parameter is set to either
-	<constant>GL_VERTEX_SHADER</constant>, <constant>GL_TESS_CONTROL_SHADER</constant>,
+	<constant>GL_COMPUTE_SHADER</constant>, <constant>GL_VERTEX_SHADER</constant>, <constant>GL_TESS_CONTROL_SHADER</constant>,
 	<constant>GL_TESS_EVALUATION_SHADER</constant>, <constant>GL_GEOMETRY_SHADER</constant>
 	or <constant>GL_FRAGMENT_SHADER</constant>, depending on the value
 	of <parameter>shaderType</parameter>.</para>
@@ -70,6 +73,8 @@
 	<para>Applications are responsible for providing the
 	synchronization across API calls when objects are accessed from
 	different execution threads.</para>
+	
+	<para><constant>GL_COMPUTE_SHADER</constant> is available only if the GL version is 4.3 or higher.</para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
 	<para>This function returns 0 if an error occurs creating the

@@ -105,22 +105,22 @@
         <funcprototype>
         <funcdef>void <function>glUniform2ui</function></funcdef>
         <paramdef>GLint <parameter>location</parameter></paramdef>
-        <paramdef>GLint <parameter>v0</parameter></paramdef>
+        <paramdef>GLuint <parameter>v0</parameter></paramdef>
         <paramdef>GLuint <parameter>v1</parameter></paramdef>
         </funcprototype>
         <funcprototype>
         <funcdef>void <function>glUniform3ui</function></funcdef>
         <paramdef>GLint <parameter>location</parameter></paramdef>
-        <paramdef>GLint <parameter>v0</parameter></paramdef>
-        <paramdef>GLint <parameter>v1</parameter></paramdef>
+        <paramdef>GLuint <parameter>v0</parameter></paramdef>
+        <paramdef>GLuint <parameter>v1</parameter></paramdef>
         <paramdef>GLuint <parameter>v2</parameter></paramdef>
         </funcprototype>
         <funcprototype>
         <funcdef>void <function>glUniform4ui</function></funcdef>
         <paramdef>GLint <parameter>location</parameter></paramdef>
-        <paramdef>GLint <parameter>v0</parameter></paramdef>
-        <paramdef>GLint <parameter>v1</parameter></paramdef>
-        <paramdef>GLint <parameter>v2</parameter></paramdef>
+        <paramdef>GLuint <parameter>v0</parameter></paramdef>
+        <paramdef>GLuint <parameter>v1</parameter></paramdef>
+        <paramdef>GLuint <parameter>v2</parameter></paramdef>
         <paramdef>GLuint <parameter>v3</parameter></paramdef>
         </funcprototype>
     </funcsynopsis>

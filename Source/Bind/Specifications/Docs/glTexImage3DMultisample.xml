@@ -22,7 +22,7 @@
                 <funcdef>void <function>glTexImage3DMultisample</function></funcdef>
                 <paramdef>GLenum <parameter>target</parameter></paramdef>
                 <paramdef>GLsizei <parameter>samples</parameter></paramdef>
-                <paramdef>GLint <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
                 <paramdef>GLsizei <parameter>width</parameter></paramdef>
                 <paramdef>GLsizei <parameter>height</parameter></paramdef>
                 <paramdef>GLsizei <parameter>depth</parameter></paramdef>

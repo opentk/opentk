@@ -65,7 +65,7 @@
             pipeline object <parameter>pipeline</parameter>. <parameter>stages</parameter> must be
             a logical combination of <constant>GL_VERTEX_SHADER_BIT</constant>,
             <constant>GL_TESS_CONTROL_SHADER_BIT</constant>, <constant>GL_TESS_EVALUATION_SHADER_BIT</constant>,
-            <constant>GL_GEOMETRY_SHADER_BIT</constant>, and <constant>GL_FRAGMENT_SHADER_BIT</constant>.
+            <constant>GL_GEOMETRY_SHADER_BIT</constant>, <constant>GL_FRAGMENT_SHADER_BIT</constant> and <constant>GL_COMPUTE_SHADER_BIT</constant>.
             Additionally, the special value <constant>GL_ALL_SHADER_BITS</constant> may be specified to
             indicate that all executables contained in <parameter>program</parameter> should be
             installed in <parameter>pipeline</parameter>.
@@ -79,6 +79,11 @@
             for the indicated shader stages. If <parameter>stages</parameter> contains bits other than those
             listed above, and is not equal to <constant>GL_ALL_SHADER_BITS</constant>, an error is generated.
        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The <constant>GL_COMPUTE_SHADER_BIT</constant> bit is available only if the GL version is 4.3 or greater.
+        </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>

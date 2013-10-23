@@ -9,7 +9,7 @@
                 <holder>Khronos Group.</holder>
             </copyright>
         </refmetainfo>
-        <refentrytitle>glDrawTransformFeedback</refentrytitle>
+        <refentrytitle>glDrawArraysIndirect</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
     <refnamediv>
@@ -64,8 +64,8 @@
         <para>
             <function>glDrawArraysIndirect</function> specifies multiple geometric primitives
             with very few subroutine calls. <function>glDrawArraysIndirect</function> behaves
-            similarly to <citerefentry><refentrytitle>glDrawArraysInstanced</refentrytitle></citerefentry>,
-            execpt that the parameters to <citerefentry><refentrytitle>glDrawArraysInstanced</refentrytitle></citerefentry>
+            similarly to <citerefentry><refentrytitle>glDrawArraysInstancedBaseInstance</refentrytitle></citerefentry>,
+            execept that the parameters to <citerefentry><refentrytitle>glDrawArraysInstancedBaseInstance</refentrytitle></citerefentry>
             are stored in memory at the address given by <parameter>indirect</parameter>.
         </para>
         <para>
@@ -75,28 +75,35 @@
         uint  count;
         uint  primCount;
         uint  first;
-        uint  reservedMustBeZero;
+        uint  baseInstance;
     } DrawArraysIndirectCommand;
 
     const DrawArraysIndirectCommand  *cmd  = (const DrawArraysIndirectCommand  *)indirect;
-    glDrawArraysInstanced(mode,  cmd->first,  cmd->count,  cmd->primCount);]]></programlisting>
+    glDrawArraysInstancedBaseInstance(mode,  cmd->first,  cmd->count,  cmd->primCount, cmd->baseInstance);]]></programlisting>
         </para>
         <para>
-            If a buffer is bound to the <constant>GL_INDIRECT_BUFFER</constant> binding at the time
+            If a buffer is bound to the <constant>GL_DRAW_INDIRECT_BUFFER</constant> binding at the time
             of a call to <function>glDrawArraysIndirect</function>, <parameter>indirect</parameter>
             is interpreted as an offset, in basic machine units, into that buffer and the parameter
             data is read from the buffer rather than from client memory.
         </para>
         <para>
-            In contrast to <citerefentry><refentrytitle>glDrawArraysInstanced</refentrytitle></citerefentry>,
+            In contrast to <citerefentry><refentrytitle>glDrawArraysInstancedBaseInstance</refentrytitle></citerefentry>,
             the <code>first</code> member of the parameter structure is unsigned, and out-of-range indices
-            do not generate an error. The results of the operation are undefined if the <code>reservedMustBeZero</code> member
-            of the parameter structure is non-zero. However, no error is generated in this case.
+            do not generate an error.
         </para>
         <para>
             Vertex attributes that are modified by <function>glDrawArraysIndirect</function> have an
             unspecified value after <function>glDrawArraysIndirect</function> returns. Attributes that aren't
             modified remain well defined.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The <parameter>baseInstance</parameter> member of the <parameter>DrawArraysIndirectCommand</parameter>
+            structure is defined only if the GL version is 4.2 or greater. For versions of the GL less than 4.2,
+            this parameter is present but is reserved and should be set to zero. On earlier versions of the GL,
+            behavior is undefined if it is non-zero.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
@@ -105,7 +112,7 @@
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to an
-            enabled array or to the <constant>GL_INDIRECT_BUFFER</constant> binding and the buffer object's data store is currently mapped.
+            enabled array or to the <constant>GL_DRAW_INDIRECT_BUFFER</constant> binding and the buffer object's data store is currently mapped.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a geometry shader is active and <parameter>mode</parameter>

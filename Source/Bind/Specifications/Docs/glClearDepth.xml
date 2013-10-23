@@ -20,11 +20,11 @@
         <funcsynopsis>
             <funcprototype>
                 <funcdef>void <function>glClearDepth</function></funcdef>
-                <paramdef>GLclampd <parameter>depth</parameter></paramdef>
+                <paramdef>GLdouble <parameter>depth</parameter></paramdef>
             </funcprototype>
             <funcprototype>
                 <funcdef>void <function>glClearDepthf</function></funcdef>
-                <paramdef>GLclampf <parameter>depth</parameter></paramdef>
+                <paramdef>GLfloat <parameter>depth</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
@@ -54,6 +54,18 @@
             </mml:math></inlineequation>.
         </para>
     </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The type of the <parameter>depth</parameter> parameter was
+            changed from GLclampf to GLfloat for
+            <function>glClearDepthf</function> and from GLclampd to
+            GLdouble for <function>glClearDepth</function>. This change
+            is transparent to user code and is described in detail on
+            the
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+            page.
+        </para>
+    </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_DEPTH_CLEAR_VALUE</constant>
@@ -61,7 +73,8 @@
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
-            <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
         </para>
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>

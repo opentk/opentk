@@ -33,7 +33,7 @@
             <listitem>
                 <para>
                     Specifies a query object target.
-                    Must be <constant>GL_SAMPLES_PASSED</constant>, <constant>GL_ANY_SAMPLES_PASSED</constant>,
+                    Must be <constant>GL_SAMPLES_PASSED</constant>, <constant>GL_ANY_SAMPLES_PASSED</constant>, <constant>GL_ANY_SAMPLES_PASSED_CONSERVATIVE</constant>
                     <constant>GL_PRIMITIVES_GENERATED</constant>, <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>,
                     <constant>GL_TIME_ELAPSED</constant>, or <constant>GL_TIMESTAMP</constant>.
                 </para>
@@ -72,6 +72,9 @@
         </para>
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The target <constant>GL_ANY_SAMPLES_PASSED_CONSERVATIVE</constant> is available only if the GL version is 4.3 or greater.
+        </para>
         <para>
             If an error is generated,
             no change is made to the contents of <parameter>params</parameter>.

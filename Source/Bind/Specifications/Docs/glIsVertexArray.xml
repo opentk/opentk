@@ -38,8 +38,8 @@
     </refsect1>
     <refsect1 id="description"><title>Description</title>
         <para>
-            <function>glIsVertexArray</function> returns <constant>GL_TRUE</constant> if <parameter>array</parameter> is currently the name of a renderbuffer
-            object. If <parameter>renderbuffer</parameter> is zero, or if <parameter>array</parameter> is not the name of a renderbuffer object, or if an error
+            <function>glIsVertexArray</function> returns <constant>GL_TRUE</constant> if <parameter>array</parameter> is currently the name of a vertex array
+            object. If <parameter>array</parameter> is zero, or if <parameter>array</parameter> is not the name of a vertex array object, or if an error
             occurs, <function>glIsVertexArray</function> returns <constant>GL_FALSE</constant>. If <parameter>array</parameter> is a name returned by
             <citerefentry><refentrytitle>glGenVertexArrays</refentrytitle></citerefentry>, by that has not yet been bound through a call to
             <citerefentry><refentrytitle>glBindVertexArray</refentrytitle></citerefentry>, then the name is not a vertex array object and
@@ -55,7 +55,7 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group. 
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
             This material may be distributed subject to the terms and conditions set forth in 
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.

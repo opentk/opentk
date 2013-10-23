@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
-<refentry id="glDepthRangeArray">
+<refentry id="glDepthRangeIndexed">
     <refmeta>
         <refmetainfo>
             <copyright>
@@ -19,10 +19,10 @@
     <refsynopsisdiv><title>C Specification</title>
         <funcsynopsis>
             <funcprototype>
-                <funcdef>void <function>glDepthRangeArrayv</function></funcdef>
+                <funcdef>void <function>glDepthRangeIndexed</function></funcdef>
                 <paramdef>GLuint <parameter>index</parameter></paramdef>
-                <paramdef>GLclampd <parameter>nearVal</parameter></paramdef>
-                <paramdef>GLclampd <parameter>farVal</parameter></paramdef>
+                <paramdef>GLdouble <parameter>nearVal</parameter></paramdef>
+                <paramdef>GLdouble <parameter>farVal</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
@@ -75,7 +75,7 @@
             <function>glDepthRangeIndexed</function> specifies a linear mapping of the normalized depth coordinates
             in this range to window depth coordinates for a specified viewport.
             Thus,
-            the values accepted by <function>glDepthRangeArray</function> are both clamped to this range
+            the values accepted by <function>glDepthRangeIndexed</function> are both clamped to this range
             before they are accepted.
         </para>
         <para>
@@ -114,6 +114,14 @@
             </mml:math></inlineequation>
             are acceptable.
         </para>
+        <para>
+            The type of the <parameter>nearVal</parameter> and
+            <parameter>farVal</parameter> parameters was changed from
+            GLclampd to GLdouble. This change is transparent to user
+            code and is described in detail on the
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+            page.
+        </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
@@ -133,7 +141,8 @@
             <citerefentry><refentrytitle>glDepthRangeArray</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glViewportArray</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glViewport</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glViewport</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
         </para>
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>

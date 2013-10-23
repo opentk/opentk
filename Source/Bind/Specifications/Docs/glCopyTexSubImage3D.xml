@@ -5,8 +5,8 @@
     <refmeta>
         <refmetainfo>
             <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
+                <year>2013</year>
+                <holder>Khronos Group</holder>
             </copyright>
         </refmetainfo>
         <refentrytitle>glCopyTexSubImage3D</refentrytitle>
@@ -42,7 +42,7 @@
             <listitem>
                 <para>
                     Specifies the target texture.
-                    Must be <constant>GL_TEXTURE_3D</constant>
+                    Must be <constant>GL_TEXTURE_3D</constant> or <constant>GL_TEXTURE_2D_ARRAY</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -111,7 +111,7 @@
     <refsect1 id="description"><title>Description</title>
         <para>
             <function>glCopyTexSubImage3D</function> replaces a rectangular portion of a three-dimensional
-            texture image with pixels from the current <constant>GL_READ_BUFFER</constant> (rather
+            or two-dimensional array texture image with pixels from the current <constant>GL_READ_BUFFER</constant> (rather
             than from main memory, as is the case for <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>).
         </para>
         <para>
@@ -210,7 +210,9 @@
             </mml:math></inlineequation>,
             where 
             <inlineequation><mml:math><mml:mi mathvariant="italic">max</mml:mi></mml:math></inlineequation>
-            is the returned value of <constant>GL_MAX_3D_TEXTURE_SIZE</constant>.
+            is the returned value of <constant>GL_MAX_3D_TEXTURE_SIZE</constant> if <parameter>target</parameter>
+            is <constant>GL_TEXTURE_3D</constant> or the returned value of <constant>GL_MAX_ARRAY_TEXTURE_LAYERS</constant>
+            if <parameter>target</parameter> is <constant>GL_TEXTURE_2D_ARRAY</constant>.
         </para>
         <para>
             <constant>GL_INVALID_VALUE</constant> is generated if 
@@ -219,10 +221,7 @@
                 <mml:mrow>
                     <mml:mi mathvariant="italic">xoffset</mml:mi>
                     <mml:mo>&lt;</mml:mo>
-                    <mml:mrow>
-                        <mml:mo>-</mml:mo>
-                        <mml:mi mathvariant="italic">b</mml:mi>
-                    </mml:mrow>
+                    <mml:mn>0</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
             <inlineequation><mml:math>
@@ -236,13 +235,7 @@
                         </mml:mrow>
                     </mml:mfenced>
                     <mml:mo>&gt;</mml:mo>
-                    <mml:mfenced open="(" close=")">
-                        <mml:mrow>
-                            <mml:mi mathvariant="italic">w</mml:mi>
-                            <mml:mo>-</mml:mo>
-                            <mml:mi mathvariant="italic">b</mml:mi>
-                        </mml:mrow>
-                    </mml:mfenced>
+                    <mml:mi mathvariant="italic">w</mml:mi>
                 </mml:mrow>
             </mml:math></inlineequation>,
             <inlineequation><mml:math>
@@ -250,10 +243,7 @@
                 <mml:mrow>
                     <mml:mi mathvariant="italic">yoffset</mml:mi>
                     <mml:mo>&lt;</mml:mo>
-                    <mml:mrow>
-                        <mml:mo>-</mml:mo>
-                        <mml:mi mathvariant="italic">b</mml:mi>
-                    </mml:mrow>
+                    <mml:mn>0</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
             <inlineequation><mml:math>
@@ -267,13 +257,7 @@
                         </mml:mrow>
                     </mml:mfenced>
                     <mml:mo>&gt;</mml:mo>
-                    <mml:mfenced open="(" close=")">
-                        <mml:mrow>
-                            <mml:mi mathvariant="italic">h</mml:mi>
-                            <mml:mo>-</mml:mo>
-                            <mml:mi mathvariant="italic">b</mml:mi>
-                        </mml:mrow>
-                    </mml:mfenced>
+                    <mml:mi mathvariant="italic">h</mml:mi>
                 </mml:mrow>
             </mml:math></inlineequation>,
             <inlineequation><mml:math>
@@ -281,10 +265,7 @@
                 <mml:mrow>
                     <mml:mi mathvariant="italic">zoffset</mml:mi>
                     <mml:mo>&lt;</mml:mo>
-                    <mml:mrow>
-                        <mml:mo>-</mml:mo>
-                        <mml:mi mathvariant="italic">b</mml:mi>
-                    </mml:mrow>
+                    <mml:mn>0</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
             or 
@@ -299,13 +280,7 @@
                         </mml:mrow>
                     </mml:mfenced>
                     <mml:mo>&gt;</mml:mo>
-                    <mml:mfenced open="(" close=")">
-                        <mml:mrow>
-                            <mml:mi mathvariant="italic">d</mml:mi>
-                            <mml:mo>-</mml:mo>
-                            <mml:mi mathvariant="italic">b</mml:mi>
-                        </mml:mrow>
-                    </mml:mfenced>
+                    <mml:mi mathvariant="italic">d</mml:mi>
                 </mml:mrow>
             </mml:math></inlineequation>,
             where 
@@ -314,10 +289,7 @@
             <inlineequation><mml:math><mml:mi mathvariant="italic">h</mml:mi></mml:math></inlineequation>
             is the <constant>GL_TEXTURE_HEIGHT</constant>,
             <inlineequation><mml:math><mml:mi mathvariant="italic">d</mml:mi></mml:math></inlineequation>
-            is the <constant>GL_TEXTURE_DEPTH</constant>,
-            and 
-            <inlineequation><mml:math><mml:mi mathvariant="italic">b</mml:mi></mml:math></inlineequation>
-            is the <constant>GL_TEXTURE_BORDER</constant>
+            is the <constant>GL_TEXTURE_DEPTH</constant> and
             of the texture image being modified.
             Note that 
             <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>, 
@@ -352,7 +324,9 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2012-2013 Khronos Group.
+            This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

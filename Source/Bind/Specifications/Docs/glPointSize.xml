@@ -68,12 +68,6 @@
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_POINT_SIZE</constant>
         </para>
         <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_POINT_SIZE_MIN</constant>
-        </para>
-        <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_POINT_SIZE_MAX</constant>
-        </para>
-        <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_POINT_FADE_THRESHOLD_SIZE</constant>
         </para>
         <para>

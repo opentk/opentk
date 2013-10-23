@@ -80,7 +80,7 @@
             by <parameter>id</parameter>.
         </para>
         <para>
-            Calling <citerefentry>glDrawTransformFeedback</citerefentry> is equivalent to calling <function>glDrawTransformFeedbackStream</function>
+            Calling <citerefentry><refentrytitle>glDrawTransformFeedback</refentrytitle></citerefentry> is equivalent to calling <function>glDrawTransformFeedbackStream</function>
             with <parameter>stream</parameter> set to zero.
         </para>
     </refsect1>

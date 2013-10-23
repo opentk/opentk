@@ -47,7 +47,7 @@
                 <para>
                     Specifies the attachment point of the framebuffer. <parameter>attachment</parameter> must be
                     <constant>GL_COLOR_ATTACHMENT<emphasis>i</emphasis></constant>, <constant>GL_DEPTH_ATTACHMENT</constant>,
-                    <constant>GL_STENCIL_ATTACHMENT</constant> or <constant>GL_DEPTH_STENCIL_ATTACHMMENT</constant>.
+                    <constant>GL_STENCIL_ATTACHMENT</constant> or <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant>.
                 </para>
             </listitem>
         </varlistentry>

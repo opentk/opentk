@@ -54,7 +54,7 @@
             is referred to as instanced if its <constant>GL_VERTEX_ATTRIB_ARRAY_DIVISOR</constant> value is non-zero.
         </para>
         <para>
-            <parameter>index</parameter> must be less than the value of <constant>GL_MAX_VERTEX_ATTRIBUTES</constant>.
+            <parameter>index</parameter> must be less than the value of <constant>GL_MAX_VERTEX_ATTRIBS</constant>.
         </para>
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
@@ -65,7 +65,7 @@
     <refsect1 id="errors"><title>Errors</title>
         <para>
             <constant>GL_INVALID_VALUE</constant> is generated if <parameter>index</parameter> is greater
-            than or equal to the value of <constant>GL_MAX_VERTEX_ATTRIBUTES</constant>.
+            than or equal to the value of <constant>GL_MAX_VERTEX_ATTRIBS</constant>.
         </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>

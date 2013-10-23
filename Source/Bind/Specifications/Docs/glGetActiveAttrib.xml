@@ -154,7 +154,7 @@
     <constant>GL_INT_VEC2</constant>,
     <constant>GL_INT_VEC3</constant>,
     <constant>GL_INT_VEC4</constant>,
-    <constant>GL_UNSIGNED_INT_VEC</constant>,
+    <constant>GL_UNSIGNED_INT</constant>,
     <constant>GL_UNSIGNED_INT_VEC2</constant>,
     <constant>GL_UNSIGNED_INT_VEC3</constant>,
     <constant>GL_UNSIGNED_INT_VEC4</constant>,

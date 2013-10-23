@@ -39,12 +39,14 @@
             <constant>GL_VALIDATE_STATUS</constant>,
             <constant>GL_INFO_LOG_LENGTH</constant>,
             <constant>GL_ATTACHED_SHADERS</constant>,
+            <constant>GL_ACTIVE_ATOMIC_COUNTER_BUFFERS</constant>,
             <constant>GL_ACTIVE_ATTRIBUTES</constant>,
             <constant>GL_ACTIVE_ATTRIBUTE_MAX_LENGTH</constant>,
             <constant>GL_ACTIVE_UNIFORMS</constant>,
             <constant>GL_ACTIVE_UNIFORM_BLOCKS</constant>,
             <constant>GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH</constant>,
             <constant>GL_ACTIVE_UNIFORM_MAX_LENGTH</constant>,
+            <constant>GL_COMPUTE_WORK_GROUP_SIZE</constant>
             <constant>GL_PROGRAM_BINARY_LENGTH</constant>,
             <constant>GL_TRANSFORM_FEEDBACK_BUFFER_MODE</constant>,
             <constant>GL_TRANSFORM_FEEDBACK_VARYINGS</constant>,
@@ -136,6 +138,17 @@
         </varlistentry>
 
         <varlistentry>
+        <term><constant>GL_ACTIVE_ATOMIC_COUNTER_BUFFERS</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns the
+            number of active attribute atomic counter buffers used by
+            <parameter>program</parameter>.</para>
+        </listitem>
+        </varlistentry>
+
+        <varlistentry>
         <term><constant>GL_ACTIVE_ATTRIBUTES</constant></term>
         <listitem>
             <para>
@@ -197,6 +210,21 @@
             a call to <citerefentry><refentrytitle>glGetProgramBinary</refentrytitle></citerefentry>.
             When a progam's <constant>GL_LINK_STATUS</constant> is <constant>GL_FALSE</constant>,
             its program binary length is zero.
+            </para>
+        </listitem>
+        </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_COMPUTE_WORK_GROUP_SIZE</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns an
+            array of three integers containing the local work group size of
+            the compute program as specified by its input layout qualifier(s).
+            <parameter>program</parameter> must be the name of a program object
+            that has been previously linked successfully and contains a binary
+            for the compute shader stage.
             </para>
         </listitem>
         </varlistentry>
@@ -277,6 +305,10 @@
         and <constant>GL_GEOMETRY_OUTPUT_TYPE</constant> are accepted only if the GL
         version is 3.2 or greater.
     </para>
+    <para>
+        <constant>GL_COMPUTE_WORK_GROUP_SIZE</constant> is accepted only if the
+        GL version is 4.3 or greater.
+    </para>
 
     <para>If an error is generated, no change is made to the
     contents of <parameter>params</parameter>.</para>
@@ -298,6 +330,10 @@
     <para><constant>GL_INVALID_ENUM</constant>
     is generated if <parameter>pname</parameter>
     is not an accepted value.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if <parameter>pname</parameter>
+    is <constant>GL_COMPUTE_WORK_GROUP_SIZE</constant> and <parameter>program</parameter>
+    does not contain a binary for the compute shader stage.</para>
 
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
@@ -327,7 +363,7 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 2003-2005 3Dlabs Inc. Ltd. 
-            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group.
+            Copyright <trademark class="copyright"></trademark> 2010-2011 Khronos Group.
             This material may be distributed subject to the terms and conditions set forth in 
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.

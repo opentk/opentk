@@ -5,8 +5,8 @@
     <refmeta>
         <refmetainfo>
             <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
+                <year>2013</year>
+                <holder>Khronos Group</holder>
             </copyright>
         </refmetainfo>
         <refentrytitle>glCopyTexSubImage2D</refentrytitle>
@@ -46,8 +46,9 @@
                     <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
-                    <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>, or
-                    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>.
+                    <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>,
+                    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>, or
+                    <constant>GL_TEXTURE_1D_ARRAY</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -107,8 +108,9 @@
     </refsect1>
     <refsect1 id="description"><title>Description</title>
         <para>
-            <function>glCopyTexSubImage2D</function> replaces a rectangular portion of a two-dimensional texture image or
-            cube-map texture image with pixels from the current <constant>GL_READ_BUFFER</constant>
+            <function>glCopyTexSubImage2D</function> replaces a rectangular portion of a two-dimensional texture image,
+            cube-map texture image or a linear portion of a number of slices of a one-dimensional array texture
+            with pixels from the current <constant>GL_READ_BUFFER</constant>
             (rather than from main memory, as is the case for <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>).
         </para>
         <para>
@@ -168,13 +170,18 @@
             such a specification has no effect.
         </para>
         <para>
+            When <parameter>target</parameter> is <constant>GL_TEXTURE_1D_ARRAY</constant>
+            then the y coordinate and height are treated as the start slice and number
+            of slices to modify.
+        </para>
+        <para>
             If any of the pixels within the specified rectangle of the current
             <constant>GL_READ_BUFFER</constant> are outside the read window associated with the current
             rendering context, then the values obtained for those pixels are undefined.
         </para>
         <para>
-            No change is made to the <emphasis>internalformat</emphasis>, <emphasis>width</emphasis>,
-            <emphasis>height</emphasis>, or <emphasis>border</emphasis> parameters of the specified texture
+            No change is made to the <emphasis>internalformat</emphasis>, <emphasis>width</emphasis>, or
+            <emphasis>height</emphasis>, parameters of the specified texture
             array or to texel values outside the specified subregion.
         </para>
     </refsect1>
@@ -190,8 +197,9 @@
             <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
             <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
             <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
-            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>, or
-            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>.
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>, or
+            <constant>GL_TEXTURE_1D_ARRAY</constant>.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if the texture array has not been
@@ -229,10 +237,7 @@
                 <mml:mrow>
                     <mml:mi mathvariant="italic">xoffset</mml:mi>
                     <mml:mo>&lt;</mml:mo>
-                    <mml:mrow>
-                        <mml:mo>-</mml:mo>
-                        <mml:mi mathvariant="italic">b</mml:mi>
-                    </mml:mrow>
+                    <mml:mn>0</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
             <inlineequation><mml:math>
@@ -246,13 +251,7 @@
                         </mml:mrow>
                     </mml:mfenced>
                     <mml:mo>&gt;</mml:mo>
-                    <mml:mfenced open="(" close=")">
-                        <mml:mrow>
-                            <mml:mi mathvariant="italic">w</mml:mi>
-                            <mml:mo>-</mml:mo>
-                            <mml:mi mathvariant="italic">b</mml:mi>
-                        </mml:mrow>
-                    </mml:mfenced>
+                    <mml:mi mathvariant="italic">w</mml:mi>
                 </mml:mrow>
             </mml:math></inlineequation>,
             <inlineequation><mml:math>
@@ -260,10 +259,7 @@
                 <mml:mrow>
                     <mml:mi mathvariant="italic">yoffset</mml:mi>
                     <mml:mo>&lt;</mml:mo>
-                    <mml:mrow>
-                        <mml:mo>-</mml:mo>
-                        <mml:mi mathvariant="italic">b</mml:mi>
-                    </mml:mrow>
+                    <mml:mn>0</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
             or
@@ -278,29 +274,15 @@
                         </mml:mrow>
                     </mml:mfenced>
                     <mml:mo>&gt;</mml:mo>
-                    <mml:mfenced open="(" close=")">
-                        <mml:mrow>
-                            <mml:mi mathvariant="italic">h</mml:mi>
-                            <mml:mo>-</mml:mo>
-                            <mml:mi mathvariant="italic">b</mml:mi>
-                        </mml:mrow>
-                    </mml:mfenced>
+                    <mml:mn>0</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
             where 
             <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>
             is the <constant>GL_TEXTURE_WIDTH</constant>,
             <inlineequation><mml:math><mml:mi mathvariant="italic">h</mml:mi></mml:math></inlineequation>
-            is the <constant>GL_TEXTURE_HEIGHT</constant>,
-            and 
-            <inlineequation><mml:math><mml:mi mathvariant="italic">b</mml:mi></mml:math></inlineequation>
-            is the <constant>GL_TEXTURE_BORDER</constant>
+            is the <constant>GL_TEXTURE_HEIGHT</constant> and
             of the texture image being modified.
-            Note that 
-            <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>
-            and 
-            <inlineequation><mml:math><mml:mi mathvariant="italic">h</mml:mi></mml:math></inlineequation>
-            include twice the border width.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
@@ -328,7 +310,8 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc. Copyright <trademark class="copyright"></trademark> 2012-2013 Khronos Group.
+            This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

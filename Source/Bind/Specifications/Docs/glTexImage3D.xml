@@ -5,8 +5,8 @@
     <refmeta>
         <refmetainfo>
             <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
+                <year>2013</year>
+                <holder>Khronos Group</holder>
             </copyright>
         </refmetainfo>
         <refentrytitle>glTexImage3D</refentrytitle>
@@ -72,68 +72,9 @@
             <listitem>
                 <para>
                     Specifies the number of color components in the texture.
-                    Must be one of the following symbolic constants:
-                    <constant>GL_RGBA32F</constant>,
-                    <constant>GL_RGBA32I</constant>,
-                    <constant>GL_RGBA32UI</constant>,
-                    <constant>GL_RGBA16</constant>,
-                    <constant>GL_RGBA16F</constant>,
-                    <constant>GL_RGBA16I</constant>,
-                    <constant>GL_RGBA16UI</constant>,
-                    <constant>GL_RGBA8</constant>,
-                    <constant>GL_RGBA8UI</constant>,
-                    <constant>GL_SRGB8_ALPHA8</constant>,
-                    <constant>GL_RGB10_A2</constant>,
-                    <constant>GL_RGBA10_A2UI</constant>,
-                    <constant>GL_R11_G11_B10F</constant>,
-                    <constant>GL_RG32F</constant>,
-                    <constant>GL_RG32I</constant>,
-                    <constant>GL_RG32UI</constant>,
-                    <constant>GL_RG16</constant>,
-                    <constant>GL_RG16F</constant>,
-                    <constant>GL_RGB16I</constant>,
-                    <constant>GL_RGB16UI</constant>,
-                    <constant>GL_RG8</constant>,
-                    <constant>GL_RG8I</constant>,
-                    <constant>GL_RG8UI</constant>,
-                    <constant>GL_R23F</constant>,
-                    <constant>GL_R32I</constant>,
-                    <constant>GL_R32UI</constant>,
-                    <constant>GL_R16F</constant>,
-                    <constant>GL_R16I</constant>,
-                    <constant>GL_R16UI</constant>,
-                    <constant>GL_R8</constant>,
-                    <constant>GL_R8I</constant>,
-                    <constant>GL_R8UI</constant>,
-                    <constant>GL_RGBA16_UNORM</constant>,
-                    <constant>GL_RGBA8_SNORM</constant>,
-                    <constant>GL_RGB32F</constant>,
-                    <constant>GL_RGB32I</constant>,
-                    <constant>GL_RGB32UI</constant>,
-                    <constant>GL_RGB16_SNORM</constant>,
-                    <constant>GL_RGB16F</constant>,
-                    <constant>GL_RGB16I</constant>,
-                    <constant>GL_RGB16UI</constant>,
-                    <constant>GL_RGB16</constant>,
-                    <constant>GL_RGB8_SNORM</constant>,
-                    <constant>GL_RGB8</constant>,
-                    <constant>GL_RGB8I</constant>,
-                    <constant>GL_RGB8UI</constant>,
-                    <constant>GL_SRGB8</constant>,
-                    <constant>GL_RGB9_E5</constant>,
-                    <constant>GL_RG16_SNORM</constant>,
-                    <constant>GL_RG8_SNORM</constant>,
-                    <constant>GL_COMPRESSED_RG_RGTC2</constant>,
-                    <constant>GL_COMPRESSED_SIGNED_RG_RGTC2</constant>,
-                    <constant>GL_R16_SNORM</constant>,
-                    <constant>GL_R8_SNORM</constant>,
-                    <constant>GL_COMPRESSED_RED_RGTC1</constant>,
-                    <constant>GL_COMPRESSED_SIGNED_RED_RGTC1</constant>,
-                    <constant>GL_DEPTH_COMPONENT32F</constant>,
-                    <constant>GL_DEPTH_COMPONENT24</constant>,
-                    <constant>GL_DEPTH_COMPONENT16</constant>,
-                    <constant>GL_DEPTH32F_STENCIL8</constant>,
-                    <constant>GL_DEPTH24_STENCIL8</constant>.
+                    Must be one of base internal formats given in Table 1,
+                    one of the sized internal formats given in Table 2, or one
+                    of the compressed internal formats given in Table 3, below.
                 </para>
             </listitem>
         </varlistentry>
@@ -185,8 +126,17 @@
                     <constant>GL_RG</constant>,
                     <constant>GL_RGB</constant>,
                     <constant>GL_BGR</constant>,
-                    <constant>GL_RGBA</constant>, and
-                    <constant>GL_BGRA</constant>.
+                    <constant>GL_RGBA</constant>,
+                    <constant>GL_BGRA</constant>,
+                    <constant>GL_RED_INTEGER</constant>,
+                    <constant>GL_RG_INTEGER</constant>,
+                    <constant>GL_RGB_INTEGER</constant>,
+                    <constant>GL_BGR_INTEGER</constant>,
+                    <constant>GL_RGBA_INTEGER</constant>,
+                    <constant>GL_BGRA_INTEGER</constant>,
+                    <constant>GL_STENCIL_INDEX</constant>,
+                    <constant>GL_DEPTH_COMPONENT</constant>,
+                    <constant>GL_DEPTH_STENCIL</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -300,9 +250,7 @@
                         Each element is a single red component.
                         The GL converts it to floating point and assembles it into an RGBA element
                         by attaching 0 for green and blue, and 1 for alpha.
-                        Each component is then multiplied by the signed scale factor <constant>GL_c_SCALE</constant>,
-                        added to the signed bias <constant>GL_c_BIAS</constant>,
-                        and clamped to the range [0,1].
+                        Each component is clamped to the range [0,1].
                     </para>
                 </listitem>
             </varlistentry>
@@ -313,9 +261,7 @@
                         Each element is a red and green pair.
                         The GL converts each to floating point and assembles it into an RGBA element
                         by attaching 0 for blue, and 1 for alpha.
-                        Each component is then multiplied by the signed scale factor <constant>GL_c_SCALE</constant>,
-                        added to the signed bias <constant>GL_c_BIAS</constant>,
-                        and clamped to the range [0,1].
+                        Each component is clamped to the range [0,1].
                     </para>
                 </listitem>
             </varlistentry>
@@ -331,9 +277,7 @@
                         Each element is an RGB triple.
                         The GL converts it to floating point and assembles it into an RGBA element
                         by attaching 1 for alpha.
-                        Each component is then multiplied by the signed scale factor <constant>GL_c_SCALE</constant>,
-                        added to the signed bias <constant>GL_c_BIAS</constant>,
-                        and clamped to the range [0,1].
+                        Each component is clamped to the range [0,1].
                     </para>
                 </listitem>
             </varlistentry>
@@ -347,9 +291,7 @@
                 <listitem>
                     <para>
                         Each element contains all four components.
-                        Each component is multiplied by the signed scale factor <constant>GL_c_SCALE</constant>,
-                        added to the signed bias <constant>GL_c_BIAS</constant>,
-                        and clamped to the range [0,1].
+                        Each component is clamped to the range [0,1].
                     </para>
                 </listitem>
             </varlistentry>
@@ -362,6 +304,27 @@
             it may not match exactly.
             (The representations specified by <constant>GL_RED</constant>, <constant>GL_RG</constant>, <constant>GL_RGB</constant>,
             and <constant>GL_RGBA</constant> must match exactly.)
+        </para>
+        <para>
+            <parameter>internalFormat</parameter> may be one of the base internal formats shown in
+            Table 1, below
+        </para>
+        <para>
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="baseformattable.xml" />
+        </para>
+        <para>
+            <parameter>internalFormat</parameter> may also be one of the sized internal formats
+            shown in Table 2, below
+        </para>
+        <para>
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="internalformattable.xml" />
+        </para>
+        <para>
+            Finally, <parameter>internalFormat</parameter> may also be one of the generic or compressed
+            compressed texture formats shown in Table 3 below
+        </para>
+        <para>
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="compressedformattable.xml" />
         </para>
         <para>
         	If the <parameter>internalFormat</parameter> parameter is one of the generic compressed formats,
@@ -507,6 +470,10 @@
             <function>glTexImage3D</function> specifies the three-dimensional texture for the current texture unit,
             specified with <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>.
         </para>
+        <para>
+            <constant>GL_STENCIL_INDEX</constant> may be used for <parameter>format</parameter> only if the GL
+            version is 4.4 or higher.
+        </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
@@ -548,28 +515,7 @@
             <constant>GL_INVALID_VALUE</constant> is generated if <parameter>width</parameter>, <parameter>height</parameter>, or <parameter>depth</parameter> is less than 0 or greater than <constant>GL_MAX_TEXTURE_SIZE</constant>.
         </para>
         <para>
-            <constant>GL_INVALID_VALUE</constant> is generated if non-power-of-two textures are not supported and the <parameter>width</parameter>, <parameter>height</parameter>, or <parameter>depth</parameter> cannot be represented as 
-            <inlineequation><mml:math>
-                <!-- eqn: 2 sup k  +  2( border ): -->
-                <mml:mrow>
-                    <mml:msup><mml:mn>2</mml:mn>
-                    <mml:mi mathvariant="italic">k</mml:mi>
-                    </mml:msup>
-                    <mml:mo>+</mml:mo>
-                    <mml:mrow>
-                        <mml:mn>2</mml:mn>
-                        <mml:mo>&af;</mml:mo>
-                        <mml:mfenced open="(" close=")">
-                            <mml:mi mathvariant="italic">border</mml:mi>
-                        </mml:mfenced>
-                    </mml:mrow>
-                </mml:mrow>
-            </mml:math></inlineequation>
-            for some
-            integer value of <emphasis>k</emphasis>.
-        </para>
-        <para>
-            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>border</parameter> is not 0 or 1.
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>border</parameter> is not 0.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>type</parameter> is one of
@@ -645,8 +591,9 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2011-2013 Khronos Group.
+            This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

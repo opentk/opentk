@@ -20,10 +20,10 @@
         <funcsynopsis>
             <funcprototype>
                 <funcdef>void <function>glClearColor</function></funcdef>
-                <paramdef>GLclampf <parameter>red</parameter></paramdef>
-                <paramdef>GLclampf <parameter>green</parameter></paramdef>
-                <paramdef>GLclampf <parameter>blue</parameter></paramdef>
-                <paramdef>GLclampf <parameter>alpha</parameter></paramdef>
+                <paramdef>GLfloat <parameter>red</parameter></paramdef>
+                <paramdef>GLfloat <parameter>green</parameter></paramdef>
+                <paramdef>GLfloat <parameter>blue</parameter></paramdef>
+                <paramdef>GLfloat <parameter>alpha</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
@@ -60,6 +60,17 @@
             </mml:math></inlineequation>.
         </para>
     </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The type of the <parameter>red</parameter>,
+            <parameter>green</parameter>, <parameter>blue</parameter>,
+            and <parameter>alpha</parameter> parameters was changed from
+            GLclampf to GLfloat. This change is transparent to user code
+            and is described in detail on the
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+            page.
+        </para>
+    </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COLOR_CLEAR_VALUE</constant>
@@ -67,7 +78,8 @@
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
-            <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
         </para>
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>

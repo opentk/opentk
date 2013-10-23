@@ -91,6 +91,22 @@
                 <paramdef>const GLint * <parameter>params</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glSamplerParameterIiv</function></funcdef>
+                <paramdef>GLuint <parameter>sampler</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLint *<parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glSamplerParameterIuiv</function></funcdef>
+                <paramdef>GLuint <parameter>sampler</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLuint *<parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
     </refsynopsisdiv>
     <refsect1 id="parameters2"><title>Parameters</title>
         <variablelist>
@@ -498,8 +514,8 @@
                     <para>
                         Sets the wrap parameter for texture coordinate 
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
-                        to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_MIRRORED_REPEAT</constant>, or
-                        <constant>GL_REPEAT</constant>.  <constant>GL_CLAMP_TO_BORDER</constant> causes the 
+                        to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_MIRRORED_REPEAT</constant>,
+                        <constant>GL_REPEAT</constant>, or <constant>GL_MIRROR_CLAMP_TO_EDGE</constant>.  <constant>GL_CLAMP_TO_BORDER</constant> causes the 
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
                         coordinate to be clamped to the range
                         <inlineequation><mml:math>
@@ -606,6 +622,9 @@
                         </mml:math></inlineequation>
                         represents the fractional part of
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>.
+                        <constant>GL_MIRROR_CLAMP_TO_EDGE</constant> causes the the <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+                        coordinate to be repeated as for <constant>GL_MIRRORED_REPEAT</constant> for one reptition of the texture,
+                        at which point the coordinate to be clamped as in <constant>GL_CLAMP_TO_EDGE</constant>.
                         Initially, <constant>GL_TEXTURE_WRAP_S</constant> is set to <constant>GL_REPEAT</constant>.
                     </para>
                 </listitem>
@@ -620,8 +639,8 @@
                     <para>
                         Sets the wrap parameter for texture coordinate 
                         <inlineequation><mml:math><mml:mi mathvariant="italic">t</mml:mi></mml:math></inlineequation>
-                        to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_MIRRORED_REPEAT</constant>, or
-                        <constant>GL_REPEAT</constant>.  See the discussion under <constant>GL_TEXTURE_WRAP_S</constant>.
+                        to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_MIRRORED_REPEAT</constant>,
+                        <constant>GL_REPEAT</constant>, or <constant>GL_MIRROR_CLAMP_TO_EDGE</constant>.  See the discussion under <constant>GL_TEXTURE_WRAP_S</constant>.
                         Initially, <constant>GL_TEXTURE_WRAP_T</constant> is set to <constant>GL_REPEAT</constant>.
                     </para>
                 </listitem>
@@ -632,8 +651,8 @@
                     <para>
                         Sets the wrap parameter for texture coordinate 
                         <inlineequation><mml:math><mml:mi mathvariant="italic">r</mml:mi></mml:math></inlineequation>
-                        to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_MIRRORED_REPEAT</constant>, or
-                        <constant>GL_REPEAT</constant>.  See the discussion under <constant>GL_TEXTURE_WRAP_S</constant>.
+                        to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_MIRRORED_REPEAT</constant>,
+                        <constant>GL_REPEAT</constant>, or <constant>GL_MIRROR_CLAMP_TO_EDGE</constant>.  See the discussion under <constant>GL_TEXTURE_WRAP_S</constant>.
                         Initially, <constant>GL_TEXTURE_WRAP_R</constant> is set to <constant>GL_REPEAT</constant>.
                     </para>
                 </listitem>
@@ -1090,6 +1109,9 @@
             a condition where a texture is <emphasis>incomplete</emphasis> with respect to one sampler object and not with respect to
             another. Thus, completeness can be considered a function of a sampler object and a texture object bound to a single
             texture unit, rather than a property of the texture object itself.
+        </para>
+        <para>
+            <constant>GL_MIRROR_CLAMP_TO_EDGE</constant> is available only if the GL version is 4.4 or greater.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
