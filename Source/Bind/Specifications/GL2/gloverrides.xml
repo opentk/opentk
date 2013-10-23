@@ -431,6 +431,12 @@
         <type>ClearBuffer</type>
       </param>
     </function>
+    
+    <function name="ClearBufferfi" extension="Core">
+      <param name="buffer">
+        <type>ClearBufferCombined</type>
+      </param>
+    </function>
 
     <function name="GetString" extension="Core">
       <param name="name">
@@ -1035,6 +1041,24 @@
     <function name="GetProgramResourceLocationIndex" extension="Core">
       <param name="programInterface">
         <type>ProgramInterface</type>
+      </param>
+    </function>
+    
+    <function name="InvalidateFramebuffer" extension="Core">
+      <param name="target">
+        <type>FramebufferTarget</type>
+      </param>
+      <param name="attachments">
+        <type>FramebufferAttachment</type>
+      </param>
+    </function>
+    
+    <function name="InvalidateSubFramebuffer" extension="Core">
+      <param name="target">
+        <type>FramebufferTarget</type>
+      </param>
+      <param name="attachments">
+        <type>FramebufferAttachment</type>
       </param>
     </function>
     
@@ -1942,6 +1966,8 @@
       <use enum="VERSION_1_1" token="COLOR" />
       <use enum="VERSION_1_1" token="DEPTH" />
       <use enum="VERSION_1_1" token="STENCIL" />
+    </enum>
+    <enum name="ClearBufferCombined">
       <use enum="VERSION_3_0" token="DEPTH_STENCIL" />
     </enum>
     <enum name="ColorPointerType">
@@ -2134,6 +2160,9 @@
       <use enum="VERSION_1_1" token="AUX1" />
       <use enum="VERSION_1_1" token="AUX2" />
       <use enum="VERSION_1_1" token="AUX3" />
+      <use enum="VERSION_1_1" token="COLOR" />
+      <use enum="VERSION_1_1" token="DEPTH" />
+      <use enum="VERSION_1_1" token="STENCIL" />
     </enum>
     <enum name="FramebufferAttachmentComponentType">
       <use enum="DataType" token="FLOAT" />

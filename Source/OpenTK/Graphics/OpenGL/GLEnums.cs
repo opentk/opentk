@@ -23649,7 +23649,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.InvalidateFramebuffer, GL.InvalidateSubFramebuffer
+    /// Not used directly.
     /// </summary>
     public enum ArbInvalidateSubdata : int
     {
@@ -29424,6 +29424,13 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_STENCIL = 0x1802
         /// </summary>
         Stencil = ((int)0x1802)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.ClearBuffer
+    /// </summary>
+    public enum ClearBufferCombined : int
+    {
         /// <summary>
         /// Original was GL_DEPTH_STENCIL = 0x84F9
         /// </summary>
@@ -35423,7 +35430,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.FramebufferTexture, GL.Arb.FramebufferTextureFace, GL.Arb.FramebufferTextureLayer, GL.FramebufferRenderbuffer, GL.FramebufferTexture, GL.FramebufferTexture1D, GL.FramebufferTexture2D, GL.FramebufferTexture3D, GL.FramebufferTextureLayer, GL.GetFramebufferAttachmentParameter, GL.Ext.FramebufferRenderbuffer, GL.Ext.FramebufferTexture1D, GL.Ext.FramebufferTexture2D, GL.Ext.FramebufferTexture3D, GL.Ext.FramebufferTexture, GL.Ext.FramebufferTextureFace, GL.Ext.FramebufferTextureLayer, GL.Ext.GetFramebufferAttachmentParameter, GL.Ext.GetNamedFramebufferAttachmentParameter, GL.Ext.NamedFramebufferRenderbuffer, GL.Ext.NamedFramebufferTexture1D, GL.Ext.NamedFramebufferTexture2D, GL.Ext.NamedFramebufferTexture3D, GL.Ext.NamedFramebufferTexture, GL.Ext.NamedFramebufferTextureFace, GL.Ext.NamedFramebufferTextureLayer
+    /// Used in GL.Arb.FramebufferTexture, GL.Arb.FramebufferTextureFace, GL.Arb.FramebufferTextureLayer, GL.FramebufferRenderbuffer, GL.FramebufferTexture, GL.FramebufferTexture1D, GL.FramebufferTexture2D, GL.FramebufferTexture3D, GL.FramebufferTextureLayer, GL.GetFramebufferAttachmentParameter, GL.InvalidateFramebuffer, GL.InvalidateSubFramebuffer, GL.Ext.FramebufferRenderbuffer, GL.Ext.FramebufferTexture1D, GL.Ext.FramebufferTexture2D, GL.Ext.FramebufferTexture3D, GL.Ext.FramebufferTexture, GL.Ext.FramebufferTextureFace, GL.Ext.FramebufferTextureLayer, GL.Ext.GetFramebufferAttachmentParameter, GL.Ext.GetNamedFramebufferAttachmentParameter, GL.Ext.NamedFramebufferRenderbuffer, GL.Ext.NamedFramebufferTexture1D, GL.Ext.NamedFramebufferTexture2D, GL.Ext.NamedFramebufferTexture3D, GL.Ext.NamedFramebufferTexture, GL.Ext.NamedFramebufferTextureFace, GL.Ext.NamedFramebufferTextureLayer
     /// </summary>
     public enum FramebufferAttachment : int
     {
@@ -35459,6 +35466,18 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_AUX3 = 0x040C
         /// </summary>
         Aux3 = ((int)0x040C)        ,
+        /// <summary>
+        /// Original was GL_COLOR = 0x1800
+        /// </summary>
+        Color = ((int)0x1800)        ,
+        /// <summary>
+        /// Original was GL_DEPTH = 0x1801
+        /// </summary>
+        Depth = ((int)0x1801)        ,
+        /// <summary>
+        /// Original was GL_STENCIL = 0x1802
+        /// </summary>
+        Stencil = ((int)0x1802)        ,
         /// <summary>
         /// Original was GL_DEPTH_STENCIL_ATTACHMENT = 0x821A
         /// </summary>
@@ -35845,7 +35864,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.FramebufferTexture, GL.Arb.FramebufferTextureFace, GL.Arb.FramebufferTextureLayer, GL.BindFramebuffer, GL.CheckFramebufferStatus, GL.FramebufferParameter, GL.FramebufferRenderbuffer, GL.FramebufferTexture, GL.FramebufferTexture1D, GL.FramebufferTexture2D, GL.FramebufferTexture3D, GL.FramebufferTextureLayer, GL.GetFramebufferAttachmentParameter, GL.GetFramebufferParameter, GL.Ext.BindFramebuffer, GL.Ext.CheckFramebufferStatus, GL.Ext.CheckNamedFramebufferStatus, GL.Ext.FramebufferRenderbuffer, GL.Ext.FramebufferTexture1D, GL.Ext.FramebufferTexture2D, GL.Ext.FramebufferTexture3D, GL.Ext.FramebufferTexture, GL.Ext.FramebufferTextureFace, GL.Ext.FramebufferTextureLayer, GL.Ext.GetFramebufferAttachmentParameter
+    /// Used in GL.Arb.FramebufferTexture, GL.Arb.FramebufferTextureFace, GL.Arb.FramebufferTextureLayer, GL.BindFramebuffer, GL.CheckFramebufferStatus, GL.FramebufferParameter, GL.FramebufferRenderbuffer, GL.FramebufferTexture, GL.FramebufferTexture1D, GL.FramebufferTexture2D, GL.FramebufferTexture3D, GL.FramebufferTextureLayer, GL.GetFramebufferAttachmentParameter, GL.GetFramebufferParameter, GL.InvalidateFramebuffer, GL.InvalidateSubFramebuffer, GL.Ext.BindFramebuffer, GL.Ext.CheckFramebufferStatus, GL.Ext.CheckNamedFramebufferStatus, GL.Ext.FramebufferRenderbuffer, GL.Ext.FramebufferTexture1D, GL.Ext.FramebufferTexture2D, GL.Ext.FramebufferTexture3D, GL.Ext.FramebufferTexture, GL.Ext.FramebufferTextureFace, GL.Ext.FramebufferTextureLayer, GL.Ext.GetFramebufferAttachmentParameter
     /// </summary>
     public enum FramebufferTarget : int
     {

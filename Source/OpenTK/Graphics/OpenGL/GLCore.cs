@@ -446,7 +446,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void ClearBufferData(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.ArbClearBufferObject type, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearBufferfi", ExactSpelling = true)]
-            internal extern static void ClearBufferfi(OpenTK.Graphics.OpenGL.ClearBuffer buffer, Int32 drawbuffer, Single depth, Int32 stencil);
+            internal extern static void ClearBufferfi(OpenTK.Graphics.OpenGL.ClearBufferCombined buffer, Int32 drawbuffer, Single depth, Int32 stencil);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearBufferfv", ExactSpelling = true)]
             internal extern static unsafe void ClearBufferfv(OpenTK.Graphics.OpenGL.ClearBuffer buffer, Int32 drawbuffer, Single* value);
@@ -3086,10 +3086,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void InvalidateBufferSubData(UInt32 buffer, IntPtr offset, IntPtr length);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glInvalidateFramebuffer", ExactSpelling = true)]
-            internal extern static unsafe void InvalidateFramebuffer(OpenTK.Graphics.OpenGL.ArbInvalidateSubdata target, Int32 numAttachments, OpenTK.Graphics.OpenGL.ArbInvalidateSubdata* attachments);
+            internal extern static unsafe void InvalidateFramebuffer(OpenTK.Graphics.OpenGL.FramebufferTarget target, Int32 numAttachments, OpenTK.Graphics.OpenGL.FramebufferAttachment* attachments);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glInvalidateSubFramebuffer", ExactSpelling = true)]
-            internal extern static unsafe void InvalidateSubFramebuffer(OpenTK.Graphics.OpenGL.ArbInvalidateSubdata target, Int32 numAttachments, OpenTK.Graphics.OpenGL.ArbInvalidateSubdata* attachments, Int32 x, Int32 y, Int32 width, Int32 height);
+            internal extern static unsafe void InvalidateSubFramebuffer(OpenTK.Graphics.OpenGL.FramebufferTarget target, Int32 numAttachments, OpenTK.Graphics.OpenGL.FramebufferAttachment* attachments, Int32 x, Int32 y, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glInvalidateTexImage", ExactSpelling = true)]
             internal extern static void InvalidateTexImage(UInt32 texture, Int32 level);
