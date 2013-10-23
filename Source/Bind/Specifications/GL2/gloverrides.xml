@@ -175,12 +175,11 @@
     </function>
 
     <function name="StencilFuncSeparate" extension="Core">
-      <param name="frontfunc">
-        <name>face</name>
+      <param name="face">
         <type>StencilFace</type>
       </param>
-      <param name="backfunc">
-        <name>func</name>
+      <param name="func">
+        <type>StencilFunction</type>
       </param>
     </function>
 
@@ -1799,6 +1798,10 @@
       <token name="CONSTANT_COLOR" value="0x8001" />
       <token name="ONE_MINUS_CONSTANT_ALPHA" value="0x8004" />
       <token name="ONE_MINUS_CONSTANT_COLOR" value="0x8002" />
+      <use enum="VERSION_1_1" token="SRC_COLOR" />
+      <use enum="VERSION_1_1" token="SRC_ALPHA" />
+      <use enum="VERSION_1_1" token="ONE_MINUS_SRC_ALPHA" />
+      <use enum="VERSION_1_1" token="ONE_MINUS_SRC_COLOR" />
       <use enum="VERSION_3_3" token="SRC1_ALPHA" />
       <use enum="VERSION_3_3" token="SRC1_COLOR" />
       <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_ALPHA" />
@@ -1809,6 +1812,10 @@
       <token name="CONSTANT_COLOR" value="0x8001" />
       <token name="ONE_MINUS_CONSTANT_ALPHA" value="0x8004" />
       <token name="ONE_MINUS_CONSTANT_COLOR" value="0x8002" />
+      <use enum="VERSION_1_1" token="SRC_COLOR" />
+      <use enum="VERSION_1_1" token="SRC_ALPHA" />
+      <use enum="VERSION_1_1" token="ONE_MINUS_SRC_ALPHA" />
+      <use enum="VERSION_1_1" token="ONE_MINUS_SRC_COLOR" />
       <use enum="VERSION_3_3" token="SRC1_ALPHA" />
       <use enum="VERSION_3_3" token="SRC1_COLOR" />
       <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_ALPHA" />

@@ -28883,6 +28883,14 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         Zero = ((int)0)        ,
         /// <summary>
+        /// Original was GL_SRC_COLOR = 0x0300
+        /// </summary>
+        SrcColor = ((int)0x0300)        ,
+        /// <summary>
+        /// Original was GL_ONE_MINUS_SRC_COLOR = 0x0301
+        /// </summary>
+        OneMinusSrcColor = ((int)0x0301)        ,
+        /// <summary>
         /// Original was GL_SRC_ALPHA = 0x0302
         /// </summary>
         SrcAlpha = ((int)0x0302)        ,
@@ -51314,7 +51322,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.StencilMaskSeparate, GL.StencilOpSeparate
+    /// Used in GL.StencilFuncSeparate, GL.StencilMaskSeparate, GL.StencilOpSeparate
     /// </summary>
     public enum StencilFace : int
     {
@@ -56444,7 +56452,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.StencilFuncSeparate
+    /// Not used directly.
     /// </summary>
     public enum Version20 : int
     {
