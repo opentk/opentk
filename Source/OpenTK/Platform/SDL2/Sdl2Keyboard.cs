@@ -64,29 +64,29 @@ namespace OpenTK.Platform.SDL2
         // Fixme: this does not appear to work as expected.
         void UpdateModifiers()
         {
-            SDL.SDL_Keymod mod = SDL.SDL_GetModState();
+            Keymod mod = SDL.GetModState();
 
-            state.SetKeyState(Key.LAlt, (byte)SDL.SDL_Scancode.SDL_SCANCODE_LALT, (mod & SDL.SDL_Keymod.KMOD_LALT) != 0);
-            state.SetKeyState(Key.RAlt, (byte)SDL.SDL_Scancode.SDL_SCANCODE_RALT, (mod & SDL.SDL_Keymod.KMOD_RALT) != 0);
-            state.SetKeyState(Key.LControl, (byte)SDL.SDL_Scancode.SDL_SCANCODE_LCTRL, (mod & SDL.SDL_Keymod.KMOD_LCTRL) != 0);
-            state.SetKeyState(Key.RControl, (byte)SDL.SDL_Scancode.SDL_SCANCODE_RCTRL, (mod & SDL.SDL_Keymod.KMOD_RCTRL) != 0);
-            state.SetKeyState(Key.LShift, (byte)SDL.SDL_Scancode.SDL_SCANCODE_LSHIFT, (mod & SDL.SDL_Keymod.KMOD_LSHIFT) != 0);
-            state.SetKeyState(Key.RShift, (byte)SDL.SDL_Scancode.SDL_SCANCODE_RSHIFT, (mod & SDL.SDL_Keymod.KMOD_RSHIFT) != 0);
-            state.SetKeyState(Key.Menu, (byte)SDL.SDL_Scancode.SDL_SCANCODE_APPLICATION, (mod & SDL.SDL_Keymod.KMOD_GUI) != 0);
-            state.SetKeyState(Key.CapsLock, (byte)SDL.SDL_Scancode.SDL_SCANCODE_CAPSLOCK, (mod & SDL.SDL_Keymod.KMOD_CAPS) != 0);
-            state.SetKeyState(Key.NumLock, (byte)SDL.SDL_Scancode.SDL_SCANCODE_NUMLOCKCLEAR, (mod & SDL.SDL_Keymod.KMOD_NUM) != 0);
-            //state.SetKeyState(Key., (byte)SDL.SDL_Scancode.SDL_SCANCODE_MODE, (mod & SDL.SDL_Keymod.KMOD_MODE) != 0);
+            state.SetKeyState(Key.LAlt, (byte)Scancode.LALT, (mod & Keymod.LALT) != 0);
+            state.SetKeyState(Key.RAlt, (byte)Scancode.RALT, (mod & Keymod.RALT) != 0);
+            state.SetKeyState(Key.LControl, (byte)Scancode.LCTRL, (mod & Keymod.LCTRL) != 0);
+            state.SetKeyState(Key.RControl, (byte)Scancode.RCTRL, (mod & Keymod.CTRL) != 0);
+            state.SetKeyState(Key.LShift, (byte)Scancode.LSHIFT, (mod & Keymod.LSHIFT) != 0);
+            state.SetKeyState(Key.RShift, (byte)Scancode.RSHIFT, (mod & Keymod.RSHIFT) != 0);
+            state.SetKeyState(Key.Menu, (byte)Scancode.APPLICATION, (mod & Keymod.GUI) != 0);
+            state.SetKeyState(Key.CapsLock, (byte)Scancode.CAPSLOCK, (mod & Keymod.CAPS) != 0);
+            state.SetKeyState(Key.NumLock, (byte)Scancode.NUMLOCKCLEAR, (mod & Keymod.NUM) != 0);
+            //state.SetKeyState(Key., (byte)Scancode.MODE, (mod & Keymod.MODE) != 0);
         }
 
         #endregion
 
         #region Internal Members
 
-        internal void ProcessKeyboardEvent(SDL.SDL_KeyboardEvent e)
+        internal void ProcessKeyboardEvent(KeyboardEvent e)
         {
             Key key;
-            bool pressed = e.state != 0;
-            var scancode = e.keysym.scancode;
+            bool pressed = e.State != 0;
+            var scancode = e.Keysym.Scancode;
             if (KeyMap.TryGetValue(scancode, out key))
             {
                 state.SetKeyState(key, (byte)scancode, pressed);

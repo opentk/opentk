@@ -36,33 +36,33 @@ namespace OpenTK.Platform.SDL2
     {
         public Sdl2DisplayDeviceDriver()
         {
-            int displays = SDL.SDL_GetNumVideoDisplays();
+            int displays = SDL.GetNumVideoDisplays();
             for (int d = 0; d < displays; d++)
             {
-                SDL.SDL_Rect bounds;
-                SDL.SDL_GetDisplayBounds(d, out bounds);
+                Rect bounds;
+                SDL.GetDisplayBounds(d, out bounds);
 
-                SDL.SDL_DisplayMode current_mode;
-                SDL.SDL_GetCurrentDisplayMode(d, out current_mode);
+                DisplayMode current_mode;
+                SDL.GetCurrentDisplayMode(d, out current_mode);
 
                 var mode_list = new List<DisplayResolution>();
-                int num_modes = SDL.SDL_GetNumDisplayModes(d);
+                int num_modes = SDL.GetNumDisplayModes(d);
                 for (int m = 0; m < num_modes; m++)
                 {
-                    SDL.SDL_DisplayMode sdl_mode;
-                    SDL.SDL_GetDisplayMode(d, m, out sdl_mode);
+                    DisplayMode sdl_mode;
+                    SDL.GetDisplayMode(d, m, out sdl_mode);
                     mode_list.Add(new DisplayResolution(
-                        bounds.x, bounds.y,
-                        sdl_mode.w, sdl_mode.h,
-                        TranslateFormat(sdl_mode.format),
-                        sdl_mode.refresh_rate));
+                        bounds.X, bounds.Y,
+                        sdl_mode.Width, sdl_mode.Height,
+                        TranslateFormat(sdl_mode.Format),
+                        sdl_mode.RefreshRate));
                 }
 
                 var current_resolution = new DisplayResolution(
-                    bounds.x, bounds.y,
-                    current_mode.w, current_mode.h,
-                    TranslateFormat(current_mode.format),
-                    current_mode.refresh_rate);
+                    bounds.X, bounds.Y,
+                    current_mode.Width, current_mode.Height,
+                    TranslateFormat(current_mode.Format),
+                    current_mode.RefreshRate);
 
                 var device = new DisplayDevice(
                     current_resolution, d == 0, mode_list, TranslateBounds(bounds), d);
@@ -79,13 +79,13 @@ namespace OpenTK.Platform.SDL2
         {
             int bpp;
             uint a, r, g, b;
-            SDL.SDL_PixelFormatEnumToMasks(format, out bpp, out r, out g, out b, out a);
+            SDL.PixelFormatEnumToMasks(format, out bpp, out r, out g, out b, out a);
             return bpp;
         }
 
-        Rectangle TranslateBounds(SDL.SDL_Rect rect)
+        Rectangle TranslateBounds(Rect rect)
         {
-            return new Rectangle(rect.x, rect.y, rect.w, rect.h);
+            return new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }
 
         #endregion

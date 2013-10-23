@@ -54,23 +54,23 @@ namespace OpenTK.Platform.SDL2
 
         #region Private Members
 
-        MouseButton TranslateButton(uint button)
+        MouseButton TranslateButton(Button button)
         {
             switch (button)
             {
-                case SDL.SDL_BUTTON_LEFT:
+                case Button.Left:
                     return MouseButton.Left;
 
-                case SDL.SDL_BUTTON_RIGHT:
+                case Button.Right:
                     return MouseButton.Right;
 
-                case SDL.SDL_BUTTON_MIDDLE:
+                case Button.Middle:
                     return MouseButton.Middle;
 
-                case SDL.SDL_BUTTON_X1:
+                case Button.X1:
                     return MouseButton.Button1;
 
-                case SDL.SDL_BUTTON_X2:
+                case Button.X2:
                     return MouseButton.Button2;
 
                 default:
@@ -95,24 +95,24 @@ namespace OpenTK.Platform.SDL2
 
         #region Public Members
 
-        public void ProcessWheelEvent(SDL.SDL_MouseWheelEvent wheel)
+        public void ProcessWheelEvent(MouseWheelEvent wheel)
         {
-            state.WheelPrecise += wheel.y;
-            mice[0].WheelPrecise += wheel.y;
+            state.WheelPrecise += wheel.Y;
+            mice[0].WheelPrecise += wheel.Y;
         }
 
-        public void ProcessMouseEvent(SDL.SDL_MouseMotionEvent motion)
+        public void ProcessMouseEvent(MouseMotionEvent motion)
         {
-            state.X += motion.xrel;
-            state.Y += motion.yrel;
-            mice[0].Position = new Point(motion.x, motion.y);
+            state.X += motion.Xrel;
+            state.Y += motion.Yrel;
+            mice[0].Position = new Point(motion.X, motion.Y);
         }
 
-        public void ProcessMouseEvent(SDL.SDL_MouseButtonEvent button)
+        public void ProcessMouseEvent(MouseButtonEvent button)
         {
-            bool pressed = button.state == SDL.SDL_PRESSED;
-            SetButtonState(TranslateButton(button.button), pressed);
-            mice[0][TranslateButton(button.button)] = pressed;
+            bool pressed = button.State == State.Pressed;
+            SetButtonState(TranslateButton(button.Button), pressed);
+            mice[0][TranslateButton(button.Button)] = pressed;
         }
 
         #endregion
@@ -146,7 +146,7 @@ namespace OpenTK.Platform.SDL2
 
         public void SetPosition(double x, double y)
         {
-            SDL.SDL_WarpMouseInWindow(IntPtr.Zero, (int)x, (int)y);
+            SDL.WarpMouseInWindow(IntPtr.Zero, (int)x, (int)y);
         }
 
         #endregion

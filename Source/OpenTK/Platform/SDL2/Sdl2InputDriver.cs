@@ -45,22 +45,18 @@ namespace OpenTK.Platform.SDL2
         readonly Sdl2Mouse mouse_driver = new Sdl2Mouse();
         readonly Sdl2JoystickDriver joystick_driver = new Sdl2JoystickDriver();
 
-        readonly SDL.SDL_EventFilter EventFilterDelegate = FilterInputEvents;
-        readonly IntPtr EventFilterPointer;
+        readonly EventFilter EventFilterDelegate = FilterInputEvents;
 
         static int count;
         bool disposed;
 
         public Sdl2InputDriver()
         {
-            EventFilterPointer = Marshal.GetFunctionPointerForDelegate(
-                EventFilterDelegate);
-
             lock (SDL.Sync)
             {
                 driver_handle = new IntPtr(count++);
                 DriverHandles.Add(driver_handle, this);
-                SDL.SDL_AddEventWatch(EventFilterPointer, driver_handle);
+                SDL.AddEventWatch(EventFilterDelegate, driver_handle);
             }
         }
 
@@ -70,29 +66,29 @@ namespace OpenTK.Platform.SDL2
         {
             try
             {
-                SDL.SDL_Event ev = *(SDL.SDL_Event*)e;
+                Event ev = *(Event*)e;
 
                 Sdl2InputDriver driver;
                 if (DriverHandles.TryGetValue(driver_handle, out driver))
                 {
-                    switch (ev.type)
+                    switch (ev.Type)
                     {
-                        case SDL.SDL_EventType.SDL_KEYDOWN:
-                        case SDL.SDL_EventType.SDL_KEYUP:
-                            driver.keyboard_driver.ProcessKeyboardEvent(ev.key);
+                        case EventType.KEYDOWN:
+                        case EventType.KEYUP:
+                            driver.keyboard_driver.ProcessKeyboardEvent(ev.Key);
                             break;
 
-                        case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
-                        case SDL.SDL_EventType.SDL_MOUSEBUTTONUP:
-                            driver.mouse_driver.ProcessMouseEvent(ev.button);
+                        case EventType.MOUSEBUTTONDOWN:
+                        case EventType.MOUSEBUTTONUP:
+                            driver.mouse_driver.ProcessMouseEvent(ev.Button);
                             break;
 
-                        case SDL.SDL_EventType.SDL_MOUSEMOTION:
-                            driver.mouse_driver.ProcessMouseEvent(ev.motion);
+                        case EventType.MOUSEMOTION:
+                            driver.mouse_driver.ProcessMouseEvent(ev.Motion);
                             break;
 
-                        case SDL.SDL_EventType.SDL_MOUSEWHEEL:
-                            driver.mouse_driver.ProcessWheelEvent(ev.wheel);
+                        case EventType.MOUSEWHEEL:
+                            driver.mouse_driver.ProcessWheelEvent(ev.Wheel);
                             break;
                     }
                 }
@@ -192,7 +188,7 @@ namespace OpenTK.Platform.SDL2
                     joystick_driver.Dispose();
                     lock (SDL.Sync)
                     {
-                        SDL.SDL_DelEventWatch(EventFilterPointer, IntPtr.Zero);
+                        SDL.DelEventWatch(EventFilterDelegate, IntPtr.Zero);
                     }
                     DriverHandles.Remove(driver_handle);
                 }

@@ -174,17 +174,17 @@ namespace OpenTK
             // Detect whether SDL2 is supported
             try
             {
-                if (OpenTK.Platform.SDL2.SDL.SDL_WasInit(0) == 0)
+                if (!OpenTK.Platform.SDL2.SDL.WasInit(0))
                 {
-                    var flags = OpenTK.Platform.SDL2.SDL.SDL_INIT_EVERYTHING;
-                    flags &= ~OpenTK.Platform.SDL2.SDL.SDL_INIT_AUDIO;
-                    if (OpenTK.Platform.SDL2.SDL.SDL_Init((uint)flags) == 0)
+                    var flags = OpenTK.Platform.SDL2.SystemFlags.EVERYTHING;
+                    flags &= ~OpenTK.Platform.SDL2.SystemFlags.AUDIO;
+                    if (OpenTK.Platform.SDL2.SDL.Init(flags) == 0)
                     {
                         supported = true;
                     }
                     else
                     {
-                        Debug.Print("SDL2 init failed with error: {0}", OpenTK.Platform.SDL2.SDL.SDL_GetError());
+                        Debug.Print("SDL2 init failed with error: {0}", OpenTK.Platform.SDL2.SDL.GetError());
                     }
                 }
                 else

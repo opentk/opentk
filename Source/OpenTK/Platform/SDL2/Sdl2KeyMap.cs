@@ -31,93 +31,93 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    using Code = SDL.SDL_Scancode;
+    using Code = Scancode;
 
-    class Sdl2KeyMap : Dictionary<SDL.SDL_Scancode, Key> 
+    class Sdl2KeyMap : Dictionary<Scancode, Key> 
     {
         public Sdl2KeyMap()
         {
-            Add(Code.SDL_SCANCODE_ESCAPE, Key.Escape);
+            Add(Code.ESCAPE, Key.Escape);
 
             // Function keys
             for (int i = 0; i < 12; i++)
             {
-                Add(Code.SDL_SCANCODE_F1 + i, Key.F1 + i);
+                Add(Code.F1 + i, Key.F1 + i);
             }
 
             // Number keys (0-9)
-            Add(Code.SDL_SCANCODE_0, Key.Number0);
+            Add(Code.Num0, Key.Number0);
             for (int i = 0; i < 9; i++)
             {
-                Add(Code.SDL_SCANCODE_1 + i, Key.Number1 + i);
+                Add(Code.Num1 + i, Key.Number1 + i);
             }
 
             // Letters (A-Z)
             for (int i = 0; i < 26; i++)
             {
-                Add(Code.SDL_SCANCODE_A + i, Key.A + i);
+                Add(Code.A + i, Key.A + i);
             }
 
-            Add(Code.SDL_SCANCODE_TAB, Key.Tab);
-            Add(Code.SDL_SCANCODE_CAPSLOCK, Key.CapsLock);
-            Add(Code.SDL_SCANCODE_LCTRL, Key.ControlLeft);
-            Add(Code.SDL_SCANCODE_LSHIFT, Key.ShiftLeft);
-            Add(Code.SDL_SCANCODE_LALT, Key.WinLeft);
-            Add(Code.SDL_SCANCODE_MENU, Key.AltLeft);
-            Add(Code.SDL_SCANCODE_SPACE, Key.Space);
-            Add(Code.SDL_SCANCODE_RALT, Key.AltRight);
+            Add(Code.TAB, Key.Tab);
+            Add(Code.CAPSLOCK, Key.CapsLock);
+            Add(Code.LCTRL, Key.ControlLeft);
+            Add(Code.LSHIFT, Key.ShiftLeft);
+            Add(Code.LALT, Key.WinLeft);
+            Add(Code.MENU, Key.AltLeft);
+            Add(Code.SPACE, Key.Space);
+            Add(Code.RALT, Key.AltRight);
             //Add(Code., Key.WinRight);
-            Add(Code.SDL_SCANCODE_APPLICATION, Key.Menu);
-            Add(Code.SDL_SCANCODE_RCTRL, Key.ControlRight);
-            Add(Code.SDL_SCANCODE_RSHIFT, Key.ShiftRight);
-            Add(Code.SDL_SCANCODE_RETURN, Key.Enter);
-            Add(Code.SDL_SCANCODE_BACKSPACE, Key.BackSpace);
+            Add(Code.APPLICATION, Key.Menu);
+            Add(Code.RCTRL, Key.ControlRight);
+            Add(Code.RSHIFT, Key.ShiftRight);
+            Add(Code.RETURN, Key.Enter);
+            Add(Code.BACKSPACE, Key.BackSpace);
 
-            Add(Code.SDL_SCANCODE_SEMICOLON, Key.Semicolon);      // Varies by keyboard, ;: on Win2K/US
-            Add(Code.SDL_SCANCODE_SLASH, Key.Slash);          // Varies by keyboard, /? on Win2K/US
-            Add(Code.SDL_SCANCODE_GRAVE, Key.Tilde);          // Varies by keyboard, `~ on Win2K/US
-            Add(Code.SDL_SCANCODE_LEFTBRACKET, Key.BracketLeft);    // Varies by keyboard, [{ on Win2K/US
-            Add(Code.SDL_SCANCODE_BACKSLASH, Key.BackSlash);      // Varies by keyboard, \| on Win2K/US
-            Add(Code.SDL_SCANCODE_RIGHTBRACKET, Key.BracketRight);   // Varies by keyboard, ]} on Win2K/US
-            Add(Code.SDL_SCANCODE_APOSTROPHE, Key.Quote);          // Varies by keyboard, '" on Win2K/US
-            Add(Code.SDL_SCANCODE_EQUALS, Key.Plus);
-            Add(Code.SDL_SCANCODE_COMMA, Key.Comma);      // Invariant: ,
-            Add(Code.SDL_SCANCODE_MINUS, Key.Minus);      // Invariant: -
-            Add(Code.SDL_SCANCODE_PERIOD, Key.Period);    // Invariant: .
+            Add(Code.SEMICOLON, Key.Semicolon);      // Varies by keyboard, ;: on Win2K/US
+            Add(Code.SLASH, Key.Slash);          // Varies by keyboard, /? on Win2K/US
+            Add(Code.GRAVE, Key.Tilde);          // Varies by keyboard, `~ on Win2K/US
+            Add(Code.LEFTBRACKET, Key.BracketLeft);    // Varies by keyboard, [{ on Win2K/US
+            Add(Code.BACKSLASH, Key.BackSlash);      // Varies by keyboard, \| on Win2K/US
+            Add(Code.RIGHTBRACKET, Key.BracketRight);   // Varies by keyboard, ]} on Win2K/US
+            Add(Code.APOSTROPHE, Key.Quote);          // Varies by keyboard, '" on Win2K/US
+            Add(Code.EQUALS, Key.Plus);
+            Add(Code.COMMA, Key.Comma);      // Invariant: ,
+            Add(Code.MINUS, Key.Minus);      // Invariant: -
+            Add(Code.PERIOD, Key.Period);    // Invariant: .
 
-            Add(Code.SDL_SCANCODE_HOME, Key.Home);
-            Add(Code.SDL_SCANCODE_END, Key.End);
-            Add(Code.SDL_SCANCODE_DELETE, Key.Delete);
-            Add(Code.SDL_SCANCODE_PAGEUP, Key.PageUp);
-            Add(Code.SDL_SCANCODE_PAGEDOWN, Key.PageDown);
-            Add(Code.SDL_SCANCODE_PAUSE, Key.Pause);
-            Add(Code.SDL_SCANCODE_NUMLOCKCLEAR, Key.NumLock);
+            Add(Code.HOME, Key.Home);
+            Add(Code.END, Key.End);
+            Add(Code.DELETE, Key.Delete);
+            Add(Code.PAGEUP, Key.PageUp);
+            Add(Code.PAGEDOWN, Key.PageDown);
+            Add(Code.PAUSE, Key.Pause);
+            Add(Code.NUMLOCKCLEAR, Key.NumLock);
 
-            Add(Code.SDL_SCANCODE_SCROLLLOCK, Key.ScrollLock);
-            Add(Code.SDL_SCANCODE_PRINTSCREEN, Key.PrintScreen);
-            Add(Code.SDL_SCANCODE_CLEAR, Key.Clear);
-            Add(Code.SDL_SCANCODE_INSERT, Key.Insert);
+            Add(Code.SCROLLLOCK, Key.ScrollLock);
+            Add(Code.PRINTSCREEN, Key.PrintScreen);
+            Add(Code.CLEAR, Key.Clear);
+            Add(Code.INSERT, Key.Insert);
 
-            Add(Code.SDL_SCANCODE_SLEEP, Key.Sleep);
+            Add(Code.SLEEP, Key.Sleep);
 
             // Keypad
             for (int i = 0; i < 9; i++)
             {
-                Add(Code.SDL_SCANCODE_KP_1 + i, Key.Keypad1 + i);
+                Add(Code.KP_1 + i, Key.Keypad1 + i);
             }
-            Add(Code.SDL_SCANCODE_KP_0, Key.Keypad0); // Note: SDL2 goes KP_1..KP_9, then KP_0
+            Add(Code.KP_0, Key.Keypad0); // Note: SDL2 goes KP_1..KP_9, then KP_0
 
-            Add(Code.SDL_SCANCODE_KP_DECIMAL, Key.KeypadDecimal);
-            Add(Code.SDL_SCANCODE_KP_PLUS, Key.KeypadAdd);
-            Add(Code.SDL_SCANCODE_KP_MINUS, Key.KeypadSubtract);
-            Add(Code.SDL_SCANCODE_KP_DIVIDE, Key.KeypadDivide);
-            Add(Code.SDL_SCANCODE_KP_MULTIPLY, Key.KeypadMultiply);
+            Add(Code.KP_DECIMAL, Key.KeypadDecimal);
+            Add(Code.KP_PLUS, Key.KeypadAdd);
+            Add(Code.KP_MINUS, Key.KeypadSubtract);
+            Add(Code.KP_DIVIDE, Key.KeypadDivide);
+            Add(Code.KP_MULTIPLY, Key.KeypadMultiply);
 
             // Navigation
-            Add(Code.SDL_SCANCODE_UP, Key.Up);
-            Add(Code.SDL_SCANCODE_DOWN, Key.Down);
-            Add(Code.SDL_SCANCODE_LEFT, Key.Left);
-            Add(Code.SDL_SCANCODE_RIGHT, Key.Right);
+            Add(Code.UP, Key.Up);
+            Add(Code.DOWN, Key.Down);
+            Add(Code.LEFT, Key.Left);
+            Add(Code.RIGHT, Key.Right);
         }
     }
 }

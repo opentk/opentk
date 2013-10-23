@@ -272,7 +272,7 @@ namespace OpenTK.Platform
         public static IWindowInfo CreateSdl2WindowInfo(IntPtr windowHandle)
         {
             return new OpenTK.Platform.SDL2.Sdl2WindowInfo(
-                SDL2.SDL.SDL_CreateWindowFrom(windowHandle), null);
+                SDL2.SDL.CreateWindowFrom(windowHandle), null);
         }
 
         #endregion

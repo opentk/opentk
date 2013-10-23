@@ -50,7 +50,7 @@ namespace OpenTK.Platform.SDL2
             else
             {
                 Window = new Sdl2WindowInfo(
-                    SDL.SDL_CreateWindowFrom(window.Handle),
+                    SDL.CreateWindowFrom(window.Handle),
                     null);
             }
         }
@@ -64,11 +64,11 @@ namespace OpenTK.Platform.SDL2
             lock (SDL.Sync)
             {
                 SetGLAttributes(mode, shareContext, major, minor, flags);
-                SdlContext = new ContextHandle(SDL.SDL_GL_CreateContext(Window.Handle));
+                SdlContext = new ContextHandle(SDL.GL.CreateContext(Window.Handle));
             }
             if (SdlContext == ContextHandle.Zero)
             {
-                var error = SDL.SDL_GetError();
+                var error = SDL.GetError();
                 Debug.Print("SDL2 failed to create OpenGL context: {0}", error);
                 throw new GraphicsContextException(error);
             }
@@ -84,85 +84,93 @@ namespace OpenTK.Platform.SDL2
         {
             if (mode.AccumulatorFormat.BitsPerPixel > 0)
             {
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha);
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_ACCUM_RED_SIZE, mode.AccumulatorFormat.Red);
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_ACCUM_GREEN_SIZE, mode.AccumulatorFormat.Green);
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_ACCUM_BLUE_SIZE, mode.AccumulatorFormat.Blue);
+                SDL.GL.SetAttribute(ContextAttribute.ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha);
+                SDL.GL.SetAttribute(ContextAttribute.ACCUM_RED_SIZE, mode.AccumulatorFormat.Red);
+                SDL.GL.SetAttribute(ContextAttribute.ACCUM_GREEN_SIZE, mode.AccumulatorFormat.Green);
+                SDL.GL.SetAttribute(ContextAttribute.ACCUM_BLUE_SIZE, mode.AccumulatorFormat.Blue);
             }
 
             if (mode.Buffers > 0)
             {
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_DOUBLEBUFFER, mode.Buffers > 1 ? 1 : 0);
+                SDL.GL.SetAttribute(ContextAttribute.DOUBLEBUFFER, mode.Buffers > 1 ? 1 : 0);
             }
 
             if (mode.ColorFormat > 0)
             {
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_ALPHA_SIZE, mode.ColorFormat.Alpha);
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_RED_SIZE, mode.ColorFormat.Red);
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_GREEN_SIZE, mode.ColorFormat.Green);
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_BLUE_SIZE, mode.ColorFormat.Blue);
+                SDL.GL.SetAttribute(ContextAttribute.ALPHA_SIZE, mode.ColorFormat.Alpha);
+                SDL.GL.SetAttribute(ContextAttribute.RED_SIZE, mode.ColorFormat.Red);
+                SDL.GL.SetAttribute(ContextAttribute.GREEN_SIZE, mode.ColorFormat.Green);
+                SDL.GL.SetAttribute(ContextAttribute.BLUE_SIZE, mode.ColorFormat.Blue);
             }
 
             if (mode.Depth > 0)
             {
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_DEPTH_SIZE, mode.Depth);
+                SDL.GL.SetAttribute(ContextAttribute.DEPTH_SIZE, mode.Depth);
             }
 
             if (mode.Samples > 0)
             {
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_MULTISAMPLEBUFFERS, 1);
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_MULTISAMPLESAMPLES, mode.Samples);
+                SDL.GL.SetAttribute(ContextAttribute.MULTISAMPLEBUFFERS, 1);
+                SDL.GL.SetAttribute(ContextAttribute.MULTISAMPLESAMPLES, mode.Samples);
             }
 
             if (mode.Stencil > 0)
             {
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_STENCIL_SIZE, mode.Stereo ? 1 : 0);
+                SDL.GL.SetAttribute(ContextAttribute.STENCIL_SIZE, mode.Stereo ? 1 : 0);
             }
 
             if (mode.Stereo)
             {
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_STEREO, 1);
+                SDL.GL.SetAttribute(ContextAttribute.STEREO, 1);
             }
 
             if (major > 0)
             {
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_CONTEXT_MAJOR_VERSION, major);
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_CONTEXT_MINOR_VERSION, minor);
+                SDL.GL.SetAttribute(ContextAttribute.CONTEXT_MAJOR_VERSION, major);
+                SDL.GL.SetAttribute(ContextAttribute.CONTEXT_MINOR_VERSION, minor);
             }
 
             if ((flags & GraphicsContextFlags.Debug) != 0)
             {
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_CONTEXT_FLAGS, (int)SDL.SDL_GLcontext.SDL_GL_CONTEXT_DEBUG_FLAG);
-            }
-
-            if ((flags & GraphicsContextFlags.Embedded) != 0)
-            {
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_CONTEXT_EGL, 1);
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_CONTEXT_PROFILE_MASK, (int)SDL.SDL_GLprofile.SDL_GL_CONTEXT_PROFILE_ES);
-            }
-
-            if ((flags & GraphicsContextFlags.ForwardCompatible) != 0)
-            {
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_CONTEXT_PROFILE_MASK, (int)SDL.SDL_GLprofile.SDL_GL_CONTEXT_PROFILE_CORE);
+                SDL.GL.SetAttribute(ContextAttribute.CONTEXT_FLAGS, ContextFlags.DEBUG);
             }
 
             /*
             if ((flags & GraphicsContextFlags.Robust) != 0)
             {
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_CONTEXT_FLAGS, (int)SDL.SDL_GLcontext.SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG);
+                SDL.GL.SetAttribute(ContextAttribute.CONTEXT_FLAGS, ContextFlags.ROBUST_ACCESS_FLAG);
             }
 
             if ((flags & GraphicsContextFlags.ResetIsolation) != 0)
             {
-                SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_CONTEXT_FLAGS, (int)SDL.SDL_GLcontext.SDL_GL_CONTEXT_RESET_ISOLATION_FLAG);
+                SDL.GL.SetAttribute(ContextAttribute.CONTEXT_FLAGS, ContextFlags.RESET_ISOLATION_FLAG);
             }
             */
+
+            {
+                ContextProfileFlags cpflags = 0;
+                if ((flags & GraphicsContextFlags.Embedded) != 0)
+                {
+                    cpflags |= ContextProfileFlags.ES;
+                    SDL.GL.SetAttribute(ContextAttribute.CONTEXT_EGL, 1);
+                }
+
+                if ((flags & GraphicsContextFlags.ForwardCompatible) != 0)
+                {
+                    cpflags |= ContextProfileFlags.CORE;
+                }
+
+                if (cpflags != 0)
+                {
+                    SDL.GL.SetAttribute(ContextAttribute.CONTEXT_PROFILE_MASK, cpflags);
+                }
+            }
 
             if (shareContext != null)
             {
                 if (shareContext.IsCurrent)
                 {
-                    SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
+                    SDL.GL.SetAttribute(ContextAttribute.SHARE_WITH_CURRENT_CONTEXT, 1);
                 }
                 else
                 {
@@ -177,7 +185,7 @@ namespace OpenTK.Platform.SDL2
 
         public override void SwapBuffers()
         {
-            SDL.SDL_GL_SwapWindow(Window.Handle);
+            SDL.GL.SwapWindow(Window.Handle);
         }
 
         public override void MakeCurrent(IWindowInfo window)
@@ -185,22 +193,22 @@ namespace OpenTK.Platform.SDL2
             int result = 0;
             if (window != null)
             {
-                result = SDL.SDL_GL_MakeCurrent(window.Handle, SdlContext.Handle);
+                result = SDL.GL.MakeCurrent(window.Handle, SdlContext.Handle);
             }
             else
             {
-                result = SDL.SDL_GL_MakeCurrent(IntPtr.Zero, IntPtr.Zero);
+                result = SDL.GL.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
             }
 
             if (result < 0)
             {
-                Debug.Print("SDL2 MakeCurrent failed with: {0}", SDL.SDL_GetError());
+                Debug.Print("SDL2 MakeCurrent failed with: {0}", SDL.GetError());
             }
         }
 
         public override IntPtr GetAddress(string function)
         {
-            return SDL.SDL_GL_GetProcAddress(function);
+            return SDL.GL.GetProcAddress(function);
         }
 
         public override bool IsCurrent
@@ -215,13 +223,13 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                return SDL.SDL_GL_GetSwapInterval();
+                return SDL.GL.GetSwapInterval();
             }
             set
             {
-                if (SDL.SDL_GL_SetSwapInterval(value) < 0)
+                if (SDL.GL.SetSwapInterval(value) < 0)
                 {
-                    Debug.Print("SDL2 failed to set swap interval: {0}", SDL.SDL_GetError());
+                    Debug.Print("SDL2 failed to set swap interval: {0}", SDL.GetError());
                 }
             }
         }
@@ -239,7 +247,7 @@ namespace OpenTK.Platform.SDL2
                     Debug.Print("Disposing {0}", GetType());
                     lock (SDL.Sync)
                     {
-                        SDL.SDL_GL_DeleteContext(SdlContext.Handle);
+                        SDL.GL.DeleteContext(SdlContext.Handle);
                     }
                 }
                 else
