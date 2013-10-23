@@ -736,7 +736,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ingr.BlendFuncSeparate, GL.Sgix.IglooInterface
+    /// Used in GL.GetInternalformat, GL.Ingr.BlendFuncSeparate, GL.Sgix.IglooInterface
     /// </summary>
     public enum All : int
     {
@@ -23167,7 +23167,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetInternalformat
+    /// Not used directly.
     /// </summary>
     public enum ArbInternalformatQuery : int
     {
@@ -23178,7 +23178,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetInternalformat
+    /// Not used directly.
     /// </summary>
     public enum ArbInternalformatQuery2 : int
     {
@@ -29913,6 +29913,227 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
+    /// Used in GL.DebugMessageInsert
+    /// </summary>
+    public enum DebugSeverity : int
+    {
+        /// <summary>
+        /// Original was GL_DEBUG_SEVERITY_NOTIFICATION = 0x826B
+        /// </summary>
+        DebugSeverityNotification = ((int)0x826B)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SEVERITY_HIGH = 0x9146
+        /// </summary>
+        DebugSeverityHigh = ((int)0x9146)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SEVERITY_MEDIUM = 0x9147
+        /// </summary>
+        DebugSeverityMedium = ((int)0x9147)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SEVERITY_LOW = 0x9148
+        /// </summary>
+        DebugSeverityLow = ((int)0x9148)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.DebugMessageControl
+    /// </summary>
+    public enum DebugSeverityControl : int
+    {
+        /// <summary>
+        /// Original was GL_DONT_CARE = 0x1100
+        /// </summary>
+        DontCare = ((int)0x1100)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SEVERITY_NOTIFICATION = 0x826B
+        /// </summary>
+        DebugSeverityNotification = ((int)0x826B)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SEVERITY_HIGH = 0x9146
+        /// </summary>
+        DebugSeverityHigh = ((int)0x9146)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SEVERITY_MEDIUM = 0x9147
+        /// </summary>
+        DebugSeverityMedium = ((int)0x9147)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SEVERITY_LOW = 0x9148
+        /// </summary>
+        DebugSeverityLow = ((int)0x9148)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum DebugSource : int
+    {
+        /// <summary>
+        /// Original was GL_DEBUG_SOURCE_API = 0x8246
+        /// </summary>
+        DebugSourceApi = ((int)0x8246)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SOURCE_WINDOW_SYSTEM = 0x8247
+        /// </summary>
+        DebugSourceWindowSystem = ((int)0x8247)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SOURCE_SHADER_COMPILER = 0x8248
+        /// </summary>
+        DebugSourceShaderCompiler = ((int)0x8248)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SOURCE_THIRD_PARTY = 0x8249
+        /// </summary>
+        DebugSourceThirdParty = ((int)0x8249)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SOURCE_APPLICATION = 0x824A
+        /// </summary>
+        DebugSourceApplication = ((int)0x824A)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SOURCE_OTHER = 0x824B
+        /// </summary>
+        DebugSourceOther = ((int)0x824B)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.DebugMessageControl
+    /// </summary>
+    public enum DebugSourceControl : int
+    {
+        /// <summary>
+        /// Original was GL_DONT_CARE = 0x1100
+        /// </summary>
+        DontCare = ((int)0x1100)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SOURCE_API = 0x8246
+        /// </summary>
+        DebugSourceApi = ((int)0x8246)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SOURCE_WINDOW_SYSTEM = 0x8247
+        /// </summary>
+        DebugSourceWindowSystem = ((int)0x8247)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SOURCE_SHADER_COMPILER = 0x8248
+        /// </summary>
+        DebugSourceShaderCompiler = ((int)0x8248)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SOURCE_THIRD_PARTY = 0x8249
+        /// </summary>
+        DebugSourceThirdParty = ((int)0x8249)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SOURCE_APPLICATION = 0x824A
+        /// </summary>
+        DebugSourceApplication = ((int)0x824A)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SOURCE_OTHER = 0x824B
+        /// </summary>
+        DebugSourceOther = ((int)0x824B)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.DebugMessageInsert, GL.PushDebugGroup
+    /// </summary>
+    public enum DebugSourceExternal : int
+    {
+        /// <summary>
+        /// Original was GL_DEBUG_SOURCE_THIRD_PARTY = 0x8249
+        /// </summary>
+        DebugSourceThirdParty = ((int)0x8249)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_SOURCE_APPLICATION = 0x824A
+        /// </summary>
+        DebugSourceApplication = ((int)0x824A)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.DebugMessageInsert
+    /// </summary>
+    public enum DebugType : int
+    {
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_ERROR = 0x824C
+        /// </summary>
+        DebugTypeError = ((int)0x824C)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR = 0x824D
+        /// </summary>
+        DebugTypeDeprecatedBehavior = ((int)0x824D)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR = 0x824E
+        /// </summary>
+        DebugTypeUndefinedBehavior = ((int)0x824E)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_PORTABILITY = 0x824F
+        /// </summary>
+        DebugTypePortability = ((int)0x824F)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_PERFORMANCE = 0x8250
+        /// </summary>
+        DebugTypePerformance = ((int)0x8250)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_OTHER = 0x8251
+        /// </summary>
+        DebugTypeOther = ((int)0x8251)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_MARKER = 0x8268
+        /// </summary>
+        DebugTypeMarker = ((int)0x8268)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_PUSH_GROUP = 0x8269
+        /// </summary>
+        DebugTypePushGroup = ((int)0x8269)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_POP_GROUP = 0x826A
+        /// </summary>
+        DebugTypePopGroup = ((int)0x826A)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.DebugMessageControl
+    /// </summary>
+    public enum DebugTypeControl : int
+    {
+        /// <summary>
+        /// Original was GL_DONT_CARE = 0x1100
+        /// </summary>
+        DontCare = ((int)0x1100)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_ERROR = 0x824C
+        /// </summary>
+        DebugTypeError = ((int)0x824C)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR = 0x824D
+        /// </summary>
+        DebugTypeDeprecatedBehavior = ((int)0x824D)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR = 0x824E
+        /// </summary>
+        DebugTypeUndefinedBehavior = ((int)0x824E)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_PORTABILITY = 0x824F
+        /// </summary>
+        DebugTypePortability = ((int)0x824F)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_PERFORMANCE = 0x8250
+        /// </summary>
+        DebugTypePerformance = ((int)0x8250)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_OTHER = 0x8251
+        /// </summary>
+        DebugTypeOther = ((int)0x8251)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_MARKER = 0x8268
+        /// </summary>
+        DebugTypeMarker = ((int)0x8268)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_PUSH_GROUP = 0x8269
+        /// </summary>
+        DebugTypePushGroup = ((int)0x8269)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_TYPE_POP_GROUP = 0x826A
+        /// </summary>
+        DebugTypePopGroup = ((int)0x826A)        ,
+    }
+
+    /// <summary>
     /// Used in GL.DepthFunc, GL.NV.PathCoverDepthFunc
     /// </summary>
     public enum DepthFunction : int
@@ -30665,6 +30886,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         SharedTexturePaletteExt = ((int)0x81FB)        ,
         /// <summary>
+        /// Original was GL_DEBUG_OUTPUT_SYNCHRONOUS = 0x8242
+        /// </summary>
+        DebugOutputSynchronous = ((int)0x8242)        ,
+        /// <summary>
         /// Original was GL_ASYNC_HISTOGRAM_SGIX = 0x832C
         /// </summary>
         AsyncHistogramSgix = ((int)0x832C)        ,
@@ -30792,6 +31017,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_PRIMITIVE_RESTART = 0x8F9D
         /// </summary>
         PrimitiveRestart = ((int)0x8F9D)        ,
+        /// <summary>
+        /// Original was GL_DEBUG_OUTPUT = 0x92E0
+        /// </summary>
+        DebugOutput = ((int)0x92E0)        ,
     }
 
     /// <summary>
@@ -39764,7 +39993,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.CopyImageSubData
+    /// Used in GL.CopyImageSubData, GL.GetInternalformat
     /// </summary>
     public enum ImageTarget : int
     {
@@ -40152,7 +40381,294 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.DebugMessageControl, GL.DebugMessageInsert, GL.GetDebugMessageLog, GL.GetObjectLabel, GL.ObjectLabel, GL.PushDebugGroup
+    /// Used in GL.GetInternalformat
+    /// </summary>
+    public enum InternalFormatParameter : int
+    {
+        /// <summary>
+        /// Original was GL_SAMPLES = 0x80A9
+        /// </summary>
+        Samples = ((int)0x80A9)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_SUPPORTED = 0x826F
+        /// </summary>
+        InternalformatSupported = ((int)0x826F)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_PREFERRED = 0x8270
+        /// </summary>
+        InternalformatPreferred = ((int)0x8270)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_RED_SIZE = 0x8271
+        /// </summary>
+        InternalformatRedSize = ((int)0x8271)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_GREEN_SIZE = 0x8272
+        /// </summary>
+        InternalformatGreenSize = ((int)0x8272)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_BLUE_SIZE = 0x8273
+        /// </summary>
+        InternalformatBlueSize = ((int)0x8273)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_ALPHA_SIZE = 0x8274
+        /// </summary>
+        InternalformatAlphaSize = ((int)0x8274)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_DEPTH_SIZE = 0x8275
+        /// </summary>
+        InternalformatDepthSize = ((int)0x8275)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_STENCIL_SIZE = 0x8276
+        /// </summary>
+        InternalformatStencilSize = ((int)0x8276)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_SHARED_SIZE = 0x8277
+        /// </summary>
+        InternalformatSharedSize = ((int)0x8277)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_RED_TYPE = 0x8278
+        /// </summary>
+        InternalformatRedType = ((int)0x8278)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_GREEN_TYPE = 0x8279
+        /// </summary>
+        InternalformatGreenType = ((int)0x8279)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_BLUE_TYPE = 0x827A
+        /// </summary>
+        InternalformatBlueType = ((int)0x827A)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_ALPHA_TYPE = 0x827B
+        /// </summary>
+        InternalformatAlphaType = ((int)0x827B)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_DEPTH_TYPE = 0x827C
+        /// </summary>
+        InternalformatDepthType = ((int)0x827C)        ,
+        /// <summary>
+        /// Original was GL_INTERNALFORMAT_STENCIL_TYPE = 0x827D
+        /// </summary>
+        InternalformatStencilType = ((int)0x827D)        ,
+        /// <summary>
+        /// Original was GL_MAX_WIDTH = 0x827E
+        /// </summary>
+        MaxWidth = ((int)0x827E)        ,
+        /// <summary>
+        /// Original was GL_MAX_HEIGHT = 0x827F
+        /// </summary>
+        MaxHeight = ((int)0x827F)        ,
+        /// <summary>
+        /// Original was GL_MAX_DEPTH = 0x8280
+        /// </summary>
+        MaxDepth = ((int)0x8280)        ,
+        /// <summary>
+        /// Original was GL_MAX_LAYERS = 0x8281
+        /// </summary>
+        MaxLayers = ((int)0x8281)        ,
+        /// <summary>
+        /// Original was GL_MAX_COMBINED_DIMENSIONS = 0x8282
+        /// </summary>
+        MaxCombinedDimensions = ((int)0x8282)        ,
+        /// <summary>
+        /// Original was GL_COLOR_COMPONENTS = 0x8283
+        /// </summary>
+        ColorComponents = ((int)0x8283)        ,
+        /// <summary>
+        /// Original was GL_DEPTH_COMPONENTS = 0x8284
+        /// </summary>
+        DepthComponents = ((int)0x8284)        ,
+        /// <summary>
+        /// Original was GL_STENCIL_COMPONENTS = 0x8285
+        /// </summary>
+        StencilComponents = ((int)0x8285)        ,
+        /// <summary>
+        /// Original was GL_COLOR_RENDERABLE = 0x8286
+        /// </summary>
+        ColorRenderable = ((int)0x8286)        ,
+        /// <summary>
+        /// Original was GL_DEPTH_RENDERABLE = 0x8287
+        /// </summary>
+        DepthRenderable = ((int)0x8287)        ,
+        /// <summary>
+        /// Original was GL_STENCIL_RENDERABLE = 0x8288
+        /// </summary>
+        StencilRenderable = ((int)0x8288)        ,
+        /// <summary>
+        /// Original was GL_FRAMEBUFFER_RENDERABLE = 0x8289
+        /// </summary>
+        FramebufferRenderable = ((int)0x8289)        ,
+        /// <summary>
+        /// Original was GL_FRAMEBUFFER_RENDERABLE_LAYERED = 0x828A
+        /// </summary>
+        FramebufferRenderableLayered = ((int)0x828A)        ,
+        /// <summary>
+        /// Original was GL_FRAMEBUFFER_BLEND = 0x828B
+        /// </summary>
+        FramebufferBlend = ((int)0x828B)        ,
+        /// <summary>
+        /// Original was GL_READ_PIXELS_FORMAT = 0x828D
+        /// </summary>
+        ReadPixelsFormat = ((int)0x828D)        ,
+        /// <summary>
+        /// Original was GL_READ_PIXELS_TYPE = 0x828E
+        /// </summary>
+        ReadPixelsType = ((int)0x828E)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_IMAGE_FORMAT = 0x828F
+        /// </summary>
+        TextureImageFormat = ((int)0x828F)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_IMAGE_TYPE = 0x8290
+        /// </summary>
+        TextureImageType = ((int)0x8290)        ,
+        /// <summary>
+        /// Original was GL_GET_TEXTURE_IMAGE_FORMAT = 0x8291
+        /// </summary>
+        GetTextureImageFormat = ((int)0x8291)        ,
+        /// <summary>
+        /// Original was GL_GET_TEXTURE_IMAGE_TYPE = 0x8292
+        /// </summary>
+        GetTextureImageType = ((int)0x8292)        ,
+        /// <summary>
+        /// Original was GL_MIPMAP = 0x8293
+        /// </summary>
+        Mipmap = ((int)0x8293)        ,
+        /// <summary>
+        /// Original was GL_MANUAL_GENERATE_MIPMAP = 0x8294
+        /// </summary>
+        ManualGenerateMipmap = ((int)0x8294)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ENCODING = 0x8296
+        /// </summary>
+        ColorEncoding = ((int)0x8296)        ,
+        /// <summary>
+        /// Original was GL_SRGB_READ = 0x8297
+        /// </summary>
+        SrgbRead = ((int)0x8297)        ,
+        /// <summary>
+        /// Original was GL_SRGB_WRITE = 0x8298
+        /// </summary>
+        SrgbWrite = ((int)0x8298)        ,
+        /// <summary>
+        /// Original was GL_FILTER = 0x829A
+        /// </summary>
+        Filter = ((int)0x829A)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_TEXTURE = 0x829B
+        /// </summary>
+        VertexTexture = ((int)0x829B)        ,
+        /// <summary>
+        /// Original was GL_TESS_CONTROL_TEXTURE = 0x829C
+        /// </summary>
+        TessControlTexture = ((int)0x829C)        ,
+        /// <summary>
+        /// Original was GL_TESS_EVALUATION_TEXTURE = 0x829D
+        /// </summary>
+        TessEvaluationTexture = ((int)0x829D)        ,
+        /// <summary>
+        /// Original was GL_GEOMETRY_TEXTURE = 0x829E
+        /// </summary>
+        GeometryTexture = ((int)0x829E)        ,
+        /// <summary>
+        /// Original was GL_FRAGMENT_TEXTURE = 0x829F
+        /// </summary>
+        FragmentTexture = ((int)0x829F)        ,
+        /// <summary>
+        /// Original was GL_COMPUTE_TEXTURE = 0x82A0
+        /// </summary>
+        ComputeTexture = ((int)0x82A0)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_SHADOW = 0x82A1
+        /// </summary>
+        TextureShadow = ((int)0x82A1)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_GATHER = 0x82A2
+        /// </summary>
+        TextureGather = ((int)0x82A2)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_GATHER_SHADOW = 0x82A3
+        /// </summary>
+        TextureGatherShadow = ((int)0x82A3)        ,
+        /// <summary>
+        /// Original was GL_SHADER_IMAGE_LOAD = 0x82A4
+        /// </summary>
+        ShaderImageLoad = ((int)0x82A4)        ,
+        /// <summary>
+        /// Original was GL_SHADER_IMAGE_STORE = 0x82A5
+        /// </summary>
+        ShaderImageStore = ((int)0x82A5)        ,
+        /// <summary>
+        /// Original was GL_SHADER_IMAGE_ATOMIC = 0x82A6
+        /// </summary>
+        ShaderImageAtomic = ((int)0x82A6)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_TEXEL_SIZE = 0x82A7
+        /// </summary>
+        ImageTexelSize = ((int)0x82A7)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_COMPATIBILITY_CLASS = 0x82A8
+        /// </summary>
+        ImageCompatibilityClass = ((int)0x82A8)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_PIXEL_FORMAT = 0x82A9
+        /// </summary>
+        ImagePixelFormat = ((int)0x82A9)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_PIXEL_TYPE = 0x82AA
+        /// </summary>
+        ImagePixelType = ((int)0x82AA)        ,
+        /// <summary>
+        /// Original was GL_SIMULTANEOUS_TEXTURE_AND_DEPTH_TEST = 0x82AC
+        /// </summary>
+        SimultaneousTextureAndDepthTest = ((int)0x82AC)        ,
+        /// <summary>
+        /// Original was GL_SIMULTANEOUS_TEXTURE_AND_STENCIL_TEST = 0x82AD
+        /// </summary>
+        SimultaneousTextureAndStencilTest = ((int)0x82AD)        ,
+        /// <summary>
+        /// Original was GL_SIMULTANEOUS_TEXTURE_AND_STENCIL_WRITE = 0x82AF
+        /// </summary>
+        SimultaneousTextureAndStencilWrite = ((int)0x82AF)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_COMPRESSED_BLOCK_WIDTH = 0x82B1
+        /// </summary>
+        TextureCompressedBlockWidth = ((int)0x82B1)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_COMPRESSED_BLOCK_HEIGHT = 0x82B2
+        /// </summary>
+        TextureCompressedBlockHeight = ((int)0x82B2)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_COMPRESSED_BLOCK_SIZE = 0x82B3
+        /// </summary>
+        TextureCompressedBlockSize = ((int)0x82B3)        ,
+        /// <summary>
+        /// Original was GL_CLEAR_BUFFER = 0x82B4
+        /// </summary>
+        ClearBuffer = ((int)0x82B4)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_VIEW = 0x82B5
+        /// </summary>
+        TextureView = ((int)0x82B5)        ,
+        /// <summary>
+        /// Original was GL_VIEW_COMPATIBILITY_CLASS = 0x82B6
+        /// </summary>
+        ViewCompatibilityClass = ((int)0x82B6)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_COMPRESSED = 0x86A1
+        /// </summary>
+        TextureCompressed = ((int)0x86A1)        ,
+        /// <summary>
+        /// Original was GL_IMAGE_FORMAT_COMPATIBILITY_TYPE = 0x90C7
+        /// </summary>
+        ImageFormatCompatibilityType = ((int)0x90C7)        ,
+        /// <summary>
+        /// Original was GL_NUM_SAMPLE_COUNTS = 0x9380
+        /// </summary>
+        NumSampleCounts = ((int)0x9380)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetDebugMessageLog
     /// </summary>
     public enum KhrDebug : int
     {
@@ -45549,6 +46065,57 @@ namespace OpenTK.Graphics.OpenGL
     /// </summary>
     public enum NvXConditionalRender : int
     {
+    }
+
+    /// <summary>
+    /// Used in GL.GetObjectLabel, GL.ObjectLabel
+    /// </summary>
+    public enum ObjectLabelIdentifier : int
+    {
+        /// <summary>
+        /// Original was GL_TEXTURE = 0x1702
+        /// </summary>
+        Texture = ((int)0x1702)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_ARRAY = 0x8074
+        /// </summary>
+        VertexArray = ((int)0x8074)        ,
+        /// <summary>
+        /// Original was GL_BUFFER = 0x82E0
+        /// </summary>
+        Buffer = ((int)0x82E0)        ,
+        /// <summary>
+        /// Original was GL_SHADER = 0x82E1
+        /// </summary>
+        Shader = ((int)0x82E1)        ,
+        /// <summary>
+        /// Original was GL_PROGRAM = 0x82E2
+        /// </summary>
+        Program = ((int)0x82E2)        ,
+        /// <summary>
+        /// Original was GL_QUERY = 0x82E3
+        /// </summary>
+        Query = ((int)0x82E3)        ,
+        /// <summary>
+        /// Original was GL_PROGRAM_PIPELINE = 0x82E4
+        /// </summary>
+        ProgramPipeline = ((int)0x82E4)        ,
+        /// <summary>
+        /// Original was GL_SAMPLER = 0x82E6
+        /// </summary>
+        Sampler = ((int)0x82E6)        ,
+        /// <summary>
+        /// Original was GL_FRAMEBUFFER = 0x8D40
+        /// </summary>
+        Framebuffer = ((int)0x8D40)        ,
+        /// <summary>
+        /// Original was GL_RENDERBUFFER = 0x8D41
+        /// </summary>
+        Renderbuffer = ((int)0x8D41)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK = 0x8E22
+        /// </summary>
+        TransformFeedback = ((int)0x8E22)        ,
     }
 
     /// <summary>
@@ -51513,6 +52080,21 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_VERSION = 0x1F02
         /// </summary>
         Version = ((int)0x1F02)        ,
+        /// <summary>
+        /// Original was GL_EXTENSIONS = 0x1F03
+        /// </summary>
+        Extensions = ((int)0x1F03)        ,
+        /// <summary>
+        /// Original was GL_SHADING_LANGUAGE_VERSION = 0x8B8C
+        /// </summary>
+        ShadingLanguageVersion = ((int)0x8B8C)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetString
+    /// </summary>
+    public enum StringNameIndexed : int
+    {
         /// <summary>
         /// Original was GL_EXTENSIONS = 0x1F03
         /// </summary>

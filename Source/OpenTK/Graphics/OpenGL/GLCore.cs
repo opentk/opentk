@@ -1040,7 +1040,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void DebugMessageCallbackARB(DebugProcArb callback, IntPtr userParam);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageControl", ExactSpelling = true)]
-            internal extern static unsafe void DebugMessageControl(OpenTK.Graphics.OpenGL.KhrDebug source, OpenTK.Graphics.OpenGL.KhrDebug type, OpenTK.Graphics.OpenGL.KhrDebug severity, Int32 count, UInt32* ids, bool enabled);
+            internal extern static unsafe void DebugMessageControl(OpenTK.Graphics.OpenGL.DebugSourceControl source, OpenTK.Graphics.OpenGL.DebugTypeControl type, OpenTK.Graphics.OpenGL.DebugSeverityControl severity, Int32 count, UInt32* ids, bool enabled);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageControlARB", ExactSpelling = true)]
             internal extern static unsafe void DebugMessageControlARB(OpenTK.Graphics.OpenGL.ArbDebugOutput source, OpenTK.Graphics.OpenGL.ArbDebugOutput type, OpenTK.Graphics.OpenGL.ArbDebugOutput severity, Int32 count, UInt32* ids, bool enabled);
@@ -1049,7 +1049,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void DebugMessageEnableAMD(OpenTK.Graphics.OpenGL.AmdDebugOutput category, OpenTK.Graphics.OpenGL.AmdDebugOutput severity, Int32 count, UInt32* ids, bool enabled);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageInsert", ExactSpelling = true)]
-            internal extern static void DebugMessageInsert(OpenTK.Graphics.OpenGL.KhrDebug source, OpenTK.Graphics.OpenGL.KhrDebug type, UInt32 id, OpenTK.Graphics.OpenGL.KhrDebug severity, Int32 length, String buf);
+            internal extern static void DebugMessageInsert(OpenTK.Graphics.OpenGL.DebugSourceExternal source, OpenTK.Graphics.OpenGL.DebugType type, UInt32 id, OpenTK.Graphics.OpenGL.DebugSeverity severity, Int32 length, String buf);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageInsertAMD", ExactSpelling = true)]
             internal extern static void DebugMessageInsertAMD(OpenTK.Graphics.OpenGL.AmdDebugOutput category, OpenTK.Graphics.OpenGL.AmdDebugOutput severity, UInt32 id, Int32 length, String buf);
@@ -2159,10 +2159,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void GetIntegerv(OpenTK.Graphics.OpenGL.GetPName pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetInternalformati64v", ExactSpelling = true)]
-            internal extern static unsafe void GetInternalformati64v(OpenTK.Graphics.OpenGL.ArbInternalformatQuery2 target, OpenTK.Graphics.OpenGL.ArbInternalformatQuery2 internalformat, OpenTK.Graphics.OpenGL.ArbInternalformatQuery2 pname, Int32 bufSize, [OutAttribute] Int64* @params);
+            internal extern static unsafe void GetInternalformati64v(OpenTK.Graphics.OpenGL.ImageTarget target, OpenTK.Graphics.OpenGL.All internalformat, OpenTK.Graphics.OpenGL.InternalFormatParameter pname, Int32 bufSize, [OutAttribute] Int64* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetInternalformativ", ExactSpelling = true)]
-            internal extern static unsafe void GetInternalformativ(OpenTK.Graphics.OpenGL.ArbInternalformatQuery target, OpenTK.Graphics.OpenGL.ArbInternalformatQuery internalformat, OpenTK.Graphics.OpenGL.ArbInternalformatQuery pname, Int32 bufSize, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetInternalformativ(OpenTK.Graphics.OpenGL.ImageTarget target, OpenTK.Graphics.OpenGL.All internalformat, OpenTK.Graphics.OpenGL.InternalFormatParameter pname, Int32 bufSize, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetInvariantBooleanvEXT", ExactSpelling = true)]
             internal extern static unsafe void GetInvariantBooleanvEXT(UInt32 id, OpenTK.Graphics.OpenGL.ExtVertexShader value, [OutAttribute] bool* data);
@@ -2399,7 +2399,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void GetObjectBufferivATI(UInt32 buffer, OpenTK.Graphics.OpenGL.AtiVertexArrayObject pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetObjectLabel", ExactSpelling = true)]
-            internal extern static unsafe void GetObjectLabel(OpenTK.Graphics.OpenGL.KhrDebug identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
+            internal extern static unsafe void GetObjectLabel(OpenTK.Graphics.OpenGL.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetObjectParameterfvARB", ExactSpelling = true)]
             internal extern static unsafe void GetObjectParameterfvARB(UInt32 obj, OpenTK.Graphics.OpenGL.ArbShaderObjects pname, [OutAttribute] Single* @params);
@@ -2678,7 +2678,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static IntPtr GetString(OpenTK.Graphics.OpenGL.StringName name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetStringi", ExactSpelling = true)]
-            internal extern static IntPtr GetStringi(OpenTK.Graphics.OpenGL.StringName name, UInt32 index);
+            internal extern static IntPtr GetStringi(OpenTK.Graphics.OpenGL.StringNameIndexed name, UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSubroutineIndex", ExactSpelling = true)]
             internal extern static Int32 GetSubroutineIndex(UInt32 program, OpenTK.Graphics.OpenGL.ShaderType shadertype, String name);
@@ -4154,7 +4154,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void NormalStream3svATI(OpenTK.Graphics.OpenGL.AtiVertexStreams stream, Int16* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glObjectLabel", ExactSpelling = true)]
-            internal extern static void ObjectLabel(OpenTK.Graphics.OpenGL.KhrDebug identifier, UInt32 name, Int32 length, String label);
+            internal extern static void ObjectLabel(OpenTK.Graphics.OpenGL.ObjectLabelIdentifier identifier, UInt32 name, Int32 length, String label);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glObjectPtrLabel", ExactSpelling = true)]
             internal extern static void ObjectPtrLabel(IntPtr ptr, Int32 length, String label);
@@ -4931,7 +4931,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void PushClientAttribDefaultEXT(OpenTK.Graphics.OpenGL.ClientAttribMask mask);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPushDebugGroup", ExactSpelling = true)]
-            internal extern static void PushDebugGroup(OpenTK.Graphics.OpenGL.KhrDebug source, UInt32 id, Int32 length, String message);
+            internal extern static void PushDebugGroup(OpenTK.Graphics.OpenGL.DebugSourceExternal source, UInt32 id, Int32 length, String message);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPushMatrix", ExactSpelling = true)]
             internal extern static void PushMatrix();

@@ -14,6 +14,12 @@
         <type>ArrayCap</type>
       </param>
     </function>
+    
+    <function name="GetString" extension="Core">
+      <param name="name">
+        <type>StringName</type>
+      </param>
+    </function>
 
     <function name="TexImage1D" extension="Core">
       <param name="internalformat">
@@ -438,9 +444,9 @@
       </param>
     </function>
 
-    <function name="GetString" extension="Core">
+    <function name="GetStringi" extension="Core">
       <param name="name">
-        <type>StringName</type>
+        <type>StringNameIndexed</type>
       </param>
     </function>
 
@@ -993,6 +999,30 @@
       </param>
     </function>
     
+    <function name="DebugMessageControl" extension="Core">
+      <param name="source">
+        <type>DebugSourceControl</type>
+      </param>
+      <param name="type">
+        <type>DebugTypeControl</type>
+      </param>
+      <param name="severity">
+        <type>DebugSeverityControl</type>
+      </param>
+    </function>
+    
+    <function name="DebugMessageInsert" extension="Core">
+      <param name="source">
+        <type>DebugSourceExternal</type>
+      </param>
+      <param name="type">
+        <type>DebugType</type>
+      </param>
+      <param name="severity">
+        <type>DebugSeverity</type>
+      </param>
+    </function>
+    
     <function name="FramebufferParameter" extension="Core">
       <param name="target">
         <type>FramebufferTarget</type>
@@ -1008,6 +1038,36 @@
       </param>
       <param name="pname">
         <type>FramebufferDefaultParameter</type>
+      </param>
+    </function>
+    
+    <function name="GetInternalformat" extension="Core">
+      <param name="target">
+        <type>ImageTarget</type>
+      </param>
+      <param name="internalformat">
+        <type>All</type>
+      </param>
+      <param name="pname">
+        <type>InternalFormatParameter</type>
+      </param>
+    </function>
+    
+    <function name="GetMessageDebugLog" extension="Core">
+      <param name="sources">
+        <type>DebugSource</type>
+      </param>
+      <param name="types">
+        <type>DebugType</type>
+      </param>
+      <param name="severities">
+        <type>DebugSeverity</type>
+      </param>
+    </function>
+    
+    <function name="GetObjectLabel" extension="Core">
+      <param name="identifier">
+        <type>ObjectLabelIdentifier</type>
       </param>
     </function>
         
@@ -1074,6 +1134,18 @@
     <function name="MultiDrawArraysIndirect" extension="Core">
       <param name="mode">
         <type>PrimitiveType</type>
+      </param>
+    </function>
+    
+    <function name="ObjectLabel" extension="Core">
+      <param name="identifier">
+        <type>ObjectLabelIdentifier</type>
+      </param>
+    </function>
+    
+    <function name="PushDebugGroup" extension="Core">
+      <param name="source">
+        <type>DebugSourceExternal</type>
       </param>
     </function>
     
@@ -2020,6 +2092,63 @@
       <token name="CONVOLUTION_2D" value="0x8011" />
       <token name="SEPARABLE_2D" value="0x8012" />
     </enum>
+    <enum name="DebugSeverity">
+      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_HIGH" />
+      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_MEDIUM" />
+      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_LOW" />
+      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_NOTIFICATION" />
+    </enum>
+    <enum name="DebugSeverityControl">
+      <use enum="VERSION_1_1" token="DONT_CARE" />
+      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_HIGH" />
+      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_MEDIUM" />
+      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_LOW" />
+      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_NOTIFICATION" />
+    </enum>
+    <enum name="DebugSource">
+      <use enum="VERSION_4_3" token="DEBUG_SOURCE_API" />
+      <use enum="VERSION_4_3" token="DEBUG_SOURCE_SHADER_COMPILER" />
+      <use enum="VERSION_4_3" token="DEBUG_SOURCE_WINDOW_SYSTEM" />
+      <use enum="VERSION_4_3" token="DEBUG_SOURCE_THIRD_PARTY" />
+      <use enum="VERSION_4_3" token="DEBUG_SOURCE_APPLICATION" />
+      <use enum="VERSION_4_3" token="DEBUG_SOURCE_OTHER" />
+    </enum>
+    <enum name="DebugSourceControl">
+      <use enum="VERSION_1_1" token="DONT_CARE" />
+      <use enum="VERSION_4_3" token="DEBUG_SOURCE_API" />
+      <use enum="VERSION_4_3" token="DEBUG_SOURCE_SHADER_COMPILER" />
+      <use enum="VERSION_4_3" token="DEBUG_SOURCE_WINDOW_SYSTEM" />
+      <use enum="VERSION_4_3" token="DEBUG_SOURCE_THIRD_PARTY" />
+      <use enum="VERSION_4_3" token="DEBUG_SOURCE_APPLICATION" />
+      <use enum="VERSION_4_3" token="DEBUG_SOURCE_OTHER" />
+    </enum>
+    <enum name="DebugSourceExternal">
+      <use enum="VERSION_4_3" token="DEBUG_SOURCE_THIRD_PARTY" />
+      <use enum="VERSION_4_3" token="DEBUG_SOURCE_APPLICATION" />
+    </enum>
+    <enum name="DebugType">
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_ERROR" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_MARKER" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_OTHER" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_DEPRECATED_BEHAVIOR" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_UNDEFINED_BEHAVIOR" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_PERFORMANCE" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_PORTABILITY" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_PUSH_GROUP" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_POP_GROUP" />
+    </enum>
+    <enum name="DebugTypeControl">
+      <use enum="VERSION_1_1" token="DONT_CARE" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_ERROR" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_MARKER" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_OTHER" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_DEPRECATED_BEHAVIOR" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_UNDEFINED_BEHAVIOR" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_PERFORMANCE" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_PORTABILITY" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_PUSH_GROUP" />
+      <use enum="VERSION_4_3" token="DEBUG_TYPE_POP_GROUP" />
+    </enum>
     <enum name="DrawBufferMode">
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT1" />
@@ -2108,6 +2237,8 @@
       <use enum="VERSION_3_1" token="TEXTURE_RECTANGLE" />
       <use enum="VERSION_3_2" token="TEXTURE_CUBE_MAP_SEAMLESS" />
       <use enum="VERSION_4_0" token="SAMPLE_SHADING" />
+      <use enum="VERSION_4_3" token="DEBUG_OUTPUT" />
+      <use enum="VERSION_4_3" token="DEBUG_OUTPUT_SYNCHRONOUS" />
       <use enum="VERSION_4_3" token="PRIMITIVE_RESTART_FIXED_INDEX" />
     </enum>
     <enum name="ErrorCode">
@@ -2618,6 +2749,79 @@
       <use enum="GetPName" token="BLEND" />
       <use enum="VERSION_4_1" token="SCISSOR_TEST" />
     </enum>
+    <enum name="InternalFormatParameter">
+      <use token="CLEAR_BUFFER" />
+      <use enum="VERSION_4_4" token="CLEAR_TEXTURE" />
+      <use token="COLOR_ENCODING" />
+      <use token="COLOR_COMPONENTS" />
+      <use token="COLOR_RENDERABLE" />
+      <use token="COMPUTE_TEXTURE" />
+      <use token="DEPTH_COMPONENTS" />
+      <use token="DEPTH_RENDERABLE" />
+      <use token="FILTER" />
+      <use token="FRAMEBUFFER_BLEND" />
+      <use token="FRAMEBUFFER_RENDERABLE" />
+      <use token="FRAMEBUFFER_RENDERABLE_LAYERED" />
+      <use token="FRAGMENT_TEXTURE" />
+      <use token="GEOMETRY_TEXTURE" />
+      <use token="MANUAL_GENERATE_MIPMAP" />
+      <use token="MIPMAP" />
+      <use token="IMAGE_COMPATIBILITY_CLASS" />
+      <use token="IMAGE_PIXEL_FORMAT" />
+      <use token="IMAGE_PIXEL_TYPE" />
+      <use token="IMAGE_FORMAT_COMPATIBILITY_TYPE" />
+      <use token="IMAGE_TEXEL_SIZE" />
+      <use token="INTERNALFORMAT_PREFERRED" />
+      <use token="INTERNALFORMAT_SUPPORTED" />
+      <use token="INTERNALFORMAT_RED_SIZE" />
+      <use token="INTERNALFORMAT_GREEN_SIZE" />
+      <use token="INTERNALFORMAT_BLUE_SIZE" />
+      <use token="INTERNALFORMAT_DEPTH_SIZE" />
+      <use token="INTERNALFORMAT_STENCIL_SIZE" />
+      <use token="INTERNALFORMAT_ALPHA_SIZE" />
+      <use token="INTERNALFORMAT_SHARED_SIZE" />
+      <use token="INTERNALFORMAT_RED_TYPE" />
+      <use token="INTERNALFORMAT_GREEN_TYPE" />
+      <use token="INTERNALFORMAT_BLUE_TYPE" />
+      <use token="INTERNALFORMAT_ALPHA_TYPE" />
+      <use token="INTERNALFORMAT_DEPTH_TYPE" />
+      <use token="INTERNALFORMAT_STENCIL_TYPE" />
+      <use token="MAX_COMBINED_DIMENSIONS" />
+      <use token="MAX_WIDTH" />
+      <use token="MAX_HEIGHT" />
+      <use token="MAX_DEPTH" />
+      <use token="MAX_LAYERS" />
+      <use token="NUM_SAMPLE_COUNTS" />
+      <use token="READ_PIXELS_FORMAT" />
+      <use token="READ_PIXELS_TYPE" />
+      <use token="SAMPLES" />
+      <use token="SHADER_IMAGE_ATOMIC" />
+      <use token="SHADER_IMAGE_LOAD" />
+      <use token="SHADER_IMAGE_STORE" />
+      <use token="SIMULTANEOUS_TEXTURE_AND_DEPTH_TEST" />
+      <use token="SIMULTANEOUS_TEXTURE_AND_STENCIL_TEST" />
+      <use token="SIMULTANEOUS_TEXTURE_AND_STENCIL_WRITE" />
+      <use token="SRGB_READ" />
+      <use token="SRGB_WRITE" />
+      <use token="STENCIL_COMPONENTS" />
+      <use token="STENCIL_RENDERABLE" />
+      <use token="TESS_CONTROL_TEXTURE" />
+      <use token="TESS_EVALUATION_TEXTURE" />
+      <use token="TEXTURE_COMPRESSED" />
+      <use token="TEXTURE_COMPRESSED_BLOCK_HEIGHT" />
+      <use token="TEXTURE_COMPRESSED_BLOCK_WIDTH" />
+      <use token="TEXTURE_COMPRESSED_BLOCK_SIZE" />
+      <use token="TEXTURE_GATHER" />
+      <use token="TEXTURE_GATHER_SHADOW" />
+      <use token="TEXTURE_IMAGE_FORMAT" />
+      <use token="GET_TEXTURE_IMAGE_FORMAT" />
+      <use token="TEXTURE_IMAGE_TYPE" />
+      <use token="GET_TEXTURE_IMAGE_TYPE" />
+      <use token="TEXTURE_SHADOW" />
+      <use token="TEXTURE_VIEW" />
+      <use token="VERTEX_TEXTURE" />
+      <use token="VIEW_COMPATIBILITY_CLASS" />
+    </enum>
     <enum name="LightModelColorControl">
       <token name="SEPARATE_SPECULAR_COLOR" value="0x81FA" />
       <token name="SINGLE_COLOR" value="0x81F9" />
@@ -2691,6 +2895,19 @@
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
       <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
       <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+    </enum>
+    <enum name="ObjectLabelIdentifier">
+      <use enum="VERSION_4_3" token="BUFFER" />
+      <use enum="VERSION_4_3" token="FRAMEBUFFER" />
+      <use enum="VERSION_4_3" token="RENDERBUFFER" />
+      <use enum="VERSION_4_3" token="PROGRAM_PIPELINE" />
+      <use enum="VERSION_4_3" token="PROGRAM" />
+      <use enum="VERSION_4_3" token="QUERY" />
+      <use enum="VERSION_4_3" token="SAMPLER" />
+      <use enum="VERSION_4_3" token="SHADER" />
+      <use enum="VERSION_4_3" token="TEXTURE" />
+      <use enum="VERSION_4_3" token="TRANSFORM_FEEDBACK" />
+      <use enum="VERSION_4_3" token="VERTEX_ARRAY" />
     </enum>
     <enum name="PackedPointerType">
       <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
@@ -3263,8 +3480,11 @@
       <token name="INCR_WRAP" value="0x8507" />
     </enum>
     <enum name="StringName">
-      <use enum="StringName" token="EXTENSIONS" />
-      <token name="SHADING_LANGUAGE_VERSION" value="0x8B8C" />
+      <use enum="VERSION_2_0" token="SHADING_LANGUAGE_VERSION" />
+    </enum>
+    <enum name="StringNameIndexed">
+      <use enum="VERSION_1_1" token="EXTENSIONS" />
+      <use enum="VERSION_2_0" token="SHADING_LANGUAGE_VERSION" />
     </enum>
     <enum name="SyncCondition">
       <use enum="VERSION_4_1" token="SYNC_GPU_COMMANDS_COMPLETE" />

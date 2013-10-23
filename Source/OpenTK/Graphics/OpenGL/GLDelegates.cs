@@ -1038,7 +1038,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void DebugMessageCallbackARB(DebugProcArb callback, IntPtr userParam);
             internal static DebugMessageCallbackARB glDebugMessageCallbackARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void DebugMessageControl(OpenTK.Graphics.OpenGL.KhrDebug source, OpenTK.Graphics.OpenGL.KhrDebug type, OpenTK.Graphics.OpenGL.KhrDebug severity, Int32 count, UInt32* ids, bool enabled);
+            internal unsafe delegate void DebugMessageControl(OpenTK.Graphics.OpenGL.DebugSourceControl source, OpenTK.Graphics.OpenGL.DebugTypeControl type, OpenTK.Graphics.OpenGL.DebugSeverityControl severity, Int32 count, UInt32* ids, bool enabled);
             internal unsafe static DebugMessageControl glDebugMessageControl;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void DebugMessageControlARB(OpenTK.Graphics.OpenGL.ArbDebugOutput source, OpenTK.Graphics.OpenGL.ArbDebugOutput type, OpenTK.Graphics.OpenGL.ArbDebugOutput severity, Int32 count, UInt32* ids, bool enabled);
@@ -1047,7 +1047,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void DebugMessageEnableAMD(OpenTK.Graphics.OpenGL.AmdDebugOutput category, OpenTK.Graphics.OpenGL.AmdDebugOutput severity, Int32 count, UInt32* ids, bool enabled);
             internal unsafe static DebugMessageEnableAMD glDebugMessageEnableAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DebugMessageInsert(OpenTK.Graphics.OpenGL.KhrDebug source, OpenTK.Graphics.OpenGL.KhrDebug type, UInt32 id, OpenTK.Graphics.OpenGL.KhrDebug severity, Int32 length, String buf);
+            internal delegate void DebugMessageInsert(OpenTK.Graphics.OpenGL.DebugSourceExternal source, OpenTK.Graphics.OpenGL.DebugType type, UInt32 id, OpenTK.Graphics.OpenGL.DebugSeverity severity, Int32 length, String buf);
             internal static DebugMessageInsert glDebugMessageInsert;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DebugMessageInsertAMD(OpenTK.Graphics.OpenGL.AmdDebugOutput category, OpenTK.Graphics.OpenGL.AmdDebugOutput severity, UInt32 id, Int32 length, String buf);
@@ -2157,10 +2157,10 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetIntegerv(OpenTK.Graphics.OpenGL.GetPName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetIntegerv glGetIntegerv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetInternalformati64v(OpenTK.Graphics.OpenGL.ArbInternalformatQuery2 target, OpenTK.Graphics.OpenGL.ArbInternalformatQuery2 internalformat, OpenTK.Graphics.OpenGL.ArbInternalformatQuery2 pname, Int32 bufSize, [OutAttribute] Int64* @params);
+            internal unsafe delegate void GetInternalformati64v(OpenTK.Graphics.OpenGL.ImageTarget target, OpenTK.Graphics.OpenGL.All internalformat, OpenTK.Graphics.OpenGL.InternalFormatParameter pname, Int32 bufSize, [OutAttribute] Int64* @params);
             internal unsafe static GetInternalformati64v glGetInternalformati64v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetInternalformativ(OpenTK.Graphics.OpenGL.ArbInternalformatQuery target, OpenTK.Graphics.OpenGL.ArbInternalformatQuery internalformat, OpenTK.Graphics.OpenGL.ArbInternalformatQuery pname, Int32 bufSize, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetInternalformativ(OpenTK.Graphics.OpenGL.ImageTarget target, OpenTK.Graphics.OpenGL.All internalformat, OpenTK.Graphics.OpenGL.InternalFormatParameter pname, Int32 bufSize, [OutAttribute] Int32* @params);
             internal unsafe static GetInternalformativ glGetInternalformativ;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetInvariantBooleanvEXT(UInt32 id, OpenTK.Graphics.OpenGL.ExtVertexShader value, [OutAttribute] bool* data);
@@ -2397,7 +2397,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetObjectBufferivATI(UInt32 buffer, OpenTK.Graphics.OpenGL.AtiVertexArrayObject pname, [OutAttribute] Int32* @params);
             internal unsafe static GetObjectBufferivATI glGetObjectBufferivATI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetObjectLabel(OpenTK.Graphics.OpenGL.KhrDebug identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
+            internal unsafe delegate void GetObjectLabel(OpenTK.Graphics.OpenGL.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
             internal unsafe static GetObjectLabel glGetObjectLabel;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetObjectParameterfvARB(UInt32 obj, OpenTK.Graphics.OpenGL.ArbShaderObjects pname, [OutAttribute] Single* @params);
@@ -2676,7 +2676,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate IntPtr GetString(OpenTK.Graphics.OpenGL.StringName name);
             internal static GetString glGetString;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr GetStringi(OpenTK.Graphics.OpenGL.StringName name, UInt32 index);
+            internal delegate IntPtr GetStringi(OpenTK.Graphics.OpenGL.StringNameIndexed name, UInt32 index);
             internal static GetStringi glGetStringi;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Int32 GetSubroutineIndex(UInt32 program, OpenTK.Graphics.OpenGL.ShaderType shadertype, String name);
@@ -4152,7 +4152,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void NormalStream3svATI(OpenTK.Graphics.OpenGL.AtiVertexStreams stream, Int16* coords);
             internal unsafe static NormalStream3svATI glNormalStream3svATI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ObjectLabel(OpenTK.Graphics.OpenGL.KhrDebug identifier, UInt32 name, Int32 length, String label);
+            internal delegate void ObjectLabel(OpenTK.Graphics.OpenGL.ObjectLabelIdentifier identifier, UInt32 name, Int32 length, String label);
             internal static ObjectLabel glObjectLabel;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ObjectPtrLabel(IntPtr ptr, Int32 length, String label);
@@ -4929,7 +4929,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void PushClientAttribDefaultEXT(OpenTK.Graphics.OpenGL.ClientAttribMask mask);
             internal static PushClientAttribDefaultEXT glPushClientAttribDefaultEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void PushDebugGroup(OpenTK.Graphics.OpenGL.KhrDebug source, UInt32 id, Int32 length, String message);
+            internal delegate void PushDebugGroup(OpenTK.Graphics.OpenGL.DebugSourceExternal source, UInt32 id, Int32 length, String message);
             internal static PushDebugGroup glPushDebugGroup;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void PushMatrix();
