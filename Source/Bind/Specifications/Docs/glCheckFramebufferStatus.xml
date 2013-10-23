@@ -64,7 +64,7 @@
                 <listitem>
                     <para>
                         <constant>GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER</constant> is returned if the value of <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE</constant>
-                         is <constant>GL_NONE</constant> for any color attachment point(s) named by <constant>GL_DRAWBUFFERi</constant>.
+                         is <constant>GL_NONE</constant> for any color attachment point(s) named by <constant>GL_DRAW_BUFFERi</constant>.
                     </para>
                 </listitem>
                 <listitem>

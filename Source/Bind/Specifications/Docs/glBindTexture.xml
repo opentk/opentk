@@ -32,14 +32,16 @@
             <listitem>
                 <para>
                     Specifies the target to which the texture is bound.
-                    Must be either
+                    Must be one of
                     <constant>GL_TEXTURE_1D</constant>,
                     <constant>GL_TEXTURE_2D</constant>,
-                    <constant>GL_TEXTURE_3D</constant>, or
+                    <constant>GL_TEXTURE_3D</constant>,
                     <constant>GL_TEXTURE_1D_ARRAY</constant>,
                     <constant>GL_TEXTURE_2D_ARRAY</constant>,
                     <constant>GL_TEXTURE_RECTANGLE</constant>,
                     <constant>GL_TEXTURE_CUBE_MAP</constant>,
+                    <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant>,
+                    <constant>GL_TEXTURE_BUFFER</constant>,
                     <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or
                     <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.
                 </para>
@@ -59,9 +61,17 @@
         <para>
             <function>glBindTexture</function> lets you create or use a named texture. Calling <function>glBindTexture</function> with
             <parameter>target</parameter> set to
-            <constant>GL_TEXTURE_1D</constant>, <constant>GL_TEXTURE_2D</constant>, <constant>GL_TEXTURE_3D</constant>, or
-            <constant>GL_TEXTURE_1D_ARRAY</constant>, <constant>GL_TEXTURE_2D_ARRAY</constant>, <constant>GL_TEXTURE_RECTANGLE</constant>,
-            <constant>GL_TEXTURE_CUBE_MAP</constant>, <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>
+            <constant>GL_TEXTURE_1D</constant>,
+            <constant>GL_TEXTURE_2D</constant>,
+            <constant>GL_TEXTURE_3D</constant>,
+            <constant>GL_TEXTURE_1D_ARRAY</constant>,
+            <constant>GL_TEXTURE_2D_ARRAY</constant>,
+            <constant>GL_TEXTURE_RECTANGLE</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant>,
+            <constant>GL_TEXTURE_BUFFER</constant>,
+            <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or
+            <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>
             and <parameter>texture</parameter> set to the name of the new texture binds the texture name to the target.
             When a texture is bound to a target, the previous binding for that target is automatically broken.
         </para>
@@ -83,8 +93,10 @@
             texture first bound to <constant>GL_TEXTURE_3D</constant> becomes three-dimensional texture, a
             texture first bound to <constant>GL_TEXTURE_1D_ARRAY</constant> becomes one-dimensional array texture, a
             texture first bound to <constant>GL_TEXTURE_2D_ARRAY</constant> becomes two-dimensional arary texture, a
-            texture first bound to <constant>GL_TEXTURE_RECTANGLE</constant> becomes rectangle texture, a,
+            texture first bound to <constant>GL_TEXTURE_RECTANGLE</constant> becomes rectangle texture, a
             texture first bound to <constant>GL_TEXTURE_CUBE_MAP</constant> becomes a cube-mapped texture, a
+            texture first bound to <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant> becomes a cube-mapped array texture, a
+            texture first bound to <constant>GL_TEXTURE_BUFFER</constant> becomes a buffer texture, a
             texture first bound to <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> becomes a two-dimensional multisampled texture, and a
             texture first bound to <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant> becomes a two-dimensional multisampled array texture.
             The state of a one-dimensional texture immediately after it is first bound is equivalent to the state of the
@@ -135,7 +147,10 @@
         <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_BINDING_1D</constant>,
             <constant>GL_TEXTURE_BINDING_2D</constant>, <constant>GL_TEXTURE_BINDING_3D</constant>, <constant>GL_TEXTURE_BINDING_1D_ARRAY</constant>,
-            <constant>GL_TEXTURE_BINDING_2D_ARRAY</constant>, <constant>GL_TEXTURE_BINDING_RECTANGLE</constant>, <constant>GL_TEXTURE_BINDING_2D_MULTISAMPLE</constant>,
+            <constant>GL_TEXTURE_BINDING_2D_ARRAY</constant>, <constant>GL_TEXTURE_BINDING_RECTANGLE</constant>,
+            <constant>GL_TEXTURE_BINDING_BUFFER</constant>, <constant>GL_TEXTURE_BINDING_CUBE_MAP</constant>, <constant>GL_TEXTURE_BINDING_CUBE_MAP</constant>,
+            <constant>GL_TEXTURE_BINDING_CUBE_MAP_ARRAY</constant>,
+            <constant>GL_TEXTURE_BINDING_2D_MULTISAMPLE</constant>,
             or <constant>GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY</constant>.
         </para>
     </refsect1>
@@ -151,6 +166,7 @@
             <citerefentry><refentrytitle>glTexImage2DMultisample</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexImage3DMultisample</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexBuffer</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
         </para>
     </refsect1>

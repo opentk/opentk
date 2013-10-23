@@ -5,8 +5,8 @@
     <refmeta>
         <refmetainfo>
             <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
+                <year>2013</year>
+                <holder>Khronos Group</holder>
             </copyright>
         </refmetainfo>
         <refentrytitle>glMultiDrawArrays</refentrytitle>
@@ -23,7 +23,7 @@
                 <paramdef>GLenum <parameter>mode</parameter></paramdef>
                 <paramdef>const GLint * <parameter>first</parameter></paramdef>
                 <paramdef>const GLsizei * <parameter>count</parameter></paramdef>
-                <paramdef>GLsizei <parameter>primcount</parameter></paramdef>
+                <paramdef>GLsizei <parameter>drawcount</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
@@ -68,7 +68,7 @@
             </listitem>
         </varlistentry>
         <varlistentry>
-            <term><parameter>primcount</parameter></term>
+            <term><parameter>drawcount</parameter></term>
             <listitem>
                 <para>
                     Specifies the size of the first and count
@@ -88,7 +88,7 @@
             call to <function>glMultiDrawArrays</function>.
         </para>
         <para>
-            <function>glMultiDrawArrays</function> behaves identically to <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry> except that <parameter>primcount</parameter>
+            <function>glMultiDrawArrays</function> behaves identically to <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry> except that <parameter>drawcount</parameter>
             separate ranges of elements are specified instead.
         </para>
         <para>
@@ -118,7 +118,7 @@
             <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not an accepted value.
         </para>
         <para>
-            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>primcount</parameter> is negative.
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>drawcount</parameter> is negative.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to an
@@ -134,7 +134,10 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2010-2013
+            Khronos Group.
+            This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

@@ -55,6 +55,7 @@
                 <para>
                     Specifies the symbolic name of a single-valued texture parameter.
                     <parameter>pname</parameter> can be one of the following:
+                    <constant>GL_DEPTH_STENCIL_TEXTURE_MODE</constant>,
                     <constant>GL_TEXTURE_BASE_LEVEL</constant>,
                     <constant>GL_TEXTURE_COMPARE_FUNC</constant>,
                     <constant>GL_TEXTURE_COMPARE_MODE</constant>,
@@ -138,6 +139,7 @@
                 <para>
                     Specifies the symbolic name of a texture parameter.
                     <parameter>pname</parameter> can be one of the following:
+                    <constant>GL_DEPTH_STENCIL_TEXTURE_MODE</constant>,
                     <constant>GL_TEXTURE_BASE_LEVEL</constant>,
                     <constant>GL_TEXTURE_BORDER_COLOR</constant>,
                     <constant>GL_TEXTURE_COMPARE_FUNC</constant>,
@@ -179,6 +181,23 @@
             <constant>GL_TEXTURE_2D_ARRAY</constant>, <constant>GL_TEXTURE_RECTANGLE</constant>, or <constant>GL_TEXTURE_3D</constant>.
             The following symbols are accepted in <parameter>pname</parameter>:
         </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_DEPTH_STENCIL_TEXTURE_MODE</constant></term>
+                <listitem>
+                    <para>
+                        Specifies the mode used to read from depth-stencil format textures. <parameter>params</parameter>
+                        must be one of <constant>GL_DEPTH_COMPONENT</constant> or <constant>GL_STENCIL_COMPONENT</constant>.
+                        If the depth stencil mode is <constant>GL_DEPTH_COMPONENT</constant>, then reads from depth-stencil
+                        format textures will return the depth component of the texel in
+                        <inlineequation><mml:math><mml:msub><mml:mi>R</mml:mi><mml:mi>t</mml:mi></mml:msub></mml:math></inlineequation> and the stencil component
+                        will be discarded. If the depth stencil mode is <constant>GL_STENCIL_COMPONENT</constant> then
+                        the stencil component is returned in <inlineequation><mml:math><mml:msub><mml:mi>R</mml:mi><mml:mi>t</mml:mi></mml:msub></mml:math></inlineequation>
+                        and the depth component is discarded. The initial value is <constant>GL_DEPTH_COMPONENT</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
         <variablelist>
             <varlistentry>
                 <term><constant>GL_TEXTURE_BASE_LEVEL</constant></term>
@@ -1169,8 +1188,8 @@
                         Sets the wrap parameter for texture coordinate 
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
                         to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_CLAMP_TO_BORDER</constant>,
-                        <constant>GL_MIRRORED_REPEAT</constant>, or
-                        <constant>GL_REPEAT</constant>. <constant>GL_CLAMP_TO_EDGE</constant> causes 
+                        <constant>GL_MIRRORED_REPEAT</constant>,
+                        <constant>GL_REPEAT</constant>, or <constant>GL_MIRROR_CLAMP_TO_EDGE</constant>. <constant>GL_CLAMP_TO_EDGE</constant> causes 
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
                         coordinates to be clamped to the
                         range 
@@ -1250,6 +1269,9 @@
                         </mml:math></inlineequation>
                         represents the fractional part of
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>.
+                        <constant>GL_MIRROR_CLAMP_TO_EDGE</constant> causes the the <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+                        coordinate to be repeated as for <constant>GL_MIRRORED_REPEAT</constant> for one reptition of the texture,
+                        at which point the coordinate to be clamped as in <constant>GL_CLAMP_TO_EDGE</constant>.
                         Initially, <constant>GL_TEXTURE_WRAP_S</constant> is set to <constant>GL_REPEAT</constant>.
                     </para>
                 </listitem>
@@ -1265,8 +1287,8 @@
                         Sets the wrap parameter for texture coordinate 
                         <inlineequation><mml:math><mml:mi mathvariant="italic">t</mml:mi></mml:math></inlineequation>
                         to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_CLAMP_TO_BORDER</constant>,
-                        <constant>GL_MIRRORED_REPEAT</constant>, or
-                        <constant>GL_REPEAT</constant>.  See the discussion under <constant>GL_TEXTURE_WRAP_S</constant>.
+                        <constant>GL_MIRRORED_REPEAT</constant>, <constant>GL_REPEAT</constant>, or
+                        <constant>GL_MIRROR_CLAMP_TO_EDGE</constant>. See the discussion under <constant>GL_TEXTURE_WRAP_S</constant>.
                         Initially, <constant>GL_TEXTURE_WRAP_T</constant> is set to <constant>GL_REPEAT</constant>.
                     </para>
                 </listitem>
@@ -1282,8 +1304,8 @@
                         Sets the wrap parameter for texture coordinate 
                         <inlineequation><mml:math><mml:mi mathvariant="italic">r</mml:mi></mml:math></inlineequation>
                         to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_CLAMP_TO_BORDER</constant>,
-                        <constant>GL_MIRRORED_REPEAT</constant>, or
-                        <constant>GL_REPEAT</constant>.  See the discussion under <constant>GL_TEXTURE_WRAP_S</constant>.
+                        <constant>GL_MIRRORED_REPEAT</constant>, <constant>GL_REPEAT</constant>, or
+                        <constant>GL_MIRROR_CLAMP_TO_EDGE</constant>.  See the discussion under <constant>GL_TEXTURE_WRAP_S</constant>.
                         Initially, <constant>GL_TEXTURE_WRAP_R</constant> is set to <constant>GL_REPEAT</constant>.
                     </para>
                 </listitem>
@@ -1310,6 +1332,12 @@
         <para>
             <function>glTexParameter</function> specifies the texture parameters for the active texture unit, specified
             by calling <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            <constant>GL_DEPTH_STENCIL_TEXTURE_MODE</constant> is available only if the GL version is 4.3 or greater.
+        </para>
+        <para>
+            <constant>GL_MIRROR_CLAMP_TO_EDGE</constant> is available only if the GL version is 4.4 or greater.
         </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
@@ -1352,7 +1380,9 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2012-2013
+            Khronos Group. This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

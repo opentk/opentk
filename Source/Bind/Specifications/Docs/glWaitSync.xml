@@ -76,7 +76,7 @@
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
-            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>sync</parameter> is not the name of a sync object.
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>sync</parameter> is not the name of a sync object.
         </para>
         <para>
             <constant>GL_INVALID_VALUE</constant> is generated if <parameter>flags</parameter> is not zero.

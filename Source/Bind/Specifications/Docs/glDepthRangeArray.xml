@@ -22,7 +22,7 @@
                 <funcdef>void <function>glDepthRangeArrayv</function></funcdef>
                 <paramdef>GLuint <parameter>first</parameter></paramdef>
                 <paramdef>GLsizei <parameter>count</parameter></paramdef>
-                <paramdef>const GLclampd *<parameter>v</parameter></paramdef>
+                <paramdef>const GLdouble *<parameter>v</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
@@ -117,6 +117,13 @@
             </mml:math></inlineequation>
             are acceptable.
         </para>
+        <para>
+            The type of the <parameter>v</parameter> parameter was
+            changed from GLclampd to GLdouble. This change is
+            transparent to user code and is described in detail on the
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+            page.
+        </para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
@@ -137,9 +144,11 @@
         <para>
             <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glDepthRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDepthRangeIndexed</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glViewportArray</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glViewport</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glViewport</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
         </para>
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>

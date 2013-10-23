@@ -13,7 +13,7 @@
         <manvolnum>3G</manvolnum>
     </refmeta>
     <refnamediv>
-        <refname>glColorMask</refname>
+        <refname>glColorMask, glColorMaski</refname>
         <refpurpose>enable and disable writing of frame buffer color components</refpurpose>
     </refnamediv>
     <refsynopsisdiv><title>C Specification</title>
@@ -26,9 +26,28 @@
                 <paramdef>GLboolean <parameter>alpha</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glColorMaski</function></funcdef>
+                <paramdef>GLuint <parameter>buf</parameter></paramdef>
+                <paramdef>GLboolean <parameter>red</parameter></paramdef>
+                <paramdef>GLboolean <parameter>green</parameter></paramdef>
+                <paramdef>GLboolean <parameter>blue</parameter></paramdef>
+                <paramdef>GLboolean <parameter>alpha</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
     </refsynopsisdiv>
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
+        <varlistentry>
+            <term><parameter>buf</parameter></term>
+            <listitem>
+                <para>
+                    For <function>glColorMaski</function>, specifies the index of the
+                    draw buffer whose color mask to set.
+                </para>
+            </listitem>
+        </varlistentry>
         <varlistentry>
             <term><parameter>red</parameter></term>
             <term><parameter>green</parameter></term>
@@ -36,10 +55,10 @@
             <term><parameter>alpha</parameter></term>
             <listitem>
                 <para>
-                    Specify whether red, green, blue, and alpha can or cannot be written
+                    Specify whether red, green, blue, and alpha are to be written
                     into the frame buffer.
                     The initial values are all <constant>GL_TRUE</constant>,
-                    indicating that the color components can be written.
+                    indicating that the color components are written.
                 </para>
             </listitem>
         </varlistentry>
@@ -47,8 +66,9 @@
     </refsect1>
     <refsect1 id="description"><title>Description</title>
         <para>
-            <function>glColorMask</function> specifies whether the individual color components in the frame buffer
-            can or cannot be written.
+            <function>glColorMask</function> and <function>glColorMaski</function> specify whether the individual color components in the frame buffer
+            can or cannot be written. <function>glColorMaski</function> sets the mask for a specific draw buffer, whereas
+            <function>glColorMask</function> sets the mask for all draw buffers.
             If <parameter>red</parameter> is <constant>GL_FALSE</constant>,
             for example,
             no change is made to the red component of any pixel in any of the
@@ -76,7 +96,9 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2010-2011 Khronos Group.
+            This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

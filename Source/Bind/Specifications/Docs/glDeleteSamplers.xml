@@ -21,7 +21,7 @@
             <funcprototype>
                 <funcdef>void <function>glDeleteSamplers</function></funcdef>
                 <paramdef>GLsizei <parameter>n</parameter></paramdef>
-                <paramdef>const GLuint * <parameter>ids</parameter></paramdef>
+                <paramdef>const GLuint * <parameter>samplers</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
@@ -36,7 +36,7 @@
             </listitem>
         </varlistentry>
         <varlistentry>
-            <term><parameter>ids</parameter></term>
+            <term><parameter>samplers</parameter></term>
             <listitem>
                 <para>
                     Specifies an array of sampler objects to be deleted.
@@ -47,7 +47,7 @@
     </refsect1>
     <refsect1 id="description"><title>Description</title>
         <para>
-            <function>glDeleteSamplers</function> deletes <parameter>n</parameter> sampler objects named by the elements of the array <parameter>ids</parameter>.
+            <function>glDeleteSamplers</function> deletes <parameter>n</parameter> sampler objects named by the elements of the array <parameter>samplers</parameter>.
             After a sampler object is deleted, its name is again unused. If a sampler object that is currently bound to a sampler unit is deleted, it is as
             though <citerefentry><refentrytitle>glBindSampler</refentrytitle></citerefentry> is called with unit set to the unit the sampler is bound to and
             sampler zero. Unused names in samplers are silently ignored, as is the reserved name zero.

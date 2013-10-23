@@ -107,7 +107,7 @@
             maximum.
         </para>
         <para>
-            If <parameter>target</parameter> is <constant>GL_SAMPLES_PASSED</constant>, <parameter>target</parameter> must be an unused name,
+            If <parameter>target</parameter> is <constant>GL_SAMPLES_PASSED</constant>, <parameter>id</parameter> must be an unused name,
             or the name of an existing occlusion query object.
             When <function>glBeginQueryIndexed</function> is executed, the query object's samples-passed counter is reset to 0.  Subsequent
             rendering will increment the counter for every sample that passes the depth test.  If the value of <constant>GL_SAMPLE_BUFFERS</constant>
@@ -121,7 +121,7 @@
             When <parameter>target</parameter> is <constant>GL_SAMPLES_PASSED</constant>, <parameter>index</parameter> must be zero.
         </para>
         <para>
-            If <parameter>target</parameter> is <constant>GL_ANY_SAMPLES_PASSED</constant>, <parameter>target</parameter> must be an unused name,
+            If <parameter>target</parameter> is <constant>GL_ANY_SAMPLES_PASSED</constant>, <parameter>id</parameter> must be an unused name,
             or the name of an existing boolean occlusion query object.
             When <function>glBeginQueryIndexed</function> is executed, the query object's samples-passed flag is reset to <constant>GL_FALSE</constant>.
             Subsequent rendering causes the flag to be set to <constant>GL_TRUE</constant> if any sample passes the depth test.  When
@@ -131,7 +131,7 @@
             When <parameter>target</parameter> is <constant>GL_ANY_SAMPLES_PASSED</constant>, <parameter>index</parameter> must be zero.
         </para>
         <para>
-            If <parameter>target</parameter> is <constant>GL_PRIMITIVES_GENERATED</constant>, <parameter>target</parameter> must be an unused
+            If <parameter>target</parameter> is <constant>GL_PRIMITIVES_GENERATED</constant>, <parameter>id</parameter> must be an unused
             name, or the name of an existing primitive query object previously bound to the <constant>GL_PRIMITIVES_GENERATED</constant> query binding.
             When <function>glBeginQueryIndexed</function> is executed, the query object's primitives-generated counter is reset to 0.  Subsequent
             rendering will increment the counter once for every vertex that is emitted from the geometry shader to the stream given by <parameter>index</parameter>,
@@ -143,7 +143,7 @@
             less than the value of <constant>GL_MAX_VERTEX_STREAMS</constant>.
         </para>
         <para>
-            If <parameter>target</parameter> is <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, <parameter>target</parameter> must be
+            If <parameter>target</parameter> is <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, <parameter>id</parameter> must be
             an unused name, or the name of an existing primitive query object previously bound to the <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>
             query binding. When <function>glBeginQueryIndexed</function> is executed, the query object's primitives-written counter for the stream specified by
             <parameter>index</parameter> is reset to 0.  Subsequent rendering will increment the counter once for every vertex that is written into the bound
@@ -156,7 +156,7 @@
             less than the value of <constant>GL_MAX_VERTEX_STREAMS</constant>.
         </para>
         <para>
-            If <parameter>target</parameter> is <constant>GL_TIME_ELAPSED</constant>, <parameter>target</parameter> must be
+            If <parameter>target</parameter> is <constant>GL_TIME_ELAPSED</constant>, <parameter>id</parameter> must be
             an unused name, or the name of an existing timer query object previously bound to the <constant>GL_TIME_ELAPSED</constant>
             query binding. When <function>glBeginQueryIndexed</function> is executed, the query object's time counter is reset to 0.  When <function>glEndQueryIndexed</function>
             is executed, the elapsed server time that has passed since the call to <function>glBeginQueryIndexed</function> is written into the query object's

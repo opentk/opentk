@@ -20,7 +20,7 @@
         <funcsynopsis>
             <funcprototype>
                 <funcdef>void <function>glSampleCoverage</function></funcdef>
-                <paramdef>GLclampf <parameter>value</parameter></paramdef>
+                <paramdef>GLfloat <parameter>value</parameter></paramdef>
                 <paramdef>GLboolean <parameter>invert</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
@@ -83,6 +83,15 @@
             information, allowing those operations to be performed on each sample.
         </para>
     </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The type of the <parameter>value</parameter> parameter was
+            changed from GLclampf to GLfloat. This change is transparent
+            to user code and is described in detail on the
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+            page.
+        </para>
+    </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_SAMPLE_COVERAGE_VALUE</constant>
@@ -105,7 +114,8 @@
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
-            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
         </para>
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>

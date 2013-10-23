@@ -9,7 +9,7 @@
                 <holder>Khronos Group</holder>
             </copyright>
         </refmetainfo>
-        <refentrytitle>glScissorArray</refentrytitle>
+        <refentrytitle>glScissorIndexed</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
     <refnamediv>

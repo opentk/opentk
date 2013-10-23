@@ -191,11 +191,6 @@
                 <listitem>
                     <para>
                         Stencil values are read from the stencil buffer.
-                        Each index is converted to fixed point,
-                        shifted left or right depending on the value and sign of <constant>GL_INDEX_SHIFT</constant>,
-                        and added to <constant>GL_INDEX_OFFSET</constant>.
-                        If <constant>GL_MAP_STENCIL</constant> is <constant>GL_TRUE</constant>,
-                        indices are replaced by their mappings in the table <constant>GL_PIXEL_MAP_S_TO_S</constant>.
                     </para>
                 </listitem>
             </varlistentry>
@@ -206,9 +201,7 @@
                         Depth values are read from the depth buffer.
                         Each component is converted to floating point such that the minimum depth
                         value maps to 0 and the maximum value maps to 1.
-                        Each component is then multiplied by <constant>GL_DEPTH_SCALE</constant>,
-                        added to <constant>GL_DEPTH_BIAS</constant>,
-                        and finally clamped to the range 
+                        Each component is clamped to the range
                         <inlineequation><mml:math>
                             <!-- eqn: [0,1]: -->
                             <mml:mfenced open="[" close="]">
@@ -1164,9 +1157,6 @@
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
-        <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_INDEX_MODE</constant>
-        </para>
         <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_PACK_BUFFER_BINDING</constant>
         </para>

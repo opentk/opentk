@@ -165,7 +165,7 @@
         <listitem>
         <para>The total number of components to capture in any transform feedback varying variable
         is  greater  than  the  constant <constant>GL_MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS</constant>
-        and the buffer mode is <constant>SEPARATE_ATTRIBS</constant>.</para>
+        and the buffer mode is <constant>GL_SEPARATE_ATTRIBS</constant>.</para>
         </listitem>
     </itemizedlist>
 

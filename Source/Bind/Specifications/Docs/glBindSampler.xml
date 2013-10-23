@@ -67,7 +67,7 @@
     <refsect1 id="errors"><title>Errors</title>
         <para>
             <constant>GL_INVALID_VALUE</constant> is generated if <parameter>unit</parameter> is greater than or equal to the value of
-            <constant>GL_MAX_COMBIED_TEXTURE_IMAGE_UNITS</constant>.
+            <constant>GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS</constant>.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>sampler</parameter> is not zero or a name previously

@@ -41,7 +41,7 @@
         <term><parameter>count</parameter></term>
         <listitem>
             <para>Returns the number of names actually returned
-            in <parameter>objects</parameter>.</para>
+            in <parameter>shaders</parameter>.</para>
         </listitem>
         </varlistentry>
         <varlistentry>

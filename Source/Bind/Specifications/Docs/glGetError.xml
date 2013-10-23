@@ -116,6 +116,24 @@
                     </para>
                 </listitem>
             </varlistentry>
+            <varlistentry>
+                <term><constant>GL_STACK_UNDERFLOW</constant></term>
+                <listitem>
+                    <para>
+                        An attempt has been made to perform an operation that would
+                        cause an internal stack to underflow.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_STACK_OVERFLOW</constant></term>
+                <listitem>
+                    <para>
+                        An attempt has been made to perform an operation that would
+                        cause an internal stack to overflow.
+                    </para>
+                </listitem>
+            </varlistentry>
         </variablelist>
         <para>
             When an error flag is set,
@@ -131,7 +149,10 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2012
+            Khronos Group.
+            This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

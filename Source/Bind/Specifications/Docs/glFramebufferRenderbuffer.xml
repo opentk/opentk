@@ -19,7 +19,7 @@
     <refsynopsisdiv><title>C Specification</title>
         <funcsynopsis>
             <funcprototype>
-                <funcdef>GLsync <function>glFramebufferRenderbuffer</function></funcdef>
+                <funcdef>void <function>glFramebufferRenderbuffer</function></funcdef>
                 <paramdef>GLenum <parameter>target</parameter></paramdef>
                 <paramdef>GLenum <parameter>attachment</parameter></paramdef>
                 <paramdef>GLenum <parameter>renderbuffertarget</parameter></paramdef>

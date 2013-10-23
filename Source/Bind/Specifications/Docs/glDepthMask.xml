@@ -54,6 +54,14 @@
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_DEPTH_WRITEMASK</constant>
         </para>
     </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            Even if the depth buffer exists and the depth mask is non-zero, the
+            depth buffer is not updated if the depth test is disabled. In order to
+            unconditionally write to the depth buffer, the depth test should be enabled
+            and set to <constant>GL_ALWAYS</constant> (see <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>).
+        </para>
+    </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
             <citerefentry><refentrytitle>glColorMask</refentrytitle></citerefentry>,
@@ -65,7 +73,10 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
+            Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2012
+            Khronos Group.
+            This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

@@ -19,7 +19,7 @@
     <refsynopsisdiv><title>C Specification</title>
         <funcsynopsis>
             <funcprototype>
-                <funcdef>GLuint <function>glGetUniformIndices</function></funcdef>
+                <funcdef>void <function>glGetUniformIndices</function></funcdef>
                 <paramdef>GLuint <parameter>program</parameter></paramdef>
                 <paramdef>GLsizei <parameter>uniformCount</parameter></paramdef>
                 <paramdef>const GLchar **<parameter>uniformNames</parameter></paramdef>

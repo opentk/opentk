@@ -24,7 +24,7 @@
                 <paramdef>GLuint<parameter>index</parameter></paramdef>
                 <paramdef>GLsizei<parameter>bufSize</parameter></paramdef>
                 <paramdef>GLsizei *<parameter>length</parameter></paramdef>
-                <paramdef>GLsizei<parameter>size</parameter></paramdef>
+                <paramdef>GLsizei *<parameter>size</parameter></paramdef>
                 <paramdef>GLenum *<parameter>type</parameter></paramdef>
                 <paramdef>char *<parameter>name</parameter></paramdef>
             </funcprototype>
@@ -99,7 +99,7 @@
             variable selected by <parameter>index</parameter>. An <parameter>index</parameter> of 0 selects
             the first varying variable specified in the <parameter>varyings</parameter> array passed
             to <citerefentry><refentrytitle>glTransformFeedbackVaryings</refentrytitle></citerefentry>, and
-            an <parameter>index</parameter> of <constant>GL_TRANSFORM_FEEDBACK_VARYINGS-1</constant> selects
+            an <parameter>index</parameter> of <constant>GL_TRANSFORM_FEEDBACK_VARYINGS</constant> - 1 selects
             the last such variable.
         </para>
         <para>
@@ -152,7 +152,7 @@
         </para>
     </refsect1>    <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2010 Khronos Group. 
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
             This material may be distributed subject to the terms and conditions set forth in 
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
-<refentry id="glBindVertexArray">
+<refentry id="glBlitFramebuffer">
     <refmeta>
         <refmetainfo>
             <copyright>
@@ -114,11 +114,6 @@
             is undefined.
         </para>
     </refsect1>
-    <refsect1 id="notes"><title>Notes</title>
-        <para>
-            <function>glBindVertexArray</function> is available only if the GL version is 3.0 or greater.
-        </para>
-    </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>mask</parameter> contains any of the <constant>GL_DEPTH_BUFFER_BIT</constant>
@@ -143,7 +138,7 @@
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>mask</parameter> contains <constant>GL_DEPTH_BUFFER_BIT</constant> or
-            <constant>GL_DEPTH_BUFFER_BIT</constant> and the source and destination depth and stencil formats do not match.
+            <constant>GL_STENCIL_BUFFER_BIT</constant> and the source and destination depth and stencil formats do not match.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>filter</parameter> is <constant>GL_LINEAR</constant> and the read buffer

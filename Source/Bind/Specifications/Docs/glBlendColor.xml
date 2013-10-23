@@ -20,10 +20,10 @@
         <funcsynopsis>
             <funcprototype>
                 <funcdef>void <function>glBlendColor</function></funcdef>
-                <paramdef>GLclampf <parameter>red</parameter></paramdef>
-                <paramdef>GLclampf <parameter>green</parameter></paramdef>
-                <paramdef>GLclampf <parameter>blue</parameter></paramdef>
-                <paramdef>GLclampf <parameter>alpha</parameter></paramdef>
+                <paramdef>GLfloat <parameter>red</parameter></paramdef>
+                <paramdef>GLfloat <parameter>green</parameter></paramdef>
+                <paramdef>GLfloat <parameter>blue</parameter></paramdef>
+                <paramdef>GLfloat <parameter>alpha</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
@@ -46,7 +46,7 @@
     <refsect1 id="description"><title>Description</title>
         <para>
             The <constant>GL_BLEND_COLOR</constant> may be used to calculate the source and destination
-            blending factors. The color components are clamped to the range 
+            blending factors. The color components are clamped to the range
             <inlineequation><mml:math>
                 <!-- eqn: [0,1]: -->
                 <mml:mfenced open="[" close="]">
@@ -59,6 +59,17 @@
             Initially the <constant>GL_BLEND_COLOR</constant> is set to (0, 0, 0, 0).
         </para>
     </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The type of the <parameter>red</parameter>,
+            <parameter>green</parameter>, <parameter>blue</parameter>,
+            and <parameter>alpha</parameter> parameters was changed from
+            GLclampf to GLfloat. This change is transparent to user code
+            and is described in detail on the
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+            page.
+        </para>
+    </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
             <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with an argument of <constant>GL_BLEND_COLOR</constant>
@@ -68,7 +79,8 @@
         <para>
             <citerefentry><refentrytitle>glBlendEquation</refentrytitle></citerefentry>,
             <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>,
-            <citerefentry><refentrytitle>glGetString</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glGetString</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
         </para>
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
