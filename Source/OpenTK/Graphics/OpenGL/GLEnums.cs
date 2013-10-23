@@ -21155,7 +21155,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.DrawArraysInstancedBaseInstance, GL.DrawElementsInstancedBaseInstance, GL.DrawElementsInstancedBaseVertexBaseInstance
+    /// Not used directly.
     /// </summary>
     public enum ArbBaseInstance : int
     {
@@ -21641,7 +21641,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.DrawArraysIndirect, GL.DrawElementsIndirect
+    /// Used in GL.DrawElementsIndirect
     /// </summary>
     public enum ArbDrawIndirect : int
     {
@@ -23717,7 +23717,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.MultiDrawArraysIndirect, GL.MultiDrawElementsIndirect
+    /// Used in GL.MultiDrawElementsIndirect
     /// </summary>
     public enum ArbMultiDrawIndirect : int
     {
@@ -26529,7 +26529,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.VertexAttribFormat, GL.VertexAttribIFormat, GL.VertexAttribLFormat, GL.Ext.VertexArrayVertexAttribFormat, GL.Ext.VertexArrayVertexAttribIFormat, GL.Ext.VertexArrayVertexAttribLFormat
+    /// Used in GL.Ext.VertexArrayVertexAttribFormat, GL.Ext.VertexArrayVertexAttribIFormat, GL.Ext.VertexArrayVertexAttribLFormat
     /// </summary>
     public enum ArbVertexAttribBinding : int
     {
@@ -28619,7 +28619,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.DrawElementsBaseVertex, GL.DrawElementsInstancedBaseVertex, GL.DrawRangeElementsBaseVertex, GL.DrawTransformFeedback, GL.DrawTransformFeedbackStream, GL.MultiDrawElementsBaseVertex
+    /// Used in GL.DrawTransformFeedback, GL.DrawTransformFeedbackStream
     /// </summary>
     public enum BeginMode : int
     {
@@ -30154,7 +30154,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.DrawElementsInstanced, GL.DrawElements, GL.DrawElementsBaseVertex, GL.DrawElementsInstanced, GL.DrawElementsInstancedBaseVertex, GL.DrawRangeElements, GL.DrawRangeElementsBaseVertex, GL.MultiDrawElements, GL.MultiDrawElementsBaseVertex, GL.Ext.DrawElementsInstanced, GL.Ext.DrawRangeElements, GL.Ext.MultiDrawElements, GL.Ibm.MultiModeDrawElements
+    /// Used in GL.Arb.DrawElementsInstanced, GL.DrawElements, GL.DrawElementsBaseVertex, GL.DrawElementsInstanced, GL.DrawElementsInstancedBaseInstance, GL.DrawElementsInstancedBaseVertex, GL.DrawElementsInstancedBaseVertexBaseInstance, GL.DrawRangeElements, GL.DrawRangeElementsBaseVertex, GL.MultiDrawElements, GL.MultiDrawElementsBaseVertex, GL.Ext.DrawElementsInstanced, GL.Ext.DrawRangeElements, GL.Ext.MultiDrawElements, GL.Ibm.MultiModeDrawElements
     /// </summary>
     public enum DrawElementsType : int
     {
@@ -30701,6 +30701,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_RASTERIZER_DISCARD = 0x8C89
         /// </summary>
         RasterizerDiscard = ((int)0x8C89)        ,
+        /// <summary>
+        /// Original was GL_PRIMITIVE_RESTART_FIXED_INDEX = 0x8D69
+        /// </summary>
+        PrimitiveRestartFixedIndex = ((int)0x8D69)        ,
         /// <summary>
         /// Original was GL_FRAMEBUFFER_SRGB = 0x8DB9
         /// </summary>
@@ -48109,7 +48113,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Apple.DrawElementArray, GL.Apple.DrawRangeElementArray, GL.Apple.MultiDrawElementArray, GL.Apple.MultiDrawRangeElementArray, GL.Arb.DrawArraysInstanced, GL.Arb.DrawElementsInstanced, GL.Ati.DrawElementArray, GL.Ati.DrawRangeElementArray, GL.Begin, GL.DrawArrays, GL.DrawArraysInstanced, GL.DrawElements, GL.DrawElementsInstanced, GL.DrawRangeElements, GL.MultiDrawArrays, GL.MultiDrawElements, GL.Ext.DrawArrays, GL.Ext.DrawArraysInstanced, GL.Ext.DrawElementsInstanced, GL.Ext.DrawRangeElements, GL.Ext.MultiDrawArrays, GL.Ext.MultiDrawElements, GL.Ibm.MultiModeDrawArrays, GL.Ibm.MultiModeDrawElements, GL.Sun.DrawMeshArrays
+    /// Used in GL.Apple.DrawElementArray, GL.Apple.DrawRangeElementArray, GL.Apple.MultiDrawElementArray, GL.Apple.MultiDrawRangeElementArray, GL.Arb.DrawArraysInstanced, GL.Arb.DrawElementsInstanced, GL.Ati.DrawElementArray, GL.Ati.DrawRangeElementArray, GL.Begin, GL.DrawArrays, GL.DrawArraysIndirect, GL.DrawArraysInstanced, GL.DrawArraysInstancedBaseInstance, GL.DrawElements, GL.DrawElementsBaseVertex, GL.DrawElementsInstanced, GL.DrawElementsInstancedBaseInstance, GL.DrawElementsInstancedBaseVertex, GL.DrawElementsInstancedBaseVertexBaseInstance, GL.DrawRangeElements, GL.DrawRangeElementsBaseVertex, GL.MultiDrawArrays, GL.MultiDrawArraysIndirect, GL.MultiDrawElements, GL.MultiDrawElementsBaseVertex, GL.Ext.DrawArrays, GL.Ext.DrawArraysInstanced, GL.Ext.DrawElementsInstanced, GL.Ext.DrawRangeElements, GL.Ext.MultiDrawArrays, GL.Ext.MultiDrawElements, GL.Ibm.MultiModeDrawArrays, GL.Ibm.MultiModeDrawElements, GL.Sun.DrawMeshArrays
     /// </summary>
     public enum PrimitiveType : int
     {
@@ -48153,6 +48157,26 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_POLYGON = 0x0009
         /// </summary>
         Polygon = ((int)0x0009)        ,
+        /// <summary>
+        /// Original was GL_LINES_ADJACENCY = 0x000A
+        /// </summary>
+        LinesAdjacency = ((int)0x000A)        ,
+        /// <summary>
+        /// Original was GL_LINE_STRIP_ADJACENCY = 0x000B
+        /// </summary>
+        LineStripAdjacency = ((int)0x000B)        ,
+        /// <summary>
+        /// Original was GL_TRIANGLES_ADJACENCY = 0x000C
+        /// </summary>
+        TrianglesAdjacency = ((int)0x000C)        ,
+        /// <summary>
+        /// Original was GL_TRIANGLE_STRIP_ADJACENCY = 0x000D
+        /// </summary>
+        TriangleStripAdjacency = ((int)0x000D)        ,
+        /// <summary>
+        /// Original was GL_PATCHES = 0x000E
+        /// </summary>
+        Patches = ((int)0x000E)        ,
     }
 
     /// <summary>
@@ -60234,7 +60258,18 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.VertexAttribLPointer
+    /// Used in GL.VertexAttribLFormat, GL.VertexAttribLPointer
+    /// </summary>
+    public enum VertexAttribDoubleType : int
+    {
+        /// <summary>
+        /// Original was GL_DOUBLE = 0x140A
+        /// </summary>
+        Double = ((int)0x140A)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
     /// </summary>
     public enum VertexAttribDPointerType : int
     {
@@ -60245,7 +60280,38 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.VertexAttribIPointer
+    /// Used in GL.VertexAttribIFormat, GL.VertexAttribIPointer
+    /// </summary>
+    public enum VertexAttribIntegerType : int
+    {
+        /// <summary>
+        /// Original was GL_BYTE = 0x1400
+        /// </summary>
+        Byte = ((int)0x1400)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_BYTE = 0x1401
+        /// </summary>
+        UnsignedByte = ((int)0x1401)        ,
+        /// <summary>
+        /// Original was GL_SHORT = 0x1402
+        /// </summary>
+        Short = ((int)0x1402)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_SHORT = 0x1403
+        /// </summary>
+        UnsignedShort = ((int)0x1403)        ,
+        /// <summary>
+        /// Original was GL_INT = 0x1404
+        /// </summary>
+        Int = ((int)0x1404)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT = 0x1405
+        /// </summary>
+        UnsignedInt = ((int)0x1405)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
     /// </summary>
     public enum VertexAttribIPointerType : int
     {
@@ -60463,6 +60529,61 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_DOUBLE = 0x140A
         /// </summary>
         Double = ((int)0x140A)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.VertexAttribFormat
+    /// </summary>
+    public enum VertexAttribType : int
+    {
+        /// <summary>
+        /// Original was GL_BYTE = 0x1400
+        /// </summary>
+        Byte = ((int)0x1400)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_BYTE = 0x1401
+        /// </summary>
+        UnsignedByte = ((int)0x1401)        ,
+        /// <summary>
+        /// Original was GL_SHORT = 0x1402
+        /// </summary>
+        Short = ((int)0x1402)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_SHORT = 0x1403
+        /// </summary>
+        UnsignedShort = ((int)0x1403)        ,
+        /// <summary>
+        /// Original was GL_INT = 0x1404
+        /// </summary>
+        Int = ((int)0x1404)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT = 0x1405
+        /// </summary>
+        UnsignedInt = ((int)0x1405)        ,
+        /// <summary>
+        /// Original was GL_FLOAT = 0x1406
+        /// </summary>
+        Float = ((int)0x1406)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE = 0x140A
+        /// </summary>
+        Double = ((int)0x140A)        ,
+        /// <summary>
+        /// Original was GL_HALF_FLOAT = 0x140B
+        /// </summary>
+        HalfFloat = ((int)0x140B)        ,
+        /// <summary>
+        /// Original was GL_FIXED = 0x140C
+        /// </summary>
+        Fixed = ((int)0x140C)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_2_10_10_10_REV = 0x8368
+        /// </summary>
+        UnsignedInt2101010Rev = ((int)0x8368)        ,
+        /// <summary>
+        /// Original was GL_INT_2_10_10_10_REV = 0x8D9F
+        /// </summary>
+        Int2101010Rev = ((int)0x8D9F)        ,
     }
 
     /// <summary>

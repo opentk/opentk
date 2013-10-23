@@ -148,6 +148,14 @@
         <type>BufferPointer</type>
       </param>
     </function>
+    
+    <!-- Version 1.2 -->
+    
+    <function name="DrawArraysIndirect" extension="Core">
+      <param name="mode">
+        <type>PrimitiveType</type>
+      </param>
+    </function>
 
     <!-- Version 2.0-->
 
@@ -409,7 +417,7 @@
 
     <function name="VertexAttribIPointer" extension="Core">
       <param name="type">
-        <type>VertexAttribIPointerType</type>
+        <type>VertexAttribIntegerType</type>
       </param>
     </function>
 
@@ -432,6 +440,12 @@
     </function>
 
     <!-- Version 3.1 -->
+    
+    <function name="DrawArraysInstancedBaseInstance" extension="Core">
+      <param name="mode">
+        <type>PrimitiveType</type>
+      </param>
+    </function>
 
     <function name="TexBuffer" extension="Core">
       <param name="target">
@@ -449,6 +463,34 @@
     </function>
 
     <!-- Version 3.2 -->
+    
+    <function name="DrawElementsBaseVertex" extension="Core">
+      <version>3.2</version>
+      <param name="mode">
+        <type>PrimitiveType</type>
+      </param>
+    </function>
+
+    <function name="DrawElementsInstancedBaseVertex" extension="Core">
+      <version>3.2</version>
+      <param name="mode">
+        <type>PrimitiveType</type>
+      </param>
+    </function>
+    
+    <function name="DrawRangeElementsBaseVertex" extension="Core">
+      <version>3.2</version>
+      <param name="mode">
+        <type>PrimitiveType</type>
+      </param>
+    </function>
+    
+    <function name="MultiDrawElementsBaseVertex" extension="Core">
+      <version>3.2</version>
+      <param name="mode">
+        <type>PrimitiveType</type>
+      </param>
+    </function>
 
     <function name="TexImage2DMultisample" extension="Core">
       <param name="target">
@@ -477,30 +519,6 @@
     <function name="ProvokingVertex" extension="Core">
       <param name="mode">
         <type>ProvokingVertexMode</type>
-      </param>
-    </function>
-
-    <function name="DrawElementsBaseVertex" extension="Core">
-      <param name="mode">
-        <type>BeginMode</type>
-      </param>
-    </function>
-
-    <function name="DrawRangeElementsBaseVertex" extension="Core">
-      <param name="mode">
-        <type>BeginMode</type>
-      </param>
-    </function>
-
-    <function name="DrawElementsInstancedBaseVertex" extension="Core">
-      <param name="mode">
-        <type>BeginMode</type>
-      </param>
-    </function>
-
-    <function name="MultiDrawElementsBaseVertex" extension="Core">
-      <param name="mode">
-        <type>BeginMode</type>
       </param>
     </function>
 
@@ -791,7 +809,7 @@
 
     <function name="VertexAttribLPointer" extension="Core">
       <param name="type">
-        <type>VertexAttribDPointerType</type>
+        <type>VertexAttribDoubleType</type>
       </param>
     </function>
 
@@ -861,6 +879,24 @@
       </param>
       <param name="format">
         <type>SizedInternalFormat</type>
+      </param>
+    </function>
+    
+    <function name="DrawElementsInstancedBaseInstance" extension="Core">
+      <param name="mode">
+        <type>PrimitiveType</type>
+      </param>
+      <param name="type">
+        <type>DrawElementsType</type>
+      </param>
+    </function>
+    
+    <function name="DrawElementsInstancedBaseVertexBaseInstance" extension="Core">
+      <param name="mode">
+        <type>PrimitiveType</type>
+      </param>
+      <param name="type">
+        <type>DrawElementsType</type>
       </param>
     </function>
     
@@ -989,6 +1025,12 @@
       </param>
     </function>
     
+    <function name="MultiDrawArraysIndirect" extension="Core">
+      <param name="mode">
+        <type>PrimitiveType</type>
+      </param>
+    </function>
+    
     <function name="TexBufferRange" extension="Core">
       <param name="target">
         <type>TextureBufferTarget</type>
@@ -1025,6 +1067,24 @@
       </param>
     </function>
     
+    <function name="VertexAttribFormat" extension="Core">
+      <param name="type">
+        <type>VertexAttribType</type>
+      </param>
+    </function>
+    
+    <function name="VertexAttribIFormat" extension="Core">
+      <param name="type">
+        <type>VertexAttribIntegerType</type>
+      </param>
+    </function>
+
+    <function name="VertexAttribLFormat" extension="Core">
+      <param name="type">
+        <type>VertexAttribDoubleType</type>
+      </param>
+    </function>
+        
     <!-- Version 4.4 -->
     
     <function name="ClearTexImage" extension="Core">
@@ -1974,6 +2034,7 @@
       <use enum="VERSION_3_1" token="TEXTURE_RECTANGLE" />
       <use enum="VERSION_3_2" token="TEXTURE_CUBE_MAP_SEAMLESS" />
       <use enum="VERSION_4_0" token="SAMPLE_SHADING" />
+      <use enum="VERSION_4_3" token="PRIMITIVE_RESTART_FIXED_INDEX" />
     </enum>
     <enum name="ErrorCode">
       <use enum="ARB_framebuffer_object" token="INVALID_FRAMEBUFFER_OPERATION" />
@@ -2743,6 +2804,20 @@
       <token name="LOWER_LEFT" value="0x8CA1" />
       <token name="UPPER_LEFT" value="0x8CA2" />
     </enum>
+    <enum name="PrimitiveType">
+      <use enum="VERSION_1_1" token="POINTS" />
+      <use enum="VERSION_1_1" token="LINE_STRIP" />
+      <use enum="VERSION_1_1" token="LINE_LOOP" />
+      <use enum="VERSION_1_1" token="LINES" />
+      <use enum="VERSION_1_1" token="TRIANGLE_STRIP" />
+      <use enum="VERSION_1_1" token="TRIANGLE_FAN" />
+      <use enum="VERSION_1_1" token="TRIANGLES" />
+      <use enum="VERSION_3_2" token="LINES_ADJACENCY" />
+      <use enum="VERSION_3_2" token="TRIANGLES_ADJACENCY" />
+      <use enum="VERSION_3_2" token="LINE_STRIP_ADJACENCY" />
+      <use enum="VERSION_3_2" token="TRIANGLE_STRIP_ADJACENCY" />
+      <use enum="VERSION_4_0" token="PATCHES" />
+    </enum>
     <enum name="ProgramInterface">
       <use enum="VERSION_3_0" token="TRANSFORM_FEEDBACK_BUFFER" />
       <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER" />
@@ -3367,8 +3442,19 @@
     <enum name="TransformFeedbackTarget">
       <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK" />
     </enum>
+    <enum name="VertexAttribDoubleType">
+      <use enum="VERSION_4_1" token="DOUBLE" />
+    </enum>
     <enum name="VertexAttribD_PointerType">
       <use enum="VERSION_4_1" token="DOUBLE" />
+    </enum>
+    <enum name="VertexAttribIntegerType">
+      <use enum="DataType" token="BYTE" />
+      <use enum="DataType" token="UNSIGNED_BYTE" />
+      <use enum="DataType" token="SHORT" />
+      <use enum="DataType" token="UNSIGNED_SHORT" />
+      <use enum="DataType" token="INT" />
+      <use enum="DataType" token="UNSIGNED_INT" />
     </enum>
     <enum name="VertexAttribI_PointerType">
       <use enum="DataType" token="BYTE" />
@@ -3403,16 +3489,30 @@
     <enum name="VertexAttribPointerParameterARB">
       <token name="ARRAY_POINTER" value="0x8645" />
     </enum>
+    <enum name="VertexAttribType">
+      <use enum="VERSION_1_1" token="BYTE" />
+      <use enum="VERSION_1_1" token="UNSIGNED_BYTE" />
+      <use enum="VERSION_1_1" token="SHORT" />
+      <use enum="VERSION_1_1" token="UNSIGNED_SHORT" />
+      <use enum="VERSION_1_1" token="INT" />
+      <use enum="VERSION_1_1" token="UNSIGNED_INT" />
+      <use enum="VERSION_1_1" token="FLOAT" />
+      <use enum="VERSION_1_1" token="DOUBLE" />
+      <use enum="VERSION_3_0" token="HALF_FLOAT" />
+      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+      <use enum="VERSION_4_1" token="FIXED" />
+    </enum>
     <enum name="VertexAttribPointerType">
-      <use enum="DataType" token="BYTE" />
-      <use enum="DataType" token="UNSIGNED_BYTE" />
-      <use enum="DataType" token="SHORT" />
-      <use enum="DataType" token="UNSIGNED_SHORT" />
-      <use enum="DataType" token="INT" />
-      <use enum="DataType" token="UNSIGNED_INT" />
-      <use enum="DataType" token="FLOAT" />
-      <use enum="DataType" token="DOUBLE" />
-      <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
+      <use enum="VERSION_1_1" token="BYTE" />
+      <use enum="VERSION_1_1" token="UNSIGNED_BYTE" />
+      <use enum="VERSION_1_1" token="SHORT" />
+      <use enum="VERSION_1_1" token="UNSIGNED_SHORT" />
+      <use enum="VERSION_1_1" token="INT" />
+      <use enum="VERSION_1_1" token="UNSIGNED_INT" />
+      <use enum="VERSION_1_1" token="FLOAT" />
+      <use enum="VERSION_1_1" token="DOUBLE" />
+      <use enum="VERSION_3_0" token="HALF_FLOAT" />
       <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
       <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
       <use enum="VERSION_4_1" token="FIXED" />

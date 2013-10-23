@@ -1245,7 +1245,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void DrawArraysEXT(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32 first, Int32 count);
             internal static DrawArraysEXT glDrawArraysEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawArraysIndirect(OpenTK.Graphics.OpenGL.ArbDrawIndirect mode, IntPtr indirect);
+            internal delegate void DrawArraysIndirect(OpenTK.Graphics.OpenGL.PrimitiveType mode, IntPtr indirect);
             internal static DrawArraysIndirect glDrawArraysIndirect;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawArraysInstanced(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32 first, Int32 count, Int32 instancecount);
@@ -1254,7 +1254,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void DrawArraysInstancedARB(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32 first, Int32 count, Int32 primcount);
             internal static DrawArraysInstancedARB glDrawArraysInstancedARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawArraysInstancedBaseInstance(OpenTK.Graphics.OpenGL.ArbBaseInstance mode, Int32 first, Int32 count, Int32 instancecount, UInt32 baseinstance);
+            internal delegate void DrawArraysInstancedBaseInstance(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32 first, Int32 count, Int32 instancecount, UInt32 baseinstance);
             internal static DrawArraysInstancedBaseInstance glDrawArraysInstancedBaseInstance;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawArraysInstancedEXT(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32 start, Int32 count, Int32 primcount);
@@ -1281,7 +1281,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void DrawElements(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices);
             internal static DrawElements glDrawElements;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawElementsBaseVertex(OpenTK.Graphics.OpenGL.BeginMode mode, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 basevertex);
+            internal delegate void DrawElementsBaseVertex(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 basevertex);
             internal static DrawElementsBaseVertex glDrawElementsBaseVertex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawElementsIndirect(OpenTK.Graphics.OpenGL.ArbDrawIndirect mode, OpenTK.Graphics.OpenGL.ArbDrawIndirect type, IntPtr indirect);
@@ -1293,13 +1293,13 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void DrawElementsInstancedARB(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 primcount);
             internal static DrawElementsInstancedARB glDrawElementsInstancedARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawElementsInstancedBaseInstance(OpenTK.Graphics.OpenGL.ArbBaseInstance mode, Int32 count, OpenTK.Graphics.OpenGL.ArbBaseInstance type, IntPtr indices, Int32 instancecount, UInt32 baseinstance);
+            internal delegate void DrawElementsInstancedBaseInstance(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 instancecount, UInt32 baseinstance);
             internal static DrawElementsInstancedBaseInstance glDrawElementsInstancedBaseInstance;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawElementsInstancedBaseVertex(OpenTK.Graphics.OpenGL.BeginMode mode, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 instancecount, Int32 basevertex);
+            internal delegate void DrawElementsInstancedBaseVertex(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 instancecount, Int32 basevertex);
             internal static DrawElementsInstancedBaseVertex glDrawElementsInstancedBaseVertex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawElementsInstancedBaseVertexBaseInstance(OpenTK.Graphics.OpenGL.ArbBaseInstance mode, Int32 count, OpenTK.Graphics.OpenGL.ArbBaseInstance type, IntPtr indices, Int32 instancecount, Int32 basevertex, UInt32 baseinstance);
+            internal delegate void DrawElementsInstancedBaseVertexBaseInstance(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 instancecount, Int32 basevertex, UInt32 baseinstance);
             internal static DrawElementsInstancedBaseVertexBaseInstance glDrawElementsInstancedBaseVertexBaseInstance;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawElementsInstancedEXT(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 primcount);
@@ -1320,7 +1320,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void DrawRangeElements(OpenTK.Graphics.OpenGL.PrimitiveType mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices);
             internal static DrawRangeElements glDrawRangeElements;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawRangeElementsBaseVertex(OpenTK.Graphics.OpenGL.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 basevertex);
+            internal delegate void DrawRangeElementsBaseVertex(OpenTK.Graphics.OpenGL.PrimitiveType mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 basevertex);
             internal static DrawRangeElementsBaseVertex glDrawRangeElementsBaseVertex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawRangeElementsEXT(OpenTK.Graphics.OpenGL.PrimitiveType mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices);
@@ -3546,7 +3546,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void MultiDrawArraysEXT(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32* first, Int32* count, Int32 primcount);
             internal unsafe static MultiDrawArraysEXT glMultiDrawArraysEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MultiDrawArraysIndirect(OpenTK.Graphics.OpenGL.ArbMultiDrawIndirect mode, IntPtr indirect, Int32 drawcount, Int32 stride);
+            internal delegate void MultiDrawArraysIndirect(OpenTK.Graphics.OpenGL.PrimitiveType mode, IntPtr indirect, Int32 drawcount, Int32 stride);
             internal static MultiDrawArraysIndirect glMultiDrawArraysIndirect;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void MultiDrawArraysIndirectAMD(OpenTK.Graphics.OpenGL.AmdMultiDrawIndirect mode, IntPtr indirect, Int32 primcount, Int32 stride);
@@ -3558,7 +3558,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void MultiDrawElements(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32* count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 drawcount);
             internal unsafe static MultiDrawElements glMultiDrawElements;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void MultiDrawElementsBaseVertex(OpenTK.Graphics.OpenGL.BeginMode mode, Int32* count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 drawcount, Int32* basevertex);
+            internal unsafe delegate void MultiDrawElementsBaseVertex(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32* count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 drawcount, Int32* basevertex);
             internal unsafe static MultiDrawElementsBaseVertex glMultiDrawElementsBaseVertex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void MultiDrawElementsEXT(OpenTK.Graphics.OpenGL.PrimitiveType mode, Int32* count, OpenTK.Graphics.OpenGL.DrawElementsType type, IntPtr indices, Int32 primcount);
@@ -6996,7 +6996,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void VertexAttribDivisorARB(UInt32 index, UInt32 divisor);
             internal static VertexAttribDivisorARB glVertexAttribDivisorARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void VertexAttribFormat(UInt32 attribindex, Int32 size, OpenTK.Graphics.OpenGL.ArbVertexAttribBinding type, bool normalized, UInt32 relativeoffset);
+            internal delegate void VertexAttribFormat(UInt32 attribindex, Int32 size, OpenTK.Graphics.OpenGL.VertexAttribType type, bool normalized, UInt32 relativeoffset);
             internal static VertexAttribFormat glVertexAttribFormat;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void VertexAttribFormatNV(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.NvVertexBufferUnifiedMemory type, bool normalized, Int32 stride);
@@ -7122,13 +7122,13 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void VertexAttribI4usvEXT(UInt32 index, UInt16* v);
             internal unsafe static VertexAttribI4usvEXT glVertexAttribI4usvEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void VertexAttribIFormat(UInt32 attribindex, Int32 size, OpenTK.Graphics.OpenGL.ArbVertexAttribBinding type, UInt32 relativeoffset);
+            internal delegate void VertexAttribIFormat(UInt32 attribindex, Int32 size, OpenTK.Graphics.OpenGL.VertexAttribIntegerType type, UInt32 relativeoffset);
             internal static VertexAttribIFormat glVertexAttribIFormat;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void VertexAttribIFormatNV(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.NvVertexBufferUnifiedMemory type, Int32 stride);
             internal static VertexAttribIFormatNV glVertexAttribIFormatNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void VertexAttribIPointer(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.VertexAttribIPointerType type, Int32 stride, IntPtr pointer);
+            internal delegate void VertexAttribIPointer(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.VertexAttribIntegerType type, Int32 stride, IntPtr pointer);
             internal static VertexAttribIPointer glVertexAttribIPointer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void VertexAttribIPointerEXT(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.NvVertexProgram4 type, Int32 stride, IntPtr pointer);
@@ -7230,13 +7230,13 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void VertexAttribL4ui64vNV(UInt32 index, UInt64* v);
             internal unsafe static VertexAttribL4ui64vNV glVertexAttribL4ui64vNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void VertexAttribLFormat(UInt32 attribindex, Int32 size, OpenTK.Graphics.OpenGL.ArbVertexAttribBinding type, UInt32 relativeoffset);
+            internal delegate void VertexAttribLFormat(UInt32 attribindex, Int32 size, OpenTK.Graphics.OpenGL.VertexAttribDoubleType type, UInt32 relativeoffset);
             internal static VertexAttribLFormat glVertexAttribLFormat;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void VertexAttribLFormatNV(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.NvVertexAttribInteger64bit type, Int32 stride);
             internal static VertexAttribLFormatNV glVertexAttribLFormatNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void VertexAttribLPointer(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.VertexAttribDPointerType type, Int32 stride, IntPtr pointer);
+            internal delegate void VertexAttribLPointer(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.VertexAttribDoubleType type, Int32 stride, IntPtr pointer);
             internal static VertexAttribLPointer glVertexAttribLPointer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void VertexAttribLPointerEXT(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL.ExtVertexAttrib64bit type, Int32 stride, IntPtr pointer);
