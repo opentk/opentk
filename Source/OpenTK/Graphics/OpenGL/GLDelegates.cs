@@ -912,7 +912,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void CopyConvolutionFilter2DEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height);
             internal static CopyConvolutionFilter2DEXT glCopyConvolutionFilter2DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CopyImageSubData(UInt32 srcName, OpenTK.Graphics.OpenGL.ArbCopyImage srcTarget, Int32 srcLevel, Int32 srcX, Int32 srcY, Int32 srcZ, UInt32 dstName, OpenTK.Graphics.OpenGL.ArbCopyImage dstTarget, Int32 dstLevel, Int32 dstX, Int32 dstY, Int32 dstZ, Int32 srcWidth, Int32 srcHeight, Int32 srcDepth);
+            internal delegate void CopyImageSubData(UInt32 srcName, OpenTK.Graphics.OpenGL.ImageTarget srcTarget, Int32 srcLevel, Int32 srcX, Int32 srcY, Int32 srcZ, UInt32 dstName, OpenTK.Graphics.OpenGL.ImageTarget dstTarget, Int32 dstLevel, Int32 dstX, Int32 dstY, Int32 dstZ, Int32 srcWidth, Int32 srcHeight, Int32 srcDepth);
             internal static CopyImageSubData glCopyImageSubData;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void CopyImageSubDataNV(UInt32 srcName, OpenTK.Graphics.OpenGL.NvCopyImage srcTarget, Int32 srcLevel, Int32 srcX, Int32 srcY, Int32 srcZ, UInt32 dstName, OpenTK.Graphics.OpenGL.NvCopyImage dstTarget, Int32 dstLevel, Int32 dstX, Int32 dstY, Int32 dstZ, Int32 width, Int32 height, Int32 depth);

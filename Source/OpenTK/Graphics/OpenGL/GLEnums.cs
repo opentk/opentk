@@ -741,10 +741,6 @@ namespace OpenTK.Graphics.OpenGL
     public enum All : int
     {
         /// <summary>
-        /// Original was GL_DEFAULT = 0
-        /// </summary>
-        Default = ((int)0)        ,
-        /// <summary>
         /// Original was GL_FALSE = 0
         /// </summary>
         False = ((int)0)        ,
@@ -21421,7 +21417,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.CopyImageSubData
+    /// Not used directly.
     /// </summary>
     public enum ArbCopyImage : int
     {
@@ -29443,6 +29439,10 @@ namespace OpenTK.Graphics.OpenGL
     [Flags]
     public enum ClearBufferMask : int
     {
+        /// <summary>
+        /// Original was GL_NONE = 0
+        /// </summary>
+        None = ((int)0)        ,
         /// <summary>
         /// Original was GL_DEPTH_BUFFER_BIT = 0x00000100
         /// </summary>
@@ -39764,6 +39764,61 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
+    /// Used in GL.CopyImageSubData
+    /// </summary>
+    public enum ImageTarget : int
+    {
+        /// <summary>
+        /// Original was GL_TEXTURE_1D = 0x0DE0
+        /// </summary>
+        Texture1D = ((int)0x0DE0)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_2D = 0x0DE1
+        /// </summary>
+        Texture2D = ((int)0x0DE1)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_3D = 0x806F
+        /// </summary>
+        Texture3D = ((int)0x806F)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_RECTANGLE = 0x84F5
+        /// </summary>
+        TextureRectangle = ((int)0x84F5)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP = 0x8513
+        /// </summary>
+        TextureCubeMap = ((int)0x8513)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_1D_ARRAY = 0x8C18
+        /// </summary>
+        Texture1DArray = ((int)0x8C18)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_ARRAY = 0x8C1A
+        /// </summary>
+        Texture2DArray = ((int)0x8C1A)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BUFFER = 0x8C2A
+        /// </summary>
+        TextureBuffer = ((int)0x8C2A)        ,
+        /// <summary>
+        /// Original was GL_RENDERBUFFER = 0x8D41
+        /// </summary>
+        Renderbuffer = ((int)0x8D41)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_ARRAY = 0x9009
+        /// </summary>
+        TextureCubeMapArray = ((int)0x9009)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_MULTISAMPLE = 0x9100
+        /// </summary>
+        Texture2DMultisample = ((int)0x9100)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
+        /// </summary>
+        Texture2DMultisampleArray = ((int)0x9102)        ,
+    }
+
+    /// <summary>
     /// Not used directly.
     /// </summary>
     public enum ImgMultisampledRenderToTexture : int
@@ -48941,6 +48996,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         Right = ((int)0x0407)        ,
         /// <summary>
+        /// Original was GL_FRONT_AND_BACK = 0x0408
+        /// </summary>
+        FrontAndBack = ((int)0x0408)        ,
+        /// <summary>
         /// Original was GL_AUX0 = 0x0409
         /// </summary>
         Aux0 = ((int)0x0409)        ,
@@ -51759,6 +51818,57 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_INT_2_10_10_10_REV = 0x8D9F
         /// </summary>
         Int2101010Rev = ((int)0x8D9F)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum TexImageTarget : int
+    {
+        /// <summary>
+        /// Original was GL_TEXTURE_1D = 0x0DE0
+        /// </summary>
+        Texture1D = ((int)0x0DE0)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_2D = 0x0DE1
+        /// </summary>
+        Texture2D = ((int)0x0DE1)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_3D = 0x806F
+        /// </summary>
+        Texture3D = ((int)0x806F)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_RECTANGLE = 0x84F5
+        /// </summary>
+        TextureRectangle = ((int)0x84F5)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP = 0x8513
+        /// </summary>
+        TextureCubeMap = ((int)0x8513)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_1D_ARRAY = 0x8C18
+        /// </summary>
+        Texture1DArray = ((int)0x8C18)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_ARRAY = 0x8C1A
+        /// </summary>
+        Texture2DArray = ((int)0x8C1A)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_BUFFER = 0x8C2A
+        /// </summary>
+        TextureBuffer = ((int)0x8C2A)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_ARRAY = 0x9009
+        /// </summary>
+        TextureCubeMapArray = ((int)0x9009)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_MULTISAMPLE = 0x9100
+        /// </summary>
+        Texture2DMultisample = ((int)0x9100)        ,
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
+        /// </summary>
+        Texture2DMultisampleArray = ((int)0x9102)        ,
     }
 
     /// <summary>
@@ -60725,9 +60835,9 @@ namespace OpenTK.Graphics.OpenGL
     public enum WaitSyncFlags : int
     {
         /// <summary>
-        /// Original was GL_DEFAULT = 0
+        /// Original was GL_NONE = 0
         /// </summary>
-        Default = ((int)0)        ,
+        None = ((int)0)        ,
         /// <summary>
         /// Original was GL_SYNC_FLUSH_COMMANDS_BIT = 0x00000001
         /// </summary>

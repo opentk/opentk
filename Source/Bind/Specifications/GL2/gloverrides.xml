@@ -984,6 +984,15 @@
       </param>
     </function>
     
+    <function name="CopyImageSubData" extension="Core">
+      <param name="srcTarget">
+        <type>ImageTarget</type>
+      </param>
+      <param name="dstTarget">
+        <type>ImageTarget</type>
+      </param>
+    </function>
+    
     <function name="FramebufferParameter" extension="Core">
       <param name="target">
         <type>FramebufferTarget</type>
@@ -1129,7 +1138,7 @@
         <type>PixelFormat</type>
       </param>
       <param name="type">
-        <type>TextureTarget3d</type>
+        <type>TexImageTarget</type>
       </param>
     </function>
     
@@ -1138,7 +1147,7 @@
         <type>PixelFormat</type>
       </param>
       <param name="type">
-        <type>TextureTarget3d</type>
+        <type>TexImageTarget</type>
       </param>
     </function>
 
@@ -1970,6 +1979,9 @@
     <enum name="ClearBufferCombined">
       <use enum="VERSION_3_0" token="DEPTH_STENCIL" />
     </enum>
+    <enum name="ClearBufferMask">
+      <use enum="VERSION_1_1" token="NONE" />
+    </enum>
     <enum name="ColorPointerType">
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
       <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
@@ -2588,6 +2600,20 @@
       <token name="HISTOGRAM" value="0x8024" />
       <token name="PROXY_HISTOGRAM" value="0x8025" />
     </enum>
+    <enum name="ImageTarget">
+      <use name="VERSION_1_1" token="TEXTURE_1D" />
+      <use name="VERSION_1_1" token="TEXTURE_2D" />
+      <use name="VERSION_1_2" token="TEXTURE_3D" />
+      <use name="VERSION_3_0" token="TEXTURE_1D_ARRAY" />
+      <use name="VERSION_3_0" token="TEXTURE_2D_ARRAY" />
+      <use name="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE" />
+      <use name="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE_ARRAY" />
+      <use name="VERSION_3_1" token="TEXTURE_BUFFER" />
+      <use name="VERSION_3_1" token="TEXTURE_RECTANGLE" />
+      <use name="VERSION_1_3" token="TEXTURE_CUBE_MAP" />
+      <use name="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY" />
+      <use name="VERSION_3_0" token="RENDERBUFFER" />
+    </enum>
     <enum name="IndexedEnableCap">
       <use enum="GetPName" token="BLEND" />
       <use enum="VERSION_4_1" token="SCISSOR_TEST" />
@@ -3036,6 +3062,7 @@
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT14" />
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT15" />
       <use enum="VERSION_1_1" token="NONE" />
+      <use enum="VERSION_1_1" token="FRONT_AND_BACK" />
     </enum>
     <enum name="RenderbufferParameterName">
       <use enum="ARB_framebuffer_object" token="RENDERBUFFER_SAMPLES" />
@@ -3243,7 +3270,7 @@
       <use enum="VERSION_4_1" token="SYNC_GPU_COMMANDS_COMPLETE" />
     </enum>
     <enum name="WaitSyncFlags">
-      <token name="DEFAULT" value="0" />
+      <use enum="VERSION_1_1" token="NONE" />
       <use enum="VERSION_4_1" token="SYNC_FLUSH_COMMANDS_BIT" />
     </enum>
     <enum name="WaitSyncStatus">
@@ -3257,6 +3284,19 @@
       <use token="SYNC_STATUS" />
       <use token="SYNC_CONDITION" />
       <use token="SYNC_FLAGS" />
+    </enum>
+    <enum name="TexImageTarget">
+      <use name="VERSION_1_1" token="TEXTURE_1D" />
+      <use name="VERSION_1_1" token="TEXTURE_2D" />
+      <use name="VERSION_1_2" token="TEXTURE_3D" />
+      <use name="VERSION_3_0" token="TEXTURE_1D_ARRAY" />
+      <use name="VERSION_3_0" token="TEXTURE_2D_ARRAY" />
+      <use name="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE" />
+      <use name="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE_ARRAY" />
+      <use name="VERSION_3_1" token="TEXTURE_BUFFER" />
+      <use name="VERSION_3_1" token="TEXTURE_RECTANGLE" />
+      <use name="VERSION_1_3" token="TEXTURE_CUBE_MAP" />
+      <use name="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY" />
     </enum>
     <enum name="TextureAccess">
       <use enum="VERSION_1_5" token="READ_ONLY" />
