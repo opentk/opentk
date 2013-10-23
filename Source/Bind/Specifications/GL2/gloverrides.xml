@@ -1495,10 +1495,17 @@
 
   <add>
     <enum name="ActiveAttribType">
+      <use enum="VERSION_1_1" token="NONE" />
       <use enum="DataType" token="FLOAT" />
       <token name="FLOAT_MAT2" value="0x8B5A" />
       <token name="FLOAT_MAT3" value="0x8B5B" />
       <token name="FLOAT_MAT4" value="0x8B5C" />
+      <use enum="VERSION_2_1" token="FLOAT_MAT2x3" />
+      <use enum="VERSION_2_1" token="FLOAT_MAT2x4" />
+      <use enum="VERSION_2_1" token="FLOAT_MAT3x2" />
+      <use enum="VERSION_2_1" token="FLOAT_MAT3x4" />
+      <use enum="VERSION_2_1" token="FLOAT_MAT4x2" />
+      <use enum="VERSION_2_1" token="FLOAT_MAT4x3" />
       <token name="FLOAT_VEC2" value="0x8B50" />
       <token name="FLOAT_VEC3" value="0x8B51" />
       <token name="FLOAT_VEC4" value="0x8B52" />
