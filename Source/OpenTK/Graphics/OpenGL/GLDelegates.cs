@@ -1329,19 +1329,19 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void DrawTextureNV(UInt32 texture, UInt32 sampler, Single x0, Single y0, Single x1, Single y1, Single z, Single s0, Single t0, Single s1, Single t1);
             internal static DrawTextureNV glDrawTextureNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawTransformFeedback(OpenTK.Graphics.OpenGL.BeginMode mode, UInt32 id);
+            internal delegate void DrawTransformFeedback(OpenTK.Graphics.OpenGL.PrimitiveType mode, UInt32 id);
             internal static DrawTransformFeedback glDrawTransformFeedback;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawTransformFeedbackInstanced(OpenTK.Graphics.OpenGL.ArbTransformFeedbackInstanced mode, UInt32 id, Int32 instancecount);
+            internal delegate void DrawTransformFeedbackInstanced(OpenTK.Graphics.OpenGL.PrimitiveType mode, UInt32 id, Int32 instancecount);
             internal static DrawTransformFeedbackInstanced glDrawTransformFeedbackInstanced;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawTransformFeedbackNV(OpenTK.Graphics.OpenGL.NvTransformFeedback2 mode, UInt32 id);
             internal static DrawTransformFeedbackNV glDrawTransformFeedbackNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawTransformFeedbackStream(OpenTK.Graphics.OpenGL.BeginMode mode, UInt32 id, UInt32 stream);
+            internal delegate void DrawTransformFeedbackStream(OpenTK.Graphics.OpenGL.PrimitiveType mode, UInt32 id, UInt32 stream);
             internal static DrawTransformFeedbackStream glDrawTransformFeedbackStream;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawTransformFeedbackStreamInstanced(OpenTK.Graphics.OpenGL.ArbTransformFeedbackInstanced mode, UInt32 id, UInt32 stream, Int32 instancecount);
+            internal delegate void DrawTransformFeedbackStreamInstanced(OpenTK.Graphics.OpenGL.PrimitiveType mode, UInt32 id, UInt32 stream, Int32 instancecount);
             internal static DrawTransformFeedbackStreamInstanced glDrawTransformFeedbackStreamInstanced;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void EdgeFlag(bool flag);

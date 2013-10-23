@@ -26307,7 +26307,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.DrawTransformFeedbackInstanced, GL.DrawTransformFeedbackStreamInstanced
+    /// Not used directly.
     /// </summary>
     public enum ArbTransformFeedbackInstanced : int
     {
@@ -28647,7 +28647,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.DrawTransformFeedback, GL.DrawTransformFeedbackStream
+    /// Not used directly.
     /// </summary>
     public enum BeginMode : int
     {
@@ -30386,29 +30386,61 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         PolygonOffsetLine = ((int)0x2A02)        ,
         /// <summary>
+        /// Original was GL_CLIP_DISTANCE0 = 0x3000
+        /// </summary>
+        ClipDistance0 = ((int)0x3000)        ,
+        /// <summary>
         /// Original was GL_CLIP_PLANE0 = 0x3000
         /// </summary>
         ClipPlane0 = ((int)0x3000)        ,
+        /// <summary>
+        /// Original was GL_CLIP_DISTANCE1 = 0x3001
+        /// </summary>
+        ClipDistance1 = ((int)0x3001)        ,
         /// <summary>
         /// Original was GL_CLIP_PLANE1 = 0x3001
         /// </summary>
         ClipPlane1 = ((int)0x3001)        ,
         /// <summary>
+        /// Original was GL_CLIP_DISTANCE2 = 0x3002
+        /// </summary>
+        ClipDistance2 = ((int)0x3002)        ,
+        /// <summary>
         /// Original was GL_CLIP_PLANE2 = 0x3002
         /// </summary>
         ClipPlane2 = ((int)0x3002)        ,
+        /// <summary>
+        /// Original was GL_CLIP_DISTANCE3 = 0x3003
+        /// </summary>
+        ClipDistance3 = ((int)0x3003)        ,
         /// <summary>
         /// Original was GL_CLIP_PLANE3 = 0x3003
         /// </summary>
         ClipPlane3 = ((int)0x3003)        ,
         /// <summary>
+        /// Original was GL_CLIP_DISTANCE4 = 0x3004
+        /// </summary>
+        ClipDistance4 = ((int)0x3004)        ,
+        /// <summary>
         /// Original was GL_CLIP_PLANE4 = 0x3004
         /// </summary>
         ClipPlane4 = ((int)0x3004)        ,
         /// <summary>
+        /// Original was GL_CLIP_DISTANCE5 = 0x3005
+        /// </summary>
+        ClipDistance5 = ((int)0x3005)        ,
+        /// <summary>
         /// Original was GL_CLIP_PLANE5 = 0x3005
         /// </summary>
         ClipPlane5 = ((int)0x3005)        ,
+        /// <summary>
+        /// Original was GL_CLIP_DISTANCE6 = 0x3006
+        /// </summary>
+        ClipDistance6 = ((int)0x3006)        ,
+        /// <summary>
+        /// Original was GL_CLIP_DISTANCE7 = 0x3007
+        /// </summary>
+        ClipDistance7 = ((int)0x3007)        ,
         /// <summary>
         /// Original was GL_LIGHT0 = 0x4000
         /// </summary>
@@ -48141,7 +48173,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Apple.DrawElementArray, GL.Apple.DrawRangeElementArray, GL.Apple.MultiDrawElementArray, GL.Apple.MultiDrawRangeElementArray, GL.Arb.DrawArraysInstanced, GL.Arb.DrawElementsInstanced, GL.Ati.DrawElementArray, GL.Ati.DrawRangeElementArray, GL.Begin, GL.DrawArrays, GL.DrawArraysIndirect, GL.DrawArraysInstanced, GL.DrawArraysInstancedBaseInstance, GL.DrawElements, GL.DrawElementsBaseVertex, GL.DrawElementsInstanced, GL.DrawElementsInstancedBaseInstance, GL.DrawElementsInstancedBaseVertex, GL.DrawElementsInstancedBaseVertexBaseInstance, GL.DrawRangeElements, GL.DrawRangeElementsBaseVertex, GL.MultiDrawArrays, GL.MultiDrawArraysIndirect, GL.MultiDrawElements, GL.MultiDrawElementsBaseVertex, GL.Ext.DrawArrays, GL.Ext.DrawArraysInstanced, GL.Ext.DrawElementsInstanced, GL.Ext.DrawRangeElements, GL.Ext.MultiDrawArrays, GL.Ext.MultiDrawElements, GL.Ibm.MultiModeDrawArrays, GL.Ibm.MultiModeDrawElements, GL.Sun.DrawMeshArrays
+    /// Used in GL.Apple.DrawElementArray, GL.Apple.DrawRangeElementArray, GL.Apple.MultiDrawElementArray, GL.Apple.MultiDrawRangeElementArray, GL.Arb.DrawArraysInstanced, GL.Arb.DrawElementsInstanced, GL.Ati.DrawElementArray, GL.Ati.DrawRangeElementArray, GL.Begin, GL.DrawArrays, GL.DrawArraysIndirect, GL.DrawArraysInstanced, GL.DrawArraysInstancedBaseInstance, GL.DrawElements, GL.DrawElementsBaseVertex, GL.DrawElementsInstanced, GL.DrawElementsInstancedBaseInstance, GL.DrawElementsInstancedBaseVertex, GL.DrawElementsInstancedBaseVertexBaseInstance, GL.DrawRangeElements, GL.DrawRangeElementsBaseVertex, GL.DrawTransformFeedback, GL.DrawTransformFeedbackInstanced, GL.DrawTransformFeedbackStream, GL.DrawTransformFeedbackStreamInstanced, GL.MultiDrawArrays, GL.MultiDrawArraysIndirect, GL.MultiDrawElements, GL.MultiDrawElementsBaseVertex, GL.Ext.DrawArrays, GL.Ext.DrawArraysInstanced, GL.Ext.DrawElementsInstanced, GL.Ext.DrawRangeElements, GL.Ext.MultiDrawArrays, GL.Ext.MultiDrawElements, GL.Ibm.MultiModeDrawArrays, GL.Ibm.MultiModeDrawElements, GL.Sun.DrawMeshArrays
     /// </summary>
     public enum PrimitiveType : int
     {

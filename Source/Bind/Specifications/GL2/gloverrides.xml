@@ -716,14 +716,16 @@
     </function>
 
     <function name="DrawTransformFeedback" extension="Core">
+      <version>4.0</version>
       <param name="mode">
-        <type>BeginMode</type>
+        <type>PrimitiveType</type>
       </param>
     </function>
 
     <function name="DrawTransformFeedbackStream" extension="Core">
+      <version>4.0</version>
       <param name="mode">
-        <type>BeginMode</type>
+        <type>PrimitiveType</type>
       </param>
     </function>
 
@@ -897,6 +899,18 @@
       </param>
       <param name="type">
         <type>DrawElementsType</type>
+      </param>
+    </function>
+    
+    <function name="DrawTransformFeedbackInstanced" extension="Core">
+      <param name="mode">
+        <type>PrimitiveType</type>
+      </param>
+    </function>
+    
+    <function name="DrawTransformFeedbackStreamInstanced" extension="Core">
+      <param name="mode">
+        <type>PrimitiveType</type>
       </param>
     </function>
     
@@ -2038,6 +2052,14 @@
       <token name="TEXTURE_CUBE_MAP_SEAMLESS" value="0x884F" />
       <token name="VERTEX_PROGRAM_POINT_SIZE" value="0x8642" />
       <token name="VERTEX_PROGRAM_TWO_SIDE" value="0x8643" />
+      <use enum="VERSION_3_0" token="CLIP_DISTANCE0" />
+      <use enum="VERSION_3_0" token="CLIP_DISTANCE1" />
+      <use enum="VERSION_3_0" token="CLIP_DISTANCE2" />
+      <use enum="VERSION_3_0" token="CLIP_DISTANCE3" />
+      <use enum="VERSION_3_0" token="CLIP_DISTANCE4" />
+      <use enum="VERSION_3_0" token="CLIP_DISTANCE5" />
+      <use enum="VERSION_3_0" token="CLIP_DISTANCE6" />
+      <use enum="VERSION_3_0" token="CLIP_DISTANCE7" />
       <use enum="VERSION_3_1" token="TEXTURE_RECTANGLE" />
       <use enum="VERSION_3_2" token="TEXTURE_CUBE_MAP_SEAMLESS" />
       <use enum="VERSION_4_0" token="SAMPLE_SHADING" />

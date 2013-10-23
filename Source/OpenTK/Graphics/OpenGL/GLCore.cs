@@ -1331,19 +1331,19 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void DrawTextureNV(UInt32 texture, UInt32 sampler, Single x0, Single y0, Single x1, Single y1, Single z, Single s0, Single t0, Single s1, Single t1);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawTransformFeedback", ExactSpelling = true)]
-            internal extern static void DrawTransformFeedback(OpenTK.Graphics.OpenGL.BeginMode mode, UInt32 id);
+            internal extern static void DrawTransformFeedback(OpenTK.Graphics.OpenGL.PrimitiveType mode, UInt32 id);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawTransformFeedbackInstanced", ExactSpelling = true)]
-            internal extern static void DrawTransformFeedbackInstanced(OpenTK.Graphics.OpenGL.ArbTransformFeedbackInstanced mode, UInt32 id, Int32 instancecount);
+            internal extern static void DrawTransformFeedbackInstanced(OpenTK.Graphics.OpenGL.PrimitiveType mode, UInt32 id, Int32 instancecount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawTransformFeedbackNV", ExactSpelling = true)]
             internal extern static void DrawTransformFeedbackNV(OpenTK.Graphics.OpenGL.NvTransformFeedback2 mode, UInt32 id);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawTransformFeedbackStream", ExactSpelling = true)]
-            internal extern static void DrawTransformFeedbackStream(OpenTK.Graphics.OpenGL.BeginMode mode, UInt32 id, UInt32 stream);
+            internal extern static void DrawTransformFeedbackStream(OpenTK.Graphics.OpenGL.PrimitiveType mode, UInt32 id, UInt32 stream);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawTransformFeedbackStreamInstanced", ExactSpelling = true)]
-            internal extern static void DrawTransformFeedbackStreamInstanced(OpenTK.Graphics.OpenGL.ArbTransformFeedbackInstanced mode, UInt32 id, UInt32 stream, Int32 instancecount);
+            internal extern static void DrawTransformFeedbackStreamInstanced(OpenTK.Graphics.OpenGL.PrimitiveType mode, UInt32 id, UInt32 stream, Int32 instancecount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEdgeFlag", ExactSpelling = true)]
             internal extern static void EdgeFlag(bool flag);
