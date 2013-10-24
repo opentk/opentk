@@ -164,7 +164,9 @@ namespace CHeaderToXML
                 var api = Lookup(categories, cmd_name, "api");
                 var deprecated = Lookup(categories, cmd_name, "deprecated");
 
-                var returns = new XElement("returns", FunctionParameterType(command.Element("proto")));
+                var returns = new XElement(
+                    "returns", 
+                    new XAttribute("type", FunctionParameterType(command.Element("proto"))));
 
                 foreach (var parameter in command.Elements("param"))
                 {
