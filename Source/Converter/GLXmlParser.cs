@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -92,7 +93,12 @@ namespace CHeaderToXML
             foreach (var c in features.Concat(extensions))
             {
                 var category = TrimName(c.Attribute("name").Value);
-                var api = c.Attribute("api") != null ? c.Attribute("api").Value : null;
+                var extension = c.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core";
+
+                var api =
+                    c.Attribute("api") != null ? c.Attribute("api").Value :
+                    c.Attribute("supported") != null ? c.Attribute("supported").Value :
+                    null;
                 var version = c.Attribute("number") != null ? c.Attribute("number").Value : null;
 
                 foreach (var command in c.Elements("require").Elements("command"))
@@ -104,16 +110,36 @@ namespace CHeaderToXML
                     var cmd_element = categories[cmd_name];
 
                     var cmd_category = cmd_element.Attribute("category") ?? new XAttribute("category", "");
+                    var cmd_extension = cmd_element.Attribute("extension") ?? new XAttribute("extension", "");
                     var cmd_api = cmd_element.Attribute("api") ?? new XAttribute("api", "");
                     var cmd_version = cmd_element.Attribute("version") ?? new XAttribute("version", "");
 
                     cmd_category.Value = Join(cmd_category.Value, category);
+                    cmd_extension.Value = Join(cmd_extension.Value, extension);
                     cmd_api.Value = Join(cmd_api.Value, api);
                     cmd_version.Value = Join(cmd_version.Value, version);
 
                     cmd_element.SetAttributeValue(cmd_category.Name, cmd_category.Value);
+                    cmd_element.SetAttributeValue(cmd_extension.Name, cmd_extension.Value);
                     cmd_element.SetAttributeValue(cmd_api.Name, cmd_api.Value);
                     cmd_element.SetAttributeValue(cmd_version.Name, cmd_version.Value);
+                }
+            }
+
+            // Lookup which functions are deprecated and mark them so.
+            foreach (var c in features)
+            {
+                var version = c.Attribute("number").Value;
+
+                foreach (var r in c.Elements("remove").Elements("command"))
+                {
+                    var cmd_name = TrimName(r.Attribute("name").Value);
+                    var cmd_element = categories[cmd_name];
+                    var cmd_deprecated = cmd_element.Attribute("deprecated") ?? new XAttribute("deprecated", "");
+
+                    cmd_deprecated.Value = Join(cmd_deprecated.Value, version);
+
+                    cmd_element.SetAttributeValue(cmd_deprecated.Name, cmd_deprecated.Value);
                 }
             }
   
@@ -126,14 +152,19 @@ namespace CHeaderToXML
                 var cmd_name = FunctionName(command);
                 var name = new XAttribute("name", cmd_name);
 
-                var extension = new XAttribute("extension", "");
+                if (!categories.ContainsKey(cmd_name))
+                {
+                    Trace.WriteLine(String.Format("Command '{0}' is not part of any feature or extension. Ignoring.", cmd_name));
+                    continue;
+                }
+                
+                var category = Lookup(categories, cmd_name, "category");
+                var extension = Lookup(categories, cmd_name, "extension");
+                var version = Lookup(categories, cmd_name, "version");
+                var api = Lookup(categories, cmd_name, "api");
+                var deprecated = Lookup(categories, cmd_name, "deprecated");
+
                 var returns = new XElement("returns", FunctionParameterType(command.Element("proto")));
-
-                var category = categories.ContainsKey(cmd_name) ? new XAttribute("category", categories[cmd_name].Attribute("category").Value) : null;
-                var version = categories.ContainsKey(cmd_name) ? new XAttribute("version", categories[cmd_name].Attribute("version").Value) : null;
-                var api = categories.ContainsKey(cmd_name) ? new XAttribute("api", categories[cmd_name].Attribute("api").Value) : null;
-
-                var deprecated = new XAttribute("deprecated", "");
 
                 foreach (var parameter in command.Elements("param"))
                 {
@@ -215,6 +246,15 @@ namespace CHeaderToXML
                 return right;
             else
                 return String.Empty;
+        }
+
+        static XAttribute Lookup(IDictionary<string, XElement> categories, string cmd_name, string attribute)
+        {
+            if (categories.ContainsKey(cmd_name))
+            {
+                return categories[cmd_name].Attribute(attribute);
+            }
+            return null;
         }
     }
 }
