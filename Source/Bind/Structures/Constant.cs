@@ -205,7 +205,9 @@ namespace Bind.Structures
                 throw new ArgumentNullException("enums");
 
             if (++CurrentReferenceDepth >= MaxReferenceDepth)
-                throw new InvalidOperationException("Enum specification contains cycle");
+                throw new InvalidOperationException(String.Format(
+                    "Enum specification contains cycle: {0}",
+                    c.ToString()));
 
             if (!String.IsNullOrEmpty(c.Reference))
             {
