@@ -28,49 +28,107 @@ namespace CHeaderToXML
 
         IEnumerable<XElement> ParseEnums(XDocument input)
         {
-            foreach (var group in input.Root.Elements("groups").Elements("group"))
-            {
-                var e = new XElement("enum", new XAttribute("name", TrimName(group.Attribute("name").Value)));
-                foreach (var token in group.Elements("enum"))
-                {
-                    if (token.Attribute("value") != null)
-                    {
-                        e.Add(new XElement("token",
-                            new XAttribute("name", TrimName(token.Attribute("name").Value)),
-                            new XAttribute("value", token.Attribute("value").Value)));
-                    }
-                    else
-                    {
-                        e.Add(new XElement("use",
-                            new XAttribute("token", TrimName(token.Attribute("name").Value))));
-                    }
-                }
-
-                yield return e;
-            }
-
-            var all = new XElement("enum", new XAttribute("name", "All"));
-            foreach (var token in input.Root.Elements("enums").Elements("enum"))
-            {
-                all.Add(new XElement("token", token.Attributes()));
-            }
-            yield return all;
-
+            // Go through all features and extension in the spec
+            // and build a list of which tokens belong to which.
             var features = input.Root.Elements("feature");
-            var extensions = input.Root.Elements("extension");
+            var extensions = input.Root.Elements("extensions").Elements("extension");
+            var categories = new SortedDictionary<string, XElement>();
+
             foreach (var feature in features.Concat(extensions))
             {
-                var e = new XElement("enum",
-                    new XAttribute("name", feature.Attribute("name").Value),
-                    new XAttribute("version", feature.Attribute("number").Value));
+                var category = TrimName(feature.Attribute("name").Value);
+                var extension = feature.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core";
+                var version = feature.Attribute("number") != null ? feature.Attribute("number").Value : null;
+                var api =
+                    feature.Attribute("api") != null ? feature.Attribute("api").Value :
+                    feature.Attribute("supported") != null ? feature.Attribute("supported").Value :
+                    null;
 
                 foreach (var token in feature.Elements("require").Elements("enum"))
                 {
-                    e.Add(new XElement("use", new XAttribute("token", token.Attribute("name").Value)));
+                    var enum_name = TrimName(token.Attribute("name").Value);
+                    if (!categories.ContainsKey(enum_name))
+                        categories.Add(enum_name, new XElement("enum"));
+
+                    var e = categories[enum_name];
+
+                    var enum_category = e.Attribute("category") ?? new XAttribute("category", "");
+                    var enum_extension = e.Attribute("extension") ?? new XAttribute("extension", "");
+                    var enum_api = e.Attribute("api") ?? new XAttribute("api", "");
+                    var enum_version = e.Attribute("version") ?? new XAttribute("version", "");
+
+                    enum_category.Value = Join(enum_category.Value, category);
+                    enum_extension.Value = Join(enum_extension.Value, extension);
+                    enum_api.Value = Join(enum_api.Value, api);
+                    enum_version.Value = Join(enum_version.Value, version);
+
+                    e.SetAttributeValue(enum_category.Name, enum_category.Value);
+                    e.SetAttributeValue(enum_extension.Name, enum_extension.Value);
+                    e.SetAttributeValue(enum_api.Name, enum_api.Value);
+                    e.SetAttributeValue(enum_version.Name, enum_version.Value); 
+               }
+            }
+
+            foreach (var group in features
+                     .Concat(extensions)
+                     .Concat(input.Root.Elements("groups").Elements("group")))
+            {
+                var enum_name = TrimName(group.Attribute("name").Value);
+                var enum_element = new XElement("enum", new XAttribute("name", enum_name));
+
+                foreach (var token in group.Elements("enum").Concat(group.Elements("require").Elements("enum")))
+                {
+                    var name = TrimName(token.Attribute("name").Value);
+
+                    XElement e = new XElement(
+                        "use",
+                        new XAttribute("enum", "All"),
+                        new XAttribute("token", name));
+
+                    enum_element.Add(e);
                 }
 
-                yield return e;
+                yield return enum_element;
             }
+
+            // The actual values are defined here
+            var all = new XElement("enum", new XAttribute("name", "All"));
+            foreach (var enumeration in input.Root.Elements("enums"))
+            {
+                var type = enumeration.Attribute("type");
+
+                foreach (var token in enumeration.Elements("enum"))
+                {
+                    var e = new XElement("token", type);
+                    var name = TrimName(token.Attribute("name").Value);
+                    var value = token.Attribute("value").Value;
+                    e.Add(
+                        new XAttribute("name", name),
+                        new XAttribute("value", value));
+
+                    if (categories.ContainsKey(name))
+                    {
+                        var category = Lookup(categories, name, "category");
+                        var extension = Lookup(categories, name, "extension");
+                        var version = Lookup(categories, name, "version");
+                        var api = Lookup(categories, name, "api");
+                        var deprecated = Lookup(categories, name, "deprecated");
+
+                        e.Add(category);
+                        e.Add(extension);
+                        e.Add(version);
+                        e.Add(api);
+                        e.Add(deprecated);
+                    }
+                    else
+                    {
+                        Trace.WriteLine(String.Format("Token '{0}' is not part of any feature or extension.", name));
+                    }
+
+                    all.Add(e);
+                }
+            }
+            yield return all;
         }
 
         IEnumerable<XElement> ParseFunctions(XDocument input)
