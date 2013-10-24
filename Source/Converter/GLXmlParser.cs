@@ -52,7 +52,7 @@ namespace CHeaderToXML
             var all = new XElement("enum", new XAttribute("name", "All"));
             foreach (var token in input.Root.Elements("enums").Elements("enum"))
             {
-                all.Add(token);
+                all.Add(new XElement("token", token.Attributes()));
             }
             yield return all;
 
