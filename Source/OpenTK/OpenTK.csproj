@@ -779,10 +779,6 @@
     <Compile Include="IntPtrEqualityComparer.cs" />
     <Compile Include="Input\GamePadButton.cs" />
     <Compile Include="Input\GamePadAxis.cs" />
-    <None Include="Platform\SDL2\sdl2-cs\LICENSE" />
-    <None Include="Platform\SDL2\sdl2-cs\README" />
-    <Compile Include="Platform\SDL2\sdl2-cs\src\LPUtf8StrMarshaler.cs" />
-    <Compile Include="Platform\SDL2\sdl2-cs\src\SDL2.cs" />
     <Compile Include="Platform\SDL2\Sdl2DisplayDeviceDriver.cs" />
     <Compile Include="Platform\SDL2\Sdl2Factory.cs" />
     <Compile Include="Platform\SDL2\Sdl2GraphicsContext.cs" />
