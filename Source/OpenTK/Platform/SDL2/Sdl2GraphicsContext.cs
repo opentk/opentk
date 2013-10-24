@@ -65,6 +65,9 @@ namespace OpenTK.Platform.SDL2
             {
                 SetGLAttributes(mode, shareContext, major, minor, flags);
                 SdlContext = new ContextHandle(SDL.GL.CreateContext(Window.Handle));
+                Mode = GetGLAttributes(SdlContext, out flags);
+                Debug.Print("SDL2 created GraphicsContext (mode: {0}) (flags: {1}",
+                    Mode, flags);
             }
             if (SdlContext == ContextHandle.Zero)
             {
@@ -77,7 +80,74 @@ namespace OpenTK.Platform.SDL2
 
         #region Private Members
 
-        void SetGLAttributes(GraphicsMode mode,
+        static GraphicsMode GetGLAttributes(ContextHandle sdlContext, out GraphicsContextFlags context_flags)
+        {
+            context_flags = 0;
+
+            int accum_red, accum_green, accum_blue, accum_alpha;
+            SDL.GL.GetAttribute(ContextAttribute.ACCUM_RED_SIZE, out accum_red);
+            SDL.GL.GetAttribute(ContextAttribute.ACCUM_GREEN_SIZE, out accum_green);
+            SDL.GL.GetAttribute(ContextAttribute.ACCUM_BLUE_SIZE, out accum_blue);
+            SDL.GL.GetAttribute(ContextAttribute.ACCUM_ALPHA_SIZE, out accum_alpha);
+
+            int buffers;
+            SDL.GL.GetAttribute(ContextAttribute.DOUBLEBUFFER, out buffers);
+
+            int red, green, blue, alpha;
+            SDL.GL.GetAttribute(ContextAttribute.RED_SIZE, out red);
+            SDL.GL.GetAttribute(ContextAttribute.GREEN_SIZE, out green);
+            SDL.GL.GetAttribute(ContextAttribute.BLUE_SIZE, out blue);
+            SDL.GL.GetAttribute(ContextAttribute.ALPHA_SIZE, out alpha);
+
+            int depth, stencil;
+            SDL.GL.GetAttribute(ContextAttribute.DEPTH_SIZE, out depth);
+            SDL.GL.GetAttribute(ContextAttribute.STENCIL_SIZE, out stencil);
+
+            int samples;
+            SDL.GL.GetAttribute(ContextAttribute.MULTISAMPLESAMPLES, out samples);
+
+            int stereo;
+            SDL.GL.GetAttribute(ContextAttribute.STEREO, out stereo);
+
+            int major, minor;
+            SDL.GL.GetAttribute(ContextAttribute.CONTEXT_MAJOR_VERSION, out major);
+            SDL.GL.GetAttribute(ContextAttribute.CONTEXT_MINOR_VERSION, out minor);
+
+            int flags;
+            SDL.GL.GetAttribute(ContextAttribute.CONTEXT_FLAGS, out flags);
+
+            int egl;
+            SDL.GL.GetAttribute(ContextAttribute.CONTEXT_EGL, out egl);
+
+            int profile;
+            SDL.GL.GetAttribute(ContextAttribute.CONTEXT_PROFILE_MASK, out profile);
+
+            if (egl != 0)
+            {
+                context_flags |= GraphicsContextFlags.Embedded;
+            }
+
+            if ((flags & (int)ContextFlags.DEBUG) != 0)
+            {
+                context_flags |= GraphicsContextFlags.Debug;
+            }
+
+            if ((profile & (int)ContextProfileFlags.CORE) != 0)
+            {
+                context_flags |= GraphicsContextFlags.ForwardCompatible;
+            }
+
+            return new GraphicsMode(
+                new ColorFormat(red, green, blue, alpha),
+                depth,
+                stencil,
+                samples,
+                new ColorFormat(accum_red, accum_green, accum_blue, accum_alpha),
+                buffers,
+                stereo != 0 ? true : false);
+        }
+
+        static void SetGLAttributes(GraphicsMode mode,
             IGraphicsContext shareContext,
             int major, int minor,
             GraphicsContextFlags flags)

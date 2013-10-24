@@ -291,6 +291,10 @@ namespace OpenTK.Platform.SDL2
             public static extern void DeleteContext(IntPtr context);
 
             [SuppressUnmanagedCodeSecurity]
+            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetAttribute", ExactSpelling = true)]
+            public static extern int GetAttribute(ContextAttribute attr, out int value);
+
+            [SuppressUnmanagedCodeSecurity]
             [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetDrawableSize", ExactSpelling = true)]
             public static extern void GetDrawableSize(IntPtr window, out int w, out int h);
 

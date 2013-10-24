@@ -40,7 +40,7 @@ namespace OpenTK.Platform.SDL2
 
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers, bool stereo)
         {
-            return new GraphicsMode(new IntPtr(1), new ColorFormat(32), 24, 8, 0, ColorFormat.Empty, 2, false);
+            return new GraphicsMode(IntPtr.Zero, color, depth, stencil, samples, accum, buffers, stereo);
         }
 
         #endregion
