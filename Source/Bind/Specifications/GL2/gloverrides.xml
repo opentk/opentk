@@ -1210,7 +1210,7 @@
         <type>PixelFormat</type>
       </param>
       <param name="type">
-        <type>TexImageTarget</type>
+        <type>PixelType</type>
       </param>
     </function>
     
@@ -1219,7 +1219,7 @@
         <type>PixelFormat</type>
       </param>
       <param name="type">
-        <type>TexImageTarget</type>
+        <type>PixelType</type>
       </param>
     </function>
 
@@ -3504,19 +3504,6 @@
       <use token="SYNC_STATUS" />
       <use token="SYNC_CONDITION" />
       <use token="SYNC_FLAGS" />
-    </enum>
-    <enum name="TexImageTarget">
-      <use name="VERSION_1_1" token="TEXTURE_1D" />
-      <use name="VERSION_1_1" token="TEXTURE_2D" />
-      <use name="VERSION_1_2" token="TEXTURE_3D" />
-      <use name="VERSION_3_0" token="TEXTURE_1D_ARRAY" />
-      <use name="VERSION_3_0" token="TEXTURE_2D_ARRAY" />
-      <use name="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE" />
-      <use name="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE_ARRAY" />
-      <use name="VERSION_3_1" token="TEXTURE_BUFFER" />
-      <use name="VERSION_3_1" token="TEXTURE_RECTANGLE" />
-      <use name="VERSION_1_3" token="TEXTURE_CUBE_MAP" />
-      <use name="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY" />
     </enum>
     <enum name="TextureAccess">
       <use enum="VERSION_1_5" token="READ_ONLY" />

@@ -52403,57 +52403,6 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
-    /// </summary>
-    public enum TexImageTarget : int
-    {
-        /// <summary>
-        /// Original was GL_TEXTURE_1D = 0x0DE0
-        /// </summary>
-        Texture1D = ((int)0x0DE0)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_2D = 0x0DE1
-        /// </summary>
-        Texture2D = ((int)0x0DE1)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_3D = 0x806F
-        /// </summary>
-        Texture3D = ((int)0x806F)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_RECTANGLE = 0x84F5
-        /// </summary>
-        TextureRectangle = ((int)0x84F5)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_CUBE_MAP = 0x8513
-        /// </summary>
-        TextureCubeMap = ((int)0x8513)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_1D_ARRAY = 0x8C18
-        /// </summary>
-        Texture1DArray = ((int)0x8C18)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_2D_ARRAY = 0x8C1A
-        /// </summary>
-        Texture2DArray = ((int)0x8C1A)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_BUFFER = 0x8C2A
-        /// </summary>
-        TextureBuffer = ((int)0x8C2A)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_CUBE_MAP_ARRAY = 0x9009
-        /// </summary>
-        TextureCubeMapArray = ((int)0x9009)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_2D_MULTISAMPLE = 0x9100
-        /// </summary>
-        Texture2DMultisample = ((int)0x9100)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
-        /// </summary>
-        Texture2DMultisampleArray = ((int)0x9102)        ,
-    }
-
-    /// <summary>
     /// Used in GL.BindImageTexture
     /// </summary>
     public enum TextureAccess : int
