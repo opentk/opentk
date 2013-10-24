@@ -95,9 +95,17 @@ namespace Bind
 
                             string element_count = param.GetAttribute("elementcount", String.Empty);
                             if (String.IsNullOrEmpty(element_count))
+                            {
                                 element_count = param.GetAttribute("count", String.Empty);
-                            if (!String.IsNullOrEmpty(element_count))
-                                p.ElementCount = Int32.Parse(element_count);
+                                if (!String.IsNullOrEmpty(element_count))
+                                {
+                                    int count;
+                                    if (Int32.TryParse(element_count, out count))
+                                    {
+                                        p.ElementCount = count;
+                                    }
+                                }
+                            }
 
                             p.Flow = Parameter.GetFlowDirection(param.GetAttribute("flow", String.Empty));
 
