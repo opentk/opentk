@@ -206,6 +206,11 @@ namespace Bind
                                 case "flow":
                                     d.Parameters[i].Flow = Parameter.GetFlowDirection((string)node.TypedValue);
                                     break;
+                                case "count":
+                                    int count;
+                                    if (Int32.TryParse(node.Value, out count))
+                                        d.Parameters[i].ElementCount = count;
+                                    break;
                             }
                         }
                     }
