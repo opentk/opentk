@@ -217,56 +217,61 @@ namespace Bind
         {
             StringBuilder translator = new StringBuilder(s.Length);
 
-            // Translate the constant's name to match .Net naming conventions
-            bool name_is_all_caps = s.AsEnumerable().All(c => Char.IsLetter(c) ? Char.IsUpper(c) : true);
-            bool name_contains_underscore = s.Contains("_");
-            if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None &&
-                (name_is_all_caps || name_contains_underscore))
+            if (isValue)
             {
-                bool next_char_uppercase = true;
-                bool is_after_digit = false;
-
-                if (!isValue && Char.IsDigit(s[0]))
-                    s = Settings.ConstantPrefix + s;
-
-                foreach (char c in s)
-                {
-                    if (c == '_' || c == '-')
-                    {
-                        next_char_uppercase = true;
-                        continue; // do not add these chars to output
-                    }
-                    else if (Char.IsDigit(c))
-                    {
-                        translator.Append(c);
-                        is_after_digit = true;
-                    }
-                    else
-                    {
-                        // Check for common 'digit'-'letter' abbreviations:
-                        // 2D, 3D, R3G3B2, etc. The abbreviated characters
-                        // should be made upper case.
-                        if (is_after_digit && (c == 'D' || c == 'R' || c == 'G' || c == 'B' || c == 'A'))
-                        {
-                            next_char_uppercase = true;
-                        }
-                        translator.Append(next_char_uppercase ? Char.ToUpper(c) : Char.ToLower(c));
-                        is_after_digit = next_char_uppercase = false;
-                    }
-                }
-
-                translator[0] = Char.ToUpper(translator[0]);
+                translator.Append(s);
             }
             else
-                translator.Append(s);
+            {
+                // Translate the constant's name to match .Net naming conventions
+                bool name_is_all_caps = s.AsEnumerable().All(c => Char.IsLetter(c) ? Char.IsUpper(c) : true);
+                bool name_contains_underscore = s.Contains("_");
+                if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None &&
+                (name_is_all_caps || name_contains_underscore))
+                {
+                    bool next_char_uppercase = true;
+                    bool is_after_digit = false;
+
+                    if (!isValue && Char.IsDigit(s[0]))
+                        s = Settings.ConstantPrefix + s;
+
+                    foreach (char c in s)
+                    {
+                        if (c == '_' || c == '-')
+                        {
+                            next_char_uppercase = true;
+                            continue; // do not add these chars to output
+                        }
+                        else if (Char.IsDigit(c))
+                        {
+                            translator.Append(c);
+                            is_after_digit = true;
+                        }
+                        else
+                        {
+                            // Check for common 'digit'-'letter' abbreviations:
+                            // 2D, 3D, R3G3B2, etc. The abbreviated characters
+                            // should be made upper case.
+                            if (is_after_digit && (c == 'D' || c == 'R' || c == 'G' || c == 'B' || c == 'A'))
+                            {
+                                next_char_uppercase = true;
+                            }
+                            translator.Append(next_char_uppercase ? Char.ToUpper(c) : Char.ToLower(c));
+                            is_after_digit = next_char_uppercase = false;
+                        }
+                    }
+
+                    translator[0] = Char.ToUpper(translator[0]);
+                }
+                else
+                    translator.Append(s);
+            }
 
             return translator.ToString();
         }
 
         public static string TranslateConstantValue(string value)
         {
-            if (value.ToLower() == " 0xffffffffffffffff") System.Diagnostics.Debugger.Break();
-
             // Remove decorations to get a pure number (e.g. 0x80u -> 80).
             if (value.ToLower().StartsWith("0x"))
             {
@@ -325,11 +330,22 @@ namespace Bind
 
         static bool IsValue(string test)
         {
-            ulong number;
-
             // Check if the result is a number.
-            return UInt64.TryParse(test.ToLower().Replace("0x", String.Empty),
-                NumberStyles.AllowHexSpecifier, null, out number);
+            long number;
+            bool is_number = false;
+            if (test.ToLower().StartsWith("0x"))
+            {
+                is_number = true;
+            }
+            else
+            {
+                is_number = Int64.TryParse(
+                    test,
+                    NumberStyles.Number,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out number);
+            }
+            return is_number;
         }
     }
 }
