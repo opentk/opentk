@@ -20121,37 +20121,37 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         LayoutLinearCpuCachedIntel = ((int)2)        ,
         /// <summary>
-        /// Original was GL_NEXT_BUFFER_NV = 2
-        /// </summary>
-        NextBufferNv = ((int)2)        ,
-        /// <summary>
         /// Original was GL_TWO = 2
         /// </summary>
         Two = ((int)2)        ,
         /// <summary>
-        /// Original was GL_SKIP_COMPONENTS4_NV = 3
+        /// Original was GL_NEXT_BUFFER_NV = -2
         /// </summary>
-        SkipComponents4Nv = ((int)3)        ,
+        NextBufferNv = ((int)-2)        ,
         /// <summary>
         /// Original was GL_THREE = 3
         /// </summary>
         Three = ((int)3)        ,
         /// <summary>
+        /// Original was GL_SKIP_COMPONENTS4_NV = -3
+        /// </summary>
+        SkipComponents4Nv = ((int)-3)        ,
+        /// <summary>
         /// Original was GL_FOUR = 4
         /// </summary>
         Four = ((int)4)        ,
         /// <summary>
-        /// Original was GL_SKIP_COMPONENTS3_NV = 4
+        /// Original was GL_SKIP_COMPONENTS3_NV = -4
         /// </summary>
-        SkipComponents3Nv = ((int)4)        ,
+        SkipComponents3Nv = ((int)-4)        ,
         /// <summary>
-        /// Original was GL_SKIP_COMPONENTS2_NV = 5
+        /// Original was GL_SKIP_COMPONENTS2_NV = -5
         /// </summary>
-        SkipComponents2Nv = ((int)5)        ,
+        SkipComponents2Nv = ((int)-5)        ,
         /// <summary>
-        /// Original was GL_SKIP_COMPONENTS1_NV = 6
+        /// Original was GL_SKIP_COMPONENTS1_NV = -6
         /// </summary>
-        SkipComponents1Nv = ((int)6)        ,
+        SkipComponents1Nv = ((int)-6)        ,
     }
 
     /// <summary>
@@ -44960,25 +44960,25 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         LayerNv = ((int)0x8DAA)        ,
         /// <summary>
-        /// Original was GL_NEXT_BUFFER_NV = 2
+        /// Original was GL_NEXT_BUFFER_NV = -2
         /// </summary>
-        NextBufferNv = ((int)2)        ,
+        NextBufferNv = ((int)-2)        ,
         /// <summary>
-        /// Original was GL_SKIP_COMPONENTS4_NV = 3
+        /// Original was GL_SKIP_COMPONENTS4_NV = -3
         /// </summary>
-        SkipComponents4Nv = ((int)3)        ,
+        SkipComponents4Nv = ((int)-3)        ,
         /// <summary>
-        /// Original was GL_SKIP_COMPONENTS3_NV = 4
+        /// Original was GL_SKIP_COMPONENTS3_NV = -4
         /// </summary>
-        SkipComponents3Nv = ((int)4)        ,
+        SkipComponents3Nv = ((int)-4)        ,
         /// <summary>
-        /// Original was GL_SKIP_COMPONENTS2_NV = 5
+        /// Original was GL_SKIP_COMPONENTS2_NV = -5
         /// </summary>
-        SkipComponents2Nv = ((int)5)        ,
+        SkipComponents2Nv = ((int)-5)        ,
         /// <summary>
-        /// Original was GL_SKIP_COMPONENTS1_NV = 6
+        /// Original was GL_SKIP_COMPONENTS1_NV = -6
         /// </summary>
-        SkipComponents1Nv = ((int)6)        ,
+        SkipComponents1Nv = ((int)-6)        ,
     }
 
     /// <summary>
