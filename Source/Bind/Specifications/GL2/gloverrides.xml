@@ -212,6 +212,12 @@
         <type>ShaderParameter</type>
       </param>
     </function>
+    
+    <function name="ShaderSource" extension="Core">
+      <param name="length">
+        <count>0</count>
+      </param>
+    </function>
 
     <function name="GetActiveAttrib" extension="Core">
       <param name="type">
@@ -1457,6 +1463,12 @@
       <param name="internalformat">
         <type>RenderbufferStorage</type>
       </param>
+    </function>
+    
+    <function name="VertexArrayFogCoordOffset" extension="Ext">
+       <param name="type">
+         <type>FogPointerType</type>
+       </param>
     </function>
 
     <!-- Apple -->
