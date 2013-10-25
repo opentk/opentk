@@ -35,7 +35,7 @@ namespace CHeaderToXML
     class GLParser : Parser
     {
         static readonly Regex extensions = new Regex(
-            "(ARB|EXT|ATI|NV|SUNX|SUN|SGIS|SGIX|SGI|MESA|3DFX|IBM|GREMEDY|HP|INTEL|PGI|INGR|APPLE|OML|I3D)",
+            @"3DFX|(?!(?<=[1-4])D)[A-Z]{2,}",
             RegexOptions.RightToLeft | RegexOptions.Compiled);
         static readonly char[] splitters = new char[] { ' ', '\t', ',', '(', ')', ';', '\n', '\r' };
 
@@ -80,11 +80,6 @@ namespace CHeaderToXML
                     current = new XElement("function",
                         new XAttribute("name", words[0]),
                         new XAttribute("extension", extension));
-
-                    if (words[0].Contains("ShaderSource"))
-                    {
-                        System.Diagnostics.Debugger.Break();
-                    }
 
                     CurrentMode = ParserModes.Func;
                 }
