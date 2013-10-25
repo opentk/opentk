@@ -224,19 +224,31 @@ namespace CHeaderToXML
 
                 var returns = new XElement(
                     "returns", 
-                    new XAttribute("type", FunctionParameterType(command.Element("proto"))));
+                    new XAttribute(
+                        "type",
+                        FunctionParameterType(command.Element("proto"))
+                            .Replace("const", String.Empty)
+                            .Replace("struct", String.Empty)
+                            .Trim()));
 
                 foreach (var parameter in command.Elements("param"))
                 {
+                    var param = FunctionParameterType(parameter);
+
                     var p = new XElement("param");
                     var pname = new XAttribute("name", parameter.Element("name").Value);
-                    var type = new XAttribute("type", FunctionParameterType(parameter));
+                    var type = new XAttribute(
+                        "type",
+                        param
+                            .Replace("const", String.Empty)
+                            .Replace("struct", String.Empty)
+                            .Trim());
 
                     var count = parameter.Attribute("len") != null ?
                         new XAttribute("count", parameter.Attribute("len").Value) : null;
 
                     var flow = new XAttribute("flow",
-                        type.Value.Contains("*") && !type.Value.Contains("const") ? "out" : "in");
+                        param.Contains("*") && !param.Contains("const") ? "out" : "in");
 
                     p.Add(pname, type, flow);
                     if (count != null)
@@ -282,7 +294,20 @@ namespace CHeaderToXML
             var proto = e.Value;
             var name = e.Element("name").Value;
             var group = e.Attribute("group");
-            var ret = group != null ? group.Value : proto.Remove(proto.LastIndexOf(name)).Trim();
+
+            var ret = proto.Remove(proto.LastIndexOf(name)).Trim();
+
+            if (group != null)
+            {
+                var words = ret.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                if (words[0] == "struct" || words[0] == "const")
+                    words[1] = group.Value;
+                else
+                    words[0] = group.Value;
+
+                ret = String.Join(" ", words);
+            }
+
             return ret;
         }
 
