@@ -306,10 +306,18 @@ namespace Bind.Structures
         {
             base.Translate(overrides, category, enums);
 
+            if (Pointer >= 3)
+            {
+                System.Diagnostics.Trace.WriteLine(String.Format(
+                    "[Error] Type '{0}' has a high pointer level. Bindings will be incorrect.",
+                    CurrentType));
+            }
+
             // Find out the necessary wrapper types.
             if (Pointer != 0)/* || CurrentType == "IntPtr")*/
             {
-                if (CurrentType.ToLower().Contains("string"))
+                if (CurrentType.ToLower().Contains("string") ||
+                    CurrentType.ToLower().Contains("char") && Pointer > 1)
                 {
                     // string* -> [In] String[] or [Out] StringBuilder[]
                     QualifiedType =
