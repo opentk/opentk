@@ -1963,8 +1963,8 @@
       <use enum="VERSION_3_0" token="MAP_INVALIDATE_BUFFER_BIT" />
       <use enum="VERSION_3_0" token="MAP_FLUSH_EXPLICIT_BIT" />
       <use enum="VERSION_3_0" token="MAP_UNSYNCHRONIZED_BIT" />
-      <use enum="VERSION_4_4" token="MASK_COHERENT_BIT" />
-      <use enum="VERSION_4_4" token="MASK_PERSISTENT_BIT" />
+      <use enum="VERSION_4_4" token="MAP_COHERENT_BIT" />
+      <use enum="VERSION_4_4" token="MAP_PERSISTENT_BIT" />
     </enum>
     <enum name="BufferParameterName">
       <use enum="VERSION_1_5" token="BUFFER_SIZE" />
