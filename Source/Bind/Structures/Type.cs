@@ -108,7 +108,7 @@ namespace Bind.Structures
 
                 while (type.EndsWith("*"))
                 {
-                    type = type.Substring(0, type.Length - 1);
+                    type = type.Substring(0, type.Length - 1).Trim();
                     Pointer++;
                 }
             }
@@ -379,10 +379,13 @@ namespace Bind.Structures
                 }
                 else
                 {
+                    // Todo: what is the point of this here? It is overwritten below.
                     // A few translations for consistency
                     switch (CurrentType.ToLower())
                     {
-                        case "string": QualifiedType = "String"; break;
+                        case "string":
+                            QualifiedType = "String";
+                            break;
                     }
 
                     QualifiedType = s;
