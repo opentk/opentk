@@ -30,6 +30,9 @@ GLhalfARB,          Half
 GLhalfNV,           Half
 GLcharARB,          Char
 
+# ARB_texture_compression (introduced in 1.3)
+CompressedTextureARB, IntPtr
+
 # 64 bit types (introduced in 2.1)
 GLint64EXT,         Int64
 GLuint64EXT,        UInt64
@@ -39,6 +42,15 @@ GLuint64,           UInt64
 # ARB_sync (introduced in 3.2)
 sync,           IntPtr
 GLsync,		IntPtr
+
+# Debug callbacks
+GLDEBUGPROC, DebugProc
+GLDEBUGPROCAMD, DebugProcAmd
+GLDEBUGPROCARB, DebugProcArb
+GLDEBUGPROCKHR, DebugProcKhr
+
+# NV_vdpau
+GLvdpauSurfaceNV, IntPtr
 
 # Wgl types.
 PROC,           IntPtr
@@ -63,10 +75,6 @@ VoidPointer,    void*
 float,          float
 int,            int
 #void,           *
-GLDEBUGPROC, DebugProc
-GLDEBUGPROCARB, DebugProcArb
-GLDEBUGPROCAMD, DebugProcAmd
-GLvdpauSurfaceNV, IntPtr
 
 # Glu types.
 Float64         double
