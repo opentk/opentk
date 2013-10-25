@@ -205,7 +205,7 @@ namespace Bind
                 // Tried to add a constant that already exists. If one constant
                 // is like: 'Foo = 0x5' and the other like: 'Foo = Bar.Foo', then 
                 // keep the first one.
-                if (!Char.IsDigit(((Constant)s.ConstantCollection[t.Name]).Value[0]))
+                if (!String.IsNullOrEmpty(s.ConstantCollection[t.Name].Reference))
                 {
                     s.ConstantCollection.Remove(t.Name);
                     s.ConstantCollection.Add(t.Name, t);
