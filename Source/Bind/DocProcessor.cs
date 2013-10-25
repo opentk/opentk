@@ -77,7 +77,7 @@ namespace Bind
                 using (StringWriter sw = new StringWriter())
                 {
                     xslt.Transform(doc, null, sw);
-                    Text = sw.ToString().TrimEnd('\n');
+                    Text = sw.ToString().TrimEnd('\r', '\n');
                     return Text;
                 }
             }
