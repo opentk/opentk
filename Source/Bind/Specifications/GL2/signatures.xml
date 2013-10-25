@@ -8523,6 +8523,204 @@
       <returns type="void" />
       <param name="mask" type="UInt32" flow="in" />
     </function>
+    <function name="BeginPerfMonitorAMD" extension="AMD" category="AMD_performance_monitor" version="1.2">
+      <returns type="void" />
+      <param name="monitor" type="UInt32" flow="in" />
+    </function>
+    <function name="BlendEquationIndexedAMD" extension="AMD" category="AMD_draw_buffers_blend" version="2.0">
+      <returns type="void" />
+      <param name="buf" type="UInt32" flow="in" />
+      <param name="mode" type="GLenum" flow="in" />
+    </function>
+    <function name="BlendEquationSeparateIndexedAMD" extension="AMD" category="AMD_draw_buffers_blend" version="2.0">
+      <returns type="void" />
+      <param name="buf" type="UInt32" flow="in" />
+      <param name="modeRGB" type="GLenum" flow="in" />
+      <param name="modeAlpha" type="GLenum" flow="in" />
+    </function>
+    <function name="BlendFuncIndexedAMD" extension="AMD" category="AMD_draw_buffers_blend" version="2.0">
+      <returns type="void" />
+      <param name="buf" type="UInt32" flow="in" />
+      <param name="src" type="GLenum" flow="in" />
+      <param name="dst" type="GLenum" flow="in" />
+    </function>
+    <function name="BlendFuncSeparateIndexedAMD" extension="AMD" category="AMD_draw_buffers_blend" version="2.0">
+      <returns type="void" />
+      <param name="buf" type="UInt32" flow="in" />
+      <param name="srcRGB" type="GLenum" flow="in" />
+      <param name="dstRGB" type="GLenum" flow="in" />
+      <param name="srcAlpha" type="GLenum" flow="in" />
+      <param name="dstAlpha" type="GLenum" flow="in" />
+    </function>
+    <function name="DebugMessageCallbackAMD" extension="AMD" category="AMD_debug_output" version="4.1">
+      <returns type="void" />
+      <param name="callback" type="GLDEBUGPROCAMD" flow="in" />
+      <param name="userParam" type="Void*" flow="out" />
+    </function>
+    <function name="DebugMessageEnableAMD" extension="AMD" category="AMD_debug_output" version="4.1">
+      <returns type="void" />
+      <param name="category" type="GLenum" flow="in" />
+      <param name="severity" type="GLenum" flow="in" />
+      <param name="count" type="SizeI" flow="in" />
+      <param name="ids" type="UInt32*" flow="in" />
+      <param name="enabled" type="Boolean" flow="in" />
+    </function>
+    <function name="DebugMessageInsertAMD" extension="AMD" category="AMD_debug_output" version="4.1">
+      <returns type="void" />
+      <param name="category" type="GLenum" flow="in" />
+      <param name="severity" type="GLenum" flow="in" />
+      <param name="id" type="UInt32" flow="in" />
+      <param name="length" type="SizeI" flow="in" />
+      <param name="buf" type="Char*" flow="in" />
+    </function>
+    <function name="DeleteNamesAMD" extension="AMD" category="AMD_name_gen_delete" version="4.1">
+      <returns type="void" />
+      <param name="identifier" type="GLenum" flow="in" />
+      <param name="num" type="UInt32" flow="in" />
+      <param name="names" type="UInt32*" flow="in" />
+    </function>
+    <function name="DeletePerfMonitorsAMD" extension="AMD" category="AMD_performance_monitor" version="1.2">
+      <returns type="void" />
+      <param name="n" type="SizeI" flow="in" />
+      <param name="monitors" type="UInt32*" flow="out" />
+    </function>
+    <function name="EndPerfMonitorAMD" extension="AMD" category="AMD_performance_monitor" version="1.2">
+      <returns type="void" />
+      <param name="monitor" type="UInt32" flow="in" />
+    </function>
+    <function name="GenNamesAMD" extension="AMD" category="AMD_name_gen_delete" version="4.1">
+      <returns type="void" />
+      <param name="identifier" type="GLenum" flow="in" />
+      <param name="num" type="UInt32" flow="in" />
+      <param name="names" type="UInt32*" flow="out" />
+    </function>
+    <function name="GenPerfMonitorsAMD" extension="AMD" category="AMD_performance_monitor" version="1.2">
+      <returns type="void" />
+      <param name="n" type="SizeI" flow="in" />
+      <param name="monitors" type="UInt32*" flow="out" />
+    </function>
+    <function name="GetDebugMessageLogAMD" extension="AMD" category="AMD_debug_output" version="4.1">
+      <returns type="UInt32" />
+      <param name="count" type="UInt32" flow="in" />
+      <param name="bufsize" type="SizeI" flow="in" />
+      <param name="categories" type="GLenum*" flow="out" />
+      <param name="severities" type="UInt32*" flow="out" />
+      <param name="ids" type="UInt32*" flow="out" />
+      <param name="lengths" type="SizeI*" flow="out" />
+      <param name="message" type="Char*" flow="out" />
+    </function>
+    <function name="GetPerfMonitorCounterDataAMD" extension="AMD" category="AMD_performance_monitor" version="1.2">
+      <returns type="void" />
+      <param name="monitor" type="UInt32" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="dataSize" type="SizeI" flow="in" />
+      <param name="data" type="UInt32*" flow="out" />
+      <param name="bytesWritten" type="Int32*" flow="out" count="1" />
+    </function>
+    <function name="GetPerfMonitorCounterInfoAMD" extension="AMD" category="AMD_performance_monitor" version="1.2">
+      <returns type="void" />
+      <param name="group" type="UInt32" flow="in" />
+      <param name="counter" type="UInt32" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="data" type="Void*" flow="out" />
+    </function>
+    <function name="GetPerfMonitorCountersAMD" extension="AMD" category="AMD_performance_monitor" version="1.2">
+      <returns type="void" />
+      <param name="group" type="UInt32" flow="in" />
+      <param name="numCounters" type="Int32*" flow="out" count="1" />
+      <param name="maxActiveCounters" type="Int32*" flow="out" count="1" />
+      <param name="counterSize" type="SizeI" flow="in" />
+      <param name="counters" type="UInt32*" flow="out" />
+    </function>
+    <function name="GetPerfMonitorCounterStringAMD" extension="AMD" category="AMD_performance_monitor" version="1.2">
+      <returns type="void" />
+      <param name="group" type="UInt32" flow="in" />
+      <param name="counter" type="UInt32" flow="in" />
+      <param name="bufSize" type="SizeI" flow="in" />
+      <param name="length" type="SizeI*" flow="out" count="1" />
+      <param name="counterString" type="Char*" flow="out" />
+    </function>
+    <function name="GetPerfMonitorGroupsAMD" extension="AMD" category="AMD_performance_monitor" version="1.2">
+      <returns type="void" />
+      <param name="numGroups" type="Int32*" flow="out" count="1" />
+      <param name="groupsSize" type="SizeI" flow="in" />
+      <param name="groups" type="UInt32*" flow="out" />
+    </function>
+    <function name="GetPerfMonitorGroupStringAMD" extension="AMD" category="AMD_performance_monitor" version="1.2">
+      <returns type="void" />
+      <param name="group" type="UInt32" flow="in" />
+      <param name="bufSize" type="SizeI" flow="in" />
+      <param name="length" type="SizeI*" flow="out" count="1" />
+      <param name="groupString" type="Char*" flow="out" />
+    </function>
+    <function name="IsNameAMD" extension="AMD" category="AMD_name_gen_delete" version="4.1">
+      <returns type="Boolean" />
+      <param name="identifier" type="GLenum" flow="in" />
+      <param name="name" type="UInt32" flow="in" />
+    </function>
+    <function name="MultiDrawArraysIndirectAMD" extension="AMD" category="AMD_multi_draw_indirect" version="4.0">
+      <returns type="void" />
+      <param name="mode" type="GLenum" flow="in" />
+      <param name="indirect" type="Void*" flow="in" />
+      <param name="primcount" type="SizeI" flow="in" />
+      <param name="stride" type="SizeI" flow="in" />
+    </function>
+    <function name="MultiDrawElementsIndirectAMD" extension="AMD" category="AMD_multi_draw_indirect" version="4.0">
+      <returns type="void" />
+      <param name="mode" type="GLenum" flow="in" />
+      <param name="type" type="GLenum" flow="in" />
+      <param name="indirect" type="Void*" flow="in" />
+      <param name="primcount" type="SizeI" flow="in" />
+      <param name="stride" type="SizeI" flow="in" />
+    </function>
+    <function name="SelectPerfMonitorCountersAMD" extension="AMD" category="AMD_performance_monitor" version="1.2">
+      <returns type="void" />
+      <param name="monitor" type="UInt32" flow="in" />
+      <param name="enable" type="Boolean" flow="in" />
+      <param name="group" type="UInt32" flow="in" />
+      <param name="numCounters" type="Int32" flow="in" />
+      <param name="counterList" type="UInt32*" flow="out" />
+    </function>
+    <function name="SetMultisamplefvAMD" extension="AMD" category="AMD_sample_positions" version="3.2">
+      <returns type="void" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="index" type="UInt32" flow="in" />
+      <param name="val" type="Float32*" flow="in" />
+    </function>
+    <function name="StencilOpValueAMD" extension="AMD" category="AMD_stencil_operation_extended" version="1.2">
+      <returns type="void" />
+      <param name="face" type="StencilFaceDirection" flow="in" />
+      <param name="value" type="UInt32" flow="in" />
+    </function>
+    <function name="TessellationFactorAMD" extension="AMD" category="AMD_vertex_shader_tessellator" version="2.0">
+      <returns type="void" />
+      <param name="factor" type="Float32" flow="in" />
+    </function>
+    <function name="TessellationModeAMD" extension="AMD" category="AMD_vertex_shader_tessellator" version="2.0">
+      <returns type="void" />
+      <param name="mode" type="GLenum" flow="in" />
+    </function>
+    <function name="TexStorageSparseAMD" extension="AMD" category="AMD_sparse_texture" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="internalFormat" type="GLenum" flow="in" />
+      <param name="width" type="SizeI" flow="in" />
+      <param name="height" type="SizeI" flow="in" />
+      <param name="depth" type="SizeI" flow="in" />
+      <param name="layers" type="SizeI" flow="in" />
+      <param name="flags" type="GLbitfield" flow="in" />
+    </function>
+    <function name="TextureStorageSparseAMD" extension="AMD" category="AMD_sparse_texture" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="UInt32" flow="in" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="internalFormat" type="GLenum" flow="in" />
+      <param name="width" type="SizeI" flow="in" />
+      <param name="height" type="SizeI" flow="in" />
+      <param name="depth" type="SizeI" flow="in" />
+      <param name="layers" type="SizeI" flow="in" />
+      <param name="flags" type="GLbitfield" flow="in" />
+    </function>
     <function name="BindVertexArrayAPPLE" extension="APPLE" category="APPLE_vertex_array_object" version="1.2">
       <returns type="void" />
       <param name="array" type="UInt32" flow="in" />
@@ -10765,11 +10963,6 @@
       <param name="op" type="AccumOp" flow="in" />
       <param name="value" type="CoordF" flow="in" />
     </function>
-    <function name="AccumxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="op" type="GLenum" flow="in" />
-      <param name="value" type="Fixed" flow="in" />
-    </function>
     <function name="ActiveShaderProgram" extension="Core" category="ARB_separate_shader_objects" version="4.1">
       <returns type="void" />
       <param name="pipeline" type="UInt32" flow="in" />
@@ -10783,11 +10976,6 @@
       <returns type="void" />
       <param name="func" type="AlphaFunction" flow="in" />
       <param name="ref" type="Float32" flow="in" />
-    </function>
-    <function name="AlphaFuncxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="func" type="GLenum" flow="in" />
-      <param name="ref" type="ClampedFixed" flow="in" />
     </function>
     <function name="AreTexturesResident" extension="Core" category="VERSION_1_1" version="1.1" deprecated="3.1">
       <returns type="Boolean" />
@@ -10812,10 +11000,6 @@
       <returns type="void" />
       <param name="id" type="UInt32" flow="in" />
       <param name="mode" type="TypeEnum" flow="in" />
-    </function>
-    <function name="BeginPerfMonitorAMD" extension="Core" category="AMD_performance_monitor" version="1.2">
-      <returns type="void" />
-      <param name="monitor" type="UInt32" flow="in" />
     </function>
     <function name="BeginQuery" extension="Core" category="VERSION_1_5" version="1.5">
       <returns type="void" />
@@ -10930,29 +11114,12 @@
       <param name="ymove" type="CoordF" flow="in" />
       <param name="bitmap" type="UInt8*" flow="in" />
     </function>
-    <function name="BitmapxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="width" type="SizeI" flow="in" />
-      <param name="height" type="SizeI" flow="in" />
-      <param name="xorig" type="Fixed" flow="in" />
-      <param name="yorig" type="Fixed" flow="in" />
-      <param name="xmove" type="Fixed" flow="in" />
-      <param name="ymove" type="Fixed" flow="in" />
-      <param name="bitmap" type="ConstUByte*" flow="in" />
-    </function>
     <function name="BlendColor" extension="Core" category="VERSION_1_2" version="1.2">
       <returns type="void" />
       <param name="red" type="ColorF" flow="in" />
       <param name="green" type="ColorF" flow="in" />
       <param name="blue" type="ColorF" flow="in" />
       <param name="alpha" type="ColorF" flow="in" />
-    </function>
-    <function name="BlendColorxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="red" type="ClampedFixed" flow="in" />
-      <param name="green" type="ClampedFixed" flow="in" />
-      <param name="blue" type="ClampedFixed" flow="in" />
-      <param name="alpha" type="ClampedFixed" flow="in" />
     </function>
     <function name="BlendEquation" extension="Core" category="VERSION_1_2" version="1.2">
       <returns type="void" />
@@ -10963,23 +11130,12 @@
       <param name="buf" type="UInt32" flow="in" />
       <param name="mode" type="GLenum" flow="in" />
     </function>
-    <function name="BlendEquationIndexedAMD" extension="Core" category="AMD_draw_buffers_blend" version="2.0">
-      <returns type="void" />
-      <param name="buf" type="UInt32" flow="in" />
-      <param name="mode" type="GLenum" flow="in" />
-    </function>
     <function name="BlendEquationSeparate" extension="Core" category="VERSION_2_0" version="2.0">
       <returns type="void" />
       <param name="modeRGB" type="BlendEquationModeEXT" flow="in" />
       <param name="modeAlpha" type="BlendEquationModeEXT" flow="in" />
     </function>
     <function name="BlendEquationSeparatei" extension="Core" category="VERSION_4_0" version="1.2">
-      <returns type="void" />
-      <param name="buf" type="UInt32" flow="in" />
-      <param name="modeRGB" type="GLenum" flow="in" />
-      <param name="modeAlpha" type="GLenum" flow="in" />
-    </function>
-    <function name="BlendEquationSeparateIndexedAMD" extension="Core" category="AMD_draw_buffers_blend" version="2.0">
       <returns type="void" />
       <param name="buf" type="UInt32" flow="in" />
       <param name="modeRGB" type="GLenum" flow="in" />
@@ -10996,12 +11152,6 @@
       <param name="src" type="GLenum" flow="in" />
       <param name="dst" type="GLenum" flow="in" />
     </function>
-    <function name="BlendFuncIndexedAMD" extension="Core" category="AMD_draw_buffers_blend" version="2.0">
-      <returns type="void" />
-      <param name="buf" type="UInt32" flow="in" />
-      <param name="src" type="GLenum" flow="in" />
-      <param name="dst" type="GLenum" flow="in" />
-    </function>
     <function name="BlendFuncSeparate" extension="Core" category="VERSION_1_4" version="1.4">
       <returns type="void" />
       <param name="sfactorRGB" type="BlendFuncSeparateParameterEXT" flow="in" />
@@ -11010,14 +11160,6 @@
       <param name="dfactorAlpha" type="BlendFuncSeparateParameterEXT" flow="in" />
     </function>
     <function name="BlendFuncSeparatei" extension="Core" category="VERSION_4_0" version="1.2">
-      <returns type="void" />
-      <param name="buf" type="UInt32" flow="in" />
-      <param name="srcRGB" type="GLenum" flow="in" />
-      <param name="dstRGB" type="GLenum" flow="in" />
-      <param name="srcAlpha" type="GLenum" flow="in" />
-      <param name="dstAlpha" type="GLenum" flow="in" />
-    </function>
-    <function name="BlendFuncSeparateIndexedAMD" extension="Core" category="AMD_draw_buffers_blend" version="2.0">
       <returns type="void" />
       <param name="buf" type="UInt32" flow="in" />
       <param name="srcRGB" type="GLenum" flow="in" />
@@ -11082,13 +11224,6 @@
       <param name="blue" type="Float32" flow="in" />
       <param name="alpha" type="Float32" flow="in" />
     </function>
-    <function name="ClearAccumxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="red" type="ClampedFixed" flow="in" />
-      <param name="green" type="ClampedFixed" flow="in" />
-      <param name="blue" type="ClampedFixed" flow="in" />
-      <param name="alpha" type="ClampedFixed" flow="in" />
-    </function>
     <function name="ClearBufferData" extension="Core" category="ARB_clear_buffer_object" version="4.3">
       <returns type="void" />
       <param name="target" type="GLenum" flow="in" />
@@ -11139,13 +11274,6 @@
       <param name="blue" type="ColorF" flow="in" />
       <param name="alpha" type="ColorF" flow="in" />
     </function>
-    <function name="ClearColorxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="red" type="ClampedFixed" flow="in" />
-      <param name="green" type="ClampedFixed" flow="in" />
-      <param name="blue" type="ClampedFixed" flow="in" />
-      <param name="alpha" type="ClampedFixed" flow="in" />
-    </function>
     <function name="ClearDepth" extension="Core" category="VERSION_1_0" version="1.0">
       <returns type="void" />
       <param name="depth" type="Float64" flow="in" />
@@ -11153,14 +11281,6 @@
     <function name="ClearDepthf" extension="Core" category="ARB_ES2_compatibility" version="4.1">
       <returns type="void" />
       <param name="d" type="Float32" flow="in" />
-    </function>
-    <function name="ClearDepthfOES" extension="Core" category="OES_single_precision" version="4.3">
-      <returns type="void" />
-      <param name="depth" type="ClampedFloat32" flow="in" />
-    </function>
-    <function name="ClearDepthxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="depth" type="ClampedFixed" flow="in" />
     </function>
     <function name="ClearIndex" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -11184,16 +11304,6 @@
       <returns type="void" />
       <param name="plane" type="ClipPlaneName" flow="in" />
       <param name="equation" type="Float64*" flow="in" />
-    </function>
-    <function name="ClipPlanefOES" extension="Core" category="OES_single_precision" version="4.3">
-      <returns type="void" />
-      <param name="plane" type="GLenum" flow="in" />
-      <param name="equation" type="ConstFloat32*" flow="in" />
-    </function>
-    <function name="ClipPlanexOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="plane" type="GLenum" flow="in" />
-      <param name="equation" type="ConstFixed*" flow="in" />
     </function>
     <function name="Color3b" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -11274,16 +11384,6 @@
     <function name="Color3usv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="v" type="ColorUS*" flow="in" />
-    </function>
-    <function name="Color3xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="red" type="Fixed" flow="in" />
-      <param name="green" type="Fixed" flow="in" />
-      <param name="blue" type="Fixed" flow="in" />
-    </function>
-    <function name="Color3xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="components" type="ConstFixed*" flow="in" />
     </function>
     <function name="Color4b" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -11372,17 +11472,6 @@
     <function name="Color4usv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="v" type="ColorUS*" flow="in" />
-    </function>
-    <function name="Color4xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="red" type="Fixed" flow="in" />
-      <param name="green" type="Fixed" flow="in" />
-      <param name="blue" type="Fixed" flow="in" />
-      <param name="alpha" type="Fixed" flow="in" />
-    </function>
-    <function name="Color4xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="components" type="ConstFixed*" flow="in" />
     </function>
     <function name="ColorMask" extension="Core" category="VERSION_1_0" version="1.0">
       <returns type="void" />
@@ -11577,18 +11666,6 @@
       <param name="pname" type="ConvolutionParameter" flow="in" />
       <param name="params" type="CheckedInt32*" flow="in" />
     </function>
-    <function name="ConvolutionParameterxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="Fixed" flow="in" />
-    </function>
-    <function name="ConvolutionParameterxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="ConstFixed*" flow="in" />
-    </function>
     <function name="CopyBufferSubData" extension="Core" category="ARB_copy_buffer" version="3.0">
       <returns type="void" />
       <param name="readTarget" type="GLenum" flow="in" />
@@ -11731,23 +11808,10 @@
       <param name="callback" type="GLDEBUGPROC" flow="in" />
       <param name="userParam" type="void*" flow="in" />
     </function>
-    <function name="DebugMessageCallbackAMD" extension="Core" category="AMD_debug_output" version="4.1">
-      <returns type="void" />
-      <param name="callback" type="GLDEBUGPROCAMD" flow="in" />
-      <param name="userParam" type="Void*" flow="out" />
-    </function>
     <function name="DebugMessageControl" extension="Core" category="KHR_debug" version="4.3">
       <returns type="void" />
       <param name="source" type="GLenum" flow="in" />
       <param name="type" type="GLenum" flow="in" />
-      <param name="severity" type="GLenum" flow="in" />
-      <param name="count" type="SizeI" flow="in" />
-      <param name="ids" type="UInt32*" flow="in" />
-      <param name="enabled" type="Boolean" flow="in" />
-    </function>
-    <function name="DebugMessageEnableAMD" extension="Core" category="AMD_debug_output" version="4.1">
-      <returns type="void" />
-      <param name="category" type="GLenum" flow="in" />
       <param name="severity" type="GLenum" flow="in" />
       <param name="count" type="SizeI" flow="in" />
       <param name="ids" type="UInt32*" flow="in" />
@@ -11759,14 +11823,6 @@
       <param name="type" type="GLenum" flow="in" />
       <param name="id" type="UInt32" flow="in" />
       <param name="severity" type="GLenum" flow="in" />
-      <param name="length" type="SizeI" flow="in" />
-      <param name="buf" type="Char*" flow="in" />
-    </function>
-    <function name="DebugMessageInsertAMD" extension="Core" category="AMD_debug_output" version="4.1">
-      <returns type="void" />
-      <param name="category" type="GLenum" flow="in" />
-      <param name="severity" type="GLenum" flow="in" />
-      <param name="id" type="UInt32" flow="in" />
       <param name="length" type="SizeI" flow="in" />
       <param name="buf" type="Char*" flow="in" />
     </function>
@@ -11784,17 +11840,6 @@
       <returns type="void" />
       <param name="list" type="List" flow="in" />
       <param name="range" type="SizeI" flow="in" />
-    </function>
-    <function name="DeleteNamesAMD" extension="Core" category="AMD_name_gen_delete" version="4.1">
-      <returns type="void" />
-      <param name="identifier" type="GLenum" flow="in" />
-      <param name="num" type="UInt32" flow="in" />
-      <param name="names" type="UInt32*" flow="in" />
-    </function>
-    <function name="DeletePerfMonitorsAMD" extension="Core" category="AMD_performance_monitor" version="1.2">
-      <returns type="void" />
-      <param name="n" type="SizeI" flow="in" />
-      <param name="monitors" type="UInt32*" flow="out" />
     </function>
     <function name="DeleteProgram" extension="Core" category="VERSION_2_0" version="2.0">
       <returns type="void" />
@@ -11867,21 +11912,11 @@
       <param name="n" type="Float32" flow="in" />
       <param name="f" type="Float32" flow="in" />
     </function>
-    <function name="DepthRangefOES" extension="Core" category="OES_single_precision" version="4.3">
-      <returns type="void" />
-      <param name="n" type="ClampedFloat32" flow="in" />
-      <param name="f" type="ClampedFloat32" flow="in" />
-    </function>
     <function name="DepthRangeIndexed" extension="Core" category="ARB_viewport_array" version="4.1">
       <returns type="void" />
       <param name="index" type="UInt32" flow="in" />
       <param name="n" type="Float64" flow="in" />
       <param name="f" type="Float64" flow="in" />
-    </function>
-    <function name="DepthRangexOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="n" type="ClampedFixed" flow="in" />
-      <param name="f" type="ClampedFixed" flow="in" />
     </function>
     <function name="DetachShader" extension="Core" category="VERSION_2_0" version="2.0">
       <returns type="void" />
@@ -12097,10 +12132,6 @@
     <function name="EndList" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
     </function>
-    <function name="EndPerfMonitorAMD" extension="Core" category="AMD_performance_monitor" version="1.2">
-      <returns type="void" />
-      <param name="monitor" type="UInt32" flow="in" />
-    </function>
     <function name="EndQuery" extension="Core" category="VERSION_1_5" version="1.5">
       <returns type="void" />
       <param name="target" type="GLenum" flow="in" />
@@ -12129,14 +12160,6 @@
       <returns type="void" />
       <param name="u" type="CoordF*" flow="in" count="1" />
     </function>
-    <function name="EvalCoord1xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="u" type="Fixed" flow="in" />
-    </function>
-    <function name="EvalCoord1xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstFixed*" flow="in" count="1" />
-    </function>
     <function name="EvalCoord2d" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="u" type="CoordD" flow="in" />
@@ -12154,15 +12177,6 @@
     <function name="EvalCoord2fv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="u" type="CoordF*" flow="in" />
-    </function>
-    <function name="EvalCoord2xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="u" type="Fixed" flow="in" />
-      <param name="v" type="Fixed" flow="in" />
-    </function>
-    <function name="EvalCoord2xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstFixed*" flow="in" />
     </function>
     <function name="EvalMesh1" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -12192,12 +12206,6 @@
       <param name="size" type="SizeI" flow="in" />
       <param name="type" type="FeedbackType" flow="in" />
       <param name="buffer" type="FeedbackElement*" flow="out" />
-    </function>
-    <function name="FeedbackBufferxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="n" type="SizeI" flow="in" />
-      <param name="type" type="GLenum" flow="in" />
-      <param name="buffer" type="Fixed*" flow="in" />
     </function>
     <function name="FenceSync" extension="Core" category="ARB_sync" version="1.2">
       <returns type="sync" />
@@ -12257,16 +12265,6 @@
       <returns type="void" />
       <param name="pname" type="FogParameter" flow="in" />
       <param name="params" type="CheckedInt32*" flow="in" />
-    </function>
-    <function name="FogxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="Fixed" flow="in" />
-    </function>
-    <function name="FogxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="ConstFixed*" flow="in" />
     </function>
     <function name="FramebufferParameteri" extension="Core" category="ARB_framebuffer_no_attachments" version="4.3">
       <returns type="void" />
@@ -12334,24 +12332,6 @@
       <param name="zNear" type="Float64" flow="in" />
       <param name="zFar" type="Float64" flow="in" />
     </function>
-    <function name="FrustumfOES" extension="Core" category="OES_single_precision" version="4.3">
-      <returns type="void" />
-      <param name="l" type="Float32" flow="in" />
-      <param name="r" type="Float32" flow="in" />
-      <param name="b" type="Float32" flow="in" />
-      <param name="t" type="Float32" flow="in" />
-      <param name="n" type="Float32" flow="in" />
-      <param name="f" type="Float32" flow="in" />
-    </function>
-    <function name="FrustumxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="l" type="Fixed" flow="in" />
-      <param name="r" type="Fixed" flow="in" />
-      <param name="b" type="Fixed" flow="in" />
-      <param name="t" type="Fixed" flow="in" />
-      <param name="n" type="Fixed" flow="in" />
-      <param name="f" type="Fixed" flow="in" />
-    </function>
     <function name="GenBuffers" extension="Core" category="VERSION_1_5" version="1.5">
       <returns type="void" />
       <param name="n" type="SizeI" flow="in" />
@@ -12369,17 +12349,6 @@
     <function name="GenLists" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="List" />
       <param name="range" type="SizeI" flow="in" />
-    </function>
-    <function name="GenNamesAMD" extension="Core" category="AMD_name_gen_delete" version="4.1">
-      <returns type="void" />
-      <param name="identifier" type="GLenum" flow="in" />
-      <param name="num" type="UInt32" flow="in" />
-      <param name="names" type="UInt32*" flow="out" />
-    </function>
-    <function name="GenPerfMonitorsAMD" extension="Core" category="AMD_performance_monitor" version="1.2">
-      <returns type="void" />
-      <param name="n" type="SizeI" flow="in" />
-      <param name="monitors" type="UInt32*" flow="out" />
     </function>
     <function name="GenProgramPipelines" extension="Core" category="ARB_separate_shader_objects" version="4.1">
       <returns type="void" />
@@ -12553,16 +12522,6 @@
       <param name="plane" type="ClipPlaneName" flow="in" />
       <param name="equation" type="Float64*" flow="out" />
     </function>
-    <function name="GetClipPlanefOES" extension="Core" category="OES_single_precision" version="4.3">
-      <returns type="void" />
-      <param name="plane" type="GLenum" flow="in" />
-      <param name="equation" type="Float32*" flow="out" />
-    </function>
-    <function name="GetClipPlanexOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="plane" type="GLenum" flow="in" />
-      <param name="equation" type="Fixed*" flow="out" />
-    </function>
     <function name="GetColorTable" extension="Core" category="VERSION_1_2" version="1.2" deprecated="3.1">
       <returns type="void" />
       <param name="target" type="ColorTableTarget" flow="in" />
@@ -12607,12 +12566,6 @@
       <param name="pname" type="GetConvolutionParameterPName" flow="in" />
       <param name="params" type="Int32*" flow="out" />
     </function>
-    <function name="GetConvolutionParameterxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="Fixed*" flow="out" />
-    </function>
     <function name="GetDebugMessageLog" extension="Core" category="KHR_debug" version="4.3">
       <returns type="UInt32" />
       <param name="count" type="UInt32" flow="in" />
@@ -12623,16 +12576,6 @@
       <param name="severities" type="GLenum*" flow="out" />
       <param name="lengths" type="SizeI*" flow="out" />
       <param name="messageLog" type="Char*" flow="out" />
-    </function>
-    <function name="GetDebugMessageLogAMD" extension="Core" category="AMD_debug_output" version="4.1">
-      <returns type="UInt32" />
-      <param name="count" type="UInt32" flow="in" />
-      <param name="bufsize" type="SizeI" flow="in" />
-      <param name="categories" type="GLenum*" flow="out" />
-      <param name="severities" type="UInt32*" flow="out" />
-      <param name="ids" type="UInt32*" flow="out" />
-      <param name="lengths" type="SizeI*" flow="out" />
-      <param name="message" type="Char*" flow="out" />
     </function>
     <function name="GetDoublei_v" extension="Core" category="ARB_viewport_array" version="4.1">
       <returns type="void" />
@@ -12647,11 +12590,6 @@
     </function>
     <function name="GetError" extension="Core" category="VERSION_1_0" version="1.0">
       <returns type="ErrorCode" />
-    </function>
-    <function name="GetFixedvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="Fixed*" flow="out" />
     </function>
     <function name="GetFloati_v" extension="Core" category="ARB_viewport_array" version="4.1">
       <returns type="void" />
@@ -12707,12 +12645,6 @@
       <param name="pname" type="GetHistogramParameterPName" flow="in" />
       <param name="params" type="Int32*" flow="out" />
     </function>
-    <function name="GetHistogramParameterxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="Fixed*" flow="out" />
-    </function>
     <function name="GetInteger64i_v" extension="Core" category="VERSION_3_2" version="3.2">
       <returns type="void" />
       <param name="target" type="GLenum" flow="in" />
@@ -12763,12 +12695,6 @@
       <param name="pname" type="LightParameter" flow="in" />
       <param name="params" type="Int32*" flow="out" />
     </function>
-    <function name="GetLightxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="light" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="Fixed*" flow="out" />
-    </function>
     <function name="GetMapdv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="target" type="MapTarget" flow="in" />
@@ -12787,12 +12713,6 @@
       <param name="query" type="GetMapQuery" flow="in" />
       <param name="v" type="Int32*" flow="out" />
     </function>
-    <function name="GetMapxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="query" type="GLenum" flow="in" />
-      <param name="v" type="Fixed*" flow="out" />
-    </function>
     <function name="GetMaterialfv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="face" type="MaterialFace" flow="in" />
@@ -12804,12 +12724,6 @@
       <param name="face" type="MaterialFace" flow="in" />
       <param name="pname" type="MaterialParameter" flow="in" />
       <param name="params" type="Int32*" flow="out" />
-    </function>
-    <function name="GetMaterialxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="face" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="Fixed" flow="in" />
     </function>
     <function name="GetMinmax" extension="Core" category="VERSION_1_2" version="1.2" deprecated="3.1">
       <returns type="void" />
@@ -12851,50 +12765,6 @@
       <param name="bufSize" type="SizeI" flow="in" />
       <param name="length" type="SizeI*" flow="out" />
       <param name="label" type="Char*" flow="out" />
-    </function>
-    <function name="GetPerfMonitorCounterDataAMD" extension="Core" category="AMD_performance_monitor" version="1.2">
-      <returns type="void" />
-      <param name="monitor" type="UInt32" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="dataSize" type="SizeI" flow="in" />
-      <param name="data" type="UInt32*" flow="out" />
-      <param name="bytesWritten" type="Int32*" flow="out" count="1" />
-    </function>
-    <function name="GetPerfMonitorCounterInfoAMD" extension="Core" category="AMD_performance_monitor" version="1.2">
-      <returns type="void" />
-      <param name="group" type="UInt32" flow="in" />
-      <param name="counter" type="UInt32" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="data" type="Void*" flow="out" />
-    </function>
-    <function name="GetPerfMonitorCountersAMD" extension="Core" category="AMD_performance_monitor" version="1.2">
-      <returns type="void" />
-      <param name="group" type="UInt32" flow="in" />
-      <param name="numCounters" type="Int32*" flow="out" count="1" />
-      <param name="maxActiveCounters" type="Int32*" flow="out" count="1" />
-      <param name="counterSize" type="SizeI" flow="in" />
-      <param name="counters" type="UInt32*" flow="out" />
-    </function>
-    <function name="GetPerfMonitorCounterStringAMD" extension="Core" category="AMD_performance_monitor" version="1.2">
-      <returns type="void" />
-      <param name="group" type="UInt32" flow="in" />
-      <param name="counter" type="UInt32" flow="in" />
-      <param name="bufSize" type="SizeI" flow="in" />
-      <param name="length" type="SizeI*" flow="out" count="1" />
-      <param name="counterString" type="Char*" flow="out" />
-    </function>
-    <function name="GetPerfMonitorGroupsAMD" extension="Core" category="AMD_performance_monitor" version="1.2">
-      <returns type="void" />
-      <param name="numGroups" type="Int32*" flow="out" count="1" />
-      <param name="groupsSize" type="SizeI" flow="in" />
-      <param name="groups" type="UInt32*" flow="out" />
-    </function>
-    <function name="GetPerfMonitorGroupStringAMD" extension="Core" category="AMD_performance_monitor" version="1.2">
-      <returns type="void" />
-      <param name="group" type="UInt32" flow="in" />
-      <param name="bufSize" type="SizeI" flow="in" />
-      <param name="length" type="SizeI*" flow="out" count="1" />
-      <param name="groupString" type="Char*" flow="out" />
     </function>
     <function name="GetPixelMapfv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -13156,12 +13026,6 @@
       <param name="pname" type="TextureEnvParameter" flow="in" />
       <param name="params" type="Int32*" flow="out" />
     </function>
-    <function name="GetTexEnvxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="Fixed*" flow="out" />
-    </function>
     <function name="GetTexGendv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="coord" type="TextureCoordName" flow="in" />
@@ -13179,12 +13043,6 @@
       <param name="coord" type="TextureCoordName" flow="in" />
       <param name="pname" type="TextureGenParameter" flow="in" />
       <param name="params" type="Int32*" flow="out" />
-    </function>
-    <function name="GetTexGenxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coord" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="Fixed*" flow="out" />
     </function>
     <function name="GetTexImage" extension="Core" category="VERSION_1_0" version="1.0">
       <returns type="void" />
@@ -13207,13 +13065,6 @@
       <param name="level" type="CheckedInt32" flow="in" />
       <param name="pname" type="GetTextureParameter" flow="in" />
       <param name="params" type="Int32*" flow="out" />
-    </function>
-    <function name="GetTexLevelParameterxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="level" type="Int32" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="Fixed*" flow="out" />
     </function>
     <function name="GetTexParameterfv" extension="Core" category="VERSION_1_0" version="1.0">
       <returns type="void" />
@@ -13238,12 +13089,6 @@
       <param name="target" type="TextureTarget" flow="in" />
       <param name="pname" type="GetTextureParameter" flow="in" />
       <param name="params" type="Int32*" flow="out" />
-    </function>
-    <function name="GetTexParameterxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="Fixed*" flow="out" />
     </function>
     <function name="GetTransformFeedbackVarying" extension="Core" category="VERSION_3_0" version="3.0">
       <returns type="void" />
@@ -13406,14 +13251,6 @@
       <returns type="void" />
       <param name="c" type="ColorIndexValueUB*" flow="in" count="1" />
     </function>
-    <function name="IndexxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="component" type="Fixed" flow="in" />
-    </function>
-    <function name="IndexxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="component" type="ConstFixed*" flow="in" count="1" />
-    </function>
     <function name="InitNames" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
     </function>
@@ -13485,11 +13322,6 @@
     <function name="IsList" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="Boolean" />
       <param name="list" type="List" flow="in" />
-    </function>
-    <function name="IsNameAMD" extension="Core" category="AMD_name_gen_delete" version="4.1">
-      <returns type="Boolean" />
-      <param name="identifier" type="GLenum" flow="in" />
-      <param name="name" type="UInt32" flow="in" />
     </function>
     <function name="IsProgram" extension="Core" category="VERSION_2_0" version="2.0">
       <returns type="Boolean" />
@@ -13575,28 +13407,6 @@
       <param name="pname" type="LightModelParameter" flow="in" />
       <param name="params" type="Int32*" flow="in" />
     </function>
-    <function name="LightModelxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="Fixed" flow="in" />
-    </function>
-    <function name="LightModelxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="ConstFixed*" flow="in" />
-    </function>
-    <function name="LightxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="light" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="Fixed" flow="in" />
-    </function>
-    <function name="LightxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="light" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="ConstFixed*" flow="in" />
-    </function>
     <function name="LineStipple" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="factor" type="CheckedInt32" flow="in" />
@@ -13605,10 +13415,6 @@
     <function name="LineWidth" extension="Core" category="VERSION_1_0" version="1.0">
       <returns type="void" />
       <param name="width" type="CheckedFloat32" flow="in" />
-    </function>
-    <function name="LineWidthxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="width" type="Fixed" flow="in" />
     </function>
     <function name="LinkProgram" extension="Core" category="VERSION_2_0" version="2.0">
       <returns type="void" />
@@ -13629,10 +13435,6 @@
       <returns type="void" />
       <param name="m" type="Float32*" flow="in" />
     </function>
-    <function name="LoadMatrixxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="m" type="ConstFixed*" flow="in" />
-    </function>
     <function name="LoadName" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="name" type="SelectName" flow="in" />
@@ -13644,10 +13446,6 @@
     <function name="LoadTransposeMatrixf" extension="Core" category="VERSION_1_3" version="1.3" deprecated="3.1">
       <returns type="void" />
       <param name="m" type="Float32*" flow="in" />
-    </function>
-    <function name="LoadTransposeMatrixxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="m" type="ConstFixed*" flow="in" />
     </function>
     <function name="LogicOp" extension="Core" category="VERSION_1_0" version="1.0">
       <returns type="void" />
@@ -13670,15 +13468,6 @@
       <param name="stride" type="Int32" flow="in" />
       <param name="order" type="CheckedInt32" flow="in" />
       <param name="points" type="CoordF*" flow="in" />
-    </function>
-    <function name="Map1xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="u1" type="Fixed" flow="in" />
-      <param name="u2" type="Fixed" flow="in" />
-      <param name="stride" type="Int32" flow="in" />
-      <param name="order" type="Int32" flow="in" />
-      <param name="points" type="Fixed" flow="in" />
     </function>
     <function name="Map2d" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -13706,19 +13495,6 @@
       <param name="vorder" type="CheckedInt32" flow="in" />
       <param name="points" type="CoordF*" flow="in" />
     </function>
-    <function name="Map2xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="u1" type="Fixed" flow="in" />
-      <param name="u2" type="Fixed" flow="in" />
-      <param name="ustride" type="Int32" flow="in" />
-      <param name="uorder" type="Int32" flow="in" />
-      <param name="v1" type="Fixed" flow="in" />
-      <param name="v2" type="Fixed" flow="in" />
-      <param name="vstride" type="Int32" flow="in" />
-      <param name="vorder" type="Int32" flow="in" />
-      <param name="points" type="Fixed" flow="in" />
-    </function>
     <function name="MapBuffer" extension="Core" category="VERSION_1_5" version="1.5">
       <returns type="VoidPointer" />
       <param name="target" type="BufferTargetARB" flow="in" />
@@ -13743,12 +13519,6 @@
       <param name="u1" type="CoordF" flow="in" />
       <param name="u2" type="CoordF" flow="in" />
     </function>
-    <function name="MapGrid1xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="n" type="Int32" flow="in" />
-      <param name="u1" type="Fixed" flow="in" />
-      <param name="u2" type="Fixed" flow="in" />
-    </function>
     <function name="MapGrid2d" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="un" type="Int32" flow="in" />
@@ -13766,14 +13536,6 @@
       <param name="vn" type="Int32" flow="in" />
       <param name="v1" type="CoordF" flow="in" />
       <param name="v2" type="CoordF" flow="in" />
-    </function>
-    <function name="MapGrid2xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="n" type="Int32" flow="in" />
-      <param name="u1" type="Fixed" flow="in" />
-      <param name="u2" type="Fixed" flow="in" />
-      <param name="v1" type="Fixed" flow="in" />
-      <param name="v2" type="Fixed" flow="in" />
     </function>
     <function name="Materialf" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -13798,18 +13560,6 @@
       <param name="face" type="MaterialFace" flow="in" />
       <param name="pname" type="MaterialParameter" flow="in" />
       <param name="params" type="CheckedInt32*" flow="in" />
-    </function>
-    <function name="MaterialxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="face" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="Fixed" flow="in" />
-    </function>
-    <function name="MaterialxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="face" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="ConstFixed*" flow="in" />
     </function>
     <function name="MatrixMode" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -13843,13 +13593,6 @@
       <param name="drawcount" type="SizeI" flow="in" />
       <param name="stride" type="SizeI" flow="in" />
     </function>
-    <function name="MultiDrawArraysIndirectAMD" extension="Core" category="AMD_multi_draw_indirect" version="4.0">
-      <returns type="void" />
-      <param name="mode" type="GLenum" flow="in" />
-      <param name="indirect" type="Void*" flow="in" />
-      <param name="primcount" type="SizeI" flow="in" />
-      <param name="stride" type="SizeI" flow="in" />
-    </function>
     <function name="MultiDrawElements" extension="Core" category="VERSION_1_4" version="1.4">
       <returns type="void" />
       <param name="mode" type="PrimitiveType" flow="in" />
@@ -13874,24 +13617,6 @@
       <param name="indirect" type="void*" flow="in" />
       <param name="drawcount" type="SizeI" flow="in" />
       <param name="stride" type="SizeI" flow="in" />
-    </function>
-    <function name="MultiDrawElementsIndirectAMD" extension="Core" category="AMD_multi_draw_indirect" version="4.0">
-      <returns type="void" />
-      <param name="mode" type="GLenum" flow="in" />
-      <param name="type" type="GLenum" flow="in" />
-      <param name="indirect" type="Void*" flow="in" />
-      <param name="primcount" type="SizeI" flow="in" />
-      <param name="stride" type="SizeI" flow="in" />
-    </function>
-    <function name="MultiTexCoord1bOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="s" type="Int8" flow="in" />
-    </function>
-    <function name="MultiTexCoord1bvOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="coords" type="ConstByte*" flow="in" count="1" />
     </function>
     <function name="MultiTexCoord1d" extension="Core" category="VERSION_1_3" version="1.3" deprecated="3.1">
       <returns type="void" />
@@ -13932,27 +13657,6 @@
       <returns type="void" />
       <param name="target" type="TextureUnit" flow="in" />
       <param name="v" type="CoordS*" flow="in" count="1" />
-    </function>
-    <function name="MultiTexCoord1xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="s" type="Fixed" flow="in" />
-    </function>
-    <function name="MultiTexCoord1xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="coords" type="ConstFixed*" flow="in" count="1" />
-    </function>
-    <function name="MultiTexCoord2bOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="s" type="Int8" flow="in" />
-      <param name="t" type="Int8" flow="in" />
-    </function>
-    <function name="MultiTexCoord2bvOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="coords" type="ConstByte*" flow="in" />
     </function>
     <function name="MultiTexCoord2d" extension="Core" category="VERSION_1_3" version="1.3" deprecated="3.1">
       <returns type="void" />
@@ -13997,29 +13701,6 @@
       <returns type="void" />
       <param name="target" type="TextureUnit" flow="in" />
       <param name="v" type="CoordS*" flow="in" />
-    </function>
-    <function name="MultiTexCoord2xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="s" type="Fixed" flow="in" />
-      <param name="t" type="Fixed" flow="in" />
-    </function>
-    <function name="MultiTexCoord2xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="coords" type="ConstFixed*" flow="in" />
-    </function>
-    <function name="MultiTexCoord3bOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="s" type="Int8" flow="in" />
-      <param name="t" type="Int8" flow="in" />
-      <param name="r" type="Int8" flow="in" />
-    </function>
-    <function name="MultiTexCoord3bvOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="coords" type="ConstByte*" flow="in" />
     </function>
     <function name="MultiTexCoord3d" extension="Core" category="VERSION_1_3" version="1.3" deprecated="3.1">
       <returns type="void" />
@@ -14068,31 +13749,6 @@
       <returns type="void" />
       <param name="target" type="TextureUnit" flow="in" />
       <param name="v" type="CoordS*" flow="in" />
-    </function>
-    <function name="MultiTexCoord3xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="s" type="Fixed" flow="in" />
-      <param name="t" type="Fixed" flow="in" />
-      <param name="r" type="Fixed" flow="in" />
-    </function>
-    <function name="MultiTexCoord3xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="coords" type="ConstFixed*" flow="in" />
-    </function>
-    <function name="MultiTexCoord4bOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="s" type="Int8" flow="in" />
-      <param name="t" type="Int8" flow="in" />
-      <param name="r" type="Int8" flow="in" />
-      <param name="q" type="Int8" flow="in" />
-    </function>
-    <function name="MultiTexCoord4bvOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="coords" type="ConstByte*" flow="in" />
     </function>
     <function name="MultiTexCoord4d" extension="Core" category="VERSION_1_3" version="1.3" deprecated="3.1">
       <returns type="void" />
@@ -14145,19 +13801,6 @@
       <returns type="void" />
       <param name="target" type="TextureUnit" flow="in" />
       <param name="v" type="CoordS*" flow="in" />
-    </function>
-    <function name="MultiTexCoord4xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="s" type="Fixed" flow="in" />
-      <param name="t" type="Fixed" flow="in" />
-      <param name="r" type="Fixed" flow="in" />
-      <param name="q" type="Fixed" flow="in" />
-    </function>
-    <function name="MultiTexCoord4xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="GLenum" flow="in" />
-      <param name="coords" type="ConstFixed*" flow="in" />
     </function>
     <function name="MultiTexCoordP1ui" extension="Core" category="ARB_vertex_type_2_10_10_10_rev" version="1.2">
       <returns type="void" />
@@ -14215,10 +13858,6 @@
       <returns type="void" />
       <param name="m" type="Float32*" flow="in" />
     </function>
-    <function name="MultMatrixxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="m" type="ConstFixed*" flow="in" />
-    </function>
     <function name="MultTransposeMatrixd" extension="Core" category="VERSION_1_3" version="1.3" deprecated="3.1">
       <returns type="void" />
       <param name="m" type="Float64*" flow="in" />
@@ -14226,10 +13865,6 @@
     <function name="MultTransposeMatrixf" extension="Core" category="VERSION_1_3" version="1.3" deprecated="3.1">
       <returns type="void" />
       <param name="m" type="Float32*" flow="in" />
-    </function>
-    <function name="MultTransposeMatrixxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="m" type="ConstFixed*" flow="in" />
     </function>
     <function name="NewList" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -14286,16 +13921,6 @@
       <returns type="void" />
       <param name="v" type="Int16*" flow="in" />
     </function>
-    <function name="Normal3xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="nx" type="Fixed" flow="in" />
-      <param name="ny" type="Fixed" flow="in" />
-      <param name="nz" type="Fixed" flow="in" />
-    </function>
-    <function name="Normal3xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstFixed*" flow="in" />
-    </function>
     <function name="NormalP3ui" extension="Core" category="ARB_vertex_type_2_10_10_10_rev" version="1.2">
       <returns type="void" />
       <param name="type" type="GLenum" flow="in" />
@@ -14334,31 +13959,9 @@
       <param name="zNear" type="Float64" flow="in" />
       <param name="zFar" type="Float64" flow="in" />
     </function>
-    <function name="OrthofOES" extension="Core" category="OES_single_precision" version="4.3">
-      <returns type="void" />
-      <param name="l" type="Float32" flow="in" />
-      <param name="r" type="Float32" flow="in" />
-      <param name="b" type="Float32" flow="in" />
-      <param name="t" type="Float32" flow="in" />
-      <param name="n" type="Float32" flow="in" />
-      <param name="f" type="Float32" flow="in" />
-    </function>
-    <function name="OrthoxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="l" type="Fixed" flow="in" />
-      <param name="r" type="Fixed" flow="in" />
-      <param name="b" type="Fixed" flow="in" />
-      <param name="t" type="Fixed" flow="in" />
-      <param name="n" type="Fixed" flow="in" />
-      <param name="f" type="Fixed" flow="in" />
-    </function>
     <function name="PassThrough" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="token" type="FeedbackElement" flow="in" />
-    </function>
-    <function name="PassThroughxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="token" type="Fixed" flow="in" />
     </function>
     <function name="PatchParameterfv" extension="Core" category="ARB_tessellation_shader" version="1.2">
       <returns type="void" />
@@ -14422,20 +14025,10 @@
       <param name="pname" type="PixelTransferParameter" flow="in" />
       <param name="param" type="CheckedInt32" flow="in" />
     </function>
-    <function name="PixelTransferxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="Fixed" flow="in" />
-    </function>
     <function name="PixelZoom" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="xfactor" type="Float32" flow="in" />
       <param name="yfactor" type="Float32" flow="in" />
-    </function>
-    <function name="PixelZoomxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="xfactor" type="Fixed" flow="in" />
-      <param name="yfactor" type="Fixed" flow="in" />
     </function>
     <function name="PointParameterf" extension="Core" category="VERSION_1_4" version="1.4">
       <returns type="void" />
@@ -14457,18 +14050,9 @@
       <param name="pname" type="PointParameterNameARB" flow="in" />
       <param name="params" type="Int32*" flow="in" />
     </function>
-    <function name="PointParameterxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="ConstFixed*" flow="in" />
-    </function>
     <function name="PointSize" extension="Core" category="VERSION_1_0" version="1.0">
       <returns type="void" />
       <param name="size" type="CheckedFloat32" flow="in" />
-    </function>
-    <function name="PointSizexOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="size" type="Fixed" flow="in" />
     </function>
     <function name="PolygonMode" extension="Core" category="VERSION_1_0" version="1.0">
       <returns type="void" />
@@ -14479,11 +14063,6 @@
       <returns type="void" />
       <param name="factor" type="Float32" flow="in" />
       <param name="units" type="Float32" flow="in" />
-    </function>
-    <function name="PolygonOffsetxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="factor" type="Fixed" flow="in" />
-      <param name="units" type="Fixed" flow="in" />
     </function>
     <function name="PolygonStipple" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -14513,12 +14092,6 @@
       <param name="n" type="SizeI" flow="in" />
       <param name="textures" type="Texture*" flow="in" />
       <param name="priorities" type="Float32*" flow="in" />
-    </function>
-    <function name="PrioritizeTexturesxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="n" type="SizeI" flow="in" />
-      <param name="textures" type="UInt32*" flow="in" />
-      <param name="priorities" type="ClampedFixed*" flow="in" />
     </function>
     <function name="ProgramBinary" extension="Core" category="ARB_get_program_binary" version="4.1">
       <returns type="void" />
@@ -14940,11 +14513,6 @@
       <param name="id" type="UInt32" flow="in" />
       <param name="target" type="GLenum" flow="in" />
     </function>
-    <function name="QueryMatrixxOES" extension="Core" category="OES_query_matrix" version="4.3">
-      <returns type="GLbitfield" />
-      <param name="mantissa" type="Fixed*" flow="out" />
-      <param name="exponent" type="Int32*" flow="out" />
-    </function>
     <function name="RasterPos2d" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="x" type="CoordD" flow="in" />
@@ -14980,15 +14548,6 @@
     <function name="RasterPos2sv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="v" type="CoordS*" flow="in" />
-    </function>
-    <function name="RasterPos2xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="x" type="Fixed" flow="in" />
-      <param name="y" type="Fixed" flow="in" />
-    </function>
-    <function name="RasterPos2xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstFixed*" flow="in" />
     </function>
     <function name="RasterPos3d" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -15029,16 +14588,6 @@
     <function name="RasterPos3sv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="v" type="CoordS*" flow="in" />
-    </function>
-    <function name="RasterPos3xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="x" type="Fixed" flow="in" />
-      <param name="y" type="Fixed" flow="in" />
-      <param name="z" type="Fixed" flow="in" />
-    </function>
-    <function name="RasterPos3xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstFixed*" flow="in" />
     </function>
     <function name="RasterPos4d" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -15083,17 +14632,6 @@
     <function name="RasterPos4sv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="v" type="CoordS*" flow="in" />
-    </function>
-    <function name="RasterPos4xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="x" type="Fixed" flow="in" />
-      <param name="y" type="Fixed" flow="in" />
-      <param name="z" type="Fixed" flow="in" />
-      <param name="w" type="Fixed" flow="in" />
-    </function>
-    <function name="RasterPos4xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstFixed*" flow="in" />
     </function>
     <function name="ReadBuffer" extension="Core" category="VERSION_1_0" version="1.0">
       <returns type="void" />
@@ -15157,18 +14695,6 @@
       <param name="v1" type="CoordS*" flow="in" />
       <param name="v2" type="CoordS*" flow="in" />
     </function>
-    <function name="RectxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="x1" type="Fixed" flow="in" />
-      <param name="y1" type="Fixed" flow="in" />
-      <param name="x2" type="Fixed" flow="in" />
-      <param name="y2" type="Fixed" flow="in" />
-    </function>
-    <function name="RectxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="v1" type="ConstFixed*" flow="in" />
-      <param name="v2" type="ConstFixed*" flow="in" />
-    </function>
     <function name="ReleaseShaderCompiler" extension="Core" category="ARB_ES2_compatibility" version="4.1">
       <returns type="void" />
     </function>
@@ -15216,21 +14742,9 @@
       <param name="y" type="Float32" flow="in" />
       <param name="z" type="Float32" flow="in" />
     </function>
-    <function name="RotatexOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="angle" type="Fixed" flow="in" />
-      <param name="x" type="Fixed" flow="in" />
-      <param name="y" type="Fixed" flow="in" />
-      <param name="z" type="Fixed" flow="in" />
-    </function>
     <function name="SampleCoverage" extension="Core" category="VERSION_1_3" version="1.3">
       <returns type="void" />
       <param name="value" type="Float32" flow="in" />
-      <param name="invert" type="Boolean" flow="in" />
-    </function>
-    <function name="SampleCoverageOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="value" type="ClampedFixed" flow="in" />
       <param name="invert" type="Boolean" flow="in" />
     </function>
     <function name="SampleMaski" extension="Core" category="ARB_texture_multisample" version="1.2">
@@ -15285,12 +14799,6 @@
       <param name="x" type="Float32" flow="in" />
       <param name="y" type="Float32" flow="in" />
       <param name="z" type="Float32" flow="in" />
-    </function>
-    <function name="ScalexOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="x" type="Fixed" flow="in" />
-      <param name="y" type="Fixed" flow="in" />
-      <param name="z" type="Fixed" flow="in" />
     </function>
     <function name="Scissor" extension="Core" category="VERSION_1_0" version="1.0">
       <returns type="void" />
@@ -15420,14 +14928,6 @@
       <param name="size" type="SizeI" flow="in" />
       <param name="buffer" type="SelectName*" flow="out" />
     </function>
-    <function name="SelectPerfMonitorCountersAMD" extension="Core" category="AMD_performance_monitor" version="1.2">
-      <returns type="void" />
-      <param name="monitor" type="UInt32" flow="in" />
-      <param name="enable" type="Boolean" flow="in" />
-      <param name="group" type="UInt32" flow="in" />
-      <param name="numCounters" type="Int32" flow="in" />
-      <param name="counterList" type="UInt32*" flow="out" />
-    </function>
     <function name="SeparableFilter2D" extension="Core" category="VERSION_1_2" version="1.2" deprecated="3.1">
       <returns type="void" />
       <param name="target" type="SeparableTarget" flow="in" />
@@ -15438,12 +14938,6 @@
       <param name="type" type="PixelType" flow="in" />
       <param name="row" type="Void*" flow="in" />
       <param name="column" type="Void*" flow="in" />
-    </function>
-    <function name="SetMultisamplefvAMD" extension="Core" category="AMD_sample_positions" version="3.2">
-      <returns type="void" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="index" type="UInt32" flow="in" />
-      <param name="val" type="Float32*" flow="in" />
     </function>
     <function name="ShadeModel" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -15505,19 +14999,6 @@
       <param name="dpfail" type="StencilOp" flow="in" />
       <param name="dppass" type="StencilOp" flow="in" />
     </function>
-    <function name="StencilOpValueAMD" extension="Core" category="AMD_stencil_operation_extended" version="1.2">
-      <returns type="void" />
-      <param name="face" type="StencilFaceDirection" flow="in" />
-      <param name="value" type="UInt32" flow="in" />
-    </function>
-    <function name="TessellationFactorAMD" extension="Core" category="AMD_vertex_shader_tessellator" version="2.0">
-      <returns type="void" />
-      <param name="factor" type="Float32" flow="in" />
-    </function>
-    <function name="TessellationModeAMD" extension="Core" category="AMD_vertex_shader_tessellator" version="2.0">
-      <returns type="void" />
-      <param name="mode" type="GLenum" flow="in" />
-    </function>
     <function name="TexBuffer" extension="Core" category="VERSION_3_1" version="3.1">
       <returns type="void" />
       <param name="target" type="TextureTarget" flow="in" />
@@ -15531,14 +15012,6 @@
       <param name="buffer" type="UInt32" flow="in" />
       <param name="offset" type="BufferOffset" flow="in" />
       <param name="size" type="BufferSize" flow="in" />
-    </function>
-    <function name="TexCoord1bOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="s" type="Int8" flow="in" />
-    </function>
-    <function name="TexCoord1bvOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstByte*" flow="in" count="1" />
     </function>
     <function name="TexCoord1d" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -15571,23 +15044,6 @@
     <function name="TexCoord1sv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="v" type="CoordS*" flow="in" count="1" />
-    </function>
-    <function name="TexCoord1xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="s" type="Fixed" flow="in" />
-    </function>
-    <function name="TexCoord1xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstFixed*" flow="in" count="1" />
-    </function>
-    <function name="TexCoord2bOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="s" type="Int8" flow="in" />
-      <param name="t" type="Int8" flow="in" />
-    </function>
-    <function name="TexCoord2bvOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstByte*" flow="in" />
     </function>
     <function name="TexCoord2d" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -15624,25 +15080,6 @@
     <function name="TexCoord2sv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="v" type="CoordS*" flow="in" />
-    </function>
-    <function name="TexCoord2xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="s" type="Fixed" flow="in" />
-      <param name="t" type="Fixed" flow="in" />
-    </function>
-    <function name="TexCoord2xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstFixed*" flow="in" />
-    </function>
-    <function name="TexCoord3bOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="s" type="Int8" flow="in" />
-      <param name="t" type="Int8" flow="in" />
-      <param name="r" type="Int8" flow="in" />
-    </function>
-    <function name="TexCoord3bvOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstByte*" flow="in" />
     </function>
     <function name="TexCoord3d" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -15683,27 +15120,6 @@
     <function name="TexCoord3sv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="v" type="CoordS*" flow="in" />
-    </function>
-    <function name="TexCoord3xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="s" type="Fixed" flow="in" />
-      <param name="t" type="Fixed" flow="in" />
-      <param name="r" type="Fixed" flow="in" />
-    </function>
-    <function name="TexCoord3xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstFixed*" flow="in" />
-    </function>
-    <function name="TexCoord4bOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="s" type="Int8" flow="in" />
-      <param name="t" type="Int8" flow="in" />
-      <param name="r" type="Int8" flow="in" />
-      <param name="q" type="Int8" flow="in" />
-    </function>
-    <function name="TexCoord4bvOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstByte*" flow="in" />
     </function>
     <function name="TexCoord4d" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -15748,17 +15164,6 @@
     <function name="TexCoord4sv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="v" type="CoordS*" flow="in" />
-    </function>
-    <function name="TexCoord4xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="s" type="Fixed" flow="in" />
-      <param name="t" type="Fixed" flow="in" />
-      <param name="r" type="Fixed" flow="in" />
-      <param name="q" type="Fixed" flow="in" />
-    </function>
-    <function name="TexCoord4xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstFixed*" flow="in" />
     </function>
     <function name="TexCoordP1ui" extension="Core" category="ARB_vertex_type_2_10_10_10_rev" version="1.2">
       <returns type="void" />
@@ -15831,18 +15236,6 @@
       <param name="pname" type="TextureEnvParameter" flow="in" />
       <param name="params" type="CheckedInt32*" flow="in" />
     </function>
-    <function name="TexEnvxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="Fixed" flow="in" />
-    </function>
-    <function name="TexEnvxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="ConstFixed*" flow="in" />
-    </function>
     <function name="TexGend" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="coord" type="TextureCoordName" flow="in" />
@@ -15878,18 +15271,6 @@
       <param name="coord" type="TextureCoordName" flow="in" />
       <param name="pname" type="TextureGenParameter" flow="in" />
       <param name="params" type="CheckedInt32*" flow="in" />
-    </function>
-    <function name="TexGenxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coord" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="Fixed" flow="in" />
-    </function>
-    <function name="TexGenxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coord" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="ConstFixed*" flow="in" />
     </function>
     <function name="TexImage1D" extension="Core" category="VERSION_1_0" version="1.0">
       <returns type="void" />
@@ -15982,18 +15363,6 @@
       <param name="pname" type="TextureParameterName" flow="in" />
       <param name="params" type="CheckedInt32*" flow="in" />
     </function>
-    <function name="TexParameterxOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="param" type="Fixed" flow="in" />
-    </function>
-    <function name="TexParameterxvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="ConstFixed*" flow="in" />
-    </function>
     <function name="TexStorage1D" extension="Core" category="ARB_texture_storage" version="4.2">
       <returns type="void" />
       <param name="target" type="GLenum" flow="in" />
@@ -16037,16 +15406,6 @@
       <param name="depth" type="SizeI" flow="in" />
       <param name="fixedsamplelocations" type="Boolean" flow="in" />
     </function>
-    <function name="TexStorageSparseAMD" extension="Core" category="AMD_sparse_texture" version="4.3">
-      <returns type="void" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="internalFormat" type="GLenum" flow="in" />
-      <param name="width" type="SizeI" flow="in" />
-      <param name="height" type="SizeI" flow="in" />
-      <param name="depth" type="SizeI" flow="in" />
-      <param name="layers" type="SizeI" flow="in" />
-      <param name="flags" type="GLbitfield" flow="in" />
-    </function>
     <function name="TexSubImage1D" extension="Core" category="VERSION_1_1" version="1.1">
       <returns type="void" />
       <param name="target" type="TextureTarget" flow="in" />
@@ -16083,17 +15442,6 @@
       <param name="type" type="PixelType" flow="in" />
       <param name="pixels" type="Void*" flow="in" />
     </function>
-    <function name="TextureStorageSparseAMD" extension="Core" category="AMD_sparse_texture" version="4.3">
-      <returns type="void" />
-      <param name="texture" type="UInt32" flow="in" />
-      <param name="target" type="GLenum" flow="in" />
-      <param name="internalFormat" type="GLenum" flow="in" />
-      <param name="width" type="SizeI" flow="in" />
-      <param name="height" type="SizeI" flow="in" />
-      <param name="depth" type="SizeI" flow="in" />
-      <param name="layers" type="SizeI" flow="in" />
-      <param name="flags" type="GLbitfield" flow="in" />
-    </function>
     <function name="TextureView" extension="Core" category="ARB_texture_view" version="4.3">
       <returns type="void" />
       <param name="texture" type="UInt32" flow="in" />
@@ -16123,12 +15471,6 @@
       <param name="x" type="Float32" flow="in" />
       <param name="y" type="Float32" flow="in" />
       <param name="z" type="Float32" flow="in" />
-    </function>
-    <function name="TranslatexOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="x" type="Fixed" flow="in" />
-      <param name="y" type="Fixed" flow="in" />
-      <param name="z" type="Fixed" flow="in" />
     </function>
     <function name="Uniform1d" extension="Core" category="ARB_gpu_shader_fp64" version="1.2">
       <returns type="void" />
@@ -16490,14 +15832,6 @@
       <returns type="void" />
       <param name="pipeline" type="UInt32" flow="in" />
     </function>
-    <function name="Vertex2bOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="x" type="Int8" flow="in" />
-    </function>
-    <function name="Vertex2bvOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstByte*" flow="in" />
-    </function>
     <function name="Vertex2d" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="x" type="CoordD" flow="in" />
@@ -16533,23 +15867,6 @@
     <function name="Vertex2sv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="v" type="CoordS*" flow="in" />
-    </function>
-    <function name="Vertex2xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="x" type="Fixed" flow="in" />
-    </function>
-    <function name="Vertex2xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstFixed*" flow="in" />
-    </function>
-    <function name="Vertex3bOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="x" type="Int8" flow="in" />
-      <param name="y" type="Int8" flow="in" />
-    </function>
-    <function name="Vertex3bvOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstByte*" flow="in" />
     </function>
     <function name="Vertex3d" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -16590,25 +15907,6 @@
     <function name="Vertex3sv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="v" type="CoordS*" flow="in" />
-    </function>
-    <function name="Vertex3xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="x" type="Fixed" flow="in" />
-      <param name="y" type="Fixed" flow="in" />
-    </function>
-    <function name="Vertex3xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstFixed*" flow="in" />
-    </function>
-    <function name="Vertex4bOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="x" type="Int8" flow="in" />
-      <param name="y" type="Int8" flow="in" />
-      <param name="z" type="Int8" flow="in" />
-    </function>
-    <function name="Vertex4bvOES" extension="Core" category="OES_byte_coordinates" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstByte*" flow="in" />
     </function>
     <function name="Vertex4d" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
@@ -16653,16 +15951,6 @@
     <function name="Vertex4sv" extension="Core" category="VERSION_1_0" version="1.0" deprecated="3.1">
       <returns type="void" />
       <param name="v" type="CoordS*" flow="in" />
-    </function>
-    <function name="Vertex4xOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="x" type="Fixed" flow="in" />
-      <param name="y" type="Fixed" flow="in" />
-      <param name="z" type="Fixed" flow="in" />
-    </function>
-    <function name="Vertex4xvOES" extension="Core" category="OES_fixed_point" version="4.3">
-      <returns type="void" />
-      <param name="coords" type="ConstFixed*" flow="in" />
     </function>
     <function name="VertexAttrib1d" extension="Core" category="VERSION_2_0" version="2.0" deprecated="3.1">
       <returns type="void" />
@@ -16995,21 +16283,6 @@
       <param name="index" type="UInt32" flow="in" />
       <param name="v" type="UInt16*" flow="in" />
     </function>
-    <function name="VertexAttribIFormat" extension="Core" category="ARB_vertex_attrib_binding" version="4.3">
-      <returns type="void" />
-      <param name="attribindex" type="UInt32" flow="in" />
-      <param name="size" type="Int32" flow="in" />
-      <param name="type" type="GLenum" flow="in" />
-      <param name="relativeoffset" type="UInt32" flow="in" />
-    </function>
-    <function name="VertexAttribIPointer" extension="Core" category="VERSION_3_0" version="3.0">
-      <returns type="void" />
-      <param name="index" type="UInt32" flow="in" />
-      <param name="size" type="Int32" flow="in" />
-      <param name="type" type="VertexAttribEnum" flow="in" />
-      <param name="stride" type="SizeI" flow="in" />
-      <param name="pointer" type="Void*" flow="in" />
-    </function>
     <function name="VertexAttribL1d" extension="Core" category="ARB_vertex_attrib_64bit" version="4.1">
       <returns type="void" />
       <param name="index" type="UInt32" flow="in" />
@@ -17055,21 +16328,6 @@
       <returns type="void" />
       <param name="index" type="UInt32" flow="in" />
       <param name="v" type="Float64*" flow="in" />
-    </function>
-    <function name="VertexAttribLFormat" extension="Core" category="ARB_vertex_attrib_binding" version="4.3">
-      <returns type="void" />
-      <param name="attribindex" type="UInt32" flow="in" />
-      <param name="size" type="Int32" flow="in" />
-      <param name="type" type="GLenum" flow="in" />
-      <param name="relativeoffset" type="UInt32" flow="in" />
-    </function>
-    <function name="VertexAttribLPointer" extension="Core" category="ARB_vertex_attrib_64bit" version="4.1">
-      <returns type="void" />
-      <param name="index" type="UInt32" flow="in" />
-      <param name="size" type="Int32" flow="in" />
-      <param name="type" type="GLenum" flow="in" />
-      <param name="stride" type="SizeI" flow="in" />
-      <param name="pointer" type="Void*" flow="in" />
     </function>
     <function name="VertexAttribP1ui" extension="Core" category="ARB_vertex_type_2_10_10_10_rev" version="1.2">
       <returns type="void" />
@@ -20843,6 +20101,13 @@
       <param name="pointer" type="VoidPointer*" flow="in" />
       <param name="ptrstride" type="Int32" flow="in" />
     </function>
+    <function name="VertexAttribIFormat" extension="IF" category="ARB_vertex_attrib_binding" version="4.3">
+      <returns type="void" />
+      <param name="attribindex" type="UInt32" flow="in" />
+      <param name="size" type="Int32" flow="in" />
+      <param name="type" type="GLenum" flow="in" />
+      <param name="relativeoffset" type="UInt32" flow="in" />
+    </function>
     <function name="BlendFuncSeparateINGR" extension="INGR" category="INGR_blend_func_separate" version="1.0">
       <returns type="void" />
       <param name="sfactorRGB" type="BlendFuncSeparateParameterEXT" flow="in" />
@@ -20889,6 +20154,29 @@
       <param name="size" type="Int32" flow="in" />
       <param name="type" type="VertexPointerType" flow="in" />
       <param name="pointer" type="VoidPointer*" flow="in" />
+    </function>
+    <function name="VertexAttribIPointer" extension="IP" category="VERSION_3_0" version="3.0">
+      <returns type="void" />
+      <param name="index" type="UInt32" flow="in" />
+      <param name="size" type="Int32" flow="in" />
+      <param name="type" type="VertexAttribEnum" flow="in" />
+      <param name="stride" type="SizeI" flow="in" />
+      <param name="pointer" type="Void*" flow="in" />
+    </function>
+    <function name="VertexAttribLFormat" extension="LF" category="ARB_vertex_attrib_binding" version="4.3">
+      <returns type="void" />
+      <param name="attribindex" type="UInt32" flow="in" />
+      <param name="size" type="Int32" flow="in" />
+      <param name="type" type="GLenum" flow="in" />
+      <param name="relativeoffset" type="UInt32" flow="in" />
+    </function>
+    <function name="VertexAttribLPointer" extension="LP" category="ARB_vertex_attrib_64bit" version="4.1">
+      <returns type="void" />
+      <param name="index" type="UInt32" flow="in" />
+      <param name="size" type="Int32" flow="in" />
+      <param name="type" type="GLenum" flow="in" />
+      <param name="stride" type="SizeI" flow="in" />
+      <param name="pointer" type="Void*" flow="in" />
     </function>
     <function name="ResizeBuffersMESA" extension="MESA" category="MESA_resize_buffers" version="1.0">
       <returns type="void" />
@@ -21028,10 +20316,6 @@
       <returns type="void" />
       <param name="id" type="UInt32" flow="in" />
       <param name="mode" type="TypeEnum" flow="in" />
-    </function>
-    <function name="BeginConditionalRenderNVX" extension="NV" category="NVX_conditional_render" version="4.3">
-      <returns type="void" />
-      <param name="id" type="UInt32" flow="in" />
     </function>
     <function name="BeginOcclusionQueryNV" extension="NV" category="NV_occlusion_query" version="1.2">
       <returns type="void" />
@@ -21289,9 +20573,6 @@
       <param name="stride" type="SizeI" flow="in" />
     </function>
     <function name="EndConditionalRenderNV" extension="NV" category="NV_conditional_render">
-      <returns type="void" />
-    </function>
-    <function name="EndConditionalRenderNVX" extension="NV" category="NVX_conditional_render" version="4.3">
       <returns type="void" />
     </function>
     <function name="EndOcclusionQueryNV" extension="NV" category="NV_occlusion_query" version="1.2">
@@ -23441,6 +22722,725 @@
       <param name="numPaths" type="SizeI" flow="in" />
       <param name="paths" type="Path*" flow="in" />
       <param name="weights" type="Float32*" flow="in" />
+    </function>
+    <function name="BeginConditionalRenderNVX" extension="NVX" category="NVX_conditional_render" version="4.3">
+      <returns type="void" />
+      <param name="id" type="UInt32" flow="in" />
+    </function>
+    <function name="EndConditionalRenderNVX" extension="NVX" category="NVX_conditional_render" version="4.3">
+      <returns type="void" />
+    </function>
+    <function name="AccumxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="op" type="GLenum" flow="in" />
+      <param name="value" type="Fixed" flow="in" />
+    </function>
+    <function name="AlphaFuncxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="func" type="GLenum" flow="in" />
+      <param name="ref" type="ClampedFixed" flow="in" />
+    </function>
+    <function name="BitmapxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="width" type="SizeI" flow="in" />
+      <param name="height" type="SizeI" flow="in" />
+      <param name="xorig" type="Fixed" flow="in" />
+      <param name="yorig" type="Fixed" flow="in" />
+      <param name="xmove" type="Fixed" flow="in" />
+      <param name="ymove" type="Fixed" flow="in" />
+      <param name="bitmap" type="ConstUByte*" flow="in" />
+    </function>
+    <function name="BlendColorxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="red" type="ClampedFixed" flow="in" />
+      <param name="green" type="ClampedFixed" flow="in" />
+      <param name="blue" type="ClampedFixed" flow="in" />
+      <param name="alpha" type="ClampedFixed" flow="in" />
+    </function>
+    <function name="ClearAccumxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="red" type="ClampedFixed" flow="in" />
+      <param name="green" type="ClampedFixed" flow="in" />
+      <param name="blue" type="ClampedFixed" flow="in" />
+      <param name="alpha" type="ClampedFixed" flow="in" />
+    </function>
+    <function name="ClearColorxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="red" type="ClampedFixed" flow="in" />
+      <param name="green" type="ClampedFixed" flow="in" />
+      <param name="blue" type="ClampedFixed" flow="in" />
+      <param name="alpha" type="ClampedFixed" flow="in" />
+    </function>
+    <function name="ClearDepthfOES" extension="OES" category="OES_single_precision" version="4.3">
+      <returns type="void" />
+      <param name="depth" type="ClampedFloat32" flow="in" />
+    </function>
+    <function name="ClearDepthxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="depth" type="ClampedFixed" flow="in" />
+    </function>
+    <function name="ClipPlanefOES" extension="OES" category="OES_single_precision" version="4.3">
+      <returns type="void" />
+      <param name="plane" type="GLenum" flow="in" />
+      <param name="equation" type="ConstFloat32*" flow="in" />
+    </function>
+    <function name="ClipPlanexOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="plane" type="GLenum" flow="in" />
+      <param name="equation" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="Color3xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="red" type="Fixed" flow="in" />
+      <param name="green" type="Fixed" flow="in" />
+      <param name="blue" type="Fixed" flow="in" />
+    </function>
+    <function name="Color3xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="components" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="Color4xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="red" type="Fixed" flow="in" />
+      <param name="green" type="Fixed" flow="in" />
+      <param name="blue" type="Fixed" flow="in" />
+      <param name="alpha" type="Fixed" flow="in" />
+    </function>
+    <function name="Color4xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="components" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="ConvolutionParameterxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="Fixed" flow="in" />
+    </function>
+    <function name="ConvolutionParameterxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="DepthRangefOES" extension="OES" category="OES_single_precision" version="4.3">
+      <returns type="void" />
+      <param name="n" type="ClampedFloat32" flow="in" />
+      <param name="f" type="ClampedFloat32" flow="in" />
+    </function>
+    <function name="DepthRangexOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="n" type="ClampedFixed" flow="in" />
+      <param name="f" type="ClampedFixed" flow="in" />
+    </function>
+    <function name="EvalCoord1xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="u" type="Fixed" flow="in" />
+    </function>
+    <function name="EvalCoord1xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstFixed*" flow="in" count="1" />
+    </function>
+    <function name="EvalCoord2xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="u" type="Fixed" flow="in" />
+      <param name="v" type="Fixed" flow="in" />
+    </function>
+    <function name="EvalCoord2xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="FeedbackBufferxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="n" type="SizeI" flow="in" />
+      <param name="type" type="GLenum" flow="in" />
+      <param name="buffer" type="Fixed*" flow="in" />
+    </function>
+    <function name="FogxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="Fixed" flow="in" />
+    </function>
+    <function name="FogxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="FrustumfOES" extension="OES" category="OES_single_precision" version="4.3">
+      <returns type="void" />
+      <param name="l" type="Float32" flow="in" />
+      <param name="r" type="Float32" flow="in" />
+      <param name="b" type="Float32" flow="in" />
+      <param name="t" type="Float32" flow="in" />
+      <param name="n" type="Float32" flow="in" />
+      <param name="f" type="Float32" flow="in" />
+    </function>
+    <function name="FrustumxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="l" type="Fixed" flow="in" />
+      <param name="r" type="Fixed" flow="in" />
+      <param name="b" type="Fixed" flow="in" />
+      <param name="t" type="Fixed" flow="in" />
+      <param name="n" type="Fixed" flow="in" />
+      <param name="f" type="Fixed" flow="in" />
+    </function>
+    <function name="GetClipPlanefOES" extension="OES" category="OES_single_precision" version="4.3">
+      <returns type="void" />
+      <param name="plane" type="GLenum" flow="in" />
+      <param name="equation" type="Float32*" flow="out" />
+    </function>
+    <function name="GetClipPlanexOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="plane" type="GLenum" flow="in" />
+      <param name="equation" type="Fixed*" flow="out" />
+    </function>
+    <function name="GetConvolutionParameterxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="Fixed*" flow="out" />
+    </function>
+    <function name="GetFixedvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="Fixed*" flow="out" />
+    </function>
+    <function name="GetHistogramParameterxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="Fixed*" flow="out" />
+    </function>
+    <function name="GetLightxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="light" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="Fixed*" flow="out" />
+    </function>
+    <function name="GetMapxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="query" type="GLenum" flow="in" />
+      <param name="v" type="Fixed*" flow="out" />
+    </function>
+    <function name="GetMaterialxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="face" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="Fixed" flow="in" />
+    </function>
+    <function name="GetTexEnvxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="Fixed*" flow="out" />
+    </function>
+    <function name="GetTexGenxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coord" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="Fixed*" flow="out" />
+    </function>
+    <function name="GetTexLevelParameterxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="level" type="Int32" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="Fixed*" flow="out" />
+    </function>
+    <function name="GetTexParameterxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="Fixed*" flow="out" />
+    </function>
+    <function name="IndexxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="component" type="Fixed" flow="in" />
+    </function>
+    <function name="IndexxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="component" type="ConstFixed*" flow="in" count="1" />
+    </function>
+    <function name="LightModelxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="Fixed" flow="in" />
+    </function>
+    <function name="LightModelxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="LightxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="light" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="Fixed" flow="in" />
+    </function>
+    <function name="LightxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="light" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="LineWidthxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="width" type="Fixed" flow="in" />
+    </function>
+    <function name="LoadMatrixxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="m" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="LoadTransposeMatrixxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="m" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="Map1xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="u1" type="Fixed" flow="in" />
+      <param name="u2" type="Fixed" flow="in" />
+      <param name="stride" type="Int32" flow="in" />
+      <param name="order" type="Int32" flow="in" />
+      <param name="points" type="Fixed" flow="in" />
+    </function>
+    <function name="Map2xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="u1" type="Fixed" flow="in" />
+      <param name="u2" type="Fixed" flow="in" />
+      <param name="ustride" type="Int32" flow="in" />
+      <param name="uorder" type="Int32" flow="in" />
+      <param name="v1" type="Fixed" flow="in" />
+      <param name="v2" type="Fixed" flow="in" />
+      <param name="vstride" type="Int32" flow="in" />
+      <param name="vorder" type="Int32" flow="in" />
+      <param name="points" type="Fixed" flow="in" />
+    </function>
+    <function name="MapGrid1xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="n" type="Int32" flow="in" />
+      <param name="u1" type="Fixed" flow="in" />
+      <param name="u2" type="Fixed" flow="in" />
+    </function>
+    <function name="MapGrid2xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="n" type="Int32" flow="in" />
+      <param name="u1" type="Fixed" flow="in" />
+      <param name="u2" type="Fixed" flow="in" />
+      <param name="v1" type="Fixed" flow="in" />
+      <param name="v2" type="Fixed" flow="in" />
+    </function>
+    <function name="MaterialxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="face" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="Fixed" flow="in" />
+    </function>
+    <function name="MaterialxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="face" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="MultiTexCoord1bOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="s" type="Int8" flow="in" />
+    </function>
+    <function name="MultiTexCoord1bvOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="coords" type="ConstByte*" flow="in" count="1" />
+    </function>
+    <function name="MultiTexCoord1xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="s" type="Fixed" flow="in" />
+    </function>
+    <function name="MultiTexCoord1xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="coords" type="ConstFixed*" flow="in" count="1" />
+    </function>
+    <function name="MultiTexCoord2bOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="s" type="Int8" flow="in" />
+      <param name="t" type="Int8" flow="in" />
+    </function>
+    <function name="MultiTexCoord2bvOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="coords" type="ConstByte*" flow="in" />
+    </function>
+    <function name="MultiTexCoord2xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="s" type="Fixed" flow="in" />
+      <param name="t" type="Fixed" flow="in" />
+    </function>
+    <function name="MultiTexCoord2xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="coords" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="MultiTexCoord3bOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="s" type="Int8" flow="in" />
+      <param name="t" type="Int8" flow="in" />
+      <param name="r" type="Int8" flow="in" />
+    </function>
+    <function name="MultiTexCoord3bvOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="coords" type="ConstByte*" flow="in" />
+    </function>
+    <function name="MultiTexCoord3xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="s" type="Fixed" flow="in" />
+      <param name="t" type="Fixed" flow="in" />
+      <param name="r" type="Fixed" flow="in" />
+    </function>
+    <function name="MultiTexCoord3xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="coords" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="MultiTexCoord4bOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="s" type="Int8" flow="in" />
+      <param name="t" type="Int8" flow="in" />
+      <param name="r" type="Int8" flow="in" />
+      <param name="q" type="Int8" flow="in" />
+    </function>
+    <function name="MultiTexCoord4bvOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="coords" type="ConstByte*" flow="in" />
+    </function>
+    <function name="MultiTexCoord4xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="s" type="Fixed" flow="in" />
+      <param name="t" type="Fixed" flow="in" />
+      <param name="r" type="Fixed" flow="in" />
+      <param name="q" type="Fixed" flow="in" />
+    </function>
+    <function name="MultiTexCoord4xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="texture" type="GLenum" flow="in" />
+      <param name="coords" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="MultMatrixxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="m" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="MultTransposeMatrixxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="m" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="Normal3xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="nx" type="Fixed" flow="in" />
+      <param name="ny" type="Fixed" flow="in" />
+      <param name="nz" type="Fixed" flow="in" />
+    </function>
+    <function name="Normal3xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="OrthofOES" extension="OES" category="OES_single_precision" version="4.3">
+      <returns type="void" />
+      <param name="l" type="Float32" flow="in" />
+      <param name="r" type="Float32" flow="in" />
+      <param name="b" type="Float32" flow="in" />
+      <param name="t" type="Float32" flow="in" />
+      <param name="n" type="Float32" flow="in" />
+      <param name="f" type="Float32" flow="in" />
+    </function>
+    <function name="OrthoxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="l" type="Fixed" flow="in" />
+      <param name="r" type="Fixed" flow="in" />
+      <param name="b" type="Fixed" flow="in" />
+      <param name="t" type="Fixed" flow="in" />
+      <param name="n" type="Fixed" flow="in" />
+      <param name="f" type="Fixed" flow="in" />
+    </function>
+    <function name="PassThroughxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="token" type="Fixed" flow="in" />
+    </function>
+    <function name="PixelTransferxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="Fixed" flow="in" />
+    </function>
+    <function name="PixelZoomxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="xfactor" type="Fixed" flow="in" />
+      <param name="yfactor" type="Fixed" flow="in" />
+    </function>
+    <function name="PointParameterxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="PointSizexOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="size" type="Fixed" flow="in" />
+    </function>
+    <function name="PolygonOffsetxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="factor" type="Fixed" flow="in" />
+      <param name="units" type="Fixed" flow="in" />
+    </function>
+    <function name="PrioritizeTexturesxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="n" type="SizeI" flow="in" />
+      <param name="textures" type="UInt32*" flow="in" />
+      <param name="priorities" type="ClampedFixed*" flow="in" />
+    </function>
+    <function name="QueryMatrixxOES" extension="OES" category="OES_query_matrix" version="4.3">
+      <returns type="GLbitfield" />
+      <param name="mantissa" type="Fixed*" flow="out" />
+      <param name="exponent" type="Int32*" flow="out" />
+    </function>
+    <function name="RasterPos2xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="x" type="Fixed" flow="in" />
+      <param name="y" type="Fixed" flow="in" />
+    </function>
+    <function name="RasterPos2xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="RasterPos3xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="x" type="Fixed" flow="in" />
+      <param name="y" type="Fixed" flow="in" />
+      <param name="z" type="Fixed" flow="in" />
+    </function>
+    <function name="RasterPos3xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="RasterPos4xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="x" type="Fixed" flow="in" />
+      <param name="y" type="Fixed" flow="in" />
+      <param name="z" type="Fixed" flow="in" />
+      <param name="w" type="Fixed" flow="in" />
+    </function>
+    <function name="RasterPos4xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="RectxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="x1" type="Fixed" flow="in" />
+      <param name="y1" type="Fixed" flow="in" />
+      <param name="x2" type="Fixed" flow="in" />
+      <param name="y2" type="Fixed" flow="in" />
+    </function>
+    <function name="RectxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="v1" type="ConstFixed*" flow="in" />
+      <param name="v2" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="RotatexOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="angle" type="Fixed" flow="in" />
+      <param name="x" type="Fixed" flow="in" />
+      <param name="y" type="Fixed" flow="in" />
+      <param name="z" type="Fixed" flow="in" />
+    </function>
+    <function name="SampleCoverageOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="value" type="ClampedFixed" flow="in" />
+      <param name="invert" type="Boolean" flow="in" />
+    </function>
+    <function name="ScalexOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="x" type="Fixed" flow="in" />
+      <param name="y" type="Fixed" flow="in" />
+      <param name="z" type="Fixed" flow="in" />
+    </function>
+    <function name="TexCoord1bOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="s" type="Int8" flow="in" />
+    </function>
+    <function name="TexCoord1bvOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstByte*" flow="in" count="1" />
+    </function>
+    <function name="TexCoord1xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="s" type="Fixed" flow="in" />
+    </function>
+    <function name="TexCoord1xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstFixed*" flow="in" count="1" />
+    </function>
+    <function name="TexCoord2bOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="s" type="Int8" flow="in" />
+      <param name="t" type="Int8" flow="in" />
+    </function>
+    <function name="TexCoord2bvOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstByte*" flow="in" />
+    </function>
+    <function name="TexCoord2xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="s" type="Fixed" flow="in" />
+      <param name="t" type="Fixed" flow="in" />
+    </function>
+    <function name="TexCoord2xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="TexCoord3bOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="s" type="Int8" flow="in" />
+      <param name="t" type="Int8" flow="in" />
+      <param name="r" type="Int8" flow="in" />
+    </function>
+    <function name="TexCoord3bvOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstByte*" flow="in" />
+    </function>
+    <function name="TexCoord3xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="s" type="Fixed" flow="in" />
+      <param name="t" type="Fixed" flow="in" />
+      <param name="r" type="Fixed" flow="in" />
+    </function>
+    <function name="TexCoord3xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="TexCoord4bOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="s" type="Int8" flow="in" />
+      <param name="t" type="Int8" flow="in" />
+      <param name="r" type="Int8" flow="in" />
+      <param name="q" type="Int8" flow="in" />
+    </function>
+    <function name="TexCoord4bvOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstByte*" flow="in" />
+    </function>
+    <function name="TexCoord4xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="s" type="Fixed" flow="in" />
+      <param name="t" type="Fixed" flow="in" />
+      <param name="r" type="Fixed" flow="in" />
+      <param name="q" type="Fixed" flow="in" />
+    </function>
+    <function name="TexCoord4xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="TexEnvxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="Fixed" flow="in" />
+    </function>
+    <function name="TexEnvxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="TexGenxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coord" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="Fixed" flow="in" />
+    </function>
+    <function name="TexGenxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coord" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="TexParameterxOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="Fixed" flow="in" />
+    </function>
+    <function name="TexParameterxvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="target" type="GLenum" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="params" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="TranslatexOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="x" type="Fixed" flow="in" />
+      <param name="y" type="Fixed" flow="in" />
+      <param name="z" type="Fixed" flow="in" />
+    </function>
+    <function name="Vertex2bOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="x" type="Int8" flow="in" />
+    </function>
+    <function name="Vertex2bvOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstByte*" flow="in" />
+    </function>
+    <function name="Vertex2xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="x" type="Fixed" flow="in" />
+    </function>
+    <function name="Vertex2xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="Vertex3bOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="x" type="Int8" flow="in" />
+      <param name="y" type="Int8" flow="in" />
+    </function>
+    <function name="Vertex3bvOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstByte*" flow="in" />
+    </function>
+    <function name="Vertex3xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="x" type="Fixed" flow="in" />
+      <param name="y" type="Fixed" flow="in" />
+    </function>
+    <function name="Vertex3xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstFixed*" flow="in" />
+    </function>
+    <function name="Vertex4bOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="x" type="Int8" flow="in" />
+      <param name="y" type="Int8" flow="in" />
+      <param name="z" type="Int8" flow="in" />
+    </function>
+    <function name="Vertex4bvOES" extension="OES" category="OES_byte_coordinates" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstByte*" flow="in" />
+    </function>
+    <function name="Vertex4xOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="x" type="Fixed" flow="in" />
+      <param name="y" type="Fixed" flow="in" />
+      <param name="z" type="Fixed" flow="in" />
+    </function>
+    <function name="Vertex4xvOES" extension="OES" category="OES_fixed_point" version="4.3">
+      <returns type="void" />
+      <param name="coords" type="ConstFixed*" flow="in" />
     </function>
     <function name="HintPGI" extension="PGI" category="PGI_misc_hints" version="1.1">
       <returns type="void" />
