@@ -1655,13 +1655,20 @@ namespace OpenTK.Graphics.OpenGL
 
     public delegate void DebugProcAmd(int id,
         AmdDebugOutput category, AmdDebugOutput severity,
-        IntPtr length, string message, IntPtr userParam);
+        int length, IntPtr message, IntPtr userParam);
 
-    public delegate void DebugProcArb(int id,
-        ArbDebugOutput category, ArbDebugOutput severity,
-        IntPtr length, string message, IntPtr userParam);
+    public delegate void DebugProcArb(
+        DebugSource source, DebugType type, int id,
+        DebugSeverity severity, int length, IntPtr message,
+        IntPtr userParam);
 
-    public delegate void DebugProc(int id,
-        ArbDebugOutput category, ArbDebugOutput severity,
-        IntPtr length, string message, IntPtr userParam);
+    public delegate void DebugProc(
+        DebugSource source, DebugType type, int id,
+        DebugSeverity severity, int length, IntPtr message,
+        IntPtr userParam);
+
+    public delegate void DebugProcKhr(
+        DebugSource source, DebugType type, int id,
+        DebugSeverity severity, int length, IntPtr message,
+        IntPtr userParam);
 }
