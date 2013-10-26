@@ -35,8 +35,8 @@ namespace CHeaderToXML
     class GLParser : Parser
     {
         static readonly Regex extensions = new Regex(
-            @"3DFX|(?!(?<=[1-4])D)[A-Z]{2,}",
-            RegexOptions.RightToLeft | RegexOptions.Compiled);
+            @"3DFX|(?!(?<=[1-4])D)[A-Z]{2,}$",
+            RegexOptions.Compiled);
         static readonly char[] splitters = new char[] { ' ', '\t', ',', '(', ')', ';', '\n', '\r' };
 
         enum ParserModes { None, Enum, Func };

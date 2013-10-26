@@ -16283,6 +16283,21 @@
       <param name="index" type="UInt32" flow="in" />
       <param name="v" type="UInt16*" flow="in" />
     </function>
+    <function name="VertexAttribIFormat" extension="Core" category="ARB_vertex_attrib_binding" version="4.3">
+      <returns type="void" />
+      <param name="attribindex" type="UInt32" flow="in" />
+      <param name="size" type="Int32" flow="in" />
+      <param name="type" type="GLenum" flow="in" />
+      <param name="relativeoffset" type="UInt32" flow="in" />
+    </function>
+    <function name="VertexAttribIPointer" extension="Core" category="VERSION_3_0" version="3.0">
+      <returns type="void" />
+      <param name="index" type="UInt32" flow="in" />
+      <param name="size" type="Int32" flow="in" />
+      <param name="type" type="VertexAttribEnum" flow="in" />
+      <param name="stride" type="SizeI" flow="in" />
+      <param name="pointer" type="Void*" flow="in" />
+    </function>
     <function name="VertexAttribL1d" extension="Core" category="ARB_vertex_attrib_64bit" version="4.1">
       <returns type="void" />
       <param name="index" type="UInt32" flow="in" />
@@ -16328,6 +16343,21 @@
       <returns type="void" />
       <param name="index" type="UInt32" flow="in" />
       <param name="v" type="Float64*" flow="in" />
+    </function>
+    <function name="VertexAttribLFormat" extension="Core" category="ARB_vertex_attrib_binding" version="4.3">
+      <returns type="void" />
+      <param name="attribindex" type="UInt32" flow="in" />
+      <param name="size" type="Int32" flow="in" />
+      <param name="type" type="GLenum" flow="in" />
+      <param name="relativeoffset" type="UInt32" flow="in" />
+    </function>
+    <function name="VertexAttribLPointer" extension="Core" category="ARB_vertex_attrib_64bit" version="4.1">
+      <returns type="void" />
+      <param name="index" type="UInt32" flow="in" />
+      <param name="size" type="Int32" flow="in" />
+      <param name="type" type="GLenum" flow="in" />
+      <param name="stride" type="SizeI" flow="in" />
+      <param name="pointer" type="Void*" flow="in" />
     </function>
     <function name="VertexAttribP1ui" extension="Core" category="ARB_vertex_type_2_10_10_10_rev" version="1.2">
       <returns type="void" />
@@ -20101,13 +20131,6 @@
       <param name="pointer" type="VoidPointer*" flow="in" />
       <param name="ptrstride" type="Int32" flow="in" />
     </function>
-    <function name="VertexAttribIFormat" extension="IF" category="ARB_vertex_attrib_binding" version="4.3">
-      <returns type="void" />
-      <param name="attribindex" type="UInt32" flow="in" />
-      <param name="size" type="Int32" flow="in" />
-      <param name="type" type="GLenum" flow="in" />
-      <param name="relativeoffset" type="UInt32" flow="in" />
-    </function>
     <function name="BlendFuncSeparateINGR" extension="INGR" category="INGR_blend_func_separate" version="1.0">
       <returns type="void" />
       <param name="sfactorRGB" type="BlendFuncSeparateParameterEXT" flow="in" />
@@ -20154,29 +20177,6 @@
       <param name="size" type="Int32" flow="in" />
       <param name="type" type="VertexPointerType" flow="in" />
       <param name="pointer" type="VoidPointer*" flow="in" />
-    </function>
-    <function name="VertexAttribIPointer" extension="IP" category="VERSION_3_0" version="3.0">
-      <returns type="void" />
-      <param name="index" type="UInt32" flow="in" />
-      <param name="size" type="Int32" flow="in" />
-      <param name="type" type="VertexAttribEnum" flow="in" />
-      <param name="stride" type="SizeI" flow="in" />
-      <param name="pointer" type="Void*" flow="in" />
-    </function>
-    <function name="VertexAttribLFormat" extension="LF" category="ARB_vertex_attrib_binding" version="4.3">
-      <returns type="void" />
-      <param name="attribindex" type="UInt32" flow="in" />
-      <param name="size" type="Int32" flow="in" />
-      <param name="type" type="GLenum" flow="in" />
-      <param name="relativeoffset" type="UInt32" flow="in" />
-    </function>
-    <function name="VertexAttribLPointer" extension="LP" category="ARB_vertex_attrib_64bit" version="4.1">
-      <returns type="void" />
-      <param name="index" type="UInt32" flow="in" />
-      <param name="size" type="Int32" flow="in" />
-      <param name="type" type="GLenum" flow="in" />
-      <param name="stride" type="SizeI" flow="in" />
-      <param name="pointer" type="Void*" flow="in" />
     </function>
     <function name="ResizeBuffersMESA" extension="MESA" category="MESA_resize_buffers" version="1.0">
       <returns type="void" />
