@@ -4533,10 +4533,10 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void ProgramParameteri(UInt32 program, OpenTK.Graphics.OpenGL.ProgramParameterPName pname, Int32 value);
             internal static ProgramParameteri glProgramParameteri;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ProgramParameteriARB(UInt32 program, OpenTK.Graphics.OpenGL.AssemblyProgramParameterArb pname, Int32 value);
+            internal delegate void ProgramParameteriARB(UInt32 program, OpenTK.Graphics.OpenGL.ProgramParameterPName pname, Int32 value);
             internal static ProgramParameteriARB glProgramParameteriARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ProgramParameteriEXT(UInt32 program, OpenTK.Graphics.OpenGL.AssemblyProgramParameterArb pname, Int32 value);
+            internal delegate void ProgramParameteriEXT(UInt32 program, OpenTK.Graphics.OpenGL.ProgramParameterPName pname, Int32 value);
             internal static ProgramParameteriEXT glProgramParameteriEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void ProgramParameters4dvNV(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, UInt32 index, Int32 count, Double* v);
