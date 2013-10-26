@@ -59,6 +59,7 @@ namespace Bind
         private DelegateCollection ReadDelegates(XPathNavigator specs)
         {
             DelegateCollection delegates = new DelegateCollection();
+            var extensions = new List<string>();
 
             foreach (XPathNavigator node in specs.SelectChildren("function", String.Empty))
             {
@@ -78,6 +79,9 @@ namespace Bind
                     d.Category = node.GetAttribute("category", String.Empty);
                     d.DeprecatedVersion = node.GetAttribute("deprecated", String.Empty);
                     d.Deprecated = !String.IsNullOrEmpty(d.DeprecatedVersion);
+                    d.Extension = node.GetAttribute("extension", String.Empty) ?? "Core";
+                    if (!extensions.Contains(d.Extension))
+                        extensions.Add(d.Extension);
                 }
 
                 foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
@@ -117,6 +121,7 @@ namespace Bind
                 delegates.Add(d);
             }
 
+            Utilities.InitExtensions(extensions);
             return delegates;
         }
 

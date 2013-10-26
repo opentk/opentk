@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Bind.Structures;
 using Delegate=Bind.Structures.Delegate;
@@ -69,11 +70,34 @@ namespace Bind
     public static class Utilities
     {
         public static readonly char[] Separators = { ' ', '\n', ',', '(', ')', ';', '#' };
-        public static readonly Regex Extensions = new Regex(
-            "ARB|EXT|ATIX|ATI|AMDX|AMD|NV|NVX|SUNX|SUN|SGIS|SGIX|SGI|MESAX|MESA|3DFX|IBM|GREMEDY|HP|INTEL|PGI|INGR|APPLE|OML|I3D|ARM|ANGLE|OES|QCOM|VIV|IMG",
-            RegexOptions.Compiled);
-        public static readonly Regex Acronyms = new Regex(Extensions.ToString() + "|EGL|3TC|DXT|ES|GL|CL|RGBA|BGRA|RGB|BGR|ETC",
-            RegexOptions.Compiled);
+        public static Regex Extensions { get; private set; }
+        public static Regex Acronyms { get; private set; }
+        //public static readonly Regex Extensions = new Regex(
+        //    "ARB|EXT|ATIX|ATI|AMDX|AMD|NV|NVX|SUNX|SUN|SGIS|SGIX|SGI|MESAX|MESA|3DFX|IBM|GREMEDY|HP|INTEL|PGI|INGR|APPLE|OML|I3D|ARM|ANGLE|OES|QCOM|VIV|IMG",
+        //    RegexOptions.Compiled);
+        //public static readonly Regex Acronyms = new Regex(Extensions.ToString() + "|EGL|3TC|DXT|ES|GL|CL|RGBA|BGRA|RGB|BGR|ETC",
+        //    RegexOptions.Compiled);
+
+        public static void InitExtensions(IEnumerable<string> extensions)
+        {
+            var acronyms = new string[]
+            {
+                "EGL",  "ES", "GL", "CL",
+                "RGBA", "BGRA", "RGB", "BGR",
+                "SRGB", "YCBCR",
+                "3TC", "DXT", "BPTC", "RGTC",
+                "3DC", "ATC", "ETC",
+                "ANGLE",  "MESAX", "MESA",
+            };
+
+            Extensions = new Regex(
+                String.Join("|", extensions.ToArray()),
+                RegexOptions.Compiled);
+                        
+            Acronyms = new Regex(
+                String.Join("|", extensions.Concat(acronyms).ToArray()),
+                RegexOptions.Compiled);
+        }
 
         #region internal StreamReader OpenSpecFile(string file)
 
