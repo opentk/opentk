@@ -82,8 +82,11 @@ namespace Bind.GL2
             SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates);
             SpecReader.ReadDelegates(overrides, Delegates);
 
-            Enums = new EnumProcessor(overrides).Process(Enums);
-            Wrappers = new FuncProcessor(overrides).Process(Delegates, Enums);
+            var enum_processor = new EnumProcessor(overrides);
+            var func_processor = new FuncProcessor(overrides);
+
+            Enums = enum_processor.Process(Enums);
+            Wrappers = func_processor.Process(enum_processor, Delegates, Enums);
         }
 
         #endregion

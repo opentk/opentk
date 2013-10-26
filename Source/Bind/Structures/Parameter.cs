@@ -15,7 +15,7 @@ namespace Bind.Structures
     /// <summary>
     /// Represents a single parameter of an opengl function.
     /// </summary>
-    public class Parameter : Type, IComparable<Parameter>
+    class Parameter : Type, IComparable<Parameter>
     {
         string cache;
         bool rebuild;
@@ -302,9 +302,9 @@ namespace Bind.Structures
 
         #region Translate()
 
-        override public void Translate(XPathNavigator overrides, string category, EnumCollection enums)
+        override public void Translate(EnumProcessor enum_processor, XPathNavigator overrides, string category, EnumCollection enums)
         {
-            base.Translate(overrides, category, enums);
+            base.Translate(enum_processor, overrides, category, enums);
 
             if (Pointer >= 3)
             {
@@ -392,7 +392,7 @@ namespace Bind.Structures
     /// <summary>
     /// Holds the parameter list of an opengl function.
     /// </summary>
-    public class ParameterCollection : List<Parameter>, IComparable<ParameterCollection>
+    class ParameterCollection : List<Parameter>, IComparable<ParameterCollection>
     {
         string cache = String.Empty;
         string callStringCache = String.Empty;

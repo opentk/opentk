@@ -58,7 +58,7 @@ namespace Bind
             return enums;
         }
 
-        static EnumCollection ProcessNames(EnumCollection enums, XPathNavigator nav)
+        EnumCollection ProcessNames(EnumCollection enums, XPathNavigator nav)
         {
             EnumCollection processed_enums = new EnumCollection();
             foreach (var e in enums.Values)
@@ -89,8 +89,11 @@ namespace Bind
             return name;
         }
 
-        public static string TranslateEnumName(string name)
+        public string TranslateEnumName(string name)
         {
+            if (String.IsNullOrEmpty(name))
+                return name;
+
             if (Utilities.Keywords.Contains(name))
                 return name;
 
@@ -99,7 +102,7 @@ namespace Bind
 
             StringBuilder translator = new StringBuilder(name);
 
-            // Split on IHV names, to ensure that characters appearing after these name are uppercase.
+            // Split on IHV names and acronyms, to ensure that characters appearing after these name are uppercase.
             var match = Utilities.Acronyms.Match(name);
             int offset = 0; // Everytime we insert a match, we must increase offset to compensate.
             while (match.Success)
@@ -162,7 +165,7 @@ namespace Bind
             return name;
         }
 
-        static EnumCollection ProcessConstants(EnumCollection enums, XPathNavigator nav)
+        EnumCollection ProcessConstants(EnumCollection enums, XPathNavigator nav)
         {
             foreach (var e in enums.Values)
             {
@@ -171,6 +174,7 @@ namespace Bind
                 {
                     c.Name = TranslateConstantName(c.Name, false);
                     c.Value = TranslateConstantValue(c.Value);
+                    c.Reference = TranslateEnumName(c.Reference);
                     if (!processed_constants.ContainsKey(c.Name))
                         processed_constants.Add(c.Name, c);
                 }
@@ -215,6 +219,9 @@ namespace Bind
 
         public static string TranslateConstantName(string s, bool isValue)
         {
+            if (String.IsNullOrEmpty(s))
+                return s;
+
             StringBuilder translator = new StringBuilder(s.Length);
 
             if (isValue)
@@ -319,7 +326,7 @@ namespace Bind
             // Note that we have the removal must be a separate step, since
             // we cannot modify a collection while iterating with foreach.
             var broken_references = e.ConstantCollection.Values
-                .Where(c => !Constant.TranslateConstantWithReference(c, enums, null))
+                .Where(c => !Constant.TranslateConstantWithReference(c, enums))
                 .Select(c => c).ToList();
             foreach (var c in broken_references)
             {

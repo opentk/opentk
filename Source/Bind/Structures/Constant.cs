@@ -98,9 +98,7 @@ namespace Bind.Structures
             get { return _reference; }
             set
             {
-                if (!String.IsNullOrEmpty(value))
-                    _reference = EnumProcessor.TranslateEnumName(value.Trim());
-                else _reference = value;
+                _reference = value;
             }
         }
 
@@ -145,51 +143,6 @@ namespace Bind.Structures
 
         #endregion
 
-        #region Translate
-
-        [Obsolete]
-        public static string Translate(string s, bool isValue)
-        {
-            translator.Remove(0, translator.Length);
-
-            // Translate the constant's name to match .Net naming conventions
-            bool name_is_all_caps = s.AsEnumerable().All(c => Char.IsLetter(c) ? Char.IsUpper(c) : true);
-            bool name_contains_underscore = s.Contains("_");
-            if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None &&
-                (name_is_all_caps || name_contains_underscore))
-            {
-                bool next_char_uppercase = true;
-                bool is_after_digit = false;
-
-                if (!isValue && Char.IsDigit(s[0]))
-                    translator.Insert(0, Settings.ConstantPrefix);
-
-                foreach (char c in s)
-                {
-                    if (c == '_')
-                        next_char_uppercase = true;
-                    else if (Char.IsDigit(c))
-                    {
-                        is_after_digit = true;
-                        translator.Append(c);
-                    }
-                    else
-                    {
-                        translator.Append(next_char_uppercase || (is_after_digit && c == 'd') ? Char.ToUpper(c) : Char.ToLower(c));
-                        is_after_digit = next_char_uppercase = false;
-                    }
-                }
-
-                translator[0] = Char.ToUpper(translator[0]);
-            }
-            else
-                translator.Append(s);
-
-            return translator.ToString();
-        }
-
-        #endregion
-
         /// <summary>
         /// Replces the Value of the given constant with the value referenced by the [c.Reference, c.Value] pair.
         /// </summary>
@@ -197,7 +150,7 @@ namespace Bind.Structures
         /// <param name="enums">The list of enums to check.</param>
         /// <param name="auxEnums">The list of auxilliary enums to check.</param>
         /// <returns>True if the reference was found; false otherwise.</returns>
-        public static bool TranslateConstantWithReference(Constant c, EnumCollection enums, EnumCollection auxEnums)
+        public static bool TranslateConstantWithReference(Constant c, EnumCollection enums)
         {
             if (c == null)
                 throw new ArgumentNullException("c");
@@ -218,15 +171,8 @@ namespace Bind.Structures
                     // Transitively translate the referenced token
                     // Todo: this may cause loops if two tokens reference each other.
                     // Add a max reference depth and bail out?
-                    TranslateConstantWithReference(enums[c.Reference].ConstantCollection[c.Value], enums, auxEnums);
+                    TranslateConstantWithReference(enums[c.Reference].ConstantCollection[c.Value], enums);
                     referenced_constant = (enums[c.Reference].ConstantCollection[c.Value]);
-                }
-                else if (auxEnums != null && auxEnums.ContainsKey(c.Reference) && auxEnums[c.Reference].ConstantCollection.ContainsKey(c.Value))
-                {
-                    // Legacy from previous generator incarnation.
-                    // Todo: merge everything into enums and get rid of auxEnums.
-                    TranslateConstantWithReference(auxEnums[c.Reference].ConstantCollection[c.Value], enums, auxEnums);
-                    referenced_constant = (auxEnums[c.Reference].ConstantCollection[c.Value]);
                 }
                 else if (enums.ContainsKey(Settings.CompleteEnumName) &&
                     enums[Settings.CompleteEnumName].ConstantCollection.ContainsKey(c.Value))

@@ -56,14 +56,15 @@ namespace Bind
             Overrides = overrides;
         }
 
-        public FunctionCollection Process(DelegateCollection delegates, EnumCollection enums)
+        public FunctionCollection Process(EnumProcessor enum_processor, DelegateCollection delegates, EnumCollection enums)
         {
             Console.WriteLine("Processing delegates.");
             var nav = new XPathDocument(Overrides).CreateNavigator();
             foreach (var d in delegates.Values)
             {
-                TranslateReturnType(nav, d, enums);
-                TranslateParameters(nav, d, enums);
+                TranslateExtension(d);
+                TranslateReturnType(enum_processor, nav, d, enums);
+                TranslateParameters(enum_processor, nav, d, enums);
                 TranslateAttributes(nav, d, enums);
             }
 
@@ -76,11 +77,33 @@ namespace Bind
             return MarkCLSCompliance(wrappers);
         }
 
-        // Trims unecessary suffices from the specified OpenGL function name.
-        public static string TrimName(string name, bool keep_extension)
+        void TranslateExtension(Delegate d)
         {
-            string trimmed_name = Utilities.StripGL2Extension(name);
-            string extension = Utilities.GetGL2Extension(name);
+            var extension = d.Extension.ToUpper();
+            if (extension.Length > 2)
+            {
+                extension = extension[0] + extension.Substring(1).ToLower();
+            }
+            d.Extension = extension;
+        }
+
+        static string GetTrimmedExtension(string name, string extension)
+        {
+            // Extensions are always uppercase
+            int index = name.LastIndexOf(extension.ToUpper());
+            if (index >= 0)
+            {
+                name = name.Remove(index);
+            }
+            return name;
+        }
+
+        // Trims unecessary suffices from the specified OpenGL function name.
+        static string GetTrimmedName(Delegate d)
+        {
+            string name = d.Name;
+            string extension = d.Extension;
+            string trimmed_name = GetTrimmedExtension(name, extension);
 
             // Note: some endings should not be trimmed, for example: 'b' from Attrib.
             // Check the endingsNotToTrim regex for details.
@@ -117,14 +140,18 @@ namespace Bind
 
         static XPathNavigator GetFuncOverride(XPathNavigator nav, Delegate d)
         {
-            string name = TrimName(d.Name, false);
+            string trimmed_name = GetTrimmedName(d);
             string ext = d.Extension;
 
             var function_override =
                 nav.SelectSingleNode(String.Format(Path, d.Name, ext)) ??
-                nav.SelectSingleNode(String.Format(Path, Utilities.StripGL2Extension(d.Name), ext)) ??
-                nav.SelectSingleNode(String.Format(Path, name, ext));
+                nav.SelectSingleNode(String.Format(Path, trimmed_name, ext));
             return function_override;
+        }
+
+        void TrimName(Function f)
+        {
+            f.TrimmedName = GetTrimmedName(f);
         }
 
         // Translates the opengl return type to the equivalent C# type.
@@ -136,7 +163,7 @@ namespace Bind
         // 3) A generic object or void* (translates to IntPtr)
         // 4) A GLenum (translates to int on Legacy.Tao or GL.Enums.GLenum otherwise).
         // Return types must always be CLS-compliant, because .Net does not support overloading on return types.
-        static void TranslateReturnType(XPathNavigator nav, Delegate d, EnumCollection enums)
+        void TranslateReturnType(EnumProcessor enum_processor, XPathNavigator nav, Delegate d, EnumCollection enums)
         {
             var function_override = GetFuncOverride(nav, d);
 
@@ -149,7 +176,7 @@ namespace Bind
                 }
             }
 
-            d.ReturnType.Translate(nav, d.Category, enums);
+            d.ReturnType.Translate(enum_processor, nav, d.Category, enums);
 
             if (d.ReturnType.CurrentType.ToLower().Contains("void") && d.ReturnType.Pointer != 0)
             {
@@ -181,7 +208,7 @@ namespace Bind
             d.ReturnType.CurrentType = d.ReturnType.GetCLSCompliantType();
         }
 
-        static void TranslateParameters(XPathNavigator nav, Delegate d, EnumCollection enums)
+        void TranslateParameters(EnumProcessor enum_processor, XPathNavigator nav, Delegate d, EnumCollection enums)
         {
             var function_override = GetFuncOverride(nav, d);
 
@@ -216,7 +243,7 @@ namespace Bind
                     }
                 }
 
-                d.Parameters[i].Translate(nav, d.Category, enums);
+                d.Parameters[i].Translate(enum_processor, nav, d.Category, enums);
                 if (d.Parameters[i].CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
                     d.Parameters[i].WrapperType = WrapperTypes.UncheckedParameter;
             }
@@ -242,7 +269,7 @@ namespace Bind
             }
         }
 
-        static FunctionCollection CreateWrappers(DelegateCollection delegates, EnumCollection enums)
+        FunctionCollection CreateWrappers(DelegateCollection delegates, EnumCollection enums)
         {
             var wrappers = new FunctionCollection();
             foreach (var d in delegates.Values)
@@ -347,9 +374,11 @@ namespace Bind
             return collection;
         }
 
-        static IEnumerable<Function> CreateNormalWrappers(Delegate d, EnumCollection enums)
+        IEnumerable<Function> CreateNormalWrappers(Delegate d, EnumCollection enums)
         {
             Function f = new Function(d);
+            TrimName(f);
+
             WrapReturnType(f);
             foreach (var wrapper in WrapParameters(f, enums))
             {

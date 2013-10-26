@@ -24,7 +24,7 @@ namespace Bind.Structures
         public Function(Delegate d)
             : base(d)
         {
-            Name = d.Name;
+            TrimmedName = Name = d.Name;
             Body = new FunctionBody();
             WrappedDelegate = d;
         }
@@ -34,6 +34,7 @@ namespace Bind.Structures
         {
             Parameters = new ParameterCollection(f.Parameters);
             ReturnType = new Type(f.ReturnType);
+            TrimmedName = f.TrimmedName;
             Body.AddRange(f.Body);
         }
 
@@ -94,38 +95,7 @@ namespace Bind.Structures
 
         #region public string TrimmedName
 
-        public string TrimmedName;
-
-        #endregion
-
-        #region public override string Name
-
-        /// <summary>
-        /// Gets or sets the name of the opengl function.
-        /// If no Tao compatibility is set, set TrimmedName to Name, after removing
-        /// [u][bsifd][v].
-        /// </summary>
-        public override string Name
-        {
-            get { return base.Name; }
-            set
-            {
-                base.Name = value;
-
-                if ((Settings.Compatibility & Settings.Legacy.NoTrimFunctionEnding) != Settings.Legacy.None)
-                {
-                    // If we don't need compatibility with Tao,
-                    // remove the Extension and the overload information from the name
-                    // (Extension == "ARB", "EXT", etc, overload == [u][bsidf][v])
-                    // TODO: Use some regex's here, to reduce clutter.
-                    TrimmedName = value;
-                }
-                else
-                {
-                    TrimmedName = FuncProcessor.TrimName(Name, false);
-                }
-            }
-        }
+        public string TrimmedName { get; set; }
 
         #endregion
 

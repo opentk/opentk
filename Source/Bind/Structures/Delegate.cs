@@ -43,6 +43,7 @@ namespace Bind.Structures
         public Delegate(Delegate d)
         {
             Category = d.Category;
+            Extension = d.Extension;
             Name = d.Name;
             Parameters = new ParameterCollection(d.Parameters);
             ReturnType = new Type(d.ReturnType);
@@ -226,22 +227,10 @@ namespace Bind.Structures
 
         #region public bool Extension
 
-        string _extension;
-
         public string Extension
         {
-            get
-            {
-                if (!String.IsNullOrEmpty(Name))
-                {
-                    _extension = Utilities.GetGL2Extension(Name);
-                    return String.IsNullOrEmpty(_extension) ? "Core" : _extension;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            get;
+            set;
         }
 
         #endregion

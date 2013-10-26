@@ -11,7 +11,7 @@ using System.Xml.XPath;
 
 namespace Bind.Structures
 {
-    public class Type : IComparable<Type>
+    class Type : IComparable<Type>
     {
         internal static Dictionary<string, string> GLTypes;
         internal static Dictionary<string, string> CSTypes;
@@ -324,12 +324,12 @@ namespace Bind.Structures
 
         #region public virtual void Translate(XPathNavigator overrides, string category)
 
-        public virtual void Translate(XPathNavigator overrides, string category, EnumCollection enums)
+        public virtual void Translate(EnumProcessor enum_processor, XPathNavigator overrides, string category, EnumCollection enums)
         {
             Enum @enum;
             string s;
 
-            category = EnumProcessor.TranslateEnumName(category);
+            category = enum_processor.TranslateEnumName(category);
 
             // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
             // Otherwise, try to find it in the aux enums list. If it exists in neither, it is not an enum.
@@ -368,7 +368,7 @@ namespace Bind.Structures
                         if (enums.ContainsKey(category))
                         {
                             QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
-                                Settings.NamespaceSeparator, EnumProcessor.TranslateEnumName(category));
+                                Settings.NamespaceSeparator, enum_processor.TranslateEnumName(category));
                         }
                         else
                         {
