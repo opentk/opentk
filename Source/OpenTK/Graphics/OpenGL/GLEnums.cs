@@ -50653,7 +50653,6 @@ namespace OpenTK.Graphics.OpenGL
     /// <summary>
     /// Not used directly.
     /// </summary>
-    [Flags]
     public enum SgisTextureColorMask : int
     {
         /// <summary>

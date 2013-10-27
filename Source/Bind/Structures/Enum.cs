@@ -23,13 +23,7 @@ namespace Bind.Structures
         // Returns true if the enum contains a collection of flags, i.e. 1, 2, 4, 8, ...
         public bool IsFlagCollection
         {
-            get
-            {
-                // It seems that all flag collections contain "Mask" in their names.
-                // This looks like a heuristic, but it holds 100% in practice
-                // (checked all enums to make sure).
-                return Name.Contains("Mask");
-            }
+            get; set;
         }
 
         public string Name
@@ -94,6 +88,11 @@ namespace Bind.Structures
             sb.Append("}");
 
             return sb.ToString();
+        }
+
+        public void Add(Constant constant)
+        {
+            ConstantCollection.Add(constant.Name, constant);
         }
     }
 

@@ -157,8 +157,15 @@ namespace Bind
                         Name = node.GetAttribute("name", String.Empty),
                         Type = node.GetAttribute("type", String.Empty)
                     };
+
                     if (String.IsNullOrEmpty(e.Name))
                         throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
+
+
+                    // It seems that all flag collections contain "Mask" in their names.
+                    // This looks like a heuristic, but it holds 100% in practice
+                    // (checked all enums to make sure).
+                    e.IsFlagCollection = e.Name.ToLower().Contains("mask");
 
                     foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
                     {
