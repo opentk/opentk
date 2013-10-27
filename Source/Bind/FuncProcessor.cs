@@ -140,11 +140,13 @@ namespace Bind
 
         static XPathNavigator GetFuncOverride(XPathNavigator nav, Delegate d)
         {
-            string trimmed_name = GetTrimmedName(d);
             string ext = d.Extension;
+            string trimmed_name = GetTrimmedName(d);
+            string extensionless_name = GetTrimmedExtension(d.Name, ext);
 
             var function_override =
                 nav.SelectSingleNode(String.Format(Path, d.Name, ext)) ??
+                nav.SelectSingleNode(String.Format(Path, extensionless_name, ext)) ??
                 nav.SelectSingleNode(String.Format(Path, trimmed_name, ext));
             return function_override;
         }

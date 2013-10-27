@@ -27416,7 +27416,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetProgram, GL.Arb.GetProgramString, GL.NV.GetProgramParameter, GL.NV.GetTrackMatrix
+    /// Used in GL.Arb.GetProgram, GL.Arb.GetProgramString, GL.Arb.ProgramParameter, GL.Ext.ProgramParameter, GL.NV.GetProgramParameter, GL.NV.GetTrackMatrix
     /// </summary>
     public enum AssemblyProgramParameterArb : int
     {
@@ -49118,7 +49118,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.ProgramParameter, GL.ProgramParameter, GL.Ext.ProgramParameter
+    /// Used in GL.ProgramParameter
     /// </summary>
     public enum ProgramParameterPName : int
     {

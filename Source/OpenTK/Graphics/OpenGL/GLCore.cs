@@ -4535,10 +4535,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void ProgramParameteri(UInt32 program, OpenTK.Graphics.OpenGL.ProgramParameterPName pname, Int32 value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramParameteriARB", ExactSpelling = true)]
-            internal extern static void ProgramParameteriARB(UInt32 program, OpenTK.Graphics.OpenGL.ProgramParameterPName pname, Int32 value);
+            internal extern static void ProgramParameteriARB(UInt32 program, OpenTK.Graphics.OpenGL.AssemblyProgramParameterArb pname, Int32 value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramParameteriEXT", ExactSpelling = true)]
-            internal extern static void ProgramParameteriEXT(UInt32 program, OpenTK.Graphics.OpenGL.ProgramParameterPName pname, Int32 value);
+            internal extern static void ProgramParameteriEXT(UInt32 program, OpenTK.Graphics.OpenGL.AssemblyProgramParameterArb pname, Int32 value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glProgramParameters4dvNV", ExactSpelling = true)]
             internal extern static unsafe void ProgramParameters4dvNV(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, UInt32 index, Int32 count, Double* v);
