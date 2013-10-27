@@ -28,107 +28,95 @@ namespace CHeaderToXML
 
         IEnumerable<XElement> ParseEnums(XDocument input)
         {
-            // Go through all features and extension in the spec
-            // and build a list of which tokens belong to which.
             var features = input.Root.Elements("feature");
             var extensions = input.Root.Elements("extensions").Elements("extension");
-            var categories = new SortedDictionary<string, XElement>();
+            var enumerations = input.Root.Elements("enums").Elements("enum");
+            var groups = input.Root.Elements("groups").Elements("group");
+            var APIs = new Dictionary<string, XElement>();
 
-            foreach (var feature in features.Concat(extensions))
+            // Build a list of all available tokens.
+            // Some tokens have a different value between GL and GLES,
+            // so we need to keep separate lists for each API. Tokens
+            // that are common go to the "default" list.
+            var enums = new Dictionary<string, SortedDictionary<string, string>>();
+            foreach (var e in enumerations)
+            {
+                var api = (e.Attribute("api") ?? new XAttribute("api", "default")).Value;
+                if (!enums.ContainsKey(api))
+                    enums.Add(api, new SortedDictionary<string, string>());
+
+                enums[api].Add(
+                    TrimName(e.Attribute("name").Value),
+                    e.Attribute("value").Value);
+            }
+
+            // Now we go through each feature, extension and group
+            // and construct the actual enumerations. Each API
+            // gets its own list of enumerations. Common enums are
+            // explicitly repeated. For example:
+            // <extension name="GL_AMD_performance_monitor" supported="gl|gles2">
+            // means that its enums must go to both the gl and gles2 APIs.
+            foreach (var feature in features.Concat(extensions).Concat(groups))
             {
                 var category = TrimName(feature.Attribute("name").Value);
                 var extension = feature.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core";
                 var version = feature.Attribute("number") != null ? feature.Attribute("number").Value : null;
-                var api =
-                    feature.Attribute("api") != null ? feature.Attribute("api").Value :
+                var apinames =
+                    (feature.Attribute("api") != null ? feature.Attribute("api").Value :
                     feature.Attribute("supported") != null ? feature.Attribute("supported").Value :
-                    null;
+                    "gl").Split('|');
 
-                foreach (var token in feature.Elements("require").Elements("enum"))
+                // An enum may belong to one or more APIs.
+                // Add it to all relevant ones.
+                foreach (var apiname in apinames)
                 {
-                    var enum_name = TrimName(token.Attribute("name").Value);
-                    if (!categories.ContainsKey(enum_name))
-                        categories.Add(enum_name, new XElement("enum"));
+                    if (!APIs.ContainsKey(apiname))
+                        APIs.Add(apiname, new XElement("api", new XAttribute("name", apiname)));
+                    var api = APIs[apiname];
 
-                    var e = categories[enum_name];
+                    var enum_name = TrimName(feature.Attribute("name").Value);
 
-                    var enum_category = e.Attribute("category") ?? new XAttribute("category", "");
-                    var enum_extension = e.Attribute("extension") ?? new XAttribute("extension", "");
-                    var enum_api = e.Attribute("api") ?? new XAttribute("api", "");
-                    var enum_version = e.Attribute("version") ?? new XAttribute("version", "");
-
-                    enum_category.Value = Join(enum_category.Value, category);
-                    enum_extension.Value = Join(enum_extension.Value, extension);
-                    enum_api.Value = Join(enum_api.Value, api);
-                    enum_version.Value = Join(enum_version.Value, version);
-
-                    e.SetAttributeValue(enum_category.Name, enum_category.Value);
-                    e.SetAttributeValue(enum_extension.Name, enum_extension.Value);
-                    e.SetAttributeValue(enum_api.Name, enum_api.Value);
-                    e.SetAttributeValue(enum_version.Name, enum_version.Value); 
-               }
-            }
-
-            foreach (var group in features
-                     .Concat(extensions)
-                     .Concat(input.Root.Elements("groups").Elements("group")))
-            {
-                var enum_name = TrimName(group.Attribute("name").Value);
-                var enum_element = new XElement("enum", new XAttribute("name", enum_name));
-
-                foreach (var token in group.Elements("enum").Concat(group.Elements("require").Elements("enum")))
-                {
-                    var name = TrimName(token.Attribute("name").Value);
-
-                    XElement e = new XElement(
-                        "use",
-                        new XAttribute("enum", "All"),
-                        new XAttribute("token", name));
-
-                    enum_element.Add(e);
-                }
-
-                yield return enum_element;
-            }
-
-            // The actual values are defined here
-            var all = new XElement("enum", new XAttribute("name", "All"));
-            foreach (var enumeration in input.Root.Elements("enums"))
-            {
-                var type = enumeration.Attribute("type");
-
-                foreach (var token in enumeration.Elements("enum"))
-                {
-                    var e = new XElement("token", type);
-                    var name = TrimName(token.Attribute("name").Value);
-                    var value = token.Attribute("value").Value;
-                    e.Add(
-                        new XAttribute("name", name),
-                        new XAttribute("value", value));
-
-                    if (categories.ContainsKey(name))
+                    var e = new XElement("enum", new XAttribute("name", enum_name));
+                    foreach (var token in feature.Elements("enum").Concat(feature.Elements("require").Elements("enum")))
                     {
-                        var category = Lookup(categories, name, "category");
-                        var extension = Lookup(categories, name, "extension");
-                        var version = Lookup(categories, name, "version");
-                        var api = Lookup(categories, name, "api");
-                        var deprecated = Lookup(categories, name, "deprecated");
+                        var token_name = TrimName(token.Attribute("name").Value);
+                        var token_value =
+                            enums.ContainsKey(apiname) && enums[apiname].ContainsKey(token_name) ? enums[apiname][token_name] :
+                            enums["default"].ContainsKey(token_name) ? enums["default"][token_name] :
+                            String.Empty;
 
-                        e.Add(category);
-                        e.Add(extension);
-                        e.Add(version);
-                        e.Add(api);
-                        e.Add(deprecated);
-                    }
-                    else
-                    {
-                        Trace.WriteLine(String.Format("Token '{0}' is not part of any feature or extension.", name));
+                        if (!String.IsNullOrEmpty(token_value))
+                        {
+                            var @enum =
+                                new XElement(
+                                    "token",
+                                    new XAttribute("name", token_name),
+                                    new XAttribute("value", token_value));
+                            e.Add(@enum);
+                        }
+                        else
+                        {
+                            Trace.WriteLine(String.Format("Token {0} is not defined.", token_name));
+                        }
                     }
 
-                    all.Add(e);
+                    foreach (var token in feature.Elements("remove").Elements("enum"))
+                    {
+                        var token_name = TrimName(token.Attribute("name").Value);
+                        var deprecated =
+                            api.Elements("enum").Elements("token")
+                            .FirstOrDefault(t => t.Attribute("name").Value == token_name);
+                        if (deprecated != null)
+                        {
+                            deprecated.Add(new XAttribute("deprecated", version));
+                        }
+                    }
+
+                    api.Add(e);
                 }
             }
-            yield return all;
+
+            return APIs.Values;
         }
 
         IEnumerable<XElement> ParseFunctions(XDocument input)
@@ -139,136 +127,126 @@ namespace CHeaderToXML
             // It also includes information about the return type and parameters. These
             // are then parsed by the binding generator in order to create the necessary
             // overloads for correct use.
+            var features = input.Root.Elements("feature");
+            var extensions = input.Root.Elements("extensions").Elements("extension");
+            var APIs = new Dictionary<string, XElement>();
+
+            // First we build a list of all available commands,
+            // including their parameters and return types.
+            var commands = new SortedDictionary<string, XElement>();
+            foreach (var command in input.Root.Elements("commands").Elements("command"))
+            {
+                commands.Add(FunctionName(command), command);
+            }
 
             // First, we go through all available features and extensions and build a list
             // of commands that belong to them.
             // We will then use this information to "decorate" our bindings with
             // information about versioning, extension support and deprecation.
-            var features = input.Root.Elements("feature");
-            var extensions = input.Root.Elements("extensions").Elements("extension");
-            var categories = new SortedDictionary<string, XElement>();
-
-            foreach (var c in features.Concat(extensions))
+            foreach (var feature in features.Concat(extensions))
             {
-                var category = TrimName(c.Attribute("name").Value);
-                var extension = c.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core";
+                var category = TrimName(feature.Attribute("name").Value);
+                var extension =
+                    feature.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core";
+                var apinames =
+                    (feature.Attribute("api") != null ? feature.Attribute("api").Value :
+                    feature.Attribute("supported") != null ? feature.Attribute("supported").Value :
+                    "gl").Split('|');
+                var version =
+                    (feature.Attribute("number") != null ? feature.Attribute("number").Value : "")
+                    .Split('|');
 
-                var api =
-                    c.Attribute("api") != null ? c.Attribute("api").Value :
-                    c.Attribute("supported") != null ? c.Attribute("supported").Value :
-                    null;
-                var version = c.Attribute("number") != null ? c.Attribute("number").Value : null;
-
-                foreach (var command in c.Elements("require").Elements("command"))
+                int i = -1;
+                foreach (var apiname in apinames)
                 {
-                    var cmd_name = TrimName(command.Attribute("name").Value);
-                    if (!categories.ContainsKey(cmd_name))
-                        categories.Add(cmd_name, new XElement(cmd_name));
+                    i++;
+                    if (!APIs.ContainsKey(apiname))
+                        APIs.Add(apiname, new XElement("api", new XAttribute("name", apiname)));
+                    var api = APIs[apiname];
 
-                    var cmd_element = categories[cmd_name];
+                    var cmd_category = category;
+                    var cmd_extension = extension;
+                    var cmd_version = version.Length > i ? version[i] : version[0];
 
-                    var cmd_category = cmd_element.Attribute("category") ?? new XAttribute("category", "");
-                    var cmd_extension = cmd_element.Attribute("extension") ?? new XAttribute("extension", "");
-                    var cmd_api = cmd_element.Attribute("api") ?? new XAttribute("api", "");
-                    var cmd_version = cmd_element.Attribute("version") ?? new XAttribute("version", "");
-
-                    cmd_category.Value = Join(cmd_category.Value, category);
-                    cmd_extension.Value = Join(cmd_extension.Value, extension);
-                    cmd_api.Value = Join(cmd_api.Value, api);
-                    cmd_version.Value = Join(cmd_version.Value, version);
-
-                    cmd_element.SetAttributeValue(cmd_category.Name, cmd_category.Value);
-                    cmd_element.SetAttributeValue(cmd_extension.Name, cmd_extension.Value);
-                    cmd_element.SetAttributeValue(cmd_api.Name, cmd_api.Value);
-                    cmd_element.SetAttributeValue(cmd_version.Name, cmd_version.Value);
-                }
-            }
-
-            // Lookup which functions are deprecated and mark them so.
-            foreach (var c in features)
-            {
-                var version = c.Attribute("number").Value;
-
-                foreach (var r in c.Elements("remove").Elements("command"))
-                {
-                    var cmd_name = TrimName(r.Attribute("name").Value);
-                    var cmd_element = categories[cmd_name];
-                    var cmd_deprecated = cmd_element.Attribute("deprecated") ?? new XAttribute("deprecated", "");
-
-                    cmd_deprecated.Value = Join(cmd_deprecated.Value, version);
-
-                    cmd_element.SetAttributeValue(cmd_deprecated.Name, cmd_deprecated.Value);
-                }
-            }
-  
-            // Now, we go through all commands and retrieve their parameters and return types.
-            // We also use the list we built above to decorate them with the relevant attributes.
-            foreach (var command in input.Root.Elements("commands").Elements("command"))
-            {
-                var function = new XElement("function");
-
-                var cmd_name = FunctionName(command);
-                var name = new XAttribute("name", cmd_name);
-
-                if (!categories.ContainsKey(cmd_name))
-                {
-                    Trace.WriteLine(String.Format("Command '{0}' is not part of any feature or extension. Ignoring.", cmd_name));
-                    continue;
-                }
-                
-                var category = Lookup(categories, cmd_name, "category");
-                var extension = Lookup(categories, cmd_name, "extension");
-                var version = Lookup(categories, cmd_name, "version");
-                var api = Lookup(categories, cmd_name, "api");
-                var deprecated = Lookup(categories, cmd_name, "deprecated");
-
-                var returns = new XElement(
-                    "returns", 
-                    new XAttribute(
-                        "type",
-                        FunctionParameterType(command.Element("proto"))
-                            .Replace("const", String.Empty)
-                            .Replace("struct", String.Empty)
-                            .Trim()));
-
-                foreach (var parameter in command.Elements("param"))
-                {
-                    var param = FunctionParameterType(parameter);
-
-                    var p = new XElement("param");
-                    var pname = new XAttribute("name", parameter.Element("name").Value);
-                    var type = new XAttribute(
-                        "type",
-                        param
-                            .Replace("const", String.Empty)
-                            .Replace("struct", String.Empty)
-                            .Trim());
-
-                    var count = parameter.Attribute("len") != null ?
-                        new XAttribute("count", parameter.Attribute("len").Value) : null;
-
-                    var flow = new XAttribute("flow",
-                        param.Contains("*") && !param.Contains("const") ? "out" : "in");
-
-                    p.Add(pname, type, flow);
-                    if (count != null)
+                    foreach (var command in feature.Elements("require").Elements("command"))
                     {
-                        p.Add(count);
+                        var cmd_name = TrimName(command.Attribute("name").Value);
+
+                        XElement function = TranslateCommand(commands[cmd_name]);
+                        function.Add(new XAttribute("category", cmd_category));
+                        function.Add(new XAttribute("extension", cmd_extension));
+                        if (!String.IsNullOrEmpty(cmd_version))
+                            function.Add(new XAttribute("version", cmd_version));
+
+                        api.Add(function);
                     }
 
-                    function.Add(p);
+                    // Mark all deprecated functions as such
+                    foreach (var command in feature.Elements("remove").Elements("command"))
+                    {
+                        var deprecated_name = TrimName(command.Attribute("name").Value);
+                        var function =
+                            api.Elements("function")
+                            .FirstOrDefault(t => t.Attribute("name").Value == deprecated_name);
+
+                        if (function != null)
+                        {
+                            function.Add(new XAttribute("deprecated", cmd_version));
+                        }
+                    }
+                }
+            }
+
+            return APIs.Values;
+        }
+
+        private XElement TranslateCommand(XElement command)
+        {
+            XElement function = new XElement("function");
+
+            var cmd_name = FunctionName(command);
+            var name = new XAttribute("name", cmd_name);
+
+            var returns = new XElement(
+                "returns",
+                new XAttribute(
+                    "type",
+                    FunctionParameterType(command.Element("proto"))
+                        .Replace("const", String.Empty)
+                        .Replace("struct", String.Empty)
+                        .Trim()));
+
+            foreach (var parameter in command.Elements("param"))
+            {
+                var param = FunctionParameterType(parameter);
+
+                var p = new XElement("param");
+                var pname = new XAttribute("name", parameter.Element("name").Value);
+                var type = new XAttribute(
+                    "type",
+                    param
+                        .Replace("const", String.Empty)
+                        .Replace("struct", String.Empty)
+                        .Trim());
+
+                var count = parameter.Attribute("len") != null ?
+                    new XAttribute("count", parameter.Attribute("len").Value) : null;
+
+                var flow = new XAttribute("flow",
+                    param.Contains("*") && !param.Contains("const") ? "out" : "in");
+
+                p.Add(pname, type, flow);
+                if (count != null)
+                {
+                    p.Add(count);
                 }
 
-                function.Add(name);
-                function.Add(extension);
-                function.Add(returns);
-                function.Add(category);
-                function.Add(version);
-                function.Add(api);
-                function.Add(deprecated);
-
-                yield return function;
+                function.Add(p);
             }
+
+            function.Add(name);
+            function.Add(returns);
+            return function;
         }
 
         string FunctionName(XElement e)
