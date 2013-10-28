@@ -20,8 +20,6 @@ namespace Bind.Structures
     public class Constant : IComparable<Constant>
     {
         static StringBuilder translator = new StringBuilder();
-        static readonly int MaxReferenceDepth = 8;
-        static int CurrentReferenceDepth = 0;
 
         #region PreviousName
 
@@ -157,49 +155,42 @@ namespace Bind.Structures
             if (enums == null)
                 throw new ArgumentNullException("enums");
 
-            if (++CurrentReferenceDepth >= MaxReferenceDepth)
-                throw new InvalidOperationException(String.Format(
-                    "Enum specification contains cycle: {0}",
-                    c.ToString()));
-
             if (!String.IsNullOrEmpty(c.Reference))
             {
-                Constant referenced_constant;
+                // Resolve the referenced Constant. Be careful
+                // to avoid loops in the definitions.
+                Constant reference = c;
+                do
+                {
+                    reference =
+                        enums.ContainsKey(reference.Reference) &&
+                        enums[reference.Reference].ConstantCollection.ContainsKey(reference.Value) ?
+                        enums[reference.Reference].ConstantCollection[reference.Value] : null;
+                } while (reference != null && reference.Reference != null && reference.Reference != c.Reference);
 
-                if (enums.ContainsKey(c.Reference) && enums[c.Reference].ConstantCollection.ContainsKey(c.Value))
+                // If we haven't managed to locate the reference, do
+                // a brute-force search through all enums.
+                if (reference == null || reference.Reference != null)
                 {
-                    // Transitively translate the referenced token
-                    // Todo: this may cause loops if two tokens reference each other.
-                    // Add a max reference depth and bail out?
-                    TranslateConstantWithReference(enums[c.Reference].ConstantCollection[c.Value], enums);
-                    referenced_constant = (enums[c.Reference].ConstantCollection[c.Value]);
+                    reference = enums.Values.Select(e =>
+                        e.ConstantCollection.Values.FirstOrDefault(t =>
+                            t.Reference == null && t.Name == c.Name))
+                        .FirstOrDefault(t => t != null);
                 }
-                else if (enums.ContainsKey(Settings.CompleteEnumName) &&
-                    enums[Settings.CompleteEnumName].ConstantCollection.ContainsKey(c.Value))
+
+                // Resolve the value for this Constant
+                if (reference != null)
                 {
-                    // Try the All enum
-                    var reference = enums[Settings.CompleteEnumName].ConstantCollection[c.Value];
-                    if (reference.Reference == null)
-                        referenced_constant = (enums[Settings.CompleteEnumName].ConstantCollection[c.Value]);
-                    else
-                    {
-                        --CurrentReferenceDepth;
-                        return false;
-                    }
+                    c.Value = reference.Value;
+                    c.Reference = null;
+                    return true;
                 }
                 else
                 {
-                    --CurrentReferenceDepth;
+                    Trace.WriteLine(String.Format("[Warning] Failed to resolve token: {0}", c));
                     return false;
                 }
-                //else throw new InvalidOperationException(String.Format("Unknown Enum \"{0}\" referenced by Constant \"{1}\"",
-                //                                                       c.Reference, c.ToString()));
-
-                c.Value = referenced_constant.Value;
-                c.Reference = null;
             }
-
-            --CurrentReferenceDepth;
             return true;
         }
 
