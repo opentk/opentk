@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using System.Xml.XPath;
 using Bind.Structures;
 
@@ -42,15 +43,21 @@ namespace Bind
     {
         #region ISpecReader Members
 
-        public void ReadDelegates(string file, DelegateCollection delegates)
+        public void ReadDelegates(string file, DelegateCollection delegates, string apiname)
         {
             var specs = new XPathDocument(file);
-            foreach (XPathNavigator nav in specs.CreateNavigator().Select("/signatures/delete"))
+            foreach (XPathNavigator nav in specs.CreateNavigator().Select(
+                !String.IsNullOrEmpty(apiname) ?
+                String.Format("/signatures/delete|/signatures/add/delete[@name='{0}']", apiname) :
+                String.Format("/signatures/delete|/signatures/add/delete")))
             {
                 foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
                     delegates.Remove(node.GetAttribute("name", String.Empty));
             }
-            foreach (XPathNavigator nav in specs.CreateNavigator().Select("/signatures/add"))
+            foreach (XPathNavigator nav in specs.CreateNavigator().Select(
+                !String.IsNullOrEmpty(apiname) ?
+                String.Format("/signatures/add|/signatures/add/api[@name='{0}']", apiname) :
+                String.Format("/signatures/add|/signatures/add/api")))
             {
                 Utilities.Merge(delegates, ReadDelegates(nav));
             }
@@ -125,19 +132,25 @@ namespace Bind
             return delegates;
         }
 
-        public void ReadEnums(string file, EnumCollection enums)
+        public void ReadEnums(string file, EnumCollection enums, string apiname)
         {
             // First, read all enum definitions from spec and override file.
             // Afterwards, read all token/enum overrides from overrides file.
             // Every single enum is merged into
 
             var specs = new XPathDocument(file);
-            foreach (XPathNavigator nav in specs.CreateNavigator().Select("/signatures/delete"))
+            foreach (XPathNavigator nav in specs.CreateNavigator().Select(
+                !String.IsNullOrEmpty(apiname) ?
+                String.Format("/signatures/delete|/signatures/delete/api[@name='{0}']", apiname) :
+                String.Format("/signatures/delete|/signatures/delete/api")))
             {
                 foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
                     enums.Remove(node.GetAttribute("name", String.Empty));
             }
-            foreach (XPathNavigator nav in specs.CreateNavigator().Select("/signatures/add"))
+            foreach (XPathNavigator nav in specs.CreateNavigator().Select(
+                !String.IsNullOrEmpty(apiname) ?
+                String.Format("/signatures/add|/signatures/add/api[@name='{0}']", apiname) :
+                String.Format("/signatures/add|/signatures/add/api")))
             {
                 Utilities.Merge(enums, ReadEnums(nav));
             }

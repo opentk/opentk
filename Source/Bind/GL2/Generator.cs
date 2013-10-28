@@ -77,10 +77,12 @@ namespace Bind.GL2
             string overrides = Path.Combine(Settings.InputPath, Settings.OverridesFile);
             Type.GLTypes = SpecReader.ReadTypeMap(Path.Combine(Settings.InputPath, glTypemap));
             Type.CSTypes = SpecReader.ReadCSTypeMap(Path.Combine(Settings.InputPath, csTypemap));
-            SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec), Enums);
-            SpecReader.ReadEnums(overrides, Enums);
-            SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates);
-            SpecReader.ReadDelegates(overrides, Delegates);
+            SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec), Enums, "gl");
+            SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec), Enums, "glcore");
+            SpecReader.ReadEnums(overrides, Enums, "");
+            SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates, "gl");
+            SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates, "glcore");
+            SpecReader.ReadDelegates(overrides, Delegates, "");
 
             var enum_processor = new EnumProcessor(overrides);
             var func_processor = new FuncProcessor(overrides);
