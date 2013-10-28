@@ -1,13 +1,44 @@
+    #region License
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit library
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace CHeaderToXML
 {
     class GLXmlParser : Parser
     {
+        static readonly Regex ExtensionRegex = new Regex(
+            @"3DFX|(?!(?<=[1-4])D)[A-Z]{2,}$",
+            RegexOptions.Compiled);
         string EnumPrefix { get { return Prefix.ToUpper() + "_"; } }
         string FuncPrefix { get { return Prefix; } }
 
@@ -32,7 +63,7 @@ namespace CHeaderToXML
             var extensions = input.Root.Elements("extensions").Elements("extension");
             var enumerations = input.Root.Elements("enums").Elements("enum");
             var groups = input.Root.Elements("groups").Elements("group");
-            var APIs = new Dictionary<string, XElement>();
+            var APIs = new SortedDictionary<string, XElement>();
 
             // Build a list of all available tokens.
             // Some tokens have a different value between GL and GLES,
@@ -56,7 +87,10 @@ namespace CHeaderToXML
             // explicitly repeated. For example:
             // <extension name="GL_AMD_performance_monitor" supported="gl|gles2">
             // means that its enums must go to both the gl and gles2 APIs.
-            foreach (var feature in features.Concat(extensions).Concat(groups))
+            foreach (var feature in
+                features.Concat(extensions)
+                .Concat(groups)
+                .OrderBy(f => TrimName(f.Attribute("name").Value)))
             {
                 var category = TrimName(feature.Attribute("name").Value);
                 var extension = feature.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core";
@@ -77,7 +111,9 @@ namespace CHeaderToXML
                     var enum_name = TrimName(feature.Attribute("name").Value);
 
                     var e = new XElement("enum", new XAttribute("name", enum_name));
-                    foreach (var token in feature.Elements("enum").Concat(feature.Elements("require").Elements("enum")))
+                    foreach (var token in
+                        feature.Elements("enum")
+                        .Concat(feature.Elements("require").Elements("enum")))
                     {
                         var token_name = TrimName(token.Attribute("name").Value);
                         var token_value =
@@ -129,7 +165,7 @@ namespace CHeaderToXML
             // overloads for correct use.
             var features = input.Root.Elements("feature");
             var extensions = input.Root.Elements("extensions").Elements("extension");
-            var APIs = new Dictionary<string, XElement>();
+            var APIs = new SortedDictionary<string, XElement>();
 
             // First we build a list of all available commands,
             // including their parameters and return types.
@@ -146,8 +182,6 @@ namespace CHeaderToXML
             foreach (var feature in features.Concat(extensions))
             {
                 var category = TrimName(feature.Attribute("name").Value);
-                var extension =
-                    feature.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core";
                 var apinames =
                     (feature.Attribute("api") != null ? feature.Attribute("api").Value :
                     feature.Attribute("supported") != null ? feature.Attribute("supported").Value :
@@ -165,12 +199,14 @@ namespace CHeaderToXML
                     var api = APIs[apiname];
 
                     var cmd_category = category;
-                    var cmd_extension = extension;
                     var cmd_version = version.Length > i ? version[i] : version[0];
 
                     foreach (var command in feature.Elements("require").Elements("command"))
                     {
                         var cmd_name = TrimName(command.Attribute("name").Value);
+                        var cmd_extension = ExtensionRegex.Match(cmd_name).Value;
+                        if (String.IsNullOrEmpty(cmd_extension))
+                            cmd_extension = "Core";
 
                         XElement function = TranslateCommand(commands[cmd_name]);
                         function.Add(new XAttribute("category", cmd_category));
