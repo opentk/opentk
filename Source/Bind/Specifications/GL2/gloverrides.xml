@@ -2013,10 +2013,10 @@
       <use enum="VERSION_4_4" token="QUERY_BUFFER" />
     </enum>
     <enum name="BufferRangeTarget">
-        <use token="ATOMIC_COUNTER_BUFFER" />
-        <use token="SHADER_STORAGE_BUFFER" />
-        <use token="UNIFORM_BUFFER" />
-        <use token="TRANSFORM_FEEDBACK_BUFFER" />
+      <use enum="VERSION_3_1" token="UNIFORM_BUFFER" />
+      <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER" />
+      <use enum="VERSION_4_3" token="SHADER_STORAGE_BUFFER" />
+      <use enum="VERSION_4_4" token="TRANSFORM_FEEDBACK_BUFFER" />
     </enum>
     <enum name="BufferTargetARB">
       <token name="ARRAY_BUFFER" value="0x8892" />
@@ -2762,10 +2762,10 @@
       <use enum="VERSION_4_1" token="SCISSOR_TEST" />
     </enum>
     <enum name="InternalFormatParameter">
-      <use token="CLEAR_BUFFER" />
+      <use enum="VERSION_4_3" token="CLEAR_BUFFER" />
       <use enum="VERSION_4_4" token="CLEAR_TEXTURE" />
       <use token="COLOR_ENCODING" />
-      <use token="COLOR_COMPONENTS" />
+      <use enum="VERSION_4_3" token="COLOR_COMPONENTS" />
       <use token="COLOR_RENDERABLE" />
       <use token="COMPUTE_TEXTURE" />
       <use token="DEPTH_COMPONENTS" />
@@ -2970,6 +2970,76 @@
     </enum>
     <enum name="PixelInternalFormat">
       <use enum="PixelFormat" token="DEPTH_COMPONENT" />
+      <!-- Copy from InternalFormat (Khronos renamed PixelInternalFormat) -->
+      <use token="ALPHA12"/>
+      <use token="ALPHA16"/>
+      <use token="ALPHA16_ICC_SGIX"/>
+      <use token="ALPHA4"/>
+      <use token="ALPHA8"/>
+      <use token="ALPHA_ICC_SGIX"/>
+      <use token="DEPTH_COMPONENT16_SGIX"/>
+      <use token="DEPTH_COMPONENT24_SGIX"/>
+      <use token="DEPTH_COMPONENT32_SGIX"/>
+      <use token="DUAL_ALPHA12_SGIS"/>
+      <use token="DUAL_ALPHA16_SGIS"/>
+      <use token="DUAL_ALPHA4_SGIS"/>
+      <use token="DUAL_ALPHA8_SGIS"/>
+      <use token="DUAL_INTENSITY12_SGIS"/>
+      <use token="DUAL_INTENSITY16_SGIS"/>
+      <use token="DUAL_INTENSITY4_SGIS"/>
+      <use token="DUAL_INTENSITY8_SGIS"/>
+      <use token="DUAL_LUMINANCE12_SGIS"/>
+      <use token="DUAL_LUMINANCE16_SGIS"/>
+      <use token="DUAL_LUMINANCE4_SGIS"/>
+      <use token="DUAL_LUMINANCE8_SGIS"/>
+      <use token="DUAL_LUMINANCE_ALPHA4_SGIS"/>
+      <use token="DUAL_LUMINANCE_ALPHA8_SGIS"/>
+      <use token="INTENSITY"/>
+      <use token="INTENSITY12"/>
+      <use token="INTENSITY16"/>
+      <use token="INTENSITY16_ICC_SGIX"/>
+      <use token="INTENSITY4"/>
+      <use token="INTENSITY8"/>
+      <use token="INTENSITY_ICC_SGIX"/>
+      <use token="LUMINANCE12"/>
+      <use token="LUMINANCE12_ALPHA12"/>
+      <use token="LUMINANCE12_ALPHA4"/>
+      <use token="LUMINANCE16"/>
+      <use token="LUMINANCE16_ALPHA16"/>
+      <use token="LUMINANCE16_ALPHA8_ICC_SGIX"/>
+      <use token="LUMINANCE16_ICC_SGIX"/>
+      <use token="LUMINANCE4"/>
+      <use token="LUMINANCE4_ALPHA4"/>
+      <use token="LUMINANCE6_ALPHA2"/>
+      <use token="LUMINANCE8"/>
+      <use token="LUMINANCE8_ALPHA8"/>
+      <use token="LUMINANCE_ALPHA_ICC_SGIX"/>
+      <use token="LUMINANCE_ICC_SGIX"/>
+      <use token="QUAD_ALPHA4_SGIS"/>
+      <use token="QUAD_ALPHA8_SGIS"/>
+      <use token="QUAD_INTENSITY4_SGIS"/>
+      <use token="QUAD_INTENSITY8_SGIS"/>
+      <use token="QUAD_LUMINANCE4_SGIS"/>
+      <use token="QUAD_LUMINANCE8_SGIS"/>
+      <use token="R3_G3_B2"/>
+      <use token="R5_G6_B5_A8_ICC_SGIX"/>
+      <use token="R5_G6_B5_ICC_SGIX"/>
+      <use token="RGB10"/>
+      <use token="RGB10_A2"/>
+      <use token="RGB12"/>
+      <use token="RGB16"/>
+      <use token="RGB2_EXT"/>
+      <use token="RGB4"/>
+      <use token="RGB5"/>
+      <use token="RGB5_A1"/>
+      <use token="RGB8"/>
+      <use token="RGBA12"/>
+      <use token="RGBA16"/>
+      <use token="RGBA2"/>
+      <use token="RGBA4"/>
+      <use token="RGBA8"/>
+      <use token="RGBA_ICC_SGIX"/>
+      <use token="RGB_ICC_SGIX"/>
       <use enum="ARB_depth_buffer_float" token="DEPTH_COMPONENT32F" />
       <use enum="ARB_depth_buffer_float" token="DEPTH32F_STENCIL8" />
       <use enum="ARB_depth_buffer_float" token="FLOAT_32_UNSIGNED_INT_24_8_REV" />
@@ -3506,16 +3576,16 @@
       <use enum="VERSION_4_1" token="SYNC_FLUSH_COMMANDS_BIT" />
     </enum>
     <enum name="WaitSyncStatus">
-      <use token="ALREADY_SIGNALED" />
-      <use token="TIMEOUT_EXPIRED" />
-      <use token="CONDITION_SATISFIED" />
-      <use token="WAIT_FAILED" />
+      <use enum="VERSION_3_2" token="ALREADY_SIGNALED" />
+      <use enum="VERSION_3_2" token="TIMEOUT_EXPIRED" />
+      <use enum="VERSION_3_2" token="CONDITION_SATISFIED" />
+      <use enum="VERSION_3_2" token="WAIT_FAILED" />
     </enum>
     <enum name="SyncParameter">
-      <use token="OBJECT_TYPE" />
-      <use token="SYNC_STATUS" />
-      <use token="SYNC_CONDITION" />
-      <use token="SYNC_FLAGS" />
+      <use enum="VERSION_3_2" token="OBJECT_TYPE" />
+      <use enum="VERSION_3_2" token="SYNC_STATUS" />
+      <use enum="VERSION_3_2" token="SYNC_CONDITION" />
+      <use enum="VERSION_3_2" token="SYNC_FLAGS" />
     </enum>
     <enum name="TextureAccess">
       <use enum="VERSION_1_5" token="READ_ONLY" />
