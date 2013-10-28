@@ -39,7 +39,7 @@ namespace Bind.Structures
 			set { _type = value; }
 		}
 
-        Dictionary<string, Constant> _constant_collection = new Dictionary<string, Constant>();
+        SortedDictionary<string, Constant> _constant_collection = new SortedDictionary<string, Constant>();
 
         public IDictionary<string, Constant> ConstantCollection
         {
