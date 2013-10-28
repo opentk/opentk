@@ -34,19 +34,19 @@ namespace CHeaderToXML
 {
     class EnumTokenComparer : IEqualityComparer<XNode>
     {
-        public bool Equals (XNode a, XNode b)
+        public bool Equals(XNode a, XNode b)
         {
             var a_attr = ((XElement)a).Attribute("name") ?? ((XElement)a).Attribute("token");
             var b_attr = ((XElement)b).Attribute("name") ?? ((XElement)b).Attribute("token");
             return a_attr.Value == b_attr.Value;
         }
 
-        public int GetHashCode (XNode a)
+        public int GetHashCode(XNode a)
         {
             XElement e = (XElement)a;
-            if (e.Name == "enum" || e.Name == "token")
+            if (e.Name == "enum" || e.Name == "token" || e.Name == "function")
             {
-                return ((XElement)a).Attribute("name").Value.GetHashCode();
+                return ((XElement)a).Attribute("name").Value.GetHashCode() ^ e.Name.LocalName.GetHashCode();
             }
             else if (e.Name == "use")
             {
@@ -181,10 +181,10 @@ namespace CHeaderToXML
         private static Dictionary<string, XElement> MergeDuplicates(IEnumerable<IEnumerable<XElement>> sigs)
         {
             var entries = new Dictionary<string, XElement>();
-            foreach (var e in sigs.SelectMany(s => s).Where(s => s.Name.LocalName == "enum"))
+            foreach (var e in sigs.SelectMany(s => s))//.Where(s => s.Name.LocalName == "enum"))
             {
-                var name = (string)e.Attribute("name");
-                if (entries.ContainsKey(name) && e.Name.LocalName == "enum")
+                var name = (string)e.Attribute("name") ?? "";
+                if (entries.ContainsKey(name))// && e.Name.LocalName == "enum")
                 {
                     var p = entries[name];
                     var curTokens = p.Nodes().ToList();
@@ -192,7 +192,9 @@ namespace CHeaderToXML
                     p.Add(curTokens.Concat(e.Nodes()).Distinct(new EnumTokenComparer()));
                 }
                 else
+                {
                     entries.Add(name, e);
+                }
             }
             return entries;
         }
