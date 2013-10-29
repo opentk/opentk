@@ -140,13 +140,21 @@ namespace CHeaderToXML
 
                 using (var writer = XmlWriter.Create(out_stream, settings))
                 {
-                    new XElement("signatures",
-                        new XElement("add",
-                            entries.Values.OrderBy(s => s.Attribute("name").Value),  // only enums
-                            sigs.SelectMany(s => s).Where(s => s.Name.LocalName == "function")    // only functions
-                                 .OrderBy(s => s.Attribute("extension").Value)
-                                 .ThenBy(s => s.Attribute("name").Value)
-                    )).WriteTo(writer);
+                    var output = new XElement("signatures");
+                    foreach (var api in sigs.SelectMany(s => s))
+                    {
+                        output.Add(
+                            new XElement("add",
+                                new XAttribute("name", api.Attribute("name").Value),
+                                api.Elements()
+                                    .OrderBy(s => s.Name.LocalName)
+                                    .ThenBy(s => (string)s.Attribute("value") ?? String.Empty)
+                                    .ThenBy(s => (string)s.Attribute("name") ?? String.Empty)
+                                    .ThenBy(s => (string)s.Attribute("version") ?? String.Empty)
+                                    .ThenBy(s => (string)s.Attribute("extension") ?? String.Empty)
+                                ));
+                    }
+                    output.WriteTo(writer);
                     writer.Flush();
                     writer.Close();
                 }
