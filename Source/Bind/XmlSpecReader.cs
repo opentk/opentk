@@ -48,16 +48,16 @@ namespace Bind
             var specs = new XPathDocument(file);
             foreach (XPathNavigator nav in specs.CreateNavigator().Select(
                 !String.IsNullOrEmpty(apiname) ?
-                String.Format("/signatures/delete|/signatures/add/delete[@name='{0}']", apiname) :
-                String.Format("/signatures/delete|/signatures/add/delete")))
+                String.Format("/signatures/delete[@name='{0}']", apiname) :
+                String.Format("/signatures/delete")))
             {
                 foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
                     delegates.Remove(node.GetAttribute("name", String.Empty));
             }
             foreach (XPathNavigator nav in specs.CreateNavigator().Select(
                 !String.IsNullOrEmpty(apiname) ?
-                String.Format("/signatures/add|/signatures/add/api[@name='{0}']", apiname) :
-                String.Format("/signatures/add|/signatures/add/api")))
+                String.Format("/signatures/add[@name='{0}']", apiname) :
+                String.Format("/signatures/add")))
             {
                 Utilities.Merge(delegates, ReadDelegates(nav));
             }
@@ -141,16 +141,16 @@ namespace Bind
             var specs = new XPathDocument(file);
             foreach (XPathNavigator nav in specs.CreateNavigator().Select(
                 !String.IsNullOrEmpty(apiname) ?
-                String.Format("/signatures/delete|/signatures/delete/api[@name='{0}']", apiname) :
-                String.Format("/signatures/delete|/signatures/delete/api")))
+                String.Format("/signatures/delete[@name='{0}']", apiname) :
+                String.Format("/signatures/delete")))
             {
                 foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
                     enums.Remove(node.GetAttribute("name", String.Empty));
             }
             foreach (XPathNavigator nav in specs.CreateNavigator().Select(
                 !String.IsNullOrEmpty(apiname) ?
-                String.Format("/signatures/add|/signatures/add/api[@name='{0}']", apiname) :
-                String.Format("/signatures/add|/signatures/add/api")))
+                String.Format("/signatures/add[@name='{0}']", apiname) :
+                String.Format("/signatures/add")))
             {
                 Utilities.Merge(enums, ReadEnums(nav));
             }
