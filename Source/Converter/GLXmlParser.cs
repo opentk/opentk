@@ -34,6 +34,14 @@ using System.Xml.Linq;
 
 namespace CHeaderToXML
 {
+    static class Extension
+    {
+        public static string ValueOrDefault(this XAttribute a)
+        {
+            return a != null ? a.Value : String.Empty;
+        }
+    }
+
     class GLXmlParser : Parser
     {
         static readonly Regex ExtensionRegex = new Regex(
@@ -204,7 +212,9 @@ namespace CHeaderToXML
                     foreach (var command in feature.Elements("require").Elements("command"))
                     {
                         var cmd_name = TrimName(command.Attribute("name").Value);
-                        var cmd_extension = ExtensionRegex.Match(cmd_name).Value;
+                        var cmd_extension =
+                            ExtensionRegex.Match(cmd_name).Value ??
+                            (feature.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core");
                         if (String.IsNullOrEmpty(cmd_extension))
                             cmd_extension = "Core";
 
@@ -214,7 +224,7 @@ namespace CHeaderToXML
                         if (!String.IsNullOrEmpty(cmd_version))
                             function.Add(new XAttribute("version", cmd_version));
 
-                        api.Add(function);
+                        Merge(api, function);
                     }
 
                     // Mark all deprecated functions as such
@@ -234,6 +244,29 @@ namespace CHeaderToXML
             }
 
             return APIs.Values;
+        }
+
+        private void Merge(XElement api, XElement function)
+        {
+            var type = function.Name.LocalName;
+            var name = function.Attribute("name").Value;
+            var f = api.Elements(type).FirstOrDefault(p => p.Attribute("name").Value == name);
+            if (f != null)
+            {
+                f.SetAttributeValue("category", String.Join("|",
+                    new string[] { f.Attribute("category").Value, function.Attribute("category").Value }));
+                f.SetAttributeValue("version",
+                    (f.Attribute("version") ?? function.Attribute("version")).ValueOrDefault());
+
+                // Sanity check: one function cannot belong to two different extensions
+                if (f.Attribute("extension").Value != function.Attribute("extension").Value)
+                    throw new InvalidOperationException("Different extensions for the same function");
+
+            }
+            else
+            {
+                api.Add(function);
+            }
         }
 
         private XElement TranslateCommand(XElement command)
