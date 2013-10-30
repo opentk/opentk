@@ -37,13 +37,33 @@ namespace Bind.GL2
         //protected static readonly Dictionary<string, string> doc_replacements;
 
         protected ISpecReader SpecReader = new XmlSpecReader();
+        protected string Profile = "gl";
 
         #endregion
 
         #region Constructors
 
-        public Generator()
+        public Generator(string nsName, string dirName)
         {
+            if (String.IsNullOrEmpty(nsName))
+                throw new ArgumentNullException("nsName");
+            if (dirName == null)
+                dirName = "GL2";
+
+            glTypemap = "GL2/gl.tm";
+            csTypemap = Settings.LanguageTypeMapFile;
+
+            enumSpec = Path.Combine(dirName, "signatures.xml");
+            enumSpecExt = String.Empty;
+            glSpec = Path.Combine(dirName, "signatures.xml");
+            glSpecExt = String.Empty;
+            Settings.OverridesFile = Path.Combine(dirName, "overrides.xml");
+
+            Settings.ImportsClass = "Core";
+            Settings.DelegatesClass = "Delegates";
+
+            Settings.OutputClass = "GL";
+
             if (Settings.Compatibility == Settings.Legacy.Tao)
             {
                 Settings.OutputNamespace = "Tao.OpenGl";
@@ -77,11 +97,9 @@ namespace Bind.GL2
             string overrides = Path.Combine(Settings.InputPath, Settings.OverridesFile);
             Type.GLTypes = SpecReader.ReadTypeMap(Path.Combine(Settings.InputPath, glTypemap));
             Type.CSTypes = SpecReader.ReadCSTypeMap(Path.Combine(Settings.InputPath, csTypemap));
-            SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec), Enums, "gl");
-            SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec), Enums, "glcore");
+            SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec), Enums, Profile);
             SpecReader.ReadEnums(overrides, Enums, "");
-            SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates, "gl");
-            SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates, "glcore");
+            SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates, Profile);
             SpecReader.ReadDelegates(overrides, Delegates, "");
 
             var enum_processor = new EnumProcessor(overrides);

@@ -27,33 +27,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace Bind.GL2
 {
-    class GL4Generator : ES.ESGenerator
+    class GL4Generator : Generator
     {
         public GL4Generator(string name, string dirname)
-			: base(name, dirname)
+            : base(name, dirname)
         {
-            glTypemap = "GL2/gl.tm";
-            csTypemap = Settings.LanguageTypeMapFile;
+            Settings.OverridesFile = Path.Combine(dirname, "gloverrides.xml");
 
-            enumSpec = "GL2/signatures.xml";
-            enumSpecExt = String.Empty;
-            glSpec = "GL2/signatures.xml";
-            glSpecExt = String.Empty;
-            Settings.OverridesFile = "GL2/gloverrides.xml";
-
-            Settings.ImportsFile = "GLCore.cs";
-            Settings.DelegatesFile = "GLDelegates.cs";
-            Settings.EnumsFile = "GLEnums.cs";
-            Settings.WrappersFile = "GL.cs";
-            Settings.ImportsClass = "Core";
-            Settings.DelegatesClass = "Delegates";
-
-            Settings.OutputClass = "GL";
+            Profile = "glcore";
         }
     }
 }
