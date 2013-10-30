@@ -58,11 +58,17 @@ namespace CHeaderToXML
         {
             var input = XDocument.Parse(String.Join(" ", lines));
 
-            List<XElement> elements = new List<XElement>();
-            elements.AddRange(ParseEnums(input));
-            elements.AddRange(ParseFunctions(input));
-
-            return elements;
+            var elements = new SortedDictionary<string, XElement>();
+            foreach (var e in ParseEnums(input).Concat(ParseFunctions(input)))
+            {
+                var name = e.Attribute("name").Value;
+                if (!elements.ContainsKey(name))
+                    elements.Add(name, e);
+                else
+                    elements[name].Add(e.Elements());
+            }
+            
+            return elements.Values;
         }
 
         IEnumerable<XElement> ParseEnums(XDocument input)
@@ -104,9 +110,11 @@ namespace CHeaderToXML
                 var extension = feature.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core";
                 var version = feature.Attribute("number") != null ? feature.Attribute("number").Value : null;
                 var apinames =
-                    (feature.Attribute("api") != null ? feature.Attribute("api").Value :
+                    (//feature.Attribute("api") != null ? feature.Attribute("api").Value :
                     feature.Attribute("supported") != null ? feature.Attribute("supported").Value :
-                    "gl").Split('|');
+                    feature.Attribute("profile") != null ? feature.Attribute("profile").Value
+                        .Replace("compatibility", "gl").Replace("core", "glcore") :
+                    "gl|glcore").Split('|');
 
                 // An enum may belong to one or more APIs.
                 // Add it to all relevant ones.
@@ -144,19 +152,37 @@ namespace CHeaderToXML
                         }
                     }
 
+                    api.Add(e);
+                }
+
+                foreach (var apiname in apinames)
+                {
+                    var api = APIs[apiname];
+
+                    // Mark deprecated enums
                     foreach (var token in feature.Elements("remove").Elements("enum"))
                     {
                         var token_name = TrimName(token.Attribute("name").Value);
                         var deprecated =
                             api.Elements("enum").Elements("token")
                             .FirstOrDefault(t => t.Attribute("name").Value == token_name);
+
                         if (deprecated != null)
                         {
-                            deprecated.Add(new XAttribute("deprecated", version));
+                            if (apiname == "glcore")
+                            {
+                                // These tokens do not exist in the glcore profile, remove them
+                                api.Elements("enum").Elements("token")
+                                    .First(t => t.Attribute("name").Value == token_name)
+                                    .Remove();
+                            }
+                            else
+                            {
+                                // These tokens exist in all other profiles, mark them as deprecated.
+                                deprecated.Add(new XAttribute("deprecated", version));
+                            }
                         }
                     }
-
-                    api.Add(e);
                 }
             }
 
@@ -191,9 +217,11 @@ namespace CHeaderToXML
             {
                 var category = TrimName(feature.Attribute("name").Value);
                 var apinames =
-                    (feature.Attribute("api") != null ? feature.Attribute("api").Value :
+                    (//feature.Attribute("api") != null ? feature.Attribute("api").Value :
                     feature.Attribute("supported") != null ? feature.Attribute("supported").Value :
-                    "gl").Split('|');
+                    feature.Attribute("profile") != null ? feature.Attribute("profile").Value
+                        .Replace("compatibility", "gl").Replace("core", "glcore") :
+                    "gl|glcore").Split('|');
                 var version =
                     (feature.Attribute("number") != null ? feature.Attribute("number").Value : "")
                     .Split('|');
@@ -226,18 +254,37 @@ namespace CHeaderToXML
 
                         Merge(api, function);
                     }
+                }
+
+                i = -1;
+                foreach (var apiname in apinames)
+                {
+                    i++;
+                    var cmd_version = version.Length > i ? version[i] : version[0];
+                    var api = APIs[apiname];
 
                     // Mark all deprecated functions as such
                     foreach (var command in feature.Elements("remove").Elements("command"))
                     {
                         var deprecated_name = TrimName(command.Attribute("name").Value);
-                        var function =
+                        var deprecated =
                             api.Elements("function")
                             .FirstOrDefault(t => t.Attribute("name").Value == deprecated_name);
 
-                        if (function != null)
+                        if (deprecated != null)
                         {
-                            function.Add(new XAttribute("deprecated", cmd_version));
+                            if (apiname == "glcore")
+                            {
+                                // These tokens do not exist in the glcore profile, remove them
+                                api.Elements("function")
+                                    .First(t => t.Attribute("name").Value == deprecated_name)
+                                    .Remove();
+                            }
+                            else
+                            {
+                                // These tokens exist in all other profiles, mark them as deprecated.
+                                deprecated.Add(new XAttribute("deprecated", cmd_version));
+                            }
                         }
                     }
                 }
