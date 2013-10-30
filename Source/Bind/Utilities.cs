@@ -251,7 +251,10 @@ namespace Bind
         // Merges the given delegate into the delegate list.
         internal static void Merge(DelegateCollection delegates, Delegate t)
         {
-            delegates.Add(t.Name, t);
+            if (!delegates.ContainsKey(t.Name))
+                delegates.Add(t.Name, t);
+            else
+                Console.WriteLine("Function '{0}' redefined", t.Name);
         }
 
         #endregion
