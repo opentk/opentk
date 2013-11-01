@@ -19,7 +19,7 @@ namespace Bind.Structures
     /// Represents an opengl function.
     /// The return value, function name, function parameters and opengl version can be retrieved or set.
     /// </summary>
-    class Delegate : IComparable<Delegate>
+    class Delegate : IComparable<Delegate>, IEquatable<Delegate>
     {
         //internal static DelegateCollection Delegates;
 
@@ -240,43 +240,9 @@ namespace Bind.Structures
 
         #endregion
 
-        /// <summary>
-        /// Returns a string that represents an invocation of this delegate.
-        /// </summary>
-        public string CallString()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(Settings.DelegatesClass);
-            sb.Append(Settings.NamespaceSeparator);
-            sb.Append(Settings.FunctionPrefix);
-            sb.Append(Name);
-            sb.Append(Parameters.CallString());
-
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns a string representing the full non-delegate declaration without decorations.
-        /// (ie "(unsafe) void glXxxYyy(int a, float b, IntPtr c)"
-        /// </summary>
-        public string DeclarationString()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(Unsafe ? "unsafe " : "");
-            sb.Append(ReturnType);
-            sb.Append(" ");
-            sb.Append(Name);
-            sb.Append(Parameters.ToString(true));
-
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns a string representing the full delegate declaration without decorations.
-        /// (ie "(unsafe) void delegate glXxxYyy(int a, float b, IntPtr c)"
-        /// </summary>
+        // This method should only be used for debugging purposes, not for code generation!
+        // Returns a string representing the full delegate declaration without decorations.
+        // (ie "(unsafe) void delegate glXxxYyy(int a, float b, IntPtr c)"
         override public string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -286,23 +252,9 @@ namespace Bind.Structures
             sb.Append(ReturnType);
             sb.Append(" ");
             sb.Append(Name);
-            sb.Append(Parameters.ToString(true));
+            sb.Append(Parameters.ToString());
 
             return sb.ToString();
-        }
-
-        public Delegate GetCLSCompliantDelegate()
-        {
-            Delegate f = new Delegate(this);
-
-            for (int i = 0; i < f.Parameters.Count; i++)
-            {
-                f.Parameters[i].CurrentType = f.Parameters[i].GetCLSCompliantType();
-            }
-
-            f.ReturnType.CurrentType = f.ReturnType.GetCLSCompliantType();
-
-            return f;
         }
 
         #region IComparable<Delegate> Members
@@ -310,6 +262,15 @@ namespace Bind.Structures
         public int CompareTo(Delegate other)
         {
             return Name.CompareTo(other.Name);
+        }
+
+        #endregion
+
+        #region IEquatable<Delegate> Members
+
+        public bool Equals(Delegate other)
+        {
+            return CompareTo(other) == 0;
         }
 
         #endregion
