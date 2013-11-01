@@ -67,7 +67,7 @@ namespace Bind
 
     #endregion
 
-    public static class Utilities
+    static class Utilities
     {
         public static readonly char[] Separators = { ' ', '\n', ',', '(', ')', ';', '#' };
         public static Regex Extensions { get; private set; }
@@ -117,17 +117,14 @@ namespace Bind
 
         #region Keywords
 
-        public static List<string> Keywords
+        public static List<string> Keywords(GeneratorLanguage language)
         {
-            get
+            switch (language)
             {
-                switch (Settings.Language)
-                {
-                    case GeneratorLanguage.CSharp: return CSharpKeywords;
-                    case GeneratorLanguage.Cpp: return CppKeywords;
-                    case GeneratorLanguage.Java: return JavaKeywords;
-                    default: throw new NotImplementedException();
-                }
+                case GeneratorLanguage.CSharp: return CSharpKeywords;
+                case GeneratorLanguage.Cpp: return CppKeywords;
+                case GeneratorLanguage.Java: return JavaKeywords;
+                default: throw new NotImplementedException();
             }
         }
 
