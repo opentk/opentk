@@ -42,11 +42,17 @@ namespace Bind
         const string Path = "/signatures/replace/enum[@name='{0}']";
         string Overrides { get; set; }
 
-        public EnumProcessor(string overrides)
+        IBind Generator { get; set; }
+        Settings Settings { get { return Generator.Settings; } }
+
+        public EnumProcessor(IBind generator, string overrides)
         {
+            if (generator == null)
+                throw new ArgumentNullException("generator");
             if (overrides == null)
                 throw new ArgumentNullException("overrides");
 
+            Generator = generator;
             Overrides = overrides;
         }
 
@@ -94,7 +100,7 @@ namespace Bind
             if (String.IsNullOrEmpty(name))
                 return name;
 
-            if (Utilities.Keywords.Contains(name))
+            if (Utilities.Keywords(Settings.Language).Contains(name))
                 return name;
 
             if (Char.IsDigit(name[0]))
@@ -217,7 +223,7 @@ namespace Bind
             }
         }
 
-        public static string TranslateConstantName(string s, bool isValue)
+        public string TranslateConstantName(string s, bool isValue)
         {
             if (String.IsNullOrEmpty(s))
                 return s;
@@ -277,7 +283,7 @@ namespace Bind
             return translator.ToString();
         }
 
-        public static string TranslateConstantValue(string value)
+        public string TranslateConstantValue(string value)
         {
             // Remove decorations to get a pure number (e.g. 0x80u -> 80).
             if (value.ToLower().StartsWith("0x"))
