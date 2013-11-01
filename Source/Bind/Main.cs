@@ -5,26 +5,30 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security;
+using System.Text.RegularExpressions;
 using Bind.CL;
 using Bind.ES;
 using Bind.GL2;
-using System.Text.RegularExpressions;
 
 namespace Bind
 {
     enum GeneratorMode
     {
-        Unknown,
+        All = 0,
+        Default = All,
         GL2,
         GL3,
+        GL4,
         ES10,
         ES11,
         ES20,
+        ES30,
         CL10,
     }
 
@@ -37,8 +41,9 @@ namespace Bind
 
     static class MainClass
     {
-        static GeneratorMode mode = GeneratorMode.GL2;
-        static internal IBind Generator;
+        static GeneratorMode mode = GeneratorMode.Default;
+        static internal List<IBind> Generators = new List<IBind>();
+        static Settings Settings = new Settings();
 
         static void Main(string[] arguments)
         {
@@ -158,63 +163,78 @@ namespace Bind
 
             try
             {
-                long ticks = DateTime.Now.Ticks;
-
                 switch (mode)
                 {
+                    case GeneratorMode.All:
+                        Console.WriteLine("Using 'all' generator mode.");
+                        Console.WriteLine("Use '-mode:all/gl2/gl4/es10/es11/es20' to select a specific mode.");
+                        Generators.Add(new Generator(Settings, "OpenTK.Graphics.OpenGL", dirName));
+                        Generators.Add(new GL4Generator(Settings, "OpenTK.Graphics.OpenGL.Core", dirName));
+                        Generators.Add(new ESGenerator(Settings, "OpenTK.Graphics.ES10", dirName));
+                        Generators.Add(new ESGenerator(Settings, "OpenTK.Graphics.ES11", dirName));
+                        Generators.Add(new ESGenerator(Settings, "OpenTK.Graphics.ES20", dirName));
+                        break;
+
                     case GeneratorMode.GL2:
-                        Generator = new Generator("OpenGL", dirName);
+                        Generators.Add(new Generator(Settings, "OpenTK.Graphics.OpenGL", dirName));
                         break;
 
                     case GeneratorMode.GL3:
-                        Generator = new GL4Generator("OpenGL.Core", dirName);
+                    case GeneratorMode.GL4:
+                        Generators.Add(new GL4Generator(Settings, "OpenTK.Graphics.OpenGL.Core", dirName));
                         break;
 
                     case GeneratorMode.ES10:
-                        Generator = new ESGenerator("ES10", dirName);
+                        Generators.Add(new ESGenerator(Settings, "OpenTK.Graphics.ES10", dirName));
                         break;
                     
                     case GeneratorMode.ES11:
-                        Generator = new ESGenerator("ES11", dirName);
+                        Generators.Add(new ESGenerator(Settings, "OpenTK.Graphics.ES11", dirName));
                         break;
                     
                     case GeneratorMode.ES20:
-                        Generator = new ESGenerator("ES20", dirName);
+                        Generators.Add(new ESGenerator(Settings, "OpenTK.Graphics.ES20", dirName));
                         break;
 
                     case GeneratorMode.CL10:
-                        Generator = new CLGenerator("CL10", dirName);
+                        Generators.Add(new CLGenerator(Settings, "CL10", dirName));
                         break;
                     
-                    case GeneratorMode.Unknown:
                     default:
                         Console.WriteLine("Please specify a generator mode (use '-mode:gl2/gl3/glu/wgl/glx])'");
                         return;
                 }
 
-                Generator.Process();
-                ISpecWriter writer = null;
-                switch (Settings.Language)
+                foreach (var generator in Generators)
                 {
-                    case GeneratorLanguage.Cpp:
-                        writer = new CppSpecWriter();
-                        break;
+                    long ticks = DateTime.Now.Ticks;
 
-                    case GeneratorLanguage.Java:
-                        writer = new JavaSpecWriter();
-                        break;
+                    generator.Process();
 
-                    case GeneratorLanguage.CSharp:
-                    default:
-                        writer = new CSharpSpecWriter();
-                        break;
+                    ISpecWriter writer = null;
+                    switch (generator.Settings.Language)
+                    {
+                        case GeneratorLanguage.Cpp:
+                            writer = new CppSpecWriter();
+                            break;
+
+                        case GeneratorLanguage.Java:
+                            writer = new JavaSpecWriter();
+                            break;
+
+                        case GeneratorLanguage.CSharp:
+                        default:
+                            writer = new CSharpSpecWriter();
+                            break;
+                    }
+                    writer.WriteBindings(generator);
+
+                    ticks = DateTime.Now.Ticks - ticks;
+
+                    Console.WriteLine();
+                    Console.WriteLine("Bindings generated in {0} seconds.", ticks / (double)10000000.0);
                 }
-                writer.WriteBindings(Generator);
-
-                ticks = DateTime.Now.Ticks - ticks;
-
-                Console.WriteLine();
-                Console.WriteLine("Bindings generated in {0} seconds.", ticks / (double)10000000.0);
+                
                 Console.WriteLine();
                 if (Debugger.IsAttached)
                 {
@@ -236,42 +256,51 @@ namespace Bind
 
         private static void SetGeneratorMode(string dirName, string arg)
         {
-            if (arg == "gl" || arg == "gl2" || arg == "gl3" || arg == "gl4")
+            switch (arg)
             {
-                mode = GeneratorMode.GL2;
-                Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
-            }
-            else if (arg == "es10")
-            {
-                mode = GeneratorMode.ES10;
-                Settings.DefaultOutputPath = Path.Combine(
-                    Directory.GetParent(Settings.DefaultOutputPath).ToString(),
-                    dirName);
-                Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES10";
-            }
-            else if (arg == "es11")
-            {
-                mode = GeneratorMode.ES11;
-                Settings.DefaultOutputPath = Path.Combine(
-                    Directory.GetParent(Settings.DefaultOutputPath).ToString(),
-                    dirName);
-                Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
-            }
-            else if (arg == "es20")
-            {
-                mode = GeneratorMode.ES20;
-                Settings.DefaultOutputPath = Path.Combine(
-                    Directory.GetParent(Settings.DefaultOutputPath).ToString(),
-                    dirName);
-                Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
-            }
-            else if (arg == "cl" || arg == "cl10")
-            {
-                mode = GeneratorMode.CL10;
-            }
-            else
-            {
-                throw new NotSupportedException();
+                case "gl":
+                case "gl2":
+                    mode = GeneratorMode.GL2;
+                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
+                    break;
+
+                case "gl3":
+                case "gl4":
+                    mode = GeneratorMode.GL2;
+                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL.Core";
+                    break;
+
+                case "es10":
+                    mode = GeneratorMode.ES10;
+                    Settings.DefaultOutputPath = Path.Combine(
+                        Directory.GetParent(Settings.DefaultOutputPath).ToString(),
+                        dirName);
+                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES10";
+                    break;
+
+                case "es11":
+                    mode = GeneratorMode.ES11;
+                    Settings.DefaultOutputPath = Path.Combine(
+                        Directory.GetParent(Settings.DefaultOutputPath).ToString(),
+                        dirName);
+                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
+                    break;
+
+                case "es20":
+                    mode = GeneratorMode.ES20;
+                    Settings.DefaultOutputPath = Path.Combine(
+                        Directory.GetParent(Settings.DefaultOutputPath).ToString(),
+                        dirName);
+                    Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
+                    break;
+
+                case "cl":
+                case "cl10":
+                    mode = GeneratorMode.CL10;
+                    break;
+
+                default:
+                    throw new NotSupportedException();
             }
         }
 
@@ -287,6 +316,9 @@ Available switches:
 -namespace:  Same as -ns
 -class:      Output class (e.g. -class:GL3).
              Default: GL/Wgl/Glu/Glx (depends on -mode)
+-mode:       Generator mode (e.g. -mode:gl4).
+             Default: all
+             Accepted: all/gl2/gl4/es10/es11/es20
 -o/-option:  Set advanced option. Available options:
     -o:tao   Tao compatibility mode.
     -o:enums Follow OpenGL instead .Net naming conventions.
