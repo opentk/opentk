@@ -11,13 +11,13 @@ namespace Bind.ES
 {
     class ESGenerator : Generator
     {
-        public ESGenerator(string nsName, string dirName)
-            : base(nsName, dirName)
+        public ESGenerator(Settings settings, string nsName, string dirName)
+            : base(settings, nsName, dirName)
         {
-            Settings.ImportsFile = "Core.cs";
-            Settings.DelegatesFile = "Delegates.cs";
-            Settings.EnumsFile = "Enums.cs";
-            Settings.WrappersFile = "ES.cs";
+            Settings.ImportsFile = nsName + "Core.cs";
+            Settings.DelegatesFile = nsName + "Delegates.cs";
+            Settings.EnumsFile = nsName + "Enums.cs";
+            Settings.WrappersFile = nsName + ".cs";
         }
     }
 }

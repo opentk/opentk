@@ -35,10 +35,13 @@ namespace Bind.GL2
 {
     class GL4Generator : Generator
     {
-        public GL4Generator(string name, string dirname)
-            : base(name, dirname)
+        public GL4Generator(Settings settings, string name, string dirname)
+            : base(settings, name, dirname)
         {
-            Settings.OverridesFile = Path.Combine(dirname, "gloverrides.xml");
+            Settings.ImportsFile = "GL4Core.cs";
+            Settings.DelegatesFile = "GL4Delegates.cs";
+            Settings.EnumsFile = "GL4Enums.cs";
+            Settings.WrappersFile = "GL4.cs";
 
             Profile = "glcore";
         }

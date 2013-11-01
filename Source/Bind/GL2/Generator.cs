@@ -22,33 +22,38 @@ namespace Bind.GL2
     {
         #region Fields
 
-        protected static string glTypemap = "GL2/gl.tm";
-        protected static string csTypemap = Settings.LanguageTypeMapFile;
-        protected static string enumSpec = "GL2/enum.spec";
-        protected static string enumSpecExt = "GL2/enumext.spec";
-        protected static string glSpec = "GL2/gl.spec";
-        protected static string glSpecExt = "";
+        protected string glTypemap = "GL2/gl.tm";
+        protected string csTypemap = "csharp.tm";
+        protected string enumSpec = "GL2/enum.spec";
+        protected string enumSpecExt = "GL2/enumext.spec";
+        protected string glSpec = "GL2/gl.spec";
+        protected string glSpecExt = "";
 
-        protected static string loadAllFuncName = "LoadAll";
+        protected string loadAllFuncName = "LoadAll";
 
-        protected static Regex enumToDotNet = new Regex("_[a-z|A-Z]?", RegexOptions.Compiled);
+        protected Regex enumToDotNet = new Regex("_[a-z|A-Z]?", RegexOptions.Compiled);
 
-        protected static readonly char[] numbers = "0123456789".ToCharArray();
+        protected readonly char[] numbers = "0123456789".ToCharArray();
         //protected static readonly Dictionary<string, string> doc_replacements;
 
-        protected ISpecReader SpecReader = new XmlSpecReader();
+        protected ISpecReader SpecReader { get; set; }
         protected string Profile = "gl";
+        public Settings Settings { get; protected set; }
 
         #endregion
 
         #region Constructors
 
-        public Generator(string nsName, string dirName)
+        public Generator(Settings settings, string nsName, string dirName)
         {
+            if (settings == null)
+                throw new ArgumentNullException("settings");
             if (String.IsNullOrEmpty(nsName))
                 throw new ArgumentNullException("nsName");
             if (dirName == null)
                 dirName = "GL2";
+
+            Settings = settings.Clone();
 
             glTypemap = "GL2/gl.tm";
             csTypemap = Settings.LanguageTypeMapFile;
@@ -61,8 +66,8 @@ namespace Bind.GL2
 
             Settings.ImportsClass = "Core";
             Settings.DelegatesClass = "Delegates";
-
             Settings.OutputClass = "GL";
+            Settings.OutputNamespace = nsName;
 
             if (Settings.Compatibility == Settings.Legacy.Tao)
             {
@@ -82,6 +87,8 @@ namespace Bind.GL2
             Delegates = new DelegateCollection();
             Enums = new EnumCollection();
             Wrappers = new FunctionCollection();
+
+            SpecReader = new XmlSpecReader(Settings);
         }
 
         #endregion
@@ -91,19 +98,23 @@ namespace Bind.GL2
         public DelegateCollection Delegates { get; private set; }
         public EnumCollection Enums { get; private set; }
         public FunctionCollection Wrappers { get; private set; }
+        public IDictionary<string, string> GLTypes { get; private set; }
+        public IDictionary<string, string> CSTypes { get; private set; }
 
         public virtual void Process()
         {
             string overrides = Path.Combine(Settings.InputPath, Settings.OverridesFile);
-            Type.GLTypes = SpecReader.ReadTypeMap(Path.Combine(Settings.InputPath, glTypemap));
-            Type.CSTypes = SpecReader.ReadCSTypeMap(Path.Combine(Settings.InputPath, csTypemap));
+            
+            GLTypes = SpecReader.ReadTypeMap(Path.Combine(Settings.InputPath, glTypemap));
+            CSTypes = SpecReader.ReadCSTypeMap(Path.Combine(Settings.InputPath, csTypemap));
+
             SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec), Enums, Profile);
             SpecReader.ReadEnums(overrides, Enums, "");
             SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates, Profile);
             SpecReader.ReadDelegates(overrides, Delegates, "");
 
-            var enum_processor = new EnumProcessor(overrides);
-            var func_processor = new FuncProcessor(overrides);
+            var enum_processor = new EnumProcessor(this, overrides);
+            var func_processor = new FuncProcessor(this, overrides);
 
             Enums = enum_processor.Process(Enums);
             Wrappers = func_processor.Process(enum_processor, Delegates, Enums);

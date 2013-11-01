@@ -11,12 +11,12 @@ namespace Bind.CL
 {
     class CLGenerator : ES.ESGenerator
     {
-        public CLGenerator(string name, string dirname)
-			: base(name, dirname)
+        public CLGenerator(Settings settings, string name, string dirname)
+            : base(settings, name, dirname)
         {
             glTypemap = null;
 
-			Settings.WrappersFile = "CL.cs";
+            Settings.WrappersFile = "CL.cs";
 
             Settings.FunctionPrefix = "cl";
             Settings.ConstantPrefix = "CL_";
