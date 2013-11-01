@@ -15,11 +15,9 @@ namespace Bind.Structures
     /// <summary>
     /// Represents a single parameter of an opengl function.
     /// </summary>
-    class Parameter : Type, IComparable<Parameter>
+    class Parameter : Type, IComparable<Parameter>, IEquatable<Parameter>
     {
         string cache;
-        bool rebuild;
-        bool unsafe_allowed;        // True if the cache may contain unsafe types, false otherwise.
 
         #region Constructors
 
@@ -75,10 +73,7 @@ namespace Bind.Structures
         {
             get
             {
-                if (Utilities.Keywords.Contains(RawName))
-                    return Settings.KeywordEscapeCharacter + RawName;
-                else
-                    return RawName;
+                return RawName;
             }
             set
             {
@@ -90,7 +85,6 @@ namespace Bind.Structures
                         value = value.Substring(1);
                     }
                     RawName = value;
-                    rebuild = true;
                 }
             }
         }
@@ -111,7 +105,6 @@ namespace Bind.Structures
                 if (_unmanaged_type != value)
                 {
                     _unmanaged_type = value;
-                    rebuild = true;
                 }
             }
         }
@@ -133,7 +126,6 @@ namespace Bind.Structures
                 if (_flow != value)
                 {
                     _flow = value;
-                    rebuild = true;
                 }
             }
         }
@@ -165,7 +157,6 @@ namespace Bind.Structures
                 if (_unchecked != value)
                 {
                     _unchecked = value;
-                    rebuild = true;
                 }
             }
         }
@@ -179,23 +170,6 @@ namespace Bind.Structures
         {
             get { return generic; }
             set { generic = value; }
-        }
-
-        #endregion
-
-        #region public override string CurrentType
-
-        public override string CurrentType
-        {
-            get
-            {
-                return base.CurrentType;
-            }
-            set
-            {
-                base.CurrentType = value;
-                rebuild = true;
-            }
         }
 
         #endregion
@@ -214,153 +188,6 @@ namespace Bind.Structures
                 CurrentType == other.CurrentType &&
                 (Reference && !(other.Reference || other.Array > 0 || other.Pointer != 0) ||
                 other.Reference && !(Reference || Array > 0 || Pointer != 0));
-        }
-
-        #endregion
-
-        #region public override string ToString()
-
-        public override string ToString()
-        {
-            return ToString(false);
-        }
-
-        #endregion
-
-        #region public string ToString(bool override_unsafe_setting)
-
-        public string ToString(bool override_unsafe_setting)
-        {
-            rebuild |= unsafe_allowed |= override_unsafe_setting;
-            unsafe_allowed = override_unsafe_setting;
-
-            if (!String.IsNullOrEmpty(cache) && !rebuild)
-            {
-               return cache;
-            }
-            else
-            {
-                StringBuilder sb = new StringBuilder();
-
-                if (Flow == FlowDirection.Out)
-                    sb.Append("[OutAttribute] ");
-                else if (Flow == FlowDirection.Undefined)
-                    sb.Append("[InAttribute, OutAttribute] ");
-
-                if (Reference)
-                {
-                    if (Flow == FlowDirection.Out)
-                        sb.Append("out ");
-                    else
-                        sb.Append("ref ");
-                }
-
-                if (!override_unsafe_setting && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None))
-                {
-                    if (Pointer != 0)
-                    {
-                        sb.Append("IntPtr");
-                    }
-                    else
-                    {
-                        sb.Append(base.ToString());
-                        if (Array > 0)
-                        {
-                            sb.Append("[");
-                            for (int i = 1; i < Array; i++)
-                                sb.Append(",");
-                            sb.Append("]");
-                        }
-                    }
-                }
-                else
-                {
-                    sb.Append(base.ToString());
-                    for (int i = 0; i < Pointer; i++)
-                        sb.Append("*");
-                    if (Array > 0)
-                    {
-                        sb.Append("[");
-                        for (int i = 1; i < Array; i++)
-                            sb.Append(",");
-                        sb.Append("]");
-                    }
-                }
-                if (!String.IsNullOrEmpty(Name))
-                {
-                    sb.Append(" ");
-                    sb.Append(Name);
-                }
-
-                rebuild = false;
-                cache = sb.ToString();
-                return cache;
-            }
-        }
-
-        #endregion
-
-        #region Translate()
-
-        override public void Translate(EnumProcessor enum_processor, XPathNavigator overrides, string category, EnumCollection enums)
-        {
-            base.Translate(enum_processor, overrides, category, enums);
-
-            if (Pointer >= 3)
-            {
-                System.Diagnostics.Trace.WriteLine(String.Format(
-                    "[Error] Type '{0}' has a high pointer level. Bindings will be incorrect.",
-                    CurrentType));
-            }
-
-            // Find out the necessary wrapper types.
-            if (Pointer != 0)/* || CurrentType == "IntPtr")*/
-            {
-                if (CurrentType.ToLower().Contains("string") ||
-                    CurrentType.ToLower().Contains("char") && Pointer > 1)
-                {
-                    // string* -> [In] String[] or [Out] StringBuilder[]
-                    QualifiedType =
-                        Flow == FlowDirection.Out ?
-                        "StringBuilder[]" :
-                        "String[]";
-
-                    Pointer = 0;
-                    WrapperType = WrapperTypes.None;
-                }
-                else if (CurrentType.ToLower().Contains("char"))
-                {
-                    // char* -> [In] String or [Out] StringBuilder
-                    QualifiedType =
-                        Flow == FlowDirection.Out ?
-                        "StringBuilder" :
-                        "String";
-
-                    Pointer = 0;
-                    WrapperType = WrapperTypes.None;
-                }
-                else if (CurrentType.ToLower().Contains("void") ||
-                    (!String.IsNullOrEmpty(PreviousType) && PreviousType.ToLower().Contains("void"))) /*|| CurrentType.Contains("IntPtr"))*/
-                {
-                    CurrentType = "IntPtr";
-                    Pointer = 0;
-                    WrapperType = WrapperTypes.GenericParameter;
-                }
-                else
-                {
-                    WrapperType = WrapperTypes.ArrayParameter;
-                }
-            }
-
-            if (Reference)
-                WrapperType |= WrapperTypes.ReferenceParameter;
-
-            if (Utilities.Keywords.Contains(Name))
-                Name = Settings.KeywordEscapeCharacter + Name;
-
-            // This causes problems with bool arrays
-            //if (CurrentType.ToLower().Contains("bool"))
-            //    WrapperType = WrapperTypes.BoolParameter;
         }
 
         #endregion
@@ -387,26 +214,49 @@ namespace Bind.Structures
         }
 
         #endregion
+
+        #region ToString
+
+        public override string ToString()
+        {
+            return String.Format("{2}{0} {1}",
+                base.ToString(),
+                Name,
+                Reference ? 
+                    Flow == FlowDirection.Out ? "out " : "ref " :
+                    String.Empty);
+        }
+
+        #endregion
+
+        #region IEquatable<Parameter> Members
+
+        public bool Equals(Parameter other)
+        {
+            bool result =
+                base.Equals(other as Type) &&
+                Name.Equals(other.Name);
+
+            return result;
+        }
+
+        #endregion
     }
 
     /// <summary>
     /// Holds the parameter list of an opengl function.
     /// </summary>
-    class ParameterCollection : List<Parameter>, IComparable<ParameterCollection>
+    class ParameterCollection : IList<Parameter>, IComparable<ParameterCollection>, IEquatable<ParameterCollection>
     {
-        string cache = String.Empty;
-        string callStringCache = String.Empty;
-        private bool rebuild = true;
+        readonly List<Parameter> Parameters = new List<Parameter>();
+
         bool hasPointerParameters;
         bool hasReferenceParameters;
         bool hasUnsignedParameters;
         bool hasGenericParameters;
-        bool unsafe_types_allowed;
-        public bool Rebuild
-        {
-            private get { return rebuild; }
-            set { rebuild = true;/*value;*/ }
-        }
+
+        public bool Rebuild { get; set; }
+        Settings Settings { get; set; }
 
         #region Constructors
 
@@ -430,13 +280,11 @@ namespace Bind.Structures
 
         #endregion
 
-        #region void BuildCache()
+        #region BuildCache
 
         void BuildCache()
         {
             BuildReferenceAndPointerParametersCache();
-            BuildCallStringCache();
-            BuildToStringCache(unsafe_types_allowed);
             Rebuild = false;
         }
 
@@ -449,7 +297,9 @@ namespace Bind.Structures
             get
             {
                 if (Rebuild)
+                {
                     BuildCache();
+                }
 
                 return hasPointerParameters;
             }
@@ -464,8 +314,10 @@ namespace Bind.Structures
             get
             {
                 if (Rebuild)
+                {
                     BuildCache();
-                
+                }
+
                 return hasReferenceParameters;
             }
         }
@@ -479,7 +331,9 @@ namespace Bind.Structures
             get
             {
                 if (Rebuild)
+                {
                     BuildCache();
+                }
 
                 return hasUnsignedParameters;
             }
@@ -494,7 +348,9 @@ namespace Bind.Structures
             get
             {
                 if (Rebuild)
+                {
                     BuildCache();
+                }
 
                 return hasGenericParameters;
             }
@@ -524,61 +380,18 @@ namespace Bind.Structures
 
         #endregion
 
-        #region new public void Add(Parameter p)
+        #region ToString
 
-        new public void Add(Parameter p)
-        {
-            Rebuild = true;
-            base.Add(p);
-        }
-
-        #endregion
-
+        // Only use for debugging, not for code generation!
         public override string ToString()
         {
-            return ToString(false);
-        }
-
-        #region public string ToString(bool override_unsafe_setting)
-
-        /// <summary>
-        /// Gets the parameter declaration string.
-        /// </summary>
-        /// <param name="override_unsafe_setting">
-        /// If true, unsafe types will be used even if the Settings.Compatibility.NoPublicUnsafeFunctions flag is set.
-        /// </param>
-        /// <returns>The parameter list of an opengl function in the form ( [parameters] )</returns>
-        public string ToString(bool override_unsafe_setting)
-        {
-            Rebuild |= unsafe_types_allowed != override_unsafe_setting;
-            unsafe_types_allowed = override_unsafe_setting;
-
-            if (!Rebuild)
-            {
-                return cache;
-            }
-            else
-            {
-                BuildCache();
-                return cache;
-            }
-        }
-
-        #endregion
-
-        #region void BuildToStringCache(bool override_unsafe_setting)
-
-        void BuildToStringCache(bool override_unsafe_setting)
-        {
-            unsafe_types_allowed = override_unsafe_setting;
-
             StringBuilder sb = new StringBuilder();
             sb.Append("(");
             if (Count > 0)
             {
                 foreach (Parameter p in this)
                 {
-                    sb.Append(p.ToString(override_unsafe_setting));
+                    sb.Append(p.ToString());
                     sb.Append(", ");
                 }
                 sb.Replace(", ", ")", sb.Length - 2, 2);
@@ -586,91 +399,12 @@ namespace Bind.Structures
             else
                 sb.Append(")");
 
-            cache = sb.ToString();
+            return sb.ToString();
         }
 
         #endregion
 
-        #region public string CallString()
-
-        public string CallString()
-        {
-            if (!Rebuild)
-            {
-                return callStringCache;
-            }
-            else
-            {
-                BuildCache();
-                return callStringCache;
-            }
-        }
-
-        #endregion
-
-        #region private void BuildCallStringCache()
-
-        /// <summary>
-        /// Builds a call string instance and caches it.
-        /// </summary>
-        private void BuildCallStringCache()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append("(");
-
-            if (Count > 0)
-            {
-                foreach (Parameter p in this)
-                {
-                    if (p.Unchecked)
-                        sb.Append("unchecked((" + p.QualifiedType + ")");
-
-                    if (!p.Generic && p.CurrentType != "object")
-                    {
-                        if (p.CurrentType.ToLower().Contains("string"))
-                        {
-                            sb.Append(String.Format("({0}{1})",
-                                p.QualifiedType, (p.Array > 0) ? "[]" : ""));
-                        }
-                        else if (p.IndirectionLevel != 0)
-                        {
-                            if (((Settings.Compatibility & Settings.Legacy.TurnVoidPointersToIntPtr) != Settings.Legacy.None) &&
-                                p.Pointer != 0 && p.CurrentType.Contains("void"))
-                                sb.Append("(IntPtr)");
-                            else
-                            {
-                                sb.Append("(");
-                                sb.Append(p.QualifiedType);
-                                for (int i = 0; i < p.IndirectionLevel; i++)
-                                    sb.Append("*");
-                                sb.Append(")");
-                            }
-                        }
-                        else
-                        {
-                            sb.Append(String.Format("({0})", p.QualifiedType));
-                        }
-                    }
-
-                    sb.Append(p.Name);
-
-                    if (p.Unchecked)
-                        sb.Append(")");
-
-                    sb.Append(", ");
-                }
-                sb.Replace(", ", ")", sb.Length - 2, 2);
-            }
-            else
-            {
-                sb.Append(")");
-            }
-
-            callStringCache = sb.ToString();
-        }
-
-        #endregion
+        #region ContainsType
 
         public bool ContainsType(string type)
         {
@@ -679,6 +413,93 @@ namespace Bind.Structures
                     return true;
             return false;
         }
+
+        #endregion
+
+        #region IList<Parameter> Members
+        
+        public void Add(Parameter p)
+        {
+            Parameters.Add(p);
+            Rebuild = true;
+        }
+
+        public void Clear()
+        {
+            Parameters.Clear();
+            Rebuild = true;
+        }
+
+        public bool Contains(Parameter item)
+        {
+            return Parameters.Contains(item);
+        }
+
+        public void CopyTo(Parameter[] array, int arrayIndex)
+        {
+            Parameters.CopyTo(array, arrayIndex);
+        }
+
+        public int Count
+        {
+            get { return Parameters.Count; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return (Parameters as ICollection<Parameter>).IsReadOnly; }
+        }
+
+        public bool Remove(Parameter item)
+        {
+            var result = Parameters.Remove(item);
+            if (result)
+            {
+                Rebuild = true;
+            }
+            return result;
+        }
+
+        public IEnumerator<Parameter> GetEnumerator()
+        {
+            return Parameters.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return Parameters.GetEnumerator();
+        }
+
+        public int IndexOf(Parameter item)
+        {
+            return Parameters.IndexOf(item);
+        }
+
+        public void Insert(int index, Parameter item)
+        {
+            Parameters.Insert(index, item);
+            Rebuild = true;
+        }
+
+        public void RemoveAt(int index)
+        {
+            Parameters.RemoveAt(index);
+            Rebuild = true;
+        }
+
+        public Parameter this[int index]
+        {
+            get
+            {
+                return Parameters[index];
+            }
+            set
+            {
+                Parameters[index] = value;
+            }
+        }
+
+        #endregion
 
         #region IComparable<ParameterCollection> Members
 
@@ -702,6 +523,23 @@ namespace Bind.Structures
                 }
                 return 0;
             }
+        }
+
+        #endregion
+
+        #region IEquatable<ParameterCollection> Members
+
+        public bool Equals(ParameterCollection other)
+        {
+            if (Count != other.Count)
+                return false;
+
+            bool result = true;
+            for (int i = 0; i < Count && result; i++)
+            {
+                result &= this[i].Equals(other[i]);
+            }
+            return result;
         }
 
         #endregion
