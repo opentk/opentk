@@ -7,16 +7,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Xml.XPath;
 
 namespace Bind.Structures
 {
-    class Type : IComparable<Type>
+    class Type : IComparable<Type>, IEquatable<Type>
     {
-        internal static Dictionary<string, string> GLTypes;
-        internal static Dictionary<string, string> CSTypes;
-
-        string current_qualifier = "", previous_qualifier = "";
+        string current_qualifier = String.Empty;
+        string previous_qualifier = String.Empty;
 
         #region --- Constructors ---
 
@@ -28,7 +27,7 @@ namespace Bind.Structures
         {
             if (t != null)
             {
-                QualifiedType = t.QualifiedType; // Covers current type and qualifier
+                QualifiedType = t.QualifiedType ?? t.CurrentType; // Covers current type and qualifier
                 PreviousType = t.PreviousType;
                 PreviousQualifier = t.PreviousQualifier;
                 WrapperType = t.WrapperType;
@@ -41,31 +40,35 @@ namespace Bind.Structures
 
         #endregion
 
-        public string CurrentQualifier
+        #region Private Members
+
+        string CurrentQualifier
         {
             get { return current_qualifier; }
             set { PreviousQualifier = CurrentQualifier; current_qualifier = value; }
         }
 
-        public string PreviousQualifier
+        string PreviousQualifier
         {
             get { return previous_qualifier; }
-            private set { previous_qualifier = value; }
+            set { previous_qualifier = value; }
         }
+
+        #endregion
 
         public string QualifiedType
         {
             get
             {
-                if (!String.IsNullOrEmpty(CurrentQualifier))
-                    return String.Format("{0}{1}{2}", CurrentQualifier, Settings.NamespaceSeparator, CurrentType);
-                else
-                    return CurrentType;
+                return
+                    !String.IsNullOrEmpty(CurrentQualifier) ?
+                        String.Format("{0}.{1}", CurrentQualifier, CurrentType) :
+                        CurrentType;
             }
             set
             {
                 if (String.IsNullOrEmpty(value))
-                    throw new ArgumentException();
+                    throw new ArgumentNullException();
 
                 int qualifier_end = value.LastIndexOf('.');
                 if (qualifier_end > -1)
@@ -88,12 +91,8 @@ namespace Bind.Structures
         /// </summary>
         public virtual string CurrentType
         {
-            //get { return _type; }
             get
             {
-                if (((Settings.Compatibility & Settings.Legacy.TurnVoidPointersToIntPtr) != Settings.Legacy.None) && Pointer != 0 && type.Contains("void"))
-                    return "IntPtr";
-
                 return type;
             }
             set
@@ -280,139 +279,32 @@ namespace Bind.Structures
 
         #endregion
 
-        #region public string GetCLSCompliantType()
-
-        public string GetCLSCompliantType()
-        {
-            if (!CLSCompliant)
-            {
-                if (Pointer != 0 && Settings.Compatibility == Settings.Legacy.Tao)
-                    return "IntPtr";
-
-                switch (CurrentType)
-                {
-                    case "UInt16":
-                    case "ushort":
-                        return "Int16";
-                    case "UInt32":
-                    case "uint":
-                        return "Int32";
-                    case "UInt64":
-                    case "ulong":
-                        return "Int64";
-                    case "SByte":
-                    case "sbyte":
-                        return "Byte";
-                    case "UIntPtr":
-                        return "IntPtr";
-                }
-            }
-
-            return CurrentType;
-        }
-
-        #endregion
-
         #region public override string ToString()
 
+        static readonly string[] PointerLevels =
+        {
+            "",
+            "*",
+            "**",
+            "***",
+            "****"
+        };
+
+        static readonly string[] ArrayLevels =
+        {
+            "",
+            "[]",
+            "[,]",
+            "[,,]"
+        };
+
+        // Only used for debugging.
         public override string ToString()
         {
-            return QualifiedType;
-        }
-
-        #endregion
-
-        #region public virtual void Translate(XPathNavigator overrides, string category)
-
-        public virtual void Translate(EnumProcessor enum_processor, XPathNavigator overrides, string category, EnumCollection enums)
-        {
-            Enum @enum;
-            string s;
-
-            category = enum_processor.TranslateEnumName(category);
-
-            // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
-            // Otherwise, try to find it in the aux enums list. If it exists in neither, it is not an enum.
-            // Special case for Boolean - it is an enum, but it is dumb to use that instead of the 'bool' type.
-            bool normal = enums.TryGetValue(CurrentType, out @enum);
-            //bool aux = enums.TryGetValue(EnumProcessor.TranslateEnumName(CurrentType), out @enum);
-
-            // Translate enum types
-            if ((normal /*|| aux*/) && @enum.Name != "GLenum" && @enum.Name != "Boolean")
-            {
-                if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
-                {
-                    QualifiedType = "int";
-                }
-                else
-                {
-                    // Some functions and enums have the same names.
-                    // Make sure we reference the enums rather than the functions.
-                    if (normal)
-                        QualifiedType = CurrentType.Insert(0, String.Format("{0}.", Settings.EnumsOutput));
-                }
-            }
-            else if (GLTypes.TryGetValue(CurrentType, out s))
-            {
-                // Check if the parameter is a generic GLenum. If it is, search for a better match,
-                // otherwise fallback to Settings.CompleteEnumName (named 'All' by default).
-                if (s.Contains("GLenum") /*&& !String.IsNullOrEmpty(category)*/)
-                {
-                    if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
-                    {
-                        QualifiedType = "int";
-                    }
-                    else
-                    {
-                        // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
-                        if (enums.ContainsKey(category))
-                        {
-                            QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
-                                Settings.NamespaceSeparator, enum_processor.TranslateEnumName(category));
-                        }
-                        else
-                        {
-                            QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
-                                Settings.NamespaceSeparator, Settings.CompleteEnumName);
-                        }
-                    }
-                }
-                else
-                {
-                    // Todo: what is the point of this here? It is overwritten below.
-                    // A few translations for consistency
-                    switch (CurrentType.ToLower())
-                    {
-                        case "string":
-                            QualifiedType = "String";
-                            break;
-                    }
-
-                    QualifiedType = s;
-                }
-            }
-
-            CurrentType =
-                CSTypes.ContainsKey(CurrentType) ?
-                CSTypes[CurrentType] : CurrentType;
-
-            // Make sure that enum parameters follow enum overrides, i.e.
-            // if enum ErrorCodes is overriden to ErrorCode, then parameters
-            // of type ErrorCodes should also be overriden to ErrorCode.
-            XPathNavigator enum_override = overrides.SelectSingleNode(String.Format("/signatures/replace/enum[@name='{0}']/name", CurrentType));
-            if (enum_override != null)
-            {
-                // For consistency - many overrides use string instead of String.
-                if (enum_override.Value == "string")
-                    QualifiedType = "String";
-                else if (enum_override.Value == "StringBuilder")
-                    QualifiedType = "StringBuilder";
-                else
-                    CurrentType = enum_override.Value;
-            }
-
-            if (CurrentType == "IntPtr" && String.IsNullOrEmpty(PreviousType))
-                Pointer = 0;
+            return String.Format("{0}{1}{2}",
+                CurrentType,
+                PointerLevels[Pointer],
+                ArrayLevels[Array]);
         }
 
         #endregion
@@ -436,6 +328,15 @@ namespace Bind.Structures
             if (result == 0)
                 result = ElementCount.CompareTo(other.ElementCount);
             return result;
+        }
+
+        #endregion
+
+        #region IEquatable<Type> Members
+
+        public bool Equals(Type other)
+        {
+            return CompareTo(other) == 0;
         }
 
         #endregion
