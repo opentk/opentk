@@ -46,6 +46,9 @@ namespace Bind
         const string DigitPrefix = "T"; // Prefix for identifiers that start with a digit
         const string OutputFileHeader = "gl++.h";
 
+        IBind Generator { get; set; }
+        Settings Settings { get { return Generator.Settings; } }
+
         #region Verbatim parts of output file
 
         const string GetAddressDefinition = @"
@@ -293,6 +296,7 @@ typedef const char* GLstring;
 
         public void WriteBindings(IBind generator)
         {
+            Generator = generator;
             WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
         }
 
@@ -328,7 +332,7 @@ typedef const char* GLstring;
                 WriteGetAddress(sw);
                 WriteTypes(sw);
                 WriteEnums(sw, enums);
-                WriteDefinitions(sw, enums, wrappers, Type.CSTypes); // Core definitions
+                WriteDefinitions(sw, enums, wrappers, Generator.CSTypes); // Core definitions
 
                 sw.Unindent();
                 sw.WriteLine("}");
@@ -471,7 +475,7 @@ typedef const char* GLstring;
 
         void WriteDefinitions(BindStreamWriter sw,
             EnumCollection enums, FunctionCollection wrappers,
-            Dictionary<string, string> CSTypes)
+            IDictionary<string, string> CSTypes)
         {
             sw.WriteLine("namespace {0}", Settings.GLClass);
             sw.WriteLine("{");
@@ -553,7 +557,7 @@ typedef const char* GLstring;
 
         #endregion
 
-        static string GetNamespace(string ext)
+        string GetNamespace(string ext)
         {
             if (ext == "Core")
                 return Settings.GLClass;
@@ -661,8 +665,17 @@ typedef const char* GLstring;
             return sb.ToString();
         }
 
-        static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
-        static Dictionary<string, string> docfiles;
+        DocProcessor processor_;
+        DocProcessor Processor
+        {
+            get
+            {
+                if (processor_ == null)
+                    processor_ = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
+                return processor_;
+            }
+        }
+        Dictionary<string, string> docfiles;
         void WriteDocumentation(BindStreamWriter sw, Function f)
         {
             if (docfiles == null)
@@ -686,7 +699,7 @@ typedef const char* GLstring;
                 string doc = null;
                 if (docfiles.ContainsKey(docfile))
                 {
-                    doc = processor.ProcessFile(docfiles[docfile]);
+                    doc = Processor.ProcessFile(docfiles[docfile]);
                 }
                 if (doc == null)
                 {

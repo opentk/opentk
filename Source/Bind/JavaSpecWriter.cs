@@ -47,10 +47,14 @@ namespace Bind
 
         BindStreamWriter sw_h = new BindStreamWriter(Path.GetTempFileName());
 
+        IBind Generator { get; set; }
+        Settings Settings { get { return Generator.Settings; } }
+
         #region WriteBindings
 
         public void WriteBindings(IBind generator)
         {
+            Generator = generator;
             WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
         }
 
@@ -77,7 +81,7 @@ namespace Bind
                 sw.WriteLine("import java.nio.*;");
                 sw.WriteLine();
 
-                WriteDefinitions(sw, enums, wrappers, Type.CSTypes);
+                WriteDefinitions(sw, enums, wrappers, Generator.CSTypes);
 
                 sw.Flush();
                 sw.Close();
@@ -100,7 +104,7 @@ namespace Bind
 
         void WriteDefinitions(BindStreamWriter sw,
             EnumCollection enums, FunctionCollection wrappers,
-            Dictionary<string, string> CSTypes)
+            IDictionary<string, string> CSTypes)
         {
             sw.WriteLine("public class {0}", Settings.GLClass);
             sw.WriteLine("{");
@@ -312,8 +316,17 @@ namespace Bind
                 return f.ReturnType.CurrentType;
         }
 
-        static DocProcessor processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
-        static Dictionary<string, string> docfiles;
+        DocProcessor processor_;
+        DocProcessor Processor
+        {
+            get
+            {
+                if (processor_ == null)
+                    processor_ = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
+                return processor_;
+            }
+        }
+        Dictionary<string, string> docfiles;
         void WriteDocumentation(BindStreamWriter sw, Function f)
         {
             if (docfiles == null)
@@ -337,7 +350,7 @@ namespace Bind
                 string doc = null;
                 if (docfiles.ContainsKey(docfile))
                 {
-                    doc = processor.ProcessFile(docfiles[docfile]);
+                    doc = Processor.ProcessFile(docfiles[docfile]);
                 }
                 if (doc == null)
                 {
