@@ -5,6 +5,8 @@
 #endregion
 
 using Bind.Structures;
+using System.Collections.Generic;
+
 namespace Bind
 {
     interface IBind
@@ -12,6 +14,11 @@ namespace Bind
         DelegateCollection Delegates { get; }
         EnumCollection Enums { get; }
         FunctionCollection Wrappers { get; }
+        Settings Settings { get; }
+
+        IDictionary<string, string> GLTypes { get; }
+        IDictionary<string, string> CSTypes { get; }
+
         void Process();
     }
 }
