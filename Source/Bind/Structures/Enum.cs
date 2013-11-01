@@ -15,7 +15,7 @@ namespace Bind.Structures
 {
     #region class Enum
 
-    public class Enum
+    class Enum
     {
         static StringBuilder translator = new StringBuilder();
         string _name, _type;
@@ -31,13 +31,13 @@ namespace Bind.Structures
             get { return _name ?? ""; }
             set { _name = value; }
         }
-		
-		// Typically 'long' or 'int'. Default is 'int'.
-		public string Type
-		{
-			get { return String.IsNullOrEmpty(_type) ? "int" : _type; }
-			set { _type = value; }
-		}
+
+        // Typically 'long' or 'int'. Default is 'int'.
+        public string Type
+        {
+            get { return String.IsNullOrEmpty(_type) ? "int" : _type; }
+            set { _type = value; }
+        }
 
         SortedDictionary<string, Constant> _constant_collection = new SortedDictionary<string, Constant>();
 
@@ -57,37 +57,13 @@ namespace Bind.Structures
             }
         }
 
-        [Obsolete("This code belongs to the various language-specific ISpecWriter implementations")]
+        // Use only for debugging, not for code generation.
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            List<Constant> constants = new List<Constant>(ConstantCollection.Values);
-            constants.Sort(delegate(Constant c1, Constant c2)
-            {
-                int ret = String.Compare(c1.Value, c2.Value);
-                if (ret == 0)
-                    return String.Compare(c1.Name, c2.Name);
-                return ret;
-            });
-
-            if (IsFlagCollection)
-                sb.AppendLine("[Flags]");
-            sb.Append("public enum ");
-			sb.Append(Name);
-			sb.Append(" : ");
-			sb.AppendLine(Type);
-            sb.AppendLine("{");
-
-            foreach (Constant c in constants)
-            {
-                sb.Append("    ");
-                sb.Append(c.ToString());
-                if (!String.IsNullOrEmpty(c.ToString()))
-                    sb.AppendLine(",");
-            }
-            sb.Append("}");
-
-            return sb.ToString();
+            return String.Format("enum {0} : {1} {{ {2} }}",
+                Name,
+                Type,
+                ConstantCollection);
         }
 
         public void Add(Constant constant)
@@ -100,8 +76,10 @@ namespace Bind.Structures
 
     #region class EnumCollection
 
-    public class EnumCollection : SortedDictionary<string, Enum>
+    class EnumCollection : IDictionary<string, Enum>
     {
+        SortedDictionary<string, Enum> Enumerations = new SortedDictionary<string, Enum>();
+
         internal void AddRange(EnumCollection enums)
         {
             foreach (Enum e in enums.Values)
@@ -138,10 +116,96 @@ namespace Bind.Structures
                 return 0;
         }
 
-        new bool TryGetValue(string key, out Enum value)
+        #region IDictionary<string, Enum> Members
+
+        public void Add(string key, Enum value)
         {
-            return base.TryGetValue(key, out value);
+            Enumerations.Add(key, value);
         }
+
+        public bool ContainsKey(string key)
+        {
+            return Enumerations.ContainsKey(key);
+        }
+
+        public ICollection<string> Keys
+        {
+            get { return Enumerations.Keys; }
+        }
+
+        public bool Remove(string key)
+        {
+            return Enumerations.Remove(key);
+        }
+
+        public bool TryGetValue(string key, out Enum value)
+        {
+            return Enumerations.TryGetValue(key, out value);
+        }
+
+        public ICollection<Enum> Values
+        {
+            get { return Enumerations.Values; }
+        }
+
+        public Enum this[string key]
+        {
+            get
+            {
+                return Enumerations[key];
+            }
+            set
+            {
+                Enumerations[key] = value;
+            }
+        }
+
+        public void Add(KeyValuePair<string, Enum> item)
+        {
+            Enumerations.Add(item.Key, item.Value);
+        }
+
+        public void Clear()
+        {
+            Enumerations.Clear();
+        }
+
+        public bool Contains(KeyValuePair<string, Enum> item)
+        {
+            return Enumerations.Contains(item);
+        }
+
+        public void CopyTo(KeyValuePair<string, Enum>[] array, int arrayIndex)
+        {
+            Enumerations.CopyTo(array, arrayIndex);
+        }
+
+        public int Count
+        {
+            get { return Enumerations.Count; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return (Enumerations as IDictionary<string, Enum>).IsReadOnly; }
+        }
+
+        public bool Remove(KeyValuePair<string, Enum> item)
+        {
+            return Enumerations.Remove(item.Key);
+        }
+
+        public IEnumerator<KeyValuePair<string, Enum>> GetEnumerator()
+        {
+            return Enumerations.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return Enumerations.GetEnumerator();
+        }
+
+        #endregion
     }
 
     #endregion
