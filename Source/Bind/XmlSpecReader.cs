@@ -2,7 +2,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2010 the Open Toolkit library.
+// Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -41,11 +41,36 @@ namespace Bind
 
     class XmlSpecReader : ISpecReader
     {
+        Settings Settings { get; set; }
+
+        #region Constructors
+
+        public XmlSpecReader(Settings settings)
+        {
+            if (settings == null)
+                throw new ArgumentNullException("settings");
+            Settings = settings;
+        }
+
+        #endregion
+
         #region ISpecReader Members
 
         public void ReadDelegates(string file, DelegateCollection delegates, string apiname)
         {
             var specs = new XPathDocument(file);
+
+            // The pre-GL4.4 spec format does not distinguish between
+            // different apinames (it is assumed that different APIs
+            // are stored in distinct signature.xml files).
+            // To maintain compatibility, we detect the version of the
+            // signatures.xml file and ignore apiname if it is version 1.
+            var specversion = GetSpecVersion(specs);
+            if (specversion == "1")
+            {
+                apiname = null;
+            }
+
             foreach (XPathNavigator nav in specs.CreateNavigator().Select(
                 !String.IsNullOrEmpty(apiname) ?
                 String.Format("/signatures/delete[@name='{0}']", apiname) :
@@ -63,82 +88,23 @@ namespace Bind
             }
         }
 
-        private DelegateCollection ReadDelegates(XPathNavigator specs)
-        {
-            DelegateCollection delegates = new DelegateCollection();
-            var extensions = new List<string>();
-
-            foreach (XPathNavigator node in specs.SelectChildren("function", String.Empty))
-            {
-                var name = node.GetAttribute("name", String.Empty);
-
-                // Check whether we are adding to an existing delegate or creating a new one.
-                Delegate d = null;
-                if (delegates.ContainsKey(name))
-                {
-                    d = delegates[name];
-                }
-                else
-                {
-                    d = new Delegate();
-                    d.Name = name;
-                    d.Version = node.GetAttribute("version", String.Empty);
-                    d.Category = node.GetAttribute("category", String.Empty);
-                    d.DeprecatedVersion = node.GetAttribute("deprecated", String.Empty);
-                    d.Deprecated = !String.IsNullOrEmpty(d.DeprecatedVersion);
-                    d.Extension = node.GetAttribute("extension", String.Empty) ?? "Core";
-                    if (!extensions.Contains(d.Extension))
-                        extensions.Add(d.Extension);
-                }
-
-                foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
-                {
-                    switch (param.Name)
-                    {
-                        case "returns":
-                            d.ReturnType.CurrentType = param.GetAttribute("type", String.Empty);
-                            break;
-
-                        case "param":
-                            Parameter p = new Parameter();
-                            p.CurrentType = param.GetAttribute("type", String.Empty);
-                            p.Name = param.GetAttribute("name", String.Empty);
-
-                            string element_count = param.GetAttribute("elementcount", String.Empty);
-                            if (String.IsNullOrEmpty(element_count))
-                            {
-                                element_count = param.GetAttribute("count", String.Empty);
-                                if (!String.IsNullOrEmpty(element_count))
-                                {
-                                    int count;
-                                    if (Int32.TryParse(element_count, out count))
-                                    {
-                                        p.ElementCount = count;
-                                    }
-                                }
-                            }
-
-                            p.Flow = Parameter.GetFlowDirection(param.GetAttribute("flow", String.Empty));
-
-                            d.Parameters.Add(p);
-                            break;
-                    }
-                }
-
-                delegates.Add(d);
-            }
-
-            Utilities.InitExtensions(extensions);
-            return delegates;
-        }
-
         public void ReadEnums(string file, EnumCollection enums, string apiname)
         {
+            var specs = new XPathDocument(file);
+
+            // The pre-GL4.4 spec format does not distinguish between
+            // different apinames (it is assumed that different APIs
+            // are stored in distinct signature.xml files).
+            // To maintain compatibility, we detect the version of the
+            // signatures.xml file and ignore apiname if it is version 1.
+            var specversion = GetSpecVersion(specs);
+            if (specversion == "1")
+            {
+                apiname = null;
+            }
+
             // First, read all enum definitions from spec and override file.
             // Afterwards, read all token/enum overrides from overrides file.
-            // Every single enum is merged into
-
-            var specs = new XPathDocument(file);
             foreach (XPathNavigator nav in specs.CreateNavigator().Select(
                 !String.IsNullOrEmpty(apiname) ?
                 String.Format("/signatures/delete[@name='{0}']", apiname) :
@@ -154,92 +120,6 @@ namespace Bind
             {
                 Utilities.Merge(enums, ReadEnums(nav));
             }
-        }
-
-        private EnumCollection ReadEnums(XPathNavigator nav)
-        {
-            EnumCollection enums = new EnumCollection();
-            Enum all = new Enum() { Name = Settings.CompleteEnumName };
-
-            if (nav != null)
-            {
-                foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
-                {
-                    Enum e = new Enum()
-                    {
-                        Name = node.GetAttribute("name", String.Empty),
-                        Type = node.GetAttribute("type", String.Empty)
-                    };
-
-                    if (String.IsNullOrEmpty(e.Name))
-                        throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
-
-
-                    // It seems that all flag collections contain "Mask" in their names.
-                    // This looks like a heuristic, but it holds 100% in practice
-                    // (checked all enums to make sure).
-                    e.IsFlagCollection = e.Name.ToLower().Contains("mask");
-
-                    foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
-                    {
-                        Constant c = null;
-                        switch (param.Name)
-                        {
-                            case "token":
-                                c = new Constant
-                                {
-                                    Name = param.GetAttribute("name", String.Empty),
-                                    Value = param.GetAttribute("value", String.Empty)
-                                };
-                                break;
-
-                            case "use":
-                                c = new Constant
-                                {
-                                    Name = param.GetAttribute("token", String.Empty),
-                                    Reference = param.GetAttribute("enum", String.Empty),
-                                    Value = param.GetAttribute("token", String.Empty),
-                                };
-                                break;
-
-                            default:
-                                throw new NotSupportedException();
-                        }
-                        Utilities.Merge(all, c);
-                        try
-                        {
-                            if (!e.ConstantCollection.ContainsKey(c.Name))
-                            {
-                                e.ConstantCollection.Add(c.Name, c);
-                            }
-                            else if (e.ConstantCollection[c.Name].Value != c.Value)
-                            {
-                                var existing = e.ConstantCollection[c.Name];
-                                if (existing.Reference != null && c.Reference == null)
-                                {
-                                    e.ConstantCollection[c.Name] = c;
-                                }
-                                else if (existing.Reference == null && c.Reference != null)
-                                { } // Keep existing
-                                else
-                                {
-                                    Console.WriteLine("[Warning] Conflicting token {0}.{1} with value {2} != {3}",
-                                        e.Name, c.Name, e.ConstantCollection[c.Name].Value, c.Value);
-                                }
-                            }
-                        }
-                        catch (ArgumentException ex)
-                        {
-                            Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message);
-                        }
-                    }
-
-                    Utilities.Merge(enums, e);
-                }
-            }
-
-            Utilities.Merge(enums, all);
-            return enums;
         }
 
         public Dictionary<string, string> ReadTypeMap(string file)
@@ -332,6 +212,177 @@ namespace Bind
 
                 return CSTypes;
             }
+        }
+
+        #endregion
+
+        #region Private Members
+
+        string GetSpecVersion(XPathDocument specs)
+        {
+            var version =
+                specs.CreateNavigator().SelectSingleNode("/signatures")
+                .GetAttribute("version", String.Empty);
+            if (String.IsNullOrEmpty(version))
+            {
+                version = "1";
+            }
+            return version;
+        }
+
+        DelegateCollection ReadDelegates(XPathNavigator specs)
+        {
+            DelegateCollection delegates = new DelegateCollection();
+            var extensions = new List<string>();
+
+            foreach (XPathNavigator node in specs.SelectChildren("function", String.Empty))
+            {
+                var name = node.GetAttribute("name", String.Empty);
+
+                // Check whether we are adding to an existing delegate or creating a new one.
+                Delegate d = null;
+                if (delegates.ContainsKey(name))
+                {
+                    d = delegates[name];
+                }
+                else
+                {
+                    d = new Delegate();
+                    d.Name = name;
+                    d.Version = node.GetAttribute("version", String.Empty);
+                    d.Category = node.GetAttribute("category", String.Empty);
+                    d.DeprecatedVersion = node.GetAttribute("deprecated", String.Empty);
+                    d.Deprecated = !String.IsNullOrEmpty(d.DeprecatedVersion);
+                    d.Extension = node.GetAttribute("extension", String.Empty) ?? "Core";
+                    if (!extensions.Contains(d.Extension))
+                        extensions.Add(d.Extension);
+                }
+
+                foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
+                {
+                    switch (param.Name)
+                    {
+                        case "returns":
+                            d.ReturnType.CurrentType = param.GetAttribute("type", String.Empty);
+                            break;
+
+                        case "param":
+                            Parameter p = new Parameter();
+                            p.CurrentType = param.GetAttribute("type", String.Empty);
+                            p.Name = param.GetAttribute("name", String.Empty);
+
+                            string element_count = param.GetAttribute("elementcount", String.Empty);
+                            if (String.IsNullOrEmpty(element_count))
+                            {
+                                element_count = param.GetAttribute("count", String.Empty);
+                                if (!String.IsNullOrEmpty(element_count))
+                                {
+                                    int count;
+                                    if (Int32.TryParse(element_count, out count))
+                                    {
+                                        p.ElementCount = count;
+                                    }
+                                }
+                            }
+
+                            p.Flow = Parameter.GetFlowDirection(param.GetAttribute("flow", String.Empty));
+
+                            d.Parameters.Add(p);
+                            break;
+                    }
+                }
+
+                delegates.Add(d);
+            }
+
+            Utilities.InitExtensions(extensions);
+            return delegates;
+        }
+
+        EnumCollection ReadEnums(XPathNavigator nav)
+        {
+            EnumCollection enums = new EnumCollection();
+            Enum all = new Enum() { Name = Settings.CompleteEnumName };
+
+            if (nav != null)
+            {
+                foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
+                {
+                    Enum e = new Enum()
+                    {
+                        Name = node.GetAttribute("name", String.Empty),
+                        Type = node.GetAttribute("type", String.Empty)
+                    };
+
+                    if (String.IsNullOrEmpty(e.Name))
+                        throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
+
+
+                    // It seems that all flag collections contain "Mask" in their names.
+                    // This looks like a heuristic, but it holds 100% in practice
+                    // (checked all enums to make sure).
+                    e.IsFlagCollection = e.Name.ToLower().Contains("mask");
+
+                    foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
+                    {
+                        Constant c = null;
+                        switch (param.Name)
+                        {
+                            case "token":
+                                c = new Constant
+                                {
+                                    Name = param.GetAttribute("name", String.Empty),
+                                    Value = param.GetAttribute("value", String.Empty)
+                                };
+                                break;
+
+                            case "use":
+                                c = new Constant
+                                {
+                                    Name = param.GetAttribute("token", String.Empty),
+                                    Reference = param.GetAttribute("enum", String.Empty),
+                                    Value = param.GetAttribute("token", String.Empty),
+                                };
+                                break;
+
+                            default:
+                                throw new NotSupportedException();
+                        }
+                        Utilities.Merge(all, c);
+                        try
+                        {
+                            if (!e.ConstantCollection.ContainsKey(c.Name))
+                            {
+                                e.ConstantCollection.Add(c.Name, c);
+                            }
+                            else if (e.ConstantCollection[c.Name].Value != c.Value)
+                            {
+                                var existing = e.ConstantCollection[c.Name];
+                                if (existing.Reference != null && c.Reference == null)
+                                {
+                                    e.ConstantCollection[c.Name] = c;
+                                }
+                                else if (existing.Reference == null && c.Reference != null)
+                                { } // Keep existing
+                                else
+                                {
+                                    Console.WriteLine("[Warning] Conflicting token {0}.{1} with value {2} != {3}",
+                                        e.Name, c.Name, e.ConstantCollection[c.Name].Value, c.Value);
+                                }
+                            }
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message);
+                        }
+                    }
+
+                    Utilities.Merge(enums, e);
+                }
+            }
+
+            Utilities.Merge(enums, all);
+            return enums;
         }
 
         #endregion
