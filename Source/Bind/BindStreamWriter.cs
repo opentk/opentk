@@ -1,7 +1,30 @@
-﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- */
+﻿#region License
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit Library
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
+
+
 #endregion
 
 using System;
@@ -39,39 +62,48 @@ namespace Bind
 
         public override void Write(string value)
         {
-            bool is_multiline = false;
-            foreach (var line in splitLines.Split(value))
+            var lines = splitLines.Split(value);
+            bool is_multiline = lines.Length > 1;
+            if (is_multiline)
             {
-                base.Write(line);
-                base.Write(System.Environment.NewLine);
-                is_multiline = true;
+                // Write all internal lines
+                for (int i = 0; i < lines.Length - 1; i++)
+                {
+                    var line = lines[i];
+                    WriteIndentations();
+                    base.Write(line);
+                    base.Write(System.Environment.NewLine);
+                }
+                // Write the last line without appending a newline
+                WriteIndentations();
+                base.Write(lines[lines.Length - 1]);
             }
-
-            if (!is_multiline)
+            else
             {
-                for (int i = indent_level; i > 0; i--)
-                    base.Write("    ");
+                WriteIndentations();
                 base.Write(value);
             }
         }
 
         public override void WriteLine(string value)
         {
-            // Todo: it seems that spacing is not correct if this code
-            // is enabled on Linux/Mono. However, it works as it should on Windows/.Net.
-            // This could be related to line-ending differences, but I haven't been able to
-            // find the cause yet.
-            // This ugly workaround should work until the real cause is found.
-            if (Environment.OSVersion.Platform == PlatformID.Win32Windows ||
-                Environment.OSVersion.Platform == PlatformID.Win32NT ||
-                Environment.OSVersion.Platform == PlatformID.Win32S ||
-                Environment.OSVersion.Platform == PlatformID.WinCE)
+            // The Mono implementation of WriteLine calls Write internally.
+            // The .Net implementation does not.
+            // If running on Mono, we must avoid indenting in WriteLine
+            // because then we'll indent twice (once in WriteLine and once in Write).
+            // If running on .Net we must indent in both WriteLine and Write.
+            // Neat, no?
+            if (System.Type.GetType("Mono.Runtime") == null)
             {
-                for (int i = indent_level; i > 0; i--)
-                    base.Write("    ");
+                WriteIndentations();
             }
-
             base.WriteLine(value);
+        }
+
+        void WriteIndentations()
+        {
+            for (int i = indent_level; i > 0; i--)
+                base.Write("    ");
         }
     }
 }
