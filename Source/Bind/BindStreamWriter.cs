@@ -42,7 +42,8 @@ namespace Bind
             bool is_multiline = false;
             foreach (var line in splitLines.Split(value))
             {
-                WriteLine(line);
+                base.Write(line);
+                base.Write(System.Environment.NewLine);
                 is_multiline = true;
             }
 
