@@ -39,10 +39,19 @@ namespace Bind
 
         public override void Write(string value)
         {
-            for (int i = indent_level; i > 0; i--)
-                base.Write("    ");
+            bool is_multiline = false;
+            foreach (var line in splitLines.Split(value))
+            {
+                WriteLine(line);
+                is_multiline = true;
+            }
 
-            base.Write(value);
+            if (!is_multiline)
+            {
+                for (int i = indent_level; i > 0; i--)
+                    base.Write("    ");
+                base.Write(value);
+            }
         }
 
         public override void WriteLine(string value)
@@ -60,20 +69,8 @@ namespace Bind
                 for (int i = indent_level; i > 0; i--)
                     base.Write("    ");
             }
-            
+
             base.WriteLine(value);
-        }
-
-        public void Write(Enum e)
-        {
-            foreach (string s in splitLines.Split(e.ToString()))
-                WriteLine(s.TrimEnd('\r', '\n'));
-        }
-
-        public void Write(Function f)
-        {
-            foreach (string s in splitLines.Split(f.ToString()))
-                WriteLine(s);
         }
     }
 }
