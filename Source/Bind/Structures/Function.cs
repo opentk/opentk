@@ -72,9 +72,6 @@ namespace Bind.Structures
         {
             get
             {
-                if ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None)
-                    return false;
-
                 return base.Unsafe;
             }
         }
@@ -99,52 +96,14 @@ namespace Bind.Structures
 
         #endregion
 
-        #region public override string ToString()
+        #region ToString
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(Unsafe ? "unsafe " : "");
-            sb.Append(ReturnType);
-            sb.Append(" ");
-            if ((Settings.Compatibility & Settings.Legacy.NoTrimFunctionEnding) != Settings.Legacy.None)
-            {
-                sb.Append(Settings.FunctionPrefix);
-            }
-            sb.Append(!String.IsNullOrEmpty(TrimmedName) ? TrimmedName : Name);
-            
-            if (Parameters.HasGenericParameters)
-            {
-                sb.Append("<");
-                foreach (Parameter p in Parameters)
-                {
-                    if (p.Generic)
-                    {
-                        sb.Append(p.CurrentType);
-                        sb.Append(",");
-                    }
-                }
-                sb.Remove(sb.Length - 1, 1);
-                sb.Append(">");
-            }
-            sb.AppendLine(Parameters.ToString(false));
-            if (Parameters.HasGenericParameters)
-            {
-                foreach (Parameter p in Parameters)
-                {
-                    if (p.Generic)
-                        sb.AppendLine(String.Format("    where {0} : struct", p.CurrentType));
-                }
-                
-            }
-
-            if (Body.Count > 0)
-            {
-                sb.Append(Body.ToString());
-            }
-
-            return sb.ToString();
+            return String.Format("{0} {1}({2})",
+                ReturnType,
+                TrimmedName,
+                Parameters);
         }
 
         #endregion
@@ -153,10 +112,11 @@ namespace Bind.Structures
 
         public bool Equals(Function other)
         {
-            return
+            bool result =
                 !String.IsNullOrEmpty(TrimmedName) && !String.IsNullOrEmpty(other.TrimmedName) &&
-                TrimmedName == other.TrimmedName &&
-                Parameters.ToString(true) == other.Parameters.ToString(true);
+                TrimmedName.Equals(other.TrimmedName) &&
+                Parameters.Equals(other.Parameters);
+            return result;
         }
 
         #endregion
@@ -201,13 +161,15 @@ namespace Bind.Structures
 
         public void Unindent()
         {
-            if (indent.Length >= 4)
+            if (indent.Length > 4)
                 indent = indent.Substring(4);
+            else
+                indent = String.Empty;
         }
 
         new public void Add(string s)
         {
-            base.Add(indent + s);
+            base.Add(indent + s.TrimEnd('\r', '\n'));
         }
 
         new public void AddRange(IEnumerable<string> collection)
@@ -244,7 +206,7 @@ namespace Bind.Structures
     {
         Regex unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
 
-        public void Add(Function f)
+        void Add(Function f)
         {
             if (!ContainsKey(f.Extension))
             {
@@ -261,7 +223,7 @@ namespace Bind.Structures
         {
             foreach (Function f in functions)
             {
-                Add(f);
+                AddChecked(f);
             }
         }
 
@@ -284,8 +246,7 @@ namespace Bind.Structures
                     if ((existing.Parameters.HasUnsignedParameters && !unsignedFunctions.IsMatch(existing.Name) && unsignedFunctions.IsMatch(f.Name)) ||
                         (!existing.Parameters.HasUnsignedParameters && unsignedFunctions.IsMatch(existing.Name) && !unsignedFunctions.IsMatch(f.Name)))
                     {
-                        this[f.Extension].RemoveAt(index);
-                        this[f.Extension].Add(f);
+                        this[f.Extension][index] = f;
                     }
                 }
             }
