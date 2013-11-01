@@ -17,7 +17,7 @@ namespace Bind.Structures
     /// can be retrieved or set. The value can be either a number, another constant
     /// or an alias to a constant 
     /// </summary>
-    public class Constant : IComparable<Constant>
+    class Constant : IComparable<Constant>
     {
         static StringBuilder translator = new StringBuilder();
 
@@ -194,23 +194,16 @@ namespace Bind.Structures
             return true;
         }
 
-        #region public override string ToString()
+        #region ToString
 
-        /// <summary>
-        /// Returns a string that represents the full constant declaration without decorations
-        /// (eg GL_XXX_YYY = (int)0xDEADBEEF or GL_XXX_YYY = GL_ZZZ.FOOBAR).
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("This belongs to the language-specific ISpecWriter implementations.")]
         public override string ToString()
         {
-            if (String.IsNullOrEmpty(Name))
-                return "";
-            return String.Format("{0} = {1}((int){2}{3})",
-                Name, Unchecked ? "unchecked" : "",
-                !String.IsNullOrEmpty(Reference) ? Reference + Settings.NamespaceSeparator : "", Value);
-
-            //return String.Format("{0} = {1}((int){2})", Name, Unchecked ? "unchecked" : "", Value);
+            return
+                String.Format("{0} = {1}((int){2}{3})",
+                Name,
+                Unchecked ? "unchecked" : String.Empty,
+                !String.IsNullOrEmpty(Reference) ? Reference + "." : String.Empty,
+                Value);
         }
 
         #endregion
