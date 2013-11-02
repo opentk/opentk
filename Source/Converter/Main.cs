@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (C) 2009 the Open Toolkit (http://www.opentk.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -140,7 +140,8 @@ namespace CHeaderToXML
 
                 using (var writer = XmlWriter.Create(out_stream, settings))
                 {
-                    var output = new XElement("signatures");
+                    var output = new XElement("signatures",
+                        new XAttribute("version", parser is GLXmlParser ? "2" : "1"));
                     foreach (var api in sigs.SelectMany(s => s))
                     {
                         output.Add(
