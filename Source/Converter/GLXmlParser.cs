@@ -71,6 +71,44 @@ namespace CHeaderToXML
             return elements.Values;
         }
 
+        static string[] GetApiNames(XElement feature)
+        {
+            string[] apinames = null;
+            switch (feature.Name.LocalName)
+            {
+                case "feature":
+                {
+                    string v = feature.Attribute("api") != null ? feature.Attribute("api").Value : "gl|glcore";
+                    if (v == "gl")
+                    {
+                        // Add all gl features to both compatibility (gl) and core (glcore) profiles.
+                        // Deprecated features will be explicitly marked or removed when parsing
+                        // the <remove> elements.
+                        v = "gl|glcore";
+                    }
+                    apinames = v.Split('|');
+                    break;
+                }
+
+                case "extension":
+                {
+                    string v = feature.Attribute("supported") != null ? feature.Attribute("supported").Value : "gl|glcore";
+                    apinames = v.Split('|');
+                    break;
+                }
+
+                case "group":
+                {
+                    apinames = new string[] { "gl", "glcore" };
+                    break;
+                }
+
+                default:
+                    throw new NotSupportedException("Unknown feature type");
+            }
+            return apinames;
+        }
+
         IEnumerable<XElement> ParseEnums(XDocument input)
         {
             var features = input.Root.Elements("feature");
@@ -109,12 +147,7 @@ namespace CHeaderToXML
                 var category = TrimName(feature.Attribute("name").Value);
                 var extension = feature.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core";
                 var version = feature.Attribute("number") != null ? feature.Attribute("number").Value : null;
-                var apinames =
-                    (//feature.Attribute("api") != null ? feature.Attribute("api").Value :
-                    feature.Attribute("supported") != null ? feature.Attribute("supported").Value :
-                    feature.Attribute("profile") != null ? feature.Attribute("profile").Value
-                        .Replace("compatibility", "gl").Replace("core", "glcore") :
-                    "gl|glcore").Split('|');
+                var apinames = GetApiNames(feature);
 
                 // An enum may belong to one or more APIs.
                 // Add it to all relevant ones.
@@ -216,12 +249,8 @@ namespace CHeaderToXML
             foreach (var feature in features.Concat(extensions))
             {
                 var category = TrimName(feature.Attribute("name").Value);
-                var apinames =
-                    (//feature.Attribute("api") != null ? feature.Attribute("api").Value :
-                    feature.Attribute("supported") != null ? feature.Attribute("supported").Value :
-                    feature.Attribute("profile") != null ? feature.Attribute("profile").Value
-                        .Replace("compatibility", "gl").Replace("core", "glcore") :
-                    "gl|glcore").Split('|');
+                var apinames = GetApiNames(feature);
+                
                 var version =
                     (feature.Attribute("number") != null ? feature.Attribute("number").Value : "")
                     .Split('|');
