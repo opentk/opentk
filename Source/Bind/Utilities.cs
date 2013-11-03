@@ -228,8 +228,7 @@ namespace Bind
                 // keep the first one.
                 if (!String.IsNullOrEmpty(s.ConstantCollection[t.Name].Reference))
                 {
-                    s.ConstantCollection.Remove(t.Name);
-                    s.ConstantCollection.Add(t.Name, t);
+                    s.ConstantCollection[t.Name] = t;
                 }
             }
 
