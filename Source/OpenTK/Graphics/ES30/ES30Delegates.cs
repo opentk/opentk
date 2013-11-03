@@ -57,13 +57,13 @@ namespace OpenTK.Graphics.ES30
             internal delegate void BeginPerfMonitorAMD(UInt32 monitor);
             internal static BeginPerfMonitorAMD glBeginPerfMonitorAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BeginQuery(OpenTK.Graphics.ES30.All target, UInt32 id);
+            internal delegate void BeginQuery(OpenTK.Graphics.ES30.QueryTarget target, UInt32 id);
             internal static BeginQuery glBeginQuery;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BeginQueryEXT(OpenTK.Graphics.ES30.All target, UInt32 id);
+            internal delegate void BeginQueryEXT(OpenTK.Graphics.ES30.QueryTarget target, UInt32 id);
             internal static BeginQueryEXT glBeginQueryEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BeginTransformFeedback(OpenTK.Graphics.ES30.All primitiveMode);
+            internal delegate void BeginTransformFeedback(OpenTK.Graphics.ES30.BeginFeedbackMode primitiveMode);
             internal static BeginTransformFeedback glBeginTransformFeedback;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BindAttribLocation(UInt32 program, UInt32 index, String name);
@@ -93,7 +93,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate void BindTexture(OpenTK.Graphics.ES30.TextureTarget target, UInt32 texture);
             internal static BindTexture glBindTexture;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindTransformFeedback(OpenTK.Graphics.ES30.All target, UInt32 id);
+            internal delegate void BindTransformFeedback(OpenTK.Graphics.ES30.TransformFeedbackTarget target, UInt32 id);
             internal static BindTransformFeedback glBindTransformFeedback;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BindVertexArray(UInt32 array);
@@ -126,13 +126,13 @@ namespace OpenTK.Graphics.ES30
             internal delegate void BlendParameteriNV(OpenTK.Graphics.ES30.All pname, Int32 value);
             internal static BlendParameteriNV glBlendParameteriNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlitFramebuffer(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, OpenTK.Graphics.ES30.ClearBufferMask mask, OpenTK.Graphics.ES30.All filter);
+            internal delegate void BlitFramebuffer(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, OpenTK.Graphics.ES30.ClearBufferMask mask, OpenTK.Graphics.ES30.BlitFramebufferFilter filter);
             internal static BlitFramebuffer glBlitFramebuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlitFramebufferANGLE(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, UInt32 mask, OpenTK.Graphics.ES30.All filter);
+            internal delegate void BlitFramebufferANGLE(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, OpenTK.Graphics.ES30.ClearBufferMask mask, OpenTK.Graphics.ES30.BlitFramebufferFilter filter);
             internal static BlitFramebufferANGLE glBlitFramebufferANGLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlitFramebufferNV(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, UInt32 mask, OpenTK.Graphics.ES30.All filter);
+            internal delegate void BlitFramebufferNV(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, OpenTK.Graphics.ES30.ClearBufferMask mask, OpenTK.Graphics.ES30.BlitFramebufferFilter filter);
             internal static BlitFramebufferNV glBlitFramebufferNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BufferData(OpenTK.Graphics.ES30.BufferTarget target, IntPtr size, IntPtr data, OpenTK.Graphics.ES30.BufferUsage usage);
@@ -402,10 +402,10 @@ namespace OpenTK.Graphics.ES30
             internal delegate void EndPerfMonitorAMD(UInt32 monitor);
             internal static EndPerfMonitorAMD glEndPerfMonitorAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void EndQuery(OpenTK.Graphics.ES30.All target);
+            internal delegate void EndQuery(OpenTK.Graphics.ES30.QueryTarget target);
             internal static EndQuery glEndQuery;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void EndQueryEXT(OpenTK.Graphics.ES30.All target);
+            internal delegate void EndQueryEXT(OpenTK.Graphics.ES30.QueryTarget target);
             internal static EndQueryEXT glEndQueryEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void EndTilingQCOM(UInt32 preserveMask);
@@ -465,10 +465,10 @@ namespace OpenTK.Graphics.ES30
             internal delegate void Flush();
             internal static Flush glFlush;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FlushMappedBufferRange(OpenTK.Graphics.ES30.All target, IntPtr offset, IntPtr length);
+            internal delegate void FlushMappedBufferRange(OpenTK.Graphics.ES30.BufferTarget target, IntPtr offset, IntPtr length);
             internal static FlushMappedBufferRange glFlushMappedBufferRange;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FlushMappedBufferRangeEXT(OpenTK.Graphics.ES30.All target, IntPtr offset, IntPtr length);
+            internal delegate void FlushMappedBufferRangeEXT(OpenTK.Graphics.ES30.BufferTarget target, IntPtr offset, IntPtr length);
             internal static FlushMappedBufferRangeEXT glFlushMappedBufferRangeEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FramebufferRenderbuffer(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferSlot attachment, OpenTK.Graphics.ES30.RenderbufferTarget renderbuffertarget, UInt32 renderbuffer);
@@ -564,10 +564,10 @@ namespace OpenTK.Graphics.ES30
             internal unsafe delegate void GetBufferParameteriv(OpenTK.Graphics.ES30.BufferTarget target, OpenTK.Graphics.ES30.BufferParameterName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetBufferParameteriv glGetBufferParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetBufferPointerv(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All pname, [OutAttribute] IntPtr @params);
+            internal delegate void GetBufferPointerv(OpenTK.Graphics.ES30.BufferTarget target, OpenTK.Graphics.ES30.BufferPointer pname, [OutAttribute] IntPtr @params);
             internal static GetBufferPointerv glGetBufferPointerv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetBufferPointervOES(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All pname, [OutAttribute] IntPtr @params);
+            internal delegate void GetBufferPointervOES(OpenTK.Graphics.ES30.BufferTarget target, OpenTK.Graphics.ES30.BufferPointer pname, [OutAttribute] IntPtr @params);
             internal static GetBufferPointervOES glGetBufferPointervOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.ES30.All* sources, [OutAttribute] OpenTK.Graphics.ES30.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.ES30.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
@@ -684,25 +684,25 @@ namespace OpenTK.Graphics.ES30
             internal unsafe delegate void GetProgramPipelineivEXT(UInt32 pipeline, OpenTK.Graphics.ES30.All pname, [OutAttribute] Int32* @params);
             internal unsafe static GetProgramPipelineivEXT glGetProgramPipelineivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetQueryiv(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetQueryiv(OpenTK.Graphics.ES30.QueryTarget target, OpenTK.Graphics.ES30.GetQueryParam pname, [OutAttribute] Int32* @params);
             internal unsafe static GetQueryiv glGetQueryiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetQueryivEXT(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetQueryivEXT(OpenTK.Graphics.ES30.QueryTarget target, OpenTK.Graphics.ES30.GetQueryParam pname, [OutAttribute] Int32* @params);
             internal unsafe static GetQueryivEXT glGetQueryivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetQueryObjecti64vEXT(UInt32 id, OpenTK.Graphics.ES30.All pname, [OutAttribute] Int64* @params);
+            internal unsafe delegate void GetQueryObjecti64vEXT(UInt32 id, OpenTK.Graphics.ES30.GetQueryObjectParam pname, [OutAttribute] Int64* @params);
             internal unsafe static GetQueryObjecti64vEXT glGetQueryObjecti64vEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetQueryObjectivEXT(UInt32 id, OpenTK.Graphics.ES30.All pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetQueryObjectivEXT(UInt32 id, OpenTK.Graphics.ES30.GetQueryObjectParam pname, [OutAttribute] Int32* @params);
             internal unsafe static GetQueryObjectivEXT glGetQueryObjectivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetQueryObjectui64vEXT(UInt32 id, OpenTK.Graphics.ES30.All pname, [OutAttribute] UInt64* @params);
+            internal unsafe delegate void GetQueryObjectui64vEXT(UInt32 id, OpenTK.Graphics.ES30.GetQueryObjectParam pname, [OutAttribute] UInt64* @params);
             internal unsafe static GetQueryObjectui64vEXT glGetQueryObjectui64vEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetQueryObjectuiv(UInt32 id, OpenTK.Graphics.ES30.All pname, [OutAttribute] UInt32* @params);
+            internal unsafe delegate void GetQueryObjectuiv(UInt32 id, OpenTK.Graphics.ES30.GetQueryObjectParam pname, [OutAttribute] UInt32* @params);
             internal unsafe static GetQueryObjectuiv glGetQueryObjectuiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetQueryObjectuivEXT(UInt32 id, OpenTK.Graphics.ES30.All pname, [OutAttribute] UInt32* @params);
+            internal unsafe delegate void GetQueryObjectuivEXT(UInt32 id, OpenTK.Graphics.ES30.GetQueryObjectParam pname, [OutAttribute] UInt32* @params);
             internal unsafe static GetQueryObjectuivEXT glGetQueryObjectuivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetRenderbufferParameteriv(OpenTK.Graphics.ES30.RenderbufferTarget target, OpenTK.Graphics.ES30.RenderbufferParameterName pname, [OutAttribute] Int32* @params);
@@ -861,7 +861,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate IntPtr MapBufferRange(OpenTK.Graphics.ES30.BufferTarget target, IntPtr offset, IntPtr length, OpenTK.Graphics.ES30.BufferAccessMask access);
             internal static MapBufferRange glMapBufferRange;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr MapBufferRangeEXT(OpenTK.Graphics.ES30.All target, IntPtr offset, IntPtr length, UInt32 access);
+            internal delegate IntPtr MapBufferRangeEXT(OpenTK.Graphics.ES30.BufferTarget target, IntPtr offset, IntPtr length, UInt32 access);
             internal static MapBufferRangeEXT glMapBufferRangeEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void MultiDrawArraysEXT(OpenTK.Graphics.ES30.PrimitiveType mode, Int32* first, Int32* count, Int32 primcount);
@@ -1299,10 +1299,10 @@ namespace OpenTK.Graphics.ES30
             internal unsafe delegate void UniformMatrix4x3fvNV(Int32 location, Int32 count, bool transpose, Single* value);
             internal unsafe static UniformMatrix4x3fvNV glUniformMatrix4x3fvNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate bool UnmapBuffer(OpenTK.Graphics.ES30.All target);
+            internal delegate bool UnmapBuffer(OpenTK.Graphics.ES30.BufferTarget target);
             internal static UnmapBuffer glUnmapBuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate bool UnmapBufferOES(OpenTK.Graphics.ES30.All target);
+            internal delegate bool UnmapBufferOES(OpenTK.Graphics.ES30.BufferTarget target);
             internal static UnmapBufferOES glUnmapBufferOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void UseProgram(UInt32 program);

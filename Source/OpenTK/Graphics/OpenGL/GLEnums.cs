@@ -28284,7 +28284,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BlitFramebuffer
+    /// Used in GL.BlitFramebuffer, GL.Ext.BlitFramebuffer
     /// </summary>
     public enum BlitFramebufferFilter : int
     {
@@ -31073,7 +31073,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ext.BlitFramebuffer
+    /// Not used directly.
     /// </summary>
     public enum ExtFramebufferBlit : int
     {
@@ -31096,7 +31096,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ext.RenderbufferStorageMultisample
+    /// Not used directly.
     /// </summary>
     public enum ExtFramebufferMultisample : int
     {
@@ -47828,7 +47828,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.RenderbufferStorage, GL.RenderbufferStorageMultisample and 1 other function
+    /// Used in GL.RenderbufferStorage, GL.RenderbufferStorageMultisample and 2 other functions
     /// </summary>
     public enum RenderbufferStorage : int
     {
@@ -48123,7 +48123,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BindRenderbuffer, GL.FramebufferRenderbuffer and 9 other functions
+    /// Used in GL.BindRenderbuffer, GL.FramebufferRenderbuffer and 10 other functions
     /// </summary>
     public enum RenderbufferTarget : int
     {

@@ -4947,29 +4947,102 @@
   <!-- gles2 3.0 -->
   <replace name="gles2" version="3.0">
     <!-- Buffer Objects [2.9] -->
-    <function name="BindBuffer" extension="Core">
+    <function name="BindBuffer">
       <param name="target"><type>BufferTarget</type></param>
     </function>
-    <function name="BindBufferRange" extension="Core">
+    <function name="BindBufferRange">
       <param name="target"><type>BufferRangeTarget</type></param>
     </function>
-    <function name="BindBufferBase" extension="Core">
+    <function name="BindBufferBase">
       <param name="target"><type>BufferRangeTarget</type></param>
     </function>
-    <function name="BufferData" extension="Core">
+    <function name="BufferData">
       <param name="target"><type>BufferTarget</type></param>
       <param name="usage"><type>BufferUsageHint</type></param>
     </function>
-    <function name="BufferSubData" extension="Core">
+    <function name="BufferSubData">
       <param name="target"><type>BufferTarget</type></param>
-    </function> 
-    <function name="MapBufferRange" extension="Core">
+    </function>
+    <function name="CopyBufferSubData">
+      <param name="readtarget"><type>BufferTarget</type></param>
+      <param name="writetarget"><type>BufferTarget</type></param>
+    </function>
+    <function name="FlushMappedBufferRange">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+    <function name="MapBufferRange">
       <param name="target"><type>BufferTarget</type></param>
       <param name="target"><type>BufferAccessMask</type></param>
     </function> 
+    <function name="UnmapBuffer">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+    
+    <!-- Buffer Object Queries [6.1.9] -->
+    <function name="GetBufferParameter">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="pname"><type>BufferParameterName</type></param>
+    </function>
+    <function name="GetBufferPointer">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="pname"><type>BufferPointer</type></param>
+    </function>
+    
+    <!-- Asynchronous Queries [2.13, 6.1.7] -->
+    <function name="BeginQuery">
+      <param name="target"><type>QueryTarget</type></param>
+    </function>
+    <function name="EndQuery">
+      <param name="target"><type>QueryTarget</type></param>
+    </function>
+    <function name="GetQuery">
+      <param name="target"><type>QueryTarget</type></param>
+      <param name="pname"><type>GetQueryParam</type></param>
+    </function>
+    <function name="GetQueryObject">
+      <param name="pname"><type>GetQueryObjectParam</type></param>
+    </function>
+    
+    <!-- Transform Feedback [2.14, 6.1.11] -->
+    <function name="BindTransformFeedback">
+      <param name="target"><type>TransformFeedbackTarget</type></param>
+    </function>
+    <function name="BeginTransformFeedback">
+      <param name="primitiveMode"><type>BeginFeedbackMode</type></param>
+    </function>
+    
+    <!-- Reading and Copying Pixels [4.3.1-2] -->
+    <function name="ReadPixels">
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+    <function name="ReadBuffer">
+      <param name="src"><type>ReadBufferMode</type></param>
+    </function>
+    <function name="BlitFramebuffer">
+      <param name="mask"><type>ClearBufferMask</type></param>
+      <param name="filter"><type>BlitFramebufferFilter</type></param>
+    </function>
+    
+    <!-- Polygons [3.6] -->
+    <function name="FrontFace">
+      <param name="dir"><type>FrontFaceDirection</type></param>
+    </function>
+    <function name="CullFace">
+      <param name="face"><type>CullFaceMode</type></param>
+    </function>
    </replace>
   
   <add name="gles2" version="3.0">
+    <enum name="BeginFeedbackMode">
+      <use token="TRIANGLES" />
+      <use token="LINES" />
+      <use token="POINTS" />
+    </enum>
+    <enum name="BlitFramebufferFilter">
+      <use token="LINEAR" />
+      <use token="NEAREST" />
+    </enum>
     <enum name="BufferAccessMask">
       <use token="MAP_READ_BIT" />
       <use token="MAP_WRITE_BIT" />
@@ -4977,6 +5050,19 @@
       <use token="MAP_INVALIDATE_BUFFER_BIT" />
       <use token="MAP_FLUSH_EXPLICIT_BIT" />
       <use token="MAP_UNSYNCHRONIZED_BIT" />
+    </enum>
+    <enum name="BufferParameterName">
+      <use token="BUFFER_SIZE" />
+      <use token="BUFFER_USAGE" />
+      <use token="BUFFER_ACCESS" />
+      <use token="BUFFER_FLAGS" />
+      <use token="BUFFER_MAPPED" />
+      <use token="BUFFER_MAP_POINTER" />
+      <use token="BUFFER_MAP_OFFSET" />
+      <use token="BUFFER_MAP_LENGTH" />
+    </enum>
+    <enum name="BufferPointer">
+      <use token="BUFFER_MAP_POINTER" />
     </enum>
     <enum name="BufferRangeTarget">
       <use token="TRANSFORM_FEEDBACK_BUFFER" />
@@ -5002,6 +5088,69 @@
       <use token="DYNAMIC_DRAW" />
       <use token="DYNAMIC_READ" />
       <use token="DYNAMIC_COPY" />      
+    </enum>
+    <enum name="ClearBufferMask">
+      <use token="COLOR_BUFFER_BIT" />
+      <use token="DEPTH_BUFFER_BIT" />
+      <use token="STENCIL_BUFFER_BIT" />
+    </enum>
+    <enum name="CullFaceMode">
+      <use token="FRONT" />
+      <use token="BACK" />
+      <use token="FRONT_AND_BACK" />
+    </enum>
+    <enum name="EnableCap">
+      <use token="CULL_FACE" />
+      <use token="POLYGON_OFFSET_FILL" />
+    </enum>
+    <enum name="FrontFaceDirection">
+      <use token="CCW" />
+      <use token="CW" />
+    </enum>
+    <enum name="GetQueryObjectParam">
+      <use token="CURRENT_RESULT" />
+      <use token="CURRENT_RESULT_AVAILABLE" />
+    </enum>
+    <enum name="GetQueryParam">
+      <use token="CURRENT_QUERY" />
+    </enum>
+    <enum name="PixelFormat">
+      <use token="RGBA" />
+      <use token="RGBA_INTEGER" />
+    </enum>
+    <enum name="PixelType">
+      <use token="INT" />
+      <use token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use token="UNSIGNED_BYTE" />
+      <use token="UNSIGNED_INT" />
+    </enum>
+    <enum name="QueryTarget">
+      <use token="ANY_SAMPLES_PASSED" />
+      <use token="ANY_SAMPLES_PASSED_CONSERVATIVE" />
+      <use token="TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN" /> <!-- see 6.1.7 -->
+    </enum>
+    <enum name="ReadBufferMode">
+      <use token="NONE" />
+      <use token="BACK" />
+      <use token="COLOR_ATTACHMENT0" />
+      <use token="COLOR_ATTACHMENT1" />
+      <use token="COLOR_ATTACHMENT2" />
+      <use token="COLOR_ATTACHMENT3" />
+      <use token="COLOR_ATTACHMENT4" />
+      <use token="COLOR_ATTACHMENT5" />
+      <use token="COLOR_ATTACHMENT6" />
+      <use token="COLOR_ATTACHMENT7" />
+      <use token="COLOR_ATTACHMENT8" />
+      <use token="COLOR_ATTACHMENT9" />
+      <use token="COLOR_ATTACHMENT10" />
+      <use token="COLOR_ATTACHMENT11" />
+      <use token="COLOR_ATTACHMENT12" />
+      <use token="COLOR_ATTACHMENT13" />
+      <use token="COLOR_ATTACHMENT14" />
+      <use token="COLOR_ATTACHMENT15" />
+    </enum>
+    <enum name="TransformFeedbackTarget">
+      <use token="TRANSFORM_FEEDBACK" />
     </enum>
   </add>
 

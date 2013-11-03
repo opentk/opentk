@@ -167,7 +167,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 80 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 70 other functions
     /// </summary>
     public enum All : int
     {
@@ -8171,7 +8171,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.BindBuffer, GL.BufferData and 2 other functions
+    /// Used in GL.BindBuffer, GL.BufferData and 6 other functions
     /// </summary>
     public enum BufferTarget : int
     {
@@ -8205,7 +8205,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Clear
+    /// Used in GL.Angle.BlitFramebuffer, GL.Clear and 1 other function
     /// </summary>
     [Flags]
     public enum ClearBufferMask : int

@@ -167,7 +167,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 115 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 95 other functions
     /// </summary>
     public enum All : int
     {
@@ -8966,6 +8966,25 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
+    /// Used in GL.BeginTransformFeedback
+    /// </summary>
+    public enum BeginFeedbackMode : int
+    {
+        /// <summary>
+        /// Original was GL_POINTS = 0X0000
+        /// </summary>
+        Points = ((int)0X0000)        ,
+        /// <summary>
+        /// Original was GL_LINES = 0X0001
+        /// </summary>
+        Lines = ((int)0X0001)        ,
+        /// <summary>
+        /// Original was GL_TRIANGLES = 0X0004
+        /// </summary>
+        Triangles = ((int)0X0004)        ,
+    }
+
+    /// <summary>
     /// Used in GL.DrawArrays, GL.DrawElements
     /// </summary>
     public enum BeginMode : int
@@ -9225,6 +9244,21 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
+    /// Used in GL.Angle.BlitFramebuffer, GL.BlitFramebuffer and 1 other function
+    /// </summary>
+    public enum BlitFramebufferFilter : int
+    {
+        /// <summary>
+        /// Original was GL_NEAREST = 0X2600
+        /// </summary>
+        Nearest = ((int)0X2600)        ,
+        /// <summary>
+        /// Original was GL_LINEAR = 0X2601
+        /// </summary>
+        Linear = ((int)0X2601)        ,
+    }
+
+    /// <summary>
     /// Not used directly.
     /// </summary>
     public enum Boolean : int
@@ -9277,13 +9311,40 @@ namespace OpenTK.Graphics.ES30
     public enum BufferParameterName : int
     {
         /// <summary>
-        /// Original was GL_BufferSize = 0X8764
+        /// Original was GL_BUFFER_SIZE = 0x8764
         /// </summary>
-        BufferSize = ((int)0X8764)        ,
+        BufferSize = ((int)0x8764)        ,
         /// <summary>
-        /// Original was GL_BufferUsage = 0X8765
+        /// Original was GL_BUFFER_USAGE = 0x8765
         /// </summary>
-        BufferUsage = ((int)0X8765)        ,
+        BufferUsage = ((int)0x8765)        ,
+        /// <summary>
+        /// Original was GL_BUFFER_MAPPED = 0x88BC
+        /// </summary>
+        BufferMapped = ((int)0x88BC)        ,
+        /// <summary>
+        /// Original was GL_BUFFER_MAP_POINTER = 0x88BD
+        /// </summary>
+        BufferMapPointer = ((int)0x88BD)        ,
+        /// <summary>
+        /// Original was GL_BUFFER_MAP_LENGTH = 0x9120
+        /// </summary>
+        BufferMapLength = ((int)0x9120)        ,
+        /// <summary>
+        /// Original was GL_BUFFER_MAP_OFFSET = 0x9121
+        /// </summary>
+        BufferMapOffset = ((int)0x9121)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetBufferPointer, GL.Oes.GetBufferPointer
+    /// </summary>
+    public enum BufferPointer : int
+    {
+        /// <summary>
+        /// Original was GL_BUFFER_MAP_POINTER = 0x88BD
+        /// </summary>
+        BufferMapPointer = ((int)0x88BD)        ,
     }
 
     /// <summary>
@@ -9302,7 +9363,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.BindBuffer, GL.BufferData and 3 other functions
+    /// Used in GL.BindBuffer, GL.BufferData and 10 other functions
     /// </summary>
     public enum BufferTarget : int
     {
@@ -9403,7 +9464,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.BlitFramebuffer, GL.Clear
+    /// Used in GL.Angle.BlitFramebuffer, GL.BlitFramebuffer and 2 other functions
     /// </summary>
     [Flags]
     public enum ClearBufferMask : int
@@ -16260,6 +16321,24 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
+    /// Used in GL.GetQueryObject, GL.Ext.GetQueryObject
+    /// </summary>
+    public enum GetQueryObjectParam : int
+    {
+    }
+
+    /// <summary>
+    /// Used in GL.GetQuery, GL.Ext.GetQuery
+    /// </summary>
+    public enum GetQueryParam : int
+    {
+        /// <summary>
+        /// Original was GL_CURRENT_QUERY = 0x8865
+        /// </summary>
+        CurrentQuery = ((int)0x8865)        ,
+    }
+
+    /// <summary>
     /// Used in GL.GetTexParameter
     /// </summary>
     public enum GetTextureParameter : int
@@ -19985,6 +20064,10 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_YCRCB_444_SGIX = 0x81BC
         /// </summary>
         Ycrcb444Sgix = ((int)0x81BC)        ,
+        /// <summary>
+        /// Original was GL_RGBA_INTEGER = 0x8D99
+        /// </summary>
+        RgbaInteger = ((int)0x8D99)        ,
     }
 
     /// <summary>
@@ -20592,6 +20675,10 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_UnsignedShort565 = 0X8363
         /// </summary>
         UnsignedShort565 = ((int)0X8363)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_2_10_10_10_REV = 0x8368
+        /// </summary>
+        UnsignedInt2101010Rev = ((int)0x8368)        ,
     }
 
     /// <summary>
@@ -21091,10 +21178,33 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
+    /// Used in GL.BeginQuery, GL.EndQuery and 4 other functions
+    /// </summary>
+    public enum QueryTarget : int
+    {
+        /// <summary>
+        /// Original was GL_ANY_SAMPLES_PASSED = 0x8C2F
+        /// </summary>
+        AnySamplesPassed = ((int)0x8C2F)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN = 0x8C88
+        /// </summary>
+        TransformFeedbackPrimitivesWritten = ((int)0x8C88)        ,
+        /// <summary>
+        /// Original was GL_ANY_SAMPLES_PASSED_CONSERVATIVE = 0x8D6A
+        /// </summary>
+        AnySamplesPassedConservative = ((int)0x8D6A)        ,
+    }
+
+    /// <summary>
     /// Used in GL.ReadBuffer
     /// </summary>
     public enum ReadBufferMode : int
     {
+        /// <summary>
+        /// Original was GL_NONE = 0
+        /// </summary>
+        None = ((int)0)        ,
         /// <summary>
         /// Original was GL_FRONT_LEFT = 0x0400
         /// </summary>
@@ -21143,6 +21253,70 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_AUX3 = 0x040C
         /// </summary>
         Aux3 = ((int)0x040C)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT0 = 0x8CE0
+        /// </summary>
+        ColorAttachment0 = ((int)0x8CE0)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT1 = 0x8CE1
+        /// </summary>
+        ColorAttachment1 = ((int)0x8CE1)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT2 = 0x8CE2
+        /// </summary>
+        ColorAttachment2 = ((int)0x8CE2)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT3 = 0x8CE3
+        /// </summary>
+        ColorAttachment3 = ((int)0x8CE3)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT4 = 0x8CE4
+        /// </summary>
+        ColorAttachment4 = ((int)0x8CE4)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT5 = 0x8CE5
+        /// </summary>
+        ColorAttachment5 = ((int)0x8CE5)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT6 = 0x8CE6
+        /// </summary>
+        ColorAttachment6 = ((int)0x8CE6)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT7 = 0x8CE7
+        /// </summary>
+        ColorAttachment7 = ((int)0x8CE7)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT8 = 0x8CE8
+        /// </summary>
+        ColorAttachment8 = ((int)0x8CE8)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT9 = 0x8CE9
+        /// </summary>
+        ColorAttachment9 = ((int)0x8CE9)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT10 = 0x8CEA
+        /// </summary>
+        ColorAttachment10 = ((int)0x8CEA)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT11 = 0x8CEB
+        /// </summary>
+        ColorAttachment11 = ((int)0x8CEB)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT12 = 0x8CEC
+        /// </summary>
+        ColorAttachment12 = ((int)0x8CEC)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT13 = 0x8CED
+        /// </summary>
+        ColorAttachment13 = ((int)0x8CED)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT14 = 0x8CEE
+        /// </summary>
+        ColorAttachment14 = ((int)0x8CEE)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT15 = 0x8CEF
+        /// </summary>
+        ColorAttachment15 = ((int)0x8CEF)        ,
     }
 
     /// <summary>
@@ -22259,6 +22433,17 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_CLAMP_TO_EDGE_SGIS = 0x812F
         /// </summary>
         ClampToEdgeSgis = ((int)0x812F)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.BindTransformFeedback
+    /// </summary>
+    public enum TransformFeedbackTarget : int
+    {
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK = 0x8E22
+        /// </summary>
+        TransformFeedback = ((int)0x8E22)        ,
     }
 
     /// <summary>
