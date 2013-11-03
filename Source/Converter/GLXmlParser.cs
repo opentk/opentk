@@ -153,9 +153,15 @@ namespace CHeaderToXML
                 // Add it to all relevant ones.
                 foreach (var apiname in apinames)
                 {
-                    if (!APIs.ContainsKey(apiname))
-                        APIs.Add(apiname, new XElement("api", new XAttribute("name", apiname)));
-                    var api = APIs[apiname];
+                    var key = apiname + version;
+                    if (!APIs.ContainsKey(key))
+                        APIs.Add(
+                            key,
+                            new XElement(
+                                "api",
+                                new XAttribute("name", apiname),
+                                String.IsNullOrEmpty(version) ? null : new XAttribute("version", version)));
+                    var api = APIs[key];
 
                     var enum_name = TrimName(feature.Attribute("name").Value);
 
@@ -188,9 +194,9 @@ namespace CHeaderToXML
                     api.Add(e);
                 }
 
-                foreach (var apiname in apinames)
+                foreach (var api in APIs.Values)
                 {
-                    var api = APIs[apiname];
+                var apiname = api.Attribute("name").Value;
 
                     // Mark deprecated enums
                     foreach (var token in feature.Elements("remove").Elements("enum"))
