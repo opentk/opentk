@@ -216,7 +216,7 @@
       </param>
     </function>
     
-    <function name="ShaderSource" extension="Core">
+    <function name="ShaderSource" extension="Core|Arb">
       <param name="length">
         <count>0</count>
       </param>
@@ -3960,7 +3960,7 @@
     </function>
     
     <function name="ShaderSource" extension="Core">
-      <param name="string"><type>String*</type></param>
+      <param name="length"><count>0</count></param>
     </function>
     
     <function name="BlendEquation" extension="Core" version="2.0">
