@@ -56,7 +56,7 @@ namespace Bind
 
         #region ISpecReader Members
 
-        public void ReadDelegates(string file, DelegateCollection delegates, string apiname)
+        public void ReadDelegates(string file, DelegateCollection delegates, string apiname, string apiversion)
         {
             var specs = new XPathDocument(file);
 
@@ -71,24 +71,21 @@ namespace Bind
                 apiname = null;
             }
 
-            foreach (XPathNavigator nav in specs.CreateNavigator().Select(
-                !String.IsNullOrEmpty(apiname) ?
-                String.Format("/signatures/delete[@name='{0}']", apiname) :
-                String.Format("/signatures/delete")))
+            string xpath_add, xpath_delete;
+            GetSignaturePaths(apiname, apiversion, out xpath_add, out xpath_delete);
+
+            foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_delete))
             {
                 foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
                     delegates.Remove(node.GetAttribute("name", String.Empty));
             }
-            foreach (XPathNavigator nav in specs.CreateNavigator().Select(
-                !String.IsNullOrEmpty(apiname) ?
-                String.Format("/signatures/add[@name='{0}']", apiname) :
-                String.Format("/signatures/add")))
+            foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_add))
             {
-                Utilities.Merge(delegates, ReadDelegates(nav));
+                Utilities.Merge(delegates, ReadDelegates(nav, apiversion));
             }
         }
 
-        public void ReadEnums(string file, EnumCollection enums, string apiname)
+        public void ReadEnums(string file, EnumCollection enums, string apiname, string apiversion)
         {
             var specs = new XPathDocument(file);
 
@@ -103,20 +100,17 @@ namespace Bind
                 apiname = null;
             }
 
+            string xpath_add, xpath_delete;
+            GetSignaturePaths(apiname, apiversion, out xpath_add, out xpath_delete);
+
             // First, read all enum definitions from spec and override file.
             // Afterwards, read all token/enum overrides from overrides file.
-            foreach (XPathNavigator nav in specs.CreateNavigator().Select(
-                !String.IsNullOrEmpty(apiname) ?
-                String.Format("/signatures/delete[@name='{0}']", apiname) :
-                String.Format("/signatures/delete")))
+            foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_delete))
             {
                 foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
                     enums.Remove(node.GetAttribute("name", String.Empty));
             }
-            foreach (XPathNavigator nav in specs.CreateNavigator().Select(
-                !String.IsNullOrEmpty(apiname) ?
-                String.Format("/signatures/add[@name='{0}']", apiname) :
-                String.Format("/signatures/add")))
+            foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_add))
             {
                 Utilities.Merge(enums, ReadEnums(nav));
             }
@@ -218,6 +212,18 @@ namespace Bind
 
         #region Private Members
 
+        static void GetSignaturePaths(string apiname, string apiversion, out string xpath_add, out string xpath_delete)
+        {
+            xpath_add = "/signatures/add";
+            xpath_delete = "/signatures/delete";
+
+            if (!String.IsNullOrEmpty(apiname))
+            {
+                xpath_add += String.Format("[contains(concat('|', @name, '|'), '|{0}|')]", apiname);
+                xpath_delete += String.Format("[contains(concat('|', @name, '|'), '|{0}|')]", apiname);
+            }
+        }
+
         string GetSpecVersion(XPathDocument specs)
         {
             var version =
@@ -230,14 +236,23 @@ namespace Bind
             return version;
         }
 
-        DelegateCollection ReadDelegates(XPathNavigator specs)
+        DelegateCollection ReadDelegates(XPathNavigator specs, string apiversion)
         {
             DelegateCollection delegates = new DelegateCollection();
             var extensions = new List<string>();
 
-            foreach (XPathNavigator node in specs.SelectChildren("function", String.Empty))
+            string path = "function";
+            foreach (XPathNavigator node in specs.SelectChildren(path, String.Empty))
             {
                 var name = node.GetAttribute("name", String.Empty);
+                var version = node.GetAttribute("version", String.Empty);
+
+                // Ignore functions that have a higher version number than
+                // our current apiversion. Extensions do not have a version,
+                // so we add them anyway (which is desirable).
+                if (!String.IsNullOrEmpty(version) && !String.IsNullOrEmpty(apiversion) &&
+                    Decimal.Parse(version) > Decimal.Parse(apiversion))
+                    continue;
 
                 // Check whether we are adding to an existing delegate or creating a new one.
                 Delegate d = null;
