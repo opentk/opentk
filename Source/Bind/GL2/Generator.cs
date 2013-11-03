@@ -37,19 +37,33 @@ namespace Bind.GL2
         //protected static readonly Dictionary<string, string> doc_replacements;
 
         protected ISpecReader SpecReader { get; set; }
+
+        /// <summary>
+        /// The Profile field corresponds to the "profile" attribute
+        /// in the OpenGL registry. We use this to distinguish between
+        /// different profiles (e.g. "gl", "glcore", "gles1", "gles2").
+        /// </summary>
         protected string Profile = "gl";
+
+        /// <summary>
+        /// The Version field corresponds to the "number" attribute
+        /// in the OpenGL registry. We use this to distinguish between
+        /// OpenGL ES 2.0 and 3.0, which share the same profile "gles2".
+        /// If empty, then all elements of a profile will be parsed, and
+        /// their version number will be ignored.
+        /// </summary>
+        protected string Version = String.Empty;
+
         public Settings Settings { get; protected set; }
 
         #endregion
 
         #region Constructors
 
-        public Generator(Settings settings, string nsName, string dirName)
+        public Generator(Settings settings, string dirName)
         {
             if (settings == null)
                 throw new ArgumentNullException("settings");
-            if (String.IsNullOrEmpty(nsName))
-                throw new ArgumentNullException("nsName");
             if (dirName == null)
                 dirName = "GL2";
 
@@ -67,7 +81,6 @@ namespace Bind.GL2
             Settings.ImportsClass = "Core";
             Settings.DelegatesClass = "Delegates";
             Settings.OutputClass = "GL";
-            Settings.OutputNamespace = nsName;
 
             if (Settings.Compatibility == Settings.Legacy.Tao)
             {
@@ -79,10 +92,11 @@ namespace Bind.GL2
                 // Defaults
             }
 
-            Settings.ImportsFile = "GLCore.cs";
-            Settings.DelegatesFile = "GLDelegates.cs";
-            Settings.EnumsFile = "GLEnums.cs";
-            Settings.WrappersFile = "GL.cs";
+            Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
+            Settings.DefaultImportsFile = "GLCore.cs";
+            Settings.DefaultDelegatesFile = "GLDelegates.cs";
+            Settings.DefaultEnumsFile = "GLEnums.cs";
+            Settings.DefaultWrappersFile = "GL.cs";
 
             Delegates = new DelegateCollection();
             Enums = new EnumCollection();
@@ -108,16 +122,16 @@ namespace Bind.GL2
             GLTypes = SpecReader.ReadTypeMap(Path.Combine(Settings.InputPath, glTypemap));
             CSTypes = SpecReader.ReadCSTypeMap(Path.Combine(Settings.InputPath, csTypemap));
 
-            SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec), Enums, Profile);
-            SpecReader.ReadEnums(overrides, Enums, "");
-            SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates, Profile);
-            SpecReader.ReadDelegates(overrides, Delegates, "");
+            SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec), Enums, Profile, Version);
+            SpecReader.ReadEnums(overrides, Enums, Profile, Version);
+            SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates, Profile, Version);
+            SpecReader.ReadDelegates(overrides, Delegates, Profile, Version);
 
             var enum_processor = new EnumProcessor(this, overrides);
             var func_processor = new FuncProcessor(this, overrides);
 
-            Enums = enum_processor.Process(Enums);
-            Wrappers = func_processor.Process(enum_processor, Delegates, Enums);
+            Enums = enum_processor.Process(Enums, Profile);
+            Wrappers = func_processor.Process(enum_processor, Delegates, Enums, Profile);
         }
 
         #endregion

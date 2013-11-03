@@ -35,13 +35,14 @@ namespace Bind.GL2
 {
     class GL4Generator : Generator
     {
-        public GL4Generator(Settings settings, string name, string dirname)
-            : base(settings, name, dirname)
+        public GL4Generator(Settings settings, string dirname)
+            : base(settings, dirname)
         {
-            Settings.ImportsFile = "GL4Core.cs";
-            Settings.DelegatesFile = "GL4Delegates.cs";
-            Settings.EnumsFile = "GL4Enums.cs";
-            Settings.WrappersFile = "GL4.cs";
+            Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL4";
+            Settings.DefaultImportsFile = "GL4Core.cs";
+            Settings.DefaultDelegatesFile = "GL4Delegates.cs";
+            Settings.DefaultEnumsFile = "GL4Enums.cs";
+            Settings.DefaultWrappersFile = "GL4.cs";
 
             Profile = "glcore";
         }

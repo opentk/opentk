@@ -9,15 +9,23 @@ using Enum=Bind.Structures.Enum;
 
 namespace Bind.ES
 {
+    // Generator implementation for OpenGL ES 1.0 and 1.1
     class ESGenerator : Generator
     {
-        public ESGenerator(Settings settings, string nsName, string dirName)
-            : base(settings, nsName, dirName)
+        public ESGenerator(Settings settings, string dirName)
+            : base(settings, dirName)
         {
-            Settings.ImportsFile = nsName + "Core.cs";
-            Settings.DelegatesFile = nsName + "Delegates.cs";
-            Settings.EnumsFile = nsName + "Enums.cs";
-            Settings.WrappersFile = nsName + ".cs";
+            Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
+            Settings.DefaultImportsFile = "ES11Core.cs";
+            Settings.DefaultDelegatesFile = "ES11Delegates.cs";
+            Settings.DefaultEnumsFile = "ES11Enums.cs";
+            Settings.DefaultWrappersFile = "ES11.cs";
+
+            // Khronos releases a combined 1.0+1.1 specification,
+            // so we cannot distinguish between the two.
+            // Todo: add support for common and light profiles.
+            Profile = "gles1";
+            Version = "1.1"; 
         }
     }
 }
