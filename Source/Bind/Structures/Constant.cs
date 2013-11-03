@@ -19,8 +19,6 @@ namespace Bind.Structures
     /// </summary>
     class Constant : IComparable<Constant>
     {
-        static StringBuilder translator = new StringBuilder();
-
         #region PreviousName
 
         string original_name;

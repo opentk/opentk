@@ -255,23 +255,18 @@ namespace Bind
                     continue;
 
                 // Check whether we are adding to an existing delegate or creating a new one.
-                Delegate d = null;
-                if (delegates.ContainsKey(name))
+                var d = new Delegate
                 {
-                    d = delegates[name];
-                }
-                else
-                {
-                    d = new Delegate();
-                    d.Name = name;
-                    d.Version = node.GetAttribute("version", String.Empty).Trim();
-                    d.Category = node.GetAttribute("category", String.Empty).Trim();
-                    d.DeprecatedVersion = node.GetAttribute("deprecated", String.Empty).Trim();
-                    d.Deprecated = !String.IsNullOrEmpty(d.DeprecatedVersion);
-                    d.Extension = node.GetAttribute("extension", String.Empty).Trim() ?? "Core";
-                    if (!extensions.Contains(d.Extension))
-                        extensions.Add(d.Extension);
-                }
+                    Name = name,
+                    EntryPoint = name,
+                    Version = node.GetAttribute("version", String.Empty).Trim(),
+                    Category = node.GetAttribute("category", String.Empty).Trim(),
+                    DeprecatedVersion = node.GetAttribute("deprecated", String.Empty).Trim(),
+                    Deprecated = !String.IsNullOrEmpty(node.GetAttribute("deprecated", String.Empty)),
+                    Extension = node.GetAttribute("extension", String.Empty).Trim() ?? "Core",
+                };
+                if (!extensions.Contains(d.Extension))
+                    extensions.Add(d.Extension);
 
                 foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
                 {

@@ -51,6 +51,7 @@ namespace Bind.Structures
             //this.Version = !String.IsNullOrEmpty(d.Version) ? new string(d.Version.ToCharArray()) : "";
             Deprecated = d.Deprecated;
             DeprecatedVersion = d.DeprecatedVersion;
+            EntryPoint = d.EntryPoint;
         }
 
         #endregion
@@ -237,6 +238,7 @@ namespace Bind.Structures
 
         public bool Deprecated { get; set; }
         public string DeprecatedVersion { get; set; }
+        public string EntryPoint { get; set; }
 
         #endregion
 
@@ -261,7 +263,12 @@ namespace Bind.Structures
 
         public int CompareTo(Delegate other)
         {
-            return Name.CompareTo(other.Name);
+            int ret = Name.CompareTo(other.Name);
+            if (ret == 0)
+                ret = Parameters.CompareTo(other.Parameters);
+            if (ret == 0)
+                ret = ReturnType.CompareTo(other.ReturnType);
+            return ret;
         }
 
         #endregion
@@ -270,29 +277,158 @@ namespace Bind.Structures
 
         public bool Equals(Delegate other)
         {
-            return CompareTo(other) == 0;
+            return
+                Name.Equals(other.Name) &&
+                Parameters.Equals(other.Parameters) &&
+                ReturnType.Equals(other.ReturnType);
         }
 
         #endregion
     }
 
-    #region class DelegateCollection : SortedDictionary<string, Delegate>
+    #region DelegateCollection
 
-    class DelegateCollection : SortedDictionary<string, Delegate>
+    class DelegateCollection : IDictionary<string, List<Delegate>>
     {
+        readonly SortedDictionary<string, List<Delegate>> Delegates =
+            new SortedDictionary<string, List<Delegate>>();
+
         public void Add(Delegate d)
         {
             if (!ContainsKey(d.Name))
             {
-                Add(d.Name, d);
+                Add(d.Name, new List<Delegate> { d });
             }
             else
             {
-                Trace.WriteLine(String.Format(
-                    "Spec error: function {0} redefined, ignoring second definition.",
-                    d.Name));
+                var list = Delegates[d.Name];
+                if (!list.Contains(d))
+                {
+                    list.Add(d);
+                }
+                else
+                {
+                    Trace.WriteLine(String.Format(
+                        "Spec error: function {0} redefined, ignoring second definition.",
+                        d.Name));
+                }
             }
         }
+
+        #region IDictionary Members
+
+        public void Add(string key, List<Delegate> value)
+        {
+            Delegates.Add(key, value.ToList());
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return Delegates.ContainsKey(key);
+        }
+
+        public bool Remove(string key)
+        {
+            return Delegates.Remove(key);
+        }
+
+        public bool TryGetValue(string key, out List<Delegate> value)
+        {
+            return Delegates.TryGetValue(key, out value);
+        }
+
+        public List<Delegate> this[string index]
+        {
+            get
+            {
+                return Delegates[index];
+            }
+            set
+            {
+                Delegates[index] = value;
+            }
+        }
+
+        public ICollection<string> Keys
+        {
+            get
+            {
+                return Delegates.Keys;
+            }
+        }
+
+        public ICollection<List<Delegate>> Values
+        {
+            get
+            {
+                return Delegates.Values;
+            }
+        }
+
+        #endregion
+
+        #region ICollection implementation
+
+        public void Add(KeyValuePair<string, List<Delegate>> item)
+        {
+            Delegates.Add(item.Key, item.Value.ToList());
+        }
+
+        public void Clear()
+        {
+            Delegates.Clear();
+        }
+
+        public bool Contains(KeyValuePair<string, List<Delegate>> item)
+        {
+            return Delegates.Contains(item);
+        }
+
+        public void CopyTo(KeyValuePair<string, List<Delegate>>[] array, int arrayIndex)
+        {
+            Delegates.CopyTo(array, arrayIndex);
+        }
+
+        public bool Remove(KeyValuePair<string, List<Delegate>> item)
+        {
+            return Delegates.Remove(item.Key);
+        }
+
+        public int Count
+        {
+            get
+            {
+                return Delegates.Count;
+            }
+        }
+
+        public bool IsReadOnly
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region IEnumerable implementation
+
+        public IEnumerator<KeyValuePair<string, List<Delegate>>> GetEnumerator()
+        {
+            return Delegates.GetEnumerator();
+        }
+
+        #endregion
+
+        #region IEnumerable implementation
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return Delegates.GetEnumerator();
+        }
+
+        #endregion
     }
 
     #endregion

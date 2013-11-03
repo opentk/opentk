@@ -69,21 +69,27 @@ namespace Bind
         {
             Console.WriteLine("Processing delegates.");
             var nav = new XPathDocument(Overrides).CreateNavigator();
-            foreach (var d in delegates.Values)
+            foreach (var overloads in delegates.Values)
             {
-                TranslateExtension(d);
-                TranslateReturnType(enum_processor, nav, d, enums, apiname);
-                TranslateParameters(enum_processor, nav, d, enums, apiname);
-                TranslateAttributes(nav, d, enums, apiname);
+                foreach (var d in overloads)
+                {
+                    TranslateExtension(d);
+                    TranslateReturnType(enum_processor, nav, d, enums, apiname);
+                    TranslateParameters(enum_processor, nav, d, enums, apiname);
+                    TranslateAttributes(nav, d, enums, apiname);
+                }
             }
 
             Console.WriteLine("Generating wrappers.");
             var wrappers = CreateWrappers(delegates, enums);
+
             Console.WriteLine("Creating CLS compliant overloads.");
             wrappers = CreateCLSCompliantWrappers(wrappers, enums);
-            Console.WriteLine("Removing non-CLS compliant duplicates.");
 
-            return MarkCLSCompliance(wrappers);
+            Console.WriteLine("Removing non-CLS compliant duplicates.");
+            wrappers = MarkCLSCompliance(wrappers);
+
+            return wrappers;
         }
 
         public static string GetOverridesPath(string apiname, string function, string extension)
@@ -132,6 +138,8 @@ namespace Bind
             // Translate enum types
             if (normal && @enum.Name != "GLenum" && @enum.Name != "Boolean")
             {
+                type.IsEnum = true;
+
                 if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
                 {
                     type.QualifiedType = "int";
@@ -146,6 +154,8 @@ namespace Bind
             }
             else if (Generator.GLTypes.TryGetValue(type.CurrentType, out s))
             {
+                type.IsEnum = true;
+
                 // Check if the parameter is a generic GLenum. If it is, search for a better match,
                 // otherwise fallback to Settings.CompleteEnumName (named 'All' by default).
                 if (s.Contains("GLenum") /*&& !String.IsNullOrEmpty(category)*/)
@@ -157,7 +167,9 @@ namespace Bind
                     else
                     {
                         // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
-                        if (enums.ContainsKey(category))
+                        // Note: for backwards compatibility we use "category" only for the gl api.
+                        // glcore, gles1 and gles2 use the All enum instead.
+                        if (apiname == "gl" && enums.ContainsKey(category))
                         {
                             type.QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
                                 Settings.NamespaceSeparator, enum_processor.TranslateEnumName(category));
@@ -486,7 +498,7 @@ namespace Bind
         FunctionCollection CreateWrappers(DelegateCollection delegates, EnumCollection enums)
         {
             var wrappers = new FunctionCollection();
-            foreach (var d in delegates.Values)
+            foreach (var d in delegates.Values.SelectMany(v => v))
             {
                 wrappers.AddRange(CreateNormalWrappers(d, enums));
             }

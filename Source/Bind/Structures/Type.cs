@@ -35,6 +35,7 @@ namespace Bind.Structures
                 Pointer = t.Pointer;
                 Reference = t.Reference;
                 ElementCount = t.ElementCount;
+                IsEnum = t.IsEnum;
             }
         }
 
@@ -55,6 +56,8 @@ namespace Bind.Structures
         }
 
         #endregion
+
+        #region Public Members
 
         public string QualifiedType
         {
@@ -176,15 +179,8 @@ namespace Bind.Structures
 
         #endregion
 
-        //// Returns true if parameter is an enum.
-        //public bool IsEnum
-        //{
-        //    get
-        //    {
-        //        return Enum.GLEnums.ContainsKey(CurrentType) ||
-        //            Enum.AuxEnums.ContainsKey(CurrentType);
-        //    }
-        //}
+        // Set to true if parameter is an enum.
+        public bool IsEnum { get; set; }
 
         #region IndirectionLevel
 
@@ -306,6 +302,8 @@ namespace Bind.Structures
                 PointerLevels[Pointer],
                 ArrayLevels[Array]);
         }
+
+        #endregion
 
         #endregion
 

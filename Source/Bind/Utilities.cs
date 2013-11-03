@@ -238,19 +238,16 @@ namespace Bind
         // Merges the specified delegate collections.
         internal static void Merge(DelegateCollection delegates, DelegateCollection new_delegates)
         {
-            foreach (var d in new_delegates)
+            foreach (var d in new_delegates.Values.SelectMany(v => v))
             {
-                Merge(delegates, d.Value);
+                Merge(delegates, d);
             }
         }
 
         // Merges the given delegate into the delegate list.
         internal static void Merge(DelegateCollection delegates, Delegate t)
         {
-            if (!delegates.ContainsKey(t.Name))
-                delegates.Add(t.Name, t);
-            else
-                Console.WriteLine("Function '{0}' redefined", t.Name);
+            delegates.Add(t);
         }
 
         #endregion
