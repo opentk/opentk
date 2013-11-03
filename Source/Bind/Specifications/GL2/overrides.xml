@@ -1626,7 +1626,7 @@
 
   </replace>
   
-  <add name="gl|glcore">
+  <add name="gl">
     <!-- Khronos renamed a few enum types between GL 4.3 and GL4.4 -->
     <!-- PrimitiveType <=> BeginMode overloads for backwards compatibility -->
     <function name="Begin" category="VERSION_1_0" extension="Core" version="1.0" deprecated="3.2">
@@ -1652,7 +1652,51 @@
       <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
       <returns type="void" />
     </function>
+    <function name="DrawElementsBaseVertex" category="VERSION_3_2|ARB_draw_elements_base_vertex" extension="Core" version="3.2">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="type" type="DrawElementsType" flow="in" />
+      <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
+      <param name="basevertex" type="GLint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawElementsInstanced" category="VERSION_3_1" extension="Core" version="3.1">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="type" type="DrawElementsType" flow="in" />
+      <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
+      <param name="instancecount" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawElementsInstancedBaseVertex" category="VERSION_3_2|ARB_draw_elements_base_vertex" extension="Core" version="3.2">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="type" type="DrawElementsType" flow="in" />
+      <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
+      <param name="instancecount" type="GLsizei" flow="in" />
+      <param name="basevertex" type="GLint" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="DrawRangeElements" category="VERSION_1_2" extension="Core" version="1.2">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="start" type="GLuint" flow="in" />
+      <param name="end" type="GLuint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="type" type="DrawElementsType" flow="in" />
+      <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
+      <returns type="void" />
+    </function>
+    <function name="DrawRangeElementsBaseVertex" category="VERSION_3_2|ARB_draw_elements_base_vertex" extension="Core" version="3.2">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="start" type="GLuint" flow="in" />
+      <param name="end" type="GLuint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="type" type="DrawElementsType" flow="in" />
+      <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
+      <param name="basevertex" type="GLint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawRangeElementsEXT" category="EXT_draw_range_elements" extension="EXT">
       <param name="mode" type="BeginMode" flow="in" />
       <param name="start" type="GLuint" flow="in" />
       <param name="end" type="GLuint" flow="in" />
@@ -4032,6 +4076,10 @@
   <!-- gles2 2.0 -->
   <replace name="gles2">
   
+    <function name="BindBuffer" extension="Core" version="2.0">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+  
     <function name="GetString" extension="Core">
       <returns>String</returns>
       <param name="name"><type>StringName</type></param>
@@ -4066,10 +4114,6 @@
       <param name="dstAlpha"><type>BlendingFactorDest</type></param>
     </function>
 
-    <function name="BindBuffer" extension="Core" version="2.0">
-      <param name="target"><type>BufferTarget</type></param>
-    </function>
-     
     <function name="BufferData" extension="Core" version="2.0">
       <param name="target"><type>BufferTarget</type></param>
       <param name="usage"><type>BufferUsage</type></param>
@@ -4898,6 +4942,67 @@
       GetInteger(GetPName.ShaderBinaryFormats) -->
     </enum>
     
+  </add>
+  
+  <!-- gles2 3.0 -->
+  <replace name="gles2" version="3.0">
+    <!-- Buffer Objects [2.9] -->
+    <function name="BindBuffer" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+    <function name="BindBufferRange" extension="Core">
+      <param name="target"><type>BufferRangeTarget</type></param>
+    </function>
+    <function name="BindBufferBase" extension="Core">
+      <param name="target"><type>BufferRangeTarget</type></param>
+    </function>
+    <function name="BufferData" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="usage"><type>BufferUsageHint</type></param>
+    </function>
+    <function name="BufferSubData" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+    </function> 
+    <function name="MapBufferRange" extension="Core">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="target"><type>BufferAccessMask</type></param>
+    </function> 
+   </replace>
+  
+  <add name="gles2" version="3.0">
+    <enum name="BufferAccessMask">
+      <use token="MAP_READ_BIT" />
+      <use token="MAP_WRITE_BIT" />
+      <use token="MAP_INVALIDATE_RANGE_BIT" />
+      <use token="MAP_INVALIDATE_BUFFER_BIT" />
+      <use token="MAP_FLUSH_EXPLICIT_BIT" />
+      <use token="MAP_UNSYNCHRONIZED_BIT" />
+    </enum>
+    <enum name="BufferRangeTarget">
+      <use token="TRANSFORM_FEEDBACK_BUFFER" />
+      <use token="UNIFORM_BUFFER" />
+    </enum>
+    <enum name="BufferTarget">
+      <use  token="ARRAY_BUFFER" />
+      <use  token="ELEMENT_ARRAY_BUFFER" />
+      <use token="PIXEL_PACK_BUFFER" />
+      <use token="PIXEL_UNPACK_BUFFER" />
+      <use token="COPY_READ_BUFFER" />
+      <use token="COPY_WRITE_BUFFER" />
+      <use token="UNIFORM_BUFFER" />
+      <use token="TRANSFORM_FEEDBACK_BUFFER" />
+    </enum>
+    <enum name="BufferUsageHint">
+      <use token="STATIC_DRAW" />
+      <use token="STATIC_READ" />
+      <use token="STATIC_COPY" />
+      <use token="STREAM_DRAW" />
+      <use token="STREAM_READ" />
+      <use token="STREAM_COPY" />
+      <use token="DYNAMIC_DRAW" />
+      <use token="DYNAMIC_READ" />
+      <use token="DYNAMIC_COPY" />      
+    </enum>
   </add>
 
 </signatures>
