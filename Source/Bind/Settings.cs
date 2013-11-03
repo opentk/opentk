@@ -15,7 +15,9 @@ namespace Bind
     class Settings
     {
         // Disable BeforeFieldInit.
-        public Settings() { }
+        public Settings()
+        {
+        }
 
         public string DefaultInputPath = "../../../Source/Bind/Specifications";
         public string DefaultOutputPath = "../../../Source/OpenTK/Graphics/OpenGL";
@@ -26,9 +28,14 @@ namespace Bind
         public string DefaultOverridesFile = "GL2/gloverrides.xml";
         public string DefaultLanguageTypeMapFile = "csharp.tm";
         public string DefaultKeywordEscapeCharacter = "@";
+        public string DefaultImportsFile = "Core.cs";
+        public string DefaultDelegatesFile = "Delegates.cs";
+        public string DefaultEnumsFile = "Enums.cs";
+        public string DefaultWrappersFile = "GL.cs";
 
         string inputPath, outputPath, outputNamespace, docPath, docFile, licenseFile, overridesFile,
-            languageTypeMapFile, keywordEscapeCharacter;
+            languageTypeMapFile, keywordEscapeCharacter, importsFile, delegatesFile, enumsFile,
+            wrappersFile;
         public string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
         public string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
         public string OutputNamespace { get { return outputNamespace ?? DefaultOutputNamespace; } set { outputNamespace = value; } }
@@ -38,6 +45,10 @@ namespace Bind
         public string OverridesFile { get { return overridesFile ?? DefaultOverridesFile; } set { overridesFile = value; } }
         public string LanguageTypeMapFile { get { return languageTypeMapFile ?? DefaultLanguageTypeMapFile; } set { languageTypeMapFile = value; } }
         public string KeywordEscapeCharacter { get { return keywordEscapeCharacter ?? DefaultKeywordEscapeCharacter; } set { keywordEscapeCharacter = value; } }
+        public string ImportsFile { get { return importsFile ?? DefaultImportsFile; } set { importsFile = value; } }
+        public string DelegatesFile { get { return delegatesFile ?? DefaultDelegatesFile; } set { delegatesFile = value; } }
+        public string EnumsFile { get { return enumsFile ?? DefaultEnumsFile; } set { enumsFile = value; } }
+        public string WrappersFile { get { return wrappersFile ?? DefaultWrappersFile; } set { wrappersFile = value; } }
 
         public string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
         public string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".
@@ -45,11 +56,6 @@ namespace Bind
         public string ConstantPrefix = "GL_";
         public string EnumPrefix = "";
         public string NamespaceSeparator = ".";
-
-        public string ImportsFile = "Core.cs";
-        public string DelegatesFile = "Delegates.cs";
-        public string EnumsFile = "Enums.cs";
-        public string WrappersFile = "GL.cs";
 
         // TODO: This code is too fragile.
         // Old enums code:
