@@ -99,7 +99,7 @@ namespace CHeaderToXML
 
                 case "group":
                 {
-                    apinames = new string[] { "gl", "glcore" };
+                    apinames = new string[] { "gl", "glcore", "gles1", "gles2" };
                     break;
                 }
 
