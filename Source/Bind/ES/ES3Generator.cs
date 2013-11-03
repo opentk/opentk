@@ -24,7 +24,7 @@ namespace Bind.ES
             Settings.DefaultWrappersFile = "ES30.cs";
 
             Profile = "gles2"; // The 3.0 spec reuses the gles2 apiname
-            Version = "3.0";
+            Version = "2.0|3.0";
         }
     }
 }
