@@ -56,7 +56,7 @@ namespace Bind
 
         #region ISpecReader Members
 
-        public void ReadDelegates(string file, DelegateCollection delegates, string apiname, string apiversion)
+        public void ReadDelegates(string file, DelegateCollection delegates, string apiname, string apiversions)
         {
             var specs = new XPathDocument(file);
 
@@ -71,21 +71,24 @@ namespace Bind
                 apiname = null;
             }
 
-            string xpath_add, xpath_delete;
-            GetSignaturePaths(apiname, apiversion, out xpath_add, out xpath_delete);
+            foreach (var apiversion in apiversions.Split('|'))
+            {
+                string xpath_add, xpath_delete;
+                GetSignaturePaths(apiname, apiversion, out xpath_add, out xpath_delete);
 
-            foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_delete))
-            {
-                foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
-                    delegates.Remove(node.GetAttribute("name", String.Empty));
-            }
-            foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_add))
-            {
-                Utilities.Merge(delegates, ReadDelegates(nav, apiversion));
+                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_delete))
+                {
+                    foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
+                        delegates.Remove(node.GetAttribute("name", String.Empty));
+                }
+                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_add))
+                {
+                    Utilities.Merge(delegates, ReadDelegates(nav, apiversion));
+                }
             }
         }
 
-        public void ReadEnums(string file, EnumCollection enums, string apiname, string apiversion)
+        public void ReadEnums(string file, EnumCollection enums, string apiname, string apiversions)
         {
             var specs = new XPathDocument(file);
 
@@ -100,19 +103,22 @@ namespace Bind
                 apiname = null;
             }
 
-            string xpath_add, xpath_delete;
-            GetSignaturePaths(apiname, apiversion, out xpath_add, out xpath_delete);
+            foreach (var apiversion in apiversions.Split('|'))
+            {
+                string xpath_add, xpath_delete;
+                GetSignaturePaths(apiname, apiversion, out xpath_add, out xpath_delete);
 
-            // First, read all enum definitions from spec and override file.
-            // Afterwards, read all token/enum overrides from overrides file.
-            foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_delete))
-            {
-                foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
-                    enums.Remove(node.GetAttribute("name", String.Empty));
-            }
-            foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_add))
-            {
-                Utilities.Merge(enums, ReadEnums(nav));
+                // First, read all enum definitions from spec and override file.
+                // Afterwards, read all token/enum overrides from overrides file.
+                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_delete))
+                {
+                    foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
+                        enums.Remove(node.GetAttribute("name", String.Empty));
+                }
+                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_add))
+                {
+                    Utilities.Merge(enums, ReadEnums(nav));
+                }
             }
         }
 
@@ -217,10 +223,21 @@ namespace Bind
             xpath_add = "/signatures/add";
             xpath_delete = "/signatures/delete";
 
-            if (!String.IsNullOrEmpty(apiname))
+            if (!String.IsNullOrEmpty(apiname) && !String.IsNullOrEmpty(apiversion))
             {
-                xpath_add += String.Format("[contains(concat('|', @name, '|'), '|{0}|')]", apiname);
-                xpath_delete += String.Format("[contains(concat('|', @name, '|'), '|{0}|')]", apiname);
+                var match = String.Format(
+                    "[contains(concat('|', @name, '|'), '|{0}|') and " +
+                    "(contains(concat('|', @version, '|'), '|{1}|') or not(boolean(@version)))]",
+                    apiname,
+                    apiversion);
+                xpath_add += match; 
+                xpath_delete += match;
+            }
+            else if (!String.IsNullOrEmpty(apiname))
+            {
+                var match = String.Format("[contains(concat('|', @name, '|'), '|{0}|')]", apiname);
+                xpath_add += match;
+                xpath_delete += match;
             }
         }
 
