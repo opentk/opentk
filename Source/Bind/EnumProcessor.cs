@@ -39,7 +39,6 @@ namespace Bind
 {
     class EnumProcessor
     {
-        const string Path = "/signatures/replace/enum[@name='{0}']";
         string Overrides { get; set; }
 
         IBind Generator { get; set; }
@@ -56,15 +55,36 @@ namespace Bind
             Overrides = overrides;
         }
 
-        public EnumCollection Process(EnumCollection enums)
+        public EnumCollection Process(EnumCollection enums, string apiname)
         {
             var nav = new XPathDocument(Overrides).CreateNavigator();
-            enums = ProcessNames(enums, nav);
-            enums = ProcessConstants(enums, nav);
+            enums = ProcessNames(enums, nav, apiname);
+            enums = ProcessConstants(enums, nav, apiname);
             return enums;
         }
 
-        EnumCollection ProcessNames(EnumCollection enums, XPathNavigator nav)
+        public static string GetOverridesPath(string apiname, string enumeration)
+        {
+            if (enumeration == null)
+                throw new ArgumentNullException("enumeration");
+
+            var path = new StringBuilder();
+            path.Append("/signatures/replace");
+            if (apiname != null)
+            {
+                path.Append(String.Format("[contains(concat('|', @name, '|'), '|{0}|')]", apiname));
+            }
+
+            path.Append(String.Format(
+                "/enum[contains(concat('|', @name, '|'), '|{0}|')]",
+                enumeration));
+
+            return path.ToString();
+        }
+
+        #region Private Members
+
+        EnumCollection ProcessNames(EnumCollection enums, XPathNavigator nav, string apiname)
         {
             EnumCollection processed_enums = new EnumCollection();
             foreach (var e in enums.Values)
@@ -73,7 +93,7 @@ namespace Bind
                 // so we keep a list of modified enums and remove/readd the
                 // modified items to refresh their keys.
                 string name = e.Name;
-                name = ReplaceName(nav, name);
+                name = ReplaceName(nav, apiname, name);
                 name = TranslateEnumName(name);
                 e.Name = name;
                 processed_enums.Add(e.Name, e);
@@ -81,9 +101,9 @@ namespace Bind
             return processed_enums;
         }
 
-        static string ReplaceName(XPathNavigator nav, string name)
+        static string ReplaceName(XPathNavigator nav, string apiname, string name)
         {
-            var enum_override = nav.SelectSingleNode(String.Format(Path, name));
+            var enum_override = nav.SelectSingleNode(GetOverridesPath(apiname, name));
             if (enum_override != null)
             {
                 var name_override = enum_override.SelectSingleNode("name");
@@ -171,7 +191,7 @@ namespace Bind
             return name;
         }
 
-        EnumCollection ProcessConstants(EnumCollection enums, XPathNavigator nav)
+        EnumCollection ProcessConstants(EnumCollection enums, XPathNavigator nav, string apiname)
         {
             foreach (var e in enums.Values)
             {
@@ -186,7 +206,7 @@ namespace Bind
                 }
                 e.ConstantCollection = processed_constants;
 
-                var enum_override = nav.SelectSingleNode(String.Format(Path, e.Name));
+                var enum_override = nav.SelectSingleNode(GetOverridesPath(apiname, e.Name));
                 foreach (Constant c in e.ConstantCollection.Values)
                 {
                     ReplaceConstant(enum_override, c);
@@ -360,5 +380,7 @@ namespace Bind
             }
             return is_number;
         }
+
+        #endregion
     }
 }

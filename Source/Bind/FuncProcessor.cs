@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.XPath;
 using Bind.Structures;
@@ -42,7 +43,6 @@ namespace Bind
 
     class FuncProcessor
     {
-        const string Path = "/signatures/replace/function[@name='{0}' and @extension='{1}']";
         static readonly Regex Endings =
             new Regex(@"((((d|f|fi)|(L?(u?i?64)?u?[isb]))_?(64)?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
         static readonly Regex EndingsNotToTrim =
@@ -65,16 +65,16 @@ namespace Bind
             Overrides = overrides;
         }
 
-        public FunctionCollection Process(EnumProcessor enum_processor, DelegateCollection delegates, EnumCollection enums)
+        public FunctionCollection Process(EnumProcessor enum_processor, DelegateCollection delegates, EnumCollection enums, string apiname)
         {
             Console.WriteLine("Processing delegates.");
             var nav = new XPathDocument(Overrides).CreateNavigator();
             foreach (var d in delegates.Values)
             {
                 TranslateExtension(d);
-                TranslateReturnType(enum_processor, nav, d, enums);
-                TranslateParameters(enum_processor, nav, d, enums);
-                TranslateAttributes(nav, d, enums);
+                TranslateReturnType(enum_processor, nav, d, enums, apiname);
+                TranslateParameters(enum_processor, nav, d, enums, apiname);
+                TranslateAttributes(nav, d, enums, apiname);
             }
 
             Console.WriteLine("Generating wrappers.");
@@ -86,9 +86,39 @@ namespace Bind
             return MarkCLSCompliance(wrappers);
         }
 
-        #region TranslateType
+        public static string GetOverridesPath(string apiname, string function, string extension)
+        {
+            if (function == null)
+                throw new ArgumentNullException("function");
 
-        void TranslateType(Bind.Structures.Type type, EnumProcessor enum_processor, XPathNavigator overrides, string category, EnumCollection enums)
+            var path = new StringBuilder();
+            path.Append("/signatures/replace");
+            if (apiname != null)
+            {
+                path.Append(String.Format("[contains(concat('|', @name, '|'), '|{0}|')]", apiname));
+            }
+
+            if (extension != null)
+            {
+                path.Append(String.Format(
+                    "/function[contains(concat('|', @name, '|'), '|{0}|') and contains(concat('|', @extension, '|'), '|{1}|')]",
+                    function,
+                    extension));
+            }
+            else
+            {
+                path.Append(String.Format(
+                    "/function[contains(concat('|', @name, '|'), '|{0}|')]",
+                    function));
+            }
+
+            return path.ToString();
+        }
+
+        #region Private Members
+
+        void TranslateType(Bind.Structures.Type type, EnumProcessor enum_processor, XPathNavigator overrides, EnumCollection enums,
+            string category, string apiname)
         {
             Bind.Structures.Enum @enum;
             string s;
@@ -162,8 +192,7 @@ namespace Bind
             // if enum ErrorCodes is overriden to ErrorCode, then parameters
             // of type ErrorCodes should also be overriden to ErrorCode.
             XPathNavigator enum_override = overrides.SelectSingleNode(
-                String.Format("/signatures/replace/enum[@name='{0}']/name",
-                type.CurrentType));
+                EnumProcessor.GetOverridesPath(apiname, type.CurrentType));
             if (enum_override != null)
             {
                 // For consistency - many overrides use string instead of String.
@@ -185,8 +214,6 @@ namespace Bind
                     type.CurrentType));
             }
         }
-
-        #endregion
 
         void TranslateExtension(Delegate d)
         {
@@ -249,16 +276,16 @@ namespace Bind
             return trimmed_name;
         }
 
-        static XPathNavigator GetFuncOverride(XPathNavigator nav, Delegate d)
+        static XPathNavigator GetFuncOverride(XPathNavigator nav, Delegate d, string apiname)
         {
             string ext = d.Extension;
             string trimmed_name = GetTrimmedName(d);
             string extensionless_name = GetTrimmedExtension(d.Name, ext);
 
             var function_override =
-                nav.SelectSingleNode(String.Format(Path, d.Name, ext)) ??
-                nav.SelectSingleNode(String.Format(Path, extensionless_name, ext)) ??
-                nav.SelectSingleNode(String.Format(Path, trimmed_name, ext));
+                nav.SelectSingleNode(GetOverridesPath(apiname, d.Name, ext)) ??
+                nav.SelectSingleNode(GetOverridesPath(apiname, extensionless_name, ext)) ??
+                nav.SelectSingleNode(GetOverridesPath(apiname, trimmed_name, ext));
             return function_override;
         }
 
@@ -276,9 +303,9 @@ namespace Bind
         // 3) A generic object or void* (translates to IntPtr)
         // 4) A GLenum (translates to int on Legacy.Tao or GL.Enums.GLenum otherwise).
         // Return types must always be CLS-compliant, because .Net does not support overloading on return types.
-        void TranslateReturnType(EnumProcessor enum_processor, XPathNavigator nav, Delegate d, EnumCollection enums)
+        void TranslateReturnType(EnumProcessor enum_processor, XPathNavigator nav, Delegate d, EnumCollection enums, string apiname)
         {
-            var function_override = GetFuncOverride(nav, d);
+            var function_override = GetFuncOverride(nav, d, apiname);
 
             if (function_override != null)
             {
@@ -289,7 +316,7 @@ namespace Bind
                 }
             }
 
-            TranslateType(d.ReturnType, enum_processor, nav, d.Category, enums);
+            TranslateType(d.ReturnType, enum_processor, nav, enums, d.Category, apiname);
 
             if (d.ReturnType.CurrentType.ToLower().Contains("void") && d.ReturnType.Pointer != 0)
             {
@@ -337,9 +364,10 @@ namespace Bind
         }
 
 
-        void TranslateParameters(EnumProcessor enum_processor, XPathNavigator nav, Delegate d, EnumCollection enums)
+        void TranslateParameters(EnumProcessor enum_processor,
+            XPathNavigator nav, Delegate d, EnumCollection enums, string apiname)
         {
-            var function_override = GetFuncOverride(nav, d);
+            var function_override = GetFuncOverride(nav, d, apiname);
 
             for (int i = 0; i < d.Parameters.Count; i++)
             {
@@ -372,16 +400,17 @@ namespace Bind
                     }
                 }
 
-                TranslateParameter(d.Parameters[i], enum_processor, nav, d.Category, enums);
+                TranslateParameter(d.Parameters[i], enum_processor, nav, enums, d.Category, apiname);
                 if (d.Parameters[i].CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
                     d.Parameters[i].WrapperType = WrapperTypes.UncheckedParameter;
             }
         }
 
         void TranslateParameter(Parameter p, EnumProcessor enum_processor,
-            XPathNavigator overrides, string category, EnumCollection enums)
+            XPathNavigator overrides, EnumCollection enums,
+            string category, string apiname)
         {
-            TranslateType(p, enum_processor, overrides, category, enums);
+            TranslateType(p, enum_processor, overrides, enums, category, apiname);
 
             // Find out the necessary wrapper types.
             if (p.Pointer != 0)/* || CurrentType == "IntPtr")*/
@@ -434,9 +463,9 @@ namespace Bind
             //    WrapperType = WrapperTypes.BoolParameter;
         }
 
-        void TranslateAttributes(XPathNavigator nav, Delegate d, EnumCollection enums)
+        void TranslateAttributes(XPathNavigator nav, Delegate d, EnumCollection enums, string apiname)
         {
-            var function_override = GetFuncOverride(nav, d);
+            var function_override = GetFuncOverride(nav, d, apiname);
 
             if (function_override != null)
             {
@@ -766,5 +795,7 @@ namespace Bind
                     break;
             }
         }
+
+        #endregion
     }
 }
