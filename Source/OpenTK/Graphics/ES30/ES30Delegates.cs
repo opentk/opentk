@@ -72,10 +72,10 @@ namespace OpenTK.Graphics.ES30
             internal delegate void BindBuffer(OpenTK.Graphics.ES30.BufferTarget target, UInt32 buffer);
             internal static BindBuffer glBindBuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindBufferBase(OpenTK.Graphics.ES30.All target, UInt32 index, UInt32 buffer);
+            internal delegate void BindBufferBase(OpenTK.Graphics.ES30.BufferRangeTarget target, UInt32 index, UInt32 buffer);
             internal static BindBufferBase glBindBufferBase;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindBufferRange(OpenTK.Graphics.ES30.All target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
+            internal delegate void BindBufferRange(OpenTK.Graphics.ES30.BufferRangeTarget target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
             internal static BindBufferRange glBindBufferRange;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BindFramebuffer(OpenTK.Graphics.ES30.FramebufferTarget target, UInt32 framebuffer);
@@ -858,7 +858,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate IntPtr MapBufferOES(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All access);
             internal static MapBufferOES glMapBufferOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr MapBufferRange(OpenTK.Graphics.ES30.All target, IntPtr offset, IntPtr length, UInt32 access);
+            internal delegate IntPtr MapBufferRange(OpenTK.Graphics.ES30.BufferTarget target, IntPtr offset, IntPtr length, OpenTK.Graphics.ES30.BufferAccessMask access);
             internal static MapBufferRange glMapBufferRange;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate IntPtr MapBufferRangeEXT(OpenTK.Graphics.ES30.All target, IntPtr offset, IntPtr length, UInt32 access);

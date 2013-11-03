@@ -27958,7 +27958,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Begin, GL.DrawArrays and 5 other functions
+    /// Used in GL.Begin, GL.DrawArrays and 7 other functions
     /// </summary>
     public enum BeginMode : int
     {

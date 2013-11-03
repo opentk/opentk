@@ -749,10 +749,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Points = ((int)0x0000)        ,
         /// <summary>
-        /// Original was GL_CLIENT_PIXEL_STORE_BIT = 0x00000001
-        /// </summary>
-        ClientPixelStoreBit = ((int)0x00000001)        ,
-        /// <summary>
         /// Original was GL_CONTEXT_CORE_PROFILE_BIT = 0x00000001
         /// </summary>
         ContextCoreProfileBit = ((int)0x00000001)        ,
@@ -760,10 +756,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_CONTEXT_FLAG_FORWARD_COMPATIBLE_BIT = 0x00000001
         /// </summary>
         ContextFlagForwardCompatibleBit = ((int)0x00000001)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_BIT = 0x00000001
-        /// </summary>
-        CurrentBit = ((int)0x00000001)        ,
         /// <summary>
         /// Original was GL_SYNC_FLUSH_COMMANDS_BIT = 0x00000001
         /// </summary>
@@ -784,10 +776,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_VERTEX_SHADER_BIT_EXT = 0x00000001
         /// </summary>
         VertexShaderBitExt = ((int)0x00000001)        ,
-        /// <summary>
-        /// Original was GL_CLIENT_VERTEX_ARRAY_BIT = 0x00000002
-        /// </summary>
-        ClientVertexArrayBit = ((int)0x00000002)        ,
         /// <summary>
         /// Original was GL_CONTEXT_COMPATIBILITY_PROFILE_BIT = 0x00000002
         /// </summary>
@@ -817,10 +805,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         FragmentShaderBitExt = ((int)0x00000002)        ,
         /// <summary>
-        /// Original was GL_POINT_BIT = 0x00000002
-        /// </summary>
-        PointBit = ((int)0x00000002)        ,
-        /// <summary>
         /// Original was GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT_ARB = 0x00000004
         /// </summary>
         ContextFlagRobustAccessBitArb = ((int)0x00000004)        ,
@@ -829,10 +813,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         GeometryShaderBit = ((int)0x00000004)        ,
         /// <summary>
-        /// Original was GL_LINE_BIT = 0x00000004
-        /// </summary>
-        LineBit = ((int)0x00000004)        ,
-        /// <summary>
         /// Original was GL_UNIFORM_BARRIER_BIT = 0x00000004
         /// </summary>
         UniformBarrierBit = ((int)0x00000004)        ,
@@ -840,10 +820,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_UNIFORM_BARRIER_BIT_EXT = 0x00000004
         /// </summary>
         UniformBarrierBitExt = ((int)0x00000004)        ,
-        /// <summary>
-        /// Original was GL_POLYGON_BIT = 0x00000008
-        /// </summary>
-        PolygonBit = ((int)0x00000008)        ,
         /// <summary>
         /// Original was GL_TESS_CONTROL_SHADER_BIT = 0x00000008
         /// </summary>
@@ -857,10 +833,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         TextureFetchBarrierBitExt = ((int)0x00000008)        ,
         /// <summary>
-        /// Original was GL_POLYGON_STIPPLE_BIT = 0x00000010
-        /// </summary>
-        PolygonStippleBit = ((int)0x00000010)        ,
-        /// <summary>
         /// Original was GL_SHADER_GLOBAL_ACCESS_BARRIER_BIT_NV = 0x00000010
         /// </summary>
         ShaderGlobalAccessBarrierBitNv = ((int)0x00000010)        ,
@@ -872,10 +844,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_COMPUTE_SHADER_BIT = 0x00000020
         /// </summary>
         ComputeShaderBit = ((int)0x00000020)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MODE_BIT = 0x00000020
-        /// </summary>
-        PixelModeBit = ((int)0x00000020)        ,
         /// <summary>
         /// Original was GL_SHADER_IMAGE_ACCESS_BARRIER_BIT = 0x00000020
         /// </summary>
@@ -892,14 +860,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_COMMAND_BARRIER_BIT_EXT = 0x00000040
         /// </summary>
         CommandBarrierBitExt = ((int)0x00000040)        ,
-        /// <summary>
-        /// Original was GL_LIGHTING_BIT = 0x00000040
-        /// </summary>
-        LightingBit = ((int)0x00000040)        ,
-        /// <summary>
-        /// Original was GL_FOG_BIT = 0x00000080
-        /// </summary>
-        FogBit = ((int)0x00000080)        ,
         /// <summary>
         /// Original was GL_PIXEL_BUFFER_BARRIER_BIT = 0x00000080
         /// </summary>
@@ -953,10 +913,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         TransformFeedbackBarrierBitExt = ((int)0x00000800)        ,
         /// <summary>
-        /// Original was GL_VIEWPORT_BIT = 0x00000800
-        /// </summary>
-        ViewportBit = ((int)0x00000800)        ,
-        /// <summary>
         /// Original was GL_ATOMIC_COUNTER_BARRIER_BIT = 0x00001000
         /// </summary>
         AtomicCounterBarrierBit = ((int)0x00001000)        ,
@@ -964,14 +920,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_ATOMIC_COUNTER_BARRIER_BIT_EXT = 0x00001000
         /// </summary>
         AtomicCounterBarrierBitExt = ((int)0x00001000)        ,
-        /// <summary>
-        /// Original was GL_TRANSFORM_BIT = 0x00001000
-        /// </summary>
-        TransformBit = ((int)0x00001000)        ,
-        /// <summary>
-        /// Original was GL_ENABLE_BIT = 0x00002000
-        /// </summary>
-        EnableBit = ((int)0x00002000)        ,
         /// <summary>
         /// Original was GL_SHADER_STORAGE_BARRIER_BIT = 0x00002000
         /// </summary>
@@ -989,10 +937,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         CoverageBufferBitNv = ((int)0x00008000)        ,
         /// <summary>
-        /// Original was GL_HINT_BIT = 0x00008000
-        /// </summary>
-        HintBit = ((int)0x00008000)        ,
-        /// <summary>
         /// Original was GL_QUERY_BUFFER_BARRIER_BIT = 0x00008000
         /// </summary>
         QueryBufferBarrierBit = ((int)0x00008000)        ,
@@ -1009,10 +953,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         MapReadBitExt = ((int)0x0001)        ,
         /// <summary>
-        /// Original was GL_EVAL_BIT = 0x00010000
-        /// </summary>
-        EvalBit = ((int)0x00010000)        ,
-        /// <summary>
         /// Original was GL_LINE_LOOP = 0x0002
         /// </summary>
         LineLoop = ((int)0x0002)        ,
@@ -1024,10 +964,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_MAP_WRITE_BIT_EXT = 0x0002
         /// </summary>
         MapWriteBitExt = ((int)0x0002)        ,
-        /// <summary>
-        /// Original was GL_LIST_BIT = 0x00020000
-        /// </summary>
-        ListBit = ((int)0x00020000)        ,
         /// <summary>
         /// Original was GL_LINE_STRIP = 0x0003
         /// </summary>
@@ -1044,10 +980,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_Triangles = 0x0004
         /// </summary>
         Triangles = ((int)0x0004)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_BIT = 0x00040000
-        /// </summary>
-        TextureBit = ((int)0x00040000)        ,
         /// <summary>
         /// Original was GL_TRIANGLE_STRIP = 0x0005
         /// </summary>
@@ -1072,10 +1004,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_QUAD_STRIP = 0x0008
         /// </summary>
         QuadStrip = ((int)0x0008)        ,
-        /// <summary>
-        /// Original was GL_SCISSOR_BIT = 0x00080000
-        /// </summary>
-        ScissorBit = ((int)0x00080000)        ,
         /// <summary>
         /// Original was GL_POLYGON = 0x0009
         /// </summary>
@@ -1157,25 +1085,9 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         MapCoherentBit = ((int)0x0080)        ,
         /// <summary>
-        /// Original was GL_ACCUM = 0x0100
-        /// </summary>
-        Accum = ((int)0x0100)        ,
-        /// <summary>
         /// Original was GL_DYNAMIC_STORAGE_BIT = 0x0100
         /// </summary>
         DynamicStorageBit = ((int)0x0100)        ,
-        /// <summary>
-        /// Original was GL_LOAD = 0x0101
-        /// </summary>
-        Load = ((int)0x0101)        ,
-        /// <summary>
-        /// Original was GL_RETURN = 0x0102
-        /// </summary>
-        Return = ((int)0x0102)        ,
-        /// <summary>
-        /// Original was GL_MULT = 0x0103
-        /// </summary>
-        Mult = ((int)0x0103)        ,
         /// <summary>
         /// Original was GL_ADD = 0x0104
         /// </summary>
@@ -1349,66 +1261,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         InvalidFramebufferOperationOes = ((int)0x0506)        ,
         /// <summary>
-        /// Original was GL_2D = 0x0600
-        /// </summary>
-        Gl2D = ((int)0x0600)        ,
-        /// <summary>
-        /// Original was GL_3D = 0x0601
-        /// </summary>
-        Gl3D = ((int)0x0601)        ,
-        /// <summary>
-        /// Original was GL_3D_COLOR = 0x0602
-        /// </summary>
-        Gl3DColor = ((int)0x0602)        ,
-        /// <summary>
-        /// Original was GL_3D_COLOR_TEXTURE = 0x0603
-        /// </summary>
-        Gl3DColorTexture = ((int)0x0603)        ,
-        /// <summary>
-        /// Original was GL_4D_COLOR_TEXTURE = 0x0604
-        /// </summary>
-        Gl4DColorTexture = ((int)0x0604)        ,
-        /// <summary>
-        /// Original was GL_PASS_THROUGH_TOKEN = 0x0700
-        /// </summary>
-        PassThroughToken = ((int)0x0700)        ,
-        /// <summary>
-        /// Original was GL_POINT_TOKEN = 0x0701
-        /// </summary>
-        PointToken = ((int)0x0701)        ,
-        /// <summary>
-        /// Original was GL_LINE_TOKEN = 0x0702
-        /// </summary>
-        LineToken = ((int)0x0702)        ,
-        /// <summary>
-        /// Original was GL_POLYGON_TOKEN = 0x0703
-        /// </summary>
-        PolygonToken = ((int)0x0703)        ,
-        /// <summary>
-        /// Original was GL_BITMAP_TOKEN = 0x0704
-        /// </summary>
-        BitmapToken = ((int)0x0704)        ,
-        /// <summary>
-        /// Original was GL_DRAW_PIXEL_TOKEN = 0x0705
-        /// </summary>
-        DrawPixelToken = ((int)0x0705)        ,
-        /// <summary>
-        /// Original was GL_COPY_PIXEL_TOKEN = 0x0706
-        /// </summary>
-        CopyPixelToken = ((int)0x0706)        ,
-        /// <summary>
-        /// Original was GL_LINE_RESET_TOKEN = 0x0707
-        /// </summary>
-        LineResetToken = ((int)0x0707)        ,
-        /// <summary>
-        /// Original was GL_EXP = 0x0800
-        /// </summary>
-        Exp = ((int)0x0800)        ,
-        /// <summary>
-        /// Original was GL_EXP2 = 0x0801
-        /// </summary>
-        Exp2 = ((int)0x0801)        ,
-        /// <summary>
         /// Original was GL_CW = 0x0900
         /// </summary>
         Cw = ((int)0x0900)        ,
@@ -1416,58 +1268,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_CCW = 0x0901
         /// </summary>
         Ccw = ((int)0x0901)        ,
-        /// <summary>
-        /// Original was GL_COEFF = 0x0A00
-        /// </summary>
-        Coeff = ((int)0x0A00)        ,
-        /// <summary>
-        /// Original was GL_ORDER = 0x0A01
-        /// </summary>
-        Order = ((int)0x0A01)        ,
-        /// <summary>
-        /// Original was GL_DOMAIN = 0x0A02
-        /// </summary>
-        Domain = ((int)0x0A02)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_COLOR = 0x0B00
-        /// </summary>
-        CurrentColor = ((int)0x0B00)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_INDEX = 0x0B01
-        /// </summary>
-        CurrentIndex = ((int)0x0B01)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_NORMAL = 0x0B02
-        /// </summary>
-        CurrentNormal = ((int)0x0B02)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_TEXTURE_COORDS = 0x0B03
-        /// </summary>
-        CurrentTextureCoords = ((int)0x0B03)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_RASTER_COLOR = 0x0B04
-        /// </summary>
-        CurrentRasterColor = ((int)0x0B04)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_RASTER_INDEX = 0x0B05
-        /// </summary>
-        CurrentRasterIndex = ((int)0x0B05)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_RASTER_TEXTURE_COORDS = 0x0B06
-        /// </summary>
-        CurrentRasterTextureCoords = ((int)0x0B06)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_RASTER_POSITION = 0x0B07
-        /// </summary>
-        CurrentRasterPosition = ((int)0x0B07)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_RASTER_POSITION_VALID = 0x0B08
-        /// </summary>
-        CurrentRasterPositionValid = ((int)0x0B08)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_RASTER_DISTANCE = 0x0B09
-        /// </summary>
-        CurrentRasterDistance = ((int)0x0B09)        ,
         /// <summary>
         /// Original was GL_POINT_SMOOTH = 0x0B10
         /// </summary>
@@ -1521,30 +1321,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         LineStipple = ((int)0x0B24)        ,
         /// <summary>
-        /// Original was GL_LINE_STIPPLE_PATTERN = 0x0B25
-        /// </summary>
-        LineStipplePattern = ((int)0x0B25)        ,
-        /// <summary>
-        /// Original was GL_LINE_STIPPLE_REPEAT = 0x0B26
-        /// </summary>
-        LineStippleRepeat = ((int)0x0B26)        ,
-        /// <summary>
-        /// Original was GL_LIST_MODE = 0x0B30
-        /// </summary>
-        ListMode = ((int)0x0B30)        ,
-        /// <summary>
-        /// Original was GL_MAX_LIST_NESTING = 0x0B31
-        /// </summary>
-        MaxListNesting = ((int)0x0B31)        ,
-        /// <summary>
-        /// Original was GL_LIST_BASE = 0x0B32
-        /// </summary>
-        ListBase = ((int)0x0B32)        ,
-        /// <summary>
-        /// Original was GL_LIST_INDEX = 0x0B33
-        /// </summary>
-        ListIndex = ((int)0x0B33)        ,
-        /// <summary>
         /// Original was GL_POLYGON_MODE = 0x0B40
         /// </summary>
         PolygonMode = ((int)0x0B40)        ,
@@ -1556,10 +1332,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_POLYGON_STIPPLE = 0x0B42
         /// </summary>
         PolygonStipple = ((int)0x0B42)        ,
-        /// <summary>
-        /// Original was GL_EDGE_FLAG = 0x0B43
-        /// </summary>
-        EdgeFlag = ((int)0x0B43)        ,
         /// <summary>
         /// Original was GL_CULL_FACE = 0x0B44
         /// </summary>
@@ -1588,18 +1360,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_LIGHT_MODEL_AMBIENT = 0x0B53
         /// </summary>
         LightModelAmbient = ((int)0x0B53)        ,
-        /// <summary>
-        /// Original was GL_SHADE_MODEL = 0x0B54
-        /// </summary>
-        ShadeModel = ((int)0x0B54)        ,
-        /// <summary>
-        /// Original was GL_COLOR_MATERIAL_FACE = 0x0B55
-        /// </summary>
-        ColorMaterialFace = ((int)0x0B55)        ,
-        /// <summary>
-        /// Original was GL_COLOR_MATERIAL_PARAMETER = 0x0B56
-        /// </summary>
-        ColorMaterialParameter = ((int)0x0B56)        ,
         /// <summary>
         /// Original was GL_COLOR_MATERIAL = 0x0B57
         /// </summary>
@@ -1653,10 +1413,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         DepthFunc = ((int)0x0B74)        ,
         /// <summary>
-        /// Original was GL_ACCUM_CLEAR_VALUE = 0x0B80
-        /// </summary>
-        AccumClearValue = ((int)0x0B80)        ,
-        /// <summary>
         /// Original was GL_STENCIL_TEST = 0x0B90
         /// </summary>
         StencilTest = ((int)0x0B90)        ,
@@ -1693,10 +1449,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         StencilWritemask = ((int)0x0B98)        ,
         /// <summary>
-        /// Original was GL_MATRIX_MODE = 0x0BA0
-        /// </summary>
-        MatrixMode = ((int)0x0BA0)        ,
-        /// <summary>
         /// Original was GL_NORMALIZE = 0x0BA1
         /// </summary>
         Normalize = ((int)0x0BA1)        ,
@@ -1709,41 +1461,9 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Modelview0StackDepthExt = ((int)0x0BA3)        ,
         /// <summary>
-        /// Original was GL_MODELVIEW_STACK_DEPTH = 0x0BA3
-        /// </summary>
-        ModelviewStackDepth = ((int)0x0BA3)        ,
-        /// <summary>
-        /// Original was GL_PROJECTION_STACK_DEPTH = 0x0BA4
-        /// </summary>
-        ProjectionStackDepth = ((int)0x0BA4)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_STACK_DEPTH = 0x0BA5
-        /// </summary>
-        TextureStackDepth = ((int)0x0BA5)        ,
-        /// <summary>
         /// Original was GL_MODELVIEW0_MATRIX_EXT = 0x0BA6
         /// </summary>
         Modelview0MatrixExt = ((int)0x0BA6)        ,
-        /// <summary>
-        /// Original was GL_MODELVIEW_MATRIX = 0x0BA6
-        /// </summary>
-        ModelviewMatrix = ((int)0x0BA6)        ,
-        /// <summary>
-        /// Original was GL_PROJECTION_MATRIX = 0x0BA7
-        /// </summary>
-        ProjectionMatrix = ((int)0x0BA7)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_MATRIX = 0x0BA8
-        /// </summary>
-        TextureMatrix = ((int)0x0BA8)        ,
-        /// <summary>
-        /// Original was GL_ATTRIB_STACK_DEPTH = 0x0BB0
-        /// </summary>
-        AttribStackDepth = ((int)0x0BB0)        ,
-        /// <summary>
-        /// Original was GL_CLIENT_ATTRIB_STACK_DEPTH = 0x0BB1
-        /// </summary>
-        ClientAttribStackDepth = ((int)0x0BB1)        ,
         /// <summary>
         /// Original was GL_ALPHA_TEST = 0x0BC0
         /// </summary>
@@ -1753,17 +1473,9 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         AlphaTestQcom = ((int)0x0BC0)        ,
         /// <summary>
-        /// Original was GL_ALPHA_TEST_FUNC = 0x0BC1
-        /// </summary>
-        AlphaTestFunc = ((int)0x0BC1)        ,
-        /// <summary>
         /// Original was GL_ALPHA_TEST_FUNC_QCOM = 0x0BC1
         /// </summary>
         AlphaTestFuncQcom = ((int)0x0BC1)        ,
-        /// <summary>
-        /// Original was GL_ALPHA_TEST_REF = 0x0BC2
-        /// </summary>
-        AlphaTestRef = ((int)0x0BC2)        ,
         /// <summary>
         /// Original was GL_ALPHA_TEST_REF_QCOM = 0x0BC2
         /// </summary>
@@ -1801,10 +1513,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         ColorLogicOp = ((int)0x0BF2)        ,
         /// <summary>
-        /// Original was GL_AUX_BUFFERS = 0x0C00
-        /// </summary>
-        AuxBuffers = ((int)0x0C00)        ,
-        /// <summary>
         /// Original was GL_DRAW_BUFFER = 0x0C01
         /// </summary>
         DrawBuffer = ((int)0x0C01)        ,
@@ -1833,14 +1541,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         ScissorTest = ((int)0x0C11)        ,
         /// <summary>
-        /// Original was GL_INDEX_CLEAR_VALUE = 0x0C20
-        /// </summary>
-        IndexClearValue = ((int)0x0C20)        ,
-        /// <summary>
-        /// Original was GL_INDEX_WRITEMASK = 0x0C21
-        /// </summary>
-        IndexWritemask = ((int)0x0C21)        ,
-        /// <summary>
         /// Original was GL_COLOR_CLEAR_VALUE = 0x0C22
         /// </summary>
         ColorClearValue = ((int)0x0C22)        ,
@@ -1849,14 +1549,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         ColorWritemask = ((int)0x0C23)        ,
         /// <summary>
-        /// Original was GL_INDEX_MODE = 0x0C30
-        /// </summary>
-        IndexMode = ((int)0x0C30)        ,
-        /// <summary>
-        /// Original was GL_RGBA_MODE = 0x0C31
-        /// </summary>
-        RgbaMode = ((int)0x0C31)        ,
-        /// <summary>
         /// Original was GL_DOUBLEBUFFER = 0x0C32
         /// </summary>
         Doublebuffer = ((int)0x0C32)        ,
@@ -1864,10 +1556,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_STEREO = 0x0C33
         /// </summary>
         Stereo = ((int)0x0C33)        ,
-        /// <summary>
-        /// Original was GL_RENDER_MODE = 0x0C40
-        /// </summary>
-        RenderMode = ((int)0x0C40)        ,
         /// <summary>
         /// Original was GL_PERSPECTIVE_CORRECTION_HINT = 0x0C50
         /// </summary>
@@ -1944,46 +1632,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_PIXEL_MAP_A_TO_A = 0x0C79
         /// </summary>
         PixelMapAToA = ((int)0x0C79)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_I_SIZE = 0x0CB0
-        /// </summary>
-        PixelMapIToISize = ((int)0x0CB0)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_S_TO_S_SIZE = 0x0CB1
-        /// </summary>
-        PixelMapSToSSize = ((int)0x0CB1)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_R_SIZE = 0x0CB2
-        /// </summary>
-        PixelMapIToRSize = ((int)0x0CB2)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_G_SIZE = 0x0CB3
-        /// </summary>
-        PixelMapIToGSize = ((int)0x0CB3)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_B_SIZE = 0x0CB4
-        /// </summary>
-        PixelMapIToBSize = ((int)0x0CB4)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_A_SIZE = 0x0CB5
-        /// </summary>
-        PixelMapIToASize = ((int)0x0CB5)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_R_TO_R_SIZE = 0x0CB6
-        /// </summary>
-        PixelMapRToRSize = ((int)0x0CB6)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_G_TO_G_SIZE = 0x0CB7
-        /// </summary>
-        PixelMapGToGSize = ((int)0x0CB7)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_B_TO_B_SIZE = 0x0CB8
-        /// </summary>
-        PixelMapBToBSize = ((int)0x0CB8)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_A_TO_A_SIZE = 0x0CB9
-        /// </summary>
-        PixelMapAToASize = ((int)0x0CB9)        ,
         /// <summary>
         /// Original was GL_UNPACK_SWAP_BYTES = 0x0CF0
         /// </summary>
@@ -2069,14 +1717,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         RedBias = ((int)0x0D15)        ,
         /// <summary>
-        /// Original was GL_ZOOM_X = 0x0D16
-        /// </summary>
-        ZoomX = ((int)0x0D16)        ,
-        /// <summary>
-        /// Original was GL_ZOOM_Y = 0x0D17
-        /// </summary>
-        ZoomY = ((int)0x0D17)        ,
-        /// <summary>
         /// Original was GL_GREEN_SCALE = 0x0D18
         /// </summary>
         GreenScale = ((int)0x0D18)        ,
@@ -2109,109 +1749,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         DepthBias = ((int)0x0D1F)        ,
         /// <summary>
-        /// Original was GL_MAX_EVAL_ORDER = 0x0D30
-        /// </summary>
-        MaxEvalOrder = ((int)0x0D30)        ,
-        /// <summary>
-        /// Original was GL_MAX_LIGHTS = 0x0D31
-        /// </summary>
-        MaxLights = ((int)0x0D31)        ,
-        /// <summary>
         /// Original was GL_MAX_CLIP_DISTANCES = 0x0D32
         /// </summary>
         MaxClipDistances = ((int)0x0D32)        ,
-        /// <summary>
-        /// Original was GL_MAX_CLIP_PLANES = 0x0D32
-        /// </summary>
-        MaxClipPlanes = ((int)0x0D32)        ,
         /// <summary>
         /// Original was GL_MAX_TEXTURE_SIZE = 0x0D33
         /// </summary>
         MaxTextureSize = ((int)0x0D33)        ,
         /// <summary>
-        /// Original was GL_MAX_PIXEL_MAP_TABLE = 0x0D34
-        /// </summary>
-        MaxPixelMapTable = ((int)0x0D34)        ,
-        /// <summary>
-        /// Original was GL_MAX_ATTRIB_STACK_DEPTH = 0x0D35
-        /// </summary>
-        MaxAttribStackDepth = ((int)0x0D35)        ,
-        /// <summary>
-        /// Original was GL_MAX_MODELVIEW_STACK_DEPTH = 0x0D36
-        /// </summary>
-        MaxModelviewStackDepth = ((int)0x0D36)        ,
-        /// <summary>
-        /// Original was GL_MAX_NAME_STACK_DEPTH = 0x0D37
-        /// </summary>
-        MaxNameStackDepth = ((int)0x0D37)        ,
-        /// <summary>
-        /// Original was GL_MAX_PROJECTION_STACK_DEPTH = 0x0D38
-        /// </summary>
-        MaxProjectionStackDepth = ((int)0x0D38)        ,
-        /// <summary>
-        /// Original was GL_MAX_TEXTURE_STACK_DEPTH = 0x0D39
-        /// </summary>
-        MaxTextureStackDepth = ((int)0x0D39)        ,
-        /// <summary>
         /// Original was GL_MAX_VIEWPORT_DIMS = 0x0D3A
         /// </summary>
         MaxViewportDims = ((int)0x0D3A)        ,
         /// <summary>
-        /// Original was GL_MAX_CLIENT_ATTRIB_STACK_DEPTH = 0x0D3B
-        /// </summary>
-        MaxClientAttribStackDepth = ((int)0x0D3B)        ,
-        /// <summary>
         /// Original was GL_SUBPIXEL_BITS = 0x0D50
         /// </summary>
         SubpixelBits = ((int)0x0D50)        ,
-        /// <summary>
-        /// Original was GL_INDEX_BITS = 0x0D51
-        /// </summary>
-        IndexBits = ((int)0x0D51)        ,
-        /// <summary>
-        /// Original was GL_RED_BITS = 0x0D52
-        /// </summary>
-        RedBits = ((int)0x0D52)        ,
-        /// <summary>
-        /// Original was GL_GREEN_BITS = 0x0D53
-        /// </summary>
-        GreenBits = ((int)0x0D53)        ,
-        /// <summary>
-        /// Original was GL_BLUE_BITS = 0x0D54
-        /// </summary>
-        BlueBits = ((int)0x0D54)        ,
-        /// <summary>
-        /// Original was GL_ALPHA_BITS = 0x0D55
-        /// </summary>
-        AlphaBits = ((int)0x0D55)        ,
-        /// <summary>
-        /// Original was GL_DEPTH_BITS = 0x0D56
-        /// </summary>
-        DepthBits = ((int)0x0D56)        ,
-        /// <summary>
-        /// Original was GL_STENCIL_BITS = 0x0D57
-        /// </summary>
-        StencilBits = ((int)0x0D57)        ,
-        /// <summary>
-        /// Original was GL_ACCUM_RED_BITS = 0x0D58
-        /// </summary>
-        AccumRedBits = ((int)0x0D58)        ,
-        /// <summary>
-        /// Original was GL_ACCUM_GREEN_BITS = 0x0D59
-        /// </summary>
-        AccumGreenBits = ((int)0x0D59)        ,
-        /// <summary>
-        /// Original was GL_ACCUM_BLUE_BITS = 0x0D5A
-        /// </summary>
-        AccumBlueBits = ((int)0x0D5A)        ,
-        /// <summary>
-        /// Original was GL_ACCUM_ALPHA_BITS = 0x0D5B
-        /// </summary>
-        AccumAlphaBits = ((int)0x0D5B)        ,
-        /// <summary>
-        /// Original was GL_NAME_STACK_DEPTH = 0x0D70
-        /// </summary>
-        NameStackDepth = ((int)0x0D70)        ,
         /// <summary>
         /// Original was GL_AUTO_NORMAL = 0x0D80
         /// </summary>
@@ -2289,22 +1841,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Map2Vertex4 = ((int)0x0DB8)        ,
         /// <summary>
-        /// Original was GL_MAP1_GRID_DOMAIN = 0x0DD0
-        /// </summary>
-        Map1GridDomain = ((int)0x0DD0)        ,
-        /// <summary>
-        /// Original was GL_MAP1_GRID_SEGMENTS = 0x0DD1
-        /// </summary>
-        Map1GridSegments = ((int)0x0DD1)        ,
-        /// <summary>
-        /// Original was GL_MAP2_GRID_DOMAIN = 0x0DD2
-        /// </summary>
-        Map2GridDomain = ((int)0x0DD2)        ,
-        /// <summary>
-        /// Original was GL_MAP2_GRID_SEGMENTS = 0x0DD3
-        /// </summary>
-        Map2GridSegments = ((int)0x0DD3)        ,
-        /// <summary>
         /// Original was GL_TEXTURE_1D = 0x0DE0
         /// </summary>
         Texture1D = ((int)0x0DE0)        ,
@@ -2313,26 +1849,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Texture2D = ((int)0x0DE1)        ,
         /// <summary>
-        /// Original was GL_FEEDBACK_BUFFER_POINTER = 0x0DF0
-        /// </summary>
-        FeedbackBufferPointer = ((int)0x0DF0)        ,
-        /// <summary>
-        /// Original was GL_FEEDBACK_BUFFER_SIZE = 0x0DF1
-        /// </summary>
-        FeedbackBufferSize = ((int)0x0DF1)        ,
-        /// <summary>
-        /// Original was GL_FEEDBACK_BUFFER_TYPE = 0x0DF2
-        /// </summary>
-        FeedbackBufferType = ((int)0x0DF2)        ,
-        /// <summary>
-        /// Original was GL_SELECTION_BUFFER_POINTER = 0x0DF3
-        /// </summary>
-        SelectionBufferPointer = ((int)0x0DF3)        ,
-        /// <summary>
-        /// Original was GL_SELECTION_BUFFER_SIZE = 0x0DF4
-        /// </summary>
-        SelectionBufferSize = ((int)0x0DF4)        ,
-        /// <summary>
         /// Original was GL_TEXTURE_WIDTH = 0x1000
         /// </summary>
         TextureWidth = ((int)0x1000)        ,
@@ -2340,10 +1856,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_TEXTURE_HEIGHT = 0x1001
         /// </summary>
         TextureHeight = ((int)0x1001)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_COMPONENTS = 0x1003
-        /// </summary>
-        TextureComponents = ((int)0x1003)        ,
         /// <summary>
         /// Original was GL_TEXTURE_INTERNAL_FORMAT = 0x1003
         /// </summary>
@@ -2356,10 +1868,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_TEXTURE_BORDER_COLOR_NV = 0x1004
         /// </summary>
         TextureBorderColorNv = ((int)0x1004)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_BORDER = 0x1005
-        /// </summary>
-        TextureBorder = ((int)0x1005)        ,
         /// <summary>
         /// Original was GL_DONT_CARE = 0x1100
         /// </summary>
@@ -2384,42 +1892,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_SPECULAR = 0x1202
         /// </summary>
         Specular = ((int)0x1202)        ,
-        /// <summary>
-        /// Original was GL_POSITION = 0x1203
-        /// </summary>
-        Position = ((int)0x1203)        ,
-        /// <summary>
-        /// Original was GL_SPOT_DIRECTION = 0x1204
-        /// </summary>
-        SpotDirection = ((int)0x1204)        ,
-        /// <summary>
-        /// Original was GL_SPOT_EXPONENT = 0x1205
-        /// </summary>
-        SpotExponent = ((int)0x1205)        ,
-        /// <summary>
-        /// Original was GL_SPOT_CUTOFF = 0x1206
-        /// </summary>
-        SpotCutoff = ((int)0x1206)        ,
-        /// <summary>
-        /// Original was GL_CONSTANT_ATTENUATION = 0x1207
-        /// </summary>
-        ConstantAttenuation = ((int)0x1207)        ,
-        /// <summary>
-        /// Original was GL_LINEAR_ATTENUATION = 0x1208
-        /// </summary>
-        LinearAttenuation = ((int)0x1208)        ,
-        /// <summary>
-        /// Original was GL_QUADRATIC_ATTENUATION = 0x1209
-        /// </summary>
-        QuadraticAttenuation = ((int)0x1209)        ,
-        /// <summary>
-        /// Original was GL_COMPILE = 0x1300
-        /// </summary>
-        Compile = ((int)0x1300)        ,
-        /// <summary>
-        /// Original was GL_COMPILE_AND_EXECUTE = 0x1301
-        /// </summary>
-        CompileAndExecute = ((int)0x1301)        ,
         /// <summary>
         /// Original was GL_BYTE = 0x1400
         /// </summary>
@@ -2448,18 +1920,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_FLOAT = 0x1406
         /// </summary>
         Float = ((int)0x1406)        ,
-        /// <summary>
-        /// Original was GL_2_BYTES = 0x1407
-        /// </summary>
-        Gl2Bytes = ((int)0x1407)        ,
-        /// <summary>
-        /// Original was GL_3_BYTES = 0x1408
-        /// </summary>
-        Gl3Bytes = ((int)0x1408)        ,
-        /// <summary>
-        /// Original was GL_4_BYTES = 0x1409
-        /// </summary>
-        Gl4Bytes = ((int)0x1409)        ,
         /// <summary>
         /// Original was GL_DOUBLE = 0x140A
         /// </summary>
@@ -2545,29 +2005,13 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Emission = ((int)0x1600)        ,
         /// <summary>
-        /// Original was GL_SHININESS = 0x1601
-        /// </summary>
-        Shininess = ((int)0x1601)        ,
-        /// <summary>
         /// Original was GL_AMBIENT_AND_DIFFUSE = 0x1602
         /// </summary>
         AmbientAndDiffuse = ((int)0x1602)        ,
         /// <summary>
-        /// Original was GL_COLOR_INDEXES = 0x1603
-        /// </summary>
-        ColorIndexes = ((int)0x1603)        ,
-        /// <summary>
-        /// Original was GL_MODELVIEW = 0x1700
-        /// </summary>
-        Modelview = ((int)0x1700)        ,
-        /// <summary>
         /// Original was GL_MODELVIEW0_EXT = 0x1700
         /// </summary>
         Modelview0Ext = ((int)0x1700)        ,
-        /// <summary>
-        /// Original was GL_PROJECTION = 0x1701
-        /// </summary>
-        Projection = ((int)0x1701)        ,
         /// <summary>
         /// Original was GL_TEXTURE = 0x1702
         /// </summary>
@@ -2644,10 +2088,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_LUMINANCE_ALPHA = 0x190A
         /// </summary>
         LuminanceAlpha = ((int)0x190A)        ,
-        /// <summary>
-        /// Original was GL_BITMAP = 0x1A00
-        /// </summary>
-        Bitmap = ((int)0x1A00)        ,
         /// <summary>
         /// Original was GL_PREFER_DOUBLEBUFFER_HINT_PGI = 0x1A1F8
         /// </summary>
@@ -2753,26 +2193,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Fill = ((int)0x1B02)        ,
         /// <summary>
-        /// Original was GL_RENDER = 0x1C00
-        /// </summary>
-        Render = ((int)0x1C00)        ,
-        /// <summary>
-        /// Original was GL_FEEDBACK = 0x1C01
-        /// </summary>
-        Feedback = ((int)0x1C01)        ,
-        /// <summary>
-        /// Original was GL_SELECT = 0x1C02
-        /// </summary>
-        Select = ((int)0x1C02)        ,
-        /// <summary>
-        /// Original was GL_FLAT = 0x1D00
-        /// </summary>
-        Flat = ((int)0x1D00)        ,
-        /// <summary>
-        /// Original was GL_SMOOTH = 0x1D01
-        /// </summary>
-        Smooth = ((int)0x1D01)        ,
-        /// <summary>
         /// Original was GL_KEEP = 0x1E00
         /// </summary>
         Keep = ((int)0x1E00)        ,
@@ -2805,10 +2225,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Extensions = ((int)0x1F03)        ,
         /// <summary>
-        /// Original was GL_S = 0x2000
-        /// </summary>
-        S = ((int)0x2000)        ,
-        /// <summary>
         /// Original was GL_MULTISAMPLE_BIT = 0x20000000
         /// </summary>
         MultisampleBit = ((int)0x20000000)        ,
@@ -2825,61 +2241,9 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         MultisampleBitExt = ((int)0x20000000)        ,
         /// <summary>
-        /// Original was GL_T = 0x2001
-        /// </summary>
-        T = ((int)0x2001)        ,
-        /// <summary>
-        /// Original was GL_R = 0x2002
-        /// </summary>
-        R = ((int)0x2002)        ,
-        /// <summary>
-        /// Original was GL_Q = 0x2003
-        /// </summary>
-        Q = ((int)0x2003)        ,
-        /// <summary>
         /// Original was GL_MODULATE = 0x2100
         /// </summary>
         Modulate = ((int)0x2100)        ,
-        /// <summary>
-        /// Original was GL_DECAL = 0x2101
-        /// </summary>
-        Decal = ((int)0x2101)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_ENV_MODE = 0x2200
-        /// </summary>
-        TextureEnvMode = ((int)0x2200)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_ENV_COLOR = 0x2201
-        /// </summary>
-        TextureEnvColor = ((int)0x2201)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_ENV = 0x2300
-        /// </summary>
-        TextureEnv = ((int)0x2300)        ,
-        /// <summary>
-        /// Original was GL_EYE_LINEAR = 0x2400
-        /// </summary>
-        EyeLinear = ((int)0x2400)        ,
-        /// <summary>
-        /// Original was GL_OBJECT_LINEAR = 0x2401
-        /// </summary>
-        ObjectLinear = ((int)0x2401)        ,
-        /// <summary>
-        /// Original was GL_SPHERE_MAP = 0x2402
-        /// </summary>
-        SphereMap = ((int)0x2402)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_GEN_MODE = 0x2500
-        /// </summary>
-        TextureGenMode = ((int)0x2500)        ,
-        /// <summary>
-        /// Original was GL_OBJECT_PLANE = 0x2501
-        /// </summary>
-        ObjectPlane = ((int)0x2501)        ,
-        /// <summary>
-        /// Original was GL_EYE_PLANE = 0x2502
-        /// </summary>
-        EyePlane = ((int)0x2502)        ,
         /// <summary>
         /// Original was GL_NEAREST = 0x2600
         /// </summary>
@@ -2921,10 +2285,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         TextureWrapT = ((int)0x2803)        ,
         /// <summary>
-        /// Original was GL_CLAMP = 0x2900
-        /// </summary>
-        Clamp = ((int)0x2900)        ,
-        /// <summary>
         /// Original was GL_REPEAT = 0x2901
         /// </summary>
         Repeat = ((int)0x2901)        ,
@@ -2944,62 +2304,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_R3_G3_B2 = 0x2A10
         /// </summary>
         R3G3B2 = ((int)0x2A10)        ,
-        /// <summary>
-        /// Original was GL_V2F = 0x2A20
-        /// </summary>
-        V2f = ((int)0x2A20)        ,
-        /// <summary>
-        /// Original was GL_V3F = 0x2A21
-        /// </summary>
-        V3f = ((int)0x2A21)        ,
-        /// <summary>
-        /// Original was GL_C4UB_V2F = 0x2A22
-        /// </summary>
-        C4ubV2f = ((int)0x2A22)        ,
-        /// <summary>
-        /// Original was GL_C4UB_V3F = 0x2A23
-        /// </summary>
-        C4ubV3f = ((int)0x2A23)        ,
-        /// <summary>
-        /// Original was GL_C3F_V3F = 0x2A24
-        /// </summary>
-        C3fV3f = ((int)0x2A24)        ,
-        /// <summary>
-        /// Original was GL_N3F_V3F = 0x2A25
-        /// </summary>
-        N3fV3f = ((int)0x2A25)        ,
-        /// <summary>
-        /// Original was GL_C4F_N3F_V3F = 0x2A26
-        /// </summary>
-        C4fN3fV3f = ((int)0x2A26)        ,
-        /// <summary>
-        /// Original was GL_T2F_V3F = 0x2A27
-        /// </summary>
-        T2fV3f = ((int)0x2A27)        ,
-        /// <summary>
-        /// Original was GL_T4F_V4F = 0x2A28
-        /// </summary>
-        T4fV4f = ((int)0x2A28)        ,
-        /// <summary>
-        /// Original was GL_T2F_C4UB_V3F = 0x2A29
-        /// </summary>
-        T2fC4ubV3f = ((int)0x2A29)        ,
-        /// <summary>
-        /// Original was GL_T2F_C3F_V3F = 0x2A2A
-        /// </summary>
-        T2fC3fV3f = ((int)0x2A2A)        ,
-        /// <summary>
-        /// Original was GL_T2F_N3F_V3F = 0x2A2B
-        /// </summary>
-        T2fN3fV3f = ((int)0x2A2B)        ,
-        /// <summary>
-        /// Original was GL_T2F_C4F_N3F_V3F = 0x2A2C
-        /// </summary>
-        T2fC4fN3fV3f = ((int)0x2A2C)        ,
-        /// <summary>
-        /// Original was GL_T4F_C4F_N3F_V4F = 0x2A2D
-        /// </summary>
-        T4fC4fN3fV4f = ((int)0x2A2D)        ,
         /// <summary>
         /// Original was GL_CLIP_DISTANCE0 = 0x3000
         /// </summary>
@@ -3533,82 +2837,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         RescaleNormalExt = ((int)0x803A)        ,
         /// <summary>
-        /// Original was GL_ALPHA4 = 0x803B
-        /// </summary>
-        Alpha4 = ((int)0x803B)        ,
-        /// <summary>
-        /// Original was GL_ALPHA8 = 0x803C
-        /// </summary>
-        Alpha8 = ((int)0x803C)        ,
-        /// <summary>
-        /// Original was GL_ALPHA12 = 0x803D
-        /// </summary>
-        Alpha12 = ((int)0x803D)        ,
-        /// <summary>
-        /// Original was GL_ALPHA16 = 0x803E
-        /// </summary>
-        Alpha16 = ((int)0x803E)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE4 = 0x803F
-        /// </summary>
-        Luminance4 = ((int)0x803F)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE8 = 0x8040
-        /// </summary>
-        Luminance8 = ((int)0x8040)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE12 = 0x8041
-        /// </summary>
-        Luminance12 = ((int)0x8041)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE16 = 0x8042
-        /// </summary>
-        Luminance16 = ((int)0x8042)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE4_ALPHA4 = 0x8043
-        /// </summary>
-        Luminance4Alpha4 = ((int)0x8043)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE6_ALPHA2 = 0x8044
-        /// </summary>
-        Luminance6Alpha2 = ((int)0x8044)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE8_ALPHA8 = 0x8045
-        /// </summary>
-        Luminance8Alpha8 = ((int)0x8045)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE12_ALPHA4 = 0x8046
-        /// </summary>
-        Luminance12Alpha4 = ((int)0x8046)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE12_ALPHA12 = 0x8047
-        /// </summary>
-        Luminance12Alpha12 = ((int)0x8047)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE16_ALPHA16 = 0x8048
-        /// </summary>
-        Luminance16Alpha16 = ((int)0x8048)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY = 0x8049
-        /// </summary>
-        Intensity = ((int)0x8049)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY4 = 0x804A
-        /// </summary>
-        Intensity4 = ((int)0x804A)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY8 = 0x804B
-        /// </summary>
-        Intensity8 = ((int)0x804B)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY12 = 0x804C
-        /// </summary>
-        Intensity12 = ((int)0x804C)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY16 = 0x804D
-        /// </summary>
-        Intensity16 = ((int)0x804D)        ,
-        /// <summary>
         /// Original was GL_RGB2_EXT = 0x804E
         /// </summary>
         Rgb2Ext = ((int)0x804E)        ,
@@ -3681,14 +2909,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         TextureAlphaSize = ((int)0x805F)        ,
         /// <summary>
-        /// Original was GL_TEXTURE_LUMINANCE_SIZE = 0x8060
-        /// </summary>
-        TextureLuminanceSize = ((int)0x8060)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_INTENSITY_SIZE = 0x8061
-        /// </summary>
-        TextureIntensitySize = ((int)0x8061)        ,
-        /// <summary>
         /// Original was GL_REPLACE_EXT = 0x8062
         /// </summary>
         ReplaceExt = ((int)0x8062)        ,
@@ -3720,10 +2940,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_TEXTURE_PRIORITY_EXT = 0x8066
         /// </summary>
         TexturePriorityExt = ((int)0x8066)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_RESIDENT = 0x8067
-        /// </summary>
-        TextureResident = ((int)0x8067)        ,
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_1D = 0x8068
         /// </summary>
@@ -3849,129 +3065,49 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         EdgeFlagArray = ((int)0x8079)        ,
         /// <summary>
-        /// Original was GL_VERTEX_ARRAY_SIZE = 0x807A
-        /// </summary>
-        VertexArraySize = ((int)0x807A)        ,
-        /// <summary>
-        /// Original was GL_VERTEX_ARRAY_TYPE = 0x807B
-        /// </summary>
-        VertexArrayType = ((int)0x807B)        ,
-        /// <summary>
-        /// Original was GL_VERTEX_ARRAY_STRIDE = 0x807C
-        /// </summary>
-        VertexArrayStride = ((int)0x807C)        ,
-        /// <summary>
         /// Original was GL_VERTEX_ARRAY_COUNT_EXT = 0x807D
         /// </summary>
         VertexArrayCountExt = ((int)0x807D)        ,
-        /// <summary>
-        /// Original was GL_NORMAL_ARRAY_TYPE = 0x807E
-        /// </summary>
-        NormalArrayType = ((int)0x807E)        ,
-        /// <summary>
-        /// Original was GL_NORMAL_ARRAY_STRIDE = 0x807F
-        /// </summary>
-        NormalArrayStride = ((int)0x807F)        ,
         /// <summary>
         /// Original was GL_NORMAL_ARRAY_COUNT_EXT = 0x8080
         /// </summary>
         NormalArrayCountExt = ((int)0x8080)        ,
         /// <summary>
-        /// Original was GL_COLOR_ARRAY_SIZE = 0x8081
-        /// </summary>
-        ColorArraySize = ((int)0x8081)        ,
-        /// <summary>
-        /// Original was GL_COLOR_ARRAY_TYPE = 0x8082
-        /// </summary>
-        ColorArrayType = ((int)0x8082)        ,
-        /// <summary>
-        /// Original was GL_COLOR_ARRAY_STRIDE = 0x8083
-        /// </summary>
-        ColorArrayStride = ((int)0x8083)        ,
-        /// <summary>
         /// Original was GL_COLOR_ARRAY_COUNT_EXT = 0x8084
         /// </summary>
         ColorArrayCountExt = ((int)0x8084)        ,
-        /// <summary>
-        /// Original was GL_INDEX_ARRAY_TYPE = 0x8085
-        /// </summary>
-        IndexArrayType = ((int)0x8085)        ,
-        /// <summary>
-        /// Original was GL_INDEX_ARRAY_STRIDE = 0x8086
-        /// </summary>
-        IndexArrayStride = ((int)0x8086)        ,
         /// <summary>
         /// Original was GL_INDEX_ARRAY_COUNT_EXT = 0x8087
         /// </summary>
         IndexArrayCountExt = ((int)0x8087)        ,
         /// <summary>
-        /// Original was GL_TEXTURE_COORD_ARRAY_SIZE = 0x8088
-        /// </summary>
-        TextureCoordArraySize = ((int)0x8088)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_COORD_ARRAY_TYPE = 0x8089
-        /// </summary>
-        TextureCoordArrayType = ((int)0x8089)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_COORD_ARRAY_STRIDE = 0x808A
-        /// </summary>
-        TextureCoordArrayStride = ((int)0x808A)        ,
-        /// <summary>
         /// Original was GL_TEXTURE_COORD_ARRAY_COUNT_EXT = 0x808B
         /// </summary>
         TextureCoordArrayCountExt = ((int)0x808B)        ,
-        /// <summary>
-        /// Original was GL_EDGE_FLAG_ARRAY_STRIDE = 0x808C
-        /// </summary>
-        EdgeFlagArrayStride = ((int)0x808C)        ,
         /// <summary>
         /// Original was GL_EDGE_FLAG_ARRAY_COUNT_EXT = 0x808D
         /// </summary>
         EdgeFlagArrayCountExt = ((int)0x808D)        ,
         /// <summary>
-        /// Original was GL_VERTEX_ARRAY_POINTER = 0x808E
-        /// </summary>
-        VertexArrayPointer = ((int)0x808E)        ,
-        /// <summary>
         /// Original was GL_VERTEX_ARRAY_POINTER_EXT = 0x808E
         /// </summary>
         VertexArrayPointerExt = ((int)0x808E)        ,
-        /// <summary>
-        /// Original was GL_NORMAL_ARRAY_POINTER = 0x808F
-        /// </summary>
-        NormalArrayPointer = ((int)0x808F)        ,
         /// <summary>
         /// Original was GL_NORMAL_ARRAY_POINTER_EXT = 0x808F
         /// </summary>
         NormalArrayPointerExt = ((int)0x808F)        ,
         /// <summary>
-        /// Original was GL_COLOR_ARRAY_POINTER = 0x8090
-        /// </summary>
-        ColorArrayPointer = ((int)0x8090)        ,
-        /// <summary>
         /// Original was GL_COLOR_ARRAY_POINTER_EXT = 0x8090
         /// </summary>
         ColorArrayPointerExt = ((int)0x8090)        ,
-        /// <summary>
-        /// Original was GL_INDEX_ARRAY_POINTER = 0x8091
-        /// </summary>
-        IndexArrayPointer = ((int)0x8091)        ,
         /// <summary>
         /// Original was GL_INDEX_ARRAY_POINTER_EXT = 0x8091
         /// </summary>
         IndexArrayPointerExt = ((int)0x8091)        ,
         /// <summary>
-        /// Original was GL_TEXTURE_COORD_ARRAY_POINTER = 0x8092
-        /// </summary>
-        TextureCoordArrayPointer = ((int)0x8092)        ,
-        /// <summary>
         /// Original was GL_TEXTURE_COORD_ARRAY_POINTER_EXT = 0x8092
         /// </summary>
         TextureCoordArrayPointerExt = ((int)0x8092)        ,
-        /// <summary>
-        /// Original was GL_EDGE_FLAG_ARRAY_POINTER = 0x8093
-        /// </summary>
-        EdgeFlagArrayPointer = ((int)0x8093)        ,
         /// <summary>
         /// Original was GL_EDGE_FLAG_ARRAY_POINTER_EXT = 0x8093
         /// </summary>
@@ -10721,10 +9857,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         CompressedSrgb8Alpha8Astc12X12Khr = ((int)0x93DD)        ,
         /// <summary>
-        /// Original was GL_ALL_ATTRIB_BITS = 0xFFFFFFFF
-        /// </summary>
-        AllAttribBits = unchecked((int)0xFFFFFFFF)        ,
-        /// <summary>
         /// Original was GL_ALL_BARRIER_BITS = 0xFFFFFFFF
         /// </summary>
         AllBarrierBits = unchecked((int)0xFFFFFFFF)        ,
@@ -10740,10 +9872,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_ALL_SHADER_BITS_EXT = 0xFFFFFFFF
         /// </summary>
         AllShaderBitsExt = unchecked((int)0xFFFFFFFF)        ,
-        /// <summary>
-        /// Original was GL_CLIENT_ALL_ATTRIB_BITS = 0xFFFFFFFF
-        /// </summary>
-        ClientAllAttribBits = unchecked((int)0xFFFFFFFF)        ,
         /// <summary>
         /// Original was GL_INVALID_INDEX = 0xFFFFFFFF
         /// </summary>
@@ -15314,7 +14442,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Begin, GL.DrawArrays and 5 other functions
+    /// Not used directly.
     /// </summary>
     public enum BeginMode : int
     {
@@ -22916,14 +22044,6 @@ namespace OpenTK.Graphics.OpenGL4
     public enum MatrixModeArb : int
     {
         /// <summary>
-        /// Original was GL_MODELVIEW = 0x1700
-        /// </summary>
-        Modelview = ((int)0x1700)        ,
-        /// <summary>
-        /// Original was GL_PROJECTION = 0x1701
-        /// </summary>
-        Projection = ((int)0x1701)        ,
-        /// <summary>
         /// Original was GL_TEXTURE = 0x1702
         /// </summary>
         Texture = ((int)0x1702)        ,
@@ -23670,82 +22790,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_R3_G3_B2 = 0x2A10
         /// </summary>
         R3G3B2 = ((int)0x2A10)        ,
-        /// <summary>
-        /// Original was GL_ALPHA4 = 0x803B
-        /// </summary>
-        Alpha4 = ((int)0x803B)        ,
-        /// <summary>
-        /// Original was GL_ALPHA8 = 0x803C
-        /// </summary>
-        Alpha8 = ((int)0x803C)        ,
-        /// <summary>
-        /// Original was GL_ALPHA12 = 0x803D
-        /// </summary>
-        Alpha12 = ((int)0x803D)        ,
-        /// <summary>
-        /// Original was GL_ALPHA16 = 0x803E
-        /// </summary>
-        Alpha16 = ((int)0x803E)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE4 = 0x803F
-        /// </summary>
-        Luminance4 = ((int)0x803F)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE8 = 0x8040
-        /// </summary>
-        Luminance8 = ((int)0x8040)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE12 = 0x8041
-        /// </summary>
-        Luminance12 = ((int)0x8041)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE16 = 0x8042
-        /// </summary>
-        Luminance16 = ((int)0x8042)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE4_ALPHA4 = 0x8043
-        /// </summary>
-        Luminance4Alpha4 = ((int)0x8043)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE6_ALPHA2 = 0x8044
-        /// </summary>
-        Luminance6Alpha2 = ((int)0x8044)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE8_ALPHA8 = 0x8045
-        /// </summary>
-        Luminance8Alpha8 = ((int)0x8045)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE12_ALPHA4 = 0x8046
-        /// </summary>
-        Luminance12Alpha4 = ((int)0x8046)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE12_ALPHA12 = 0x8047
-        /// </summary>
-        Luminance12Alpha12 = ((int)0x8047)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE16_ALPHA16 = 0x8048
-        /// </summary>
-        Luminance16Alpha16 = ((int)0x8048)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY = 0x8049
-        /// </summary>
-        Intensity = ((int)0x8049)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY4 = 0x804A
-        /// </summary>
-        Intensity4 = ((int)0x804A)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY8 = 0x804B
-        /// </summary>
-        Intensity8 = ((int)0x804B)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY12 = 0x804C
-        /// </summary>
-        Intensity12 = ((int)0x804C)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY16 = 0x804D
-        /// </summary>
-        Intensity16 = ((int)0x804D)        ,
         /// <summary>
         /// Original was GL_RGB2_EXT = 0x804E
         /// </summary>
@@ -25904,22 +24948,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_R3_G3_B2 = 0x2A10
         /// </summary>
         R3G3B2 = ((int)0x2A10)        ,
-        /// <summary>
-        /// Original was GL_ALPHA4 = 0x803B
-        /// </summary>
-        Alpha4 = ((int)0x803B)        ,
-        /// <summary>
-        /// Original was GL_ALPHA8 = 0x803C
-        /// </summary>
-        Alpha8 = ((int)0x803C)        ,
-        /// <summary>
-        /// Original was GL_ALPHA12 = 0x803D
-        /// </summary>
-        Alpha12 = ((int)0x803D)        ,
-        /// <summary>
-        /// Original was GL_ALPHA16 = 0x803E
-        /// </summary>
-        Alpha16 = ((int)0x803E)        ,
         /// <summary>
         /// Original was GL_RGB4 = 0x804F
         /// </summary>
@@ -28281,93 +27309,25 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Points = ((int)0x0000)        ,
         /// <summary>
-        /// Original was GL_CLIENT_PIXEL_STORE_BIT = 0x00000001
-        /// </summary>
-        ClientPixelStoreBit = ((int)0x00000001)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_BIT = 0x00000001
-        /// </summary>
-        CurrentBit = ((int)0x00000001)        ,
-        /// <summary>
-        /// Original was GL_CLIENT_VERTEX_ARRAY_BIT = 0x00000002
-        /// </summary>
-        ClientVertexArrayBit = ((int)0x00000002)        ,
-        /// <summary>
-        /// Original was GL_POINT_BIT = 0x00000002
-        /// </summary>
-        PointBit = ((int)0x00000002)        ,
-        /// <summary>
-        /// Original was GL_LINE_BIT = 0x00000004
-        /// </summary>
-        LineBit = ((int)0x00000004)        ,
-        /// <summary>
-        /// Original was GL_POLYGON_BIT = 0x00000008
-        /// </summary>
-        PolygonBit = ((int)0x00000008)        ,
-        /// <summary>
-        /// Original was GL_POLYGON_STIPPLE_BIT = 0x00000010
-        /// </summary>
-        PolygonStippleBit = ((int)0x00000010)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MODE_BIT = 0x00000020
-        /// </summary>
-        PixelModeBit = ((int)0x00000020)        ,
-        /// <summary>
-        /// Original was GL_LIGHTING_BIT = 0x00000040
-        /// </summary>
-        LightingBit = ((int)0x00000040)        ,
-        /// <summary>
-        /// Original was GL_FOG_BIT = 0x00000080
-        /// </summary>
-        FogBit = ((int)0x00000080)        ,
-        /// <summary>
         /// Original was GL_DEPTH_BUFFER_BIT = 0x00000100
         /// </summary>
         DepthBufferBit = ((int)0x00000100)        ,
-        /// <summary>
-        /// Original was GL_ACCUM_BUFFER_BIT = 0x00000200
-        /// </summary>
-        AccumBufferBit = ((int)0x00000200)        ,
         /// <summary>
         /// Original was GL_STENCIL_BUFFER_BIT = 0x00000400
         /// </summary>
         StencilBufferBit = ((int)0x00000400)        ,
         /// <summary>
-        /// Original was GL_VIEWPORT_BIT = 0x00000800
-        /// </summary>
-        ViewportBit = ((int)0x00000800)        ,
-        /// <summary>
-        /// Original was GL_TRANSFORM_BIT = 0x00001000
-        /// </summary>
-        TransformBit = ((int)0x00001000)        ,
-        /// <summary>
-        /// Original was GL_ENABLE_BIT = 0x00002000
-        /// </summary>
-        EnableBit = ((int)0x00002000)        ,
-        /// <summary>
         /// Original was GL_COLOR_BUFFER_BIT = 0x00004000
         /// </summary>
         ColorBufferBit = ((int)0x00004000)        ,
-        /// <summary>
-        /// Original was GL_HINT_BIT = 0x00008000
-        /// </summary>
-        HintBit = ((int)0x00008000)        ,
         /// <summary>
         /// Original was GL_LINES = 0x0001
         /// </summary>
         Lines = ((int)0x0001)        ,
         /// <summary>
-        /// Original was GL_EVAL_BIT = 0x00010000
-        /// </summary>
-        EvalBit = ((int)0x00010000)        ,
-        /// <summary>
         /// Original was GL_LINE_LOOP = 0x0002
         /// </summary>
         LineLoop = ((int)0x0002)        ,
-        /// <summary>
-        /// Original was GL_LIST_BIT = 0x00020000
-        /// </summary>
-        ListBit = ((int)0x00020000)        ,
         /// <summary>
         /// Original was GL_LINE_STRIP = 0x0003
         /// </summary>
@@ -28377,10 +27337,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Triangles = ((int)0x0004)        ,
         /// <summary>
-        /// Original was GL_TEXTURE_BIT = 0x00040000
-        /// </summary>
-        TextureBit = ((int)0x00040000)        ,
-        /// <summary>
         /// Original was GL_TRIANGLE_STRIP = 0x0005
         /// </summary>
         TriangleStrip = ((int)0x0005)        ,
@@ -28388,42 +27344,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_TRIANGLE_FAN = 0x0006
         /// </summary>
         TriangleFan = ((int)0x0006)        ,
-        /// <summary>
-        /// Original was GL_QUADS = 0x0007
-        /// </summary>
-        Quads = ((int)0x0007)        ,
-        /// <summary>
-        /// Original was GL_QUAD_STRIP = 0x0008
-        /// </summary>
-        QuadStrip = ((int)0x0008)        ,
-        /// <summary>
-        /// Original was GL_SCISSOR_BIT = 0x00080000
-        /// </summary>
-        ScissorBit = ((int)0x00080000)        ,
-        /// <summary>
-        /// Original was GL_POLYGON = 0x0009
-        /// </summary>
-        Polygon = ((int)0x0009)        ,
-        /// <summary>
-        /// Original was GL_ACCUM = 0x0100
-        /// </summary>
-        Accum = ((int)0x0100)        ,
-        /// <summary>
-        /// Original was GL_LOAD = 0x0101
-        /// </summary>
-        Load = ((int)0x0101)        ,
-        /// <summary>
-        /// Original was GL_RETURN = 0x0102
-        /// </summary>
-        Return = ((int)0x0102)        ,
-        /// <summary>
-        /// Original was GL_MULT = 0x0103
-        /// </summary>
-        Mult = ((int)0x0103)        ,
-        /// <summary>
-        /// Original was GL_ADD = 0x0104
-        /// </summary>
-        Add = ((int)0x0104)        ,
         /// <summary>
         /// Original was GL_NEVER = 0x0200
         /// </summary>
@@ -28529,22 +27449,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         FrontAndBack = ((int)0x0408)        ,
         /// <summary>
-        /// Original was GL_AUX0 = 0x0409
-        /// </summary>
-        Aux0 = ((int)0x0409)        ,
-        /// <summary>
-        /// Original was GL_AUX1 = 0x040A
-        /// </summary>
-        Aux1 = ((int)0x040A)        ,
-        /// <summary>
-        /// Original was GL_AUX2 = 0x040B
-        /// </summary>
-        Aux2 = ((int)0x040B)        ,
-        /// <summary>
-        /// Original was GL_AUX3 = 0x040C
-        /// </summary>
-        Aux3 = ((int)0x040C)        ,
-        /// <summary>
         /// Original was GL_INVALID_ENUM = 0x0500
         /// </summary>
         InvalidEnum = ((int)0x0500)        ,
@@ -28557,77 +27461,9 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         InvalidOperation = ((int)0x0502)        ,
         /// <summary>
-        /// Original was GL_STACK_OVERFLOW = 0x0503
-        /// </summary>
-        StackOverflow = ((int)0x0503)        ,
-        /// <summary>
-        /// Original was GL_STACK_UNDERFLOW = 0x0504
-        /// </summary>
-        StackUnderflow = ((int)0x0504)        ,
-        /// <summary>
         /// Original was GL_OUT_OF_MEMORY = 0x0505
         /// </summary>
         OutOfMemory = ((int)0x0505)        ,
-        /// <summary>
-        /// Original was GL_2D = 0x0600
-        /// </summary>
-        Gl2D = ((int)0x0600)        ,
-        /// <summary>
-        /// Original was GL_3D = 0x0601
-        /// </summary>
-        Gl3D = ((int)0x0601)        ,
-        /// <summary>
-        /// Original was GL_3D_COLOR = 0x0602
-        /// </summary>
-        Gl3DColor = ((int)0x0602)        ,
-        /// <summary>
-        /// Original was GL_3D_COLOR_TEXTURE = 0x0603
-        /// </summary>
-        Gl3DColorTexture = ((int)0x0603)        ,
-        /// <summary>
-        /// Original was GL_4D_COLOR_TEXTURE = 0x0604
-        /// </summary>
-        Gl4DColorTexture = ((int)0x0604)        ,
-        /// <summary>
-        /// Original was GL_PASS_THROUGH_TOKEN = 0x0700
-        /// </summary>
-        PassThroughToken = ((int)0x0700)        ,
-        /// <summary>
-        /// Original was GL_POINT_TOKEN = 0x0701
-        /// </summary>
-        PointToken = ((int)0x0701)        ,
-        /// <summary>
-        /// Original was GL_LINE_TOKEN = 0x0702
-        /// </summary>
-        LineToken = ((int)0x0702)        ,
-        /// <summary>
-        /// Original was GL_POLYGON_TOKEN = 0x0703
-        /// </summary>
-        PolygonToken = ((int)0x0703)        ,
-        /// <summary>
-        /// Original was GL_BITMAP_TOKEN = 0x0704
-        /// </summary>
-        BitmapToken = ((int)0x0704)        ,
-        /// <summary>
-        /// Original was GL_DRAW_PIXEL_TOKEN = 0x0705
-        /// </summary>
-        DrawPixelToken = ((int)0x0705)        ,
-        /// <summary>
-        /// Original was GL_COPY_PIXEL_TOKEN = 0x0706
-        /// </summary>
-        CopyPixelToken = ((int)0x0706)        ,
-        /// <summary>
-        /// Original was GL_LINE_RESET_TOKEN = 0x0707
-        /// </summary>
-        LineResetToken = ((int)0x0707)        ,
-        /// <summary>
-        /// Original was GL_EXP = 0x0800
-        /// </summary>
-        Exp = ((int)0x0800)        ,
-        /// <summary>
-        /// Original was GL_EXP2 = 0x0801
-        /// </summary>
-        Exp2 = ((int)0x0801)        ,
         /// <summary>
         /// Original was GL_CW = 0x0900
         /// </summary>
@@ -28636,62 +27472,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_CCW = 0x0901
         /// </summary>
         Ccw = ((int)0x0901)        ,
-        /// <summary>
-        /// Original was GL_COEFF = 0x0A00
-        /// </summary>
-        Coeff = ((int)0x0A00)        ,
-        /// <summary>
-        /// Original was GL_ORDER = 0x0A01
-        /// </summary>
-        Order = ((int)0x0A01)        ,
-        /// <summary>
-        /// Original was GL_DOMAIN = 0x0A02
-        /// </summary>
-        Domain = ((int)0x0A02)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_COLOR = 0x0B00
-        /// </summary>
-        CurrentColor = ((int)0x0B00)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_INDEX = 0x0B01
-        /// </summary>
-        CurrentIndex = ((int)0x0B01)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_NORMAL = 0x0B02
-        /// </summary>
-        CurrentNormal = ((int)0x0B02)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_TEXTURE_COORDS = 0x0B03
-        /// </summary>
-        CurrentTextureCoords = ((int)0x0B03)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_RASTER_COLOR = 0x0B04
-        /// </summary>
-        CurrentRasterColor = ((int)0x0B04)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_RASTER_INDEX = 0x0B05
-        /// </summary>
-        CurrentRasterIndex = ((int)0x0B05)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_RASTER_TEXTURE_COORDS = 0x0B06
-        /// </summary>
-        CurrentRasterTextureCoords = ((int)0x0B06)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_RASTER_POSITION = 0x0B07
-        /// </summary>
-        CurrentRasterPosition = ((int)0x0B07)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_RASTER_POSITION_VALID = 0x0B08
-        /// </summary>
-        CurrentRasterPositionValid = ((int)0x0B08)        ,
-        /// <summary>
-        /// Original was GL_CURRENT_RASTER_DISTANCE = 0x0B09
-        /// </summary>
-        CurrentRasterDistance = ((int)0x0B09)        ,
-        /// <summary>
-        /// Original was GL_POINT_SMOOTH = 0x0B10
-        /// </summary>
-        PointSmooth = ((int)0x0B10)        ,
         /// <summary>
         /// Original was GL_POINT_SIZE = 0x0B11
         /// </summary>
@@ -28721,34 +27501,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         LineWidthGranularity = ((int)0x0B23)        ,
         /// <summary>
-        /// Original was GL_LINE_STIPPLE = 0x0B24
-        /// </summary>
-        LineStipple = ((int)0x0B24)        ,
-        /// <summary>
-        /// Original was GL_LINE_STIPPLE_PATTERN = 0x0B25
-        /// </summary>
-        LineStipplePattern = ((int)0x0B25)        ,
-        /// <summary>
-        /// Original was GL_LINE_STIPPLE_REPEAT = 0x0B26
-        /// </summary>
-        LineStippleRepeat = ((int)0x0B26)        ,
-        /// <summary>
-        /// Original was GL_LIST_MODE = 0x0B30
-        /// </summary>
-        ListMode = ((int)0x0B30)        ,
-        /// <summary>
-        /// Original was GL_MAX_LIST_NESTING = 0x0B31
-        /// </summary>
-        MaxListNesting = ((int)0x0B31)        ,
-        /// <summary>
-        /// Original was GL_LIST_BASE = 0x0B32
-        /// </summary>
-        ListBase = ((int)0x0B32)        ,
-        /// <summary>
-        /// Original was GL_LIST_INDEX = 0x0B33
-        /// </summary>
-        ListIndex = ((int)0x0B33)        ,
-        /// <summary>
         /// Original was GL_POLYGON_MODE = 0x0B40
         /// </summary>
         PolygonMode = ((int)0x0B40)        ,
@@ -28756,14 +27508,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_POLYGON_SMOOTH = 0x0B41
         /// </summary>
         PolygonSmooth = ((int)0x0B41)        ,
-        /// <summary>
-        /// Original was GL_POLYGON_STIPPLE = 0x0B42
-        /// </summary>
-        PolygonStipple = ((int)0x0B42)        ,
-        /// <summary>
-        /// Original was GL_EDGE_FLAG = 0x0B43
-        /// </summary>
-        EdgeFlag = ((int)0x0B43)        ,
         /// <summary>
         /// Original was GL_CULL_FACE = 0x0B44
         /// </summary>
@@ -28776,66 +27520,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_FRONT_FACE = 0x0B46
         /// </summary>
         FrontFace = ((int)0x0B46)        ,
-        /// <summary>
-        /// Original was GL_LIGHTING = 0x0B50
-        /// </summary>
-        Lighting = ((int)0x0B50)        ,
-        /// <summary>
-        /// Original was GL_LIGHT_MODEL_LOCAL_VIEWER = 0x0B51
-        /// </summary>
-        LightModelLocalViewer = ((int)0x0B51)        ,
-        /// <summary>
-        /// Original was GL_LIGHT_MODEL_TWO_SIDE = 0x0B52
-        /// </summary>
-        LightModelTwoSide = ((int)0x0B52)        ,
-        /// <summary>
-        /// Original was GL_LIGHT_MODEL_AMBIENT = 0x0B53
-        /// </summary>
-        LightModelAmbient = ((int)0x0B53)        ,
-        /// <summary>
-        /// Original was GL_SHADE_MODEL = 0x0B54
-        /// </summary>
-        ShadeModel = ((int)0x0B54)        ,
-        /// <summary>
-        /// Original was GL_COLOR_MATERIAL_FACE = 0x0B55
-        /// </summary>
-        ColorMaterialFace = ((int)0x0B55)        ,
-        /// <summary>
-        /// Original was GL_COLOR_MATERIAL_PARAMETER = 0x0B56
-        /// </summary>
-        ColorMaterialParameter = ((int)0x0B56)        ,
-        /// <summary>
-        /// Original was GL_COLOR_MATERIAL = 0x0B57
-        /// </summary>
-        ColorMaterial = ((int)0x0B57)        ,
-        /// <summary>
-        /// Original was GL_FOG = 0x0B60
-        /// </summary>
-        Fog = ((int)0x0B60)        ,
-        /// <summary>
-        /// Original was GL_FOG_INDEX = 0x0B61
-        /// </summary>
-        FogIndex = ((int)0x0B61)        ,
-        /// <summary>
-        /// Original was GL_FOG_DENSITY = 0x0B62
-        /// </summary>
-        FogDensity = ((int)0x0B62)        ,
-        /// <summary>
-        /// Original was GL_FOG_START = 0x0B63
-        /// </summary>
-        FogStart = ((int)0x0B63)        ,
-        /// <summary>
-        /// Original was GL_FOG_END = 0x0B64
-        /// </summary>
-        FogEnd = ((int)0x0B64)        ,
-        /// <summary>
-        /// Original was GL_FOG_MODE = 0x0B65
-        /// </summary>
-        FogMode = ((int)0x0B65)        ,
-        /// <summary>
-        /// Original was GL_FOG_COLOR = 0x0B66
-        /// </summary>
-        FogColor = ((int)0x0B66)        ,
         /// <summary>
         /// Original was GL_DEPTH_RANGE = 0x0B70
         /// </summary>
@@ -28856,10 +27540,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_DEPTH_FUNC = 0x0B74
         /// </summary>
         DepthFunc = ((int)0x0B74)        ,
-        /// <summary>
-        /// Original was GL_ACCUM_CLEAR_VALUE = 0x0B80
-        /// </summary>
-        AccumClearValue = ((int)0x0B80)        ,
         /// <summary>
         /// Original was GL_STENCIL_TEST = 0x0B90
         /// </summary>
@@ -28897,61 +27577,9 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         StencilWritemask = ((int)0x0B98)        ,
         /// <summary>
-        /// Original was GL_MATRIX_MODE = 0x0BA0
-        /// </summary>
-        MatrixMode = ((int)0x0BA0)        ,
-        /// <summary>
-        /// Original was GL_NORMALIZE = 0x0BA1
-        /// </summary>
-        Normalize = ((int)0x0BA1)        ,
-        /// <summary>
         /// Original was GL_VIEWPORT = 0x0BA2
         /// </summary>
         Viewport = ((int)0x0BA2)        ,
-        /// <summary>
-        /// Original was GL_MODELVIEW_STACK_DEPTH = 0x0BA3
-        /// </summary>
-        ModelviewStackDepth = ((int)0x0BA3)        ,
-        /// <summary>
-        /// Original was GL_PROJECTION_STACK_DEPTH = 0x0BA4
-        /// </summary>
-        ProjectionStackDepth = ((int)0x0BA4)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_STACK_DEPTH = 0x0BA5
-        /// </summary>
-        TextureStackDepth = ((int)0x0BA5)        ,
-        /// <summary>
-        /// Original was GL_MODELVIEW_MATRIX = 0x0BA6
-        /// </summary>
-        ModelviewMatrix = ((int)0x0BA6)        ,
-        /// <summary>
-        /// Original was GL_PROJECTION_MATRIX = 0x0BA7
-        /// </summary>
-        ProjectionMatrix = ((int)0x0BA7)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_MATRIX = 0x0BA8
-        /// </summary>
-        TextureMatrix = ((int)0x0BA8)        ,
-        /// <summary>
-        /// Original was GL_ATTRIB_STACK_DEPTH = 0x0BB0
-        /// </summary>
-        AttribStackDepth = ((int)0x0BB0)        ,
-        /// <summary>
-        /// Original was GL_CLIENT_ATTRIB_STACK_DEPTH = 0x0BB1
-        /// </summary>
-        ClientAttribStackDepth = ((int)0x0BB1)        ,
-        /// <summary>
-        /// Original was GL_ALPHA_TEST = 0x0BC0
-        /// </summary>
-        AlphaTest = ((int)0x0BC0)        ,
-        /// <summary>
-        /// Original was GL_ALPHA_TEST_FUNC = 0x0BC1
-        /// </summary>
-        AlphaTestFunc = ((int)0x0BC1)        ,
-        /// <summary>
-        /// Original was GL_ALPHA_TEST_REF = 0x0BC2
-        /// </summary>
-        AlphaTestRef = ((int)0x0BC2)        ,
         /// <summary>
         /// Original was GL_DITHER = 0x0BD0
         /// </summary>
@@ -28973,21 +27601,9 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         LogicOpMode = ((int)0x0BF0)        ,
         /// <summary>
-        /// Original was GL_INDEX_LOGIC_OP = 0x0BF1
-        /// </summary>
-        IndexLogicOp = ((int)0x0BF1)        ,
-        /// <summary>
-        /// Original was GL_LOGIC_OP = 0x0BF1
-        /// </summary>
-        LogicOp = ((int)0x0BF1)        ,
-        /// <summary>
         /// Original was GL_COLOR_LOGIC_OP = 0x0BF2
         /// </summary>
         ColorLogicOp = ((int)0x0BF2)        ,
-        /// <summary>
-        /// Original was GL_AUX_BUFFERS = 0x0C00
-        /// </summary>
-        AuxBuffers = ((int)0x0C00)        ,
         /// <summary>
         /// Original was GL_DRAW_BUFFER = 0x0C01
         /// </summary>
@@ -29005,14 +27621,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         ScissorTest = ((int)0x0C11)        ,
         /// <summary>
-        /// Original was GL_INDEX_CLEAR_VALUE = 0x0C20
-        /// </summary>
-        IndexClearValue = ((int)0x0C20)        ,
-        /// <summary>
-        /// Original was GL_INDEX_WRITEMASK = 0x0C21
-        /// </summary>
-        IndexWritemask = ((int)0x0C21)        ,
-        /// <summary>
         /// Original was GL_COLOR_CLEAR_VALUE = 0x0C22
         /// </summary>
         ColorClearValue = ((int)0x0C22)        ,
@@ -29020,14 +27628,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_COLOR_WRITEMASK = 0x0C23
         /// </summary>
         ColorWritemask = ((int)0x0C23)        ,
-        /// <summary>
-        /// Original was GL_INDEX_MODE = 0x0C30
-        /// </summary>
-        IndexMode = ((int)0x0C30)        ,
-        /// <summary>
-        /// Original was GL_RGBA_MODE = 0x0C31
-        /// </summary>
-        RgbaMode = ((int)0x0C31)        ,
         /// <summary>
         /// Original was GL_DOUBLEBUFFER = 0x0C32
         /// </summary>
@@ -29037,18 +27637,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Stereo = ((int)0x0C33)        ,
         /// <summary>
-        /// Original was GL_RENDER_MODE = 0x0C40
-        /// </summary>
-        RenderMode = ((int)0x0C40)        ,
-        /// <summary>
-        /// Original was GL_PERSPECTIVE_CORRECTION_HINT = 0x0C50
-        /// </summary>
-        PerspectiveCorrectionHint = ((int)0x0C50)        ,
-        /// <summary>
-        /// Original was GL_POINT_SMOOTH_HINT = 0x0C51
-        /// </summary>
-        PointSmoothHint = ((int)0x0C51)        ,
-        /// <summary>
         /// Original was GL_LINE_SMOOTH_HINT = 0x0C52
         /// </summary>
         LineSmoothHint = ((int)0x0C52)        ,
@@ -29056,106 +27644,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_POLYGON_SMOOTH_HINT = 0x0C53
         /// </summary>
         PolygonSmoothHint = ((int)0x0C53)        ,
-        /// <summary>
-        /// Original was GL_FOG_HINT = 0x0C54
-        /// </summary>
-        FogHint = ((int)0x0C54)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_GEN_S = 0x0C60
-        /// </summary>
-        TextureGenS = ((int)0x0C60)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_GEN_T = 0x0C61
-        /// </summary>
-        TextureGenT = ((int)0x0C61)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_GEN_R = 0x0C62
-        /// </summary>
-        TextureGenR = ((int)0x0C62)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_GEN_Q = 0x0C63
-        /// </summary>
-        TextureGenQ = ((int)0x0C63)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_I = 0x0C70
-        /// </summary>
-        PixelMapIToI = ((int)0x0C70)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_S_TO_S = 0x0C71
-        /// </summary>
-        PixelMapSToS = ((int)0x0C71)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_R = 0x0C72
-        /// </summary>
-        PixelMapIToR = ((int)0x0C72)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_G = 0x0C73
-        /// </summary>
-        PixelMapIToG = ((int)0x0C73)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_B = 0x0C74
-        /// </summary>
-        PixelMapIToB = ((int)0x0C74)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_A = 0x0C75
-        /// </summary>
-        PixelMapIToA = ((int)0x0C75)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_R_TO_R = 0x0C76
-        /// </summary>
-        PixelMapRToR = ((int)0x0C76)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_G_TO_G = 0x0C77
-        /// </summary>
-        PixelMapGToG = ((int)0x0C77)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_B_TO_B = 0x0C78
-        /// </summary>
-        PixelMapBToB = ((int)0x0C78)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_A_TO_A = 0x0C79
-        /// </summary>
-        PixelMapAToA = ((int)0x0C79)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_I_SIZE = 0x0CB0
-        /// </summary>
-        PixelMapIToISize = ((int)0x0CB0)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_S_TO_S_SIZE = 0x0CB1
-        /// </summary>
-        PixelMapSToSSize = ((int)0x0CB1)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_R_SIZE = 0x0CB2
-        /// </summary>
-        PixelMapIToRSize = ((int)0x0CB2)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_G_SIZE = 0x0CB3
-        /// </summary>
-        PixelMapIToGSize = ((int)0x0CB3)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_B_SIZE = 0x0CB4
-        /// </summary>
-        PixelMapIToBSize = ((int)0x0CB4)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_A_SIZE = 0x0CB5
-        /// </summary>
-        PixelMapIToASize = ((int)0x0CB5)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_R_TO_R_SIZE = 0x0CB6
-        /// </summary>
-        PixelMapRToRSize = ((int)0x0CB6)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_G_TO_G_SIZE = 0x0CB7
-        /// </summary>
-        PixelMapGToGSize = ((int)0x0CB7)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_B_TO_B_SIZE = 0x0CB8
-        /// </summary>
-        PixelMapBToBSize = ((int)0x0CB8)        ,
-        /// <summary>
-        /// Original was GL_PIXEL_MAP_A_TO_A_SIZE = 0x0CB9
-        /// </summary>
-        PixelMapAToASize = ((int)0x0CB9)        ,
         /// <summary>
         /// Original was GL_UNPACK_SWAP_BYTES = 0x0CF0
         /// </summary>
@@ -29205,261 +27693,17 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         PackAlignment = ((int)0x0D05)        ,
         /// <summary>
-        /// Original was GL_MAP_COLOR = 0x0D10
-        /// </summary>
-        MapColor = ((int)0x0D10)        ,
-        /// <summary>
-        /// Original was GL_MAP_STENCIL = 0x0D11
-        /// </summary>
-        MapStencil = ((int)0x0D11)        ,
-        /// <summary>
-        /// Original was GL_INDEX_SHIFT = 0x0D12
-        /// </summary>
-        IndexShift = ((int)0x0D12)        ,
-        /// <summary>
-        /// Original was GL_INDEX_OFFSET = 0x0D13
-        /// </summary>
-        IndexOffset = ((int)0x0D13)        ,
-        /// <summary>
-        /// Original was GL_RED_SCALE = 0x0D14
-        /// </summary>
-        RedScale = ((int)0x0D14)        ,
-        /// <summary>
-        /// Original was GL_RED_BIAS = 0x0D15
-        /// </summary>
-        RedBias = ((int)0x0D15)        ,
-        /// <summary>
-        /// Original was GL_ZOOM_X = 0x0D16
-        /// </summary>
-        ZoomX = ((int)0x0D16)        ,
-        /// <summary>
-        /// Original was GL_ZOOM_Y = 0x0D17
-        /// </summary>
-        ZoomY = ((int)0x0D17)        ,
-        /// <summary>
-        /// Original was GL_GREEN_SCALE = 0x0D18
-        /// </summary>
-        GreenScale = ((int)0x0D18)        ,
-        /// <summary>
-        /// Original was GL_GREEN_BIAS = 0x0D19
-        /// </summary>
-        GreenBias = ((int)0x0D19)        ,
-        /// <summary>
-        /// Original was GL_BLUE_SCALE = 0x0D1A
-        /// </summary>
-        BlueScale = ((int)0x0D1A)        ,
-        /// <summary>
-        /// Original was GL_BLUE_BIAS = 0x0D1B
-        /// </summary>
-        BlueBias = ((int)0x0D1B)        ,
-        /// <summary>
-        /// Original was GL_ALPHA_SCALE = 0x0D1C
-        /// </summary>
-        AlphaScale = ((int)0x0D1C)        ,
-        /// <summary>
-        /// Original was GL_ALPHA_BIAS = 0x0D1D
-        /// </summary>
-        AlphaBias = ((int)0x0D1D)        ,
-        /// <summary>
-        /// Original was GL_DEPTH_SCALE = 0x0D1E
-        /// </summary>
-        DepthScale = ((int)0x0D1E)        ,
-        /// <summary>
-        /// Original was GL_DEPTH_BIAS = 0x0D1F
-        /// </summary>
-        DepthBias = ((int)0x0D1F)        ,
-        /// <summary>
-        /// Original was GL_MAX_EVAL_ORDER = 0x0D30
-        /// </summary>
-        MaxEvalOrder = ((int)0x0D30)        ,
-        /// <summary>
-        /// Original was GL_MAX_LIGHTS = 0x0D31
-        /// </summary>
-        MaxLights = ((int)0x0D31)        ,
-        /// <summary>
-        /// Original was GL_MAX_CLIP_PLANES = 0x0D32
-        /// </summary>
-        MaxClipPlanes = ((int)0x0D32)        ,
-        /// <summary>
         /// Original was GL_MAX_TEXTURE_SIZE = 0x0D33
         /// </summary>
         MaxTextureSize = ((int)0x0D33)        ,
-        /// <summary>
-        /// Original was GL_MAX_PIXEL_MAP_TABLE = 0x0D34
-        /// </summary>
-        MaxPixelMapTable = ((int)0x0D34)        ,
-        /// <summary>
-        /// Original was GL_MAX_ATTRIB_STACK_DEPTH = 0x0D35
-        /// </summary>
-        MaxAttribStackDepth = ((int)0x0D35)        ,
-        /// <summary>
-        /// Original was GL_MAX_MODELVIEW_STACK_DEPTH = 0x0D36
-        /// </summary>
-        MaxModelviewStackDepth = ((int)0x0D36)        ,
-        /// <summary>
-        /// Original was GL_MAX_NAME_STACK_DEPTH = 0x0D37
-        /// </summary>
-        MaxNameStackDepth = ((int)0x0D37)        ,
-        /// <summary>
-        /// Original was GL_MAX_PROJECTION_STACK_DEPTH = 0x0D38
-        /// </summary>
-        MaxProjectionStackDepth = ((int)0x0D38)        ,
-        /// <summary>
-        /// Original was GL_MAX_TEXTURE_STACK_DEPTH = 0x0D39
-        /// </summary>
-        MaxTextureStackDepth = ((int)0x0D39)        ,
         /// <summary>
         /// Original was GL_MAX_VIEWPORT_DIMS = 0x0D3A
         /// </summary>
         MaxViewportDims = ((int)0x0D3A)        ,
         /// <summary>
-        /// Original was GL_MAX_CLIENT_ATTRIB_STACK_DEPTH = 0x0D3B
-        /// </summary>
-        MaxClientAttribStackDepth = ((int)0x0D3B)        ,
-        /// <summary>
         /// Original was GL_SUBPIXEL_BITS = 0x0D50
         /// </summary>
         SubpixelBits = ((int)0x0D50)        ,
-        /// <summary>
-        /// Original was GL_INDEX_BITS = 0x0D51
-        /// </summary>
-        IndexBits = ((int)0x0D51)        ,
-        /// <summary>
-        /// Original was GL_RED_BITS = 0x0D52
-        /// </summary>
-        RedBits = ((int)0x0D52)        ,
-        /// <summary>
-        /// Original was GL_GREEN_BITS = 0x0D53
-        /// </summary>
-        GreenBits = ((int)0x0D53)        ,
-        /// <summary>
-        /// Original was GL_BLUE_BITS = 0x0D54
-        /// </summary>
-        BlueBits = ((int)0x0D54)        ,
-        /// <summary>
-        /// Original was GL_ALPHA_BITS = 0x0D55
-        /// </summary>
-        AlphaBits = ((int)0x0D55)        ,
-        /// <summary>
-        /// Original was GL_DEPTH_BITS = 0x0D56
-        /// </summary>
-        DepthBits = ((int)0x0D56)        ,
-        /// <summary>
-        /// Original was GL_STENCIL_BITS = 0x0D57
-        /// </summary>
-        StencilBits = ((int)0x0D57)        ,
-        /// <summary>
-        /// Original was GL_ACCUM_RED_BITS = 0x0D58
-        /// </summary>
-        AccumRedBits = ((int)0x0D58)        ,
-        /// <summary>
-        /// Original was GL_ACCUM_GREEN_BITS = 0x0D59
-        /// </summary>
-        AccumGreenBits = ((int)0x0D59)        ,
-        /// <summary>
-        /// Original was GL_ACCUM_BLUE_BITS = 0x0D5A
-        /// </summary>
-        AccumBlueBits = ((int)0x0D5A)        ,
-        /// <summary>
-        /// Original was GL_ACCUM_ALPHA_BITS = 0x0D5B
-        /// </summary>
-        AccumAlphaBits = ((int)0x0D5B)        ,
-        /// <summary>
-        /// Original was GL_NAME_STACK_DEPTH = 0x0D70
-        /// </summary>
-        NameStackDepth = ((int)0x0D70)        ,
-        /// <summary>
-        /// Original was GL_AUTO_NORMAL = 0x0D80
-        /// </summary>
-        AutoNormal = ((int)0x0D80)        ,
-        /// <summary>
-        /// Original was GL_MAP1_COLOR_4 = 0x0D90
-        /// </summary>
-        Map1Color4 = ((int)0x0D90)        ,
-        /// <summary>
-        /// Original was GL_MAP1_INDEX = 0x0D91
-        /// </summary>
-        Map1Index = ((int)0x0D91)        ,
-        /// <summary>
-        /// Original was GL_MAP1_NORMAL = 0x0D92
-        /// </summary>
-        Map1Normal = ((int)0x0D92)        ,
-        /// <summary>
-        /// Original was GL_MAP1_TEXTURE_COORD_1 = 0x0D93
-        /// </summary>
-        Map1TextureCoord1 = ((int)0x0D93)        ,
-        /// <summary>
-        /// Original was GL_MAP1_TEXTURE_COORD_2 = 0x0D94
-        /// </summary>
-        Map1TextureCoord2 = ((int)0x0D94)        ,
-        /// <summary>
-        /// Original was GL_MAP1_TEXTURE_COORD_3 = 0x0D95
-        /// </summary>
-        Map1TextureCoord3 = ((int)0x0D95)        ,
-        /// <summary>
-        /// Original was GL_MAP1_TEXTURE_COORD_4 = 0x0D96
-        /// </summary>
-        Map1TextureCoord4 = ((int)0x0D96)        ,
-        /// <summary>
-        /// Original was GL_MAP1_VERTEX_3 = 0x0D97
-        /// </summary>
-        Map1Vertex3 = ((int)0x0D97)        ,
-        /// <summary>
-        /// Original was GL_MAP1_VERTEX_4 = 0x0D98
-        /// </summary>
-        Map1Vertex4 = ((int)0x0D98)        ,
-        /// <summary>
-        /// Original was GL_MAP2_COLOR_4 = 0x0DB0
-        /// </summary>
-        Map2Color4 = ((int)0x0DB0)        ,
-        /// <summary>
-        /// Original was GL_MAP2_INDEX = 0x0DB1
-        /// </summary>
-        Map2Index = ((int)0x0DB1)        ,
-        /// <summary>
-        /// Original was GL_MAP2_NORMAL = 0x0DB2
-        /// </summary>
-        Map2Normal = ((int)0x0DB2)        ,
-        /// <summary>
-        /// Original was GL_MAP2_TEXTURE_COORD_1 = 0x0DB3
-        /// </summary>
-        Map2TextureCoord1 = ((int)0x0DB3)        ,
-        /// <summary>
-        /// Original was GL_MAP2_TEXTURE_COORD_2 = 0x0DB4
-        /// </summary>
-        Map2TextureCoord2 = ((int)0x0DB4)        ,
-        /// <summary>
-        /// Original was GL_MAP2_TEXTURE_COORD_3 = 0x0DB5
-        /// </summary>
-        Map2TextureCoord3 = ((int)0x0DB5)        ,
-        /// <summary>
-        /// Original was GL_MAP2_TEXTURE_COORD_4 = 0x0DB6
-        /// </summary>
-        Map2TextureCoord4 = ((int)0x0DB6)        ,
-        /// <summary>
-        /// Original was GL_MAP2_VERTEX_3 = 0x0DB7
-        /// </summary>
-        Map2Vertex3 = ((int)0x0DB7)        ,
-        /// <summary>
-        /// Original was GL_MAP2_VERTEX_4 = 0x0DB8
-        /// </summary>
-        Map2Vertex4 = ((int)0x0DB8)        ,
-        /// <summary>
-        /// Original was GL_MAP1_GRID_DOMAIN = 0x0DD0
-        /// </summary>
-        Map1GridDomain = ((int)0x0DD0)        ,
-        /// <summary>
-        /// Original was GL_MAP1_GRID_SEGMENTS = 0x0DD1
-        /// </summary>
-        Map1GridSegments = ((int)0x0DD1)        ,
-        /// <summary>
-        /// Original was GL_MAP2_GRID_DOMAIN = 0x0DD2
-        /// </summary>
-        Map2GridDomain = ((int)0x0DD2)        ,
-        /// <summary>
-        /// Original was GL_MAP2_GRID_SEGMENTS = 0x0DD3
-        /// </summary>
-        Map2GridSegments = ((int)0x0DD3)        ,
         /// <summary>
         /// Original was GL_TEXTURE_1D = 0x0DE0
         /// </summary>
@@ -29469,26 +27713,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Texture2D = ((int)0x0DE1)        ,
         /// <summary>
-        /// Original was GL_FEEDBACK_BUFFER_POINTER = 0x0DF0
-        /// </summary>
-        FeedbackBufferPointer = ((int)0x0DF0)        ,
-        /// <summary>
-        /// Original was GL_FEEDBACK_BUFFER_SIZE = 0x0DF1
-        /// </summary>
-        FeedbackBufferSize = ((int)0x0DF1)        ,
-        /// <summary>
-        /// Original was GL_FEEDBACK_BUFFER_TYPE = 0x0DF2
-        /// </summary>
-        FeedbackBufferType = ((int)0x0DF2)        ,
-        /// <summary>
-        /// Original was GL_SELECTION_BUFFER_POINTER = 0x0DF3
-        /// </summary>
-        SelectionBufferPointer = ((int)0x0DF3)        ,
-        /// <summary>
-        /// Original was GL_SELECTION_BUFFER_SIZE = 0x0DF4
-        /// </summary>
-        SelectionBufferSize = ((int)0x0DF4)        ,
-        /// <summary>
         /// Original was GL_TEXTURE_WIDTH = 0x1000
         /// </summary>
         TextureWidth = ((int)0x1000)        ,
@@ -29497,10 +27721,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         TextureHeight = ((int)0x1001)        ,
         /// <summary>
-        /// Original was GL_TEXTURE_COMPONENTS = 0x1003
-        /// </summary>
-        TextureComponents = ((int)0x1003)        ,
-        /// <summary>
         /// Original was GL_TEXTURE_INTERNAL_FORMAT = 0x1003
         /// </summary>
         TextureInternalFormat = ((int)0x1003)        ,
@@ -29508,10 +27728,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_TEXTURE_BORDER_COLOR = 0x1004
         /// </summary>
         TextureBorderColor = ((int)0x1004)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_BORDER = 0x1005
-        /// </summary>
-        TextureBorder = ((int)0x1005)        ,
         /// <summary>
         /// Original was GL_DONT_CARE = 0x1100
         /// </summary>
@@ -29524,54 +27740,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_NICEST = 0x1102
         /// </summary>
         Nicest = ((int)0x1102)        ,
-        /// <summary>
-        /// Original was GL_AMBIENT = 0x1200
-        /// </summary>
-        Ambient = ((int)0x1200)        ,
-        /// <summary>
-        /// Original was GL_DIFFUSE = 0x1201
-        /// </summary>
-        Diffuse = ((int)0x1201)        ,
-        /// <summary>
-        /// Original was GL_SPECULAR = 0x1202
-        /// </summary>
-        Specular = ((int)0x1202)        ,
-        /// <summary>
-        /// Original was GL_POSITION = 0x1203
-        /// </summary>
-        Position = ((int)0x1203)        ,
-        /// <summary>
-        /// Original was GL_SPOT_DIRECTION = 0x1204
-        /// </summary>
-        SpotDirection = ((int)0x1204)        ,
-        /// <summary>
-        /// Original was GL_SPOT_EXPONENT = 0x1205
-        /// </summary>
-        SpotExponent = ((int)0x1205)        ,
-        /// <summary>
-        /// Original was GL_SPOT_CUTOFF = 0x1206
-        /// </summary>
-        SpotCutoff = ((int)0x1206)        ,
-        /// <summary>
-        /// Original was GL_CONSTANT_ATTENUATION = 0x1207
-        /// </summary>
-        ConstantAttenuation = ((int)0x1207)        ,
-        /// <summary>
-        /// Original was GL_LINEAR_ATTENUATION = 0x1208
-        /// </summary>
-        LinearAttenuation = ((int)0x1208)        ,
-        /// <summary>
-        /// Original was GL_QUADRATIC_ATTENUATION = 0x1209
-        /// </summary>
-        QuadraticAttenuation = ((int)0x1209)        ,
-        /// <summary>
-        /// Original was GL_COMPILE = 0x1300
-        /// </summary>
-        Compile = ((int)0x1300)        ,
-        /// <summary>
-        /// Original was GL_COMPILE_AND_EXECUTE = 0x1301
-        /// </summary>
-        CompileAndExecute = ((int)0x1301)        ,
         /// <summary>
         /// Original was GL_BYTE = 0x1400
         /// </summary>
@@ -29600,18 +27768,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_FLOAT = 0x1406
         /// </summary>
         Float = ((int)0x1406)        ,
-        /// <summary>
-        /// Original was GL_2_BYTES = 0x1407
-        /// </summary>
-        Gl2Bytes = ((int)0x1407)        ,
-        /// <summary>
-        /// Original was GL_3_BYTES = 0x1408
-        /// </summary>
-        Gl3Bytes = ((int)0x1408)        ,
-        /// <summary>
-        /// Original was GL_4_BYTES = 0x1409
-        /// </summary>
-        Gl4Bytes = ((int)0x1409)        ,
         /// <summary>
         /// Original was GL_DOUBLE = 0x140A
         /// </summary>
@@ -29681,30 +27837,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Set = ((int)0x150F)        ,
         /// <summary>
-        /// Original was GL_EMISSION = 0x1600
-        /// </summary>
-        Emission = ((int)0x1600)        ,
-        /// <summary>
-        /// Original was GL_SHININESS = 0x1601
-        /// </summary>
-        Shininess = ((int)0x1601)        ,
-        /// <summary>
-        /// Original was GL_AMBIENT_AND_DIFFUSE = 0x1602
-        /// </summary>
-        AmbientAndDiffuse = ((int)0x1602)        ,
-        /// <summary>
-        /// Original was GL_COLOR_INDEXES = 0x1603
-        /// </summary>
-        ColorIndexes = ((int)0x1603)        ,
-        /// <summary>
-        /// Original was GL_MODELVIEW = 0x1700
-        /// </summary>
-        Modelview = ((int)0x1700)        ,
-        /// <summary>
-        /// Original was GL_PROJECTION = 0x1701
-        /// </summary>
-        Projection = ((int)0x1701)        ,
-        /// <summary>
         /// Original was GL_TEXTURE = 0x1702
         /// </summary>
         Texture = ((int)0x1702)        ,
@@ -29720,10 +27852,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_STENCIL = 0x1802
         /// </summary>
         Stencil = ((int)0x1802)        ,
-        /// <summary>
-        /// Original was GL_COLOR_INDEX = 0x1900
-        /// </summary>
-        ColorIndex = ((int)0x1900)        ,
         /// <summary>
         /// Original was GL_STENCIL_INDEX = 0x1901
         /// </summary>
@@ -29757,18 +27885,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         Rgba = ((int)0x1908)        ,
         /// <summary>
-        /// Original was GL_LUMINANCE = 0x1909
-        /// </summary>
-        Luminance = ((int)0x1909)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE_ALPHA = 0x190A
-        /// </summary>
-        LuminanceAlpha = ((int)0x190A)        ,
-        /// <summary>
-        /// Original was GL_BITMAP = 0x1A00
-        /// </summary>
-        Bitmap = ((int)0x1A00)        ,
-        /// <summary>
         /// Original was GL_POINT = 0x1B00
         /// </summary>
         Point = ((int)0x1B00)        ,
@@ -29780,26 +27896,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_FILL = 0x1B02
         /// </summary>
         Fill = ((int)0x1B02)        ,
-        /// <summary>
-        /// Original was GL_RENDER = 0x1C00
-        /// </summary>
-        Render = ((int)0x1C00)        ,
-        /// <summary>
-        /// Original was GL_FEEDBACK = 0x1C01
-        /// </summary>
-        Feedback = ((int)0x1C01)        ,
-        /// <summary>
-        /// Original was GL_SELECT = 0x1C02
-        /// </summary>
-        Select = ((int)0x1C02)        ,
-        /// <summary>
-        /// Original was GL_FLAT = 0x1D00
-        /// </summary>
-        Flat = ((int)0x1D00)        ,
-        /// <summary>
-        /// Original was GL_SMOOTH = 0x1D01
-        /// </summary>
-        Smooth = ((int)0x1D01)        ,
         /// <summary>
         /// Original was GL_KEEP = 0x1E00
         /// </summary>
@@ -29832,66 +27928,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_EXTENSIONS = 0x1F03
         /// </summary>
         Extensions = ((int)0x1F03)        ,
-        /// <summary>
-        /// Original was GL_S = 0x2000
-        /// </summary>
-        S = ((int)0x2000)        ,
-        /// <summary>
-        /// Original was GL_T = 0x2001
-        /// </summary>
-        T = ((int)0x2001)        ,
-        /// <summary>
-        /// Original was GL_R = 0x2002
-        /// </summary>
-        R = ((int)0x2002)        ,
-        /// <summary>
-        /// Original was GL_Q = 0x2003
-        /// </summary>
-        Q = ((int)0x2003)        ,
-        /// <summary>
-        /// Original was GL_MODULATE = 0x2100
-        /// </summary>
-        Modulate = ((int)0x2100)        ,
-        /// <summary>
-        /// Original was GL_DECAL = 0x2101
-        /// </summary>
-        Decal = ((int)0x2101)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_ENV_MODE = 0x2200
-        /// </summary>
-        TextureEnvMode = ((int)0x2200)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_ENV_COLOR = 0x2201
-        /// </summary>
-        TextureEnvColor = ((int)0x2201)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_ENV = 0x2300
-        /// </summary>
-        TextureEnv = ((int)0x2300)        ,
-        /// <summary>
-        /// Original was GL_EYE_LINEAR = 0x2400
-        /// </summary>
-        EyeLinear = ((int)0x2400)        ,
-        /// <summary>
-        /// Original was GL_OBJECT_LINEAR = 0x2401
-        /// </summary>
-        ObjectLinear = ((int)0x2401)        ,
-        /// <summary>
-        /// Original was GL_SPHERE_MAP = 0x2402
-        /// </summary>
-        SphereMap = ((int)0x2402)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_GEN_MODE = 0x2500
-        /// </summary>
-        TextureGenMode = ((int)0x2500)        ,
-        /// <summary>
-        /// Original was GL_OBJECT_PLANE = 0x2501
-        /// </summary>
-        ObjectPlane = ((int)0x2501)        ,
-        /// <summary>
-        /// Original was GL_EYE_PLANE = 0x2502
-        /// </summary>
-        EyePlane = ((int)0x2502)        ,
         /// <summary>
         /// Original was GL_NEAREST = 0x2600
         /// </summary>
@@ -29933,10 +27969,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         TextureWrapT = ((int)0x2803)        ,
         /// <summary>
-        /// Original was GL_CLAMP = 0x2900
-        /// </summary>
-        Clamp = ((int)0x2900)        ,
-        /// <summary>
         /// Original was GL_REPEAT = 0x2901
         /// </summary>
         Repeat = ((int)0x2901)        ,
@@ -29957,118 +27989,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         R3G3B2 = ((int)0x2A10)        ,
         /// <summary>
-        /// Original was GL_V2F = 0x2A20
-        /// </summary>
-        V2f = ((int)0x2A20)        ,
-        /// <summary>
-        /// Original was GL_V3F = 0x2A21
-        /// </summary>
-        V3f = ((int)0x2A21)        ,
-        /// <summary>
-        /// Original was GL_C4UB_V2F = 0x2A22
-        /// </summary>
-        C4ubV2f = ((int)0x2A22)        ,
-        /// <summary>
-        /// Original was GL_C4UB_V3F = 0x2A23
-        /// </summary>
-        C4ubV3f = ((int)0x2A23)        ,
-        /// <summary>
-        /// Original was GL_C3F_V3F = 0x2A24
-        /// </summary>
-        C3fV3f = ((int)0x2A24)        ,
-        /// <summary>
-        /// Original was GL_N3F_V3F = 0x2A25
-        /// </summary>
-        N3fV3f = ((int)0x2A25)        ,
-        /// <summary>
-        /// Original was GL_C4F_N3F_V3F = 0x2A26
-        /// </summary>
-        C4fN3fV3f = ((int)0x2A26)        ,
-        /// <summary>
-        /// Original was GL_T2F_V3F = 0x2A27
-        /// </summary>
-        T2fV3f = ((int)0x2A27)        ,
-        /// <summary>
-        /// Original was GL_T4F_V4F = 0x2A28
-        /// </summary>
-        T4fV4f = ((int)0x2A28)        ,
-        /// <summary>
-        /// Original was GL_T2F_C4UB_V3F = 0x2A29
-        /// </summary>
-        T2fC4ubV3f = ((int)0x2A29)        ,
-        /// <summary>
-        /// Original was GL_T2F_C3F_V3F = 0x2A2A
-        /// </summary>
-        T2fC3fV3f = ((int)0x2A2A)        ,
-        /// <summary>
-        /// Original was GL_T2F_N3F_V3F = 0x2A2B
-        /// </summary>
-        T2fN3fV3f = ((int)0x2A2B)        ,
-        /// <summary>
-        /// Original was GL_T2F_C4F_N3F_V3F = 0x2A2C
-        /// </summary>
-        T2fC4fN3fV3f = ((int)0x2A2C)        ,
-        /// <summary>
-        /// Original was GL_T4F_C4F_N3F_V4F = 0x2A2D
-        /// </summary>
-        T4fC4fN3fV4f = ((int)0x2A2D)        ,
-        /// <summary>
-        /// Original was GL_CLIP_PLANE0 = 0x3000
-        /// </summary>
-        ClipPlane0 = ((int)0x3000)        ,
-        /// <summary>
-        /// Original was GL_CLIP_PLANE1 = 0x3001
-        /// </summary>
-        ClipPlane1 = ((int)0x3001)        ,
-        /// <summary>
-        /// Original was GL_CLIP_PLANE2 = 0x3002
-        /// </summary>
-        ClipPlane2 = ((int)0x3002)        ,
-        /// <summary>
-        /// Original was GL_CLIP_PLANE3 = 0x3003
-        /// </summary>
-        ClipPlane3 = ((int)0x3003)        ,
-        /// <summary>
-        /// Original was GL_CLIP_PLANE4 = 0x3004
-        /// </summary>
-        ClipPlane4 = ((int)0x3004)        ,
-        /// <summary>
-        /// Original was GL_CLIP_PLANE5 = 0x3005
-        /// </summary>
-        ClipPlane5 = ((int)0x3005)        ,
-        /// <summary>
-        /// Original was GL_LIGHT0 = 0x4000
-        /// </summary>
-        Light0 = ((int)0x4000)        ,
-        /// <summary>
-        /// Original was GL_LIGHT1 = 0x4001
-        /// </summary>
-        Light1 = ((int)0x4001)        ,
-        /// <summary>
-        /// Original was GL_LIGHT2 = 0x4002
-        /// </summary>
-        Light2 = ((int)0x4002)        ,
-        /// <summary>
-        /// Original was GL_LIGHT3 = 0x4003
-        /// </summary>
-        Light3 = ((int)0x4003)        ,
-        /// <summary>
-        /// Original was GL_LIGHT4 = 0x4004
-        /// </summary>
-        Light4 = ((int)0x4004)        ,
-        /// <summary>
-        /// Original was GL_LIGHT5 = 0x4005
-        /// </summary>
-        Light5 = ((int)0x4005)        ,
-        /// <summary>
-        /// Original was GL_LIGHT6 = 0x4006
-        /// </summary>
-        Light6 = ((int)0x4006)        ,
-        /// <summary>
-        /// Original was GL_LIGHT7 = 0x4007
-        /// </summary>
-        Light7 = ((int)0x4007)        ,
-        /// <summary>
         /// Original was GL_POLYGON_OFFSET_FILL = 0x8037
         /// </summary>
         PolygonOffsetFill = ((int)0x8037)        ,
@@ -30076,82 +27996,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_POLYGON_OFFSET_FACTOR = 0x8038
         /// </summary>
         PolygonOffsetFactor = ((int)0x8038)        ,
-        /// <summary>
-        /// Original was GL_ALPHA4 = 0x803B
-        /// </summary>
-        Alpha4 = ((int)0x803B)        ,
-        /// <summary>
-        /// Original was GL_ALPHA8 = 0x803C
-        /// </summary>
-        Alpha8 = ((int)0x803C)        ,
-        /// <summary>
-        /// Original was GL_ALPHA12 = 0x803D
-        /// </summary>
-        Alpha12 = ((int)0x803D)        ,
-        /// <summary>
-        /// Original was GL_ALPHA16 = 0x803E
-        /// </summary>
-        Alpha16 = ((int)0x803E)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE4 = 0x803F
-        /// </summary>
-        Luminance4 = ((int)0x803F)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE8 = 0x8040
-        /// </summary>
-        Luminance8 = ((int)0x8040)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE12 = 0x8041
-        /// </summary>
-        Luminance12 = ((int)0x8041)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE16 = 0x8042
-        /// </summary>
-        Luminance16 = ((int)0x8042)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE4_ALPHA4 = 0x8043
-        /// </summary>
-        Luminance4Alpha4 = ((int)0x8043)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE6_ALPHA2 = 0x8044
-        /// </summary>
-        Luminance6Alpha2 = ((int)0x8044)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE8_ALPHA8 = 0x8045
-        /// </summary>
-        Luminance8Alpha8 = ((int)0x8045)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE12_ALPHA4 = 0x8046
-        /// </summary>
-        Luminance12Alpha4 = ((int)0x8046)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE12_ALPHA12 = 0x8047
-        /// </summary>
-        Luminance12Alpha12 = ((int)0x8047)        ,
-        /// <summary>
-        /// Original was GL_LUMINANCE16_ALPHA16 = 0x8048
-        /// </summary>
-        Luminance16Alpha16 = ((int)0x8048)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY = 0x8049
-        /// </summary>
-        Intensity = ((int)0x8049)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY4 = 0x804A
-        /// </summary>
-        Intensity4 = ((int)0x804A)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY8 = 0x804B
-        /// </summary>
-        Intensity8 = ((int)0x804B)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY12 = 0x804C
-        /// </summary>
-        Intensity12 = ((int)0x804C)        ,
-        /// <summary>
-        /// Original was GL_INTENSITY16 = 0x804D
-        /// </summary>
-        Intensity16 = ((int)0x804D)        ,
         /// <summary>
         /// Original was GL_RGB4 = 0x804F
         /// </summary>
@@ -30221,14 +28065,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         TextureAlphaSize = ((int)0x805F)        ,
         /// <summary>
-        /// Original was GL_TEXTURE_LUMINANCE_SIZE = 0x8060
-        /// </summary>
-        TextureLuminanceSize = ((int)0x8060)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_INTENSITY_SIZE = 0x8061
-        /// </summary>
-        TextureIntensitySize = ((int)0x8061)        ,
-        /// <summary>
         /// Original was GL_PROXY_TEXTURE_1D = 0x8063
         /// </summary>
         ProxyTexture1D = ((int)0x8063)        ,
@@ -30237,14 +28073,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         ProxyTexture2D = ((int)0x8064)        ,
         /// <summary>
-        /// Original was GL_TEXTURE_PRIORITY = 0x8066
-        /// </summary>
-        TexturePriority = ((int)0x8066)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_RESIDENT = 0x8067
-        /// </summary>
-        TextureResident = ((int)0x8067)        ,
-        /// <summary>
         /// Original was GL_TEXTURE_BINDING_1D = 0x8068
         /// </summary>
         TextureBinding1D = ((int)0x8068)        ,
@@ -30252,118 +28080,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_TEXTURE_BINDING_2D = 0x8069
         /// </summary>
         TextureBinding2D = ((int)0x8069)        ,
-        /// <summary>
-        /// Original was GL_VERTEX_ARRAY = 0x8074
-        /// </summary>
-        VertexArray = ((int)0x8074)        ,
-        /// <summary>
-        /// Original was GL_NORMAL_ARRAY = 0x8075
-        /// </summary>
-        NormalArray = ((int)0x8075)        ,
-        /// <summary>
-        /// Original was GL_COLOR_ARRAY = 0x8076
-        /// </summary>
-        ColorArray = ((int)0x8076)        ,
-        /// <summary>
-        /// Original was GL_INDEX_ARRAY = 0x8077
-        /// </summary>
-        IndexArray = ((int)0x8077)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_COORD_ARRAY = 0x8078
-        /// </summary>
-        TextureCoordArray = ((int)0x8078)        ,
-        /// <summary>
-        /// Original was GL_EDGE_FLAG_ARRAY = 0x8079
-        /// </summary>
-        EdgeFlagArray = ((int)0x8079)        ,
-        /// <summary>
-        /// Original was GL_VERTEX_ARRAY_SIZE = 0x807A
-        /// </summary>
-        VertexArraySize = ((int)0x807A)        ,
-        /// <summary>
-        /// Original was GL_VERTEX_ARRAY_TYPE = 0x807B
-        /// </summary>
-        VertexArrayType = ((int)0x807B)        ,
-        /// <summary>
-        /// Original was GL_VERTEX_ARRAY_STRIDE = 0x807C
-        /// </summary>
-        VertexArrayStride = ((int)0x807C)        ,
-        /// <summary>
-        /// Original was GL_NORMAL_ARRAY_TYPE = 0x807E
-        /// </summary>
-        NormalArrayType = ((int)0x807E)        ,
-        /// <summary>
-        /// Original was GL_NORMAL_ARRAY_STRIDE = 0x807F
-        /// </summary>
-        NormalArrayStride = ((int)0x807F)        ,
-        /// <summary>
-        /// Original was GL_COLOR_ARRAY_SIZE = 0x8081
-        /// </summary>
-        ColorArraySize = ((int)0x8081)        ,
-        /// <summary>
-        /// Original was GL_COLOR_ARRAY_TYPE = 0x8082
-        /// </summary>
-        ColorArrayType = ((int)0x8082)        ,
-        /// <summary>
-        /// Original was GL_COLOR_ARRAY_STRIDE = 0x8083
-        /// </summary>
-        ColorArrayStride = ((int)0x8083)        ,
-        /// <summary>
-        /// Original was GL_INDEX_ARRAY_TYPE = 0x8085
-        /// </summary>
-        IndexArrayType = ((int)0x8085)        ,
-        /// <summary>
-        /// Original was GL_INDEX_ARRAY_STRIDE = 0x8086
-        /// </summary>
-        IndexArrayStride = ((int)0x8086)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_COORD_ARRAY_SIZE = 0x8088
-        /// </summary>
-        TextureCoordArraySize = ((int)0x8088)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_COORD_ARRAY_TYPE = 0x8089
-        /// </summary>
-        TextureCoordArrayType = ((int)0x8089)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_COORD_ARRAY_STRIDE = 0x808A
-        /// </summary>
-        TextureCoordArrayStride = ((int)0x808A)        ,
-        /// <summary>
-        /// Original was GL_EDGE_FLAG_ARRAY_STRIDE = 0x808C
-        /// </summary>
-        EdgeFlagArrayStride = ((int)0x808C)        ,
-        /// <summary>
-        /// Original was GL_VERTEX_ARRAY_POINTER = 0x808E
-        /// </summary>
-        VertexArrayPointer = ((int)0x808E)        ,
-        /// <summary>
-        /// Original was GL_NORMAL_ARRAY_POINTER = 0x808F
-        /// </summary>
-        NormalArrayPointer = ((int)0x808F)        ,
-        /// <summary>
-        /// Original was GL_COLOR_ARRAY_POINTER = 0x8090
-        /// </summary>
-        ColorArrayPointer = ((int)0x8090)        ,
-        /// <summary>
-        /// Original was GL_INDEX_ARRAY_POINTER = 0x8091
-        /// </summary>
-        IndexArrayPointer = ((int)0x8091)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_COORD_ARRAY_POINTER = 0x8092
-        /// </summary>
-        TextureCoordArrayPointer = ((int)0x8092)        ,
-        /// <summary>
-        /// Original was GL_EDGE_FLAG_ARRAY_POINTER = 0x8093
-        /// </summary>
-        EdgeFlagArrayPointer = ((int)0x8093)        ,
-        /// <summary>
-        /// Original was GL_ALL_ATTRIB_BITS = 0xFFFFFFFF
-        /// </summary>
-        AllAttribBits = unchecked((int)0xFFFFFFFF)        ,
-        /// <summary>
-        /// Original was GL_CLIENT_ALL_ATTRIB_BITS = 0xFFFFFFFF
-        /// </summary>
-        ClientAllAttribBits = unchecked((int)0xFFFFFFFF)        ,
         /// <summary>
         /// Original was GL_ONE = 1
         /// </summary>
@@ -30492,18 +28208,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         TextureMaxLevel = ((int)0x813D)        ,
         /// <summary>
-        /// Original was GL_LIGHT_MODEL_COLOR_CONTROL = 0x81F8
-        /// </summary>
-        LightModelColorControl = ((int)0x81F8)        ,
-        /// <summary>
-        /// Original was GL_SINGLE_COLOR = 0x81F9
-        /// </summary>
-        SingleColor = ((int)0x81F9)        ,
-        /// <summary>
-        /// Original was GL_SEPARATE_SPECULAR_COLOR = 0x81FA
-        /// </summary>
-        SeparateSpecularColor = ((int)0x81FA)        ,
-        /// <summary>
         /// Original was GL_UNSIGNED_BYTE_2_3_3_REV = 0x8362
         /// </summary>
         UnsignedByte233Rev = ((int)0x8362)        ,
@@ -30532,10 +28236,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         UnsignedInt2101010Rev = ((int)0x8368)        ,
         /// <summary>
-        /// Original was GL_ALIASED_POINT_SIZE_RANGE = 0x846D
-        /// </summary>
-        AliasedPointSizeRange = ((int)0x846D)        ,
-        /// <summary>
         /// Original was GL_ALIASED_LINE_WIDTH_RANGE = 0x846E
         /// </summary>
         AliasedLineWidthRange = ((int)0x846E)        ,
@@ -30546,10 +28246,6 @@ namespace OpenTK.Graphics.OpenGL4
     /// </summary>
     public enum Version13 : int
     {
-        /// <summary>
-        /// Original was GL_MULTISAMPLE_BIT = 0x20000000
-        /// </summary>
-        MultisampleBit = ((int)0x20000000)        ,
         /// <summary>
         /// Original was GL_MULTISAMPLE = 0x809D
         /// </summary>
@@ -30846,29 +28542,9 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         BlendSrcAlpha = ((int)0x80CB)        ,
         /// <summary>
-        /// Original was GL_POINT_SIZE_MIN = 0x8126
-        /// </summary>
-        PointSizeMin = ((int)0x8126)        ,
-        /// <summary>
-        /// Original was GL_POINT_SIZE_MAX = 0x8127
-        /// </summary>
-        PointSizeMax = ((int)0x8127)        ,
-        /// <summary>
         /// Original was GL_POINT_FADE_THRESHOLD_SIZE = 0x8128
         /// </summary>
         PointFadeThresholdSize = ((int)0x8128)        ,
-        /// <summary>
-        /// Original was GL_POINT_DISTANCE_ATTENUATION = 0x8129
-        /// </summary>
-        PointDistanceAttenuation = ((int)0x8129)        ,
-        /// <summary>
-        /// Original was GL_GENERATE_MIPMAP = 0x8191
-        /// </summary>
-        GenerateMipmap = ((int)0x8191)        ,
-        /// <summary>
-        /// Original was GL_GENERATE_MIPMAP_HINT = 0x8192
-        /// </summary>
-        GenerateMipmapHint = ((int)0x8192)        ,
         /// <summary>
         /// Original was GL_DEPTH_COMPONENT16 = 0x81A5
         /// </summary>
@@ -31757,14 +29433,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_TEXTURE_ALPHA_TYPE = 0x8C13
         /// </summary>
         TextureAlphaType = ((int)0x8C13)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_LUMINANCE_TYPE = 0x8C14
-        /// </summary>
-        TextureLuminanceType = ((int)0x8C14)        ,
-        /// <summary>
-        /// Original was GL_TEXTURE_INTENSITY_TYPE = 0x8C15
-        /// </summary>
-        TextureIntensityType = ((int)0x8C15)        ,
         /// <summary>
         /// Original was GL_TEXTURE_DEPTH_TYPE = 0x8C16
         /// </summary>

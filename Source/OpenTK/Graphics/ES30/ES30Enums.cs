@@ -167,7 +167,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 118 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 115 other functions
     /// </summary>
     public enum All : int
     {
@@ -9240,6 +9240,38 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
+    /// Used in GL.MapBufferRange
+    /// </summary>
+    [Flags]
+    public enum BufferAccessMask : int
+    {
+        /// <summary>
+        /// Original was GL_MAP_READ_BIT = 0x0001
+        /// </summary>
+        MapReadBit = ((int)0x0001)        ,
+        /// <summary>
+        /// Original was GL_MAP_WRITE_BIT = 0x0002
+        /// </summary>
+        MapWriteBit = ((int)0x0002)        ,
+        /// <summary>
+        /// Original was GL_MAP_INVALIDATE_RANGE_BIT = 0x0004
+        /// </summary>
+        MapInvalidateRangeBit = ((int)0x0004)        ,
+        /// <summary>
+        /// Original was GL_MAP_INVALIDATE_BUFFER_BIT = 0x0008
+        /// </summary>
+        MapInvalidateBufferBit = ((int)0x0008)        ,
+        /// <summary>
+        /// Original was GL_MAP_FLUSH_EXPLICIT_BIT = 0x0010
+        /// </summary>
+        MapFlushExplicitBit = ((int)0x0010)        ,
+        /// <summary>
+        /// Original was GL_MAP_UNSYNCHRONIZED_BIT = 0x0020
+        /// </summary>
+        MapUnsynchronizedBit = ((int)0x0020)        ,
+    }
+
+    /// <summary>
     /// Used in GL.GetBufferParameter
     /// </summary>
     public enum BufferParameterName : int
@@ -9255,18 +9287,57 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.BindBuffer, GL.BufferData and 2 other functions
+    /// Used in GL.BindBufferBase, GL.BindBufferRange
+    /// </summary>
+    public enum BufferRangeTarget : int
+    {
+        /// <summary>
+        /// Original was GL_UNIFORM_BUFFER = 0x8A11
+        /// </summary>
+        UniformBuffer = ((int)0x8A11)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_BUFFER = 0x8C8E
+        /// </summary>
+        TransformFeedbackBuffer = ((int)0x8C8E)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.BindBuffer, GL.BufferData and 3 other functions
     /// </summary>
     public enum BufferTarget : int
     {
         /// <summary>
-        /// Original was GL_ArrayBuffer = 0X8892
+        /// Original was GL_ARRAY_BUFFER = 0x8892
         /// </summary>
-        ArrayBuffer = ((int)0X8892)        ,
+        ArrayBuffer = ((int)0x8892)        ,
         /// <summary>
-        /// Original was GL_ElementArrayBuffer = 0X8893
+        /// Original was GL_ELEMENT_ARRAY_BUFFER = 0x8893
         /// </summary>
-        ElementArrayBuffer = ((int)0X8893)        ,
+        ElementArrayBuffer = ((int)0x8893)        ,
+        /// <summary>
+        /// Original was GL_PIXEL_PACK_BUFFER = 0x88EB
+        /// </summary>
+        PixelPackBuffer = ((int)0x88EB)        ,
+        /// <summary>
+        /// Original was GL_PIXEL_UNPACK_BUFFER = 0x88EC
+        /// </summary>
+        PixelUnpackBuffer = ((int)0x88EC)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_BUFFER = 0x8A11
+        /// </summary>
+        UniformBuffer = ((int)0x8A11)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_BUFFER = 0x8C8E
+        /// </summary>
+        TransformFeedbackBuffer = ((int)0x8C8E)        ,
+        /// <summary>
+        /// Original was GL_COPY_READ_BUFFER = 0x8F36
+        /// </summary>
+        CopyReadBuffer = ((int)0x8F36)        ,
+        /// <summary>
+        /// Original was GL_COPY_WRITE_BUFFER = 0x8F37
+        /// </summary>
+        CopyWriteBuffer = ((int)0x8F37)        ,
     }
 
     /// <summary>
@@ -9286,6 +9357,49 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_DynamicDraw = 0X88e8
         /// </summary>
         DynamicDraw = ((int)0X88e8)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum BufferUsageHint : int
+    {
+        /// <summary>
+        /// Original was GL_STREAM_DRAW = 0x88E0
+        /// </summary>
+        StreamDraw = ((int)0x88E0)        ,
+        /// <summary>
+        /// Original was GL_STREAM_READ = 0x88E1
+        /// </summary>
+        StreamRead = ((int)0x88E1)        ,
+        /// <summary>
+        /// Original was GL_STREAM_COPY = 0x88E2
+        /// </summary>
+        StreamCopy = ((int)0x88E2)        ,
+        /// <summary>
+        /// Original was GL_STATIC_DRAW = 0x88E4
+        /// </summary>
+        StaticDraw = ((int)0x88E4)        ,
+        /// <summary>
+        /// Original was GL_STATIC_READ = 0x88E5
+        /// </summary>
+        StaticRead = ((int)0x88E5)        ,
+        /// <summary>
+        /// Original was GL_STATIC_COPY = 0x88E6
+        /// </summary>
+        StaticCopy = ((int)0x88E6)        ,
+        /// <summary>
+        /// Original was GL_DYNAMIC_DRAW = 0x88E8
+        /// </summary>
+        DynamicDraw = ((int)0x88E8)        ,
+        /// <summary>
+        /// Original was GL_DYNAMIC_READ = 0x88E9
+        /// </summary>
+        DynamicRead = ((int)0x88E9)        ,
+        /// <summary>
+        /// Original was GL_DYNAMIC_COPY = 0x88EA
+        /// </summary>
+        DynamicCopy = ((int)0x88EA)        ,
     }
 
     /// <summary>
