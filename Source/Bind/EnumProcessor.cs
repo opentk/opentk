@@ -195,14 +195,16 @@ namespace Bind
         {
             foreach (var e in enums.Values)
             {
-                var processed_constants = new Dictionary<string, Constant>(e.ConstantCollection.Count);
+                var processed_constants = new SortedDictionary<string, Constant>();
                 foreach (Constant c in e.ConstantCollection.Values)
                 {
                     c.Name = TranslateConstantName(c.Name, false);
                     c.Value = TranslateConstantValue(c.Value);
                     c.Reference = TranslateEnumName(c.Reference);
                     if (!processed_constants.ContainsKey(c.Name))
+                    {
                         processed_constants.Add(c.Name, c);
+                    }
                 }
                 e.ConstantCollection = processed_constants;
 
