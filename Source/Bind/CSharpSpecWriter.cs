@@ -327,6 +327,7 @@ namespace Bind
                 WriteDocumentation(sw, f);
             }
             WriteMethod(sw, f, enums);
+            sw.WriteLine();
             return current;
         }
 
