@@ -298,7 +298,7 @@
 
     <function name="BeginTransformFeedback" extension="Core">
       <param name="primitiveMode">
-        <type>BeginFeedbackMode</type>
+        <type>TransformFeedbackPrimitiveType</type>
       </param>
     </function>
 
@@ -334,7 +334,7 @@
 
     <function name="GetTransformFeedbackVarying" extension="Core">
       <param name="type">
-        <type>ActiveAttribType</type>
+        <type>TransformFeedbackType</type>
       </param>
     </function>
 
@@ -871,7 +871,7 @@
         <type>ShaderType</type>
       </param>
       <param name="precisiontype">
-        <type>ShaderPrecisionType</type>
+        <type>ShaderPrecision</type>
       </param>
     </function>
 
@@ -3618,7 +3618,7 @@
       <token name="SHADER_SOURCE_LENGTH" value="0x8B88" />
       <token name="SHADER_TYPE" value="0x8B4F" />
     </enum>
-    <enum name="ShaderPrecisionType">
+    <enum name="ShaderPrecision">
       <use enum="VERSION_4_1" token="LOW_FLOAT" />
       <use enum="VERSION_4_1" token="MEDIUM_FLOAT" />
       <use enum="VERSION_4_1" token="HIGH_FLOAT" />
@@ -3948,8 +3948,49 @@
       <token name="INTERLEAVED_ATTRIBS" value="0x8C8C" />
       <token name="SEPARATE_ATTRIBS" value="0x8C8D" />
     </enum>
+    <enum name="TransformFeedbackPrimitiveType">
+      <use enum="PrimitiveType" token="POINTS" />
+      <use enum="PrimitiveType" token="LINES" />
+      <use enum="PrimitiveType" token="TRIANGLES" />
+    </enum>
     <enum name="TransformFeedbackTarget">
       <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK" />
+    </enum>
+    <enum name="TransformFeedbackType">
+      <use token="FLOAT" />
+      <use token="FLOAT_VEC2" />
+      <use token="FLOAT_VEC3" />
+      <use token="FLOAT_VEC4" />
+      <use token="FLOAT_MAT2" />
+      <use token="FLOAT_MAT3" />
+      <use token="FLOAT_MAT4" />
+      <use token="FLOAT_MAT2x3" />
+      <use token="FLOAT_MAT2x4" />
+      <use token="FLOAT_MAT3x2" />
+      <use token="FLOAT_MAT3x4" />
+      <use token="FLOAT_MAT4x2" />
+      <use token="FLOAT_MAT4x3" />
+      <use token="INT" />
+      <use token="INT_VEC2" />
+      <use token="INT_VEC3" />
+      <use token="INT_VEC4" />
+      <use token="UNSIGNED_INT" />
+      <use token="UNSIGNED_INT_VEC2" />
+      <use token="UNSIGNED_INT_VEC3" />
+      <use token="UNSIGNED_INT_VEC4" />
+      <use token="DOUBLE" />
+      <use token="DOUBLE_VEC2" />
+      <use token="DOUBLE_VEC3" />
+      <use token="DOUBLE_VEC4" />
+      <use token="DOUBLE_MAT2" />
+      <use token="DOUBLE_MAT3" />
+      <use token="DOUBLE_MAT4" />
+      <use token="DOUBLE_MAT2x3" />
+      <use token="DOUBLE_MAT2x4" />
+      <use token="DOUBLE_MAT3x2" />
+      <use token="DOUBLE_MAT3x4" />
+      <use token="DOUBLE_MAT4x2" />
+      <use token="DOUBLE_MAT4x3" />
     </enum>
     <enum name="VertexAttribDoubleType">
       <use enum="VERSION_4_1" token="DOUBLE" />
@@ -4422,6 +4463,16 @@
       <token name="OneMinusConstantAlpha" value="0X8004" />
       <token name="SrcAlphaSaturate" value="0X0308" remark="only valid for source RGB/Alpha" />
     </enum>
+    
+    <enum name="BlitFramebufferFilter">
+      <use token="LINEAR" />
+      <use token="NEAREST" />
+    </enum>
+    
+    <!-- OES_mapbuffer -->
+    <enum name="BufferPointer">
+      <use token="BUFFER_MAP_POINTER" />
+    </enum>
 
     <enum name="BufferTarget">
       <token name="ArrayBuffer" value="0X8892" />
@@ -4495,6 +4546,15 @@
       <use token="DEBUG_TYPE_PORTABILITY" />
       <use token="DEBUG_TYPE_PUSH_GROUP" />
       <use token="DEBUG_TYPE_POP_GROUP" />
+    </enum>
+    
+    <!-- EXT_disjoint_timer_query -->
+    <enum name="GetQueryObjectParam">
+      <use token="CURRENT_RESULT" />
+      <use token="CURRENT_RESULT_AVAILABLE" />
+    </enum>
+    <enum name="GetQueryParam">
+      <use token="CURRENT_QUERY" />
     </enum>
      
     <enum name="VertexAttribPointerType">
@@ -4614,8 +4674,26 @@
       <token name="OutOfMemory" value="0X0505" />
       <token name="InvalidFramebufferOperation " value="0X0506" />
     </enum>
-     
+    
     <enum name="ProgramParameter">
+      <use token="DELETE_STATUS" />
+      <use token="LINK_STATUS" />
+      <use token="VALIDATE_STATUS" />
+      <use token="INFO_LOG_LENGTH" />
+      <use token="ATTACHED_SHADERS" />
+      <use token="ACTIVE_ATTRIBUTES" />
+      <use token="ACTIVE_ATTRIBUTE_MAX_LENGTH" />
+      <use token="ACTIVE_UNIFORMS" />
+      <use token="ACTIVE_UNIFORM_MAX_LENGTH" />
+      <use token="ACTIVE_UNIFORM_BLOCKS" />
+      <use token="ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH" />
+      <use token="TRANSFORM_FEEDBACK_BUFFER_MODE" />
+      <use token="TRANSFORM_FEEDBACK_VARYINGS" />
+      <use token="TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH" />
+      <use token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
+    </enum>
+     
+    <enum name="ProgramParameterName">
       <token name="DeleteStatus" value="0X8b80" />
       <token name="LinkStatus" value="0X8b82" />
       <token name="ValidateStatus" value="0X8b83" />
@@ -4801,6 +4879,11 @@
       <token name="FramebufferIncompleteMissingAttachment" value="0X8cd7" />
       <token name="FramebufferIncompleteDimensions" value="0X8cd9" />
       <token name="FramebufferUnsupported" value="0X8cdd" />
+    </enum>
+    
+    <enum name="QueryTarget">
+      <use token="ANY_SAMPLES_PASSED" />
+      <use token="ANY_SAMPLES_PASSED_CONSERVATIVE" />
     </enum>
 
     <enum name="RenderbufferTarget">
@@ -5008,7 +5091,7 @@
       <param name="target"><type>TransformFeedbackTarget</type></param>
     </function>
     <function name="BeginTransformFeedback">
-      <param name="primitiveMode"><type>BeginFeedbackMode</type></param>
+      <param name="primitiveMode"><type>TransformFeedbackPrimitiveType</type></param>
     </function>
     
     <!-- Reading and Copying Pixels [4.3.1-2] -->
@@ -5031,13 +5114,141 @@
     <function name="CullFace">
       <param name="face"><type>CullFaceMode</type></param>
     </function>
+    
+    <!-- Vertex Arrays [2.8] -->
+    <function name="VertexAttribIPointer">
+      <param name="type"><type>VertexAttribIntegerType</type></param>
+    </function>
+    
+    <!-- Program Objects [2.11.3-4] -->
+    <function name="ProgramParameter">
+      <param name="pname"><type>ProgramParameterName</type></param>
+    </function>
+    
+    <!-- Uniform Variables [2.11.6] -->
+    <function name="GetActiveUniform">
+      <param name="type"><type>ActiveUniformType</type></param>
+    </function>
+    <function name="GetActiveUniforms">
+      <param name="pname"><type>ActiveUniformParameter</type></param>
+    </function>
+    <function name="GetActiveUniformBlock">
+      <param name="pname"><type>ActiveUniformBlockParameter</type></param>
+    </function>
+    
+    <!-- Output Variables [2.11.8] -->
+    <function name="GetTransformFeedbackVarying">
+      <param name="type"><type>TransformFeedbackType</type></param>
+    </function>
+    <function name="TransformFeedbackVaryings">
+      <param name="bufferMode"><type>TransformFeedbackMode</type></param>
+    </function>
+
+	<!-- Shader Queries [6.1.12] -->
+    <function name="GetShader">
+      <param name="pname"><type>ShaderParameter</type></param> 
+    </function>
+    <function name="GetShaderPrecisionFormat">
+      <param name="shadertype"><type>ShaderType</type></param>
+      <param name="precisiontype"><type>ShaderPrecision</type></param>
+    </function>
+    <function name="GetVertexAttrib">
+      <param name="pname"><type>VertexAttribParameter</type></param> 
+    </function>
+    <function name="GetVertexAttribPointer">
+      <param name="pname"><type>VertexAttribPointerParameter</type></param> 
+    </function>
+    
+    <!-- Program Queries [6.1.12] -->
+    <function name="GetProgram" extension="Core" version="2.0">
+      <param name="pname"><type>ProgramParameter</type></param>
+    </function>
+    
    </replace>
   
   <add name="gles2" version="3.0">
-    <enum name="BeginFeedbackMode">
-      <use token="TRIANGLES" />
-      <use token="LINES" />
-      <use token="POINTS" />
+    <enum name="ActiveAttribType">
+      <use token="FLOAT" />
+      <use token="FLOAT_VEC2" />
+      <use token="FLOAT_VEC3" />
+      <use token="FLOAT_VEC4" />
+      <use token="FLOAT_MAT2" />
+      <use token="FLOAT_MAT3" />
+      <use token="FLOAT_MAT4" />
+      <use token="FLOAT_MAT2x3" />
+      <use token="FLOAT_MAT2x4" />
+      <use token="FLOAT_MAT3x2" />
+      <use token="FLOAT_MAT3x4" />
+      <use token="FLOAT_MAT4x2" />
+      <use token="FLOAT_MAT4x3" />
+      <use token="INT" />
+      <use token="INT_VEC2" />
+      <use token="INT_VEC3" />
+      <use token="INT_VEC4" />
+      <use token="UNSIGNED_INT" />
+      <use token="UNSIGNED_INT_VEC2" />
+      <use token="UNSIGNED_INT_VEC3" />
+      <use token="UNSIGNED_INT_VEC4" />
+    </enum>
+    <enum name="ActiveUniformBlockParameter">
+      <use token="UNIFORM_BLOCK_BINDING" />
+      <use token="UNIFORM_BLOCK_DATA_SIZE" />
+      <use token="UNIFORM_BLOCK_NAME_LENGTH" />
+      <use token="UNIFORM_BLOCK_ACTIVE_UNIFORMS" />
+      <use token="UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES" />
+      <use token="UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER" />
+      <use token="UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER" />
+    </enum>
+    <enum name="ActiveUniformParameter">
+      <use token="UNIFORM_TYPE" />
+      <use token="UNIFORM_SIZE" />
+      <use token="UNIFORM_NAME_LENGTH" />
+      <use token="UNIFORM_BLOCK_INDEX" />
+      <use token="UNIFORM_OFFSET" />
+      <use token="UNIFORM_ARRAY_STRIDE" />
+      <use token="UNIFORM_MATRIX_STRIDE" />
+      <use token="UNIFORM_IS_ROW_MAJOR" />
+    </enum>
+    <enum name="ActiveUniformType">
+      <use token="BOOL" />
+      <use token="BOOL_VEC2" />
+      <use token="BOOL_VEC3" />
+      <use token="BOOL_VEC4" />
+      <use token="FLOAT" />
+      <use token="FLOAT_VEC2" />
+      <use token="FLOAT_VEC3" />
+      <use token="FLOAT_VEC4" />
+      <use token="INT" />
+      <use token="INT_VEC2" />
+      <use token="INT_VEC3" />
+      <use token="INT_VEC4" />
+      <use token="UNSIGNED_INT" />
+      <use token="UNSIGNED_INT_VEC2" />
+      <use token="UNSIGNED_INT_VEC3" />
+      <use token="UNSIGNED_INT_VEC4" />
+      <use token="FLOAT_MAT2" />
+      <use token="FLOAT_MAT3" />
+      <use token="FLOAT_MAT4" />
+      <use token="FLOAT_MAT2x3" />
+      <use token="FLOAT_MAT2x4" />
+      <use token="FLOAT_MAT3x4" />
+      <use token="FLOAT_MAT4x2" />
+      <use token="FLOAT_MAT4x3" />
+      <use token="SAMPLER_2D" />
+      <use token="SAMPLER_2D_ARRAY" />
+      <use token="SAMPLER_3D" />
+      <use token="SAMPLER_CUBE" />
+      <use token="SAMPLER_2D_SHADOW" />
+      <use token="SAMPLER_2D_ARRAY_SHADOW" />
+      <use token="SAMPLER_CUBE_SHADOW" />
+      <use token="INT_SAMPLER_2D" />
+      <use token="INT_SAMPLER_3D" />
+      <use token="INT_SAMPLER_CUBE" />
+      <use token="INT_SAMPLER_2D_ARRAY" />
+      <use token="UNSIGNED_INT_SAMPLER_2D" />
+      <use token="UNSIGNED_INT_SAMPLER_3D" />
+      <use token="UNSIGNED_INT_SAMPLER_CUBE" />
+      <use token="UNSIGNED_INT_SAMPLER_2D_ARRAY" />
     </enum>
     <enum name="BlitFramebufferFilter">
       <use token="LINEAR" />
@@ -5099,9 +5310,15 @@
       <use token="BACK" />
       <use token="FRONT_AND_BACK" />
     </enum>
+    <enum name="DrawElementsType">
+      <use token="UNSIGNED_BYTE" />
+      <use token="UNSIGNED_SHORT" />
+      <use token="UNSIGNED_INT" />
+    </enum>
     <enum name="EnableCap">
-      <use token="CULL_FACE" />
-      <use token="POLYGON_OFFSET_FILL" />
+      <use token="CULL_FACE" /> <!-- Polygons [3.6] -->
+      <use token="POLYGON_OFFSET_FILL" />  <!-- Polygons [3.6] -->
+      <use token="PRIMITIVE_RESTART_FIXED_INDEX" /> <!-- Vertex Arrays [2.8] -->
     </enum>
     <enum name="FrontFaceDirection">
       <use token="CCW" />
@@ -5123,6 +5340,23 @@
       <use token="UNSIGNED_INT_2_10_10_10_REV" />
       <use token="UNSIGNED_BYTE" />
       <use token="UNSIGNED_INT" />
+    </enum>
+    <enum name="ProgramParameter">
+      <use token="DELETE_STATUS" />
+      <use token="LINK_STATUS" />
+      <use token="VALIDATE_STATUS" />
+      <use token="INFO_LOG_LENGTH" />
+      <use token="ATTACHED_SHADERS" />
+      <use token="ACTIVE_ATTRIBUTES" />
+      <use token="ACTIVE_ATTRIBUTE_MAX_LENGTH" />
+      <use token="ACTIVE_UNIFORMS" />
+      <use token="ACTIVE_UNIFORM_MAX_LENGTH" />
+      <use token="ACTIVE_UNIFORM_BLOCKS" />
+      <use token="ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH" />
+      <use token="TRANSFORM_FEEDBACK_BUFFER_MODE" />
+      <use token="TRANSFORM_FEEDBACK_VARYINGS" />
+      <use token="TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH" />
+      <use token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
     </enum>
     <enum name="QueryTarget">
       <use token="ANY_SAMPLES_PASSED" />
@@ -5149,9 +5383,96 @@
       <use token="COLOR_ATTACHMENT14" />
       <use token="COLOR_ATTACHMENT15" />
     </enum>
+    <enum name="ShaderParameter">
+      <use token="ShaderType" />
+      <use token="DeleteStatus" />
+      <use token="CompileStatus" />
+      <use token="InfoLogLength" />
+      <use token="ShaderSourceLength" />
+    </enum>
+    <enum name="ShaderPrecision">
+      <use token="LOW_FLOAT" />
+      <use token="MEDIUM_FLOAT" />
+      <use token="HIGH_FLOAT" />
+      <use token="LOW_INT" />
+      <use token="MEDIUM_INT" />
+      <use token="HIGH_INT" />
+    </enum>
+    <enum name="ShaderType">
+      <use token="VERTEX_SHADER" />
+      <use token="FRAGMENT_SHADER" />
+    </enum>
+    <enum name="TransformFeedbackMode">
+      <use token="INTERLEAVED_ATTRIBS" />
+      <use token="SEPARATE_ATTRIBS" />
+    </enum>
+    <enum name="TransformFeedbackPrimitiveType">
+      <use token="TRIANGLES" />
+      <use token="LINES" />
+      <use token="POINTS" />
+    </enum>
     <enum name="TransformFeedbackTarget">
       <use token="TRANSFORM_FEEDBACK" />
     </enum>
+    <enum name="TransformFeedbackType">
+      <use token="FLOAT" />
+      <use token="FLOAT_VEC2" />
+      <use token="FLOAT_VEC3" />
+      <use token="FLOAT_VEC4" />
+      <use token="FLOAT_MAT2" />
+      <use token="FLOAT_MAT3" />
+      <use token="FLOAT_MAT4" />
+      <use token="FLOAT_MAT2x3" />
+      <use token="FLOAT_MAT2x4" />
+      <use token="FLOAT_MAT3x2" />
+      <use token="FLOAT_MAT3x4" />
+      <use token="FLOAT_MAT4x2" />
+      <use token="FLOAT_MAT4x3" />
+      <use token="INT" />
+      <use token="INT_VEC2" />
+      <use token="INT_VEC3" />
+      <use token="INT_VEC4" />
+      <use token="UNSIGNED_INT" />
+      <use token="UNSIGNED_INT_VEC2" />
+      <use token="UNSIGNED_INT_VEC3" />
+      <use token="UNSIGNED_INT_VEC4" />
+    </enum>
+    <enum name="VertexAttribIntegerType">
+      <use token="BYTE" />
+      <use token="UNSIGNED_BYTE" />
+      <use token="SHORT" />
+      <use token="UNSIGNED_SHORT" />
+      <use token="INT" />
+      <use token="UNSIGNED_INT" />
+    </enum>
+    <enum name="VertexAttribParameter">
+      <use token="CURRENT_VERTEX_ATTRIB" />
+      <use token="VERTEX_ATTRIB_ARRAY_BUFFER_BINDING" />
+      <use token="VERTEX_ATTRIB_ARRAY_DIVISOR" />
+      <use token="VERTEX_ATTRIB_ARRAY_ENABLED" />
+      <use token="VERTEX_ATTRIB_ARRAY_INTEGER" />
+      <use token="VERTEX_ATTRIB_ARRAY_SIZE" />
+      <use token="VERTEX_ATTRIB_ARRAY_STRIDE" />
+      <use token="VERTEX_ATTRIB_ARRAY_TYPE" />
+      <use token="VERTEX_ATTRIB_ARRAY_NORMALIZED" />
+    </enum>
+    <enum name="VertexAttribPointerParameter">
+      <use token="VERTEX_ATTRIB_ARRAY_POINTER" />
+    </enum>
+    <enum name="VertexAttribPointerType">
+      <use token="BYTE" />
+      <use token="UNSIGNED_BYTE" />
+      <use token="SHORT" />
+      <use token="UNSIGNED_SHORT" />
+      <use token="INT" />
+      <use token="UNSIGNED_INT" />
+      <use token="FIXED" />
+      <use token="FLOAT" />
+      <use token="HALF_FLOAT" />
+	  <use token="INT_2_10_10_10_REV" />
+      <use token="UNSIGNED_INT_2_10_10_10_REV" />
+    </enum>
+
   </add>
 
 </signatures>

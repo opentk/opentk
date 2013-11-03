@@ -144,7 +144,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void BeginQueryIndexed(OpenTK.Graphics.OpenGL.QueryTarget target, UInt32 index, UInt32 id);
             internal static BeginQueryIndexed glBeginQueryIndexed;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BeginTransformFeedback(OpenTK.Graphics.OpenGL.BeginFeedbackMode primitiveMode);
+            internal delegate void BeginTransformFeedback(OpenTK.Graphics.OpenGL.TransformFeedbackPrimitiveType primitiveMode);
             internal static BeginTransformFeedback glBeginTransformFeedback;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BeginTransformFeedbackEXT(OpenTK.Graphics.OpenGL.ExtTransformFeedback primitiveMode);
@@ -2808,7 +2808,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetShaderiv(UInt32 shader, OpenTK.Graphics.OpenGL.ShaderParameter pname, [OutAttribute] Int32* @params);
             internal unsafe static GetShaderiv glGetShaderiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetShaderPrecisionFormat(OpenTK.Graphics.OpenGL.ShaderType shadertype, OpenTK.Graphics.OpenGL.ShaderPrecisionType precisiontype, [OutAttribute] Int32* range, [OutAttribute] Int32* precision);
+            internal unsafe delegate void GetShaderPrecisionFormat(OpenTK.Graphics.OpenGL.ShaderType shadertype, OpenTK.Graphics.OpenGL.ShaderPrecision precisiontype, [OutAttribute] Int32* range, [OutAttribute] Int32* precision);
             internal unsafe static GetShaderPrecisionFormat glGetShaderPrecisionFormat;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetShaderSource(UInt32 shader, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder source);
@@ -2937,7 +2937,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetTrackMatrixivNV(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, UInt32 address, OpenTK.Graphics.OpenGL.AssemblyProgramParameterArb pname, [OutAttribute] Int32* @params);
             internal unsafe static GetTrackMatrixivNV glGetTrackMatrixivNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTransformFeedbackVarying(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.OpenGL.ActiveAttribType* type, [OutAttribute] StringBuilder name);
+            internal unsafe delegate void GetTransformFeedbackVarying(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.OpenGL.TransformFeedbackType* type, [OutAttribute] StringBuilder name);
             internal unsafe static GetTransformFeedbackVarying glGetTransformFeedbackVarying;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetTransformFeedbackVaryingEXT(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.OpenGL.ExtTransformFeedback* type, [OutAttribute] StringBuilder name);

@@ -62,33 +62,163 @@ namespace OpenTK.Graphics.ES30
     public enum ActiveAttribType : int
     {
         /// <summary>
+        /// Original was GL_INT = 0X1404
+        /// </summary>
+        Int = ((int)0X1404)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT = 0x1405
+        /// </summary>
+        UnsignedInt = ((int)0x1405)        ,
+        /// <summary>
         /// Original was GL_Float = 0X1406
         /// </summary>
         Float = ((int)0X1406)        ,
         /// <summary>
-        /// Original was GL_FloatVec2 = 0X8b50
+        /// Original was GL_FLOAT_VEC2 = 0x8B50
         /// </summary>
-        FloatVec2 = ((int)0X8b50)        ,
+        FloatVec2 = ((int)0x8B50)        ,
         /// <summary>
-        /// Original was GL_FloatVec3 = 0X8b51
+        /// Original was GL_FLOAT_VEC3 = 0x8B51
         /// </summary>
-        FloatVec3 = ((int)0X8b51)        ,
+        FloatVec3 = ((int)0x8B51)        ,
         /// <summary>
-        /// Original was GL_FloatVec4 = 0X8b52
+        /// Original was GL_FLOAT_VEC4 = 0x8B52
         /// </summary>
-        FloatVec4 = ((int)0X8b52)        ,
+        FloatVec4 = ((int)0x8B52)        ,
         /// <summary>
-        /// Original was GL_FloatMat2 = 0X8b5a
+        /// Original was GL_INT_VEC2 = 0x8B53
         /// </summary>
-        FloatMat2 = ((int)0X8b5a)        ,
+        IntVec2 = ((int)0x8B53)        ,
         /// <summary>
-        /// Original was GL_FloatMat3 = 0X8b5b
+        /// Original was GL_INT_VEC3 = 0x8B54
         /// </summary>
-        FloatMat3 = ((int)0X8b5b)        ,
+        IntVec3 = ((int)0x8B54)        ,
         /// <summary>
-        /// Original was GL_FloatMat4 = 0X8b5c
+        /// Original was GL_INT_VEC4 = 0x8B55
         /// </summary>
-        FloatMat4 = ((int)0X8b5c)        ,
+        IntVec4 = ((int)0x8B55)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT2 = 0x8B5A
+        /// </summary>
+        FloatMat2 = ((int)0x8B5A)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT3 = 0x8B5B
+        /// </summary>
+        FloatMat3 = ((int)0x8B5B)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT4 = 0x8B5C
+        /// </summary>
+        FloatMat4 = ((int)0x8B5C)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT2x3 = 0x8B65
+        /// </summary>
+        FloatMat2x3 = ((int)0x8B65)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT2x4 = 0x8B66
+        /// </summary>
+        FloatMat2x4 = ((int)0x8B66)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT3x2 = 0x8B67
+        /// </summary>
+        FloatMat3x2 = ((int)0x8B67)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT3x4 = 0x8B68
+        /// </summary>
+        FloatMat3x4 = ((int)0x8B68)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT4x2 = 0x8B69
+        /// </summary>
+        FloatMat4x2 = ((int)0x8B69)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT4x3 = 0x8B6A
+        /// </summary>
+        FloatMat4x3 = ((int)0x8B6A)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_VEC2 = 0x8DC6
+        /// </summary>
+        UnsignedIntVec2 = ((int)0x8DC6)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_VEC3 = 0x8DC7
+        /// </summary>
+        UnsignedIntVec3 = ((int)0x8DC7)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_VEC4 = 0x8DC8
+        /// </summary>
+        UnsignedIntVec4 = ((int)0x8DC8)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetActiveUniformBlock
+    /// </summary>
+    public enum ActiveUniformBlockParameter : int
+    {
+        /// <summary>
+        /// Original was GL_UNIFORM_BLOCK_BINDING = 0x8A3F
+        /// </summary>
+        UniformBlockBinding = ((int)0x8A3F)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_BLOCK_DATA_SIZE = 0x8A40
+        /// </summary>
+        UniformBlockDataSize = ((int)0x8A40)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_BLOCK_NAME_LENGTH = 0x8A41
+        /// </summary>
+        UniformBlockNameLength = ((int)0x8A41)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS = 0x8A42
+        /// </summary>
+        UniformBlockActiveUniforms = ((int)0x8A42)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES = 0x8A43
+        /// </summary>
+        UniformBlockActiveUniformIndices = ((int)0x8A43)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER = 0x8A44
+        /// </summary>
+        UniformBlockReferencedByVertexShader = ((int)0x8A44)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER = 0x8A46
+        /// </summary>
+        UniformBlockReferencedByFragmentShader = ((int)0x8A46)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetActiveUniforms
+    /// </summary>
+    public enum ActiveUniformParameter : int
+    {
+        /// <summary>
+        /// Original was GL_UNIFORM_TYPE = 0x8A37
+        /// </summary>
+        UniformType = ((int)0x8A37)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_SIZE = 0x8A38
+        /// </summary>
+        UniformSize = ((int)0x8A38)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_NAME_LENGTH = 0x8A39
+        /// </summary>
+        UniformNameLength = ((int)0x8A39)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_BLOCK_INDEX = 0x8A3A
+        /// </summary>
+        UniformBlockIndex = ((int)0x8A3A)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_OFFSET = 0x8A3B
+        /// </summary>
+        UniformOffset = ((int)0x8A3B)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_ARRAY_STRIDE = 0x8A3C
+        /// </summary>
+        UniformArrayStride = ((int)0x8A3C)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_MATRIX_STRIDE = 0x8A3D
+        /// </summary>
+        UniformMatrixStride = ((int)0x8A3D)        ,
+        /// <summary>
+        /// Original was GL_UNIFORM_IS_ROW_MAJOR = 0x8A3E
+        /// </summary>
+        UniformIsRowMajor = ((int)0x8A3E)        ,
     }
 
     /// <summary>
@@ -101,73 +231,161 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         Int = ((int)0X1404)        ,
         /// <summary>
+        /// Original was GL_UNSIGNED_INT = 0x1405
+        /// </summary>
+        UnsignedInt = ((int)0x1405)        ,
+        /// <summary>
         /// Original was GL_Float = 0X1406
         /// </summary>
         Float = ((int)0X1406)        ,
         /// <summary>
-        /// Original was GL_FloatVec2 = 0X8b50
+        /// Original was GL_FLOAT_VEC2 = 0x8B50
         /// </summary>
-        FloatVec2 = ((int)0X8b50)        ,
+        FloatVec2 = ((int)0x8B50)        ,
         /// <summary>
-        /// Original was GL_FloatVec3 = 0X8b51
+        /// Original was GL_FLOAT_VEC3 = 0x8B51
         /// </summary>
-        FloatVec3 = ((int)0X8b51)        ,
+        FloatVec3 = ((int)0x8B51)        ,
         /// <summary>
-        /// Original was GL_FloatVec4 = 0X8b52
+        /// Original was GL_FLOAT_VEC4 = 0x8B52
         /// </summary>
-        FloatVec4 = ((int)0X8b52)        ,
+        FloatVec4 = ((int)0x8B52)        ,
         /// <summary>
-        /// Original was GL_IntVec2 = 0X8b53
+        /// Original was GL_INT_VEC2 = 0x8B53
         /// </summary>
-        IntVec2 = ((int)0X8b53)        ,
+        IntVec2 = ((int)0x8B53)        ,
         /// <summary>
-        /// Original was GL_IntVec3 = 0X8b54
+        /// Original was GL_INT_VEC3 = 0x8B54
         /// </summary>
-        IntVec3 = ((int)0X8b54)        ,
+        IntVec3 = ((int)0x8B54)        ,
         /// <summary>
-        /// Original was GL_IntVec4 = 0X8b55
+        /// Original was GL_INT_VEC4 = 0x8B55
         /// </summary>
-        IntVec4 = ((int)0X8b55)        ,
+        IntVec4 = ((int)0x8B55)        ,
         /// <summary>
         /// Original was GL_Bool = 0X8b56
         /// </summary>
         Bool = ((int)0X8b56)        ,
         /// <summary>
-        /// Original was GL_BoolVec2 = 0X8b57
+        /// Original was GL_BOOL_VEC2 = 0x8B57
         /// </summary>
-        BoolVec2 = ((int)0X8b57)        ,
+        BoolVec2 = ((int)0x8B57)        ,
         /// <summary>
-        /// Original was GL_BoolVec3 = 0X8b58
+        /// Original was GL_BOOL_VEC3 = 0x8B58
         /// </summary>
-        BoolVec3 = ((int)0X8b58)        ,
+        BoolVec3 = ((int)0x8B58)        ,
         /// <summary>
-        /// Original was GL_BoolVec4 = 0X8b59
+        /// Original was GL_BOOL_VEC4 = 0x8B59
         /// </summary>
-        BoolVec4 = ((int)0X8b59)        ,
+        BoolVec4 = ((int)0x8B59)        ,
         /// <summary>
-        /// Original was GL_FloatMat2 = 0X8b5a
+        /// Original was GL_FLOAT_MAT2 = 0x8B5A
         /// </summary>
-        FloatMat2 = ((int)0X8b5a)        ,
+        FloatMat2 = ((int)0x8B5A)        ,
         /// <summary>
-        /// Original was GL_FloatMat3 = 0X8b5b
+        /// Original was GL_FLOAT_MAT3 = 0x8B5B
         /// </summary>
-        FloatMat3 = ((int)0X8b5b)        ,
+        FloatMat3 = ((int)0x8B5B)        ,
         /// <summary>
-        /// Original was GL_FloatMat4 = 0X8b5c
+        /// Original was GL_FLOAT_MAT4 = 0x8B5C
         /// </summary>
-        FloatMat4 = ((int)0X8b5c)        ,
+        FloatMat4 = ((int)0x8B5C)        ,
         /// <summary>
-        /// Original was GL_Sampler2D = 0X8b5e
+        /// Original was GL_SAMPLER_2D = 0x8B5E
         /// </summary>
-        Sampler2D = ((int)0X8b5e)        ,
+        Sampler2D = ((int)0x8B5E)        ,
         /// <summary>
-        /// Original was GL_SamplerCube = 0X8b60
+        /// Original was GL_SAMPLER_3D = 0x8B5F
         /// </summary>
-        SamplerCube = ((int)0X8b60)        ,
+        Sampler3D = ((int)0x8B5F)        ,
+        /// <summary>
+        /// Original was GL_SAMPLER_CUBE = 0x8B60
+        /// </summary>
+        SamplerCube = ((int)0x8B60)        ,
+        /// <summary>
+        /// Original was GL_SAMPLER_2D_SHADOW = 0x8B62
+        /// </summary>
+        Sampler2DShadow = ((int)0x8B62)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT2x3 = 0x8B65
+        /// </summary>
+        FloatMat2x3 = ((int)0x8B65)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT2x4 = 0x8B66
+        /// </summary>
+        FloatMat2x4 = ((int)0x8B66)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT3x4 = 0x8B68
+        /// </summary>
+        FloatMat3x4 = ((int)0x8B68)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT4x2 = 0x8B69
+        /// </summary>
+        FloatMat4x2 = ((int)0x8B69)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT4x3 = 0x8B6A
+        /// </summary>
+        FloatMat4x3 = ((int)0x8B6A)        ,
+        /// <summary>
+        /// Original was GL_SAMPLER_2D_ARRAY = 0x8DC1
+        /// </summary>
+        Sampler2DArray = ((int)0x8DC1)        ,
+        /// <summary>
+        /// Original was GL_SAMPLER_2D_ARRAY_SHADOW = 0x8DC4
+        /// </summary>
+        Sampler2DArrayShadow = ((int)0x8DC4)        ,
+        /// <summary>
+        /// Original was GL_SAMPLER_CUBE_SHADOW = 0x8DC5
+        /// </summary>
+        SamplerCubeShadow = ((int)0x8DC5)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_VEC2 = 0x8DC6
+        /// </summary>
+        UnsignedIntVec2 = ((int)0x8DC6)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_VEC3 = 0x8DC7
+        /// </summary>
+        UnsignedIntVec3 = ((int)0x8DC7)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_VEC4 = 0x8DC8
+        /// </summary>
+        UnsignedIntVec4 = ((int)0x8DC8)        ,
+        /// <summary>
+        /// Original was GL_INT_SAMPLER_2D = 0x8DCA
+        /// </summary>
+        IntSampler2D = ((int)0x8DCA)        ,
+        /// <summary>
+        /// Original was GL_INT_SAMPLER_3D = 0x8DCB
+        /// </summary>
+        IntSampler3D = ((int)0x8DCB)        ,
+        /// <summary>
+        /// Original was GL_INT_SAMPLER_CUBE = 0x8DCC
+        /// </summary>
+        IntSamplerCube = ((int)0x8DCC)        ,
+        /// <summary>
+        /// Original was GL_INT_SAMPLER_2D_ARRAY = 0x8DCF
+        /// </summary>
+        IntSampler2DArray = ((int)0x8DCF)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_SAMPLER_2D = 0x8DD2
+        /// </summary>
+        UnsignedIntSampler2D = ((int)0x8DD2)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_SAMPLER_3D = 0x8DD3
+        /// </summary>
+        UnsignedIntSampler3D = ((int)0x8DD3)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_SAMPLER_CUBE = 0x8DD4
+        /// </summary>
+        UnsignedIntSamplerCube = ((int)0x8DD4)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_SAMPLER_2D_ARRAY = 0x8DD7
+        /// </summary>
+        UnsignedIntSampler2DArray = ((int)0x8DD7)        ,
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 95 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 88 other functions
     /// </summary>
     public enum All : int
     {
@@ -8966,25 +9184,6 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.BeginTransformFeedback
-    /// </summary>
-    public enum BeginFeedbackMode : int
-    {
-        /// <summary>
-        /// Original was GL_POINTS = 0X0000
-        /// </summary>
-        Points = ((int)0X0000)        ,
-        /// <summary>
-        /// Original was GL_LINES = 0X0001
-        /// </summary>
-        Lines = ((int)0X0001)        ,
-        /// <summary>
-        /// Original was GL_TRIANGLES = 0X0004
-        /// </summary>
-        Triangles = ((int)0X0004)        ,
-    }
-
-    /// <summary>
     /// Used in GL.DrawArrays, GL.DrawElements
     /// </summary>
     public enum BeginMode : int
@@ -10224,13 +10423,17 @@ namespace OpenTK.Graphics.ES30
     public enum DrawElementsType : int
     {
         /// <summary>
-        /// Original was GL_UnsignedByte = 0X1401
+        /// Original was GL_UNSIGNED_BYTE = 0x1401
         /// </summary>
-        UnsignedByte = ((int)0X1401)        ,
+        UnsignedByte = ((int)0x1401)        ,
         /// <summary>
-        /// Original was GL_UnsignedShort = 0X1403
+        /// Original was GL_UNSIGNED_SHORT = 0x1403
         /// </summary>
-        UnsignedShort = ((int)0X1403)        ,
+        UnsignedShort = ((int)0x1403)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT = 0x1405
+        /// </summary>
+        UnsignedInt = ((int)0x1405)        ,
     }
 
     /// <summary>
@@ -10670,6 +10873,10 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_FRAGMENT_LIGHT7_SGIX = 0x8413
         /// </summary>
         FragmentLight7Sgix = ((int)0x8413)        ,
+        /// <summary>
+        /// Original was GL_PRIMITIVE_RESTART_FIXED_INDEX = 0x8D69
+        /// </summary>
+        PrimitiveRestartFixedIndex = ((int)0x8D69)        ,
     }
 
     /// <summary>
@@ -20876,6 +21083,73 @@ namespace OpenTK.Graphics.ES30
     public enum ProgramParameter : int
     {
         /// <summary>
+        /// Original was GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257
+        /// </summary>
+        ProgramBinaryRetrievableHint = ((int)0x8257)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH = 0x8A35
+        /// </summary>
+        ActiveUniformBlockMaxNameLength = ((int)0x8A35)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORM_BLOCKS = 0x8A36
+        /// </summary>
+        ActiveUniformBlocks = ((int)0x8A36)        ,
+        /// <summary>
+        /// Original was GL_DELETE_STATUS = 0x8B80
+        /// </summary>
+        DeleteStatus = ((int)0x8B80)        ,
+        /// <summary>
+        /// Original was GL_LINK_STATUS = 0x8B82
+        /// </summary>
+        LinkStatus = ((int)0x8B82)        ,
+        /// <summary>
+        /// Original was GL_VALIDATE_STATUS = 0x8B83
+        /// </summary>
+        ValidateStatus = ((int)0x8B83)        ,
+        /// <summary>
+        /// Original was GL_INFO_LOG_LENGTH = 0x8B84
+        /// </summary>
+        InfoLogLength = ((int)0x8B84)        ,
+        /// <summary>
+        /// Original was GL_ATTACHED_SHADERS = 0x8B85
+        /// </summary>
+        AttachedShaders = ((int)0x8B85)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORMS = 0x8B86
+        /// </summary>
+        ActiveUniforms = ((int)0x8B86)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORM_MAX_LENGTH = 0x8B87
+        /// </summary>
+        ActiveUniformMaxLength = ((int)0x8B87)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_ATTRIBUTES = 0x8B89
+        /// </summary>
+        ActiveAttributes = ((int)0x8B89)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8B8A
+        /// </summary>
+        ActiveAttributeMaxLength = ((int)0x8B8A)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH = 0x8C76
+        /// </summary>
+        TransformFeedbackVaryingMaxLength = ((int)0x8C76)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_MODE = 0x8C7F
+        /// </summary>
+        TransformFeedbackBufferMode = ((int)0x8C7F)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_VARYINGS = 0x8C83
+        /// </summary>
+        TransformFeedbackVaryings = ((int)0x8C83)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.ProgramParameter, GL.Ext.ProgramParameter
+    /// </summary>
+    public enum ProgramParameterName : int
+    {
+        /// <summary>
         /// Original was GL_DeleteStatus = 0X8b80
         /// </summary>
         DeleteStatus = ((int)0X8b80)        ,
@@ -21537,29 +21811,29 @@ namespace OpenTK.Graphics.ES30
     public enum ShaderPrecision : int
     {
         /// <summary>
-        /// Original was GL_LowFloat = 0X8df0
+        /// Original was GL_LOW_FLOAT = 0x8DF0
         /// </summary>
-        LowFloat = ((int)0X8df0)        ,
+        LowFloat = ((int)0x8DF0)        ,
         /// <summary>
-        /// Original was GL_MediumFloat = 0X8df1
+        /// Original was GL_MEDIUM_FLOAT = 0x8DF1
         /// </summary>
-        MediumFloat = ((int)0X8df1)        ,
+        MediumFloat = ((int)0x8DF1)        ,
         /// <summary>
-        /// Original was GL_HighFloat = 0X8df2
+        /// Original was GL_HIGH_FLOAT = 0x8DF2
         /// </summary>
-        HighFloat = ((int)0X8df2)        ,
+        HighFloat = ((int)0x8DF2)        ,
         /// <summary>
-        /// Original was GL_LowInt = 0X8df3
+        /// Original was GL_LOW_INT = 0x8DF3
         /// </summary>
-        LowInt = ((int)0X8df3)        ,
+        LowInt = ((int)0x8DF3)        ,
         /// <summary>
-        /// Original was GL_MediumInt = 0X8df4
+        /// Original was GL_MEDIUM_INT = 0x8DF4
         /// </summary>
-        MediumInt = ((int)0X8df4)        ,
+        MediumInt = ((int)0x8DF4)        ,
         /// <summary>
-        /// Original was GL_HighInt = 0X8df5
+        /// Original was GL_HIGH_INT = 0x8DF5
         /// </summary>
-        HighInt = ((int)0X8df5)        ,
+        HighInt = ((int)0x8DF5)        ,
     }
 
     /// <summary>
@@ -21568,13 +21842,13 @@ namespace OpenTK.Graphics.ES30
     public enum ShaderType : int
     {
         /// <summary>
-        /// Original was GL_FragmentShader = 0X8b30
+        /// Original was GL_FRAGMENT_SHADER = 0x8B30
         /// </summary>
-        FragmentShader = ((int)0X8b30)        ,
+        FragmentShader = ((int)0x8B30)        ,
         /// <summary>
-        /// Original was GL_VertexShader = 0X8b31
+        /// Original was GL_VERTEX_SHADER = 0x8B31
         /// </summary>
-        VertexShader = ((int)0X8b31)        ,
+        VertexShader = ((int)0x8B31)        ,
     }
 
     /// <summary>
@@ -22436,6 +22710,40 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
+    /// Used in GL.TransformFeedbackVaryings
+    /// </summary>
+    public enum TransformFeedbackMode : int
+    {
+        /// <summary>
+        /// Original was GL_INTERLEAVED_ATTRIBS = 0x8C8C
+        /// </summary>
+        InterleavedAttribs = ((int)0x8C8C)        ,
+        /// <summary>
+        /// Original was GL_SEPARATE_ATTRIBS = 0x8C8D
+        /// </summary>
+        SeparateAttribs = ((int)0x8C8D)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.BeginTransformFeedback
+    /// </summary>
+    public enum TransformFeedbackPrimitiveType : int
+    {
+        /// <summary>
+        /// Original was GL_POINTS = 0X0000
+        /// </summary>
+        Points = ((int)0X0000)        ,
+        /// <summary>
+        /// Original was GL_LINES = 0X0001
+        /// </summary>
+        Lines = ((int)0X0001)        ,
+        /// <summary>
+        /// Original was GL_TRIANGLES = 0X0004
+        /// </summary>
+        Triangles = ((int)0X0004)        ,
+    }
+
+    /// <summary>
     /// Used in GL.BindTransformFeedback
     /// </summary>
     public enum TransformFeedbackTarget : int
@@ -22444,6 +22752,97 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_TRANSFORM_FEEDBACK = 0x8E22
         /// </summary>
         TransformFeedback = ((int)0x8E22)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetTransformFeedbackVarying
+    /// </summary>
+    public enum TransformFeedbackType : int
+    {
+        /// <summary>
+        /// Original was GL_INT = 0X1404
+        /// </summary>
+        Int = ((int)0X1404)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT = 0x1405
+        /// </summary>
+        UnsignedInt = ((int)0x1405)        ,
+        /// <summary>
+        /// Original was GL_FLOAT = 0X1406
+        /// </summary>
+        Float = ((int)0X1406)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_VEC2 = 0x8B50
+        /// </summary>
+        FloatVec2 = ((int)0x8B50)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_VEC3 = 0x8B51
+        /// </summary>
+        FloatVec3 = ((int)0x8B51)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_VEC4 = 0x8B52
+        /// </summary>
+        FloatVec4 = ((int)0x8B52)        ,
+        /// <summary>
+        /// Original was GL_INT_VEC2 = 0x8B53
+        /// </summary>
+        IntVec2 = ((int)0x8B53)        ,
+        /// <summary>
+        /// Original was GL_INT_VEC3 = 0x8B54
+        /// </summary>
+        IntVec3 = ((int)0x8B54)        ,
+        /// <summary>
+        /// Original was GL_INT_VEC4 = 0x8B55
+        /// </summary>
+        IntVec4 = ((int)0x8B55)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT2 = 0x8B5A
+        /// </summary>
+        FloatMat2 = ((int)0x8B5A)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT3 = 0x8B5B
+        /// </summary>
+        FloatMat3 = ((int)0x8B5B)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT4 = 0x8B5C
+        /// </summary>
+        FloatMat4 = ((int)0x8B5C)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT2x3 = 0x8B65
+        /// </summary>
+        FloatMat2x3 = ((int)0x8B65)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT2x4 = 0x8B66
+        /// </summary>
+        FloatMat2x4 = ((int)0x8B66)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT3x2 = 0x8B67
+        /// </summary>
+        FloatMat3x2 = ((int)0x8B67)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT3x4 = 0x8B68
+        /// </summary>
+        FloatMat3x4 = ((int)0x8B68)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT4x2 = 0x8B69
+        /// </summary>
+        FloatMat4x2 = ((int)0x8B69)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT4x3 = 0x8B6A
+        /// </summary>
+        FloatMat4x3 = ((int)0x8B6A)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_VEC2 = 0x8DC6
+        /// </summary>
+        UnsignedIntVec2 = ((int)0x8DC6)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_VEC3 = 0x8DC7
+        /// </summary>
+        UnsignedIntVec3 = ((int)0x8DC7)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_VEC4 = 0x8DC8
+        /// </summary>
+        UnsignedIntVec4 = ((int)0x8DC8)        ,
     }
 
     /// <summary>
@@ -22495,38 +22894,77 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
+    /// Used in GL.VertexAttribIPointer
+    /// </summary>
+    public enum VertexAttribIntegerType : int
+    {
+        /// <summary>
+        /// Original was GL_BYTE = 0X1400
+        /// </summary>
+        Byte = ((int)0X1400)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_BYTE = 0x1401
+        /// </summary>
+        UnsignedByte = ((int)0x1401)        ,
+        /// <summary>
+        /// Original was GL_SHORT = 0X1402
+        /// </summary>
+        Short = ((int)0X1402)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_SHORT = 0x1403
+        /// </summary>
+        UnsignedShort = ((int)0x1403)        ,
+        /// <summary>
+        /// Original was GL_INT = 0X1404
+        /// </summary>
+        Int = ((int)0X1404)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT = 0x1405
+        /// </summary>
+        UnsignedInt = ((int)0x1405)        ,
+    }
+
+    /// <summary>
     /// Used in GL.GetVertexAttrib
     /// </summary>
     public enum VertexAttribParameter : int
     {
         /// <summary>
-        /// Original was GL_VertexAttribArrayEnabled = 0X8622
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_ENABLED = 0x8622
         /// </summary>
-        VertexAttribArrayEnabled = ((int)0X8622)        ,
+        VertexAttribArrayEnabled = ((int)0x8622)        ,
         /// <summary>
-        /// Original was GL_VertexAttribArraySize = 0X8623
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_SIZE = 0x8623
         /// </summary>
-        VertexAttribArraySize = ((int)0X8623)        ,
+        VertexAttribArraySize = ((int)0x8623)        ,
         /// <summary>
-        /// Original was GL_VertexAttribArrayStride = 0X8624
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_STRIDE = 0x8624
         /// </summary>
-        VertexAttribArrayStride = ((int)0X8624)        ,
+        VertexAttribArrayStride = ((int)0x8624)        ,
         /// <summary>
-        /// Original was GL_VertexAttribArrayType = 0X8625
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_TYPE = 0x8625
         /// </summary>
-        VertexAttribArrayType = ((int)0X8625)        ,
+        VertexAttribArrayType = ((int)0x8625)        ,
         /// <summary>
-        /// Original was GL_CurrentVertexAttrib = 0X8626
+        /// Original was GL_CURRENT_VERTEX_ATTRIB = 0x8626
         /// </summary>
-        CurrentVertexAttrib = ((int)0X8626)        ,
+        CurrentVertexAttrib = ((int)0x8626)        ,
         /// <summary>
-        /// Original was GL_VertexAttribArrayNormalized = 0X886a
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_NORMALIZED = 0x886A
         /// </summary>
-        VertexAttribArrayNormalized = ((int)0X886a)        ,
+        VertexAttribArrayNormalized = ((int)0x886A)        ,
         /// <summary>
-        /// Original was GL_VertexAttribArrayBufferBinding = 0X889f
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING = 0x889F
         /// </summary>
-        VertexAttribArrayBufferBinding = ((int)0X889f)        ,
+        VertexAttribArrayBufferBinding = ((int)0x889F)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_INTEGER = 0x88FD
+        /// </summary>
+        VertexAttribArrayInteger = ((int)0x88FD)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_DIVISOR = 0x88FE
+        /// </summary>
+        VertexAttribArrayDivisor = ((int)0x88FE)        ,
     }
 
     /// <summary>
@@ -22535,9 +22973,9 @@ namespace OpenTK.Graphics.ES30
     public enum VertexAttribPointerParameter : int
     {
         /// <summary>
-        /// Original was GL_VertexAttribArrayPointer = 0X8645
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_POINTER = 0x8645
         /// </summary>
-        VertexAttribArrayPointer = ((int)0X8645)        ,
+        VertexAttribArrayPointer = ((int)0x8645)        ,
     }
 
     /// <summary>
@@ -22550,25 +22988,45 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         Byte = ((int)0X1400)        ,
         /// <summary>
-        /// Original was GL_UnsignedByte = 0X1401
+        /// Original was GL_UNSIGNED_BYTE = 0x1401
         /// </summary>
-        UnsignedByte = ((int)0X1401)        ,
+        UnsignedByte = ((int)0x1401)        ,
         /// <summary>
         /// Original was GL_Short = 0X1402
         /// </summary>
         Short = ((int)0X1402)        ,
         /// <summary>
-        /// Original was GL_UnsignedShort = 0X1403
+        /// Original was GL_UNSIGNED_SHORT = 0x1403
         /// </summary>
-        UnsignedShort = ((int)0X1403)        ,
+        UnsignedShort = ((int)0x1403)        ,
+        /// <summary>
+        /// Original was GL_INT = 0X1404
+        /// </summary>
+        Int = ((int)0X1404)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT = 0x1405
+        /// </summary>
+        UnsignedInt = ((int)0x1405)        ,
         /// <summary>
         /// Original was GL_Float = 0X1406
         /// </summary>
         Float = ((int)0X1406)        ,
         /// <summary>
+        /// Original was GL_HALF_FLOAT = 0x140B
+        /// </summary>
+        HalfFloat = ((int)0x140B)        ,
+        /// <summary>
         /// Original was GL_Fixed = 0X140c
         /// </summary>
         Fixed = ((int)0X140c)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_2_10_10_10_REV = 0x8368
+        /// </summary>
+        UnsignedInt2101010Rev = ((int)0x8368)        ,
+        /// <summary>
+        /// Original was GL_INT_2_10_10_10_REV = 0x8D9F
+        /// </summary>
+        Int2101010Rev = ((int)0x8D9F)        ,
     }
 
     /// <summary>

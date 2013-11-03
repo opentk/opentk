@@ -37,7 +37,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.GetActiveAttrib, GL.GetTransformFeedbackVarying
+    /// Used in GL.GetActiveAttrib
     /// </summary>
     public enum ActiveAttribType : int
     {
@@ -14423,7 +14423,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.BeginTransformFeedback
+    /// Not used directly.
     /// </summary>
     public enum BeginFeedbackMode : int
     {
@@ -25469,7 +25469,7 @@ namespace OpenTK.Graphics.OpenGL4
     /// <summary>
     /// Used in GL.GetShaderPrecisionFormat
     /// </summary>
-    public enum ShaderPrecisionType : int
+    public enum ShaderPrecision : int
     {
         /// <summary>
         /// Original was GL_LOW_FLOAT = 0x8DF0
@@ -27218,6 +27218,25 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
+    /// Used in GL.BeginTransformFeedback
+    /// </summary>
+    public enum TransformFeedbackPrimitiveType : int
+    {
+        /// <summary>
+        /// Original was GL_POINTS = 0x0000
+        /// </summary>
+        Points = ((int)0x0000)        ,
+        /// <summary>
+        /// Original was GL_LINES = 0x0001
+        /// </summary>
+        Lines = ((int)0x0001)        ,
+        /// <summary>
+        /// Original was GL_TRIANGLES = 0x0004
+        /// </summary>
+        Triangles = ((int)0x0004)        ,
+    }
+
+    /// <summary>
     /// Used in GL.BindTransformFeedback
     /// </summary>
     public enum TransformFeedbackTarget : int
@@ -27226,6 +27245,149 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_TRANSFORM_FEEDBACK = 0x8E22
         /// </summary>
         TransformFeedback = ((int)0x8E22)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetTransformFeedbackVarying
+    /// </summary>
+    public enum TransformFeedbackType : int
+    {
+        /// <summary>
+        /// Original was GL_INT = 0x1404
+        /// </summary>
+        Int = ((int)0x1404)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT = 0x1405
+        /// </summary>
+        UnsignedInt = ((int)0x1405)        ,
+        /// <summary>
+        /// Original was GL_FLOAT = 0x1406
+        /// </summary>
+        Float = ((int)0x1406)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE = 0x140A
+        /// </summary>
+        Double = ((int)0x140A)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_VEC2 = 0x8B50
+        /// </summary>
+        FloatVec2 = ((int)0x8B50)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_VEC3 = 0x8B51
+        /// </summary>
+        FloatVec3 = ((int)0x8B51)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_VEC4 = 0x8B52
+        /// </summary>
+        FloatVec4 = ((int)0x8B52)        ,
+        /// <summary>
+        /// Original was GL_INT_VEC2 = 0x8B53
+        /// </summary>
+        IntVec2 = ((int)0x8B53)        ,
+        /// <summary>
+        /// Original was GL_INT_VEC3 = 0x8B54
+        /// </summary>
+        IntVec3 = ((int)0x8B54)        ,
+        /// <summary>
+        /// Original was GL_INT_VEC4 = 0x8B55
+        /// </summary>
+        IntVec4 = ((int)0x8B55)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT2 = 0x8B5A
+        /// </summary>
+        FloatMat2 = ((int)0x8B5A)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT3 = 0x8B5B
+        /// </summary>
+        FloatMat3 = ((int)0x8B5B)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT4 = 0x8B5C
+        /// </summary>
+        FloatMat4 = ((int)0x8B5C)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT2x3 = 0x8B65
+        /// </summary>
+        FloatMat2x3 = ((int)0x8B65)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT2x4 = 0x8B66
+        /// </summary>
+        FloatMat2x4 = ((int)0x8B66)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT3x2 = 0x8B67
+        /// </summary>
+        FloatMat3x2 = ((int)0x8B67)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT3x4 = 0x8B68
+        /// </summary>
+        FloatMat3x4 = ((int)0x8B68)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT4x2 = 0x8B69
+        /// </summary>
+        FloatMat4x2 = ((int)0x8B69)        ,
+        /// <summary>
+        /// Original was GL_FLOAT_MAT4x3 = 0x8B6A
+        /// </summary>
+        FloatMat4x3 = ((int)0x8B6A)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_VEC2 = 0x8DC6
+        /// </summary>
+        UnsignedIntVec2 = ((int)0x8DC6)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_VEC3 = 0x8DC7
+        /// </summary>
+        UnsignedIntVec3 = ((int)0x8DC7)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_VEC4 = 0x8DC8
+        /// </summary>
+        UnsignedIntVec4 = ((int)0x8DC8)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE_MAT2 = 0x8F46
+        /// </summary>
+        DoubleMat2 = ((int)0x8F46)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE_MAT3 = 0x8F47
+        /// </summary>
+        DoubleMat3 = ((int)0x8F47)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE_MAT4 = 0x8F48
+        /// </summary>
+        DoubleMat4 = ((int)0x8F48)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE_MAT2x3 = 0x8F49
+        /// </summary>
+        DoubleMat2x3 = ((int)0x8F49)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE_MAT2x4 = 0x8F4A
+        /// </summary>
+        DoubleMat2x4 = ((int)0x8F4A)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE_MAT3x2 = 0x8F4B
+        /// </summary>
+        DoubleMat3x2 = ((int)0x8F4B)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE_MAT3x4 = 0x8F4C
+        /// </summary>
+        DoubleMat3x4 = ((int)0x8F4C)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE_MAT4x2 = 0x8F4D
+        /// </summary>
+        DoubleMat4x2 = ((int)0x8F4D)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE_MAT4x3 = 0x8F4E
+        /// </summary>
+        DoubleMat4x3 = ((int)0x8F4E)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE_VEC2 = 0x8FFC
+        /// </summary>
+        DoubleVec2 = ((int)0x8FFC)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE_VEC3 = 0x8FFD
+        /// </summary>
+        DoubleVec3 = ((int)0x8FFD)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE_VEC4 = 0x8FFE
+        /// </summary>
+        DoubleVec4 = ((int)0x8FFE)        ,
     }
 
     /// <summary>
