@@ -458,4 +458,14 @@ namespace OpenTK.Graphics.ES20
 
         #endregion
     }
+
+    public delegate void DebugProc(
+        DebugSource source, DebugType type, int id,
+        DebugSeverity severity, int length, IntPtr message,
+        IntPtr userParam);
+
+    public delegate void DebugProcKhr(
+        DebugSource source, DebugType type, int id,
+        DebugSeverity severity, int length, IntPtr message,
+        IntPtr userParam);
 }
