@@ -113,6 +113,7 @@
     <Reference Include="System.Xml">
       <Name>System.Xml</Name>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
@@ -227,8 +228,6 @@
     <None Include="Specifications\ES11\signatures.xml">
     </None>
     <None Include="Specifications\ES11\overrides.xml">
-    </None>
-    <None Include="Specifications\GL2\gloverrides.xml">
     </None>
     <None Include="Specifications\ES20\signatures.xml">
     </None>
@@ -914,6 +913,13 @@
     </None>
     <None Include="Specifications\License.txt">
     </None>
+    <None Include="Specifications\GL2\overrides.xml" />
+    <Compile Include="ES\ES2Generator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ES\ES3Generator.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Specifications\Docs\glActiveShaderProgram.xml" />
