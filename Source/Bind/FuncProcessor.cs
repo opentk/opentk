@@ -106,8 +106,12 @@ namespace Bind
 
             if (extension != null)
             {
+                // match an override that has this specific extension
+                // *or* one that has no extension at all (equivalent
+                // to "match all possible extensions")
                 path.Append(String.Format(
-                    "/function[contains(concat('|', @name, '|'), '|{0}|') and contains(concat('|', @extension, '|'), '|{1}|')]",
+                    "/function[contains(concat('|', @name, '|'), '|{0}|') and " +
+                    "(contains(concat('|', @extension, '|'), '|{1}|') or not(boolean(@extension)))]",
                     function,
                     extension));
             }
