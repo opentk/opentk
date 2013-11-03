@@ -311,10 +311,15 @@ namespace Bind.Structures
                 else
                 {
                     // Function redefined with identical parameters:
-                    // merge the categories and ignore the second definition.
+                    // merge their version and category properties and
+                    // discard the duplicate definition
                     if (!list[index].Category.Contains(d.Category))
                     {
                         list[index].Category += "|" + d.Category;
+                    }
+                    if (String.IsNullOrEmpty(list[index].Version))
+                    {
+                        list[index].Version = d.Version;
                     }
                 }
             }
