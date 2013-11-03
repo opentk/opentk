@@ -211,7 +211,7 @@ namespace Bind
             {
                 System.Diagnostics.Trace.WriteLine(String.Format(
                     "[Error] Type '{0}' has a high pointer level. Bindings will be incorrect.",
-                    type.CurrentType));
+                    type));
             }
         }
 
