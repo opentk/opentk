@@ -1625,6 +1625,58 @@
     </function>
 
   </replace>
+  
+  <add name="gl|glcore">
+    <!-- Khronos renamed a few enum types between GL 4.3 and GL4.4 -->
+    <!-- PrimitiveType <=> BeginMode overloads for backwards compatibility -->
+    <function name="Begin" category="VERSION_1_0" extension="Core" version="1.0" deprecated="3.2">
+      <param name="mode" type="BeginMode" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawArrays" category="VERSION_1_1" extension="Core" version="1.1">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="first" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawArraysEXT" category="EXT_vertex_array" extension="EXT">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="first" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawElements" category="VERSION_1_1" extension="Core" version="1.1">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="type" type="DrawElementsType" flow="in" />
+      <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
+      <returns type="void" />
+    </function>
+    <function name="DrawRangeElements" category="VERSION_1_2" extension="Core" version="1.2">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="start" type="GLuint" flow="in" />
+      <param name="end" type="GLuint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="type" type="DrawElementsType" flow="in" />
+      <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
+      <returns type="void" />
+    </function>
+    <function name="MultiDrawArrays" category="VERSION_1_4" extension="Core" version="1.4">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="first" type="GLint *" flow="in" count="COMPSIZE(count)" />
+      <param name="count" type="GLsizei *" flow="in" count="COMPSIZE(drawcount)" />
+      <param name="drawcount" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="MultiDrawElements" category="VERSION_1_4" extension="Core" version="1.4">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="count" type="GLsizei *" flow="in" count="COMPSIZE(drawcount)" />
+      <param name="type" type="DrawElementsType" flow="in" />
+      <param name="indices" type="void **" flow="in" count="COMPSIZE(drawcount)" />
+      <param name="drawcount" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+  </add>
 
   <add name="gl|glcore">
     <enum name="ActiveAttribType">
@@ -3947,6 +3999,36 @@
     </enum>
   </add>
   
+  <!--- gles1 -->
+  <add name="gles1">
+  <!-- PrimtiveType <=> BeginMode overloads for backwards compatibility -->
+    <function name="DrawArrays" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="first" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawElements" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="type" type="DrawElementsType" flow="in" />
+      <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
+      <returns type="void" />
+    </function>
+  </add>
+  
+  <add name="gles1">
+    <enum name="BeginMode">
+      <token name="Points" value="0X0000" />
+      <token name="Lines" value="0X0001" />
+      <token name="LineLoop" value="0X0002" />
+      <token name="LineStrip" value="0X0003" />
+      <token name="Triangles" value="0X0004" />
+      <token name="TriangleStrip" value="0X0005" />
+      <token name="TriangleFan" value="0X0006" />
+    </enum>
+  </add>
+  
   <!-- gles2 2.0 -->
   <replace name="gles2">
   
@@ -4058,15 +4140,6 @@
       <param name="func"><type>DepthFunction</type></param>
     </function>
      
-    <function name="DrawArrays" extension="Core" version="2.0">
-      <param name="mode"><type>BeginMode</type></param>
-    </function>
-     
-    <function name="DrawElements" extension="Core" version="2.0">
-      <param name="mode"><type>BeginMode</type></param>
-      <param name="type"><type>DrawElementsType</type></param>
-    </function>
-
     <function name="Enable" extension="Core" version="2.0">
       <param name="cap"><type>EnableCap</type></param>
     </function>
@@ -4244,6 +4317,23 @@
     </function>
 
   </replace>
+  
+  <add name="gles2">
+    <!-- PrimtiveType <=> BeginMode overloads for backwards compatibility -->
+    <function name="DrawArrays" category="ES_VERSION_2_0" extension="Core" version="2.0">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="first" type="GLint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawElements" category="ES_VERSION_2_0" extension="Core" version="2.0">
+      <param name="mode" type="BeginMode" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="type" type="DrawElementsType" flow="in" />
+      <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
+      <returns type="void" />
+    </function>
+  </add>
 
   <add name="gles2" version="2.0">
 

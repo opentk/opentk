@@ -49,6 +49,9 @@ namespace OpenTK.Graphics.OpenGL4
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glAttachShader", ExactSpelling = true)]
             internal extern static void AttachShader(UInt32 program, UInt32 shader);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBegin", ExactSpelling = true)]
+            internal extern static void Begin(OpenTK.Graphics.OpenGL4.BeginMode mode);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBeginConditionalRender", ExactSpelling = true)]
             internal extern static void BeginConditionalRender(UInt32 id, OpenTK.Graphics.OpenGL4.ConditionalRenderType mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -131,10 +134,10 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static void BlendEquation(OpenTK.Graphics.OpenGL4.BlendEquationMode mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationi", ExactSpelling = true)]
-            internal extern static void BlendEquationi(UInt32 buf, OpenTK.Graphics.OpenGL4.Version40 mode);
+            internal extern static void BlendEquationi(UInt32 buf, OpenTK.Graphics.OpenGL4.All mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationiARB", ExactSpelling = true)]
-            internal extern static void BlendEquationiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend mode);
+            internal extern static void BlendEquationiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.All mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationSeparate", ExactSpelling = true)]
             internal extern static void BlendEquationSeparate(OpenTK.Graphics.OpenGL4.BlendEquationMode modeRGB, OpenTK.Graphics.OpenGL4.BlendEquationMode modeAlpha);
@@ -143,25 +146,25 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static void BlendEquationSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL4.BlendEquationMode modeRGB, OpenTK.Graphics.OpenGL4.BlendEquationMode modeAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationSeparateiARB", ExactSpelling = true)]
-            internal extern static void BlendEquationSeparateiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend modeRGB, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend modeAlpha);
+            internal extern static void BlendEquationSeparateiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.All modeRGB, OpenTK.Graphics.OpenGL4.All modeAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFunc", ExactSpelling = true)]
             internal extern static void BlendFunc(OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactor, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactor);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFunci", ExactSpelling = true)]
-            internal extern static void BlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL4.Version40 src, OpenTK.Graphics.OpenGL4.Version40 dst);
+            internal extern static void BlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL4.All src, OpenTK.Graphics.OpenGL4.All dst);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFunciARB", ExactSpelling = true)]
-            internal extern static void BlendFunciARB(UInt32 buf, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend src, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend dst);
+            internal extern static void BlendFunciARB(UInt32 buf, OpenTK.Graphics.OpenGL4.All src, OpenTK.Graphics.OpenGL4.All dst);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFuncSeparate", ExactSpelling = true)]
             internal extern static void BlendFuncSeparate(OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactorRGB, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactorRGB, OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactorAlpha, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactorAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFuncSeparatei", ExactSpelling = true)]
-            internal extern static void BlendFuncSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL4.Version40 srcRGB, OpenTK.Graphics.OpenGL4.Version40 dstRGB, OpenTK.Graphics.OpenGL4.Version40 srcAlpha, OpenTK.Graphics.OpenGL4.Version40 dstAlpha);
+            internal extern static void BlendFuncSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL4.All srcRGB, OpenTK.Graphics.OpenGL4.All dstRGB, OpenTK.Graphics.OpenGL4.All srcAlpha, OpenTK.Graphics.OpenGL4.All dstAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFuncSeparateiARB", ExactSpelling = true)]
-            internal extern static void BlendFuncSeparateiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend srcRGB, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend dstRGB, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend srcAlpha, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend dstAlpha);
+            internal extern static void BlendFuncSeparateiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.All srcRGB, OpenTK.Graphics.OpenGL4.All dstRGB, OpenTK.Graphics.OpenGL4.All srcAlpha, OpenTK.Graphics.OpenGL4.All dstAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlitFramebuffer", ExactSpelling = true)]
             internal extern static void BlitFramebuffer(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, OpenTK.Graphics.OpenGL4.ClearBufferMask mask, OpenTK.Graphics.OpenGL4.BlitFramebufferFilter filter);
@@ -356,19 +359,19 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static unsafe void DebugMessageControl(OpenTK.Graphics.OpenGL4.DebugSourceControl source, OpenTK.Graphics.OpenGL4.DebugTypeControl type, OpenTK.Graphics.OpenGL4.DebugSeverityControl severity, Int32 count, UInt32* ids, bool enabled);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageControlARB", ExactSpelling = true)]
-            internal extern static unsafe void DebugMessageControlARB(OpenTK.Graphics.OpenGL4.ArbDebugOutput source, OpenTK.Graphics.OpenGL4.ArbDebugOutput type, OpenTK.Graphics.OpenGL4.ArbDebugOutput severity, Int32 count, UInt32* ids, bool enabled);
+            internal extern static unsafe void DebugMessageControlARB(OpenTK.Graphics.OpenGL4.All source, OpenTK.Graphics.OpenGL4.All type, OpenTK.Graphics.OpenGL4.All severity, Int32 count, UInt32* ids, bool enabled);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageControlKHR", ExactSpelling = true)]
-            internal extern static unsafe void DebugMessageControlKHR(OpenTK.Graphics.OpenGL4.KhrDebug source, OpenTK.Graphics.OpenGL4.KhrDebug type, OpenTK.Graphics.OpenGL4.KhrDebug severity, Int32 count, UInt32* ids, bool enabled);
+            internal extern static unsafe void DebugMessageControlKHR(OpenTK.Graphics.OpenGL4.All source, OpenTK.Graphics.OpenGL4.All type, OpenTK.Graphics.OpenGL4.All severity, Int32 count, UInt32* ids, bool enabled);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageInsert", ExactSpelling = true)]
             internal extern static void DebugMessageInsert(OpenTK.Graphics.OpenGL4.DebugSourceExternal source, OpenTK.Graphics.OpenGL4.DebugType type, UInt32 id, OpenTK.Graphics.OpenGL4.DebugSeverity severity, Int32 length, String buf);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageInsertARB", ExactSpelling = true)]
-            internal extern static void DebugMessageInsertARB(OpenTK.Graphics.OpenGL4.ArbDebugOutput source, OpenTK.Graphics.OpenGL4.ArbDebugOutput type, UInt32 id, OpenTK.Graphics.OpenGL4.ArbDebugOutput severity, Int32 length, String buf);
+            internal extern static void DebugMessageInsertARB(OpenTK.Graphics.OpenGL4.All source, OpenTK.Graphics.OpenGL4.All type, UInt32 id, OpenTK.Graphics.OpenGL4.All severity, Int32 length, String buf);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageInsertKHR", ExactSpelling = true)]
-            internal extern static void DebugMessageInsertKHR(OpenTK.Graphics.OpenGL4.KhrDebug source, OpenTK.Graphics.OpenGL4.KhrDebug type, UInt32 id, OpenTK.Graphics.OpenGL4.KhrDebug severity, Int32 length, String buf);
+            internal extern static void DebugMessageInsertKHR(OpenTK.Graphics.OpenGL4.All source, OpenTK.Graphics.OpenGL4.All type, UInt32 id, OpenTK.Graphics.OpenGL4.All severity, Int32 length, String buf);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteBuffers", ExactSpelling = true)]
             internal extern static unsafe void DeleteBuffers(Int32 n, UInt32* buffers);
@@ -451,6 +454,12 @@ namespace OpenTK.Graphics.OpenGL4
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawArrays", ExactSpelling = true)]
             internal extern static void DrawArrays(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 first, Int32 count);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawArrays", ExactSpelling = true)]
+            internal extern static void DrawArrays1(OpenTK.Graphics.OpenGL4.BeginMode mode, Int32 first, Int32 count);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawArraysEXT", ExactSpelling = true)]
+            internal extern static void DrawArraysEXT(OpenTK.Graphics.OpenGL4.BeginMode mode, Int32 first, Int32 count);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawArraysIndirect", ExactSpelling = true)]
             internal extern static void DrawArraysIndirect(OpenTK.Graphics.OpenGL4.PrimitiveType mode, IntPtr indirect);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -468,6 +477,9 @@ namespace OpenTK.Graphics.OpenGL4
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElements", ExactSpelling = true)]
             internal extern static void DrawElements(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElements", ExactSpelling = true)]
+            internal extern static void DrawElements1(OpenTK.Graphics.OpenGL4.BeginMode mode, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElementsBaseVertex", ExactSpelling = true)]
             internal extern static void DrawElementsBaseVertex(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 basevertex);
@@ -489,6 +501,9 @@ namespace OpenTK.Graphics.OpenGL4
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawRangeElements", ExactSpelling = true)]
             internal extern static void DrawRangeElements(OpenTK.Graphics.OpenGL4.PrimitiveType mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawRangeElements", ExactSpelling = true)]
+            internal extern static void DrawRangeElements1(OpenTK.Graphics.OpenGL4.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawRangeElementsBaseVertex", ExactSpelling = true)]
             internal extern static void DrawRangeElementsBaseVertex(OpenTK.Graphics.OpenGL4.PrimitiveType mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 basevertex);
@@ -671,10 +686,10 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static unsafe Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.All* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDebugMessageLogARB", ExactSpelling = true)]
-            internal extern static unsafe Int32 GetDebugMessageLogARB(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.ArbDebugOutput* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.ArbDebugOutput* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.ArbDebugOutput* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+            internal extern static unsafe Int32 GetDebugMessageLogARB(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.All* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDebugMessageLogKHR", ExactSpelling = true)]
-            internal extern static unsafe Int32 GetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.KhrDebug* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.KhrDebug* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.KhrDebug* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+            internal extern static unsafe Int32 GetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.All* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDoublei_v", ExactSpelling = true)]
             internal extern static unsafe void GetDoublei_v(OpenTK.Graphics.OpenGL4.GetIndexedPName target, UInt32 index, [OutAttribute] Double* data);
@@ -704,7 +719,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static unsafe void GetFramebufferParameteriv(OpenTK.Graphics.OpenGL4.FramebufferTarget target, OpenTK.Graphics.OpenGL4.FramebufferDefaultParameter pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetGraphicsResetStatusARB", ExactSpelling = true)]
-            internal extern static OpenTK.Graphics.OpenGL4.ArbRobustness GetGraphicsResetStatusARB();
+            internal extern static OpenTK.Graphics.OpenGL4.All GetGraphicsResetStatusARB();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetHistogram", ExactSpelling = true)]
             internal extern static void GetHistogram(OpenTK.Graphics.OpenGL4.HistogramTarget target, bool reset, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [OutAttribute] IntPtr values);
@@ -716,7 +731,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static unsafe void GetHistogramParameteriv(OpenTK.Graphics.OpenGL4.HistogramTarget target, OpenTK.Graphics.OpenGL4.GetHistogramParameterPName pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetImageHandleARB", ExactSpelling = true)]
-            internal extern static Int64 GetImageHandleARB(UInt32 texture, Int32 level, bool layered, Int32 layer, OpenTK.Graphics.OpenGL4.ArbBindlessTexture format);
+            internal extern static Int64 GetImageHandleARB(UInt32 texture, Int32 level, bool layered, Int32 layer, OpenTK.Graphics.OpenGL4.All format);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetInteger64i_v", ExactSpelling = true)]
             internal extern static unsafe void GetInteger64i_v(OpenTK.Graphics.OpenGL4.GetIndexedPName target, UInt32 index, [OutAttribute] Int64* data);
@@ -752,49 +767,49 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static unsafe void GetNamedStringARB(Int32 namelen, String name, Int32 bufSize, [OutAttribute] Int32* stringlen, [OutAttribute] StringBuilder @string);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetNamedStringivARB", ExactSpelling = true)]
-            internal extern static unsafe void GetNamedStringivARB(Int32 namelen, String name, OpenTK.Graphics.OpenGL4.ArbShadingLanguageInclude pname, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetNamedStringivARB(Int32 namelen, String name, OpenTK.Graphics.OpenGL4.All pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnColorTableARB", ExactSpelling = true)]
-            internal extern static void GetnColorTableARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, OpenTK.Graphics.OpenGL4.ArbRobustness format, OpenTK.Graphics.OpenGL4.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr table);
+            internal extern static void GetnColorTableARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr table);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnCompressedTexImageARB", ExactSpelling = true)]
-            internal extern static void GetnCompressedTexImageARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, Int32 lod, Int32 bufSize, [OutAttribute] IntPtr img);
+            internal extern static void GetnCompressedTexImageARB(OpenTK.Graphics.OpenGL4.All target, Int32 lod, Int32 bufSize, [OutAttribute] IntPtr img);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnConvolutionFilterARB", ExactSpelling = true)]
-            internal extern static void GetnConvolutionFilterARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, OpenTK.Graphics.OpenGL4.ArbRobustness format, OpenTK.Graphics.OpenGL4.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr image);
+            internal extern static void GetnConvolutionFilterARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr image);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnHistogramARB", ExactSpelling = true)]
-            internal extern static void GetnHistogramARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, bool reset, OpenTK.Graphics.OpenGL4.ArbRobustness format, OpenTK.Graphics.OpenGL4.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr values);
+            internal extern static void GetnHistogramARB(OpenTK.Graphics.OpenGL4.All target, bool reset, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnMapdvARB", ExactSpelling = true)]
-            internal extern static unsafe void GetnMapdvARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, OpenTK.Graphics.OpenGL4.ArbRobustness query, Int32 bufSize, [OutAttribute] Double* v);
+            internal extern static unsafe void GetnMapdvARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All query, Int32 bufSize, [OutAttribute] Double* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnMapfvARB", ExactSpelling = true)]
-            internal extern static unsafe void GetnMapfvARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, OpenTK.Graphics.OpenGL4.ArbRobustness query, Int32 bufSize, [OutAttribute] Single* v);
+            internal extern static unsafe void GetnMapfvARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All query, Int32 bufSize, [OutAttribute] Single* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnMapivARB", ExactSpelling = true)]
-            internal extern static unsafe void GetnMapivARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, OpenTK.Graphics.OpenGL4.ArbRobustness query, Int32 bufSize, [OutAttribute] Int32* v);
+            internal extern static unsafe void GetnMapivARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All query, Int32 bufSize, [OutAttribute] Int32* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnMinmaxARB", ExactSpelling = true)]
-            internal extern static void GetnMinmaxARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, bool reset, OpenTK.Graphics.OpenGL4.ArbRobustness format, OpenTK.Graphics.OpenGL4.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr values);
+            internal extern static void GetnMinmaxARB(OpenTK.Graphics.OpenGL4.All target, bool reset, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnPixelMapfvARB", ExactSpelling = true)]
-            internal extern static unsafe void GetnPixelMapfvARB(OpenTK.Graphics.OpenGL4.ArbRobustness map, Int32 bufSize, [OutAttribute] Single* values);
+            internal extern static unsafe void GetnPixelMapfvARB(OpenTK.Graphics.OpenGL4.All map, Int32 bufSize, [OutAttribute] Single* values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnPixelMapuivARB", ExactSpelling = true)]
-            internal extern static unsafe void GetnPixelMapuivARB(OpenTK.Graphics.OpenGL4.ArbRobustness map, Int32 bufSize, [OutAttribute] UInt32* values);
+            internal extern static unsafe void GetnPixelMapuivARB(OpenTK.Graphics.OpenGL4.All map, Int32 bufSize, [OutAttribute] UInt32* values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnPixelMapusvARB", ExactSpelling = true)]
-            internal extern static unsafe void GetnPixelMapusvARB(OpenTK.Graphics.OpenGL4.ArbRobustness map, Int32 bufSize, [OutAttribute] UInt16* values);
+            internal extern static unsafe void GetnPixelMapusvARB(OpenTK.Graphics.OpenGL4.All map, Int32 bufSize, [OutAttribute] UInt16* values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnPolygonStippleARB", ExactSpelling = true)]
             internal extern static unsafe void GetnPolygonStippleARB(Int32 bufSize, [OutAttribute] Byte* pattern);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnSeparableFilterARB", ExactSpelling = true)]
-            internal extern static void GetnSeparableFilterARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, OpenTK.Graphics.OpenGL4.ArbRobustness format, OpenTK.Graphics.OpenGL4.ArbRobustness type, Int32 rowBufSize, [OutAttribute] IntPtr row, Int32 columnBufSize, [OutAttribute] IntPtr column, [OutAttribute] IntPtr span);
+            internal extern static void GetnSeparableFilterARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 rowBufSize, [OutAttribute] IntPtr row, Int32 columnBufSize, [OutAttribute] IntPtr column, [OutAttribute] IntPtr span);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnTexImageARB", ExactSpelling = true)]
-            internal extern static void GetnTexImageARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, Int32 level, OpenTK.Graphics.OpenGL4.ArbRobustness format, OpenTK.Graphics.OpenGL4.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr img);
+            internal extern static void GetnTexImageARB(OpenTK.Graphics.OpenGL4.All target, Int32 level, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr img);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnUniformdvARB", ExactSpelling = true)]
             internal extern static unsafe void GetnUniformdvARB(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Double* @params);
@@ -812,7 +827,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static unsafe void GetObjectLabel(OpenTK.Graphics.OpenGL4.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetObjectLabelKHR", ExactSpelling = true)]
-            internal extern static unsafe void GetObjectLabelKHR(OpenTK.Graphics.OpenGL4.KhrDebug identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
+            internal extern static unsafe void GetObjectLabelKHR(OpenTK.Graphics.OpenGL4.All identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetObjectPtrLabel", ExactSpelling = true)]
             internal extern static unsafe void GetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
@@ -824,7 +839,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static void GetPointerv(OpenTK.Graphics.OpenGL4.GetPointervPName pname, [OutAttribute] IntPtr @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetPointervKHR", ExactSpelling = true)]
-            internal extern static void GetPointervKHR(OpenTK.Graphics.OpenGL4.KhrDebug pname, [OutAttribute] IntPtr @params);
+            internal extern static void GetPointervKHR(OpenTK.Graphics.OpenGL4.All pname, [OutAttribute] IntPtr @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetProgramBinary", ExactSpelling = true)]
             internal extern static unsafe void GetProgramBinary(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.OpenGL4.BinaryFormat* binaryFormat, [OutAttribute] IntPtr binary);
@@ -1091,7 +1106,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static void MakeImageHandleNonResidentARB(UInt64 handle);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMakeImageHandleResidentARB", ExactSpelling = true)]
-            internal extern static void MakeImageHandleResidentARB(UInt64 handle, OpenTK.Graphics.OpenGL4.ArbBindlessTexture access);
+            internal extern static void MakeImageHandleResidentARB(UInt64 handle, OpenTK.Graphics.OpenGL4.All access);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMakeTextureHandleNonResidentARB", ExactSpelling = true)]
             internal extern static void MakeTextureHandleNonResidentARB(UInt64 handle);
@@ -1120,14 +1135,20 @@ namespace OpenTK.Graphics.OpenGL4
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawArrays", ExactSpelling = true)]
             internal extern static unsafe void MultiDrawArrays(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32* first, Int32* count, Int32 drawcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawArrays", ExactSpelling = true)]
+            internal extern static unsafe void MultiDrawArrays1(OpenTK.Graphics.OpenGL4.BeginMode mode, Int32* first, Int32* count, Int32 drawcount);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawArraysIndirect", ExactSpelling = true)]
             internal extern static void MultiDrawArraysIndirect(OpenTK.Graphics.OpenGL4.PrimitiveType mode, IntPtr indirect, Int32 drawcount, Int32 stride);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawArraysIndirectCountARB", ExactSpelling = true)]
-            internal extern static void MultiDrawArraysIndirectCountARB(OpenTK.Graphics.OpenGL4.ArbIndirectParameters mode, IntPtr indirect, IntPtr drawcount, Int32 maxdrawcount, Int32 stride);
+            internal extern static void MultiDrawArraysIndirectCountARB(OpenTK.Graphics.OpenGL4.All mode, IntPtr indirect, IntPtr drawcount, Int32 maxdrawcount, Int32 stride);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawElements", ExactSpelling = true)]
             internal extern static unsafe void MultiDrawElements(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32* count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 drawcount);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawElements", ExactSpelling = true)]
+            internal extern static unsafe void MultiDrawElements1(OpenTK.Graphics.OpenGL4.BeginMode mode, Int32* count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 drawcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawElementsBaseVertex", ExactSpelling = true)]
             internal extern static unsafe void MultiDrawElementsBaseVertex(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32* count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 drawcount, Int32* basevertex);
@@ -1136,7 +1157,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static void MultiDrawElementsIndirect(OpenTK.Graphics.OpenGL4.All mode, OpenTK.Graphics.OpenGL4.All type, IntPtr indirect, Int32 drawcount, Int32 stride);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawElementsIndirectCountARB", ExactSpelling = true)]
-            internal extern static void MultiDrawElementsIndirectCountARB(OpenTK.Graphics.OpenGL4.ArbIndirectParameters mode, OpenTK.Graphics.OpenGL4.ArbIndirectParameters type, IntPtr indirect, IntPtr drawcount, Int32 maxdrawcount, Int32 stride);
+            internal extern static void MultiDrawElementsIndirectCountARB(OpenTK.Graphics.OpenGL4.All mode, OpenTK.Graphics.OpenGL4.All type, IntPtr indirect, IntPtr drawcount, Int32 maxdrawcount, Int32 stride);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoordP1ui", ExactSpelling = true)]
             internal extern static void MultiTexCoordP1ui(OpenTK.Graphics.OpenGL4.TextureUnit texture, OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 coords);
@@ -1163,7 +1184,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static unsafe void MultiTexCoordP4uiv(OpenTK.Graphics.OpenGL4.TextureUnit texture, OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNamedStringARB", ExactSpelling = true)]
-            internal extern static void NamedStringARB(OpenTK.Graphics.OpenGL4.ArbShadingLanguageInclude type, Int32 namelen, String name, Int32 stringlen, String @string);
+            internal extern static void NamedStringARB(OpenTK.Graphics.OpenGL4.All type, Int32 namelen, String name, Int32 stringlen, String @string);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNormalP3ui", ExactSpelling = true)]
             internal extern static void NormalP3ui(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 coords);
@@ -1175,7 +1196,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static void ObjectLabel(OpenTK.Graphics.OpenGL4.ObjectLabelIdentifier identifier, UInt32 name, Int32 length, String label);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glObjectLabelKHR", ExactSpelling = true)]
-            internal extern static void ObjectLabelKHR(OpenTK.Graphics.OpenGL4.KhrDebug identifier, UInt32 name, Int32 length, String label);
+            internal extern static void ObjectLabelKHR(OpenTK.Graphics.OpenGL4.All identifier, UInt32 name, Int32 length, String label);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glObjectPtrLabel", ExactSpelling = true)]
             internal extern static void ObjectPtrLabel(IntPtr ptr, Int32 length, String label);
@@ -1397,7 +1418,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static void PushDebugGroup(OpenTK.Graphics.OpenGL4.DebugSourceExternal source, UInt32 id, Int32 length, String message);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPushDebugGroupKHR", ExactSpelling = true)]
-            internal extern static void PushDebugGroupKHR(OpenTK.Graphics.OpenGL4.KhrDebug source, UInt32 id, Int32 length, String message);
+            internal extern static void PushDebugGroupKHR(OpenTK.Graphics.OpenGL4.All source, UInt32 id, Int32 length, String message);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glQueryCounter", ExactSpelling = true)]
             internal extern static void QueryCounter(UInt32 id, OpenTK.Graphics.OpenGL4.QueryCounterTarget target);
@@ -1406,7 +1427,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static void ReadBuffer(OpenTK.Graphics.OpenGL4.ReadBufferMode mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glReadnPixelsARB", ExactSpelling = true)]
-            internal extern static void ReadnPixelsARB(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL4.ArbRobustness format, OpenTK.Graphics.OpenGL4.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr data);
+            internal extern static void ReadnPixelsARB(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glReadPixels", ExactSpelling = true)]
             internal extern static void ReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [OutAttribute] IntPtr pixels);
@@ -1547,7 +1568,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static void TexImage3DMultisample(OpenTK.Graphics.OpenGL4.TextureTargetMultisample target, Int32 samples, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexPageCommitmentARB", ExactSpelling = true)]
-            internal extern static void TexPageCommitmentARB(OpenTK.Graphics.OpenGL4.ArbSparseTexture target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, bool resident);
+            internal extern static void TexPageCommitmentARB(OpenTK.Graphics.OpenGL4.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, bool resident);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexParameterf", ExactSpelling = true)]
             internal extern static void TexParameterf(OpenTK.Graphics.OpenGL4.TextureTarget target, OpenTK.Graphics.OpenGL4.TextureParameterName pname, Single param);

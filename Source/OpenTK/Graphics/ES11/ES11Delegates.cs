@@ -39,28 +39,28 @@ namespace OpenTK.Graphics.ES11
         internal static partial class Delegates
         {
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void AccumxOES(OpenTK.Graphics.ES11.OesFixedPoint op, int value);
+            internal delegate void AccumxOES(OpenTK.Graphics.ES11.All op, int value);
             internal static AccumxOES glAccumxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ActiveTexture(OpenTK.Graphics.ES11.VersionEsCm10 texture);
+            internal delegate void ActiveTexture(OpenTK.Graphics.ES11.All texture);
             internal static ActiveTexture glActiveTexture;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void AlphaFunc(OpenTK.Graphics.ES11.AlphaFunction func, Single @ref);
             internal static AlphaFunc glAlphaFunc;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void AlphaFuncx(OpenTK.Graphics.ES11.VersionEsCm10 func, int @ref);
+            internal delegate void AlphaFuncx(OpenTK.Graphics.ES11.All func, int @ref);
             internal static AlphaFuncx glAlphaFuncx;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void AlphaFuncxOES(OpenTK.Graphics.ES11.OesFixedPoint func, int @ref);
+            internal delegate void AlphaFuncxOES(OpenTK.Graphics.ES11.All func, int @ref);
             internal static AlphaFuncxOES glAlphaFuncxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindBuffer(OpenTK.Graphics.ES11.VersionEsCm10 target, UInt32 buffer);
+            internal delegate void BindBuffer(OpenTK.Graphics.ES11.All target, UInt32 buffer);
             internal static BindBuffer glBindBuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindFramebufferOES(OpenTK.Graphics.ES11.OesFramebufferObject target, UInt32 framebuffer);
+            internal delegate void BindFramebufferOES(OpenTK.Graphics.ES11.All target, UInt32 framebuffer);
             internal static BindFramebufferOES glBindFramebufferOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindRenderbufferOES(OpenTK.Graphics.ES11.OesFramebufferObject target, UInt32 renderbuffer);
+            internal delegate void BindRenderbufferOES(OpenTK.Graphics.ES11.All target, UInt32 renderbuffer);
             internal static BindRenderbufferOES glBindRenderbufferOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BindTexture(OpenTK.Graphics.ES11.TextureTarget target, UInt32 texture);
@@ -75,28 +75,28 @@ namespace OpenTK.Graphics.ES11
             internal delegate void BlendColorxOES(int red, int green, int blue, int alpha);
             internal static BlendColorxOES glBlendColorxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendEquationEXT(OpenTK.Graphics.ES11.ExtBlendMinmax mode);
+            internal delegate void BlendEquationEXT(OpenTK.Graphics.ES11.All mode);
             internal static BlendEquationEXT glBlendEquationEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendEquationOES(OpenTK.Graphics.ES11.OesBlendSubtract mode);
+            internal delegate void BlendEquationOES(OpenTK.Graphics.ES11.All mode);
             internal static BlendEquationOES glBlendEquationOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendEquationSeparateOES(OpenTK.Graphics.ES11.OesBlendEquationSeparate modeRGB, OpenTK.Graphics.ES11.OesBlendEquationSeparate modeAlpha);
+            internal delegate void BlendEquationSeparateOES(OpenTK.Graphics.ES11.All modeRGB, OpenTK.Graphics.ES11.All modeAlpha);
             internal static BlendEquationSeparateOES glBlendEquationSeparateOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFunc(OpenTK.Graphics.ES11.BlendingFactorSrc sfactor, OpenTK.Graphics.ES11.BlendingFactorDest dfactor);
             internal static BlendFunc glBlendFunc;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendFuncSeparateOES(OpenTK.Graphics.ES11.OesBlendFuncSeparate srcRGB, OpenTK.Graphics.ES11.OesBlendFuncSeparate dstRGB, OpenTK.Graphics.ES11.OesBlendFuncSeparate srcAlpha, OpenTK.Graphics.ES11.OesBlendFuncSeparate dstAlpha);
+            internal delegate void BlendFuncSeparateOES(OpenTK.Graphics.ES11.All srcRGB, OpenTK.Graphics.ES11.All dstRGB, OpenTK.Graphics.ES11.All srcAlpha, OpenTK.Graphics.ES11.All dstAlpha);
             internal static BlendFuncSeparateOES glBlendFuncSeparateOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BufferData(OpenTK.Graphics.ES11.VersionEsCm10 target, IntPtr size, IntPtr data, OpenTK.Graphics.ES11.VersionEsCm10 usage);
+            internal delegate void BufferData(OpenTK.Graphics.ES11.All target, IntPtr size, IntPtr data, OpenTK.Graphics.ES11.All usage);
             internal static BufferData glBufferData;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BufferSubData(OpenTK.Graphics.ES11.VersionEsCm10 target, IntPtr offset, IntPtr size, IntPtr data);
+            internal delegate void BufferSubData(OpenTK.Graphics.ES11.All target, IntPtr offset, IntPtr size, IntPtr data);
             internal static BufferSubData glBufferSubData;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate OpenTK.Graphics.ES11.OesFramebufferObject CheckFramebufferStatusOES(OpenTK.Graphics.ES11.OesFramebufferObject target);
+            internal delegate OpenTK.Graphics.ES11.All CheckFramebufferStatusOES(OpenTK.Graphics.ES11.All target);
             internal static CheckFramebufferStatusOES glCheckFramebufferStatusOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Clear(OpenTK.Graphics.ES11.ClearBufferMask mask);
@@ -129,28 +129,28 @@ namespace OpenTK.Graphics.ES11
             internal delegate void ClearStencil(Int32 s);
             internal static ClearStencil glClearStencil;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ClientActiveTexture(OpenTK.Graphics.ES11.VersionEsCm10 texture);
+            internal delegate void ClientActiveTexture(OpenTK.Graphics.ES11.All texture);
             internal static ClientActiveTexture glClientActiveTexture;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate OpenTK.Graphics.ES11.AppleSync ClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
+            internal delegate OpenTK.Graphics.ES11.All ClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
             internal static ClientWaitSyncAPPLE glClientWaitSyncAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ClipPlanef(OpenTK.Graphics.ES11.VersionEsCm10 p, Single* eqn);
+            internal unsafe delegate void ClipPlanef(OpenTK.Graphics.ES11.All p, Single* eqn);
             internal unsafe static ClipPlanef glClipPlanef;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ClipPlanefIMG(OpenTK.Graphics.ES11.ImgUserClipPlane p, Single* eqn);
+            internal unsafe delegate void ClipPlanefIMG(OpenTK.Graphics.ES11.All p, Single* eqn);
             internal unsafe static ClipPlanefIMG glClipPlanefIMG;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ClipPlanefOES(OpenTK.Graphics.ES11.OesSinglePrecision plane, Single* equation);
+            internal unsafe delegate void ClipPlanefOES(OpenTK.Graphics.ES11.All plane, Single* equation);
             internal unsafe static ClipPlanefOES glClipPlanefOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ClipPlanex(OpenTK.Graphics.ES11.VersionEsCm10 plane, int* equation);
+            internal unsafe delegate void ClipPlanex(OpenTK.Graphics.ES11.All plane, int* equation);
             internal unsafe static ClipPlanex glClipPlanex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ClipPlanexIMG(OpenTK.Graphics.ES11.ImgUserClipPlane p, int* eqn);
+            internal unsafe delegate void ClipPlanexIMG(OpenTK.Graphics.ES11.All p, int* eqn);
             internal unsafe static ClipPlanexIMG glClipPlanexIMG;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ClipPlanexOES(OpenTK.Graphics.ES11.OesFixedPoint plane, int* equation);
+            internal unsafe delegate void ClipPlanexOES(OpenTK.Graphics.ES11.All plane, int* equation);
             internal unsafe static ClipPlanexOES glClipPlanexOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Color3xOES(int red, int green, int blue);
@@ -180,19 +180,19 @@ namespace OpenTK.Graphics.ES11
             internal delegate void ColorPointer(Int32 size, OpenTK.Graphics.ES11.ColorPointerType type, Int32 stride, IntPtr pointer);
             internal static ColorPointer glColorPointer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CompressedTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.VersionEsCm10 internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
+            internal delegate void CompressedTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
             internal static CompressedTexImage2D glCompressedTexImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void CompressedTexSubImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES11.PixelFormat format, Int32 imageSize, IntPtr data);
             internal static CompressedTexSubImage2D glCompressedTexSubImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ConvolutionParameterxOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal delegate void ConvolutionParameterxOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
             internal static ConvolutionParameterxOES glConvolutionParameterxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ConvolutionParameterxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, int* @params);
+            internal unsafe delegate void ConvolutionParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
             internal unsafe static ConvolutionParameterxvOES glConvolutionParameterxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CopyTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.VersionEsCm10 internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
+            internal delegate void CopyTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
             internal static CopyTexImage2D glCopyTexImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void CopyTexSubImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
@@ -255,14 +255,20 @@ namespace OpenTK.Graphics.ES11
             internal delegate void DisableDriverControlQCOM(UInt32 driverControl);
             internal static DisableDriverControlQCOM glDisableDriverControlQCOM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void DiscardFramebufferEXT(OpenTK.Graphics.ES11.ExtDiscardFramebuffer target, Int32 numAttachments, OpenTK.Graphics.ES11.ExtDiscardFramebuffer* attachments);
+            internal unsafe delegate void DiscardFramebufferEXT(OpenTK.Graphics.ES11.All target, Int32 numAttachments, OpenTK.Graphics.ES11.All* attachments);
             internal unsafe static DiscardFramebufferEXT glDiscardFramebufferEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawArrays(OpenTK.Graphics.ES11.PrimitiveType mode, Int32 first, Int32 count);
             internal static DrawArrays glDrawArrays;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawElements(OpenTK.Graphics.ES11.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES11.VersionEsCm10 type, IntPtr indices);
+            internal delegate void DrawArrays1(OpenTK.Graphics.ES11.BeginMode mode, Int32 first, Int32 count);
+            internal static DrawArrays1 glDrawArrays1;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void DrawElements(OpenTK.Graphics.ES11.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES11.All type, IntPtr indices);
             internal static DrawElements glDrawElements;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void DrawElements1(OpenTK.Graphics.ES11.BeginMode mode, Int32 count, OpenTK.Graphics.ES11.All type, IntPtr indices);
+            internal static DrawElements1 glDrawElements1;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawTexfOES(Single x, Single y, Single z, Single width, Single height);
             internal static DrawTexfOES glDrawTexfOES;
@@ -288,10 +294,10 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void DrawTexxvOES(int* coords);
             internal unsafe static DrawTexxvOES glDrawTexxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void EGLImageTargetRenderbufferStorageOES(OpenTK.Graphics.ES11.OesEglImage target, IntPtr image);
+            internal delegate void EGLImageTargetRenderbufferStorageOES(OpenTK.Graphics.ES11.All target, IntPtr image);
             internal static EGLImageTargetRenderbufferStorageOES glEGLImageTargetRenderbufferStorageOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void EGLImageTargetTexture2DOES(OpenTK.Graphics.ES11.OesEglImage target, IntPtr image);
+            internal delegate void EGLImageTargetTexture2DOES(OpenTK.Graphics.ES11.All target, IntPtr image);
             internal static EGLImageTargetTexture2DOES glEGLImageTargetTexture2DOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Enable(OpenTK.Graphics.ES11.EnableCap cap);
@@ -318,7 +324,7 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void EvalCoord2xvOES(int* coords);
             internal unsafe static EvalCoord2xvOES glEvalCoord2xvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ExtGetBufferPointervQCOM(OpenTK.Graphics.ES11.QcomExtendedGet target, [OutAttribute] IntPtr @params);
+            internal delegate void ExtGetBufferPointervQCOM(OpenTK.Graphics.ES11.All target, [OutAttribute] IntPtr @params);
             internal static ExtGetBufferPointervQCOM glExtGetBufferPointervQCOM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void ExtGetBuffersQCOM([OutAttribute] UInt32* buffers, Int32 maxBuffers, [OutAttribute] Int32* numBuffers);
@@ -327,7 +333,7 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void ExtGetFramebuffersQCOM([OutAttribute] UInt32* framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32* numFramebuffers);
             internal unsafe static ExtGetFramebuffersQCOM glExtGetFramebuffersQCOM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ExtGetProgramBinarySourceQCOM(UInt32 program, OpenTK.Graphics.ES11.QcomExtendedGet2 shadertype, [OutAttribute] StringBuilder source, [OutAttribute] Int32* length);
+            internal unsafe delegate void ExtGetProgramBinarySourceQCOM(UInt32 program, OpenTK.Graphics.ES11.All shadertype, [OutAttribute] StringBuilder source, [OutAttribute] Int32* length);
             internal unsafe static ExtGetProgramBinarySourceQCOM glExtGetProgramBinarySourceQCOM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void ExtGetProgramsQCOM([OutAttribute] UInt32* programs, Int32 maxPrograms, [OutAttribute] Int32* numPrograms);
@@ -339,10 +345,10 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void ExtGetShadersQCOM([OutAttribute] UInt32* shaders, Int32 maxShaders, [OutAttribute] Int32* numShaders);
             internal unsafe static ExtGetShadersQCOM glExtGetShadersQCOM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ExtGetTexLevelParameterivQCOM(UInt32 texture, OpenTK.Graphics.ES11.QcomExtendedGet face, Int32 level, OpenTK.Graphics.ES11.QcomExtendedGet pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void ExtGetTexLevelParameterivQCOM(UInt32 texture, OpenTK.Graphics.ES11.All face, Int32 level, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
             internal unsafe static ExtGetTexLevelParameterivQCOM glExtGetTexLevelParameterivQCOM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ExtGetTexSubImageQCOM(OpenTK.Graphics.ES11.QcomExtendedGet target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.QcomExtendedGet format, OpenTK.Graphics.ES11.QcomExtendedGet type, [OutAttribute] IntPtr texels);
+            internal delegate void ExtGetTexSubImageQCOM(OpenTK.Graphics.ES11.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [OutAttribute] IntPtr texels);
             internal static ExtGetTexSubImageQCOM glExtGetTexSubImageQCOM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void ExtGetTexturesQCOM([OutAttribute] UInt32* textures, Int32 maxTextures, [OutAttribute] Int32* numTextures);
@@ -351,13 +357,13 @@ namespace OpenTK.Graphics.ES11
             internal delegate bool ExtIsProgramBinaryQCOM(UInt32 program);
             internal static ExtIsProgramBinaryQCOM glExtIsProgramBinaryQCOM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ExtTexObjectStateOverrideiQCOM(OpenTK.Graphics.ES11.QcomExtendedGet target, OpenTK.Graphics.ES11.QcomExtendedGet pname, Int32 param);
+            internal delegate void ExtTexObjectStateOverrideiQCOM(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, Int32 param);
             internal static ExtTexObjectStateOverrideiQCOM glExtTexObjectStateOverrideiQCOM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void FeedbackBufferxOES(Int32 n, OpenTK.Graphics.ES11.OesFixedPoint type, int* buffer);
+            internal unsafe delegate void FeedbackBufferxOES(Int32 n, OpenTK.Graphics.ES11.All type, int* buffer);
             internal unsafe static FeedbackBufferxOES glFeedbackBufferxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr FenceSyncAPPLE(OpenTK.Graphics.ES11.AppleSync condition, UInt32 flags);
+            internal delegate IntPtr FenceSyncAPPLE(OpenTK.Graphics.ES11.All condition, UInt32 flags);
             internal static FenceSyncAPPLE glFenceSyncAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Finish();
@@ -369,7 +375,7 @@ namespace OpenTK.Graphics.ES11
             internal delegate void Flush();
             internal static Flush glFlush;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FlushMappedBufferRangeEXT(OpenTK.Graphics.ES11.ExtMapBufferRange target, IntPtr offset, IntPtr length);
+            internal delegate void FlushMappedBufferRangeEXT(OpenTK.Graphics.ES11.All target, IntPtr offset, IntPtr length);
             internal static FlushMappedBufferRangeEXT glFlushMappedBufferRangeEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Fogf(OpenTK.Graphics.ES11.FogParameter pname, Single param);
@@ -378,28 +384,28 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void Fogfv(OpenTK.Graphics.ES11.FogParameter pname, Single* @params);
             internal unsafe static Fogfv glFogfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void Fogx(OpenTK.Graphics.ES11.VersionEsCm10 pname, int param);
+            internal delegate void Fogx(OpenTK.Graphics.ES11.All pname, int param);
             internal static Fogx glFogx;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FogxOES(OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal delegate void FogxOES(OpenTK.Graphics.ES11.All pname, int param);
             internal static FogxOES glFogxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void Fogxv(OpenTK.Graphics.ES11.VersionEsCm10 pname, int* param);
+            internal unsafe delegate void Fogxv(OpenTK.Graphics.ES11.All pname, int* param);
             internal unsafe static Fogxv glFogxv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void FogxvOES(OpenTK.Graphics.ES11.OesFixedPoint pname, int* param);
+            internal unsafe delegate void FogxvOES(OpenTK.Graphics.ES11.All pname, int* param);
             internal unsafe static FogxvOES glFogxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FramebufferRenderbufferOES(OpenTK.Graphics.ES11.OesFramebufferObject target, OpenTK.Graphics.ES11.OesFramebufferObject attachment, OpenTK.Graphics.ES11.OesFramebufferObject renderbuffertarget, UInt32 renderbuffer);
+            internal delegate void FramebufferRenderbufferOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All renderbuffertarget, UInt32 renderbuffer);
             internal static FramebufferRenderbufferOES glFramebufferRenderbufferOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FramebufferTexture2DMultisampleEXT(OpenTK.Graphics.ES11.ExtMultisampledRenderToTexture target, OpenTK.Graphics.ES11.ExtMultisampledRenderToTexture attachment, OpenTK.Graphics.ES11.ExtMultisampledRenderToTexture textarget, UInt32 texture, Int32 level, Int32 samples);
+            internal delegate void FramebufferTexture2DMultisampleEXT(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, UInt32 texture, Int32 level, Int32 samples);
             internal static FramebufferTexture2DMultisampleEXT glFramebufferTexture2DMultisampleEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FramebufferTexture2DMultisampleIMG(OpenTK.Graphics.ES11.ImgMultisampledRenderToTexture target, OpenTK.Graphics.ES11.ImgMultisampledRenderToTexture attachment, OpenTK.Graphics.ES11.ImgMultisampledRenderToTexture textarget, UInt32 texture, Int32 level, Int32 samples);
+            internal delegate void FramebufferTexture2DMultisampleIMG(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, UInt32 texture, Int32 level, Int32 samples);
             internal static FramebufferTexture2DMultisampleIMG glFramebufferTexture2DMultisampleIMG;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FramebufferTexture2DOES(OpenTK.Graphics.ES11.OesFramebufferObject target, OpenTK.Graphics.ES11.OesFramebufferObject attachment, OpenTK.Graphics.ES11.OesFramebufferObject textarget, UInt32 texture, Int32 level);
+            internal delegate void FramebufferTexture2DOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, UInt32 texture, Int32 level);
             internal static FramebufferTexture2DOES glFramebufferTexture2DOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FrontFace(OpenTK.Graphics.ES11.FrontFaceDirection mode);
@@ -420,7 +426,7 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void GenBuffers(Int32 n, [OutAttribute] UInt32* buffers);
             internal unsafe static GenBuffers glGenBuffers;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GenerateMipmapOES(OpenTK.Graphics.ES11.OesFramebufferObject target);
+            internal delegate void GenerateMipmapOES(OpenTK.Graphics.ES11.All target);
             internal static GenerateMipmapOES glGenerateMipmapOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GenFencesNV(Int32 n, [OutAttribute] UInt32* fences);
@@ -441,25 +447,25 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void GetBooleanv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] bool* data);
             internal unsafe static GetBooleanv glGetBooleanv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetBufferParameteriv(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetBufferParameteriv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
             internal unsafe static GetBufferParameteriv glGetBufferParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetBufferPointervOES(OpenTK.Graphics.ES11.OesMapbuffer target, OpenTK.Graphics.ES11.OesMapbuffer pname, [OutAttribute] IntPtr @params);
+            internal delegate void GetBufferPointervOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] IntPtr @params);
             internal static GetBufferPointervOES glGetBufferPointervOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetClipPlanef(OpenTK.Graphics.ES11.VersionEsCm10 plane, [OutAttribute] Single* equation);
+            internal unsafe delegate void GetClipPlanef(OpenTK.Graphics.ES11.All plane, [OutAttribute] Single* equation);
             internal unsafe static GetClipPlanef glGetClipPlanef;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetClipPlanefOES(OpenTK.Graphics.ES11.OesSinglePrecision plane, [OutAttribute] Single* equation);
+            internal unsafe delegate void GetClipPlanefOES(OpenTK.Graphics.ES11.All plane, [OutAttribute] Single* equation);
             internal unsafe static GetClipPlanefOES glGetClipPlanefOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetClipPlanex(OpenTK.Graphics.ES11.VersionEsCm10 plane, [OutAttribute] int* equation);
+            internal unsafe delegate void GetClipPlanex(OpenTK.Graphics.ES11.All plane, [OutAttribute] int* equation);
             internal unsafe static GetClipPlanex glGetClipPlanex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetClipPlanexOES(OpenTK.Graphics.ES11.OesFixedPoint plane, [OutAttribute] int* equation);
+            internal unsafe delegate void GetClipPlanexOES(OpenTK.Graphics.ES11.All plane, [OutAttribute] int* equation);
             internal unsafe static GetClipPlanexOES glGetClipPlanexOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetConvolutionParameterxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal unsafe delegate void GetConvolutionParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetConvolutionParameterxvOES glGetConvolutionParameterxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls);
@@ -471,28 +477,28 @@ namespace OpenTK.Graphics.ES11
             internal delegate OpenTK.Graphics.ES11.ErrorCode GetError();
             internal static GetError glGetError;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetFenceivNV(UInt32 fence, OpenTK.Graphics.ES11.NvFence pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetFenceivNV(UInt32 fence, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
             internal unsafe static GetFenceivNV glGetFenceivNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetFixedv(OpenTK.Graphics.ES11.VersionEsCm10 pname, [OutAttribute] int* @params);
+            internal unsafe delegate void GetFixedv(OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetFixedv glGetFixedv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetFixedvOES(OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal unsafe delegate void GetFixedvOES(OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetFixedvOES glGetFixedvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetFloatv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Single* data);
             internal unsafe static GetFloatv glGetFloatv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetFramebufferAttachmentParameterivOES(OpenTK.Graphics.ES11.OesFramebufferObject target, OpenTK.Graphics.ES11.OesFramebufferObject attachment, OpenTK.Graphics.ES11.OesFramebufferObject pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetFramebufferAttachmentParameterivOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
             internal unsafe static GetFramebufferAttachmentParameterivOES glGetFramebufferAttachmentParameterivOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate OpenTK.Graphics.ES11.ExtRobustness GetGraphicsResetStatusEXT();
+            internal delegate OpenTK.Graphics.ES11.All GetGraphicsResetStatusEXT();
             internal static GetGraphicsResetStatusEXT glGetGraphicsResetStatusEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetHistogramParameterxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal unsafe delegate void GetHistogramParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetHistogramParameterxvOES glGetHistogramParameterxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetInteger64vAPPLE(OpenTK.Graphics.ES11.AppleSync pname, [OutAttribute] Int64* @params);
+            internal unsafe delegate void GetInteger64vAPPLE(OpenTK.Graphics.ES11.All pname, [OutAttribute] Int64* @params);
             internal unsafe static GetInteger64vAPPLE glGetInteger64vAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetIntegerv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Int32* data);
@@ -501,28 +507,28 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void GetLightfv(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [OutAttribute] Single* @params);
             internal unsafe static GetLightfv glGetLightfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetLightxOES(OpenTK.Graphics.ES11.OesFixedPoint light, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal unsafe delegate void GetLightxOES(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetLightxOES glGetLightxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetLightxv(OpenTK.Graphics.ES11.VersionEsCm10 light, OpenTK.Graphics.ES11.VersionEsCm10 pname, [OutAttribute] int* @params);
+            internal unsafe delegate void GetLightxv(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetLightxv glGetLightxv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetLightxvOES(OpenTK.Graphics.ES11.OesFixedPoint light, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal unsafe delegate void GetLightxvOES(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetLightxvOES glGetLightxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetMapxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint query, [OutAttribute] int* v);
+            internal unsafe delegate void GetMapxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All query, [OutAttribute] int* v);
             internal unsafe static GetMapxvOES glGetMapxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetMaterialfv(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, [OutAttribute] Single* @params);
             internal unsafe static GetMaterialfv glGetMaterialfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetMaterialxOES(OpenTK.Graphics.ES11.OesFixedPoint face, OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal delegate void GetMaterialxOES(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int param);
             internal static GetMaterialxOES glGetMaterialxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetMaterialxv(OpenTK.Graphics.ES11.VersionEsCm10 face, OpenTK.Graphics.ES11.VersionEsCm10 pname, [OutAttribute] int* @params);
+            internal unsafe delegate void GetMaterialxv(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetMaterialxv glGetMaterialxv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetMaterialxvOES(OpenTK.Graphics.ES11.OesFixedPoint face, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal unsafe delegate void GetMaterialxvOES(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetMaterialxvOES glGetMaterialxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetnUniformfvEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
@@ -531,19 +537,19 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void GetnUniformivEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
             internal unsafe static GetnUniformivEXT glGetnUniformivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetPixelMapxv(OpenTK.Graphics.ES11.OesFixedPoint map, Int32 size, [OutAttribute] int* values);
+            internal unsafe delegate void GetPixelMapxv(OpenTK.Graphics.ES11.All map, Int32 size, [OutAttribute] int* values);
             internal unsafe static GetPixelMapxv glGetPixelMapxv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void GetPointerv(OpenTK.Graphics.ES11.GetPointervPName pname, [OutAttribute] IntPtr @params);
             internal static GetPointerv glGetPointerv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetRenderbufferParameterivOES(OpenTK.Graphics.ES11.OesFramebufferObject target, OpenTK.Graphics.ES11.OesFramebufferObject pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetRenderbufferParameterivOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
             internal unsafe static GetRenderbufferParameterivOES glGetRenderbufferParameterivOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate IntPtr GetString(OpenTK.Graphics.ES11.StringName name);
             internal static GetString glGetString;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetSyncivAPPLE(IntPtr sync, OpenTK.Graphics.ES11.AppleSync pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+            internal unsafe delegate void GetSyncivAPPLE(IntPtr sync, OpenTK.Graphics.ES11.All pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
             internal unsafe static GetSyncivAPPLE glGetSyncivAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetTexEnvfv(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [OutAttribute] Single* @params);
@@ -552,22 +558,22 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void GetTexEnviv(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [OutAttribute] Int32* @params);
             internal unsafe static GetTexEnviv glGetTexEnviv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTexEnvxv(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, [OutAttribute] int* @params);
+            internal unsafe delegate void GetTexEnvxv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetTexEnvxv glGetTexEnvxv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTexEnvxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal unsafe delegate void GetTexEnvxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetTexEnvxvOES glGetTexEnvxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTexGenfvOES(OpenTK.Graphics.ES11.OesTextureCubeMap coord, OpenTK.Graphics.ES11.OesTextureCubeMap pname, [OutAttribute] Single* @params);
+            internal unsafe delegate void GetTexGenfvOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute] Single* @params);
             internal unsafe static GetTexGenfvOES glGetTexGenfvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTexGenivOES(OpenTK.Graphics.ES11.OesTextureCubeMap coord, OpenTK.Graphics.ES11.OesTextureCubeMap pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetTexGenivOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
             internal unsafe static GetTexGenivOES glGetTexGenivOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetTexGenxvOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetTexGenxvOES glGetTexGenxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTexLevelParameterxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, Int32 level, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal unsafe delegate void GetTexLevelParameterxvOES(OpenTK.Graphics.ES11.All target, Int32 level, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetTexLevelParameterxvOES glGetTexLevelParameterxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetTexParameterfv(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute] Single* @params);
@@ -576,10 +582,10 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void GetTexParameteriv(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute] Int32* @params);
             internal unsafe static GetTexParameteriv glGetTexParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTexParameterxv(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, [OutAttribute] int* @params);
+            internal unsafe delegate void GetTexParameterxv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetTexParameterxv glGetTexParameterxv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTexParameterxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal unsafe delegate void GetTexParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             internal unsafe static GetTexParameterxvOES glGetTexParameterxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Hint(OpenTK.Graphics.ES11.HintTarget target, OpenTK.Graphics.ES11.HintMode mode);
@@ -627,28 +633,28 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void LightModelfv(OpenTK.Graphics.ES11.LightModelParameter pname, Single* @params);
             internal unsafe static LightModelfv glLightModelfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void LightModelx(OpenTK.Graphics.ES11.VersionEsCm10 pname, int param);
+            internal delegate void LightModelx(OpenTK.Graphics.ES11.All pname, int param);
             internal static LightModelx glLightModelx;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void LightModelxOES(OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal delegate void LightModelxOES(OpenTK.Graphics.ES11.All pname, int param);
             internal static LightModelxOES glLightModelxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void LightModelxv(OpenTK.Graphics.ES11.VersionEsCm10 pname, int* param);
+            internal unsafe delegate void LightModelxv(OpenTK.Graphics.ES11.All pname, int* param);
             internal unsafe static LightModelxv glLightModelxv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void LightModelxvOES(OpenTK.Graphics.ES11.OesFixedPoint pname, int* param);
+            internal unsafe delegate void LightModelxvOES(OpenTK.Graphics.ES11.All pname, int* param);
             internal unsafe static LightModelxvOES glLightModelxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void Lightx(OpenTK.Graphics.ES11.VersionEsCm10 light, OpenTK.Graphics.ES11.VersionEsCm10 pname, int param);
+            internal delegate void Lightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, int param);
             internal static Lightx glLightx;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void LightxOES(OpenTK.Graphics.ES11.OesFixedPoint light, OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal delegate void LightxOES(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, int param);
             internal static LightxOES glLightxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void Lightxv(OpenTK.Graphics.ES11.VersionEsCm10 light, OpenTK.Graphics.ES11.VersionEsCm10 pname, int* @params);
+            internal unsafe delegate void Lightxv(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, int* @params);
             internal unsafe static Lightxv glLightxv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void LightxvOES(OpenTK.Graphics.ES11.OesFixedPoint light, OpenTK.Graphics.ES11.OesFixedPoint pname, int* @params);
+            internal unsafe delegate void LightxvOES(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, int* @params);
             internal unsafe static LightxvOES glLightxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void LineWidth(Single width);
@@ -681,16 +687,16 @@ namespace OpenTK.Graphics.ES11
             internal delegate void LogicOp(OpenTK.Graphics.ES11.LogicOp opcode);
             internal static LogicOp glLogicOp;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void Map1xOES(OpenTK.Graphics.ES11.OesFixedPoint target, int u1, int u2, Int32 stride, Int32 order, int points);
+            internal delegate void Map1xOES(OpenTK.Graphics.ES11.All target, int u1, int u2, Int32 stride, Int32 order, int points);
             internal static Map1xOES glMap1xOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void Map2xOES(OpenTK.Graphics.ES11.OesFixedPoint target, int u1, int u2, Int32 ustride, Int32 uorder, int v1, int v2, Int32 vstride, Int32 vorder, int points);
+            internal delegate void Map2xOES(OpenTK.Graphics.ES11.All target, int u1, int u2, Int32 ustride, Int32 uorder, int v1, int v2, Int32 vstride, Int32 vorder, int points);
             internal static Map2xOES glMap2xOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr MapBufferOES(OpenTK.Graphics.ES11.OesMapbuffer target, OpenTK.Graphics.ES11.OesMapbuffer access);
+            internal delegate IntPtr MapBufferOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All access);
             internal static MapBufferOES glMapBufferOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr MapBufferRangeEXT(OpenTK.Graphics.ES11.ExtMapBufferRange target, IntPtr offset, IntPtr length, UInt32 access);
+            internal delegate IntPtr MapBufferRangeEXT(OpenTK.Graphics.ES11.All target, IntPtr offset, IntPtr length, UInt32 access);
             internal static MapBufferRangeEXT glMapBufferRangeEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void MapGrid1xOES(Int32 n, int u1, int u2);
@@ -705,19 +711,19 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void Materialfv(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, Single* @params);
             internal unsafe static Materialfv glMaterialfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void Materialx(OpenTK.Graphics.ES11.VersionEsCm10 face, OpenTK.Graphics.ES11.VersionEsCm10 pname, int param);
+            internal delegate void Materialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int param);
             internal static Materialx glMaterialx;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MaterialxOES(OpenTK.Graphics.ES11.OesFixedPoint face, OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal delegate void MaterialxOES(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int param);
             internal static MaterialxOES glMaterialxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void Materialxv(OpenTK.Graphics.ES11.VersionEsCm10 face, OpenTK.Graphics.ES11.VersionEsCm10 pname, int* param);
+            internal unsafe delegate void Materialxv(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int* param);
             internal unsafe static Materialxv glMaterialxv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void MaterialxvOES(OpenTK.Graphics.ES11.OesFixedPoint face, OpenTK.Graphics.ES11.OesFixedPoint pname, int* param);
+            internal unsafe delegate void MaterialxvOES(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int* param);
             internal unsafe static MaterialxvOES glMaterialxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MatrixIndexPointerOES(Int32 size, OpenTK.Graphics.ES11.OesMatrixPalette type, Int32 stride, IntPtr pointer);
+            internal delegate void MatrixIndexPointerOES(Int32 size, OpenTK.Graphics.ES11.All type, Int32 stride, IntPtr pointer);
             internal static MatrixIndexPointerOES glMatrixIndexPointerOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void MatrixMode(OpenTK.Graphics.ES11.MatrixMode mode);
@@ -726,61 +732,61 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void MultiDrawArraysEXT(OpenTK.Graphics.ES11.PrimitiveType mode, Int32* first, Int32* count, Int32 primcount);
             internal unsafe static MultiDrawArraysEXT glMultiDrawArraysEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void MultiDrawElementsEXT(OpenTK.Graphics.ES11.PrimitiveType mode, Int32* count, OpenTK.Graphics.ES11.ExtMultiDrawArrays type, IntPtr indices, Int32 primcount);
+            internal unsafe delegate void MultiDrawElementsEXT(OpenTK.Graphics.ES11.PrimitiveType mode, Int32* count, OpenTK.Graphics.ES11.All type, IntPtr indices, Int32 primcount);
             internal unsafe static MultiDrawElementsEXT glMultiDrawElementsEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MultiTexCoord1bOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte s);
+            internal delegate void MultiTexCoord1bOES(OpenTK.Graphics.ES11.All texture, SByte s);
             internal static MultiTexCoord1bOES glMultiTexCoord1bOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void MultiTexCoord1bvOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte* coords);
+            internal unsafe delegate void MultiTexCoord1bvOES(OpenTK.Graphics.ES11.All texture, SByte* coords);
             internal unsafe static MultiTexCoord1bvOES glMultiTexCoord1bvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MultiTexCoord1xOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int s);
+            internal delegate void MultiTexCoord1xOES(OpenTK.Graphics.ES11.All texture, int s);
             internal static MultiTexCoord1xOES glMultiTexCoord1xOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void MultiTexCoord1xvOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int* coords);
+            internal unsafe delegate void MultiTexCoord1xvOES(OpenTK.Graphics.ES11.All texture, int* coords);
             internal unsafe static MultiTexCoord1xvOES glMultiTexCoord1xvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MultiTexCoord2bOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte s, SByte t);
+            internal delegate void MultiTexCoord2bOES(OpenTK.Graphics.ES11.All texture, SByte s, SByte t);
             internal static MultiTexCoord2bOES glMultiTexCoord2bOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void MultiTexCoord2bvOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte* coords);
+            internal unsafe delegate void MultiTexCoord2bvOES(OpenTK.Graphics.ES11.All texture, SByte* coords);
             internal unsafe static MultiTexCoord2bvOES glMultiTexCoord2bvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MultiTexCoord2xOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int s, int t);
+            internal delegate void MultiTexCoord2xOES(OpenTK.Graphics.ES11.All texture, int s, int t);
             internal static MultiTexCoord2xOES glMultiTexCoord2xOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void MultiTexCoord2xvOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int* coords);
+            internal unsafe delegate void MultiTexCoord2xvOES(OpenTK.Graphics.ES11.All texture, int* coords);
             internal unsafe static MultiTexCoord2xvOES glMultiTexCoord2xvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MultiTexCoord3bOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte s, SByte t, SByte r);
+            internal delegate void MultiTexCoord3bOES(OpenTK.Graphics.ES11.All texture, SByte s, SByte t, SByte r);
             internal static MultiTexCoord3bOES glMultiTexCoord3bOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void MultiTexCoord3bvOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte* coords);
+            internal unsafe delegate void MultiTexCoord3bvOES(OpenTK.Graphics.ES11.All texture, SByte* coords);
             internal unsafe static MultiTexCoord3bvOES glMultiTexCoord3bvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MultiTexCoord3xOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int s, int t, int r);
+            internal delegate void MultiTexCoord3xOES(OpenTK.Graphics.ES11.All texture, int s, int t, int r);
             internal static MultiTexCoord3xOES glMultiTexCoord3xOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void MultiTexCoord3xvOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int* coords);
+            internal unsafe delegate void MultiTexCoord3xvOES(OpenTK.Graphics.ES11.All texture, int* coords);
             internal unsafe static MultiTexCoord3xvOES glMultiTexCoord3xvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MultiTexCoord4bOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte s, SByte t, SByte r, SByte q);
+            internal delegate void MultiTexCoord4bOES(OpenTK.Graphics.ES11.All texture, SByte s, SByte t, SByte r, SByte q);
             internal static MultiTexCoord4bOES glMultiTexCoord4bOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void MultiTexCoord4bvOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte* coords);
+            internal unsafe delegate void MultiTexCoord4bvOES(OpenTK.Graphics.ES11.All texture, SByte* coords);
             internal unsafe static MultiTexCoord4bvOES glMultiTexCoord4bvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MultiTexCoord4f(OpenTK.Graphics.ES11.VersionEsCm10 target, Single s, Single t, Single r, Single q);
+            internal delegate void MultiTexCoord4f(OpenTK.Graphics.ES11.All target, Single s, Single t, Single r, Single q);
             internal static MultiTexCoord4f glMultiTexCoord4f;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MultiTexCoord4x(OpenTK.Graphics.ES11.VersionEsCm10 texture, int s, int t, int r, int q);
+            internal delegate void MultiTexCoord4x(OpenTK.Graphics.ES11.All texture, int s, int t, int r, int q);
             internal static MultiTexCoord4x glMultiTexCoord4x;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MultiTexCoord4xOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int s, int t, int r, int q);
+            internal delegate void MultiTexCoord4xOES(OpenTK.Graphics.ES11.All texture, int s, int t, int r, int q);
             internal static MultiTexCoord4xOES glMultiTexCoord4xOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void MultiTexCoord4xvOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int* coords);
+            internal unsafe delegate void MultiTexCoord4xvOES(OpenTK.Graphics.ES11.All texture, int* coords);
             internal unsafe static MultiTexCoord4xvOES glMultiTexCoord4xvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void MultMatrixf(Single* m);
@@ -825,43 +831,43 @@ namespace OpenTK.Graphics.ES11
             internal delegate void PassThroughxOES(int token);
             internal static PassThroughxOES glPassThroughxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void PixelMapx(OpenTK.Graphics.ES11.OesFixedPoint map, Int32 size, int* values);
+            internal unsafe delegate void PixelMapx(OpenTK.Graphics.ES11.All map, Int32 size, int* values);
             internal unsafe static PixelMapx glPixelMapx;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void PixelStorei(OpenTK.Graphics.ES11.PixelStoreParameter pname, Int32 param);
             internal static PixelStorei glPixelStorei;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void PixelStorex(OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal delegate void PixelStorex(OpenTK.Graphics.ES11.All pname, int param);
             internal static PixelStorex glPixelStorex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void PixelTransferxOES(OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal delegate void PixelTransferxOES(OpenTK.Graphics.ES11.All pname, int param);
             internal static PixelTransferxOES glPixelTransferxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void PixelZoomxOES(int xfactor, int yfactor);
             internal static PixelZoomxOES glPixelZoomxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void PointParameterf(OpenTK.Graphics.ES11.VersionEsCm10 pname, Single param);
+            internal delegate void PointParameterf(OpenTK.Graphics.ES11.All pname, Single param);
             internal static PointParameterf glPointParameterf;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void PointParameterfv(OpenTK.Graphics.ES11.VersionEsCm10 pname, Single* @params);
+            internal unsafe delegate void PointParameterfv(OpenTK.Graphics.ES11.All pname, Single* @params);
             internal unsafe static PointParameterfv glPointParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void PointParameterx(OpenTK.Graphics.ES11.VersionEsCm10 pname, int param);
+            internal delegate void PointParameterx(OpenTK.Graphics.ES11.All pname, int param);
             internal static PointParameterx glPointParameterx;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void PointParameterxOES(OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal delegate void PointParameterxOES(OpenTK.Graphics.ES11.All pname, int param);
             internal static PointParameterxOES glPointParameterxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void PointParameterxv(OpenTK.Graphics.ES11.VersionEsCm10 pname, int* @params);
+            internal unsafe delegate void PointParameterxv(OpenTK.Graphics.ES11.All pname, int* @params);
             internal unsafe static PointParameterxv glPointParameterxv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void PointParameterxvOES(OpenTK.Graphics.ES11.OesFixedPoint pname, int* @params);
+            internal unsafe delegate void PointParameterxvOES(OpenTK.Graphics.ES11.All pname, int* @params);
             internal unsafe static PointParameterxvOES glPointParameterxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void PointSize(Single size);
             internal static PointSize glPointSize;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void PointSizePointerOES(OpenTK.Graphics.ES11.OesPointSizeArray type, Int32 stride, IntPtr pointer);
+            internal delegate void PointSizePointerOES(OpenTK.Graphics.ES11.All type, Int32 stride, IntPtr pointer);
             internal static PointSizePointerOES glPointSizePointerOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void PointSizex(int size);
@@ -909,7 +915,7 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void RasterPos4xvOES(int* coords);
             internal unsafe static RasterPos4xvOES glRasterPos4xvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.ExtRobustness format, OpenTK.Graphics.ES11.ExtRobustness type, Int32 bufSize, [OutAttribute] IntPtr data);
+            internal delegate void ReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, Int32 bufSize, [OutAttribute] IntPtr data);
             internal static ReadnPixelsEXT glReadnPixelsEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [OutAttribute] IntPtr pixels);
@@ -921,16 +927,16 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void RectxvOES(int* v1, int* v2);
             internal unsafe static RectxvOES glRectxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void RenderbufferStorageMultisampleAPPLE(OpenTK.Graphics.ES11.AppleFramebufferMultisample target, Int32 samples, OpenTK.Graphics.ES11.AppleFramebufferMultisample internalformat, Int32 width, Int32 height);
+            internal delegate void RenderbufferStorageMultisampleAPPLE(OpenTK.Graphics.ES11.All target, Int32 samples, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
             internal static RenderbufferStorageMultisampleAPPLE glRenderbufferStorageMultisampleAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void RenderbufferStorageMultisampleEXT(OpenTK.Graphics.ES11.ExtMultisampledRenderToTexture target, Int32 samples, OpenTK.Graphics.ES11.ExtMultisampledRenderToTexture internalformat, Int32 width, Int32 height);
+            internal delegate void RenderbufferStorageMultisampleEXT(OpenTK.Graphics.ES11.All target, Int32 samples, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
             internal static RenderbufferStorageMultisampleEXT glRenderbufferStorageMultisampleEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void RenderbufferStorageMultisampleIMG(OpenTK.Graphics.ES11.ImgMultisampledRenderToTexture target, Int32 samples, OpenTK.Graphics.ES11.ImgMultisampledRenderToTexture internalformat, Int32 width, Int32 height);
+            internal delegate void RenderbufferStorageMultisampleIMG(OpenTK.Graphics.ES11.All target, Int32 samples, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
             internal static RenderbufferStorageMultisampleIMG glRenderbufferStorageMultisampleIMG;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void RenderbufferStorageOES(OpenTK.Graphics.ES11.OesFramebufferObject target, OpenTK.Graphics.ES11.OesFramebufferObject internalformat, Int32 width, Int32 height);
+            internal delegate void RenderbufferStorageOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
             internal static RenderbufferStorageOES glRenderbufferStorageOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ResolveMultisampleFramebufferAPPLE();
@@ -969,7 +975,7 @@ namespace OpenTK.Graphics.ES11
             internal delegate void Scissor(Int32 x, Int32 y, Int32 width, Int32 height);
             internal static Scissor glScissor;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void SetFenceNV(UInt32 fence, OpenTK.Graphics.ES11.NvFence condition);
+            internal delegate void SetFenceNV(UInt32 fence, OpenTK.Graphics.ES11.All condition);
             internal static SetFenceNV glSetFenceNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ShadeModel(OpenTK.Graphics.ES11.ShadingModel mode);
@@ -1053,28 +1059,28 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void TexEnviv(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, Int32* @params);
             internal unsafe static TexEnviv glTexEnviv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexEnvx(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, int param);
+            internal delegate void TexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
             internal static TexEnvx glTexEnvx;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexEnvxOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal delegate void TexEnvxOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
             internal static TexEnvxOES glTexEnvxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void TexEnvxv(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, int* @params);
+            internal unsafe delegate void TexEnvxv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
             internal unsafe static TexEnvxv glTexEnvxv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void TexEnvxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, int* @params);
+            internal unsafe delegate void TexEnvxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
             internal unsafe static TexEnvxvOES glTexEnvxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexGenfOES(OpenTK.Graphics.ES11.OesTextureCubeMap coord, OpenTK.Graphics.ES11.OesTextureCubeMap pname, Single param);
+            internal delegate void TexGenfOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Single param);
             internal static TexGenfOES glTexGenfOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void TexGenfvOES(OpenTK.Graphics.ES11.OesTextureCubeMap coord, OpenTK.Graphics.ES11.OesTextureCubeMap pname, Single* @params);
+            internal unsafe delegate void TexGenfvOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Single* @params);
             internal unsafe static TexGenfvOES glTexGenfvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexGeniOES(OpenTK.Graphics.ES11.OesTextureCubeMap coord, OpenTK.Graphics.ES11.OesTextureCubeMap pname, Int32 param);
+            internal delegate void TexGeniOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Int32 param);
             internal static TexGeniOES glTexGeniOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void TexGenivOES(OpenTK.Graphics.ES11.OesTextureCubeMap coord, OpenTK.Graphics.ES11.OesTextureCubeMap pname, Int32* @params);
+            internal unsafe delegate void TexGenivOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Int32* @params);
             internal unsafe static TexGenivOES glTexGenivOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexGenxOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, int param);
@@ -1098,37 +1104,37 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void TexParameteriv(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.TextureParameterName pname, Int32* @params);
             internal unsafe static TexParameteriv glTexParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexParameterx(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, int param);
+            internal delegate void TexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
             internal static TexParameterx glTexParameterx;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexParameterxOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal delegate void TexParameterxOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
             internal static TexParameterxOES glTexParameterxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void TexParameterxv(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, int* @params);
+            internal unsafe delegate void TexParameterxv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
             internal unsafe static TexParameterxv glTexParameterxv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void TexParameterxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, int* @params);
+            internal unsafe delegate void TexParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
             internal unsafe static TexParameterxvOES glTexParameterxvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexStorage1DEXT(OpenTK.Graphics.ES11.ExtTextureStorage target, Int32 levels, OpenTK.Graphics.ES11.ExtTextureStorage internalformat, Int32 width);
+            internal delegate void TexStorage1DEXT(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width);
             internal static TexStorage1DEXT glTexStorage1DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexStorage2DEXT(OpenTK.Graphics.ES11.ExtTextureStorage target, Int32 levels, OpenTK.Graphics.ES11.ExtTextureStorage internalformat, Int32 width, Int32 height);
+            internal delegate void TexStorage2DEXT(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
             internal static TexStorage2DEXT glTexStorage2DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexStorage3DEXT(OpenTK.Graphics.ES11.ExtTextureStorage target, Int32 levels, OpenTK.Graphics.ES11.ExtTextureStorage internalformat, Int32 width, Int32 height, Int32 depth);
+            internal delegate void TexStorage3DEXT(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 depth);
             internal static TexStorage3DEXT glTexStorage3DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexSubImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, IntPtr pixels);
             internal static TexSubImage2D glTexSubImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TextureStorage1DEXT(UInt32 texture, OpenTK.Graphics.ES11.ExtTextureStorage target, Int32 levels, OpenTK.Graphics.ES11.ExtTextureStorage internalformat, Int32 width);
+            internal delegate void TextureStorage1DEXT(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width);
             internal static TextureStorage1DEXT glTextureStorage1DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TextureStorage2DEXT(UInt32 texture, OpenTK.Graphics.ES11.ExtTextureStorage target, Int32 levels, OpenTK.Graphics.ES11.ExtTextureStorage internalformat, Int32 width, Int32 height);
+            internal delegate void TextureStorage2DEXT(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
             internal static TextureStorage2DEXT glTextureStorage2DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TextureStorage3DEXT(UInt32 texture, OpenTK.Graphics.ES11.ExtTextureStorage target, Int32 levels, OpenTK.Graphics.ES11.ExtTextureStorage internalformat, Int32 width, Int32 height, Int32 depth);
+            internal delegate void TextureStorage3DEXT(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 depth);
             internal static TextureStorage3DEXT glTextureStorage3DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Translatef(Single x, Single y, Single z);
@@ -1140,7 +1146,7 @@ namespace OpenTK.Graphics.ES11
             internal delegate void TranslatexOES(int x, int y, int z);
             internal static TranslatexOES glTranslatexOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate bool UnmapBufferOES(OpenTK.Graphics.ES11.OesMapbuffer target);
+            internal delegate bool UnmapBufferOES(OpenTK.Graphics.ES11.All target);
             internal static UnmapBufferOES glUnmapBufferOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Vertex2bOES(SByte x);
@@ -1188,7 +1194,7 @@ namespace OpenTK.Graphics.ES11
             internal delegate void WaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
             internal static WaitSyncAPPLE glWaitSyncAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void WeightPointerOES(Int32 size, OpenTK.Graphics.ES11.OesMatrixPalette type, Int32 stride, IntPtr pointer);
+            internal delegate void WeightPointerOES(Int32 size, OpenTK.Graphics.ES11.All type, Int32 stride, IntPtr pointer);
             internal static WeightPointerOES glWeightPointerOES;
         }
     }

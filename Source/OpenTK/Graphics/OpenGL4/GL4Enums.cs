@@ -716,7 +716,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.ClearBufferData, GL.ClearBufferSubData and 7 other functions
+    /// Used in GL.Arb.BlendEquation, GL.Arb.BlendEquationSeparate and 41 other functions
     /// </summary>
     public enum All : int
     {
@@ -10836,7 +10836,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetImageHandle, GL.Arb.MakeImageHandleResident
+    /// Not used directly.
     /// </summary>
     public enum ArbBindlessTexture : int
     {
@@ -11128,7 +11128,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.DebugMessageControl, GL.Arb.DebugMessageInsert and 1 other function
+    /// Not used directly.
     /// </summary>
     public enum ArbDebugOutput : int
     {
@@ -11253,7 +11253,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.BlendEquation, GL.Arb.BlendEquationSeparate and 2 other functions
+    /// Not used directly.
     /// </summary>
     public enum ArbDrawBuffersBlend : int
     {
@@ -12271,7 +12271,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.MultiDrawArraysIndirectCount, GL.Arb.MultiDrawElementsIndirectCount
+    /// Not used directly.
     /// </summary>
     public enum ArbIndirectParameters : int
     {
@@ -13098,7 +13098,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetnColorTable, GL.Arb.GetnCompressedTexImage and 8 other functions
+    /// Not used directly.
     /// </summary>
     public enum ArbRobustness : int
     {
@@ -13796,7 +13796,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetNamedString, GL.Arb.NamedString
+    /// Not used directly.
     /// </summary>
     public enum ArbShadingLanguageInclude : int
     {
@@ -13822,7 +13822,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.TexPageCommitment
+    /// Not used directly.
     /// </summary>
     public enum ArbSparseTexture : int
     {
@@ -15314,7 +15314,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Begin, GL.DrawArrays and 5 other functions
     /// </summary>
     public enum BeginMode : int
     {
@@ -21813,7 +21813,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Khr.DebugMessageControl, GL.Khr.DebugMessageInsert and 5 other functions
+    /// Not used directly.
     /// </summary>
     public enum KhrDebug : int
     {
@@ -32885,7 +32885,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.BlendEquation, GL.BlendFunc and 1 other function
+    /// Not used directly.
     /// </summary>
     public enum Version40 : int
     {

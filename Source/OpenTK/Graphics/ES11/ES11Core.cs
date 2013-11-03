@@ -41,28 +41,28 @@ namespace OpenTK.Graphics.ES11
 
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glAccumxOES", ExactSpelling = true)]
-            internal extern static void AccumxOES(OpenTK.Graphics.ES11.OesFixedPoint op, int value);
+            internal extern static void AccumxOES(OpenTK.Graphics.ES11.All op, int value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glActiveTexture", ExactSpelling = true)]
-            internal extern static void ActiveTexture(OpenTK.Graphics.ES11.VersionEsCm10 texture);
+            internal extern static void ActiveTexture(OpenTK.Graphics.ES11.All texture);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glAlphaFunc", ExactSpelling = true)]
             internal extern static void AlphaFunc(OpenTK.Graphics.ES11.AlphaFunction func, Single @ref);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glAlphaFuncx", ExactSpelling = true)]
-            internal extern static void AlphaFuncx(OpenTK.Graphics.ES11.VersionEsCm10 func, int @ref);
+            internal extern static void AlphaFuncx(OpenTK.Graphics.ES11.All func, int @ref);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glAlphaFuncxOES", ExactSpelling = true)]
-            internal extern static void AlphaFuncxOES(OpenTK.Graphics.ES11.OesFixedPoint func, int @ref);
+            internal extern static void AlphaFuncxOES(OpenTK.Graphics.ES11.All func, int @ref);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindBuffer", ExactSpelling = true)]
-            internal extern static void BindBuffer(OpenTK.Graphics.ES11.VersionEsCm10 target, UInt32 buffer);
+            internal extern static void BindBuffer(OpenTK.Graphics.ES11.All target, UInt32 buffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindFramebufferOES", ExactSpelling = true)]
-            internal extern static void BindFramebufferOES(OpenTK.Graphics.ES11.OesFramebufferObject target, UInt32 framebuffer);
+            internal extern static void BindFramebufferOES(OpenTK.Graphics.ES11.All target, UInt32 framebuffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindRenderbufferOES", ExactSpelling = true)]
-            internal extern static void BindRenderbufferOES(OpenTK.Graphics.ES11.OesFramebufferObject target, UInt32 renderbuffer);
+            internal extern static void BindRenderbufferOES(OpenTK.Graphics.ES11.All target, UInt32 renderbuffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindTexture", ExactSpelling = true)]
             internal extern static void BindTexture(OpenTK.Graphics.ES11.TextureTarget target, UInt32 texture);
@@ -77,28 +77,28 @@ namespace OpenTK.Graphics.ES11
             internal extern static void BlendColorxOES(int red, int green, int blue, int alpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationEXT", ExactSpelling = true)]
-            internal extern static void BlendEquationEXT(OpenTK.Graphics.ES11.ExtBlendMinmax mode);
+            internal extern static void BlendEquationEXT(OpenTK.Graphics.ES11.All mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationOES", ExactSpelling = true)]
-            internal extern static void BlendEquationOES(OpenTK.Graphics.ES11.OesBlendSubtract mode);
+            internal extern static void BlendEquationOES(OpenTK.Graphics.ES11.All mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationSeparateOES", ExactSpelling = true)]
-            internal extern static void BlendEquationSeparateOES(OpenTK.Graphics.ES11.OesBlendEquationSeparate modeRGB, OpenTK.Graphics.ES11.OesBlendEquationSeparate modeAlpha);
+            internal extern static void BlendEquationSeparateOES(OpenTK.Graphics.ES11.All modeRGB, OpenTK.Graphics.ES11.All modeAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFunc", ExactSpelling = true)]
             internal extern static void BlendFunc(OpenTK.Graphics.ES11.BlendingFactorSrc sfactor, OpenTK.Graphics.ES11.BlendingFactorDest dfactor);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFuncSeparateOES", ExactSpelling = true)]
-            internal extern static void BlendFuncSeparateOES(OpenTK.Graphics.ES11.OesBlendFuncSeparate srcRGB, OpenTK.Graphics.ES11.OesBlendFuncSeparate dstRGB, OpenTK.Graphics.ES11.OesBlendFuncSeparate srcAlpha, OpenTK.Graphics.ES11.OesBlendFuncSeparate dstAlpha);
+            internal extern static void BlendFuncSeparateOES(OpenTK.Graphics.ES11.All srcRGB, OpenTK.Graphics.ES11.All dstRGB, OpenTK.Graphics.ES11.All srcAlpha, OpenTK.Graphics.ES11.All dstAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBufferData", ExactSpelling = true)]
-            internal extern static void BufferData(OpenTK.Graphics.ES11.VersionEsCm10 target, IntPtr size, IntPtr data, OpenTK.Graphics.ES11.VersionEsCm10 usage);
+            internal extern static void BufferData(OpenTK.Graphics.ES11.All target, IntPtr size, IntPtr data, OpenTK.Graphics.ES11.All usage);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBufferSubData", ExactSpelling = true)]
-            internal extern static void BufferSubData(OpenTK.Graphics.ES11.VersionEsCm10 target, IntPtr offset, IntPtr size, IntPtr data);
+            internal extern static void BufferSubData(OpenTK.Graphics.ES11.All target, IntPtr offset, IntPtr size, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCheckFramebufferStatusOES", ExactSpelling = true)]
-            internal extern static OpenTK.Graphics.ES11.OesFramebufferObject CheckFramebufferStatusOES(OpenTK.Graphics.ES11.OesFramebufferObject target);
+            internal extern static OpenTK.Graphics.ES11.All CheckFramebufferStatusOES(OpenTK.Graphics.ES11.All target);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClear", ExactSpelling = true)]
             internal extern static void Clear(OpenTK.Graphics.ES11.ClearBufferMask mask);
@@ -131,28 +131,28 @@ namespace OpenTK.Graphics.ES11
             internal extern static void ClearStencil(Int32 s);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClientActiveTexture", ExactSpelling = true)]
-            internal extern static void ClientActiveTexture(OpenTK.Graphics.ES11.VersionEsCm10 texture);
+            internal extern static void ClientActiveTexture(OpenTK.Graphics.ES11.All texture);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClientWaitSyncAPPLE", ExactSpelling = true)]
-            internal extern static OpenTK.Graphics.ES11.AppleSync ClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
+            internal extern static OpenTK.Graphics.ES11.All ClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClipPlanef", ExactSpelling = true)]
-            internal extern static unsafe void ClipPlanef(OpenTK.Graphics.ES11.VersionEsCm10 p, Single* eqn);
+            internal extern static unsafe void ClipPlanef(OpenTK.Graphics.ES11.All p, Single* eqn);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClipPlanefIMG", ExactSpelling = true)]
-            internal extern static unsafe void ClipPlanefIMG(OpenTK.Graphics.ES11.ImgUserClipPlane p, Single* eqn);
+            internal extern static unsafe void ClipPlanefIMG(OpenTK.Graphics.ES11.All p, Single* eqn);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClipPlanefOES", ExactSpelling = true)]
-            internal extern static unsafe void ClipPlanefOES(OpenTK.Graphics.ES11.OesSinglePrecision plane, Single* equation);
+            internal extern static unsafe void ClipPlanefOES(OpenTK.Graphics.ES11.All plane, Single* equation);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClipPlanex", ExactSpelling = true)]
-            internal extern static unsafe void ClipPlanex(OpenTK.Graphics.ES11.VersionEsCm10 plane, int* equation);
+            internal extern static unsafe void ClipPlanex(OpenTK.Graphics.ES11.All plane, int* equation);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClipPlanexIMG", ExactSpelling = true)]
-            internal extern static unsafe void ClipPlanexIMG(OpenTK.Graphics.ES11.ImgUserClipPlane p, int* eqn);
+            internal extern static unsafe void ClipPlanexIMG(OpenTK.Graphics.ES11.All p, int* eqn);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClipPlanexOES", ExactSpelling = true)]
-            internal extern static unsafe void ClipPlanexOES(OpenTK.Graphics.ES11.OesFixedPoint plane, int* equation);
+            internal extern static unsafe void ClipPlanexOES(OpenTK.Graphics.ES11.All plane, int* equation);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColor3xOES", ExactSpelling = true)]
             internal extern static void Color3xOES(int red, int green, int blue);
@@ -182,19 +182,19 @@ namespace OpenTK.Graphics.ES11
             internal extern static void ColorPointer(Int32 size, OpenTK.Graphics.ES11.ColorPointerType type, Int32 stride, IntPtr pointer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCompressedTexImage2D", ExactSpelling = true)]
-            internal extern static void CompressedTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.VersionEsCm10 internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
+            internal extern static void CompressedTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCompressedTexSubImage2D", ExactSpelling = true)]
             internal extern static void CompressedTexSubImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES11.PixelFormat format, Int32 imageSize, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glConvolutionParameterxOES", ExactSpelling = true)]
-            internal extern static void ConvolutionParameterxOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal extern static void ConvolutionParameterxOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glConvolutionParameterxvOES", ExactSpelling = true)]
-            internal extern static unsafe void ConvolutionParameterxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, int* @params);
+            internal extern static unsafe void ConvolutionParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyTexImage2D", ExactSpelling = true)]
-            internal extern static void CopyTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.VersionEsCm10 internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
+            internal extern static void CopyTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyTexSubImage2D", ExactSpelling = true)]
             internal extern static void CopyTexSubImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
@@ -257,13 +257,19 @@ namespace OpenTK.Graphics.ES11
             internal extern static void DisableDriverControlQCOM(UInt32 driverControl);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDiscardFramebufferEXT", ExactSpelling = true)]
-            internal extern static unsafe void DiscardFramebufferEXT(OpenTK.Graphics.ES11.ExtDiscardFramebuffer target, Int32 numAttachments, OpenTK.Graphics.ES11.ExtDiscardFramebuffer* attachments);
+            internal extern static unsafe void DiscardFramebufferEXT(OpenTK.Graphics.ES11.All target, Int32 numAttachments, OpenTK.Graphics.ES11.All* attachments);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawArrays", ExactSpelling = true)]
             internal extern static void DrawArrays(OpenTK.Graphics.ES11.PrimitiveType mode, Int32 first, Int32 count);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawArrays", ExactSpelling = true)]
+            internal extern static void DrawArrays1(OpenTK.Graphics.ES11.BeginMode mode, Int32 first, Int32 count);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElements", ExactSpelling = true)]
-            internal extern static void DrawElements(OpenTK.Graphics.ES11.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES11.VersionEsCm10 type, IntPtr indices);
+            internal extern static void DrawElements(OpenTK.Graphics.ES11.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES11.All type, IntPtr indices);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElements", ExactSpelling = true)]
+            internal extern static void DrawElements1(OpenTK.Graphics.ES11.BeginMode mode, Int32 count, OpenTK.Graphics.ES11.All type, IntPtr indices);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawTexfOES", ExactSpelling = true)]
             internal extern static void DrawTexfOES(Single x, Single y, Single z, Single width, Single height);
@@ -290,10 +296,10 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void DrawTexxvOES(int* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEGLImageTargetRenderbufferStorageOES", ExactSpelling = true)]
-            internal extern static void EGLImageTargetRenderbufferStorageOES(OpenTK.Graphics.ES11.OesEglImage target, IntPtr image);
+            internal extern static void EGLImageTargetRenderbufferStorageOES(OpenTK.Graphics.ES11.All target, IntPtr image);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEGLImageTargetTexture2DOES", ExactSpelling = true)]
-            internal extern static void EGLImageTargetTexture2DOES(OpenTK.Graphics.ES11.OesEglImage target, IntPtr image);
+            internal extern static void EGLImageTargetTexture2DOES(OpenTK.Graphics.ES11.All target, IntPtr image);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEnable", ExactSpelling = true)]
             internal extern static void Enable(OpenTK.Graphics.ES11.EnableCap cap);
@@ -320,7 +326,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void EvalCoord2xvOES(int* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glExtGetBufferPointervQCOM", ExactSpelling = true)]
-            internal extern static void ExtGetBufferPointervQCOM(OpenTK.Graphics.ES11.QcomExtendedGet target, [OutAttribute] IntPtr @params);
+            internal extern static void ExtGetBufferPointervQCOM(OpenTK.Graphics.ES11.All target, [OutAttribute] IntPtr @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glExtGetBuffersQCOM", ExactSpelling = true)]
             internal extern static unsafe void ExtGetBuffersQCOM([OutAttribute] UInt32* buffers, Int32 maxBuffers, [OutAttribute] Int32* numBuffers);
@@ -329,7 +335,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void ExtGetFramebuffersQCOM([OutAttribute] UInt32* framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32* numFramebuffers);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glExtGetProgramBinarySourceQCOM", ExactSpelling = true)]
-            internal extern static unsafe void ExtGetProgramBinarySourceQCOM(UInt32 program, OpenTK.Graphics.ES11.QcomExtendedGet2 shadertype, [OutAttribute] StringBuilder source, [OutAttribute] Int32* length);
+            internal extern static unsafe void ExtGetProgramBinarySourceQCOM(UInt32 program, OpenTK.Graphics.ES11.All shadertype, [OutAttribute] StringBuilder source, [OutAttribute] Int32* length);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glExtGetProgramsQCOM", ExactSpelling = true)]
             internal extern static unsafe void ExtGetProgramsQCOM([OutAttribute] UInt32* programs, Int32 maxPrograms, [OutAttribute] Int32* numPrograms);
@@ -341,10 +347,10 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void ExtGetShadersQCOM([OutAttribute] UInt32* shaders, Int32 maxShaders, [OutAttribute] Int32* numShaders);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glExtGetTexLevelParameterivQCOM", ExactSpelling = true)]
-            internal extern static unsafe void ExtGetTexLevelParameterivQCOM(UInt32 texture, OpenTK.Graphics.ES11.QcomExtendedGet face, Int32 level, OpenTK.Graphics.ES11.QcomExtendedGet pname, [OutAttribute] Int32* @params);
+            internal extern static unsafe void ExtGetTexLevelParameterivQCOM(UInt32 texture, OpenTK.Graphics.ES11.All face, Int32 level, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glExtGetTexSubImageQCOM", ExactSpelling = true)]
-            internal extern static void ExtGetTexSubImageQCOM(OpenTK.Graphics.ES11.QcomExtendedGet target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.QcomExtendedGet format, OpenTK.Graphics.ES11.QcomExtendedGet type, [OutAttribute] IntPtr texels);
+            internal extern static void ExtGetTexSubImageQCOM(OpenTK.Graphics.ES11.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [OutAttribute] IntPtr texels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glExtGetTexturesQCOM", ExactSpelling = true)]
             internal extern static unsafe void ExtGetTexturesQCOM([OutAttribute] UInt32* textures, Int32 maxTextures, [OutAttribute] Int32* numTextures);
@@ -353,13 +359,13 @@ namespace OpenTK.Graphics.ES11
             internal extern static bool ExtIsProgramBinaryQCOM(UInt32 program);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glExtTexObjectStateOverrideiQCOM", ExactSpelling = true)]
-            internal extern static void ExtTexObjectStateOverrideiQCOM(OpenTK.Graphics.ES11.QcomExtendedGet target, OpenTK.Graphics.ES11.QcomExtendedGet pname, Int32 param);
+            internal extern static void ExtTexObjectStateOverrideiQCOM(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, Int32 param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFeedbackBufferxOES", ExactSpelling = true)]
-            internal extern static unsafe void FeedbackBufferxOES(Int32 n, OpenTK.Graphics.ES11.OesFixedPoint type, int* buffer);
+            internal extern static unsafe void FeedbackBufferxOES(Int32 n, OpenTK.Graphics.ES11.All type, int* buffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFenceSyncAPPLE", ExactSpelling = true)]
-            internal extern static IntPtr FenceSyncAPPLE(OpenTK.Graphics.ES11.AppleSync condition, UInt32 flags);
+            internal extern static IntPtr FenceSyncAPPLE(OpenTK.Graphics.ES11.All condition, UInt32 flags);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFinish", ExactSpelling = true)]
             internal extern static void Finish();
@@ -371,7 +377,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static void Flush();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFlushMappedBufferRangeEXT", ExactSpelling = true)]
-            internal extern static void FlushMappedBufferRangeEXT(OpenTK.Graphics.ES11.ExtMapBufferRange target, IntPtr offset, IntPtr length);
+            internal extern static void FlushMappedBufferRangeEXT(OpenTK.Graphics.ES11.All target, IntPtr offset, IntPtr length);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFogf", ExactSpelling = true)]
             internal extern static void Fogf(OpenTK.Graphics.ES11.FogParameter pname, Single param);
@@ -380,28 +386,28 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void Fogfv(OpenTK.Graphics.ES11.FogParameter pname, Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFogx", ExactSpelling = true)]
-            internal extern static void Fogx(OpenTK.Graphics.ES11.VersionEsCm10 pname, int param);
+            internal extern static void Fogx(OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFogxOES", ExactSpelling = true)]
-            internal extern static void FogxOES(OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal extern static void FogxOES(OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFogxv", ExactSpelling = true)]
-            internal extern static unsafe void Fogxv(OpenTK.Graphics.ES11.VersionEsCm10 pname, int* param);
+            internal extern static unsafe void Fogxv(OpenTK.Graphics.ES11.All pname, int* param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFogxvOES", ExactSpelling = true)]
-            internal extern static unsafe void FogxvOES(OpenTK.Graphics.ES11.OesFixedPoint pname, int* param);
+            internal extern static unsafe void FogxvOES(OpenTK.Graphics.ES11.All pname, int* param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFramebufferRenderbufferOES", ExactSpelling = true)]
-            internal extern static void FramebufferRenderbufferOES(OpenTK.Graphics.ES11.OesFramebufferObject target, OpenTK.Graphics.ES11.OesFramebufferObject attachment, OpenTK.Graphics.ES11.OesFramebufferObject renderbuffertarget, UInt32 renderbuffer);
+            internal extern static void FramebufferRenderbufferOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All renderbuffertarget, UInt32 renderbuffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFramebufferTexture2DMultisampleEXT", ExactSpelling = true)]
-            internal extern static void FramebufferTexture2DMultisampleEXT(OpenTK.Graphics.ES11.ExtMultisampledRenderToTexture target, OpenTK.Graphics.ES11.ExtMultisampledRenderToTexture attachment, OpenTK.Graphics.ES11.ExtMultisampledRenderToTexture textarget, UInt32 texture, Int32 level, Int32 samples);
+            internal extern static void FramebufferTexture2DMultisampleEXT(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, UInt32 texture, Int32 level, Int32 samples);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFramebufferTexture2DMultisampleIMG", ExactSpelling = true)]
-            internal extern static void FramebufferTexture2DMultisampleIMG(OpenTK.Graphics.ES11.ImgMultisampledRenderToTexture target, OpenTK.Graphics.ES11.ImgMultisampledRenderToTexture attachment, OpenTK.Graphics.ES11.ImgMultisampledRenderToTexture textarget, UInt32 texture, Int32 level, Int32 samples);
+            internal extern static void FramebufferTexture2DMultisampleIMG(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, UInt32 texture, Int32 level, Int32 samples);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFramebufferTexture2DOES", ExactSpelling = true)]
-            internal extern static void FramebufferTexture2DOES(OpenTK.Graphics.ES11.OesFramebufferObject target, OpenTK.Graphics.ES11.OesFramebufferObject attachment, OpenTK.Graphics.ES11.OesFramebufferObject textarget, UInt32 texture, Int32 level);
+            internal extern static void FramebufferTexture2DOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, UInt32 texture, Int32 level);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFrontFace", ExactSpelling = true)]
             internal extern static void FrontFace(OpenTK.Graphics.ES11.FrontFaceDirection mode);
@@ -422,7 +428,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void GenBuffers(Int32 n, [OutAttribute] UInt32* buffers);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenerateMipmapOES", ExactSpelling = true)]
-            internal extern static void GenerateMipmapOES(OpenTK.Graphics.ES11.OesFramebufferObject target);
+            internal extern static void GenerateMipmapOES(OpenTK.Graphics.ES11.All target);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGenFencesNV", ExactSpelling = true)]
             internal extern static unsafe void GenFencesNV(Int32 n, [OutAttribute] UInt32* fences);
@@ -443,25 +449,25 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void GetBooleanv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] bool* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetBufferParameteriv", ExactSpelling = true)]
-            internal extern static unsafe void GetBufferParameteriv(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetBufferParameteriv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetBufferPointervOES", ExactSpelling = true)]
-            internal extern static void GetBufferPointervOES(OpenTK.Graphics.ES11.OesMapbuffer target, OpenTK.Graphics.ES11.OesMapbuffer pname, [OutAttribute] IntPtr @params);
+            internal extern static void GetBufferPointervOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] IntPtr @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetClipPlanef", ExactSpelling = true)]
-            internal extern static unsafe void GetClipPlanef(OpenTK.Graphics.ES11.VersionEsCm10 plane, [OutAttribute] Single* equation);
+            internal extern static unsafe void GetClipPlanef(OpenTK.Graphics.ES11.All plane, [OutAttribute] Single* equation);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetClipPlanefOES", ExactSpelling = true)]
-            internal extern static unsafe void GetClipPlanefOES(OpenTK.Graphics.ES11.OesSinglePrecision plane, [OutAttribute] Single* equation);
+            internal extern static unsafe void GetClipPlanefOES(OpenTK.Graphics.ES11.All plane, [OutAttribute] Single* equation);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetClipPlanex", ExactSpelling = true)]
-            internal extern static unsafe void GetClipPlanex(OpenTK.Graphics.ES11.VersionEsCm10 plane, [OutAttribute] int* equation);
+            internal extern static unsafe void GetClipPlanex(OpenTK.Graphics.ES11.All plane, [OutAttribute] int* equation);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetClipPlanexOES", ExactSpelling = true)]
-            internal extern static unsafe void GetClipPlanexOES(OpenTK.Graphics.ES11.OesFixedPoint plane, [OutAttribute] int* equation);
+            internal extern static unsafe void GetClipPlanexOES(OpenTK.Graphics.ES11.All plane, [OutAttribute] int* equation);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetConvolutionParameterxvOES", ExactSpelling = true)]
-            internal extern static unsafe void GetConvolutionParameterxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal extern static unsafe void GetConvolutionParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDriverControlsQCOM", ExactSpelling = true)]
             internal extern static unsafe void GetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls);
@@ -473,28 +479,28 @@ namespace OpenTK.Graphics.ES11
             internal extern static OpenTK.Graphics.ES11.ErrorCode GetError();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFenceivNV", ExactSpelling = true)]
-            internal extern static unsafe void GetFenceivNV(UInt32 fence, OpenTK.Graphics.ES11.NvFence pname, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetFenceivNV(UInt32 fence, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFixedv", ExactSpelling = true)]
-            internal extern static unsafe void GetFixedv(OpenTK.Graphics.ES11.VersionEsCm10 pname, [OutAttribute] int* @params);
+            internal extern static unsafe void GetFixedv(OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFixedvOES", ExactSpelling = true)]
-            internal extern static unsafe void GetFixedvOES(OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal extern static unsafe void GetFixedvOES(OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFloatv", ExactSpelling = true)]
             internal extern static unsafe void GetFloatv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Single* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFramebufferAttachmentParameterivOES", ExactSpelling = true)]
-            internal extern static unsafe void GetFramebufferAttachmentParameterivOES(OpenTK.Graphics.ES11.OesFramebufferObject target, OpenTK.Graphics.ES11.OesFramebufferObject attachment, OpenTK.Graphics.ES11.OesFramebufferObject pname, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetFramebufferAttachmentParameterivOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetGraphicsResetStatusEXT", ExactSpelling = true)]
-            internal extern static OpenTK.Graphics.ES11.ExtRobustness GetGraphicsResetStatusEXT();
+            internal extern static OpenTK.Graphics.ES11.All GetGraphicsResetStatusEXT();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetHistogramParameterxvOES", ExactSpelling = true)]
-            internal extern static unsafe void GetHistogramParameterxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal extern static unsafe void GetHistogramParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetInteger64vAPPLE", ExactSpelling = true)]
-            internal extern static unsafe void GetInteger64vAPPLE(OpenTK.Graphics.ES11.AppleSync pname, [OutAttribute] Int64* @params);
+            internal extern static unsafe void GetInteger64vAPPLE(OpenTK.Graphics.ES11.All pname, [OutAttribute] Int64* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetIntegerv", ExactSpelling = true)]
             internal extern static unsafe void GetIntegerv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Int32* data);
@@ -503,28 +509,28 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void GetLightfv(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [OutAttribute] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetLightxOES", ExactSpelling = true)]
-            internal extern static unsafe void GetLightxOES(OpenTK.Graphics.ES11.OesFixedPoint light, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal extern static unsafe void GetLightxOES(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetLightxv", ExactSpelling = true)]
-            internal extern static unsafe void GetLightxv(OpenTK.Graphics.ES11.VersionEsCm10 light, OpenTK.Graphics.ES11.VersionEsCm10 pname, [OutAttribute] int* @params);
+            internal extern static unsafe void GetLightxv(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetLightxvOES", ExactSpelling = true)]
-            internal extern static unsafe void GetLightxvOES(OpenTK.Graphics.ES11.OesFixedPoint light, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal extern static unsafe void GetLightxvOES(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetMapxvOES", ExactSpelling = true)]
-            internal extern static unsafe void GetMapxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint query, [OutAttribute] int* v);
+            internal extern static unsafe void GetMapxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All query, [OutAttribute] int* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetMaterialfv", ExactSpelling = true)]
             internal extern static unsafe void GetMaterialfv(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, [OutAttribute] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetMaterialxOES", ExactSpelling = true)]
-            internal extern static void GetMaterialxOES(OpenTK.Graphics.ES11.OesFixedPoint face, OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal extern static void GetMaterialxOES(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetMaterialxv", ExactSpelling = true)]
-            internal extern static unsafe void GetMaterialxv(OpenTK.Graphics.ES11.VersionEsCm10 face, OpenTK.Graphics.ES11.VersionEsCm10 pname, [OutAttribute] int* @params);
+            internal extern static unsafe void GetMaterialxv(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetMaterialxvOES", ExactSpelling = true)]
-            internal extern static unsafe void GetMaterialxvOES(OpenTK.Graphics.ES11.OesFixedPoint face, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal extern static unsafe void GetMaterialxvOES(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnUniformfvEXT", ExactSpelling = true)]
             internal extern static unsafe void GetnUniformfvEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
@@ -533,19 +539,19 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void GetnUniformivEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetPixelMapxv", ExactSpelling = true)]
-            internal extern static unsafe void GetPixelMapxv(OpenTK.Graphics.ES11.OesFixedPoint map, Int32 size, [OutAttribute] int* values);
+            internal extern static unsafe void GetPixelMapxv(OpenTK.Graphics.ES11.All map, Int32 size, [OutAttribute] int* values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetPointerv", ExactSpelling = true)]
             internal extern static void GetPointerv(OpenTK.Graphics.ES11.GetPointervPName pname, [OutAttribute] IntPtr @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetRenderbufferParameterivOES", ExactSpelling = true)]
-            internal extern static unsafe void GetRenderbufferParameterivOES(OpenTK.Graphics.ES11.OesFramebufferObject target, OpenTK.Graphics.ES11.OesFramebufferObject pname, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetRenderbufferParameterivOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetString", ExactSpelling = true)]
             internal extern static IntPtr GetString(OpenTK.Graphics.ES11.StringName name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSyncivAPPLE", ExactSpelling = true)]
-            internal extern static unsafe void GetSyncivAPPLE(IntPtr sync, OpenTK.Graphics.ES11.AppleSync pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+            internal extern static unsafe void GetSyncivAPPLE(IntPtr sync, OpenTK.Graphics.ES11.All pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexEnvfv", ExactSpelling = true)]
             internal extern static unsafe void GetTexEnvfv(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [OutAttribute] Single* @params);
@@ -554,22 +560,22 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void GetTexEnviv(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexEnvxv", ExactSpelling = true)]
-            internal extern static unsafe void GetTexEnvxv(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, [OutAttribute] int* @params);
+            internal extern static unsafe void GetTexEnvxv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexEnvxvOES", ExactSpelling = true)]
-            internal extern static unsafe void GetTexEnvxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal extern static unsafe void GetTexEnvxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexGenfvOES", ExactSpelling = true)]
-            internal extern static unsafe void GetTexGenfvOES(OpenTK.Graphics.ES11.OesTextureCubeMap coord, OpenTK.Graphics.ES11.OesTextureCubeMap pname, [OutAttribute] Single* @params);
+            internal extern static unsafe void GetTexGenfvOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexGenivOES", ExactSpelling = true)]
-            internal extern static unsafe void GetTexGenivOES(OpenTK.Graphics.ES11.OesTextureCubeMap coord, OpenTK.Graphics.ES11.OesTextureCubeMap pname, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetTexGenivOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexGenxvOES", ExactSpelling = true)]
             internal extern static unsafe void GetTexGenxvOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexLevelParameterxvOES", ExactSpelling = true)]
-            internal extern static unsafe void GetTexLevelParameterxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, Int32 level, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal extern static unsafe void GetTexLevelParameterxvOES(OpenTK.Graphics.ES11.All target, Int32 level, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexParameterfv", ExactSpelling = true)]
             internal extern static unsafe void GetTexParameterfv(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute] Single* @params);
@@ -578,10 +584,10 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void GetTexParameteriv(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexParameterxv", ExactSpelling = true)]
-            internal extern static unsafe void GetTexParameterxv(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, [OutAttribute] int* @params);
+            internal extern static unsafe void GetTexParameterxv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexParameterxvOES", ExactSpelling = true)]
-            internal extern static unsafe void GetTexParameterxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
+            internal extern static unsafe void GetTexParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glHint", ExactSpelling = true)]
             internal extern static void Hint(OpenTK.Graphics.ES11.HintTarget target, OpenTK.Graphics.ES11.HintMode mode);
@@ -629,28 +635,28 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void LightModelfv(OpenTK.Graphics.ES11.LightModelParameter pname, Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glLightModelx", ExactSpelling = true)]
-            internal extern static void LightModelx(OpenTK.Graphics.ES11.VersionEsCm10 pname, int param);
+            internal extern static void LightModelx(OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glLightModelxOES", ExactSpelling = true)]
-            internal extern static void LightModelxOES(OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal extern static void LightModelxOES(OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glLightModelxv", ExactSpelling = true)]
-            internal extern static unsafe void LightModelxv(OpenTK.Graphics.ES11.VersionEsCm10 pname, int* param);
+            internal extern static unsafe void LightModelxv(OpenTK.Graphics.ES11.All pname, int* param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glLightModelxvOES", ExactSpelling = true)]
-            internal extern static unsafe void LightModelxvOES(OpenTK.Graphics.ES11.OesFixedPoint pname, int* param);
+            internal extern static unsafe void LightModelxvOES(OpenTK.Graphics.ES11.All pname, int* param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glLightx", ExactSpelling = true)]
-            internal extern static void Lightx(OpenTK.Graphics.ES11.VersionEsCm10 light, OpenTK.Graphics.ES11.VersionEsCm10 pname, int param);
+            internal extern static void Lightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glLightxOES", ExactSpelling = true)]
-            internal extern static void LightxOES(OpenTK.Graphics.ES11.OesFixedPoint light, OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal extern static void LightxOES(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glLightxv", ExactSpelling = true)]
-            internal extern static unsafe void Lightxv(OpenTK.Graphics.ES11.VersionEsCm10 light, OpenTK.Graphics.ES11.VersionEsCm10 pname, int* @params);
+            internal extern static unsafe void Lightxv(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glLightxvOES", ExactSpelling = true)]
-            internal extern static unsafe void LightxvOES(OpenTK.Graphics.ES11.OesFixedPoint light, OpenTK.Graphics.ES11.OesFixedPoint pname, int* @params);
+            internal extern static unsafe void LightxvOES(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glLineWidth", ExactSpelling = true)]
             internal extern static void LineWidth(Single width);
@@ -683,16 +689,16 @@ namespace OpenTK.Graphics.ES11
             internal extern static void LogicOp(OpenTK.Graphics.ES11.LogicOp opcode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMap1xOES", ExactSpelling = true)]
-            internal extern static void Map1xOES(OpenTK.Graphics.ES11.OesFixedPoint target, int u1, int u2, Int32 stride, Int32 order, int points);
+            internal extern static void Map1xOES(OpenTK.Graphics.ES11.All target, int u1, int u2, Int32 stride, Int32 order, int points);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMap2xOES", ExactSpelling = true)]
-            internal extern static void Map2xOES(OpenTK.Graphics.ES11.OesFixedPoint target, int u1, int u2, Int32 ustride, Int32 uorder, int v1, int v2, Int32 vstride, Int32 vorder, int points);
+            internal extern static void Map2xOES(OpenTK.Graphics.ES11.All target, int u1, int u2, Int32 ustride, Int32 uorder, int v1, int v2, Int32 vstride, Int32 vorder, int points);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMapBufferOES", ExactSpelling = true)]
-            internal extern static IntPtr MapBufferOES(OpenTK.Graphics.ES11.OesMapbuffer target, OpenTK.Graphics.ES11.OesMapbuffer access);
+            internal extern static IntPtr MapBufferOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All access);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMapBufferRangeEXT", ExactSpelling = true)]
-            internal extern static IntPtr MapBufferRangeEXT(OpenTK.Graphics.ES11.ExtMapBufferRange target, IntPtr offset, IntPtr length, UInt32 access);
+            internal extern static IntPtr MapBufferRangeEXT(OpenTK.Graphics.ES11.All target, IntPtr offset, IntPtr length, UInt32 access);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMapGrid1xOES", ExactSpelling = true)]
             internal extern static void MapGrid1xOES(Int32 n, int u1, int u2);
@@ -707,19 +713,19 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void Materialfv(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMaterialx", ExactSpelling = true)]
-            internal extern static void Materialx(OpenTK.Graphics.ES11.VersionEsCm10 face, OpenTK.Graphics.ES11.VersionEsCm10 pname, int param);
+            internal extern static void Materialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMaterialxOES", ExactSpelling = true)]
-            internal extern static void MaterialxOES(OpenTK.Graphics.ES11.OesFixedPoint face, OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal extern static void MaterialxOES(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMaterialxv", ExactSpelling = true)]
-            internal extern static unsafe void Materialxv(OpenTK.Graphics.ES11.VersionEsCm10 face, OpenTK.Graphics.ES11.VersionEsCm10 pname, int* param);
+            internal extern static unsafe void Materialxv(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int* param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMaterialxvOES", ExactSpelling = true)]
-            internal extern static unsafe void MaterialxvOES(OpenTK.Graphics.ES11.OesFixedPoint face, OpenTK.Graphics.ES11.OesFixedPoint pname, int* param);
+            internal extern static unsafe void MaterialxvOES(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int* param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMatrixIndexPointerOES", ExactSpelling = true)]
-            internal extern static void MatrixIndexPointerOES(Int32 size, OpenTK.Graphics.ES11.OesMatrixPalette type, Int32 stride, IntPtr pointer);
+            internal extern static void MatrixIndexPointerOES(Int32 size, OpenTK.Graphics.ES11.All type, Int32 stride, IntPtr pointer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMatrixMode", ExactSpelling = true)]
             internal extern static void MatrixMode(OpenTK.Graphics.ES11.MatrixMode mode);
@@ -728,61 +734,61 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void MultiDrawArraysEXT(OpenTK.Graphics.ES11.PrimitiveType mode, Int32* first, Int32* count, Int32 primcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawElementsEXT", ExactSpelling = true)]
-            internal extern static unsafe void MultiDrawElementsEXT(OpenTK.Graphics.ES11.PrimitiveType mode, Int32* count, OpenTK.Graphics.ES11.ExtMultiDrawArrays type, IntPtr indices, Int32 primcount);
+            internal extern static unsafe void MultiDrawElementsEXT(OpenTK.Graphics.ES11.PrimitiveType mode, Int32* count, OpenTK.Graphics.ES11.All type, IntPtr indices, Int32 primcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord1bOES", ExactSpelling = true)]
-            internal extern static void MultiTexCoord1bOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte s);
+            internal extern static void MultiTexCoord1bOES(OpenTK.Graphics.ES11.All texture, SByte s);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord1bvOES", ExactSpelling = true)]
-            internal extern static unsafe void MultiTexCoord1bvOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte* coords);
+            internal extern static unsafe void MultiTexCoord1bvOES(OpenTK.Graphics.ES11.All texture, SByte* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord1xOES", ExactSpelling = true)]
-            internal extern static void MultiTexCoord1xOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int s);
+            internal extern static void MultiTexCoord1xOES(OpenTK.Graphics.ES11.All texture, int s);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord1xvOES", ExactSpelling = true)]
-            internal extern static unsafe void MultiTexCoord1xvOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int* coords);
+            internal extern static unsafe void MultiTexCoord1xvOES(OpenTK.Graphics.ES11.All texture, int* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord2bOES", ExactSpelling = true)]
-            internal extern static void MultiTexCoord2bOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte s, SByte t);
+            internal extern static void MultiTexCoord2bOES(OpenTK.Graphics.ES11.All texture, SByte s, SByte t);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord2bvOES", ExactSpelling = true)]
-            internal extern static unsafe void MultiTexCoord2bvOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte* coords);
+            internal extern static unsafe void MultiTexCoord2bvOES(OpenTK.Graphics.ES11.All texture, SByte* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord2xOES", ExactSpelling = true)]
-            internal extern static void MultiTexCoord2xOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int s, int t);
+            internal extern static void MultiTexCoord2xOES(OpenTK.Graphics.ES11.All texture, int s, int t);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord2xvOES", ExactSpelling = true)]
-            internal extern static unsafe void MultiTexCoord2xvOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int* coords);
+            internal extern static unsafe void MultiTexCoord2xvOES(OpenTK.Graphics.ES11.All texture, int* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord3bOES", ExactSpelling = true)]
-            internal extern static void MultiTexCoord3bOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte s, SByte t, SByte r);
+            internal extern static void MultiTexCoord3bOES(OpenTK.Graphics.ES11.All texture, SByte s, SByte t, SByte r);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord3bvOES", ExactSpelling = true)]
-            internal extern static unsafe void MultiTexCoord3bvOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte* coords);
+            internal extern static unsafe void MultiTexCoord3bvOES(OpenTK.Graphics.ES11.All texture, SByte* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord3xOES", ExactSpelling = true)]
-            internal extern static void MultiTexCoord3xOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int s, int t, int r);
+            internal extern static void MultiTexCoord3xOES(OpenTK.Graphics.ES11.All texture, int s, int t, int r);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord3xvOES", ExactSpelling = true)]
-            internal extern static unsafe void MultiTexCoord3xvOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int* coords);
+            internal extern static unsafe void MultiTexCoord3xvOES(OpenTK.Graphics.ES11.All texture, int* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord4bOES", ExactSpelling = true)]
-            internal extern static void MultiTexCoord4bOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte s, SByte t, SByte r, SByte q);
+            internal extern static void MultiTexCoord4bOES(OpenTK.Graphics.ES11.All texture, SByte s, SByte t, SByte r, SByte q);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord4bvOES", ExactSpelling = true)]
-            internal extern static unsafe void MultiTexCoord4bvOES(OpenTK.Graphics.ES11.OesByteCoordinates texture, SByte* coords);
+            internal extern static unsafe void MultiTexCoord4bvOES(OpenTK.Graphics.ES11.All texture, SByte* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord4f", ExactSpelling = true)]
-            internal extern static void MultiTexCoord4f(OpenTK.Graphics.ES11.VersionEsCm10 target, Single s, Single t, Single r, Single q);
+            internal extern static void MultiTexCoord4f(OpenTK.Graphics.ES11.All target, Single s, Single t, Single r, Single q);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord4x", ExactSpelling = true)]
-            internal extern static void MultiTexCoord4x(OpenTK.Graphics.ES11.VersionEsCm10 texture, int s, int t, int r, int q);
+            internal extern static void MultiTexCoord4x(OpenTK.Graphics.ES11.All texture, int s, int t, int r, int q);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord4xOES", ExactSpelling = true)]
-            internal extern static void MultiTexCoord4xOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int s, int t, int r, int q);
+            internal extern static void MultiTexCoord4xOES(OpenTK.Graphics.ES11.All texture, int s, int t, int r, int q);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord4xvOES", ExactSpelling = true)]
-            internal extern static unsafe void MultiTexCoord4xvOES(OpenTK.Graphics.ES11.OesFixedPoint texture, int* coords);
+            internal extern static unsafe void MultiTexCoord4xvOES(OpenTK.Graphics.ES11.All texture, int* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultMatrixf", ExactSpelling = true)]
             internal extern static unsafe void MultMatrixf(Single* m);
@@ -827,43 +833,43 @@ namespace OpenTK.Graphics.ES11
             internal extern static void PassThroughxOES(int token);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPixelMapx", ExactSpelling = true)]
-            internal extern static unsafe void PixelMapx(OpenTK.Graphics.ES11.OesFixedPoint map, Int32 size, int* values);
+            internal extern static unsafe void PixelMapx(OpenTK.Graphics.ES11.All map, Int32 size, int* values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPixelStorei", ExactSpelling = true)]
             internal extern static void PixelStorei(OpenTK.Graphics.ES11.PixelStoreParameter pname, Int32 param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPixelStorex", ExactSpelling = true)]
-            internal extern static void PixelStorex(OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal extern static void PixelStorex(OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPixelTransferxOES", ExactSpelling = true)]
-            internal extern static void PixelTransferxOES(OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal extern static void PixelTransferxOES(OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPixelZoomxOES", ExactSpelling = true)]
             internal extern static void PixelZoomxOES(int xfactor, int yfactor);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPointParameterf", ExactSpelling = true)]
-            internal extern static void PointParameterf(OpenTK.Graphics.ES11.VersionEsCm10 pname, Single param);
+            internal extern static void PointParameterf(OpenTK.Graphics.ES11.All pname, Single param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPointParameterfv", ExactSpelling = true)]
-            internal extern static unsafe void PointParameterfv(OpenTK.Graphics.ES11.VersionEsCm10 pname, Single* @params);
+            internal extern static unsafe void PointParameterfv(OpenTK.Graphics.ES11.All pname, Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPointParameterx", ExactSpelling = true)]
-            internal extern static void PointParameterx(OpenTK.Graphics.ES11.VersionEsCm10 pname, int param);
+            internal extern static void PointParameterx(OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPointParameterxOES", ExactSpelling = true)]
-            internal extern static void PointParameterxOES(OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal extern static void PointParameterxOES(OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPointParameterxv", ExactSpelling = true)]
-            internal extern static unsafe void PointParameterxv(OpenTK.Graphics.ES11.VersionEsCm10 pname, int* @params);
+            internal extern static unsafe void PointParameterxv(OpenTK.Graphics.ES11.All pname, int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPointParameterxvOES", ExactSpelling = true)]
-            internal extern static unsafe void PointParameterxvOES(OpenTK.Graphics.ES11.OesFixedPoint pname, int* @params);
+            internal extern static unsafe void PointParameterxvOES(OpenTK.Graphics.ES11.All pname, int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPointSize", ExactSpelling = true)]
             internal extern static void PointSize(Single size);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPointSizePointerOES", ExactSpelling = true)]
-            internal extern static void PointSizePointerOES(OpenTK.Graphics.ES11.OesPointSizeArray type, Int32 stride, IntPtr pointer);
+            internal extern static void PointSizePointerOES(OpenTK.Graphics.ES11.All type, Int32 stride, IntPtr pointer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPointSizex", ExactSpelling = true)]
             internal extern static void PointSizex(int size);
@@ -911,7 +917,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void RasterPos4xvOES(int* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glReadnPixelsEXT", ExactSpelling = true)]
-            internal extern static void ReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.ExtRobustness format, OpenTK.Graphics.ES11.ExtRobustness type, Int32 bufSize, [OutAttribute] IntPtr data);
+            internal extern static void ReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, Int32 bufSize, [OutAttribute] IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glReadPixels", ExactSpelling = true)]
             internal extern static void ReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [OutAttribute] IntPtr pixels);
@@ -923,16 +929,16 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void RectxvOES(int* v1, int* v2);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glRenderbufferStorageMultisampleAPPLE", ExactSpelling = true)]
-            internal extern static void RenderbufferStorageMultisampleAPPLE(OpenTK.Graphics.ES11.AppleFramebufferMultisample target, Int32 samples, OpenTK.Graphics.ES11.AppleFramebufferMultisample internalformat, Int32 width, Int32 height);
+            internal extern static void RenderbufferStorageMultisampleAPPLE(OpenTK.Graphics.ES11.All target, Int32 samples, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glRenderbufferStorageMultisampleEXT", ExactSpelling = true)]
-            internal extern static void RenderbufferStorageMultisampleEXT(OpenTK.Graphics.ES11.ExtMultisampledRenderToTexture target, Int32 samples, OpenTK.Graphics.ES11.ExtMultisampledRenderToTexture internalformat, Int32 width, Int32 height);
+            internal extern static void RenderbufferStorageMultisampleEXT(OpenTK.Graphics.ES11.All target, Int32 samples, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glRenderbufferStorageMultisampleIMG", ExactSpelling = true)]
-            internal extern static void RenderbufferStorageMultisampleIMG(OpenTK.Graphics.ES11.ImgMultisampledRenderToTexture target, Int32 samples, OpenTK.Graphics.ES11.ImgMultisampledRenderToTexture internalformat, Int32 width, Int32 height);
+            internal extern static void RenderbufferStorageMultisampleIMG(OpenTK.Graphics.ES11.All target, Int32 samples, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glRenderbufferStorageOES", ExactSpelling = true)]
-            internal extern static void RenderbufferStorageOES(OpenTK.Graphics.ES11.OesFramebufferObject target, OpenTK.Graphics.ES11.OesFramebufferObject internalformat, Int32 width, Int32 height);
+            internal extern static void RenderbufferStorageOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glResolveMultisampleFramebufferAPPLE", ExactSpelling = true)]
             internal extern static void ResolveMultisampleFramebufferAPPLE();
@@ -971,7 +977,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static void Scissor(Int32 x, Int32 y, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSetFenceNV", ExactSpelling = true)]
-            internal extern static void SetFenceNV(UInt32 fence, OpenTK.Graphics.ES11.NvFence condition);
+            internal extern static void SetFenceNV(UInt32 fence, OpenTK.Graphics.ES11.All condition);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glShadeModel", ExactSpelling = true)]
             internal extern static void ShadeModel(OpenTK.Graphics.ES11.ShadingModel mode);
@@ -1055,28 +1061,28 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void TexEnviv(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexEnvx", ExactSpelling = true)]
-            internal extern static void TexEnvx(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, int param);
+            internal extern static void TexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexEnvxOES", ExactSpelling = true)]
-            internal extern static void TexEnvxOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal extern static void TexEnvxOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexEnvxv", ExactSpelling = true)]
-            internal extern static unsafe void TexEnvxv(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, int* @params);
+            internal extern static unsafe void TexEnvxv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexEnvxvOES", ExactSpelling = true)]
-            internal extern static unsafe void TexEnvxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, int* @params);
+            internal extern static unsafe void TexEnvxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexGenfOES", ExactSpelling = true)]
-            internal extern static void TexGenfOES(OpenTK.Graphics.ES11.OesTextureCubeMap coord, OpenTK.Graphics.ES11.OesTextureCubeMap pname, Single param);
+            internal extern static void TexGenfOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Single param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexGenfvOES", ExactSpelling = true)]
-            internal extern static unsafe void TexGenfvOES(OpenTK.Graphics.ES11.OesTextureCubeMap coord, OpenTK.Graphics.ES11.OesTextureCubeMap pname, Single* @params);
+            internal extern static unsafe void TexGenfvOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexGeniOES", ExactSpelling = true)]
-            internal extern static void TexGeniOES(OpenTK.Graphics.ES11.OesTextureCubeMap coord, OpenTK.Graphics.ES11.OesTextureCubeMap pname, Int32 param);
+            internal extern static void TexGeniOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Int32 param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexGenivOES", ExactSpelling = true)]
-            internal extern static unsafe void TexGenivOES(OpenTK.Graphics.ES11.OesTextureCubeMap coord, OpenTK.Graphics.ES11.OesTextureCubeMap pname, Int32* @params);
+            internal extern static unsafe void TexGenivOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexGenxOES", ExactSpelling = true)]
             internal extern static void TexGenxOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, int param);
@@ -1100,37 +1106,37 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void TexParameteriv(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.TextureParameterName pname, Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexParameterx", ExactSpelling = true)]
-            internal extern static void TexParameterx(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, int param);
+            internal extern static void TexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexParameterxOES", ExactSpelling = true)]
-            internal extern static void TexParameterxOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, int param);
+            internal extern static void TexParameterxOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexParameterxv", ExactSpelling = true)]
-            internal extern static unsafe void TexParameterxv(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, int* @params);
+            internal extern static unsafe void TexParameterxv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexParameterxvOES", ExactSpelling = true)]
-            internal extern static unsafe void TexParameterxvOES(OpenTK.Graphics.ES11.OesFixedPoint target, OpenTK.Graphics.ES11.OesFixedPoint pname, int* @params);
+            internal extern static unsafe void TexParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexStorage1DEXT", ExactSpelling = true)]
-            internal extern static void TexStorage1DEXT(OpenTK.Graphics.ES11.ExtTextureStorage target, Int32 levels, OpenTK.Graphics.ES11.ExtTextureStorage internalformat, Int32 width);
+            internal extern static void TexStorage1DEXT(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexStorage2DEXT", ExactSpelling = true)]
-            internal extern static void TexStorage2DEXT(OpenTK.Graphics.ES11.ExtTextureStorage target, Int32 levels, OpenTK.Graphics.ES11.ExtTextureStorage internalformat, Int32 width, Int32 height);
+            internal extern static void TexStorage2DEXT(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexStorage3DEXT", ExactSpelling = true)]
-            internal extern static void TexStorage3DEXT(OpenTK.Graphics.ES11.ExtTextureStorage target, Int32 levels, OpenTK.Graphics.ES11.ExtTextureStorage internalformat, Int32 width, Int32 height, Int32 depth);
+            internal extern static void TexStorage3DEXT(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 depth);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexSubImage2D", ExactSpelling = true)]
             internal extern static void TexSubImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTextureStorage1DEXT", ExactSpelling = true)]
-            internal extern static void TextureStorage1DEXT(UInt32 texture, OpenTK.Graphics.ES11.ExtTextureStorage target, Int32 levels, OpenTK.Graphics.ES11.ExtTextureStorage internalformat, Int32 width);
+            internal extern static void TextureStorage1DEXT(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTextureStorage2DEXT", ExactSpelling = true)]
-            internal extern static void TextureStorage2DEXT(UInt32 texture, OpenTK.Graphics.ES11.ExtTextureStorage target, Int32 levels, OpenTK.Graphics.ES11.ExtTextureStorage internalformat, Int32 width, Int32 height);
+            internal extern static void TextureStorage2DEXT(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTextureStorage3DEXT", ExactSpelling = true)]
-            internal extern static void TextureStorage3DEXT(UInt32 texture, OpenTK.Graphics.ES11.ExtTextureStorage target, Int32 levels, OpenTK.Graphics.ES11.ExtTextureStorage internalformat, Int32 width, Int32 height, Int32 depth);
+            internal extern static void TextureStorage3DEXT(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 depth);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTranslatef", ExactSpelling = true)]
             internal extern static void Translatef(Single x, Single y, Single z);
@@ -1142,7 +1148,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static void TranslatexOES(int x, int y, int z);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUnmapBufferOES", ExactSpelling = true)]
-            internal extern static bool UnmapBufferOES(OpenTK.Graphics.ES11.OesMapbuffer target);
+            internal extern static bool UnmapBufferOES(OpenTK.Graphics.ES11.All target);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertex2bOES", ExactSpelling = true)]
             internal extern static void Vertex2bOES(SByte x);
@@ -1190,7 +1196,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static void WaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glWeightPointerOES", ExactSpelling = true)]
-            internal extern static void WeightPointerOES(Int32 size, OpenTK.Graphics.ES11.OesMatrixPalette type, Int32 stride, IntPtr pointer);
+            internal extern static void WeightPointerOES(Int32 size, OpenTK.Graphics.ES11.All type, Int32 stride, IntPtr pointer);
         }
     }
 }

@@ -167,7 +167,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.BeginQuery, GL.Ext.EndQuery and 2 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 80 other functions
     /// </summary>
     public enum All : int
     {
@@ -8459,7 +8459,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo
+    /// Not used directly.
     /// </summary>
     public enum AmdPerformanceMonitor : int
     {
@@ -8544,7 +8544,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Angle.BlitFramebuffer
+    /// Not used directly.
     /// </summary>
     public enum AngleFramebufferBlit : int
     {
@@ -8567,7 +8567,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Angle.RenderbufferStorageMultisample
+    /// Not used directly.
     /// </summary>
     public enum AngleFramebufferMultisample : int
     {
@@ -8586,7 +8586,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Angle.DrawElementsInstanced
+    /// Not used directly.
     /// </summary>
     public enum AngleInstancedArrays : int
     {
@@ -8674,7 +8674,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Apple.RenderbufferStorageMultisample
+    /// Not used directly.
     /// </summary>
     public enum AppleFramebufferMultisample : int
     {
@@ -8732,7 +8732,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Apple.FenceSync, GL.Apple.GetInteger64 and 1 other function
+    /// Not used directly.
     /// </summary>
     public enum AppleSync : int
     {
@@ -10557,7 +10557,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.BlendFuncSeparate
+    /// Not used directly.
     /// </summary>
     public enum EsVersion20 : int
     {
@@ -12995,7 +12995,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.BlendEquation
+    /// Not used directly.
     /// </summary>
     public enum ExtBlendMinmax : int
     {
@@ -13049,7 +13049,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.GetObjectLabel, GL.Ext.LabelObject
+    /// Not used directly.
     /// </summary>
     public enum ExtDebugLabel : int
     {
@@ -13095,7 +13095,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.DiscardFramebuffer
+    /// Not used directly.
     /// </summary>
     public enum ExtDiscardFramebuffer : int
     {
@@ -13114,7 +13114,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.GetQueryObject, GL.Ext.QueryCounter
+    /// Not used directly.
     /// </summary>
     public enum ExtDisjointTimerQuery : int
     {
@@ -13149,7 +13149,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.DrawBuffers
+    /// Not used directly.
     /// </summary>
     public enum ExtDrawBuffers : int
     {
@@ -13310,7 +13310,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.FlushMappedBufferRange, GL.Ext.MapBufferRange
+    /// Not used directly.
     /// </summary>
     public enum ExtMapBufferRange : int
     {
@@ -13348,7 +13348,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.FramebufferTexture2DMultisample, GL.Ext.RenderbufferStorageMultisample
+    /// Not used directly.
     /// </summary>
     public enum ExtMultisampledRenderToTexture : int
     {
@@ -13371,7 +13371,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.DrawBuffersIndexed, GL.Ext.GetInteger and 1 other function
+    /// Not used directly.
     /// </summary>
     public enum ExtMultiviewDrawBuffers : int
     {
@@ -13467,7 +13467,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.ReadnPixels
+    /// Not used directly.
     /// </summary>
     public enum ExtRobustness : int
     {
@@ -13506,7 +13506,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.CreateShaderProgram, GL.Ext.GetProgramPipeline and 2 other functions
+    /// Not used directly.
     /// </summary>
     public enum ExtSeparateShaderObjects : int
     {
@@ -13725,7 +13725,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.TexStorage1D, GL.Ext.TexStorage2D and 4 other functions
+    /// Not used directly.
     /// </summary>
     public enum ExtTextureStorage : int
     {
@@ -16622,7 +16622,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Img.FramebufferTexture2DMultisample, GL.Img.RenderbufferStorageMultisample
+    /// Not used directly.
     /// </summary>
     public enum ImgMultisampledRenderToTexture : int
     {
@@ -17041,7 +17041,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.DebugMessageControl, GL.DebugMessageInsert and 11 other functions
+    /// Not used directly.
     /// </summary>
     public enum KhrDebug : int
     {
@@ -18407,7 +18407,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.NV.BlendParameter
+    /// Not used directly.
     /// </summary>
     public enum NvBlendEquationAdvanced : int
     {
@@ -18645,7 +18645,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.NV.CopyBufferSubData
+    /// Not used directly.
     /// </summary>
     public enum NvCopyBuffer : int
     {
@@ -18660,7 +18660,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.NV.CoverageOperation
+    /// Not used directly.
     /// </summary>
     public enum NvCoverageSample : int
     {
@@ -18714,7 +18714,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.NV.DrawBuffers
+    /// Not used directly.
     /// </summary>
     public enum NvDrawBuffers : int
     {
@@ -18853,7 +18853,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.NV.DrawElementsInstanced
+    /// Not used directly.
     /// </summary>
     public enum NvDrawInstanced : int
     {
@@ -18942,7 +18942,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.NV.GetFence, GL.NV.SetFence
+    /// Not used directly.
     /// </summary>
     public enum NvFence : int
     {
@@ -18961,7 +18961,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.NV.BlitFramebuffer
+    /// Not used directly.
     /// </summary>
     public enum NvFramebufferBlit : int
     {
@@ -18984,7 +18984,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.NV.RenderbufferStorageMultisample
+    /// Not used directly.
     /// </summary>
     public enum NvFramebufferMultisample : int
     {
@@ -19052,7 +19052,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.NV.ReadBuffer
+    /// Not used directly.
     /// </summary>
     public enum NvReadBuffer : int
     {
@@ -19288,7 +19288,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Oes.EGLImageTargetRenderbufferStorage, GL.Oes.EGLImageTargetTexture2D
+    /// Not used directly.
     /// </summary>
     public enum OesEglImage : int
     {
@@ -19343,7 +19343,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Oes.GetProgramBinary, GL.Oes.ProgramBinary
+    /// Not used directly.
     /// </summary>
     public enum OesGetProgramBinary : int
     {
@@ -19362,7 +19362,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Oes.GetBufferPointer, GL.Oes.MapBuffer and 1 other function
+    /// Not used directly.
     /// </summary>
     public enum OesMapbuffer : int
     {
@@ -19530,7 +19530,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Oes.CompressedTexImage3D, GL.Oes.CompressedTexSubImage3D and 4 other functions
+    /// Not used directly.
     /// </summary>
     public enum OesTexture3D : int
     {
@@ -20571,7 +20571,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Angle.DrawArraysInstanced, GL.Angle.DrawElementsInstanced and 6 other functions
+    /// Used in GL.Angle.DrawArraysInstanced, GL.Angle.DrawElementsInstanced and 8 other functions
     /// </summary>
     public enum PrimitiveType : int
     {
@@ -20713,7 +20713,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Qcom.AlphaFunc
+    /// Not used directly.
     /// </summary>
     public enum QcomAlphaTest : int
     {
@@ -20762,7 +20762,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Qcom.ExtGetBufferPointer, GL.Qcom.ExtGetTexLevelParameter and 2 other functions
+    /// Not used directly.
     /// </summary>
     public enum QcomExtendedGet : int
     {
@@ -20813,7 +20813,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Qcom.ExtGetProgramBinarySource
+    /// Not used directly.
     /// </summary>
     public enum QcomExtendedGet2 : int
     {

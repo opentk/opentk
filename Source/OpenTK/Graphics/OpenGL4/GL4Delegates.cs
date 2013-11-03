@@ -48,6 +48,9 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate void AttachShader(UInt32 program, UInt32 shader);
             internal static AttachShader glAttachShader;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void Begin(OpenTK.Graphics.OpenGL4.BeginMode mode);
+            internal static Begin glBegin;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BeginConditionalRender(UInt32 id, OpenTK.Graphics.OpenGL4.ConditionalRenderType mode);
             internal static BeginConditionalRender glBeginConditionalRender;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -129,10 +132,10 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate void BlendEquation(OpenTK.Graphics.OpenGL4.BlendEquationMode mode);
             internal static BlendEquation glBlendEquation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendEquationi(UInt32 buf, OpenTK.Graphics.OpenGL4.Version40 mode);
+            internal delegate void BlendEquationi(UInt32 buf, OpenTK.Graphics.OpenGL4.All mode);
             internal static BlendEquationi glBlendEquationi;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendEquationiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend mode);
+            internal delegate void BlendEquationiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.All mode);
             internal static BlendEquationiARB glBlendEquationiARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendEquationSeparate(OpenTK.Graphics.OpenGL4.BlendEquationMode modeRGB, OpenTK.Graphics.OpenGL4.BlendEquationMode modeAlpha);
@@ -141,25 +144,25 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate void BlendEquationSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL4.BlendEquationMode modeRGB, OpenTK.Graphics.OpenGL4.BlendEquationMode modeAlpha);
             internal static BlendEquationSeparatei glBlendEquationSeparatei;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendEquationSeparateiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend modeRGB, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend modeAlpha);
+            internal delegate void BlendEquationSeparateiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.All modeRGB, OpenTK.Graphics.OpenGL4.All modeAlpha);
             internal static BlendEquationSeparateiARB glBlendEquationSeparateiARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFunc(OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactor, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactor);
             internal static BlendFunc glBlendFunc;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL4.Version40 src, OpenTK.Graphics.OpenGL4.Version40 dst);
+            internal delegate void BlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL4.All src, OpenTK.Graphics.OpenGL4.All dst);
             internal static BlendFunci glBlendFunci;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendFunciARB(UInt32 buf, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend src, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend dst);
+            internal delegate void BlendFunciARB(UInt32 buf, OpenTK.Graphics.OpenGL4.All src, OpenTK.Graphics.OpenGL4.All dst);
             internal static BlendFunciARB glBlendFunciARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFuncSeparate(OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactorRGB, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactorRGB, OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactorAlpha, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactorAlpha);
             internal static BlendFuncSeparate glBlendFuncSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendFuncSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL4.Version40 srcRGB, OpenTK.Graphics.OpenGL4.Version40 dstRGB, OpenTK.Graphics.OpenGL4.Version40 srcAlpha, OpenTK.Graphics.OpenGL4.Version40 dstAlpha);
+            internal delegate void BlendFuncSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL4.All srcRGB, OpenTK.Graphics.OpenGL4.All dstRGB, OpenTK.Graphics.OpenGL4.All srcAlpha, OpenTK.Graphics.OpenGL4.All dstAlpha);
             internal static BlendFuncSeparatei glBlendFuncSeparatei;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendFuncSeparateiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend srcRGB, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend dstRGB, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend srcAlpha, OpenTK.Graphics.OpenGL4.ArbDrawBuffersBlend dstAlpha);
+            internal delegate void BlendFuncSeparateiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.All srcRGB, OpenTK.Graphics.OpenGL4.All dstRGB, OpenTK.Graphics.OpenGL4.All srcAlpha, OpenTK.Graphics.OpenGL4.All dstAlpha);
             internal static BlendFuncSeparateiARB glBlendFuncSeparateiARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlitFramebuffer(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, OpenTK.Graphics.OpenGL4.ClearBufferMask mask, OpenTK.Graphics.OpenGL4.BlitFramebufferFilter filter);
@@ -354,19 +357,19 @@ namespace OpenTK.Graphics.OpenGL4
             internal unsafe delegate void DebugMessageControl(OpenTK.Graphics.OpenGL4.DebugSourceControl source, OpenTK.Graphics.OpenGL4.DebugTypeControl type, OpenTK.Graphics.OpenGL4.DebugSeverityControl severity, Int32 count, UInt32* ids, bool enabled);
             internal unsafe static DebugMessageControl glDebugMessageControl;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void DebugMessageControlARB(OpenTK.Graphics.OpenGL4.ArbDebugOutput source, OpenTK.Graphics.OpenGL4.ArbDebugOutput type, OpenTK.Graphics.OpenGL4.ArbDebugOutput severity, Int32 count, UInt32* ids, bool enabled);
+            internal unsafe delegate void DebugMessageControlARB(OpenTK.Graphics.OpenGL4.All source, OpenTK.Graphics.OpenGL4.All type, OpenTK.Graphics.OpenGL4.All severity, Int32 count, UInt32* ids, bool enabled);
             internal unsafe static DebugMessageControlARB glDebugMessageControlARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void DebugMessageControlKHR(OpenTK.Graphics.OpenGL4.KhrDebug source, OpenTK.Graphics.OpenGL4.KhrDebug type, OpenTK.Graphics.OpenGL4.KhrDebug severity, Int32 count, UInt32* ids, bool enabled);
+            internal unsafe delegate void DebugMessageControlKHR(OpenTK.Graphics.OpenGL4.All source, OpenTK.Graphics.OpenGL4.All type, OpenTK.Graphics.OpenGL4.All severity, Int32 count, UInt32* ids, bool enabled);
             internal unsafe static DebugMessageControlKHR glDebugMessageControlKHR;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DebugMessageInsert(OpenTK.Graphics.OpenGL4.DebugSourceExternal source, OpenTK.Graphics.OpenGL4.DebugType type, UInt32 id, OpenTK.Graphics.OpenGL4.DebugSeverity severity, Int32 length, String buf);
             internal static DebugMessageInsert glDebugMessageInsert;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DebugMessageInsertARB(OpenTK.Graphics.OpenGL4.ArbDebugOutput source, OpenTK.Graphics.OpenGL4.ArbDebugOutput type, UInt32 id, OpenTK.Graphics.OpenGL4.ArbDebugOutput severity, Int32 length, String buf);
+            internal delegate void DebugMessageInsertARB(OpenTK.Graphics.OpenGL4.All source, OpenTK.Graphics.OpenGL4.All type, UInt32 id, OpenTK.Graphics.OpenGL4.All severity, Int32 length, String buf);
             internal static DebugMessageInsertARB glDebugMessageInsertARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DebugMessageInsertKHR(OpenTK.Graphics.OpenGL4.KhrDebug source, OpenTK.Graphics.OpenGL4.KhrDebug type, UInt32 id, OpenTK.Graphics.OpenGL4.KhrDebug severity, Int32 length, String buf);
+            internal delegate void DebugMessageInsertKHR(OpenTK.Graphics.OpenGL4.All source, OpenTK.Graphics.OpenGL4.All type, UInt32 id, OpenTK.Graphics.OpenGL4.All severity, Int32 length, String buf);
             internal static DebugMessageInsertKHR glDebugMessageInsertKHR;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void DeleteBuffers(Int32 n, UInt32* buffers);
@@ -450,6 +453,12 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate void DrawArrays(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 first, Int32 count);
             internal static DrawArrays glDrawArrays;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void DrawArrays1(OpenTK.Graphics.OpenGL4.BeginMode mode, Int32 first, Int32 count);
+            internal static DrawArrays1 glDrawArrays1;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void DrawArraysEXT(OpenTK.Graphics.OpenGL4.BeginMode mode, Int32 first, Int32 count);
+            internal static DrawArraysEXT glDrawArraysEXT;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawArraysIndirect(OpenTK.Graphics.OpenGL4.PrimitiveType mode, IntPtr indirect);
             internal static DrawArraysIndirect glDrawArraysIndirect;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -467,6 +476,9 @@ namespace OpenTK.Graphics.OpenGL4
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawElements(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices);
             internal static DrawElements glDrawElements;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void DrawElements1(OpenTK.Graphics.OpenGL4.BeginMode mode, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices);
+            internal static DrawElements1 glDrawElements1;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawElementsBaseVertex(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 basevertex);
             internal static DrawElementsBaseVertex glDrawElementsBaseVertex;
@@ -488,6 +500,9 @@ namespace OpenTK.Graphics.OpenGL4
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawRangeElements(OpenTK.Graphics.OpenGL4.PrimitiveType mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices);
             internal static DrawRangeElements glDrawRangeElements;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void DrawRangeElements1(OpenTK.Graphics.OpenGL4.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices);
+            internal static DrawRangeElements1 glDrawRangeElements1;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawRangeElementsBaseVertex(OpenTK.Graphics.OpenGL4.PrimitiveType mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 basevertex);
             internal static DrawRangeElementsBaseVertex glDrawRangeElementsBaseVertex;
@@ -669,10 +684,10 @@ namespace OpenTK.Graphics.OpenGL4
             internal unsafe delegate Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.All* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
             internal unsafe static GetDebugMessageLog glGetDebugMessageLog;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Int32 GetDebugMessageLogARB(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.ArbDebugOutput* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.ArbDebugOutput* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.ArbDebugOutput* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+            internal unsafe delegate Int32 GetDebugMessageLogARB(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.All* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
             internal unsafe static GetDebugMessageLogARB glGetDebugMessageLogARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Int32 GetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.KhrDebug* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.KhrDebug* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.KhrDebug* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+            internal unsafe delegate Int32 GetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.All* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
             internal unsafe static GetDebugMessageLogKHR glGetDebugMessageLogKHR;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetDoublei_v(OpenTK.Graphics.OpenGL4.GetIndexedPName target, UInt32 index, [OutAttribute] Double* data);
@@ -702,7 +717,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal unsafe delegate void GetFramebufferParameteriv(OpenTK.Graphics.OpenGL4.FramebufferTarget target, OpenTK.Graphics.OpenGL4.FramebufferDefaultParameter pname, [OutAttribute] Int32* @params);
             internal unsafe static GetFramebufferParameteriv glGetFramebufferParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate OpenTK.Graphics.OpenGL4.ArbRobustness GetGraphicsResetStatusARB();
+            internal delegate OpenTK.Graphics.OpenGL4.All GetGraphicsResetStatusARB();
             internal static GetGraphicsResetStatusARB glGetGraphicsResetStatusARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void GetHistogram(OpenTK.Graphics.OpenGL4.HistogramTarget target, bool reset, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [OutAttribute] IntPtr values);
@@ -714,7 +729,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal unsafe delegate void GetHistogramParameteriv(OpenTK.Graphics.OpenGL4.HistogramTarget target, OpenTK.Graphics.OpenGL4.GetHistogramParameterPName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetHistogramParameteriv glGetHistogramParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int64 GetImageHandleARB(UInt32 texture, Int32 level, bool layered, Int32 layer, OpenTK.Graphics.OpenGL4.ArbBindlessTexture format);
+            internal delegate Int64 GetImageHandleARB(UInt32 texture, Int32 level, bool layered, Int32 layer, OpenTK.Graphics.OpenGL4.All format);
             internal static GetImageHandleARB glGetImageHandleARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetInteger64i_v(OpenTK.Graphics.OpenGL4.GetIndexedPName target, UInt32 index, [OutAttribute] Int64* data);
@@ -750,49 +765,49 @@ namespace OpenTK.Graphics.OpenGL4
             internal unsafe delegate void GetNamedStringARB(Int32 namelen, String name, Int32 bufSize, [OutAttribute] Int32* stringlen, [OutAttribute] StringBuilder @string);
             internal unsafe static GetNamedStringARB glGetNamedStringARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetNamedStringivARB(Int32 namelen, String name, OpenTK.Graphics.OpenGL4.ArbShadingLanguageInclude pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetNamedStringivARB(Int32 namelen, String name, OpenTK.Graphics.OpenGL4.All pname, [OutAttribute] Int32* @params);
             internal unsafe static GetNamedStringivARB glGetNamedStringivARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetnColorTableARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, OpenTK.Graphics.OpenGL4.ArbRobustness format, OpenTK.Graphics.OpenGL4.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr table);
+            internal delegate void GetnColorTableARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr table);
             internal static GetnColorTableARB glGetnColorTableARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetnCompressedTexImageARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, Int32 lod, Int32 bufSize, [OutAttribute] IntPtr img);
+            internal delegate void GetnCompressedTexImageARB(OpenTK.Graphics.OpenGL4.All target, Int32 lod, Int32 bufSize, [OutAttribute] IntPtr img);
             internal static GetnCompressedTexImageARB glGetnCompressedTexImageARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetnConvolutionFilterARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, OpenTK.Graphics.OpenGL4.ArbRobustness format, OpenTK.Graphics.OpenGL4.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr image);
+            internal delegate void GetnConvolutionFilterARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr image);
             internal static GetnConvolutionFilterARB glGetnConvolutionFilterARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetnHistogramARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, bool reset, OpenTK.Graphics.OpenGL4.ArbRobustness format, OpenTK.Graphics.OpenGL4.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr values);
+            internal delegate void GetnHistogramARB(OpenTK.Graphics.OpenGL4.All target, bool reset, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr values);
             internal static GetnHistogramARB glGetnHistogramARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetnMapdvARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, OpenTK.Graphics.OpenGL4.ArbRobustness query, Int32 bufSize, [OutAttribute] Double* v);
+            internal unsafe delegate void GetnMapdvARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All query, Int32 bufSize, [OutAttribute] Double* v);
             internal unsafe static GetnMapdvARB glGetnMapdvARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetnMapfvARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, OpenTK.Graphics.OpenGL4.ArbRobustness query, Int32 bufSize, [OutAttribute] Single* v);
+            internal unsafe delegate void GetnMapfvARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All query, Int32 bufSize, [OutAttribute] Single* v);
             internal unsafe static GetnMapfvARB glGetnMapfvARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetnMapivARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, OpenTK.Graphics.OpenGL4.ArbRobustness query, Int32 bufSize, [OutAttribute] Int32* v);
+            internal unsafe delegate void GetnMapivARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All query, Int32 bufSize, [OutAttribute] Int32* v);
             internal unsafe static GetnMapivARB glGetnMapivARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetnMinmaxARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, bool reset, OpenTK.Graphics.OpenGL4.ArbRobustness format, OpenTK.Graphics.OpenGL4.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr values);
+            internal delegate void GetnMinmaxARB(OpenTK.Graphics.OpenGL4.All target, bool reset, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr values);
             internal static GetnMinmaxARB glGetnMinmaxARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetnPixelMapfvARB(OpenTK.Graphics.OpenGL4.ArbRobustness map, Int32 bufSize, [OutAttribute] Single* values);
+            internal unsafe delegate void GetnPixelMapfvARB(OpenTK.Graphics.OpenGL4.All map, Int32 bufSize, [OutAttribute] Single* values);
             internal unsafe static GetnPixelMapfvARB glGetnPixelMapfvARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetnPixelMapuivARB(OpenTK.Graphics.OpenGL4.ArbRobustness map, Int32 bufSize, [OutAttribute] UInt32* values);
+            internal unsafe delegate void GetnPixelMapuivARB(OpenTK.Graphics.OpenGL4.All map, Int32 bufSize, [OutAttribute] UInt32* values);
             internal unsafe static GetnPixelMapuivARB glGetnPixelMapuivARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetnPixelMapusvARB(OpenTK.Graphics.OpenGL4.ArbRobustness map, Int32 bufSize, [OutAttribute] UInt16* values);
+            internal unsafe delegate void GetnPixelMapusvARB(OpenTK.Graphics.OpenGL4.All map, Int32 bufSize, [OutAttribute] UInt16* values);
             internal unsafe static GetnPixelMapusvARB glGetnPixelMapusvARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetnPolygonStippleARB(Int32 bufSize, [OutAttribute] Byte* pattern);
             internal unsafe static GetnPolygonStippleARB glGetnPolygonStippleARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetnSeparableFilterARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, OpenTK.Graphics.OpenGL4.ArbRobustness format, OpenTK.Graphics.OpenGL4.ArbRobustness type, Int32 rowBufSize, [OutAttribute] IntPtr row, Int32 columnBufSize, [OutAttribute] IntPtr column, [OutAttribute] IntPtr span);
+            internal delegate void GetnSeparableFilterARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 rowBufSize, [OutAttribute] IntPtr row, Int32 columnBufSize, [OutAttribute] IntPtr column, [OutAttribute] IntPtr span);
             internal static GetnSeparableFilterARB glGetnSeparableFilterARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetnTexImageARB(OpenTK.Graphics.OpenGL4.ArbRobustness target, Int32 level, OpenTK.Graphics.OpenGL4.ArbRobustness format, OpenTK.Graphics.OpenGL4.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr img);
+            internal delegate void GetnTexImageARB(OpenTK.Graphics.OpenGL4.All target, Int32 level, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr img);
             internal static GetnTexImageARB glGetnTexImageARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetnUniformdvARB(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Double* @params);
@@ -810,7 +825,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal unsafe delegate void GetObjectLabel(OpenTK.Graphics.OpenGL4.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
             internal unsafe static GetObjectLabel glGetObjectLabel;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetObjectLabelKHR(OpenTK.Graphics.OpenGL4.KhrDebug identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
+            internal unsafe delegate void GetObjectLabelKHR(OpenTK.Graphics.OpenGL4.All identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
             internal unsafe static GetObjectLabelKHR glGetObjectLabelKHR;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
@@ -822,7 +837,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate void GetPointerv(OpenTK.Graphics.OpenGL4.GetPointervPName pname, [OutAttribute] IntPtr @params);
             internal static GetPointerv glGetPointerv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetPointervKHR(OpenTK.Graphics.OpenGL4.KhrDebug pname, [OutAttribute] IntPtr @params);
+            internal delegate void GetPointervKHR(OpenTK.Graphics.OpenGL4.All pname, [OutAttribute] IntPtr @params);
             internal static GetPointervKHR glGetPointervKHR;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetProgramBinary(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.OpenGL4.BinaryFormat* binaryFormat, [OutAttribute] IntPtr binary);
@@ -1089,7 +1104,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate void MakeImageHandleNonResidentARB(UInt64 handle);
             internal static MakeImageHandleNonResidentARB glMakeImageHandleNonResidentARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MakeImageHandleResidentARB(UInt64 handle, OpenTK.Graphics.OpenGL4.ArbBindlessTexture access);
+            internal delegate void MakeImageHandleResidentARB(UInt64 handle, OpenTK.Graphics.OpenGL4.All access);
             internal static MakeImageHandleResidentARB glMakeImageHandleResidentARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void MakeTextureHandleNonResidentARB(UInt64 handle);
@@ -1119,14 +1134,20 @@ namespace OpenTK.Graphics.OpenGL4
             internal unsafe delegate void MultiDrawArrays(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32* first, Int32* count, Int32 drawcount);
             internal unsafe static MultiDrawArrays glMultiDrawArrays;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void MultiDrawArrays1(OpenTK.Graphics.OpenGL4.BeginMode mode, Int32* first, Int32* count, Int32 drawcount);
+            internal unsafe static MultiDrawArrays1 glMultiDrawArrays1;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void MultiDrawArraysIndirect(OpenTK.Graphics.OpenGL4.PrimitiveType mode, IntPtr indirect, Int32 drawcount, Int32 stride);
             internal static MultiDrawArraysIndirect glMultiDrawArraysIndirect;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MultiDrawArraysIndirectCountARB(OpenTK.Graphics.OpenGL4.ArbIndirectParameters mode, IntPtr indirect, IntPtr drawcount, Int32 maxdrawcount, Int32 stride);
+            internal delegate void MultiDrawArraysIndirectCountARB(OpenTK.Graphics.OpenGL4.All mode, IntPtr indirect, IntPtr drawcount, Int32 maxdrawcount, Int32 stride);
             internal static MultiDrawArraysIndirectCountARB glMultiDrawArraysIndirectCountARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void MultiDrawElements(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32* count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 drawcount);
             internal unsafe static MultiDrawElements glMultiDrawElements;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void MultiDrawElements1(OpenTK.Graphics.OpenGL4.BeginMode mode, Int32* count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 drawcount);
+            internal unsafe static MultiDrawElements1 glMultiDrawElements1;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void MultiDrawElementsBaseVertex(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32* count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 drawcount, Int32* basevertex);
             internal unsafe static MultiDrawElementsBaseVertex glMultiDrawElementsBaseVertex;
@@ -1134,7 +1155,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate void MultiDrawElementsIndirect(OpenTK.Graphics.OpenGL4.All mode, OpenTK.Graphics.OpenGL4.All type, IntPtr indirect, Int32 drawcount, Int32 stride);
             internal static MultiDrawElementsIndirect glMultiDrawElementsIndirect;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MultiDrawElementsIndirectCountARB(OpenTK.Graphics.OpenGL4.ArbIndirectParameters mode, OpenTK.Graphics.OpenGL4.ArbIndirectParameters type, IntPtr indirect, IntPtr drawcount, Int32 maxdrawcount, Int32 stride);
+            internal delegate void MultiDrawElementsIndirectCountARB(OpenTK.Graphics.OpenGL4.All mode, OpenTK.Graphics.OpenGL4.All type, IntPtr indirect, IntPtr drawcount, Int32 maxdrawcount, Int32 stride);
             internal static MultiDrawElementsIndirectCountARB glMultiDrawElementsIndirectCountARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void MultiTexCoordP1ui(OpenTK.Graphics.OpenGL4.TextureUnit texture, OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 coords);
@@ -1161,7 +1182,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal unsafe delegate void MultiTexCoordP4uiv(OpenTK.Graphics.OpenGL4.TextureUnit texture, OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* coords);
             internal unsafe static MultiTexCoordP4uiv glMultiTexCoordP4uiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void NamedStringARB(OpenTK.Graphics.OpenGL4.ArbShadingLanguageInclude type, Int32 namelen, String name, Int32 stringlen, String @string);
+            internal delegate void NamedStringARB(OpenTK.Graphics.OpenGL4.All type, Int32 namelen, String name, Int32 stringlen, String @string);
             internal static NamedStringARB glNamedStringARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void NormalP3ui(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 coords);
@@ -1173,7 +1194,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate void ObjectLabel(OpenTK.Graphics.OpenGL4.ObjectLabelIdentifier identifier, UInt32 name, Int32 length, String label);
             internal static ObjectLabel glObjectLabel;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ObjectLabelKHR(OpenTK.Graphics.OpenGL4.KhrDebug identifier, UInt32 name, Int32 length, String label);
+            internal delegate void ObjectLabelKHR(OpenTK.Graphics.OpenGL4.All identifier, UInt32 name, Int32 length, String label);
             internal static ObjectLabelKHR glObjectLabelKHR;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ObjectPtrLabel(IntPtr ptr, Int32 length, String label);
@@ -1395,7 +1416,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate void PushDebugGroup(OpenTK.Graphics.OpenGL4.DebugSourceExternal source, UInt32 id, Int32 length, String message);
             internal static PushDebugGroup glPushDebugGroup;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void PushDebugGroupKHR(OpenTK.Graphics.OpenGL4.KhrDebug source, UInt32 id, Int32 length, String message);
+            internal delegate void PushDebugGroupKHR(OpenTK.Graphics.OpenGL4.All source, UInt32 id, Int32 length, String message);
             internal static PushDebugGroupKHR glPushDebugGroupKHR;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void QueryCounter(UInt32 id, OpenTK.Graphics.OpenGL4.QueryCounterTarget target);
@@ -1404,7 +1425,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate void ReadBuffer(OpenTK.Graphics.OpenGL4.ReadBufferMode mode);
             internal static ReadBuffer glReadBuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ReadnPixelsARB(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL4.ArbRobustness format, OpenTK.Graphics.OpenGL4.ArbRobustness type, Int32 bufSize, [OutAttribute] IntPtr data);
+            internal delegate void ReadnPixelsARB(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr data);
             internal static ReadnPixelsARB glReadnPixelsARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [OutAttribute] IntPtr pixels);
@@ -1545,7 +1566,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate void TexImage3DMultisample(OpenTK.Graphics.OpenGL4.TextureTargetMultisample target, Int32 samples, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
             internal static TexImage3DMultisample glTexImage3DMultisample;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexPageCommitmentARB(OpenTK.Graphics.OpenGL4.ArbSparseTexture target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, bool resident);
+            internal delegate void TexPageCommitmentARB(OpenTK.Graphics.OpenGL4.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, bool resident);
             internal static TexPageCommitmentARB glTexPageCommitmentARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexParameterf(OpenTK.Graphics.OpenGL4.TextureTarget target, OpenTK.Graphics.OpenGL4.TextureParameterName pname, Single param);

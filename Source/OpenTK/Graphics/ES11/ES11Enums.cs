@@ -57,7 +57,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Oes.GetTexGenx, GL.Oes.TexGenx
+    /// Used in GL.Apple.FenceSync, GL.Apple.GetInteger64 and 118 other functions
     /// </summary>
     public enum All : int
     {
@@ -86,9 +86,9 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         Zero = ((int)0)        ,
         /// <summary>
-        /// Original was GL_POINTS = 0x0000
+        /// Original was GL_Points = 0X0000
         /// </summary>
-        Points = ((int)0x0000)        ,
+        Points = ((int)0X0000)        ,
         /// <summary>
         /// Original was GL_CLIENT_PIXEL_STORE_BIT = 0x00000001
         /// </summary>
@@ -402,10 +402,6 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         QueryBufferBarrierBit = ((int)0x00008000)        ,
         /// <summary>
-        /// Original was GL_LINES = 0x0001
-        /// </summary>
-        Lines = ((int)0x0001)        ,
-        /// <summary>
         /// Original was GL_MAP_READ_BIT = 0x0001
         /// </summary>
         MapReadBit = ((int)0x0001)        ,
@@ -413,6 +409,10 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_MAP_READ_BIT_EXT = 0x0001
         /// </summary>
         MapReadBitExt = ((int)0x0001)        ,
+        /// <summary>
+        /// Original was GL_Lines = 0X0001
+        /// </summary>
+        Lines = ((int)0X0001)        ,
         /// <summary>
         /// Original was GL_EVAL_BIT = 0x00010000
         /// </summary>
@@ -454,9 +454,9 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         MapInvalidateRangeBitExt = ((int)0x0004)        ,
         /// <summary>
-        /// Original was GL_TRIANGLES = 0x0004
+        /// Original was GL_Triangles = 0X0004
         /// </summary>
-        Triangles = ((int)0x0004)        ,
+        Triangles = ((int)0X0004)        ,
         /// <summary>
         /// Original was GL_STENCIL_BUFFER_BIT2_QCOM = 0x00040000
         /// </summary>
@@ -5936,7 +5936,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Apple.RenderbufferStorageMultisample
+    /// Not used directly.
     /// </summary>
     public enum AppleFramebufferMultisample : int
     {
@@ -5971,7 +5971,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Apple.FenceSync, GL.Apple.GetInteger64 and 1 other function
+    /// Not used directly.
     /// </summary>
     public enum AppleSync : int
     {
@@ -6187,6 +6187,41 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_ALL_ATTRIB_BITS = 0xFFFFFFFF
         /// </summary>
         AllAttribBits = unchecked((int)0xFFFFFFFF)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.DrawArrays, GL.DrawElements
+    /// </summary>
+    public enum BeginMode : int
+    {
+        /// <summary>
+        /// Original was GL_Points = 0X0000
+        /// </summary>
+        Points = ((int)0X0000)        ,
+        /// <summary>
+        /// Original was GL_Lines = 0X0001
+        /// </summary>
+        Lines = ((int)0X0001)        ,
+        /// <summary>
+        /// Original was GL_LineLoop = 0X0002
+        /// </summary>
+        LineLoop = ((int)0X0002)        ,
+        /// <summary>
+        /// Original was GL_LineStrip = 0X0003
+        /// </summary>
+        LineStrip = ((int)0X0003)        ,
+        /// <summary>
+        /// Original was GL_Triangles = 0X0004
+        /// </summary>
+        Triangles = ((int)0X0004)        ,
+        /// <summary>
+        /// Original was GL_TriangleStrip = 0X0005
+        /// </summary>
+        TriangleStrip = ((int)0X0005)        ,
+        /// <summary>
+        /// Original was GL_TriangleFan = 0X0006
+        /// </summary>
+        TriangleFan = ((int)0X0006)        ,
     }
 
     /// <summary>
@@ -7371,7 +7406,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Ext.BlendEquation
+    /// Not used directly.
     /// </summary>
     public enum ExtBlendMinmax : int
     {
@@ -7394,7 +7429,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Ext.DiscardFramebuffer
+    /// Not used directly.
     /// </summary>
     public enum ExtDiscardFramebuffer : int
     {
@@ -7413,7 +7448,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Ext.FlushMappedBufferRange, GL.Ext.MapBufferRange
+    /// Not used directly.
     /// </summary>
     public enum ExtMapBufferRange : int
     {
@@ -7444,14 +7479,14 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Ext.MultiDrawElements
+    /// Not used directly.
     /// </summary>
     public enum ExtMultiDrawArrays : int
     {
     }
 
     /// <summary>
-    /// Used in GL.Ext.FramebufferTexture2DMultisample, GL.Ext.RenderbufferStorageMultisample
+    /// Not used directly.
     /// </summary>
     public enum ExtMultisampledRenderToTexture : int
     {
@@ -7493,7 +7528,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Ext.ReadnPixels
+    /// Not used directly.
     /// </summary>
     public enum ExtRobustness : int
     {
@@ -7615,7 +7650,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Ext.TexStorage1D, GL.Ext.TexStorage2D and 4 other functions
+    /// Not used directly.
     /// </summary>
     public enum ExtTextureStorage : int
     {
@@ -10211,7 +10246,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Img.FramebufferTexture2DMultisample, GL.Img.RenderbufferStorageMultisample
+    /// Not used directly.
     /// </summary>
     public enum ImgMultisampledRenderToTexture : int
     {
@@ -10307,7 +10342,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Img.ClipPlane, GL.Img.ClipPlanex
+    /// Not used directly.
     /// </summary>
     public enum ImgUserClipPlane : int
     {
@@ -11464,7 +11499,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.NV.GetFence, GL.NV.SetFence
+    /// Not used directly.
     /// </summary>
     public enum NvFence : int
     {
@@ -11483,7 +11518,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Oes.BlendEquationSeparate
+    /// Not used directly.
     /// </summary>
     public enum OesBlendEquationSeparate : int
     {
@@ -11498,7 +11533,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Oes.BlendFuncSeparate
+    /// Not used directly.
     /// </summary>
     public enum OesBlendFuncSeparate : int
     {
@@ -11521,7 +11556,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Oes.BlendEquation
+    /// Not used directly.
     /// </summary>
     public enum OesBlendSubtract : int
     {
@@ -11544,7 +11579,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Oes.MultiTexCoord1, GL.Oes.MultiTexCoord2 and 2 other functions
+    /// Not used directly.
     /// </summary>
     public enum OesByteCoordinates : int
     {
@@ -11642,7 +11677,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Oes.EGLImageTargetRenderbufferStorage, GL.Oes.EGLImageTargetTexture2D
+    /// Not used directly.
     /// </summary>
     public enum OesEglImage : int
     {
@@ -11697,7 +11732,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.GetPixelMapx, GL.PixelMapx and 30 other functions
+    /// Not used directly.
     /// </summary>
     public enum OesFixedPoint : int
     {
@@ -11708,7 +11743,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Oes.BindFramebuffer, GL.Oes.BindRenderbuffer and 7 other functions
+    /// Not used directly.
     /// </summary>
     public enum OesFramebufferObject : int
     {
@@ -11847,7 +11882,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Oes.GetBufferPointer, GL.Oes.MapBuffer and 1 other function
+    /// Not used directly.
     /// </summary>
     public enum OesMapbuffer : int
     {
@@ -11889,7 +11924,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Oes.MatrixIndexPointer, GL.Oes.WeightPointer
+    /// Not used directly.
     /// </summary>
     public enum OesMatrixPalette : int
     {
@@ -11979,7 +12014,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Oes.PointSizePointer
+    /// Not used directly.
     /// </summary>
     public enum OesPointSizeArray : int
     {
@@ -12125,7 +12160,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Oes.ClipPlane, GL.Oes.GetClipPlane
+    /// Not used directly.
     /// </summary>
     public enum OesSinglePrecision : int
     {
@@ -12180,7 +12215,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Oes.GetTexGen, GL.Oes.TexGen
+    /// Not used directly.
     /// </summary>
     public enum OesTextureCubeMap : int
     {
@@ -13154,7 +13189,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Qcom.ExtGetBufferPointer, GL.Qcom.ExtGetTexLevelParameter and 2 other functions
+    /// Not used directly.
     /// </summary>
     public enum QcomExtendedGet : int
     {
@@ -13205,7 +13240,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Qcom.ExtGetProgramBinarySource
+    /// Not used directly.
     /// </summary>
     public enum QcomExtendedGet2 : int
     {
@@ -14252,7 +14287,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.ActiveTexture, GL.AlphaFuncx and 27 other functions
+    /// Not used directly.
     /// </summary>
     public enum VersionEsCm10 : int
     {
