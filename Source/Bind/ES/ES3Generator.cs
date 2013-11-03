@@ -15,8 +15,10 @@ namespace Bind.ES
         public ES3Generator(Settings settings, string dirName)
             : base(settings, dirName)
         {
+            Settings.DefaultOutputPath = Path.Combine(
+                Settings.DefaultOutputPath, "../ES30");
             Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES30";
-            Settings.DefaultImportsFile = "ES30Core.cs";
+            Settings.DefaultImportsFile = "ES3Core.cs";
             Settings.DefaultDelegatesFile = "ES30Delegates.cs";
             Settings.DefaultEnumsFile = "ES30Enums.cs";
             Settings.DefaultWrappersFile = "ES30.cs";

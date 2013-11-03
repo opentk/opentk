@@ -15,6 +15,8 @@ namespace Bind.ES
         public ESGenerator(Settings settings, string dirName)
             : base(settings, dirName)
         {
+            Settings.DefaultOutputPath = Path.Combine(
+                Settings.DefaultOutputPath, "../ES11");
             Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
             Settings.DefaultImportsFile = "ES11Core.cs";
             Settings.DefaultDelegatesFile = "ES11Delegates.cs";

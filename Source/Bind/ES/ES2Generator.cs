@@ -15,6 +15,8 @@ namespace Bind.ES
         public ES2Generator(Settings settings, string dirName)
             : base(settings, dirName)
         {
+            Settings.DefaultOutputPath = Path.Combine(
+                Settings.DefaultOutputPath, "../ES20");
             Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
             Settings.DefaultImportsFile = "ES20Core.cs";
             Settings.DefaultDelegatesFile = "ES20Delegates.cs";
