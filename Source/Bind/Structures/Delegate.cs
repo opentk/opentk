@@ -302,15 +302,20 @@ namespace Bind.Structures
             else
             {
                 var list = Delegates[d.Name];
-                if (!list.Contains(d))
+                var index = list.IndexOf(d);
+                if (index < 0)
                 {
+                    // Function not defined - add it!
                     list.Add(d);
                 }
                 else
                 {
-                    Trace.WriteLine(String.Format(
-                        "Spec error: function {0} redefined, ignoring second definition.",
-                        d.Name));
+                    // Function redefined with identical parameters:
+                    // merge the categories and ignore the second definition.
+                    if (!list[index].Category.Contains(d.Category))
+                    {
+                        list[index].Category += "|" + d.Category;
+                    }
                 }
             }
         }
