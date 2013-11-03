@@ -3621,7 +3621,7 @@
     </enum>
     <enum name="TextureCompareMode">
       <token name="COMPARE_R_TO_TEXTURE" value="0x884E" />
-      <token name="COMPARE_REF_TO_TEXTURE" value="GL_COMPARE_R_TO_TEXTURE_ARB" />
+      <token name="COMPARE_REF_TO_TEXTURE" value="0x884E" />
       <use enum="VERSION_1_1" token="NONE" />
     </enum>
     <enum name="TextureEnvMode">
@@ -4303,6 +4303,64 @@
     <enum name="BufferParameterName">
       <token name="BufferSize" value="0X8764" />
       <token name="BufferUsage" value="0X8765" />
+    </enum>
+    
+    <enum name="DebugSeverity">
+      <use token="DEBUG_SEVERITY_HIGH" />
+      <use token="DEBUG_SEVERITY_MEDIUM" />
+      <use token="DEBUG_SEVERITY_LOW" />
+      <use token="DEBUG_SEVERITY_NOTIFICATION" />
+    </enum>
+    <enum name="DebugSeverityControl">
+      <use token="DONT_CARE" />
+      <use token="DEBUG_SEVERITY_HIGH" />
+      <use token="DEBUG_SEVERITY_MEDIUM" />
+      <use token="DEBUG_SEVERITY_LOW" />
+      <use token="DEBUG_SEVERITY_NOTIFICATION" />
+    </enum>
+    <enum name="DebugSource">
+      <use token="DEBUG_SOURCE_API" />
+      <use token="DEBUG_SOURCE_SHADER_COMPILER" />
+      <use token="DEBUG_SOURCE_WINDOW_SYSTEM" />
+      <use token="DEBUG_SOURCE_THIRD_PARTY" />
+      <use token="DEBUG_SOURCE_APPLICATION" />
+      <use token="DEBUG_SOURCE_OTHER" />
+    </enum>
+    <enum name="DebugSourceControl">
+      <use token="DONT_CARE" />
+      <use token="DEBUG_SOURCE_API" />
+      <use token="DEBUG_SOURCE_SHADER_COMPILER" />
+      <use token="DEBUG_SOURCE_WINDOW_SYSTEM" />
+      <use token="DEBUG_SOURCE_THIRD_PARTY" />
+      <use token="DEBUG_SOURCE_APPLICATION" />
+      <use token="DEBUG_SOURCE_OTHER" />
+    </enum>
+    <enum name="DebugSourceExternal">
+      <use token="DEBUG_SOURCE_THIRD_PARTY" />
+      <use token="DEBUG_SOURCE_APPLICATION" />
+    </enum>
+    <enum name="DebugType">
+      <use token="DEBUG_TYPE_ERROR" />
+      <use token="DEBUG_TYPE_MARKER" />
+      <use token="DEBUG_TYPE_OTHER" />
+      <use token="DEBUG_TYPE_DEPRECATED_BEHAVIOR" />
+      <use token="DEBUG_TYPE_UNDEFINED_BEHAVIOR" />
+      <use token="DEBUG_TYPE_PERFORMANCE" />
+      <use token="DEBUG_TYPE_PORTABILITY" />
+      <use token="DEBUG_TYPE_PUSH_GROUP" />
+      <use token="DEBUG_TYPE_POP_GROUP" />
+    </enum>
+    <enum name="DebugTypeControl">
+      <use token="DONT_CARE" />
+      <use token="DEBUG_TYPE_ERROR" />
+      <use token="DEBUG_TYPE_MARKER" />
+      <use token="DEBUG_TYPE_OTHER" />
+      <use token="DEBUG_TYPE_DEPRECATED_BEHAVIOR" />
+      <use token="DEBUG_TYPE_UNDEFINED_BEHAVIOR" />
+      <use token="DEBUG_TYPE_PERFORMANCE" />
+      <use token="DEBUG_TYPE_PORTABILITY" />
+      <use token="DEBUG_TYPE_PUSH_GROUP" />
+      <use token="DEBUG_TYPE_POP_GROUP" />
     </enum>
      
     <enum name="VertexAttribPointerType">
