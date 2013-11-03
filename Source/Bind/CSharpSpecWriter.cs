@@ -329,7 +329,7 @@ namespace Bind
         {
             if ((Settings.Compatibility & Settings.Legacy.NoDocumentation) == 0)
             {
-                string text = String.Format("Writing function #{0}: {1}", current++, f.Name);
+                string text = String.Format("Writing function #{0}: {1}", current++, f.ToString());
                 ConsoleRewrite(text);
 
                 WriteDocumentation(sw, f);
