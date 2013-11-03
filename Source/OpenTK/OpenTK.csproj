@@ -485,40 +485,16 @@
     <Compile Include="Graphics\ES10\Core.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\ES11\ES.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES11\Enums.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Graphics\ES11\ErrorHelper.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Graphics\ES11\Helper.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\ES11\Delegates.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES11\Core.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES20\ES.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES20\Enums.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Graphics\ES20\ErrorHelper.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Graphics\ES20\Helper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES20\Delegates.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Graphics\ES20\Core.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Input\Keyboard.cs">
@@ -793,6 +769,34 @@
     <Compile Include="Platform\SDL2\Sdl2.cs" />
     <Compile Include="Platform\Egl\EglSdl2PlatformFactory.cs" />
     <Compile Include="Platform\SDL2\Sdl2JoystickDriver.cs" />
+    <Compile Include="Graphics\ES30\ErrorHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\ES30\Helper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\OpenGL4\Helper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\OpenGL4\ErrorHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\OpenGL4\GL4.cs" />
+    <Compile Include="Graphics\OpenGL4\GL4Core.cs" />
+    <Compile Include="Graphics\OpenGL4\GL4Delegates.cs" />
+    <Compile Include="Graphics\OpenGL4\GL4Enums.cs" />
+    <Compile Include="Graphics\ES30\ES30.cs" />
+    <Compile Include="Graphics\ES30\ES30Core.cs" />
+    <Compile Include="Graphics\ES30\ES30Delegates.cs" />
+    <Compile Include="Graphics\ES30\ES30Enums.cs" />
+    <Compile Include="Graphics\ES20\ES20.cs" />
+    <Compile Include="Graphics\ES20\ES20Core.cs" />
+    <Compile Include="Graphics\ES20\ES20Delegates.cs" />
+    <Compile Include="Graphics\ES20\ES20Enums.cs" />
+    <Compile Include="Graphics\ES11\ES11.cs" />
+    <Compile Include="Graphics\ES11\ES11Core.cs" />
+    <Compile Include="Graphics\ES11\ES11Delegates.cs" />
+    <Compile Include="Graphics\ES11\ES11Enums.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -802,4 +806,8 @@
     </PostBuildEvent>
   </PropertyGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Graphics\ES30\" />
+    <Folder Include="Graphics\OpenGL4\" />
+  </ItemGroup>
 </Project>
