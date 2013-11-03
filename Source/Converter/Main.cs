@@ -147,6 +147,7 @@ namespace CHeaderToXML
                         output.Add(
                             new XElement("add",
                                 new XAttribute("name", api.Attribute("name").Value),
+                                api.Attribute("version") != null ? new XAttribute("version",  api.Attribute("version").Value) : null,
                                 api.Elements()
                                     .OrderBy(s => s.Name.LocalName)
                                     .ThenBy(s => (string)s.Attribute("value") ?? String.Empty)
@@ -190,19 +191,21 @@ namespace CHeaderToXML
         private static Dictionary<string, XElement> MergeDuplicates(IEnumerable<IEnumerable<XElement>> sigs)
         {
             var entries = new Dictionary<string, XElement>();
-            foreach (var e in sigs.SelectMany(s => s))//.Where(s => s.Name.LocalName == "enum"))
+            foreach (var e in sigs.SelectMany(s => s))
             {
                 var name = (string)e.Attribute("name") ?? "";
-                if (entries.ContainsKey(name))// && e.Name.LocalName == "enum")
+                var version = (string)e.Attribute("version") ?? "";
+                var key = name + version;
+                if (entries.ContainsKey(key))
                 {
-                    var p = entries[name];
+                    var p = entries[key];
                     var curTokens = p.Nodes().ToList();
                     p.RemoveNodes();
                     p.Add(curTokens.Concat(e.Nodes()).Distinct(new EnumTokenComparer()));
                 }
                 else
                 {
-                    entries.Add(name, e);
+                    entries.Add(key, e);
                 }
             }
             return entries;

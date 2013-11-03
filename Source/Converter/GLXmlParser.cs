@@ -62,10 +62,12 @@ namespace CHeaderToXML
             foreach (var e in ParseEnums(input).Concat(ParseFunctions(input)))
             {
                 var name = e.Attribute("name").Value;
-                if (!elements.ContainsKey(name))
-                    elements.Add(name, e);
+                var version = (e.Attribute("version") ?? new XAttribute("version", String.Empty)).Value;
+                var key = name + version;
+                if (!elements.ContainsKey(key))
+                    elements.Add(key, e);
                 else
-                    elements[name].Add(e.Elements());
+                    elements[key].Add(e.Elements());
             }
             
             return elements.Values;
@@ -196,7 +198,7 @@ namespace CHeaderToXML
 
                 foreach (var api in APIs.Values)
                 {
-                var apiname = api.Attribute("name").Value;
+                    var apiname = api.Attribute("name").Value;
 
                     // Mark deprecated enums
                     foreach (var token in feature.Elements("remove").Elements("enum"))
@@ -265,12 +267,19 @@ namespace CHeaderToXML
                 foreach (var apiname in apinames)
                 {
                     i++;
-                    if (!APIs.ContainsKey(apiname))
-                        APIs.Add(apiname, new XElement("api", new XAttribute("name", apiname)));
-                    var api = APIs[apiname];
 
                     var cmd_category = category;
                     var cmd_version = version.Length > i ? version[i] : version[0];
+
+                    var key = apiname + cmd_version;
+                    if (!APIs.ContainsKey(key))
+                        APIs.Add(
+                            key,
+                            new XElement(
+                            "api",
+                            new XAttribute("name", apiname),
+                            new XAttribute("version", cmd_version)));
+                    var api = APIs[key];
 
                     foreach (var command in feature.Elements("require").Elements("command"))
                     {
@@ -292,11 +301,11 @@ namespace CHeaderToXML
                 }
 
                 i = -1;
-                foreach (var apiname in apinames)
+                foreach (var api in APIs.Values)
                 {
                     i++;
+                    var apiname = api.Attribute("name").Value;
                     var cmd_version = version.Length > i ? version[i] : version[0];
-                    var api = APIs[apiname];
 
                     // Mark all deprecated functions as such
                     foreach (var command in feature.Elements("remove").Elements("command"))
