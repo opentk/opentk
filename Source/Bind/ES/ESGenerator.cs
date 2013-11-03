@@ -27,7 +27,7 @@ namespace Bind.ES
             // so we cannot distinguish between the two.
             // Todo: add support for common and light profiles.
             Profile = "gles1";
-            Version = "1.1"; 
+            // Both 1.0 and 1.1 versions
         }
     }
 }
