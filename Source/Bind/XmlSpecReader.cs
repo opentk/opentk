@@ -244,8 +244,8 @@ namespace Bind
             string path = "function";
             foreach (XPathNavigator node in specs.SelectChildren(path, String.Empty))
             {
-                var name = node.GetAttribute("name", String.Empty);
-                var version = node.GetAttribute("version", String.Empty);
+                var name = node.GetAttribute("name", String.Empty).Trim();
+                var version = node.GetAttribute("version", String.Empty).Trim();
 
                 // Ignore functions that have a higher version number than
                 // our current apiversion. Extensions do not have a version,
@@ -264,11 +264,11 @@ namespace Bind
                 {
                     d = new Delegate();
                     d.Name = name;
-                    d.Version = node.GetAttribute("version", String.Empty);
-                    d.Category = node.GetAttribute("category", String.Empty);
-                    d.DeprecatedVersion = node.GetAttribute("deprecated", String.Empty);
+                    d.Version = node.GetAttribute("version", String.Empty).Trim();
+                    d.Category = node.GetAttribute("category", String.Empty).Trim();
+                    d.DeprecatedVersion = node.GetAttribute("deprecated", String.Empty).Trim();
                     d.Deprecated = !String.IsNullOrEmpty(d.DeprecatedVersion);
-                    d.Extension = node.GetAttribute("extension", String.Empty) ?? "Core";
+                    d.Extension = node.GetAttribute("extension", String.Empty).Trim() ?? "Core";
                     if (!extensions.Contains(d.Extension))
                         extensions.Add(d.Extension);
                 }
@@ -278,18 +278,18 @@ namespace Bind
                     switch (param.Name)
                     {
                         case "returns":
-                            d.ReturnType.CurrentType = param.GetAttribute("type", String.Empty);
+                            d.ReturnType.CurrentType = param.GetAttribute("type", String.Empty).Trim();
                             break;
 
                         case "param":
                             Parameter p = new Parameter();
-                            p.CurrentType = param.GetAttribute("type", String.Empty);
-                            p.Name = param.GetAttribute("name", String.Empty);
+                            p.CurrentType = param.GetAttribute("type", String.Empty).Trim();
+                            p.Name = param.GetAttribute("name", String.Empty).Trim();
 
-                            string element_count = param.GetAttribute("elementcount", String.Empty);
+                            string element_count = param.GetAttribute("elementcount", String.Empty).Trim();
                             if (String.IsNullOrEmpty(element_count))
                             {
-                                element_count = param.GetAttribute("count", String.Empty);
+                                element_count = param.GetAttribute("count", String.Empty).Trim();
                                 if (!String.IsNullOrEmpty(element_count))
                                 {
                                     int count;
@@ -300,7 +300,7 @@ namespace Bind
                                 }
                             }
 
-                            p.Flow = Parameter.GetFlowDirection(param.GetAttribute("flow", String.Empty));
+                            p.Flow = Parameter.GetFlowDirection(param.GetAttribute("flow", String.Empty).Trim());
 
                             d.Parameters.Add(p);
                             break;
@@ -325,8 +325,8 @@ namespace Bind
                 {
                     Enum e = new Enum()
                     {
-                        Name = node.GetAttribute("name", String.Empty),
-                        Type = node.GetAttribute("type", String.Empty)
+                        Name = node.GetAttribute("name", String.Empty).Trim(),
+                        Type = node.GetAttribute("type", String.Empty).Trim()
                     };
 
                     if (String.IsNullOrEmpty(e.Name))
@@ -346,17 +346,17 @@ namespace Bind
                             case "token":
                                 c = new Constant
                                 {
-                                    Name = param.GetAttribute("name", String.Empty),
-                                    Value = param.GetAttribute("value", String.Empty)
+                                    Name = param.GetAttribute("name", String.Empty).Trim(),
+                                    Value = param.GetAttribute("value", String.Empty).Trim()
                                 };
                                 break;
 
                             case "use":
                                 c = new Constant
                                 {
-                                    Name = param.GetAttribute("token", String.Empty),
-                                    Reference = param.GetAttribute("enum", String.Empty),
-                                    Value = param.GetAttribute("token", String.Empty),
+                                    Name = param.GetAttribute("token", String.Empty).Trim(),
+                                    Reference = param.GetAttribute("enum", String.Empty).Trim(),
+                                    Value = param.GetAttribute("token", String.Empty).Trim(),
                                 };
                                 break;
 
