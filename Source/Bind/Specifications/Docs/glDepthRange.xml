@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glDepthRange">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glDepthRange</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -30,7 +30,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -56,7 +55,7 @@
     <refsect1 id="description"><title>Description</title>
         <para>
             After clipping and division by <emphasis>w</emphasis>,
-            depth coordinates range from 
+            depth coordinates range from
             <inlineequation><mml:math>
                 <!-- eqn: -1: -->
                 <mml:mn>-1</mml:mn>
@@ -82,7 +81,7 @@
     <refsect1 id="notes"><title>Notes</title>
         <para>
             It is not necessary that <parameter>nearVal</parameter> be less than <parameter>farVal</parameter>.
-            Reverse mappings such as 
+            Reverse mappings such as
             <inlineequation><mml:math>
                 <!-- eqn: nearVal  =  1: -->
                 <mml:mrow>
@@ -91,7 +90,7 @@
                     <mml:mn>1</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            and 
+            and
             <inlineequation><mml:math>
                 <!-- eqn: farVal  =  0: -->
                 <mml:mrow>

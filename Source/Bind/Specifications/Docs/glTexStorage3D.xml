@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glTexStorage3D">
+    <refentryinfo>
+        <copyright>
+            <year>2011-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>2011</year>
-                <holder>Khronos Group</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glTexStorage3D</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -163,68 +163,74 @@
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>target</parameter> is <constant>GL_TEXTURE_3D</constant>
-            or <constant>GL_PROXY_TEXTURE_3D</constant> and <parameter>levels</parameter> is greater than <mml:math>
-  <mml:mrow>
-    <mml:mfenced open = '&lfloor;' close = '&rfloor;'>
-      <mml:mrow>
-        <mml:msub>
-          <mml:mi>log</mml:mi>
-          <mml:mn>2</mml:mn>
-        </mml:msub>
-        <mml:mfenced open = '(' close = ')'>
-          <mml:mrow>
-            <mml:mi>max</mml:mi>
-            <mml:mfenced open = '(' close = ')'>
-              <mml:mrow>
-                <mml:mi>width</mml:mi>
-                <mml:mo>,</mml:mo>
-                <mml:mtext fontfamily='Times New Roman'>&nbsp;</mml:mtext>
-                <mml:mi>height</mml:mi>
-                <mml:mo>,</mml:mo>
-                <mml:mtext fontfamily='Times New Roman'>&nbsp;</mml:mtext>
-                <mml:mi>depth</mml:mi>
-              </mml:mrow>
-            </mml:mfenced>
-          </mml:mrow>
-        </mml:mfenced>
-      </mml:mrow>
-    </mml:mfenced>
-    <mml:mo>+</mml:mo>
-    <mml:mn>1</mml:mn>
-  </mml:mrow>
-</mml:math>.
+            or <constant>GL_PROXY_TEXTURE_3D</constant> and <parameter>levels</parameter> is greater than
+            <inlineequation>
+                <mml:math>
+                  <mml:mrow>
+                    <mml:mfenced open = '&lfloor;' close = '&rfloor;'>
+                      <mml:mrow>
+                        <mml:msub>
+                          <mml:mi>log</mml:mi>
+                          <mml:mn>2</mml:mn>
+                        </mml:msub>
+                        <mml:mfenced open = '(' close = ')'>
+                          <mml:mrow>
+                            <mml:mi>max</mml:mi>
+                            <mml:mfenced open = '(' close = ')'>
+                              <mml:mrow>
+                                <mml:mi>width</mml:mi>
+                                <mml:mo>,</mml:mo>
+                                <mml:mtext fontfamily='Times New Roman'>&nbsp;</mml:mtext>
+                                <mml:mi>height</mml:mi>
+                                <mml:mo>,</mml:mo>
+                                <mml:mtext fontfamily='Times New Roman'>&nbsp;</mml:mtext>
+                                <mml:mi>depth</mml:mi>
+                              </mml:mrow>
+                            </mml:mfenced>
+                          </mml:mrow>
+                        </mml:mfenced>
+                      </mml:mrow>
+                    </mml:mfenced>
+                    <mml:mo>+</mml:mo>
+                    <mml:mn>1</mml:mn>
+                  </mml:mrow>
+                </mml:math>
+            </inlineequation>.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>target</parameter> is <constant>GL_TEXTURE_2D_ARRAY</constant>,
             <constant>GL_PROXY_TEXTURE_2D_ARRAY</constant>, <constant>GL_TEXURE_CUBE_ARRAY</constant>, or <constant>GL_PROXY_TEXTURE_CUBE_MAP_ARRAY</constant>
-            and <parameter>levels</parameter> is greater than <mml:math>
-  <mml:mrow>
-    <mml:mfenced open = '&lfloor;' close = '&rfloor;'>
-      <mml:mrow>
-        <mml:msub>
-          <mml:mi>log</mml:mi>
-          <mml:mn>2</mml:mn>
-        </mml:msub>
-        <mml:mfenced open = '(' close = ')'>
-          <mml:mrow>
-            <mml:mi>max</mml:mi>
-            <mml:mfenced open = '(' close = ')'>
-              <mml:mrow>
-                <mml:mi>width</mml:mi>
-                <mml:mo>,</mml:mo>
-                <mml:mtext fontfamily='Times New Roman'>&nbsp;</mml:mtext>
-                <mml:mi>height</mml:mi>
-              </mml:mrow>
-            </mml:mfenced>
-          </mml:mrow>
-        </mml:mfenced>
-      </mml:mrow>
-    </mml:mfenced>
-    <mml:mo>+</mml:mo>
-    <mml:mn>1</mml:mn>
-  </mml:mrow>
-</mml:math>.
-    </para>
+            and <parameter>levels</parameter> is greater than
+            <inlineequation>
+                <mml:math>
+                  <mml:mrow>
+                    <mml:mfenced open = '&lfloor;' close = '&rfloor;'>
+                      <mml:mrow>
+                        <mml:msub>
+                          <mml:mi>log</mml:mi>
+                          <mml:mn>2</mml:mn>
+                        </mml:msub>
+                        <mml:mfenced open = '(' close = ')'>
+                          <mml:mrow>
+                            <mml:mi>max</mml:mi>
+                            <mml:mfenced open = '(' close = ')'>
+                              <mml:mrow>
+                                <mml:mi>width</mml:mi>
+                                <mml:mo>,</mml:mo>
+                                <mml:mtext fontfamily='Times New Roman'>&nbsp;</mml:mtext>
+                                <mml:mi>height</mml:mi>
+                              </mml:mrow>
+                            </mml:mfenced>
+                          </mml:mrow>
+                        </mml:mfenced>
+                      </mml:mrow>
+                    </mml:mfenced>
+                    <mml:mo>+</mml:mo>
+                    <mml:mn>1</mml:mn>
+                  </mml:mrow>
+                </mml:math>
+            </inlineequation>.
+        </para>
     </refsect1>
     <refsect1 id="seealso"><title>See Also</title>
         <para>
@@ -235,8 +241,8 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2011 Khronos Group. 
-            This material may be distributed subject to the terms and conditions set forth in 
+            Copyright <trademark class="copyright"></trademark> 2011-2013 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
         </para>

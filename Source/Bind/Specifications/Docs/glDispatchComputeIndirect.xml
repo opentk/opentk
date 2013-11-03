@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glDispatchComputeIndirect">
+    <refentryinfo>
+        <copyright>
+            <year>2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>2012</year>
-                <holder>Khronos Group</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glDispatchComputeIndirect</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -63,8 +63,7 @@
             A call to <function>glDispatchComputeIndirect</function> is equivalent, assuming no
             errors are generated, to:
             <programlisting><![CDATA[    cmd = (const DispatchIndirectCommand  *)indirect;
-    glDispatchComputeIndirect(cmd->num_groups_x, cmd->num_groups_y, cmd->num_groups_z);
-    }]]></programlisting>
+    glDispatchComputeIndirect(cmd->num_groups_x, cmd->num_groups_y, cmd->num_groups_z);]]></programlisting>
         </para>
         <para>
             Unlike <citerefentry><refentrytitle>glDispatchCompute</refentrytitle></citerefentry>,
@@ -103,7 +102,7 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2012 Khronos Group.
+            Copyright <trademark class="copyright"></trademark> 2013 Khronos Group.
             This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.

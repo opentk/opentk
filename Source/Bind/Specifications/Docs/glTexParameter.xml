@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glTexParameter">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glTexParameter</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -33,8 +33,40 @@
                 <paramdef>GLint <parameter>param</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
+            <!-- Vector commands -->
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexParameterfv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLfloat * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexParameteriv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexParameterIiv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexParameterIuiv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLuint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -73,91 +105,21 @@
                     <constant>GL_TEXTURE_WRAP_T</constant>, or
                     <constant>GL_TEXTURE_WRAP_R</constant>.
                 </para>
+                <para>
+                    For the vector commands
+                    (<function>glTexParameter*v</function>),
+                    <parameter>pname</parameter> can also be one of
+                    <constant>GL_TEXTURE_BORDER_COLOR</constant> or
+                    <constant>GL_TEXTURE_SWIZZLE_RGBA</constant>.
+                </para>
             </listitem>
         </varlistentry>
         <varlistentry>
             <term><parameter>param</parameter></term>
             <listitem>
                 <para>
-                    Specifies the value of <parameter>pname</parameter>.
-                </para>
-            </listitem>
-        </varlistentry>
-        </variablelist>
-    </refsect1>
-    <refsynopsisdiv><title>C Specification</title>
-        <funcsynopsis>
-            <funcprototype>
-                <funcdef>void <function>glTexParameterfv</function></funcdef>
-                <paramdef>GLenum <parameter>target</parameter></paramdef>
-                <paramdef>GLenum <parameter>pname</parameter></paramdef>
-                <paramdef>const GLfloat * <parameter>params</parameter></paramdef>
-            </funcprototype>
-        </funcsynopsis>
-        <funcsynopsis>
-            <funcprototype>
-                <funcdef>void <function>glTexParameteriv</function></funcdef>
-                <paramdef>GLenum <parameter>target</parameter></paramdef>
-                <paramdef>GLenum <parameter>pname</parameter></paramdef>
-                <paramdef>const GLint * <parameter>params</parameter></paramdef>
-            </funcprototype>
-        </funcsynopsis>
-        <funcsynopsis>
-            <funcprototype>
-                <funcdef>void <function>glTexParameterIiv</function></funcdef>
-                <paramdef>GLenum <parameter>target</parameter></paramdef>
-                <paramdef>GLenum <parameter>pname</parameter></paramdef>
-                <paramdef>const GLint * <parameter>params</parameter></paramdef>
-            </funcprototype>
-        </funcsynopsis>
-        <funcsynopsis>
-            <funcprototype>
-                <funcdef>void <function>glTexParameterIuiv</function></funcdef>
-                <paramdef>GLenum <parameter>target</parameter></paramdef>
-                <paramdef>GLenum <parameter>pname</parameter></paramdef>
-                <paramdef>const GLuint * <parameter>params</parameter></paramdef>
-            </funcprototype>
-        </funcsynopsis>
-    </refsynopsisdiv>
-    <refsect1 id="parameters2"><title>Parameters</title>
-        <variablelist>
-        <varlistentry>
-            <term><parameter>target</parameter></term>
-            <listitem>
-                <para>
-                    Specifies the target texture,
-                    which must be either <constant>GL_TEXTURE_1D</constant>, <constant>GL_TEXTURE_2D</constant>,
-                    <constant>GL_TEXTURE_3D</constant>, <constant>GL_TEXTURE_1D_ARRAY</constant>,
-                    <constant>GL_TEXTURE_2D_ARRAY</constant>, <constant>GL_TEXTURE_RECTANGLE</constant>,
-                    or <constant>GL_TEXTURE_CUBE_MAP</constant>.
-                </para>
-            </listitem>
-        </varlistentry>
-        <varlistentry>
-            <term><parameter>pname</parameter></term>
-            <listitem>
-                <para>
-                    Specifies the symbolic name of a texture parameter.
-                    <parameter>pname</parameter> can be one of the following:
-                    <constant>GL_DEPTH_STENCIL_TEXTURE_MODE</constant>,
-                    <constant>GL_TEXTURE_BASE_LEVEL</constant>,
-                    <constant>GL_TEXTURE_BORDER_COLOR</constant>,
-                    <constant>GL_TEXTURE_COMPARE_FUNC</constant>,
-                    <constant>GL_TEXTURE_COMPARE_MODE</constant>,
-                    <constant>GL_TEXTURE_LOD_BIAS</constant>,
-                    <constant>GL_TEXTURE_MIN_FILTER</constant>,
-                    <constant>GL_TEXTURE_MAG_FILTER</constant>,
-                    <constant>GL_TEXTURE_MIN_LOD</constant>,
-                    <constant>GL_TEXTURE_MAX_LOD</constant>,
-                    <constant>GL_TEXTURE_MAX_LEVEL</constant>,
-                    <constant>GL_TEXTURE_SWIZZLE_R</constant>,
-                    <constant>GL_TEXTURE_SWIZZLE_G</constant>,
-                    <constant>GL_TEXTURE_SWIZZLE_B</constant>,
-                    <constant>GL_TEXTURE_SWIZZLE_A</constant>,
-                    <constant>GL_TEXTURE_SWIZZLE_RGBA</constant>,
-                    <constant>GL_TEXTURE_WRAP_S</constant>,
-                    <constant>GL_TEXTURE_WRAP_T</constant>, or
-                    <constant>GL_TEXTURE_WRAP_R</constant>.
+                    For the scalar commands, specifies the value of
+                    <parameter>pname</parameter>.
                 </para>
             </listitem>
         </varlistentry>
@@ -165,8 +127,9 @@
             <term><parameter>params</parameter></term>
             <listitem>
                 <para>
-                    Specifies a pointer to an array where the value or values of <parameter>pname</parameter>
-                    are stored.
+                    For the vector commands, specifies a pointer to an array
+                    where the value or values of
+                    <parameter>pname</parameter> are stored.
                 </para>
             </listitem>
         </varlistentry>
@@ -226,7 +189,13 @@
                             <mml:mrow>
                                 <mml:mfenced open="(" close=")">
                                     <mml:mrow>
-                                        0.0, 0.0, 0.0, 0.0
+                                        <mml:mn>0.0</mml:mn>
+                                        <mml:mo>,</mml:mo>
+                                        <mml:mn>0.0</mml:mn>
+                                        <mml:mo>,</mml:mo>
+                                        <mml:mn>0.0</mml:mn>
+                                        <mml:mo>,</mml:mo>
+                                        <mml:mn>0.0</mml:mn>
                                     </mml:mrow>
                                 </mml:mfenced>
                             </mml:mrow>
@@ -243,15 +212,15 @@
                                 <mml:mo>=</mml:mo>
                                 <mml:mfrac>
                                     <mml:mrow>
-                                        <mml:msub><mml:mn>2</mml:mn>
+                                        <mml:mn>2</mml:mn>
                                         <mml:mi mathvariant="italic">c</mml:mi>
-                                        </mml:msub>
                                         <mml:mo>+</mml:mo>
                                         <mml:mn>1</mml:mn>
                                     </mml:mrow>
                                     <mml:mrow>
-                                        <mml:msup><mml:mn>2</mml:mn>
-                                        <mml:mi mathvariant="italic">b</mml:mi>
+                                        <mml:msup>
+                                            <mml:mn>2</mml:mn>
+                                            <mml:mi mathvariant="italic">b</mml:mi>
                                         </mml:msup>
                                         <mml:mo>-</mml:mo>
                                         <mml:mn>1</mml:mn>
@@ -279,7 +248,7 @@
                                         Texture Comparison Function
                                         </emphasis></entry>
                                         <entry rowsep="1" align="left"><emphasis role="bold">
-                                        Computed result 
+                                        Computed result
                                         </emphasis></entry>
                                     </row>
                                 </thead>
@@ -289,7 +258,7 @@
                                         <constant>GL_LEQUAL</constant>
                                         </entry>
                                         <entry align="left">
-                                            <informalequation><mml:math>
+                                            <inlineequation><mml:math>
                                                 <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
                                                 <mml:mrow>
                                                     <mml:mi mathvariant="italic">result</mml:mi>
@@ -332,7 +301,7 @@
                                                         </mml:mrow>
                                                     </mml:mfenced>
                                                 </mml:mrow>
-                                            </mml:math></informalequation>
+                                            </mml:math></inlineequation>
                                         </entry>
                                     </row>
                                     <row>
@@ -340,7 +309,7 @@
                                         <constant>GL_GEQUAL</constant>
                                         </entry>
                                         <entry align="left">
-                                            <informalequation><mml:math>
+                                            <inlineequation><mml:math>
                                                 <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
                                                 <mml:mrow>
                                                     <mml:mi mathvariant="italic">result</mml:mi>
@@ -383,7 +352,7 @@
                                                         </mml:mrow>
                                                     </mml:mfenced>
                                                 </mml:mrow>
-                                            </mml:math></informalequation>
+                                            </mml:math></inlineequation>
                                         </entry>
                                     </row>
                                     <row>
@@ -391,7 +360,7 @@
                                         <constant>GL_LESS</constant>
                                         </entry>
                                         <entry align="left">
-                                            <informalequation><mml:math>
+                                            <inlineequation><mml:math>
                                                 <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
                                                 <mml:mrow>
                                                     <mml:mi mathvariant="italic">result</mml:mi>
@@ -434,7 +403,7 @@
                                                         </mml:mrow>
                                                     </mml:mfenced>
                                                 </mml:mrow>
-                                            </mml:math></informalequation>
+                                            </mml:math></inlineequation>
                                         </entry>
                                     </row>
                                     <row>
@@ -442,7 +411,7 @@
                                         <constant>GL_GREATER</constant>
                                         </entry>
                                         <entry align="left">
-                                            <informalequation><mml:math>
+                                            <inlineequation><mml:math>
                                                 <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
                                                 <mml:mrow>
                                                     <mml:mi mathvariant="italic">result</mml:mi>
@@ -485,7 +454,7 @@
                                                         </mml:mrow>
                                                     </mml:mfenced>
                                                 </mml:mrow>
-                                            </mml:math></informalequation>
+                                            </mml:math></inlineequation>
                                         </entry>
                                     </row>
                                     <row>
@@ -493,7 +462,7 @@
                                         <constant>GL_EQUAL</constant>
                                         </entry>
                                         <entry align="left">
-                                            <informalequation><mml:math>
+                                            <inlineequation><mml:math>
                                                 <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
                                                 <mml:mrow>
                                                     <mml:mi mathvariant="italic">result</mml:mi>
@@ -536,7 +505,7 @@
                                                         </mml:mrow>
                                                     </mml:mfenced>
                                                 </mml:mrow>
-                                            </mml:math></informalequation>
+                                            </mml:math></inlineequation>
                                         </entry>
                                     </row>
                                     <row>
@@ -544,7 +513,7 @@
                                         <constant>GL_NOTEQUAL</constant>
                                         </entry>
                                         <entry align="left">
-                                            <informalequation><mml:math>
+                                            <inlineequation><mml:math>
                                                 <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
                                                 <mml:mrow>
                                                     <mml:mi mathvariant="italic">result</mml:mi>
@@ -587,7 +556,7 @@
                                                         </mml:mrow>
                                                     </mml:mfenced>
                                                 </mml:mrow>
-                                            </mml:math></informalequation>
+                                            </mml:math></inlineequation>
                                         </entry>
                                     </row>
                                     <row>
@@ -595,7 +564,7 @@
                                         <constant>GL_ALWAYS</constant>
                                         </entry>
                                         <entry align="left">
-                                            <informalequation>
+                                            <inlineequation>
                                                 <mml:math>
                                                 <mml:mrow>
                                                     <mml:mi mathvariant="italic">result</mml:mi>
@@ -603,7 +572,7 @@
                                                     <mml:mi>1.0</mml:mi>
                                                 </mml:mrow>
                                                 </mml:math>
-                                            </informalequation>
+                                            </inlineequation>
                                         </entry>
                                     </row>
                                     <row>
@@ -611,7 +580,7 @@
                                         <constant>GL_NEVER</constant>
                                         </entry>
                                         <entry align="left">
-                                            <informalequation>
+                                            <inlineequation>
                                                 <mml:math>
                                                 <mml:mrow>
                                                     <mml:mi mathvariant="italic">result</mml:mi>
@@ -619,14 +588,14 @@
                                                     <mml:mi>0.0</mml:mi>
                                                 </mml:mrow>
                                                 </mml:math>
-                                            </informalequation>
+                                            </inlineequation>
                                         </entry>
                                     </row>
                                 </tbody>
                             </tgroup>
                         </informaltable>
                         where <inlineequation><mml:math><mml:mi mathvariant="italic">r</mml:mi></mml:math></inlineequation>
-                        is the current interpolated texture coordinate, and 
+                        is the current interpolated texture coordinate, and
                         <inlineequation><mml:math>
                             <!-- eqn: D sub t: -->
                             <mml:msub><mml:mi mathvariant="italic">D</mml:mi>
@@ -652,7 +621,7 @@
                                 <term><constant>GL_COMPARE_REF_TO_TEXTURE</constant></term>
                                 <listitem>
                                     <para>
-                                        Specifies that the interpolated and clamped 
+                                        Specifies that the interpolated and clamped
                                         <inlineequation><mml:math><mml:mi mathvariant="italic">r</mml:mi></mml:math></inlineequation>
                                         texture coordinate should
                                         be compared to the value in the currently bound depth texture.  See the
@@ -685,17 +654,19 @@
                             <mml:mfenced open="[" close="]">
                                 <mml:mfenced open="" close="">
                                     <mml:mrow>
-                                        -
-                                        <mml:msub><mml:mi mathvariant="italic">bias</mml:mi>
-                                        <mml:mi mathvariant="italic">max</mml:mi>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:msub>
+                                            <mml:mi mathvariant="italic">bias</mml:mi>
+                                            <mml:mi mathvariant="italic">max</mml:mi>
                                         </mml:msub>
                                     </mml:mrow>
                                 </mml:mfenced>
                                 <mml:mrow>
                                     <mml:mfenced open="" close="">
                                     <mml:mrow>
-                                        <mml:msub><mml:mi mathvariant="italic">bias</mml:mi>
-                                        <mml:mi mathvariant="italic">max</mml:mi>
+                                        <mml:msub>
+                                            <mml:mi mathvariant="italic">bias</mml:mi>
+                                            <mml:mi mathvariant="italic">max</mml:mi>
                                         </mml:msub>
                                     </mml:mrow>
                                     </mml:mfenced>
@@ -728,7 +699,7 @@
                     <para>
                         A mipmap is an ordered set of arrays representing the same image
                         at progressively lower resolutions.
-                        If the texture has dimensions 
+                        If the texture has dimensions
                         <inlineequation><mml:math>
                             <!-- eqn: 2 sup n  times  2 sup m: -->
                             <mml:mrow>
@@ -759,7 +730,7 @@
                         </mml:math></inlineequation>
                         mipmaps.
                         The first mipmap is the original texture,
-                        with dimensions 
+                        with dimensions
                         <inlineequation><mml:math>
                             <!-- eqn: 2 sup n  times  2 sup m: -->
                             <mml:mrow>
@@ -772,7 +743,7 @@
                                 </mml:msup>
                             </mml:mrow>
                         </mml:math></inlineequation>.
-                        Each subsequent mipmap has dimensions 
+                        Each subsequent mipmap has dimensions
                         <inlineequation><mml:math>
                             <!-- eqn: 2 sup { k - 1 }  times  2 sup { l - 1 }: -->
                             <mml:mrow>
@@ -797,7 +768,7 @@
                                 </mml:msup>
                             </mml:mrow>
                         </mml:math></inlineequation>,
-                        where 
+                        where
                         <inlineequation><mml:math>
                             <!-- eqn: 2 sup k  times  2 sup l: -->
                             <mml:mrow>
@@ -811,7 +782,7 @@
                             </mml:mrow>
                         </mml:math></inlineequation>
                         are the dimensions of the previous mipmap,
-                        until either 
+                        until either
                         <inlineequation><mml:math>
                             <!-- eqn: k  =  0: -->
                             <mml:mrow>
@@ -820,7 +791,7 @@
                                 <mml:mn>0</mml:mn>
                             </mml:mrow>
                         </mml:math></inlineequation>
-                        or 
+                        or
                         <inlineequation><mml:math>
                             <!-- eqn: l = 0: -->
                             <mml:mrow>
@@ -830,7 +801,7 @@
                             </mml:mrow>
                         </mml:math></inlineequation>.
                         At that point,
-                        subsequent mipmaps have dimension 
+                        subsequent mipmaps have dimension
                         <inlineequation><mml:math>
                             <!-- eqn: 1  times  2 sup { l - 1 }: -->
                             <mml:mrow>
@@ -847,7 +818,7 @@
                                 </mml:msup>
                             </mml:mrow>
                         </mml:math></inlineequation>
-                        or 
+                        or
                         <inlineequation><mml:math>
                             <!-- eqn: 2 sup { k - 1}  times  1: -->
                             <mml:mrow>
@@ -865,7 +836,7 @@
                             </mml:mrow>
                         </mml:math></inlineequation>
                         until the final mipmap,
-                        which has dimension 
+                        which has dimension
                         <inlineequation><mml:math>
                             <!-- eqn: 1  times  1: -->
                             <mml:mrow>
@@ -879,7 +850,7 @@
                         <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>, or <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>
                         with the <emphasis>level</emphasis> argument indicating the order of the mipmaps.
                         Level 0 is the original texture;
-                        level 
+                        level
                         <inlineequation><mml:math>
                             <!-- eqn: max ( n, m ): -->
                             <mml:mrow>
@@ -891,7 +862,7 @@
                                 </mml:mfenced>
                             </mml:mrow>
                         </mml:math></inlineequation>
-                        is the final 
+                        is the final
                         <inlineequation><mml:math>
                             <!-- eqn: 1  times  1: -->
                             <mml:mrow>
@@ -1029,8 +1000,6 @@
                                 </listitem>
                             </varlistentry>
                         </variablelist>
-                        <para>
-                        </para>
                     </para>
                 </listitem>
             </varlistentry>
@@ -1185,14 +1154,14 @@
                 <term><constant>GL_TEXTURE_WRAP_S</constant></term>
                 <listitem>
                     <para>
-                        Sets the wrap parameter for texture coordinate 
+                        Sets the wrap parameter for texture coordinate
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
                         to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_CLAMP_TO_BORDER</constant>,
                         <constant>GL_MIRRORED_REPEAT</constant>,
-                        <constant>GL_REPEAT</constant>, or <constant>GL_MIRROR_CLAMP_TO_EDGE</constant>. <constant>GL_CLAMP_TO_EDGE</constant> causes 
+                        <constant>GL_REPEAT</constant>, or <constant>GL_MIRROR_CLAMP_TO_EDGE</constant>. <constant>GL_CLAMP_TO_EDGE</constant> causes
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
                         coordinates to be clamped to the
-                        range 
+                        range
                         <inlineequation><mml:math>
                             <!-- eqn: left [ {1 over 2N}, 1 - {1 over 2N} right ]: -->
                             <mml:mfenced open="[" close="]">
@@ -1200,7 +1169,9 @@
                                     <mml:mrow>
                                         <mml:mfrac>
                                             <mml:mn>1</mml:mn>
-                                            <mml:mn>2<mml:mi mathvariant="italic">N</mml:mi></mml:mn>
+                                            <mml:mrow>
+                                                <mml:mn>2</mml:mn><mml:mi mathvariant="italic">N</mml:mi>
+                                            </mml:mrow>
                                         </mml:mfrac>
                                     </mml:mrow>
                                 </mml:mfenced>
@@ -1211,14 +1182,16 @@
                                         <mml:mrow>
                                             <mml:mfrac>
                                                 <mml:mn>1</mml:mn>
-                                                <mml:mn>2<mml:mi mathvariant="italic">N</mml:mi></mml:mn>
+                                                <mml:mrow>
+                                                    <mml:mn>2</mml:mn><mml:mi mathvariant="italic">N</mml:mi>
+                                                </mml:mrow>
                                             </mml:mfrac>
                                         </mml:mrow>
                                     </mml:mfenced>
                                 </mml:mrow>
                             </mml:mfenced>
                         </mml:math></inlineequation>,
-                        where 
+                        where
                         <inlineequation><mml:math><mml:mi mathvariant="italic">N</mml:mi></mml:math></inlineequation>
                         is the size
                         of the texture in the direction of clamping.
@@ -1226,22 +1199,22 @@
                         However, in cases where clamping would have occurred in <constant>GL_CLAMP_TO_EDGE</constant> mode, the fetched texel data
                         is substituted with the values specified by <constant>GL_TEXTURE_BORDER_COLOR</constant>.
                         <constant>GL_REPEAT</constant> causes the
-                        integer part of the 
+                        integer part of the
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
                         coordinate to be ignored; the GL uses only the
                         fractional part, thereby creating a repeating pattern.
-                        <constant>GL_MIRRORED_REPEAT</constant> causes the 
+                        <constant>GL_MIRRORED_REPEAT</constant> causes the
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
                         coordinate to be set to the
-                        fractional part of the texture coordinate if the integer part of 
+                        fractional part of the texture coordinate if the integer part of
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
                         is
-                        even; if the integer part of 
+                        even; if the integer part of
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
-                        is odd, then the 
+                        is odd, then the
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
                         texture coordinate is
-                        set to 
+                        set to
                         <inlineequation><mml:math>
                             <!-- eqn: 1 - frac(s): -->
                             <mml:mrow>
@@ -1256,7 +1229,7 @@
                                 </mml:mrow>
                             </mml:mrow>
                         </mml:math></inlineequation>,
-                        where 
+                        where
                         <inlineequation><mml:math>
                             <!-- eqn: frac(s): -->
                             <mml:mrow>
@@ -1284,7 +1257,7 @@
                 <term><constant>GL_TEXTURE_WRAP_T</constant></term>
                 <listitem>
                     <para>
-                        Sets the wrap parameter for texture coordinate 
+                        Sets the wrap parameter for texture coordinate
                         <inlineequation><mml:math><mml:mi mathvariant="italic">t</mml:mi></mml:math></inlineequation>
                         to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_CLAMP_TO_BORDER</constant>,
                         <constant>GL_MIRRORED_REPEAT</constant>, <constant>GL_REPEAT</constant>, or
@@ -1301,7 +1274,7 @@
                 <term><constant>GL_TEXTURE_WRAP_R</constant></term>
                 <listitem>
                     <para>
-                        Sets the wrap parameter for texture coordinate 
+                        Sets the wrap parameter for texture coordinate
                         <inlineequation><mml:math><mml:mi mathvariant="italic">r</mml:mi></mml:math></inlineequation>
                         to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_CLAMP_TO_BORDER</constant>,
                         <constant>GL_MIRRORED_REPEAT</constant>, <constant>GL_REPEAT</constant>, or

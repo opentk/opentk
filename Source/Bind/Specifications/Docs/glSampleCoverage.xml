@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glSampleCoverage">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glSampleCoverage</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -25,7 +25,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -33,7 +32,7 @@
             <listitem>
                 <para>
                     Specify a single floating-point sample coverage value.  The value is
-                    clamped to the range 
+                    clamped to the range
                     <inlineequation><mml:math>
                         <!-- eqn: [0 ,1]: -->
                         <mml:mfenced open="[" close="]">

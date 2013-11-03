@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glReadPixels">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glReadPixels</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -30,7 +30,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -129,7 +128,7 @@
             but not all of the parameters specified by these three commands.
         </para>
         <para>
-            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_PACK_BUFFER</constant> target 
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_PACK_BUFFER</constant> target
             (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a block of pixels is
             requested, <parameter>data</parameter> is treated as a byte offset into the buffer object's data store
             rather than a pointer to client memory.
@@ -151,7 +150,7 @@
                     </mml:mrow>
                 </mml:mfenced>
             </mml:math></inlineequation>
-            for 
+            for
             <inlineequation><mml:math>
                 <!-- eqn: 0 <= i < width: -->
                 <mml:mrow>
@@ -173,9 +172,9 @@
                     <mml:mi mathvariant="italic">height</mml:mi>
                 </mml:mrow>
             </mml:math></inlineequation>.
-            This pixel is said to be the 
+            This pixel is said to be the
             <inlineequation><mml:math><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>th
-            pixel in the 
+            pixel in the
             <inlineequation><mml:math><mml:mi mathvariant="italic">j</mml:mi></mml:math></inlineequation>th
             row.
             Pixels are returned in row order from the lowest to the highest row,
@@ -222,38 +221,15 @@
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term><constant>GL_RED</constant></term>
+                <term><constant>GL_RED</constant>,
+                      <constant>GL_GREEN</constant>,
+                      <constant>GL_BLUE</constant>,
+                      <constant>GL_RGB</constant>,
+                      <constant>GL_BGR</constant>,
+                      <constant>GL_RGBA</constant>,
+                      <constant>GL_BGRA</constant></term>
                 <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_GREEN</constant></term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_BLUE</constant></term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_RGB</constant></term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_BGR</constant></term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_RGBA</constant></term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_BGRA</constant></term>
-                <listitem>
+                    <para>Color values are taken from the color buffer.</para>
                 </listitem>
             </varlistentry>
         </variablelist>
@@ -1054,12 +1030,12 @@
             <constant>GL_RED</constant>,
             <constant>GL_GREEN</constant>, or
             <constant>GL_BLUE</constant>,
-            a single value is returned and the data for the 
+            a single value is returned and the data for the
             <inlineequation><mml:math><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>th
-            pixel in the 
+            pixel in the
             <inlineequation><mml:math><mml:mi mathvariant="italic">j</mml:mi></mml:math></inlineequation>th
             row
-            is placed in location 
+            is placed in location
             <inlineequation><mml:math>
                 <!-- eqn: (j) width + i: -->
                 <mml:mrow>
@@ -1142,12 +1118,12 @@
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
-            <constant>GL_PIXEL_PACK_BUFFER</constant> target and the data would be packed to the buffer 
+            <constant>GL_PIXEL_PACK_BUFFER</constant> target and the data would be packed to the buffer
             object such that the memory writes required would exceed the data store size.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
-            <constant>GL_PIXEL_PACK_BUFFER</constant> target and <parameter>data</parameter> is not evenly divisible 
+            <constant>GL_PIXEL_PACK_BUFFER</constant> target and <parameter>data</parameter> is not evenly divisible
             into the number of bytes needed to store in memory a datum indicated by <parameter>type</parameter>.
         </para>
         <para>

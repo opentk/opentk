@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glCopyTexSubImage2D">
+    <refentryinfo>
+        <copyright>
+            <year>2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>2013</year>
-                <holder>Khronos Group</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glCopyTexSubImage2D</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -31,9 +31,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
-    <para>
-    </para>
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -124,7 +121,7 @@
             </mml:math></inlineequation>
             and with
             width <parameter>width</parameter> and height <parameter>height</parameter> replaces the portion of the
-            texture array with x indices <parameter>xoffset</parameter> through 
+            texture array with x indices <parameter>xoffset</parameter> through
             <inlineequation><mml:math>
                 <!-- eqn: xoffset  +  width  -  1: -->
                 <mml:mrow>
@@ -135,7 +132,7 @@
                     <mml:mn>1</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            inclusive, and y indices <parameter>yoffset</parameter> through 
+            inclusive, and y indices <parameter>yoffset</parameter> through
             <inlineequation><mml:math>
                 <!-- eqn: yoffset  +  height  -  1: -->
                 <mml:mrow>
@@ -152,7 +149,7 @@
             The pixels in the rectangle are processed exactly as if
             <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry> had been called, but the process stops just before
             final conversion.
-            At this point, all pixel component values are clamped to the range 
+            At this point, all pixel component values are clamped to the range
             <inlineequation><mml:math>
                 <!-- eqn: [0,1]: -->
                 <mml:mfenced open="[" close="]">
@@ -209,7 +206,7 @@
             <constant>GL_INVALID_VALUE</constant> is generated if <parameter>level</parameter> is less than 0.
         </para>
         <para>
-            <constant>GL_INVALID_VALUE</constant> may be generated if 
+            <constant>GL_INVALID_VALUE</constant> may be generated if
             <inlineequation><mml:math>
                 <!-- eqn: level  >  log sub 2(max): -->
                 <mml:mrow>
@@ -226,12 +223,12 @@
                     </mml:mrow>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            where 
+            where
             <inlineequation><mml:math><mml:mi mathvariant="italic">max</mml:mi></mml:math></inlineequation>
             is the returned value of <constant>GL_MAX_TEXTURE_SIZE</constant>.
         </para>
         <para>
-            <constant>GL_INVALID_VALUE</constant> is generated if 
+            <constant>GL_INVALID_VALUE</constant> is generated if
             <inlineequation><mml:math>
                 <!-- eqn: xoffset  <  -b: -->
                 <mml:mrow>
@@ -277,7 +274,7 @@
                     <mml:mn>0</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            where 
+            where
             <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>
             is the <constant>GL_TEXTURE_WIDTH</constant>,
             <inlineequation><mml:math><mml:mi mathvariant="italic">h</mml:mi></mml:math></inlineequation>

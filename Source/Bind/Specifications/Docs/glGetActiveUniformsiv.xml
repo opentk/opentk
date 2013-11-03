@@ -2,13 +2,19 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
           "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glGetActiveUniformsiv">
+    <refentryinfo>
+        <copyright>
+            <year>2011-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-    <refentrytitle>glGetActiveUniformsiv</refentrytitle>
-    <manvolnum>3G</manvolnum>
+        <refentrytitle>glGetActiveUniformsiv</refentrytitle>
+        <manvolnum>3G</manvolnum>
     </refmeta>
     <refnamediv>
-    <refname>glGetActiveUniformsiv</refname>
-    <refpurpose>Returns information about several active uniform variables for the specified program object</refpurpose>
+        <refname>glGetActiveUniformsiv</refname>
+        <refpurpose>Returns information about several active uniform variables for the specified program object</refpurpose>
     </refnamediv>
     <refsynopsisdiv><title>C Specification</title>
     <funcsynopsis>
@@ -33,46 +39,59 @@
         <varlistentry>
         <term><parameter>uniformCount</parameter></term>
         <listitem>
-            <para>Specifies both the number of elements in the array of indices <parameter>uniformIndices</parameter> and the
-            number of parameters written to <parameter>params</parameter> upon successful return.</para>
+            <para>Specifies both the number of elements in the array of
+            indices <parameter>uniformIndices</parameter> and the number of
+            parameters written to <parameter>params</parameter> upon
+            successful return.</para>
         </listitem>
         </varlistentry>
         <varlistentry>
         <term><parameter>uniformIndices</parameter></term>
         <listitem>
-            <para>Specifies the address of an array of <parameter>uniformCount</parameter> integers containing the indices of
-            uniforms within <parameter>program</parameter> whose parameter <parameter>pname</parameter> pname.</para>
+            <para>Specifies the address of an array of
+            <parameter>uniformCount</parameter> integers containing the
+            indices of uniforms within <parameter>program</parameter> whose
+            parameter <parameter>pname</parameter> should be queried.</para>
         </listitem>
         </varlistentry>
         <varlistentry>
         <term><parameter>pname</parameter></term>
         <listitem>
-            <para>Specifies the property of the each uniform in <parameter>uniformIndices</parameter> that should be
-            written into the corresponding element of <parameter>params</parameter>.</para>
+            <para>Specifies the property of each uniform in
+            <parameter>uniformIndices</parameter> that should be written
+            into the corresponding element of
+            <parameter>params</parameter>.</para>
         </listitem>
         </varlistentry>
         <varlistentry>
         <term><parameter>params</parameter></term>
         <listitem>
-            <para>Specifies the address of an array of <parameter>uniformCount</parameter> integers which are to
-            receive the value of <parameter>pname</parameter> for each uniform in <parameter>uniformIndices</parameter>.</para>
+            <para>Specifies the address of an array of
+            <parameter>uniformCount</parameter> integers which are to
+            receive the value of <parameter>pname</parameter> for each
+            uniform in <parameter>uniformIndices</parameter>.</para>
         </listitem>
         </varlistentry>
     </variablelist>
     </refsect1>
     <refsect1 id="description"><title>Description</title>
         <para>
-            <function>glGetActiveUniformsiv</function> queries the value of the parameter named <parameter>pname</parameter>
-            for each of the uniforms within <parameter>program</parameter> whose indices are specified in the array of
-            <parameter>uniformCount</parameter> unsigned integers <parameter>uniformIndices</parameter>. Upon success,
-            the value of the parameter for each uniform is written into the corresponding entry in the array whose
-            address is given in <parameter>params</parameter>. If an error is generated, nothing is written into
-            <parameter>params</parameter>.
+            <function>glGetActiveUniformsiv</function> queries the value of
+            the parameter named <parameter>pname</parameter> for each of the
+            uniforms within <parameter>program</parameter> whose indices are
+            specified in the array of <parameter>uniformCount</parameter>
+            unsigned integers <parameter>uniformIndices</parameter>. Upon
+            success, the value of the parameter for each uniform is written
+            into the corresponding entry in the array whose address is given
+            in <parameter>params</parameter>. If an error is generated,
+            nothing is written into <parameter>params</parameter>.
         </para>
         <para>
-            If <parameter>pname</parameter> is <constant>GL_UNIFORM_TYPE</constant>, then an array identifying the types
-            of uniforms specified by the corresponding array of <parameter>uniformIndices</parameter> is returned. The
-            returned types can be any of the values from the following table:
+            If <parameter>pname</parameter> is
+            <constant>GL_UNIFORM_TYPE</constant>, then an array identifying
+            the types of uniforms specified by the corresponding array of
+            <parameter>uniformIndices</parameter> is returned. The returned
+            types can be any of the values from the following table:
         <informaltable frame="topbot">
             <tgroup cols="2" align="left">
                 <colspec colwidth="1.1*" />
@@ -796,8 +815,8 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2011 Khronos Group
-            This material may be distributed subject to the terms and conditions set forth in 
+            Copyright <trademark class="copyright"></trademark> 2011-2013 Khronos Group
+            This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
         </para>

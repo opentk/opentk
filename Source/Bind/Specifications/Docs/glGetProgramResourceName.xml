@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glGetProgramResourceName">
+    <refentryinfo>
+        <copyright>
+            <year>2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>2012</year>
-                <holder>Khronos Group</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glGetProgramResourceName</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -132,11 +132,11 @@
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term><constant>GL_VERTEX_SUBROUTINE</constant></term>,
-                <term><constant>GL_TESS_CONTROL_SUBROUTINE</constant></term>,
-                <term><constant>GL_TESS_EVALUATION_SUBROUTINE</constant></term>,
-                <term><constant>GL_GEOMETRY_SUBROUTINE</constant></term>,
-                <term><constant>GL_FRAGMENT_SUBROUTINE</constant></term>,
+                <term><constant>GL_VERTEX_SUBROUTINE</constant></term>
+                <term><constant>GL_TESS_CONTROL_SUBROUTINE</constant></term>
+                <term><constant>GL_TESS_EVALUATION_SUBROUTINE</constant></term>
+                <term><constant>GL_GEOMETRY_SUBROUTINE</constant></term>
+                <term><constant>GL_FRAGMENT_SUBROUTINE</constant></term>
                 <term><constant>GL_COMPUTE_SUBROUTINE</constant></term>
                 <listitem>
                     <para>
@@ -146,11 +146,11 @@
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term><constant>GL_VERTEX_SUBROUTINE_UNIFORM</constant></term>,
-                <term><constant>GL_TESS_CONTROL_SUBROUTINE_UNIFORM</constant></term>,
-                <term><constant>GL_TESS_EVALUATION_SUBROUTINE_UNIFORM</constant></term>,
-                <term><constant>GL_GEOMETRY_SUBROUTINE_UNIFORM</constant></term>,
-                <term><constant>GL_FRAGMENT_SUBROUTINE_UNIFORM</constant></term>,
+                <term><constant>GL_VERTEX_SUBROUTINE_UNIFORM</constant></term>
+                <term><constant>GL_TESS_CONTROL_SUBROUTINE_UNIFORM</constant></term>
+                <term><constant>GL_TESS_EVALUATION_SUBROUTINE_UNIFORM</constant></term>
+                <term><constant>GL_GEOMETRY_SUBROUTINE_UNIFORM</constant></term>
+                <term><constant>GL_FRAGMENT_SUBROUTINE_UNIFORM</constant></term>
                 <term><constant>GL_COMPUTE_SUBROUTINE_UNIFORM</constant></term>
                 <listitem>
                     <para>
@@ -231,7 +231,7 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2012 Khronos Group. 
+            Copyright <trademark class="copyright"></trademark> 2013 Khronos Group. 
             This material may be distributed subject to the terms and conditions set forth in 
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.

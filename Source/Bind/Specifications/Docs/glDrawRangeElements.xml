@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glDrawRangeElements">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glDrawRangeElements</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -29,7 +29,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -109,7 +108,7 @@
             index data,
             which may be queried by calling <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument
             <constant>GL_MAX_ELEMENTS_VERTICES</constant> and <constant>GL_MAX_ELEMENTS_INDICES</constant>.
-            If 
+            If
             <inlineequation><mml:math>
                 <!-- eqn: end  -  start  +  1: -->
                 <mml:mrow>
@@ -140,7 +139,7 @@
             enabled array, starting at <parameter>start</parameter> to construct a sequence of
             geometric primitives. <parameter>mode</parameter> specifies what kind of primitives are
             constructed, and how the array elements construct these primitives. If
-            more than one array is enabled, each is used. 
+            more than one array is enabled, each is used.
         </para>
         <para>
             Vertex attributes that are modified by <function>glDrawRangeElements</function> have an
@@ -159,7 +158,7 @@
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
-            It is an error for indices to lie outside the range 
+            It is an error for indices to lie outside the range
             <inlineequation><mml:math>
                 <!-- eqn: [start, end]: -->
                 <mml:mfenced open="[" close="]">
@@ -177,7 +176,7 @@
             <constant>GL_INVALID_VALUE</constant> is generated if <parameter>count</parameter> is negative.
         </para>
         <para>
-            <constant>GL_INVALID_VALUE</constant> is generated if 
+            <constant>GL_INVALID_VALUE</constant> is generated if
             <inlineequation><mml:math>
                 <!-- eqn: end < start: -->
                 <mml:mrow>

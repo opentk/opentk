@@ -440,7 +440,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void GenVertexArraysOES(Int32 n, [OutAttribute] UInt32* arrays);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetBooleanv", ExactSpelling = true)]
-            internal extern static unsafe void GetBooleanv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] bool* @params);
+            internal extern static unsafe void GetBooleanv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] bool* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetBufferParameteriv", ExactSpelling = true)]
             internal extern static unsafe void GetBufferParameteriv(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, [OutAttribute] Int32* @params);
@@ -482,7 +482,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void GetFixedvOES(OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFloatv", ExactSpelling = true)]
-            internal extern static unsafe void GetFloatv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Single* @params);
+            internal extern static unsafe void GetFloatv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Single* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFramebufferAttachmentParameterivOES", ExactSpelling = true)]
             internal extern static unsafe void GetFramebufferAttachmentParameterivOES(OpenTK.Graphics.ES11.OesFramebufferObject target, OpenTK.Graphics.ES11.OesFramebufferObject attachment, OpenTK.Graphics.ES11.OesFramebufferObject pname, [OutAttribute] Int32* @params);
@@ -497,7 +497,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void GetInteger64vAPPLE(OpenTK.Graphics.ES11.AppleSync pname, [OutAttribute] Int64* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetIntegerv", ExactSpelling = true)]
-            internal extern static unsafe void GetIntegerv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetIntegerv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Int32* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetLightfv", ExactSpelling = true)]
             internal extern static unsafe void GetLightfv(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [OutAttribute] Single* @params);

@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glViewport">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glViewport</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -27,7 +27,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -57,13 +56,13 @@
     </refsect1>
     <refsect1 id="description"><title>Description</title>
         <para>
-            <function>glViewport</function> specifies the affine transformation of 
+            <function>glViewport</function> specifies the affine transformation of
             <inlineequation><mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>
-            and 
+            and
             <inlineequation><mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>
             from
             normalized device coordinates to window coordinates.
-            Let 
+            Let
             <inlineequation><mml:math>
                 <!-- eqn: (x sub nd, y sub nd):-->
                 <mml:mfenced open="(" close=")">
@@ -76,7 +75,7 @@
                 </mml:mfenced>
             </mml:math></inlineequation>
             be normalized device coordinates.
-            Then the window coordinates 
+            Then the window coordinates
             <inlineequation><mml:math>
                 <!-- eqn: (x sub w, y sub w):-->
                 <mml:mfenced open="(" close=")">

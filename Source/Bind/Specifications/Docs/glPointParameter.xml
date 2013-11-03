@@ -2,13 +2,17 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glPointParameter">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glPointParameter</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -24,7 +28,6 @@
                 <paramdef>GLfloat <parameter>param</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
-        <para></para>
         <funcsynopsis>
             <funcprototype>
                 <funcdef>void <function>glPointParameteri</function></funcdef>
@@ -32,8 +35,21 @@
                 <paramdef>GLint <parameter>param</parameter></paramdef>
             </funcprototype>
         </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPointParameterfv</function></funcdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLfloat * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPointParameteriv</function></funcdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -51,39 +67,9 @@
             <term><parameter>param</parameter></term>
             <listitem>
                 <para>
-                    Specifies the value that <parameter>pname</parameter> will be set to.
-                </para>
-            </listitem>
-        </varlistentry>
-        </variablelist>
-    </refsect1>
-    <refsynopsisdiv><title>C Specification</title>
-        <funcsynopsis>
-            <funcprototype>
-                <funcdef>void <function>glPointParameterfv</function></funcdef>
-                <paramdef>GLenum <parameter>pname</parameter></paramdef>
-                <paramdef>const GLfloat * <parameter>params</parameter></paramdef>
-            </funcprototype>
-        </funcsynopsis>
-        <para></para>
-        <funcsynopsis>
-            <funcprototype>
-                <funcdef>void <function>glPointParameteriv</function></funcdef>
-                <paramdef>GLenum <parameter>pname</parameter></paramdef>
-                <paramdef>const GLint * <parameter>params</parameter></paramdef>
-            </funcprototype>
-        </funcsynopsis>
-    </refsynopsisdiv>
-    <refsect1 id="parameters2"><title>Parameters</title>
-        <variablelist>
-        <varlistentry>
-            <term><parameter>pname</parameter></term>
-            <listitem>
-                <para>
-                    Specifies a point parameter.
-                    <constant>GL_POINT_FADE_THRESHOLD_SIZE</constant>, and
-                    <constant>GL_POINT_SPRITE_COORD_ORIGIN</constant>
-                    are accepted.
+                    For <function>glPointParameterf</function> and
+                    <function>glPointParameteri</function>, specifies the
+                    value that <parameter>pname</parameter> will be set to.
                 </para>
             </listitem>
         </varlistentry>
@@ -91,7 +77,10 @@
             <term><parameter>params</parameter></term>
             <listitem>
                 <para>
-                    Specifies the value to be assigned to <parameter>pname</parameter>..
+                    For <function>glPointParameterfv</function> and
+                    <function>glPointParameteriv</function>, specifies a
+                    pointer to an array where the value or values to be
+                    assigned to <parameter>pname</parameter> are stored.
                 </para>
             </listitem>
         </varlistentry>
@@ -120,7 +109,7 @@
                     <para>
                     </para>
                     <para>
-                        <parameter>params</parameter> is a single enum specifying the point sprite texture coordinate origin, either <constant>GL_LOWER_LEFT</constant> or <constant>GL_UPPER_LEFT</constant>. 
+                        <parameter>params</parameter> is a single enum specifying the point sprite texture coordinate origin, either <constant>GL_LOWER_LEFT</constant> or <constant>GL_UPPER_LEFT</constant>.
                         The default value is <constant>GL_UPPER_LEFT</constant>.
                     </para>
                 </listitem>
@@ -152,9 +141,9 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. Copyright <trademark class="copyright"></trademark> 2010
-            Khronos Group. This document is licensed under the SGI
+            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc. 
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group. 
+            This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

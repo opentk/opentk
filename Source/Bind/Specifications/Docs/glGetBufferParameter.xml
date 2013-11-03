@@ -2,13 +2,17 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glGetBufferParameteriv">
+    <refentryinfo>
+        <copyright>
+            <year>2005</year>
+            <holder>Sams Publishing</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>2005</year>
-                <holder>Sams Publishing</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glGetBufferParameteriv</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -64,7 +68,7 @@
             <listitem>
                 <para>
                     Specifies the symbolic name of a buffer object parameter.
-                    Accepted values are <constant>GL_BUFFER_ACCESS</constant>, <constant>GL_BUFFER_MAPPED</constant>, 
+                    Accepted values are <constant>GL_BUFFER_ACCESS</constant>, <constant>GL_BUFFER_MAPPED</constant>,
                     <constant>GL_BUFFER_SIZE</constant>, or <constant>GL_BUFFER_USAGE</constant>.
                 </para>
             </listitem>
@@ -92,7 +96,7 @@
                 <term><constant>GL_BUFFER_ACCESS</constant></term>
                 <listitem>
                     <para>
-                        <parameter>params</parameter> returns the access policy set while mapping the buffer object.  
+                        <parameter>params</parameter> returns the access policy set while mapping the buffer object.
                         The initial value is <constant>GL_READ_WRITE</constant>.
                     </para>
                 </listitem>
@@ -101,7 +105,7 @@
                 <term><constant>GL_BUFFER_MAPPED</constant></term>
                 <listitem>
                     <para>
-                        <parameter>params</parameter> returns a flag indicating whether the buffer object is currently 
+                        <parameter>params</parameter> returns a flag indicating whether the buffer object is currently
                         mapped. The initial value is <constant>GL_FALSE</constant>.
                     </para>
                 </listitem>
@@ -110,7 +114,7 @@
                 <term><constant>GL_BUFFER_SIZE</constant></term>
                 <listitem>
                     <para>
-                        <parameter>params</parameter> returns the size of the buffer object, measured in bytes.  
+                        <parameter>params</parameter> returns the size of the buffer object, measured in bytes.
                         The initial value is 0.
                     </para>
                 </listitem>
@@ -160,9 +164,9 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2005 Addison-Wesley. 
-            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group. 
-            This material may be distributed subject to the terms and conditions set forth in 
+            Copyright <trademark class="copyright"></trademark> 2005 Addison-Wesley.
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
         </para>

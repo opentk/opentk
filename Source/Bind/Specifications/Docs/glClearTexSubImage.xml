@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glClearTexSubImage">
+    <refentryinfo>
+        <copyright>
+            <year>2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>2013</year>
-                <holder>Khronos Group</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glClearTexSubImage</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -34,7 +34,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -153,20 +152,45 @@
         <para>
             Negative values of <parameter>xoffset</parameter>, <parameter>yoffset</parameter>, and <parameter>zoffset</parameter> correspond to the coordinates of
             border texels. Taking
-            <mml:math><mml:mi mathvariant="italic">ws</mml:mi></mml:math>,
-            <mml:math><mml:mi mathvariant="italic">hs</mml:mi></mml:math>,
-            <mml:math><mml:mi mathvariant="italic">ds</mml:mi></mml:math>,
-            <mml:math><mml:mi mathvariant="italic">wb</mml:mi></mml:math>,
-            <mml:math><mml:mi mathvariant="italic">hb</mml:mi></mml:math>, and
-            <mml:math><mml:mi mathvariant="italic">db</mml:mi></mml:math> to be
+            <inlineequation>
+                <mml:math><mml:mi mathvariant="italic">ws</mml:mi></mml:math>
+            </inlineequation>,
+            <inlineequation>
+                <mml:math><mml:mi mathvariant="italic">hs</mml:mi></mml:math>
+            </inlineequation>,
+            <inlineequation>
+                <mml:math><mml:mi mathvariant="italic">ds</mml:mi></mml:math>
+            </inlineequation>,
+            <inlineequation>
+                <mml:math><mml:mi mathvariant="italic">wb</mml:mi></mml:math>
+            </inlineequation>,
+            <inlineequation>
+                <mml:math><mml:mi mathvariant="italic">hb</mml:mi></mml:math>
+            </inlineequation>, and
+            <inlineequation>
+                <mml:math><mml:mi mathvariant="italic">db</mml:mi></mml:math> 
+            </inlineequation> to be
             the specified <parameter>width</parameter>, <parameter>height</parameter>, <parameter>depth</parameter>, and the border width, border height, and border
             depth of the texel array and taking
-            <mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math>,
-            <mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math>,
-            <mml:math><mml:mi mathvariant="italic">z</mml:mi></mml:math>,
-            <mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math>,
-            <mml:math><mml:mi mathvariant="italic">h</mml:mi></mml:math>, and
-            <mml:math><mml:mi mathvariant="italic">d</mml:mi></mml:math> to be the <parameter>xoffset</parameter>, <parameter>yoffset</parameter>,
+            <inlineequation>
+                <mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math>
+            </inlineequation>,
+            <inlineequation>
+                <mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math>
+            </inlineequation>,
+            <inlineequation>
+                <mml:math><mml:mi mathvariant="italic">z</mml:mi></mml:math>
+            </inlineequation>,
+            <inlineequation>
+                <mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math>
+            </inlineequation>,
+            <inlineequation>
+                <mml:math><mml:mi mathvariant="italic">h</mml:mi></mml:math>
+            </inlineequation>, and
+            <inlineequation>
+                <mml:math><mml:mi mathvariant="italic">d</mml:mi></mml:math> 
+            </inlineequation>
+            to be the <parameter>xoffset</parameter>, <parameter>yoffset</parameter>,
             <parameter>zoffset</parameter>, <parameter>width</parameter>, <parameter>height</parameter>, and <parameter>depth</parameter> argument values,
             any of the following relationships generates a <constant>GL_INVALID_OPERATION</constant> error:
             <itemizedlist>

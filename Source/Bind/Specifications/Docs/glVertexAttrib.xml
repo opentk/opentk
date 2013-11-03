@@ -2,13 +2,23 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
           "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glVertexAttrib">
+    <refentryinfo>
+        <copyright>
+            <year>2003-2005</year>
+            <holder>3Dlabs Inc. Ltd.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-    <refentrytitle>glVertexAttrib</refentrytitle>
-    <manvolnum>3G</manvolnum>
+        <refentrytitle>glVertexAttrib</refentrytitle>
+        <manvolnum>3G</manvolnum>
     </refmeta>
     <refnamediv>
-    <refname>glVertexAttrib</refname>
-    <refpurpose>Specifies the value of a generic vertex attribute</refpurpose>
+        <refname>glVertexAttrib</refname>
+        <refpurpose>Specifies the value of a generic vertex attribute</refpurpose>
     </refnamediv>
     <refsynopsisdiv><title>C Specification</title>
     <funcsynopsis>
@@ -176,33 +186,7 @@
         <paramdef>GLdouble <parameter>v2</parameter></paramdef>
         <paramdef>GLdouble <parameter>v3</parameter></paramdef>
         </funcprototype>
-    </funcsynopsis>
-    </refsynopsisdiv>
-    <refsect1 id="parameters"><title>Parameters</title>
-    <variablelist>
-        <varlistentry>
-        <term><parameter>index</parameter></term>
-        <listitem>
-            <para>Specifies the index of the generic vertex
-            attribute to be modified.</para>
-        </listitem>
-        </varlistentry>
-        <varlistentry>
-        <term>
-            <parameter>v0</parameter>,
-            <parameter>v1</parameter>,
-            <parameter>v2</parameter>,
-            <parameter>v3</parameter>
-        </term>
-        <listitem>
-            <para>Specifies the new values to be used for the
-            specified vertex attribute.</para>
-        </listitem>
-        </varlistentry>
-    </variablelist>
-    </refsect1>
-    <refsynopsisdiv><title>C Specification</title>
-    <funcsynopsis>
+            <!-- Vector commands -->
         <funcprototype>
         <funcdef>void <function>glVertexAttrib1fv</function></funcdef>
         <paramdef>GLuint <parameter>index</parameter></paramdef>
@@ -398,28 +382,7 @@
         <paramdef>GLuint <parameter>index</parameter></paramdef>
         <paramdef>const GLdouble *<parameter>v</parameter></paramdef>
         </funcprototype>
-    </funcsynopsis>
-    </refsynopsisdiv>
-    <refsect1 id="parameters2"><title>Parameters</title>
-    <variablelist>
-        <varlistentry>
-        <term><parameter>index</parameter></term>
-        <listitem>
-            <para>Specifies the index of the generic vertex
-            attribute to be modified.</para>
-        </listitem>
-        </varlistentry>
-        <varlistentry>
-        <term><parameter>v</parameter></term>
-        <listitem>
-            <para>Specifies a pointer to an array of values to
-            be used for the generic vertex attribute.</para>
-        </listitem>
-        </varlistentry>
-    </variablelist>
-    </refsect1>
-    <refsynopsisdiv><title>C Specification</title>
-    <funcsynopsis>
+            <!-- Packed commands -->
         <funcprototype>
         <funcdef>void <function>glVertexAttribP1ui</function></funcdef>
         <paramdef>GLuint <parameter>index</parameter></paramdef>
@@ -450,7 +413,7 @@
         </funcprototype>
     </funcsynopsis>
     </refsynopsisdiv>
-    <refsect1 id="parameters3"><title>Parameters</title>
+    <refsect1 id="parameters"><title>Parameters</title>
     <variablelist>
         <varlistentry>
         <term><parameter>index</parameter></term>
@@ -460,31 +423,66 @@
         </listitem>
         </varlistentry>
         <varlistentry>
+        <term>
+            <parameter>v0</parameter>,
+            <parameter>v1</parameter>,
+            <parameter>v2</parameter>,
+            <parameter>v3</parameter>
+        </term>
+        <listitem>
+            <para>
+                For the scalar commands, specifies the new values to be used
+                for the specified vertex attribute.
+            </para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>v</parameter></term>
+        <listitem>
+            <para>
+                For the vector commands
+                (<function>glVertexAttrib*v</function>), specifies a pointer
+                to an array of values to be used for the generic vertex
+                attribute.
+            </para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
         <term><parameter>type</parameter></term>
         <listitem>
-            <para>Type of packing used on the data. This parameter must be
-                    <constant>GL_INT_2_10_10_10_REV</constant> or <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>,
-                    to specify signed or unsigned data, respectively, or <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant>
-                    to specify floating point data.</para>
+            <para>
+                For the packed commands
+                (<function>glVertexAttribP*</function>), specified the type
+                of packing used on the data. This parameter must be
+                <constant>GL_INT_2_10_10_10_REV</constant> or
+                <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>, to
+                specify signed or unsigned data, respectively, or
+                <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant> to
+                specify floating point data.
+            </para>
         </listitem>
         </varlistentry>
         <varlistentry>
         <term><parameter>normalized</parameter></term>
         <listitem>
-            <para>If <constant>GL_TRUE</constant>, then the values are to be
-                    converted to floating point values by normalizing. Otherwise,
-                    they are converted directly to floating-point values.
-                    If <parameter>type</parameter> indicates a floating-pont format,
-                    then <parameter>normalized</parameter> value must be <constant>GL_FALSE</constant>.</para>
+            <para>
+                For the packed commands, if <constant>GL_TRUE</constant>,
+                then the values are to be converted to floating point values
+                by normalizing. Otherwise, they are converted directly to
+                floating-point values. If <parameter>type</parameter>
+                indicates a floating-pont format, then
+                <parameter>normalized</parameter> value must be
+                <constant>GL_FALSE</constant>.
+            </para>
         </listitem>
         </varlistentry>
         <varlistentry>
-        <term>
-            <parameter>value</parameter>
-        </term>
+        <term><parameter>value</parameter></term> 
         <listitem>
-            <para>Specifies the new packed value to be used for the
-            specified vertex attribute.</para>
+            <para>
+                For the packed commands, specifies the new packed value to
+                be used for the specified vertex attribute.
+            </para>
         </listitem>
         </varlistentry>
     </variablelist>
@@ -533,9 +531,9 @@
         to the default behavior of the glVertexAttrib function:</para>
 
         <para>
-            The commands containing <function>N</function> indicate that 
-            the arguments will be passed as fixed-point values that are 
-            scaled to a normalized range according to the component 
+            The commands containing <function>N</function> indicate that
+            the arguments will be passed as fixed-point values that are
+            scaled to a normalized range according to the component
             conversion rules defined by the OpenGL specification. Signed
             values are understood to represent fixed-point values in the
             range [-1,1], and unsigned values are understood to represent
@@ -543,12 +541,12 @@
         </para>
 
         <para>
-            The commands containing <function>I</function> indicate that 
+            The commands containing <function>I</function> indicate that
             the arguments are extended to full signed or unsigned integers.
         </para>
 
         <para>
-            The commands containing <function>P</function> indicate that 
+            The commands containing <function>P</function> indicate that
             the arguments are stored as packed components within a larger
             natural type.
         </para>
@@ -625,14 +623,14 @@
     <constant>GL_MAX_VERTEX_ATTRIBS</constant>.</para>
 
     <para><constant>GL_INVALID_ENUM</constant> is generated if
-    <function>glVertexAttribP*</function> is used with a 
+    <function>glVertexAttribP*</function> is used with a
         <parameter>type</parameter> other than
     <constant>GL_INT_2_10_10_10_REV</constant>,
         <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>,
         or <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant>.</para>
 
     <para><constant>GL_INVALID_ENUM</constant> is generated if
-    <function>glVertexAttribL</function> is used with a 
+    <function>glVertexAttribL</function> is used with a
         <parameter>type</parameter> other than
     <constant>GL_DOUBLE</constant>.</para>
 
@@ -659,9 +657,9 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2003-2005 3Dlabs Inc. Ltd. 
+            Copyright <trademark class="copyright"></trademark> 2003-2005 3Dlabs Inc. Ltd.
             Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
-            This material may be distributed subject to the terms and conditions set forth in 
+            This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
         </para>

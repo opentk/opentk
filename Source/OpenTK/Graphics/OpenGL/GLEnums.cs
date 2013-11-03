@@ -13685,6 +13685,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         SkipDecodeExt = ((int)0x8A4A)        ,
         /// <summary>
+        /// Original was GL_PROGRAM_PIPELINE_OBJECT_EXT = 0x8A4F
+        /// </summary>
+        ProgramPipelineObjectExt = ((int)0x8A4F)        ,
+        /// <summary>
         /// Original was GL_RGB_RAW_422_APPLE = 0x8A51
         /// </summary>
         RgbRaw422Apple = ((int)0x8A51)        ,
@@ -13709,9 +13713,17 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         ProgramObjectArb = ((int)0x8B40)        ,
         /// <summary>
+        /// Original was GL_PROGRAM_OBJECT_EXT = 0x8B40
+        /// </summary>
+        ProgramObjectExt = ((int)0x8B40)        ,
+        /// <summary>
         /// Original was GL_SHADER_OBJECT_ARB = 0x8B48
         /// </summary>
         ShaderObjectArb = ((int)0x8B48)        ,
+        /// <summary>
+        /// Original was GL_SHADER_OBJECT_EXT = 0x8B48
+        /// </summary>
+        ShaderObjectExt = ((int)0x8B48)        ,
         /// <summary>
         /// Original was GL_MAX_FRAGMENT_UNIFORM_COMPONENTS = 0x8B49
         /// </summary>
@@ -18313,6 +18325,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         DebugCategoryOtherAmd = ((int)0x9150)        ,
         /// <summary>
+        /// Original was GL_BUFFER_OBJECT_EXT = 0x9151
+        /// </summary>
+        BufferObjectExt = ((int)0x9151)        ,
+        /// <summary>
         /// Original was GL_DATA_BUFFER_AMD = 0x9151
         /// </summary>
         DataBufferAmd = ((int)0x9151)        ,
@@ -18325,9 +18341,17 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         QueryObjectAmd = ((int)0x9153)        ,
         /// <summary>
+        /// Original was GL_QUERY_OBJECT_EXT = 0x9153
+        /// </summary>
+        QueryObjectExt = ((int)0x9153)        ,
+        /// <summary>
         /// Original was GL_VERTEX_ARRAY_OBJECT_AMD = 0x9154
         /// </summary>
         VertexArrayObjectAmd = ((int)0x9154)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_ARRAY_OBJECT_EXT = 0x9154
+        /// </summary>
+        VertexArrayObjectExt = ((int)0x9154)        ,
         /// <summary>
         /// Original was GL_SAMPLER_OBJECT_AMD = 0x9155
         /// </summary>
@@ -30901,6 +30925,52 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
+    /// Used in GL.Ext.GetObjectLabel, GL.Ext.LabelObject
+    /// </summary>
+    public enum ExtDebugLabel : int
+    {
+        /// <summary>
+        /// Original was GL_SAMPLER = 0x82E6
+        /// </summary>
+        Sampler = ((int)0x82E6)        ,
+        /// <summary>
+        /// Original was GL_PROGRAM_PIPELINE_OBJECT_EXT = 0x8A4F
+        /// </summary>
+        ProgramPipelineObjectExt = ((int)0x8A4F)        ,
+        /// <summary>
+        /// Original was GL_PROGRAM_OBJECT_EXT = 0x8B40
+        /// </summary>
+        ProgramObjectExt = ((int)0x8B40)        ,
+        /// <summary>
+        /// Original was GL_SHADER_OBJECT_EXT = 0x8B48
+        /// </summary>
+        ShaderObjectExt = ((int)0x8B48)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK = 0x8E22
+        /// </summary>
+        TransformFeedback = ((int)0x8E22)        ,
+        /// <summary>
+        /// Original was GL_BUFFER_OBJECT_EXT = 0x9151
+        /// </summary>
+        BufferObjectExt = ((int)0x9151)        ,
+        /// <summary>
+        /// Original was GL_QUERY_OBJECT_EXT = 0x9153
+        /// </summary>
+        QueryObjectExt = ((int)0x9153)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_ARRAY_OBJECT_EXT = 0x9154
+        /// </summary>
+        VertexArrayObjectExt = ((int)0x9154)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ExtDebugMarker : int
+    {
+    }
+
+    /// <summary>
     /// Not used directly.
     /// </summary>
     public enum ExtDepthBoundsTest : int
@@ -39066,6 +39136,13 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_INTERLACE_READ_INGR = 0x8568
         /// </summary>
         InterlaceReadIngr = ((int)0x8568)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum IntelFragmentShaderOrdering : int
+    {
     }
 
     /// <summary>

@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glClearStencil">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glClearStencil</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -24,7 +24,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -41,7 +40,7 @@
     <refsect1 id="description"><title>Description</title>
         <para>
             <function>glClearStencil</function> specifies the index used by <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry> to clear the stencil buffer.
-            <parameter>s</parameter> is masked with 
+            <parameter>s</parameter> is masked with
             <inlineequation><mml:math>
                 <!-- eqn: 2 sup m - 1: -->
                 <mml:mrow>
@@ -52,7 +51,7 @@
                     <mml:mn>1</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            where 
+            where
             <inlineequation><mml:math><mml:mi mathvariant="italic">m</mml:mi></mml:math></inlineequation>
             is the number of bits in the stencil buffer.
         </para>

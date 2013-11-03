@@ -2172,9 +2172,7 @@
     <enum name="ColorTableParameterPNameSGI">
       <token name="COLOR_TABLE_BIAS" value="0x80D7" />
       <token name="COLOR_TABLE_BIAS_SGI" value="0x80D7" />
-      <token name="COLOR_TABLE_BIAS_SGI" value="0x80D7" />
       <token name="COLOR_TABLE_SCALE" value="0x80D6" />
-      <token name="COLOR_TABLE_SCALE_SGI" value="0x80D6" />
       <token name="COLOR_TABLE_SCALE_SGI" value="0x80D6" />
     </enum>
     <enum name="ColorTableTargetSGI">
@@ -2484,6 +2482,17 @@
       <token name="CULL_VERTEX_EYE_POSITION_EXT" value="0x81AB" />
       <token name="CULL_VERTEX_OBJECT_POSITION_EXT" value="0x81AC" />
     </enum>
+    <enum name="EXT_debug_label">
+      <token name="PROGRAM_PIPELINE_OBJECT_EXT" value="0x8A4F" />
+      <token name="PROGRAM_OBJECT_EXT" value="0x8B40" />
+      <token name="SHADER_OBJECT_EXT" value="0x8B48" />
+      <token name="BUFFER_OBJECT_EXT" value="0x9151" />
+      <token name="QUERY_OBJECT_EXT" value="0x9153" />
+      <token name="VERTEX_ARRAY_OBJECT_EXT" value="0x9154" />
+      <token name="SAMPLER" value="0x82E6" />
+      <token name="TRANSFORM_FEEDBACK" value="0x8E22" />
+    </enum>
+    <enum name="EXT_debug_marker" />
     <enum name="EXT_depth_bounds_test">
       <token name="DEPTH_BOUNDS_TEST_EXT" value="0x8890" />
       <token name="DEPTH_BOUNDS_EXT" value="0x8891" />
@@ -4053,6 +4062,7 @@
     <enum name="INGR_interlace_read">
       <token name="INTERLACE_READ_INGR" value="0x8568" />
     </enum>
+    <enum name="INTEL_fragment_shader_ordering" />
     <enum name="INTEL_map_texture">
       <token name="TEXTURE_MEMORY_LAYOUT_INTEL" value="0x83FF" />
       <token name="LAYOUT_DEFAULT_INTEL" value="0" />
@@ -7509,7 +7519,6 @@
       <token name="WAIT_FAILED" value="0x911D" />
       <token name="TIMEOUT_IGNORED" value="0xFFFFFFFFFFFFFFFF" />
       <token name="SYNC_FLUSH_COMMANDS_BIT" value="0x00000001" />
-      <token name="TIMEOUT_IGNORED" value="0xFFFFFFFFFFFFFFFF" />
       <token name="SAMPLE_POSITION" value="0x8E50" />
       <token name="SAMPLE_MASK" value="0x8E51" />
       <token name="SAMPLE_MASK_VALUE" value="0x8E52" />
@@ -11157,7 +11166,7 @@
     </function>
     <function name="ElementPointerAPPLE" category="APPLE_element_array" extension="APPLE">
       <param name="type" type="ElementPointerTypeATI" flow="in" />
-      <param name="pointer" type="void *" flow="in" count="type" />
+      <param name="pointer" type="void *" flow="in" count="COMPSIZE(type)" />
       <returns type="void" />
     </function>
     <function name="ElementPointerATI" category="ATI_element_array" extension="ATI">
@@ -12143,7 +12152,7 @@
     </function>
     <function name="GetBooleanv" category="VERSION_1_0" extension="Core" version="1.0">
       <param name="pname" type="GetPName" flow="in" />
-      <param name="params" type="Boolean *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="Boolean *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetBufferParameteri64v" category="VERSION_3_2" extension="Core" version="3.2">
@@ -12442,7 +12451,7 @@
     </function>
     <function name="GetDoublev" category="VERSION_1_0" extension="Core" version="1.0">
       <param name="pname" type="GetPName" flow="in" />
-      <param name="params" type="GLdouble *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="GLdouble *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetError" category="VERSION_1_0" extension="Core" version="1.0">
@@ -12491,7 +12500,7 @@
     </function>
     <function name="GetFloatv" category="VERSION_1_0" extension="Core" version="1.0">
       <param name="pname" type="GetPName" flow="in" />
-      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="GLfloat *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetFogFuncSGIS" category="SGIS_fog_function" extension="SGIS">
@@ -12662,7 +12671,7 @@
     </function>
     <function name="GetInteger64v" category="VERSION_3_2|ARB_sync" extension="Core" version="3.2">
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint64 *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="GLint64 *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetIntegeri_v" category="VERSION_3_0" extension="Core" version="3.0">
@@ -12690,7 +12699,7 @@
     </function>
     <function name="GetIntegerv" category="VERSION_1_0" extension="Core" version="1.0">
       <param name="pname" type="GetPName" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetInternalformati64v" category="VERSION_4_3|ARB_internalformat_query2" extension="Core" version="4.3">
@@ -13259,6 +13268,14 @@
       <param name="label" type="GLchar *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
+    <function name="GetObjectLabelEXT" category="EXT_debug_label" extension="EXT">
+      <param name="type" type="GLenum" flow="in" />
+      <param name="object" type="GLuint" flow="in" />
+      <param name="bufSize" type="GLsizei" flow="in" />
+      <param name="length" type="GLsizei *" flow="out" />
+      <param name="label" type="GLchar *" flow="out" count="bufSize" />
+      <returns type="void" />
+    </function>
     <function name="GetObjectLabelKHR" category="KHR_debug" extension="KHR">
       <param name="identifier" type="GLenum" flow="in" />
       <param name="name" type="GLuint" flow="in" />
@@ -13270,7 +13287,7 @@
     <function name="GetObjectParameterfvARB" category="ARB_shader_objects" extension="ARB">
       <param name="obj" type="handleARB" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLfloat *" flow="out" count="pname" />
+      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetObjectParameterivAPPLE" category="APPLE_object_purgeable" extension="APPLE">
@@ -13283,7 +13300,7 @@
     <function name="GetObjectParameterivARB" category="ARB_shader_objects" extension="ARB">
       <param name="obj" type="handleARB" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetObjectPtrLabel" category="VERSION_4_3|KHR_debug" extension="Core" version="4.3">
@@ -13566,7 +13583,7 @@
     <function name="GetProgramiv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="program" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetProgramivARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
@@ -13732,13 +13749,13 @@
     <function name="GetQueryiv" category="VERSION_1_5" extension="Core" version="1.5">
       <param name="target" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetQueryivARB" category="ARB_occlusion_query" extension="ARB">
       <param name="target" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetQueryObjecti64v" category="VERSION_3_3|ARB_timer_query" extension="Core" version="3.3">
@@ -13750,19 +13767,19 @@
     <function name="GetQueryObjecti64vEXT" category="EXT_timer_query" extension="EXT">
       <param name="id" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint64 *" flow="out" count="pname" />
+      <param name="params" type="GLint64 *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetQueryObjectiv" category="VERSION_1_5" extension="Core" version="1.5">
       <param name="id" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetQueryObjectivARB" category="ARB_occlusion_query" extension="ARB">
       <param name="id" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetQueryObjectui64v" category="VERSION_3_3|ARB_timer_query" extension="Core" version="3.3">
@@ -13774,19 +13791,19 @@
     <function name="GetQueryObjectui64vEXT" category="EXT_timer_query" extension="EXT">
       <param name="id" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLuint64 *" flow="out" count="pname" />
+      <param name="params" type="GLuint64 *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetQueryObjectuiv" category="VERSION_1_5" extension="Core" version="1.5">
       <param name="id" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLuint *" flow="out" count="pname" />
+      <param name="params" type="GLuint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetQueryObjectuivARB" category="ARB_occlusion_query" extension="ARB">
       <param name="id" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLuint *" flow="out" count="pname" />
+      <param name="params" type="GLuint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetRenderbufferParameteriv" category="VERSION_3_0|ARB_framebuffer_object" extension="Core" version="3.0">
@@ -13853,7 +13870,7 @@
     <function name="GetShaderiv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="shader" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetShaderPrecisionFormat" category="VERSION_4_1|ARB_ES2_compatibility" extension="Core" version="4.1">
@@ -14312,13 +14329,13 @@
     <function name="GetVertexAttribArrayObjectfvATI" category="ATI_vertex_attrib_array_object" extension="ATI">
       <param name="index" type="GLuint" flow="in" />
       <param name="pname" type="ArrayObjectPNameATI" flow="in" />
-      <param name="params" type="GLfloat *" flow="out" count="pname" />
+      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetVertexAttribArrayObjectivATI" category="ATI_vertex_attrib_array_object" extension="ATI">
       <param name="index" type="GLuint" flow="in" />
       <param name="pname" type="ArrayObjectPNameATI" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetVertexAttribdv" category="VERSION_2_0" extension="Core" version="2.0">
@@ -14685,6 +14702,11 @@
       <param name="num" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
+    <function name="InsertEventMarkerEXT" category="EXT_debug_marker" extension="EXT">
+      <param name="length" type="GLsizei" flow="in" />
+      <param name="marker" type="GLchar *" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="InstrumentsBufferSGIX" category="SGIX_instruments" extension="SGIX">
       <param name="size" type="GLsizei" flow="in" />
       <param name="buffer" type="GLint *" flow="out" count="size" />
@@ -14931,6 +14953,13 @@
       <param name="index" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
       <returns type="Boolean" />
+    </function>
+    <function name="LabelObjectEXT" category="EXT_debug_label" extension="EXT">
+      <param name="type" type="GLenum" flow="in" />
+      <param name="object" type="GLuint" flow="in" />
+      <param name="length" type="GLsizei" flow="in" />
+      <param name="label" type="GLchar *" flow="in" />
+      <returns type="void" />
     </function>
     <function name="LightEnviSGIX" category="SGIX_fragment_lighting" extension="SGIX">
       <param name="pname" type="LightEnvParameterSGIX" flow="in" />
@@ -17428,6 +17457,9 @@
     <function name="PopDebugGroupKHR" category="KHR_debug" extension="KHR">
       <returns type="void" />
     </function>
+    <function name="PopGroupMarkerEXT" category="EXT_debug_marker" extension="EXT">
+      <returns type="void" />
+    </function>
     <function name="PopMatrix" category="VERSION_1_0" extension="Core" version="1.0" deprecated="3.2">
       <returns type="void" />
     </function>
@@ -18741,6 +18773,11 @@
       <param name="message" type="GLchar *" flow="in" />
       <returns type="void" />
     </function>
+    <function name="PushGroupMarkerEXT" category="EXT_debug_marker" extension="EXT">
+      <param name="length" type="GLsizei" flow="in" />
+      <param name="marker" type="GLchar *" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="PushMatrix" category="VERSION_1_0" extension="Core" version="1.0" deprecated="3.2">
       <returns type="void" />
     </function>
@@ -19714,14 +19751,14 @@
       <param name="shader" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="string" type="GLchar **" flow="in" count="count" />
-      <param name="length" type="GLint *" flow="in" count="1" />
+      <param name="length" type="GLint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="ShaderSourceARB" category="ARB_shader_objects" extension="ARB">
       <param name="shaderObj" type="handleARB" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="string" type="GLcharARB **" flow="in" count="count" />
-      <param name="length" type="GLint *" flow="in" count="1" />
+      <param name="length" type="GLint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="ShaderStorageBlockBinding" category="VERSION_4_3|ARB_shader_storage_buffer_object" extension="Core" version="4.3">
@@ -25571,9 +25608,7 @@
     <enum name="ColorTableParameterPNameSGI">
       <token name="COLOR_TABLE_BIAS" value="0x80D7" />
       <token name="COLOR_TABLE_BIAS_SGI" value="0x80D7" />
-      <token name="COLOR_TABLE_BIAS_SGI" value="0x80D7" />
       <token name="COLOR_TABLE_SCALE" value="0x80D6" />
-      <token name="COLOR_TABLE_SCALE_SGI" value="0x80D6" />
       <token name="COLOR_TABLE_SCALE_SGI" value="0x80D6" />
     </enum>
     <enum name="ColorTableTargetSGI">
@@ -28093,7 +28128,6 @@
       <token name="WAIT_FAILED" value="0x911D" />
       <token name="TIMEOUT_IGNORED" value="0xFFFFFFFFFFFFFFFF" />
       <token name="SYNC_FLUSH_COMMANDS_BIT" value="0x00000001" />
-      <token name="TIMEOUT_IGNORED" value="0xFFFFFFFFFFFFFFFF" />
       <token name="SAMPLE_POSITION" value="0x8E50" />
       <token name="SAMPLE_MASK" value="0x8E51" />
       <token name="SAMPLE_MASK_VALUE" value="0x8E52" />
@@ -29943,7 +29977,7 @@
     </function>
     <function name="GetBooleanv" category="VERSION_1_0" extension="Core" version="1.0">
       <param name="pname" type="GetPName" flow="in" />
-      <param name="params" type="Boolean *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="Boolean *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetBufferParameteri64v" category="VERSION_3_2" extension="Core" version="3.2">
@@ -30056,7 +30090,7 @@
     </function>
     <function name="GetDoublev" category="VERSION_1_0" extension="Core" version="1.0">
       <param name="pname" type="GetPName" flow="in" />
-      <param name="params" type="GLdouble *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="GLdouble *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetError" category="VERSION_1_0" extension="Core" version="1.0">
@@ -30070,7 +30104,7 @@
     </function>
     <function name="GetFloatv" category="VERSION_1_0" extension="Core" version="1.0">
       <param name="pname" type="GetPName" flow="in" />
-      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="GLfloat *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetFragDataIndex" category="VERSION_3_3|ARB_blend_func_extended" extension="Core" version="3.3">
@@ -30135,7 +30169,7 @@
     </function>
     <function name="GetInteger64v" category="VERSION_3_2|ARB_sync" extension="Core" version="3.2">
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint64 *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="GLint64 *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetIntegeri_v" category="VERSION_3_0" extension="Core" version="3.0">
@@ -30146,7 +30180,7 @@
     </function>
     <function name="GetIntegerv" category="VERSION_1_0" extension="Core" version="1.0">
       <param name="pname" type="GetPName" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetInternalformati64v" category="VERSION_4_3|ARB_internalformat_query2" extension="Core" version="4.3">
@@ -30404,7 +30438,7 @@
     <function name="GetProgramiv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="program" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetProgramPipelineInfoLog" category="VERSION_4_1|ARB_separate_shader_objects" extension="Core" version="4.1">
@@ -30475,7 +30509,7 @@
     <function name="GetQueryiv" category="VERSION_1_5" extension="Core" version="1.5">
       <param name="target" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetQueryObjecti64v" category="VERSION_3_3|ARB_timer_query" extension="Core" version="3.3">
@@ -30487,7 +30521,7 @@
     <function name="GetQueryObjectiv" category="VERSION_1_5" extension="Core" version="1.5">
       <param name="id" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetQueryObjectui64v" category="VERSION_3_3|ARB_timer_query" extension="Core" version="3.3">
@@ -30499,7 +30533,7 @@
     <function name="GetQueryObjectuiv" category="VERSION_1_5" extension="Core" version="1.5">
       <param name="id" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLuint *" flow="out" count="pname" />
+      <param name="params" type="GLuint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetRenderbufferParameteriv" category="VERSION_3_0|ARB_framebuffer_object" extension="Core" version="3.0">
@@ -30551,7 +30585,7 @@
     <function name="GetShaderiv" category="VERSION_2_0" extension="Core" version="2.0">
       <param name="shader" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetShaderPrecisionFormat" category="VERSION_4_1|ARB_ES2_compatibility" extension="Core" version="4.1">
@@ -31739,7 +31773,7 @@
       <param name="shader" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="string" type="GLchar **" flow="in" count="count" />
-      <param name="length" type="GLint *" flow="in" count="1" />
+      <param name="length" type="GLint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="ShaderStorageBlockBinding" category="VERSION_4_3|ARB_shader_storage_buffer_object" extension="Core" version="4.3">
@@ -33145,9 +33179,7 @@
     <enum name="ColorTableParameterPNameSGI">
       <token name="COLOR_TABLE_BIAS" value="0x80D7" />
       <token name="COLOR_TABLE_BIAS_SGI" value="0x80D7" />
-      <token name="COLOR_TABLE_BIAS_SGI" value="0x80D7" />
       <token name="COLOR_TABLE_SCALE" value="0x80D6" />
-      <token name="COLOR_TABLE_SCALE_SGI" value="0x80D6" />
       <token name="COLOR_TABLE_SCALE_SGI" value="0x80D6" />
     </enum>
     <enum name="ColorTableTargetSGI">
@@ -36192,7 +36224,7 @@
     </function>
     <function name="GetBooleanv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="pname" type="GetPName" flow="in" />
-      <param name="params" type="Boolean *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="Boolean *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetBufferParameteriv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -36267,7 +36299,7 @@
     </function>
     <function name="GetFloatv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="pname" type="GetPName" flow="in" />
-      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="GLfloat *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetFramebufferAttachmentParameterivOES" category="OES_framebuffer_object" extension="OES">
@@ -36293,7 +36325,7 @@
     </function>
     <function name="GetIntegerv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
       <param name="pname" type="GetPName" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetLightfv" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
@@ -37870,9 +37902,7 @@
     <enum name="ColorTableParameterPNameSGI">
       <token name="COLOR_TABLE_BIAS" value="0x80D7" />
       <token name="COLOR_TABLE_BIAS_SGI" value="0x80D7" />
-      <token name="COLOR_TABLE_BIAS_SGI" value="0x80D7" />
       <token name="COLOR_TABLE_SCALE" value="0x80D6" />
-      <token name="COLOR_TABLE_SCALE_SGI" value="0x80D6" />
       <token name="COLOR_TABLE_SCALE_SGI" value="0x80D6" />
     </enum>
     <enum name="ColorTableTargetSGI">
@@ -41893,7 +41923,7 @@
     </function>
     <function name="GetBooleanv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="pname" type="GetPName" flow="in" />
-      <param name="params" type="Boolean *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="Boolean *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetBufferParameteri64v" category="ES_VERSION_3_0" extension="Core" version="3.0">
@@ -41966,7 +41996,7 @@
     </function>
     <function name="GetFloatv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="pname" type="GetPName" flow="in" />
-      <param name="params" type="GLfloat *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="GLfloat *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetFragDataLocation" category="ES_VERSION_3_0" extension="Core" version="3.0">
@@ -41992,7 +42022,7 @@
     </function>
     <function name="GetInteger64v" category="ES_VERSION_3_0" extension="Core" version="3.0">
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint64 *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="GLint64 *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetInteger64vAPPLE" category="APPLE_sync" extension="APPLE">
@@ -42014,7 +42044,7 @@
     </function>
     <function name="GetIntegerv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="pname" type="GetPName" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
+      <param name="data" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetInternalformativ" category="ES_VERSION_3_0" extension="Core" version="3.0">
@@ -42157,7 +42187,7 @@
     <function name="GetProgramiv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="program" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetProgramPipelineInfoLogEXT" category="EXT_separate_shader_objects" extension="EXT">
@@ -42176,7 +42206,7 @@
     <function name="GetQueryiv" category="ES_VERSION_3_0" extension="Core" version="3.0">
       <param name="target" type="GLenum" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetQueryivEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT" version="">
@@ -42188,7 +42218,7 @@
     <function name="GetQueryObjecti64vEXT" category="EXT_disjoint_timer_query" extension="EXT">
       <param name="id" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint64 *" flow="out" count="pname" />
+      <param name="params" type="GLint64 *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetQueryObjectivEXT" category="EXT_disjoint_timer_query" extension="EXT">
@@ -42200,13 +42230,13 @@
     <function name="GetQueryObjectui64vEXT" category="EXT_disjoint_timer_query" extension="EXT">
       <param name="id" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLuint64 *" flow="out" count="pname" />
+      <param name="params" type="GLuint64 *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetQueryObjectuiv" category="ES_VERSION_3_0" extension="Core" version="3.0">
       <param name="id" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLuint *" flow="out" count="pname" />
+      <param name="params" type="GLuint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetQueryObjectuivEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT" version="">
@@ -42243,7 +42273,7 @@
     <function name="GetShaderiv" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="shader" type="GLuint" flow="in" />
       <param name="pname" type="GLenum" flow="in" />
-      <param name="params" type="GLint *" flow="out" count="pname" />
+      <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
     <function name="GetShaderPrecisionFormat" category="ES_VERSION_2_0" extension="Core" version="2.0">
@@ -43025,7 +43055,7 @@
       <param name="shader" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="string" type="GLchar **" flow="in" count="count" />
-      <param name="length" type="GLint *" flow="in" count="1" />
+      <param name="length" type="GLint *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="StartTilingQCOM" category="QCOM_tiled_rendering" extension="QCOM">

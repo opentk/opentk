@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glTexSubImage3D">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glTexSubImage3D</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -34,9 +34,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
-    <para>
-    </para>
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -181,7 +178,7 @@
                 </mml:mrow>
             </mml:math></inlineequation>,
             inclusive,
-            y indices <parameter>yoffset</parameter> and 
+            y indices <parameter>yoffset</parameter> and
             <inlineequation><mml:math>
                 <!-- eqn: yoffset  +  height  -  1: -->
                 <mml:mrow>
@@ -193,7 +190,7 @@
                 </mml:mrow>
             </mml:math></inlineequation>,
             inclusive,
-            and z indices <parameter>zoffset</parameter> and 
+            and z indices <parameter>zoffset</parameter> and
             <inlineequation><mml:math>
                 <!-- eqn: zoffset  +  depth  -  1: -->
                 <mml:mrow>
@@ -214,7 +211,7 @@
             depth but such a specification has no effect.
         </para>
         <para>
-            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target 
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target
             (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a texture image is
             specified, <parameter>data</parameter> is treated as a byte offset into the buffer object's data store.
         </para>
@@ -248,7 +245,7 @@
         </para>
         <para>
             <constant>GL_INVALID_VALUE</constant> may be generated if <parameter>level</parameter> is greater
-            than 
+            than
             <inlineequation><mml:math>
                 <!-- eqn: log sub 2: -->
                 <mml:msub><mml:mi mathvariant="italic">log</mml:mi>
@@ -259,7 +256,7 @@
             where <emphasis>max</emphasis> is the returned value of <constant>GL_MAX_TEXTURE_SIZE</constant>.
         </para>
         <para>
-            <constant>GL_INVALID_VALUE</constant> is generated if 
+            <constant>GL_INVALID_VALUE</constant> is generated if
             <inlineequation><mml:math>
                 <!-- eqn: xoffset  <   -b: -->
                 <mml:mrow>
@@ -302,7 +299,7 @@
                     </mml:mrow>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            or 
+            or
             <inlineequation><mml:math>
                 <!-- eqn: (yoffset  +  height)  >  (h - b): -->
                 <mml:mrow>
@@ -323,7 +320,7 @@
                     </mml:mfenced>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            or 
+            or
             <inlineequation><mml:math>
                 <!-- eqn: zoffset  <   -b: -->
                 <mml:mrow>
@@ -335,7 +332,7 @@
                     </mml:mrow>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            or 
+            or
             <inlineequation><mml:math>
                 <!-- eqn: (zoffset  +  depth)  >  (d - b): -->
                 <mml:mrow>
@@ -356,20 +353,20 @@
                     </mml:mfenced>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            where 
+            where
             <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>
             is the <constant>GL_TEXTURE_WIDTH</constant>,
             <inlineequation><mml:math><mml:mi mathvariant="italic">h</mml:mi></mml:math></inlineequation>
-            is the <constant>GL_TEXTURE_HEIGHT</constant>, 
+            is the <constant>GL_TEXTURE_HEIGHT</constant>,
             <inlineequation><mml:math><mml:mi mathvariant="italic">d</mml:mi></mml:math></inlineequation>
-            is the <constant>GL_TEXTURE_DEPTH</constant> 
-            and 
+            is the <constant>GL_TEXTURE_DEPTH</constant>
+            and
             <inlineequation><mml:math><mml:mi mathvariant="italic">b</mml:mi></mml:math></inlineequation>
             is the border width of the texture image being modified.
-            Note that 
+            Note that
             <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>,
             <inlineequation><mml:math><mml:mi mathvariant="italic">h</mml:mi></mml:math></inlineequation>,
-            and 
+            and
             <inlineequation><mml:math><mml:mi mathvariant="italic">d</mml:mi></mml:math></inlineequation>
             include twice the border width.
         </para>
@@ -379,7 +376,7 @@
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if the texture array has not
-            been defined by a previous <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry> 
+            been defined by a previous <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>
             or <citerefentry><refentrytitle>glTexStorage3D</refentrytitle></citerefentry> operation.
         </para>
         <para>
@@ -412,12 +409,12 @@
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
-            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer 
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer
             object such that the memory reads required would exceed the data store size.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
-            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and <parameter>data</parameter> is not evenly divisible 
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and <parameter>data</parameter> is not evenly divisible
             into the number of bytes needed to store in memory a datum indicated by <parameter>type</parameter>.
         </para>
     </refsect1>

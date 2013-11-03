@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glClearDepth">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glClearDepth</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -44,7 +44,7 @@
     <refsect1 id="description"><title>Description</title>
         <para>
             <function>glClearDepth</function> specifies the depth value used by <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry> to clear the depth buffer.
-            Values specified by <function>glClearDepth</function> are clamped to the range 
+            Values specified by <function>glClearDepth</function> are clamped to the range
             <inlineequation><mml:math>
                 <!-- eqn: [0,1]: -->
                 <mml:mfenced open="[" close="]">

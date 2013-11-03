@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glDrawBuffer">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glDrawBuffer</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -24,7 +24,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -42,7 +41,7 @@
                     <constant>GL_BACK</constant>,
                     <constant>GL_LEFT</constant>,
                     <constant>GL_RIGHT</constant>, and
-                    <constant>GL_FRONT_AND_BACK</constant> 
+                    <constant>GL_FRONT_AND_BACK</constant>
                     are accepted.
                     The initial value is <constant>GL_FRONT</constant> for single-buffered contexts,
                     and <constant>GL_BACK</constant> for double-buffered contexts.

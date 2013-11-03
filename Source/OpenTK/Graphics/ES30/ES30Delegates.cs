@@ -549,7 +549,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate Int32 GetAttribLocation(UInt32 program, String name);
             internal static GetAttribLocation glGetAttribLocation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetBooleanv(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] bool* @params);
+            internal unsafe delegate void GetBooleanv(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] bool* data);
             internal unsafe static GetBooleanv glGetBooleanv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetBufferParameteri64v(OpenTK.Graphics.ES30.BufferTarget target, OpenTK.Graphics.ES30.BufferParameterName pname, [OutAttribute] Int64* @params);
@@ -582,7 +582,7 @@ namespace OpenTK.Graphics.ES30
             internal unsafe delegate void GetFenceivNV(UInt32 fence, OpenTK.Graphics.ES30.NvFence pname, [OutAttribute] Int32* @params);
             internal unsafe static GetFenceivNV glGetFenceivNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetFloatv(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Single* @params);
+            internal unsafe delegate void GetFloatv(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Single* data);
             internal unsafe static GetFloatv glGetFloatv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Int32 GetFragDataLocation(UInt32 program, String name);
@@ -597,7 +597,7 @@ namespace OpenTK.Graphics.ES30
             internal unsafe delegate void GetInteger64i_v(OpenTK.Graphics.ES30.EsVersion30 target, UInt32 index, [OutAttribute] Int64* data);
             internal unsafe static GetInteger64i_v glGetInteger64i_v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetInteger64v(OpenTK.Graphics.ES30.EsVersion30 pname, [OutAttribute] Int64* @params);
+            internal unsafe delegate void GetInteger64v(OpenTK.Graphics.ES30.EsVersion30 pname, [OutAttribute] Int64* data);
             internal unsafe static GetInteger64v glGetInteger64v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetInteger64vAPPLE(OpenTK.Graphics.ES30.AppleSync pname, [OutAttribute] Int64* @params);
@@ -609,7 +609,7 @@ namespace OpenTK.Graphics.ES30
             internal unsafe delegate void GetIntegeri_vEXT(OpenTK.Graphics.ES30.ExtMultiviewDrawBuffers target, UInt32 index, [OutAttribute] Int32* data);
             internal unsafe static GetIntegeri_vEXT glGetIntegeri_vEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetIntegerv(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetIntegerv(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int32* data);
             internal unsafe static GetIntegerv glGetIntegerv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetInternalformativ(OpenTK.Graphics.ES30.EsVersion30 target, OpenTK.Graphics.ES30.EsVersion30 internalformat, OpenTK.Graphics.ES30.EsVersion30 pname, Int32 bufSize, [OutAttribute] Int32* @params);

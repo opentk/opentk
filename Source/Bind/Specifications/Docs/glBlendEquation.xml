@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glBlendEquation">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glBlendEquation</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -29,7 +29,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -57,7 +56,7 @@
         <para>
             The blend equations determine how a new pixel (the ''source'' color)
             is combined with a pixel already in the framebuffer (the ''destination''
-            color).  This function sets both the RGB blend equation and the alpha 
+            color).  This function sets both the RGB blend equation and the alpha
             blend equation to a single equation. <function>glBlendEquationi</function>
             specifies the blend equation for a single draw buffer whereas <function>glBlendEquation</function>
             sets the blend equation for all draw buffers.
@@ -164,7 +163,7 @@
             </mml:math></inlineequation>,
             respectively.
             For these equations all color components are understood to have values
-            in the range 
+            in the range
             <inlineequation><mml:math>
                 <!-- eqn: [0,1]: -->
                 <mml:mfenced open="[" close="]">
@@ -197,7 +196,7 @@
                         <constant>GL_FUNC_ADD</constant>
                         </entry>
                         <entry align="left">
-                        <informalequation><mml:math>
+                        <inlineequation><mml:math>
                             <!-- eqn: Rr  =      R sub s s sub R  +  R sub d d sub R : -->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Rr</mml:mi>
@@ -220,8 +219,8 @@
                                     </mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
-                        </mml:math></informalequation>
-                        <informalequation><mml:math>
+                        </mml:math></inlineequation>
+                        <inlineequation><mml:math>
                             <!-- eqn: Gr  =    G sub s s sub G  +  G sub d d sub G : -->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Gr</mml:mi>
@@ -244,8 +243,8 @@
                                     </mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
-                        </mml:math></informalequation>
-                        <informalequation><mml:math>
+                        </mml:math></inlineequation>
+                        <inlineequation><mml:math>
                             <!-- eqn: Br  =    B sub s s sub B  +  B sub d d sub B : -->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Br</mml:mi>
@@ -268,10 +267,10 @@
                                     </mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
-                        </mml:math></informalequation>
+                        </mml:math></inlineequation>
                         </entry>
                         <entry align="left">
-                        <informalequation><mml:math>
+                        <inlineequation><mml:math>
                             <!-- eqn: Ar  =    A sub s s sub A  +  A sub d d sub A : -->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Ar</mml:mi>
@@ -294,7 +293,7 @@
                                     </mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
-                        </mml:math></informalequation>
+                        </mml:math></inlineequation>
                         </entry>
                     </row>
                     <row>
@@ -302,7 +301,7 @@
                         <constant>GL_FUNC_SUBTRACT</constant>
                         </entry>
                         <entry align="left">
-                        <informalequation><mml:math>
+                        <inlineequation><mml:math>
                             <!-- eqn: Rr  =      R sub s s sub R  -  R sub d d sub R : -->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Rr</mml:mi>
@@ -325,8 +324,8 @@
                                     </mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
-                        </mml:math></informalequation>
-                        <informalequation><mml:math>
+                        </mml:math></inlineequation>
+                        <inlineequation><mml:math>
                             <!-- eqn: Gr  =    G sub s s sub G  -  G sub d d sub G : -->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Gr</mml:mi>
@@ -349,8 +348,8 @@
                                     </mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
-                        </mml:math></informalequation>
-                        <informalequation><mml:math>
+                        </mml:math></inlineequation>
+                        <inlineequation><mml:math>
                             <!-- eqn: Br  =    B sub s s sub B  -  B sub d d sub B : -->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Br</mml:mi>
@@ -373,10 +372,10 @@
                                     </mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
-                        </mml:math></informalequation>
+                        </mml:math></inlineequation>
                         </entry>
                         <entry align="left">
-                        <informalequation><mml:math>
+                        <inlineequation><mml:math>
                             <!-- eqn: Ar  =    A sub s s sub A  -  A sub d d sub A : -->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Ar</mml:mi>
@@ -399,7 +398,7 @@
                                     </mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
-                        </mml:math></informalequation>
+                        </mml:math></inlineequation>
                         </entry>
                     </row>
                     <row>
@@ -407,7 +406,7 @@
                         <constant>GL_FUNC_REVERSE_SUBTRACT</constant>
                         </entry>
                         <entry align="left">
-                            <informalequation><mml:math>
+                            <inlineequation><mml:math>
                                 <!-- eqn: Rr  =      R sub d d sub R  -  R sub s s sub R : -->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Rr</mml:mi>
@@ -430,8 +429,8 @@
                                         </mml:msub>
                                     </mml:mrow>
                                 </mml:mrow>
-                            </mml:math></informalequation>
-                            <informalequation><mml:math>
+                            </mml:math></inlineequation>
+                            <inlineequation><mml:math>
                                 <!-- eqn: Gr  =    G sub d d sub G  -  G sub s s sub G : -->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Gr</mml:mi>
@@ -454,8 +453,8 @@
                                         </mml:msub>
                                     </mml:mrow>
                                 </mml:mrow>
-                            </mml:math></informalequation>
-                            <informalequation><mml:math>
+                            </mml:math></inlineequation>
+                            <inlineequation><mml:math>
                                 <!-- eqn: Br  =    B sub d d sub B  -  B sub s s sub B : -->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Br</mml:mi>
@@ -478,10 +477,10 @@
                                         </mml:msub>
                                     </mml:mrow>
                                 </mml:mrow>
-                            </mml:math></informalequation>
+                            </mml:math></inlineequation>
                         </entry>
                         <entry align="left">
-                            <informalequation><mml:math>
+                            <inlineequation><mml:math>
                                 <!-- eqn: Ar  =    A sub d d sub A  -  A sub s s sub A : -->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Ar</mml:mi>
@@ -504,7 +503,7 @@
                                         </mml:msub>
                                     </mml:mrow>
                                 </mml:mrow>
-                            </mml:math></informalequation>
+                            </mml:math></inlineequation>
                         </entry>
                     </row>
                     <row>
@@ -512,7 +511,7 @@
                         <constant>GL_MIN</constant>
                         </entry>
                         <entry align="left">
-                            <informalequation><mml:math>
+                            <inlineequation><mml:math>
                                 <!-- eqn: Rr  =      min ( R sub s, R sub d): -->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Rr</mml:mi>
@@ -534,8 +533,8 @@
                                         </mml:mfenced>
                                     </mml:mrow>
                                 </mml:mrow>
-                            </mml:math></informalequation>
-                            <informalequation><mml:math>
+                            </mml:math></inlineequation>
+                            <inlineequation><mml:math>
                                 <!-- eqn: Gr  =      min ( G sub s, G sub d): -->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Gr</mml:mi>
@@ -557,8 +556,8 @@
                                         </mml:mfenced>
                                     </mml:mrow>
                                 </mml:mrow>
-                            </mml:math></informalequation>
-                            <informalequation><mml:math>
+                            </mml:math></inlineequation>
+                            <inlineequation><mml:math>
                                 <!-- eqn: Br  =      min ( B sub s, B sub d): -->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Br</mml:mi>
@@ -580,10 +579,10 @@
                                         </mml:mfenced>
                                     </mml:mrow>
                                 </mml:mrow>
-                            </mml:math></informalequation>
+                            </mml:math></inlineequation>
                         </entry>
                         <entry align="left">
-                            <informalequation><mml:math>
+                            <inlineequation><mml:math>
                                 <!-- eqn: Ar  =      min ( A sub s, A sub d): -->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Ar</mml:mi>
@@ -605,7 +604,7 @@
                                         </mml:mfenced>
                                     </mml:mrow>
                                 </mml:mrow>
-                            </mml:math></informalequation>
+                            </mml:math></inlineequation>
                         </entry>
                     </row>
                     <row>
@@ -613,7 +612,7 @@
                         <constant>GL_MAX</constant>
                         </entry>
                         <entry align="left">
-                            <informalequation><mml:math>
+                            <inlineequation><mml:math>
                                 <!-- eqn: Rr  =      max ( R sub s, R sub d): -->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Rr</mml:mi>
@@ -635,8 +634,8 @@
                                         </mml:mfenced>
                                     </mml:mrow>
                                 </mml:mrow>
-                            </mml:math></informalequation>
-                            <informalequation><mml:math>
+                            </mml:math></inlineequation>
+                            <inlineequation><mml:math>
                                 <!-- eqn: Gr  =      max ( G sub s, G sub d): -->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Gr</mml:mi>
@@ -658,8 +657,8 @@
                                         </mml:mfenced>
                                     </mml:mrow>
                                 </mml:mrow>
-                            </mml:math></informalequation>
-                            <informalequation><mml:math>
+                            </mml:math></inlineequation>
+                            <inlineequation><mml:math>
                                 <!-- eqn: Br  =      max ( B sub s, B sub d): -->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Br</mml:mi>
@@ -681,10 +680,10 @@
                                         </mml:mfenced>
                                     </mml:mrow>
                                 </mml:mrow>
-                            </mml:math></informalequation>
+                            </mml:math></inlineequation>
                         </entry>
                         <entry align="left">
-                            <informalequation><mml:math>
+                            <inlineequation><mml:math>
                                 <!-- eqn: Ar  =      max ( A sub s, A sub d): -->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Ar</mml:mi>
@@ -706,7 +705,7 @@
                                         </mml:mfenced>
                                     </mml:mrow>
                                 </mml:mrow>
-                            </mml:math></informalequation>
+                            </mml:math></inlineequation>
                         </entry>
                     </row>
                 </tbody>
@@ -714,7 +713,7 @@
         </informaltable>
         </para>
         <para>
-            The results of these equations are clamped to the range 
+            The results of these equations are clamped to the range
                         <inlineequation><mml:math>
                             <!-- eqn: [0,1]: -->
                             <mml:mfenced open="[" close="]">

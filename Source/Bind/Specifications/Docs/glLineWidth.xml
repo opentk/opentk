@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glLineWidth">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glLineWidth</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -24,7 +24,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -58,17 +57,18 @@
             If
             <inlineequation><mml:math>
                 <!-- eqn: | DELTA x |  >=  | DELTA y |:-->
+                <!-- Use Unicode for &Delta; = &#x394; and &VerticalBar; = &#x02223; -->
                 <mml:mrow>
-                    <mml:mfenced open="&VerticalBar;" close="&VerticalBar;">
+                    <mml:mfenced open="&#x02223;" close="&#x02223;">
                         <mml:mrow>
-                            <mml:mo>&Delta;</mml:mo>
+                            <mml:mo>&#x394;</mml:mo>
                             <mml:mi mathvariant="italic">x</mml:mi>
                         </mml:mrow>
                     </mml:mfenced>
                     <mml:mo>&gt;=</mml:mo>
-                    <mml:mfenced open="&VerticalBar;" close="&VerticalBar;">
+                    <mml:mfenced open="&#x02223;" close="&#x02223;">
                         <mml:mrow>
-                            <mml:mo>&Delta;</mml:mo>
+                            <mml:mo>&#x394;</mml:mo>
                             <mml:mi mathvariant="italic">y</mml:mi>
                         </mml:mrow>
                     </mml:mfenced>

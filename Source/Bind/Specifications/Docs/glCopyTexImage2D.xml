@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glCopyTexImage2D">
+    <refentryinfo>
+        <copyright>
+            <year>2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>2013</year>
-                <holder>Khronos Group</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glCopyTexImage2D</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -31,7 +31,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -96,7 +95,7 @@
                     <constant>GL_RGBA16</constant>,
                     <constant>GL_SRGB</constant>,
                     <constant>GL_SRGB8</constant>,
-                    <constant>GL_SRGB_ALPHA</constant>, or 
+                    <constant>GL_SRGB_ALPHA</constant>, or
                     <constant>GL_SRGB8_ALPHA8</constant>.
                 </para>
             </listitem>
@@ -145,7 +144,7 @@
         </para>
         <para>
             The screen-aligned pixel rectangle with lower left corner at (<parameter>x</parameter>,
-            <parameter>y</parameter>) and with a width of 
+            <parameter>y</parameter>) and with a width of
             <inlineequation><mml:math>
                 <mml:mi mathvariant="italic">width</mml:mi>
             </mml:math></inlineequation>
@@ -161,7 +160,7 @@
             The pixels in the rectangle are processed exactly as if
             <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry> had been called, but the process stops just before
             final conversion.
-            At this point all pixel component values are clamped to the range 
+            At this point all pixel component values are clamped to the range
             <inlineequation><mml:math>
                 <!-- eqn: [0,1]: -->
                 <mml:mfenced open="[" close="]">
@@ -173,14 +172,14 @@
             array.
         </para>
         <para>
-            Pixel ordering is such that lower 
+            Pixel ordering is such that lower
             <inlineequation><mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>
-            and 
+            and
             <inlineequation><mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>
             screen coordinates correspond to
-            lower 
+            lower
             <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
-            and 
+            and
             <inlineequation><mml:math><mml:mi mathvariant="italic">t</mml:mi></mml:math></inlineequation>
             texture coordinates.
         </para>
@@ -220,7 +219,7 @@
         </para>
         <para>
             <constant>GL_INVALID_VALUE</constant> may be generated if <parameter>level</parameter> is greater
-            than 
+            than
             <inlineequation><mml:math>
                 <!-- eqn: log sub 2 max: -->
                 <mml:mrow>
@@ -231,7 +230,7 @@
                     <mml:mi mathvariant="italic">max</mml:mi>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            where 
+            where
             <inlineequation><mml:math><mml:mi mathvariant="italic">max</mml:mi></mml:math></inlineequation>
             is the returned value of <constant>GL_MAX_TEXTURE_SIZE</constant>.
         </para>

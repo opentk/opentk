@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glPolygonOffset">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glPolygonOffset</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -25,7 +25,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -54,7 +53,7 @@
             <constant>GL_POLYGON_OFFSET_POINT</constant> is enabled, each
             fragment's <emphasis>depth</emphasis> value will be offset after it is interpolated
             from the <emphasis>depth</emphasis> values of the appropriate vertices.
-            The value of the offset is 
+            The value of the offset is
             <inlineequation><mml:math>
                 <!-- eqn: factor  *  DZ   +   r  *  units: -->
                 <mml:mrow>
@@ -71,13 +70,13 @@
                     </mml:mrow>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            where 
+            where
             <inlineequation><mml:math>
                 <!-- eqn: DZ: -->
                 <mml:mi mathvariant="italic">DZ</mml:mi>
             </mml:math></inlineequation>
             is a measurement of the change in depth relative to the screen
-            area of the polygon, and 
+            area of the polygon, and
             <inlineequation><mml:math><mml:mi mathvariant="italic">r</mml:mi></mml:math></inlineequation>
             is the smallest value that is guaranteed to
             produce a resolvable offset for a given implementation.

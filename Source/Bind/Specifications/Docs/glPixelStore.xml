@@ -2,13 +2,17 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glPixelStore">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glPixelStore</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -32,7 +36,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -179,7 +182,7 @@
                     <para>
                         If greater than 0,
                         <constant>GL_PACK_ROW_LENGTH</constant> defines the number of pixels in a row.
-                        If the first pixel of a row is placed at location 
+                        If the first pixel of a row is placed at location
                         <inlineequation><mml:math><mml:mi mathvariant="italic">p</mml:mi></mml:math></inlineequation>
                         in memory,
                         then the location of the first pixel of the next row is obtained by skipping
@@ -209,7 +212,7 @@
                                                         </mml:mfrac>
                                                     </mml:mfenced>
                                                     <mml:mo>&it;</mml:mo>
-                                                    <mml:mfenced open="&LeftCeiling;" close="&RightCeiling;">
+                                                    <mml:mfenced open="&lceil;" close="&rceil;">
                                                         <mml:mfrac>
                                                             <mml:mfenced open="" close="">
                                                                 <mml:mrow>
@@ -250,20 +253,20 @@
                     </para>
                     <para>
                         components or indices,
-                        where 
+                        where
                         <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
                         is the number of components or indices in a pixel,
                         <inlineequation><mml:math><mml:mi mathvariant="italic">l</mml:mi></mml:math></inlineequation>
                         is the number of pixels in a row
                         (<constant>GL_PACK_ROW_LENGTH</constant> if it is greater than 0,
-                        the 
+                        the
                         <inlineequation><mml:math><mml:mi mathvariant="italic">width</mml:mi></mml:math></inlineequation>
                         argument to the pixel routine otherwise),
                         <inlineequation><mml:math><mml:mi mathvariant="italic">a</mml:mi></mml:math></inlineequation>
                         is the value of <constant>GL_PACK_ALIGNMENT</constant>, and
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
                         is the size, in bytes, of a single component
-                        (if 
+                        (if
                         <inlineequation><mml:math>
                             <!-- eqn: a < s: -->
                             <mml:mrow>
@@ -272,7 +275,7 @@
                                 <mml:mi mathvariant="italic">s</mml:mi>
                             </mml:mrow>
                         </mml:math></inlineequation>,
-                        then it is as if 
+                        then it is as if
                         <inlineequation><mml:math>
                             <!-- eqn: a  =  s: -->
                             <mml:mrow>
@@ -295,7 +298,7 @@
                                     <mml:mo>&it;</mml:mo>
                                     <mml:mi mathvariant="italic">a</mml:mi>
                                     <mml:mo>&it;</mml:mo>
-                                    <mml:mfenced open="&LeftCeiling;" close="&RightCeiling;">
+                                    <mml:mfenced open="&lceil;" close="&rceil;">
                                         <mml:mfrac>
                                             <mml:mfenced open="" close="">
                                                 <mml:mrow>
@@ -344,7 +347,7 @@
                         <constant>GL_PACK_IMAGE_HEIGHT</constant> defines the number of pixels in an image
                         three-dimensional texture volume, where ``image'' is defined by all pixels
                         sharing the same third dimension index.
-                        If the first pixel of a row is placed at location 
+                        If the first pixel of a row is placed at location
                         <inlineequation><mml:math><mml:mi mathvariant="italic">p</mml:mi></mml:math></inlineequation>
                         in memory,
                         then the location of the first pixel of the next row is obtained by skipping
@@ -376,7 +379,7 @@
                                                         </mml:mfrac>
                                                     </mml:mfenced>
                                                     <mml:mo>&it;</mml:mo>
-                                                    <mml:mfenced open="&LeftCeiling;" close="&RightCeiling;">
+                                                    <mml:mfenced open="&lceil;" close="&rceil;">
                                                         <mml:mfrac>
                                                             <mml:mfenced open="" close="">
                                                                 <mml:mrow>
@@ -418,27 +421,27 @@
                         </mml:math></informalequation>
                     </para>
                     <para>
-                        components or indices, where 
+                        components or indices, where
                         <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
                         is the number of components or indices
-                        in a pixel, 
+                        in a pixel,
                         <inlineequation><mml:math><mml:mi mathvariant="italic">l</mml:mi></mml:math></inlineequation>
                         is the number of pixels in a row
                         (<constant>GL_PACK_ROW_LENGTH</constant> if it is greater than 0, the
                         <inlineequation><mml:math><mml:mi mathvariant="italic">width</mml:mi></mml:math></inlineequation>
-                        argument to <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry> otherwise), 
+                        argument to <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry> otherwise),
                         <inlineequation><mml:math><mml:mi mathvariant="italic">h</mml:mi></mml:math></inlineequation>
                         is the number of
                         rows in a pixel image (<constant>GL_PACK_IMAGE_HEIGHT</constant> if it is greater than
-                        0, the 
+                        0, the
                         <inlineequation><mml:math><mml:mi mathvariant="italic">height</mml:mi></mml:math></inlineequation>
                         argument to the <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry> routine otherwise),
                         <inlineequation><mml:math><mml:mi mathvariant="italic">a</mml:mi></mml:math></inlineequation>
                         is the value of
-                        <constant>GL_PACK_ALIGNMENT</constant>, and 
+                        <constant>GL_PACK_ALIGNMENT</constant>, and
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
                         is the size, in bytes, of a single
-                        component (if 
+                        component (if
                         <inlineequation><mml:math>
                             <!-- eqn: a < s: -->
                             <mml:mrow>
@@ -447,7 +450,7 @@
                                 <mml:mi mathvariant="italic">s</mml:mi>
                             </mml:mrow>
                         </mml:math></inlineequation>,
-                        then it is as if 
+                        then it is as if
                         <inlineequation><mml:math>
                             <!-- eqn: a = s: -->
                             <mml:mrow>
@@ -480,10 +483,10 @@
                         These values are provided as a convenience to the programmer;
                         they provide no functionality that cannot be duplicated simply by
                         incrementing the pointer passed to <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>.
-                        Setting <constant>GL_PACK_SKIP_PIXELS</constant> to 
+                        Setting <constant>GL_PACK_SKIP_PIXELS</constant> to
                         <inlineequation><mml:math><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>
                         is equivalent to incrementing
-                        the pointer by 
+                        the pointer by
                         <inlineequation><mml:math>
                             <!-- eqn: i n: -->
                             <mml:mrow>
@@ -493,13 +496,13 @@
                             </mml:mrow>
                         </mml:math></inlineequation>
                         components or indices,
-                        where 
+                        where
                         <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
                         is the number of components or indices in each pixel.
-                        Setting <constant>GL_PACK_SKIP_ROWS</constant> to 
+                        Setting <constant>GL_PACK_SKIP_ROWS</constant> to
                         <inlineequation><mml:math><mml:mi mathvariant="italic">j</mml:mi></mml:math></inlineequation>
                         is equivalent to incrementing
-                        the pointer by 
+                        the pointer by
                         <inlineequation><mml:math>
                             <!-- eqn: j m: -->
                             <mml:mrow>
@@ -509,14 +512,14 @@
                             </mml:mrow>
                         </mml:math></inlineequation>
                         components or indices,
-                        where 
+                        where
                         <inlineequation><mml:math><mml:mi mathvariant="italic">m</mml:mi></mml:math></inlineequation>
                         is the number of components or indices per row,
                         as just computed in the <constant>GL_PACK_ROW_LENGTH</constant> section.
-                        Setting <constant>GL_PACK_SKIP_IMAGES</constant> to 
+                        Setting <constant>GL_PACK_SKIP_IMAGES</constant> to
                         <inlineequation><mml:math><mml:mi mathvariant="italic">k</mml:mi></mml:math></inlineequation>
                         is equivalent to incrementing
-                        the pointer by 
+                        the pointer by
                         <inlineequation><mml:math>
                             <!-- eqn: k p: -->
                             <mml:mrow>
@@ -525,7 +528,7 @@
                                 <mml:mi mathvariant="italic">p</mml:mi>
                             </mml:mrow>
                         </mml:math></inlineequation>,
-                        where 
+                        where
                         <inlineequation><mml:math><mml:mi mathvariant="italic">p</mml:mi></mml:math></inlineequation>
                         is the number of components or indices
                         per image, as computed in the <constant>GL_PACK_IMAGE_HEIGHT</constant> section.
@@ -651,7 +654,7 @@
                     <para>
                         If greater than 0,
                         <constant>GL_UNPACK_ROW_LENGTH</constant> defines the number of pixels in a row.
-                        If the first pixel of a row is placed at location 
+                        If the first pixel of a row is placed at location
                         <inlineequation><mml:math><mml:mi mathvariant="italic">p</mml:mi></mml:math></inlineequation>
                         in memory,
                         then the location of the first pixel of the next row is obtained by skipping
@@ -681,7 +684,7 @@
                                                         </mml:mfrac>
                                                     </mml:mfenced>
                                                     <mml:mo>&it;</mml:mo>
-                                                    <mml:mfenced open="&LeftCeiling;" close="&RightCeiling;">
+                                                    <mml:mfenced open="&lceil;" close="&rceil;">
                                                         <mml:mfrac>
                                                             <mml:mfenced open="" close="">
                                                                 <mml:mrow>
@@ -722,20 +725,20 @@
                     </para>
                     <para>
                         components or indices,
-                        where 
+                        where
                         <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
                         is the number of components or indices in a pixel,
                         <inlineequation><mml:math><mml:mi mathvariant="italic">l</mml:mi></mml:math></inlineequation>
                         is the number of pixels in a row
                         (<constant>GL_UNPACK_ROW_LENGTH</constant> if it is greater than 0,
-                        the 
+                        the
                         <inlineequation><mml:math><mml:mi mathvariant="italic">width</mml:mi></mml:math></inlineequation>
                         argument to the pixel routine otherwise),
                         <inlineequation><mml:math><mml:mi mathvariant="italic">a</mml:mi></mml:math></inlineequation>
                         is the value of <constant>GL_UNPACK_ALIGNMENT</constant>, and
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
                         is the size, in bytes, of a single component
-                        (if 
+                        (if
                         <inlineequation><mml:math>
                             <!-- eqn: a < s: -->
                             <mml:mrow>
@@ -744,7 +747,7 @@
                                 <mml:mi mathvariant="italic">s</mml:mi>
                             </mml:mrow>
                         </mml:math></inlineequation>,
-                        then it is as if 
+                        then it is as if
                         <inlineequation><mml:math>
                             <!-- eqn: a = s: -->
                             <mml:mrow>
@@ -767,7 +770,7 @@
                                     <mml:mo>&it;</mml:mo>
                                     <mml:mi mathvariant="italic">a</mml:mi>
                                     <mml:mo>&it;</mml:mo>
-                                    <mml:mfenced open="&LeftCeiling;" close="&RightCeiling;">
+                                    <mml:mfenced open="&lceil;" close="&rceil;">
                                         <mml:mfrac>
                                             <mml:mfenced open="" close="">
                                                 <mml:mrow>
@@ -816,7 +819,7 @@
                         <constant>GL_UNPACK_IMAGE_HEIGHT</constant> defines the number of pixels in an image of
                         a three-dimensional texture volume.  Where ``image'' is defined by all
                         pixel sharing the same third dimension index.
-                        If the first pixel of a row is placed at location 
+                        If the first pixel of a row is placed at location
                         <inlineequation><mml:math><mml:mi mathvariant="italic">p</mml:mi></mml:math></inlineequation>
                         in memory,
                         then the location of the first pixel of the next row is obtained by skipping
@@ -848,7 +851,7 @@
                                                         </mml:mfrac>
                                                     </mml:mfenced>
                                                     <mml:mo>&it;</mml:mo>
-                                                    <mml:mfenced open="&LeftCeiling;" close="&RightCeiling;">
+                                                    <mml:mfenced open="&lceil;" close="&rceil;">
                                                         <mml:mfrac>
                                                             <mml:mfenced open="" close="">
                                                                 <mml:mrow>
@@ -891,25 +894,25 @@
                     </para>
                     <para>
                         components or indices,
-                        where 
+                        where
                         <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
                         is the number of components or indices in a pixel,
                         <inlineequation><mml:math><mml:mi mathvariant="italic">l</mml:mi></mml:math></inlineequation>
                         is the number of pixels in a row
                         (<constant>GL_UNPACK_ROW_LENGTH</constant> if it is greater than 0,
-                        the 
+                        the
                         <inlineequation><mml:math><mml:mi mathvariant="italic">width</mml:mi></mml:math></inlineequation>
                         argument to <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry> otherwise),
                         <inlineequation><mml:math><mml:mi mathvariant="italic">h</mml:mi></mml:math></inlineequation>
                         is the number of rows in an image (<constant>GL_UNPACK_IMAGE_HEIGHT</constant> if
-                        it is greater than 0, the 
+                        it is greater than 0, the
                         <inlineequation><mml:math><mml:mi mathvariant="italic">height</mml:mi></mml:math></inlineequation>
                         argument to <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry> otherwise),
                         <inlineequation><mml:math><mml:mi mathvariant="italic">a</mml:mi></mml:math></inlineequation>
                         is the value of <constant>GL_UNPACK_ALIGNMENT</constant>, and
                         <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
                         is the size, in bytes, of a single component
-                        (if 
+                        (if
                         <inlineequation><mml:math>
                             <!-- eqn: a < s: -->
                             <mml:mrow>
@@ -918,7 +921,7 @@
                                 <mml:mi mathvariant="italic">s</mml:mi>
                             </mml:mrow>
                         </mml:math></inlineequation>,
-                        then it is as if 
+                        then it is as if
                         <inlineequation><mml:math>
                             <!-- eqn: a  =  s: -->
                             <mml:mrow>
@@ -955,10 +958,10 @@
                         <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
                         <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry> or
                         <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>.
-                        Setting <constant>GL_UNPACK_SKIP_PIXELS</constant> to 
+                        Setting <constant>GL_UNPACK_SKIP_PIXELS</constant> to
                         <inlineequation><mml:math><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>
                         is equivalent to incrementing
-                        the pointer by 
+                        the pointer by
                         <inlineequation><mml:math>
                             <!-- eqn: i n: -->
                             <mml:mrow>
@@ -968,13 +971,13 @@
                             </mml:mrow>
                         </mml:math></inlineequation>
                         components or indices,
-                        where 
+                        where
                         <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
                         is the number of components or indices in each pixel.
-                        Setting <constant>GL_UNPACK_SKIP_ROWS</constant> to 
+                        Setting <constant>GL_UNPACK_SKIP_ROWS</constant> to
                         <inlineequation><mml:math><mml:mi mathvariant="italic">j</mml:mi></mml:math></inlineequation>
                         is equivalent to incrementing
-                        the pointer by 
+                        the pointer by
                         <inlineequation><mml:math>
                             <!-- eqn: j k: -->
                             <mml:mrow>
@@ -984,7 +987,7 @@
                             </mml:mrow>
                         </mml:math></inlineequation>
                         components or indices,
-                        where 
+                        where
                         <inlineequation><mml:math><mml:mi mathvariant="italic">k</mml:mi></mml:math></inlineequation>
                         is the number of components or indices per row,
                         as just computed in the <constant>GL_UNPACK_ROW_LENGTH</constant> section.
@@ -1418,9 +1421,9 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. <trademark class="copyright"></trademark> 2011
-            Khronos Group. This document is licensed under the SGI
+            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc. 
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group. 
+            This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>

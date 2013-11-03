@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glTexImage2D">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glTexImage2D</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -32,9 +32,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
-    <para>
-    </para>
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -210,7 +207,7 @@
             as an array of one-dimensional images.
         </para>
         <para>
-            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target 
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target
             (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a texture image is
             specified, <parameter>data</parameter> is treated as a byte offset into the buffer object's data store.
         </para>
@@ -251,10 +248,6 @@
             </varlistentry>
             <varlistentry>
                 <term><constant>GL_RGB</constant></term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
                 <term><constant>GL_BGR</constant></term>
                 <listitem>
                     <para>
@@ -267,10 +260,6 @@
             </varlistentry>
             <varlistentry>
                 <term><constant>GL_RGBA</constant></term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
                 <term><constant>GL_BGRA</constant></term>
                 <listitem>
                     <para>
@@ -337,17 +326,17 @@
             <constant>GL_COMPRESSED_RGBA</constant>, the GL will replace the internal format with the symbolic constant for a specific internal format and compress the texture before storage.  If no corresponding internal format is available, or the GL can not compress that image for any reason, the internal format is instead replaced with a corresponding base internal format.
         </para>
         <para>
-            If the <parameter>internalFormat</parameter> parameter is             
+            If the <parameter>internalFormat</parameter> parameter is
             <constant>GL_SRGB</constant>,
             <constant>GL_SRGB8</constant>,
             <constant>GL_SRGB_ALPHA</constant>, or
-            <constant>GL_SRGB8_ALPHA8</constant>, the texture is treated as if the red, green, or blue components are encoded in the sRGB color space.    Any alpha component is left unchanged.  The conversion from the sRGB encoded component 
+            <constant>GL_SRGB8_ALPHA8</constant>, the texture is treated as if the red, green, or blue components are encoded in the sRGB color space.    Any alpha component is left unchanged.  The conversion from the sRGB encoded component
             <inlineequation><mml:math>
                     <mml:msub><mml:mi mathvariant="italic">c</mml:mi>
                     <mml:mi mathvariant="italic">s</mml:mi>
                     </mml:msub>
             </mml:math></inlineequation>
-            to a linear component 
+            to a linear component
             <inlineequation><mml:math>
                     <mml:msub><mml:mi mathvariant="italic">c</mml:mi>
                     <mml:mi mathvariant="italic">l</mml:mi>
@@ -365,7 +354,7 @@
                 <mml:mo>=</mml:mo>
                 <mml:mrow>
                   <mml:mo>{</mml:mo>
-            
+
                   <mml:mtable columnalign="left">
                     <mml:mtr>
                       <mml:mtd columnalign="left">
@@ -433,7 +422,7 @@
             </inlineequation>
         </para>
         <para>
-            Assume         
+            Assume
             <inlineequation><mml:math>
                                 <mml:msub><mml:mi mathvariant="italic">c</mml:mi>
                                 <mml:mi mathvariant="italic">s</mml:mi>
@@ -523,7 +512,7 @@
             <constant>GL_INVALID_VALUE</constant> is generated if <parameter>level</parameter> is less than 0.
         </para>
         <para>
-            <constant>GL_INVALID_VALUE</constant> may be generated if <parameter>level</parameter> is greater than 
+            <constant>GL_INVALID_VALUE</constant> may be generated if <parameter>level</parameter> is greater than
             <inlineequation><mml:math>
                 <!-- eqn: log sub 2 (max): -->
                 <mml:mrow>
@@ -597,12 +586,12 @@
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
-            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer 
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer
             object such that the memory reads required would exceed the data store size.
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
-            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and <parameter>data</parameter> is not evenly divisible 
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and <parameter>data</parameter> is not evenly divisible
             into the number of bytes needed to store in memory a datum indicated by <parameter>type</parameter>.
         </para>
         <para>

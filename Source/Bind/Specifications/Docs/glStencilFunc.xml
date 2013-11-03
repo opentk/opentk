@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glStencilFunc">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glStencilFunc</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -16,7 +16,6 @@
         <refname>glStencilFunc</refname>
         <refpurpose>set front and back function and reference value for stencil testing</refpurpose>
     </refnamediv>
-    <!-- eqn: ignoring delim $$ -->
     <refsynopsisdiv><title>C Specification</title>
         <funcsynopsis>
             <funcprototype>
@@ -51,7 +50,7 @@
             <listitem>
                 <para>
                     Specifies the reference value for the stencil test.
-                    <parameter>ref</parameter> is clamped to the range 
+                    <parameter>ref</parameter> is clamped to the range
                     <inlineequation><mml:math>
                         <!-- eqn: [0, 2 sup n - 1]:-->
                         <mml:mfenced open="[" close="]">
@@ -65,7 +64,7 @@
                             </mml:mrow>
                         </mml:mfenced>
                     </mml:math></inlineequation>,
-                    where 
+                    where
                     <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
                     is the number of bitplanes in the stencil buffer. The
                     initial value is 0.
@@ -105,13 +104,13 @@
             To enable and disable the test, call <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glDisable</refentrytitle></citerefentry>
             with argument <constant>GL_STENCIL_TEST</constant>.
             To specify actions based on the outcome of the stencil test, call
-            <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry> or 
+            <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry> or
             <citerefentry><refentrytitle>glStencilOpSeparate</refentrytitle></citerefentry>.
         </para>
         <para>
-            There can be two separate sets of <parameter>func</parameter>, <parameter>ref</parameter>, and 
+            There can be two separate sets of <parameter>func</parameter>, <parameter>ref</parameter>, and
             <parameter>mask</parameter> parameters; one affects back-facing polygons, and the other
-            affects front-facing polygons as well as other non-polygon primitives. 
+            affects front-facing polygons as well as other non-polygon primitives.
             <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry> sets both front
             and back stencil state to the same values. Use <citerefentry><refentrytitle>glStencilFuncSeparate</refentrytitle></citerefentry>
             to set front and back stencil state to different values.
@@ -121,7 +120,7 @@
             It accepts one of eight values,
             shown in the following list.
             <parameter>ref</parameter> is an integer reference value that is used in the stencil comparison.
-            It is clamped to the range 
+            It is clamped to the range
             <inlineequation><mml:math>
                 <!-- eqn: [0, 2 sup n - 1]:-->
                 <mml:mfenced open="[" close="]">
@@ -135,7 +134,7 @@
                     </mml:mrow>
                 </mml:mfenced>
             </mml:math></inlineequation>,
-            where 
+            where
             <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
             is the number of bitplanes in the stencil buffer.
             <parameter>mask</parameter> is bitwise ANDed with both the reference value
@@ -164,7 +163,7 @@
                     </mml:mrow>
                 </mml:mfenced>
             </mml:math></inlineequation>,
-            where 
+            where
             <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
             is the number of bitplanes in the stencil buffer.
         </para>
@@ -259,10 +258,10 @@
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument 
-            <constant>GL_STENCIL_FUNC</constant>, <constant>GL_STENCIL_VALUE_MASK</constant>, 
-            <constant>GL_STENCIL_REF</constant>, <constant>GL_STENCIL_BACK_FUNC</constant>, 
-            <constant>GL_STENCIL_BACK_VALUE_MASK</constant>, <constant>GL_STENCIL_BACK_REF</constant>, 
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument
+            <constant>GL_STENCIL_FUNC</constant>, <constant>GL_STENCIL_VALUE_MASK</constant>,
+            <constant>GL_STENCIL_REF</constant>, <constant>GL_STENCIL_BACK_FUNC</constant>,
+            <constant>GL_STENCIL_BACK_VALUE_MASK</constant>, <constant>GL_STENCIL_BACK_REF</constant>,
             or <constant>GL_STENCIL_BITS</constant>
         </para>
         <para>

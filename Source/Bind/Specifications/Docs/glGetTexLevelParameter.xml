@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glGetTexLevelParameter">
+    <refentryinfo>
+        <copyright>
+            <year>2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>2013</year>
-                <holder>Khronos Group</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glGetTexLevelParameter</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -36,7 +36,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -78,9 +77,9 @@
                 <para>
                     Specifies the level-of-detail number of the desired image.
                     Level 0 is the base image level.
-                    Level 
+                    Level
                     <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
-                    is the 
+                    is the
                     <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>th
                     mipmap reduction image.
                 </para>
@@ -161,8 +160,6 @@
                 <term><constant>GL_TEXTURE_WIDTH</constant></term>
                 <listitem>
                     <para>
-                    </para>
-                    <para>
                         <parameter>params</parameter> returns a single value,
                         the width of the texture image.
                         The initial value is 0.
@@ -172,8 +169,6 @@
             <varlistentry>
                 <term><constant>GL_TEXTURE_HEIGHT</constant></term>
                 <listitem>
-                    <para>
-                    </para>
                     <para>
                         <parameter>params</parameter> returns a single value,
                         the height of the texture image.
@@ -185,8 +180,6 @@
                 <term><constant>GL_TEXTURE_DEPTH</constant></term>
                 <listitem>
                     <para>
-                    </para>
-                    <para>
                         <parameter>params</parameter> returns a single value,
                         the depth of the texture image.
                         The initial value is 0.
@@ -197,38 +190,18 @@
                 <term><constant>GL_TEXTURE_INTERNAL_FORMAT</constant></term>
                 <listitem>
                     <para>
-                    </para>
-                    <para>
                         <parameter>params</parameter> returns a single value,
                         the internal format of the texture image.
                     </para>
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term><constant>GL_TEXTURE_RED_TYPE</constant>,</term>
+                <term><constant>GL_TEXTURE_RED_TYPE</constant>,
+                      <constant>GL_TEXTURE_GREEN_TYPE</constant>,
+                      <constant>GL_TEXTURE_BLUE_TYPE</constant>,
+                      <constant>GL_TEXTURE_ALPHA_TYPE</constant>,
+                      <constant>GL_TEXTURE_DEPTH_TYPE</constant></term>
                 <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_GREEN_TYPE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_BLUE_TYPE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_ALPHA_TYPE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_DEPTH_TYPE</constant></term>
-                <listitem>
-                    <para>
-                    </para>
                     <para>
                         The data type used to store the component.
                         The types <constant>GL_NONE</constant>, <constant>GL_SIGNED_NORMALIZED</constant>,
@@ -240,27 +213,11 @@
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term><constant>GL_TEXTURE_RED_SIZE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_GREEN_SIZE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_BLUE_SIZE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_ALPHA_SIZE</constant>,</term>
-                <listitem>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><constant>GL_TEXTURE_DEPTH_SIZE</constant></term>
+                <term><constant>GL_TEXTURE_RED_SIZE</constant>,
+                      <constant>GL_TEXTURE_GREEN_SIZE</constant>,
+                      <constant>GL_TEXTURE_BLUE_SIZE</constant>,
+                      <constant>GL_TEXTURE_ALPHA_SIZE</constant>,
+                      <constant>GL_TEXTURE_DEPTH_SIZE</constant></term>
                 <listitem>
                     <para>
                     </para>
@@ -345,7 +302,7 @@
         </para>
         <para>
             <constant>GL_INVALID_VALUE</constant> may be generated if <parameter>level</parameter> is greater
-            than 
+            than
             <inlineequation><mml:math>
                 <!-- eqn: log sub 2: -->
                 <mml:msub><mml:mi mathvariant="italic">log</mml:mi>

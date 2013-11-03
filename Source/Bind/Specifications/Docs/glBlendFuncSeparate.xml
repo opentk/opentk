@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glBlendFuncSeparate">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glBlendFuncSeparate</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -35,7 +35,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -204,28 +203,26 @@
             where
         </para>
         <para>
-            <para>
-                <inlineequation><mml:math>
-                    <!-- eqn: k sub c  =  2 sup {m sub c} - 1: -->
+            <inlineequation><mml:math>
+                <!-- eqn: k sub c  =  2 sup {m sub c} - 1: -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                    <mml:mi mathvariant="italic">c</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
                     <mml:mrow>
-                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
-                        <mml:mi mathvariant="italic">c</mml:mi>
-                        </mml:msub>
-                        <mml:mo>=</mml:mo>
-                        <mml:mrow>
-                            <mml:msup><mml:mn>2</mml:mn>
-                            <mml:mfenced open="" close="">
-                                <mml:msub><mml:mi mathvariant="italic">m</mml:mi>
-                                <mml:mi mathvariant="italic">c</mml:mi>
-                                </mml:msub>
-                            </mml:mfenced>
-                            </mml:msup>
-                            <mml:mo>-</mml:mo>
-                            <mml:mn>1</mml:mn>
-                        </mml:mrow>
+                        <mml:msup><mml:mn>2</mml:mn>
+                        <mml:mfenced open="" close="">
+                            <mml:msub><mml:mi mathvariant="italic">m</mml:mi>
+                            <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:msub>
+                        </mml:mfenced>
+                        </mml:msup>
+                        <mml:mo>-</mml:mo>
+                        <mml:mn>1</mml:mn>
                     </mml:mrow>
-                </mml:math></inlineequation>
-            </para>
+                </mml:mrow>
+            </mml:math></inlineequation>
         </para>
         <para>
             and
@@ -288,7 +285,7 @@
                     </mml:msub>
                 </mml:mfenced>
             </mml:math></inlineequation>.
-            All scale factors have range 
+            All scale factors have range
             <inlineequation><mml:math>
                 <!-- eqn: [0,1]: -->
                 <mml:mfenced open="[" close="]">
@@ -1190,181 +1187,177 @@
             In the table,
         </para>
         <para>
-            <para>
-                <inlineequation><mml:math>
-                    <!-- eqn: i  =   min (A sub s , 1 - {A sub d}): -->
+            <inlineequation><mml:math>
+                <!-- eqn: i  =   min (A sub s , 1 - {A sub d}): -->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">i</mml:mi>
+                    <mml:mo>=</mml:mo>
                     <mml:mrow>
-                        <mml:mi mathvariant="italic">i</mml:mi>
-                        <mml:mo>=</mml:mo>
-                        <mml:mrow>
-                            <mml:mi mathvariant="italic">min</mml:mi>
-                            <mml:mo>&af;</mml:mo>
-                            <mml:mfenced open="(" close=")">
-                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
-                                <mml:mi mathvariant="italic">s</mml:mi>
-                                </mml:msub>
-                                <mml:mrow>
-                                    <mml:mn>1</mml:mn>
-                                    <mml:mo>-</mml:mo>
-                                    <mml:mfenced open="" close="">
-                                        <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
-                                        <mml:mi mathvariant="italic">d</mml:mi>
-                                        </mml:msub>
-                                    </mml:mfenced>
-                                </mml:mrow>
-                            </mml:mfenced>
-                        </mml:mrow>
+                        <mml:mi mathvariant="italic">min</mml:mi>
+                        <mml:mo>&af;</mml:mo>
+                        <mml:mfenced open="(" close=")">
+                            <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                            <mml:mi mathvariant="italic">s</mml:mi>
+                            </mml:msub>
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">d</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:mfenced>
                     </mml:mrow>
-                </mml:math></inlineequation>
-            </para>
+                </mml:mrow>
+            </mml:math></inlineequation>
         </para>
         <para>
             To determine the blended RGBA values of a pixel,
             the system uses the following equations:
         </para>
         <para>
-            <para>
-                <inlineequation><mml:math>
-                    <!-- eqn: R sub d  =      min ( k sub R,  R sub s s sub R + R sub d d sub R ): -->
+            <inlineequation><mml:math>
+                <!-- eqn: R sub d  =      min ( k sub R,  R sub s s sub R + R sub d d sub R ): -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
                     <mml:mrow>
-                        <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
-                        <mml:mi mathvariant="italic">d</mml:mi>
-                        </mml:msub>
-                        <mml:mo>=</mml:mo>
-                        <mml:mrow>
-                            <mml:mi mathvariant="italic">min</mml:mi>
-                            <mml:mo>&af;</mml:mo>
-                            <mml:mfenced open="(" close=")">
-                                <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                        <mml:mi mathvariant="italic">min</mml:mi>
+                        <mml:mo>&af;</mml:mo>
+                        <mml:mfenced open="(" close=")">
+                            <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                            <mml:mi mathvariant="italic">R</mml:mi>
+                            </mml:msub>
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
                                 <mml:mi mathvariant="italic">R</mml:mi>
                                 </mml:msub>
-                                <mml:mrow>
-                                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
-                                    <mml:mi mathvariant="italic">s</mml:mi>
-                                    </mml:msub>
-                                    <mml:mo>&it;</mml:mo>
-                                    <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                    <mml:mi mathvariant="italic">R</mml:mi>
-                                    </mml:msub>
-                                    <mml:mo>+</mml:mo>
-                                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
-                                    <mml:mi mathvariant="italic">d</mml:mi>
-                                    </mml:msub>
-                                    <mml:mo>&it;</mml:mo>
-                                    <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                    <mml:mi mathvariant="italic">R</mml:mi>
-                                    </mml:msub>
-                                </mml:mrow>
-                            </mml:mfenced>
-                        </mml:mrow>
+                                <mml:mo>+</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                                <mml:mi mathvariant="italic">d</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+                                <mml:mi mathvariant="italic">R</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:mfenced>
                     </mml:mrow>
-                </mml:math></inlineequation>
-                <inlineequation><mml:math>
-                    <!-- eqn: G sub d  =    min ( k sub G,  G sub s s sub G + G sub d d sub G ): -->
+                </mml:mrow>
+            </mml:math></inlineequation>
+            <inlineequation><mml:math>
+                <!-- eqn: G sub d  =    min ( k sub G,  G sub s s sub G + G sub d d sub G ): -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
                     <mml:mrow>
-                        <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
-                        <mml:mi mathvariant="italic">d</mml:mi>
-                        </mml:msub>
-                        <mml:mo>=</mml:mo>
-                        <mml:mrow>
-                            <mml:mi mathvariant="italic">min</mml:mi>
-                            <mml:mo>&af;</mml:mo>
-                            <mml:mfenced open="(" close=")">
-                                <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                        <mml:mi mathvariant="italic">min</mml:mi>
+                        <mml:mo>&af;</mml:mo>
+                        <mml:mfenced open="(" close=")">
+                            <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                            <mml:mi mathvariant="italic">G</mml:mi>
+                            </mml:msub>
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
                                 <mml:mi mathvariant="italic">G</mml:mi>
                                 </mml:msub>
-                                <mml:mrow>
-                                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
-                                    <mml:mi mathvariant="italic">s</mml:mi>
-                                    </mml:msub>
-                                    <mml:mo>&it;</mml:mo>
-                                    <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                    <mml:mi mathvariant="italic">G</mml:mi>
-                                    </mml:msub>
-                                    <mml:mo>+</mml:mo>
-                                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
-                                    <mml:mi mathvariant="italic">d</mml:mi>
-                                    </mml:msub>
-                                    <mml:mo>&it;</mml:mo>
-                                    <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                    <mml:mi mathvariant="italic">G</mml:mi>
-                                    </mml:msub>
-                                </mml:mrow>
-                            </mml:mfenced>
-                        </mml:mrow>
+                                <mml:mo>+</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                                <mml:mi mathvariant="italic">d</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+                                <mml:mi mathvariant="italic">G</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:mfenced>
                     </mml:mrow>
-                </mml:math></inlineequation>
-                <inlineequation><mml:math>
-                    <!-- eqn: B sub d  =    min ( k sub B,  B sub s s sub B + B sub d d sub B ): -->
+                </mml:mrow>
+            </mml:math></inlineequation>
+            <inlineequation><mml:math>
+                <!-- eqn: B sub d  =    min ( k sub B,  B sub s s sub B + B sub d d sub B ): -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
                     <mml:mrow>
-                        <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
-                        <mml:mi mathvariant="italic">d</mml:mi>
-                        </mml:msub>
-                        <mml:mo>=</mml:mo>
-                        <mml:mrow>
-                            <mml:mi mathvariant="italic">min</mml:mi>
-                            <mml:mo>&af;</mml:mo>
-                            <mml:mfenced open="(" close=")">
-                                <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                        <mml:mi mathvariant="italic">min</mml:mi>
+                        <mml:mo>&af;</mml:mo>
+                        <mml:mfenced open="(" close=")">
+                            <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                            <mml:mi mathvariant="italic">B</mml:mi>
+                            </mml:msub>
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
                                 <mml:mi mathvariant="italic">B</mml:mi>
                                 </mml:msub>
-                                <mml:mrow>
-                                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
-                                    <mml:mi mathvariant="italic">s</mml:mi>
-                                    </mml:msub>
-                                    <mml:mo>&it;</mml:mo>
-                                    <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                    <mml:mi mathvariant="italic">B</mml:mi>
-                                    </mml:msub>
-                                    <mml:mo>+</mml:mo>
-                                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
-                                    <mml:mi mathvariant="italic">d</mml:mi>
-                                    </mml:msub>
-                                    <mml:mo>&it;</mml:mo>
-                                    <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                    <mml:mi mathvariant="italic">B</mml:mi>
-                                    </mml:msub>
-                                </mml:mrow>
-                            </mml:mfenced>
-                        </mml:mrow>
+                                <mml:mo>+</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                                <mml:mi mathvariant="italic">d</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+                                <mml:mi mathvariant="italic">B</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:mfenced>
                     </mml:mrow>
-                </mml:math></inlineequation>
-                <inlineequation><mml:math>
-                    <!-- eqn: A sub d  =    min ( k sub A,  A sub s s sub A + A sub d d sub A ): -->
+                </mml:mrow>
+            </mml:math></inlineequation>
+            <inlineequation><mml:math>
+                <!-- eqn: A sub d  =    min ( k sub A,  A sub s s sub A + A sub d d sub A ): -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
                     <mml:mrow>
-                        <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
-                        <mml:mi mathvariant="italic">d</mml:mi>
-                        </mml:msub>
-                        <mml:mo>=</mml:mo>
-                        <mml:mrow>
-                            <mml:mi mathvariant="italic">min</mml:mi>
-                            <mml:mo>&af;</mml:mo>
-                            <mml:mfenced open="(" close=")">
-                                <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                        <mml:mi mathvariant="italic">min</mml:mi>
+                        <mml:mo>&af;</mml:mo>
+                        <mml:mfenced open="(" close=")">
+                            <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                            <mml:mi mathvariant="italic">A</mml:mi>
+                            </mml:msub>
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
                                 <mml:mi mathvariant="italic">A</mml:mi>
                                 </mml:msub>
-                                <mml:mrow>
-                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
-                                    <mml:mi mathvariant="italic">s</mml:mi>
-                                    </mml:msub>
-                                    <mml:mo>&it;</mml:mo>
-                                    <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                    <mml:mi mathvariant="italic">A</mml:mi>
-                                    </mml:msub>
-                                    <mml:mo>+</mml:mo>
-                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
-                                    <mml:mi mathvariant="italic">d</mml:mi>
-                                    </mml:msub>
-                                    <mml:mo>&it;</mml:mo>
-                                    <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                    <mml:mi mathvariant="italic">A</mml:mi>
-                                    </mml:msub>
-                                </mml:mrow>
-                            </mml:mfenced>
-                        </mml:mrow>
+                                <mml:mo>+</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">d</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+                                <mml:mi mathvariant="italic">A</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:mfenced>
                     </mml:mrow>
-                </mml:math></inlineequation>
-            </para>
+                </mml:mrow>
+            </mml:math></inlineequation>
         </para>
         <para>
             Despite the apparent precision of the above equations, blending arithmetic
@@ -1372,7 +1365,7 @@
             color values.  However, a blend factor that should be equal to 1 is
             guaranteed not to modify its multiplicand, and a blend factor equal to 0
             reduces its multiplicand to 0.  For example, when <parameter>srcRGB</parameter> is
-            <constant>GL_SRC_ALPHA</constant>, <parameter>dstRGB</parameter> is <constant>GL_ONE_MINUS_SRC_ALPHA</constant>, and 
+            <constant>GL_SRC_ALPHA</constant>, <parameter>dstRGB</parameter> is <constant>GL_ONE_MINUS_SRC_ALPHA</constant>, and
             <inlineequation><mml:math>
                 <!-- eqn: A sub s: -->
                 <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
@@ -1380,7 +1373,7 @@
                 </mml:msub>
             </mml:math></inlineequation>
             is
-            equal to 
+            equal to
             <inlineequation><mml:math>
                 <!-- eqn: k sub A: -->
                 <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
@@ -1390,56 +1383,54 @@
             the equations reduce to simple replacement:
         </para>
         <para>
-            <para>
-                <inlineequation><mml:math>
-                    <!-- eqn: R sub d  =      R sub s: -->
-                    <mml:mrow>
-                        <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
-                        <mml:mi mathvariant="italic">d</mml:mi>
-                        </mml:msub>
-                        <mml:mo>=</mml:mo>
-                        <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
-                        <mml:mi mathvariant="italic">s</mml:mi>
-                        </mml:msub>
-                    </mml:mrow>
-                </mml:math></inlineequation>
-                <inlineequation><mml:math>
-                    <!-- eqn: G sub d  =    G sub s: -->
-                    <mml:mrow>
-                        <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
-                        <mml:mi mathvariant="italic">d</mml:mi>
-                        </mml:msub>
-                        <mml:mo>=</mml:mo>
-                        <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
-                        <mml:mi mathvariant="italic">s</mml:mi>
-                        </mml:msub>
-                    </mml:mrow>
-                </mml:math></inlineequation>
-                <inlineequation><mml:math>
-                    <!-- eqn: B sub d  =    B sub s: -->
-                    <mml:mrow>
-                        <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
-                        <mml:mi mathvariant="italic">d</mml:mi>
-                        </mml:msub>
-                        <mml:mo>=</mml:mo>
-                        <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
-                        <mml:mi mathvariant="italic">s</mml:mi>
-                        </mml:msub>
-                    </mml:mrow>
-                </mml:math></inlineequation>
-                <inlineequation><mml:math>
-                    <!-- eqn: A sub d  =    A sub s: -->
-                    <mml:mrow>
-                        <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
-                        <mml:mi mathvariant="italic">d</mml:mi>
-                        </mml:msub>
-                        <mml:mo>=</mml:mo>
-                        <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
-                        <mml:mi mathvariant="italic">s</mml:mi>
-                        </mml:msub>
-                    </mml:mrow>
-                </mml:math></inlineequation>
-            </para>
+            <inlineequation><mml:math>
+                <!-- eqn: R sub d  =      R sub s: -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                    <mml:mi mathvariant="italic">s</mml:mi>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            <inlineequation><mml:math>
+                <!-- eqn: G sub d  =    G sub s: -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                    <mml:mi mathvariant="italic">s</mml:mi>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            <inlineequation><mml:math>
+                <!-- eqn: B sub d  =    B sub s: -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                    <mml:mi mathvariant="italic">s</mml:mi>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            <inlineequation><mml:math>
+                <!-- eqn: A sub d  =    A sub s: -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                    <mml:mi mathvariant="italic">s</mml:mi>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
         </para>
         <para>
         </para>
@@ -1447,7 +1438,7 @@
     <refsect1 id="notes"><title>Notes</title>
         <para>
             Incoming (source) alpha is correctly thought of as a material opacity,
-            ranging from 1.0 
+            ranging from 1.0
             (<inlineequation><mml:math>
                 <!-- eqn: K sub A: -->
                 <mml:msub><mml:mi mathvariant="italic">K</mml:mi>

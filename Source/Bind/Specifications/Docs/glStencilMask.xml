@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glStencilMask">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glStencilMask</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -24,7 +24,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -42,10 +41,10 @@
     <refsect1 id="description"><title>Description</title>
         <para>
             <function>glStencilMask</function> controls the writing of individual bits in the stencil planes.
-            The least significant 
+            The least significant
             <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
             bits of <parameter>mask</parameter>,
-            where 
+            where
             <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
             is the number of bits in the stencil buffer,
             specify a mask.
@@ -57,7 +56,7 @@
         </para>
         <para>
             There can be two separate <parameter>mask</parameter> writemasks; one affects back-facing polygons, and the other
-            affects front-facing polygons as well as other non-polygon primitives. 
+            affects front-facing polygons as well as other non-polygon primitives.
             <citerefentry><refentrytitle>glStencilMask</refentrytitle></citerefentry> sets both front
             and back stencil writemasks to the same values. Use <citerefentry><refentrytitle>glStencilMaskSeparate</refentrytitle></citerefentry>
             to set front and back stencil writemasks to different values.
@@ -72,8 +71,8 @@
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument 
-            <constant>GL_STENCIL_WRITEMASK</constant>, <constant>GL_STENCIL_BACK_WRITEMASK</constant>, 
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument
+            <constant>GL_STENCIL_WRITEMASK</constant>, <constant>GL_STENCIL_BACK_WRITEMASK</constant>,
             or <constant>GL_STENCIL_BITS</constant>
         </para>
     </refsect1>

@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glCompressedTexSubImage1D">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glCompressedTexSubImage1D</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -30,7 +30,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -102,7 +101,7 @@
         <para>
             <function>glCompressedTexSubImage1D</function> redefines a contiguous subregion of an existing one-dimensional
             texture image.  The texels referenced by <parameter>data</parameter> replace the portion of the
-            existing texture array with x indices <parameter>xoffset</parameter> and 
+            existing texture array with x indices <parameter>xoffset</parameter> and
             <inlineequation><mml:math>
                 <!-- eqn: xoffset  +  width  -  1: -->
                 <mml:mrow>
@@ -127,7 +126,7 @@
             compressed with <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry>.
         </para>
         <para>
-            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target 
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target
             (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a texture image is
             specified, <parameter>data</parameter> is treated as a byte offset into the buffer object's data store.
         </para>
@@ -159,7 +158,7 @@
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
-            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer 
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer
             object such that the memory reads required would exceed the data store size.
         </para>
         <para>

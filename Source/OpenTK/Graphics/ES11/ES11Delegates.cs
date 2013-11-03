@@ -438,7 +438,7 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void GenVertexArraysOES(Int32 n, [OutAttribute] UInt32* arrays);
             internal unsafe static GenVertexArraysOES glGenVertexArraysOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetBooleanv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] bool* @params);
+            internal unsafe delegate void GetBooleanv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] bool* data);
             internal unsafe static GetBooleanv glGetBooleanv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetBufferParameteriv(OpenTK.Graphics.ES11.VersionEsCm10 target, OpenTK.Graphics.ES11.VersionEsCm10 pname, [OutAttribute] Int32* @params);
@@ -480,7 +480,7 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void GetFixedvOES(OpenTK.Graphics.ES11.OesFixedPoint pname, [OutAttribute] int* @params);
             internal unsafe static GetFixedvOES glGetFixedvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetFloatv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Single* @params);
+            internal unsafe delegate void GetFloatv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Single* data);
             internal unsafe static GetFloatv glGetFloatv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetFramebufferAttachmentParameterivOES(OpenTK.Graphics.ES11.OesFramebufferObject target, OpenTK.Graphics.ES11.OesFramebufferObject attachment, OpenTK.Graphics.ES11.OesFramebufferObject pname, [OutAttribute] Int32* @params);
@@ -495,7 +495,7 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void GetInteger64vAPPLE(OpenTK.Graphics.ES11.AppleSync pname, [OutAttribute] Int64* @params);
             internal unsafe static GetInteger64vAPPLE glGetInteger64vAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetIntegerv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetIntegerv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Int32* data);
             internal unsafe static GetIntegerv glGetIntegerv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetLightfv(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [OutAttribute] Single* @params);

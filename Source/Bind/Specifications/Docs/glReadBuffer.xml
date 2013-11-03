@@ -2,13 +2,17 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glReadBuffer">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2011-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glReadBuffer</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -40,7 +44,7 @@
                     <constant>GL_BACK</constant>,
                     <constant>GL_LEFT</constant>,
                     <constant>GL_RIGHT</constant>, and the constants
-                    <constant>GL_COLOR_ATTACHMENT<emphasis>i</emphasis></constant>.
+                    <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>.
                 </para>
             </listitem>
         </varlistentry>
@@ -61,7 +65,7 @@
             <constant>GL_RIGHT</constant> name the front right buffer, and
             <constant>GL_BACK_LEFT</constant> and
             <constant>GL_BACK</constant> name the back left buffer.
-            Further more, the constants <constant>GL_COLOR_ATTACHMENT<emphasis>i</emphasis></constant> may be used to indicate the
+            Further more, the constants <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis> may be used to indicate the
             <emphasis>i</emphasis><superscript>th</superscript> color attachment where <emphasis>i</emphasis> ranges from zero to the
             value of <constant>GL_MAX_COLOR_ATTACHMENTS</constant> minus one.
         </para>
@@ -105,8 +109,8 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc.
-            Copyright <trademark class="copyright"></trademark> 2011 Khronos Group.
+            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc. 
+            Copyright <trademark class="copyright"></trademark> 2011-2013 Khronos Group. 
             This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.

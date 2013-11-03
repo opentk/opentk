@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glGetInternalformativ">
+    <refentryinfo>
+        <copyright>
+            <year>2011-2013</year>
+            <holder>Khronos Group.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>2011-2013</year>
-                <holder>Khronos Group.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glGetInternalformativ</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -36,7 +36,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -111,12 +110,40 @@
             Querying <constant>GL_SAMPLES</constant> with <parameter>bufSize</parameter> of one will return just the maximum supported number of
             samples for this format. The maximum value in <constant>GL_SAMPLES</constant> is guaranteed to be at least the lowest of the following:
             <itemizedlist>
-                <listitem>The value of <constant>GL_MAX_INTEGER_SAMPLES</constant> if <parameter>internalformat</parameter> is a signed or unsigned integer format.</listitem>
-                <listitem>The value of <constant>GL_MAX_DEPTH_TEXTURE_SAMPLES</constant> if <parameter>internalformat</parameter> is a depth- or stencil-renderable format and
-                <parameter>target</parameter> is <constant>GL_TEXTURE_2D_MULTISAMPLE</constant>, <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.</listitem>
-                <listitem>The value of <constant>GL_MAX_COLOR_TEXTURE_SAMPLES</constant> if <parameter>internalformat</parameter> is a color-renderable format and
-                <parameter>target</parameter> is <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.</listitem>
-                <listitem>The value of <constant>GL_MAX_SAMPLES</constant>.</listitem>
+                <listitem>
+                    <para>
+                        The value of
+                        <constant>GL_MAX_INTEGER_SAMPLES</constant> if
+                        <parameter>internalformat</parameter> is a signed or
+                        unsigned integer format.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        The value of
+                        <constant>GL_MAX_DEPTH_TEXTURE_SAMPLES</constant> if
+                        <parameter>internalformat</parameter> is a depth- or
+                        stencil-renderable format and
+                        <parameter>target</parameter> is
+                        <constant>GL_TEXTURE_2D_MULTISAMPLE</constant>,
+                        <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        The value of
+                        <constant>GL_MAX_COLOR_TEXTURE_SAMPLES</constant> if
+                        <parameter>internalformat</parameter> is a
+                        color-renderable format and
+                        <parameter>target</parameter> is
+                        <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or
+                        <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>The value of <constant>GL_MAX_SAMPLES</constant>.</para>
+                </listitem>
+
             </itemizedlist>
         </para>
         <para>
@@ -268,7 +295,7 @@
             <constant>GL_IMAGE_CLASS_4_X_8</constant>, <constant>GL_IMAGE_CLASS_2_X_8</constant>, <constant>GL_IMAGE_CLASS_1_X_8</constant>,
             <constant>GL_IMAGE_CLASS_11_11_10</constant>, and <constant>GL_IMAGE_CLASS_10_10_10_2</constant>, which correspond to
             the 4x32, 2x32, 1x32, 4x16, 2x16, 1x16, 4x8, 2x8, 1x8, the class
-            (a) 11/11/10 packed floating-point format, and the class (b) 
+            (a) 11/11/10 packed floating-point format, and the class (b)
             10/10/10/2 packed formats, respectively.
             If the resource is not supported for image textures, <constant>GL_NONE</constant> is returned.
         </para>
@@ -444,8 +471,8 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2011-2013 Khronos Group. 
-            This material may be distributed subject to the terms and conditions set forth in 
+            Copyright <trademark class="copyright"></trademark> 2011-2013 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
         </para>

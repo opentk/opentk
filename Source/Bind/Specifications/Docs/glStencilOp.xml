@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glStencilOp">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glStencilOp</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -16,7 +16,6 @@
         <refname>glStencilOp</refname>
         <refpurpose>set front and back stencil test actions</refpurpose>
     </refnamediv>
-    <!-- eqn: ignoring delim $$ -->
     <refsynopsisdiv><title>C Specification</title>
         <funcsynopsis>
             <funcprototype>
@@ -90,14 +89,14 @@
             of a comparison between the value in the stencil buffer and a
             reference value. To enable and disable the test, call <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
             and <citerefentry><refentrytitle>glDisable</refentrytitle></citerefentry> with argument
-            <constant>GL_STENCIL_TEST</constant>; to control it, call 
-            <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry> or 
+            <constant>GL_STENCIL_TEST</constant>; to control it, call
+            <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry> or
             <citerefentry><refentrytitle>glStencilFuncSeparate</refentrytitle></citerefentry>.
         </para>
         <para>
-            There can be two separate sets of <parameter>sfail</parameter>, <parameter>dpfail</parameter>, and 
+            There can be two separate sets of <parameter>sfail</parameter>, <parameter>dpfail</parameter>, and
             <parameter>dppass</parameter> parameters; one affects back-facing polygons, and the other
-            affects front-facing polygons as well as other non-polygon primitives. 
+            affects front-facing polygons as well as other non-polygon primitives.
             <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry> sets both front
             and back stencil state to the same values. Use <citerefentry><refentrytitle>glStencilOpSeparate</refentrytitle></citerefentry>
             to set front and back stencil state to different values.
@@ -186,7 +185,7 @@
         <para>
             Stencil buffer values are treated as unsigned integers.
             When incremented and decremented,
-            values are clamped to 0 and 
+            values are clamped to 0 and
             <inlineequation><mml:math>
                 <!-- eqn: 2 sup n - 1: -->
                 <mml:mrow>
@@ -197,7 +196,7 @@
                     <mml:mn>1</mml:mn>
                 </mml:mrow>
             </mml:math></inlineequation>,
-            where 
+            where
             <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
             is the value returned by querying <constant>GL_STENCIL_BITS</constant>.
         </para>
@@ -236,9 +235,9 @@
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
         <para>
-            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument 
-            <constant>GL_STENCIL_FAIL</constant>, <constant>GL_STENCIL_PASS_DEPTH_PASS</constant>, 
-            <constant>GL_STENCIL_PASS_DEPTH_FAIL</constant>, <constant>GL_STENCIL_BACK_FAIL</constant>, 
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument
+            <constant>GL_STENCIL_FAIL</constant>, <constant>GL_STENCIL_PASS_DEPTH_PASS</constant>,
+            <constant>GL_STENCIL_PASS_DEPTH_FAIL</constant>, <constant>GL_STENCIL_BACK_FAIL</constant>,
             <constant>GL_STENCIL_BACK_PASS_DEPTH_PASS</constant>, <constant>GL_STENCIL_BACK_PASS_DEPTH_FAIL</constant>,
             or <constant>GL_STENCIL_BITS</constant>
         </para>

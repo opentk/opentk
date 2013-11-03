@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glGetCompressedTexImage">
+    <refentryinfo>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>1991-2006</year>
-                <holder>Silicon Graphics, Inc.</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glGetCompressedTexImage</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -26,7 +26,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -51,9 +50,9 @@
                 <para>
                     Specifies the level-of-detail number of the desired image.
                     Level 0 is the base image level.
-                    Level 
+                    Level
                     <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
-                    is the 
+                    is the
                     <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>th
                     mipmap reduction image.
                 </para>
@@ -81,7 +80,7 @@
             <parameter>lod</parameter> specifies the level-of-detail number of the desired image.
         </para>
         <para>
-            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_PACK_BUFFER</constant> target 
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_PACK_BUFFER</constant> target
             (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a texture image is
             requested, <parameter>img</parameter> is treated as a byte offset into the buffer object's data store.
         </para>
@@ -113,7 +112,7 @@
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
-            <constant>GL_PIXEL_PACK_BUFFER</constant> target and the data would be packed to the buffer 
+            <constant>GL_PIXEL_PACK_BUFFER</constant> target and the data would be packed to the buffer
             object such that the memory writes required would exceed the data store size.
         </para>
     </refsect1>

@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
 <refentry id="glBufferStorage">
+    <refentryinfo>
+        <copyright>
+            <year>2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </refentryinfo>
     <refmeta>
-        <refmetainfo>
-            <copyright>
-                <year>2013</year>
-                <holder>Khronos Group</holder>
-            </copyright>
-        </refmetainfo>
         <refentrytitle>glBufferStorage</refentrytitle>
         <manvolnum>3G</manvolnum>
     </refmeta>
@@ -27,7 +27,6 @@
             </funcprototype>
         </funcsynopsis>
     </refsynopsisdiv>
-    <!-- eqn: ignoring delim $$ -->
     <refsect1 id="parameters"><title>Parameters</title>
         <variablelist>
         <varlistentry>
@@ -147,45 +146,53 @@
                             That is, data written to the store by either the client or server will be immediately visible to
                             the other with no further action taken by the application. In particular,
                         </para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    If <constant>GL_MAP_COHERENT_BIT</constant> is not set and the client performs a write
+                                    followed by a call to the <citerefentry><refentrytitle>glMemoryBarrier</refentrytitle></citerefentry>
+                                    command with the <constant>GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT</constant> set, then in subsequent
+                                    commands the server will see the writes.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    If <constant>GL_MAP_COHERENT_BIT</constant> is set and the client performs a write, then in
+                                    subsequent commands the server will see the writes.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    If <constant>GL_MAP_COHERENT_BIT</constant> is not set and the server performs a write, the
+                                    application must call <citerefentry><refentrytitle>glMemoryBarrier</refentrytitle></citerefentry>
+                                    with the <constant>GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT</constant> set and then call
+                                    <citerefentry><refentrytitle>glFenceSync</refentrytitle></citerefentry> with
+                                    <constant>GL_SYNC_GPU_COMMANDS_COMPLETE</constant> (or <constant>glFinish</constant>).
+                                    Then the CPU will see the writes after the sync is complete.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    If <constant>GL_MAP_COHERENT_BIT</constant> is set and the server does a write, the app must
+                                    call FenceSync with <constant>GL_SYNC_GPU_COMMANDS_COMPLETE</constant> (or <citerefentry><refentrytitle>glFinish</refentrytitle></citerefentry>).
+                                    Then the CPU will see the writes after the sync is complete.
+                                </para>
+                            </listitem>
+                        </itemizedlist>
                     </listitem>
-                    <itemizedlist>
-                        <listitem>
-                            <para>
-                                If <constant>GL_MAP_COHERENT_BIT</constant> is not set and the client performs a write
-                                followed by a call to the <citerefentry><refentrytitle>glMemoryBarrier</refentrytitle></citerefentry>
-                                command with the <constant>GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT</constant> set, then in subsequent
-                                commands the server will see the writes.
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                If <constant>GL_MAP_COHERENT_BIT</constant> is set and the client performs a write, then in
-                                subsequent commands the server will see the writes.
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                If <constant>GL_MAP_COHERENT_BIT</constant> is not set and the server performs a write, the
-                                application must call <citerefentry><refentrytitle>glMemoryBarrier</refentrytitle></citerefentry>
-                                with the <constant>GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT</constant> set and then call
-                                <citerefentry><refentrytitle>glFenceSync</refentrytitle></citerefentry> with
-                                <constant>GL_SYNC_GPU_COMMANDS_COMPLETE</constant> (or <constant>glFinish</constant>).
-                                Then the CPU will see the writes after the sync is complete.
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                If <constant>GL_MAP_COHERENT_BIT</constant> is set and the server does a write, the app must
-                                call FenceSync with <constant>GL_SYNC_GPU_COMMANDS_COMPLETE</constant> (or <citerefentry><refentrytitle>glFinish</refentrytitle></citerefentry>).
-                                Then the CPU will see the writes after the sync is complete.
-                            </para>
-                        </listitem>
-                    </itemizedlist>
                 </varlistentry>
                 <varlistentry>
-                    <term><constant>GL_CLIENT_STORAGE_BIT</constant></term> When all other criteria for the buffer storage allocation
-                    are met, this bit may be used by an implementation to determine whether to use storage that is local to the
-                    server or to the client to serve as the backing store for the buffer.
+                    <term><constant>GL_CLIENT_STORAGE_BIT</constant></term> 
+                    <listitem>
+                        <para>
+                            When all other criteria for the buffer storage
+                            allocation are met, this bit may be used by an
+                            implementation to determine whether to use
+                            storage that is local to the server or to the
+                            client to serve as the backing store for the
+                            buffer.
+                        </para>
+                    </listitem>
                 </varlistentry>
             </variablelist>
         </para>
