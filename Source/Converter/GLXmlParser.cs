@@ -359,6 +359,7 @@ namespace CHeaderToXML
                     FunctionParameterType(command.Element("proto"))
                         .Replace("const", String.Empty)
                         .Replace("struct", String.Empty)
+                        .Replace("String *", "String")
                         .Trim()));
 
             foreach (var parameter in command.Elements("param"))
