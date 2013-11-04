@@ -149,16 +149,16 @@ namespace OpenTK.Graphics.ES30
             internal extern static void Clear(OpenTK.Graphics.ES30.ClearBufferMask mask);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearBufferfi", ExactSpelling = true)]
-            internal extern static void ClearBufferfi(OpenTK.Graphics.ES30.All buffer, Int32 drawbuffer, Single depth, Int32 stencil);
+            internal extern static void ClearBufferfi(OpenTK.Graphics.ES30.ClearBufferCombined buffer, Int32 drawbuffer, Single depth, Int32 stencil);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearBufferfv", ExactSpelling = true)]
-            internal extern static unsafe void ClearBufferfv(OpenTK.Graphics.ES30.All buffer, Int32 drawbuffer, Single* value);
+            internal extern static unsafe void ClearBufferfv(OpenTK.Graphics.ES30.ClearBuffer buffer, Int32 drawbuffer, Single* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearBufferiv", ExactSpelling = true)]
-            internal extern static unsafe void ClearBufferiv(OpenTK.Graphics.ES30.All buffer, Int32 drawbuffer, Int32* value);
+            internal extern static unsafe void ClearBufferiv(OpenTK.Graphics.ES30.ClearBuffer buffer, Int32 drawbuffer, Int32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearBufferuiv", ExactSpelling = true)]
-            internal extern static unsafe void ClearBufferuiv(OpenTK.Graphics.ES30.All buffer, Int32 drawbuffer, UInt32* value);
+            internal extern static unsafe void ClearBufferuiv(OpenTK.Graphics.ES30.ClearBuffer buffer, Int32 drawbuffer, UInt32* value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClearColor", ExactSpelling = true)]
             internal extern static void ClearColor(Single red, Single green, Single blue, Single alpha);
@@ -353,7 +353,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static void DrawArraysInstancedNV(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 first, Int32 count, Int32 primcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawBuffers", ExactSpelling = true)]
-            internal extern static unsafe void DrawBuffers(Int32 n, OpenTK.Graphics.ES30.All* bufs);
+            internal extern static unsafe void DrawBuffers(Int32 n, OpenTK.Graphics.ES30.DrawBufferMode* bufs);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawBuffersEXT", ExactSpelling = true)]
             internal extern static unsafe void DrawBuffersEXT(Int32 n, OpenTK.Graphics.ES30.All* bufs);
@@ -1115,7 +1115,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static void StencilMask(UInt32 mask);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glStencilMaskSeparate", ExactSpelling = true)]
-            internal extern static void StencilMaskSeparate(OpenTK.Graphics.ES30.CullFaceMode face, UInt32 mask);
+            internal extern static void StencilMaskSeparate(OpenTK.Graphics.ES30.StencilFace face, UInt32 mask);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glStencilOp", ExactSpelling = true)]
             internal extern static void StencilOp(OpenTK.Graphics.ES30.StencilOp fail, OpenTK.Graphics.ES30.StencilOp zfail, OpenTK.Graphics.ES30.StencilOp zpass);

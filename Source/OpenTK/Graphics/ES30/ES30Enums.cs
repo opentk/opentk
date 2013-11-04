@@ -385,7 +385,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 78 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 76 other functions
     /// </summary>
     public enum All : int
     {
@@ -9671,6 +9671,36 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
+    /// Used in GL.ClearBuffer
+    /// </summary>
+    public enum ClearBuffer : int
+    {
+        /// <summary>
+        /// Original was GL_COLOR = 0x1800
+        /// </summary>
+        Color = ((int)0x1800)        ,
+        /// <summary>
+        /// Original was GL_DEPTH = 0x1801
+        /// </summary>
+        Depth = ((int)0x1801)        ,
+        /// <summary>
+        /// Original was GL_STENCIL = 0x1802
+        /// </summary>
+        Stencil = ((int)0x1802)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.ClearBuffer
+    /// </summary>
+    public enum ClearBufferCombined : int
+    {
+        /// <summary>
+        /// Original was GL_DEPTH_STENCIL = 0x84F9
+        /// </summary>
+        DepthStencil = ((int)0x84F9)        ,
+    }
+
+    /// <summary>
     /// Used in GL.Angle.BlitFramebuffer, GL.BlitFramebuffer and 2 other functions
     /// </summary>
     [Flags]
@@ -10109,7 +10139,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.CullFace, GL.StencilMaskSeparate
+    /// Used in GL.CullFace
     /// </summary>
     public enum CullFaceMode : int
     {
@@ -10406,7 +10436,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.DrawBuffers
     /// </summary>
     public enum DrawBufferMode : int
     {
@@ -10470,6 +10500,70 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_AUX3 = 0x040C
         /// </summary>
         Aux3 = ((int)0x040C)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT0 = 0x8CE0
+        /// </summary>
+        ColorAttachment0 = ((int)0x8CE0)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT1 = 0x8CE1
+        /// </summary>
+        ColorAttachment1 = ((int)0x8CE1)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT2 = 0x8CE2
+        /// </summary>
+        ColorAttachment2 = ((int)0x8CE2)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT3 = 0x8CE3
+        /// </summary>
+        ColorAttachment3 = ((int)0x8CE3)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT4 = 0x8CE4
+        /// </summary>
+        ColorAttachment4 = ((int)0x8CE4)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT5 = 0x8CE5
+        /// </summary>
+        ColorAttachment5 = ((int)0x8CE5)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT6 = 0x8CE6
+        /// </summary>
+        ColorAttachment6 = ((int)0x8CE6)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT7 = 0x8CE7
+        /// </summary>
+        ColorAttachment7 = ((int)0x8CE7)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT8 = 0x8CE8
+        /// </summary>
+        ColorAttachment8 = ((int)0x8CE8)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT9 = 0x8CE9
+        /// </summary>
+        ColorAttachment9 = ((int)0x8CE9)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT10 = 0x8CEA
+        /// </summary>
+        ColorAttachment10 = ((int)0x8CEA)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT11 = 0x8CEB
+        /// </summary>
+        ColorAttachment11 = ((int)0x8CEB)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT12 = 0x8CEC
+        /// </summary>
+        ColorAttachment12 = ((int)0x8CEC)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT13 = 0x8CED
+        /// </summary>
+        ColorAttachment13 = ((int)0x8CED)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT14 = 0x8CEE
+        /// </summary>
+        ColorAttachment14 = ((int)0x8CEE)        ,
+        /// <summary>
+        /// Original was GL_COLOR_ATTACHMENT15 = 0x8CEF
+        /// </summary>
+        ColorAttachment15 = ((int)0x8CEF)        ,
     }
 
     /// <summary>
@@ -22303,7 +22397,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.StencilFuncSeparate, GL.StencilOpSeparate
+    /// Used in GL.StencilFuncSeparate, GL.StencilMaskSeparate and 1 other function
     /// </summary>
     public enum StencilFace : int
     {

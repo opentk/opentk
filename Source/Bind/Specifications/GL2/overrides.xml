@@ -4222,7 +4222,7 @@
     </function>
      
     <function name="StencilMaskSeparate" extension="Core" version="2.0">
-      <param name="face"><type>CullFaceMode</type></param>
+      <param name="face"><type>StencilFace</type></param>
     </function>
      
     <function name="StencilOp" extension="Core" version="2.0">
@@ -5365,6 +5365,28 @@
       <param name="srcAlpha"><type>BlendingFactorSrc</type></param>
       <param name="dstAlpha"><type>BlendingFactorDest</type></param>
     </function>
+    
+    <!-- Selecting a Buffer for Writing [4.2.1] -->
+    <function name="DrawBuffers" extension="Core">
+      <param name="bufs"><type>DrawBufferMode</type></param>
+    </function>
+    
+    <!-- Fine Control of Buffer Updates [4.2.2] -->
+    <function name="StencilMaskSeparate">
+      <param name="face"><type>StencilFace</type></param>
+    </function>
+    
+    <!-- Clearing the Buffers [4.2.3] -->
+    <function name="Clear">
+      <param name="mask"><type>ClearBufferMask</type></param>
+    </function>
+    <function name="ClearBuffer" extension="Core">
+      <param name="buffer"><type>ClearBuffer</type></param>
+    </function>
+    <function name="ClearBufferfi" extension="Core">
+      <param name="buffer"><type>ClearBufferCombined</type></param>
+    </function>
+    
    </replace>
   
   <add name="gles2" version="3.0">
@@ -5531,6 +5553,14 @@
       <use token="DEPTH_BUFFER_BIT" />
       <use token="STENCIL_BUFFER_BIT" />
     </enum>
+    <enum name="ClearBuffer">
+      <use token="COLOR" />
+      <use token="DEPTH" />
+      <use token="STENCIL" />
+    </enum>
+    <enum name="ClearBufferCombined">
+      <use token="DEPTH_STENCIL" />
+    </enum>
     <enum name="CompressedInternalFormat">
       <use token="COMPRESSED_R11_EAC" />
       <use token="COMPRESSED_SIGNED_R11_EAC" />
@@ -5550,6 +5580,26 @@
     </enum>
     <enum name="DepthFunction">
       <reuse enum="StencilFunction" />
+    </enum>
+    <enum name="DrawBufferMode">
+      <use token="NONE" />
+      <use token="BACK" />
+      <use token="COLOR_ATTACHMENT0" />
+      <use token="COLOR_ATTACHMENT1" />
+      <use token="COLOR_ATTACHMENT2" />
+      <use token="COLOR_ATTACHMENT3" />
+      <use token="COLOR_ATTACHMENT4" />
+      <use token="COLOR_ATTACHMENT5" />
+      <use token="COLOR_ATTACHMENT6" />
+      <use token="COLOR_ATTACHMENT7" />
+      <use token="COLOR_ATTACHMENT8" />
+      <use token="COLOR_ATTACHMENT9" />
+      <use token="COLOR_ATTACHMENT10" />
+      <use token="COLOR_ATTACHMENT11" />
+      <use token="COLOR_ATTACHMENT12" />
+      <use token="COLOR_ATTACHMENT13" />
+      <use token="COLOR_ATTACHMENT14" />
+      <use token="COLOR_ATTACHMENT15" />
     </enum>
     <enum name="DrawElementsType">
       <use token="UNSIGNED_BYTE" />

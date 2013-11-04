@@ -147,16 +147,16 @@ namespace OpenTK.Graphics.ES30
             internal delegate void Clear(OpenTK.Graphics.ES30.ClearBufferMask mask);
             internal static Clear glClear;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ClearBufferfi(OpenTK.Graphics.ES30.All buffer, Int32 drawbuffer, Single depth, Int32 stencil);
+            internal delegate void ClearBufferfi(OpenTK.Graphics.ES30.ClearBufferCombined buffer, Int32 drawbuffer, Single depth, Int32 stencil);
             internal static ClearBufferfi glClearBufferfi;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ClearBufferfv(OpenTK.Graphics.ES30.All buffer, Int32 drawbuffer, Single* value);
+            internal unsafe delegate void ClearBufferfv(OpenTK.Graphics.ES30.ClearBuffer buffer, Int32 drawbuffer, Single* value);
             internal unsafe static ClearBufferfv glClearBufferfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ClearBufferiv(OpenTK.Graphics.ES30.All buffer, Int32 drawbuffer, Int32* value);
+            internal unsafe delegate void ClearBufferiv(OpenTK.Graphics.ES30.ClearBuffer buffer, Int32 drawbuffer, Int32* value);
             internal unsafe static ClearBufferiv glClearBufferiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ClearBufferuiv(OpenTK.Graphics.ES30.All buffer, Int32 drawbuffer, UInt32* value);
+            internal unsafe delegate void ClearBufferuiv(OpenTK.Graphics.ES30.ClearBuffer buffer, Int32 drawbuffer, UInt32* value);
             internal unsafe static ClearBufferuiv glClearBufferuiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ClearColor(Single red, Single green, Single blue, Single alpha);
@@ -351,7 +351,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate void DrawArraysInstancedNV(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 first, Int32 count, Int32 primcount);
             internal static DrawArraysInstancedNV glDrawArraysInstancedNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void DrawBuffers(Int32 n, OpenTK.Graphics.ES30.All* bufs);
+            internal unsafe delegate void DrawBuffers(Int32 n, OpenTK.Graphics.ES30.DrawBufferMode* bufs);
             internal unsafe static DrawBuffers glDrawBuffers;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void DrawBuffersEXT(Int32 n, OpenTK.Graphics.ES30.All* bufs);
@@ -1113,7 +1113,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate void StencilMask(UInt32 mask);
             internal static StencilMask glStencilMask;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void StencilMaskSeparate(OpenTK.Graphics.ES30.CullFaceMode face, UInt32 mask);
+            internal delegate void StencilMaskSeparate(OpenTK.Graphics.ES30.StencilFace face, UInt32 mask);
             internal static StencilMaskSeparate glStencilMaskSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void StencilOp(OpenTK.Graphics.ES30.StencilOp fail, OpenTK.Graphics.ES30.StencilOp zfail, OpenTK.Graphics.ES30.StencilOp zpass);

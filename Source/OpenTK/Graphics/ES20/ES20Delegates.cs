@@ -885,7 +885,7 @@ namespace OpenTK.Graphics.ES20
             internal delegate void StencilMask(UInt32 mask);
             internal static StencilMask glStencilMask;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void StencilMaskSeparate(OpenTK.Graphics.ES20.CullFaceMode face, UInt32 mask);
+            internal delegate void StencilMaskSeparate(OpenTK.Graphics.ES20.StencilFace face, UInt32 mask);
             internal static StencilMaskSeparate glStencilMaskSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void StencilOp(OpenTK.Graphics.ES20.StencilOp fail, OpenTK.Graphics.ES20.StencilOp zfail, OpenTK.Graphics.ES20.StencilOp zpass);

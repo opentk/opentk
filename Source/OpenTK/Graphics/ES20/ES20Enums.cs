@@ -8618,7 +8618,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.CullFace, GL.StencilMaskSeparate
+    /// Used in GL.CullFace
     /// </summary>
     public enum CullFaceMode : int
     {
@@ -19084,7 +19084,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.StencilFuncSeparate, GL.StencilOpSeparate
+    /// Used in GL.StencilFuncSeparate, GL.StencilMaskSeparate and 1 other function
     /// </summary>
     public enum StencilFace : int
     {
