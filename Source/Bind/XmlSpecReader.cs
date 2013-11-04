@@ -333,6 +333,9 @@ namespace Bind
 
             if (nav != null)
             {
+                var reuse_list = new List<KeyValuePair<Enum, string>>();
+
+                // First pass: collect all available tokens and enums
                 foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
                 {
                     Enum e = new Enum()
@@ -343,7 +346,6 @@ namespace Bind
 
                     if (String.IsNullOrEmpty(e.Name))
                         throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
-
 
                     // It seems that all flag collections contain "Mask" in their names.
                     // This looks like a heuristic, but it holds 100% in practice
@@ -372,39 +374,81 @@ namespace Bind
                                 };
                                 break;
 
+                            case "reuse":
+                                var reuse_enum = param.GetAttribute("enum", String.Empty).Trim();
+                                reuse_list.Add(new KeyValuePair<Enum, string>(e, reuse_enum));
+                                break;
+
                             default:
                                 throw new NotSupportedException();
                         }
-                        Utilities.Merge(all, c);
-                        try
+
+                        if (c != null)
                         {
-                            if (!e.ConstantCollection.ContainsKey(c.Name))
+                            Utilities.Merge(all, c);
+                            try
                             {
-                                e.ConstantCollection.Add(c.Name, c);
+                                if (!e.ConstantCollection.ContainsKey(c.Name))
+                                {
+                                    e.ConstantCollection.Add(c.Name, c);
+                                }
+                                else if (e.ConstantCollection[c.Name].Value != c.Value)
+                                {
+                                    var existing = e.ConstantCollection[c.Name];
+                                    if (existing.Reference != null && c.Reference == null)
+                                    {
+                                        e.ConstantCollection[c.Name] = c;
+                                    }
+                                    else if (existing.Reference == null && c.Reference != null)
+                                    {
+                                        // Keep existing
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("[Warning] Conflicting token {0}.{1} with value {2} != {3}",
+                                            e.Name, c.Name, e.ConstantCollection[c.Name].Value, c.Value);
+                                    }
+                                }
                             }
-                            else if (e.ConstantCollection[c.Name].Value != c.Value)
+                            catch (ArgumentException ex)
                             {
-                                var existing = e.ConstantCollection[c.Name];
-                                if (existing.Reference != null && c.Reference == null)
-                                {
-                                    e.ConstantCollection[c.Name] = c;
-                                }
-                                else if (existing.Reference == null && c.Reference != null)
-                                { } // Keep existing
-                                else
-                                {
-                                    Console.WriteLine("[Warning] Conflicting token {0}.{1} with value {2} != {3}",
-                                        e.Name, c.Name, e.ConstantCollection[c.Name].Value, c.Value);
-                                }
+                                Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message);
                             }
-                        }
-                        catch (ArgumentException ex)
-                        {
-                            Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message);
                         }
                     }
 
                     Utilities.Merge(enums, e);
+                }
+
+                // Second pass: resolve "reuse" directives
+restart:
+                foreach (var pair in reuse_list)
+                {
+                    var e = pair.Key;
+                    var reuse = pair.Value;
+                    var count = e.ConstantCollection.Count;
+
+                    if (enums.ContainsKey(reuse))
+                    {
+                        var reuse_enum = enums[reuse];
+                        foreach (var token in reuse_enum.ConstantCollection.Values)
+                        {
+                            Utilities.Merge(e, token);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("[Warning] Reuse token not found: {0}", reuse);
+                    }
+
+                    if (count != e.ConstantCollection.Count)
+                    {
+                        // Restart resolution of reuse directives whenever
+                        // we modify an enum. This is the simplest (brute) way
+                        // to resolve chains of reuse directives:
+                        // e.g. enum A reuses B which reuses C
+                        goto restart;
+                    }
                 }
             }
 
