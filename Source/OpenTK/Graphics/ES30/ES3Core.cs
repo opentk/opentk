@@ -182,22 +182,22 @@ namespace OpenTK.Graphics.ES30
             internal extern static void CompileShader(UInt32 shader);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCompressedTexImage2D", ExactSpelling = true)]
-            internal extern static void CompressedTexImage2D(OpenTK.Graphics.ES30.TextureTarget target, Int32 level, OpenTK.Graphics.ES30.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
+            internal extern static void CompressedTexImage2D(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 level, OpenTK.Graphics.ES30.CompressedInternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCompressedTexImage3D", ExactSpelling = true)]
-            internal extern static void CompressedTexImage3D(OpenTK.Graphics.ES30.TextureTarget target, Int32 level, OpenTK.Graphics.ES30.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
+            internal extern static void CompressedTexImage3D(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, OpenTK.Graphics.ES30.CompressedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCompressedTexImage3DOES", ExactSpelling = true)]
-            internal extern static void CompressedTexImage3DOES(OpenTK.Graphics.ES30.All target, Int32 level, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
+            internal extern static void CompressedTexImage3DOES(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, OpenTK.Graphics.ES30.CompressedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCompressedTexSubImage2D", ExactSpelling = true)]
-            internal extern static void CompressedTexSubImage2D(OpenTK.Graphics.ES30.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES30.PixelFormat format, Int32 imageSize, IntPtr data);
+            internal extern static void CompressedTexSubImage2D(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES30.PixelFormat format, Int32 imageSize, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCompressedTexSubImage3D", ExactSpelling = true)]
-            internal extern static void CompressedTexSubImage3D(OpenTK.Graphics.ES30.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES30.PixelFormat format, Int32 imageSize, IntPtr data);
+            internal extern static void CompressedTexSubImage3D(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES30.PixelFormat format, Int32 imageSize, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCompressedTexSubImage3DOES", ExactSpelling = true)]
-            internal extern static void CompressedTexSubImage3DOES(OpenTK.Graphics.ES30.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES30.All format, Int32 imageSize, IntPtr data);
+            internal extern static void CompressedTexSubImage3DOES(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES30.All format, Int32 imageSize, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyBufferSubData", ExactSpelling = true)]
             internal extern static void CopyBufferSubData(OpenTK.Graphics.ES30.All readTarget, OpenTK.Graphics.ES30.All writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
@@ -206,16 +206,16 @@ namespace OpenTK.Graphics.ES30
             internal extern static void CopyBufferSubDataNV(OpenTK.Graphics.ES30.All readTarget, OpenTK.Graphics.ES30.All writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyTexImage2D", ExactSpelling = true)]
-            internal extern static void CopyTexImage2D(OpenTK.Graphics.ES30.TextureTarget target, Int32 level, OpenTK.Graphics.ES30.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
+            internal extern static void CopyTexImage2D(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 level, OpenTK.Graphics.ES30.TextureCopyComponentCount internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyTexSubImage2D", ExactSpelling = true)]
-            internal extern static void CopyTexSubImage2D(OpenTK.Graphics.ES30.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+            internal extern static void CopyTexSubImage2D(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyTexSubImage3D", ExactSpelling = true)]
-            internal extern static void CopyTexSubImage3D(OpenTK.Graphics.ES30.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+            internal extern static void CopyTexSubImage3D(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyTexSubImage3DOES", ExactSpelling = true)]
-            internal extern static void CopyTexSubImage3DOES(OpenTK.Graphics.ES30.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+            internal extern static void CopyTexSubImage3DOES(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyTextureLevelsAPPLE", ExactSpelling = true)]
             internal extern static void CopyTextureLevelsAPPLE(UInt32 destinationTexture, UInt32 sourceTexture, Int32 sourceBaseLevel, Int32 sourceLevelCount);
@@ -740,10 +740,10 @@ namespace OpenTK.Graphics.ES30
             internal extern static unsafe void GetSyncivAPPLE(IntPtr sync, OpenTK.Graphics.ES30.All pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexParameterfv", ExactSpelling = true)]
-            internal extern static unsafe void GetTexParameterfv(OpenTK.Graphics.ES30.TextureTarget target, OpenTK.Graphics.ES30.GetTextureParameter pname, [OutAttribute] Single* @params);
+            internal extern static unsafe void GetTexParameterfv(OpenTK.Graphics.ES30.TextureTarget target, OpenTK.Graphics.ES30.GetTextureParameterName pname, [OutAttribute] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexParameteriv", ExactSpelling = true)]
-            internal extern static unsafe void GetTexParameteriv(OpenTK.Graphics.ES30.TextureTarget target, OpenTK.Graphics.ES30.GetTextureParameter pname, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetTexParameteriv(OpenTK.Graphics.ES30.TextureTarget target, OpenTK.Graphics.ES30.GetTextureParameterName pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTransformFeedbackVarying", ExactSpelling = true)]
             internal extern static unsafe void GetTransformFeedbackVarying(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.ES30.TransformFeedbackType* type, [OutAttribute] StringBuilder name);
@@ -1124,13 +1124,13 @@ namespace OpenTK.Graphics.ES30
             internal extern static bool TestFenceNV(UInt32 fence);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexImage2D", ExactSpelling = true)]
-            internal extern static void TexImage2D(OpenTK.Graphics.ES30.TextureTarget target, Int32 level, OpenTK.Graphics.ES30.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
+            internal extern static void TexImage2D(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 level, OpenTK.Graphics.ES30.TextureComponentCount internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexImage3D", ExactSpelling = true)]
-            internal extern static void TexImage3D(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, OpenTK.Graphics.ES30.PixelFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
+            internal extern static void TexImage3D(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, OpenTK.Graphics.ES30.TextureComponentCount internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexImage3DOES", ExactSpelling = true)]
-            internal extern static void TexImage3DOES(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, OpenTK.Graphics.ES30.PixelFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.All type, IntPtr pixels);
+            internal extern static void TexImage3DOES(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, OpenTK.Graphics.ES30.TextureComponentCount internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexParameterf", ExactSpelling = true)]
             internal extern static void TexParameterf(OpenTK.Graphics.ES30.TextureTarget target, OpenTK.Graphics.ES30.TextureParameterName pname, Single param);
@@ -1148,25 +1148,25 @@ namespace OpenTK.Graphics.ES30
             internal extern static void TexStorage1DEXT(OpenTK.Graphics.ES30.All target, Int32 levels, OpenTK.Graphics.ES30.All internalformat, Int32 width);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexStorage2D", ExactSpelling = true)]
-            internal extern static void TexStorage2D(OpenTK.Graphics.ES30.All target, Int32 levels, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height);
+            internal extern static void TexStorage2D(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 levels, OpenTK.Graphics.ES30.SizedInternalFormat internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexStorage2DEXT", ExactSpelling = true)]
-            internal extern static void TexStorage2DEXT(OpenTK.Graphics.ES30.All target, Int32 levels, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height);
+            internal extern static void TexStorage2DEXT(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 levels, OpenTK.Graphics.ES30.SizedInternalFormat internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexStorage3D", ExactSpelling = true)]
-            internal extern static void TexStorage3D(OpenTK.Graphics.ES30.All target, Int32 levels, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height, Int32 depth);
+            internal extern static void TexStorage3D(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 levels, OpenTK.Graphics.ES30.SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexStorage3DEXT", ExactSpelling = true)]
-            internal extern static void TexStorage3DEXT(OpenTK.Graphics.ES30.All target, Int32 levels, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height, Int32 depth);
+            internal extern static void TexStorage3DEXT(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 levels, OpenTK.Graphics.ES30.SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexSubImage2D", ExactSpelling = true)]
-            internal extern static void TexSubImage2D(OpenTK.Graphics.ES30.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
+            internal extern static void TexSubImage2D(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexSubImage3D", ExactSpelling = true)]
-            internal extern static void TexSubImage3D(OpenTK.Graphics.ES30.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
+            internal extern static void TexSubImage3D(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexSubImage3DOES", ExactSpelling = true)]
-            internal extern static void TexSubImage3DOES(OpenTK.Graphics.ES30.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES30.All format, OpenTK.Graphics.ES30.All type, IntPtr pixels);
+            internal extern static void TexSubImage3DOES(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES30.All format, OpenTK.Graphics.ES30.All type, IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTextureStorage1DEXT", ExactSpelling = true)]
             internal extern static void TextureStorage1DEXT(UInt32 texture, OpenTK.Graphics.ES30.All target, Int32 levels, OpenTK.Graphics.ES30.All internalformat, Int32 width);
