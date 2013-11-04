@@ -4217,7 +4217,7 @@
     </function>
      
     <function name="StencilFuncSeparate" extension="Core" version="2.0">
-      <param name="face"><type>CullFaceMode</type></param>
+      <param name="face"><type>StencilFace</type></param>
       <param name="func"><type>StencilFunction</type></param>
     </function>
      
@@ -4232,10 +4232,11 @@
     </function>
      
     <function name="StencilOpSeparate" extension="Core" version="2.0">
-      <param name="face"><type>CullFaceMode</type></param>
-      <param name="fail"><type>StencilOp</type></param>
-      <param name="zfail"><type>StencilOp</type></param>
-      <param name="zpass"><type>StencilOp</type></param>
+      <param name="face"><type>StencilFace</type></param>
+      <param name="func"><type>StencilFunction</type></param>
+      <param name="sfail"><type>StencilOp</type></param>
+      <param name="dpfail"><type>StencilOp</type></param>
+      <param name="dppass"><type>StencilOp</type></param>
     </function>  
 
     <function name="GetBufferParameter" extension="Core" version="2.0">
@@ -4455,6 +4456,22 @@
       <param name="count" type="GLsizei" flow="in" />
       <param name="type" type="DrawElementsType" flow="in" />
       <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
+      <returns type="void" />
+    </function>
+    
+    <!-- StencilFace <=> CullFaceMode -->
+    <function name="StencilFuncSeparate" category="ES_VERSION_2_0" extension="Core" version="2.0">
+      <param name="face" type="CullFaceMode" flow="in" />
+      <param name="func" type="StencilFunction" flow="in" />
+      <param name="ref" type="StencilValue" flow="in" />
+      <param name="mask" type="MaskedStencilValue" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="StencilOpSeparate" category="ES_VERSION_2_0" extension="Core" version="2.0">
+      <param name="face" type="CullFaceMode" flow="in" />
+      <param name="sfail" type="StencilOp" flow="in" />
+      <param name="dpfail" type="StencilOp" flow="in" />
+      <param name="dppass" type="StencilOp" flow="in" />
       <returns type="void" />
     </function>
   </add>
@@ -4750,6 +4767,12 @@
       <token name="CompileStatus" value="0X8b81" />
       <token name="InfoLogLength" value="0X8b84" />
       <token name="ShaderSourceLength" value="0X8b88" />
+    </enum>
+     
+    <enum name="StencilFace">
+      <use token="FRONT" />
+      <use token="BACK" />
+      <use token="FRONT_AND_BACK" />
     </enum>
      
     <enum name="StringName">
@@ -5292,11 +5315,56 @@
        <param name="target"><type>TextureTarget</type></param>
      </function>
       
-        <!-- Enumerated Queries [6.1.3] -->
+      <!-- Enumerated Queries [6.1.3] -->
      <function name="GetTexParameter">
        <param name="target"><type>TextureTarget</type></param>
       <param name="pname"><type>GetTextureParameterName</type></param>
-     </function>        
+     </function>
+     
+     <!-- Stencil Test [4.1.4] -->
+     <function name="StencilFunc">
+       <param name="func"><type>StencilFunction</type></param>
+     </function>
+     <function name="StencilFuncSeparate">
+       <param name="face"><type>StencilFace</type></param>
+       <param name="func"><type>StencilFunction</type></param>
+     </function>
+     <function name="StencilOp">
+      <param name="sfail"><type>StencilOp</type></param>
+      <param name="dpfail"><type>StencilOp</type></param>
+      <param name="dppass"><type>StencilOp</type></param>
+    </function>
+    <function name="StencilOpSeparate">
+      <param name="face"><type>StencilFace</type></param>
+      <param name="func"><type>StencilFunction</type></param>
+      <param name="sfail"><type>StencilOp</type></param>
+      <param name="dpfail"><type>StencilOp</type></param>
+      <param name="dppass"><type>StencilOp</type></param>
+    </function>
+    
+    <!-- Depth Buffer Test [4.1.5] -->
+    <function name="DepthFunc">
+      <param name="func"><type>DepthFunction</type></param>
+    </function>
+    
+    <!-- Blending [4.1.7] -->
+    <function name="BlendEquation">
+      <param name="mode"><type>BlendEquationMode</type></param>
+    </function>
+    <function name="BlendEquationSeparate">
+      <param name="modeRGB"><type>BlendEquationMode</type></param>
+      <param name="modeAlpha"><type>BlendEquationMode</type></param>
+    </function>
+    <function name="BlendFunc">
+      <param name="sfactor"><type>BlendingFactorSrc</type></param>
+      <param name="dfactor"><type>BlendingFactorDest</type></param>
+    </function>
+    <function name="BlendFuncSeparate">
+      <param name="srcRGB"><type>BlendingFactorSrc</type></param>
+      <param name="dstRGB"><type>BlendingFactorDest</type></param>
+      <param name="srcAlpha"><type>BlendingFactorSrc</type></param>
+      <param name="dstAlpha"><type>BlendingFactorDest</type></param>
+    </function>
    </replace>
   
   <add name="gles2" version="3.0">
@@ -5383,6 +5451,31 @@
       <use token="UNSIGNED_INT_SAMPLER_CUBE" />
       <use token="UNSIGNED_INT_SAMPLER_2D_ARRAY" />
     </enum>
+    <enum name="BlendEquationMode">
+      <use token="FUNC_ADD" />
+      <use token="FUNC_SUBTRACT" />
+      <use token="FUNC_REVERSE_SUBTRACT" />
+      <use token="MIN" />
+      <use token="MAX" />
+    </enum>
+    <enum name="BlendingFactorDest">
+      <use token="SRC_ALPHA" />
+      <use token="SRC_COLOR" />
+      <use token="DST_ALPHA" />
+      <use token="DST_COLOR" />
+      <use token="CONSTANT_ALPHA" />
+      <use token="CONSTANT_COLOR" />
+      <use token="ONE_MINUS_SRC_ALPHA" />
+      <use token="ONE_MINUS_SRC_COLOR" />
+      <use token="ONE_MINUS_DST_ALPHA" />
+      <use token="ONE_MINUS_DST_COLOR" />
+      <use token="ONE_MINUS_CONSTANT_ALPHA" />
+      <use token="ONE_MINUS_CONSTANT_COLOR" />
+      <use token="SRC_ALPHA_SATURATE" />
+    </enum>
+    <enum name="BlendingFactorSrc">
+      <reuse enum="BlendingFactorDest" />
+    </enum>
     <enum name="BlitFramebufferFilter">
       <use token="LINEAR" />
       <use token="NEAREST" />
@@ -5455,6 +5548,9 @@
       <use token="BACK" />
       <use token="FRONT_AND_BACK" />
     </enum>
+    <enum name="DepthFunction">
+      <reuse enum="StencilFunction" />
+    </enum>
     <enum name="DrawElementsType">
       <use token="UNSIGNED_BYTE" />
       <use token="UNSIGNED_SHORT" />
@@ -5464,6 +5560,13 @@
       <use token="CULL_FACE" /> <!-- Polygons [3.6] -->
       <use token="POLYGON_OFFSET_FILL" />  <!-- Polygons [3.6] -->
       <use token="PRIMITIVE_RESTART_FIXED_INDEX" /> <!-- Vertex Arrays [2.8] -->
+      <use token="SCISSOR_TEST" /> <!-- Scissor Test [4.1.2] -->
+      <use token="SAMPLE_ALPHA_TO_COVERAGE" /> <!-- Multisample Fragment Operations [4.1.3] -->
+      <use token="SAMPLE_COVERAGE" />
+      <use token="STENCIL_TEST" /> <!-- Stencil Test [4.1.4] -->
+      <use token="DEPTH_TEST" /> <!-- Depth Buffer Test [4.1.5] -->
+      <use token="BLEND" /> <!-- Blending [4.1.7] -->
+      <use token="DITHER" /> <!-- DIthering [4.1.9] -->
     </enum>
     <enum name="FrontFaceDirection">
       <use token="CCW" />
@@ -5641,6 +5744,31 @@
       <use token="DEPTH_COMPONENT32F" />
       <use token="DEPTH24_STENCIL8" />
       <use token="DEPTH32F_STENCIL8" />
+    </enum>
+    <enum name="StencilFace">
+      <use token="FRONT" />
+      <use token="BACK" />
+      <use token="FRONT_AND_BACK" />
+    </enum>
+    <enum name="StencilFunction">
+      <use token="NEVER" />
+      <use token="ALWAYS" />
+      <use token="LESS" />
+      <use token="GREATER" />
+      <use token="LEQUAL" />
+      <use token="GEQUAL" />
+      <use token="EQUAL" />
+      <use token="NOT_EQUAL" />
+    </enum>
+    <enum name="StencilOp">
+      <use token="KEEP" />
+      <use token="ZERO" />
+      <use token="REPLACE" />
+      <use token="INCR" />
+      <use token="DECR" />
+      <use token="INVERT" />
+      <use token="INCR_WRAP" />
+      <use token="DECR_WRAP" />
     </enum>
     <enum name="TextureComponentCount">
       <reuse enum="SizedInternalFormat" />

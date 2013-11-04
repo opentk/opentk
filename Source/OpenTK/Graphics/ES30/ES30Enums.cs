@@ -385,7 +385,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 79 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 78 other functions
     /// </summary>
     public enum All : int
     {
@@ -9219,22 +9219,30 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.BlendEquation, GL.BlendEquationSeparate
+    /// Used in GL.BlendEquation, GL.BlendEquationSeparate and 1 other function
     /// </summary>
     public enum BlendEquationMode : int
     {
         /// <summary>
-        /// Original was GL_FuncAdd = 0X8006
+        /// Original was GL_FUNC_ADD = 0x8006
         /// </summary>
-        FuncAdd = ((int)0X8006)        ,
+        FuncAdd = ((int)0x8006)        ,
         /// <summary>
-        /// Original was GL_FuncSubtract = 0X800a
+        /// Original was GL_MIN = 0x8007
         /// </summary>
-        FuncSubtract = ((int)0X800a)        ,
+        Min = ((int)0x8007)        ,
         /// <summary>
-        /// Original was GL_FuncReverseSubtract = 0X800b
+        /// Original was GL_MAX = 0x8008
         /// </summary>
-        FuncReverseSubtract = ((int)0X800b)        ,
+        Max = ((int)0x8008)        ,
+        /// <summary>
+        /// Original was GL_FUNC_SUBTRACT = 0x800A
+        /// </summary>
+        FuncSubtract = ((int)0x800A)        ,
+        /// <summary>
+        /// Original was GL_FUNC_REVERSE_SUBTRACT = 0x800B
+        /// </summary>
+        FuncReverseSubtract = ((int)0x800B)        ,
     }
 
     /// <summary>
@@ -9310,49 +9318,49 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         OneMinusDstAlpha = ((int)0x0305)        ,
         /// <summary>
-        /// Original was GL_DstColor = 0X0306
+        /// Original was GL_DST_COLOR = 0x0306
         /// </summary>
-        DstColor = ((int)0X0306)        ,
+        DstColor = ((int)0x0306)        ,
         /// <summary>
-        /// Original was GL_OneMinusDstColor = 0X0307
+        /// Original was GL_ONE_MINUS_DST_COLOR = 0x0307
         /// </summary>
-        OneMinusDstColor = ((int)0X0307)        ,
+        OneMinusDstColor = ((int)0x0307)        ,
         /// <summary>
-        /// Original was GL_SrcAlphaSaturate = 0X0308
+        /// Original was GL_SRC_ALPHA_SATURATE = 0x0308
         /// </summary>
-        SrcAlphaSaturate = ((int)0X0308)        ,
+        SrcAlphaSaturate = ((int)0x0308)        ,
+        /// <summary>
+        /// Original was GL_CONSTANT_COLOR = 0x8001
+        /// </summary>
+        ConstantColor = ((int)0x8001)        ,
         /// <summary>
         /// Original was GL_CONSTANT_COLOR_EXT = 0x8001
         /// </summary>
         ConstantColorExt = ((int)0x8001)        ,
         /// <summary>
-        /// Original was GL_ConstantColor = 0X8001
+        /// Original was GL_ONE_MINUS_CONSTANT_COLOR = 0x8002
         /// </summary>
-        ConstantColor = ((int)0X8001)        ,
+        OneMinusConstantColor = ((int)0x8002)        ,
         /// <summary>
         /// Original was GL_ONE_MINUS_CONSTANT_COLOR_EXT = 0x8002
         /// </summary>
         OneMinusConstantColorExt = ((int)0x8002)        ,
         /// <summary>
-        /// Original was GL_OneMinusConstantColor = 0X8002
+        /// Original was GL_CONSTANT_ALPHA = 0x8003
         /// </summary>
-        OneMinusConstantColor = ((int)0X8002)        ,
+        ConstantAlpha = ((int)0x8003)        ,
         /// <summary>
         /// Original was GL_CONSTANT_ALPHA_EXT = 0x8003
         /// </summary>
         ConstantAlphaExt = ((int)0x8003)        ,
         /// <summary>
-        /// Original was GL_ConstantAlpha = 0X8003
+        /// Original was GL_ONE_MINUS_CONSTANT_ALPHA = 0x8004
         /// </summary>
-        ConstantAlpha = ((int)0X8003)        ,
+        OneMinusConstantAlpha = ((int)0x8004)        ,
         /// <summary>
         /// Original was GL_ONE_MINUS_CONSTANT_ALPHA_EXT = 0x8004
         /// </summary>
         OneMinusConstantAlphaExt = ((int)0x8004)        ,
-        /// <summary>
-        /// Original was GL_OneMinusConstantAlpha = 0X8004
-        /// </summary>
-        OneMinusConstantAlpha = ((int)0X8004)        ,
         /// <summary>
         /// Original was GL_One = 1
         /// </summary>
@@ -9369,13 +9377,13 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         Zero = ((int)0)        ,
         /// <summary>
-        /// Original was GL_SrcColor = 0X0300
+        /// Original was GL_SRC_COLOR = 0x0300
         /// </summary>
-        SrcColor = ((int)0X0300)        ,
+        SrcColor = ((int)0x0300)        ,
         /// <summary>
-        /// Original was GL_OneMinusSrcColor = 0X0301
+        /// Original was GL_ONE_MINUS_SRC_COLOR = 0x0301
         /// </summary>
-        OneMinusSrcColor = ((int)0X0301)        ,
+        OneMinusSrcColor = ((int)0x0301)        ,
         /// <summary>
         /// Original was GL_SRC_ALPHA = 0x0302
         /// </summary>
@@ -9405,37 +9413,37 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         SrcAlphaSaturate = ((int)0x0308)        ,
         /// <summary>
+        /// Original was GL_CONSTANT_COLOR = 0x8001
+        /// </summary>
+        ConstantColor = ((int)0x8001)        ,
+        /// <summary>
         /// Original was GL_CONSTANT_COLOR_EXT = 0x8001
         /// </summary>
         ConstantColorExt = ((int)0x8001)        ,
         /// <summary>
-        /// Original was GL_ConstantColor = 0X8001
+        /// Original was GL_ONE_MINUS_CONSTANT_COLOR = 0x8002
         /// </summary>
-        ConstantColor = ((int)0X8001)        ,
+        OneMinusConstantColor = ((int)0x8002)        ,
         /// <summary>
         /// Original was GL_ONE_MINUS_CONSTANT_COLOR_EXT = 0x8002
         /// </summary>
         OneMinusConstantColorExt = ((int)0x8002)        ,
         /// <summary>
-        /// Original was GL_OneMinusConstantColor = 0X8002
+        /// Original was GL_CONSTANT_ALPHA = 0x8003
         /// </summary>
-        OneMinusConstantColor = ((int)0X8002)        ,
+        ConstantAlpha = ((int)0x8003)        ,
         /// <summary>
         /// Original was GL_CONSTANT_ALPHA_EXT = 0x8003
         /// </summary>
         ConstantAlphaExt = ((int)0x8003)        ,
         /// <summary>
-        /// Original was GL_ConstantAlpha = 0X8003
+        /// Original was GL_ONE_MINUS_CONSTANT_ALPHA = 0x8004
         /// </summary>
-        ConstantAlpha = ((int)0X8003)        ,
+        OneMinusConstantAlpha = ((int)0x8004)        ,
         /// <summary>
         /// Original was GL_ONE_MINUS_CONSTANT_ALPHA_EXT = 0x8004
         /// </summary>
         OneMinusConstantAlphaExt = ((int)0x8004)        ,
-        /// <summary>
-        /// Original was GL_OneMinusConstantAlpha = 0X8004
-        /// </summary>
-        OneMinusConstantAlpha = ((int)0X8004)        ,
         /// <summary>
         /// Original was GL_One = 1
         /// </summary>
@@ -10101,7 +10109,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.CullFace, GL.StencilFuncSeparate and 2 other functions
+    /// Used in GL.CullFace, GL.StencilMaskSeparate
     /// </summary>
     public enum CullFaceMode : int
     {
@@ -10789,25 +10797,25 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         MultisampleSgis = ((int)0x809D)        ,
         /// <summary>
+        /// Original was GL_SAMPLE_ALPHA_TO_COVERAGE = 0x809E
+        /// </summary>
+        SampleAlphaToCoverage = ((int)0x809E)        ,
+        /// <summary>
         /// Original was GL_SAMPLE_ALPHA_TO_MASK_SGIS = 0x809E
         /// </summary>
         SampleAlphaToMaskSgis = ((int)0x809E)        ,
-        /// <summary>
-        /// Original was GL_SampleAlphaToCoverage = 0X809e
-        /// </summary>
-        SampleAlphaToCoverage = ((int)0X809e)        ,
         /// <summary>
         /// Original was GL_SAMPLE_ALPHA_TO_ONE_SGIS = 0x809F
         /// </summary>
         SampleAlphaToOneSgis = ((int)0x809F)        ,
         /// <summary>
+        /// Original was GL_SAMPLE_COVERAGE = 0x80A0
+        /// </summary>
+        SampleCoverage = ((int)0x80A0)        ,
+        /// <summary>
         /// Original was GL_SAMPLE_MASK_SGIS = 0x80A0
         /// </summary>
         SampleMaskSgis = ((int)0x80A0)        ,
-        /// <summary>
-        /// Original was GL_SampleCoverage = 0X80a0
-        /// </summary>
-        SampleCoverage = ((int)0X80a0)        ,
         /// <summary>
         /// Original was GL_TEXTURE_COLOR_TABLE_SGI = 0x80BC
         /// </summary>
@@ -22295,6 +22303,25 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
+    /// Used in GL.StencilFuncSeparate, GL.StencilOpSeparate
+    /// </summary>
+    public enum StencilFace : int
+    {
+        /// <summary>
+        /// Original was GL_FRONT = 0X0404
+        /// </summary>
+        Front = ((int)0X0404)        ,
+        /// <summary>
+        /// Original was GL_BACK = 0X0405
+        /// </summary>
+        Back = ((int)0X0405)        ,
+        /// <summary>
+        /// Original was GL_FRONT_AND_BACK = 0x0408
+        /// </summary>
+        FrontAndBack = ((int)0x0408)        ,
+    }
+
+    /// <summary>
     /// Used in GL.StencilFunc, GL.StencilFuncSeparate
     /// </summary>
     public enum StencilFunction : int
@@ -22363,13 +22390,13 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         Decr = ((int)0X1e03)        ,
         /// <summary>
-        /// Original was GL_IncrWrap = 0X8507
+        /// Original was GL_INCR_WRAP = 0x8507
         /// </summary>
-        IncrWrap = ((int)0X8507)        ,
+        IncrWrap = ((int)0x8507)        ,
         /// <summary>
-        /// Original was GL_DecrWrap = 0X8508
+        /// Original was GL_DECR_WRAP = 0x8508
         /// </summary>
-        DecrWrap = ((int)0X8508)        ,
+        DecrWrap = ((int)0x8508)        ,
     }
 
     /// <summary>

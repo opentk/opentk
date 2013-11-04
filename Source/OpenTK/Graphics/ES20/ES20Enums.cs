@@ -8618,7 +8618,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.CullFace, GL.StencilFuncSeparate and 2 other functions
+    /// Used in GL.CullFace, GL.StencilMaskSeparate
     /// </summary>
     public enum CullFaceMode : int
     {
@@ -19081,6 +19081,25 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_SMOOTH = 0x1D01
         /// </summary>
         Smooth = ((int)0x1D01)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.StencilFuncSeparate, GL.StencilOpSeparate
+    /// </summary>
+    public enum StencilFace : int
+    {
+        /// <summary>
+        /// Original was GL_FRONT = 0X0404
+        /// </summary>
+        Front = ((int)0X0404)        ,
+        /// <summary>
+        /// Original was GL_BACK = 0X0405
+        /// </summary>
+        Back = ((int)0X0405)        ,
+        /// <summary>
+        /// Original was GL_FRONT_AND_BACK = 0x0408
+        /// </summary>
+        FrontAndBack = ((int)0x0408)        ,
     }
 
     /// <summary>

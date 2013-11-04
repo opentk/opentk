@@ -111,7 +111,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate void BlendEquation(OpenTK.Graphics.ES30.BlendEquationMode mode);
             internal static BlendEquation glBlendEquation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendEquationEXT(OpenTK.Graphics.ES30.All mode);
+            internal delegate void BlendEquationEXT(OpenTK.Graphics.ES30.BlendEquationMode mode);
             internal static BlendEquationEXT glBlendEquationEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendEquationSeparate(OpenTK.Graphics.ES30.BlendEquationMode modeRGB, OpenTK.Graphics.ES30.BlendEquationMode modeAlpha);
@@ -1104,8 +1104,11 @@ namespace OpenTK.Graphics.ES30
             internal delegate void StencilFunc(OpenTK.Graphics.ES30.StencilFunction func, Int32 @ref, UInt32 mask);
             internal static StencilFunc glStencilFunc;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void StencilFuncSeparate(OpenTK.Graphics.ES30.CullFaceMode face, OpenTK.Graphics.ES30.StencilFunction func, Int32 @ref, UInt32 mask);
+            internal delegate void StencilFuncSeparate(OpenTK.Graphics.ES30.StencilFace face, OpenTK.Graphics.ES30.StencilFunction func, Int32 @ref, UInt32 mask);
             internal static StencilFuncSeparate glStencilFuncSeparate;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void StencilFuncSeparate1(OpenTK.Graphics.ES30.StencilFace face, OpenTK.Graphics.ES30.StencilFunction func, Int32 @ref, UInt32 mask);
+            internal static StencilFuncSeparate1 glStencilFuncSeparate1;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void StencilMask(UInt32 mask);
             internal static StencilMask glStencilMask;
@@ -1116,8 +1119,11 @@ namespace OpenTK.Graphics.ES30
             internal delegate void StencilOp(OpenTK.Graphics.ES30.StencilOp fail, OpenTK.Graphics.ES30.StencilOp zfail, OpenTK.Graphics.ES30.StencilOp zpass);
             internal static StencilOp glStencilOp;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void StencilOpSeparate(OpenTK.Graphics.ES30.CullFaceMode face, OpenTK.Graphics.ES30.StencilOp sfail, OpenTK.Graphics.ES30.StencilOp dpfail, OpenTK.Graphics.ES30.StencilOp dppass);
+            internal delegate void StencilOpSeparate(OpenTK.Graphics.ES30.StencilFace face, OpenTK.Graphics.ES30.StencilOp sfail, OpenTK.Graphics.ES30.StencilOp dpfail, OpenTK.Graphics.ES30.StencilOp dppass);
             internal static StencilOpSeparate glStencilOpSeparate;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void StencilOpSeparate1(OpenTK.Graphics.ES30.StencilFace face, OpenTK.Graphics.ES30.StencilOp sfail, OpenTK.Graphics.ES30.StencilOp dpfail, OpenTK.Graphics.ES30.StencilOp dppass);
+            internal static StencilOpSeparate1 glStencilOpSeparate1;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate bool TestFenceNV(UInt32 fence);
             internal static TestFenceNV glTestFenceNV;
