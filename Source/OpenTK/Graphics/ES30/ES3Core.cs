@@ -137,7 +137,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static void BlitFramebufferNV(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, OpenTK.Graphics.ES30.ClearBufferMask mask, OpenTK.Graphics.ES30.BlitFramebufferFilter filter);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBufferData", ExactSpelling = true)]
-            internal extern static void BufferData(OpenTK.Graphics.ES30.BufferTarget target, IntPtr size, IntPtr data, OpenTK.Graphics.ES30.BufferUsage usage);
+            internal extern static void BufferData(OpenTK.Graphics.ES30.BufferTarget target, IntPtr size, IntPtr data, OpenTK.Graphics.ES30.BufferUsageHint usage);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBufferSubData", ExactSpelling = true)]
             internal extern static void BufferSubData(OpenTK.Graphics.ES30.BufferTarget target, IntPtr offset, IntPtr size, IntPtr data);
@@ -710,10 +710,10 @@ namespace OpenTK.Graphics.ES30
             internal extern static unsafe void GetRenderbufferParameteriv(OpenTK.Graphics.ES30.RenderbufferTarget target, OpenTK.Graphics.ES30.RenderbufferParameterName pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSamplerParameterfv", ExactSpelling = true)]
-            internal extern static unsafe void GetSamplerParameterfv(UInt32 sampler, OpenTK.Graphics.ES30.All pname, [OutAttribute] Single* @params);
+            internal extern static unsafe void GetSamplerParameterfv(UInt32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname, [OutAttribute] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSamplerParameteriv", ExactSpelling = true)]
-            internal extern static unsafe void GetSamplerParameteriv(UInt32 sampler, OpenTK.Graphics.ES30.All pname, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetSamplerParameteriv(UInt32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetShaderInfoLog", ExactSpelling = true)]
             internal extern static unsafe void GetShaderInfoLog(UInt32 shader, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infoLog);
@@ -1073,16 +1073,16 @@ namespace OpenTK.Graphics.ES30
             internal extern static void SampleCoverage(Single value, bool invert);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSamplerParameterf", ExactSpelling = true)]
-            internal extern static void SamplerParameterf(UInt32 sampler, OpenTK.Graphics.ES30.All pname, Single param);
+            internal extern static void SamplerParameterf(UInt32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname, Single param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSamplerParameterfv", ExactSpelling = true)]
-            internal extern static unsafe void SamplerParameterfv(UInt32 sampler, OpenTK.Graphics.ES30.All pname, Single* param);
+            internal extern static unsafe void SamplerParameterfv(UInt32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname, Single* param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSamplerParameteri", ExactSpelling = true)]
-            internal extern static void SamplerParameteri(UInt32 sampler, OpenTK.Graphics.ES30.All pname, Int32 param);
+            internal extern static void SamplerParameteri(UInt32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname, Int32 param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glSamplerParameteriv", ExactSpelling = true)]
-            internal extern static unsafe void SamplerParameteriv(UInt32 sampler, OpenTK.Graphics.ES30.All pname, Int32* param);
+            internal extern static unsafe void SamplerParameteriv(UInt32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname, Int32* param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glScissor", ExactSpelling = true)]
             internal extern static void Scissor(Int32 x, Int32 y, Int32 width, Int32 height);
@@ -1127,10 +1127,10 @@ namespace OpenTK.Graphics.ES30
             internal extern static void TexImage2D(OpenTK.Graphics.ES30.TextureTarget target, Int32 level, OpenTK.Graphics.ES30.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexImage3D", ExactSpelling = true)]
-            internal extern static void TexImage3D(OpenTK.Graphics.ES30.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
+            internal extern static void TexImage3D(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, OpenTK.Graphics.ES30.PixelFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexImage3DOES", ExactSpelling = true)]
-            internal extern static void TexImage3DOES(OpenTK.Graphics.ES30.All target, Int32 level, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES30.All format, OpenTK.Graphics.ES30.All type, IntPtr pixels);
+            internal extern static void TexImage3DOES(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, OpenTK.Graphics.ES30.PixelFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.All type, IntPtr pixels);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexParameterf", ExactSpelling = true)]
             internal extern static void TexParameterf(OpenTK.Graphics.ES30.TextureTarget target, OpenTK.Graphics.ES30.TextureParameterName pname, Single param);

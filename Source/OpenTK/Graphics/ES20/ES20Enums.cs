@@ -167,7 +167,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 69 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 80 other functions
     /// </summary>
     public enum All : int
     {
@@ -8141,7 +8141,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Angle.BlitFramebuffer, GL.NV.BlitFramebuffer
+    /// Not used directly.
     /// </summary>
     public enum BlitFramebufferFilter : int
     {
@@ -8186,14 +8186,14 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Oes.GetBufferPointer
+    /// Not used directly.
     /// </summary>
     public enum BufferPointer : int
     {
     }
 
     /// <summary>
-    /// Used in GL.BindBuffer, GL.BufferData and 6 other functions
+    /// Used in GL.BindBuffer, GL.BufferData and 2 other functions
     /// </summary>
     public enum BufferTarget : int
     {
@@ -8227,7 +8227,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Angle.BlitFramebuffer, GL.Clear and 1 other function
+    /// Used in GL.Clear
     /// </summary>
     [Flags]
     public enum ClearBufferMask : int
@@ -13857,14 +13857,14 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.GetQueryObject
+    /// Not used directly.
     /// </summary>
     public enum GetQueryObjectParam : int
     {
     }
 
     /// <summary>
-    /// Used in GL.Ext.GetQuery
+    /// Not used directly.
     /// </summary>
     public enum GetQueryParam : int
     {
@@ -18442,7 +18442,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.ProgramParameter
+    /// Not used directly.
     /// </summary>
     public enum ProgramParameterName : int
     {
@@ -18749,7 +18749,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Ext.BeginQuery, GL.Ext.EndQuery and 1 other function
+    /// Not used directly.
     /// </summary>
     public enum QueryTarget : int
     {

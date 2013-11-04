@@ -135,7 +135,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate void BlitFramebufferNV(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, OpenTK.Graphics.ES30.ClearBufferMask mask, OpenTK.Graphics.ES30.BlitFramebufferFilter filter);
             internal static BlitFramebufferNV glBlitFramebufferNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BufferData(OpenTK.Graphics.ES30.BufferTarget target, IntPtr size, IntPtr data, OpenTK.Graphics.ES30.BufferUsage usage);
+            internal delegate void BufferData(OpenTK.Graphics.ES30.BufferTarget target, IntPtr size, IntPtr data, OpenTK.Graphics.ES30.BufferUsageHint usage);
             internal static BufferData glBufferData;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BufferSubData(OpenTK.Graphics.ES30.BufferTarget target, IntPtr offset, IntPtr size, IntPtr data);
@@ -708,10 +708,10 @@ namespace OpenTK.Graphics.ES30
             internal unsafe delegate void GetRenderbufferParameteriv(OpenTK.Graphics.ES30.RenderbufferTarget target, OpenTK.Graphics.ES30.RenderbufferParameterName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetRenderbufferParameteriv glGetRenderbufferParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetSamplerParameterfv(UInt32 sampler, OpenTK.Graphics.ES30.All pname, [OutAttribute] Single* @params);
+            internal unsafe delegate void GetSamplerParameterfv(UInt32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname, [OutAttribute] Single* @params);
             internal unsafe static GetSamplerParameterfv glGetSamplerParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetSamplerParameteriv(UInt32 sampler, OpenTK.Graphics.ES30.All pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetSamplerParameteriv(UInt32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetSamplerParameteriv glGetSamplerParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetShaderInfoLog(UInt32 shader, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infoLog);
@@ -1071,16 +1071,16 @@ namespace OpenTK.Graphics.ES30
             internal delegate void SampleCoverage(Single value, bool invert);
             internal static SampleCoverage glSampleCoverage;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void SamplerParameterf(UInt32 sampler, OpenTK.Graphics.ES30.All pname, Single param);
+            internal delegate void SamplerParameterf(UInt32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname, Single param);
             internal static SamplerParameterf glSamplerParameterf;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void SamplerParameterfv(UInt32 sampler, OpenTK.Graphics.ES30.All pname, Single* param);
+            internal unsafe delegate void SamplerParameterfv(UInt32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname, Single* param);
             internal unsafe static SamplerParameterfv glSamplerParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void SamplerParameteri(UInt32 sampler, OpenTK.Graphics.ES30.All pname, Int32 param);
+            internal delegate void SamplerParameteri(UInt32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname, Int32 param);
             internal static SamplerParameteri glSamplerParameteri;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void SamplerParameteriv(UInt32 sampler, OpenTK.Graphics.ES30.All pname, Int32* param);
+            internal unsafe delegate void SamplerParameteriv(UInt32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname, Int32* param);
             internal unsafe static SamplerParameteriv glSamplerParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Scissor(Int32 x, Int32 y, Int32 width, Int32 height);
@@ -1125,10 +1125,10 @@ namespace OpenTK.Graphics.ES30
             internal delegate void TexImage2D(OpenTK.Graphics.ES30.TextureTarget target, Int32 level, OpenTK.Graphics.ES30.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
             internal static TexImage2D glTexImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexImage3D(OpenTK.Graphics.ES30.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
+            internal delegate void TexImage3D(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, OpenTK.Graphics.ES30.PixelFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
             internal static TexImage3D glTexImage3D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexImage3DOES(OpenTK.Graphics.ES30.All target, Int32 level, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES30.All format, OpenTK.Graphics.ES30.All type, IntPtr pixels);
+            internal delegate void TexImage3DOES(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, OpenTK.Graphics.ES30.PixelFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.All type, IntPtr pixels);
             internal static TexImage3DOES glTexImage3DOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexParameterf(OpenTK.Graphics.ES30.TextureTarget target, OpenTK.Graphics.ES30.TextureParameterName pname, Single param);

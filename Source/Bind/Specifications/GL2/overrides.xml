@@ -1720,6 +1720,45 @@
       <param name="drawcount" type="GLsizei" flow="in" />
       <returns type="void" />
     </function>
+    <!--
+    <function name="TexImage1D" category="VERSION_1_0" extension="Core" version="1.0">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="level" type="CheckedInt32" flow="in" />
+      <param name="internalformat" type="PixelInternalFormat" flow="in" />
+      <param name="width" type="GLsizei" flow="in" />
+      <param name="border" type="CheckedInt32" flow="in" />
+      <param name="format" type="PixelFormat" flow="in" />
+      <param name="type" type="PixelType" flow="in" />
+      <param name="pixels" type="void *" flow="in" count="COMPSIZE(format,type,width)" />
+      <returns type="void" />
+    </function>
+    <function name="TexImage2D" category="VERSION_1_0" extension="Core" version="1.0">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="level" type="CheckedInt32" flow="in" />
+      <param name="internalformat" type="PixelInternalFormat" flow="in" />
+      <param name="width" type="GLsizei" flow="in" />
+      <param name="height" type="GLsizei" flow="in" />
+      <param name="border" type="CheckedInt32" flow="in" />
+      <param name="format" type="PixelFormat" flow="in" />
+      <param name="type" type="PixelType" flow="in" />
+      <param name="pixels" type="void *" flow="in" count="COMPSIZE(format,type,width,height)" />
+      <returns type="void" />
+    </function>
+    <function name="TexImage3D" category="VERSION_1_2" extension="Core" version="1.2">
+      <param name="target" type="TextureTarget" flow="in" />
+      <param name="level" type="CheckedInt32" flow="in" />
+      <param name="internalformat" type="PixelInternalFormat" flow="in" />
+      <param name="width" type="GLsizei" flow="in" />
+      <param name="height" type="GLsizei" flow="in" />
+      <param name="depth" type="GLsizei" flow="in" />
+      <param name="border" type="CheckedInt32" flow="in" />
+      <param name="format" type="PixelFormat" flow="in" />
+      <param name="type" type="PixelType" flow="in" />
+      <param name="pixels" type="void *" flow="in" count="COMPSIZE(format,type,width,height,depth)" />
+      <returns type="void" />
+    </function>
+    -->
+
   </add>
 
   <add name="gl|glcore">
@@ -4115,7 +4154,7 @@
   </add>
   
   <!-- gles2 2.0 -->
-  <replace name="gles2">
+  <replace name="gles2" version="2.0">
   
     <function name="BindBuffer" extension="Core" version="2.0">
       <param name="target"><type>BufferTarget</type></param>
@@ -4403,7 +4442,7 @@
 
   </replace>
   
-  <add name="gles2">
+  <add name="gles2" version="2.0">
     <!-- PrimtiveType <=> BeginMode overloads for backwards compatibility -->
     <function name="DrawArrays" category="ES_VERSION_2_0" extension="Core" version="2.0">
       <param name="mode" type="BeginMode" flow="in" />
@@ -5160,8 +5199,33 @@
     </function>
     
     <!-- Program Queries [6.1.12] -->
-    <function name="GetProgram" extension="Core" version="2.0">
+    <function name="GetProgram">
       <param name="pname"><type>ProgramParameter</type></param>
+    </function>
+    
+    <!-- Texturing [3.8] -->
+    <function name="ActiveTexture">
+      <param name="texture"><type>TextureUnit</type></param>
+    </function>
+    <function name="BindTexture">
+      <param name="target"><type>TextureTarget</type></param>
+    </function>
+    
+    <!-- Sampler Objects [3.8.2] -->
+    <function name="SamplerParameter">
+      <param name="pname"><type>SamplerParameterName</type></param>
+    </function>
+
+    <!-- Sampler Queries [6.1.5] -->
+    <function name="GetSamplerParameter">
+      <param name="pname"><type>SamplerParameterName</type></param>
+    </function>
+
+    <!-- Texture Image Specification [3.8.3-4] -->
+    <function name="TexImage3D">
+      <param name="target"><type>TextureTarget3d</type></param>
+      <param name="internalformat"><type>PixelFormat</type></param>
+      <param name="format"><type>PixelFormat</type></param>
     </function>
     
    </replace>
@@ -5332,14 +5396,37 @@
       <use token="CURRENT_QUERY" />
     </enum>
     <enum name="PixelFormat">
+      <use token="ALPHA" />
       <use token="RGBA" />
+      <use token="RGB" />
+      <use token="RG" />
+      <use token="R" />
       <use token="RGBA_INTEGER" />
+      <use token="RGB_INTEGER" />
+      <use token="RG_INTEGER" />
+      <use token="R_INTEGER" />
+	  <use token="DEPTH_COMPONENT" />
+	  <use token="DEPTH_STENCIL" />
+	  <use token="LUMINANCE_ALPHA" />
+	  <use token="LUMINANCE" />
     </enum>
     <enum name="PixelType">
+      <use token="BYTE" />
+      <use token="SHORT" />
       <use token="INT" />
-      <use token="UNSIGNED_INT_2_10_10_10_REV" />
       <use token="UNSIGNED_BYTE" />
+      <use token="UNSIGNED_SHORT" />
       <use token="UNSIGNED_INT" />
+      <use token="FLOAT" />
+      <use token="HALF_FLOAT" />
+      <use token="UNSIGNED_SHORT_4_4_4_4" />
+      <use token="UNSIGNED_SHORT_5_5_5_1" />
+      <use token="UNSIGNED_SHORT_5_6_5" />
+      <use token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use token="UNSIGNED_INT_24_8" />
+      <use token="UNSIGNED_INT_10F_11F_11F_REV" />
+      <use token="UNSIGNED_INT_5_9_9_9_REV" />
+      <use token="FLOAT_32_UNSIGNED_INT_24_8_REV" />
     </enum>
     <enum name="ProgramParameter">
       <use token="DELETE_STATUS" />
@@ -5383,6 +5470,17 @@
       <use token="COLOR_ATTACHMENT14" />
       <use token="COLOR_ATTACHMENT15" />
     </enum>
+    <enum name="SamplerParameterName">
+      <use token="TEXTURE_WRAP_S" />
+      <use token="TEXTURE_WRAP_T" />
+      <use token="TEXTURE_WRAP_R" />
+      <use token="TEXTURE_MIN_FILTER" />
+      <use token="TEXTURE_MAG_FILTER" />
+      <use token="TEXTURE_MIN_LOD" />
+      <use token="TEXTURE_MAX_LOD" />
+      <use token="TEXTURE_COMPARE_MODE" />
+      <use token="TEXTURE_COMPARE_FUNC" />
+    </enum>
     <enum name="ShaderParameter">
       <use token="ShaderType" />
       <use token="DeleteStatus" />
@@ -5401,6 +5499,111 @@
     <enum name="ShaderType">
       <use token="VERTEX_SHADER" />
       <use token="FRAGMENT_SHADER" />
+    </enum>
+    <enum name="TextureComponentCount">
+      <use token="R8" />
+      <use token="R8I" />
+      <use token="R8UI" />
+      <use token="R8_SNORM" />
+      <use token="R16I" />
+      <use token="R16UI" />
+      <use token="R16F" />
+      <use token="R32I" />
+      <use token="R32UI" />
+      <use token="R32F" />
+      <use token="RG8" />
+      <use token="RG8I" />
+      <use token="RG8UI" />
+      <use token="RG8_SNORM" />
+      <use token="RG16I" />
+      <use token="RG16UI" />
+      <use token="RG16F" />
+      <use token="RG32I" />
+      <use token="RG32UI" />
+      <use token="RG32F" />
+      <use token="RGB" />
+      <use token="RGB5_A1" />
+      <use token="RGB565" />
+      <use token="RGB8" />
+      <use token="RGB8I" />
+      <use token="RGB8UI" />
+      <use token="RGB8_SNORM" />
+      <use token="RGB9_E5" />
+      <use token="RGB10_A2" />
+      <use token="RGB10_A2UI" />
+      <use token="RGB16I" />
+      <use token="RGB16UI" />
+      <use token="RGB16F" />
+      <use token="RGB32I" />
+      <use token="RGB32UI" />
+      <use token="RGB32F" />
+      <use token="SRGB8" />
+      <use token="RGBA" />
+      <use token="RGBA4" />
+      <use token="RGBA8" />
+      <use token="RGBA8I" />
+      <use token="RGBA8UI" />
+      <use token="RGBA8_SNORM" />
+      <use token="RGBA16I" />
+      <use token="RGBA16UI" />
+      <use token="RGBA16F" />
+      <use token="RGBA32I" />
+      <use token="RGBA32UI" />
+      <use token="RGBA32F" />
+      <use token="SRGB8_ALPHA8" />
+      <use token="R11F_G11F_B10F" />
+      <use token="DEPTH_COMPONENT16" />
+      <use token="DEPTH_COMPONENT24" />
+      <use token="DEPTH_COMPONENT32F" />
+      <use token="DEPTH24_STENCIL8" />
+      <use token="DEPTH32F_STENCIL8" />
+      <use token="LUMINANCE_ALPHA" />
+      <use token="LUMINANCE" />
+      <use token="ALPHA" />
+    </enum>
+    <enum name="TextureTarget">
+      <use token="TEXTURE_2D" />
+      <use token="TEXTURE_3D" />
+      <use token="TEXTURE_2D_ARRAY" />
+      <use token="TEXTURE_CUBE_MAP" />
+    </enum>
+    <enum name="TextureTarget3d">
+      <use token="TEXTURE_3D" />
+      <use token="TEXTURE_2D_ARRAY" />
+    </enum>
+    <enum name="TextureUnit">
+      <use token="TEXTURE0" />
+      <use token="TEXTURE1" />
+      <use token="TEXTURE2" />
+      <use token="TEXTURE3" />
+      <use token="TEXTURE4" />
+      <use token="TEXTURE5" />
+      <use token="TEXTURE6" />
+      <use token="TEXTURE7" />
+      <use token="TEXTURE8" />
+      <use token="TEXTURE9" />
+      <use token="TEXTURE10" />
+      <use token="TEXTURE11" />
+      <use token="TEXTURE12" />
+      <use token="TEXTURE13" />
+      <use token="TEXTURE14" />
+      <use token="TEXTURE15" />
+      <use token="TEXTURE16" />
+      <use token="TEXTURE17" />
+      <use token="TEXTURE18" />
+      <use token="TEXTURE19" />
+      <use token="TEXTURE20" />
+      <use token="TEXTURE21" />
+      <use token="TEXTURE22" />
+      <use token="TEXTURE23" />
+      <use token="TEXTURE24" />
+      <use token="TEXTURE25" />
+      <use token="TEXTURE26" />
+      <use token="TEXTURE27" />
+      <use token="TEXTURE28" />
+      <use token="TEXTURE29" />
+      <use token="TEXTURE30" />
+      <use token="TEXTURE31" />
     </enum>
     <enum name="TransformFeedbackMode">
       <use token="INTERLEAVED_ATTRIBS" />
