@@ -170,7 +170,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static void ClearStencil(Int32 s);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClientWaitSync", ExactSpelling = true)]
-            internal extern static OpenTK.Graphics.ES30.All ClientWaitSync(IntPtr sync, UInt32 flags, UInt64 timeout);
+            internal extern static OpenTK.Graphics.ES30.WaitSyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.ES30.ClientWaitSyncFlags flags, UInt64 timeout);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClientWaitSyncAPPLE", ExactSpelling = true)]
             internal extern static OpenTK.Graphics.ES30.All ClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
@@ -446,10 +446,10 @@ namespace OpenTK.Graphics.ES30
             internal extern static void ExtTexObjectStateOverrideiQCOM(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All pname, Int32 param);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFenceSync", ExactSpelling = true)]
-            internal extern static IntPtr FenceSync(OpenTK.Graphics.ES30.All condition, UInt32 flags);
+            internal extern static IntPtr FenceSync(OpenTK.Graphics.ES30.SyncCondition condition, OpenTK.Graphics.ES30.WaitSyncFlags flags);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFenceSyncAPPLE", ExactSpelling = true)]
-            internal extern static IntPtr FenceSyncAPPLE(OpenTK.Graphics.ES30.All condition, UInt32 flags);
+            internal extern static IntPtr FenceSyncAPPLE(OpenTK.Graphics.ES30.SyncCondition condition, OpenTK.Graphics.ES30.WaitSyncFlags flags);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFinish", ExactSpelling = true)]
             internal extern static void Finish();
@@ -1373,7 +1373,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static void Viewport(Int32 x, Int32 y, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glWaitSync", ExactSpelling = true)]
-            internal extern static void WaitSync(IntPtr sync, UInt32 flags, UInt64 timeout);
+            internal extern static void WaitSync(IntPtr sync, OpenTK.Graphics.ES30.WaitSyncFlags flags, UInt64 timeout);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glWaitSyncAPPLE", ExactSpelling = true)]
             internal extern static void WaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);

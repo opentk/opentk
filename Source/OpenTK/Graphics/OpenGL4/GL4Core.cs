@@ -221,7 +221,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static void ClearTexSubImage(UInt32 texture, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClientWaitSync", ExactSpelling = true)]
-            internal extern static OpenTK.Graphics.OpenGL4.WaitSyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.OpenGL4.WaitSyncFlags flags, UInt64 timeout);
+            internal extern static OpenTK.Graphics.OpenGL4.WaitSyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.OpenGL4.ClientWaitSyncFlags flags, UInt64 timeout);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorMask", ExactSpelling = true)]
             internal extern static void ColorMask(bool red, bool green, bool blue, bool alpha);
@@ -527,7 +527,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static void EndTransformFeedback();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFenceSync", ExactSpelling = true)]
-            internal extern static IntPtr FenceSync(OpenTK.Graphics.OpenGL4.SyncCondition condition, UInt32 flags);
+            internal extern static IntPtr FenceSync(OpenTK.Graphics.OpenGL4.SyncCondition condition, OpenTK.Graphics.OpenGL4.WaitSyncFlags flags);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFinish", ExactSpelling = true)]
             internal extern static void Finish();

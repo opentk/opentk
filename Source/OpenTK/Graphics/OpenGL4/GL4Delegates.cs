@@ -219,7 +219,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate void ClearTexSubImage(UInt32 texture, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr data);
             internal static ClearTexSubImage glClearTexSubImage;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate OpenTK.Graphics.OpenGL4.WaitSyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.OpenGL4.WaitSyncFlags flags, UInt64 timeout);
+            internal delegate OpenTK.Graphics.OpenGL4.WaitSyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.OpenGL4.ClientWaitSyncFlags flags, UInt64 timeout);
             internal static ClientWaitSync glClientWaitSync;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ColorMask(bool red, bool green, bool blue, bool alpha);
@@ -525,7 +525,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate void EndTransformFeedback();
             internal static EndTransformFeedback glEndTransformFeedback;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr FenceSync(OpenTK.Graphics.OpenGL4.SyncCondition condition, UInt32 flags);
+            internal delegate IntPtr FenceSync(OpenTK.Graphics.OpenGL4.SyncCondition condition, OpenTK.Graphics.OpenGL4.WaitSyncFlags flags);
             internal static FenceSync glFenceSync;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Finish();

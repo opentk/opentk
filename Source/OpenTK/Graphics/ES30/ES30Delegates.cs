@@ -168,7 +168,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate void ClearStencil(Int32 s);
             internal static ClearStencil glClearStencil;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate OpenTK.Graphics.ES30.All ClientWaitSync(IntPtr sync, UInt32 flags, UInt64 timeout);
+            internal delegate OpenTK.Graphics.ES30.WaitSyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.ES30.ClientWaitSyncFlags flags, UInt64 timeout);
             internal static ClientWaitSync glClientWaitSync;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate OpenTK.Graphics.ES30.All ClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
@@ -444,10 +444,10 @@ namespace OpenTK.Graphics.ES30
             internal delegate void ExtTexObjectStateOverrideiQCOM(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All pname, Int32 param);
             internal static ExtTexObjectStateOverrideiQCOM glExtTexObjectStateOverrideiQCOM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr FenceSync(OpenTK.Graphics.ES30.All condition, UInt32 flags);
+            internal delegate IntPtr FenceSync(OpenTK.Graphics.ES30.SyncCondition condition, OpenTK.Graphics.ES30.WaitSyncFlags flags);
             internal static FenceSync glFenceSync;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr FenceSyncAPPLE(OpenTK.Graphics.ES30.All condition, UInt32 flags);
+            internal delegate IntPtr FenceSyncAPPLE(OpenTK.Graphics.ES30.SyncCondition condition, OpenTK.Graphics.ES30.WaitSyncFlags flags);
             internal static FenceSyncAPPLE glFenceSyncAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Finish();
@@ -1371,7 +1371,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate void Viewport(Int32 x, Int32 y, Int32 width, Int32 height);
             internal static Viewport glViewport;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void WaitSync(IntPtr sync, UInt32 flags, UInt64 timeout);
+            internal delegate void WaitSync(IntPtr sync, OpenTK.Graphics.ES30.WaitSyncFlags flags, UInt64 timeout);
             internal static WaitSync glWaitSync;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void WaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);

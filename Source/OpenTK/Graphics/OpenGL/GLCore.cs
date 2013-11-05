@@ -554,7 +554,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void ClientAttribDefaultEXT(OpenTK.Graphics.OpenGL.ClientAttribMask mask);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClientWaitSync", ExactSpelling = true)]
-            internal extern static OpenTK.Graphics.OpenGL.WaitSyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.OpenGL.WaitSyncFlags flags, UInt64 timeout);
+            internal extern static OpenTK.Graphics.OpenGL.WaitSyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.OpenGL.ClientWaitSyncFlags flags, UInt64 timeout);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClipPlane", ExactSpelling = true)]
             internal extern static unsafe void ClipPlane(OpenTK.Graphics.OpenGL.ClipPlaneName plane, Double* equation);
@@ -1619,7 +1619,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void FeedbackBufferxOES(Int32 n, OpenTK.Graphics.OpenGL.OesFixedPoint type, int* buffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFenceSync", ExactSpelling = true)]
-            internal extern static IntPtr FenceSync(OpenTK.Graphics.OpenGL.SyncCondition condition, UInt32 flags);
+            internal extern static IntPtr FenceSync(OpenTK.Graphics.OpenGL.SyncCondition condition, OpenTK.Graphics.OpenGL.WaitSyncFlags flags);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFinalCombinerInputNV", ExactSpelling = true)]
             internal extern static void FinalCombinerInputNV(OpenTK.Graphics.OpenGL.NvRegisterCombiners variable, OpenTK.Graphics.OpenGL.NvRegisterCombiners input, OpenTK.Graphics.OpenGL.NvRegisterCombiners mapping, OpenTK.Graphics.OpenGL.NvRegisterCombiners componentUsage);

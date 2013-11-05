@@ -1593,12 +1593,15 @@
       <param name="condition">
         <type>SyncCondition</type>
       </param>
+      <param name="flags">
+        <type>WaitSyncFlags</type>
+      </param>
     </function>
     
     <function name="ClientWaitSync" extension="Core">
       <returns>WaitSyncStatus</returns>
       <param name="flags">
-        <type>WaitSyncFlags</type>
+        <type>ClientWaitSyncFlags</type>
       </param>
     </function>
 
@@ -3664,9 +3667,12 @@
     <enum name="SyncCondition">
       <use enum="VERSION_4_1" token="SYNC_GPU_COMMANDS_COMPLETE" />
     </enum>
-    <enum name="WaitSyncFlags">
+    <enum name="ClientWaitSyncFlags">
       <use enum="VERSION_1_1" token="NONE" />
       <use enum="VERSION_4_1" token="SYNC_FLUSH_COMMANDS_BIT" />
+    </enum>
+    <enum name="WaitSyncFlags">
+      <use enum="VERSION_1_1" token="NONE" />
     </enum>
     <enum name="WaitSyncStatus">
       <use enum="VERSION_3_2" token="ALREADY_SIGNALED" />
@@ -5304,6 +5310,19 @@
       <param name="buffer"><type>ClearBufferCombined</type></param>
     </function>
     
+    <!-- Sync Objects and Fences [5.2] -->
+    <function name="FenceSync">
+      <param name="condition"><type>SyncCondition</type></param>
+      <param name="flags"><type>WaitSyncFlags</type></param>
+    </function>
+    <function name="ClientWaitSync" extension="Core">
+      <returns>WaitSyncStatus</returns>
+      <param name="flags"><type>ClientWaitSyncFlags</type></param>
+    </function>
+    <function name="WaitSync" extension="Core">
+      <param name="flags"><type>WaitSyncFlags</type></param>
+    </function>
+    
    </replace>
   
   <add name="gles2" version="3.0">
@@ -5477,6 +5496,10 @@
     </enum>
     <enum name="ClearBufferCombined">
       <use token="DEPTH_STENCIL" />
+    </enum>
+    <enum name="ClientWaitSyncFlags">
+      <use token="NONE" />
+      <use token="SYNC_FLUSH_COMMANDS_BIT" />
     </enum>
     <enum name="CompressedInternalFormat">
       <use token="COMPRESSED_R11_EAC" />
@@ -5737,6 +5760,9 @@
       <use token="INCR_WRAP" />
       <use token="DECR_WRAP" />
     </enum>
+    <enum name="SyncCondition">
+      <use token="SYNC_GPU_COMMANDS_COMPLETE" />
+    </enum>
     <enum name="TextureComponentCount">
       <reuse enum="SizedInternalFormat" />
       <use token="RGB" />
@@ -5940,6 +5966,15 @@
       <use token="HALF_FLOAT" />
 	  <use token="INT_2_10_10_10_REV" />
       <use token="UNSIGNED_INT_2_10_10_10_REV" />
+    </enum>
+    <enum name="WaitSyncFlags">
+      <use token="NONE" />
+    </enum>
+    <enum name="WaitSyncStatus">
+      <use token="ALREADY_SIGNALED" />
+      <use token="TIMEOUT_EXPIRED" />
+      <use token="CONDITION_SATISFIED" />
+      <use token="WAIT_FAILED" />
     </enum>
 
   </add>

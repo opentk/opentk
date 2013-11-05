@@ -552,7 +552,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void ClientAttribDefaultEXT(OpenTK.Graphics.OpenGL.ClientAttribMask mask);
             internal static ClientAttribDefaultEXT glClientAttribDefaultEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate OpenTK.Graphics.OpenGL.WaitSyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.OpenGL.WaitSyncFlags flags, UInt64 timeout);
+            internal delegate OpenTK.Graphics.OpenGL.WaitSyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.OpenGL.ClientWaitSyncFlags flags, UInt64 timeout);
             internal static ClientWaitSync glClientWaitSync;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void ClipPlane(OpenTK.Graphics.OpenGL.ClipPlaneName plane, Double* equation);
@@ -1617,7 +1617,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void FeedbackBufferxOES(Int32 n, OpenTK.Graphics.OpenGL.OesFixedPoint type, int* buffer);
             internal unsafe static FeedbackBufferxOES glFeedbackBufferxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr FenceSync(OpenTK.Graphics.OpenGL.SyncCondition condition, UInt32 flags);
+            internal delegate IntPtr FenceSync(OpenTK.Graphics.OpenGL.SyncCondition condition, OpenTK.Graphics.OpenGL.WaitSyncFlags flags);
             internal static FenceSync glFenceSync;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FinalCombinerInputNV(OpenTK.Graphics.OpenGL.NvRegisterCombiners variable, OpenTK.Graphics.OpenGL.NvRegisterCombiners input, OpenTK.Graphics.OpenGL.NvRegisterCombiners mapping, OpenTK.Graphics.OpenGL.NvRegisterCombiners componentUsage);

@@ -385,7 +385,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 76 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 74 other functions
     /// </summary>
     public enum All : int
     {
@@ -9746,6 +9746,21 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_CLIENT_ALL_ATTRIB_BITS = 0xFFFFFFFF
         /// </summary>
         ClientAllAttribBits = unchecked((int)0xFFFFFFFF)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.ClientWaitSync
+    /// </summary>
+    public enum ClientWaitSyncFlags : int
+    {
+        /// <summary>
+        /// Original was GL_NONE = 0
+        /// </summary>
+        None = ((int)0)        ,
+        /// <summary>
+        /// Original was GL_SYNC_FLUSH_COMMANDS_BIT = 0x00000001
+        /// </summary>
+        SyncFlushCommandsBit = ((int)0x00000001)        ,
     }
 
     /// <summary>
@@ -22521,6 +22536,17 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
+    /// Used in GL.Apple.FenceSync, GL.FenceSync
+    /// </summary>
+    public enum SyncCondition : int
+    {
+        /// <summary>
+        /// Original was GL_SYNC_GPU_COMMANDS_COMPLETE = 0x9117
+        /// </summary>
+        SyncGpuCommandsComplete = ((int)0x9117)        ,
+    }
+
+    /// <summary>
     /// Not used directly.
     /// </summary>
     public enum TexCoordPointerType : int
@@ -24170,6 +24196,40 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_SHADER_BINARY_VIV = 0x8FC4
         /// </summary>
         ShaderBinaryViv = ((int)0x8FC4)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.Apple.FenceSync, GL.FenceSync and 1 other function
+    /// </summary>
+    public enum WaitSyncFlags : int
+    {
+        /// <summary>
+        /// Original was GL_NONE = 0
+        /// </summary>
+        None = ((int)0)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum WaitSyncStatus : int
+    {
+        /// <summary>
+        /// Original was GL_ALREADY_SIGNALED = 0x911A
+        /// </summary>
+        AlreadySignaled = ((int)0x911A)        ,
+        /// <summary>
+        /// Original was GL_TIMEOUT_EXPIRED = 0x911B
+        /// </summary>
+        TimeoutExpired = ((int)0x911B)        ,
+        /// <summary>
+        /// Original was GL_CONDITION_SATISFIED = 0x911C
+        /// </summary>
+        ConditionSatisfied = ((int)0x911C)        ,
+        /// <summary>
+        /// Original was GL_WAIT_FAILED = 0x911D
+        /// </summary>
+        WaitFailed = ((int)0x911D)        ,
     }
 
 }

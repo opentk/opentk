@@ -28833,6 +28833,21 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
+    /// Used in GL.ClientWaitSync
+    /// </summary>
+    public enum ClientWaitSyncFlags : int
+    {
+        /// <summary>
+        /// Original was GL_NONE = 0
+        /// </summary>
+        None = ((int)0)        ,
+        /// <summary>
+        /// Original was GL_SYNC_FLUSH_COMMANDS_BIT = 0x00000001
+        /// </summary>
+        SyncFlushCommandsBit = ((int)0x00000001)        ,
+    }
+
+    /// <summary>
     /// Used in GL.ClipPlane, GL.GetClipPlane
     /// </summary>
     public enum ClipPlaneName : int
@@ -59374,7 +59389,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.ClientWaitSync, GL.WaitSync
+    /// Used in GL.FenceSync, GL.WaitSync
     /// </summary>
     public enum WaitSyncFlags : int
     {
@@ -59382,10 +59397,6 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_NONE = 0
         /// </summary>
         None = ((int)0)        ,
-        /// <summary>
-        /// Original was GL_SYNC_FLUSH_COMMANDS_BIT = 0x00000001
-        /// </summary>
-        SyncFlushCommandsBit = ((int)0x00000001)        ,
     }
 
     /// <summary>
