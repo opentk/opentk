@@ -122,6 +122,8 @@ namespace OpenTK.Platform.Windows
                     if (Functions.EnumDisplaySettingsEx(dev1.DeviceName.ToString(), DisplayModeSettingsEnum.CurrentSettings, monitor_mode, 0) ||
                         Functions.EnumDisplaySettingsEx(dev1.DeviceName.ToString(), DisplayModeSettingsEnum.RegistrySettings, monitor_mode, 0))
                     {
+                        VerifyMode(dev1, monitor_mode);
+
                         opentk_dev_current_res = new DisplayResolution(
                             monitor_mode.Position.X, monitor_mode.Position.Y,
                             monitor_mode.PelsWidth, monitor_mode.PelsHeight,
@@ -134,6 +136,8 @@ namespace OpenTK.Platform.Windows
                     mode_count = 0;
                     while (Functions.EnumDisplaySettings(dev1.DeviceName.ToString(), mode_count++, monitor_mode))
                     {
+                        VerifyMode(dev1, monitor_mode);
+
                         DisplayResolution res = new DisplayResolution(
                             monitor_mode.Position.X, monitor_mode.Position.Y,
                             monitor_mode.PelsWidth, monitor_mode.PelsHeight,
@@ -163,6 +167,17 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+
+        static void VerifyMode(WindowsDisplayDevice device, DeviceMode mode)
+        {
+            if (mode.BitsPerPel == 0)
+            {
+                Debug.Print(
+                    "[Warning] DisplayDevice '{0}' reported a mode with 0 bpp. Please create a bug report at http://www.opentk.com",
+                    device.DeviceName.ToString());
+                mode.BitsPerPel = 32;
+            }
+        }
         #endregion
 
         #region HandleDisplaySettingsChanged
