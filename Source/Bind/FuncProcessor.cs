@@ -72,15 +72,37 @@ namespace Bind
             var nav = new XPathDocument(Overrides).CreateNavigator();
             foreach (var version in apiversion.Split('|'))
             {
-                foreach (var overloads in delegates.Values)
+                // Translate each delegate:
+                // 1st using the <replace> elements in overrides.xml
+                // 2nd using the hardcoded rules in FuncProcessor (e.g. char* -> string)
+                foreach (var signatures in delegates.Values)
                 {
-                    foreach (var d in overloads)
+                    foreach (var d in signatures)
                     {
                         TranslateExtension(d);
                         TranslateReturnType(enum_processor, nav, d, enums, apiname, version);
                         TranslateParameters(enum_processor, nav, d, enums, apiname, version);
                         TranslateAttributes(nav, d, enums, apiname, version);
                     }
+                }
+
+                // Create overloads for backwards compatibility,
+                // by resolving <overload> elements
+                var overload_list = new List<Delegate>();
+                foreach (var d in delegates.Values.Select(v => v.First()))
+                {
+                    var overload_element = GetFuncOverload(nav, d, apiname, apiversion);
+                    if (overload_element != null)
+                    {
+                        var overload = new Delegate(d);
+                        ApplyParameterReplacement(overload, overload_element);
+                        ApplyReturnTypeReplacement(overload, overload_element);
+                        overload_list.Add(overload);
+                    }
+                }
+                foreach (var overload in overload_list)
+                {
+                    Utilities.Merge(delegates, overload);
                 }
             }
 
@@ -96,13 +118,13 @@ namespace Bind
             return wrappers;
         }
 
-        public static string GetOverridesPath(string apiname, string apiversion, string function, string extension)
-        {
-            if (function == null)
-                throw new ArgumentNullException("function");
+        #region Private Members
 
+        static string GetPath(string apipath, string apiname, string apiversion, string function, string extension)
+        {
             var path = new StringBuilder();
-            path.Append("/signatures/replace");
+            path.Append("/signatures/");
+            path.Append(apipath);
             if (!String.IsNullOrEmpty(apiname) && !String.IsNullOrEmpty(apiversion))
             {
                 path.Append(String.Format(
@@ -120,28 +142,39 @@ namespace Bind
                 path.Append(String.Format("[contains(concat('|', @version, '|'), '|{0}|')]", apiversion));
             }
 
-            if (extension != null)
+            if (function != null)
             {
-                // match an override that has this specific extension
-                // *or* one that has no extension at all (equivalent
-                // to "match all possible extensions")
-                path.Append(String.Format(
-                    "/function[contains(concat('|', @name, '|'), '|{0}|') and " +
-                    "(contains(concat('|', @extension, '|'), '|{1}|') or not(boolean(@extension)))]",
-                    function,
-                    extension));
-            }
-            else
-            {
-                path.Append(String.Format(
-                    "/function[contains(concat('|', @name, '|'), '|{0}|')]",
-                    function));
+                if (extension != null)
+                {
+                    // match an override that has this specific extension
+                    // *or* one that has no extension at all (equivalent
+                    // to "match all possible extensions")
+                    path.Append(String.Format(
+                        "/function[contains(concat('|', @name, '|'), '|{0}|') and " +
+                        "(contains(concat('|', @extension, '|'), '|{1}|') or not(boolean(@extension)))]",
+                        function,
+                        extension));
+                }
+                else
+                {
+                    path.Append(String.Format(
+                        "/function[contains(concat('|', @name, '|'), '|{0}|')]",
+                        function));
+                }
             }
 
             return path.ToString();
         }
 
-        #region Private Members
+        static string GetOverloadsPath(string apiname, string apiversion, string function, string extension)
+        {
+            return GetPath("overload", apiname, apiversion, function, extension);
+        }
+
+        static string GetOverridesPath(string apiname, string apiversion, string function, string extension)
+        {
+            return GetPath("replace", apiname, apiversion, function, extension);
+        }
 
         void TranslateType(Bind.Structures.Type type, EnumProcessor enum_processor, XPathNavigator overrides, EnumCollection enums,
             string category, string apiname)
@@ -246,7 +279,7 @@ namespace Bind
                     type));
             }
         }
-
+        
         void TranslateExtension(Delegate d)
         {
             var extension = d.Extension.ToUpper();
@@ -308,6 +341,19 @@ namespace Bind
             return trimmed_name;
         }
 
+        static XPathNavigator GetFuncOverload(XPathNavigator nav, Delegate d, string apiname, string apiversion)
+        {
+            string ext = d.Extension;
+            string trimmed_name = GetTrimmedName(d);
+            string extensionless_name = GetTrimmedExtension(d.Name, ext);
+
+            var function_overload =
+                nav.SelectSingleNode(GetOverloadsPath(apiname, apiversion, d.Name, ext)) ??
+                    nav.SelectSingleNode(GetOverloadsPath(apiname, apiversion, extensionless_name, ext)) ??
+                    nav.SelectSingleNode(GetOverloadsPath(apiname, apiversion, trimmed_name, ext));
+            return function_overload;
+        }
+
         static XPathNavigator GetFuncOverride(XPathNavigator nav, Delegate d, string apiname, string apiversion)
         {
             string ext = d.Extension;
@@ -326,6 +372,52 @@ namespace Bind
             f.TrimmedName = GetTrimmedName(f);
         }
 
+        static void ApplyParameterReplacement(Delegate d, XPathNavigator function_override)
+        {
+            if (function_override != null)
+            {
+                for (int i = 0; i < d.Parameters.Count; i++)
+                {
+                    XPathNavigator param_override = function_override.SelectSingleNode(String.Format("param[@name='{0}']", d.Parameters[i].RawName));
+                    if (param_override != null)
+                    {
+                        foreach (XPathNavigator node in param_override.SelectChildren(XPathNodeType.Element))
+                        {
+                            switch (node.Name)
+                            {
+                                case "type":
+                                    d.Parameters[i].CurrentType = (string)node.TypedValue;
+                                    break;
+                                case "name":
+                                    d.Parameters[i].Name = (string)node.TypedValue;
+                                    break;
+                                case "flow":
+                                    d.Parameters[i].Flow = Parameter.GetFlowDirection((string)node.TypedValue);
+                                    break;
+                                case "count":
+                                    int count;
+                                    if (Int32.TryParse(node.Value, out count))
+                                        d.Parameters[i].ElementCount = count;
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        static void ApplyReturnTypeReplacement(Delegate d, XPathNavigator function_override)
+        {
+            if (function_override != null)
+            {
+                XPathNavigator return_override = function_override.SelectSingleNode("returns");
+                if (return_override != null)
+                {
+                    d.ReturnType.CurrentType = return_override.Value;
+                }
+            }
+        }
+
         // Translates the opengl return type to the equivalent C# type.
         //
         // First, we use the official typemap (gl.tm) to get the correct type.
@@ -339,15 +431,7 @@ namespace Bind
             EnumCollection enums, string apiname, string apiversion)
         {
             var function_override = GetFuncOverride(nav, d, apiname, apiversion);
-
-            if (function_override != null)
-            {
-                XPathNavigator return_override = function_override.SelectSingleNode("returns");
-                if (return_override != null)
-                {
-                    d.ReturnType.CurrentType = return_override.Value;
-                }
-            }
+            ApplyReturnTypeReplacement(d, function_override);
 
             TranslateType(d.ReturnType, enum_processor, nav, enums, d.Category, apiname);
 
@@ -396,44 +480,15 @@ namespace Bind
             return f;
         }
 
-
         void TranslateParameters(EnumProcessor enum_processor,
             XPathNavigator nav, Delegate d, EnumCollection enums,
             string apiname, string apiversion)
         {
             var function_override = GetFuncOverride(nav, d, apiname, apiversion);
+            ApplyParameterReplacement(d, function_override);
 
             for (int i = 0; i < d.Parameters.Count; i++)
             {
-                if (function_override != null)
-                {
-                    XPathNavigator param_override = function_override.SelectSingleNode(
-                            String.Format("param[@name='{0}']", d.Parameters[i].RawName));
-                    if (param_override != null)
-                    {
-                        foreach (XPathNavigator node in param_override.SelectChildren(XPathNodeType.Element))
-                        {
-                            switch (node.Name)
-                            {
-                                case "type":
-                                    d.Parameters[i].CurrentType = (string)node.TypedValue;
-                                    break;
-                                case "name":
-                                    d.Parameters[i].Name = (string)node.TypedValue;
-                                    break;
-                                case "flow":
-                                    d.Parameters[i].Flow = Parameter.GetFlowDirection((string)node.TypedValue);
-                                    break;
-                                case "count":
-                                    int count;
-                                    if (Int32.TryParse(node.Value, out count))
-                                        d.Parameters[i].ElementCount = count;
-                                    break;
-                            }
-                        }
-                    }
-                }
-
                 TranslateParameter(d.Parameters[i], enum_processor, nav, enums, d.Category, apiname);
                 if (d.Parameters[i].CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
                     d.Parameters[i].WrapperType = WrapperTypes.UncheckedParameter;

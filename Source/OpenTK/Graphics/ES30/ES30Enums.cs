@@ -9184,7 +9184,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.DrawArrays, GL.DrawElements
+    /// Not used directly.
     /// </summary>
     public enum BeginMode : int
     {

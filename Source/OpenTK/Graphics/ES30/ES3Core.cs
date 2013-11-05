@@ -337,9 +337,6 @@ namespace OpenTK.Graphics.ES30
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawArrays", ExactSpelling = true)]
             internal extern static void DrawArrays(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 first, Int32 count);
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawArrays", ExactSpelling = true)]
-            internal extern static void DrawArrays1(OpenTK.Graphics.ES30.BeginMode mode, Int32 first, Int32 count);
-            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawArraysInstanced", ExactSpelling = true)]
             internal extern static void DrawArraysInstanced(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 first, Int32 count, Int32 instancecount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -366,9 +363,6 @@ namespace OpenTK.Graphics.ES30
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElements", ExactSpelling = true)]
             internal extern static void DrawElements(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices);
-            [System.Security.SuppressUnmanagedCodeSecurity()]
-            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElements", ExactSpelling = true)]
-            internal extern static void DrawElements1(OpenTK.Graphics.ES30.BeginMode mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElementsInstanced", ExactSpelling = true)]
             internal extern static void DrawElementsInstanced(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices, Int32 instancecount);
@@ -1108,9 +1102,6 @@ namespace OpenTK.Graphics.ES30
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glStencilFuncSeparate", ExactSpelling = true)]
             internal extern static void StencilFuncSeparate(OpenTK.Graphics.ES30.StencilFace face, OpenTK.Graphics.ES30.StencilFunction func, Int32 @ref, UInt32 mask);
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glStencilFuncSeparate", ExactSpelling = true)]
-            internal extern static void StencilFuncSeparate1(OpenTK.Graphics.ES30.StencilFace face, OpenTK.Graphics.ES30.StencilFunction func, Int32 @ref, UInt32 mask);
-            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glStencilMask", ExactSpelling = true)]
             internal extern static void StencilMask(UInt32 mask);
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -1122,9 +1113,6 @@ namespace OpenTK.Graphics.ES30
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glStencilOpSeparate", ExactSpelling = true)]
             internal extern static void StencilOpSeparate(OpenTK.Graphics.ES30.StencilFace face, OpenTK.Graphics.ES30.StencilOp sfail, OpenTK.Graphics.ES30.StencilOp dpfail, OpenTK.Graphics.ES30.StencilOp dppass);
-            [System.Security.SuppressUnmanagedCodeSecurity()]
-            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glStencilOpSeparate", ExactSpelling = true)]
-            internal extern static void StencilOpSeparate1(OpenTK.Graphics.ES30.StencilFace face, OpenTK.Graphics.ES30.StencilOp sfail, OpenTK.Graphics.ES30.StencilOp dpfail, OpenTK.Graphics.ES30.StencilOp dppass);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTestFenceNV", ExactSpelling = true)]
             internal extern static bool TestFenceNV(UInt32 fence);

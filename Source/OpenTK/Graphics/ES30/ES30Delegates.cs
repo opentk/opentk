@@ -336,9 +336,6 @@ namespace OpenTK.Graphics.ES30
             internal delegate void DrawArrays(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 first, Int32 count);
             internal static DrawArrays glDrawArrays;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawArrays1(OpenTK.Graphics.ES30.BeginMode mode, Int32 first, Int32 count);
-            internal static DrawArrays1 glDrawArrays1;
-            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawArraysInstanced(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 first, Int32 count, Int32 instancecount);
             internal static DrawArraysInstanced glDrawArraysInstanced;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -365,9 +362,6 @@ namespace OpenTK.Graphics.ES30
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawElements(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices);
             internal static DrawElements glDrawElements;
-            [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawElements1(OpenTK.Graphics.ES30.BeginMode mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices);
-            internal static DrawElements1 glDrawElements1;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawElementsInstanced(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices, Int32 instancecount);
             internal static DrawElementsInstanced glDrawElementsInstanced;
@@ -1107,9 +1101,6 @@ namespace OpenTK.Graphics.ES30
             internal delegate void StencilFuncSeparate(OpenTK.Graphics.ES30.StencilFace face, OpenTK.Graphics.ES30.StencilFunction func, Int32 @ref, UInt32 mask);
             internal static StencilFuncSeparate glStencilFuncSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void StencilFuncSeparate1(OpenTK.Graphics.ES30.StencilFace face, OpenTK.Graphics.ES30.StencilFunction func, Int32 @ref, UInt32 mask);
-            internal static StencilFuncSeparate1 glStencilFuncSeparate1;
-            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void StencilMask(UInt32 mask);
             internal static StencilMask glStencilMask;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -1121,9 +1112,6 @@ namespace OpenTK.Graphics.ES30
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void StencilOpSeparate(OpenTK.Graphics.ES30.StencilFace face, OpenTK.Graphics.ES30.StencilOp sfail, OpenTK.Graphics.ES30.StencilOp dpfail, OpenTK.Graphics.ES30.StencilOp dppass);
             internal static StencilOpSeparate glStencilOpSeparate;
-            [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void StencilOpSeparate1(OpenTK.Graphics.ES30.StencilFace face, OpenTK.Graphics.ES30.StencilOp sfail, OpenTK.Graphics.ES30.StencilOp dpfail, OpenTK.Graphics.ES30.StencilOp dppass);
-            internal static StencilOpSeparate1 glStencilOpSeparate1;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate bool TestFenceNV(UInt32 fence);
             internal static TestFenceNV glTestFenceNV;

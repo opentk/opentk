@@ -879,7 +879,7 @@ namespace OpenTK.Graphics.ES20
             internal delegate void StencilFuncSeparate(OpenTK.Graphics.ES20.StencilFace face, OpenTK.Graphics.ES20.StencilFunction func, Int32 @ref, UInt32 mask);
             internal static StencilFuncSeparate glStencilFuncSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void StencilFuncSeparate1(OpenTK.Graphics.ES20.StencilFace face, OpenTK.Graphics.ES20.StencilFunction func, Int32 @ref, UInt32 mask);
+            internal delegate void StencilFuncSeparate1(OpenTK.Graphics.ES20.CullFaceMode face, OpenTK.Graphics.ES20.StencilFunction func, Int32 @ref, UInt32 mask);
             internal static StencilFuncSeparate1 glStencilFuncSeparate1;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void StencilMask(UInt32 mask);
@@ -894,7 +894,7 @@ namespace OpenTK.Graphics.ES20
             internal delegate void StencilOpSeparate(OpenTK.Graphics.ES20.StencilFace face, OpenTK.Graphics.ES20.StencilOp sfail, OpenTK.Graphics.ES20.StencilOp dpfail, OpenTK.Graphics.ES20.StencilOp dppass);
             internal static StencilOpSeparate glStencilOpSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void StencilOpSeparate1(OpenTK.Graphics.ES20.StencilFace face, OpenTK.Graphics.ES20.StencilOp sfail, OpenTK.Graphics.ES20.StencilOp dpfail, OpenTK.Graphics.ES20.StencilOp dppass);
+            internal delegate void StencilOpSeparate1(OpenTK.Graphics.ES20.CullFaceMode face, OpenTK.Graphics.ES20.StencilOp sfail, OpenTK.Graphics.ES20.StencilOp dpfail, OpenTK.Graphics.ES20.StencilOp dppass);
             internal static StencilOpSeparate1 glStencilOpSeparate1;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate bool TestFenceNV(UInt32 fence);
