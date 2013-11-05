@@ -173,7 +173,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static OpenTK.Graphics.ES30.WaitSyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.ES30.ClientWaitSyncFlags flags, UInt64 timeout);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClientWaitSyncAPPLE", ExactSpelling = true)]
-            internal extern static OpenTK.Graphics.ES30.All ClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
+            internal extern static OpenTK.Graphics.ES30.WaitSyncStatus ClientWaitSyncAPPLE(IntPtr sync, OpenTK.Graphics.ES30.ClientWaitSyncFlags flags, UInt64 timeout);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorMask", ExactSpelling = true)]
             internal extern static void ColorMask(bool red, bool green, bool blue, bool alpha);
@@ -728,10 +728,10 @@ namespace OpenTK.Graphics.ES30
             internal extern static IntPtr GetStringi(OpenTK.Graphics.ES30.StringName name, UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSynciv", ExactSpelling = true)]
-            internal extern static unsafe void GetSynciv(IntPtr sync, OpenTK.Graphics.ES30.All pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+            internal extern static unsafe void GetSynciv(IntPtr sync, OpenTK.Graphics.ES30.SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSyncivAPPLE", ExactSpelling = true)]
-            internal extern static unsafe void GetSyncivAPPLE(IntPtr sync, OpenTK.Graphics.ES30.All pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+            internal extern static unsafe void GetSyncivAPPLE(IntPtr sync, OpenTK.Graphics.ES30.SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexParameterfv", ExactSpelling = true)]
             internal extern static unsafe void GetTexParameterfv(OpenTK.Graphics.ES30.TextureTarget target, OpenTK.Graphics.ES30.GetTextureParameterName pname, [OutAttribute] Single* @params);
@@ -1376,7 +1376,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static void WaitSync(IntPtr sync, OpenTK.Graphics.ES30.WaitSyncFlags flags, UInt64 timeout);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glWaitSyncAPPLE", ExactSpelling = true)]
-            internal extern static void WaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
+            internal extern static void WaitSyncAPPLE(IntPtr sync, OpenTK.Graphics.ES30.WaitSyncFlags flags, UInt64 timeout);
         }
     }
 }

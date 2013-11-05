@@ -923,7 +923,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static Int32 GetSubroutineUniformLocation(UInt32 program, OpenTK.Graphics.OpenGL4.ShaderType shadertype, String name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSynciv", ExactSpelling = true)]
-            internal extern static unsafe void GetSynciv(IntPtr sync, OpenTK.Graphics.OpenGL4.SyncParameter pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+            internal extern static unsafe void GetSynciv(IntPtr sync, OpenTK.Graphics.OpenGL4.SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTexImage", ExactSpelling = true)]
             internal extern static void GetTexImage(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [OutAttribute] IntPtr pixels);

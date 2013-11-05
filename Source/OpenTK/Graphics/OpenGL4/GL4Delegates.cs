@@ -921,7 +921,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate Int32 GetSubroutineUniformLocation(UInt32 program, OpenTK.Graphics.OpenGL4.ShaderType shadertype, String name);
             internal static GetSubroutineUniformLocation glGetSubroutineUniformLocation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetSynciv(IntPtr sync, OpenTK.Graphics.OpenGL4.SyncParameter pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+            internal unsafe delegate void GetSynciv(IntPtr sync, OpenTK.Graphics.OpenGL4.SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
             internal unsafe static GetSynciv glGetSynciv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void GetTexImage(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [OutAttribute] IntPtr pixels);

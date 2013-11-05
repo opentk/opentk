@@ -1614,7 +1614,7 @@
     
     <function name="GetSynciv" extension="Core">
       <param name="pname">
-          <type>SyncParameter</type>
+          <type>SyncParameterName</type>
         </param>
     </function>
     
@@ -3680,7 +3680,7 @@
       <use enum="VERSION_3_2" token="CONDITION_SATISFIED" />
       <use enum="VERSION_3_2" token="WAIT_FAILED" />
     </enum>
-    <enum name="SyncParameter">
+    <enum name="SyncParameterName">
       <use enum="VERSION_3_2" token="OBJECT_TYPE" />
       <use enum="VERSION_3_2" token="SYNC_STATUS" />
       <use enum="VERSION_3_2" token="SYNC_CONDITION" />
@@ -5315,12 +5315,17 @@
       <param name="condition"><type>SyncCondition</type></param>
       <param name="flags"><type>WaitSyncFlags</type></param>
     </function>
-    <function name="ClientWaitSync" extension="Core">
+    <function name="ClientWaitSync">
       <returns>WaitSyncStatus</returns>
       <param name="flags"><type>ClientWaitSyncFlags</type></param>
     </function>
-    <function name="WaitSync" extension="Core">
+    <function name="WaitSync">
       <param name="flags"><type>WaitSyncFlags</type></param>
+    </function>
+    
+    <!-- Sync Object Queries [6.1.8] -->
+    <function name="GetSync">
+      <param name="pname"><type>SyncParameterName</type></param>
     </function>
     
    </replace>
@@ -5574,6 +5579,15 @@
       <use token="TEXTURE_IMMUTABLE_FORMAT" />
       <use token="TEXTURE_IMMUTABLE_LEVELS" />
     </enum>
+    <enum name="HintMode">
+      <use token="FASTEST" />
+      <use token="NICEST" />
+      <use token="DONT_CARE" />
+    </enum>
+    <enum name="HintTarget">
+      <use token="GENERATE_MIPMAP_HINT" />
+      <use token="FRAGMENT_SHADER_DERIVATIVE_HINT" />
+    </enum>
     <enum name="PixelFormat">
       <use token="ALPHA" />
       <use token="RGBA" />
@@ -5762,6 +5776,12 @@
     </enum>
     <enum name="SyncCondition">
       <use token="SYNC_GPU_COMMANDS_COMPLETE" />
+    </enum>
+    <enum name="SyncParameterName">
+      <use token="OBJECT_TYPE" />
+      <use token="SYNC_STATUS" />
+      <use token="SYNC_CONDITION" />
+      <use token="SYNC_FLAGS" />
     </enum>
     <enum name="TextureComponentCount">
       <reuse enum="SizedInternalFormat" />

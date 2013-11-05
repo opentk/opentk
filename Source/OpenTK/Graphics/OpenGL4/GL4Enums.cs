@@ -25830,7 +25830,7 @@ namespace OpenTK.Graphics.OpenGL4
     /// <summary>
     /// Used in GL.GetSync
     /// </summary>
-    public enum SyncParameter : int
+    public enum SyncParameterName : int
     {
         /// <summary>
         /// Original was GL_OBJECT_TYPE = 0x9112

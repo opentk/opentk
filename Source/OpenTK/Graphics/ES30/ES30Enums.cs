@@ -385,7 +385,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 74 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 72 other functions
     /// </summary>
     public enum All : int
     {
@@ -9749,7 +9749,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.ClientWaitSync
+    /// Used in GL.Apple.ClientWaitSync, GL.ClientWaitSync
     /// </summary>
     public enum ClientWaitSyncFlags : int
     {
@@ -22547,6 +22547,29 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
+    /// Used in GL.Apple.GetSync, GL.GetSync
+    /// </summary>
+    public enum SyncParameterName : int
+    {
+        /// <summary>
+        /// Original was GL_OBJECT_TYPE = 0x9112
+        /// </summary>
+        ObjectType = ((int)0x9112)        ,
+        /// <summary>
+        /// Original was GL_SYNC_CONDITION = 0x9113
+        /// </summary>
+        SyncCondition = ((int)0x9113)        ,
+        /// <summary>
+        /// Original was GL_SYNC_STATUS = 0x9114
+        /// </summary>
+        SyncStatus = ((int)0x9114)        ,
+        /// <summary>
+        /// Original was GL_SYNC_FLAGS = 0x9115
+        /// </summary>
+        SyncFlags = ((int)0x9115)        ,
+    }
+
+    /// <summary>
     /// Not used directly.
     /// </summary>
     public enum TexCoordPointerType : int
@@ -24199,7 +24222,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Apple.FenceSync, GL.FenceSync and 1 other function
+    /// Used in GL.Apple.FenceSync, GL.Apple.WaitSync and 2 other functions
     /// </summary>
     public enum WaitSyncFlags : int
     {

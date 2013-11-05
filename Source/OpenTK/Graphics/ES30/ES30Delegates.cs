@@ -171,7 +171,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate OpenTK.Graphics.ES30.WaitSyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.ES30.ClientWaitSyncFlags flags, UInt64 timeout);
             internal static ClientWaitSync glClientWaitSync;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate OpenTK.Graphics.ES30.All ClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
+            internal delegate OpenTK.Graphics.ES30.WaitSyncStatus ClientWaitSyncAPPLE(IntPtr sync, OpenTK.Graphics.ES30.ClientWaitSyncFlags flags, UInt64 timeout);
             internal static ClientWaitSyncAPPLE glClientWaitSyncAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ColorMask(bool red, bool green, bool blue, bool alpha);
@@ -726,10 +726,10 @@ namespace OpenTK.Graphics.ES30
             internal delegate IntPtr GetStringi(OpenTK.Graphics.ES30.StringName name, UInt32 index);
             internal static GetStringi glGetStringi;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetSynciv(IntPtr sync, OpenTK.Graphics.ES30.All pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+            internal unsafe delegate void GetSynciv(IntPtr sync, OpenTK.Graphics.ES30.SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
             internal unsafe static GetSynciv glGetSynciv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetSyncivAPPLE(IntPtr sync, OpenTK.Graphics.ES30.All pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+            internal unsafe delegate void GetSyncivAPPLE(IntPtr sync, OpenTK.Graphics.ES30.SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
             internal unsafe static GetSyncivAPPLE glGetSyncivAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetTexParameterfv(OpenTK.Graphics.ES30.TextureTarget target, OpenTK.Graphics.ES30.GetTextureParameterName pname, [OutAttribute] Single* @params);
@@ -1374,7 +1374,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate void WaitSync(IntPtr sync, OpenTK.Graphics.ES30.WaitSyncFlags flags, UInt64 timeout);
             internal static WaitSync glWaitSync;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void WaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
+            internal delegate void WaitSyncAPPLE(IntPtr sync, OpenTK.Graphics.ES30.WaitSyncFlags flags, UInt64 timeout);
             internal static WaitSyncAPPLE glWaitSyncAPPLE;
         }
     }
