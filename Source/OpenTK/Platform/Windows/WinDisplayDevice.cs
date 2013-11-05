@@ -134,7 +134,7 @@ namespace OpenTK.Platform.Windows
 
                     opentk_dev_available_res.Clear();
                     mode_count = 0;
-                    while (Functions.EnumDisplaySettings(dev1.DeviceName.ToString(), mode_count++, monitor_mode))
+                    while (Functions.EnumDisplaySettingsEx(dev1.DeviceName.ToString(), mode_count++, monitor_mode, 0))
                     {
                         VerifyMode(dev1, monitor_mode);
 
