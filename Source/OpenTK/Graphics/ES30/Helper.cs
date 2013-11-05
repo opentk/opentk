@@ -353,15 +353,6 @@ namespace OpenTK.Graphics.ES30
 
         #endregion
 
-        #region DrawElements
-
-        public static void DrawElements(BeginMode mode, int count, DrawElementsType type, int offset)
-        {
-            DrawElements(mode, count, type, new IntPtr(offset));
-        }
-
-        #endregion
-
         #region public static int GenTexture()
 
         public static int GenTexture()
