@@ -27,6 +27,7 @@ using OpenTK.Platform.iPhoneOS;
 using All  = OpenTK.Graphics.ES11.All;
 using ES11 = OpenTK.Graphics.ES11;
 using ES20 = OpenTK.Graphics.ES20;
+using ES30 = OpenTK.Graphics.ES30;
 
 namespace OpenTK.Platform.iPhoneOS
 {
@@ -64,6 +65,7 @@ namespace OpenTK.Platform.iPhoneOS
             switch (api) {
                 case EAGLRenderingAPI.OpenGLES1: return CreateES1();
                 case EAGLRenderingAPI.OpenGLES2: return CreateES2();
+                case EAGLRenderingAPI.OpenGLES3: return CreateES3();
             }
             throw new ArgumentException("api");
         }
@@ -103,6 +105,25 @@ namespace OpenTK.Platform.iPhoneOS
                 GetRenderbufferParameter= (All t, All p, out int a) => ES20.GL.GetRenderbufferParameter ((ES20.RenderbufferTarget) t, (ES20.RenderbufferParameterName) p, out a),
                 PixelStore              = (n, p)                    => ES20.GL.PixelStore((ES20.PixelStoreParameter) n, p),
                 ReadPixels              = (x, y, w, h, f, t, d)     => ES20.GL.ReadPixels(x, y, w, h, (ES20.PixelFormat) f, (ES20.PixelType) t, d),
+            };
+        }
+
+        static GLCalls CreateES3()
+        {
+            return new GLCalls() {
+                BindFramebuffer         = (t, f)              => ES30.GL.BindFramebuffer((ES30.FramebufferTarget) t, f),
+                BindRenderbuffer        = (t, r)              => ES30.GL.BindRenderbuffer((ES30.RenderbufferTarget) t, r),
+                DeleteFramebuffers      = (int n, ref int f)  => ES30.GL.DeleteFramebuffers(n, ref f),
+                DeleteRenderbuffers     = (int n, ref int r)  => ES30.GL.DeleteRenderbuffers(n, ref r),
+                FramebufferRenderbuffer = (t, a, rt, rb)      => ES30.GL.FramebufferRenderbuffer((ES30.FramebufferTarget) t, (ES30.FramebufferSlot) a, (ES30.RenderbufferTarget) rt, rb),
+                GenFramebuffers         = (int n, out int f)  => ES30.GL.GenFramebuffers(n, out f),
+                GenRenderbuffers        = (int n, out int r)  => ES30.GL.GenRenderbuffers(n, out r),
+                GetInteger              = (All n, out int v)  => ES30.GL.GetInteger((ES30.GetPName) n, out v),
+                Scissor                 = (x, y, w, h)        => ES30.GL.Scissor(x, y, w, h),
+                Viewport                = (x, y, w, h)        => ES30.GL.Viewport(x, y, w, h),
+                GetRenderbufferParameter= (All t, All p, out int a) => ES30.GL.GetRenderbufferParameter ((ES30.RenderbufferTarget) t, (ES30.RenderbufferParameterName) p, out a),
+                PixelStore              = (n, p)                    => ES30.GL.PixelStore((ES30.PixelStoreParameter) n, p),
+                ReadPixels              = (x, y, w, h, f, t, d)     => ES30.GL.ReadPixels(x, y, w, h, (ES30.PixelFormat) f, (ES30.PixelType) t, d),
             };
         }
     }

@@ -54,6 +54,7 @@ namespace OpenTK.Platform
             switch (version) {
                 case EAGLRenderingAPI.OpenGLES1: major = 1; minor = 1; break;
                 case EAGLRenderingAPI.OpenGLES2: major = 2; minor = 0; break;
+                case EAGLRenderingAPI.OpenGLES3: major = 3; minor = 0; break;
                 default:
                     throw new ArgumentException("Unsupported EAGLRenderingAPI version: " + version);
             }
