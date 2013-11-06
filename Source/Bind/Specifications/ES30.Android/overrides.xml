@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<overrides>
+<signatures>
   <replace>
     <function name="GetString" extension="Core">
       <returns>String</returns>
@@ -94,10 +94,15 @@
       <token name="InfoLogLength" value="0X8b84" />
       <token name="ShaderSourceLength" value="0X8b88" />
     </enum>
+
+    <enum name="ShaderType">
+      <token name="VertexShader" value="0X8b31" />
+      <token name="FragmentShader" value="0X8b30" />
+    </enum>
   </add>
   <add>
     <enum name="Token">
       <token name="FramebufferBinding" value="0x8CA6" />
     </enum>
   </add>
-</overrides>
+</signatures>

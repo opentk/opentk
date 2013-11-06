@@ -326,7 +326,6 @@ namespace OpenTK
         }
 
         #endregion
-#endif
 
         #region InputDriver
 
@@ -344,7 +343,7 @@ namespace OpenTK
         }
 
         #endregion
-
+#endif
         #region Location
 
         /// <summary>
@@ -557,7 +556,9 @@ namespace OpenTK
             set
             {
                 cursor_visible = value;
+#if !MOBILE
                 implementation.CursorVisible = value;
+#endif
             }
         }
 
@@ -1070,10 +1071,10 @@ namespace OpenTK
                     implementation.FocusedChanged += OnFocusedChangedInternal;
 #if !MOBILE
                     implementation.IconChanged += OnIconChangedInternal;
-#endif
-                    implementation.KeyPress += OnKeyPressInternal;
                     implementation.MouseEnter += OnMouseEnterInternal;
                     implementation.MouseLeave += OnMouseLeaveInternal;
+#endif
+                    implementation.KeyPress += OnKeyPressInternal;
                     implementation.Move += OnMoveInternal;
                     implementation.Resize += OnResizeInternal;
                     implementation.TitleChanged += OnTitleChangedInternal;
@@ -1090,10 +1091,10 @@ namespace OpenTK
                     implementation.FocusedChanged -= OnFocusedChangedInternal;
 #if !MOBILE
                     implementation.IconChanged -= OnIconChangedInternal;
-#endif
-                    implementation.KeyPress -= OnKeyPressInternal;
                     implementation.MouseEnter -= OnMouseEnterInternal;
                     implementation.MouseLeave -= OnMouseLeaveInternal;
+#endif
+                    implementation.KeyPress -= OnKeyPressInternal;
                     implementation.Move -= OnMoveInternal;
                     implementation.Resize -= OnResizeInternal;
                     implementation.TitleChanged -= OnTitleChangedInternal;

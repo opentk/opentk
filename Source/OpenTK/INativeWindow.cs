@@ -129,7 +129,7 @@ namespace OpenTK
         /// </summary>
         Size ClientSize { get; set; }
 
-#if !IPHONE
+#if !IPHONE && !MOBILE
         /// <summary>
         /// This property is deprecated and should not be used.
         /// </summary>
@@ -241,7 +241,7 @@ namespace OpenTK
         /// </summary>
         event EventHandler<KeyPressEventArgs> KeyPress;
 
-#if !IPHONE
+#if !IPHONE && !MOBILE
         
         /// <summary>
         /// Occurs whenever a keyboard key is released.

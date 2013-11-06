@@ -154,6 +154,11 @@ namespace OpenTK.Platform.Android {
 			Swap ();
 		}
 
+		int IGraphicsContext.SwapInterval {
+			get {throw new NotSupportedException();}
+			set {throw new NotSupportedException();}
+		}
+
 		public void MakeCurrent (IWindowInfo win)
 		{
 			var w = win as AndroidWindow;

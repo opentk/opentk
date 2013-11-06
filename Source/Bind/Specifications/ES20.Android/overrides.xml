@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2013 Xamarin Inc -->
-<overrides>
+<signatures>
   <replace>
     <function name="GetString" extension="Core">
       <returns>String</returns>
@@ -96,4 +96,4 @@
       <token name="ShaderSourceLength" value="0X8b88" />
     </enum>
   </add>
-</overrides>
+</signatures>

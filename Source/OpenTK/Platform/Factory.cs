@@ -121,7 +121,7 @@ namespace OpenTK.Platform
         {
             return default_implementation.CreateGraphicsMode();
         }
-        
+#if !MOBILE
         public OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
         {
             return default_implementation.CreateKeyboardDriver();
@@ -131,7 +131,7 @@ namespace OpenTK.Platform
         {
             return default_implementation.CreateMouseDriver();
         }
-
+#endif
         class UnsupportedPlatform : IPlatformFactory
         {
             #region Fields
