@@ -716,7 +716,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.BlendEquation, GL.Arb.BlendEquationSeparate and 41 other functions
+    /// Used in GL.Arb.BlendEquation, GL.Arb.BlendEquationSeparate and 40 other functions
     /// </summary>
     public enum All : int
     {
@@ -15771,7 +15771,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.DebugMessageInsert
+    /// Used in GL.DebugMessageInsert, GL.GetDebugMessageLog
     /// </summary>
     public enum DebugSeverity : int
     {
@@ -15821,7 +15821,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.GetDebugMessageLog
     /// </summary>
     public enum DebugSource : int
     {
@@ -15902,7 +15902,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.DebugMessageInsert
+    /// Used in GL.DebugMessageInsert, GL.GetDebugMessageLog
     /// </summary>
     public enum DebugType : int
     {

@@ -668,7 +668,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static unsafe void GetConvolutionParameteriv(OpenTK.Graphics.OpenGL4.ConvolutionTarget target, OpenTK.Graphics.OpenGL4.GetConvolutionParameterPName pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDebugMessageLog", ExactSpelling = true)]
-            internal extern static unsafe Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.All* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+            internal extern static unsafe Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.DebugSource* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.DebugType* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.DebugSeverity* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDebugMessageLogARB", ExactSpelling = true)]
             internal extern static unsafe Int32 GetDebugMessageLogARB(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.All* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);

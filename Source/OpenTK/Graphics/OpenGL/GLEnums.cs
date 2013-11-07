@@ -736,7 +736,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetProgramEnvParameter, GL.Arb.GetProgramLocalParameter and 11 other functions
+    /// Used in GL.Arb.GetProgramEnvParameter, GL.Arb.GetProgramLocalParameter and 10 other functions
     /// </summary>
     public enum All : int
     {
@@ -29355,7 +29355,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.DebugMessageInsert
+    /// Used in GL.DebugMessageInsert, GL.GetDebugMessageLog
     /// </summary>
     public enum DebugSeverity : int
     {
@@ -29405,7 +29405,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.GetDebugMessageLog
     /// </summary>
     public enum DebugSource : int
     {
@@ -29486,7 +29486,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.DebugMessageInsert
+    /// Used in GL.DebugMessageInsert, GL.GetDebugMessageLog
     /// </summary>
     public enum DebugType : int
     {

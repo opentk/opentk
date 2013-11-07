@@ -1062,7 +1062,7 @@
       </param>
     </function>
     
-    <function name="GetMessageDebugLog" extension="Core">
+    <function name="GetDebugMessageLog" extension="Core">
       <param name="sources">
         <type>DebugSource</type>
       </param>

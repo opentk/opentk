@@ -2129,7 +2129,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void GetConvolutionParameterxvOES(OpenTK.Graphics.OpenGL.OesFixedPoint target, OpenTK.Graphics.OpenGL.OesFixedPoint pname, [OutAttribute] int* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDebugMessageLog", ExactSpelling = true)]
-            internal extern static unsafe Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL.All* sources, [OutAttribute] OpenTK.Graphics.OpenGL.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+            internal extern static unsafe Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL.DebugSource* sources, [OutAttribute] OpenTK.Graphics.OpenGL.DebugType* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL.DebugSeverity* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDebugMessageLogAMD", ExactSpelling = true)]
             internal extern static unsafe Int32 GetDebugMessageLogAMD(UInt32 count, Int32 bufsize, [OutAttribute] OpenTK.Graphics.OpenGL.AmdDebugOutput* categories, [OutAttribute] UInt32* severities, [OutAttribute] UInt32* ids, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder message);
