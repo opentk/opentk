@@ -44,7 +44,7 @@ TestResults
 # Build results
 [Dd]ebug/
 [Rr]elease/
-x64/
+Binaries/
 *_i.c
 *_p.c
 *.ilk
