@@ -3,8 +3,12 @@
 This is a simple tool to convert C headers to XML files. It works using simple pattern matching - it does not actually parse the header files. For this reason, it will work with only a few, specific header files: ES and CL at this point.
 
 
-[Example]
+[Examples]
 
+To download and convert the new XML API registry from Khronos:
+Convert.exe -p:gl -v:4.4 -t:xml -o:../../../Source/Bind/Specifications/GL2/signatures.xml https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml
+
+To download and convert the old .spec files from Khronos:
 Convert.exe -p:gl -v:4.3 -t:spec -o:../../../Source/Bind/Specifications/GL2/signatures.xml https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/oldspecs/gl.spec https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/oldspecs/enum.spec https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/oldspecs/enumext.spec
 
 The line above will download the latest .spec files from the public Khronos repository and update signatures.xml for the binding generator.

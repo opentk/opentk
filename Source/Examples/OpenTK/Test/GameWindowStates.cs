@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Threading;
 
 using OpenTK;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 
@@ -28,7 +29,8 @@ namespace Examples.Tests
         KeyboardState keyboard, keyboard_old;
 
         public GameWindowStates()
-            : base(800, 600)
+            : base(800, 600, GraphicsMode.Default, "Test", GameWindowFlags.Default,
+            DisplayDevice.GetDisplay(DisplayIndex.Second), 3, 0, GraphicsContextFlags.Embedded)
         {
             VSync = VSyncMode.On;
             Keyboard.KeyRepeat = true;
@@ -152,7 +154,7 @@ namespace Examples.Tests
             }
         }
 
-        static int DrawJoysticks(Graphics gfx, IList<JoystickDevice> joysticks, int line)
+        static void DrawJoysticks(Graphics gfx, IList<JoystickDevice> joysticks, int line)
         {
             float space = gfx.MeasureString(" ", TextFont).Width;
 
@@ -181,8 +183,6 @@ namespace Examples.Tests
 
                 line++;
             }
-
-            return line;
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
@@ -209,6 +209,8 @@ namespace Examples.Tests
 
                     gfx.Clear(Color.Black);
                     gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+                    
+                    DrawString(gfx, Context.GraphicsMode.ToString(), line++);
 
                     DrawString(gfx, String.Format("[1 - 4]: change WindowState (current: {0}).", this.WindowState), line++);
                     DrawString(gfx, String.Format("[5 - 7]: change WindowBorder (current: {0}).", this.WindowBorder), line++);
@@ -223,7 +225,8 @@ namespace Examples.Tests
                     DrawString(gfx, String.Format("Window.ClientRectangle: {0}", ClientRectangle), line++);
                     DrawKeyboard(gfx, keyboard, line++);
                     DrawMouse(gfx, mouse, line++);
-                    line = DrawJoysticks(gfx, Joysticks, line++);
+                    DrawJoysticks(gfx, Joysticks, line++);
+
                 }
             }
 

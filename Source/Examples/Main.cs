@@ -85,6 +85,8 @@ namespace Examples
         public static void Main(string[] args)
         {
             Trace.Listeners.Add(new ConsoleTraceListener());
+            LaunchExample(typeof(Examples.Tests.GameWindowStates).FullName);
+            return;
 
             if (args.Length > 0)
             {
