@@ -353,13 +353,13 @@ namespace OpenTK.Graphics.ES30
             internal extern static unsafe void DrawBuffers(Int32 n, OpenTK.Graphics.ES30.DrawBufferMode* bufs);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawBuffersEXT", ExactSpelling = true)]
-            internal extern static unsafe void DrawBuffersEXT(Int32 n, OpenTK.Graphics.ES30.All* bufs);
+            internal extern static unsafe void DrawBuffersEXT(Int32 n, OpenTK.Graphics.ES30.DrawBufferMode* bufs);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawBuffersIndexedEXT", ExactSpelling = true)]
             internal extern static unsafe void DrawBuffersIndexedEXT(Int32 n, OpenTK.Graphics.ES30.All* location, Int32* indices);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawBuffersNV", ExactSpelling = true)]
-            internal extern static unsafe void DrawBuffersNV(Int32 n, OpenTK.Graphics.ES30.All* bufs);
+            internal extern static unsafe void DrawBuffersNV(Int32 n, OpenTK.Graphics.ES30.DrawBufferMode* bufs);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElements", ExactSpelling = true)]
             internal extern static void DrawElements(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices);

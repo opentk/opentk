@@ -351,13 +351,13 @@ namespace OpenTK.Graphics.ES30
             internal unsafe delegate void DrawBuffers(Int32 n, OpenTK.Graphics.ES30.DrawBufferMode* bufs);
             internal unsafe static DrawBuffers glDrawBuffers;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void DrawBuffersEXT(Int32 n, OpenTK.Graphics.ES30.All* bufs);
+            internal unsafe delegate void DrawBuffersEXT(Int32 n, OpenTK.Graphics.ES30.DrawBufferMode* bufs);
             internal unsafe static DrawBuffersEXT glDrawBuffersEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void DrawBuffersIndexedEXT(Int32 n, OpenTK.Graphics.ES30.All* location, Int32* indices);
             internal unsafe static DrawBuffersIndexedEXT glDrawBuffersIndexedEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void DrawBuffersNV(Int32 n, OpenTK.Graphics.ES30.All* bufs);
+            internal unsafe delegate void DrawBuffersNV(Int32 n, OpenTK.Graphics.ES30.DrawBufferMode* bufs);
             internal unsafe static DrawBuffersNV glDrawBuffersNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawElements(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices);

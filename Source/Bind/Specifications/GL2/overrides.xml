@@ -5310,7 +5310,7 @@
     </function>
     
     <!-- Selecting a Buffer for Writing [4.2.1] -->
-    <function name="DrawBuffers" extension="Core">
+    <function name="DrawBuffers">
       <param name="bufs"><type>DrawBufferMode</type></param>
     </function>
     
@@ -5323,10 +5323,10 @@
     <function name="Clear">
       <param name="mask"><type>ClearBufferMask</type></param>
     </function>
-    <function name="ClearBuffer" extension="Core">
+    <function name="ClearBuffer">
       <param name="buffer"><type>ClearBuffer</type></param>
     </function>
-    <function name="ClearBufferfi" extension="Core">
+    <function name="ClearBufferfi">
       <param name="buffer"><type>ClearBufferCombined</type></param>
     </function>
     

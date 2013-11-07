@@ -385,7 +385,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 47 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 45 other functions
     /// </summary>
     public enum All : int
     {
@@ -10455,7 +10455,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.DrawBuffers
+    /// Used in GL.DrawBuffers, GL.Ext.DrawBuffers and 1 other function
     /// </summary>
     public enum DrawBufferMode : int
     {
