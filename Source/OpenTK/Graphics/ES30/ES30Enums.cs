@@ -385,7 +385,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 53 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 49 other functions
     /// </summary>
     public enum All : int
     {
@@ -20346,6 +20346,57 @@ namespace OpenTK.Graphics.ES30
     /// </summary>
     public enum NvTextureNpot2DMipmap : int
     {
+    }
+
+    /// <summary>
+    /// Used in GL.GetObjectLabel, GL.ObjectLabel and 2 other functions
+    /// </summary>
+    public enum ObjectLabelIdentifier : int
+    {
+        /// <summary>
+        /// Original was GL_TEXTURE = 0x1702
+        /// </summary>
+        Texture = ((int)0x1702)        ,
+        /// <summary>
+        /// Original was GL_VERTEX_ARRAY = 0x8074
+        /// </summary>
+        VertexArray = ((int)0x8074)        ,
+        /// <summary>
+        /// Original was GL_BUFFER = 0x82E0
+        /// </summary>
+        Buffer = ((int)0x82E0)        ,
+        /// <summary>
+        /// Original was GL_SHADER = 0x82E1
+        /// </summary>
+        Shader = ((int)0x82E1)        ,
+        /// <summary>
+        /// Original was GL_PROGRAM = 0x82E2
+        /// </summary>
+        Program = ((int)0x82E2)        ,
+        /// <summary>
+        /// Original was GL_QUERY = 0x82E3
+        /// </summary>
+        Query = ((int)0x82E3)        ,
+        /// <summary>
+        /// Original was GL_PROGRAM_PIPELINE = 0x82E4
+        /// </summary>
+        ProgramPipeline = ((int)0x82E4)        ,
+        /// <summary>
+        /// Original was GL_SAMPLER = 0x82E6
+        /// </summary>
+        Sampler = ((int)0x82E6)        ,
+        /// <summary>
+        /// Original was GL_FRAMEBUFFER = 0X8d40
+        /// </summary>
+        Framebuffer = ((int)0X8d40)        ,
+        /// <summary>
+        /// Original was GL_RENDERBUFFER = 0X8d41
+        /// </summary>
+        Renderbuffer = ((int)0X8d41)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK = 0x8E22
+        /// </summary>
+        TransformFeedback = ((int)0x8E22)        ,
     }
 
     /// <summary>

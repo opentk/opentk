@@ -5440,7 +5440,12 @@
       <param name="types"><type>DebugType</type></param>
       <param name="severities"><type>DebugSeverity</type></param>
     </function>
-    
+    <function name="GetObjectLabel">
+      <param name="identifier"><type>ObjectLabelIdentifier</type></param>
+    </function>
+    <function name="ObjectLabel">
+      <param name="identifier"><type>ObjectLabelIdentifier</type></param>
+    </function>
    </replace>
   
   <add name="gles2" version="3.0">
@@ -5979,6 +5984,19 @@
     <enum name="InternalFormatParameter">
       <use token="NUM_SAMPLE_COUNTS" />
       <use token="SAMPLES" />
+    </enum>
+    <enum name="ObjectLabelIdentifier">
+      <use token="BUFFER" />
+      <use token="FRAMEBUFFER" />
+      <use token="RENDERBUFFER" />
+      <use token="PROGRAM_PIPELINE" />
+      <use token="PROGRAM" />
+      <use token="QUERY" />
+      <use token="SAMPLER" />
+      <use token="SHADER" />
+      <use token="TEXTURE" />
+      <use token="TRANSFORM_FEEDBACK" />
+      <use token="VERTEX_ARRAY" />
     </enum>
     <enum name="PixelFormat">
       <use token="ALPHA" />

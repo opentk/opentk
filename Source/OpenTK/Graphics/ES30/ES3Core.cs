@@ -623,13 +623,13 @@ namespace OpenTK.Graphics.ES30
             internal extern static unsafe void GetnUniformivEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetObjectLabel", ExactSpelling = true)]
-            internal extern static unsafe void GetObjectLabel(OpenTK.Graphics.ES30.All identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
+            internal extern static unsafe void GetObjectLabel(OpenTK.Graphics.ES30.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetObjectLabelEXT", ExactSpelling = true)]
             internal extern static unsafe void GetObjectLabelEXT(OpenTK.Graphics.ES30.All type, UInt32 @object, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetObjectLabelKHR", ExactSpelling = true)]
-            internal extern static unsafe void GetObjectLabelKHR(OpenTK.Graphics.ES30.All identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
+            internal extern static unsafe void GetObjectLabelKHR(OpenTK.Graphics.ES30.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetObjectPtrLabel", ExactSpelling = true)]
             internal extern static unsafe void GetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
@@ -866,10 +866,10 @@ namespace OpenTK.Graphics.ES30
             internal extern static unsafe void MultiDrawElementsEXT(OpenTK.Graphics.ES30.PrimitiveType mode, Int32* count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices, Int32 primcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glObjectLabel", ExactSpelling = true)]
-            internal extern static void ObjectLabel(OpenTK.Graphics.ES30.All identifier, UInt32 name, Int32 length, String label);
+            internal extern static void ObjectLabel(OpenTK.Graphics.ES30.ObjectLabelIdentifier identifier, UInt32 name, Int32 length, String label);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glObjectLabelKHR", ExactSpelling = true)]
-            internal extern static void ObjectLabelKHR(OpenTK.Graphics.ES30.All identifier, UInt32 name, Int32 length, String label);
+            internal extern static void ObjectLabelKHR(OpenTK.Graphics.ES30.ObjectLabelIdentifier identifier, UInt32 name, Int32 length, String label);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glObjectPtrLabel", ExactSpelling = true)]
             internal extern static void ObjectPtrLabel(IntPtr ptr, Int32 length, String label);
