@@ -129,7 +129,7 @@ namespace Bind
             {
                 path.Append(String.Format(
                     "[contains(concat('|', @name, '|'), '|{0}|') and " +
-                    "contains(concat('|', @version, '|'), '|{1}|')]",
+                    "(contains(concat('|', @version, '|'), '|{1}|') or not(boolean(@version)))]",
                     apiname,
                     apiversion));
             }
@@ -139,7 +139,7 @@ namespace Bind
             }
             else if (!String.IsNullOrEmpty(apiversion))
             {
-                path.Append(String.Format("[contains(concat('|', @version, '|'), '|{0}|')]", apiversion));
+                path.Append(String.Format("[contains(concat('|', @version, '|'), '|{0}|') or not(boolean(@version))]", apiversion));
             }
 
             if (function != null)
