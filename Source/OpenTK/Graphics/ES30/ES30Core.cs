@@ -368,13 +368,13 @@ namespace OpenTK.Graphics.ES30
             internal extern static void DrawElementsInstanced(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices, Int32 instancecount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElementsInstancedANGLE", ExactSpelling = true)]
-            internal extern static void DrawElementsInstancedANGLE(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.All type, IntPtr indices, Int32 primcount);
+            internal extern static void DrawElementsInstancedANGLE(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices, Int32 primcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElementsInstancedEXT", ExactSpelling = true)]
             internal extern static void DrawElementsInstancedEXT(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices, Int32 primcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElementsInstancedNV", ExactSpelling = true)]
-            internal extern static void DrawElementsInstancedNV(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.All type, IntPtr indices, Int32 primcount);
+            internal extern static void DrawElementsInstancedNV(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices, Int32 primcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawRangeElements", ExactSpelling = true)]
             internal extern static void DrawRangeElements(OpenTK.Graphics.ES30.PrimitiveType mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices);

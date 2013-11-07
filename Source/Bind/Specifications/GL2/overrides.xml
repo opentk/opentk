@@ -5105,6 +5105,26 @@
       <param name="type"><type>VertexAttribIntegerType</type></param>
     </function>
     
+    <!-- Drawing [2.8.3] -->
+    <function name="DrawArrays">
+      <param name="mode"><type>PrimitiveType</type></param>
+    </function>
+    <function name="DrawArraysInstanced">
+      <param name="mode"><type>PrimitiveType</type></param>
+    </function>
+    <function name="DrawElements">
+      <param name="mode"><type>PrimitiveType</type></param>
+      <param name="type"><type>DrawElementsType</type></param>
+    </function>
+    <function name="DrawElementsInstanced">
+      <param name="mode"><type>PrimitiveType</type></param>
+      <param name="type"><type>DrawElementsType</type></param>
+    </function>
+    <function name="DrawRangeElements">
+      <param name="mode"><type>PrimitiveType</type></param>
+      <param name="type"><type>DrawElementsType</type></param>
+    </function>
+
     <!-- Program Objects [2.11.3-4] -->
     <function name="ProgramParameter">
       <param name="pname"><type>ProgramParameterName</type></param>

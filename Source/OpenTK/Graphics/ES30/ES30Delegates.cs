@@ -366,13 +366,13 @@ namespace OpenTK.Graphics.ES30
             internal delegate void DrawElementsInstanced(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices, Int32 instancecount);
             internal static DrawElementsInstanced glDrawElementsInstanced;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawElementsInstancedANGLE(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.All type, IntPtr indices, Int32 primcount);
+            internal delegate void DrawElementsInstancedANGLE(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices, Int32 primcount);
             internal static DrawElementsInstancedANGLE glDrawElementsInstancedANGLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawElementsInstancedEXT(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices, Int32 primcount);
             internal static DrawElementsInstancedEXT glDrawElementsInstancedEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawElementsInstancedNV(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.All type, IntPtr indices, Int32 primcount);
+            internal delegate void DrawElementsInstancedNV(OpenTK.Graphics.ES30.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices, Int32 primcount);
             internal static DrawElementsInstancedNV glDrawElementsInstancedNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawRangeElements(OpenTK.Graphics.ES30.PrimitiveType mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.ES30.DrawElementsType type, IntPtr indices);

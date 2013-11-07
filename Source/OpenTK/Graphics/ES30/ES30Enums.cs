@@ -385,7 +385,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 49 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 47 other functions
     /// </summary>
     public enum All : int
     {
@@ -10586,7 +10586,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.DrawElements, GL.DrawElementsInstanced and 3 other functions
+    /// Used in GL.Angle.DrawElementsInstanced, GL.DrawElements and 5 other functions
     /// </summary>
     public enum DrawElementsType : int
     {
