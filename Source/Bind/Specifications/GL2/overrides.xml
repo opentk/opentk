@@ -4091,296 +4091,484 @@
     </enum>
   </add>
   
-  <!-- gles2 2.0 -->
-  <replace name="gles2" version="2.0">
-  
-    <function name="BindBuffer" extension="Core" version="2.0">
+  <!-- gles2 replacements for 2.0 and 3.0 -->
+  <replace name="gles2" version="2.0|3.0">
+    <!-- Buffer Objects [2.9] -->
+    <function name="BindBuffer">
       <param name="target"><type>BufferTarget</type></param>
     </function>
-  
-    <function name="GetString" extension="Core">
-      <returns>String</returns>
-      <param name="name"><type>StringName</type></param>
+    <function name="BindBufferRange">
+      <param name="target"><type>BufferRangeTarget</type></param>
     </function>
-
-    <function name="ShaderBinary" extension="Core">
+    <function name="BindBufferBase">
+      <param name="target"><type>BufferRangeTarget</type></param>
+    </function>
+    <function name="BufferData">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="usage"><type>BufferUsageHint</type></param>
+    </function>
+    <function name="BufferSubData">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+    <function name="CopyBufferSubData">
+      <param name="readTarget"><type>BufferTarget</type></param>
+      <param name="writeTarget"><type>BufferTarget</type></param>
+    </function>
+    <function name="FlushMappedBufferRange">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+    <function name="MapBufferRange">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="target"><type>BufferAccessMask</type></param>
+    </function> 
+    <function name="UnmapBuffer">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+    
+    <!-- Buffer Object Queries [6.1.9] -->
+    <function name="GetBufferParameter">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="pname"><type>BufferParameterName</type></param>
+    </function>
+    <function name="GetBufferPointer">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="pname"><type>BufferPointer</type></param>
+    </function>
+    
+    <!-- Asynchronous Queries [2.13, 6.1.7] -->
+    <function name="BeginQuery">
+      <param name="target"><type>QueryTarget</type></param>
+    </function>
+    <function name="EndQuery">
+      <param name="target"><type>QueryTarget</type></param>
+    </function>
+    <function name="GetQuery">
+      <param name="target"><type>QueryTarget</type></param>
+      <param name="pname"><type>GetQueryParam</type></param>
+    </function>
+    <function name="GetQueryObject">
+      <param name="pname"><type>GetQueryObjectParam</type></param>
+    </function>
+    
+    <!-- Transform Feedback [2.14, 6.1.11] -->
+    <function name="BindTransformFeedback">
+      <param name="target"><type>TransformFeedbackTarget</type></param>
+    </function>
+    <function name="BeginTransformFeedback">
+      <param name="primitiveMode"><type>TransformFeedbackPrimitiveType</type></param>
+    </function>
+    
+    <!-- Reading and Copying Pixels [4.3.1-2] -->
+    <function name="ReadPixels">
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+    <function name="ReadBuffer">
+      <param name="src"><type>ReadBufferMode</type></param>
+    </function>
+    <function name="BlitFramebuffer">
+      <param name="mask"><type>ClearBufferMask</type></param>
+      <param name="filter"><type>BlitFramebufferFilter</type></param>
+    </function>
+    
+    <!-- Polygons [3.6] -->
+    <function name="FrontFace">
+      <param name="dir"><type>FrontFaceDirection</type></param>
+    </function>
+    <function name="CullFace">
+      <param name="face"><type>CullFaceMode</type></param>
+    </function>
+    
+    <!-- Vertex Arrays [2.8] -->
+    <function name="VertexAttribIPointer">
+      <param name="type"><type>VertexAttribIntegerType</type></param>
+    </function>
+    
+    <!-- Drawing [2.8.3] -->
+    <function name="DrawArrays">
+      <param name="mode"><type>PrimitiveType</type></param>
+    </function>
+    <function name="DrawArraysInstanced">
+      <param name="mode"><type>PrimitiveType</type></param>
+    </function>
+    <function name="DrawElements">
+      <param name="mode"><type>PrimitiveType</type></param>
+      <param name="type"><type>DrawElementsType</type></param>
+    </function>
+    <function name="DrawElementsInstanced">
+      <param name="mode"><type>PrimitiveType</type></param>
+      <param name="type"><type>DrawElementsType</type></param>
+    </function>
+    <function name="DrawRangeElements">
+      <param name="mode"><type>PrimitiveType</type></param>
+      <param name="type"><type>DrawElementsType</type></param>
+    </function>
+    
+    <!-- Shaders and Programs [2.11.1] -->
+    <function name="CreateShader">
+      <param name="type"><type>ShaderType</type></param>
+    </function>
+    
+    <!-- Loading Shader Binaries [2.11.2] -->
+    <function name="ShaderBinary">
       <param name="binaryformat"><type>ShaderBinaryFormat</type></param>
     </function>
+
+    <!-- Program Objects [2.11.3-4] -->
+    <function name="ProgramParameter">
+      <param name="pname"><type>ProgramParameterName</type></param>
+    </function>
     
-    <function name="ShaderSource" extension="Core">
-      <param name="length"><count>0</count></param>
+    <!-- Program Objects [2.11.5] -->
+    <function name="GetActiveAttrib">
+      <param name="type"><type>ActiveAttribType</type></param>
     </function>
     
-    <function name="BlendEquation" extension="Core" version="2.0">
-      <param name="mode"><type>BlendEquationMode</type></param>
+    <!-- Uniform Variables [2.11.6] -->
+    <function name="GetActiveUniform">
+      <param name="type"><type>ActiveUniformType</type></param>
     </function>
-     
-    <function name="BlendEquationSeparate" extension="Core" version="2.0">
-      <param name="modeRGB"><type>BlendEquationMode</type></param>
-      <param name="modeAlpha"><type>BlendEquationMode</type></param>
+    <function name="GetActiveUniforms">
+      <param name="pname"><type>ActiveUniformParameter</type></param>
     </function>
-
-    <function name="BlendFunc" extension="Core" version="2.0">
-      <param name="sfactor"><type>BlendingFactorSrc</type></param>
-      <param name="dfactor"><type>BlendingFactorDest</type></param>
+    <function name="GetActiveUniformBlock">
+      <param name="pname"><type>ActiveUniformBlockParameter</type></param>
     </function>
-     
-    <function name="BlendFuncSeparate" extension="Core" version="2.0">
-      <param name="srcRGB"><type>BlendingFactorSrc</type></param>
-      <param name="dstRGB"><type>BlendingFactorDest</type></param>
-      <param name="srcAlpha"><type>BlendingFactorSrc</type></param>
-      <param name="dstAlpha"><type>BlendingFactorDest</type></param>
+    
+    <!-- Output Variables [2.11.8] -->
+    <function name="GetTransformFeedbackVarying">
+      <param name="type"><type>TransformFeedbackType</type></param>
+    </function>
+    <function name="TransformFeedbackVaryings">
+      <param name="bufferMode"><type>TransformFeedbackMode</type></param>
     </function>
 
-    <function name="BufferData" extension="Core" version="2.0">
-      <param name="target"><type>BufferTarget</type></param>
-      <param name="usage"><type>BufferUsage</type></param>
+	<!-- Shader Queries [6.1.12] -->
+    <function name="GetShader">
+      <param name="pname"><type>ShaderParameter</type></param> 
     </function>
-     
-    <function name="BufferSubData" extension="Core" version="2.0">
-      <param name="target"><type>BufferTarget</type></param>
+    <function name="GetShaderPrecisionFormat">
+      <param name="shadertype"><type>ShaderType</type></param>
+      <param name="precisiontype"><type>ShaderPrecision</type></param>
+    </function>
+    <function name="GetVertexAttrib">
+      <param name="pname"><type>VertexAttribParameter</type></param> 
+    </function>
+    <function name="GetVertexAttribPointer">
+      <param name="pname"><type>VertexAttribPointerParameter</type></param> 
+    </function>
+    
+    <!-- Program Queries [6.1.12] -->
+    <function name="GetProgram">
+      <param name="pname"><type>ProgramParameter</type></param>
+    </function>
+    
+    <!-- Texturing [3.8] -->
+    <function name="ActiveTexture">
+      <param name="texture"><type>TextureUnit</type></param>
+    </function>
+    <function name="BindTexture">
+      <param name="target"><type>TextureTarget</type></param>
+    </function>
+    
+    <!-- Sampler Objects [3.8.2] -->
+    <function name="SamplerParameter">
+      <param name="pname"><type>SamplerParameterName</type></param>
     </function>
 
-    <function name="VertexAttribPointer" extension="Core" version="2.0">
-      <param name="type"><type>VertexAttribPointerType</type></param>
+    <!-- Sampler Queries [6.1.5] -->
+    <function name="GetSamplerParameter">
+      <param name="pname"><type>SamplerParameterName</type></param>
     </function>
 
-    <function name="Hint" extension="Core" version="2.0">
-      <param name="target"><type>HintTarget</type></param>
-      <param name="mode"><type>HintMode</type></param>
+    <!-- Texture Image Specification [3.8.3-4] -->
+    <function name="TexImage2D">
+      <param name="target"><type>TextureTarget2d</type></param>
+      <param name="internalformat"><type>TextureComponentCount</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
     </function>
-     
-    <function name="StencilFunc" extension="Core" version="2.0">
-      <param name="func"><type>StencilFunction</type></param>
+    <function name="TexImage3D">
+      <param name="target"><type>TextureTarget3d</type></param>
+      <param name="internalformat"><type>TextureComponentCount</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
     </function>
-     
-    <function name="StencilFuncSeparate" extension="Core" version="2.0">
-      <param name="face"><type>StencilFace</type></param>
-      <param name="func"><type>StencilFunction</type></param>
+    <function name="TexStorage2D">
+      <param name="target"><type>TextureTarget2d</type></param>
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
     </function>
-     
-    <function name="StencilMaskSeparate" extension="Core" version="2.0">
-      <param name="face"><type>StencilFace</type></param>
+    <function name="TexStorage3D">
+      <param name="target"><type>TextureTarget2d</type></param>
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
     </function>
-     
-    <function name="StencilOp" extension="Core" version="2.0">
-      <param name="fail"><type>StencilOp</type></param>
-      <param name="zfail"><type>StencilOp</type></param>
-      <param name="zpass"><type>StencilOp</type></param>
+    
+    <!-- Alt. Texture Image Specification Commands [3.8.5] -->
+    <function name="CopyTexImage2D">
+      <param name="target"><type>TextureTarget2d</type></param>
+      <param name="internalformat"><type>TextureCopyComponentCount</type></param>
     </function>
+    <function name="TexSubImage2D">
+      <param name="target"><type>TextureTarget2d</type></param>
+    </function>
+    <function name="TexSubImage3D">
+      <param name="target"><type>TextureTarget3d</type></param>
+    </function>
+    <function name="CopyTexSubImage2D">
+      <param name="target"><type>TextureTarget2d</type></param>
+    </function>
+    <function name="CopyTexSubImage3D">
+      <param name="target"><type>TextureTarget3d</type></param>
+    </function>
+    
+    <!-- Compressed Texture Images [3.8.6] -->
+    <function name="CompressedTexImage2D">
+      <param name="target"><type>TextureTarget2d</type></param>
+      <param name="internalformat"><type>CompressedInternalFormat</type></param>
+    </function>
+    <function name="CompressedTexImage3D">
+      <param name="target"><type>TextureTarget3d</type></param>
+      <param name="internalformat"><type>CompressedInternalFormat</type></param>
+    </function>
+    <function name="CompressedTexSubImage2D">
+      <param name="target"><type>TextureTarget2d</type></param>
+    </function>
+    <function name="CompressedTexSubImage3D">
+      <param name="target"><type>TextureTarget3d</type></param>
+    </function>
+    
+    <!-- Texture Parameters [3.8.7] -->
+    <function name="TexParameter">
+      <param name="target"><type>TextureTarget</type></param>
+      <param name="pname"><type>TextureParameterName</type></param>
+    </function>   
+    
+     <!-- Manual Mipmap Generation [3.8.9] -->
+     <function name="GenerateMipmap">
+       <param name="target"><type>TextureTarget</type></param>
+     </function>
+      
+      <!-- Enumerated Queries [6.1.3] -->
+     <function name="GetTexParameter">
+       <param name="target"><type>TextureTarget</type></param>
+      <param name="pname"><type>GetTextureParameterName</type></param>
+     </function>
      
-    <function name="StencilOpSeparate" extension="Core" version="2.0">
+     <!-- Stencil Test [4.1.4] -->
+     <function name="StencilFunc">
+       <param name="func"><type>StencilFunction</type></param>
+     </function>
+     <function name="StencilFuncSeparate">
+       <param name="face"><type>StencilFace</type></param>
+       <param name="func"><type>StencilFunction</type></param>
+     </function>
+     <function name="StencilOp">
+      <param name="sfail"><type>StencilOp</type></param>
+      <param name="dpfail"><type>StencilOp</type></param>
+      <param name="dppass"><type>StencilOp</type></param>
+    </function>
+    <function name="StencilOpSeparate">
       <param name="face"><type>StencilFace</type></param>
       <param name="func"><type>StencilFunction</type></param>
       <param name="sfail"><type>StencilOp</type></param>
       <param name="dpfail"><type>StencilOp</type></param>
       <param name="dppass"><type>StencilOp</type></param>
-    </function>  
-
-    <function name="GetBufferParameter" extension="Core" version="2.0">
-      <param name="target"><type>BufferTarget</type></param>
-      <param name="pname"><type>BufferParameterName</type></param>
     </function>
-
-    <function name="Clear" extension="Core" version="2.0">
-      <param name="mask"><type>ClearBufferMask</type></param>
-    </function>
-
-    <function name="CreateShader" extension="Core" version="2.0">
-      <param name="type"><type>ShaderType</type></param>
-    </function>
-
-    <function name="GetShaderPrecisionFormat" extension="Core" version="2.0">
-      <param name="shadertype"><type>ShaderType</type></param>
-      <param name="precisiontype"><type>ShaderPrecision</type></param>
-    </function>
-
-    <function name="CullFace" extension="Core" version="2.0">
-      <param name="mode"><type>CullFaceMode</type></param>
-    </function>
-
-    <function name="DepthFunc" extension="Core" version="2.0">
+    
+    <!-- Depth Buffer Test [4.1.5] -->
+    <function name="DepthFunc">
       <param name="func"><type>DepthFunction</type></param>
     </function>
-     
-    <function name="Enable" extension="Core" version="2.0">
-      <param name="cap"><type>EnableCap</type></param>
+    
+    <!-- Blending [4.1.7] -->
+    <function name="BlendEquation">
+      <param name="mode"><type>BlendEquationMode</type></param>
     </function>
-     
-    <function name="Disable" extension="Core" version="2.0">
-      <param name="cap"><type>EnableCap</type></param>
+    <function name="BlendEquationSeparate">
+      <param name="modeRGB"><type>BlendEquationMode</type></param>
+      <param name="modeAlpha"><type>BlendEquationMode</type></param>
     </function>
-     
-    <function name="IsEnabled" extension="Core" version="2.0">
-      <param name="cap"><type>EnableCap</type></param>
+    <function name="BlendFunc">
+      <param name="sfactor"><type>BlendingFactorSrc</type></param>
+      <param name="dfactor"><type>BlendingFactorDest</type></param>
     </function>
-     
-    <function name="FrontFace" extension="Core" version="2.0">
-      <param name="mode"><type>FrontFaceDirection</type></param>
+    <function name="BlendFuncSeparate">
+      <param name="sfactorRGB"><type>BlendingFactorSrc</type></param>
+      <param name="dfactorRGB"><type>BlendingFactorDest</type></param>
+      <param name="sfactorAlpha"><type>BlendingFactorSrc</type></param>
+      <param name="dfactorAlpha"><type>BlendingFactorDest</type></param>
     </function>
-      
-    <function name="GetActiveAttrib" extension="Core" version="2.0">
-      <param name="type"><type>ActiveAttribType</type></param>
+    
+    <!-- Selecting a Buffer for Writing [4.2.1] -->
+    <function name="DrawBuffers">
+      <param name="bufs"><type>DrawBufferMode</type></param>
     </function>
-
-    <function name="GetActiveUniform" extension="Core" version="2.0">
-      <param name="type"><type>ActiveUniformType</type></param>
+    
+    <!-- Fine Control of Buffer Updates [4.2.2] -->
+    <function name="StencilMaskSeparate">
+      <param name="face"><type>StencilFace</type></param>
     </function>
-
-    <function name="GetError" extension="Core" version="2.0">
-      <returns>ErrorCode</returns>
+    
+    <!-- Clearing the Buffers [4.2.3] -->
+    <function name="Clear">
+      <param name="mask"><type>ClearBufferMask</type></param>
     </function>
-
-    <function name="GetProgram" extension="Core" version="2.0">
-      <param name="pname"><type>ProgramParameter</type></param>
+    <function name="ClearBuffer">
+      <param name="buffer"><type>ClearBuffer</type></param>
     </function>
-
-    <function name="GetShader" extension="Core" version="2.0">
-      <param name="pname"><type>ShaderParameter</type></param> 
+    <function name="ClearBufferfi">
+      <param name="buffer"><type>ClearBufferCombined</type></param>
     </function>
-
-    <function name="GetString" extension="Core" version="2.0">
-      <param name="name"><type>StringName</type></param> 
+    
+    <!-- Sync Objects and Fences [5.2] -->
+    <function name="FenceSync">
+      <param name="condition"><type>SyncCondition</type></param>
+      <param name="flags"><type>WaitSyncFlags</type></param>
     </function>
-
-    <function name="GetVertexAttrib" extension="Core" version="2.0">
-      <param name="pname"><type>VertexAttribParameter</type></param> 
+    <function name="ClientWaitSync">
+      <returns>WaitSyncStatus</returns>
+      <param name="flags"><type>ClientWaitSyncFlags</type></param>
     </function>
-     
-    <function name="GetVertexAttribPointer" extension="Core" version="2.0">
-      <param name="pname"><type>VertexAttribPointerParameter</type></param> 
+    <function name="WaitSync">
+      <param name="flags"><type>WaitSyncFlags</type></param>
     </function>
-      
-    <function name="ActiveTexture" extension="Core" version="2.0">
-      <param name="texture"><type>TextureUnit</type></param>
+    
+    <!-- Sync Object Queries [6.1.8] -->
+    <function name="GetSync">
+      <param name="pname"><type>SyncParameterName</type></param>
     </function>
- 
-    <function name="BindTexture" extension="Core" version="2.0">
-      <param name="target"><type>TextureTarget</type></param>
+    
+    <!-- Pixel Rectangles [3.7.1] -->
+    <function name="PixelStore">
+      <param name="pname"><type>PixelStoreParameter</type></param>
     </function>
-     
-    <function name="GenerateMipmap" extension="Core" version="2.0">
-      <param name="target"><type>TextureTarget</type></param>
-    </function>
-     
-    <function name="GetTexParameter" extension="Core" version="2.0">
-      <param name="target"><type>TextureTarget</type></param>
-      <param name="pname"><type>GetTextureParameter</type></param>
-    </function>
-     
-    <function name="TexParameter" extension="Core" version="2.0">
-      <param name="target"><type>TextureTarget</type></param>
-      <param name="pname"><type>TextureParameterName</type></param>
-    </function>
-     
-    <function name="TexImage2D" extension="Core" version="2.0">
-      <param name="target"><type>TextureTarget</type></param>
-      <param name="internalformat"><type>PixelInternalFormat</type></param>
-      <param name="format"><type>PixelFormat</type></param>
-      <param name="type"><type>PixelType</type></param>
-    </function>
-     
-    <function name="TexSubImage2D" extension="Core" version="2.0">
-      <param name="target"><type>TextureTarget</type></param>
-      <param name="format"><type>PixelFormat</type></param>
-      <param name="type"><type>PixelType</type></param>
-    </function>
-
-    <function name="CopyTexImage2D" extension="Core" version="2.0">
-      <param name="target"><type>TextureTarget</type></param>
-      <param name="internalformat"><type>PixelInternalFormat</type></param>
-    </function>
-     
-    <function name="CopyTexSubImage2D" extension="Core" version="2.0">
-      <param name="target"><type>TextureTarget</type></param>
-    </function>
-     
-    <function name="CompressedTexImage2D" extension="Core" version="2.0">
-      <param name="target"><type>TextureTarget</type></param>
-      <param name="internalformat"><type>PixelInternalFormat</type></param>
-    </function>
-     
-    <function name="CompressedTexSubImage2D" extension="Core" version="2.0">
-      <param name="target"><type>TextureTarget</type></param>
-      <param name="format"><type>PixelFormat</type></param>
-    </function>
-     
-    <function name="ReadPixels" extension="Core" version="2.0">
-      <param name="format"><type>PixelFormat</type></param>
-      <param name="type"><type>PixelType</type></param>
-    </function>
-     
-    <function name="CheckFramebufferStatus" extension="Core" version="2.0">
-      <returns>FramebufferErrorCode</returns>
+    
+    <!-- Binding & Managing Framebuffer Objects [4.4.1] -->
+    <function name="BindFramebuffer">
       <param name="target"><type>FramebufferTarget</type></param>
     </function>
-     
-    <function name="BindFramebuffer" extension="Core" version="2.0">
-      <param name="target"><type>FramebufferTarget</type></param>
-    </function>
-
-    <function name="BindRenderbuffer" extension="Core" version="2.0">
+    
+    <!-- Renderbuffer Objects [4.4.2] -->
+    <function name="BindRenderbuffer">
       <param name="target"><type>RenderbufferTarget</type></param>
     </function>
-      
-    <function name="RenderbufferStorage" extension="Core" version="2.0">
+    <function name="RenderbufferStorage">
       <param name="target"><type>RenderbufferTarget</type></param>
       <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
     </function>
-      
-    <function name="GetRenderbufferParameter" extension="Core" version="2.0">
+    <function name="RenderbufferStorageMultisample">
       <param name="target"><type>RenderbufferTarget</type></param>
-      <param name="pname"><type>RenderbufferParameterName</type></param>
+      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
     </function>
-      
-    <function name="FramebufferRenderbuffer" extension="Core" version="2.0">
+    
+    <!-- Attaching Renderbuffer Images to Framebuffer -->
+    <function name="FramebufferRenderbuffer">
       <param name="target"><type>FramebufferTarget</type></param>
       <param name="attachment"><type>FramebufferSlot</type></param>
       <param name="renderbuffertarget"><type>RenderbufferTarget</type></param>
     </function>
-     
-    <function name="FramebufferTexture2D" extension="Core" version="2.0">
+    
+    <!-- Attaching Texture Images to a Framebuffer -->
+    <function name="FramebufferTexture2D">
       <param name="target"><type>FramebufferTarget</type></param>
       <param name="attachment"><type>FramebufferSlot</type></param>
-      <param name="textarget"><type>TextureTarget</type></param>
+      <param name="textarget"><type>TextureTarget2d</type></param>
+    </function>
+    <function name="FramebufferTextureLayer">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachment"><type>FramebufferSlot</type></param>
+      <param name="textarget"><type>TextureTarget3d</type></param>
     </function>
     
-    <function name="GetFramebufferAttachmentParameter" extension="Core" version="2.0">
+    <!-- Framebuffer Completeness [4.4.4] -->
+    <function name="CheckFramebufferStatus">
+      <returns>FramebufferErrorCode</returns>
       <param name="target"><type>FramebufferTarget</type></param>
-      <param name="attachment"><type>FramebufferSlot</type></param>
+    </function>
+    
+    <!-- Invalidating Framebuffer Contents [4.5] -->
+    <function name="InvalidateFramebuffer">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachments"><type>FramebufferAttachment</type></param>
+    </function>
+    <function name="InvalidateSubFramebuffer">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachments"><type>FramebufferAttachment</type></param>
+    </function>
+    
+    <!-- Renderbuffer Object Queries [6.1.13-14] -->
+    <function name="GetRenderbufferParameter">
+      <param name="target"><type>RenderbufferTarget</type></param>
+      <param name="pname"><type>RenderbufferParameterName</type></param>
+    </function>
+    
+    <!-- Simple Queries [6.1.1] -->
+    <function name="GetFramebufferAttachmentParameter">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachment"><type>FramebufferAttachment</type></param>
       <param name="pname"><type>FramebufferParameterName</type></param>
     </function>
+    <function name="GetInternalformat">
+      <param name="target"><type>RenderbufferTarget</type></param>
+      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
+      <param name="pname"><type>InternalFormatParameter</type></param>
+    </function>
 
-    <function name="PixelStore" extension="Core" version="2.0">
-      <param name="pname"><type>PixelStoreParameter</type></param>
+    <!-- String Queries [6.1.6] -->
+    <function name="GetBoolean">
+      <param name="pname"><type>GetPName</type></param>
+    </function>
+    <function name="GetFloat">
+      <param name="pname"><type>GetPName</type></param>
+    </function>
+    <function name="GetInteger">
+      <param name="pname"><type>GetPName</type></param>
+    </function>
+    <function name="GetIntegeri_v">
+      <param name="target"><type>GetIndexedPName</type></param>
+    </function>
+    <function name="GetInteger64">
+      <param name="pname"><type>GetPName</type></param>
+    </function>
+    <function name="GetInteger64i_v">
+      <param name="target"><type>GetIndexedPName</type></param>
+    </function>
+    <function name="GetString">
+      <param name="name"><type>StringName</type></param>
+    </function>
+    <function name="GetStringi">
+      <param name="name"><type>StringNameIndexed</type></param>
     </function>
     
-    <function name="GetBoolean" extension="Core">
-      <param name="pname"><type>GetPName</type></param>
+    <!-- KHR_debug -->
+    <function name="DebugMessageControl">
+      <param name="source"><type>DebugSourceControl</type></param>
+      <param name="type"><type>DebugTypeControl</type></param>
+      <param name="severity"><type>DebugSeverityControl</type></param>
     </function>
- 
-    <function name="GetFloat" extension="Core">
-      <param name="pname"><type>GetPName</type></param>
+    <function name="DebugMessageInsert">
+      <param name="source"><type>DebugSourceExternal</type></param>
+      <param name="type"><type>DebugType</type></param>
+      <param name="severity"><type>DebugSeverity</type></param>
     </function>
-     
-    <function name="GetInteger" extension="Core">
-      <param name="pname"><type>GetPName</type></param>
+    <function name="GetDebugMessageLog">
+      <param name="sources"><type>DebugSourceExternal</type></param>
+      <param name="types"><type>DebugType</type></param>
+      <param name="severities"><type>DebugSeverity</type></param>
     </function>
+    <function name="GetObjectLabel">
+      <param name="identifier"><type>ObjectLabelIdentifier</type></param>
+    </function>
+    <function name="ObjectLabel">
+      <param name="identifier"><type>ObjectLabelIdentifier</type></param>
+    </function>
+   </replace>
 
-    <function name="GetError" extension="Core">
-      <returns>ErrorCode</returns>
-    </function>
-
-    <function name="GetAttribLocation" extension="Core">
-      <param name="name"><flow>in</flow></param>
-    </function>
-    
-    <function name="GetUniformLocation" extension="Core">
-      <param name="name"><flow>in</flow></param>
-    </function>
-
-  </replace>
-  
+  <!--  gles2 overloads for 2.0 backwards compatibility-->
   <overload name="gles2" version="2.0">
     <!-- PrimtiveType <=> BeginMode overloads for backwards compatibility -->
     <function name="DrawArrays" category="ES_VERSION_2_0" extension="Core" version="2.0">
@@ -4399,6 +4587,7 @@
     </function>
   </overload>
 
+ <!-- gles2 2.0 enums -->
   <add name="gles2" version="2.0">
 
     <enum name="BlendEquationMode">
@@ -5012,468 +5201,7 @@
     
   </add>
   
-  <!-- gles2 3.0 -->
-  <replace name="gles2" version="2.0|3.0">
-    <!-- Buffer Objects [2.9] -->
-    <function name="BindBuffer">
-      <param name="target"><type>BufferTarget</type></param>
-    </function>
-    <function name="BindBufferRange">
-      <param name="target"><type>BufferRangeTarget</type></param>
-    </function>
-    <function name="BindBufferBase">
-      <param name="target"><type>BufferRangeTarget</type></param>
-    </function>
-    <function name="BufferData">
-      <param name="target"><type>BufferTarget</type></param>
-      <param name="usage"><type>BufferUsageHint</type></param>
-    </function>
-    <function name="BufferSubData">
-      <param name="target"><type>BufferTarget</type></param>
-    </function>
-    <function name="CopyBufferSubData">
-      <param name="readTarget"><type>BufferTarget</type></param>
-      <param name="writeTarget"><type>BufferTarget</type></param>
-    </function>
-    <function name="FlushMappedBufferRange">
-      <param name="target"><type>BufferTarget</type></param>
-    </function>
-    <function name="MapBufferRange">
-      <param name="target"><type>BufferTarget</type></param>
-      <param name="target"><type>BufferAccessMask</type></param>
-    </function> 
-    <function name="UnmapBuffer">
-      <param name="target"><type>BufferTarget</type></param>
-    </function>
-    
-    <!-- Buffer Object Queries [6.1.9] -->
-    <function name="GetBufferParameter">
-      <param name="target"><type>BufferTarget</type></param>
-      <param name="pname"><type>BufferParameterName</type></param>
-    </function>
-    <function name="GetBufferPointer">
-      <param name="target"><type>BufferTarget</type></param>
-      <param name="pname"><type>BufferPointer</type></param>
-    </function>
-    
-    <!-- Asynchronous Queries [2.13, 6.1.7] -->
-    <function name="BeginQuery">
-      <param name="target"><type>QueryTarget</type></param>
-    </function>
-    <function name="EndQuery">
-      <param name="target"><type>QueryTarget</type></param>
-    </function>
-    <function name="GetQuery">
-      <param name="target"><type>QueryTarget</type></param>
-      <param name="pname"><type>GetQueryParam</type></param>
-    </function>
-    <function name="GetQueryObject">
-      <param name="pname"><type>GetQueryObjectParam</type></param>
-    </function>
-    
-    <!-- Transform Feedback [2.14, 6.1.11] -->
-    <function name="BindTransformFeedback">
-      <param name="target"><type>TransformFeedbackTarget</type></param>
-    </function>
-    <function name="BeginTransformFeedback">
-      <param name="primitiveMode"><type>TransformFeedbackPrimitiveType</type></param>
-    </function>
-    
-    <!-- Reading and Copying Pixels [4.3.1-2] -->
-    <function name="ReadPixels">
-      <param name="format"><type>PixelFormat</type></param>
-      <param name="type"><type>PixelType</type></param>
-    </function>
-    <function name="ReadBuffer">
-      <param name="src"><type>ReadBufferMode</type></param>
-    </function>
-    <function name="BlitFramebuffer">
-      <param name="mask"><type>ClearBufferMask</type></param>
-      <param name="filter"><type>BlitFramebufferFilter</type></param>
-    </function>
-    
-    <!-- Polygons [3.6] -->
-    <function name="FrontFace">
-      <param name="dir"><type>FrontFaceDirection</type></param>
-    </function>
-    <function name="CullFace">
-      <param name="face"><type>CullFaceMode</type></param>
-    </function>
-    
-    <!-- Vertex Arrays [2.8] -->
-    <function name="VertexAttribIPointer">
-      <param name="type"><type>VertexAttribIntegerType</type></param>
-    </function>
-    
-    <!-- Drawing [2.8.3] -->
-    <function name="DrawArrays">
-      <param name="mode"><type>PrimitiveType</type></param>
-    </function>
-    <function name="DrawArraysInstanced">
-      <param name="mode"><type>PrimitiveType</type></param>
-    </function>
-    <function name="DrawElements">
-      <param name="mode"><type>PrimitiveType</type></param>
-      <param name="type"><type>DrawElementsType</type></param>
-    </function>
-    <function name="DrawElementsInstanced">
-      <param name="mode"><type>PrimitiveType</type></param>
-      <param name="type"><type>DrawElementsType</type></param>
-    </function>
-    <function name="DrawRangeElements">
-      <param name="mode"><type>PrimitiveType</type></param>
-      <param name="type"><type>DrawElementsType</type></param>
-    </function>
-
-    <!-- Program Objects [2.11.3-4] -->
-    <function name="ProgramParameter">
-      <param name="pname"><type>ProgramParameterName</type></param>
-    </function>
-    
-    <!-- Uniform Variables [2.11.6] -->
-    <function name="GetActiveUniform">
-      <param name="type"><type>ActiveUniformType</type></param>
-    </function>
-    <function name="GetActiveUniforms">
-      <param name="pname"><type>ActiveUniformParameter</type></param>
-    </function>
-    <function name="GetActiveUniformBlock">
-      <param name="pname"><type>ActiveUniformBlockParameter</type></param>
-    </function>
-    
-    <!-- Output Variables [2.11.8] -->
-    <function name="GetTransformFeedbackVarying">
-      <param name="type"><type>TransformFeedbackType</type></param>
-    </function>
-    <function name="TransformFeedbackVaryings">
-      <param name="bufferMode"><type>TransformFeedbackMode</type></param>
-    </function>
-
-	<!-- Shader Queries [6.1.12] -->
-    <function name="GetShader">
-      <param name="pname"><type>ShaderParameter</type></param> 
-    </function>
-    <function name="GetShaderPrecisionFormat">
-      <param name="shadertype"><type>ShaderType</type></param>
-      <param name="precisiontype"><type>ShaderPrecision</type></param>
-    </function>
-    <function name="GetVertexAttrib">
-      <param name="pname"><type>VertexAttribParameter</type></param> 
-    </function>
-    <function name="GetVertexAttribPointer">
-      <param name="pname"><type>VertexAttribPointerParameter</type></param> 
-    </function>
-    
-    <!-- Program Queries [6.1.12] -->
-    <function name="GetProgram">
-      <param name="pname"><type>ProgramParameter</type></param>
-    </function>
-    
-    <!-- Texturing [3.8] -->
-    <function name="ActiveTexture">
-      <param name="texture"><type>TextureUnit</type></param>
-    </function>
-    <function name="BindTexture">
-      <param name="target"><type>TextureTarget</type></param>
-    </function>
-    
-    <!-- Sampler Objects [3.8.2] -->
-    <function name="SamplerParameter">
-      <param name="pname"><type>SamplerParameterName</type></param>
-    </function>
-
-    <!-- Sampler Queries [6.1.5] -->
-    <function name="GetSamplerParameter">
-      <param name="pname"><type>SamplerParameterName</type></param>
-    </function>
-
-    <!-- Texture Image Specification [3.8.3-4] -->
-    <function name="TexImage2D">
-      <param name="target"><type>TextureTarget2d</type></param>
-      <param name="internalformat"><type>TextureComponentCount</type></param>
-      <param name="format"><type>PixelFormat</type></param>
-      <param name="type"><type>PixelType</type></param>
-    </function>
-    <function name="TexImage3D">
-      <param name="target"><type>TextureTarget3d</type></param>
-      <param name="internalformat"><type>TextureComponentCount</type></param>
-      <param name="format"><type>PixelFormat</type></param>
-      <param name="type"><type>PixelType</type></param>
-    </function>
-    <function name="TexStorage2D">
-      <param name="target"><type>TextureTarget2d</type></param>
-      <param name="internalformat"><type>SizedInternalFormat</type></param>
-      <param name="format"><type>PixelFormat</type></param>
-      <param name="type"><type>PixelType</type></param>
-    </function>
-    <function name="TexStorage3D">
-      <param name="target"><type>TextureTarget2d</type></param>
-      <param name="internalformat"><type>SizedInternalFormat</type></param>
-      <param name="format"><type>PixelFormat</type></param>
-      <param name="type"><type>PixelType</type></param>
-    </function>
-    
-    <!-- Alt. Texture Image Specification Commands [3.8.5] -->
-    <function name="CopyTexImage2D">
-      <param name="target"><type>TextureTarget2d</type></param>
-      <param name="internalformat"><type>TextureCopyComponentCount</type></param>
-    </function>
-    <function name="TexSubImage2D">
-      <param name="target"><type>TextureTarget2d</type></param>
-    </function>
-    <function name="TexSubImage3D">
-      <param name="target"><type>TextureTarget3d</type></param>
-    </function>
-    <function name="CopyTexSubImage2D">
-      <param name="target"><type>TextureTarget2d</type></param>
-    </function>
-    <function name="CopyTexSubImage3D">
-      <param name="target"><type>TextureTarget3d</type></param>
-    </function>
-    
-    <!-- Compressed Texture Images [3.8.6] -->
-    <function name="CompressedTexImage2D">
-      <param name="target"><type>TextureTarget2d</type></param>
-      <param name="internalformat"><type>CompressedInternalFormat</type></param>
-    </function>
-    <function name="CompressedTexImage3D">
-      <param name="target"><type>TextureTarget3d</type></param>
-      <param name="internalformat"><type>CompressedInternalFormat</type></param>
-    </function>
-    <function name="CompressedTexSubImage2D">
-      <param name="target"><type>TextureTarget2d</type></param>
-    </function>
-    <function name="CompressedTexSubImage3D">
-      <param name="target"><type>TextureTarget3d</type></param>
-    </function>
-    
-    <!-- Texture Parameters [3.8.7] -->
-    <function name="TexParameter">
-      <param name="target"><type>TextureTarget</type></param>
-      <param name="pname"><type>TextureParameterName</type></param>
-    </function>   
-    
-     <!-- Manual Mipmap Generation [3.8.9] -->
-     <function name="GenerateMipmap">
-       <param name="target"><type>TextureTarget</type></param>
-     </function>
-      
-      <!-- Enumerated Queries [6.1.3] -->
-     <function name="GetTexParameter">
-       <param name="target"><type>TextureTarget</type></param>
-      <param name="pname"><type>GetTextureParameterName</type></param>
-     </function>
-     
-     <!-- Stencil Test [4.1.4] -->
-     <function name="StencilFunc">
-       <param name="func"><type>StencilFunction</type></param>
-     </function>
-     <function name="StencilFuncSeparate">
-       <param name="face"><type>StencilFace</type></param>
-       <param name="func"><type>StencilFunction</type></param>
-     </function>
-     <function name="StencilOp">
-      <param name="sfail"><type>StencilOp</type></param>
-      <param name="dpfail"><type>StencilOp</type></param>
-      <param name="dppass"><type>StencilOp</type></param>
-    </function>
-    <function name="StencilOpSeparate">
-      <param name="face"><type>StencilFace</type></param>
-      <param name="func"><type>StencilFunction</type></param>
-      <param name="sfail"><type>StencilOp</type></param>
-      <param name="dpfail"><type>StencilOp</type></param>
-      <param name="dppass"><type>StencilOp</type></param>
-    </function>
-    
-    <!-- Depth Buffer Test [4.1.5] -->
-    <function name="DepthFunc">
-      <param name="func"><type>DepthFunction</type></param>
-    </function>
-    
-    <!-- Blending [4.1.7] -->
-    <function name="BlendEquation">
-      <param name="mode"><type>BlendEquationMode</type></param>
-    </function>
-    <function name="BlendEquationSeparate">
-      <param name="modeRGB"><type>BlendEquationMode</type></param>
-      <param name="modeAlpha"><type>BlendEquationMode</type></param>
-    </function>
-    <function name="BlendFunc">
-      <param name="sfactor"><type>BlendingFactorSrc</type></param>
-      <param name="dfactor"><type>BlendingFactorDest</type></param>
-    </function>
-    <function name="BlendFuncSeparate">
-      <param name="sfactorRGB"><type>BlendingFactorSrc</type></param>
-      <param name="dfactorRGB"><type>BlendingFactorDest</type></param>
-      <param name="sfactorAlpha"><type>BlendingFactorSrc</type></param>
-      <param name="dfactorAlpha"><type>BlendingFactorDest</type></param>
-    </function>
-    
-    <!-- Selecting a Buffer for Writing [4.2.1] -->
-    <function name="DrawBuffers">
-      <param name="bufs"><type>DrawBufferMode</type></param>
-    </function>
-    
-    <!-- Fine Control of Buffer Updates [4.2.2] -->
-    <function name="StencilMaskSeparate">
-      <param name="face"><type>StencilFace</type></param>
-    </function>
-    
-    <!-- Clearing the Buffers [4.2.3] -->
-    <function name="Clear">
-      <param name="mask"><type>ClearBufferMask</type></param>
-    </function>
-    <function name="ClearBuffer">
-      <param name="buffer"><type>ClearBuffer</type></param>
-    </function>
-    <function name="ClearBufferfi">
-      <param name="buffer"><type>ClearBufferCombined</type></param>
-    </function>
-    
-    <!-- Sync Objects and Fences [5.2] -->
-    <function name="FenceSync">
-      <param name="condition"><type>SyncCondition</type></param>
-      <param name="flags"><type>WaitSyncFlags</type></param>
-    </function>
-    <function name="ClientWaitSync">
-      <returns>WaitSyncStatus</returns>
-      <param name="flags"><type>ClientWaitSyncFlags</type></param>
-    </function>
-    <function name="WaitSync">
-      <param name="flags"><type>WaitSyncFlags</type></param>
-    </function>
-    
-    <!-- Sync Object Queries [6.1.8] -->
-    <function name="GetSync">
-      <param name="pname"><type>SyncParameterName</type></param>
-    </function>
-    
-    <!-- Pixel Rectangles [3.7.1] -->
-    <function name="PixelStore">
-      <param name="pname"><type>PixelStoreParameter</type></param>
-    </function>
-    
-    <!-- Binding & Managing Framebuffer Objects [4.4.1] -->
-    <function name="BindFramebuffer">
-      <param name="target"><type>FramebufferTarget</type></param>
-    </function>
-    
-    <!-- Renderbuffer Objects [4.4.2] -->
-    <function name="BindRenderbuffer">
-      <param name="target"><type>RenderbufferTarget</type></param>
-    </function>
-    <function name="RenderbufferStorage">
-      <param name="target"><type>RenderbufferTarget</type></param>
-      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
-    </function>
-    <function name="RenderbufferStorageMultisample">
-      <param name="target"><type>RenderbufferTarget</type></param>
-      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
-    </function>
-    
-    <!-- Attaching Renderbuffer Images to Framebuffer -->
-    <function name="FramebufferRenderbuffer">
-      <param name="target"><type>FramebufferTarget</type></param>
-      <param name="attachment"><type>FramebufferSlot</type></param>
-      <param name="renderbuffertarget"><type>RenderbufferTarget</type></param>
-    </function>
-    
-    <!-- Attaching Texture Images to a Framebuffer -->
-    <function name="FramebufferTexture2D">
-      <param name="target"><type>FramebufferTarget</type></param>
-      <param name="attachment"><type>FramebufferSlot</type></param>
-      <param name="textarget"><type>TextureTarget2d</type></param>
-    </function>
-    <function name="FramebufferTextureLayer">
-      <param name="target"><type>FramebufferTarget</type></param>
-      <param name="attachment"><type>FramebufferSlot</type></param>
-      <param name="textarget"><type>TextureTarget3d</type></param>
-    </function>
-    
-    <!-- Framebuffer Completeness [4.4.4] -->
-    <function name="CheckFramebufferStatus">
-      <returns>FramebufferErrorCode</returns>
-      <param name="target"><type>FramebufferTarget</type></param>
-    </function>
-    
-    <!-- Invalidating Framebuffer Contents [4.5] -->
-    <function name="InvalidateFramebuffer">
-      <param name="target"><type>FramebufferTarget</type></param>
-      <param name="attachments"><type>FramebufferAttachment</type></param>
-    </function>
-    <function name="InvalidateSubFramebuffer">
-      <param name="target"><type>FramebufferTarget</type></param>
-      <param name="attachments"><type>FramebufferAttachment</type></param>
-    </function>
-    
-    <!-- Renderbuffer Object Queries [6.1.13-14] -->
-    <function name="GetRenderbufferParameter">
-      <param name="target"><type>RenderbufferTarget</type></param>
-      <param name="pname"><type>RenderbufferParameterName</type></param>
-    </function>
-    
-    <!-- Simple Queries [6.1.1] -->
-    <function name="GetFramebufferAttachmentParameter">
-      <param name="target"><type>FramebufferTarget</type></param>
-      <param name="attachment"><type>FramebufferAttachment</type></param>
-      <param name="pname"><type>FramebufferParameterName</type></param>
-    </function>
-    <function name="GetInternalformat">
-      <param name="target"><type>RenderbufferTarget</type></param>
-      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
-      <param name="pname"><type>InternalFormatParameter</type></param>
-    </function>
-
-    <!-- String Queries [6.1.6] -->
-    <function name="GetBoolean">
-      <param name="pname"><type>GetPName</type></param>
-    </function>
-    <function name="GetFloat">
-      <param name="pname"><type>GetPName</type></param>
-    </function>
-    <function name="GetInteger">
-      <param name="pname"><type>GetPName</type></param>
-    </function>
-    <function name="GetIntegeri_v">
-      <param name="target"><type>GetIndexedPName</type></param>
-    </function>
-    <function name="GetInteger64">
-      <param name="pname"><type>GetPName</type></param>
-    </function>
-    <function name="GetInteger64i_v">
-      <param name="target"><type>GetIndexedPName</type></param>
-    </function>
-    <function name="GetString">
-      <param name="name"><type>StringName</type></param>
-    </function>
-    <function name="GetStringi">
-      <param name="name"><type>StringNameIndexed</type></param>
-    </function>
-    
-    <!-- KHR_debug -->
-    <function name="DebugMessageControl">
-      <param name="source"><type>DebugSourceControl</type></param>
-      <param name="type"><type>DebugTypeControl</type></param>
-      <param name="severity"><type>DebugSeverityControl</type></param>
-    </function>
-    <function name="DebugMessageInsert">
-      <param name="source"><type>DebugSourceExternal</type></param>
-      <param name="type"><type>DebugType</type></param>
-      <param name="severity"><type>DebugSeverity</type></param>
-    </function>
-    <function name="GetDebugMessageLog">
-      <param name="sources"><type>DebugSourceExternal</type></param>
-      <param name="types"><type>DebugType</type></param>
-      <param name="severities"><type>DebugSeverity</type></param>
-    </function>
-    <function name="GetObjectLabel">
-      <param name="identifier"><type>ObjectLabelIdentifier</type></param>
-    </function>
-    <function name="ObjectLabel">
-      <param name="identifier"><type>ObjectLabelIdentifier</type></param>
-    </function>
-   </replace>
-  
+  <!-- gles2 3.0 enums -->
   <add name="gles2" version="3.0">
     <enum name="ActiveAttribType">
       <use token="FLOAT" />

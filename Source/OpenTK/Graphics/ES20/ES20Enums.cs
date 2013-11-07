@@ -167,7 +167,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 80 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 39 other functions
     /// </summary>
     public enum All : int
     {
@@ -7917,7 +7917,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.BlendEquation, GL.BlendEquationSeparate
+    /// Used in GL.BlendEquation, GL.BlendEquationSeparate and 1 other function
     /// </summary>
     public enum BlendEquationMode : int
     {
@@ -7975,7 +7975,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.BlendFunc
+    /// Used in GL.BlendFunc, GL.BlendFuncSeparate
     /// </summary>
     public enum BlendingFactorDest : int
     {
@@ -8058,7 +8058,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.BlendFunc
+    /// Used in GL.BlendFunc, GL.BlendFuncSeparate
     /// </summary>
     public enum BlendingFactorSrc : int
     {
@@ -8141,7 +8141,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Angle.BlitFramebuffer, GL.NV.BlitFramebuffer
     /// </summary>
     public enum BlitFramebufferFilter : int
     {
@@ -8186,14 +8186,14 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Oes.GetBufferPointer
     /// </summary>
     public enum BufferPointer : int
     {
     }
 
     /// <summary>
-    /// Used in GL.BindBuffer, GL.BufferData and 2 other functions
+    /// Used in GL.BindBuffer, GL.BufferData and 7 other functions
     /// </summary>
     public enum BufferTarget : int
     {
@@ -8208,7 +8208,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.BufferData
+    /// Not used directly.
     /// </summary>
     public enum BufferUsage : int
     {
@@ -8227,7 +8227,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Clear
+    /// Used in GL.Angle.BlitFramebuffer, GL.Clear and 1 other function
     /// </summary>
     [Flags]
     public enum ClearBufferMask : int
@@ -8644,7 +8644,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.DebugMessageInsert, GL.GetDebugMessageLog and 2 other functions
     /// </summary>
     public enum DebugSeverity : int
     {
@@ -8667,7 +8667,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.DebugMessageControl, GL.Khr.DebugMessageControl
     /// </summary>
     public enum DebugSeverityControl : int
     {
@@ -8725,7 +8725,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.DebugMessageControl, GL.Khr.DebugMessageControl
     /// </summary>
     public enum DebugSourceControl : int
     {
@@ -8760,7 +8760,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.DebugMessageInsert, GL.GetDebugMessageLog and 2 other functions
     /// </summary>
     public enum DebugSourceExternal : int
     {
@@ -8775,7 +8775,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.DebugMessageInsert, GL.GetDebugMessageLog and 2 other functions
     /// </summary>
     public enum DebugType : int
     {
@@ -8818,7 +8818,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.DebugMessageControl, GL.Khr.DebugMessageControl
     /// </summary>
     public enum DebugTypeControl : int
     {
@@ -8915,7 +8915,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.DrawBuffers, GL.NV.DrawBuffers
     /// </summary>
     public enum DrawBufferMode : int
     {
@@ -8982,7 +8982,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.DrawElements, GL.Ext.DrawElementsInstanced and 1 other function
+    /// Used in GL.Angle.DrawElementsInstanced, GL.DrawElements and 3 other functions
     /// </summary>
     public enum DrawElementsType : int
     {
@@ -11796,7 +11796,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.FramebufferRenderbuffer, GL.FramebufferTexture2D and 1 other function
+    /// Used in GL.FramebufferRenderbuffer, GL.FramebufferTexture2D
     /// </summary>
     public enum FramebufferSlot : int
     {
@@ -12055,7 +12055,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.GetBoolean, GL.GetFloat and 1 other function
+    /// Used in GL.Apple.GetInteger64, GL.GetBoolean and 2 other functions
     /// </summary>
     public enum GetPName : int
     {
@@ -13857,21 +13857,21 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.GetQueryObject
     /// </summary>
     public enum GetQueryObjectParam : int
     {
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.GetQuery
     /// </summary>
     public enum GetQueryParam : int
     {
     }
 
     /// <summary>
-    /// Used in GL.GetTexParameter
+    /// Not used directly.
     /// </summary>
     public enum GetTextureParameter : int
     {
@@ -17516,7 +17516,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.CompressedTexSubImage2D, GL.ReadPixels and 2 other functions
+    /// Used in GL.CompressedTexSubImage2D, GL.ReadPixels and 3 other functions
     /// </summary>
     public enum PixelFormat : int
     {
@@ -17599,7 +17599,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.CompressedTexImage2D, GL.CopyTexImage2D and 1 other function
+    /// Not used directly.
     /// </summary>
     public enum PixelInternalFormat : int
     {
@@ -18123,7 +18123,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.ReadPixels, GL.TexImage2D and 1 other function
+    /// Used in GL.ReadPixels, GL.TexImage2D and 2 other functions
     /// </summary>
     public enum PixelType : int
     {
@@ -18442,7 +18442,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.ProgramParameter
     /// </summary>
     public enum ProgramParameterName : int
     {
@@ -18749,7 +18749,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.BeginQuery, GL.Ext.EndQuery and 1 other function
     /// </summary>
     public enum QueryTarget : int
     {
@@ -18811,7 +18811,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.RenderbufferStorage
+    /// Used in GL.Angle.RenderbufferStorageMultisample, GL.Apple.RenderbufferStorageMultisample and 4 other functions
     /// </summary>
     public enum RenderbufferInternalFormat : int
     {
@@ -18881,7 +18881,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.BindRenderbuffer, GL.FramebufferRenderbuffer and 2 other functions
+    /// Used in GL.Angle.RenderbufferStorageMultisample, GL.Apple.RenderbufferStorageMultisample and 7 other functions
     /// </summary>
     public enum RenderbufferTarget : int
     {
@@ -19649,7 +19649,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.BindTexture, GL.CompressedTexImage2D and 9 other functions
+    /// Used in GL.BindTexture, GL.GenerateMipmap and 2 other functions
     /// </summary>
     public enum TextureTarget : int
     {
