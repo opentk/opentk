@@ -596,7 +596,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static OpenTK.Graphics.ES30.All GetGraphicsResetStatusEXT();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetInteger64i_v", ExactSpelling = true)]
-            internal extern static unsafe void GetInteger64i_v(OpenTK.Graphics.ES30.All target, UInt32 index, [OutAttribute] Int64* data);
+            internal extern static unsafe void GetInteger64i_v(OpenTK.Graphics.ES30.GetIndexedPName target, UInt32 index, [OutAttribute] Int64* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetInteger64v", ExactSpelling = true)]
             internal extern static unsafe void GetInteger64v(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int64* data);
@@ -605,10 +605,10 @@ namespace OpenTK.Graphics.ES30
             internal extern static unsafe void GetInteger64vAPPLE(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int64* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetIntegeri_v", ExactSpelling = true)]
-            internal extern static unsafe void GetIntegeri_v(OpenTK.Graphics.ES30.All target, UInt32 index, [OutAttribute] Int32* data);
+            internal extern static unsafe void GetIntegeri_v(OpenTK.Graphics.ES30.GetIndexedPName target, UInt32 index, [OutAttribute] Int32* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetIntegeri_vEXT", ExactSpelling = true)]
-            internal extern static unsafe void GetIntegeri_vEXT(OpenTK.Graphics.ES30.All target, UInt32 index, [OutAttribute] Int32* data);
+            internal extern static unsafe void GetIntegeri_vEXT(OpenTK.Graphics.ES30.GetIndexedPName target, UInt32 index, [OutAttribute] Int32* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetIntegerv", ExactSpelling = true)]
             internal extern static unsafe void GetIntegerv(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int32* data);

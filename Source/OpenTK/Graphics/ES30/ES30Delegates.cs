@@ -594,7 +594,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate OpenTK.Graphics.ES30.All GetGraphicsResetStatusEXT();
             internal static GetGraphicsResetStatusEXT glGetGraphicsResetStatusEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetInteger64i_v(OpenTK.Graphics.ES30.All target, UInt32 index, [OutAttribute] Int64* data);
+            internal unsafe delegate void GetInteger64i_v(OpenTK.Graphics.ES30.GetIndexedPName target, UInt32 index, [OutAttribute] Int64* data);
             internal unsafe static GetInteger64i_v glGetInteger64i_v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetInteger64v(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int64* data);
@@ -603,10 +603,10 @@ namespace OpenTK.Graphics.ES30
             internal unsafe delegate void GetInteger64vAPPLE(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int64* @params);
             internal unsafe static GetInteger64vAPPLE glGetInteger64vAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetIntegeri_v(OpenTK.Graphics.ES30.All target, UInt32 index, [OutAttribute] Int32* data);
+            internal unsafe delegate void GetIntegeri_v(OpenTK.Graphics.ES30.GetIndexedPName target, UInt32 index, [OutAttribute] Int32* data);
             internal unsafe static GetIntegeri_v glGetIntegeri_v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetIntegeri_vEXT(OpenTK.Graphics.ES30.All target, UInt32 index, [OutAttribute] Int32* data);
+            internal unsafe delegate void GetIntegeri_vEXT(OpenTK.Graphics.ES30.GetIndexedPName target, UInt32 index, [OutAttribute] Int32* data);
             internal unsafe static GetIntegeri_vEXT glGetIntegeri_vEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetIntegerv(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int32* data);

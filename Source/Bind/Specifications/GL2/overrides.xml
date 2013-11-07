@@ -5013,7 +5013,7 @@
   </add>
   
   <!-- gles2 3.0 -->
-  <replace name="gles2" version="3.0">
+  <replace name="gles2" version="2.0|3.0">
     <!-- Buffer Objects [2.9] -->
     <function name="BindBuffer">
       <param name="target"><type>BufferTarget</type></param>
@@ -5435,13 +5435,13 @@
       <param name="pname"><type>GetPName</type></param>
     </function>
     <function name="GetIntegeri_v">
-      <param name="pname"><type>GetIndexedPName</type></param>
+      <param name="target"><type>GetIndexedPName</type></param>
     </function>
     <function name="GetInteger64">
       <param name="pname"><type>GetPName</type></param>
     </function>
     <function name="GetInteger64i_v">
-      <param name="pname"><type>GetIndexedPName</type></param>
+      <param name="target"><type>GetIndexedPName</type></param>
     </function>
     <function name="GetString">
       <param name="name"><type>StringName</type></param>
