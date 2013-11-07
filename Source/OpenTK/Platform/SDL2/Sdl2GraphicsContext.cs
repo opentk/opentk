@@ -92,6 +92,9 @@ namespace OpenTK.Platform.SDL2
 
             int buffers;
             SDL.GL.GetAttribute(ContextAttribute.DOUBLEBUFFER, out buffers);
+            // DOUBLEBUFFER return a boolean (0-false, 1-true), so we need
+            // to adjust the buffer count (false->1 buffer, true->2 buffers)
+            buffers++;
 
             int red, green, blue, alpha;
             SDL.GL.GetAttribute(ContextAttribute.RED_SIZE, out red);
