@@ -4529,8 +4529,8 @@
     
     <!-- EXT_disjoint_timer_query -->
     <enum name="GetQueryObjectParam">
-      <use token="CURRENT_RESULT" />
-      <use token="CURRENT_RESULT_AVAILABLE" />
+      <use token="QUERY_RESULT" />
+      <use token="QUERY_RESULT_AVAILABLE" />
     </enum>
     <enum name="GetQueryParam">
       <use token="CURRENT_QUERY" />
@@ -5572,8 +5572,7 @@
     <enum name="BufferParameterName">
       <use token="BUFFER_SIZE" />
       <use token="BUFFER_USAGE" />
-      <use token="BUFFER_ACCESS" />
-      <use token="BUFFER_FLAGS" />
+      <use token="BUFFER_ACCESS_FLAGS" />
       <use token="BUFFER_MAPPED" />
       <use token="BUFFER_MAP_POINTER" />
       <use token="BUFFER_MAP_OFFSET" />
@@ -5961,8 +5960,8 @@
       <use token="COPY_WRITE_BUFFER_BINDING" />
     </enum>
     <enum name="GetQueryObjectParam">
-      <use token="CURRENT_RESULT" />
-      <use token="CURRENT_RESULT_AVAILABLE" />
+      <use token="QUERY_RESULT" />
+      <use token="QUERY_RESULT_AVAILABLE" />
     </enum>
     <enum name="GetQueryParam">
       <use token="CURRENT_QUERY" />
@@ -6007,7 +6006,7 @@
       <use token="RGBA_INTEGER" />
       <use token="RGB_INTEGER" />
       <use token="RG_INTEGER" />
-      <use token="R_INTEGER" />
+      <use token="RED_INTEGER" />
 	  <use token="DEPTH_COMPONENT" />
 	  <use token="DEPTH_STENCIL" />
 	  <use token="LUMINANCE_ALPHA" />
@@ -6015,13 +6014,13 @@
     </enum>
     <enum name="PixelStoreParameter">
       <use token="PACK_ROW_LENGTH" />
-      <use token="PACK_ROW_ALIGNMENT" />
+      <use token="PACK_ALIGNMENT" />
       <use token="PACK_SKIP_ROWS" />
       <use token="PACK_SKIP_PIXELS" />
       <use token="PACK_IMAGE_HEIGHT" />
       <use token="PACK_SKIP_IMAGES" />
       <use token="UNPACK_ROW_LENGTH" />
-      <use token="UNPACK_ROW_ALIGNMENT" />
+      <use token="UNPACK_ALIGNMENT" />
       <use token="UNPACK_SKIP_ROWS" />
       <use token="UNPACK_SKIP_PIXELS" />
       <use token="UNPACK_IMAGE_HEIGHT" />
@@ -6210,7 +6209,7 @@
       <use token="LEQUAL" />
       <use token="GEQUAL" />
       <use token="EQUAL" />
-      <use token="NOT_EQUAL" />
+      <use token="NOTEQUAL" />
     </enum>
     <enum name="StencilOp">
       <use token="KEEP" />

@@ -9534,6 +9534,10 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         BufferMapPointer = ((int)0x88BD)        ,
         /// <summary>
+        /// Original was GL_BUFFER_ACCESS_FLAGS = 0x911F
+        /// </summary>
+        BufferAccessFlags = ((int)0x911F)        ,
+        /// <summary>
         /// Original was GL_BUFFER_MAP_LENGTH = 0x9120
         /// </summary>
         BufferMapLength = ((int)0x9120)        ,
@@ -17202,6 +17206,14 @@ namespace OpenTK.Graphics.ES30
     /// </summary>
     public enum GetQueryObjectParam : int
     {
+        /// <summary>
+        /// Original was GL_QUERY_RESULT = 0x8866
+        /// </summary>
+        QueryResult = ((int)0x8866)        ,
+        /// <summary>
+        /// Original was GL_QUERY_RESULT_AVAILABLE = 0x8867
+        /// </summary>
+        QueryResultAvailable = ((int)0x8867)        ,
     }
 
     /// <summary>
@@ -21098,6 +21110,10 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_DEPTH_STENCIL = 0x84F9
         /// </summary>
         DepthStencil = ((int)0x84F9)        ,
+        /// <summary>
+        /// Original was GL_RED_INTEGER = 0x8D94
+        /// </summary>
+        RedInteger = ((int)0x8D94)        ,
         /// <summary>
         /// Original was GL_RGB_INTEGER = 0x8D98
         /// </summary>
