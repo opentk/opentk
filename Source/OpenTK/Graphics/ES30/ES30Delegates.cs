@@ -597,10 +597,10 @@ namespace OpenTK.Graphics.ES30
             internal unsafe delegate void GetInteger64i_v(OpenTK.Graphics.ES30.All target, UInt32 index, [OutAttribute] Int64* data);
             internal unsafe static GetInteger64i_v glGetInteger64i_v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetInteger64v(OpenTK.Graphics.ES30.All pname, [OutAttribute] Int64* data);
+            internal unsafe delegate void GetInteger64v(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int64* data);
             internal unsafe static GetInteger64v glGetInteger64v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetInteger64vAPPLE(OpenTK.Graphics.ES30.All pname, [OutAttribute] Int64* @params);
+            internal unsafe delegate void GetInteger64vAPPLE(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int64* @params);
             internal unsafe static GetInteger64vAPPLE glGetInteger64vAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetIntegeri_v(OpenTK.Graphics.ES30.All target, UInt32 index, [OutAttribute] Int32* data);

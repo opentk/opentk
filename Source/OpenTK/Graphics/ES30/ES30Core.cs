@@ -599,10 +599,10 @@ namespace OpenTK.Graphics.ES30
             internal extern static unsafe void GetInteger64i_v(OpenTK.Graphics.ES30.All target, UInt32 index, [OutAttribute] Int64* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetInteger64v", ExactSpelling = true)]
-            internal extern static unsafe void GetInteger64v(OpenTK.Graphics.ES30.All pname, [OutAttribute] Int64* data);
+            internal extern static unsafe void GetInteger64v(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int64* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetInteger64vAPPLE", ExactSpelling = true)]
-            internal extern static unsafe void GetInteger64vAPPLE(OpenTK.Graphics.ES30.All pname, [OutAttribute] Int64* @params);
+            internal extern static unsafe void GetInteger64vAPPLE(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int64* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetIntegeri_v", ExactSpelling = true)]
             internal extern static unsafe void GetIntegeri_v(OpenTK.Graphics.ES30.All target, UInt32 index, [OutAttribute] Int32* data);

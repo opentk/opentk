@@ -385,7 +385,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 45 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 43 other functions
     /// </summary>
     public enum All : int
     {
@@ -15132,7 +15132,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetBoolean, GL.GetFloat and 1 other function
+    /// Used in GL.Apple.GetInteger64, GL.GetBoolean and 3 other functions
     /// </summary>
     public enum GetPName : int
     {
