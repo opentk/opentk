@@ -470,7 +470,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static void FramebufferRenderbuffer(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferSlot attachment, OpenTK.Graphics.ES30.RenderbufferTarget renderbuffertarget, UInt32 renderbuffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFramebufferTexture2D", ExactSpelling = true)]
-            internal extern static void FramebufferTexture2D(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferSlot attachment, OpenTK.Graphics.ES30.TextureTarget textarget, UInt32 texture, Int32 level);
+            internal extern static void FramebufferTexture2D(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferSlot attachment, OpenTK.Graphics.ES30.TextureTarget2d textarget, UInt32 texture, Int32 level);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFramebufferTexture2DMultisampleEXT", ExactSpelling = true)]
             internal extern static void FramebufferTexture2DMultisampleEXT(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All attachment, OpenTK.Graphics.ES30.All textarget, UInt32 texture, Int32 level, Int32 samples);
@@ -482,7 +482,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static void FramebufferTexture3DOES(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All attachment, OpenTK.Graphics.ES30.All textarget, UInt32 texture, Int32 level, Int32 zoffset);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFramebufferTextureLayer", ExactSpelling = true)]
-            internal extern static void FramebufferTextureLayer(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.All attachment, UInt32 texture, Int32 level, Int32 layer);
+            internal extern static void FramebufferTextureLayer(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferSlot attachment, UInt32 texture, Int32 level, Int32 layer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFrontFace", ExactSpelling = true)]
             internal extern static void FrontFace(OpenTK.Graphics.ES30.FrontFaceDirection mode);
@@ -590,7 +590,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static Int32 GetFragDataLocation(UInt32 program, String name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFramebufferAttachmentParameteriv", ExactSpelling = true)]
-            internal extern static unsafe void GetFramebufferAttachmentParameteriv(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferSlot attachment, OpenTK.Graphics.ES30.FramebufferParameterName pname, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetFramebufferAttachmentParameteriv(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferAttachment attachment, OpenTK.Graphics.ES30.FramebufferParameterName pname, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetGraphicsResetStatusEXT", ExactSpelling = true)]
             internal extern static OpenTK.Graphics.ES30.All GetGraphicsResetStatusEXT();
@@ -614,7 +614,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static unsafe void GetIntegerv(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int32* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetInternalformativ", ExactSpelling = true)]
-            internal extern static unsafe void GetInternalformativ(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All internalformat, OpenTK.Graphics.ES30.All pname, Int32 bufSize, [OutAttribute] Int32* @params);
+            internal extern static unsafe void GetInternalformativ(OpenTK.Graphics.ES30.RenderbufferTarget target, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, OpenTK.Graphics.ES30.InternalFormatParameter pname, Int32 bufSize, [OutAttribute] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetnUniformfvEXT", ExactSpelling = true)]
             internal extern static unsafe void GetnUniformfvEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
@@ -725,7 +725,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static IntPtr GetString(OpenTK.Graphics.ES30.StringName name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetStringi", ExactSpelling = true)]
-            internal extern static IntPtr GetStringi(OpenTK.Graphics.ES30.StringName name, UInt32 index);
+            internal extern static IntPtr GetStringi(OpenTK.Graphics.ES30.StringNameIndexed name, UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSynciv", ExactSpelling = true)]
             internal extern static unsafe void GetSynciv(IntPtr sync, OpenTK.Graphics.ES30.SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
@@ -785,10 +785,10 @@ namespace OpenTK.Graphics.ES30
             internal extern static void InsertEventMarkerEXT(Int32 length, String marker);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glInvalidateFramebuffer", ExactSpelling = true)]
-            internal extern static unsafe void InvalidateFramebuffer(OpenTK.Graphics.ES30.All target, Int32 numAttachments, OpenTK.Graphics.ES30.All* attachments);
+            internal extern static unsafe void InvalidateFramebuffer(OpenTK.Graphics.ES30.FramebufferTarget target, Int32 numAttachments, OpenTK.Graphics.ES30.FramebufferAttachment* attachments);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glInvalidateSubFramebuffer", ExactSpelling = true)]
-            internal extern static unsafe void InvalidateSubFramebuffer(OpenTK.Graphics.ES30.All target, Int32 numAttachments, OpenTK.Graphics.ES30.All* attachments, Int32 x, Int32 y, Int32 width, Int32 height);
+            internal extern static unsafe void InvalidateSubFramebuffer(OpenTK.Graphics.ES30.FramebufferTarget target, Int32 numAttachments, OpenTK.Graphics.ES30.FramebufferAttachment* attachments, Int32 x, Int32 y, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsBuffer", ExactSpelling = true)]
             internal extern static bool IsBuffer(UInt32 buffer);
@@ -1040,22 +1040,22 @@ namespace OpenTK.Graphics.ES30
             internal extern static void RenderbufferStorage(OpenTK.Graphics.ES30.RenderbufferTarget target, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glRenderbufferStorageMultisample", ExactSpelling = true)]
-            internal extern static void RenderbufferStorageMultisample(OpenTK.Graphics.ES30.All target, Int32 samples, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height);
+            internal extern static void RenderbufferStorageMultisample(OpenTK.Graphics.ES30.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glRenderbufferStorageMultisampleANGLE", ExactSpelling = true)]
-            internal extern static void RenderbufferStorageMultisampleANGLE(OpenTK.Graphics.ES30.All target, Int32 samples, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height);
+            internal extern static void RenderbufferStorageMultisampleANGLE(OpenTK.Graphics.ES30.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glRenderbufferStorageMultisampleAPPLE", ExactSpelling = true)]
-            internal extern static void RenderbufferStorageMultisampleAPPLE(OpenTK.Graphics.ES30.All target, Int32 samples, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height);
+            internal extern static void RenderbufferStorageMultisampleAPPLE(OpenTK.Graphics.ES30.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glRenderbufferStorageMultisampleEXT", ExactSpelling = true)]
-            internal extern static void RenderbufferStorageMultisampleEXT(OpenTK.Graphics.ES30.All target, Int32 samples, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height);
+            internal extern static void RenderbufferStorageMultisampleEXT(OpenTK.Graphics.ES30.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glRenderbufferStorageMultisampleIMG", ExactSpelling = true)]
-            internal extern static void RenderbufferStorageMultisampleIMG(OpenTK.Graphics.ES30.All target, Int32 samples, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height);
+            internal extern static void RenderbufferStorageMultisampleIMG(OpenTK.Graphics.ES30.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glRenderbufferStorageMultisampleNV", ExactSpelling = true)]
-            internal extern static void RenderbufferStorageMultisampleNV(OpenTK.Graphics.ES30.All target, Int32 samples, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height);
+            internal extern static void RenderbufferStorageMultisampleNV(OpenTK.Graphics.ES30.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glResolveMultisampleFramebufferAPPLE", ExactSpelling = true)]
             internal extern static void ResolveMultisampleFramebufferAPPLE();

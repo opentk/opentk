@@ -468,7 +468,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate void FramebufferRenderbuffer(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferSlot attachment, OpenTK.Graphics.ES30.RenderbufferTarget renderbuffertarget, UInt32 renderbuffer);
             internal static FramebufferRenderbuffer glFramebufferRenderbuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FramebufferTexture2D(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferSlot attachment, OpenTK.Graphics.ES30.TextureTarget textarget, UInt32 texture, Int32 level);
+            internal delegate void FramebufferTexture2D(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferSlot attachment, OpenTK.Graphics.ES30.TextureTarget2d textarget, UInt32 texture, Int32 level);
             internal static FramebufferTexture2D glFramebufferTexture2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FramebufferTexture2DMultisampleEXT(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All attachment, OpenTK.Graphics.ES30.All textarget, UInt32 texture, Int32 level, Int32 samples);
@@ -480,7 +480,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate void FramebufferTexture3DOES(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All attachment, OpenTK.Graphics.ES30.All textarget, UInt32 texture, Int32 level, Int32 zoffset);
             internal static FramebufferTexture3DOES glFramebufferTexture3DOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FramebufferTextureLayer(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.All attachment, UInt32 texture, Int32 level, Int32 layer);
+            internal delegate void FramebufferTextureLayer(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferSlot attachment, UInt32 texture, Int32 level, Int32 layer);
             internal static FramebufferTextureLayer glFramebufferTextureLayer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FrontFace(OpenTK.Graphics.ES30.FrontFaceDirection mode);
@@ -588,7 +588,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate Int32 GetFragDataLocation(UInt32 program, String name);
             internal static GetFragDataLocation glGetFragDataLocation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetFramebufferAttachmentParameteriv(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferSlot attachment, OpenTK.Graphics.ES30.FramebufferParameterName pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetFramebufferAttachmentParameteriv(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferAttachment attachment, OpenTK.Graphics.ES30.FramebufferParameterName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetFramebufferAttachmentParameteriv glGetFramebufferAttachmentParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate OpenTK.Graphics.ES30.All GetGraphicsResetStatusEXT();
@@ -612,7 +612,7 @@ namespace OpenTK.Graphics.ES30
             internal unsafe delegate void GetIntegerv(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int32* data);
             internal unsafe static GetIntegerv glGetIntegerv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetInternalformativ(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All internalformat, OpenTK.Graphics.ES30.All pname, Int32 bufSize, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetInternalformativ(OpenTK.Graphics.ES30.RenderbufferTarget target, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, OpenTK.Graphics.ES30.InternalFormatParameter pname, Int32 bufSize, [OutAttribute] Int32* @params);
             internal unsafe static GetInternalformativ glGetInternalformativ;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetnUniformfvEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
@@ -723,7 +723,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate IntPtr GetString(OpenTK.Graphics.ES30.StringName name);
             internal static GetString glGetString;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr GetStringi(OpenTK.Graphics.ES30.StringName name, UInt32 index);
+            internal delegate IntPtr GetStringi(OpenTK.Graphics.ES30.StringNameIndexed name, UInt32 index);
             internal static GetStringi glGetStringi;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetSynciv(IntPtr sync, OpenTK.Graphics.ES30.SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
@@ -783,10 +783,10 @@ namespace OpenTK.Graphics.ES30
             internal delegate void InsertEventMarkerEXT(Int32 length, String marker);
             internal static InsertEventMarkerEXT glInsertEventMarkerEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void InvalidateFramebuffer(OpenTK.Graphics.ES30.All target, Int32 numAttachments, OpenTK.Graphics.ES30.All* attachments);
+            internal unsafe delegate void InvalidateFramebuffer(OpenTK.Graphics.ES30.FramebufferTarget target, Int32 numAttachments, OpenTK.Graphics.ES30.FramebufferAttachment* attachments);
             internal unsafe static InvalidateFramebuffer glInvalidateFramebuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void InvalidateSubFramebuffer(OpenTK.Graphics.ES30.All target, Int32 numAttachments, OpenTK.Graphics.ES30.All* attachments, Int32 x, Int32 y, Int32 width, Int32 height);
+            internal unsafe delegate void InvalidateSubFramebuffer(OpenTK.Graphics.ES30.FramebufferTarget target, Int32 numAttachments, OpenTK.Graphics.ES30.FramebufferAttachment* attachments, Int32 x, Int32 y, Int32 width, Int32 height);
             internal unsafe static InvalidateSubFramebuffer glInvalidateSubFramebuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate bool IsBuffer(UInt32 buffer);
@@ -1038,22 +1038,22 @@ namespace OpenTK.Graphics.ES30
             internal delegate void RenderbufferStorage(OpenTK.Graphics.ES30.RenderbufferTarget target, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             internal static RenderbufferStorage glRenderbufferStorage;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void RenderbufferStorageMultisample(OpenTK.Graphics.ES30.All target, Int32 samples, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height);
+            internal delegate void RenderbufferStorageMultisample(OpenTK.Graphics.ES30.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             internal static RenderbufferStorageMultisample glRenderbufferStorageMultisample;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void RenderbufferStorageMultisampleANGLE(OpenTK.Graphics.ES30.All target, Int32 samples, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height);
+            internal delegate void RenderbufferStorageMultisampleANGLE(OpenTK.Graphics.ES30.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             internal static RenderbufferStorageMultisampleANGLE glRenderbufferStorageMultisampleANGLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void RenderbufferStorageMultisampleAPPLE(OpenTK.Graphics.ES30.All target, Int32 samples, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height);
+            internal delegate void RenderbufferStorageMultisampleAPPLE(OpenTK.Graphics.ES30.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             internal static RenderbufferStorageMultisampleAPPLE glRenderbufferStorageMultisampleAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void RenderbufferStorageMultisampleEXT(OpenTK.Graphics.ES30.All target, Int32 samples, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height);
+            internal delegate void RenderbufferStorageMultisampleEXT(OpenTK.Graphics.ES30.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             internal static RenderbufferStorageMultisampleEXT glRenderbufferStorageMultisampleEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void RenderbufferStorageMultisampleIMG(OpenTK.Graphics.ES30.All target, Int32 samples, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height);
+            internal delegate void RenderbufferStorageMultisampleIMG(OpenTK.Graphics.ES30.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             internal static RenderbufferStorageMultisampleIMG glRenderbufferStorageMultisampleIMG;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void RenderbufferStorageMultisampleNV(OpenTK.Graphics.ES30.All target, Int32 samples, OpenTK.Graphics.ES30.All internalformat, Int32 width, Int32 height);
+            internal delegate void RenderbufferStorageMultisampleNV(OpenTK.Graphics.ES30.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
             internal static RenderbufferStorageMultisampleNV glRenderbufferStorageMultisampleNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ResolveMultisampleFramebufferAPPLE();

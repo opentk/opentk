@@ -5328,6 +5328,102 @@
       <param name="pname"><type>SyncParameterName</type></param>
     </function>
     
+    <!-- Pixel Rectangles [3.7.1] -->
+    <function name="PixelStore">
+      <param name="pname"><type>PixelStoreParameter</type></param>
+    </function>
+    
+    <!-- Binding & Managing Framebuffer Objects [4.4.1] -->
+    <function name="BindFramebuffer">
+      <param name="target"><type>FramebufferTarget</type></param>
+    </function>
+    
+    <!-- Renderbuffer Objects [4.4.2] -->
+    <function name="BindRenderbuffer">
+      <param name="target"><type>RenderbufferTarget</type></param>
+    </function>
+    <function name="RenderbufferStorage">
+      <param name="target"><type>RenderbufferTarget</type></param>
+      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
+    </function>
+    <function name="RenderbufferStorageMultisample">
+      <param name="target"><type>RenderbufferTarget</type></param>
+      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
+    </function>
+    
+    <!-- Attaching Renderbuffer Images to Framebuffer -->
+    <function name="FramebufferRenderbuffer">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachment"><type>FramebufferSlot</type></param>
+      <param name="renderbuffertarget"><type>RenderbufferTarget</type></param>
+    </function>
+    
+    <!-- Attaching Texture Images to a Framebuffer -->
+    <function name="FramebufferTexture2D">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachment"><type>FramebufferSlot</type></param>
+      <param name="textarget"><type>TextureTarget2d</type></param>
+    </function>
+    <function name="FramebufferTextureLayer">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachment"><type>FramebufferSlot</type></param>
+      <param name="textarget"><type>TextureTarget3d</type></param>
+    </function>
+    
+    <!-- Framebuffer Completeness [4.4.4] -->
+    <function name="CheckFramebufferStatus">
+      <returns>FramebufferErrorCode</returns>
+      <param name="target"><type>FramebufferTarget</type></param>
+    </function>
+    
+    <!-- Invalidating Framebuffer Contents [4.5] -->
+    <function name="InvalidateFramebuffer">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachments"><type>FramebufferAttachment</type></param>
+    </function>
+    <function name="InvalidateSubFramebuffer">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachments"><type>FramebufferAttachment</type></param>
+    </function>
+    
+    <!-- Renderbuffer Object Queries [6.1.13-14] -->
+    <function name="GetRenderbufferParameter">
+      <param name="target"><type>RenderbufferTarget</type></param>
+      <param name="pname"><type>RenderbufferParameterName</type></param>
+    </function>
+    
+    <!-- Simple Queries [6.1.1] -->
+    <function name="GetFramebufferAttachmentParameter">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachment"><type>FramebufferAttachment</type></param>
+      <param name="pname"><type>FramebufferParameterName</type></param>
+    </function>
+    <function name="GetInternalformat">
+      <param name="target"><type>RenderbufferTarget</type></param>
+      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
+      <param name="pname"><type>InternalFormatParameter</type></param>
+    </function>
+
+    <!-- String Queries [6.1.6] -->
+    <function name="GetBoolean">
+      <param name="pname"><type>GetPName</type></param>
+    </function>
+    <function name="GetFloat">
+      <param name="pname"><type>GetPName</type></param>
+    </function>
+    <function name="GetInteger">
+      <param name="pname"><type>GetPName</type></param>
+    </function>
+    <function name="GetIntegeri_v">
+      <param name="pname"><type>GetIndexedPName</type></param>
+    </function>
+    <function name="GetString">
+      <param name="name"><type>StringName</type></param>
+    </function>
+    <function name="GetStringi">
+      <param name="name"><type>StringNameIndexed</type></param>
+    </function>
+    
    </replace>
   
   <add name="gles2" version="3.0">
@@ -5561,11 +5657,229 @@
       <use token="STENCIL_TEST" /> <!-- Stencil Test [4.1.4] -->
       <use token="DEPTH_TEST" /> <!-- Depth Buffer Test [4.1.5] -->
       <use token="BLEND" /> <!-- Blending [4.1.7] -->
-      <use token="DITHER" /> <!-- DIthering [4.1.9] -->
+      <use token="DITHER" /> <!-- Dithering [4.1.9] -->
+      <use token="RASTERIZER_DISCARD" /> <!-- Table [6.2] -->
+      <use token="SCISSOR_TEST" /> <!-- Table [6.11] -->
+    </enum>
+    <enum name="FramebufferAttachment">
+      <reuse enum="FramebufferSlot" />
+      <use token="COLOR" />
+      <use token="DEPTH" />
+      <use token="STENCIL" />
+    </enum>
+    <enum name="FramebufferParameterName">
+      <use token="FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE" />
+      <use token="FRAMEBUFFER_ATTACHMENT_OBJECT_NAME" />
+      <use token="FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE" />
+      <use token="FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING" />
+      <use token="FRAMEBUFFER_ATTACHMENT_RED_SIZE" />
+      <use token="FRAMEBUFFER_ATTACHMENT_GREEN_SIZE" />
+      <use token="FRAMEBUFFER_ATTACHMENT_BLUE_SIZE" />
+      <use token="FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE" />
+      <use token="FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE" />
+      <use token="FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE" />
+      <use token="FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL" />
+      <use token="FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER" />
+      <use token="FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE" />
+    </enum>
+    <enum name="FramebufferErrorCode">
+      <use token="FRAMEBUFFER_COMPLETE" />
+      <use token="FRAMEBUFFER_INCOMPLETE_ATTACHMENT" />
+      <use token="FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT" />
+      <use token="FRAMEBUFFER_INCOMPLETE_DIMENSIONS" />
+      <use token="FRAMEBUFFER_UNSUPPORTED" />
+    </enum>
+    <enum name="FramebufferSlot">
+      <use token="COLOR_ATTACHMENT0" />
+      <use token="COLOR_ATTACHMENT1" />
+      <use token="COLOR_ATTACHMENT2" />
+      <use token="COLOR_ATTACHMENT3" />
+      <use token="COLOR_ATTACHMENT4" />
+      <use token="COLOR_ATTACHMENT5" />
+      <use token="COLOR_ATTACHMENT6" />
+      <use token="COLOR_ATTACHMENT7" />
+      <use token="COLOR_ATTACHMENT8" />
+      <use token="COLOR_ATTACHMENT9" />
+      <use token="COLOR_ATTACHMENT10" />
+      <use token="COLOR_ATTACHMENT11" />
+      <use token="COLOR_ATTACHMENT12" />
+      <use token="COLOR_ATTACHMENT13" />
+      <use token="COLOR_ATTACHMENT14" />
+      <use token="COLOR_ATTACHMENT15" />
+      <use token="DEPTH_ATTACHMENT" />
+      <use token="STENCIL_ATTACHMENT" />
+      <use token="DEPTH_STENCIL_ATTACHMENT" />
+    </enum>
+    <enum name="FramebufferTarget">
+      <use token="FRAMEBUFFER" />
+      <use token="DRAW_FRAMEBUFFER" />
+      <use token="READ_FRAMEBUFFER" />
     </enum>
     <enum name="FrontFaceDirection">
       <use token="CCW" />
       <use token="CW" />
+    </enum>
+    <enum name="GetIndexedPName">
+      <use token="TRANSFORM_FEEDBACK_BUFFER_BINDING" />
+      <use token="TRANSFORM_FEEDBACK_BUFFER_START" />
+      <use token="TRANSFORM_FEEDBACK_BUFFER_SIZE" />
+      <use token="UNIFORM_BUFFER_BINDING" />
+      <use token="UNIFORM_BUFFER_START" />
+      <use token="UNIFORM_BUFFER_SIZE" />
+    </enum>
+    <enum name="GetPName">
+      <reuse enum="EnableCap" />
+      <use token="ELEMENT_ARRAY_BUFFER_BINDING" />
+      <use token="ARRAY_BUFFER_BINDING" />
+      <use token="VERTEX_ARRAY_BINDING" />
+      <use token="VIEWPORT" />
+      <use token="DEPTH_RANGE" />
+      <use token="TRANSFORM_FEEDBACK_BINDING" />
+      <use token="LINE_WIDTH" />
+      <use token="CULL_FACE_MODE" />
+      <use token="FRONT_FACE" />
+      <use token="POLYGON_OFFSET_FACTOR" />
+      <use token="POLYGON_OFFSET_UNITS" />
+      <use token="POLYGON_OFFSET_FILL" />
+      <use token="SAMPLE_COVERAGE_VALUE" />
+      <use token="SAMPLE_COVERAGE_INVERT" />
+      <use token="ACTIVE_TEXTURE" />
+      <use token="TEXTURE_BINDING_2D" />
+      <use token="TEXTURE_BINDING_3D" />
+      <use token="TEXTURE_BINDING_2D_ARRAY" />
+      <use token="TEXTURE_BINDING_CUBE_MAP" />
+      <use token="SCISSOR_BOX" />
+      <use token="STENCIL_FUNC" />
+      <use token="STENCIL_VALUE_MASK" />
+      <use token="STENCIL_REF" />
+      <use token="STENCIL_FAIL" />
+      <use token="STENCIL_PASS_DEPTH_FAIL" />
+      <use token="STENCIL_PASS_DEPTH_PASS" />
+      <use token="STENCIL_BACK_FUNC" />
+      <use token="STENCIL_BACK_VALUE_MASK" />
+      <use token="STENCIL_BACK_REF" />
+      <use token="STENCIL_BACK_FAIL" />
+      <use token="STENCIL_BACK_PASS_DEPTH_FAIL" />
+      <use token="STENCIL_BACK_PASS_DEPTH_PASS" />
+      <use token="DEPTH_FUNC" />
+      <use token="BLEND_SRC_RGB" />
+      <use token="BLEND_SRC_ALPHA" />
+      <use token="BLEND_DST_RGB" />
+      <use token="BLEND_DST_ALPHA" />
+      <use token="BLEND_EQUATION_RGB" />
+      <use token="BLEND_EQUATION_ALPHA" />
+      <use token="BLEND_COLOR" />
+      <use token="COLOR_WRITEMASK" />
+      <use token="DEPTH_WRITEMASK" />
+      <use token="STENCIL_WRITEMASK" />
+      <use token="STENCIL_BACK_WRITEMASK" />
+      <use token="COLOR_CLEAR_VALUE" />
+      <use token="DEPTH_CLEAR_VALUE" />
+      <use token="STENCIL_CLEAR_VALUE" />
+      <use token="DRAW_FRAMEBUFFER_BINDING" />
+      <use token="READ_FRAMEBUFFER_BINDING" />
+      <use token="RENDERBUFFER_BINDING" />
+      <use token="DRAW_BUFFER0" />
+      <use token="DRAW_BUFFER1" />
+      <use token="DRAW_BUFFER2" />
+      <use token="DRAW_BUFFER3" />
+      <use token="DRAW_BUFFER4" />
+      <use token="DRAW_BUFFER5" />
+      <use token="DRAW_BUFFER6" />
+      <use token="DRAW_BUFFER7" />
+      <use token="DRAW_BUFFER8" />
+      <use token="DRAW_BUFFER9" />
+      <use token="DRAW_BUFFER10" />
+      <use token="DRAW_BUFFER11" />
+      <use token="DRAW_BUFFER12" />
+      <use token="DRAW_BUFFER13" />
+      <use token="DRAW_BUFFER14" />
+      <use token="DRAW_BUFFER15" />
+      <use token="READ_BUFFER" />
+      <use token="UNPACK_IMAGE_HEIGHT" />
+      <use token="UNPACK_SKIP_IMAGES" />
+      <use token="UNPACK_ROW_LENGTH" />
+      <use token="UNPACK_SKIP_ROWS" />
+      <use token="UNPACK_SKIP_PIXELS" />
+      <use token="UNPACK_ALIGNMENT" />
+      <use token="PACK_ROW_LENGTH" />
+      <use token="PACK_SKIP_ROWS" />
+      <use token="PACK_SKIP_PIXELS" />
+      <use token="PACK_ALIGNMENT" />
+      <use token="PIXEL_PACK_BUFFER_BINDING" />
+      <use token="PIXEL_UNPACK_BUFFER_BINDING" />
+      <use token="CURRENT_PROGRAM" />
+      <use token="TRANSFORM_FEEDBACK_BUFFER_BINDING" />
+      <use token="TRANSFORM_FEEDBACK_PAUSED" />
+      <use token="TRANSFORM_FEEDBACK_ACTIVE" />
+      <use token="READ_BUFFER" />
+      <use token="UNIFORM_BUFFER_BINDING" />
+      <use token="GENERATE_MIPMAP_HINT" />
+      <use token="FRAGMENT_SHADER_DERIVATIVE_HINT" />
+      <use token="MAX_ELEMENT_INDEX" />
+      <use token="SUBPIXEL_BITS" />
+      <use token="MAX_3D_TEXTURE_SIZE" />
+      <use token="MAX_TEXTURE_SIZE" />
+      <use token="MAX_ARRAY_TEXTURE_LAYERS" />
+      <use token="MAX_TEXTURE_LOD_BIAS" />
+      <use token="MAX_CUBE_MAP_TEXTURE_SIZE" />
+      <use token="MAX_RENDERBUFFER_SIZE" />
+      <use token="MAX_DRAW_BUFFERS" />
+      <use token="MAX_COLOR_ATTACHMENTS" />
+      <use token="MAX_VIEWPORT_DIMS" />
+      <use token="ALIASED_POINT_SIZE_RANGE" />
+      <use token="ALIASED_LINE_WIDTH_RANGE" />
+      <use token="MAX_ELEMENTS_INDICES" />
+      <use token="MAX_ELEMENTS_VERTICES" />
+      <use token="COMPRESSED_TEXTURE_FORMATS" />
+      <use token="NUM_COMPRESSED_TEXTURE_FORMATS" />
+      <use token="PROGRAM_BINARY_FORMATS" />
+      <use token="NUM_PROGRAM_BINARY_FORMATS" />
+      <use token="SHADER_BINARY_FORMATS" />
+      <use token="NUM_SHADER_BINARY_FORMATS" />
+      <use token="SHADER_COMPILER" />
+      <use token="MAX_SERVER_WAIT_TIMEOUT" />
+      <use token="NUM_EXTENSIONS" />
+      <use token="MAJOR_VERSION" />
+      <use token="MINOR_VERSION" />
+      <use token="MAX_VERTEX_ATTRIBS" />
+      <use token="MAX_VERTEX_UNIFORM_COMPONENTS" />
+      <use token="MAX_VERTEX_UNIFORM_VECTORS" />
+      <use token="MAX_VERTEX_UNIFORM_BLOCKS" />
+      <use token="MAX_VERTEX_OUTPUT_COMPONENTS" />
+      <use token="MAX_VERTEX_TEXTURE_IMAGE_UNITS" />
+      <use token="MAX_FRAGMENT_UNIFORM_COMPONENTS" />
+      <use token="MAX_FRAGMENT_UNIFORM_VECTORS" />
+      <use token="MAX_FRAGMENT_UNIFORM_BLOCKS" />
+      <use token="MAX_FRAGMENT_INPUT_COMPONENTS" />
+      <use token="MAX_TEXTURE_IMAGE_UNITS" />
+      <use token="MIN_PROGRAM_TEXEL_OFFSET" />
+      <use token="MAX_PROGRAM_TEXEL_OFFSET" />
+      <use token="MAX_UNIFORM_BUFFER_BINDINGS" />
+      <use token="MAX_UNIFORM_BLOCK_SIZE" />
+      <use token="UNIFORM_BUFFER_OFFSET_ALIGNMENT" />
+      <use token="MAX_COMBINED_UNIFORM_BLOCKS" />
+      <use token="MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS" />
+      <use token="MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS" />
+      <use token="MAX_VARYING_COMPONENTS" />
+      <use token="MAX_VARYING_VECTORS" />
+      <use token="MAX_COMBINED_TEXTURE_IMAGE_UNITS" />
+      <use token="MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS" />
+      <use token="MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS" />
+      <use token="MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS" />
+      <use token="SAMPLE_BUFFERS" />
+      <use token="SAMPLES" />
+      <use token="MAX_SAMPLES" />
+      <use token="RED_BITS" />
+      <use token="GREEN_BITS" />
+      <use token="BLUE_BITS" />
+      <use token="ALPHA_BITS" />
+      <use token="DEPTH_BITS" />
+      <use token="STENCIL_BITS" />
+      <use token="IMPLEMENTATION_COLOR_READ_TYPE" />
+      <use token="IMPLEMENTATION_COLOR_READ_FORMAT" />
+      <use token="COPY_READ_BUFFER_BINDING" />
+      <use token="COPY_WRITE_BUFFER_BINDING" />
     </enum>
     <enum name="GetQueryObjectParam">
       <use token="CURRENT_RESULT" />
@@ -5588,6 +5902,10 @@
       <use token="GENERATE_MIPMAP_HINT" />
       <use token="FRAGMENT_SHADER_DERIVATIVE_HINT" />
     </enum>
+    <enum name="InternalFormatParameter">
+      <use token="NUM_SAMPLE_COUNTS" />
+      <use token="SAMPLES" />
+    </enum>
     <enum name="PixelFormat">
       <use token="ALPHA" />
       <use token="RGBA" />
@@ -5602,6 +5920,20 @@
 	  <use token="DEPTH_STENCIL" />
 	  <use token="LUMINANCE_ALPHA" />
 	  <use token="LUMINANCE" />
+    </enum>
+    <enum name="PixelStoreParameter">
+      <use token="PACK_ROW_LENGTH" />
+      <use token="PACK_ROW_ALIGNMENT" />
+      <use token="PACK_SKIP_ROWS" />
+      <use token="PACK_SKIP_PIXELS" />
+      <use token="PACK_IMAGE_HEIGHT" />
+      <use token="PACK_SKIP_IMAGES" />
+      <use token="UNPACK_ROW_LENGTH" />
+      <use token="UNPACK_ROW_ALIGNMENT" />
+      <use token="UNPACK_SKIP_ROWS" />
+      <use token="UNPACK_SKIP_PIXELS" />
+      <use token="UNPACK_IMAGE_HEIGHT" />
+      <use token="UNPACK_SKIP_IMAGES" />
     </enum>
     <enum name="PixelType">
       <use token="BYTE" />
@@ -5663,6 +5995,24 @@
       <use token="COLOR_ATTACHMENT14" />
       <use token="COLOR_ATTACHMENT15" />
     </enum>
+    <enum name="RenderbufferTarget">
+      <use token="RENDERBUFFER" />
+    </enum>
+    <enum name="RenderbufferInternalFormat">
+      <reuse enum="SizedInternalFormat" />
+    </enum>
+    <enum name="RenderbufferParameterName">
+      <use token="RENDERBUFFER_WIDTH" />
+      <use token="RENDERBUFFER_HEIGHT" />
+      <use token="RENDERBUFFER_RED_SIZE" />
+      <use token="RENDERBUFFER_GREEN_SIZE" />
+      <use token="RENDERBUFFER_BLUE_SIZE" />
+      <use token="RENDERBUFFER_ALPHA_SIZE" />
+      <use token="RENDERBUFFER_DEPTH_SIZE" />
+      <use token="RENDERBUFFER_STENCIL_SIZE" />
+      <use token="RENDERBUFFER_SAMPLES" />
+      <use token="RENDERBUFFER_INTERNAL_FORMAT" />
+    </enum>
     <enum name="SamplerParameterName">
       <use token="TEXTURE_WRAP_S" />
       <use token="TEXTURE_WRAP_T" />
@@ -5693,7 +6043,7 @@
       <use token="VERTEX_SHADER" />
       <use token="FRAGMENT_SHADER" />
     </enum>
-    <enum name="SizedInternalFormat">
+    <enum name="SizedColorFormat">
       <use token="R8" />
       <use token="R8I" />
       <use token="R8UI" />
@@ -5743,11 +6093,17 @@
       <use token="RGBA32F" />
       <use token="SRGB8_ALPHA8" />
       <use token="R11F_G11F_B10F" />
+    </enum>
+    <enum name="SizedDepthStencilFormat">
       <use token="DEPTH_COMPONENT16" />
       <use token="DEPTH_COMPONENT24" />
       <use token="DEPTH_COMPONENT32F" />
       <use token="DEPTH24_STENCIL8" />
       <use token="DEPTH32F_STENCIL8" />
+    </enum>
+    <enum name="SizedInternalFormat">
+      <reuse enum="SizedColorFormat"/>
+      <reuse enum="SizedDepthStencilFormat"/>
     </enum>
     <enum name="StencilFace">
       <use token="FRONT" />
@@ -5774,6 +6130,16 @@
       <use token="INCR_WRAP" />
       <use token="DECR_WRAP" />
     </enum>
+    <enum name="StringName">
+      <use token="VENDOR" />
+      <use token="RENDERER" />
+      <use token="VERSION" />
+      <use token="EXTENSIONS" />
+      <use token="SHADING_LANGUAGE_VERSION" />
+    </enum>
+    <enum name="StringNameIndexed">
+      <use token="EXTENSIONS" />
+    </enum>
     <enum name="SyncCondition">
       <use token="SYNC_GPU_COMMANDS_COMPLETE" />
     </enum>
@@ -5792,57 +6158,7 @@
       <use token="ALPHA" />
     </enum>
     <enum name="TextureCopyComponentCount">
-      <use token="R8" />
-      <use token="R8I" />
-      <use token="R8UI" />
-      <use token="R8_SNORM" />
-      <use token="R16I" />
-      <use token="R16UI" />
-      <use token="R16F" />
-      <use token="R32I" />
-      <use token="R32UI" />
-      <use token="R32F" />
-      <use token="RG8" />
-      <use token="RG8I" />
-      <use token="RG8UI" />
-      <use token="RG8_SNORM" />
-      <use token="RG16I" />
-      <use token="RG16UI" />
-      <use token="RG16F" />
-      <use token="RG32I" />
-      <use token="RG32UI" />
-      <use token="RG32F" />
-      <use token="RGB" />
-      <use token="RGB5_A1" />
-      <use token="RGB565" />
-      <use token="RGB8" />
-      <use token="RGB8I" />
-      <use token="RGB8UI" />
-      <use token="RGB8_SNORM" />
-      <use token="RGB9_E5" />
-      <use token="RGB10_A2" />
-      <use token="RGB10_A2UI" />
-      <use token="RGB16I" />
-      <use token="RGB16UI" />
-      <use token="RGB16F" />
-      <use token="RGB32I" />
-      <use token="RGB32UI" />
-      <use token="RGB32F" />
-      <use token="SRGB8" />
-      <use token="RGBA" />
-      <use token="RGBA4" />
-      <use token="RGBA8" />
-      <use token="RGBA8I" />
-      <use token="RGBA8UI" />
-      <use token="RGBA8_SNORM" />
-      <use token="RGBA16I" />
-      <use token="RGBA16UI" />
-      <use token="RGBA16F" />
-      <use token="RGBA32I" />
-      <use token="RGBA32UI" />
-      <use token="RGBA32F" />
-      <use token="SRGB8_ALPHA8" />
-      <use token="R11F_G11F_B10F" />
+      <reuse enum="SizedColorFormat" />
       <use token="LUMINANCE_ALPHA" />
       <use token="LUMINANCE" />
       <use token="ALPHA" />
