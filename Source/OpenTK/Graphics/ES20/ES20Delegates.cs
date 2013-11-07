@@ -111,8 +111,11 @@ namespace OpenTK.Graphics.ES20
             internal delegate void BlitFramebufferNV(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, OpenTK.Graphics.ES20.ClearBufferMask mask, OpenTK.Graphics.ES20.BlitFramebufferFilter filter);
             internal static BlitFramebufferNV glBlitFramebufferNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BufferData(OpenTK.Graphics.ES20.BufferTarget target, IntPtr size, IntPtr data, BufferUsageHint usage);
+            internal delegate void BufferData(OpenTK.Graphics.ES20.BufferTarget target, IntPtr size, IntPtr data, OpenTK.Graphics.ES20.BufferUsageHint usage);
             internal static BufferData glBufferData;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void BufferData1(OpenTK.Graphics.ES20.BufferTarget target, IntPtr size, IntPtr data, OpenTK.Graphics.ES20.BufferUsage usage);
+            internal static BufferData1 glBufferData1;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BufferSubData(OpenTK.Graphics.ES20.BufferTarget target, IntPtr offset, IntPtr size, IntPtr data);
             internal static BufferSubData glBufferSubData;
@@ -132,7 +135,7 @@ namespace OpenTK.Graphics.ES20
             internal delegate void ClearStencil(Int32 s);
             internal static ClearStencil glClearStencil;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate WaitSyncStatus ClientWaitSyncAPPLE(IntPtr sync, ClientWaitSyncFlags flags, UInt64 timeout);
+            internal delegate OpenTK.Graphics.ES20.WaitSyncStatus ClientWaitSyncAPPLE(IntPtr sync, OpenTK.Graphics.ES20.ClientWaitSyncFlags flags, UInt64 timeout);
             internal static ClientWaitSyncAPPLE glClientWaitSyncAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ColorMask(bool red, bool green, bool blue, bool alpha);
@@ -141,28 +144,40 @@ namespace OpenTK.Graphics.ES20
             internal delegate void CompileShader(UInt32 shader);
             internal static CompileShader glCompileShader;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CompressedTexImage2D(TextureTarget2d target, Int32 level, CompressedInternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
+            internal delegate void CompressedTexImage2D(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 level, OpenTK.Graphics.ES20.CompressedInternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
             internal static CompressedTexImage2D glCompressedTexImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CompressedTexImage3DOES(TextureTarget3d target, Int32 level, CompressedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
+            internal delegate void CompressedTexImage2D1(OpenTK.Graphics.ES20.TextureTarget target, Int32 level, OpenTK.Graphics.ES20.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
+            internal static CompressedTexImage2D1 glCompressedTexImage2D1;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void CompressedTexImage3DOES(OpenTK.Graphics.ES20.TextureTarget3d target, Int32 level, OpenTK.Graphics.ES20.CompressedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
             internal static CompressedTexImage3DOES glCompressedTexImage3DOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CompressedTexSubImage2D(TextureTarget2d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, Int32 imageSize, IntPtr data);
+            internal delegate void CompressedTexSubImage2D(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, Int32 imageSize, IntPtr data);
             internal static CompressedTexSubImage2D glCompressedTexSubImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CompressedTexSubImage3DOES(TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES20.All format, Int32 imageSize, IntPtr data);
+            internal delegate void CompressedTexSubImage2D1(OpenTK.Graphics.ES20.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, Int32 imageSize, IntPtr data);
+            internal static CompressedTexSubImage2D1 glCompressedTexSubImage2D1;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void CompressedTexSubImage3DOES(OpenTK.Graphics.ES20.TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES20.All format, Int32 imageSize, IntPtr data);
             internal static CompressedTexSubImage3DOES glCompressedTexSubImage3DOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void CopyBufferSubDataNV(OpenTK.Graphics.ES20.BufferTarget readTarget, OpenTK.Graphics.ES20.BufferTarget writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
             internal static CopyBufferSubDataNV glCopyBufferSubDataNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CopyTexImage2D(TextureTarget2d target, Int32 level, TextureCopyComponentCount internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
+            internal delegate void CopyTexImage2D(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 level, OpenTK.Graphics.ES20.TextureCopyComponentCount internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
             internal static CopyTexImage2D glCopyTexImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CopyTexSubImage2D(TextureTarget2d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+            internal delegate void CopyTexImage2D1(OpenTK.Graphics.ES20.TextureTarget target, Int32 level, OpenTK.Graphics.ES20.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
+            internal static CopyTexImage2D1 glCopyTexImage2D1;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void CopyTexSubImage2D(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
             internal static CopyTexSubImage2D glCopyTexSubImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CopyTexSubImage3DOES(TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+            internal delegate void CopyTexSubImage2D1(OpenTK.Graphics.ES20.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+            internal static CopyTexSubImage2D1 glCopyTexSubImage2D1;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void CopyTexSubImage3DOES(OpenTK.Graphics.ES20.TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
             internal static CopyTexSubImage3DOES glCopyTexSubImage3DOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void CopyTextureLevelsAPPLE(UInt32 destinationTexture, UInt32 sourceTexture, Int32 sourceBaseLevel, Int32 sourceLevelCount);
@@ -366,7 +381,7 @@ namespace OpenTK.Graphics.ES20
             internal delegate void ExtTexObjectStateOverrideiQCOM(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All pname, Int32 param);
             internal static ExtTexObjectStateOverrideiQCOM glExtTexObjectStateOverrideiQCOM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr FenceSyncAPPLE(SyncCondition condition, WaitSyncFlags flags);
+            internal delegate IntPtr FenceSyncAPPLE(OpenTK.Graphics.ES20.SyncCondition condition, OpenTK.Graphics.ES20.WaitSyncFlags flags);
             internal static FenceSyncAPPLE glFenceSyncAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Finish();
@@ -384,7 +399,7 @@ namespace OpenTK.Graphics.ES20
             internal delegate void FramebufferRenderbuffer(OpenTK.Graphics.ES20.FramebufferTarget target, OpenTK.Graphics.ES20.FramebufferSlot attachment, OpenTK.Graphics.ES20.RenderbufferTarget renderbuffertarget, UInt32 renderbuffer);
             internal static FramebufferRenderbuffer glFramebufferRenderbuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FramebufferTexture2D(OpenTK.Graphics.ES20.FramebufferTarget target, OpenTK.Graphics.ES20.FramebufferSlot attachment, TextureTarget2d textarget, UInt32 texture, Int32 level);
+            internal delegate void FramebufferTexture2D(OpenTK.Graphics.ES20.FramebufferTarget target, OpenTK.Graphics.ES20.FramebufferSlot attachment, OpenTK.Graphics.ES20.TextureTarget2d textarget, UInt32 texture, Int32 level);
             internal static FramebufferTexture2D glFramebufferTexture2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FramebufferTexture2DMultisampleEXT(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All attachment, OpenTK.Graphics.ES20.All textarget, UInt32 texture, Int32 level, Int32 samples);
@@ -480,7 +495,7 @@ namespace OpenTK.Graphics.ES20
             internal unsafe delegate void GetInteger64vAPPLE(OpenTK.Graphics.ES20.GetPName pname, [OutAttribute] Int64* @params);
             internal unsafe static GetInteger64vAPPLE glGetInteger64vAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetIntegeri_vEXT(GetIndexedPName target, UInt32 index, [OutAttribute] Int32* data);
+            internal unsafe delegate void GetIntegeri_vEXT(OpenTK.Graphics.ES20.GetIndexedPName target, UInt32 index, [OutAttribute] Int32* data);
             internal unsafe static GetIntegeri_vEXT glGetIntegeri_vEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetIntegerv(OpenTK.Graphics.ES20.GetPName pname, [OutAttribute] Int32* data);
@@ -492,13 +507,13 @@ namespace OpenTK.Graphics.ES20
             internal unsafe delegate void GetnUniformivEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
             internal unsafe static GetnUniformivEXT glGetnUniformivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetObjectLabel(ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
+            internal unsafe delegate void GetObjectLabel(OpenTK.Graphics.ES20.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
             internal unsafe static GetObjectLabel glGetObjectLabel;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetObjectLabelEXT(OpenTK.Graphics.ES20.All type, UInt32 @object, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
             internal unsafe static GetObjectLabelEXT glGetObjectLabelEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetObjectLabelKHR(ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
+            internal unsafe delegate void GetObjectLabelKHR(OpenTK.Graphics.ES20.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
             internal unsafe static GetObjectLabelKHR glGetObjectLabelKHR;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
@@ -579,13 +594,13 @@ namespace OpenTK.Graphics.ES20
             internal delegate IntPtr GetString(OpenTK.Graphics.ES20.StringName name);
             internal static GetString glGetString;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetSyncivAPPLE(IntPtr sync, SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+            internal unsafe delegate void GetSyncivAPPLE(IntPtr sync, OpenTK.Graphics.ES20.SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
             internal unsafe static GetSyncivAPPLE glGetSyncivAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTexParameterfv(OpenTK.Graphics.ES20.TextureTarget target, GetTextureParameterName pname, [OutAttribute] Single* @params);
+            internal unsafe delegate void GetTexParameterfv(OpenTK.Graphics.ES20.TextureTarget target, OpenTK.Graphics.ES20.GetTextureParameterName pname, [OutAttribute] Single* @params);
             internal unsafe static GetTexParameterfv glGetTexParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTexParameteriv(OpenTK.Graphics.ES20.TextureTarget target, GetTextureParameterName pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetTexParameteriv(OpenTK.Graphics.ES20.TextureTarget target, OpenTK.Graphics.ES20.GetTextureParameterName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetTexParameteriv glGetTexParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetTranslatedShaderSourceANGLE(UInt32 shader, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder source);
@@ -672,10 +687,10 @@ namespace OpenTK.Graphics.ES20
             internal unsafe delegate void MultiDrawElementsEXT(OpenTK.Graphics.ES20.PrimitiveType mode, Int32* count, OpenTK.Graphics.ES20.DrawElementsType type, IntPtr indices, Int32 primcount);
             internal unsafe static MultiDrawElementsEXT glMultiDrawElementsEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ObjectLabel(ObjectLabelIdentifier identifier, UInt32 name, Int32 length, String label);
+            internal delegate void ObjectLabel(OpenTK.Graphics.ES20.ObjectLabelIdentifier identifier, UInt32 name, Int32 length, String label);
             internal static ObjectLabel glObjectLabel;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ObjectLabelKHR(ObjectLabelIdentifier identifier, UInt32 name, Int32 length, String label);
+            internal delegate void ObjectLabelKHR(OpenTK.Graphics.ES20.ObjectLabelIdentifier identifier, UInt32 name, Int32 length, String label);
             internal static ObjectLabelKHR glObjectLabelKHR;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ObjectPtrLabel(IntPtr ptr, Int32 length, String label);
@@ -900,10 +915,13 @@ namespace OpenTK.Graphics.ES20
             internal delegate bool TestFenceNV(UInt32 fence);
             internal static TestFenceNV glTestFenceNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexImage2D(TextureTarget2d target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, IntPtr pixels);
+            internal delegate void TexImage2D(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, IntPtr pixels);
             internal static TexImage2D glTexImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexImage3DOES(TextureTarget3d target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, IntPtr pixels);
+            internal delegate void TexImage2D1(OpenTK.Graphics.ES20.TextureTarget target, Int32 level, PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, IntPtr pixels);
+            internal static TexImage2D1 glTexImage2D1;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void TexImage3DOES(OpenTK.Graphics.ES20.TextureTarget3d target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, IntPtr pixels);
             internal static TexImage3DOES glTexImage3DOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexParameterf(OpenTK.Graphics.ES20.TextureTarget target, OpenTK.Graphics.ES20.TextureParameterName pname, Single param);
@@ -921,16 +939,19 @@ namespace OpenTK.Graphics.ES20
             internal delegate void TexStorage1DEXT(OpenTK.Graphics.ES20.All target, Int32 levels, OpenTK.Graphics.ES20.All internalformat, Int32 width);
             internal static TexStorage1DEXT glTexStorage1DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexStorage2DEXT(TextureTarget2d target, Int32 levels, SizedInternalFormat internalformat, Int32 width, Int32 height);
+            internal delegate void TexStorage2DEXT(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 levels, OpenTK.Graphics.ES20.SizedInternalFormat internalformat, Int32 width, Int32 height);
             internal static TexStorage2DEXT glTexStorage2DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexStorage3DEXT(TextureTarget2d target, Int32 levels, SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth);
+            internal delegate void TexStorage3DEXT(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 levels, OpenTK.Graphics.ES20.SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth);
             internal static TexStorage3DEXT glTexStorage3DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexSubImage2D(TextureTarget2d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, IntPtr pixels);
+            internal delegate void TexSubImage2D(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, IntPtr pixels);
             internal static TexSubImage2D glTexSubImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexSubImage3DOES(TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, IntPtr pixels);
+            internal delegate void TexSubImage2D1(OpenTK.Graphics.ES20.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, IntPtr pixels);
+            internal static TexSubImage2D1 glTexSubImage2D1;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void TexSubImage3DOES(OpenTK.Graphics.ES20.TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, IntPtr pixels);
             internal static TexSubImage3DOES glTexSubImage3DOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TextureStorage1DEXT(UInt32 texture, OpenTK.Graphics.ES20.All target, Int32 levels, OpenTK.Graphics.ES20.All internalformat, Int32 width);
@@ -1074,7 +1095,7 @@ namespace OpenTK.Graphics.ES20
             internal delegate void Viewport(Int32 x, Int32 y, Int32 width, Int32 height);
             internal static Viewport glViewport;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void WaitSyncAPPLE(IntPtr sync, WaitSyncFlags flags, UInt64 timeout);
+            internal delegate void WaitSyncAPPLE(IntPtr sync, OpenTK.Graphics.ES20.WaitSyncFlags flags, UInt64 timeout);
             internal static WaitSyncAPPLE glWaitSyncAPPLE;
         }
     }

@@ -4544,6 +4544,11 @@
       <param name="name"><type>StringNameIndexed</type></param>
     </function>
     
+    <!-- EXT_disjoint_timer_query -->
+    <function name="QueryCounter">
+      <param name="target">QueryCounterTarget</param>
+    </function>
+    
     <!-- KHR_debug -->
     <function name="DebugMessageControl">
       <param name="source"><type>DebugSourceControl</type></param>
@@ -4571,20 +4576,55 @@
   <!--  gles2 overloads for 2.0 backwards compatibility-->
   <overload name="gles2" version="2.0">
     <!-- PrimtiveType <=> BeginMode overloads for backwards compatibility -->
-    <function name="DrawArrays" category="ES_VERSION_2_0" extension="Core" version="2.0">
+    <function name="DrawArrays" obsolete="Use PrimitiveType instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
-    <function name="DrawElements" category="ES_VERSION_2_0" extension="Core" version="2.0">
+    <function name="DrawElements" obsolete="Use PrimitiveType instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
     
     <!-- StencilFace <=> CullFaceMode -->
-    <function name="StencilFuncSeparate" category="ES_VERSION_2_0" extension="Core" version="2.0">
+    <function name="StencilFuncSeparate" obsolete="Use StencilFace instead">
       <param name="face"><type>CullFaceMode</type></param>
     </function>
-    <function name="StencilOpSeparate" category="ES_VERSION_2_0" extension="Core" version="2.0">
+    <function name="StencilOpSeparate" obsolete="Use StencilFace instead">
       <param name="face"><type>CullFaceMode</type></param>
     </function>
+    
+    <!-- BufferUsageHint <=> BufferUsage -->
+    <function name="BufferData" obsolete="Use BufferUsageHint instead">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="usage"><type>BufferUsage</type></param>
+    </function>
+    
+    <!-- TextureTarget <=> TextureTarget2d -->
+    <function name="TexImage2D" obsolete="Use TextureTarget2d instead">
+      <param name="target"><type>TextureTarget</type></param>
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+    <function name="TexSubImage2D" obsolete="Use TextureTarget2d instead">
+      <param name="target"><type>TextureTarget</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+    <function name="CopyTexImage2D" obsolete="Use TextureTarget2d and TextureCopyComponentCount instead">
+      <param name="target"><type>TextureTarget</type></param>
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+    </function>
+    <function name="CopyTexSubImage2D" obsolete="Use TextureTarget2d instead">
+      <param name="target"><type>TextureTarget</type></param>
+    </function>
+    <function name="CompressedTexImage2D" obsolete="Use TextureTarget2d instead">
+      <param name="target"><type>TextureTarget</type></param>
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+    </function>
+    <function name="CompressedTexSubImage2D" obsolete="Use TextureTarget2d and CompressedInternalFormat instead">
+      <param name="target"><type>TextureTarget</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+    </function>
+    
   </overload>
 
  <!-- gles2 2.0 enums -->
@@ -4637,27 +4677,144 @@
       <use token="NEAREST" />
     </enum>
     
-    <!-- OES_mapbuffer -->
-    <enum name="BufferPointer">
-      <use token="BUFFER_MAP_POINTER" />
-    </enum>
-
     <enum name="BufferTarget">
       <token name="ArrayBuffer" value="0X8892" />
       <token name="ElementArrayBuffer" value="0X8893" />
     </enum>
-     
     <enum name="BufferUsage">
+      <reuse enum="BufferUsageHint" />
+    </enum>
+    <enum name="BufferUsageHint">
       <token name="DynamicDraw" value="0X88e8" />
       <token name="StaticDraw" value="0X88e4" />
       <token name="StreamDraw" value="0X88e0" />
     </enum>
-     
     <enum name="BufferParameterName">
       <token name="BufferSize" value="0X8764" />
       <token name="BufferUsage" value="0X8765" />
     </enum>
+    <enum name="GetTextureParameterName">
+      <reuse enum="TextureParameterName" />
+    </enum>
+
+    <!-- APPLE_rgb_422 -->
+    <enum name="SizedInternalFormat">
+      <use token="RGB_RAW_422_APPLE" />
+    </enum>
     
+    <!-- APPLE_sync -->
+    <enum name="ClientWaitSyncFlags">
+      <use token="NONE" />
+      <use token="SYNC_FLUSH_COMMANDS_BIT_APPLE" />
+    </enum>
+    <enum name="SyncCondition">
+      <use token="SYNC_GPU_COMMANDS_COMPLETE_APPLE" />
+    </enum>
+    <enum name="SyncParameterName">
+      <use token="OBJECT_TYPE_APPLE" />
+      <use token="SYNC_STATUS_APPLE" />
+      <use token="SYNC_CONDITION_APPLE" />
+      <use token="SYNC_FLAGS_APPLE" />
+    </enum>
+    <enum name="WaitSyncFlags">
+      <use token="NONE" />
+    </enum>
+    <enum name="WaitSyncStatus">
+      <use token="ALREADY_SIGNALED_APPLE" />
+      <use token="TIMEOUT_EXPIRED_APPLE" />
+      <use token="CONDITION_SATISFIED_APPLE" />
+      <use token="WAIT_FAILED_APPLE" />
+    </enum>
+    
+    <!-- APPLE_texture_format_BGRA8888 or EXT_texture_format_BGRA8888 -->
+    <enum name="SizedInternalFormat">
+      <use token="BGRA8_EXT" />
+    </enum>
+    
+    <!-- EXT_multiview_draw_buffers -->
+    <enum name="GetIndexedPName">
+      <use token="DRAW_BUFFER_EXT" />
+      <use token="READ_BUFFER_EXT" />
+    </enum>
+    <enum name="GetPName">
+      <use token="MAX_MULTIVIEW_BUFFERS_EXT" />
+    </enum>
+    
+    <!-- EXT_texture -->
+    <enum name="SizedInternalFormat">
+      <use token="ALPHA8_EXT" />
+      <use token="LUMINANCE8_EXT" />
+      <use token="LUMINANCE8_ALPHA8_EXT" />
+    </enum>
+    
+    <!-- EXT_texture_rg -->
+    <enum name="SizedInternalFormat">
+      <use token="R8_EXT" />
+      <use token="RG8_EXT" />
+    </enum>
+    
+    <!-- EXT_texture_rg and OES_texture_float -->
+    <enum name="SizedInternalFormat">
+      <use token="R32F_EXT" />
+      <use token="RG32F_EXT" />
+    </enum>
+    
+    <!-- EXT_texture_rg and OES_texture_half_float -->
+    <enum name="SizedInternalFormat">
+      <use token="R16F_EXT" />
+      <use token="RG16F_EXT" />
+    </enum>
+    
+    <!--- EXT_texture_storage -->
+    <enum name="GetTextureParameterName">
+      <use token="TEXTURE_IMMUTABLE_FORMAT_EXT" />
+    </enum>
+        
+    <!-- EXT_texture_type_2_10_10_10_REV -->
+    <enum name="SizedInternalFormat">
+      <use token="RGB10_A2_EXT" />
+      <use token="RGB10_EXT" />
+    </enum>
+    
+    <!-- OES_mapbuffer -->
+    <enum name="BufferPointer">
+      <use token="BUFFER_MAP_POINTER_OES" />
+    </enum>
+    
+    <!-- OES_texture_3d -->
+    <enum name="GetPName">
+      <use token="MAX_3D_TEXTURE_SIZE_OES" />
+      <use token="TEXTURE_BINDING_3D_OES" />
+    </enum>
+    <enum name="GetTextureParameterName">
+      <use token="TEXTURE_WRAP_R_OES" />
+    </enum>
+    <enum name="TextureTarget3d">
+      <use token="TEXTURE_3D_OES" />
+    </enum>
+    <enum name="TextureParameterName">
+      <use token="TEXTURE_WRAP_R_OES" />
+    </enum>
+    
+    <!-- OES_texture_float -->
+    <enum name="SizedInternalFormat">
+      <use token="RGBA32F_EXT" />
+      <use token="RGB32F_EXT" />
+      <use token="ALPHA32F_EXT" />
+      <use token="LUMINANCE32F_EXT" />
+      <use token="LUMINANCE_ALPHA32F_EXT" />
+    </enum>
+    
+    <!-- OES_texture_half_float -->
+    <enum name="SizedInternalFormat">
+      <use token="RGBA16F_EXT" />
+      <use token="RGB16F_EXT" />
+      <use token="ALPHA16F_EXT" />
+      <use token="LUMINANCE16F_EXT" />
+      <use token="LUMINANCE_ALPHA16F_EXT" />
+    </enum>
+
+    <!-- KHR_debug -->
     <enum name="DebugSeverity">
       <use token="DEBUG_SEVERITY_HIGH" />
       <use token="DEBUG_SEVERITY_MEDIUM" />
@@ -4717,12 +4874,36 @@
     </enum>
     
     <!-- EXT_disjoint_timer_query -->
+    <enum name="GetPName">
+      <use token="GPU_DISJOINT_EXT" />
+      <use token="TIMESTAMP_EXT" />
+    </enum>
     <enum name="GetQueryObjectParam">
-      <use token="QUERY_RESULT" />
-      <use token="QUERY_RESULT_AVAILABLE" />
+      <use token="QUERY_RESULT_EXT" />
+      <use token="QUERY_RESULT_AVAILABLE_EXT" />
     </enum>
     <enum name="GetQueryParam">
-      <use token="CURRENT_QUERY" />
+      <use token="CURRENT_QUERY_EXT" />
+      <use token="QUERY_COUNTER_BITS_EXT" />
+    </enum>
+    <enum name="QueryCounterTarget">
+      <use token="TIMESTAMP_EXT" />
+    </enum>
+    <enum name="QueryTarget">
+      <use token="TIME_ELAPSED_EXT" />
+    </enum>
+    
+    <!-- EXT_occlusion_query_boolean -->
+    <enum name="GetQueryObjectParam">
+      <use token="QUERY_RESULT_EXT" />
+      <use token="QUERY_RESULT_AVAILABLE_EXT" />
+    </enum>
+    <enum name="GetQueryParam">
+      <use token="CURRENT_QUERY_EXT" />
+    </enum>
+    <enum name="QueryTarget">
+      <use token="ANY_SAMPLES_PASSED_EXT" />
+      <use token="ANY_SAMPLES_PASSED_CONSERVATIVE_EXT" />
     </enum>
      
     <enum name="VertexAttribPointerType">
@@ -4843,6 +5024,24 @@
       <token name="InvalidFramebufferOperation " value="0X0506" />
     </enum>
     
+    <!-- KHR_debug -->
+    <!-- Note that KHR_debug is part of the gles registry,
+    but is actually written against the desktop 4.2 spec.
+    Some of the tokens defined below are not going to
+    be available in the ES version /> -->
+    <enum name="ObjectLabelIdentifier">
+      <use token="BUFFER" />
+      <use token="FRAMEBUFFER" />
+      <use token="RENDERBUFFER" />
+      <use token="PROGRAM_PIPELINE" />
+      <use token="PROGRAM" />
+      <use token="QUERY" />
+      <use token="SAMPLER" />
+      <use token="SHADER" />
+      <use token="TEXTURE" />
+      <use token="VERTEX_ARRAY" />
+    </enum>
+    
     <enum name="ProgramParameter">
       <use token="DELETE_STATUS" />
       <use token="LINK_STATUS" />
@@ -4853,11 +5052,6 @@
       <use token="ACTIVE_ATTRIBUTE_MAX_LENGTH" />
       <use token="ACTIVE_UNIFORMS" />
       <use token="ACTIVE_UNIFORM_MAX_LENGTH" />
-      <use token="ACTIVE_UNIFORM_BLOCKS" />
-      <use token="ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH" />
-      <use token="TRANSFORM_FEEDBACK_BUFFER_MODE" />
-      <use token="TRANSFORM_FEEDBACK_VARYINGS" />
-      <use token="TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH" />
       <use token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
     </enum>
      
@@ -4918,7 +5112,7 @@
       <token name="Fastest" value="0X1101" />
       <token name="Nicest" value="0X1102" />
     </enum>
-     
+         
     <enum name="StencilFunction">
       <token name="Never" value="0X0200" />
       <token name="Less" value="0X0201" />
@@ -4939,6 +5133,14 @@
       <token name="IncrWrap" value="0X8507" />
       <token name="DecrWrap" value="0X8508" />
       <token name="Zero" value="0X0000" />
+    </enum>
+    
+    <enum name="TextureCopyComponentCount">
+      <use token="RGB" />
+      <use token="RGBA" />
+      <use token="LUMINANCE_ALPHA" />
+      <use token="LUMINANCE" />
+      <use token="ALPHA" />
     </enum>
 
     <enum name="TextureUnit">
@@ -4980,6 +5182,16 @@
       <token name="Texture2D" value="0X0de1" />
       <token name="TextureCubeMap" value="0X8513" />
     </enum>
+    
+    <enum name="TextureTarget2d">
+      <use token="TEXTURE_2D" />
+      <use token="TEXTURE_CUBE_MAP_POSITIVE_X" />
+      <use token="TEXTURE_CUBE_MAP_POSITIVE_Y" />
+      <use token="TEXTURE_CUBE_MAP_POSITIVE_Z" />
+      <use token="TEXTURE_CUBE_MAP_NEGATIVE_X" />
+      <use token="TEXTURE_CUBE_MAP_NEGATIVE_Y" />
+      <use token="TEXTURE_CUBE_MAP_NEGATIVE_Z" />
+    </enum>
 
     <enum name="TextureMinFilter">
       <token name="NearestMipmapNearest" value="0X2700" />
@@ -4996,17 +5208,10 @@
     </enum>
 
     <enum name="TextureParameterName">
-      <token name="TextureMagFilter" value="0X2800" />
-      <token name="TextureMinFilter" value="0X2801" />
-      <token name="TextureWrapS" value="0X2802" />
-      <token name="TextureWrapT" value="0X2803" />
-    </enum>
-
-    <enum name="GetTextureParameter">
-      <token name="TextureMagFilter" value="0X2800" />
-      <token name="TextureMinFilter" value="0X2801" />
-      <token name="TextureWrapS" value="0X2802" />
-      <token name="TextureWrapT" value="0X2803" />
+      <use token="TEXTURE_MAG_FILTER" />
+      <use token="TEXTURE_MIN_FILTER" />
+      <use token="TEXTURE_WRAP_S" />
+      <use token="TEXTURE_WRAP_T" />
     </enum>
 
     <enum name="TextureTarget">
@@ -5053,11 +5258,6 @@
       <token name="FramebufferIncompleteMissingAttachment" value="0X8cd7" />
       <token name="FramebufferIncompleteDimensions" value="0X8cd9" />
       <token name="FramebufferUnsupported" value="0X8cdd" />
-    </enum>
-    
-    <enum name="QueryTarget">
-      <use token="ANY_SAMPLES_PASSED" />
-      <use token="ANY_SAMPLES_PASSED_CONSERVATIVE" />
     </enum>
 
     <enum name="RenderbufferTarget">
@@ -5197,6 +5397,11 @@
     <enum name="ShaderBinaryFormat">
       <!-- Note: ShaderBinaryFormat must be queried at runtime, using
       GetInteger(GetPName.ShaderBinaryFormats) -->
+    </enum>
+    
+    <!-- OES_compressed_ETC1_RGB8_texture -->
+    <enum name="CompressedInternalFormat">
+       <use token="ETC1_RGB8_OES" />
     </enum>
     
   </add>
@@ -5819,6 +6024,9 @@
       <use token="ANY_SAMPLES_PASSED" />
       <use token="ANY_SAMPLES_PASSED_CONSERVATIVE" />
       <use token="TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN" /> <!-- see 6.1.7 -->
+    </enum>
+    <enum name="QueryCounterTarget">
+      <use token="TIMESTAMP_EXT" />
     </enum>
     <enum name="ReadBufferMode">
       <use token="NONE" />
