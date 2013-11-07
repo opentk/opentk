@@ -385,7 +385,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 55 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 53 other functions
     /// </summary>
     public enum All : int
     {
@@ -10180,7 +10180,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.DebugMessageInsert, GL.Khr.DebugMessageInsert
+    /// Used in GL.DebugMessageInsert, GL.GetDebugMessageLog and 2 other functions
     /// </summary>
     public enum DebugSeverity : int
     {
@@ -10296,7 +10296,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.DebugMessageInsert, GL.Khr.DebugMessageInsert
+    /// Used in GL.DebugMessageInsert, GL.GetDebugMessageLog and 2 other functions
     /// </summary>
     public enum DebugSourceExternal : int
     {
@@ -10311,7 +10311,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.DebugMessageInsert, GL.Khr.DebugMessageInsert
+    /// Used in GL.DebugMessageInsert, GL.GetDebugMessageLog and 2 other functions
     /// </summary>
     public enum DebugType : int
     {

@@ -5435,6 +5435,11 @@
       <param name="type"><type>DebugType</type></param>
       <param name="severity"><type>DebugSeverity</type></param>
     </function>
+    <function name="GetDebugMessageLog">
+      <param name="sources"><type>DebugSourceExternal</type></param>
+      <param name="types"><type>DebugType</type></param>
+      <param name="severities"><type>DebugSeverity</type></param>
+    </function>
     
    </replace>
   

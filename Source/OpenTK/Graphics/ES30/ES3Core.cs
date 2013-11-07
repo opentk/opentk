@@ -566,10 +566,10 @@ namespace OpenTK.Graphics.ES30
             internal extern static void GetBufferPointervOES(OpenTK.Graphics.ES30.BufferTarget target, OpenTK.Graphics.ES30.BufferPointer pname, [OutAttribute] IntPtr @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDebugMessageLog", ExactSpelling = true)]
-            internal extern static unsafe Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.ES30.All* sources, [OutAttribute] OpenTK.Graphics.ES30.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.ES30.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+            internal extern static unsafe Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.ES30.DebugSourceExternal* sources, [OutAttribute] OpenTK.Graphics.ES30.DebugType* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.ES30.DebugSeverity* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDebugMessageLogKHR", ExactSpelling = true)]
-            internal extern static unsafe Int32 GetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.ES30.All* sources, [OutAttribute] OpenTK.Graphics.ES30.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.ES30.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+            internal extern static unsafe Int32 GetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.ES30.DebugSourceExternal* sources, [OutAttribute] OpenTK.Graphics.ES30.DebugType* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.ES30.DebugSeverity* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetDriverControlsQCOM", ExactSpelling = true)]
             internal extern static unsafe void GetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls);

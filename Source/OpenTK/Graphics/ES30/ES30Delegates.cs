@@ -564,10 +564,10 @@ namespace OpenTK.Graphics.ES30
             internal delegate void GetBufferPointervOES(OpenTK.Graphics.ES30.BufferTarget target, OpenTK.Graphics.ES30.BufferPointer pname, [OutAttribute] IntPtr @params);
             internal static GetBufferPointervOES glGetBufferPointervOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.ES30.All* sources, [OutAttribute] OpenTK.Graphics.ES30.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.ES30.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+            internal unsafe delegate Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.ES30.DebugSourceExternal* sources, [OutAttribute] OpenTK.Graphics.ES30.DebugType* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.ES30.DebugSeverity* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
             internal unsafe static GetDebugMessageLog glGetDebugMessageLog;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Int32 GetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.ES30.All* sources, [OutAttribute] OpenTK.Graphics.ES30.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.ES30.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+            internal unsafe delegate Int32 GetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.ES30.DebugSourceExternal* sources, [OutAttribute] OpenTK.Graphics.ES30.DebugType* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.ES30.DebugSeverity* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
             internal unsafe static GetDebugMessageLogKHR glGetDebugMessageLogKHR;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls);
