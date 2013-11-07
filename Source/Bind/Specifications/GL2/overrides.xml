@@ -3230,7 +3230,6 @@
       <use enum="VERSION_4_3" token="COMPRESSED_SIGNED_RG_RGTC2" />
       <use enum="VERSION_4_4" token="COMPRESSED_RGBA_BPTC_UNORM" />
       <use enum="VERSION_4_4" token="COMPRESSED_SRGB_BPTC_UNORM" />
-      <use enum="VERSION_4_4" token="COMPRESSED_ALPHA_BPTC_UNORM" />
       <use enum="VERSION_4_4" token="COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT" />
       <use enum="VERSION_4_4" token="COMPRESSED_RGB_BPTC_SIGNED_FLOAT" />
     </enum>
