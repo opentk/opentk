@@ -385,7 +385,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 62 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 55 other functions
     /// </summary>
     public enum All : int
     {
@@ -9285,7 +9285,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.BlendFunc
+    /// Used in GL.BlendFunc, GL.BlendFuncSeparate
     /// </summary>
     public enum BlendingFactorDest : int
     {
@@ -9368,7 +9368,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.BlendFunc
+    /// Used in GL.BlendFunc, GL.BlendFuncSeparate
     /// </summary>
     public enum BlendingFactorSrc : int
     {
@@ -9570,7 +9570,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.BindBuffer, GL.BufferData and 10 other functions
+    /// Used in GL.BindBuffer, GL.BufferData and 12 other functions
     /// </summary>
     public enum BufferTarget : int
     {
@@ -10180,7 +10180,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.DebugMessageInsert, GL.Khr.DebugMessageInsert
     /// </summary>
     public enum DebugSeverity : int
     {
@@ -10203,7 +10203,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.DebugMessageControl, GL.Khr.DebugMessageControl
     /// </summary>
     public enum DebugSeverityControl : int
     {
@@ -10261,7 +10261,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.DebugMessageControl, GL.Khr.DebugMessageControl
     /// </summary>
     public enum DebugSourceControl : int
     {
@@ -10296,7 +10296,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.DebugMessageInsert, GL.Khr.DebugMessageInsert
     /// </summary>
     public enum DebugSourceExternal : int
     {
@@ -10311,7 +10311,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.DebugMessageInsert, GL.Khr.DebugMessageInsert
     /// </summary>
     public enum DebugType : int
     {
@@ -10354,7 +10354,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.DebugMessageControl, GL.Khr.DebugMessageControl
     /// </summary>
     public enum DebugTypeControl : int
     {

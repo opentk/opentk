@@ -122,7 +122,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static void BlendFunc(OpenTK.Graphics.ES30.BlendingFactorSrc sfactor, OpenTK.Graphics.ES30.BlendingFactorDest dfactor);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFuncSeparate", ExactSpelling = true)]
-            internal extern static void BlendFuncSeparate(OpenTK.Graphics.ES30.All sfactorRGB, OpenTK.Graphics.ES30.All dfactorRGB, OpenTK.Graphics.ES30.All sfactorAlpha, OpenTK.Graphics.ES30.All dfactorAlpha);
+            internal extern static void BlendFuncSeparate(OpenTK.Graphics.ES30.BlendingFactorSrc sfactorRGB, OpenTK.Graphics.ES30.BlendingFactorDest dfactorRGB, OpenTK.Graphics.ES30.BlendingFactorSrc sfactorAlpha, OpenTK.Graphics.ES30.BlendingFactorDest dfactorAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendParameteriNV", ExactSpelling = true)]
             internal extern static void BlendParameteriNV(OpenTK.Graphics.ES30.All pname, Int32 value);
@@ -200,10 +200,10 @@ namespace OpenTK.Graphics.ES30
             internal extern static void CompressedTexSubImage3DOES(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES30.All format, Int32 imageSize, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyBufferSubData", ExactSpelling = true)]
-            internal extern static void CopyBufferSubData(OpenTK.Graphics.ES30.All readTarget, OpenTK.Graphics.ES30.All writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
+            internal extern static void CopyBufferSubData(OpenTK.Graphics.ES30.BufferTarget readTarget, OpenTK.Graphics.ES30.BufferTarget writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyBufferSubDataNV", ExactSpelling = true)]
-            internal extern static void CopyBufferSubDataNV(OpenTK.Graphics.ES30.All readTarget, OpenTK.Graphics.ES30.All writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
+            internal extern static void CopyBufferSubDataNV(OpenTK.Graphics.ES30.BufferTarget readTarget, OpenTK.Graphics.ES30.BufferTarget writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyTexImage2D", ExactSpelling = true)]
             internal extern static void CopyTexImage2D(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 level, OpenTK.Graphics.ES30.TextureCopyComponentCount internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
@@ -248,16 +248,16 @@ namespace OpenTK.Graphics.ES30
             internal extern static void DebugMessageCallbackKHR(DebugProcKhr callback, IntPtr userParam);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageControl", ExactSpelling = true)]
-            internal extern static unsafe void DebugMessageControl(OpenTK.Graphics.ES30.All source, OpenTK.Graphics.ES30.All type, OpenTK.Graphics.ES30.All severity, Int32 count, UInt32* ids, bool enabled);
+            internal extern static unsafe void DebugMessageControl(OpenTK.Graphics.ES30.DebugSourceControl source, OpenTK.Graphics.ES30.DebugTypeControl type, OpenTK.Graphics.ES30.DebugSeverityControl severity, Int32 count, UInt32* ids, bool enabled);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageControlKHR", ExactSpelling = true)]
-            internal extern static unsafe void DebugMessageControlKHR(OpenTK.Graphics.ES30.All source, OpenTK.Graphics.ES30.All type, OpenTK.Graphics.ES30.All severity, Int32 count, UInt32* ids, bool enabled);
+            internal extern static unsafe void DebugMessageControlKHR(OpenTK.Graphics.ES30.DebugSourceControl source, OpenTK.Graphics.ES30.DebugTypeControl type, OpenTK.Graphics.ES30.DebugSeverityControl severity, Int32 count, UInt32* ids, bool enabled);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageInsert", ExactSpelling = true)]
-            internal extern static void DebugMessageInsert(OpenTK.Graphics.ES30.All source, OpenTK.Graphics.ES30.All type, UInt32 id, OpenTK.Graphics.ES30.All severity, Int32 length, String buf);
+            internal extern static void DebugMessageInsert(OpenTK.Graphics.ES30.DebugSourceExternal source, OpenTK.Graphics.ES30.DebugType type, UInt32 id, OpenTK.Graphics.ES30.DebugSeverity severity, Int32 length, String buf);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDebugMessageInsertKHR", ExactSpelling = true)]
-            internal extern static void DebugMessageInsertKHR(OpenTK.Graphics.ES30.All source, OpenTK.Graphics.ES30.All type, UInt32 id, OpenTK.Graphics.ES30.All severity, Int32 length, String buf);
+            internal extern static void DebugMessageInsertKHR(OpenTK.Graphics.ES30.DebugSourceExternal source, OpenTK.Graphics.ES30.DebugType type, UInt32 id, OpenTK.Graphics.ES30.DebugSeverity severity, Int32 length, String buf);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteBuffers", ExactSpelling = true)]
             internal extern static unsafe void DeleteBuffers(Int32 n, UInt32* buffers);

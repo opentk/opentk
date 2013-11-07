@@ -5032,8 +5032,8 @@
       <param name="target"><type>BufferTarget</type></param>
     </function>
     <function name="CopyBufferSubData">
-      <param name="readtarget"><type>BufferTarget</type></param>
-      <param name="writetarget"><type>BufferTarget</type></param>
+      <param name="readTarget"><type>BufferTarget</type></param>
+      <param name="writeTarget"><type>BufferTarget</type></param>
     </function>
     <function name="FlushMappedBufferRange">
       <param name="target"><type>BufferTarget</type></param>
@@ -5283,10 +5283,10 @@
       <param name="dfactor"><type>BlendingFactorDest</type></param>
     </function>
     <function name="BlendFuncSeparate">
-      <param name="srcRGB"><type>BlendingFactorSrc</type></param>
-      <param name="dstRGB"><type>BlendingFactorDest</type></param>
-      <param name="srcAlpha"><type>BlendingFactorSrc</type></param>
-      <param name="dstAlpha"><type>BlendingFactorDest</type></param>
+      <param name="sfactorRGB"><type>BlendingFactorSrc</type></param>
+      <param name="dfactorRGB"><type>BlendingFactorDest</type></param>
+      <param name="sfactorAlpha"><type>BlendingFactorSrc</type></param>
+      <param name="dfactorAlpha"><type>BlendingFactorDest</type></param>
     </function>
     
     <!-- Selecting a Buffer for Writing [4.2.1] -->
@@ -5422,6 +5422,18 @@
     </function>
     <function name="GetStringi">
       <param name="name"><type>StringNameIndexed</type></param>
+    </function>
+    
+    <!-- KHR_debug -->
+    <function name="DebugMessageControl">
+      <param name="source"><type>DebugSourceControl</type></param>
+      <param name="type"><type>DebugTypeControl</type></param>
+      <param name="severity"><type>DebugSeverityControl</type></param>
+    </function>
+    <function name="DebugMessageInsert">
+      <param name="source"><type>DebugSourceExternal</type></param>
+      <param name="type"><type>DebugType</type></param>
+      <param name="severity"><type>DebugSeverity</type></param>
     </function>
     
    </replace>
@@ -5618,6 +5630,63 @@
       <use token="FRONT" />
       <use token="BACK" />
       <use token="FRONT_AND_BACK" />
+    </enum>
+    <enum name="DebugSeverity">
+      <use token="DEBUG_SEVERITY_HIGH" />
+      <use token="DEBUG_SEVERITY_MEDIUM" />
+      <use token="DEBUG_SEVERITY_LOW" />
+      <use token="DEBUG_SEVERITY_NOTIFICATION" />
+    </enum>
+    <enum name="DebugSeverityControl">
+      <use token="DONT_CARE" />
+      <use token="DEBUG_SEVERITY_HIGH" />
+      <use token="DEBUG_SEVERITY_MEDIUM" />
+      <use token="DEBUG_SEVERITY_LOW" />
+      <use token="DEBUG_SEVERITY_NOTIFICATION" />
+    </enum>
+    <enum name="DebugSource">
+      <use token="DEBUG_SOURCE_API" />
+      <use token="DEBUG_SOURCE_SHADER_COMPILER" />
+      <use token="DEBUG_SOURCE_WINDOW_SYSTEM" />
+      <use token="DEBUG_SOURCE_THIRD_PARTY" />
+      <use token="DEBUG_SOURCE_APPLICATION" />
+      <use token="DEBUG_SOURCE_OTHER" />
+    </enum>
+    <enum name="DebugSourceControl">
+      <use token="DONT_CARE" />
+      <use token="DEBUG_SOURCE_API" />
+      <use token="DEBUG_SOURCE_SHADER_COMPILER" />
+      <use token="DEBUG_SOURCE_WINDOW_SYSTEM" />
+      <use token="DEBUG_SOURCE_THIRD_PARTY" />
+      <use token="DEBUG_SOURCE_APPLICATION" />
+      <use token="DEBUG_SOURCE_OTHER" />
+    </enum>
+    <enum name="DebugSourceExternal">
+      <use token="DEBUG_SOURCE_THIRD_PARTY" />
+      <use token="DEBUG_SOURCE_APPLICATION" />
+    </enum>
+    <enum name="DebugType">
+      <use token="DEBUG_TYPE_ERROR" />
+      <use token="DEBUG_TYPE_MARKER" />
+      <use token="DEBUG_TYPE_OTHER" />
+      <use token="DEBUG_TYPE_DEPRECATED_BEHAVIOR" />
+      <use token="DEBUG_TYPE_UNDEFINED_BEHAVIOR" />
+      <use token="DEBUG_TYPE_PERFORMANCE" />
+      <use token="DEBUG_TYPE_PORTABILITY" />
+      <use token="DEBUG_TYPE_PUSH_GROUP" />
+      <use token="DEBUG_TYPE_POP_GROUP" />
+    </enum>
+    <enum name="DebugTypeControl">
+      <use token="DONT_CARE" />
+      <use token="DEBUG_TYPE_ERROR" />
+      <use token="DEBUG_TYPE_MARKER" />
+      <use token="DEBUG_TYPE_OTHER" />
+      <use token="DEBUG_TYPE_DEPRECATED_BEHAVIOR" />
+      <use token="DEBUG_TYPE_UNDEFINED_BEHAVIOR" />
+      <use token="DEBUG_TYPE_PERFORMANCE" />
+      <use token="DEBUG_TYPE_PORTABILITY" />
+      <use token="DEBUG_TYPE_PUSH_GROUP" />
+      <use token="DEBUG_TYPE_POP_GROUP" />
     </enum>
     <enum name="DepthFunction">
       <reuse enum="StencilFunction" />
