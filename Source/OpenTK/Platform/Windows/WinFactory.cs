@@ -89,7 +89,7 @@ namespace OpenTK.Platform.Windows
 
         public virtual IGraphicsMode CreateGraphicsMode()
         {
-            return new WinGraphicsMode();
+            throw new NotSupportedException();
         }
 
         public virtual OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
