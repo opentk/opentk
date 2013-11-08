@@ -76,7 +76,7 @@ namespace OpenTK.Platform.MacOS
 
         public virtual IGraphicsMode CreateGraphicsMode()
         {
-            return new MacOSGraphicsMode();
+            throw new NotSupportedException();
         }
 
         public virtual OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
