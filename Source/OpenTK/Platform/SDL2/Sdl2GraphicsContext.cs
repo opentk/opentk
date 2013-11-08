@@ -125,7 +125,7 @@ namespace OpenTK.Platform.SDL2
             int profile;
             SDL.GL.GetAttribute(ContextAttribute.CONTEXT_PROFILE_MASK, out profile);
 
-            if (egl != 0)
+            if (egl != 0 && (profile & (int)ContextProfileFlags.ES) != 0)
             {
                 context_flags |= GraphicsContextFlags.Embedded;
             }
