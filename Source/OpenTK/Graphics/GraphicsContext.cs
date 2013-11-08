@@ -131,7 +131,6 @@ namespace OpenTK.Graphics
                             case true: factory = Factory.Embedded; break;
                         }
 
-                        implementation = factory.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags);
                         // Note: this approach does not allow us to mix native and EGL contexts in the same process.
                         // This should not be a problem, as this use-case is not interesting for regular applications.
                         // Note 2: some platforms may not support a direct way of getting the current context
@@ -140,12 +139,10 @@ namespace OpenTK.Graphics
                         // declaration).
                         if (GetCurrentContext == null)
                         {
-                            GetCurrentContextDelegate temp = factory.CreateGetCurrentGraphicsContext();
-                            if (temp != null)
-                            {
-                                GetCurrentContext = temp;
-                            }
+                            GetCurrentContext = factory.CreateGetCurrentGraphicsContext();
                         }
+
+                        implementation = factory.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags);
                     }
 
                     available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
@@ -321,8 +318,7 @@ namespace OpenTK.Graphics
         #region public static IGraphicsContext CurrentContext
 
         internal delegate ContextHandle GetCurrentContextDelegate();
-        internal static GetCurrentContextDelegate GetCurrentContext =
-            Platform.Factory.Default.CreateGetCurrentGraphicsContext();
+        internal static GetCurrentContextDelegate GetCurrentContext;
 
         /// <summary>
         /// Gets the GraphicsContext that is current in the calling thread.
