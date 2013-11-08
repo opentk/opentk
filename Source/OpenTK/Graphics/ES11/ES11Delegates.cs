@@ -261,14 +261,8 @@ namespace OpenTK.Graphics.ES11
             internal delegate void DrawArrays(OpenTK.Graphics.ES11.PrimitiveType mode, Int32 first, Int32 count);
             internal static DrawArrays glDrawArrays;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawArrays1(OpenTK.Graphics.ES11.BeginMode mode, Int32 first, Int32 count);
-            internal static DrawArrays1 glDrawArrays1;
-            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawElements(OpenTK.Graphics.ES11.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES11.All type, IntPtr indices);
             internal static DrawElements glDrawElements;
-            [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawElements1(OpenTK.Graphics.ES11.BeginMode mode, Int32 count, OpenTK.Graphics.ES11.All type, IntPtr indices);
-            internal static DrawElements1 glDrawElements1;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawTexfOES(Single x, Single y, Single z, Single width, Single height);
             internal static DrawTexfOES glDrawTexfOES;

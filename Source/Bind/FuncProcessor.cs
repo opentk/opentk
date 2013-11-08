@@ -115,10 +115,27 @@ namespace Bind
             Console.WriteLine("Removing non-CLS compliant duplicates.");
             wrappers = MarkCLSCompliance(wrappers);
 
+            Console.WriteLine("Removing overloaded delegates.");
+            RemoveOverloadedDelegates(delegates, wrappers);
+
             return wrappers;
         }
 
         #region Private Members
+
+        // When we have a list of overloaded delegates, make sure that
+        // all generated wrappers use the first (original) delegate, not
+        // the overloaded ones. This allows us to reduce the amount
+        // of delegates we need to generate (1 per entry point instead
+        // of 1 per overload), which improves loading times.
+        static void RemoveOverloadedDelegates(DelegateCollection delegates, FunctionCollection wrappers)
+        {
+            foreach (var w in wrappers.Values.SelectMany(w => w))
+            {
+                var d = delegates[w.Name].First();
+                w.WrappedDelegate = d;
+            }
+        }
 
         static string GetPath(string apipath, string apiname, string apiversion, string function, string extension)
         {
