@@ -30,7 +30,7 @@ namespace Examples.Tests
 
         public GameWindowStates()
             : base(800, 600, GraphicsMode.Default, "Test", GameWindowFlags.Default,
-            DisplayDevice.GetDisplay(DisplayIndex.Second), 3, 0, GraphicsContextFlags.Embedded)
+            DisplayDevice.GetDisplay(DisplayIndex.Second), 1, 0, GraphicsContextFlags.Embedded)
         {
             VSync = VSyncMode.On;
             Keyboard.KeyRepeat = true;

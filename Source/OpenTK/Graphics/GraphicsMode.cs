@@ -25,19 +25,10 @@ namespace OpenTK.Graphics
         static IGraphicsMode implementation;
         static readonly object SyncRoot = new object();
 
-        #region --- Constructors ---
+        #region Constructors
 
-        #region static GraphicsMode()
-        
-        static GraphicsMode()
-        {
-            lock (SyncRoot)
-            {
-                implementation = Platform.Factory.Default.CreateGraphicsMode();
-            }
-        }
-
-        #endregion
+        // Disable BeforeFieldInit
+        static GraphicsMode() { }
 
         #region internal GraphicsMode(GraphicsMode mode)
 
@@ -180,7 +171,6 @@ namespace OpenTK.Graphics
         {
             get
             {
-                LazySelectGraphicsMode();
                 return index;
             }
             set { index = value; }
@@ -197,7 +187,6 @@ namespace OpenTK.Graphics
         {
             get
             {
-                LazySelectGraphicsMode();
                 return color_format;
             }
             private set { color_format = value; }
@@ -214,7 +203,6 @@ namespace OpenTK.Graphics
         {
             get 
             {
-                LazySelectGraphicsMode();
                 return accumulator_format;
             }
             private set { accumulator_format = value; }
@@ -232,7 +220,6 @@ namespace OpenTK.Graphics
         {
             get
             {
-                LazySelectGraphicsMode();
                 return depth;
             }
             private set { depth = value; }
@@ -250,7 +237,6 @@ namespace OpenTK.Graphics
         {
             get
             {
-                LazySelectGraphicsMode();
                 return stencil;
             }
             private set { stencil = value; }
@@ -267,7 +253,6 @@ namespace OpenTK.Graphics
         {
             get
             {
-                LazySelectGraphicsMode();
                 return samples;
             }
             private set { samples = value; }
@@ -284,7 +269,6 @@ namespace OpenTK.Graphics
         {
             get
             {
-                LazySelectGraphicsMode();
                 return stereo;
             }
             private set { stereo = value; }
@@ -302,7 +286,6 @@ namespace OpenTK.Graphics
         {
             get
             {
-                LazySelectGraphicsMode();
                 return buffers;
             }
             private set { buffers = value; }
@@ -321,9 +304,9 @@ namespace OpenTK.Graphics
                 {
                     if (defaultMode == null)
                     {
-                        Debug.Print("Creating default GraphicsMode ({0}, {1}, {2}, {3}, {4}, {5}, {6}).",
-                            32, 24, 8, 0, 0, 2, false);
-                        defaultMode = new GraphicsMode(32, 24, 8, 0, 0, 2, false);
+                        Debug.Print("Creating default GraphicsMode ({0}, {1}, {2}).",
+                            32, 24, 8);
+                        defaultMode = new GraphicsMode(null, 32, 24, 8, 0, 0, 2, false);
                     }
                     return defaultMode;
                 }
@@ -331,30 +314,6 @@ namespace OpenTK.Graphics
         }
 
         #endregion
-
-        #endregion
-
-        #region --- Private Methods ---
-
-        // Queries the implementation for the actual graphics mode if this hasn't been done already.
-        // This method allows for lazy evaluation of the actual GraphicsMode and should be called
-        // by all GraphicsMode properties.
-        void LazySelectGraphicsMode()
-        {
-            if (index == null)
-            {
-                GraphicsMode mode = implementation.SelectGraphicsMode(color_format, depth, stencil, samples, accumulator_format, buffers, stereo);
-
-                Index = mode.Index;
-                ColorFormat = mode.ColorFormat;
-                Depth = mode.Depth;
-                Stencil = mode.Stencil;
-                Samples = mode.Samples;
-                AccumulatorFormat = mode.AccumulatorFormat;
-                Buffers = mode.Buffers;
-                Stereo = mode.Stereo;
-            }
-        }
 
         #endregion
 
