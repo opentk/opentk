@@ -46,19 +46,16 @@ namespace OpenTK.Platform.Windows
 
         #region Constructors
 
-        public WinGraphicsMode()
+        public WinGraphicsMode(ContextHandle context, IntPtr device)
         {
             lock (SyncRoot)
             {
-                using (INativeWindow native = new NativeWindow())
-                {
-                    modes.AddRange(GetModesARB(native));
-                    if (modes.Count == 0)
-                        modes.AddRange(GetModesPFD(native));
-                    if (modes.Count == 0)
-                        throw new GraphicsModeException(
-                            "No GraphicsMode available. This should never happen, please report a bug at http://www.opentk.com");
-                }
+                modes.AddRange(GetModesARB(context, device));
+                if (modes.Count == 0)
+                    modes.AddRange(GetModesPFD(context, device));
+                if (modes.Count == 0)
+                    throw new GraphicsModeException(
+                        "No GraphicsMode available. This should never happen, please report a bug at http://www.opentk.com");
                 modes.Sort(new GraphicsModeComparer());
             }
         }
@@ -127,11 +124,9 @@ namespace OpenTK.Platform.Windows
 
         #region GetModesPFD
 
-        IEnumerable<GraphicsMode> GetModesPFD(INativeWindow native)
+        IEnumerable<GraphicsMode> GetModesPFD(ContextHandle context, IntPtr device)
         {
-            WinWindowInfo window = native.WindowInfo as WinWindowInfo;
-            IntPtr deviceContext = ((WinWindowInfo)window).DeviceContext;
-            Debug.WriteLine(String.Format("Device context: {0}", deviceContext));
+            Debug.WriteLine(String.Format("Device context: {0}", device));
 
             Debug.WriteLine("Retrieving PFD pixel formats... ");
             PixelFormatDescriptor pfd = new PixelFormatDescriptor();
@@ -152,7 +147,7 @@ namespace OpenTK.Platform.Windows
                 // Iterate through all accelerated formats first. Afterwards, iterate through non-accelerated formats.
                 // This should fix issue #2224, which causes OpenTK to fail on VMs without hardware acceleration.
                 int pixel = 0;
-                while (DescribePixelFormat(deviceContext, ++pixel, API.PixelFormatDescriptorSize, ref pfd) != 0)
+                while (DescribePixelFormat(device, ++pixel, API.PixelFormatDescriptorSize, ref pfd) != 0)
                 {
                     // Ignore non-accelerated formats.
                     if (!generic_allowed && (pfd.Flags & PixelFormatDescriptorFlags.GENERIC_FORMAT) != 0)
@@ -176,90 +171,83 @@ namespace OpenTK.Platform.Windows
 
         #region GetModesARB
 
-        IEnumerable<GraphicsMode> GetModesARB(INativeWindow native)
+        IEnumerable<GraphicsMode> GetModesARB(ContextHandle context, IntPtr device)
         {
-            using (IGraphicsContext context = new GraphicsContext(
-                new GraphicsMode(new IntPtr(2), new ColorFormat(), 0, 0, 0, new ColorFormat(), 2, false),
-                (WinWindowInfo)native.WindowInfo, 1, 0, GraphicsContextFlags.Default))
+            // See http://www.opengl.org/registry/specs/ARB/wgl_pixel_format.txt 
+            // for more details
+            Debug.Write("Retrieving ARB pixel formats.... ");
+            if (Wgl.Delegates.wglChoosePixelFormatARB == null || Wgl.Delegates.wglGetPixelFormatAttribivARB == null)
             {
-                WinWindowInfo window = (WinWindowInfo)native.WindowInfo;
+                Debug.WriteLine("failed.");
+                yield break;
+            }
 
-                // See http://www.opengl.org/registry/specs/ARB/wgl_pixel_format.txt 
-                // for more details
-                Debug.Write("Retrieving ARB pixel formats.... ");
-                if (Wgl.Delegates.wglChoosePixelFormatARB == null || Wgl.Delegates.wglGetPixelFormatAttribivARB == null)
-                {
-                    Debug.WriteLine("failed.");
-                    yield break;
-                }
+            int[] attribs = new int[]
+            {
+                (int)WGL_ARB_pixel_format.AccelerationArb,
 
-                int[] attribs = new int[]
-                {
-                    (int)WGL_ARB_pixel_format.AccelerationArb,
-
-                    (int)WGL_ARB_pixel_format.RedBitsArb,
-                    (int)WGL_ARB_pixel_format.GreenBitsArb,
-                    (int)WGL_ARB_pixel_format.BlueBitsArb,
-                    (int)WGL_ARB_pixel_format.AlphaBitsArb,
-                    (int)WGL_ARB_pixel_format.ColorBitsArb,
+                (int)WGL_ARB_pixel_format.RedBitsArb,
+                (int)WGL_ARB_pixel_format.GreenBitsArb,
+                (int)WGL_ARB_pixel_format.BlueBitsArb,
+                (int)WGL_ARB_pixel_format.AlphaBitsArb,
+                (int)WGL_ARB_pixel_format.ColorBitsArb,
                     
-                    (int)WGL_ARB_pixel_format.DepthBitsArb,
-                    (int)WGL_ARB_pixel_format.StencilBitsArb,
+                (int)WGL_ARB_pixel_format.DepthBitsArb,
+                (int)WGL_ARB_pixel_format.StencilBitsArb,
                     
-                    (int)WGL_ARB_multisample.SampleBuffersArb,
-                    (int)WGL_ARB_multisample.SamplesArb,
+                (int)WGL_ARB_multisample.SampleBuffersArb,
+                (int)WGL_ARB_multisample.SamplesArb,
 
-                    (int)WGL_ARB_pixel_format.AccumRedBitsArb,
-                    (int)WGL_ARB_pixel_format.AccumGreenBitsArb,
-                    (int)WGL_ARB_pixel_format.AccumBlueBitsArb,
-                    (int)WGL_ARB_pixel_format.AccumAlphaBitsArb,
-                    (int)WGL_ARB_pixel_format.AccumBitsArb,
+                (int)WGL_ARB_pixel_format.AccumRedBitsArb,
+                (int)WGL_ARB_pixel_format.AccumGreenBitsArb,
+                (int)WGL_ARB_pixel_format.AccumBlueBitsArb,
+                (int)WGL_ARB_pixel_format.AccumAlphaBitsArb,
+                (int)WGL_ARB_pixel_format.AccumBitsArb,
 
-                    (int)WGL_ARB_pixel_format.DoubleBufferArb,
-                    (int)WGL_ARB_pixel_format.StereoArb,
-                    0
-                };
+                (int)WGL_ARB_pixel_format.DoubleBufferArb,
+                (int)WGL_ARB_pixel_format.StereoArb,
+                0
+            };
 
-                int[] values = new int[attribs.Length];
+            int[] values = new int[attribs.Length];
 
-                int[] attribs_values = new int[]
+            int[] attribs_values = new int[]
+            {
+                (int)WGL_ARB_pixel_format.AccelerationArb,
+                (int)WGL_ARB_pixel_format.FullAccelerationArb,
+                (int)WGL_ARB_pixel_format.SupportOpenglArb, 1,
+                (int)WGL_ARB_pixel_format.DrawToWindowArb, 1,
+                0, 0
+            };
+
+            int[] num_formats = new int[1];
+            // Get the number of available formats
+            if (Wgl.Arb.ChoosePixelFormat(device, attribs_values, null, 0, null, num_formats))
+            {
+                // Create an array big enough to hold all available formats and get those formats
+                int[] pixel = new int[num_formats[0]];
+
+                if (Wgl.Arb.ChoosePixelFormat(device, attribs_values, null, pixel.Length, pixel, num_formats))
                 {
-                    (int)WGL_ARB_pixel_format.AccelerationArb,
-                    (int)WGL_ARB_pixel_format.FullAccelerationArb,
-                    (int)WGL_ARB_pixel_format.SupportOpenglArb, 1,
-                    (int)WGL_ARB_pixel_format.DrawToWindowArb, 1,
-                    0, 0
-                };
-
-                int[] num_formats = new int[1];
-                // Get the number of available formats
-                if (Wgl.Arb.ChoosePixelFormat(window.DeviceContext, attribs_values, null, 0, null, num_formats))
-                {
-                    // Create an array big enough to hold all available formats and get those formats
-                    int[] pixel = new int[num_formats[0]];
-                    
-                    if (Wgl.Arb.ChoosePixelFormat(window.DeviceContext, attribs_values, null, pixel.Length, pixel, num_formats))
+                    foreach (int p in pixel)
                     {
-                        foreach (int p in pixel)
+                        // Find out what we really got as a format:
+                        if (!Wgl.Arb.GetPixelFormatAttrib(device, p, 0, attribs.Length - 1, attribs, values))
                         {
-                            // Find out what we really got as a format:
-                            if (!Wgl.Arb.GetPixelFormatAttrib(window.DeviceContext, p, 0, attribs.Length - 1, attribs, values))
-                            {
-                                Debug.Print("[Warning] Failed to detect attributes for PixelFormat:{0}.", p);
-                                continue;
-                            }
-
-                            GraphicsMode mode = new GraphicsMode(new IntPtr(p),
-                                new ColorFormat(values[1], values[2], values[3], values[4]),
-                                values[6],
-                                values[7],
-                                values[8] != 0 ? values[9] : 0,
-                                new ColorFormat(values[10], values[11], values[12], values[13]),
-                                values[15] == 1 ? 2 : 1,
-                                values[16] == 1 ? true : false);
-
-                            yield return mode;
+                            Debug.Print("[Warning] Failed to detect attributes for PixelFormat:{0}.", p);
+                            continue;
                         }
+
+                        GraphicsMode mode = new GraphicsMode(new IntPtr(p),
+                            new ColorFormat(values[1], values[2], values[3], values[4]),
+                            values[6],
+                            values[7],
+                            values[8] != 0 ? values[9] : 0,
+                            new ColorFormat(values[10], values[11], values[12], values[13]),
+                            values[15] == 1 ? 2 : 1,
+                            values[16] == 1 ? true : false);
+
+                        yield return mode;
                     }
                 }
             }

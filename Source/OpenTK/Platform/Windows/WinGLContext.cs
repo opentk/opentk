@@ -36,11 +36,43 @@ namespace OpenTK.Platform.Windows
 
         bool vsync_supported;
 
+        static readonly IGraphicsMode ModeSelector;
+
         #region --- Contructors ---
 
         static WinGLContext()
         {
-            Init();
+            // Dynamically load the OpenGL32.dll in order to use the extension loading capabilities of Wgl.
+            if (opengl32Handle == IntPtr.Zero)
+            {
+                opengl32Handle = Functions.LoadLibrary(opengl32Name);
+                if (opengl32Handle == IntPtr.Zero)
+                    throw new ApplicationException(String.Format("LoadLibrary(\"{0}\") call failed with code {1}",
+                                                                 opengl32Name, Marshal.GetLastWin32Error()));
+                Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", opengl32Handle));
+            }
+
+            // We need to create a temp context in order to load
+            // wgl extensions (e.g. for multisampling or GL3).
+            // We cannot rely on OpenTK.Platform.Wgl until we
+            // create the context and call Wgl.LoadAll().
+            Debug.Print("Creating temporary context for wgl extensions.");
+            using (INativeWindow native = new NativeWindow())
+            {
+                // Create temporary context and load WGL entry points
+                WinWindowInfo window = native.WindowInfo as WinWindowInfo;
+                ContextHandle temp_context = new ContextHandle(Wgl.Imports.CreateContext(window.DeviceContext));
+                Wgl.Imports.MakeCurrent(window.DeviceContext, temp_context.Handle);
+                Wgl.LoadAll();
+
+                // Query graphics modes
+                ModeSelector = new WinGraphicsMode(temp_context, window.DeviceContext);
+                
+                // Destroy temporary context
+                Wgl.Imports.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
+                Wgl.Imports.DeleteContext(temp_context.Handle);
+                wgl_loaded = true;
+            }
         }
 
         public WinGLContext(GraphicsMode format, WinWindowInfo window, IGraphicsContext sharedContext,
@@ -56,11 +88,8 @@ namespace OpenTK.Platform.Windows
                 if (window.Handle == IntPtr.Zero)
                     throw new ArgumentException("window", "Must be a valid window.");
 
-                Mode = format;
-
                 Debug.Print("OpenGL will be bound to window:{0} on thread:{1}", window.Handle,
                     System.Threading.Thread.CurrentThread.ManagedThreadId);
-                SetGraphicsModePFD(format, (WinWindowInfo)window);
 
                 lock (LoadLock)
                 {
@@ -71,18 +100,11 @@ namespace OpenTK.Platform.Windows
                     // side-effects (i.e. the old contexts can still be handled
                     // using the new entry points.)
                     // Sigh...
-                   // if (!wgl_loaded)
-                    {
-                        // We need to create a temp context in order to load wgl extensions (e.g. for multisampling or GL3).
-                        // We cannot rely on OpenTK.Platform.Wgl until we create the context and call Wgl.LoadAll().
-                        Debug.Print("Creating temporary context for wgl extensions.");
-                        ContextHandle temp_context = new ContextHandle(Wgl.Imports.CreateContext(window.DeviceContext));
-                        Wgl.Imports.MakeCurrent(window.DeviceContext, temp_context.Handle);
-                        Wgl.LoadAll();
-                        Wgl.Imports.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
-                        Wgl.Imports.DeleteContext(temp_context.Handle);
-                        wgl_loaded = true;
-                    }
+                    //if (!wgl_loaded)
+                    //{
+                    //}
+
+                    Mode = SetGraphicsModePFD(format, (WinWindowInfo)window);
 
                     if (Wgl.Delegates.wglCreateContextAttribsARB != null)
                     {
@@ -281,22 +303,35 @@ namespace OpenTK.Platform.Windows
         #region SetGraphicsModePFD
 
         // Note: there is no relevant ARB function.
-        internal static void SetGraphicsModePFD(GraphicsMode mode, WinWindowInfo window)
+        internal static GraphicsMode SetGraphicsModePFD(GraphicsMode mode, WinWindowInfo window)
         {
             Debug.Write("Setting pixel format... ");
+            if (window == null)
+                throw new ArgumentNullException("window", "Must point to a valid window.");
 
             if (!mode.Index.HasValue)
-                throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
-
-            if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
+            {
+                mode = ModeSelector.SelectGraphicsMode(
+                    mode.ColorFormat, mode.Depth, mode.Stencil,
+                    mode.Samples, mode.AccumulatorFormat,
+                    mode.Buffers, mode.Stereo);
+            }
 
             PixelFormatDescriptor pfd = new PixelFormatDescriptor();
-            Functions.DescribePixelFormat(window.DeviceContext, (int)mode.Index.Value,
+            Functions.DescribePixelFormat(
+                window.DeviceContext, (int)mode.Index.Value,
                 API.PixelFormatDescriptorSize, ref pfd);
+            
             Debug.WriteLine(mode.Index.ToString());
+            
             if (!Functions.SetPixelFormat(window.DeviceContext, (int)mode.Index.Value, ref pfd))
+            {
                 throw new GraphicsContextException(String.Format(
-                    "Requested GraphicsMode not available. SetPixelFormat error: {0}", Marshal.GetLastWin32Error()));
+                    "Requested GraphicsMode not available. SetPixelFormat error: {0}",
+                    Marshal.GetLastWin32Error()));
+            }
+
+            return mode;
         }
 
         #endregion
@@ -313,22 +348,6 @@ namespace OpenTK.Platform.Windows
 
 
         #endregion
-
-        static internal void Init()
-        {
-            lock (SyncRoot)
-            {
-                // Dynamically load the OpenGL32.dll in order to use the extension loading capabilities of Wgl.
-                if (opengl32Handle == IntPtr.Zero)
-                {
-                    opengl32Handle = Functions.LoadLibrary(opengl32Name);
-                    if (opengl32Handle == IntPtr.Zero)
-                        throw new ApplicationException(String.Format("LoadLibrary(\"{0}\") call failed with code {1}",
-                                                                     opengl32Name, Marshal.GetLastWin32Error()));
-                    Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", opengl32Handle));
-                }
-            }
-        }
 
         #endregion
 
