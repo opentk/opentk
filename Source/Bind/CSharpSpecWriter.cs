@@ -207,20 +207,17 @@ namespace Bind
 
             foreach (var overloads in delegates.Values)
             {
-                int overload_count = -1;
-                foreach (var d in overloads)
-                {
-                    overload_count++;
-                    string overload_suffix = overload_count > 0 ? overload_count.ToString() : String.Empty;
-                    d.Name += overload_suffix;
+                // Generate only one delegate per entry point..
+                // Overloads are only used for wrapper generation,
+                // so ignore them.
+                var d = overloads.First();
 
-                    sw.WriteLine("[System.Security.SuppressUnmanagedCodeSecurity()]");
-                    sw.WriteLine("internal {0};", GetDeclarationString(d, true));
-                    sw.WriteLine("internal {0}static {2} {1}{2};",   //  = null
-                             d.Unsafe ? "unsafe " : "",
-                             Settings.FunctionPrefix,
-                             d.Name);
-                }
+                sw.WriteLine("[System.Security.SuppressUnmanagedCodeSecurity()]");
+                sw.WriteLine("internal {0};", GetDeclarationString(d, true));
+                sw.WriteLine("internal {0}static {2} {1}{2};",   //  = null
+                         d.Unsafe ? "unsafe " : "",
+                         Settings.FunctionPrefix,
+                         d.Name);
             }
 
             sw.Unindent();
@@ -251,8 +248,9 @@ namespace Bind
             sw.Indent();
             //sw.WriteLine("static {0}() {1} {2}", Settings.ImportsClass, "{", "}");    // Disable BeforeFieldInit
             sw.WriteLine();
-            foreach (Delegate d in delegates.Values.SelectMany(v => v))
+            foreach (var overloads in delegates.Values)
             {
+                var d = overloads.First(); // generate only 1 DllImport per entry point
                 sw.WriteLine("[System.Security.SuppressUnmanagedCodeSecurity()]");
                 sw.WriteLine(
                     "[System.Runtime.InteropServices.DllImport({0}.Library, EntryPoint = \"{1}{2}\"{3})]",

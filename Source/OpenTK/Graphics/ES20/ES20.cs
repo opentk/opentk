@@ -2864,7 +2864,7 @@ namespace OpenTK.Graphics.ES20
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glBufferData1((OpenTK.Graphics.ES20.BufferTarget)target, (IntPtr)size, (IntPtr)data, (OpenTK.Graphics.ES20.BufferUsage)usage);
+            Delegates.glBufferData((OpenTK.Graphics.ES20.BufferTarget)target, (IntPtr)size, (IntPtr)data, (OpenTK.Graphics.ES20.BufferUsageHint)usage);
             #if DEBUG
             }
             #endif
@@ -2944,7 +2944,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glBufferData1((OpenTK.Graphics.ES20.BufferTarget)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES20.BufferUsage)usage);
+                Delegates.glBufferData((OpenTK.Graphics.ES20.BufferTarget)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES20.BufferUsageHint)usage);
             }
             finally
             {
@@ -3038,7 +3038,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glBufferData1((OpenTK.Graphics.ES20.BufferTarget)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES20.BufferUsage)usage);
+                Delegates.glBufferData((OpenTK.Graphics.ES20.BufferTarget)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES20.BufferUsageHint)usage);
             }
             finally
             {
@@ -3132,7 +3132,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glBufferData1((OpenTK.Graphics.ES20.BufferTarget)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES20.BufferUsage)usage);
+                Delegates.glBufferData((OpenTK.Graphics.ES20.BufferTarget)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES20.BufferUsageHint)usage);
             }
             finally
             {
@@ -3226,7 +3226,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glBufferData1((OpenTK.Graphics.ES20.BufferTarget)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES20.BufferUsage)usage);
+                Delegates.glBufferData((OpenTK.Graphics.ES20.BufferTarget)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES20.BufferUsageHint)usage);
                 data = (T2)data_ptr.Target;
             }
             finally
@@ -3755,7 +3755,7 @@ namespace OpenTK.Graphics.ES20
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glCompressedTexImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES20.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data);
+            Delegates.glCompressedTexImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (OpenTK.Graphics.ES20.CompressedInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data);
             #if DEBUG
             }
             #endif
@@ -3817,7 +3817,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES20.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Delegates.glCompressedTexImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (OpenTK.Graphics.ES20.CompressedInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -3884,7 +3884,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES20.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Delegates.glCompressedTexImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (OpenTK.Graphics.ES20.CompressedInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -3951,7 +3951,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES20.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Delegates.glCompressedTexImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (OpenTK.Graphics.ES20.CompressedInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -4018,7 +4018,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES20.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Delegates.glCompressedTexImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (OpenTK.Graphics.ES20.CompressedInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
                 data = (T7)data_ptr.Target;
             }
             finally
@@ -4414,7 +4414,7 @@ namespace OpenTK.Graphics.ES20
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glCompressedTexSubImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+            Delegates.glCompressedTexSubImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
             #if DEBUG
             }
             #endif
@@ -4481,7 +4481,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexSubImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Delegates.glCompressedTexSubImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -4553,7 +4553,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexSubImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Delegates.glCompressedTexSubImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -4625,7 +4625,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexSubImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Delegates.glCompressedTexSubImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -4697,7 +4697,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexSubImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Delegates.glCompressedTexSubImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
                 data = (T8)data_ptr.Target;
             }
             finally
@@ -5108,7 +5108,7 @@ namespace OpenTK.Graphics.ES20
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glCopyTexImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES20.PixelInternalFormat)internalformat, (Int32)x, (Int32)y, (Int32)width, (Int32)height, (Int32)border);
+            Delegates.glCopyTexImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (OpenTK.Graphics.ES20.TextureCopyComponentCount)internalformat, (Int32)x, (Int32)y, (Int32)width, (Int32)height, (Int32)border);
             #if DEBUG
             }
             #endif
@@ -5214,7 +5214,7 @@ namespace OpenTK.Graphics.ES20
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glCopyTexSubImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)x, (Int32)y, (Int32)width, (Int32)height);
+            Delegates.glCopyTexSubImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)x, (Int32)y, (Int32)width, (Int32)height);
             #if DEBUG
             }
             #endif
@@ -7009,7 +7009,7 @@ namespace OpenTK.Graphics.ES20
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glDrawArrays1((OpenTK.Graphics.ES20.BeginMode)mode, (Int32)first, (Int32)count);
+            Delegates.glDrawArrays((OpenTK.Graphics.ES20.PrimitiveType)mode, (Int32)first, (Int32)count);
             #if DEBUG
             }
             #endif
@@ -7080,7 +7080,7 @@ namespace OpenTK.Graphics.ES20
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glDrawElements1((OpenTK.Graphics.ES20.BeginMode)mode, (Int32)count, (OpenTK.Graphics.ES20.DrawElementsType)type, (IntPtr)indices);
+            Delegates.glDrawElements((OpenTK.Graphics.ES20.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES20.DrawElementsType)type, (IntPtr)indices);
             #if DEBUG
             }
             #endif
@@ -7122,7 +7122,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                Delegates.glDrawElements1((OpenTK.Graphics.ES20.BeginMode)mode, (Int32)count, (OpenTK.Graphics.ES20.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                Delegates.glDrawElements((OpenTK.Graphics.ES20.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES20.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -7169,7 +7169,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                Delegates.glDrawElements1((OpenTK.Graphics.ES20.BeginMode)mode, (Int32)count, (OpenTK.Graphics.ES20.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                Delegates.glDrawElements((OpenTK.Graphics.ES20.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES20.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -7216,7 +7216,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                Delegates.glDrawElements1((OpenTK.Graphics.ES20.BeginMode)mode, (Int32)count, (OpenTK.Graphics.ES20.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                Delegates.glDrawElements((OpenTK.Graphics.ES20.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES20.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -7263,7 +7263,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                Delegates.glDrawElements1((OpenTK.Graphics.ES20.BeginMode)mode, (Int32)count, (OpenTK.Graphics.ES20.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                Delegates.glDrawElements((OpenTK.Graphics.ES20.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES20.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
                 indices = (T3)indices_ptr.Target;
             }
             finally
@@ -17453,7 +17453,7 @@ namespace OpenTK.Graphics.ES20
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glStencilFuncSeparate1((OpenTK.Graphics.ES20.CullFaceMode)face, (OpenTK.Graphics.ES20.StencilFunction)func, (Int32)@ref, (UInt32)mask);
+            Delegates.glStencilFuncSeparate((OpenTK.Graphics.ES20.StencilFace)face, (OpenTK.Graphics.ES20.StencilFunction)func, (Int32)@ref, (UInt32)mask);
             #if DEBUG
             }
             #endif
@@ -17492,7 +17492,7 @@ namespace OpenTK.Graphics.ES20
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glStencilFuncSeparate1((OpenTK.Graphics.ES20.CullFaceMode)face, (OpenTK.Graphics.ES20.StencilFunction)func, (Int32)@ref, (UInt32)mask);
+            Delegates.glStencilFuncSeparate((OpenTK.Graphics.ES20.StencilFace)face, (OpenTK.Graphics.ES20.StencilFunction)func, (Int32)@ref, (UInt32)mask);
             #if DEBUG
             }
             #endif
@@ -17744,7 +17744,7 @@ namespace OpenTK.Graphics.ES20
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glStencilOpSeparate1((OpenTK.Graphics.ES20.CullFaceMode)face, (OpenTK.Graphics.ES20.StencilOp)sfail, (OpenTK.Graphics.ES20.StencilOp)dpfail, (OpenTK.Graphics.ES20.StencilOp)dppass);
+            Delegates.glStencilOpSeparate((OpenTK.Graphics.ES20.StencilFace)face, (OpenTK.Graphics.ES20.StencilOp)sfail, (OpenTK.Graphics.ES20.StencilOp)dpfail, (OpenTK.Graphics.ES20.StencilOp)dppass);
             #if DEBUG
             }
             #endif
@@ -17845,7 +17845,7 @@ namespace OpenTK.Graphics.ES20
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glTexImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels);
+            Delegates.glTexImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels);
             #if DEBUG
             }
             #endif
@@ -17912,7 +17912,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Delegates.glTexImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -17984,7 +17984,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Delegates.glTexImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -18056,7 +18056,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Delegates.glTexImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -18128,7 +18128,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Delegates.glTexImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
                 pixels = (T8)pixels_ptr.Target;
             }
             finally
@@ -18809,7 +18809,7 @@ namespace OpenTK.Graphics.ES20
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glTexSubImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels);
+            Delegates.glTexSubImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels);
             #if DEBUG
             }
             #endif
@@ -18876,7 +18876,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexSubImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Delegates.glTexSubImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -18948,7 +18948,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexSubImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Delegates.glTexSubImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -19020,7 +19020,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexSubImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Delegates.glTexSubImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -19092,7 +19092,7 @@ namespace OpenTK.Graphics.ES20
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexSubImage2D1((OpenTK.Graphics.ES20.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Delegates.glTexSubImage2D((OpenTK.Graphics.ES20.TextureTarget2d)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES20.PixelFormat)format, (OpenTK.Graphics.ES20.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
                 pixels = (T8)pixels_ptr.Target;
             }
             finally

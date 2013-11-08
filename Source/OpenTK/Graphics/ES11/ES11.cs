@@ -3212,7 +3212,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glDrawArrays1((OpenTK.Graphics.ES11.BeginMode)mode, (Int32)first, (Int32)count);
+            Delegates.glDrawArrays((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)first, (Int32)count);
             #if DEBUG
             }
             #endif
@@ -3283,7 +3283,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glDrawElements1((OpenTK.Graphics.ES11.BeginMode)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices);
+            Delegates.glDrawElements((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices);
             #if DEBUG
             }
             #endif
@@ -3325,7 +3325,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                Delegates.glDrawElements1((OpenTK.Graphics.ES11.BeginMode)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                Delegates.glDrawElements((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -3372,7 +3372,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                Delegates.glDrawElements1((OpenTK.Graphics.ES11.BeginMode)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                Delegates.glDrawElements((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -3419,7 +3419,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                Delegates.glDrawElements1((OpenTK.Graphics.ES11.BeginMode)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                Delegates.glDrawElements((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -3466,7 +3466,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                Delegates.glDrawElements1((OpenTK.Graphics.ES11.BeginMode)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                Delegates.glDrawElements((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
                 indices = (T3)indices_ptr.Target;
             }
             finally
