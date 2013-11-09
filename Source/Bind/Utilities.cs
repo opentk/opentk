@@ -62,7 +62,19 @@ namespace Bind
         /// <summary>
         /// Function returns a typed pointer - we have to copy the data to an array to protect it from the GC.
         /// </summary>
-        ArrayReturnType
+        ArrayReturnType,
+        /// <summary>
+        /// Function normally returns a value via an out parameter.
+        /// This overload returns a single item directly.
+        /// e.g. void GetIntegerv(enum, out int) => int GetInteger(enum)
+        /// </summary>
+        ConvenienceReturnType,
+        /// <summary>
+        /// Function normally returns an array via an out parameter.
+        /// This overload returns a single item directly.
+        /// e.g. void GenBuffers(int n, int[]) => int GenBuffer()
+        /// </summary>
+        ConvenienceArrayReturnType,
     }
 
     #endregion
@@ -233,21 +245,6 @@ namespace Bind
             }
 
             return s;
-        }
-
-        // Merges the specified delegate collections.
-        internal static void Merge(DelegateCollection delegates, DelegateCollection new_delegates)
-        {
-            foreach (var d in new_delegates.Values.SelectMany(v => v))
-            {
-                Merge(delegates, d);
-            }
-        }
-
-        // Merges the given delegate into the delegate list.
-        internal static void Merge(DelegateCollection delegates, Delegate t)
-        {
-            delegates.Add(t);
         }
 
         #endregion
