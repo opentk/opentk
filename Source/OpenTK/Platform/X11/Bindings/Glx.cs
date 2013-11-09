@@ -352,7 +352,7 @@ namespace OpenTK.Platform.X11
 
         public partial class Arb
         {
-            #region CreateContextAttribs
+            #region CreateContextAttri
 
             unsafe public static IntPtr CreateContextAttribs(IntPtr display, IntPtr fbconfig, IntPtr share_context, bool direct, int* attribs)
             {
@@ -370,6 +370,19 @@ namespace OpenTK.Platform.X11
                 }
             }
 
+            #endregion
+            
+            #region GetProcAddress
+            
+            // The linux OpenGL ABI 3.6 (1999) requires
+            // that glXGetProcAddressARB be available as
+            // a static export. The same is *not* true
+            // for glXGetProcAddress, so we should use
+            // glXGetProcAddressARB instead.
+            // See http://www.opengl.org/registry/ABI/
+            [DllImport(Library, EntryPoint = "glXGetProcAddressARB")]
+            public static extern IntPtr GetProcAddress([MarshalAs(UnmanagedType.LPTStr)] string procName);
+            
             #endregion
         }
 
