@@ -31,8 +31,6 @@ namespace OpenTK.Platform.X11
         X11WindowInfo currentWindow;
         bool vsync_supported;
         int swap_interval = 1; // As defined in GLX_SGI_swap_control
-        bool glx_loaded;
-
         readonly X11GraphicsMode ModeSelector = new X11GraphicsMode();
 
         #endregion
@@ -56,7 +54,7 @@ namespace OpenTK.Platform.X11
             Display = ((X11WindowInfo)window).Display;
             
             currentWindow = (X11WindowInfo)window;
-            currentWindow.VisualInfo = SelectVisual(mode, currentWindow);
+            currentWindow.VisualInfo = SelectVisual(Mode, currentWindow);
             
             ContextHandle shareHandle = shared != null ?
                 (shared as IGraphicsContextInternal).Context : (ContextHandle)IntPtr.Zero;
@@ -66,18 +64,6 @@ namespace OpenTK.Platform.X11
             Debug.WriteLine(shareHandle.Handle == IntPtr.Zero ? "not shared... " :
                 String.Format("shared with ({0})... ", shareHandle));
             
-            if (!glx_loaded)
-            {
-                // GLX entry points are not bound to a context.
-                // This means we can load them without creating
-                // a context first! (unlike WGL)
-                // See http://dri.freedesktop.org/wiki/glXGetProcAddressNeverReturnsNULL/
-                // for more details.
-                Debug.WriteLine("Loading GLX entry points.");
-                new Glx().LoadEntryPoints();
-                glx_loaded = true;
-            }
-
             // Try using the new context creation method. If it fails, fall back to the old one.
             // For each of these methods, we try two times to create a context:
             // one with the "direct" flag intact, the other with the flag inversed.
@@ -95,7 +81,7 @@ namespace OpenTK.Platform.X11
                     IntPtr* fbconfigs = Glx.ChooseFBConfig(Display, currentWindow.Screen,
                         new int[] {
                         (int)GLXAttribute.VISUAL_ID,
-                        (int)mode.Index,
+                        (int)Mode.Index,
                         0
                     }, out count);
                     
