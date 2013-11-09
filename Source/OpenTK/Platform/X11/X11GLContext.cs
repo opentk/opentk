@@ -64,37 +64,22 @@ namespace OpenTK.Platform.X11
             
             if (!glx_loaded)
             {
-                Debug.WriteLine("Creating temporary context to load GLX extensions.");
-                
-                // Create a temporary context to obtain the necessary function pointers.
-                XVisualInfo visual = currentWindow.VisualInfo;
-                IntPtr ctx = IntPtr.Zero;
-
-                using (new XLock(Display))
-                {
-                    ctx = Glx.CreateContext(Display, ref visual, IntPtr.Zero, true);
-                    if (ctx == IntPtr.Zero)
-                        ctx = Glx.CreateContext(Display, ref visual, IntPtr.Zero, false);
-                }
-                
-                if (ctx != IntPtr.Zero)
-                {
-                    new Glx().LoadEntryPoints();
-                    using (new XLock(Display))
-                    {
-                        Glx.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero);
-                        //Glx.DestroyContext(Display, ctx);
-                    }
-                    glx_loaded = true;
-                }
+                // GLX entry points are not bound to a context.
+                // This means we can load them without creating
+                // a context first! (unlike WGL)
+                // See http://dri.freedesktop.org/wiki/glXGetProcAddressNeverReturnsNULL/
+                // for more details.
+                Debug.WriteLine("Loading GLX entry points.");
+                new Glx().LoadEntryPoints();
+                glx_loaded = true;
             }
-            
+
             // Try using the new context creation method. If it fails, fall back to the old one.
             // For each of these methods, we try two times to create a context:
             // one with the "direct" flag intact, the other with the flag inversed.
             // HACK: It seems that Catalyst 9.1 - 9.4 on Linux have problems with contexts created through
-            // GLX_ARB_create_context, including hideous input lag, no vsync and other. Use legacy context
-            // creation if the user doesn't request a 3.0+ context.
+            // GLX_ARB_create_context, including hideous input lag, no vsync and other madness.
+            // Use legacy context creation if the user doesn't request a 3.0+ context.
             if ((major * 10 + minor >= 30) && Glx.Delegates.glXCreateContextAttribsARB != null)
             {
                 Debug.Write("Using GLX_ARB_create_context... ");
