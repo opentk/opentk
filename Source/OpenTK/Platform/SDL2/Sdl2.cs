@@ -50,7 +50,14 @@ namespace OpenTK.Platform.SDL2
 
         static SDL()
         {
-            GetVersion(out Version);
+            try
+            {
+                GetVersion(out Version);
+            }
+            catch
+            {
+                // nom nom
+            }
         }
 
         #region Functions
