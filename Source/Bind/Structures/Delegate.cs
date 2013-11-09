@@ -325,6 +325,22 @@ namespace Bind.Structures
             }
         }
 
+        public void AddRange(IEnumerable<Delegate> delegates)
+        {
+            foreach (var d in delegates)
+            {
+                Add(d);
+            }
+        }
+
+        public void AddRange(DelegateCollection delegates)
+        {
+            foreach (var d in delegates.Values.SelectMany(v => v))
+            {
+                Add(d);
+            }
+        }
+
         #region IDictionary Members
 
         public void Add(string key, List<Delegate> value)
