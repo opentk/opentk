@@ -231,11 +231,14 @@ namespace OpenTK.Platform.X11
     {
         DebugBit = 0x0001,
         ForwardCompatibleBit = 0x0002,
+        CoreProfileBit = 0x00000001,
+        CompatibilityProfileBit = 0x00000002,
         MajorVersion = 0x2091,
         MinorVersion = 0x2092,
         LayerPlane = 0x2093,
         Flags = 0x2094,
         ErrorInvalidVersion = 0x2095,
+        ProfileMask = 0x9126
     }
 
     enum ErrorCode : int
