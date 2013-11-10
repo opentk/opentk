@@ -627,8 +627,12 @@ namespace Bind
 
                     if (!f.CLSCompliant)
                     {
-                        Function cls = new Function(f);
+                        // The return type must always be cls-compliant,
+                        // since we cannot overload on return types alone.
+                        f.ReturnType.CurrentType = GetCLSCompliantType(f.ReturnType);
 
+                        // Create a cls-compliant wrapper for the parameters
+                        Function cls = new Function(f);
                         bool modified = false;
                         for (int i = 0; i < f.Parameters.Count; i++)
                         {
@@ -637,8 +641,12 @@ namespace Bind
                                 modified = true;
                         }
 
+                        // Only add a cls-compliant overload if we have
+                        // changed a parameter.
                         if (modified)
+                        {
                             wrappers.AddChecked(cls);
+                        }
                     }
                 }
             }
