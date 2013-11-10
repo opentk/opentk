@@ -600,6 +600,7 @@ namespace Bind
             var handle_release_statements = new List<string>();
             var fixed_statements = new List<string>();
             var assign_statements = new List<string>();
+            var declaration_statements = new List<string>();
 
             // Obtain pointers by pinning the parameters
             int index = -1;
@@ -653,11 +654,32 @@ namespace Bind
                     }
                     else
                     {
-                        throw new ApplicationException("Unknown parameter type");
+                        throw new ApplicationException(String.Format(
+                            "Unknown wrapper type '{0}', code generation failed",
+                            p.WrapperType));
                     }
                 }
 
                 p.QualifiedType = f.WrappedDelegate.Parameters[index].QualifiedType;
+            }
+
+            if (f.ReturnType.WrapperType == WrapperTypes.ConvenienceReturnType ||
+                f.ReturnType.WrapperType == WrapperTypes.ConvenienceArrayReturnType)
+            {
+                var r = f.ReturnType;
+                var p = f.WrappedDelegate.Parameters.Last();
+                if (r.WrapperType == WrapperTypes.ConvenienceArrayReturnType)
+                {
+                    var p_size = f.WrappedDelegate.Parameters[f.WrappedDelegate.Parameters.Count - 2];
+                    declaration_statements.Add(String.Format(
+                        "const {0} = 1;",
+                        GetDeclarationString(p_size, false)));
+                }
+                declaration_statements.Add(String.Format("{0} retval;", GetDeclarationString(r)));
+                declaration_statements.Add(String.Format("{0}{2} {1} = &retval;",
+                    GetDeclarationString(r),
+                    p.Name,
+                    pointer_levels[p.IndirectionLevel]));
             }
 
             f.Body.Indent();
@@ -679,12 +701,19 @@ namespace Bind
                 }
             }
 
-            if (!f.Unsafe && fixed_statements.Count > 0)
+            bool add_unsafe = !f.Unsafe &&
+                (fixed_statements.Count > 0 || declaration_statements.Count > 0);
+            if (add_unsafe)
             {
                 f.Body.Add("unsafe");
                 f.Body.Add("{");
                 f.Body.Indent();
             }
+
+            if (declaration_statements.Count > 0)
+            {
+                f.Body.AddRange(declaration_statements);
+            } 
 
             if (fixed_statements.Count > 0)
             {
@@ -720,24 +749,6 @@ namespace Bind
                 }
             }
 
-            if (f.ReturnType.WrapperType == WrapperTypes.ConvenienceReturnType ||
-                f.ReturnType.WrapperType == WrapperTypes.ConvenienceArrayReturnType)
-            {
-                var r = f.ReturnType;
-                var p = f.WrappedDelegate.Parameters.Last();
-                f.Body.Add(String.Format("{0} {1};", GetDeclarationString(r), p.Name));
-                if (r.WrapperType == WrapperTypes.ConvenienceArrayReturnType)
-                {
-                    var p_size = f.WrappedDelegate.Parameters[f.WrappedDelegate.Parameters.Count - 2];
-                    f.Body.Add(String.Format("{0} = 1;", GetDeclarationString(p_size)));
-                }
-                fixed_statements.Add(String.Empty); // force the generation of an "unsafe" region
-                f.Body.Add(String.Format("{0}{2} {1}_ptr = {1};",
-                    GetDeclarationString(r),
-                    p.Name, 
-                    pointer_levels[p.IndirectionLevel]));
-            }
-
             if (assign_statements.Count > 0)
             {
                 // Call function
@@ -749,9 +760,16 @@ namespace Bind
                 else if (func.ReturnType.WrapperType == WrapperTypes.ConvenienceReturnType ||
                          func.ReturnType.WrapperType == WrapperTypes.ConvenienceArrayReturnType)
                 {
+                    // The wrapper has completely different parameters, 
+                    // we need to build the invocation string via the wrapped
+                    // delegate instead.
+                    callstring = GetInvocationString(f.WrappedDelegate);
                     var p = f.WrappedDelegate.Parameters.Last();
                     f.Body.Add(String.Format("{0};", callstring));
-                    f.Body.Add(String.Format("retval = {0};", p.Name));
+                    f.Body.Add(String.Format(
+                        "retval = {0}{1};",
+                        pointer_levels[p.IndirectionLevel],
+                        p.Name));
                 }
                 else if (func.ReturnType.CurrentType.ToLower().Contains("string"))
                 {
@@ -784,9 +802,13 @@ namespace Bind
                 else if (func.ReturnType.WrapperType == WrapperTypes.ConvenienceReturnType ||
                          func.ReturnType.WrapperType == WrapperTypes.ConvenienceArrayReturnType)
                 {
+                    // The wrapper has completely different parameters, 
+                    // we need to build the invocation string via the wrapped
+                    // delegate instead.
+                    callstring = GetInvocationString(f.WrappedDelegate);
                     var p = f.WrappedDelegate.Parameters.Last();
                     f.Body.Add(String.Format("{0};", callstring));
-                    f.Body.Add(String.Format("return {0};", p.Name));
+                    f.Body.Add(String.Format("return retval;"));
                 }
                 else if (func.ReturnType.CurrentType.ToLower().Contains("string"))
                 {
@@ -814,7 +836,7 @@ namespace Bind
                 f.Body.Add("}");
             }
 
-            if (!f.Unsafe && fixed_statements.Count > 0)
+            if (add_unsafe)
             {
                 f.Body.Unindent();
                 f.Body.Add("}");
