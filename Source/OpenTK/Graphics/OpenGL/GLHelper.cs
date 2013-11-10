@@ -934,21 +934,6 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region GenBuffer
-
-        /// <summary>[requires: v1.5]
-        /// Generates a single buffer object name
-        /// </summary>
-        /// <returns>The generated buffer object name</returns>
-        public static int GenBuffer()
-        {
-            int id;
-            GenBuffers(1, out id);
-            return id;
-        }
-
-        #endregion
-
         #region DeleteBuffer
 
         /// <summary>[requires: v1.5]
@@ -968,21 +953,6 @@ namespace OpenTK.Graphics.OpenGL
         public static void DeleteBuffer(uint id)
         {
             DeleteBuffers(1, ref id);
-        }
-
-        #endregion
-
-        #region GenFramebuffer
-
-        /// <summary>[requires: v3.0 and ARB_framebuffer_object]
-        /// Generates a single framebuffer object name
-        /// </summary>
-        /// <returns>The generated framebuffer object name</returns>
-        public static int GenFramebuffer()
-        {
-            int id;
-            GenFramebuffers(1, out id);
-            return id;
         }
 
         #endregion
@@ -1010,21 +980,6 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region GenProgramPipeline
-
-        /// <summary>[requires: v4.1 and ARB_separate_shader_objects]
-        /// Generates a single single pipeline object name
-        /// </summary>
-        /// <returns>The generated single pipeline object name</returns>
-        public static int GenProgramPipeline()
-        {
-            int id;
-            GenProgramPipelines(1, out id);
-            return id;
-        }
-
-        #endregion
-
         #region DeleteProgramPipeline
 
         /// <summary>[requires: v4.1 and ARB_separate_shader_objects]
@@ -1044,59 +999,6 @@ namespace OpenTK.Graphics.OpenGL
         public static void DeleteProgramPipeline(uint id)
         {
             DeleteProgramPipelines(1, ref id);
-        }
-
-        #endregion
-
-        #region GenQuery
-
-        /// <summary>[requires: v1.5]
-        /// Generates a single query object name
-        /// </summary>
-        /// <returns>The generated query object name</returns>
-        public static int GenQuery()
-        {
-            int id;
-            GenQueries(1, out id);
-            return id;
-        }
-
-        #endregion
-
-        #region DeleteQuery
-
-        /// <summary>[requires: v1.5]
-        /// Deletes a single query object
-        /// </summary>
-        /// <param name="id">The query object to be deleted</param>
-        public static void DeleteQuery(int id)
-        {
-            DeleteQueries(1, ref id);
-        }
-
-        /// <summary>
-        /// Deletes a single query object
-        /// </summary>
-        /// <param name="id">The query object to be deleted</param>
-        [CLSCompliant(false)]
-        public static void DeleteQuery(uint id)
-        {
-            DeleteQueries(1, ref id);
-        }
-
-        #endregion
-
-        #region GenRenderbuffer
-
-        /// <summary>[requires: v3.0 and ARB_framebuffer_object]
-        /// Generates a single renderbuffer object name
-        /// </summary>
-        /// <returns>The generated renderbuffer object name</returns>
-        public static int GenRenderbuffer()
-        {
-            int id;
-            GenRenderbuffers(1, out id);
-            return id;
         }
 
         #endregion
@@ -1124,21 +1026,6 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region GenSampler
-
-        /// <summary>
-        /// Generates a single sampler object name
-        /// </summary>
-        /// <returns>The generated sampler object name</returns>
-        public static int GenSampler()
-        {
-            int id;
-            GenSamplers(1, out id);
-            return id;
-        }
-
-        #endregion
-
         #region DeleteSampler
 
         /// <summary>
@@ -1158,21 +1045,6 @@ namespace OpenTK.Graphics.OpenGL
         public static void DeleteSampler(uint id)
         {
             DeleteSamplers(1, ref id);
-        }
-
-        #endregion
-
-        #region GenTexture
-
-        /// <summary>[requires: v1.1]
-        /// Generate a single texture name
-        /// </summary>
-        /// <returns>The generated texture name</returns>
-        public static int GenTexture()
-        {
-            int id;
-            GenTextures(1, out id);
-            return id;
         }
 
         #endregion
@@ -1200,21 +1072,6 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region GenTransformFeedback
-
-        /// <summary>[requires: v1.2 and ARB_transform_feedback2]
-        /// Generates a single transform feedback object name
-        /// </summary>
-        /// <returns>The generated transform feedback object name</returns>
-        public static int GenTransformFeedback()
-        {
-            int id;
-            GenTransformFeedback(1, out id);
-            return id;
-        }
-
-        #endregion
-
         #region DeleteTransformFeedback
 
         /// <summary>[requires: v1.2 and ARB_transform_feedback2]
@@ -1223,7 +1080,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="id">The transform feedback object to be deleted</param>
         public static void DeleteTransformFeedback(int id)
         {
-            DeleteTransformFeedback(1, ref id);
+            DeleteTransformFeedbacks(1, ref id);
         }
 
         /// <summary>[requires: v1.2 and ARB_transform_feedback2]
@@ -1233,22 +1090,7 @@ namespace OpenTK.Graphics.OpenGL
         [CLSCompliant(false)]
         public static void DeleteTransformFeedback(uint id)
         {
-            DeleteTransformFeedback(1, ref id);
-        }
-
-        #endregion
-
-        #region GenVertexArray
-
-        /// <summary>[requires: v3.0 and ARB_vertex_array_object]
-        /// Generates a single vertex array object name
-        /// </summary>
-        /// <returns>The generated vertex array object name</returns>
-        public static int GenVertexArray()
-        {
-            int id;
-            GenVertexArrays(1, out id);
-            return id;
+            DeleteTransformFeedbacks(1, ref id);
         }
 
         #endregion
