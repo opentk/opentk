@@ -81,6 +81,13 @@ namespace Bind
                     xslt.Transform(doc, null, sw);
                     Text = sw.ToString().Split(new char[] { '\r', '\n' },
                         StringSplitOptions.RemoveEmptyEntries);
+
+                    // Remove unecessary whitespace
+                    // Indentation is handled by BindStreamWriter
+                    for (int i = 0; i < Text.Length; i++)
+                    {
+                        Text[i] = Text[i].Trim();
+                    }
                     return Text;
                 }
             }
