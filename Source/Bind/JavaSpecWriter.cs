@@ -347,29 +347,29 @@ namespace Bind
                 if (!docfiles.ContainsKey(docfile))
                     docfile = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
 
-                string doc = null;
+                var docs = new List<string>();
                 if (docfiles.ContainsKey(docfile))
                 {
-                    doc = Processor.ProcessFile(docfiles[docfile]);
+                    docs.AddRange(Processor.ProcessFile(docfiles[docfile]));
                 }
-                if (doc == null)
+                if (docs.Count == 0)
                 {
-                    doc = "/// <summary></summary>";
+                    docs.Add("/// <summary></summary>");
                 }
 
-                int summary_start = doc.IndexOf("<summary>") + "<summary>".Length;
+                int summary_start = docs[0].IndexOf("<summary>") + "<summary>".Length;
                 string warning = "[deprecated: v{0}]";
                 string category = "[requires: {0}]";
                 if (f.Deprecated)
                 {
                     warning = String.Format(warning, f.DeprecatedVersion);
-                    doc = doc.Insert(summary_start, warning);
+                    docs[0] = docs[0].Insert(summary_start, warning);
                 }
 
                 if (f.Extension != "Core" && !String.IsNullOrEmpty(f.Category))
                 {
                     category = String.Format(category, f.Category);
-                    doc = doc.Insert(summary_start, category);
+                    docs[0] = docs[0].Insert(summary_start, category);
                 }
                 else if (!String.IsNullOrEmpty(f.Version))
                 {
@@ -377,10 +377,13 @@ namespace Bind
                         category = String.Format(category, "v" + f.Version);
                     else
                         category = String.Format(category, "v" + f.Version + " and " + f.Category);
-                    doc = doc.Insert(summary_start, category);
+                    docs[0] = docs[0].Insert(summary_start, category);
                 }
 
-                sw.WriteLine(doc);
+                foreach (var doc in docs)
+                {
+                    sw.WriteLine(doc);
+                }
             }
             catch (Exception e)
             {
