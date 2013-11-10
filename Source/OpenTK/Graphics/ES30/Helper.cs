@@ -353,15 +353,6 @@ namespace OpenTK.Graphics.ES30
 
         #endregion
 
-        #region public static void DeleteTexture(int id)
-
-        public static void DeleteTexture(int id)
-        {
-            DeleteTextures(1, ref id);
-        }
-
-        #endregion
-
         #region Get[Float|Double]
 
         public static void GetFloat(GetPName pname, out Vector2 vector)
