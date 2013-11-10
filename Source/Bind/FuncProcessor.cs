@@ -772,6 +772,8 @@ namespace Bind
                     var r = d.ReturnType;
 
                     bool is_candidate = true;
+                    is_candidate &= d.Name.StartsWith("Get") || d.Name.StartsWith("Gen") ||
+                        d.Name.StartsWith("Delete") || d.Name.StartsWith("New");
                     is_candidate &= d.Name.EndsWith("v") || d.Name.EndsWith("s");
                     is_candidate &= p.Pointer > 0;
                     is_candidate &= r.CurrentType == "void" && r.Pointer == 0;
