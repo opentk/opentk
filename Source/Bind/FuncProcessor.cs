@@ -46,7 +46,7 @@ namespace Bind
         static readonly Regex Endings =
             new Regex(@"((((d|f|fi)|(L?(u?i?64)?u?[isb]))_?(64)?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
         static readonly Regex EndingsNotToTrim =
-            new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Attrib|Access|Coord|Flag|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs|Uniforms)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+            new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Attrib|Access|Coord|Feedbacks|Flag|Queries|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs|Uniforms)", RegexOptions.Compiled | RegexOptions.RightToLeft);
         static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
 
         string Overrides { get; set; }
@@ -356,6 +356,15 @@ namespace Bind
                         }
                     }
                 }
+            }
+
+            // If we have a convenience overload, we should turn the name from
+            // plural into singular
+            if (d.ReturnType.WrapperType == WrapperTypes.ConvenienceReturnType ||
+                d.ReturnType.WrapperType == WrapperTypes.ConvenienceArrayReturnType)
+            {
+                trimmed_name = trimmed_name.Replace("Queries", "Query");
+                trimmed_name = trimmed_name.TrimEnd('s');
             }
 
             return trimmed_name;
@@ -748,7 +757,7 @@ namespace Bind
             foreach (var list in delegates.Values)
             {
                 var d = list.First();
-                if (d.Parameters.Count > 0)
+                if (d.Parameters.Count > 0 && d.Parameters.Count <= 2)
                 {
                     var p = d.Parameters.Last();
                     var r = d.ReturnType;
