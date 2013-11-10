@@ -627,9 +627,6 @@ namespace Bind
                                 "{0} = ({1}){0}_ptr.Target;",
                                 p.Name, p.QualifiedType));
                         }
-
-                        // Note! The following line modifies f.Parameters, *not* this.Parameters
-                        p.Name = "(IntPtr)" + p.Name + "_ptr.AddrOfPinnedObject()";
                     }
                     else if (p.WrapperType == WrapperTypes.PointerParameter ||
                         p.WrapperType == WrapperTypes.ArrayParameter ||
@@ -649,8 +646,10 @@ namespace Bind
                         {
                             assign_statements.Add(String.Format("{0} = *{0}_ptr;", p.Name));
                         }
-
-                        p.Name = p.Name + "_ptr";
+                    }
+                    else if (p.WrapperType == WrapperTypes.None)
+                    {
+                        // do nothing
                     }
                     else
                     {
@@ -658,6 +657,18 @@ namespace Bind
                             "Unknown wrapper type '{0}', code generation failed",
                             p.WrapperType));
                     }
+                }
+                else if (p.WrapperType == WrapperTypes.ConvenienceArrayType)
+                {
+                    var p_array = f.WrappedDelegate.Parameters[f.WrappedDelegate.Parameters.Count - 1];
+                    var p_size = f.WrappedDelegate.Parameters[f.WrappedDelegate.Parameters.Count - 2];
+                    declaration_statements.Add(String.Format(
+                        "const {0} = 1;",
+                        GetDeclarationString(p_size, false)));
+                    declaration_statements.Add(String.Format("{0}_ptr = ({1})&{2};",
+                        GetDeclarationString(p_array, false),
+                        GetDeclarationString(p_array as Type),
+                        p.Name));
                 }
 
                 p.QualifiedType = f.WrappedDelegate.Parameters[index].QualifiedType;
@@ -676,7 +687,7 @@ namespace Bind
                         GetDeclarationString(p_size, false)));
                 }
                 declaration_statements.Add(String.Format("{0} retval;", GetDeclarationString(r)));
-                declaration_statements.Add(String.Format("{0}{2} {1} = &retval;",
+                declaration_statements.Add(String.Format("{0}{2} {1}_ptr = &retval;",
                     GetDeclarationString(r),
                     p.Name,
                     pointer_levels[p.IndirectionLevel]));
@@ -753,16 +764,22 @@ namespace Bind
             {
                 // Call function
                 var callstring = GetInvocationString(f);
-                if (f.ReturnType.CurrentType.ToLower().Contains("void"))
+                if (func.Parameters.Any(p => p.WrapperType == WrapperTypes.ConvenienceArrayType))
+                {
+                    // foo(int id) { foo(1, ref id) }
+                    callstring = GetInvocationString(f.WrappedDelegate);
+                    f.Body.Add(String.Format("{0}{1};",
+                        f.ReturnType.CurrentType.ToLower().Contains("void") ? String.Empty : "return ",
+                        callstring));
+                }
+                else if (f.ReturnType.CurrentType.ToLower().Contains("void"))
                 {
                     f.Body.Add(String.Format("{0};", callstring));
                 }
                 else if (func.ReturnType.WrapperType == WrapperTypes.ConvenienceReturnType ||
                          func.ReturnType.WrapperType == WrapperTypes.ConvenienceArrayReturnType)
                 {
-                    // The wrapper has completely different parameters, 
-                    // we need to build the invocation string via the wrapped
-                    // delegate instead.
+                    // int foo() { int value; foo(1, &value); retval = value }
                     callstring = GetInvocationString(f.WrappedDelegate);
                     var p = f.WrappedDelegate.Parameters.Last();
                     f.Body.Add(String.Format("{0};", callstring));
@@ -795,16 +812,22 @@ namespace Bind
             {
                 // Call function and return
                 var callstring = GetInvocationString(f);
-                if (f.ReturnType.CurrentType.ToLower().Contains("void"))
+                if (func.Parameters.Any(p => p.WrapperType == WrapperTypes.ConvenienceArrayType))
+                {
+                    // int foo(int id) { return foo(1, ref id) }
+                    callstring = GetInvocationString(f.WrappedDelegate);
+                    f.Body.Add(String.Format("{0}{1};",
+                        f.ReturnType.CurrentType.ToLower().Contains("void") ? String.Empty : "return ",
+                        callstring));
+                }
+                else if (f.ReturnType.CurrentType.ToLower().Contains("void"))
                 {
                     f.Body.Add(String.Format("{0};", callstring));
                 }
                 else if (func.ReturnType.WrapperType == WrapperTypes.ConvenienceReturnType ||
                          func.ReturnType.WrapperType == WrapperTypes.ConvenienceArrayReturnType)
                 {
-                    // The wrapper has completely different parameters, 
-                    // we need to build the invocation string via the wrapped
-                    // delegate instead.
+                    // int foo() { int retval; foo(1, &retval); return retval }
                     callstring = GetInvocationString(f.WrappedDelegate);
                     var p = f.WrappedDelegate.Parameters.Last();
                     f.Body.Add(String.Format("{0};", callstring));
@@ -1103,7 +1126,32 @@ namespace Bind
                         }
                     }
 
-                    sb.Append(p.Name);
+
+                    switch (p.WrapperType)
+                    {
+                        case WrapperTypes.GenericParameter:
+                            if (p.Generic)
+                            {
+                                sb.Append("(IntPtr)");
+                                sb.Append(p.Name);
+                                sb.Append("_ptr.AddrOfPinnedObject()");
+                            }
+                            else
+                            {
+                                sb.Append(p.Name);
+                            }
+                            break;
+
+                        case WrapperTypes.ArrayParameter:
+                        case WrapperTypes.ReferenceParameter:
+                            sb.Append(p.Name);
+                            sb.Append("_ptr");
+                            break;
+
+                        default:
+                            sb.Append(p.Name);
+                            break;
+                    }
 
                     if (p.Unchecked)
                         sb.Append(")");

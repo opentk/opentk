@@ -66,15 +66,21 @@ namespace Bind
         /// <summary>
         /// Function normally returns a value via an out parameter.
         /// This overload returns a single item directly.
-        /// e.g. void GetIntegerv(enum, out int) => int GetInteger(enum)
+        /// e.g. void GetIntegerv(enum pname, out int value) => int GetInteger(enum pname)
         /// </summary>
         ConvenienceReturnType,
         /// <summary>
         /// Function normally returns an array via an out parameter.
         /// This overload returns a single item directly.
-        /// e.g. void GenBuffers(int n, int[]) => int GenBuffer()
+        /// e.g. void GenBuffers(int count, int[] ids) => int GenBuffer()
         /// </summary>
         ConvenienceArrayReturnType,
+        /// <summary>
+        /// Function normally takes an array in parameter.
+        /// This overload takes a single item directly.
+        /// e.g. void DeleteBuffers(int count, int[] ids) => DeleteBuffer(int id)
+        /// </summary>
+        ConvenienceArrayType,
     }
 
     #endregion

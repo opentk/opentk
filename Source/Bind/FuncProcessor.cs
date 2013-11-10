@@ -106,13 +106,13 @@ namespace Bind
                 }
             }
 
-            Console.WriteLine("Adding convenience overloads.");
+            Console.WriteLine("Generating convenience overloads.");
             delegates.AddRange(CreateConvenienceOverloads(delegates));
 
             Console.WriteLine("Generating wrappers.");
             var wrappers = CreateWrappers(delegates, enums);
 
-            Console.WriteLine("Creating CLS compliant overloads.");
+            Console.WriteLine("Generating CLS compliant overloads.");
             wrappers = CreateCLSCompliantWrappers(wrappers, enums);
 
             Console.WriteLine("Removing non-CLS compliant duplicates.");
@@ -361,7 +361,8 @@ namespace Bind
             // If we have a convenience overload, we should turn the name from
             // plural into singular
             if (d.ReturnType.WrapperType == WrapperTypes.ConvenienceReturnType ||
-                d.ReturnType.WrapperType == WrapperTypes.ConvenienceArrayReturnType)
+                d.ReturnType.WrapperType == WrapperTypes.ConvenienceArrayReturnType ||
+                d.Parameters.Any(p => p.WrapperType == WrapperTypes.ConvenienceArrayType))
             {
                 trimmed_name = trimmed_name.Replace("Queries", "Query");
                 trimmed_name = trimmed_name.TrimEnd('s');
@@ -772,28 +773,42 @@ namespace Bind
 
                     bool is_candidate = true;
                     is_candidate &= d.Name.EndsWith("v") || d.Name.EndsWith("s");
-                    is_candidate &= p.Pointer > 0 && p.Flow == FlowDirection.Out;
+                    is_candidate &= p.Pointer > 0;
                     is_candidate &= r.CurrentType == "void" && r.Pointer == 0;
 
-                    if (is_candidate)
+                    if (is_candidate && p.Flow == FlowDirection.Out)
                     {
-                        var o = new Delegate(d);
-                        o.ReturnType = new Type(o.Parameters.Last());
-                        o.ReturnType.Pointer = 0;
-                        o.Parameters.RemoveAt(o.Parameters.Count - 1);
-                        o.ReturnType.WrapperType = WrapperTypes.ConvenienceReturnType;
+                        var f = new Delegate(d);
+                        f.ReturnType = new Type(f.Parameters.Last());
+                        f.ReturnType.Pointer = 0;
+                        f.Parameters.RemoveAt(f.Parameters.Count - 1);
+                        f.ReturnType.WrapperType = WrapperTypes.ConvenienceReturnType;
 
-                        if (o.Parameters.Count > 0)
+                        if (f.Parameters.Count > 0)
                         {
-                            var p_size = o.Parameters.Last();
+                            var p_size = f.Parameters.Last();
                             if (p_size.CurrentType.ToLower().Contains("int") && p_size.Pointer == 0)
                             {
-                                o.Parameters.RemoveAt(o.Parameters.Count - 1);
-                                o.ReturnType.WrapperType = WrapperTypes.ConvenienceArrayReturnType;
+                                f.Parameters.RemoveAt(f.Parameters.Count - 1);
+                                f.ReturnType.WrapperType = WrapperTypes.ConvenienceArrayReturnType;
                             }
                         }
 
-                        yield return o;
+                        yield return f;
+                    }
+                    else if (is_candidate && p.Flow != FlowDirection.Out)
+                    {
+                        if (d.Parameters.Count == 2)
+                        {
+                            var f = new Delegate(d);
+                            var p_array = f.Parameters.Last();
+                            var p_size = f.Parameters[f.Parameters.Count - 2];
+                            f.Parameters.RemoveAt(f.Parameters.Count - 2);
+                            p_array.WrapperType = WrapperTypes.ConvenienceArrayType;
+                            p_array.Pointer = 0;
+
+                            yield return f;
+                        }
                     }
                 }
             }
@@ -824,6 +839,7 @@ namespace Bind
                             p.Reference = true;
                             p.Array--;
                             p.Pointer--;
+                            p.WrapperType = WrapperTypes.ReferenceParameter;
                         }
                     }
                 }
@@ -841,6 +857,7 @@ namespace Bind
                         p.Reference = true;
                         p.Array--;
                         p.Pointer--;
+                        p.WrapperType = WrapperTypes.ReferenceParameter;
                     }
                 }
                 f = new Function(_this);
@@ -857,8 +874,7 @@ namespace Bind
                     if (p.WrapperType == WrapperTypes.ArrayParameter)
                     {
                         p.Reference = false;
-                        //p.Array--;
-                        //p.Pointer++;
+                        p.WrapperType = WrapperTypes.PointerParameter;
                     }
                 }
                 f = new Function(_this);
