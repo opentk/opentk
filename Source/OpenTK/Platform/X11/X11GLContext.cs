@@ -31,7 +31,7 @@ namespace OpenTK.Platform.X11
         X11WindowInfo currentWindow;
         bool vsync_supported;
         int swap_interval = 1; // As defined in GLX_SGI_swap_control
-        bool glx_loaded;
+        readonly X11GraphicsMode ModeSelector = new X11GraphicsMode();
 
         #endregion
 
@@ -45,14 +45,16 @@ namespace OpenTK.Platform.X11
             if (window == null)
                 throw new ArgumentNullException("window");
 
-            Mode = mode;
+            Mode = ModeSelector.SelectGraphicsMode(
+                mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
+                mode.AccumulatorFormat, mode.Buffers, mode.Stereo);
 
             // Do not move this lower, as almost everything requires the Display
             // property to be correctly set.
             Display = ((X11WindowInfo)window).Display;
             
             currentWindow = (X11WindowInfo)window;
-            currentWindow.VisualInfo = SelectVisual(mode, currentWindow);
+            currentWindow.VisualInfo = SelectVisual(Mode, currentWindow);
             
             ContextHandle shareHandle = shared != null ?
                 (shared as IGraphicsContextInternal).Context : (ContextHandle)IntPtr.Zero;
@@ -62,40 +64,13 @@ namespace OpenTK.Platform.X11
             Debug.WriteLine(shareHandle.Handle == IntPtr.Zero ? "not shared... " :
                 String.Format("shared with ({0})... ", shareHandle));
             
-            if (!glx_loaded)
-            {
-                Debug.WriteLine("Creating temporary context to load GLX extensions.");
-                
-                // Create a temporary context to obtain the necessary function pointers.
-                XVisualInfo visual = currentWindow.VisualInfo;
-                IntPtr ctx = IntPtr.Zero;
-
-                using (new XLock(Display))
-                {
-                    ctx = Glx.CreateContext(Display, ref visual, IntPtr.Zero, true);
-                    if (ctx == IntPtr.Zero)
-                        ctx = Glx.CreateContext(Display, ref visual, IntPtr.Zero, false);
-                }
-                
-                if (ctx != IntPtr.Zero)
-                {
-                    new Glx().LoadEntryPoints();
-                    using (new XLock(Display))
-                    {
-                        Glx.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero);
-                        //Glx.DestroyContext(Display, ctx);
-                    }
-                    glx_loaded = true;
-                }
-            }
-            
             // Try using the new context creation method. If it fails, fall back to the old one.
             // For each of these methods, we try two times to create a context:
             // one with the "direct" flag intact, the other with the flag inversed.
             // HACK: It seems that Catalyst 9.1 - 9.4 on Linux have problems with contexts created through
-            // GLX_ARB_create_context, including hideous input lag, no vsync and other. Use legacy context
-            // creation if the user doesn't request a 3.0+ context.
-            if ((major * 10 + minor >= 30) && Glx.Delegates.glXCreateContextAttribsARB != null)
+            // GLX_ARB_create_context, including hideous input lag, no vsync and other madness.
+            // Use legacy context creation if the user doesn't request a 3.0+ context.
+            if ((major * 10 + minor >= 30) && SupportsCreateContextAttribs(Display, currentWindow))
             {
                 Debug.Write("Using GLX_ARB_create_context... ");
                 
@@ -106,7 +81,7 @@ namespace OpenTK.Platform.X11
                     IntPtr* fbconfigs = Glx.ChooseFBConfig(Display, currentWindow.Screen,
                         new int[] {
                         (int)GLXAttribute.VISUAL_ID,
-                        (int)mode.Index,
+                        (int)Mode.Index,
                         0
                     }, out count);
                     
@@ -119,9 +94,10 @@ namespace OpenTK.Platform.X11
                         attributes.Add(minor);
                         if (flags != 0)
                         {
-#warning "This is not entirely correct: Embedded is not a valid flag! We need to add a GetARBContextFlags(GraphicsContextFlags) method."
                             attributes.Add((int)ArbCreateContext.Flags);
-                            attributes.Add((int)flags);
+                            attributes.Add((int)GetARBContextFlags(flags));
+                            attributes.Add((int)ArbCreateContext.ProfileMask);
+                            attributes.Add((int)GetARBProfileFlags(flags));
                         }
                         // According to the docs, " <attribList> specifies a list of attributes for the context.
                         // The list consists of a sequence of <name,value> pairs terminated by the
@@ -240,21 +216,44 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        bool SupportsExtension(X11WindowInfo window, string e)
+        ArbCreateContext GetARBContextFlags(GraphicsContextFlags flags)
+        {
+            ArbCreateContext result = 0;
+            result |= (flags & GraphicsContextFlags.Debug) != 0 ? ArbCreateContext.DebugBit : 0;
+            return result;
+        }
+
+        ArbCreateContext GetARBProfileFlags(GraphicsContextFlags flags)
+        {
+            ArbCreateContext result = 0;
+            result |= (flags & GraphicsContextFlags.ForwardCompatible) != 0 ?
+                ArbCreateContext.ForwardCompatibleBit : ArbCreateContext.CompatibilityProfileBit;
+            return result;
+        }
+
+        static bool SupportsExtension(IntPtr display, X11WindowInfo window, string e)
         {
             if (window == null)
                 throw new ArgumentNullException("window");
             if (e == null)
                 throw new ArgumentNullException("e");
-            if (window.Display != Display)
+            if (window.Display != display)
                 throw new InvalidOperationException();
 
             string extensions = null;
-            using (new XLock(Display))
+            using (new XLock(display))
             {
-                extensions = Glx.QueryExtensionsString(Display, window.Screen);
+                extensions = Glx.QueryExtensionsString(display, window.Screen);
             }
             return !String.IsNullOrEmpty(extensions) && extensions.Contains(e);
+        }
+
+        static bool SupportsCreateContextAttribs(IntPtr display, X11WindowInfo window)
+        {
+            return
+                SupportsExtension(display, window, "GLX_ARB_create_context") &&
+                SupportsExtension(display, window, "GLX_ARB_create_context_profile") &&
+                Glx.Delegates.glXCreateContextAttribsARB != null;
         }
 
         #endregion

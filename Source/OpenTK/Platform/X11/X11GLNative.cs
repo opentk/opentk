@@ -144,7 +144,11 @@ namespace OpenTK.Platform.X11
             using (new XLock(window.Display))
             {
                 if (!mode.Index.HasValue)
-                    throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
+                {
+                    mode = new X11GraphicsMode().SelectGraphicsMode(
+                        mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
+                        mode.AccumulatorFormat, mode.Buffers, mode.Stereo);
+                }
 
                 info.VisualID = mode.Index.Value;
                 int dummy;
@@ -1347,8 +1351,8 @@ namespace OpenTK.Platform.X11
         public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
         public event EventHandler<EventArgs> WindowStateChanged = delegate { };
         public event EventHandler<KeyboardKeyEventArgs> KeyDown = delegate { };
-		public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
-		public event EventHandler<KeyboardKeyEventArgs> KeyUp = delegate { };
+        public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
+        public event EventHandler<KeyboardKeyEventArgs> KeyUp = delegate { };
         public event EventHandler<EventArgs> MouseEnter = delegate { };
         public event EventHandler<EventArgs> MouseLeave = delegate { };
         

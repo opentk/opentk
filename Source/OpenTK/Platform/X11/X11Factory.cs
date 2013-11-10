@@ -77,7 +77,7 @@ namespace OpenTK.Platform.X11
 
         public virtual IGraphicsMode CreateGraphicsMode()
         {
-            return new X11GraphicsMode();
+            throw new NotSupportedException();
         }
 
         public virtual OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()

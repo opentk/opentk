@@ -42,15 +42,17 @@ namespace OpenTK.Platform.MacOS
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil,
             int samples, ColorFormat accum, int buffers, bool stereo)
         {
-            IntPtr pixelformat = SelectPixelFormat(color, depth, stencil, samples, accum, buffers, stereo);
+            IntPtr pixelformat = SelectPixelFormat(
+                color, depth, stencil, samples, accum, buffers, stereo,
+                false, IntPtr.Zero);
             return GetGraphicsModeFromPixelFormat(pixelformat);
         }
 
         #endregion
 
-        #region Private Members
+        #region Internal Members
 
-        GraphicsMode GetGraphicsModeFromPixelFormat(IntPtr pixelformat)
+        internal GraphicsMode GetGraphicsModeFromPixelFormat(IntPtr pixelformat)
         {
             int r, g, b, a;
             Agl.aglDescribePixelFormat(pixelformat, Agl.PixelFormatAttribute.AGL_RED_SIZE, out r);
@@ -73,8 +75,8 @@ namespace OpenTK.Platform.MacOS
                 depth, stencil, samples, new ColorFormat(ar, ag, ab, aa), buffers + 1, stereo != 0);
         }
 
-        IntPtr SelectPixelFormat(ColorFormat color, int depth, int stencil, int samples,
-            ColorFormat accum, int buffers, bool stereo)
+        internal IntPtr SelectPixelFormat(ColorFormat color, int depth, int stencil, int samples,
+            ColorFormat accum, int buffers, bool stereo, bool fullscreen, IntPtr device)
         {
             List<int> attribs = new List<int>();
 
@@ -140,14 +142,22 @@ namespace OpenTK.Platform.MacOS
                 attribs.Add((int)Agl.PixelFormatAttribute.AGL_STEREO);
             }
 
+            if (fullscreen)
+            {
+                attribs.Add((int)Agl.PixelFormatAttribute.AGL_FULLSCREEN);
+            }
+
             attribs.Add(0);
             attribs.Add(0);
 
-            IntPtr pixelformat = Agl.aglChoosePixelFormat(IntPtr.Zero, 0, attribs.ToArray());
-            if (pixelformat == IntPtr.Zero)
+            IntPtr pixelformat = IntPtr.Zero;
+            if (device != IntPtr.Zero)
             {
-                throw new GraphicsModeException(String.Format(
-                    "[Error] Failed to select GraphicsMode, error {0}.", Agl.GetError()));
+                pixelformat = Agl.aglChoosePixelFormat(ref device, 0, attribs.ToArray());
+            }
+            else
+            {
+                pixelformat = Agl.aglChoosePixelFormat(IntPtr.Zero, 0, attribs.ToArray());
             }
             return pixelformat;
         }

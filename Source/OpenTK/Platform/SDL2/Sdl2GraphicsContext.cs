@@ -65,15 +65,16 @@ namespace OpenTK.Platform.SDL2
             {
                 SetGLAttributes(mode, shareContext, major, minor, flags);
                 SdlContext = new ContextHandle(SDL.GL.CreateContext(Window.Handle));
+                if (SdlContext == ContextHandle.Zero)
+                {
+                    var error = SDL.GetError();
+                    Debug.Print("SDL2 failed to create OpenGL context: {0}", error);
+                    throw new GraphicsContextException(error);
+                }
+
                 Mode = GetGLAttributes(SdlContext, out flags);
-                Debug.Print("SDL2 created GraphicsContext (mode: {0}) (flags: {1}",
+                Debug.Print("SDL2 created GraphicsContext (mode: {0}) (flags: {1})",
                     Mode, flags);
-            }
-            if (SdlContext == ContextHandle.Zero)
-            {
-                var error = SDL.GetError();
-                Debug.Print("SDL2 failed to create OpenGL context: {0}", error);
-                throw new GraphicsContextException(error);
             }
             Handle = GraphicsContext.GetCurrentContext();
         }
@@ -250,6 +251,15 @@ namespace OpenTK.Platform.SDL2
                     Trace.WriteLine("Warning: SDL2 requires a shared context to be current before sharing. Sharing failed.");
                 }
             }
+        }
+
+        #endregion
+
+        #region Public Members
+
+        public static ContextHandle GetCurrentContext()
+        {
+            return new ContextHandle(SDL.GL.GetCurrentContext());
         }
 
         #endregion

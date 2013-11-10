@@ -23,6 +23,9 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
+using System.Runtime.InteropServices;
+
+
 #endregion
 
 using System;
@@ -300,6 +303,9 @@ namespace OpenTK.Platform.SDL2
             [SuppressUnmanagedCodeSecurity]
             [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetAttribute", ExactSpelling = true)]
             public static extern int GetAttribute(ContextAttribute attr, out int value);
+
+            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetCurrentContext", ExactSpelling = true)]
+            public static extern IntPtr GetCurrentContext();
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetDrawableSize", ExactSpelling = true)]
@@ -1177,6 +1183,25 @@ namespace OpenTK.Platform.SDL2
         public uint Which;
         public int X;
         public int Y;
+
+        public enum EventType : uint
+        {
+            /* Touch events */
+            FingerDown      = 0x700,
+            FingerUp,
+            FingerMotion,
+
+            /* Gesture events */
+            DollarGesture   = 0x800,
+            DollarRecord,
+            MultiGesture,
+        }
+
+        public const uint TouchMouseID = 0xffffffff;
+
+        public static class GL
+        {
+        }
     }
 
     struct Rect

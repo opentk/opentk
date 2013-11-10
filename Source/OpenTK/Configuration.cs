@@ -38,7 +38,10 @@ namespace OpenTK
     /// <summary>Provides information about the underlying OS and runtime.</summary>
     public static class Configuration
     {
-        static bool runningOnWindows, runningOnUnix, runningOnX11, runningOnMacOS, runningOnLinux, runningOnMono;
+        static bool runningOnWindows, runningOnUnix, runningOnX11, runningOnMacOS, runningOnLinux;
+        static bool runningOnMono;
+        static bool runningOnAndroid;
+        static bool? sdl2supported;
         volatile static bool initialized;
         readonly static object InitLock = new object();
 
@@ -113,6 +116,26 @@ namespace OpenTK
         public static bool RunningOnMono { get { return runningOnMono; } }
 
         #endregion
+
+        #region public static bool RunningOnAndroid
+
+        /// <summary>
+        /// Gets a <c>System.Boolean</c> indicating whether
+        /// OpenTK is running on an Android device.
+        /// </summary>
+        public static bool RunningOnAndroid
+        {
+            get
+            {
+#if ANDROID
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
+        #endregion 
 
         #region --- Private Methods ---
 

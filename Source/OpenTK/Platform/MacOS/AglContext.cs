@@ -47,18 +47,18 @@ namespace OpenTK.Platform.MacOS
         // Todo: keep track of which display adapter was specified when the context was created.
         // IntPtr displayID;
 
-        GraphicsMode graphics_mode;
         CarbonWindowInfo carbonWindow;
         IntPtr shareContextRef;
         DisplayDevice device;
         bool mIsFullscreen = false;
 
+        readonly MacOSGraphicsMode ModeSelector = new MacOSGraphicsMode();
+
         public AglContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext)
         {
             Debug.Print("Context Type: {0}", shareContext);
             Debug.Print("Window info: {0}", window);
-            
-            this.graphics_mode = mode;
+
             this.carbonWindow = (CarbonWindowInfo)window;
             
             if (shareContext is AglContext)
@@ -105,50 +105,7 @@ namespace OpenTK.Platform.MacOS
         }
         void CreateContext(GraphicsMode mode, CarbonWindowInfo carbonWindow, IntPtr shareContextRef, bool fullscreen)
         {
-            List<int> aglAttributes = new List<int>();
-            
             Debug.Print("AGL pixel format attributes:");
-            Debug.Indent();
-            
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_RGBA);
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_DOUBLEBUFFER);
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_RED_SIZE, mode.ColorFormat.Red);
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_GREEN_SIZE, mode.ColorFormat.Green);
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_BLUE_SIZE, mode.ColorFormat.Blue);
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ALPHA_SIZE, mode.ColorFormat.Alpha);
-            
-            if (mode.Depth > 0)
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_DEPTH_SIZE, mode.Depth);
-            
-            if (mode.Stencil > 0)
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_STENCIL_SIZE, mode.Stencil);
-            
-            if (mode.AccumulatorFormat.BitsPerPixel > 0)
-            {
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_RED_SIZE, mode.AccumulatorFormat.Red);
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_GREEN_SIZE, mode.AccumulatorFormat.Green);
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_BLUE_SIZE, mode.AccumulatorFormat.Blue);
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha);
-            }
-            
-            if (mode.Samples > 1)
-            {
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_SAMPLE_BUFFERS_ARB, 1);
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_SAMPLES_ARB, mode.Samples);
-            }
-            
-            if (fullscreen)
-            {
-                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_FULLSCREEN);
-            }
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_NONE);
-            
-            Debug.Unindent();
-            
-            Debug.Write("Attribute array:  ");
-            for (int i = 0; i < aglAttributes.Count; i++)
-                Debug.Write(aglAttributes[i].ToString() + "  ");
-            Debug.WriteLine("");
             
             AGLPixelFormat myAGLPixelFormat;
             
@@ -166,11 +123,13 @@ namespace OpenTK.Platform.MacOS
                 if (status != OSStatus.NoError)
                     throw new MacOSException(status, "DMGetGDeviceByDisplayID failed.");
                 
-                myAGLPixelFormat = Agl.aglChoosePixelFormat(ref gdevice, 1, aglAttributes.ToArray());
+                myAGLPixelFormat = ModeSelector.SelectPixelFormat(
+                    mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
+                    mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
+                    true, gdevice);
                 
                 Agl.AglError err = Agl.GetError();
-                
-                if (err == Agl.AglError.BadPixelFormat)
+                if (myAGLPixelFormat == IntPtr.Zero || err == Agl.AglError.BadPixelFormat)
                 {
                     Debug.Print("Failed to create full screen pixel format.");
                     Debug.Print("Trying again to create a non-fullscreen pixel format.");
@@ -179,21 +138,23 @@ namespace OpenTK.Platform.MacOS
                     return;
                 }
             }
-
             else
             {
-                myAGLPixelFormat = Agl.aglChoosePixelFormat(IntPtr.Zero, 0, aglAttributes.ToArray());
-                
+                myAGLPixelFormat = ModeSelector.SelectPixelFormat(
+                    mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
+                    mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
+                    false, IntPtr.Zero);
                 MyAGLReportError("aglChoosePixelFormat");
             }
-            
             
             Debug.Print("Creating AGL context.  Sharing with {0}", shareContextRef);
             
             // create the context and share it with the share reference.
             Handle = new ContextHandle(Agl.aglCreateContext(myAGLPixelFormat, shareContextRef));
             MyAGLReportError("aglCreateContext");
-            
+
+            Mode = ModeSelector.GetGraphicsModeFromPixelFormat(myAGLPixelFormat);
+                        
             // Free the pixel format from memory.
             Agl.aglDestroyPixelFormat(myAGLPixelFormat);
             MyAGLReportError("aglDestroyPixelFormat");
@@ -205,7 +166,6 @@ namespace OpenTK.Platform.MacOS
             Update(carbonWindow);
             
             MakeCurrent(carbonWindow);
-            
             Debug.Print("context: {0}", Handle.Handle);
         }
 
@@ -290,10 +250,11 @@ namespace OpenTK.Platform.MacOS
                 
                 windowPort = API.GetWindowPort(controlOwner);
             }
-
             else
+            {
                 windowPort = API.GetWindowPort(carbonWindow.Handle);
-            
+            }
+
             return windowPort;
         }
         public override void Update(IWindowInfo window)
