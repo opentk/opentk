@@ -1241,7 +1241,6 @@ namespace OpenTK.Graphics.ES30
 
         public static partial class Angle
         {
-            
                     /// <summary>[requires: ANGLE_framebuffer_blit]
                     /// Copy a block of pixels from the read framebuffer to the draw framebuffer
                     /// </summary>
@@ -1279,7 +1278,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: ANGLE_instanced_arrays]
                     /// Draw multiple instances of a range of elements
                     /// </summary>
@@ -1317,7 +1315,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: ANGLE_instanced_arrays]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -1360,7 +1357,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: ANGLE_instanced_arrays]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -1412,7 +1408,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: ANGLE_instanced_arrays]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -1464,7 +1459,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: ANGLE_instanced_arrays]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -1516,7 +1510,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: ANGLE_instanced_arrays]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -1689,7 +1682,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: ANGLE_framebuffer_multisample]
                     /// Establish data storage, format, dimensions and sample count of a renderbuffer object's image
                     /// </summary>
@@ -1732,7 +1724,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: ANGLE_instanced_arrays]
                     /// Modify the rate at which generic vertex attributes advance during instanced rendering
                     /// </summary>
@@ -1760,7 +1751,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: ANGLE_instanced_arrays]
                     /// Modify the rate at which generic vertex attributes advance during instanced rendering
                     /// </summary>
@@ -1793,7 +1783,6 @@ namespace OpenTK.Graphics.ES30
 
         public static partial class Apple
         {
-            
                     /// <summary>[requires: APPLE_sync]
                     /// Block and wait for a sync object to become signaled
                     /// </summary>
@@ -1826,7 +1815,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: APPLE_sync]
                     /// Block and wait for a sync object to become signaled
                     /// </summary>
@@ -1891,7 +1879,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: APPLE_sync]
                     /// Delete a sync object
                     /// </summary>
@@ -1914,7 +1901,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: APPLE_sync]
                     /// Create a new sync object and insert it into the GL command stream
                     /// </summary>
@@ -2001,7 +1987,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: APPLE_sync]
                     /// Query the properties of a sync object
                     /// </summary>
@@ -2051,7 +2036,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: APPLE_sync]
                     /// Query the properties of a sync object
                     /// </summary>
@@ -2103,7 +2087,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: APPLE_sync]
                     /// Query the properties of a sync object
                     /// </summary>
@@ -2147,7 +2130,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: APPLE_sync]
                     /// Determine if a name corresponds to a sync object
                     /// </summary>
@@ -2170,7 +2152,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: APPLE_framebuffer_multisample]
                     /// Establish data storage, format, dimensions and sample count of a renderbuffer object's image
                     /// </summary>
@@ -2228,7 +2209,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: APPLE_sync]
                     /// Instruct the GL server to block until the specified sync object becomes signaled
                     /// </summary>
@@ -2261,7 +2241,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: APPLE_sync]
                     /// Instruct the GL server to block until the specified sync object becomes signaled
                     /// </summary>
@@ -2297,7 +2276,6 @@ namespace OpenTK.Graphics.ES30
 
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Select active texture unit
                 /// </summary>
@@ -2320,7 +2298,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Attaches a shader object to a program object
                 /// </summary>
@@ -2348,7 +2325,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Attaches a shader object to a program object
                 /// </summary>
@@ -2377,7 +2353,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delimit the boundaries of a query object
                 /// </summary>
@@ -2405,7 +2380,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delimit the boundaries of a query object
                 /// </summary>
@@ -2434,7 +2408,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Start transform feedback operation
                 /// </summary>
@@ -2457,7 +2430,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Associates a generic vertex attribute index with a named attribute variable
                 /// </summary>
@@ -2490,7 +2462,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Associates a generic vertex attribute index with a named attribute variable
                 /// </summary>
@@ -2524,7 +2495,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Bind a named buffer object
                 /// </summary>
@@ -2552,7 +2522,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Bind a named buffer object
                 /// </summary>
@@ -2581,7 +2550,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Bind a buffer object to an indexed buffer target
                 /// </summary>
@@ -2614,7 +2582,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Bind a buffer object to an indexed buffer target
                 /// </summary>
@@ -2648,7 +2615,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Bind a range within a buffer object to an indexed buffer target
                 /// </summary>
@@ -2691,7 +2657,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Bind a range within a buffer object to an indexed buffer target
                 /// </summary>
@@ -2735,7 +2700,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Bind a framebuffer to a framebuffer target
                 /// </summary>
@@ -2763,7 +2727,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Bind a framebuffer to a framebuffer target
                 /// </summary>
@@ -2792,7 +2755,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Bind a renderbuffer to a renderbuffer target
                 /// </summary>
@@ -2820,7 +2782,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Bind a renderbuffer to a renderbuffer target
                 /// </summary>
@@ -2849,7 +2810,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Bind a named sampler to a texturing target
                 /// </summary>
@@ -2877,7 +2837,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Bind a named sampler to a texturing target
                 /// </summary>
@@ -2906,7 +2865,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Bind a named texture to a texturing target
                 /// </summary>
@@ -2934,7 +2892,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Bind a named texture to a texturing target
                 /// </summary>
@@ -2963,7 +2920,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Bind a transform feedback object
                 /// </summary>
@@ -2991,7 +2947,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Bind a transform feedback object
                 /// </summary>
@@ -3020,7 +2975,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Bind a vertex array object
                 /// </summary>
@@ -3043,7 +2997,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Bind a vertex array object
                 /// </summary>
@@ -3067,7 +3020,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set the blend color
                 /// </summary>
@@ -3090,7 +3042,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the equation used for both the RGB blend equation and the Alpha blend equation
                 /// </summary>
@@ -3118,7 +3069,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set the RGB blend equation and the alpha blend equation separately
                 /// </summary>
@@ -3151,7 +3101,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify pixel arithmetic
                 /// </summary>
@@ -3184,7 +3133,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify pixel arithmetic for RGB and alpha components separately
                 /// </summary>
@@ -3227,7 +3175,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Copy a block of pixels from the read framebuffer to the draw framebuffer
                 /// </summary>
@@ -3265,7 +3212,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Creates and initializes a buffer object's data store
                 /// </summary>
@@ -3303,7 +3249,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Creates and initializes a buffer object's data store
                 /// </summary>
@@ -3350,7 +3295,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Creates and initializes a buffer object's data store
                 /// </summary>
@@ -3397,7 +3341,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Creates and initializes a buffer object's data store
                 /// </summary>
@@ -3444,7 +3387,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Creates and initializes a buffer object's data store
                 /// </summary>
@@ -3492,7 +3434,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Updates a subset of a buffer object's data store
                 /// </summary>
@@ -3530,7 +3471,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Updates a subset of a buffer object's data store
                 /// </summary>
@@ -3577,7 +3517,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Updates a subset of a buffer object's data store
                 /// </summary>
@@ -3624,7 +3563,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Updates a subset of a buffer object's data store
                 /// </summary>
@@ -3671,7 +3609,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Updates a subset of a buffer object's data store
                 /// </summary>
@@ -3719,7 +3656,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Check the completeness status of a framebuffer
                 /// </summary>
@@ -3742,7 +3678,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Clear buffers to preset values
                 /// </summary>
@@ -3765,7 +3700,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Clear individual buffers of the currently bound draw framebuffer
                 /// </summary>
@@ -3808,7 +3742,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Clear individual buffers of the currently bound draw framebuffer
                 /// </summary>
@@ -3857,7 +3790,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Clear individual buffers of the currently bound draw framebuffer
                 /// </summary>
@@ -3906,7 +3838,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Clear individual buffers of the currently bound draw framebuffer
                 /// </summary>
@@ -3950,7 +3881,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Clear individual buffers of the currently bound draw framebuffer
                 /// </summary>
@@ -3999,7 +3929,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Clear individual buffers of the currently bound draw framebuffer
                 /// </summary>
@@ -4048,7 +3977,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Clear individual buffers of the currently bound draw framebuffer
                 /// </summary>
@@ -4092,7 +4020,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Clear individual buffers of the currently bound draw framebuffer
                 /// </summary>
@@ -4142,7 +4069,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Clear individual buffers of the currently bound draw framebuffer
                 /// </summary>
@@ -4192,7 +4118,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Clear individual buffers of the currently bound draw framebuffer
                 /// </summary>
@@ -4236,7 +4161,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify clear values for the color buffers
                 /// </summary>
@@ -4259,7 +4183,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the clear value for the depth buffer
                 /// </summary>
@@ -4282,7 +4205,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the clear value for the stencil buffer
                 /// </summary>
@@ -4305,7 +4227,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Block and wait for a sync object to become signaled
                 /// </summary>
@@ -4338,7 +4259,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Block and wait for a sync object to become signaled
                 /// </summary>
@@ -4372,7 +4292,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Enable and disable writing of frame buffer color components
                 /// </summary>
@@ -4400,7 +4319,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Compiles a shader object
                 /// </summary>
@@ -4423,7 +4341,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Compiles a shader object
                 /// </summary>
@@ -4447,7 +4364,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture image in a compressed format
                 /// </summary>
@@ -4505,7 +4421,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture image in a compressed format
                 /// </summary>
@@ -4572,7 +4487,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture image in a compressed format
                 /// </summary>
@@ -4639,7 +4553,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture image in a compressed format
                 /// </summary>
@@ -4706,7 +4619,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture image in a compressed format
                 /// </summary>
@@ -4774,7 +4686,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture image in a compressed format
                 /// </summary>
@@ -4837,7 +4748,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture image in a compressed format
                 /// </summary>
@@ -4909,7 +4819,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture image in a compressed format
                 /// </summary>
@@ -4981,7 +4890,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture image in a compressed format
                 /// </summary>
@@ -5053,7 +4961,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture image in a compressed format
                 /// </summary>
@@ -5126,7 +5033,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture subimage in a compressed format
                 /// </summary>
@@ -5189,7 +5095,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture subimage in a compressed format
                 /// </summary>
@@ -5261,7 +5166,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture subimage in a compressed format
                 /// </summary>
@@ -5333,7 +5237,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture subimage in a compressed format
                 /// </summary>
@@ -5405,7 +5308,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture subimage in a compressed format
                 /// </summary>
@@ -5478,7 +5380,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture subimage in a compressed format
                 /// </summary>
@@ -5546,7 +5447,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture subimage in a compressed format
                 /// </summary>
@@ -5623,7 +5523,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture subimage in a compressed format
                 /// </summary>
@@ -5700,7 +5599,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture subimage in a compressed format
                 /// </summary>
@@ -5777,7 +5675,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture subimage in a compressed format
                 /// </summary>
@@ -5855,7 +5752,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Copy part of the data store of a buffer object to the data store of another buffer object
                 /// </summary>
@@ -5898,7 +5794,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Copy pixels into a 2D texture image
                 /// </summary>
@@ -5951,7 +5846,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Copy a two-dimensional texture subimage
                 /// </summary>
@@ -6004,7 +5898,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Copy a three-dimensional texture subimage
                 /// </summary>
@@ -6062,7 +5955,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Creates a program object
                 /// </summary>
@@ -6080,7 +5972,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Creates a shader object
                 /// </summary>
@@ -6103,7 +5994,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify whether front- or back-facing facets can be culled
                 /// </summary>
@@ -6126,7 +6016,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Specify a callback to receive debugging messages from the GL
                 /// </summary>
@@ -6154,7 +6043,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Specify a callback to receive debugging messages from the GL
                 /// </summary>
@@ -6191,7 +6079,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Specify a callback to receive debugging messages from the GL
                 /// </summary>
@@ -6228,7 +6115,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Specify a callback to receive debugging messages from the GL
                 /// </summary>
@@ -6265,7 +6151,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Specify a callback to receive debugging messages from the GL
                 /// </summary>
@@ -6303,7 +6188,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Control the reporting of debug messages in a debug context
                 /// </summary>
@@ -6357,7 +6241,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Control the reporting of debug messages in a debug context
                 /// </summary>
@@ -6411,7 +6294,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Control the reporting of debug messages in a debug context
                 /// </summary>
@@ -6460,7 +6342,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Control the reporting of debug messages in a debug context
                 /// </summary>
@@ -6515,7 +6396,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Control the reporting of debug messages in a debug context
                 /// </summary>
@@ -6570,7 +6450,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Control the reporting of debug messages in a debug context
                 /// </summary>
@@ -6619,7 +6498,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Inject an application-supplied message into the debug message queue
                 /// </summary>
@@ -6667,7 +6545,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Inject an application-supplied message into the debug message queue
                 /// </summary>
@@ -6716,7 +6593,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete named buffer objects
                 /// </summary>
@@ -6750,7 +6626,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete named buffer objects
                 /// </summary>
@@ -6784,7 +6659,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete named buffer objects
                 /// </summary>
@@ -6813,7 +6687,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete named buffer objects
                 /// </summary>
@@ -6848,7 +6721,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete named buffer objects
                 /// </summary>
@@ -6883,7 +6755,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete named buffer objects
                 /// </summary>
@@ -6912,7 +6783,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete framebuffer objects
                 /// </summary>
@@ -6946,7 +6816,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete framebuffer objects
                 /// </summary>
@@ -6980,7 +6849,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete framebuffer objects
                 /// </summary>
@@ -7009,7 +6877,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete framebuffer objects
                 /// </summary>
@@ -7044,7 +6911,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete framebuffer objects
                 /// </summary>
@@ -7079,7 +6945,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete framebuffer objects
                 /// </summary>
@@ -7108,7 +6973,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Deletes a program object
                 /// </summary>
@@ -7131,7 +6995,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Deletes a program object
                 /// </summary>
@@ -7155,7 +7018,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete named query objects
                 /// </summary>
@@ -7189,7 +7051,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete named query objects
                 /// </summary>
@@ -7223,7 +7084,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete named query objects
                 /// </summary>
@@ -7252,7 +7112,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete named query objects
                 /// </summary>
@@ -7287,7 +7146,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete named query objects
                 /// </summary>
@@ -7322,7 +7180,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete named query objects
                 /// </summary>
@@ -7351,7 +7208,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete renderbuffer objects
                 /// </summary>
@@ -7385,7 +7241,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete renderbuffer objects
                 /// </summary>
@@ -7419,7 +7274,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete renderbuffer objects
                 /// </summary>
@@ -7448,7 +7302,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete renderbuffer objects
                 /// </summary>
@@ -7483,7 +7336,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete renderbuffer objects
                 /// </summary>
@@ -7518,7 +7370,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete renderbuffer objects
                 /// </summary>
@@ -7547,7 +7398,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete named sampler objects
                 /// </summary>
@@ -7581,7 +7431,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete named sampler objects
                 /// </summary>
@@ -7615,7 +7464,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete named sampler objects
                 /// </summary>
@@ -7644,7 +7492,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete named sampler objects
                 /// </summary>
@@ -7679,7 +7526,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete named sampler objects
                 /// </summary>
@@ -7714,7 +7560,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete named sampler objects
                 /// </summary>
@@ -7743,7 +7588,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Deletes a shader object
                 /// </summary>
@@ -7766,7 +7610,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Deletes a shader object
                 /// </summary>
@@ -7790,7 +7633,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete a sync object
                 /// </summary>
@@ -7813,7 +7655,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete named textures
                 /// </summary>
@@ -7847,7 +7688,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete named textures
                 /// </summary>
@@ -7881,7 +7721,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete named textures
                 /// </summary>
@@ -7910,7 +7749,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete named textures
                 /// </summary>
@@ -7945,7 +7783,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete named textures
                 /// </summary>
@@ -7980,7 +7817,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Delete named textures
                 /// </summary>
@@ -8009,7 +7845,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete transform feedback objects
                 /// </summary>
@@ -8043,7 +7878,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete transform feedback objects
                 /// </summary>
@@ -8077,7 +7911,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete transform feedback objects
                 /// </summary>
@@ -8106,7 +7939,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete transform feedback objects
                 /// </summary>
@@ -8141,7 +7973,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete transform feedback objects
                 /// </summary>
@@ -8176,7 +8007,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete transform feedback objects
                 /// </summary>
@@ -8205,7 +8035,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete vertex array objects
                 /// </summary>
@@ -8239,7 +8068,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete vertex array objects
                 /// </summary>
@@ -8273,7 +8101,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete vertex array objects
                 /// </summary>
@@ -8302,7 +8129,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete vertex array objects
                 /// </summary>
@@ -8337,7 +8163,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete vertex array objects
                 /// </summary>
@@ -8372,7 +8197,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Delete vertex array objects
                 /// </summary>
@@ -8401,7 +8225,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value used for depth buffer comparisons
                 /// </summary>
@@ -8424,7 +8247,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Enable or disable writing into the depth buffer
                 /// </summary>
@@ -8447,7 +8269,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify mapping of depth values from normalized device coordinates to window coordinates
                 /// </summary>
@@ -8475,7 +8296,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Detaches a shader object from a program object to which it is attached
                 /// </summary>
@@ -8503,7 +8323,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Detaches a shader object from a program object to which it is attached
                 /// </summary>
@@ -8578,7 +8397,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -8611,7 +8429,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Draw multiple instances of a range of elements
                 /// </summary>
@@ -8649,7 +8466,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specifies a list of color buffers to be drawn into
                 /// </summary>
@@ -8683,7 +8499,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specifies a list of color buffers to be drawn into
                 /// </summary>
@@ -8717,7 +8532,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specifies a list of color buffers to be drawn into
                 /// </summary>
@@ -8746,7 +8560,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -8784,7 +8597,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -8831,7 +8643,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -8878,7 +8689,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -8925,7 +8735,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -8973,7 +8782,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Draw multiple instances of a set of elements
                 /// </summary>
@@ -9016,7 +8824,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Draw multiple instances of a set of elements
                 /// </summary>
@@ -9068,7 +8875,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Draw multiple instances of a set of elements
                 /// </summary>
@@ -9120,7 +8926,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Draw multiple instances of a set of elements
                 /// </summary>
@@ -9172,7 +8977,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Draw multiple instances of a set of elements
                 /// </summary>
@@ -9225,7 +9029,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -9273,7 +9076,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -9330,7 +9132,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -9387,7 +9188,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -9444,7 +9244,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -9502,7 +9301,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -9551,7 +9349,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -9609,7 +9406,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -9667,7 +9463,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -9725,7 +9520,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Render primitives from array data
                 /// </summary>
@@ -9784,7 +9578,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Enable or disable server-side GL capabilities
                 /// </summary>
@@ -9812,7 +9605,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Enable or disable a generic vertex attribute array
                 /// </summary>
@@ -9835,7 +9627,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Enable or disable a generic vertex attribute array
                 /// </summary>
@@ -9889,7 +9680,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Create a new sync object and insert it into the GL command stream
                 /// </summary>
@@ -9917,7 +9707,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Block until all GL execution is complete
                 /// </summary>
@@ -9935,7 +9724,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Force execution of GL commands in finite time
                 /// </summary>
@@ -9953,7 +9741,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Indicate modifications to a range of a mapped buffer
                 /// </summary>
@@ -9986,7 +9773,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Attach a renderbuffer as a logical buffer to the currently bound framebuffer object
                 /// </summary>
@@ -10024,7 +9810,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Attach a renderbuffer as a logical buffer to the currently bound framebuffer object
                 /// </summary>
@@ -10094,7 +9879,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Attach a single layer of a texture to a framebuffer
                 /// </summary>
@@ -10137,7 +9921,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Attach a single layer of a texture to a framebuffer
                 /// </summary>
@@ -10181,7 +9964,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Define front- and back-facing polygons
                 /// </summary>
@@ -10204,7 +9986,40 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+                /// <summary>[requires: v2.0 and ES_VERSION_2_0]
+                /// Generate buffer object names
+                /// </summary>
+                /// <param name="n">
+                /// <para>
+                /// Specifies the number of buffer object names to be generated.
+                /// </para>
+                /// </param>
+                /// <param name="buffers">
+                /// <para>
+                /// Specifies an array in which the generated buffer object names are stored.
+                /// </para>
+                /// </param>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGenBuffers")]
+        public static 
+        UInt32 GenBuffers()
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 buffers;
+            Int32 = 1;
+            UInt32* buffers_ptr = buffers;
+            Delegates.glGenBuffers();
+            return buffers;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate buffer object names
                 /// </summary>
@@ -10238,7 +10053,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate buffer object names
                 /// </summary>
@@ -10273,7 +10087,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate buffer object names
                 /// </summary>
@@ -10302,7 +10115,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate buffer object names
                 /// </summary>
@@ -10337,7 +10149,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate buffer object names
                 /// </summary>
@@ -10373,7 +10184,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate buffer object names
                 /// </summary>
@@ -10402,7 +10212,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate mipmaps for a specified texture target
                 /// </summary>
@@ -10425,7 +10234,40 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+                /// <summary>[requires: v2.0 and ES_VERSION_2_0]
+                /// Generate framebuffer object names
+                /// </summary>
+                /// <param name="n">
+                /// <para>
+                /// Specifies the number of framebuffer object names to generate.
+                /// </para>
+                /// </param>
+                /// <param name="ids">
+                /// <para>
+                /// Specifies an array in which the generated framebuffer object names are stored.
+                /// </para>
+                /// </param>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGenFramebuffers")]
+        public static 
+        UInt32 GenFramebuffers()
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 framebuffers;
+            Int32 = 1;
+            UInt32* framebuffers_ptr = framebuffers;
+            Delegates.glGenFramebuffers();
+            return framebuffers;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate framebuffer object names
                 /// </summary>
@@ -10459,7 +10301,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate framebuffer object names
                 /// </summary>
@@ -10494,7 +10335,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate framebuffer object names
                 /// </summary>
@@ -10523,7 +10363,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate framebuffer object names
                 /// </summary>
@@ -10558,7 +10397,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate framebuffer object names
                 /// </summary>
@@ -10594,7 +10432,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate framebuffer object names
                 /// </summary>
@@ -10623,7 +10460,40 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+                /// <summary>[requires: v3.0 and ES_VERSION_3_0]
+                /// Generate query object names
+                /// </summary>
+                /// <param name="n">
+                /// <para>
+                /// Specifies the number of query object names to be generated.
+                /// </para>
+                /// </param>
+                /// <param name="ids">
+                /// <para>
+                /// Specifies an array in which the generated query object names are stored.
+                /// </para>
+                /// </param>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGenQueries")]
+        public static 
+        UInt32 GenQueries()
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 ids;
+            Int32 = 1;
+            UInt32* ids_ptr = ids;
+            Delegates.glGenQueries();
+            return ids;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate query object names
                 /// </summary>
@@ -10657,7 +10527,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate query object names
                 /// </summary>
@@ -10692,7 +10561,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate query object names
                 /// </summary>
@@ -10721,7 +10589,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate query object names
                 /// </summary>
@@ -10756,7 +10623,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate query object names
                 /// </summary>
@@ -10792,7 +10658,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate query object names
                 /// </summary>
@@ -10821,7 +10686,40 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+                /// <summary>[requires: v2.0 and ES_VERSION_2_0]
+                /// Generate renderbuffer object names
+                /// </summary>
+                /// <param name="n">
+                /// <para>
+                /// Specifies the number of renderbuffer object names to generate.
+                /// </para>
+                /// </param>
+                /// <param name="renderbuffers">
+                /// <para>
+                /// Specifies an array in which the generated renderbuffer object names are stored.
+                /// </para>
+                /// </param>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGenRenderbuffers")]
+        public static 
+        UInt32 GenRenderbuffers()
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 renderbuffers;
+            Int32 = 1;
+            UInt32* renderbuffers_ptr = renderbuffers;
+            Delegates.glGenRenderbuffers();
+            return renderbuffers;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate renderbuffer object names
                 /// </summary>
@@ -10855,7 +10753,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate renderbuffer object names
                 /// </summary>
@@ -10890,7 +10787,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate renderbuffer object names
                 /// </summary>
@@ -10919,7 +10815,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate renderbuffer object names
                 /// </summary>
@@ -10954,7 +10849,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate renderbuffer object names
                 /// </summary>
@@ -10990,7 +10884,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate renderbuffer object names
                 /// </summary>
@@ -11019,7 +10912,40 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+                /// <summary>[requires: v3.0 and ES_VERSION_3_0]
+                /// Generate sampler object names
+                /// </summary>
+                /// <param name="n">
+                /// <para>
+                /// Specifies the number of sampler object names to generate.
+                /// </para>
+                /// </param>
+                /// <param name="samplers">
+                /// <para>
+                /// Specifies an array in which the generated sampler object names are stored.
+                /// </para>
+                /// </param>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGenSamplers")]
+        public static 
+        UInt32 GenSamplers()
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 samplers;
+            Int32 = 1;
+            UInt32* samplers_ptr = samplers;
+            Delegates.glGenSamplers();
+            return samplers;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate sampler object names
                 /// </summary>
@@ -11053,7 +10979,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate sampler object names
                 /// </summary>
@@ -11088,7 +11013,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate sampler object names
                 /// </summary>
@@ -11117,7 +11041,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate sampler object names
                 /// </summary>
@@ -11152,7 +11075,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate sampler object names
                 /// </summary>
@@ -11188,7 +11110,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate sampler object names
                 /// </summary>
@@ -11217,7 +11138,40 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+                /// <summary>[requires: v2.0 and ES_VERSION_2_0]
+                /// Generate texture names
+                /// </summary>
+                /// <param name="n">
+                /// <para>
+                /// Specifies the number of texture names to be generated.
+                /// </para>
+                /// </param>
+                /// <param name="textures">
+                /// <para>
+                /// Specifies an array in which the generated texture names are stored.
+                /// </para>
+                /// </param>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGenTextures")]
+        public static 
+        UInt32 GenTextures()
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 textures;
+            Int32 = 1;
+            UInt32* textures_ptr = textures;
+            Delegates.glGenTextures();
+            return textures;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate texture names
                 /// </summary>
@@ -11251,7 +11205,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate texture names
                 /// </summary>
@@ -11286,7 +11239,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate texture names
                 /// </summary>
@@ -11315,7 +11267,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate texture names
                 /// </summary>
@@ -11350,7 +11301,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate texture names
                 /// </summary>
@@ -11386,7 +11336,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Generate texture names
                 /// </summary>
@@ -11415,7 +11364,40 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+                /// <summary>[requires: v3.0 and ES_VERSION_3_0]
+                /// Reserve transform feedback object names
+                /// </summary>
+                /// <param name="n">
+                /// <para>
+                /// Specifies the number of transform feedback object names to reserve.
+                /// </para>
+                /// </param>
+                /// <param name="ids">
+                /// <para>
+                /// Specifies an array of into which the reserved names will be written.
+                /// </para>
+                /// </param>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGenTransformFeedbacks")]
+        public static 
+        UInt32 GenTransformFeedbacks()
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 ids;
+            Int32 = 1;
+            UInt32* ids_ptr = ids;
+            Delegates.glGenTransformFeedbacks();
+            return ids;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Reserve transform feedback object names
                 /// </summary>
@@ -11449,7 +11431,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Reserve transform feedback object names
                 /// </summary>
@@ -11484,7 +11465,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Reserve transform feedback object names
                 /// </summary>
@@ -11513,7 +11493,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Reserve transform feedback object names
                 /// </summary>
@@ -11548,7 +11527,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Reserve transform feedback object names
                 /// </summary>
@@ -11584,7 +11562,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Reserve transform feedback object names
                 /// </summary>
@@ -11613,7 +11590,40 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+                /// <summary>[requires: v3.0 and ES_VERSION_3_0]
+                /// Generate vertex array object names
+                /// </summary>
+                /// <param name="n">
+                /// <para>
+                /// Specifies the number of vertex array object names to generate.
+                /// </para>
+                /// </param>
+                /// <param name="arrays">
+                /// <para>
+                /// Specifies an array in which the generated vertex array object names are stored.
+                /// </para>
+                /// </param>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGenVertexArrays")]
+        public static 
+        UInt32 GenVertexArrays()
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 arrays;
+            Int32 = 1;
+            UInt32* arrays_ptr = arrays;
+            Delegates.glGenVertexArrays();
+            return arrays;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate vertex array object names
                 /// </summary>
@@ -11647,7 +11657,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate vertex array object names
                 /// </summary>
@@ -11682,7 +11691,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate vertex array object names
                 /// </summary>
@@ -11711,7 +11719,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate vertex array object names
                 /// </summary>
@@ -11746,7 +11753,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate vertex array object names
                 /// </summary>
@@ -11782,7 +11788,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Generate vertex array object names
                 /// </summary>
@@ -11811,7 +11816,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns information about an active attribute variable for the specified program object
                 /// </summary>
@@ -11875,7 +11879,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns information about an active attribute variable for the specified program object
                 /// </summary>
@@ -11929,7 +11932,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns information about an active attribute variable for the specified program object
                 /// </summary>
@@ -11994,7 +11996,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns information about an active attribute variable for the specified program object
                 /// </summary>
@@ -12048,7 +12049,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns information about an active uniform variable for the specified program object
                 /// </summary>
@@ -12112,7 +12112,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns information about an active uniform variable for the specified program object
                 /// </summary>
@@ -12166,7 +12165,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns information about an active uniform variable for the specified program object
                 /// </summary>
@@ -12231,7 +12229,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns information about an active uniform variable for the specified program object
                 /// </summary>
@@ -12285,7 +12282,47 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetActiveUniformBlockiv")]
+        public static 
+        Int32 GetActiveUniformBlockiv(Int32 program, Int32 uniformBlockIndex, OpenTK.Graphics.ES30.ActiveUniformBlockParameter pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetActiveUniformBlockiv((UInt32)program, (UInt32)uniformBlockIndex, (OpenTK.Graphics.ES30.ActiveUniformBlockParameter)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetActiveUniformBlockiv")]
+        public static 
+        Int32 GetActiveUniformBlockiv(UInt32 program, UInt32 uniformBlockIndex, OpenTK.Graphics.ES30.ActiveUniformBlockParameter pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetActiveUniformBlockiv((UInt32)program, (UInt32)uniformBlockIndex, (OpenTK.Graphics.ES30.ActiveUniformBlockParameter)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Query information about an active uniform block
                 /// </summary>
@@ -12329,7 +12366,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Query information about an active uniform block
                 /// </summary>
@@ -12374,7 +12410,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Query information about an active uniform block
                 /// </summary>
@@ -12413,7 +12448,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Query information about an active uniform block
                 /// </summary>
@@ -12458,7 +12492,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Query information about an active uniform block
                 /// </summary>
@@ -12504,7 +12537,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Query information about an active uniform block
                 /// </summary>
@@ -12543,7 +12575,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve the name of an active uniform block
                 /// </summary>
@@ -12593,7 +12624,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve the name of an active uniform block
                 /// </summary>
@@ -12637,7 +12667,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve the name of an active uniform block
                 /// </summary>
@@ -12688,7 +12717,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve the name of an active uniform block
                 /// </summary>
@@ -12732,7 +12760,100 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+                /// <summary>[requires: v3.0 and ES_VERSION_3_0]
+                /// Returns information about several active uniform variables for the specified program object
+                /// </summary>
+                /// <param name="program">
+                /// <para>
+                /// Specifies the program object to be queried.
+                /// </para>
+                /// </param>
+                /// <param name="uniformCount">
+                /// <para>
+                /// Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.
+                /// </para>
+                /// </param>
+                /// <param name="uniformIndices">
+                /// <para>
+                /// Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.
+                /// </para>
+                /// </param>
+                /// <param name="pname">
+                /// <para>
+                /// Specifies the property of each uniform in uniformIndices that should be written into the corresponding element of params.
+                /// </para>
+                /// </param>
+                /// <param name="params">
+                /// <para>
+                /// Specifies the address of an array of uniformCount integers which are to receive the value of pname for each uniform in uniformIndices.
+                /// </para>
+                /// </param>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetActiveUniformsiv")]
+        public static 
+        unsafe Int32 GetActiveUniformsiv(Int32 program, Int32 uniformCount, Int32* uniformIndices, OpenTK.Graphics.ES30.ActiveUniformParameter pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetActiveUniformsiv((UInt32)program, (Int32)uniformCount, (UInt32*)uniformIndices, (OpenTK.Graphics.ES30.ActiveUniformParameter)pname);
+            return @params;
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+                /// <summary>[requires: v3.0 and ES_VERSION_3_0]
+                /// Returns information about several active uniform variables for the specified program object
+                /// </summary>
+                /// <param name="program">
+                /// <para>
+                /// Specifies the program object to be queried.
+                /// </para>
+                /// </param>
+                /// <param name="uniformCount">
+                /// <para>
+                /// Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.
+                /// </para>
+                /// </param>
+                /// <param name="uniformIndices">
+                /// <para>
+                /// Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.
+                /// </para>
+                /// </param>
+                /// <param name="pname">
+                /// <para>
+                /// Specifies the property of each uniform in uniformIndices that should be written into the corresponding element of params.
+                /// </para>
+                /// </param>
+                /// <param name="params">
+                /// <para>
+                /// Specifies the address of an array of uniformCount integers which are to receive the value of pname for each uniform in uniformIndices.
+                /// </para>
+                /// </param>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetActiveUniformsiv")]
+        public static 
+        unsafe Int32 GetActiveUniformsiv(UInt32 program, Int32 uniformCount, UInt32* uniformIndices, OpenTK.Graphics.ES30.ActiveUniformParameter pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetActiveUniformsiv((UInt32)program, (Int32)uniformCount, (UInt32*)uniformIndices, (OpenTK.Graphics.ES30.ActiveUniformParameter)pname);
+            return @params;
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Returns information about several active uniform variables for the specified program object
                 /// </summary>
@@ -12782,7 +12903,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Returns information about several active uniform variables for the specified program object
                 /// </summary>
@@ -12833,7 +12953,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Returns information about several active uniform variables for the specified program object
                 /// </summary>
@@ -12877,7 +12996,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Returns information about several active uniform variables for the specified program object
                 /// </summary>
@@ -12928,7 +13046,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Returns information about several active uniform variables for the specified program object
                 /// </summary>
@@ -12980,7 +13097,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Returns information about several active uniform variables for the specified program object
                 /// </summary>
@@ -13024,7 +13140,90 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+                /// <summary>[requires: v2.0 and ES_VERSION_2_0]
+                /// Returns the handles of the shader objects attached to a program object
+                /// </summary>
+                /// <param name="program">
+                /// <para>
+                /// Specifies the program object to be queried.
+                /// </para>
+                /// </param>
+                /// <param name="maxCount">
+                /// <para>
+                /// Specifies the size of the array for storing the returned object names.
+                /// </para>
+                /// </param>
+                /// <param name="count">
+                /// <para>
+                /// Returns the number of names actually returned in shaders.
+                /// </para>
+                /// </param>
+                /// <param name="shaders">
+                /// <para>
+                /// Specifies an array that is used to return the names of attached shader objects.
+                /// </para>
+                /// </param>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetAttachedShaders")]
+        public static 
+        unsafe UInt32 GetAttachedShaders(Int32 program, Int32 maxCount, [OutAttribute] Int32* count)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 shaders;
+            UInt32* shaders_ptr = shaders;
+            Delegates.glGetAttachedShaders((UInt32)program, (Int32)maxCount, (Int32*)count);
+            return shaders;
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+                /// <summary>[requires: v2.0 and ES_VERSION_2_0]
+                /// Returns the handles of the shader objects attached to a program object
+                /// </summary>
+                /// <param name="program">
+                /// <para>
+                /// Specifies the program object to be queried.
+                /// </para>
+                /// </param>
+                /// <param name="maxCount">
+                /// <para>
+                /// Specifies the size of the array for storing the returned object names.
+                /// </para>
+                /// </param>
+                /// <param name="count">
+                /// <para>
+                /// Returns the number of names actually returned in shaders.
+                /// </para>
+                /// </param>
+                /// <param name="shaders">
+                /// <para>
+                /// Specifies an array that is used to return the names of attached shader objects.
+                /// </para>
+                /// </param>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetAttachedShaders")]
+        public static 
+        unsafe UInt32 GetAttachedShaders(UInt32 program, Int32 maxCount, [OutAttribute] Int32* count)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 shaders;
+            UInt32* shaders_ptr = shaders;
+            Delegates.glGetAttachedShaders((UInt32)program, (Int32)maxCount, (Int32*)count);
+            return shaders;
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the handles of the shader objects attached to a program object
                 /// </summary>
@@ -13070,7 +13269,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the handles of the shader objects attached to a program object
                 /// </summary>
@@ -13117,7 +13315,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the handles of the shader objects attached to a program object
                 /// </summary>
@@ -13156,7 +13353,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the handles of the shader objects attached to a program object
                 /// </summary>
@@ -13203,7 +13399,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the handles of the shader objects attached to a program object
                 /// </summary>
@@ -13251,7 +13446,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the handles of the shader objects attached to a program object
                 /// </summary>
@@ -13290,7 +13484,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the location of an attribute variable
                 /// </summary>
@@ -13318,7 +13511,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the location of an attribute variable
                 /// </summary>
@@ -13345,6 +13537,26 @@ namespace OpenTK.Graphics.ES30
             #if DEBUG
             }
             #endif
+        }
+
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetBooleanv")]
+        public static 
+        bool GetBooleanv(OpenTK.Graphics.ES30.GetPName pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            bool data;
+            bool* data_ptr = data;
+            Delegates.glGetBooleanv((OpenTK.Graphics.ES30.GetPName)pname);
+            return data;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
         }
 
         /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
@@ -13406,7 +13618,26 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetBufferParameteri64v")]
+        public static 
+        Int64 GetBufferParameteri64v(OpenTK.Graphics.ES30.BufferTarget target, OpenTK.Graphics.ES30.BufferParameterName pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int64 @params;
+            Int64* @params_ptr = @params;
+            Delegates.glGetBufferParameteri64v((OpenTK.Graphics.ES30.BufferTarget)target, (OpenTK.Graphics.ES30.BufferParameterName)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return parameters of a buffer object
                 /// </summary>
@@ -13445,7 +13676,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return parameters of a buffer object
                 /// </summary>
@@ -13485,7 +13715,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return parameters of a buffer object
                 /// </summary>
@@ -13519,7 +13748,43 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+                /// <summary>[requires: v2.0 and ES_VERSION_2_0]
+                /// Return parameters of a buffer object
+                /// </summary>
+                /// <param name="target">
+                /// <para>
+                /// Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_PIXEL_PACK_BUFFER, or GL_PIXEL_UNPACK_BUFFER.
+                /// </para>
+                /// </param>
+                /// <param name="value">
+                /// <para>
+                /// Specifies the symbolic name of a buffer object parameter. Accepted values are GL_BUFFER_ACCESS, GL_BUFFER_MAPPED, GL_BUFFER_SIZE, or GL_BUFFER_USAGE.
+                /// </para>
+                /// </param>
+                /// <param name="data">
+                /// <para>
+                /// Returns the requested parameter.
+                /// </para>
+                /// </param>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetBufferParameteriv")]
+        public static 
+        Int32 GetBufferParameteriv(OpenTK.Graphics.ES30.BufferTarget target, OpenTK.Graphics.ES30.BufferParameterName pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetBufferParameteriv((OpenTK.Graphics.ES30.BufferTarget)target, (OpenTK.Graphics.ES30.BufferParameterName)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return parameters of a buffer object
                 /// </summary>
@@ -13558,7 +13823,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return parameters of a buffer object
                 /// </summary>
@@ -13598,7 +13862,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return parameters of a buffer object
                 /// </summary>
@@ -13632,7 +13895,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return the pointer to a mapped buffer object's data store
                 /// </summary>
@@ -13665,7 +13927,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return the pointer to a mapped buffer object's data store
                 /// </summary>
@@ -13707,7 +13968,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return the pointer to a mapped buffer object's data store
                 /// </summary>
@@ -13749,7 +14009,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return the pointer to a mapped buffer object's data store
                 /// </summary>
@@ -13791,7 +14050,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return the pointer to a mapped buffer object's data store
                 /// </summary>
@@ -13834,7 +14092,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve messages from the debug message log
                 /// </summary>
@@ -13902,7 +14159,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve messages from the debug message log
                 /// </summary>
@@ -13976,7 +14232,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve messages from the debug message log
                 /// </summary>
@@ -14035,7 +14290,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve messages from the debug message log
                 /// </summary>
@@ -14104,7 +14358,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve messages from the debug message log
                 /// </summary>
@@ -14179,7 +14432,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve messages from the debug message log
                 /// </summary>
@@ -14238,7 +14490,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return error information
                 /// </summary>
@@ -14247,6 +14498,26 @@ namespace OpenTK.Graphics.ES30
         OpenTK.Graphics.ES30.ErrorCode GetError()
         {
             return Delegates.glGetError();
+        }
+
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetFloatv")]
+        public static 
+        Single GetFloatv(OpenTK.Graphics.ES30.GetPName pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Single data;
+            Single* data_ptr = data;
+            Delegates.glGetFloatv((OpenTK.Graphics.ES30.GetPName)pname);
+            return data;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
         }
 
         /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
@@ -14308,7 +14579,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Query the bindings of color numbers to user-defined varying out variables
                 /// </summary>
@@ -14336,7 +14606,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Query the bindings of color numbers to user-defined varying out variables
                 /// </summary>
@@ -14365,7 +14634,26 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetFramebufferAttachmentParameteriv")]
+        public static 
+        Int32 GetFramebufferAttachmentParameteriv(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferAttachment attachment, OpenTK.Graphics.ES30.FramebufferParameterName pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetFramebufferAttachmentParameteriv((OpenTK.Graphics.ES30.FramebufferTarget)target, (OpenTK.Graphics.ES30.FramebufferAttachment)attachment, (OpenTK.Graphics.ES30.FramebufferParameterName)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Retrieve information about attachments of a bound framebuffer object
                 /// </summary>
@@ -14409,7 +14697,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Retrieve information about attachments of a bound framebuffer object
                 /// </summary>
@@ -14454,7 +14741,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Retrieve information about attachments of a bound framebuffer object
                 /// </summary>
@@ -14491,6 +14777,27 @@ namespace OpenTK.Graphics.ES30
             #if DEBUG
             }
             #endif
+        }
+
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetInteger64i_v")]
+        public static 
+        Int64 GetInteger64i_v(OpenTK.Graphics.ES30.GetIndexedPName target)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int64 data;
+            UInt32 = 1;
+            Int64* data_ptr = data;
+            Delegates.glGetInteger64i_v((OpenTK.Graphics.ES30.GetIndexedPName)target);
+            return data;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
         }
 
         /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
@@ -14616,6 +14923,26 @@ namespace OpenTK.Graphics.ES30
         /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
         [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetInteger64v")]
         public static 
+        Int64 GetInteger64v(OpenTK.Graphics.ES30.GetPName pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int64 data;
+            Int64* data_ptr = data;
+            Delegates.glGetInteger64v((OpenTK.Graphics.ES30.GetPName)pname);
+            return data;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetInteger64v")]
+        public static 
         void GetInteger64(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int64[] data)
         {
             #if DEBUG
@@ -14670,6 +14997,27 @@ namespace OpenTK.Graphics.ES30
             #if DEBUG
             }
             #endif
+        }
+
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetIntegeri_v")]
+        public static 
+        Int32 GetIntegeri_v(OpenTK.Graphics.ES30.GetIndexedPName target)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 data;
+            UInt32 = 1;
+            Int32* data_ptr = data;
+            Delegates.glGetIntegeri_v((OpenTK.Graphics.ES30.GetIndexedPName)target);
+            return data;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
         }
 
         /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
@@ -14795,6 +15143,26 @@ namespace OpenTK.Graphics.ES30
         /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
         [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetIntegerv")]
         public static 
+        Int32 GetIntegerv(OpenTK.Graphics.ES30.GetPName pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 data;
+            Int32* data_ptr = data;
+            Delegates.glGetIntegerv((OpenTK.Graphics.ES30.GetPName)pname);
+            return data;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetIntegerv")]
+        public static 
         void GetInteger(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Int32[] data)
         {
             #if DEBUG
@@ -14851,7 +15219,54 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+                /// <summary>[requires: v3.0 and ES_VERSION_3_0]
+                /// Retrieve information about implementation-dependent support for internal formats
+                /// </summary>
+                /// <param name="target">
+                /// <para>
+                /// Indicates the usage of the internal format. target must be GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_RECTANGLE, GL_TEXTURE_BUFFER, GL_RENDERBUFFER, GL_TEXTURE_2D_MULTISAMPLE or GL_TEXTURE_2D_MULTISAMPLE_ARRAY.
+                /// </para>
+                /// </param>
+                /// <param name="internalformat">
+                /// <para>
+                /// Specifies the internal format about which to retrieve information.
+                /// </para>
+                /// </param>
+                /// <param name="pname">
+                /// <para>
+                /// Specifies the type of information to query.
+                /// </para>
+                /// </param>
+                /// <param name="bufSize">
+                /// <para>
+                /// Specifies the maximum number of basic machine units that may be written to params by the function.
+                /// </para>
+                /// </param>
+                /// <param name="params">
+                /// <para>
+                /// Specifies the address of a variable into which to write the retrieved information.
+                /// </para>
+                /// </param>
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetInternalformativ")]
+        public static 
+        Int32 GetInternalformativ(OpenTK.Graphics.ES30.RenderbufferTarget target, OpenTK.Graphics.ES30.RenderbufferInternalFormat internalformat, OpenTK.Graphics.ES30.InternalFormatParameter pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32 = 1;
+            Int32* @params_ptr = @params;
+            Delegates.glGetInternalformativ((OpenTK.Graphics.ES30.RenderbufferTarget)target, (OpenTK.Graphics.ES30.RenderbufferInternalFormat)internalformat, (OpenTK.Graphics.ES30.InternalFormatParameter)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve information about implementation-dependent support for internal formats
                 /// </summary>
@@ -14900,7 +15315,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve information about implementation-dependent support for internal formats
                 /// </summary>
@@ -14950,7 +15364,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve information about implementation-dependent support for internal formats
                 /// </summary>
@@ -14994,7 +15407,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a named object identified within a namespace
                 /// </summary>
@@ -15043,7 +15455,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a named object identified within a namespace
                 /// </summary>
@@ -15093,7 +15504,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a named object identified within a namespace
                 /// </summary>
@@ -15137,7 +15547,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a named object identified within a namespace
                 /// </summary>
@@ -15187,7 +15596,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a named object identified within a namespace
                 /// </summary>
@@ -15238,7 +15646,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a named object identified within a namespace
                 /// </summary>
@@ -15282,7 +15689,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -15326,7 +15732,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -15371,7 +15776,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -15410,7 +15814,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -15463,7 +15866,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -15517,7 +15919,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -15565,7 +15966,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -15618,7 +16018,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -15672,7 +16071,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -15720,7 +16118,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -15773,7 +16170,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -15827,7 +16223,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -15875,7 +16270,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -15929,7 +16323,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -15984,7 +16377,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Retrieve the label of a sync object identified by a pointer
                 /// </summary>
@@ -16033,7 +16425,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Return the address of the specified pointer
                 /// </summary>
@@ -16061,7 +16452,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Return the address of the specified pointer
                 /// </summary>
@@ -16098,7 +16488,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Return the address of the specified pointer
                 /// </summary>
@@ -16135,7 +16524,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Return the address of the specified pointer
                 /// </summary>
@@ -16172,7 +16560,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Return the address of the specified pointer
                 /// </summary>
@@ -16210,7 +16597,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -16262,7 +16648,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -16323,7 +16708,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -16384,7 +16768,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -16445,7 +16828,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -16507,7 +16889,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -16551,7 +16932,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -16604,7 +16984,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -16657,7 +17036,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -16710,7 +17088,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -16764,7 +17141,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -16817,7 +17193,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -16879,7 +17254,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -16941,7 +17315,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -17003,7 +17376,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -17066,7 +17438,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -17110,7 +17481,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -17163,7 +17533,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -17216,7 +17585,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -17269,7 +17637,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a binary representation of a program object's compiled and linked executable source
                 /// </summary>
@@ -17323,7 +17690,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the information log for a program object
                 /// </summary>
@@ -17368,7 +17734,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the information log for a program object
                 /// </summary>
@@ -17407,7 +17772,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the information log for a program object
                 /// </summary>
@@ -17453,7 +17817,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the information log for a program object
                 /// </summary>
@@ -17492,7 +17855,47 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetProgramiv")]
+        public static 
+        Int32 GetProgramiv(Int32 program, OpenTK.Graphics.ES30.ProgramParameter pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetProgramiv((UInt32)program, (OpenTK.Graphics.ES30.ProgramParameter)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetProgramiv")]
+        public static 
+        Int32 GetProgramiv(UInt32 program, OpenTK.Graphics.ES30.ProgramParameter pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetProgramiv((UInt32)program, (OpenTK.Graphics.ES30.ProgramParameter)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns a parameter from a program object
                 /// </summary>
@@ -17531,7 +17934,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns a parameter from a program object
                 /// </summary>
@@ -17571,7 +17973,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns a parameter from a program object
                 /// </summary>
@@ -17605,7 +18006,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns a parameter from a program object
                 /// </summary>
@@ -17645,7 +18045,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns a parameter from a program object
                 /// </summary>
@@ -17686,7 +18085,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns a parameter from a program object
                 /// </summary>
@@ -17720,7 +18118,43 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+                /// <summary>[requires: v3.0 and ES_VERSION_3_0]
+                /// Return parameters of a query object target
+                /// </summary>
+                /// <param name="target">
+                /// <para>
+                /// Specifies a query object target. Must be GL_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED_CONSERVATIVE GL_PRIMITIVES_GENERATED, GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, GL_TIME_ELAPSED, or GL_TIMESTAMP.
+                /// </para>
+                /// </param>
+                /// <param name="pname">
+                /// <para>
+                /// Specifies the symbolic name of a query object target parameter. Accepted values are GL_CURRENT_QUERY or GL_QUERY_COUNTER_BITS.
+                /// </para>
+                /// </param>
+                /// <param name="params">
+                /// <para>
+                /// Returns the requested data.
+                /// </para>
+                /// </param>
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetQueryiv")]
+        public static 
+        Int32 GetQueryiv(OpenTK.Graphics.ES30.QueryTarget target, OpenTK.Graphics.ES30.GetQueryParam pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetQueryiv((OpenTK.Graphics.ES30.QueryTarget)target, (OpenTK.Graphics.ES30.GetQueryParam)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return parameters of a query object target
                 /// </summary>
@@ -17759,7 +18193,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return parameters of a query object target
                 /// </summary>
@@ -17799,7 +18232,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return parameters of a query object target
                 /// </summary>
@@ -17833,7 +18265,48 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetQueryObjectuiv")]
+        public static 
+        UInt32 GetQueryObjectuiv(Int32 id, OpenTK.Graphics.ES30.GetQueryObjectParam pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 @params;
+            UInt32* @params_ptr = @params;
+            Delegates.glGetQueryObjectuiv((UInt32)id, (OpenTK.Graphics.ES30.GetQueryObjectParam)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetQueryObjectuiv")]
+        public static 
+        UInt32 GetQueryObjectuiv(UInt32 id, OpenTK.Graphics.ES30.GetQueryObjectParam pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 @params;
+            UInt32* @params_ptr = @params;
+            Delegates.glGetQueryObjectuiv((UInt32)id, (OpenTK.Graphics.ES30.GetQueryObjectParam)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return parameters of a query object
                 /// </summary>
@@ -17872,7 +18345,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return parameters of a query object
                 /// </summary>
@@ -17912,7 +18384,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return parameters of a query object
                 /// </summary>
@@ -17946,7 +18417,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return parameters of a query object
                 /// </summary>
@@ -17986,7 +18456,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return parameters of a query object
                 /// </summary>
@@ -18027,7 +18496,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return parameters of a query object
                 /// </summary>
@@ -18061,7 +18529,26 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetRenderbufferParameteriv")]
+        public static 
+        Int32 GetRenderbufferParameteriv(OpenTK.Graphics.ES30.RenderbufferTarget target, OpenTK.Graphics.ES30.RenderbufferParameterName pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetRenderbufferParameteriv((OpenTK.Graphics.ES30.RenderbufferTarget)target, (OpenTK.Graphics.ES30.RenderbufferParameterName)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Retrieve information about a bound renderbuffer object
                 /// </summary>
@@ -18100,7 +18587,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Retrieve information about a bound renderbuffer object
                 /// </summary>
@@ -18140,7 +18626,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Retrieve information about a bound renderbuffer object
                 /// </summary>
@@ -18174,7 +18659,47 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetSamplerParameterfv")]
+        public static 
+        Single GetSamplerParameterfv(Int32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Single @params;
+            Single* @params_ptr = @params;
+            Delegates.glGetSamplerParameterfv((UInt32)sampler, (OpenTK.Graphics.ES30.SamplerParameterName)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetSamplerParameterfv")]
+        public static 
+        Single GetSamplerParameterfv(UInt32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Single @params;
+            Single* @params_ptr = @params;
+            Delegates.glGetSamplerParameterfv((UInt32)sampler, (OpenTK.Graphics.ES30.SamplerParameterName)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return sampler parameter values
                 /// </summary>
@@ -18213,7 +18738,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return sampler parameter values
                 /// </summary>
@@ -18253,7 +18777,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return sampler parameter values
                 /// </summary>
@@ -18287,7 +18810,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return sampler parameter values
                 /// </summary>
@@ -18327,7 +18849,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return sampler parameter values
                 /// </summary>
@@ -18368,7 +18889,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return sampler parameter values
                 /// </summary>
@@ -18402,7 +18922,47 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetSamplerParameteriv")]
+        public static 
+        Int32 GetSamplerParameteriv(Int32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetSamplerParameteriv((UInt32)sampler, (OpenTK.Graphics.ES30.SamplerParameterName)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetSamplerParameteriv")]
+        public static 
+        Int32 GetSamplerParameteriv(UInt32 sampler, OpenTK.Graphics.ES30.SamplerParameterName pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetSamplerParameteriv((UInt32)sampler, (OpenTK.Graphics.ES30.SamplerParameterName)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return sampler parameter values
                 /// </summary>
@@ -18441,7 +19001,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return sampler parameter values
                 /// </summary>
@@ -18481,7 +19040,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return sampler parameter values
                 /// </summary>
@@ -18515,7 +19073,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return sampler parameter values
                 /// </summary>
@@ -18555,7 +19112,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return sampler parameter values
                 /// </summary>
@@ -18596,7 +19152,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return sampler parameter values
                 /// </summary>
@@ -18630,7 +19185,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the information log for a shader object
                 /// </summary>
@@ -18675,7 +19229,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the information log for a shader object
                 /// </summary>
@@ -18714,7 +19267,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the information log for a shader object
                 /// </summary>
@@ -18760,7 +19312,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the information log for a shader object
                 /// </summary>
@@ -18799,7 +19350,47 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetShaderiv")]
+        public static 
+        Int32 GetShaderiv(Int32 shader, OpenTK.Graphics.ES30.ShaderParameter pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetShaderiv((UInt32)shader, (OpenTK.Graphics.ES30.ShaderParameter)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetShaderiv")]
+        public static 
+        Int32 GetShaderiv(UInt32 shader, OpenTK.Graphics.ES30.ShaderParameter pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetShaderiv((UInt32)shader, (OpenTK.Graphics.ES30.ShaderParameter)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns a parameter from a shader object
                 /// </summary>
@@ -18838,7 +19429,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns a parameter from a shader object
                 /// </summary>
@@ -18878,7 +19468,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns a parameter from a shader object
                 /// </summary>
@@ -18912,7 +19501,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns a parameter from a shader object
                 /// </summary>
@@ -18952,7 +19540,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns a parameter from a shader object
                 /// </summary>
@@ -18993,7 +19580,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns a parameter from a shader object
                 /// </summary>
@@ -19027,7 +19613,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Retrieve the range and precision for numeric formats supported by the shader compiler
                 /// </summary>
@@ -19072,7 +19657,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Retrieve the range and precision for numeric formats supported by the shader compiler
                 /// </summary>
@@ -19119,7 +19703,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Retrieve the range and precision for numeric formats supported by the shader compiler
                 /// </summary>
@@ -19158,7 +19741,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the source code string from a shader object
                 /// </summary>
@@ -19203,7 +19785,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the source code string from a shader object
                 /// </summary>
@@ -19242,7 +19823,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the source code string from a shader object
                 /// </summary>
@@ -19288,7 +19868,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the source code string from a shader object
                 /// </summary>
@@ -19327,7 +19906,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return a string describing the current GL connection
                 /// </summary>
@@ -19355,7 +19933,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a string describing the current GL connection
                 /// </summary>
@@ -19383,7 +19960,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Return a string describing the current GL connection
                 /// </summary>
@@ -19412,7 +19988,26 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetSynciv")]
+        public static 
+        unsafe Int32 GetSynciv(IntPtr sync, OpenTK.Graphics.ES30.SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32* length)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 values;
+            Int32* values_ptr = values;
+            Delegates.glGetSynciv((IntPtr)sync, (OpenTK.Graphics.ES30.SyncParameterName)pname, (Int32)bufSize, (Int32*)length);
+            return values;
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Query the properties of a sync object
                 /// </summary>
@@ -19463,7 +20058,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Query the properties of a sync object
                 /// </summary>
@@ -19515,7 +20109,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Query the properties of a sync object
                 /// </summary>
@@ -19559,7 +20152,26 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetTexParameterfv")]
+        public static 
+        Single GetTexParameterfv(OpenTK.Graphics.ES30.TextureTarget target, OpenTK.Graphics.ES30.GetTextureParameterName pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Single @params;
+            Single* @params_ptr = @params;
+            Delegates.glGetTexParameterfv((OpenTK.Graphics.ES30.TextureTarget)target, (OpenTK.Graphics.ES30.GetTextureParameterName)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return texture parameter values
                 /// </summary>
@@ -19598,7 +20210,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return texture parameter values
                 /// </summary>
@@ -19638,7 +20249,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return texture parameter values
                 /// </summary>
@@ -19672,7 +20282,26 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetTexParameteriv")]
+        public static 
+        Int32 GetTexParameteriv(OpenTK.Graphics.ES30.TextureTarget target, OpenTK.Graphics.ES30.GetTextureParameterName pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetTexParameteriv((OpenTK.Graphics.ES30.TextureTarget)target, (OpenTK.Graphics.ES30.GetTextureParameterName)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return texture parameter values
                 /// </summary>
@@ -19711,7 +20340,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return texture parameter values
                 /// </summary>
@@ -19751,7 +20379,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return texture parameter values
                 /// </summary>
@@ -19785,7 +20412,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve information about varying variables selected for transform feedback
                 /// </summary>
@@ -19849,7 +20475,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve information about varying variables selected for transform feedback
                 /// </summary>
@@ -19903,7 +20528,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve information about varying variables selected for transform feedback
                 /// </summary>
@@ -19968,7 +20592,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve information about varying variables selected for transform feedback
                 /// </summary>
@@ -20022,7 +20645,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve the index of a named uniform block
                 /// </summary>
@@ -20050,7 +20672,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve the index of a named uniform block
                 /// </summary>
@@ -20079,7 +20700,49 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformfv")]
+        public static 
+        Single GetUniformfv(Int32 program)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Single @params;
+            Int32 = 1;
+            Single* @params_ptr = @params;
+            Delegates.glGetUniformfv((UInt32)program);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformfv")]
+        public static 
+        Single GetUniformfv(UInt32 program)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Single @params;
+            Int32 = 1;
+            Single* @params_ptr = @params;
+            Delegates.glGetUniformfv((UInt32)program);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20118,7 +20781,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20158,7 +20820,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20192,7 +20853,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20232,7 +20892,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20273,7 +20932,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20307,7 +20965,92 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+                /// <summary>[requires: v3.0 and ES_VERSION_3_0]
+                /// Retrieve the index of a named uniform block
+                /// </summary>
+                /// <param name="program">
+                /// <para>
+                /// Specifies the name of a program containing uniforms whose indices to query.
+                /// </para>
+                /// </param>
+                /// <param name="uniformCount">
+                /// <para>
+                /// Specifies the number of uniforms whose indices to query.
+                /// </para>
+                /// </param>
+                /// <param name="uniformNames">
+                /// <para>
+                /// Specifies the address of an array of pointers to buffers containing the names of the queried uniforms.
+                /// </para>
+                /// </param>
+                /// <param name="uniformIndices">
+                /// <para>
+                /// Specifies the address of an array that will receive the indices of the uniforms.
+                /// </para>
+                /// </param>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetUniformIndices")]
+        public static 
+        UInt32 GetUniformIndices(Int32 program, Int32 uniformCount, String[] uniformNames)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 uniformIndices;
+            UInt32* uniformIndices_ptr = uniformIndices;
+            Delegates.glGetUniformIndices((UInt32)program, (Int32)uniformCount, (String[])uniformNames);
+            return uniformIndices;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+                /// <summary>[requires: v3.0 and ES_VERSION_3_0]
+                /// Retrieve the index of a named uniform block
+                /// </summary>
+                /// <param name="program">
+                /// <para>
+                /// Specifies the name of a program containing uniforms whose indices to query.
+                /// </para>
+                /// </param>
+                /// <param name="uniformCount">
+                /// <para>
+                /// Specifies the number of uniforms whose indices to query.
+                /// </para>
+                /// </param>
+                /// <param name="uniformNames">
+                /// <para>
+                /// Specifies the address of an array of pointers to buffers containing the names of the queried uniforms.
+                /// </para>
+                /// </param>
+                /// <param name="uniformIndices">
+                /// <para>
+                /// Specifies the address of an array that will receive the indices of the uniforms.
+                /// </para>
+                /// </param>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetUniformIndices")]
+        public static 
+        UInt32 GetUniformIndices(UInt32 program, Int32 uniformCount, String[] uniformNames)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 uniformIndices;
+            UInt32* uniformIndices_ptr = uniformIndices;
+            Delegates.glGetUniformIndices((UInt32)program, (Int32)uniformCount, (String[])uniformNames);
+            return uniformIndices;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve the index of a named uniform block
                 /// </summary>
@@ -20351,7 +21094,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve the index of a named uniform block
                 /// </summary>
@@ -20396,7 +21138,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve the index of a named uniform block
                 /// </summary>
@@ -20435,7 +21176,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve the index of a named uniform block
                 /// </summary>
@@ -20480,7 +21220,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve the index of a named uniform block
                 /// </summary>
@@ -20526,7 +21265,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Retrieve the index of a named uniform block
                 /// </summary>
@@ -20565,7 +21303,49 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformiv")]
+        public static 
+        Int32 GetUniformiv(Int32 program)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32 = 1;
+            Int32* @params_ptr = @params;
+            Delegates.glGetUniformiv((UInt32)program);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetUniformiv")]
+        public static 
+        Int32 GetUniformiv(UInt32 program)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32 = 1;
+            Int32* @params_ptr = @params;
+            Delegates.glGetUniformiv((UInt32)program);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20604,7 +21384,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20644,7 +21423,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20678,7 +21456,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20718,7 +21495,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20759,7 +21535,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20793,7 +21568,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the location of a uniform variable
                 /// </summary>
@@ -20821,7 +21595,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Returns the location of a uniform variable
                 /// </summary>
@@ -20850,7 +21623,50 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetUniformuiv")]
+        public static 
+        UInt32 GetUniformuiv(Int32 program)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 @params;
+            Int32 = 1;
+            UInt32* @params_ptr = @params;
+            Delegates.glGetUniformuiv((UInt32)program);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetUniformuiv")]
+        public static 
+        UInt32 GetUniformuiv(UInt32 program)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 @params;
+            Int32 = 1;
+            UInt32* @params_ptr = @params;
+            Delegates.glGetUniformuiv((UInt32)program);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20890,7 +21706,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20931,7 +21746,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Returns the value of a uniform variable
                 /// </summary>
@@ -20965,7 +21779,47 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetVertexAttribfv")]
+        public static 
+        Single GetVertexAttribfv(Int32 index, OpenTK.Graphics.ES30.VertexAttribParameter pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Single @params;
+            Single* @params_ptr = @params;
+            Delegates.glGetVertexAttribfv((UInt32)index, (OpenTK.Graphics.ES30.VertexAttribParameter)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetVertexAttribfv")]
+        public static 
+        Single GetVertexAttribfv(UInt32 index, OpenTK.Graphics.ES30.VertexAttribParameter pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Single @params;
+            Single* @params_ptr = @params;
+            Delegates.glGetVertexAttribfv((UInt32)index, (OpenTK.Graphics.ES30.VertexAttribParameter)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return a generic vertex attribute parameter
                 /// </summary>
@@ -21004,7 +21858,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return a generic vertex attribute parameter
                 /// </summary>
@@ -21044,7 +21897,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return a generic vertex attribute parameter
                 /// </summary>
@@ -21078,7 +21930,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return a generic vertex attribute parameter
                 /// </summary>
@@ -21118,7 +21969,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return a generic vertex attribute parameter
                 /// </summary>
@@ -21159,7 +22009,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return a generic vertex attribute parameter
                 /// </summary>
@@ -21191,6 +22040,47 @@ namespace OpenTK.Graphics.ES30
             #if DEBUG
             }
             #endif
+        }
+
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetVertexAttribIiv")]
+        public static 
+        Int32 GetVertexAttribIiv(Int32 index, OpenTK.Graphics.ES30.All pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetVertexAttribIiv((UInt32)index, (OpenTK.Graphics.ES30.All)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetVertexAttribIiv")]
+        public static 
+        Int32 GetVertexAttribIiv(UInt32 index, OpenTK.Graphics.ES30.All pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetVertexAttribIiv((UInt32)index, (OpenTK.Graphics.ES30.All)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
         }
 
         /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
@@ -21274,6 +22164,48 @@ namespace OpenTK.Graphics.ES30
         [System.CLSCompliant(false)]
         [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetVertexAttribIuiv")]
         public static 
+        UInt32 GetVertexAttribIuiv(Int32 index, OpenTK.Graphics.ES30.All pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 @params;
+            UInt32* @params_ptr = @params;
+            Delegates.glGetVertexAttribIuiv((UInt32)index, (OpenTK.Graphics.ES30.All)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetVertexAttribIuiv")]
+        public static 
+        UInt32 GetVertexAttribIuiv(UInt32 index, OpenTK.Graphics.ES30.All pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            UInt32 @params;
+            UInt32* @params_ptr = @params;
+            Delegates.glGetVertexAttribIuiv((UInt32)index, (OpenTK.Graphics.ES30.All)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v3.0 and ES_VERSION_3_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_3_0", Version = "3.0", EntryPoint = "glGetVertexAttribIuiv")]
+        public static 
         void GetVertexAttribI(UInt32 index, OpenTK.Graphics.ES30.All pname, [OutAttribute] out UInt32 @params)
         {
             #if DEBUG
@@ -21309,7 +22241,47 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetVertexAttribiv")]
+        public static 
+        Int32 GetVertexAttribiv(Int32 index, OpenTK.Graphics.ES30.VertexAttribParameter pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetVertexAttribiv((UInt32)index, (OpenTK.Graphics.ES30.VertexAttribParameter)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
+        /// <summary>[requires: v2.0 and ES_VERSION_2_0]</summary>
+        [System.CLSCompliant(false)]
+        [AutoGenerated(Category = "ES_VERSION_2_0", Version = "2.0", EntryPoint = "glGetVertexAttribiv")]
+        public static 
+        Int32 GetVertexAttribiv(UInt32 index, OpenTK.Graphics.ES30.VertexAttribParameter pname)
+        {
+            #if DEBUG
+            using (new ErrorHelper(GraphicsContext.CurrentContext))
+            {
+            #endif
+            Int32 @params;
+            Int32* @params_ptr = @params;
+            Delegates.glGetVertexAttribiv((UInt32)index, (OpenTK.Graphics.ES30.VertexAttribParameter)pname);
+            return @params;
+        }
+        }
+        #if DEBUG
+        }
+        #endif
+        }
+
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return a generic vertex attribute parameter
                 /// </summary>
@@ -21348,7 +22320,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return a generic vertex attribute parameter
                 /// </summary>
@@ -21388,7 +22359,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return a generic vertex attribute parameter
                 /// </summary>
@@ -21422,7 +22392,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return a generic vertex attribute parameter
                 /// </summary>
@@ -21462,7 +22431,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return a generic vertex attribute parameter
                 /// </summary>
@@ -21503,7 +22471,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return a generic vertex attribute parameter
                 /// </summary>
@@ -21537,7 +22504,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return the address of the specified generic vertex attribute pointer
                 /// </summary>
@@ -21570,7 +22536,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return the address of the specified generic vertex attribute pointer
                 /// </summary>
@@ -21612,7 +22577,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return the address of the specified generic vertex attribute pointer
                 /// </summary>
@@ -21654,7 +22618,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return the address of the specified generic vertex attribute pointer
                 /// </summary>
@@ -21696,7 +22659,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return the address of the specified generic vertex attribute pointer
                 /// </summary>
@@ -21739,7 +22701,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return the address of the specified generic vertex attribute pointer
                 /// </summary>
@@ -21773,7 +22734,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return the address of the specified generic vertex attribute pointer
                 /// </summary>
@@ -21816,7 +22776,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return the address of the specified generic vertex attribute pointer
                 /// </summary>
@@ -21859,7 +22818,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return the address of the specified generic vertex attribute pointer
                 /// </summary>
@@ -21902,7 +22860,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Return the address of the specified generic vertex attribute pointer
                 /// </summary>
@@ -21946,7 +22903,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify implementation-specific hints
                 /// </summary>
@@ -21974,7 +22930,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Invalidate the content some or all of a framebuffer object's attachments
                 /// </summary>
@@ -22013,7 +22968,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Invalidate the content some or all of a framebuffer object's attachments
                 /// </summary>
@@ -22052,7 +23006,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Invalidate the content some or all of a framebuffer object's attachments
                 /// </summary>
@@ -22086,7 +23039,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Invalidate the content of a region of some or all of a framebuffer object's attachments
                 /// </summary>
@@ -22145,7 +23097,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Invalidate the content of a region of some or all of a framebuffer object's attachments
                 /// </summary>
@@ -22204,7 +23155,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Invalidate the content of a region of some or all of a framebuffer object's attachments
                 /// </summary>
@@ -22258,7 +23208,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Determine if a name corresponds to a buffer object
                 /// </summary>
@@ -22281,7 +23230,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Determine if a name corresponds to a buffer object
                 /// </summary>
@@ -22305,7 +23253,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Test whether a capability is enabled
                 /// </summary>
@@ -22333,7 +23280,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Determine if a name corresponds to a framebuffer object
                 /// </summary>
@@ -22356,7 +23302,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Determine if a name corresponds to a framebuffer object
                 /// </summary>
@@ -22380,7 +23325,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Determines if a name corresponds to a program object
                 /// </summary>
@@ -22403,7 +23347,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Determines if a name corresponds to a program object
                 /// </summary>
@@ -22427,7 +23370,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Determine if a name corresponds to a query object
                 /// </summary>
@@ -22450,7 +23392,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Determine if a name corresponds to a query object
                 /// </summary>
@@ -22474,7 +23415,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Determine if a name corresponds to a renderbuffer object
                 /// </summary>
@@ -22497,7 +23437,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Determine if a name corresponds to a renderbuffer object
                 /// </summary>
@@ -22521,7 +23460,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Determine if a name corresponds to a sampler object
                 /// </summary>
@@ -22544,7 +23482,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Determine if a name corresponds to a sampler object
                 /// </summary>
@@ -22568,7 +23505,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Determines if a name corresponds to a shader object
                 /// </summary>
@@ -22591,7 +23527,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Determines if a name corresponds to a shader object
                 /// </summary>
@@ -22615,7 +23550,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Determine if a name corresponds to a sync object
                 /// </summary>
@@ -22638,7 +23572,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Determine if a name corresponds to a texture
                 /// </summary>
@@ -22661,7 +23594,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Determine if a name corresponds to a texture
                 /// </summary>
@@ -22685,7 +23617,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Determine if a name corresponds to a transform feedback object
                 /// </summary>
@@ -22708,7 +23639,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Determine if a name corresponds to a transform feedback object
                 /// </summary>
@@ -22732,7 +23662,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Determine if a name corresponds to a vertex array object
                 /// </summary>
@@ -22755,7 +23684,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Determine if a name corresponds to a vertex array object
                 /// </summary>
@@ -22779,7 +23707,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the width of rasterized lines
                 /// </summary>
@@ -22802,7 +23729,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Links a program object
                 /// </summary>
@@ -22825,7 +23751,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Links a program object
                 /// </summary>
@@ -22849,7 +23774,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Map a section of a buffer object's data store
                 /// </summary>
@@ -22887,7 +23811,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Label a named object identified within a namespace
                 /// </summary>
@@ -22925,7 +23848,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Label a named object identified within a namespace
                 /// </summary>
@@ -22964,7 +23886,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Label a a sync object identified by a pointer
                 /// </summary>
@@ -22997,7 +23918,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Label a a sync object identified by a pointer
                 /// </summary>
@@ -23039,7 +23959,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Label a a sync object identified by a pointer
                 /// </summary>
@@ -23081,7 +24000,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Label a a sync object identified by a pointer
                 /// </summary>
@@ -23123,7 +24041,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Label a a sync object identified by a pointer
                 /// </summary>
@@ -23166,7 +24083,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Pause transform feedback operations
                 /// </summary>
@@ -23184,7 +24100,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set pixel storage modes
                 /// </summary>
@@ -23212,7 +24127,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set the scale and units used to calculate depth values
                 /// </summary>
@@ -23240,7 +24154,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Pop the active debug group
                 /// </summary>
@@ -23258,7 +24171,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Load a program object with a program binary
                 /// </summary>
@@ -23296,7 +24208,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Load a program object with a program binary
                 /// </summary>
@@ -23343,7 +24254,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Load a program object with a program binary
                 /// </summary>
@@ -23390,7 +24300,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Load a program object with a program binary
                 /// </summary>
@@ -23437,7 +24346,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Load a program object with a program binary
                 /// </summary>
@@ -23485,7 +24393,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Load a program object with a program binary
                 /// </summary>
@@ -23524,7 +24431,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Load a program object with a program binary
                 /// </summary>
@@ -23572,7 +24478,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Load a program object with a program binary
                 /// </summary>
@@ -23620,7 +24525,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Load a program object with a program binary
                 /// </summary>
@@ -23668,7 +24572,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Load a program object with a program binary
                 /// </summary>
@@ -23717,7 +24620,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a parameter for a program object
                 /// </summary>
@@ -23750,7 +24652,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a parameter for a program object
                 /// </summary>
@@ -23784,7 +24685,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Push a named debug group into the command stream
                 /// </summary>
@@ -23822,7 +24722,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>
                 /// Push a named debug group into the command stream
                 /// </summary>
@@ -23861,7 +24760,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Select a color buffer source for pixels
                 /// </summary>
@@ -23884,7 +24782,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Read a block of pixels from the frame buffer
                 /// </summary>
@@ -23927,7 +24824,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Read a block of pixels from the frame buffer
                 /// </summary>
@@ -23979,7 +24875,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Read a block of pixels from the frame buffer
                 /// </summary>
@@ -24031,7 +24926,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Read a block of pixels from the frame buffer
                 /// </summary>
@@ -24083,7 +24977,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Read a block of pixels from the frame buffer
                 /// </summary>
@@ -24136,7 +25029,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Release resources consumed by the implementation's shader compiler
                 /// </summary>
@@ -24154,7 +25046,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Establish data storage, format and dimensions of a renderbuffer object's image
                 /// </summary>
@@ -24192,7 +25083,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Establish data storage, format, dimensions and sample count of a renderbuffer object's image
                 /// </summary>
@@ -24235,7 +25125,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Resume transform feedback operations
                 /// </summary>
@@ -24253,7 +25142,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify multisample coverage parameters
                 /// </summary>
@@ -24281,7 +25169,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Set sampler parameters
                 /// </summary>
@@ -24319,7 +25206,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Set sampler parameters
                 /// </summary>
@@ -24358,7 +25244,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Set sampler parameters
                 /// </summary>
@@ -24402,7 +25287,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Set sampler parameters
                 /// </summary>
@@ -24441,7 +25325,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Set sampler parameters
                 /// </summary>
@@ -24486,7 +25369,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Set sampler parameters
                 /// </summary>
@@ -24525,7 +25407,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Set sampler parameters
                 /// </summary>
@@ -24563,7 +25444,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Set sampler parameters
                 /// </summary>
@@ -24602,7 +25482,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Set sampler parameters
                 /// </summary>
@@ -24646,7 +25525,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Set sampler parameters
                 /// </summary>
@@ -24685,7 +25563,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Set sampler parameters
                 /// </summary>
@@ -24730,7 +25607,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Set sampler parameters
                 /// </summary>
@@ -24769,7 +25645,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Define the scissor box
                 /// </summary>
@@ -24797,7 +25672,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -24846,7 +25720,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -24904,7 +25777,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -24962,7 +25834,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25020,7 +25891,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25079,7 +25949,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25128,7 +25997,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25186,7 +26054,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25244,7 +26111,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25302,7 +26168,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25361,7 +26226,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25405,7 +26269,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25458,7 +26321,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25511,7 +26373,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25564,7 +26425,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25618,7 +26478,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25668,7 +26527,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25727,7 +26585,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25786,7 +26643,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25845,7 +26701,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25905,7 +26760,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -25955,7 +26809,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -26014,7 +26867,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -26073,7 +26925,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -26132,7 +26983,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -26192,7 +27042,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -26236,7 +27085,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -26289,7 +27137,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -26342,7 +27189,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -26395,7 +27241,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Load pre-compiled shader binaries
                 /// </summary>
@@ -26449,7 +27294,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Replaces the source code in a shader object
                 /// </summary>
@@ -26493,7 +27337,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Replaces the source code in a shader object
                 /// </summary>
@@ -26537,7 +27380,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Replaces the source code in a shader object
                 /// </summary>
@@ -26576,7 +27418,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Replaces the source code in a shader object
                 /// </summary>
@@ -26621,7 +27462,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Replaces the source code in a shader object
                 /// </summary>
@@ -26666,7 +27506,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Replaces the source code in a shader object
                 /// </summary>
@@ -26705,7 +27544,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set front and back function and reference value for stencil testing
                 /// </summary>
@@ -26738,7 +27576,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set front and back function and reference value for stencil testing
                 /// </summary>
@@ -26772,7 +27609,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set front and/or back function and reference value for stencil testing
                 /// </summary>
@@ -26810,7 +27646,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set front and/or back function and reference value for stencil testing
                 /// </summary>
@@ -26849,7 +27684,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Control the front and back writing of individual bits in the stencil planes
                 /// </summary>
@@ -26872,7 +27706,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Control the front and back writing of individual bits in the stencil planes
                 /// </summary>
@@ -26896,7 +27729,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Control the front and/or back writing of individual bits in the stencil planes
                 /// </summary>
@@ -26924,7 +27756,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Control the front and/or back writing of individual bits in the stencil planes
                 /// </summary>
@@ -26953,7 +27784,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set front and back stencil test actions
                 /// </summary>
@@ -26986,7 +27816,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set front and/or back stencil test actions
                 /// </summary>
@@ -27024,7 +27853,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture image
                 /// </summary>
@@ -27087,7 +27915,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture image
                 /// </summary>
@@ -27159,7 +27986,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture image
                 /// </summary>
@@ -27231,7 +28057,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture image
                 /// </summary>
@@ -27303,7 +28128,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture image
                 /// </summary>
@@ -27376,7 +28200,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture image
                 /// </summary>
@@ -27444,7 +28267,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture image
                 /// </summary>
@@ -27521,7 +28343,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture image
                 /// </summary>
@@ -27598,7 +28419,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture image
                 /// </summary>
@@ -27675,7 +28495,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture image
                 /// </summary>
@@ -27753,7 +28572,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set texture parameters
                 /// </summary>
@@ -27794,7 +28612,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set texture parameters
                 /// </summary>
@@ -27841,7 +28658,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set texture parameters
                 /// </summary>
@@ -27883,7 +28699,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set texture parameters
                 /// </summary>
@@ -27924,7 +28739,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set texture parameters
                 /// </summary>
@@ -27971,7 +28785,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set texture parameters
                 /// </summary>
@@ -28013,7 +28826,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Simultaneously specify storage for all levels of a two-dimensional or one-dimensional array texture
                 /// </summary>
@@ -28056,7 +28868,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Simultaneously specify storage for all levels of a three-dimensional, two-dimensional array or cube-map array texture
                 /// </summary>
@@ -28104,7 +28915,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture subimage
                 /// </summary>
@@ -28167,7 +28977,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture subimage
                 /// </summary>
@@ -28239,7 +29048,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture subimage
                 /// </summary>
@@ -28311,7 +29119,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture subimage
                 /// </summary>
@@ -28383,7 +29190,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify a two-dimensional texture subimage
                 /// </summary>
@@ -28456,7 +29262,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture subimage
                 /// </summary>
@@ -28529,7 +29334,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture subimage
                 /// </summary>
@@ -28611,7 +29415,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture subimage
                 /// </summary>
@@ -28693,7 +29496,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture subimage
                 /// </summary>
@@ -28775,7 +29577,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify a three-dimensional texture subimage
                 /// </summary>
@@ -28858,7 +29659,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify values to record in transform feedback buffers
                 /// </summary>
@@ -28896,7 +29696,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify values to record in transform feedback buffers
                 /// </summary>
@@ -28935,7 +29734,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -28981,7 +29779,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29033,7 +29830,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29085,7 +29881,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29132,7 +29927,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29178,7 +29972,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29230,7 +30023,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29282,7 +30074,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29329,7 +30120,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29376,7 +30166,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29429,7 +30218,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29482,7 +30270,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29529,7 +30316,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29575,7 +30361,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29627,7 +30412,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29679,7 +30463,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29726,7 +30509,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29772,7 +30554,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29824,7 +30605,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29871,7 +30651,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29918,7 +30697,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -29971,7 +30749,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30024,7 +30801,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30071,7 +30847,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30117,7 +30892,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30169,7 +30943,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30221,7 +30994,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30268,7 +31040,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30314,7 +31085,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30366,7 +31136,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30418,7 +31187,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30465,7 +31233,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30512,7 +31279,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30565,7 +31331,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30618,7 +31383,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30665,7 +31429,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30711,7 +31474,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30763,7 +31525,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30815,7 +31576,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30862,7 +31622,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30908,7 +31667,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -30960,7 +31718,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -31012,7 +31769,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -31059,7 +31815,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -31106,7 +31861,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -31159,7 +31913,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -31212,7 +31965,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Specify the value of a uniform variable for the current program object
                 /// </summary>
@@ -31259,7 +32011,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Assign a binding point to an active uniform block
                 /// </summary>
@@ -31292,7 +32043,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Assign a binding point to an active uniform block
                 /// </summary>
@@ -31863,7 +32613,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Installs a program object as part of current rendering state
                 /// </summary>
@@ -31886,7 +32635,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Installs a program object as part of current rendering state
                 /// </summary>
@@ -31910,7 +32658,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Validates a program object
                 /// </summary>
@@ -31933,7 +32680,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Validates a program object
                 /// </summary>
@@ -31957,7 +32703,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32005,7 +32750,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32054,7 +32798,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32103,7 +32846,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32152,7 +32894,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32200,7 +32941,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32249,7 +32989,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32303,7 +33042,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32357,7 +33095,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32406,7 +33143,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32461,7 +33197,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32516,7 +33251,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32565,7 +33299,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32613,7 +33346,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32662,7 +33394,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32716,7 +33447,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32770,7 +33500,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32819,7 +33548,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32874,7 +33602,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32929,7 +33656,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -32978,7 +33704,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -33026,7 +33751,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -33075,7 +33799,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -33129,7 +33852,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -33183,7 +33905,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -33232,7 +33953,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -33287,7 +34007,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -33342,7 +34061,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Specifies the value of a generic vertex attribute
                 /// </summary>
@@ -33391,7 +34109,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Modify the rate at which generic vertex attributes advance during instanced rendering
                 /// </summary>
@@ -33419,7 +34136,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Modify the rate at which generic vertex attributes advance during instanced rendering
                 /// </summary>
@@ -33902,7 +34618,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Define an array of generic vertex attribute data
                 /// </summary>
@@ -33950,7 +34665,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Define an array of generic vertex attribute data
                 /// </summary>
@@ -34007,7 +34721,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Define an array of generic vertex attribute data
                 /// </summary>
@@ -34064,7 +34777,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Define an array of generic vertex attribute data
                 /// </summary>
@@ -34121,7 +34833,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Define an array of generic vertex attribute data
                 /// </summary>
@@ -34179,7 +34890,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Define an array of generic vertex attribute data
                 /// </summary>
@@ -34228,7 +34938,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Define an array of generic vertex attribute data
                 /// </summary>
@@ -34286,7 +34995,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Define an array of generic vertex attribute data
                 /// </summary>
@@ -34344,7 +35052,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Define an array of generic vertex attribute data
                 /// </summary>
@@ -34402,7 +35109,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Define an array of generic vertex attribute data
                 /// </summary>
@@ -34461,7 +35167,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v2.0 and ES_VERSION_2_0]
                 /// Set the viewport
                 /// </summary>
@@ -34489,7 +35194,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Instruct the GL server to block until the specified sync object becomes signaled
                 /// </summary>
@@ -34522,7 +35226,6 @@ namespace OpenTK.Graphics.ES30
             #endif
         }
 
-        
                 /// <summary>[requires: v3.0 and ES_VERSION_3_0]
                 /// Instruct the GL server to block until the specified sync object becomes signaled
                 /// </summary>
@@ -34589,7 +35292,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Set the active program object for a program pipeline object
                     /// </summary>
@@ -34617,7 +35319,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Set the active program object for a program pipeline object
                     /// </summary>
@@ -34646,7 +35347,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Delimit the boundaries of a query object
                     /// </summary>
@@ -34674,7 +35374,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Delimit the boundaries of a query object
                     /// </summary>
@@ -34703,7 +35402,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Bind a program pipeline to the current context
                     /// </summary>
@@ -34726,7 +35424,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Bind a program pipeline to the current context
                     /// </summary>
@@ -34750,7 +35447,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_blend_minmax]
                     /// Specify the equation used for both the RGB blend equation and the Alpha blend equation
                     /// </summary>
@@ -34778,7 +35474,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Create a stand-alone program from an array of null-terminated source code strings
                     /// </summary>
@@ -34811,7 +35506,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Create a stand-alone program from an array of null-terminated source code strings
                     /// </summary>
@@ -34844,7 +35538,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Delete program pipeline objects
                     /// </summary>
@@ -34878,7 +35571,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Delete program pipeline objects
                     /// </summary>
@@ -34912,7 +35604,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Delete program pipeline objects
                     /// </summary>
@@ -34941,7 +35632,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Delete program pipeline objects
                     /// </summary>
@@ -34976,7 +35666,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Delete program pipeline objects
                     /// </summary>
@@ -35011,7 +35700,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Delete program pipeline objects
                     /// </summary>
@@ -35040,7 +35728,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Delete named query objects
                     /// </summary>
@@ -35074,7 +35761,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Delete named query objects
                     /// </summary>
@@ -35108,7 +35794,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Delete named query objects
                     /// </summary>
@@ -35137,7 +35822,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Delete named query objects
                     /// </summary>
@@ -35172,7 +35856,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Delete named query objects
                     /// </summary>
@@ -35207,7 +35890,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Delete named query objects
                     /// </summary>
@@ -35294,7 +35976,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_draw_instanced|EXT_instanced_arrays]
                     /// Draw multiple instances of a range of elements
                     /// </summary>
@@ -35332,7 +36013,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_draw_buffers]
                     /// Specifies a list of color buffers to be drawn into
                     /// </summary>
@@ -35366,7 +36046,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_draw_buffers]
                     /// Specifies a list of color buffers to be drawn into
                     /// </summary>
@@ -35400,7 +36079,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_draw_buffers]
                     /// Specifies a list of color buffers to be drawn into
                     /// </summary>
@@ -35489,7 +36167,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_draw_instanced|EXT_instanced_arrays]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -35532,7 +36209,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_draw_instanced|EXT_instanced_arrays]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -35584,7 +36260,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_draw_instanced|EXT_instanced_arrays]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -35636,7 +36311,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_draw_instanced|EXT_instanced_arrays]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -35688,7 +36362,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_draw_instanced|EXT_instanced_arrays]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -35756,7 +36429,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_map_buffer_range]
                     /// Indicate modifications to a range of a mapped buffer
                     /// </summary>
@@ -35820,7 +36492,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Reserve program pipeline object names
                     /// </summary>
@@ -35854,7 +36525,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Reserve program pipeline object names
                     /// </summary>
@@ -35889,7 +36559,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Reserve program pipeline object names
                     /// </summary>
@@ -35918,7 +36587,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Reserve program pipeline object names
                     /// </summary>
@@ -35953,7 +36621,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Reserve program pipeline object names
                     /// </summary>
@@ -35989,7 +36656,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Reserve program pipeline object names
                     /// </summary>
@@ -36018,7 +36684,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Generate query object names
                     /// </summary>
@@ -36052,7 +36717,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Generate query object names
                     /// </summary>
@@ -36087,7 +36751,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Generate query object names
                     /// </summary>
@@ -36116,7 +36779,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Generate query object names
                     /// </summary>
@@ -36151,7 +36813,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Generate query object names
                     /// </summary>
@@ -36187,7 +36848,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Generate query object names
                     /// </summary>
@@ -36591,7 +37251,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_debug_label]
                     /// Retrieve the label of a named object identified within a namespace
                     /// </summary>
@@ -36640,7 +37299,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_debug_label]
                     /// Retrieve the label of a named object identified within a namespace
                     /// </summary>
@@ -36690,7 +37348,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_debug_label]
                     /// Retrieve the label of a named object identified within a namespace
                     /// </summary>
@@ -36734,7 +37391,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_debug_label]
                     /// Retrieve the label of a named object identified within a namespace
                     /// </summary>
@@ -36784,7 +37440,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_debug_label]
                     /// Retrieve the label of a named object identified within a namespace
                     /// </summary>
@@ -36835,7 +37490,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_debug_label]
                     /// Retrieve the label of a named object identified within a namespace
                     /// </summary>
@@ -36879,7 +37533,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Retrieve the info log string from a program pipeline object
                     /// </summary>
@@ -36923,7 +37576,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Retrieve the info log string from a program pipeline object
                     /// </summary>
@@ -36968,7 +37620,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Retrieve the info log string from a program pipeline object
                     /// </summary>
@@ -37007,7 +37658,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Retrieve the info log string from a program pipeline object
                     /// </summary>
@@ -37052,7 +37702,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Retrieve the info log string from a program pipeline object
                     /// </summary>
@@ -37098,7 +37747,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Retrieve the info log string from a program pipeline object
                     /// </summary>
@@ -37137,7 +37785,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Retrieve properties of a program pipeline object
                     /// </summary>
@@ -37176,7 +37823,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Retrieve properties of a program pipeline object
                     /// </summary>
@@ -37216,7 +37862,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Retrieve properties of a program pipeline object
                     /// </summary>
@@ -37250,7 +37895,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Retrieve properties of a program pipeline object
                     /// </summary>
@@ -37290,7 +37934,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Retrieve properties of a program pipeline object
                     /// </summary>
@@ -37331,7 +37974,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Retrieve properties of a program pipeline object
                     /// </summary>
@@ -37424,7 +38066,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37463,7 +38104,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37503,7 +38143,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37537,7 +38176,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37577,7 +38215,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37618,7 +38255,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37652,7 +38288,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37691,7 +38326,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37731,7 +38365,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37765,7 +38398,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37805,7 +38437,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37846,7 +38477,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37880,7 +38510,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37920,7 +38549,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37961,7 +38589,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Return parameters of a query object
                     /// </summary>
@@ -37995,7 +38622,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Return parameters of a query object
                     /// </summary>
@@ -38035,7 +38661,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Return parameters of a query object
                     /// </summary>
@@ -38076,7 +38701,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Return parameters of a query object
                     /// </summary>
@@ -38125,7 +38749,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Determine if a name corresponds to a program pipeline object
                     /// </summary>
@@ -38148,7 +38771,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Determine if a name corresponds to a program pipeline object
                     /// </summary>
@@ -38172,7 +38794,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Determine if a name corresponds to a query object
                     /// </summary>
@@ -38195,7 +38816,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query|EXT_occlusion_query_boolean]
                     /// Determine if a name corresponds to a query object
                     /// </summary>
@@ -38250,7 +38870,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_map_buffer_range]
                     /// Map a section of a buffer object's data store
                     /// </summary>
@@ -38288,7 +38907,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_map_buffer_range]
                     /// Map a section of a buffer object's data store
                     /// </summary>
@@ -38327,7 +38945,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives from array data
                     /// </summary>
@@ -38372,7 +38989,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives from array data
                     /// </summary>
@@ -38417,7 +39033,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives from array data
                     /// </summary>
@@ -38456,7 +39071,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -38505,7 +39119,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -38563,7 +39176,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -38621,7 +39233,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -38679,7 +39290,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -38738,7 +39348,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -38787,7 +39396,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -38845,7 +39453,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -38903,7 +39510,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -38961,7 +39567,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -39020,7 +39625,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -39064,7 +39668,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -39117,7 +39720,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -39170,7 +39772,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -39223,7 +39824,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multi_draw_arrays]
                     /// Render multiple sets of primitives by specifying indices of array data elements
                     /// </summary>
@@ -39292,7 +39892,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify a parameter for a program object
                     /// </summary>
@@ -39325,7 +39924,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify a parameter for a program object
                     /// </summary>
@@ -39359,7 +39957,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -39410,7 +40007,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -39462,7 +40058,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -39519,7 +40114,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -39576,7 +40170,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -39628,7 +40221,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -39686,7 +40278,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -39744,7 +40335,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -39796,7 +40386,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -39847,7 +40436,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -39899,7 +40487,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -39956,7 +40543,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40013,7 +40599,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40065,7 +40650,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40123,7 +40707,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40181,7 +40764,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40233,7 +40815,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40285,7 +40866,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40343,7 +40923,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40401,7 +40980,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40453,7 +41031,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40504,7 +41081,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40556,7 +41132,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40613,7 +41188,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40670,7 +41244,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40722,7 +41295,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40780,7 +41352,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40838,7 +41409,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40890,7 +41460,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40941,7 +41510,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -40993,7 +41561,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41050,7 +41617,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41102,7 +41668,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41160,7 +41725,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41212,7 +41776,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41264,7 +41827,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41322,7 +41884,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41380,7 +41941,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41432,7 +41992,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41483,7 +42042,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41535,7 +42093,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41592,7 +42149,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41649,7 +42205,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41701,7 +42256,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41759,7 +42313,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41817,7 +42370,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41869,7 +42421,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41920,7 +42471,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -41972,7 +42522,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42029,7 +42578,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42086,7 +42634,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42138,7 +42685,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42196,7 +42742,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42254,7 +42799,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42306,7 +42850,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42358,7 +42901,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42416,7 +42958,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42474,7 +43015,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42526,7 +43066,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42577,7 +43116,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42629,7 +43167,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42686,7 +43223,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42743,7 +43279,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42795,7 +43330,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42853,7 +43387,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42911,7 +43444,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -42963,7 +43495,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -43014,7 +43545,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -43066,7 +43596,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -43123,7 +43652,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -43180,7 +43708,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -43232,7 +43759,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -43290,7 +43816,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -43348,7 +43873,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -43400,7 +43924,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -43452,7 +43975,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -43510,7 +44032,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -43568,7 +44089,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Specify the value of a uniform variable for a specified program object
                     /// </summary>
@@ -44697,7 +45217,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Record the GL time into a query object after all previous commands have reached the GL server but have not yet necessarily executed.
                     /// </summary>
@@ -44725,7 +45244,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_disjoint_timer_query]
                     /// Record the GL time into a query object after all previous commands have reached the GL server but have not yet necessarily executed.
                     /// </summary>
@@ -44881,7 +45399,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_multisampled_render_to_texture]
                     /// Establish data storage, format, dimensions and sample count of a renderbuffer object's image
                     /// </summary>
@@ -44924,7 +45441,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_texture_storage]
                     /// Simultaneously specify storage for all levels of a one-dimensional texture
                     /// </summary>
@@ -44962,7 +45478,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_texture_storage]
                     /// Simultaneously specify storage for all levels of a two-dimensional or one-dimensional array texture
                     /// </summary>
@@ -45005,7 +45520,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_texture_storage]
                     /// Simultaneously specify storage for all levels of a three-dimensional, two-dimensional array or cube-map array texture
                     /// </summary>
@@ -45146,7 +45660,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Bind stages of a program object to a program pipeline
                     /// </summary>
@@ -45179,7 +45692,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Bind stages of a program object to a program pipeline
                     /// </summary>
@@ -45244,7 +45756,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Validate a program pipeline object against current GL state
                     /// </summary>
@@ -45267,7 +45778,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_separate_shader_objects]
                     /// Validate a program pipeline object against current GL state
                     /// </summary>
@@ -45291,7 +45801,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_instanced_arrays]
                     /// Modify the rate at which generic vertex attributes advance during instanced rendering
                     /// </summary>
@@ -45319,7 +45828,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: EXT_instanced_arrays]
                     /// Modify the rate at which generic vertex attributes advance during instanced rendering
                     /// </summary>
@@ -45383,7 +45891,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: IMG_multisampled_render_to_texture]
                     /// Establish data storage, format, dimensions and sample count of a renderbuffer object's image
                     /// </summary>
@@ -45430,7 +45937,6 @@ namespace OpenTK.Graphics.ES30
 
         public static partial class Khr
         {
-            
                     /// <summary>[requires: KHR_debug]
                     /// Specify a callback to receive debugging messages from the GL
                     /// </summary>
@@ -45458,7 +45964,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Specify a callback to receive debugging messages from the GL
                     /// </summary>
@@ -45495,7 +46000,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Specify a callback to receive debugging messages from the GL
                     /// </summary>
@@ -45532,7 +46036,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Specify a callback to receive debugging messages from the GL
                     /// </summary>
@@ -45569,7 +46072,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Specify a callback to receive debugging messages from the GL
                     /// </summary>
@@ -45607,7 +46109,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Control the reporting of debug messages in a debug context
                     /// </summary>
@@ -45661,7 +46162,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Control the reporting of debug messages in a debug context
                     /// </summary>
@@ -45715,7 +46215,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Control the reporting of debug messages in a debug context
                     /// </summary>
@@ -45764,7 +46263,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Control the reporting of debug messages in a debug context
                     /// </summary>
@@ -45819,7 +46317,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Control the reporting of debug messages in a debug context
                     /// </summary>
@@ -45874,7 +46371,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Control the reporting of debug messages in a debug context
                     /// </summary>
@@ -45923,7 +46419,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Inject an application-supplied message into the debug message queue
                     /// </summary>
@@ -45971,7 +46466,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Inject an application-supplied message into the debug message queue
                     /// </summary>
@@ -46020,7 +46514,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve messages from the debug message log
                     /// </summary>
@@ -46088,7 +46581,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve messages from the debug message log
                     /// </summary>
@@ -46162,7 +46654,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve messages from the debug message log
                     /// </summary>
@@ -46221,7 +46712,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve messages from the debug message log
                     /// </summary>
@@ -46290,7 +46780,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve messages from the debug message log
                     /// </summary>
@@ -46365,7 +46854,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve messages from the debug message log
                     /// </summary>
@@ -46424,7 +46912,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a named object identified within a namespace
                     /// </summary>
@@ -46473,7 +46960,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a named object identified within a namespace
                     /// </summary>
@@ -46523,7 +47009,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a named object identified within a namespace
                     /// </summary>
@@ -46567,7 +47052,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a named object identified within a namespace
                     /// </summary>
@@ -46617,7 +47101,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a named object identified within a namespace
                     /// </summary>
@@ -46668,7 +47151,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a named object identified within a namespace
                     /// </summary>
@@ -46712,7 +47194,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -46756,7 +47237,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -46801,7 +47281,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -46840,7 +47319,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -46893,7 +47371,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -46947,7 +47424,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -46995,7 +47471,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -47048,7 +47523,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -47102,7 +47576,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -47150,7 +47623,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -47203,7 +47675,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -47257,7 +47728,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -47305,7 +47775,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -47359,7 +47828,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -47414,7 +47882,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Retrieve the label of a sync object identified by a pointer
                     /// </summary>
@@ -47575,7 +48042,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Label a named object identified within a namespace
                     /// </summary>
@@ -47613,7 +48079,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Label a named object identified within a namespace
                     /// </summary>
@@ -47652,7 +48117,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Label a a sync object identified by a pointer
                     /// </summary>
@@ -47685,7 +48149,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Label a a sync object identified by a pointer
                     /// </summary>
@@ -47727,7 +48190,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Label a a sync object identified by a pointer
                     /// </summary>
@@ -47769,7 +48231,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Label a a sync object identified by a pointer
                     /// </summary>
@@ -47811,7 +48272,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Label a a sync object identified by a pointer
                     /// </summary>
@@ -47854,7 +48314,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Pop the active debug group
                     /// </summary>
@@ -47872,7 +48331,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Push a named debug group into the command stream
                     /// </summary>
@@ -47910,7 +48368,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: KHR_debug]
                     /// Push a named debug group into the command stream
                     /// </summary>
@@ -47983,7 +48440,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_framebuffer_blit]
                     /// Copy a block of pixels from the read framebuffer to the draw framebuffer
                     /// </summary>
@@ -48021,7 +48477,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_copy_buffer]
                     /// Copy part of the data store of a buffer object to the data store of another buffer object
                     /// </summary>
@@ -48212,7 +48667,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_draw_instanced]
                     /// Draw multiple instances of a range of elements
                     /// </summary>
@@ -48250,7 +48704,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_draw_buffers]
                     /// Specifies a list of color buffers to be drawn into
                     /// </summary>
@@ -48284,7 +48737,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_draw_buffers]
                     /// Specifies a list of color buffers to be drawn into
                     /// </summary>
@@ -48318,7 +48770,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_draw_buffers]
                     /// Specifies a list of color buffers to be drawn into
                     /// </summary>
@@ -48347,7 +48798,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_draw_instanced]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -48390,7 +48840,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_draw_instanced]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -48442,7 +48891,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_draw_instanced]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -48494,7 +48942,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_draw_instanced]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -48546,7 +48993,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_draw_instanced]
                     /// Draw multiple instances of a set of elements
                     /// </summary>
@@ -48901,7 +49347,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_read_buffer]
                     /// Select a color buffer source for pixels
                     /// </summary>
@@ -48924,7 +49369,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_framebuffer_multisample]
                     /// Establish data storage, format, dimensions and sample count of a renderbuffer object's image
                     /// </summary>
@@ -49377,7 +49821,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_instanced_arrays]
                     /// Modify the rate at which generic vertex attributes advance during instanced rendering
                     /// </summary>
@@ -49405,7 +49848,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: NV_instanced_arrays]
                     /// Modify the rate at which generic vertex attributes advance during instanced rendering
                     /// </summary>
@@ -49438,7 +49880,6 @@ namespace OpenTK.Graphics.ES30
 
         public static partial class Oes
         {
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Bind a vertex array object
                     /// </summary>
@@ -49461,7 +49902,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Bind a vertex array object
                     /// </summary>
@@ -49485,7 +49925,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture image in a compressed format
                     /// </summary>
@@ -49548,7 +49987,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture image in a compressed format
                     /// </summary>
@@ -49620,7 +50058,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture image in a compressed format
                     /// </summary>
@@ -49692,7 +50129,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture image in a compressed format
                     /// </summary>
@@ -49764,7 +50200,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture image in a compressed format
                     /// </summary>
@@ -49837,7 +50272,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture subimage in a compressed format
                     /// </summary>
@@ -49905,7 +50339,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture subimage in a compressed format
                     /// </summary>
@@ -49982,7 +50415,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture subimage in a compressed format
                     /// </summary>
@@ -50059,7 +50491,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture subimage in a compressed format
                     /// </summary>
@@ -50136,7 +50567,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture subimage in a compressed format
                     /// </summary>
@@ -50214,7 +50644,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Copy a three-dimensional texture subimage
                     /// </summary>
@@ -50272,7 +50701,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Delete vertex array objects
                     /// </summary>
@@ -50306,7 +50734,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Delete vertex array objects
                     /// </summary>
@@ -50340,7 +50767,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Delete vertex array objects
                     /// </summary>
@@ -50369,7 +50795,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Delete vertex array objects
                     /// </summary>
@@ -50404,7 +50829,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Delete vertex array objects
                     /// </summary>
@@ -50439,7 +50863,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Delete vertex array objects
                     /// </summary>
@@ -50529,7 +50952,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Generate vertex array object names
                     /// </summary>
@@ -50563,7 +50985,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Generate vertex array object names
                     /// </summary>
@@ -50598,7 +51019,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Generate vertex array object names
                     /// </summary>
@@ -50627,7 +51047,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Generate vertex array object names
                     /// </summary>
@@ -50662,7 +51081,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Generate vertex array object names
                     /// </summary>
@@ -50698,7 +51116,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Generate vertex array object names
                     /// </summary>
@@ -50839,7 +51256,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -50889,7 +51305,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -50948,7 +51363,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51007,7 +51421,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51066,7 +51479,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51126,7 +51538,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51178,7 +51589,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51239,7 +51649,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51300,7 +51709,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51361,7 +51769,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51423,7 +51830,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51467,7 +51873,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51520,7 +51925,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51573,7 +51977,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51626,7 +52029,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51680,7 +52082,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51731,7 +52132,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51791,7 +52191,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51851,7 +52250,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51911,7 +52309,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -51972,7 +52369,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -52025,7 +52421,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -52087,7 +52482,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -52149,7 +52543,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -52211,7 +52604,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -52274,7 +52666,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -52318,7 +52709,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -52371,7 +52761,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -52424,7 +52813,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -52477,7 +52865,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Return a binary representation of a program object's compiled and linked executable source
                     /// </summary>
@@ -52531,7 +52918,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Determine if a name corresponds to a vertex array object
                     /// </summary>
@@ -52554,7 +52940,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_vertex_array_object]
                     /// Determine if a name corresponds to a vertex array object
                     /// </summary>
@@ -52578,7 +52963,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_mapbuffer]
                     /// Map a buffer object's data store
                     /// </summary>
@@ -52606,7 +52990,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Load a program object with a program binary
                     /// </summary>
@@ -52644,7 +53027,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Load a program object with a program binary
                     /// </summary>
@@ -52691,7 +53073,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Load a program object with a program binary
                     /// </summary>
@@ -52738,7 +53119,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Load a program object with a program binary
                     /// </summary>
@@ -52785,7 +53165,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Load a program object with a program binary
                     /// </summary>
@@ -52833,7 +53212,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Load a program object with a program binary
                     /// </summary>
@@ -52872,7 +53250,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Load a program object with a program binary
                     /// </summary>
@@ -52920,7 +53297,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Load a program object with a program binary
                     /// </summary>
@@ -52968,7 +53344,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Load a program object with a program binary
                     /// </summary>
@@ -53016,7 +53391,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_get_program_binary]
                     /// Load a program object with a program binary
                     /// </summary>
@@ -53065,7 +53439,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture image
                     /// </summary>
@@ -53133,7 +53506,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture image
                     /// </summary>
@@ -53210,7 +53582,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture image
                     /// </summary>
@@ -53287,7 +53658,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture image
                     /// </summary>
@@ -53364,7 +53734,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture image
                     /// </summary>
@@ -53442,7 +53811,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture subimage
                     /// </summary>
@@ -53515,7 +53883,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture subimage
                     /// </summary>
@@ -53597,7 +53964,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture subimage
                     /// </summary>
@@ -53679,7 +54045,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture subimage
                     /// </summary>
@@ -53761,7 +54126,6 @@ namespace OpenTK.Graphics.ES30
                 #endif
             }
 
-            
                     /// <summary>[requires: OES_texture_3D]
                     /// Specify a three-dimensional texture subimage
                     /// </summary>
@@ -53863,7 +54227,6 @@ namespace OpenTK.Graphics.ES30
 
         public static partial class Qcom
         {
-            
                     /// <summary>[requires: QCOM_alpha_test]
                     /// Specify the alpha test function
                     /// </summary>

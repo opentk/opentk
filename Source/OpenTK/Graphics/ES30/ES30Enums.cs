@@ -148,7 +148,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetActiveUniformBlock
+    /// Used in GL.GetActiveUniformBlockiv, GL.GetActiveUniformBlock
     /// </summary>
     public enum ActiveUniformBlockParameter : int
     {
@@ -183,7 +183,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetActiveUniforms
+    /// Used in GL.GetActiveUniformsiv, GL.GetActiveUniforms
     /// </summary>
     public enum ActiveUniformParameter : int
     {
@@ -385,7 +385,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 41 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 43 other functions
     /// </summary>
     public enum All : int
     {
@@ -9513,7 +9513,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetBufferParameter
+    /// Used in GL.GetBufferParameteri64v, GL.GetBufferParameter and 1 other function
     /// </summary>
     public enum BufferParameterName : int
     {
@@ -9578,7 +9578,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.BindBuffer, GL.BufferData and 12 other functions
+    /// Used in GL.BindBuffer, GL.BufferData and 14 other functions
     /// </summary>
     public enum BufferTarget : int
     {
@@ -14601,7 +14601,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetFramebufferAttachmentParameter, GL.InvalidateFramebuffer and 1 other function
+    /// Used in GL.GetFramebufferAttachmentParameteriv, GL.GetFramebufferAttachmentParameter and 2 other functions
     /// </summary>
     public enum FramebufferAttachment : int
     {
@@ -14723,7 +14723,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetFramebufferAttachmentParameter
+    /// Used in GL.GetFramebufferAttachmentParameteriv, GL.GetFramebufferAttachmentParameter
     /// </summary>
     public enum FramebufferParameterName : int
     {
@@ -14865,7 +14865,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.BindFramebuffer, GL.CheckFramebufferStatus and 6 other functions
+    /// Used in GL.BindFramebuffer, GL.CheckFramebufferStatus and 7 other functions
     /// </summary>
     public enum FramebufferTarget : int
     {
@@ -15024,7 +15024,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetInteger, GL.Ext.GetInteger
+    /// Used in GL.GetInteger64i_v, GL.GetInteger and 2 other functions
     /// </summary>
     public enum GetIndexedPName : int
     {
@@ -15152,7 +15152,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Apple.GetInteger64, GL.GetBoolean and 3 other functions
+    /// Used in GL.Apple.GetInteger64, GL.GetBooleanv and 7 other functions
     /// </summary>
     public enum GetPName : int
     {
@@ -17242,7 +17242,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetQueryObject, GL.Ext.GetQueryObject
+    /// Used in GL.GetQueryObjectuiv, GL.GetQueryObject and 1 other function
     /// </summary>
     public enum GetQueryObjectParam : int
     {
@@ -17265,7 +17265,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetQuery, GL.Ext.GetQuery
+    /// Used in GL.GetQueryiv, GL.GetQuery and 1 other function
     /// </summary>
     public enum GetQueryParam : int
     {
@@ -17507,7 +17507,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetTexParameter
+    /// Used in GL.GetTexParameterfv, GL.GetTexParameter and 1 other function
     /// </summary>
     public enum GetTextureParameterName : int
     {
@@ -18262,7 +18262,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetInternalformat
+    /// Used in GL.GetInternalformativ, GL.GetInternalformat
     /// </summary>
     public enum InternalFormatParameter : int
     {
@@ -22009,7 +22009,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetProgram
+    /// Used in GL.GetProgramiv, GL.GetProgram
     /// </summary>
     public enum ProgramParameter : int
     {
@@ -22394,7 +22394,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.BeginQuery, GL.EndQuery and 4 other functions
+    /// Used in GL.BeginQuery, GL.EndQuery and 5 other functions
     /// </summary>
     public enum QueryTarget : int
     {
@@ -22548,7 +22548,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Angle.RenderbufferStorageMultisample, GL.Apple.RenderbufferStorageMultisample and 6 other functions
+    /// Used in GL.Angle.RenderbufferStorageMultisample, GL.Apple.RenderbufferStorageMultisample and 7 other functions
     /// </summary>
     public enum RenderbufferInternalFormat : int
     {
@@ -22775,7 +22775,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetRenderbufferParameter
+    /// Used in GL.GetRenderbufferParameteriv, GL.GetRenderbufferParameter
     /// </summary>
     public enum RenderbufferParameterName : int
     {
@@ -22822,7 +22822,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Angle.RenderbufferStorageMultisample, GL.Apple.RenderbufferStorageMultisample and 9 other functions
+    /// Used in GL.Angle.RenderbufferStorageMultisample, GL.Apple.RenderbufferStorageMultisample and 11 other functions
     /// </summary>
     public enum RenderbufferTarget : int
     {
@@ -22915,7 +22915,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetSamplerParameter, GL.SamplerParameter
+    /// Used in GL.GetSamplerParameterfv, GL.GetSamplerParameter and 2 other functions
     /// </summary>
     public enum SamplerParameterName : int
     {
@@ -22980,7 +22980,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetShader
+    /// Used in GL.GetShaderiv, GL.GetShader
     /// </summary>
     public enum ShaderParameter : int
     {
@@ -23763,7 +23763,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Apple.GetSync, GL.GetSync
+    /// Used in GL.Apple.GetSync, GL.GetSynciv and 1 other function
     /// </summary>
     public enum SyncParameterName : int
     {
@@ -24749,7 +24749,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.BindTexture, GL.GenerateMipmap and 2 other functions
+    /// Used in GL.BindTexture, GL.GenerateMipmap and 4 other functions
     /// </summary>
     public enum TextureTarget : int
     {
@@ -25319,7 +25319,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetVertexAttrib
+    /// Used in GL.GetVertexAttribfv, GL.GetVertexAttrib and 1 other function
     /// </summary>
     public enum VertexAttribParameter : int
     {
