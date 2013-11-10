@@ -83,7 +83,7 @@ namespace Bind
                 }
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_add))
                 {
-                    Utilities.Merge(delegates, ReadDelegates(nav, apiversion));
+                    delegates.AddRange(ReadDelegates(nav, apiversion));
                 }
             }
         }

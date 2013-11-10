@@ -717,13 +717,38 @@ namespace Bind
                 }
             }
 
+            if (f.ReturnType.WrapperType == WrapperTypes.ConvenienceReturnType ||
+                f.ReturnType.WrapperType == WrapperTypes.ConvenienceArrayReturnType)
+            {
+                var r = f.ReturnType;
+                var p = f.WrappedDelegate.Parameters.Last();
+                f.Body.Add(String.Format("{0} {1};", GetDeclarationString(r), p.Name));
+                if (r.WrapperType == WrapperTypes.ConvenienceArrayReturnType)
+                {
+                    var p_size = f.WrappedDelegate.Parameters[f.WrappedDelegate.Parameters.Count - 2];
+                    f.Body.Add(String.Format("{0} = 1;", GetDeclarationString(p_size)));
+                }
+                fixed_statements.Add(String.Empty); // force the generation of an "unsafe" region
+                f.Body.Add(String.Format("{0}{2} {1}_ptr = {1};",
+                    GetDeclarationString(r),
+                    p.Name, 
+                    pointer_levels[p.IndirectionLevel]));
+            }
+
             if (assign_statements.Count > 0)
             {
                 // Call function
-                string callstring = GetInvocationString(f);
+                var callstring = GetInvocationString(f);
                 if (f.ReturnType.CurrentType.ToLower().Contains("void"))
                 {
                     f.Body.Add(String.Format("{0};", callstring));
+                }
+                else if (func.ReturnType.WrapperType == WrapperTypes.ConvenienceReturnType ||
+                         func.ReturnType.WrapperType == WrapperTypes.ConvenienceArrayReturnType)
+                {
+                    var p = f.WrappedDelegate.Parameters.Last();
+                    f.Body.Add(String.Format("{0};", callstring));
+                    f.Body.Add(String.Format("retval = {0};", p.Name));
                 }
                 else if (func.ReturnType.CurrentType.ToLower().Contains("string"))
                 {
@@ -752,6 +777,13 @@ namespace Bind
                 if (f.ReturnType.CurrentType.ToLower().Contains("void"))
                 {
                     f.Body.Add(String.Format("{0};", callstring));
+                }
+                else if (func.ReturnType.WrapperType == WrapperTypes.ConvenienceReturnType ||
+                         func.ReturnType.WrapperType == WrapperTypes.ConvenienceArrayReturnType)
+                {
+                    var p = f.WrappedDelegate.Parameters.Last();
+                    f.Body.Add(String.Format("{0};", callstring));
+                    f.Body.Add(String.Format("return {0};", p.Name));
                 }
                 else if (func.ReturnType.CurrentType.ToLower().Contains("string"))
                 {

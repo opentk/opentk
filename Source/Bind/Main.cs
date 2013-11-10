@@ -283,11 +283,13 @@ namespace Bind
                     Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES11";
                     break;
 
+                case "es2":
                 case "es20":
                     mode = GeneratorMode.ES20;
                     Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
                     break;
 
+                case "es3":
                 case "es30":
                     mode = GeneratorMode.ES30;
                     Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES30";

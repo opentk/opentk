@@ -102,9 +102,12 @@ namespace Bind
                 }
                 foreach (var overload in overload_list)
                 {
-                    Utilities.Merge(delegates, overload);
+                    delegates.Add(overload);
                 }
             }
+
+            Console.WriteLine("Adding convenience overloads.");
+            delegates.AddRange(CreateConvenienceOverloads(delegates));
 
             Console.WriteLine("Generating wrappers.");
             var wrappers = CreateWrappers(delegates, enums);
@@ -737,6 +740,45 @@ namespace Bind
             foreach (var wrapper in WrapParameters(f, enums))
             {
                 yield return wrapper;
+            }
+        }
+
+        IEnumerable<Delegate> CreateConvenienceOverloads(DelegateCollection delegates)
+        {
+            foreach (var list in delegates.Values)
+            {
+                var d = list.First();
+                if (d.Parameters.Count > 0)
+                {
+                    var p = d.Parameters.Last();
+                    var r = d.ReturnType;
+
+                    bool is_candidate = true;
+                    is_candidate &= d.Name.EndsWith("v") || d.Name.EndsWith("s");
+                    is_candidate &= p.Pointer > 0 && p.Flow == FlowDirection.Out;
+                    is_candidate &= r.CurrentType == "void" && r.Pointer == 0;
+
+                    if (is_candidate)
+                    {
+                        var o = new Delegate(d);
+                        o.ReturnType = new Type(o.Parameters.Last());
+                        o.ReturnType.Pointer = 0;
+                        o.Parameters.RemoveAt(o.Parameters.Count - 1);
+                        o.ReturnType.WrapperType = WrapperTypes.ConvenienceReturnType;
+
+                        if (o.Parameters.Count > 0)
+                        {
+                            var p_size = o.Parameters.Last();
+                            if (p_size.CurrentType.ToLower().Contains("int") && p_size.Pointer == 0)
+                            {
+                                o.Parameters.RemoveAt(o.Parameters.Count - 1);
+                                o.ReturnType.WrapperType = WrapperTypes.ConvenienceArrayReturnType;
+                            }
+                        }
+
+                        yield return o;
+                    }
+                }
             }
         }
 
