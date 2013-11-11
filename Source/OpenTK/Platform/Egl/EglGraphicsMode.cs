@@ -67,7 +67,7 @@ namespace OpenTK.Platform.Egl
                 Egl.DEPTH_SIZE, depth > 0 ? depth : 0,
                 Egl.STENCIL_SIZE, stencil > 0 ? stencil : 0,
 
-                //Egl.SAMPLE_BUFFERS, samples > 0 ? 1 : 0,
+                Egl.SAMPLE_BUFFERS, samples > 0 ? 1 : 0,
                 Egl.SAMPLES, samples > 0 ? samples : 0,
 
                 Egl.NONE,
