@@ -829,7 +829,6 @@ namespace Bind
                 {
                     // int foo() { int retval; foo(1, &retval); return retval }
                     callstring = GetInvocationString(f.WrappedDelegate);
-                    var p = f.WrappedDelegate.Parameters.Last();
                     f.Body.Add(String.Format("{0};", callstring));
                     f.Body.Add(String.Format("return retval;"));
                 }
