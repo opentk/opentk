@@ -132,15 +132,35 @@ namespace Bind
                             case "legacy":
                             case "o":
                             case "option":
-                                Settings.Compatibility |= val.ToLower() == "tao" ? Settings.Legacy.Tao : Settings.Legacy.None;
-                                Settings.Compatibility |= val.ToLower() == "simple_enums" ? Settings.Legacy.NoAdvancedEnumProcessing : Settings.Legacy.None;
-                                Settings.Compatibility |= val.ToLower() == "safe" ? Settings.Legacy.NoPublicUnsafeFunctions : Settings.Legacy.None;
-                                //Settings.Compatibility |= b[1].ToLower().Contains("novoid") ? Settings.Legacy.TurnVoidPointersToIntPtr : Settings.Legacy.None;
-                                Settings.Compatibility |= val.ToLower() == "permutations" ? Settings.Legacy.GenerateAllPermutations : Settings.Legacy.None;
-                                Settings.Compatibility |= val.ToLower() == "enums_in_class" ? Settings.Legacy.NestedEnums : Settings.Legacy.None;
-                                Settings.Compatibility |= val.ToLower() == "nodocs" ? Settings.Legacy.NoDocumentation : Settings.Legacy.None;
-                                Settings.Compatibility |= val.ToLower() == "keep_untyped_enums" ? Settings.Legacy.KeepUntypedEnums : Settings.Legacy.None;
+                            {
+                                string option = val.ToLower();
+                                bool enable = !opt.StartsWith("-");
+                                if (option.StartsWith("+") || option.StartsWith("-"))
+                                    option = option.Substring(1);
+
+                                var settings = Settings.Legacy.None;
+                                switch (opt)
+                                {
+                                    case "tao": settings |= Settings.Legacy.Tao; break;
+                                    case "simple_enums": settings |= Settings.Legacy.NoAdvancedEnumProcessing; break;
+                                    case "safe": settings |= Settings.Legacy.NoPublicUnsafeFunctions; break;
+                                    case "permutations": settings |= Settings.Legacy.GenerateAllPermutations; break;
+                                    case "enums_in_class": settings |= Settings.Legacy.NestedEnums; break;
+                                    case "nodocs": settings |= Settings.Legacy.NoDocumentation; break;
+                                    case "keep_untyped_enums": settings |= Settings.Legacy.KeepUntypedEnums; break;
+                                }
+
+                                if (enable)
+                                {
+                                    Settings.Compatibility |= settings;
+                                }
+                                else
+                                {
+                                    Settings.Compatibility &= ~settings;
+                                }
+
                                 break;
+                            }
                             default:
                                 throw new ArgumentException(
                                     String.Format("Argument {0} not recognized. Use the '/?' switch for help.", a)
