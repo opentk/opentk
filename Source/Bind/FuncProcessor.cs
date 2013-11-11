@@ -227,12 +227,12 @@ namespace Bind
             }
             else if (Generator.GLTypes.TryGetValue(type.CurrentType, out s))
             {
-                type.IsEnum = true;
-
                 // Check if the parameter is a generic GLenum. If it is, search for a better match,
                 // otherwise fallback to Settings.CompleteEnumName (named 'All' by default).
                 if (s.Contains("GLenum") /*&& !String.IsNullOrEmpty(category)*/)
                 {
+                    type.IsEnum = true;
+
                     if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
                     {
                         type.QualifiedType = "int";
@@ -256,6 +256,8 @@ namespace Bind
                 }
                 else
                 {
+                    type.IsEnum = false;
+
                     // Todo: what is the point of this here? It is overwritten below.
                     // A few translations for consistency
                     switch (type.CurrentType.ToLower())
@@ -609,6 +611,28 @@ namespace Bind
             foreach (var d in delegates.Values.SelectMany(v => v))
             {
                 wrappers.AddRange(CreateNormalWrappers(d, enums));
+            }
+
+            if ((Settings.Compatibility & Settings.Legacy.KeepUntypedEnums) != 0)
+            {
+                // Generate an "All" overload for every function that takes strongly-typed enums
+                var overloads = new List<Function>();
+                foreach (var list in wrappers.Values)
+                {
+                    overloads.AddRange(list.Where(f => f.Parameters.Any(p => p.IsEnum)).Select(f =>
+                    {
+                        var fnew = new Function(f);
+                        foreach (var p in fnew.Parameters)
+                        {
+                            if (p.IsEnum)
+                            {
+                                p.CurrentType = Settings.CompleteEnumName;
+                            }
+                        }
+                        return fnew;
+                    }));
+                }
+                wrappers.AddRange(overloads);
             }
             return wrappers;
         }
