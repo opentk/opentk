@@ -235,18 +235,19 @@ namespace Bind.Structures
         {
             if (ContainsKey(f.Extension))
             {
-                int index = this[f.Extension].IndexOf(f);
+                var list = this[f.Extension];
+                int index = list.IndexOf(f);
                 if (index == -1)
                 {
                     Add(f);
                 }
                 else
                 {
-                    Function existing = this[f.Extension][index];
+                    Function existing = list[index];
                     if ((existing.Parameters.HasUnsignedParameters && !unsignedFunctions.IsMatch(existing.Name) && unsignedFunctions.IsMatch(f.Name)) ||
                         (!existing.Parameters.HasUnsignedParameters && unsignedFunctions.IsMatch(existing.Name) && !unsignedFunctions.IsMatch(f.Name)))
                     {
-                        this[f.Extension][index] = f;
+                        list[index] = f;
                     }
                 }
             }
