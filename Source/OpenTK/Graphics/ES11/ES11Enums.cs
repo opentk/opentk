@@ -57,7 +57,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Used in GL.Apple.FenceSync, GL.Apple.GetInteger64 and 118 other functions
+    /// Used in GL.Apple.FenceSync, GL.Apple.GetInteger64 and 163 other functions
     /// </summary>
     public enum All : int
     {

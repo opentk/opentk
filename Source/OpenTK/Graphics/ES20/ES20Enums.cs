@@ -167,7 +167,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 39 other functions
+    /// Used in GL.Amd.GetPerfMonitorCounterData, GL.Amd.GetPerfMonitorCounterInfo and 146 other functions
     /// </summary>
     public enum All : int
     {
