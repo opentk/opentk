@@ -24,7 +24,7 @@ namespace Examples.Tutorial
         #region Constructor
 
         public SimpleES20Window(GraphicsContextFlags flags)
-            : base(800, 600, new GraphicsMode(16, 16), "", GameWindowFlags.Default, DisplayDevice.Default, 2, 0, flags)
+            : base(800, 600, GraphicsMode.Default, "", GameWindowFlags.Default, DisplayDevice.Default, 2, 0, flags)
         { }
 
         #endregion
@@ -111,9 +111,7 @@ namespace Examples.Tutorial
             SimpleES20Window example;
             try
             {
-                example = new SimpleES20Window(GraphicsContextFlags.Default);
-
-                //example = new SimpleES20Window(GraphicsContextFlags.Embedded);
+                example = new SimpleES20Window(GraphicsContextFlags.Embedded);
             }
             catch
             {
