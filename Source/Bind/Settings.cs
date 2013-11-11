@@ -32,10 +32,12 @@ namespace Bind
         public string DefaultDelegatesFile = "Delegates.cs";
         public string DefaultEnumsFile = "Enums.cs";
         public string DefaultWrappersFile = "GL.cs";
+        public Legacy DefaultCompatibility = Legacy.NoDropMultipleTokens;
 
         string inputPath, outputPath, outputNamespace, docPath, docFile, licenseFile, overridesFile,
             languageTypeMapFile, keywordEscapeCharacter, importsFile, delegatesFile, enumsFile,
             wrappersFile;
+        Nullable<Legacy> compatibility;
         public string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
         public string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
         public string OutputNamespace { get { return outputNamespace ?? DefaultOutputNamespace; } set { outputNamespace = value; } }
@@ -49,6 +51,7 @@ namespace Bind
         public string DelegatesFile { get { return delegatesFile ?? DefaultDelegatesFile; } set { delegatesFile = value; } }
         public string EnumsFile { get { return enumsFile ?? DefaultEnumsFile; } set { enumsFile = value; } }
         public string WrappersFile { get { return wrappersFile ?? DefaultWrappersFile; } set { wrappersFile = value; } }
+        public Legacy Compatibility { get { return compatibility ?? DefaultCompatibility; } set { compatibility = value; } }
 
         public string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
         public string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".
@@ -104,8 +107,6 @@ namespace Bind
 
         public string DelegatesClass = "Delegates";
         public string ImportsClass = "Core";
-
-        public Legacy Compatibility = Legacy.NoDropMultipleTokens;
 
         /// <summary>
         /// The name of the C# enum which holds every single OpenGL enum (for compatibility purposes).
