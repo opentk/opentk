@@ -47,14 +47,24 @@ namespace OpenTK.Platform
 
         static Factory()
         {
-            if (Configuration.Sdl2Supported) Default = new SDL2.Sdl2Factory();
+            // Ensure we are correctly initialized.
+            Toolkit.Init();
+
+            // Create regular platform backend
+            if (Configuration.RunningOnSdl2) Default = new SDL2.Sdl2Factory();
             else if (Configuration.RunningOnWindows) Default = new Windows.WinFactory();
             else if (Configuration.RunningOnMacOS) Default = new MacOS.MacOSFactory();
             else if (Configuration.RunningOnX11) Default = new X11.X11Factory();
             else Default = new UnsupportedPlatform();
 
-            if (Configuration.Sdl2Supported)
+            // Create embedded platform backend for EGL / OpenGL ES.
+            // Todo: we could probably delay this until the embedded
+            // factory is actually accessed. This might improve startup
+            // times slightly.
+            if (Configuration.RunningOnSdl2)
             {
+                // SDL supports both EGL and desktop backends
+                // using the same API.
                 Embedded = Default;
             }
             else if (Egl.Egl.IsSupported)
