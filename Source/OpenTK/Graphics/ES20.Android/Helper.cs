@@ -395,6 +395,12 @@ namespace OpenTK.Graphics.ES20
 #endif
         #endregion
 
+        public static 
+        OpenTK.Graphics.ES20.ErrorCode GetErrorCode()
+        {
+            return (ErrorCode) Core.GetError();
+        }
+
 #pragma warning restore 3019
 #pragma warning restore 1591
 #pragma warning restore 1572

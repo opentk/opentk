@@ -158,10 +158,6 @@
       <param name="type"><type>ActiveUniformType</type></param>
     </function>
 
-    <function name="GetError" extension="Core" version="2.0">
-      <returns>ErrorCode</returns>
-    </function>
-
     <function name="GetProgram" extension="Core" version="2.0">
       <param name="pname"><type>ProgramParameter</type></param>
     </function>
@@ -296,10 +292,6 @@
      
     <function name="GetInteger" extension="Core">
       <param name="pname"><type>GetPName</type></param>
-    </function>
-
-    <function name="GetError" extension="Core">
-      <returns>ErrorCode</returns>
     </function>
 
     <function name="GetAttribLocation" extension="Core">
