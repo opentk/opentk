@@ -1,20 +1,38 @@
 OpenTK
 ======
 
-The Open Toolkit is an advanced, low-level C# library that wraps OpenGL, OpenCL and OpenAL. The OpenTK home is http://www.opentk.com/
+The Open Toolkit is an advanced, low-level C# library that wraps OpenGL and OpenAL. It is suitable for games, scientific applications and any other project that requires 3d graphics, audio or compute functionality.
 
-This is an unofficial fork for community changes that we hope will someday make it into the official repository. Unfortunately, the only official maintainer of OpenTK has been missing since early 2012.
+This is the official GIT repository for the project.
 
-This fork was created from the latest official SVN repository. It contains numerous fixes by the original maintainer that are not found in the last release (2010-10-06). This fork is based on AndyKorth's OpenTK fork with lots of fixes from all over the community. 
+
+Features
+========
+
+Create cutting-edge graphics with OpenGL 4.4 and OpenGL ES 3.0.
+
+Integrate 3d into Windows.Forms, WPF or GTK# applications.
+
+Write once run everywhere: support for Windows, Mac OS X, Linux, Xamarin.Android and Xamarin.iOS.
+
+Use strong types and inline documentation to improve your code flow and catch errors sooner.
+
+
+License
+=======
+
+The Open Toolkit is distributed under the permissive MIT/X11 license and is absolutely free.
+
 
 Documentation
 =============
 
 The best source of documentation is the [OpenTK Manual](http://www.opentk.com/doc)
 
+
 Need Help?
 ==========
 
-Head over to the [OpenTK forums](http://www.opentk.com/forum). It's the best way to reach the community.
+Feel free to post an issue on github.
 
-OpenTK Version: 1.1.1160.61462 (build 2013-03-07), also available via nuget (OpenTK and OpenTKWithOpenAL) and used in the DeltaEngine.
+Alternatively, head over to the [OpenTK forums](http://www.opentk.com/forum).
