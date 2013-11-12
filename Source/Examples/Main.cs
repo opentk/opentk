@@ -34,6 +34,8 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
+using OpenTK;
+
 namespace Examples
 {
     static class Program
@@ -52,8 +54,22 @@ namespace Examples
                 Trace.WriteLine(String.Format("Could not access debug.log", e.ToString()));
             }
 
+            ToolkitOptions options = ToolkitOptions.Default;
+            if (type.Contains("GLControl") || type.Contains("Form"))
+            {
+                // SDL does not currently support embedding in foreign windows
+                // such as GLControl. We need to use a native OpenTK.Platform
+                // backend in that case. This hack is specific to the example-browser
+                // architecture - you do not need to do anything like this in your
+                // own code (it will just work).
+                options = new ToolkitOptions
+                {
+                    Backend = PlatformBackend.PreferNative
+                };
+            }
+
             using (TextWriterTraceListener dbg = new TextWriterTraceListener("debug.log"))
-            using (OpenTK.Toolkit.Init())
+            using (Toolkit.Init(options))
             {
                 Trace.Listeners.Add(dbg);
 
