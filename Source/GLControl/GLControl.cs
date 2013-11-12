@@ -92,6 +92,18 @@ namespace OpenTK
         {
             if (mode == null)
                 throw new ArgumentNullException("mode");
+
+            // SDL does not currently support embedding
+            // on external windows. If Open.Toolkit is not yet
+            // initialized, we'll try to request a native backend
+            // that supports embedding.
+            // Most people are using GLControl through the
+            // WinForms designer in Visual Studio. This approach
+            // works perfectly in that case.
+            Toolkit.Init(new ToolkitOptions
+            {
+                Backend = PlatformBackend.PreferNative
+            });
             
             SetStyle(ControlStyles.Opaque, true);
             SetStyle(ControlStyles.UserPaint, true);
