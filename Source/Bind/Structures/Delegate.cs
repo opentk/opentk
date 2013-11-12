@@ -259,13 +259,13 @@ namespace Bind.Structures
         {
             StringBuilder sb = new StringBuilder();
 
-#if !IPHONE
+#if !MOBILE
             sb.Append(Settings.DelegatesClass);
 #else
             sb.Append(Settings.ImportsClass);
 #endif
             sb.Append(Settings.NamespaceSeparator);
-#if !IPHONE
+#if !MOBILE
             sb.Append(Settings.FunctionPrefix);
 #endif
             sb.Append(Name);

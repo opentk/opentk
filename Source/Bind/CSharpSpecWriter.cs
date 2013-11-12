@@ -176,7 +176,7 @@ namespace Bind
 
             sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
             sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
-
+#if !MONODROID
             sw.WriteLine();
             sw.WriteLine("partial class {0}", Settings.OutputClass);
             sw.WriteLine("{");
@@ -201,6 +201,7 @@ namespace Bind
 
             sw.Unindent();
             sw.WriteLine("}");
+#endif
         }
 
         #endregion
