@@ -3,6 +3,7 @@
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
+// Copyright 2013 Xamarin Inc
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -154,24 +155,24 @@ namespace OpenTK.Graphics.ES30
 
         public static string GetActiveAttrib(int program, int index, out int size, out ActiveAttribType type)
         {
-			All t;
             int length;
-            GetProgram(program, All.ActiveAttributeMaxLength, out length);
-            StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
-
-            GetActiveAttrib(program, index, sb.Capacity, out length, out size, out t, sb);
-			type = (ActiveAttribType) (int) t;
-            return sb.ToString();
-        }
-
-        public static string GetActiveAttrib(int program, int index, out int size, out All type)
-        {
-            int length;
-            GetProgram(program, All.ActiveAttributeMaxLength, out length);
+            GetProgram(program, ES30.ProgramParameter.ActiveAttributeMaxLength, out length);
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
 
             GetActiveAttrib(program, index, sb.Capacity, out length, out size, out type, sb);
+
             return sb.ToString();
+        }
+
+	[Obsolete]
+        public static string GetActiveAttrib(int program, int index, out int size, out All type)
+        {
+            ActiveAttribType t;
+	    string str = GetActiveAttrib(program, index, out size, out t);
+
+	    type = (All)(int) t;
+
+            return str;
         }
 
         #endregion
@@ -180,24 +181,23 @@ namespace OpenTK.Graphics.ES30
 
         public static string GetActiveUniform(int program, int uniformIndex, out int size, out ActiveUniformType type)
         {
-			All t;
             int length;
-            GetProgram(program, All.ActiveUniformMaxLength, out length);
+            GetProgram(program, ES30.ProgramParameter.ActiveUniformMaxLength, out length);
 
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length);
-            GetActiveUniform(program, uniformIndex, sb.Capacity, out length, out size, out t, sb);
-			type = (ActiveUniformType) (int) t;
+            GetActiveUniform(program, uniformIndex, sb.Capacity, out length, out size, out type, sb);
+
             return sb.ToString();
         }
 
         public static string GetActiveUniform(int program, int uniformIndex, out int size, out All type)
         {
-            int length;
-            GetProgram(program, All.ActiveUniformMaxLength, out length);
+            ActiveUniformType t;
+	    string str = GetActiveUniform(program, uniformIndex, out size, out t);
 
-            StringBuilder sb = new StringBuilder(length == 0 ? 1 : length);
-            GetActiveUniform(program, uniformIndex, sb.Capacity, out length, out size, out type, sb);
-            return sb.ToString();
+	    type = (All)(int) t;
+
+            return str;
         }
 
         #endregion
@@ -233,7 +233,7 @@ namespace OpenTK.Graphics.ES30
             unsafe
             {
                 int length;
-                GL.GetShader(shader, All.InfoLogLength, out length);
+                GL.GetShader(shader, ShaderParameter.InfoLogLength, out length);
                 if (length == 0)
                 {
                     info = String.Empty;
@@ -265,7 +265,7 @@ namespace OpenTK.Graphics.ES30
             unsafe
             {
                 int length;
-                GL.GetProgram(program, All.InfoLogLength, out length); if (length == 0)
+                GL.GetProgram(program, ES30.ProgramParameter.InfoLogLength, out length); if (length == 0)
                 {
                     info = String.Empty;
                     return;
