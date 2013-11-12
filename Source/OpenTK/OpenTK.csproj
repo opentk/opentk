@@ -149,6 +149,7 @@
     <Compile Include="Math\Matrix4x3d.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
+    <Compile Include="ToolkitOptions.cs" />
     <Compile Include="WindowBorder.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -806,8 +807,5 @@
     </PostBuildEvent>
   </PropertyGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Graphics\ES30\" />
-    <Folder Include="Graphics\OpenGL4\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
