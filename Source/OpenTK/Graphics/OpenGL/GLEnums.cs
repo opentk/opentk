@@ -29329,7 +29329,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.CullFace
+    /// Used in GL.CullFace, GL.StencilFuncSeparate and 1 other function
     /// </summary>
     public enum CullFaceMode : int
     {
@@ -55076,7 +55076,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.StencilFuncSeparate
     /// </summary>
     public enum Version20 : int
     {
