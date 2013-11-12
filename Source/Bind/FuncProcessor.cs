@@ -91,8 +91,8 @@ namespace Bind
                 var overload_list = new List<Delegate>();
                 foreach (var d in delegates.Values.Select(v => v.First()))
                 {
-                    var overload_element = GetFuncOverload(nav, d, apiname, apiversion);
-                    if (overload_element != null)
+                    var overload_elements = GetFuncOverload(nav, d, apiname, apiversion);
+                    foreach (XPathNavigator overload_element in overload_elements)
                     {
                         var overload = new Delegate(d);
                         ApplyParameterReplacement(overload, overload_element);
@@ -373,16 +373,17 @@ namespace Bind
             return trimmed_name;
         }
 
-        static XPathNavigator GetFuncOverload(XPathNavigator nav, Delegate d, string apiname, string apiversion)
+        static XPathNodeIterator GetFuncOverload(XPathNavigator nav, Delegate d, string apiname, string apiversion)
         {
             string ext = d.Extension;
             string trimmed_name = GetTrimmedName(d);
             string extensionless_name = GetTrimmedExtension(d.Name, ext);
 
-            var function_overload =
-                nav.SelectSingleNode(GetOverloadsPath(apiname, apiversion, d.Name, ext)) ??
-                    nav.SelectSingleNode(GetOverloadsPath(apiname, apiversion, extensionless_name, ext)) ??
-                    nav.SelectSingleNode(GetOverloadsPath(apiname, apiversion, trimmed_name, ext));
+            var function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, d.Name, ext));
+            if (function_overload.Count == 0)
+                function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, extensionless_name, ext));
+            if (function_overload.Count == 0)
+                function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, trimmed_name, ext));
             return function_overload;
         }
 
