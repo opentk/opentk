@@ -133,13 +133,13 @@ namespace Bind
                             case "o":
                             case "option":
                             {
-                                string option = val.ToLower();
+                                val = val.ToLower();
                                 bool enable = !opt.StartsWith("-");
-                                if (option.StartsWith("+") || option.StartsWith("-"))
-                                    option = option.Substring(1);
+                                if (val.StartsWith("+") || val.StartsWith("-"))
+                                    val = val.Substring(1);
 
                                 var settings = Settings.Legacy.None;
-                                switch (opt)
+                                switch (val)
                                 {
                                     case "tao": settings |= Settings.Legacy.Tao; break;
                                     case "simple_enums": settings |= Settings.Legacy.NoAdvancedEnumProcessing; break;
