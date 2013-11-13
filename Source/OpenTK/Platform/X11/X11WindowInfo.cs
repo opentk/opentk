@@ -91,6 +91,11 @@ namespace OpenTK.Platform.X11
         /// <summary>Gets or sets the X11 EventMask.</summary>
         public EventMask EventMask { get { return eventMask; } set { eventMask = value; } }
 
+        // For compatibility with whoever thought it would be
+        // a good idea to access internal APIs through reflection
+        // (e.g. MonoGame)
+        public IntPtr WindowHandle { get { return Handle; } set { Handle = value; } }
+
         #endregion
 
         #region --- IDisposable Members ---

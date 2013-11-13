@@ -89,6 +89,11 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        // For compatibility with whoever thought it would be
+        // a good idea to access internal APIs through reflection
+        // (e.g. MonoGame)
+        public IntPtr WindowHandle { get { return Handle; } set { Handle = value; } }
+
         #region public override string ToString()
 
         /// <summary>Returns a System.String that represents the current window.</summary>

@@ -70,6 +70,7 @@ namespace OpenTK.Platform.MacOS
         public IntPtr Handle
         {
             get { return this.windowRef; }
+            set { this.windowRef = value; }
         }
 
         internal bool GoFullScreenHack
@@ -82,7 +83,6 @@ namespace OpenTK.Platform.MacOS
             get { return goWindowedHack; }
             set { goWindowedHack = value; }
         }
-
 
         /// <summary>
         /// Gets a value indicating whether this instance refers to a System.Windows.Forms.Control.
@@ -98,6 +98,11 @@ namespace OpenTK.Platform.MacOS
         {
             return String.Format("MacOS.CarbonWindowInfo: Handle {0}", this.Handle);
         }
+
+        // For compatibility with whoever thought it would be
+        // a good idea to access internal APIs through reflection
+        // (e.g. MonoGame)
+        public IntPtr WindowHandle { get { return Handle; } set { Handle = value; } }
 
         #endregion
 
