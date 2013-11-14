@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * Contributions from Erik Ylvisaker
  * See license.txt for license info
@@ -71,12 +71,29 @@ namespace OpenTK.Platform.Windows
                     ContextHandle temp_context = new ContextHandle(Wgl.Imports.CreateContext(window.DeviceContext));
                     if (temp_context != ContextHandle.Zero)
                     {
-                        bool success = Wgl.Imports.MakeCurrent(window.DeviceContext, temp_context.Handle);
-                        if (!success)
-                            Debug.Print("wglMakeCurrent failed with error: {0}", Marshal.GetLastWin32Error());
-                        Wgl.LoadAll();
+						// Make the context current.
+						// Note: on some video cards and on some virtual machines, wglMakeCurrent
+						// may fail with an errorcode of 6 (INVALID_HANDLE). The suggested workaround
+						// is to call wglMakeCurrent in a loop until it succeeds.
+						// See https://www.opengl.org/discussion_boards/showthread.php/171058-nVidia-wglMakeCurrent()-multiple-threads
+						// Sigh...
+						for (int retry = 0; retry < 5; retry++)
+						{
+							bool success = Wgl.Imports.MakeCurrent(window.DeviceContext, temp_context.Handle);
+							if (!success)
+							{
+								Debug.Print("wglMakeCurrent failed with error: {0}. Retrying", Marshal.GetLastWin32Error());
+								System.Threading.Thread.Sleep(10);
+							}
+							else
+							{
+								// wglMakeCurrent succeeded, we are done here!
+								break;
+							}
+						}
 
-                        // Destroy temporary context
+						// Load wgl extensions and destroy temporary context
+						Wgl.LoadAll();
                         Wgl.Imports.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
                         Wgl.Imports.DeleteContext(temp_context.Handle);
                     }
