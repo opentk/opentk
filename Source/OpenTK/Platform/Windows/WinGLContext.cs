@@ -122,9 +122,10 @@ namespace OpenTK.Platform.Windows
                             attributes.Add(minor);
                             if (flags != 0)
                             {
-                                attributes.Add((int)ArbCreateContext.Flags);
-#warning "This is not entirely correct: Embedded is not a valid flag! We need to add a GetARBContextFlags(GraphicsContextFlags) method."
-                                attributes.Add((int)flags);
+                                attributes.Add((int)ArbCreateContext.ContextFlags);
+                                attributes.Add((int)GetARBContextFlags(flags));
+                                attributes.Add((int)ArbCreateContext.ProfileMask);
+                                attributes.Add((int)GetARBContextProfile(flags));
                             }
                             // According to the docs, " <attribList> specifies a list of attributes for the context.
                             // The list consists of a sequence of <name,value> pairs terminated by the
@@ -179,6 +180,21 @@ namespace OpenTK.Platform.Windows
                     Debug.WriteLine(result ? "success!" : "failed with win32 error " + Marshal.GetLastWin32Error());
                 }
             }
+        }
+
+        static ArbCreateContext GetARBContextFlags(GraphicsContextFlags flags)
+        {
+            ArbCreateContext result = 0;
+            result |= (flags & GraphicsContextFlags.ForwardCompatible) != 0 ?
+                ArbCreateContext.CoreProfileBit : ArbCreateContext.CompatibilityProfileBit;
+            return result;
+        }
+
+        static ArbCreateContext GetARBContextProfile(GraphicsContextFlags flags)
+        {
+            ArbCreateContext result = 0;
+            result |= (flags & GraphicsContextFlags.Debug) != 0 ? ArbCreateContext.DebugBit : 0;
+            return result;
         }
 
         public WinGLContext(ContextHandle handle, WinWindowInfo window, IGraphicsContext sharedContext,
