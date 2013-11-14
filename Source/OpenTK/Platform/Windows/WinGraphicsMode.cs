@@ -46,13 +46,13 @@ namespace OpenTK.Platform.Windows
 
         #region Constructors
 
-        public WinGraphicsMode(ContextHandle context, IntPtr device)
+        public WinGraphicsMode(IntPtr device)
         {
             lock (SyncRoot)
             {
-                modes.AddRange(GetModesARB(context, device));
+                modes.AddRange(GetModesARB(device));
                 if (modes.Count == 0)
-                    modes.AddRange(GetModesPFD(context, device));
+                    modes.AddRange(GetModesPFD(device));
                 if (modes.Count == 0)
                     throw new GraphicsModeException(
                         "No GraphicsMode available. This should never happen, please report a bug at http://www.opentk.com");
@@ -124,7 +124,7 @@ namespace OpenTK.Platform.Windows
 
         #region GetModesPFD
 
-        IEnumerable<GraphicsMode> GetModesPFD(ContextHandle context, IntPtr device)
+        IEnumerable<GraphicsMode> GetModesPFD(IntPtr device)
         {
             Debug.WriteLine(String.Format("Device context: {0}", device));
 
@@ -171,7 +171,7 @@ namespace OpenTK.Platform.Windows
 
         #region GetModesARB
 
-        IEnumerable<GraphicsMode> GetModesARB(ContextHandle context, IntPtr device)
+        IEnumerable<GraphicsMode> GetModesARB(IntPtr device)
         {
             // See http://www.opengl.org/registry/specs/ARB/wgl_pixel_format.txt 
             // for more details

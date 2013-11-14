@@ -31,47 +31,60 @@ namespace OpenTK.Platform.Windows
         static readonly object SyncRoot = new object();
 
         static IntPtr opengl32Handle;
-        static bool wgl_loaded;
         const string opengl32Name = "OPENGL32.DLL";
 
         bool vsync_supported;
 
-        static readonly IGraphicsMode ModeSelector;
+        readonly WinGraphicsMode ModeSelector;
 
         #region --- Contructors ---
 
         static WinGLContext()
         {
-            // Dynamically load the OpenGL32.dll in order to use the extension loading capabilities of Wgl.
-            if (opengl32Handle == IntPtr.Zero)
+            lock (LoadLock)
             {
-                opengl32Handle = Functions.LoadLibrary(opengl32Name);
+                // Dynamically load opengl32.dll in order to use the extension loading capabilities of Wgl.
                 if (opengl32Handle == IntPtr.Zero)
-                    throw new ApplicationException(String.Format("LoadLibrary(\"{0}\") call failed with code {1}",
-                                                                 opengl32Name, Marshal.GetLastWin32Error()));
-                Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", opengl32Handle));
-            }
+                {
+                    opengl32Handle = Functions.LoadLibrary(opengl32Name);
+                    if (opengl32Handle == IntPtr.Zero)
+                        throw new ApplicationException(String.Format("LoadLibrary(\"{0}\") call failed with code {1}",
+                                                                     opengl32Name, Marshal.GetLastWin32Error()));
+                    Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", opengl32Handle));
+                }
 
-            // We need to create a temp context in order to load
-            // wgl extensions (e.g. for multisampling or GL3).
-            // We cannot rely on OpenTK.Platform.Wgl until we
-            // create the context and call Wgl.LoadAll().
-            Debug.Print("Creating temporary context for wgl extensions.");
-            using (INativeWindow native = new NativeWindow())
-            {
-                // Create temporary context and load WGL entry points
-                WinWindowInfo window = native.WindowInfo as WinWindowInfo;
-                ContextHandle temp_context = new ContextHandle(Wgl.Imports.CreateContext(window.DeviceContext));
-                Wgl.Imports.MakeCurrent(window.DeviceContext, temp_context.Handle);
-                Wgl.LoadAll();
+                // We need to create a temp context in order to load
+                // wgl extensions (e.g. for multisampling or GL3).
+                // We cannot rely on OpenTK.Platform.Wgl until we
+                // create the context and call Wgl.LoadAll().
+                Debug.Print("Creating temporary context for wgl extensions.");
+                using (INativeWindow native = new NativeWindow())
+                {
+                    // Create temporary context and load WGL entry points
+                    // First, set a compatible pixel format to the device context
+                    // of the temp window
+                    WinWindowInfo window = native.WindowInfo as WinWindowInfo;
+                    WinGraphicsMode selector = new WinGraphicsMode(window.DeviceContext);
+                    SetGraphicsModePFD(selector, GraphicsMode.Default, window);
 
-                // Query graphics modes
-                ModeSelector = new WinGraphicsMode(temp_context, window.DeviceContext);
-                
-                // Destroy temporary context
-                Wgl.Imports.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
-                Wgl.Imports.DeleteContext(temp_context.Handle);
-                wgl_loaded = true;
+                    // Then, construct a temporary context and load all wgl extensions
+                    ContextHandle temp_context = new ContextHandle(Wgl.Imports.CreateContext(window.DeviceContext));
+                    if (temp_context != ContextHandle.Zero)
+                    {
+                        bool success = Wgl.Imports.MakeCurrent(window.DeviceContext, temp_context.Handle);
+                        if (!success)
+                            Debug.Print("wglMakeCurrent failed with error: {0}", Marshal.GetLastWin32Error());
+                        Wgl.LoadAll();
+
+                        // Destroy temporary context
+                        Wgl.Imports.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
+                        Wgl.Imports.DeleteContext(temp_context.Handle);
+                    }
+                    else
+                    {
+                        Debug.Print("wglCreateContext failed with error: {0}", Marshal.GetLastWin32Error());
+                    }
+                }
             }
         }
 
@@ -93,18 +106,8 @@ namespace OpenTK.Platform.Windows
 
                 lock (LoadLock)
                 {
-                    // On intel drivers, wgl entry points appear to change
-                    // when creating multiple contexts. As a workaround,
-                    // we reload Wgl entry points every time we create a
-                    // new context - this solves the issue without any apparent
-                    // side-effects (i.e. the old contexts can still be handled
-                    // using the new entry points.)
-                    // Sigh...
-                    //if (!wgl_loaded)
-                    //{
-                    //}
-
-                    Mode = SetGraphicsModePFD(format, (WinWindowInfo)window);
+                    ModeSelector = new WinGraphicsMode(window.DeviceContext);
+                    Mode = SetGraphicsModePFD(ModeSelector, format, (WinWindowInfo)window);
 
                     if (Wgl.Delegates.wglCreateContextAttribsARB != null)
                     {
@@ -158,6 +161,16 @@ namespace OpenTK.Platform.Windows
 
                 Debug.WriteLine(String.Format("success! (id: {0})", Handle));
 
+                // Todo: is this comment still true?
+                // On intel drivers, wgl entry points appear to change
+                // when creating multiple contexts. As a workaround,
+                // we reload Wgl entry points every time we create a
+                // new context - this solves the issue without any apparent
+                // side-effects (i.e. the old contexts can still be handled
+                // using the new entry points.)
+                // Sigh...
+                Wgl.LoadAll();
+
                 if (sharedContext != null)
                 {
                     Marshal.GetLastWin32Error();
@@ -203,12 +216,13 @@ namespace OpenTK.Platform.Windows
             {
                 bool success;
 
-                if (window != null)
+                WinWindowInfo wnd = window as WinWindowInfo;
+                if (wnd != null)
                 {
-                    if (((WinWindowInfo)window).Handle == IntPtr.Zero)
+                    if (wnd.Handle == IntPtr.Zero)
                         throw new ArgumentException("window", "Must point to a valid window.");
 
-                    success = Wgl.Imports.MakeCurrent(((WinWindowInfo)window).DeviceContext, Handle.Handle);
+                    success = Wgl.Imports.MakeCurrent(wnd.DeviceContext, Handle.Handle);
                 }
                 else
                 {
@@ -303,7 +317,8 @@ namespace OpenTK.Platform.Windows
         #region SetGraphicsModePFD
 
         // Note: there is no relevant ARB function.
-        internal static GraphicsMode SetGraphicsModePFD(GraphicsMode mode, WinWindowInfo window)
+        internal static GraphicsMode SetGraphicsModePFD(WinGraphicsMode mode_selector,
+            GraphicsMode mode, WinWindowInfo window)
         {
             Debug.Write("Setting pixel format... ");
             if (window == null)
@@ -311,7 +326,7 @@ namespace OpenTK.Platform.Windows
 
             if (!mode.Index.HasValue)
             {
-                mode = ModeSelector.SelectGraphicsMode(
+                mode = mode_selector.SelectGraphicsMode(
                     mode.ColorFormat, mode.Depth, mode.Stencil,
                     mode.Samples, mode.AccumulatorFormat,
                     mode.Buffers, mode.Stereo);
