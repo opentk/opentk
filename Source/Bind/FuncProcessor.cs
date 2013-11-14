@@ -79,10 +79,12 @@ namespace Bind
                 {
                     foreach (var d in signatures)
                     {
+                        var replace = GetFuncOverride(nav, d, apiname, apiversion);
+
                         TranslateExtension(d);
-                        TranslateReturnType(enum_processor, nav, d, enums, apiname, version);
-                        TranslateParameters(enum_processor, nav, d, enums, apiname, version);
-                        TranslateAttributes(nav, d, enums, apiname, version);
+                        TranslateReturnType(d, replace, nav, enum_processor, enums, apiname, version);
+                        TranslateParameters(d, replace, nav, enum_processor, enums, apiname, version);
+                        TranslateAttributes(d, replace, nav, apiname, version);
                     }
                 }
 
@@ -95,8 +97,9 @@ namespace Bind
                     foreach (XPathNavigator overload_element in overload_elements)
                     {
                         var overload = new Delegate(d);
-                        ApplyParameterReplacement(overload, overload_element);
-                        ApplyReturnTypeReplacement(overload, overload_element);
+                        TranslateReturnType(overload, overload_element, nav, enum_processor, enums, apiname, version);
+                        TranslateParameters(overload, overload_element, nav, enum_processor, enums, apiname, version);
+                        TranslateAttributes(overload, overload_element, nav, apiname, version);
                         overload_list.Add(overload);
                     }
                 }
@@ -196,7 +199,9 @@ namespace Bind
             return GetPath("replace", apiname, apiversion, function, extension);
         }
 
-        void TranslateType(Bind.Structures.Type type, EnumProcessor enum_processor, XPathNavigator overrides, EnumCollection enums,
+        void TranslateType(Bind.Structures.Type type,
+            XPathNavigator function_override, XPathNavigator overrides,
+            EnumProcessor enum_processor, EnumCollection enums,
             string category, string apiname)
         {
             Bind.Structures.Enum @enum;
@@ -209,6 +214,7 @@ namespace Bind
             bool normal = enums.TryGetValue(type.CurrentType, out @enum);
 
             // Translate enum types
+            type.IsEnum = false;
             if (normal && @enum.Name != "GLenum" && @enum.Name != "Boolean")
             {
                 type.IsEnum = true;
@@ -256,8 +262,6 @@ namespace Bind
                 }
                 else
                 {
-                    type.IsEnum = false;
-
                     // Todo: what is the point of this here? It is overwritten below.
                     // A few translations for consistency
                     switch (type.CurrentType.ToLower())
@@ -300,16 +304,29 @@ namespace Bind
                     "[Error] Type '{0}' has a high pointer level. Bindings will be incorrect.",
                     type));
             }
+
+            if (!type.IsEnum)
+            {
+                // Remove qualifier if type is not an enum
+                // Resolves issues when replacing / overriding
+                // an enum parameter with a non-enum type
+                type.QualifiedType = type.CurrentType;
+            }
         }
-        
-        void TranslateExtension(Delegate d)
+
+        static string TranslateExtension(string extension)
         {
-            var extension = d.Extension.ToUpper();
+            extension = extension.ToUpper();
             if (extension.Length > 2)
             {
                 extension = extension[0] + extension.Substring(1).ToLower();
             }
-            d.Extension = extension;
+            return extension;
+        }
+        
+        void TranslateExtension(Delegate d)
+        {
+            d.Extension = TranslateExtension(d.Extension);
         }
 
         static string GetTrimmedExtension(string name, string extension)
@@ -375,28 +392,47 @@ namespace Bind
 
         static XPathNodeIterator GetFuncOverload(XPathNavigator nav, Delegate d, string apiname, string apiversion)
         {
-            string ext = d.Extension;
+            // Try a few different extension variations that appear in the overrides xml file
+            string[] extensions = { d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper() };
             string trimmed_name = GetTrimmedName(d);
-            string extensionless_name = GetTrimmedExtension(d.Name, ext);
+            XPathNodeIterator function_overload = null;
 
-            var function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, d.Name, ext));
-            if (function_overload.Count == 0)
+            foreach (var ext in extensions)
+            {
+                string extensionless_name = GetTrimmedExtension(d.Name, ext);
+                function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, d.Name, ext));
+                if (function_overload.Count != 0)
+                    break;
                 function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, extensionless_name, ext));
-            if (function_overload.Count == 0)
+                if (function_overload.Count != 0)
+                    break;
                 function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, trimmed_name, ext));
+                if (function_overload.Count != 0)
+                    break;
+            }
             return function_overload;
         }
 
         static XPathNavigator GetFuncOverride(XPathNavigator nav, Delegate d, string apiname, string apiversion)
         {
-            string ext = d.Extension;
+            // Try a few different extension variations that appear in the overrides xml file
+            string[] extensions = { d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper() };
             string trimmed_name = GetTrimmedName(d);
-            string extensionless_name = GetTrimmedExtension(d.Name, ext);
+            XPathNavigator function_override = null;
 
-            var function_override =
-                nav.SelectSingleNode(GetOverridesPath(apiname, apiversion, d.Name, ext)) ??
-                nav.SelectSingleNode(GetOverridesPath(apiname, apiversion, extensionless_name, ext)) ??
-                nav.SelectSingleNode(GetOverridesPath(apiname, apiversion, trimmed_name, ext));
+            foreach (var ext in extensions)
+            {
+                string extensionless_name = GetTrimmedExtension(d.Name, ext);
+                function_override =
+                    nav.SelectSingleNode(GetOverridesPath(apiname, apiversion, d.Name, ext)) ??
+                    nav.SelectSingleNode(GetOverridesPath(apiname, apiversion, extensionless_name, ext)) ??
+                    nav.SelectSingleNode(GetOverridesPath(apiname, apiversion, trimmed_name, ext));
+
+                if (function_override != null)
+                {
+                    break;
+                }
+            }
             return function_override;
         }
 
@@ -460,13 +496,14 @@ namespace Bind
         // 3) A generic object or void* (translates to IntPtr)
         // 4) A GLenum (translates to int on Legacy.Tao or GL.Enums.GLenum otherwise).
         // Return types must always be CLS-compliant, because .Net does not support overloading on return types.
-        void TranslateReturnType(EnumProcessor enum_processor, XPathNavigator nav, Delegate d,
-            EnumCollection enums, string apiname, string apiversion)
+        void TranslateReturnType(Delegate d,
+            XPathNavigator function_override, XPathNavigator nav,
+            EnumProcessor enum_processor, EnumCollection enums,
+            string apiname, string apiversion)
         {
-            var function_override = GetFuncOverride(nav, d, apiname, apiversion);
             ApplyReturnTypeReplacement(d, function_override);
 
-            TranslateType(d.ReturnType, enum_processor, nav, enums, d.Category, apiname);
+            TranslateType(d.ReturnType, function_override, nav, enum_processor,enums, d.Category, apiname);
 
             if (d.ReturnType.CurrentType.ToLower().Contains("void") && d.ReturnType.Pointer != 0)
             {
@@ -513,26 +550,27 @@ namespace Bind
             return f;
         }
 
-        void TranslateParameters(EnumProcessor enum_processor,
-            XPathNavigator nav, Delegate d, EnumCollection enums,
+        void TranslateParameters(Delegate d,
+            XPathNavigator function_override, XPathNavigator nav,
+            EnumProcessor enum_processor, EnumCollection enums,
             string apiname, string apiversion)
         {
-            var function_override = GetFuncOverride(nav, d, apiname, apiversion);
             ApplyParameterReplacement(d, function_override);
 
             for (int i = 0; i < d.Parameters.Count; i++)
             {
-                TranslateParameter(d.Parameters[i], enum_processor, nav, enums, d.Category, apiname);
+                TranslateParameter(d.Parameters[i], function_override, nav, enum_processor, enums, d.Category, apiname);
                 if (d.Parameters[i].CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
                     d.Parameters[i].WrapperType = WrapperTypes.UncheckedParameter;
             }
         }
 
-        void TranslateParameter(Parameter p, EnumProcessor enum_processor,
-            XPathNavigator overrides, EnumCollection enums,
+        void TranslateParameter(Parameter p,
+            XPathNavigator function_override, XPathNavigator overrides,
+            EnumProcessor enum_processor, EnumCollection enums,
             string category, string apiname)
         {
-            TranslateType(p, enum_processor, overrides, enums, category, apiname);
+            TranslateType(p, function_override, overrides, enum_processor, enums, category, apiname);
 
             // Find out the necessary wrapper types.
             if (p.Pointer != 0)/* || CurrentType == "IntPtr")*/
@@ -585,11 +623,10 @@ namespace Bind
             //    WrapperType = WrapperTypes.BoolParameter;
         }
 
-        void TranslateAttributes(XPathNavigator nav, Delegate d, EnumCollection enums,
+        void TranslateAttributes(Delegate d,
+            XPathNavigator function_override, XPathNavigator nav,
             string apiname, string apiversion)
         {
-            var function_override = GetFuncOverride(nav, d, apiname, apiversion);
-
             if (function_override != null)
             {
                 var version_override = function_override.SelectSingleNode("version");
