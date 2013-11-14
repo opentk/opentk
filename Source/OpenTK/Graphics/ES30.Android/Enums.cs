@@ -1041,6 +1041,12 @@ namespace OpenTK.Graphics.ES30
         GenerateMipmapHint = ((int)0x8192),
     }
 
+    public enum OpenGlescoreVersions : int
+    {
+        EsVersion20 = ((int)1),
+        EsVersion30 = ((int)1),
+    }
+
     public enum OpenGlEsCoreVersions : int
     {
         EsVersion20 = ((int)1),

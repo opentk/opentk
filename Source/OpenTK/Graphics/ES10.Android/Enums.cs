@@ -454,7 +454,9 @@ namespace OpenTK.Graphics.ES10
         BufferSize = ((int)0x8764),
         BufferUsage = ((int)0x8765),
         AtcRgbaInterpolatedAlphaAmd = ((int)0x87EE),
+        GL_3DcXAmd = ((int)0x87F9),
         Gl3DcXAmd = ((int)0x87F9),
+        GL_3DcXyAmd = ((int)0x87FA),
         Gl3DcXyAmd = ((int)0x87FA),
         WriteonlyRenderingQcom = ((int)0x8823),
         BlendEquationAlphaOes = ((int)0x883D),
@@ -646,11 +648,26 @@ namespace OpenTK.Graphics.ES10
         Always = ((int)0x0207),
     }
 
+    public enum Amdcompressed3Dctexture : int
+    {
+        GL_3DcXAmd = ((int)0x87F9),
+        GL_3DcXyAmd = ((int)0x87FA),
+        AmdCompressed3DcTexture = ((int)1),
+    }
+
     public enum AmdCompressed3Dctexture : int
     {
         Gl3DcXAmd = ((int)0x87F9),
         Gl3DcXyAmd = ((int)0x87FA),
         AmdCompressed3DcTexture = ((int)1),
+    }
+
+    public enum AmdcompressedAtctexture : int
+    {
+        AtcRgbaInterpolatedAlphaAmd = ((int)0x87EE),
+        AtcRgbAmd = ((int)0x8C92),
+        AtcRgbaExplicitAlphaAmd = ((int)0x8C93),
+        AmdCompressedAtcTexture = ((int)1),
     }
 
     public enum AmdCompressedAtctexture : int
@@ -659,6 +676,11 @@ namespace OpenTK.Graphics.ES10
         AtcRgbAmd = ((int)0x8C92),
         AtcRgbaExplicitAlphaAmd = ((int)0x8C93),
         AmdCompressedAtcTexture = ((int)1),
+    }
+
+    public enum Appletexture2DlimitedNpot : int
+    {
+        AppleTexture2DLimitedNpot = ((int)1),
     }
 
     public enum AppleTexture2DlimitedNpot : int
@@ -675,6 +697,12 @@ namespace OpenTK.Graphics.ES10
         Triangles = ((int)0x0004),
         TriangleStrip = ((int)0x0005),
         TriangleFan = ((int)0x0006),
+    }
+
+    public enum BlendequationrgboessameAsBlendequationoes : int
+    {
+        BlendEquationRgbOes = ((int)0x8009),
+        BlendEquationAlphaOes = ((int)0x883D),
     }
 
     public enum BlendequatiOnrgbOesSameAsBlendequatiOnoes : int
@@ -799,11 +827,26 @@ namespace OpenTK.Graphics.ES10
         OutOfMemory = ((int)0x0505),
     }
 
+    public enum ExtblendMinmax : int
+    {
+        MinExt = ((int)0x8007),
+        MaxExt = ((int)0x8008),
+        ExtBlendMinmax = ((int)1),
+    }
+
     public enum ExtBlendMinmax : int
     {
         MinExt = ((int)0x8007),
         MaxExt = ((int)0x8008),
         ExtBlendMinmax = ((int)1),
+    }
+
+    public enum ExtdiscardFramebuffer : int
+    {
+        ColorExt = ((int)0x1800),
+        DepthExt = ((int)0x1801),
+        StencilExt = ((int)0x1802),
+        ExtDiscardFramebuffer = ((int)1),
     }
 
     public enum ExtDiscardFramebuffer : int
@@ -814,9 +857,22 @@ namespace OpenTK.Graphics.ES10
         ExtDiscardFramebuffer = ((int)1),
     }
 
+    public enum ExtmultiDrawArrays : int
+    {
+        ExtMultiDrawArrays = ((int)1),
+    }
+
     public enum ExtMultiDrawArrays : int
     {
         ExtMultiDrawArrays = ((int)1),
+    }
+
+    public enum ExtreadFormatBgra : int
+    {
+        BgraExt = ((int)0x80E1),
+        UnsignedShort4444RevExt = ((int)0x8365),
+        UnsignedShort1555RevExt = ((int)0x8366),
+        ExtReadFormatBgra = ((int)1),
     }
 
     public enum ExtReadFormatBgra : int
@@ -827,6 +883,13 @@ namespace OpenTK.Graphics.ES10
         ExtReadFormatBgra = ((int)1),
     }
 
+    public enum ExttextureFilterAnisotropic : int
+    {
+        TextureMaxAnisotropyExt = ((int)0x84FE),
+        MaxTextureMaxAnisotropyExt = ((int)0x84FF),
+        ExtTextureFilterAnisotropic = ((int)1),
+    }
+
     public enum ExtTextureFilterAnisotropic : int
     {
         TextureMaxAnisotropyExt = ((int)0x84FE),
@@ -834,10 +897,24 @@ namespace OpenTK.Graphics.ES10
         ExtTextureFilterAnisotropic = ((int)1),
     }
 
+    public enum ExttextureFormatBgra8888 : int
+    {
+        BgraExt = ((int)0x80E1),
+        ExtTextureFormatBgra8888 = ((int)1),
+    }
+
     public enum ExtTextureFormatBgra8888 : int
     {
         BgraExt = ((int)0x80E1),
         ExtTextureFormatBgra8888 = ((int)1),
+    }
+
+    public enum ExttextureLodBias : int
+    {
+        MaxTextureLodBiasExt = ((int)0x84FD),
+        TextureFilterControlExt = ((int)0x8500),
+        TextureLodBiasExt = ((int)0x8501),
+        ExtTextureLodBias = ((int)1),
     }
 
     public enum ExtTextureLodBias : int
@@ -980,6 +1057,15 @@ namespace OpenTK.Graphics.ES10
         GenerateMipmapHint = ((int)0x8192),
     }
 
+    public enum ImgmultisampledRenderToTexture : int
+    {
+        RenderbufferSamplesImg = ((int)0x9133),
+        FramebufferIncompleteMultisampleImg = ((int)0x9134),
+        MaxSamplesImg = ((int)0x9135),
+        TextureSamplesImg = ((int)0x9136),
+        ImgMultisampledRenderToTexture = ((int)1),
+    }
+
     public enum ImgMultisampledRenderToTexture : int
     {
         RenderbufferSamplesImg = ((int)0x9133),
@@ -989,11 +1075,27 @@ namespace OpenTK.Graphics.ES10
         ImgMultisampledRenderToTexture = ((int)1),
     }
 
+    public enum ImgreadFormat : int
+    {
+        BgraImg = ((int)0x80E1),
+        UnsignedShort4444RevImg = ((int)0x8365),
+        ImgReadFormat = ((int)1),
+    }
+
     public enum ImgReadFormat : int
     {
         BgraImg = ((int)0x80E1),
         UnsignedShort4444RevImg = ((int)0x8365),
         ImgReadFormat = ((int)1),
+    }
+
+    public enum ImgtextureCompressionPvrtc : int
+    {
+        CompressedRgbPvrtc4Bppv1Img = ((int)0x8C00),
+        CompressedRgbPvrtc2Bppv1Img = ((int)0x8C01),
+        CompressedRgbaPvrtc4Bppv1Img = ((int)0x8C02),
+        CompressedRgbaPvrtc2Bppv1Img = ((int)0x8C03),
+        ImgTextureCompressionPvrtc = ((int)1),
     }
 
     public enum ImgTextureCompressionPvrtc : int
@@ -1003,6 +1105,18 @@ namespace OpenTK.Graphics.ES10
         CompressedRgbaPvrtc4Bppv1Img = ((int)0x8C02),
         CompressedRgbaPvrtc2Bppv1Img = ((int)0x8C03),
         ImgTextureCompressionPvrtc = ((int)1),
+    }
+
+    public enum ImgtextureEnvEnhancedFixedFunction : int
+    {
+        Dot3RgbaImg = ((int)0x86AF),
+        ModulateColorImg = ((int)0x8C04),
+        RecipAddSignedAlphaImg = ((int)0x8C05),
+        TextureAlphaModulateImg = ((int)0x8C06),
+        FactorAlphaModulateImg = ((int)0x8C07),
+        FragmentAlphaModulateImg = ((int)0x8C08),
+        AddBlendImg = ((int)0x8C09),
+        ImgTextureEnvEnhancedFixedFunction = ((int)1),
     }
 
     public enum ImgTextureEnvEnhancedFixedFunction : int
@@ -1015,6 +1129,18 @@ namespace OpenTK.Graphics.ES10
         FragmentAlphaModulateImg = ((int)0x8C08),
         AddBlendImg = ((int)0x8C09),
         ImgTextureEnvEnhancedFixedFunction = ((int)1),
+    }
+
+    public enum ImguserClipPlane : int
+    {
+        MaxClipPlanesImg = ((int)0x0D32),
+        ClipPlane0Img = ((int)0x3000),
+        ClipPlane1Img = ((int)0x3001),
+        ClipPlane2Img = ((int)0x3002),
+        ClipPlane3Img = ((int)0x3003),
+        ClipPlane4Img = ((int)0x3004),
+        ClipPlane5Img = ((int)0x3005),
+        ImgUserClipPlane = ((int)1),
     }
 
     public enum ImgUserClipPlane : int
@@ -1095,6 +1221,14 @@ namespace OpenTK.Graphics.ES10
         Texture = ((int)0x1702),
     }
 
+    public enum Nvfence : int
+    {
+        AllCompletedNv = ((int)0x84F2),
+        FenceStatusNv = ((int)0x84F3),
+        FenceConditionNv = ((int)0x84F4),
+        NvFence = ((int)1),
+    }
+
     public enum NvFence : int
     {
         AllCompletedNv = ((int)0x84F2),
@@ -1103,9 +1237,23 @@ namespace OpenTK.Graphics.ES10
         NvFence = ((int)1),
     }
 
+    public enum OesblendEquationSeparate : int
+    {
+        OesBlendEquationSeparate = ((int)1),
+    }
+
     public enum OesBlendEquationSeparate : int
     {
         OesBlendEquationSeparate = ((int)1),
+    }
+
+    public enum OesblendFuncSeparate : int
+    {
+        BlendDstRgbOes = ((int)0x80C8),
+        BlendSrcRgbOes = ((int)0x80C9),
+        BlendDstAlphaOes = ((int)0x80CA),
+        BlendSrcAlphaOes = ((int)0x80CB),
+        OesBlendFuncSeparate = ((int)1),
     }
 
     public enum OesBlendFuncSeparate : int
@@ -1117,6 +1265,15 @@ namespace OpenTK.Graphics.ES10
         OesBlendFuncSeparate = ((int)1),
     }
 
+    public enum OesblendSubtract : int
+    {
+        FuncAddOes = ((int)0x8006),
+        BlendEquationOes = ((int)0x8009),
+        FuncSubtractOes = ((int)0x800A),
+        FuncReverseSubtractOes = ((int)0x800B),
+        OesBlendSubtract = ((int)1),
+    }
+
     public enum OesBlendSubtract : int
     {
         FuncAddOes = ((int)0x8006),
@@ -1126,15 +1283,41 @@ namespace OpenTK.Graphics.ES10
         OesBlendSubtract = ((int)1),
     }
 
+    public enum OesbyteCoordinates : int
+    {
+        OesByteCoordinates = ((int)1),
+    }
+
     public enum OesByteCoordinates : int
     {
         OesByteCoordinates = ((int)1),
+    }
+
+    public enum OescompressedEtc1Rgb8Texture : int
+    {
+        Etc1Rgb8Oes = ((int)0x8D64),
+        OesCompressedEtc1Rgb8Texture = ((int)1),
     }
 
     public enum OesCompressedEtc1Rgb8Texture : int
     {
         Etc1Rgb8Oes = ((int)0x8D64),
         OesCompressedEtc1Rgb8Texture = ((int)1),
+    }
+
+    public enum OescompressedPalettedTexture : int
+    {
+        Palette4Rgb8Oes = ((int)0x8B90),
+        Palette4Rgba8Oes = ((int)0x8B91),
+        Palette4R5G6B5Oes = ((int)0x8B92),
+        Palette4Rgba4Oes = ((int)0x8B93),
+        Palette4Rgb5A1Oes = ((int)0x8B94),
+        Palette8Rgb8Oes = ((int)0x8B95),
+        Palette8Rgba8Oes = ((int)0x8B96),
+        Palette8R5G6B5Oes = ((int)0x8B97),
+        Palette8Rgba4Oes = ((int)0x8B98),
+        Palette8Rgb5A1Oes = ((int)0x8B99),
+        OesCompressedPalettedTexture = ((int)1),
     }
 
     public enum OesCompressedPalettedTexture : int
@@ -1152,10 +1335,22 @@ namespace OpenTK.Graphics.ES10
         OesCompressedPalettedTexture = ((int)1),
     }
 
+    public enum Oesdepth24 : int
+    {
+        DepthComponent24Oes = ((int)0x81A6),
+        OesDepth24 = ((int)1),
+    }
+
     public enum OesDepth24 : int
     {
         DepthComponent24Oes = ((int)0x81A6),
         OesDepth24 = ((int)1),
+    }
+
+    public enum Oesdepth32 : int
+    {
+        DepthComponent32Oes = ((int)0x81A7),
+        OesDepth32 = ((int)1),
     }
 
     public enum OesDepth32 : int
@@ -1164,15 +1359,35 @@ namespace OpenTK.Graphics.ES10
         OesDepth32 = ((int)1),
     }
 
+    public enum OesdrawTexture : int
+    {
+        TextureCropRectOes = ((int)0x8B9D),
+        OesDrawTexture = ((int)1),
+    }
+
     public enum OesDrawTexture : int
     {
         TextureCropRectOes = ((int)0x8B9D),
         OesDrawTexture = ((int)1),
     }
 
+    public enum Oeseglimage : int
+    {
+        OesEglImage = ((int)1),
+    }
+
     public enum OesEglImage : int
     {
         OesEglImage = ((int)1),
+    }
+
+    public enum OeseglimageExternal : int
+    {
+        TextureExternalOes = ((int)0x8D65),
+        SamplerExternalOes = ((int)0x8D66),
+        TextureBindingExternalOes = ((int)0x8D67),
+        RequiredTextureImageUnitsOes = ((int)0x8D68),
+        OesEglImageExternal = ((int)1),
     }
 
     public enum OesEglImageExternal : int
@@ -1184,10 +1399,21 @@ namespace OpenTK.Graphics.ES10
         OesEglImageExternal = ((int)1),
     }
 
+    public enum OeselementIndexUint : int
+    {
+        UnsignedInt = ((int)0x1405),
+        OesElementIndexUint = ((int)1),
+    }
+
     public enum OesElementIndexUint : int
     {
         UnsignedInt = ((int)0x1405),
         OesElementIndexUint = ((int)1),
+    }
+
+    public enum OesextendedMatrixPalette : int
+    {
+        OesExtendedMatrixPalette = ((int)1),
     }
 
     public enum OesExtendedMatrixPalette : int
@@ -1195,15 +1421,64 @@ namespace OpenTK.Graphics.ES10
         OesExtendedMatrixPalette = ((int)1),
     }
 
+    public enum OesfboRenderMipmap : int
+    {
+        OesFboRenderMipmap = ((int)1),
+    }
+
     public enum OesFboRenderMipmap : int
     {
         OesFboRenderMipmap = ((int)1),
+    }
+
+    public enum OesfixedPoint : int
+    {
+        FixedOes = ((int)0x140C),
+        OesFixedPoint = ((int)1),
     }
 
     public enum OesFixedPoint : int
     {
         FixedOes = ((int)0x140C),
         OesFixedPoint = ((int)1),
+    }
+
+    public enum OesframebufferObject : int
+    {
+        NoneOes = ((int)0),
+        InvalidFramebufferOperationOes = ((int)0x0506),
+        Rgba4Oes = ((int)0x8056),
+        Rgb5A1Oes = ((int)0x8057),
+        DepthComponent16Oes = ((int)0x81A5),
+        MaxRenderbufferSizeOes = ((int)0x84E8),
+        FramebufferBindingOes = ((int)0x8CA6),
+        RenderbufferBindingOes = ((int)0x8CA7),
+        FramebufferAttachmentObjectTypeOes = ((int)0x8CD0),
+        FramebufferAttachmentObjectNameOes = ((int)0x8CD1),
+        FramebufferAttachmentTextureLevelOes = ((int)0x8CD2),
+        FramebufferAttachmentTextureCubeMapFaceOes = ((int)0x8CD3),
+        FramebufferCompleteOes = ((int)0x8CD5),
+        FramebufferIncompleteAttachmentOes = ((int)0x8CD6),
+        FramebufferIncompleteMissingAttachmentOes = ((int)0x8CD7),
+        FramebufferIncompleteDimensionsOes = ((int)0x8CD9),
+        FramebufferIncompleteFormatsOes = ((int)0x8CDA),
+        FramebufferUnsupportedOes = ((int)0x8CDD),
+        ColorAttachment0Oes = ((int)0x8CE0),
+        DepthAttachmentOes = ((int)0x8D00),
+        StencilAttachmentOes = ((int)0x8D20),
+        FramebufferOes = ((int)0x8D40),
+        RenderbufferOes = ((int)0x8D41),
+        RenderbufferWidthOes = ((int)0x8D42),
+        RenderbufferHeightOes = ((int)0x8D43),
+        RenderbufferInternalFormatOes = ((int)0x8D44),
+        RenderbufferRedSizeOes = ((int)0x8D50),
+        RenderbufferGreenSizeOes = ((int)0x8D51),
+        RenderbufferBlueSizeOes = ((int)0x8D52),
+        RenderbufferAlphaSizeOes = ((int)0x8D53),
+        RenderbufferDepthSizeOes = ((int)0x8D54),
+        RenderbufferStencilSizeOes = ((int)0x8D55),
+        Rgb565Oes = ((int)0x8D62),
+        OesFramebufferObject = ((int)1),
     }
 
     public enum OesFramebufferObject : int
@@ -1244,6 +1519,15 @@ namespace OpenTK.Graphics.ES10
         OesFramebufferObject = ((int)1),
     }
 
+    public enum Oesmapbuffer : int
+    {
+        WriteOnlyOes = ((int)0x88B9),
+        BufferAccessOes = ((int)0x88BB),
+        BufferMappedOes = ((int)0x88BC),
+        BufferMapPointerOes = ((int)0x88BD),
+        OesMapbuffer = ((int)1),
+    }
+
     public enum OesMapbuffer : int
     {
         WriteOnlyOes = ((int)0x88B9),
@@ -1253,12 +1537,41 @@ namespace OpenTK.Graphics.ES10
         OesMapbuffer = ((int)1),
     }
 
+    public enum OesmatrixGet : int
+    {
+        ModelviewMatrixFloatAsIntBitsOes = ((int)0x898D),
+        ProjectionMatrixFloatAsIntBitsOes = ((int)0x898E),
+        TextureMatrixFloatAsIntBitsOes = ((int)0x898F),
+        OesMatrixGet = ((int)1),
+    }
+
     public enum OesMatrixGet : int
     {
         ModelviewMatrixFloatAsIntBitsOes = ((int)0x898D),
         ProjectionMatrixFloatAsIntBitsOes = ((int)0x898E),
         TextureMatrixFloatAsIntBitsOes = ((int)0x898F),
         OesMatrixGet = ((int)1),
+    }
+
+    public enum OesmatrixPalette : int
+    {
+        MaxVertexUnitsOes = ((int)0x86A4),
+        WeightArrayTypeOes = ((int)0x86A9),
+        WeightArrayStrideOes = ((int)0x86AA),
+        WeightArraySizeOes = ((int)0x86AB),
+        WeightArrayPointerOes = ((int)0x86AC),
+        WeightArrayOes = ((int)0x86AD),
+        MatrixPaletteOes = ((int)0x8840),
+        MaxPaletteMatricesOes = ((int)0x8842),
+        CurrentPaletteMatrixOes = ((int)0x8843),
+        MatrixIndexArrayOes = ((int)0x8844),
+        MatrixIndexArraySizeOes = ((int)0x8846),
+        MatrixIndexArrayTypeOes = ((int)0x8847),
+        MatrixIndexArrayStrideOes = ((int)0x8848),
+        MatrixIndexArrayPointerOes = ((int)0x8849),
+        WeightArrayBufferBindingOes = ((int)0x889E),
+        MatrixIndexArrayBufferBindingOes = ((int)0x8B9E),
+        OesMatrixPalette = ((int)1),
     }
 
     public enum OesMatrixPalette : int
@@ -1282,12 +1595,30 @@ namespace OpenTK.Graphics.ES10
         OesMatrixPalette = ((int)1),
     }
 
+    public enum OespackedDepthStencil : int
+    {
+        DepthStencilOes = ((int)0x84F9),
+        UnsignedInt248Oes = ((int)0x84FA),
+        Depth24Stencil8Oes = ((int)0x88F0),
+        OesPackedDepthStencil = ((int)1),
+    }
+
     public enum OesPackedDepthStencil : int
     {
         DepthStencilOes = ((int)0x84F9),
         UnsignedInt248Oes = ((int)0x84FA),
         Depth24Stencil8Oes = ((int)0x88F0),
         OesPackedDepthStencil = ((int)1),
+    }
+
+    public enum OespointSizeArray : int
+    {
+        PointSizeArrayTypeOes = ((int)0x898A),
+        PointSizeArrayStrideOes = ((int)0x898B),
+        PointSizeArrayPointerOes = ((int)0x898C),
+        PointSizeArrayOes = ((int)0x8B9C),
+        PointSizeArrayBufferBindingOes = ((int)0x8B9F),
+        OesPointSizeArray = ((int)1),
     }
 
     public enum OesPointSizeArray : int
@@ -1300,6 +1631,13 @@ namespace OpenTK.Graphics.ES10
         OesPointSizeArray = ((int)1),
     }
 
+    public enum OespointSprite : int
+    {
+        PointSpriteOes = ((int)0x8861),
+        CoordReplaceOes = ((int)0x8862),
+        OesPointSprite = ((int)1),
+    }
+
     public enum OesPointSprite : int
     {
         PointSpriteOes = ((int)0x8861),
@@ -1307,9 +1645,21 @@ namespace OpenTK.Graphics.ES10
         OesPointSprite = ((int)1),
     }
 
+    public enum OesqueryMatrix : int
+    {
+        OesQueryMatrix = ((int)1),
+    }
+
     public enum OesQueryMatrix : int
     {
         OesQueryMatrix = ((int)1),
+    }
+
+    public enum OesreadFormat : int
+    {
+        ImplementationColorReadTypeOes = ((int)0x8B9A),
+        ImplementationColorReadFormatOes = ((int)0x8B9B),
+        OesReadFormat = ((int)1),
     }
 
     public enum OesReadFormat : int
@@ -1319,6 +1669,13 @@ namespace OpenTK.Graphics.ES10
         OesReadFormat = ((int)1),
     }
 
+    public enum Oesrgb8Rgba8 : int
+    {
+        Rgb8Oes = ((int)0x8051),
+        Rgba8Oes = ((int)0x8058),
+        OesRgb8Rgba8 = ((int)1),
+    }
+
     public enum OesRgb8Rgba8 : int
     {
         Rgb8Oes = ((int)0x8051),
@@ -1326,9 +1683,20 @@ namespace OpenTK.Graphics.ES10
         OesRgb8Rgba8 = ((int)1),
     }
 
+    public enum OessinglePrecision : int
+    {
+        OesSinglePrecision = ((int)1),
+    }
+
     public enum OesSinglePrecision : int
     {
         OesSinglePrecision = ((int)1),
+    }
+
+    public enum Oesstencil1 : int
+    {
+        StencilIndex1Oes = ((int)0x8D46),
+        OesStencil1 = ((int)1),
     }
 
     public enum OesStencil1 : int
@@ -1337,10 +1705,22 @@ namespace OpenTK.Graphics.ES10
         OesStencil1 = ((int)1),
     }
 
+    public enum Oesstencil4 : int
+    {
+        StencilIndex4Oes = ((int)0x8D47),
+        OesStencil4 = ((int)1),
+    }
+
     public enum OesStencil4 : int
     {
         StencilIndex4Oes = ((int)0x8D47),
         OesStencil4 = ((int)1),
+    }
+
+    public enum Oesstencil8 : int
+    {
+        StencilIndex8Oes = ((int)0x8D48),
+        OesStencil8 = ((int)1),
     }
 
     public enum OesStencil8 : int
@@ -1349,11 +1729,36 @@ namespace OpenTK.Graphics.ES10
         OesStencil8 = ((int)1),
     }
 
+    public enum OesstencilWrap : int
+    {
+        IncrWrapOes = ((int)0x8507),
+        DecrWrapOes = ((int)0x8508),
+        OesStencilWrap = ((int)1),
+    }
+
     public enum OesStencilWrap : int
     {
         IncrWrapOes = ((int)0x8507),
         DecrWrapOes = ((int)0x8508),
         OesStencilWrap = ((int)1),
+    }
+
+    public enum OestextureCubeMap : int
+    {
+        TextureGenModeOes = ((int)0x2500),
+        NormalMapOes = ((int)0x8511),
+        ReflectionMapOes = ((int)0x8512),
+        TextureCubeMapOes = ((int)0x8513),
+        TextureBindingCubeMapOes = ((int)0x8514),
+        TextureCubeMapPositiveXOes = ((int)0x8515),
+        TextureCubeMapNegativeXOes = ((int)0x8516),
+        TextureCubeMapPositiveYOes = ((int)0x8517),
+        TextureCubeMapNegativeYOes = ((int)0x8518),
+        TextureCubeMapPositiveZOes = ((int)0x8519),
+        TextureCubeMapNegativeZOes = ((int)0x851A),
+        MaxCubeMapTextureSizeOes = ((int)0x851C),
+        TextureGenStrOes = ((int)0x8D60),
+        OesTextureCubeMap = ((int)1),
     }
 
     public enum OesTextureCubeMap : int
@@ -1374,9 +1779,20 @@ namespace OpenTK.Graphics.ES10
         OesTextureCubeMap = ((int)1),
     }
 
+    public enum OestextureEnvCrossbar : int
+    {
+        OesTextureEnvCrossbar = ((int)1),
+    }
+
     public enum OesTextureEnvCrossbar : int
     {
         OesTextureEnvCrossbar = ((int)1),
+    }
+
+    public enum OestextureMirroredRepeat : int
+    {
+        MirroredRepeatOes = ((int)0x8370),
+        OesTextureMirroredRepeat = ((int)1),
     }
 
     public enum OesTextureMirroredRepeat : int
@@ -1385,10 +1801,24 @@ namespace OpenTK.Graphics.ES10
         OesTextureMirroredRepeat = ((int)1),
     }
 
+    public enum OesvertexArrayObject : int
+    {
+        VertexArrayBindingOes = ((int)0x85B5),
+        OesVertexArrayObject = ((int)1),
+    }
+
     public enum OesVertexArrayObject : int
     {
         VertexArrayBindingOes = ((int)0x85B5),
         OesVertexArrayObject = ((int)1),
+    }
+
+    public enum OpenGlescoreVersions : int
+    {
+        VersionEsCl10 = ((int)1),
+        VersionEsCl11 = ((int)1),
+        VersionEsCm10 = ((int)1),
+        VersionEsCm11 = ((int)1),
     }
 
     public enum OpenGlEsCoreVersions : int
@@ -1421,9 +1851,30 @@ namespace OpenTK.Graphics.ES10
         UnsignedShort565 = ((int)0x8363),
     }
 
+    public enum QcomdriverControl : int
+    {
+        QcomDriverControl = ((int)1),
+    }
+
     public enum QcomDriverControl : int
     {
         QcomDriverControl = ((int)1),
+    }
+
+    public enum QcomextendedGet : int
+    {
+        TextureWidthQcom = ((int)0x8BD2),
+        TextureHeightQcom = ((int)0x8BD3),
+        TextureDepthQcom = ((int)0x8BD4),
+        TextureInternalFormatQcom = ((int)0x8BD5),
+        TextureFormatQcom = ((int)0x8BD6),
+        TextureTypeQcom = ((int)0x8BD7),
+        TextureImageValidQcom = ((int)0x8BD8),
+        TextureNumLevelsQcom = ((int)0x8BD9),
+        TextureTargetQcom = ((int)0x8BDA),
+        TextureObjectValidQcom = ((int)0x8BDB),
+        StateRestore = ((int)0x8BDC),
+        QcomExtendedGet = ((int)1),
     }
 
     public enum QcomExtendedGet : int
@@ -1442,15 +1893,63 @@ namespace OpenTK.Graphics.ES10
         QcomExtendedGet = ((int)1),
     }
 
+    public enum QcomextendedGet2 : int
+    {
+        QcomExtendedGet2 = ((int)1),
+    }
+
     public enum QcomExtendedGet2 : int
     {
         QcomExtendedGet2 = ((int)1),
+    }
+
+    public enum QcomperfmonGlobalMode : int
+    {
+        PerfmonGlobalModeQcom = ((int)0x8FA0),
+        QcomPerfmonGlobalMode = ((int)1),
     }
 
     public enum QcomPerfmonGlobalMode : int
     {
         PerfmonGlobalModeQcom = ((int)0x8FA0),
         QcomPerfmonGlobalMode = ((int)1),
+    }
+
+    public enum QcomtiledRendering : int
+    {
+        ColorBufferBit0Qcom = ((int)0x00000001),
+        ColorBufferBit1Qcom = ((int)0x00000002),
+        ColorBufferBit2Qcom = ((int)0x00000004),
+        ColorBufferBit3Qcom = ((int)0x00000008),
+        ColorBufferBit4Qcom = ((int)0x00000010),
+        ColorBufferBit5Qcom = ((int)0x00000020),
+        ColorBufferBit6Qcom = ((int)0x00000040),
+        ColorBufferBit7Qcom = ((int)0x00000080),
+        DepthBufferBit0Qcom = ((int)0x00000100),
+        DepthBufferBit1Qcom = ((int)0x00000200),
+        DepthBufferBit2Qcom = ((int)0x00000400),
+        DepthBufferBit3Qcom = ((int)0x00000800),
+        DepthBufferBit4Qcom = ((int)0x00001000),
+        DepthBufferBit5Qcom = ((int)0x00002000),
+        DepthBufferBit6Qcom = ((int)0x00004000),
+        DepthBufferBit7Qcom = ((int)0x00008000),
+        StencilBufferBit0Qcom = ((int)0x00010000),
+        StencilBufferBit1Qcom = ((int)0x00020000),
+        StencilBufferBit2Qcom = ((int)0x00040000),
+        StencilBufferBit3Qcom = ((int)0x00080000),
+        StencilBufferBit4Qcom = ((int)0x00100000),
+        StencilBufferBit5Qcom = ((int)0x00200000),
+        StencilBufferBit6Qcom = ((int)0x00400000),
+        StencilBufferBit7Qcom = ((int)0x00800000),
+        MultisampleBufferBit0Qcom = ((int)0x01000000),
+        MultisampleBufferBit1Qcom = ((int)0x02000000),
+        MultisampleBufferBit2Qcom = ((int)0x04000000),
+        MultisampleBufferBit3Qcom = ((int)0x08000000),
+        MultisampleBufferBit4Qcom = ((int)0x10000000),
+        MultisampleBufferBit5Qcom = ((int)0x20000000),
+        MultisampleBufferBit6Qcom = ((int)0x40000000),
+        MultisampleBufferBit7Qcom = unchecked((int)0x80000000),
+        QcomTiledRendering = ((int)1),
     }
 
     public enum QcomTiledRendering : int
@@ -1488,6 +1987,12 @@ namespace OpenTK.Graphics.ES10
         MultisampleBufferBit6Qcom = ((int)0x40000000),
         MultisampleBufferBit7Qcom = unchecked((int)0x80000000),
         QcomTiledRendering = ((int)1),
+    }
+
+    public enum QcomwriteonlyRendering : int
+    {
+        WriteonlyRenderingQcom = ((int)0x8823),
+        QcomWriteonlyRendering = ((int)1),
     }
 
     public enum QcomWriteonlyRendering : int

@@ -342,7 +342,7 @@ namespace OpenTK.Graphics.ES30
             internal extern static void GetBufferPointerv(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All pname, [OutAttribute] IntPtr @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetError", ExactSpelling = true)]
-            internal extern static OpenTK.Graphics.ES30.ErrorCode GetError();
+            internal extern static OpenTK.Graphics.ES30.All GetError();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFloatv", ExactSpelling = true)]
             internal extern static unsafe void GetFloatv(OpenTK.Graphics.ES30.GetPName pname, [OutAttribute] Single* @params);
