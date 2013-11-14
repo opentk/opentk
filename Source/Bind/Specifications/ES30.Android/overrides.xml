@@ -157,10 +157,6 @@
       <param name="type"><type>ActiveUniformType</type></param>
     </function>
 
-    <function name="GetError" extension="Core" version="3.0">
-      <returns>ErrorCode</returns>
-    </function>
-
     <function name="GetProgram" extension="Core" version="3.0">
       <param name="pname"><type>ProgramParameter</type></param>
     </function>
@@ -295,10 +291,6 @@
      
     <function name="GetInteger" extension="Core">
       <param name="pname"><type>GetPName</type></param>
-    </function>
-
-    <function name="GetError" extension="Core">
-      <returns>ErrorCode</returns>
     </function>
 
     <function name="GetAttribLocation" extension="Core">
@@ -860,6 +852,10 @@
       <token name="StencilIndex" value="0x1901" />
     </enum>
     
+    <enum name="OpenGlescoreVersions" type="int">
+      <token name="ES_VERSION_2_0" value="1" />
+      <token name="ES_VERSION_3_0" value="1" />
+    </enum>
   </add>
 
 </signatures>
