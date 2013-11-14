@@ -1232,6 +1232,12 @@
       </param>
     </function>
 
+    <!-- Amd -->
+    <!-- AMD_performance_monitors is not const-correct -->
+    <function name="DeletePerfMonitors" extension="AMD">
+      <param name="monitors"><flow>in</flow></param>
+    </function>
+
     <!-- Arb -->
 
     <function name="ProgramParameteri" extension="Arb">
@@ -4101,6 +4107,13 @@
       <param name="mode"><type>BeginMode</type></param>
     </function>
   </overload>
+
+  <replace name="gles1">
+    <!-- AMD_performance_monitors is not const-correct -->
+    <function name="DeletePerfMonitors" extension="AMD">
+      <param name="monitors"><flow>in</flow></param>
+    </function>
+  </replace>
   
   <add name="gles1">
     <enum name="BeginMode">
@@ -4927,6 +4940,11 @@
     </function>
     <function name="GetStringi">
       <param name="name"><type>StringNameIndexed</type></param>
+    </function>
+
+    <!-- AMD_performance_monitors is not const-correct -->
+    <function name="DeletePerfMonitors" extension="AMD">
+      <param name="monitors"><flow>in</flow></param>
     </function>
     
     <!-- EXT_disjoint_timer_query -->
