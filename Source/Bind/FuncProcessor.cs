@@ -882,8 +882,6 @@ namespace Bind
             f.Parameters.RemoveAt(f.Parameters.Count - 1);
             f.ReturnType.WrapperType = WrapperTypes.ConvenienceReturnType;
 
-            if (d.Name.Contains("GetFixed"))
-                System.Diagnostics.Debugger.Break();
             if (f.Parameters.Count > 0)
             {
                 var p_size = f.Parameters.Last();
