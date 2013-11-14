@@ -82,6 +82,7 @@ namespace Bind.Structures
                 else
                 {
                     CurrentType = value;
+                    CurrentQualifier = String.Empty;
                 }
             }
         }
