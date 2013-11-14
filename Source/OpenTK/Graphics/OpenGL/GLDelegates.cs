@@ -1158,7 +1158,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void DeletePathsNV(UInt32 path, Int32 range);
             internal static DeletePathsNV glDeletePathsNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void DeletePerfMonitorsAMD(Int32 n, [OutAttribute] UInt32* monitors);
+            internal unsafe delegate void DeletePerfMonitorsAMD(Int32 n, UInt32* monitors);
             internal unsafe static DeletePerfMonitorsAMD glDeletePerfMonitorsAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DeleteProgram(UInt32 program);

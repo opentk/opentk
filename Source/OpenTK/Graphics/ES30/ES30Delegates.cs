@@ -267,7 +267,7 @@ namespace OpenTK.Graphics.ES30
             internal unsafe delegate void DeleteFramebuffers(Int32 n, UInt32* framebuffers);
             internal unsafe static DeleteFramebuffers glDeleteFramebuffers;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void DeletePerfMonitorsAMD(Int32 n, [OutAttribute] UInt32* monitors);
+            internal unsafe delegate void DeletePerfMonitorsAMD(Int32 n, UInt32* monitors);
             internal unsafe static DeletePerfMonitorsAMD glDeletePerfMonitorsAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DeleteProgram(UInt32 program);

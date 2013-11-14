@@ -1160,7 +1160,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void DeletePathsNV(UInt32 path, Int32 range);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeletePerfMonitorsAMD", ExactSpelling = true)]
-            internal extern static unsafe void DeletePerfMonitorsAMD(Int32 n, [OutAttribute] UInt32* monitors);
+            internal extern static unsafe void DeletePerfMonitorsAMD(Int32 n, UInt32* monitors);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteProgram", ExactSpelling = true)]
             internal extern static void DeleteProgram(UInt32 program);

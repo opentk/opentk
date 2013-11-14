@@ -842,49 +842,69 @@ namespace Bind
                     var p = d.Parameters.Last();
                     var r = d.ReturnType;
 
+                    var name = GetTrimmedName(d);
+
                     bool is_candidate = true;
-                    is_candidate &= d.Name.StartsWith("Get") || d.Name.StartsWith("Gen") ||
-                        d.Name.StartsWith("Delete") || d.Name.StartsWith("New");
-                    is_candidate &= d.Name.EndsWith("v") || d.Name.EndsWith("s");
+                    is_candidate &=
+                        name.StartsWith("Get") || name.StartsWith("Gen") ||
+                        name.StartsWith("Delete") || name.StartsWith("New");
                     is_candidate &= p.Pointer > 0;
+                    // if there is a specific count set, such as "4", then this function
+                    // returns a vector of specific dimensions and it would be wrong
+                    // to generate an overload that returns a value of different size.
+                    is_candidate &= p.ElementCount == 0 || p.ElementCount == 1;
                     is_candidate &= r.CurrentType == "void" && r.Pointer == 0;
 
                     if (is_candidate && p.Flow == FlowDirection.Out)
                     {
-                        var f = new Delegate(d);
-                        f.ReturnType = new Type(f.Parameters.Last());
-                        f.ReturnType.Pointer = 0;
-                        f.Parameters.RemoveAt(f.Parameters.Count - 1);
-                        f.ReturnType.WrapperType = WrapperTypes.ConvenienceReturnType;
-
-                        if (f.Parameters.Count > 0)
-                        {
-                            var p_size = f.Parameters.Last();
-                            if (p_size.CurrentType.ToLower().Contains("int") && p_size.Pointer == 0)
-                            {
-                                f.Parameters.RemoveAt(f.Parameters.Count - 1);
-                                f.ReturnType.WrapperType = WrapperTypes.ConvenienceArrayReturnType;
-                            }
-                        }
-
+                        // Match Gen*|Get*|New*([Out] int[] names) methods
+                        var f = CreateReturnTypeConvenienceWrapper(d);
                         yield return f;
                     }
                     else if (is_candidate && p.Flow != FlowDirection.Out)
                     {
+                        // Match *Delete(int count, int[] names) methods
                         if (d.Parameters.Count == 2)
                         {
-                            var f = new Delegate(d);
-                            var p_array = f.Parameters.Last();
-                            var p_size = f.Parameters[f.Parameters.Count - 2];
-                            f.Parameters.RemoveAt(f.Parameters.Count - 2);
-                            p_array.WrapperType = WrapperTypes.ConvenienceArrayType;
-                            p_array.Pointer = 0;
-
+                            var f = CreateArrayReturnTypeConvencienceWrapper(d);
                             yield return f;
                         }
                     }
                 }
             }
+        }
+
+        static Delegate CreateReturnTypeConvenienceWrapper(Delegate d)
+        {
+            var f = new Delegate(d);
+            f.ReturnType = new Type(f.Parameters.Last());
+            f.ReturnType.Pointer = 0;
+            f.Parameters.RemoveAt(f.Parameters.Count - 1);
+            f.ReturnType.WrapperType = WrapperTypes.ConvenienceReturnType;
+
+            if (d.Name.Contains("GetFixed"))
+                System.Diagnostics.Debugger.Break();
+            if (f.Parameters.Count > 0)
+            {
+                var p_size = f.Parameters.Last();
+                if (p_size.CurrentType.ToLower().StartsWith("int") && p_size.Pointer == 0)
+                {
+                    f.Parameters.RemoveAt(f.Parameters.Count - 1);
+                    f.ReturnType.WrapperType = WrapperTypes.ConvenienceArrayReturnType;
+                }
+            }
+            return f;
+        }
+
+        static Delegate CreateArrayReturnTypeConvencienceWrapper(Delegate d)
+        {
+            var f = new Delegate(d);
+            var p_array = f.Parameters.Last();
+            var p_size = f.Parameters[f.Parameters.Count - 2];
+            f.Parameters.RemoveAt(f.Parameters.Count - 2);
+            p_array.WrapperType = WrapperTypes.ConvenienceArrayType;
+            p_array.Pointer = 0;
+            return f;
         }
 
         public IEnumerable<Function> WrapParameters(Function func, EnumCollection enums)
