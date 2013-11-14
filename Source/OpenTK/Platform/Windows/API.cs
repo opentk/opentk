@@ -977,6 +977,13 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region GetDeviceCaps
+
+        [DllImport("gdi32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
+        public static extern int GetDeviceCaps(IntPtr hDC, DeviceCaps nIndex);
+
+        #endregion
+
         #endregion
 
         #region Input functions
@@ -2967,6 +2974,16 @@ namespace OpenTK.Platform.Windows
         VREDRAW = 0x200,
         REDRAW = (HREDRAW | VREDRAW),
         VALIDRECTS = 0x400
+    }
+
+    #endregion
+
+    #region DeviceCaps
+
+    enum DeviceCaps
+    {
+        LogPixelsX = 88,
+        LogPixelsY = 90
     }
 
     #endregion
