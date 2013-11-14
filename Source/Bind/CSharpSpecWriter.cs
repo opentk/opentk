@@ -341,7 +341,11 @@ namespace Bind
         {
             CreateBody(f, enums);
 
-            if (f.Deprecated && Settings.IsEnabled(Settings.Legacy.AddDeprecationWarnings))
+            if (!String.IsNullOrEmpty(f.Obsolete))
+            {
+                sw.WriteLine("[Obsolete(\"{0}\")]", f.Obsolete);
+            }
+            else if (f.Deprecated && Settings.IsEnabled(Settings.Legacy.AddDeprecationWarnings))
             {
                 sw.WriteLine("[Obsolete(\"Deprecated in OpenGL {0}\")]", f.DeprecatedVersion);
             }

@@ -52,6 +52,7 @@ namespace Bind.Structures
             Deprecated = d.Deprecated;
             DeprecatedVersion = d.DeprecatedVersion;
             EntryPoint = d.EntryPoint;
+            Obsolete = d.Obsolete;
         }
 
         #endregion
@@ -239,6 +240,7 @@ namespace Bind.Structures
         public bool Deprecated { get; set; }
         public string DeprecatedVersion { get; set; }
         public string EntryPoint { get; set; }
+        public string Obsolete { get; set; }
 
         #endregion
 

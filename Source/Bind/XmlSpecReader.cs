@@ -281,6 +281,7 @@ namespace Bind
                     DeprecatedVersion = node.GetAttribute("deprecated", String.Empty).Trim(),
                     Deprecated = !String.IsNullOrEmpty(node.GetAttribute("deprecated", String.Empty)),
                     Extension = node.GetAttribute("extension", String.Empty).Trim() ?? "Core",
+                    Obsolete = node.GetAttribute("obsolete", String.Empty).Trim()
                 };
                 if (!extensions.Contains(d.Extension))
                     extensions.Add(d.Extension);

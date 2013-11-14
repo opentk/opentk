@@ -640,6 +640,12 @@ namespace Bind
                 {
                     Debug.Print("Profile override not yet implemented");
                 }
+
+                var obsolete = function_override.GetAttribute("obsolete", String.Empty);
+                if (!String.IsNullOrEmpty(obsolete))
+                {
+                    d.Obsolete = obsolete;
+                }
             }
         }
 
