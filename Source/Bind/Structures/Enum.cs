@@ -79,12 +79,6 @@ namespace Bind.Structures
     {
         SortedDictionary<string, Enum> Enumerations = new SortedDictionary<string, Enum>();
 
-        internal void AddRange(EnumCollection enums)
-        {
-            foreach (Enum e in enums.Values)
-                Utilities.Merge(this, e);
-        }
-
         // Return -1 for ext1, 1 for ext2 or 0 if no preference.
         int OrderOfPreference(string ext1, string ext2)
         {
@@ -115,11 +109,39 @@ namespace Bind.Structures
                 return 0;
         }
 
+        #region Public Members
+
+        public void Add(Enum e)
+        {
+            Add(e.Name, e);
+        }
+
+        public void AddRange(EnumCollection enums)
+        {
+            foreach (Enum e in enums.Values)
+            {
+                Add(e);
+            }
+        }
+
+        #endregion
+
         #region IDictionary<string, Enum> Members
 
         public void Add(string key, Enum value)
         {
-            Enumerations.Add(key, value);
+            if (ContainsKey(key))
+            {
+                var e = this[key];
+                foreach (var token in value.ConstantCollection.Values)
+                {
+                    Utilities.Merge(e, token);
+                }
+            }
+            else
+            {
+                Enumerations.Add(key, value);
+            }
         }
 
         public bool ContainsKey(string key)
