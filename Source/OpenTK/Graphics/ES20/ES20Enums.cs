@@ -8667,7 +8667,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.CullFace, GL.StencilFuncSeparate and 1 other function
+    /// Used in GL.CullFace, GL.StencilFuncSeparate and 2 other functions
     /// </summary>
     public enum CullFaceMode : int
     {
@@ -20010,7 +20010,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.BindTexture, GL.CompressedTexImage2D and 8 other functions
+    /// Used in GL.BindTexture, GL.CompressedTexImage2D and 9 other functions
     /// </summary>
     public enum TextureTarget : int
     {

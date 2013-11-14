@@ -666,6 +666,8 @@ namespace Bind
                     overloads.AddRange(list.Where(f => f.Parameters.Any(p => p.IsEnum)).Select(f =>
                     {
                         var fnew = new Function(f);
+                        fnew.Obsolete = "Use strongly-typed overload instead";
+                        // Note that we can only overload parameters, not the return type
                         foreach (var p in fnew.Parameters)
                         {
                             if (p.IsEnum)
@@ -673,6 +675,7 @@ namespace Bind
                                 p.CurrentType = Settings.CompleteEnumName;
                             }
                         }
+
                         return fnew;
                     }));
                 }

@@ -1636,47 +1636,50 @@
   <overload name="gl">
     <!-- Khronos renamed a few enum types between GL 4.3 and GL4.4 -->
     <!-- PrimitiveType <=> BeginMode overloads for backwards compatibility -->
-    <function name="Begin">
+    <function name="Begin" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
-    <function name="DrawArrays">
+    <function name="DrawArrays" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
-    <function name="DrawElements">
+    <function name="DrawElements" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
-    <function name="DrawElementsBaseVertex">
+    <function name="DrawElementsBaseVertex" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
-    <function name="DrawElementsInstanced">
+    <function name="DrawElementsInstanced" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
-    <function name="DrawElementsInstancedBaseVertex">
+    <function name="DrawElementsInstancedBaseVertex" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
-    <function name="DrawRangeElements">
+    <function name="DrawRangeElements" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
-    <function name="DrawRangeElementsBaseVertex">
+    <function name="DrawRangeElementsBaseVertex" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
-    <function name="MultiDrawArrays">
+    <function name="MultiDrawArrays" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
-    <function name="MultiDrawElements">
+    <function name="MultiDrawElements" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
     
     <!-- StencilFace <=> CullFaceMode -->
-    <function name="StencilFuncSeparate" obsolete="Use StencilFace instead" extension="Core">
+    <function name="StencilFuncSeparate" obsolete="Use StencilFace overload instead" extension="Core">
       <param name="face"><type>CullFaceMode</type></param>
     </function>
-    <function name="StencilOpSeparate" obsolete="Use StencilFace instead" extension="Core">
+    <function name="StencilMaskSeparate" obsolete="Use StencilFace overload instead" extension="Core">
+      <param name="face"><type>CullFaceMode</type></param>
+    </function>
+    <function name="StencilOpSeparate" obsolete="Use StencilFace overload instead" extension="Core">
       <param name="face"><type>CullFaceMode</type></param>
     </function>
     
     <!-- StencilFace <=> Version20 -->
-    <function name="StencilFuncSeparate" obsolete="Use StencilFace instead" extension="Core">
+    <function name="StencilFuncSeparate" obsolete="Use StencilFace overload instead" extension="Core">
       <param name="face"><type>Version20</type></param>
     </function>
     
@@ -4087,14 +4090,14 @@
   
   <!--- gles1 -->
   <overload name="gles1">
-    <function name="Clear">
+    <function name="Clear" obsolete="Use ClearMask overload instead">
       <param name="mask"><type>GLuint</type></param>
     </function>
     <!-- PrimtiveType <=> BeginMode overloads for backwards compatibility -->
-    <function name="DrawArrays" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
+    <function name="DrawArrays" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
-    <function name="DrawElements" category="VERSION_ES_CM_1_0" extension="Core" version="1.0">
+    <function name="DrawElements" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
   </overload>
@@ -4958,51 +4961,57 @@
   <!--  gles2 overloads for 2.0 backwards compatibility-->
   <overload name="gles2" version="2.0">
     <!-- PrimtiveType <=> BeginMode overloads for backwards compatibility -->
-    <function name="DrawArrays" obsolete="Use PrimitiveType instead">
+    <function name="DrawArrays" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
-    <function name="DrawElements" obsolete="Use PrimitiveType instead">
+    <function name="DrawElements" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
     
     <!-- StencilFace <=> CullFaceMode -->
-    <function name="StencilFuncSeparate" obsolete="Use StencilFace instead">
+    <function name="StencilFuncSeparate" obsolete="Use StencilFace overload instead">
       <param name="face"><type>CullFaceMode</type></param>
     </function>
-    <function name="StencilOpSeparate" obsolete="Use StencilFace instead">
+    <function name="StencilMaskSeparate" obsolete="Use StencilFace overload instead">
+      <param name="face"><type>CullFaceMode</type></param>
+    </function>
+    <function name="StencilOpSeparate" obsolete="Use StencilFace overload instead">
       <param name="face"><type>CullFaceMode</type></param>
     </function>
     
     <!-- BufferUsageHint <=> BufferUsage -->
-    <function name="BufferData" obsolete="Use BufferUsageHint instead">
+    <function name="BufferData" obsolete="Use BufferUsageHint overload instead">
       <param name="target"><type>BufferTarget</type></param>
       <param name="usage"><type>BufferUsage</type></param>
     </function>
     
     <!-- TextureTarget <=> TextureTarget2d -->
-    <function name="TexImage2D" obsolete="Use TextureTarget2d instead">
+    <function name="FramebufferTexture2D" obsolete="Use TextureTarget2d overload instead">
+      <param name="textarget"><type>TextureTarget</type></param>
+    </function>
+    <function name="TexImage2D" obsolete="Use TextureTarget2d overload instead">
       <param name="target"><type>TextureTarget</type></param>
       <param name="internalformat"><type>PixelInternalFormat</type></param>
       <param name="format"><type>PixelFormat</type></param>
       <param name="type"><type>PixelType</type></param>
     </function>
-    <function name="TexSubImage2D" obsolete="Use TextureTarget2d instead">
+    <function name="TexSubImage2D" obsolete="Use TextureTarget2d overload instead">
       <param name="target"><type>TextureTarget</type></param>
       <param name="format"><type>PixelFormat</type></param>
       <param name="type"><type>PixelType</type></param>
     </function>
-    <function name="CopyTexImage2D" obsolete="Use TextureTarget2d and TextureCopyComponentCount instead">
+    <function name="CopyTexImage2D" obsolete="Use TextureTarget2d and TextureCopyComponentCount overloads instead">
       <param name="target"><type>TextureTarget</type></param>
       <param name="internalformat"><type>PixelInternalFormat</type></param>
     </function>
-    <function name="CopyTexSubImage2D" obsolete="Use TextureTarget2d instead">
+    <function name="CopyTexSubImage2D" obsolete="Use TextureTarget2d overload instead">
       <param name="target"><type>TextureTarget</type></param>
     </function>
-    <function name="CompressedTexImage2D" obsolete="Use TextureTarget2d instead">
+    <function name="CompressedTexImage2D" obsolete="Use TextureTarget2d overload instead">
       <param name="target"><type>TextureTarget</type></param>
       <param name="internalformat"><type>PixelInternalFormat</type></param>
     </function>
-    <function name="CompressedTexSubImage2D" obsolete="Use TextureTarget2d and CompressedInternalFormat instead">
+    <function name="CompressedTexSubImage2D" obsolete="Use TextureTarget2d and CompressedInternalFormat overloads instead">
       <param name="target"><type>TextureTarget</type></param>
       <param name="format"><type>PixelFormat</type></param>
     </function>
