@@ -125,10 +125,20 @@ namespace OpenTK.Platform.Windows
 
                 // To avoid issues with Ati drivers on Windows 6+ with compositing enabled, the context will not be
                 // bound to the top-level window, but rather to a child window docked in the parent.
+                int scale_width = ScaleX(width);
+                int scale_height = ScaleY(height);
+                int scale_x = x - UnscaleX(scale_width - width);
+                int scale_y = y - UnscaleY(scale_height - height);
                 window = new WinWindowInfo(
-                    CreateWindow(x, y, width, height, title, options, device, IntPtr.Zero), null);
+                    CreateWindow(
+                        scale_x, scale_y, scale_width, scale_height,
+                        title, options, device, IntPtr.Zero),
+                    null);
                 child_window = new WinWindowInfo(
-                    CreateWindow(0, 0, ClientSize.Width, ClientSize.Height, title, options, device, window.Handle), window);
+                    CreateWindow(
+                        0, 0, ClientSize.Width, ClientSize.Height,
+                        title, options, device, window.Handle),
+                    window);
 
                 exists = true;
 
@@ -149,6 +159,68 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region Private Members
+
+        #region Scale
+
+        enum ScaleDirection { X, Y }
+
+        // Scales a value according according
+        // to the DPI of the specified direction
+        static int Scale(int v, ScaleDirection direction)
+        {
+            IntPtr dc = Functions.GetDC(IntPtr.Zero);
+            if (dc != IntPtr.Zero)
+            {
+                int dpi = Functions.GetDeviceCaps(dc,
+                    direction == ScaleDirection.X ? DeviceCaps.LogPixelsX : DeviceCaps.LogPixelsY);
+                if (dpi > 0)
+                {
+                    float scale = dpi / 96.0f;
+                    v = (int)Math.Round(v * scale);
+                }
+                Functions.ReleaseDC(IntPtr.Zero, dc);
+            }
+            return v;
+        }
+
+        static int ScaleX(int x)
+        {
+            return Scale(x, ScaleDirection.X);
+        }
+        
+        static int ScaleY(int y)
+        {
+            return Scale(y, ScaleDirection.Y);
+        }
+
+        static int Unscale(int v, ScaleDirection direction)
+        {
+            IntPtr dc = Functions.GetDC(IntPtr.Zero);
+            if (dc != IntPtr.Zero)
+            {
+                int dpi = Functions.GetDeviceCaps(dc,
+                    direction == ScaleDirection.X ? DeviceCaps.LogPixelsX : DeviceCaps.LogPixelsY);
+                if (dpi > 0)
+                {
+                    float scale = dpi / 96.0f;
+                    v = (int)Math.Round(v / scale);
+                }
+                Functions.ReleaseDC(IntPtr.Zero, dc);
+            }
+            return v;
+        }
+
+        static int UnscaleX(int x)
+        {
+            return Unscale(x, ScaleDirection.X);
+        }
+
+        static int UnscaleY(int y)
+        {
+            return Unscale(y, ScaleDirection.Y);
+        }
+
+        #endregion
 
         #region WindowProcedure
 
