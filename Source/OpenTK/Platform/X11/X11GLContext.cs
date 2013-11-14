@@ -227,7 +227,7 @@ namespace OpenTK.Platform.X11
         {
             ArbCreateContext result = 0;
             result |= (flags & GraphicsContextFlags.ForwardCompatible) != 0 ?
-                ArbCreateContext.ForwardCompatibleBit : ArbCreateContext.CompatibilityProfileBit;
+                ArbCreateContext.CoreProfileBit : ArbCreateContext.CompatibilityProfileBit;
             return result;
         }
 
