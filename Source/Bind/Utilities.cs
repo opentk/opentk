@@ -186,6 +186,16 @@ namespace Bind
             }
         }
 
+        internal static string ResolveName (string s)
+        {
+            if (s.Length > 0 && s[0] == '#') {
+                if (s.Length > 1 && s[1] == '#')
+                    return s.Substring (2);
+                return s.Substring (1);
+            }
+            return s;
+        }
+
         /// <summary>
         /// Places a new constant in the specified enum, if it doesn't already exist.
         /// The existing constant is replaced iff the new has a numeric value and the old
@@ -196,9 +206,10 @@ namespace Bind
         /// <returns></returns>
         internal static Enum Merge(Enum s, Constant t)
         {
-            if (!s.ConstantCollection.ContainsKey(t.Name))
+            string name = ResolveName (t.Name);
+            if (!s.ConstantCollection.ContainsKey(name))
             {
-                s.ConstantCollection.Add(t.Name, t);
+                s.ConstantCollection.Add(name, t);
             }
             else
             {

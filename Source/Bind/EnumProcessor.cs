@@ -91,6 +91,9 @@ namespace Bind
 
         public static string TranslateEnumName(string name)
         {
+            if (name.Length > 0 && name[0] == '#')
+                return name.Substring (1);
+
             if (Utilities.Keywords.Contains(name))
                 return name;
 
@@ -170,8 +173,9 @@ namespace Bind
                 foreach (Constant c in e.ConstantCollection.Values)
                 {
                     c.Name = TranslateConstantName(c.Name, false);
+                    string name = Utilities.ResolveName (c.Name);
                     c.Value = TranslateConstantValue(c.Value);
-                    if (!processed_constants.ContainsKey(c.Name))
+                    if (!processed_constants.ContainsKey(name))
                         processed_constants.Add(c.Name, c);
                 }
                 e.ConstantCollection = processed_constants;
@@ -215,6 +219,9 @@ namespace Bind
 
         public static string TranslateConstantName(string s, bool isValue)
         {
+            if (s.Length > 0 && s[0] == '#')
+                return s.Substring (1);
+		
             StringBuilder translator = new StringBuilder(s.Length);
 
             // Translate the constant's name to match .Net naming conventions
