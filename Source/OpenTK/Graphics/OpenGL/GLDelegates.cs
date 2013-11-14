@@ -1671,7 +1671,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void FogCoordPointerEXT(OpenTK.Graphics.OpenGL.ExtFogCoord type, Int32 stride, IntPtr pointer);
             internal static FogCoordPointerEXT glFogCoordPointerEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FogCoordPointerListIBM(OpenTK.Graphics.OpenGL.IbmVertexArrayLists type, Int32 stride, IntPtr pointer, Int32 ptrstride);
+            internal delegate void FogCoordPointerListIBM(OpenTK.Graphics.OpenGL.FogPointerType type, Int32 stride, IntPtr pointer, Int32 ptrstride);
             internal static FogCoordPointerListIBM glFogCoordPointerListIBM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Fogf(OpenTK.Graphics.OpenGL.FogParameter pname, Single param);

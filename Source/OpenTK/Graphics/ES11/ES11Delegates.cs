@@ -42,7 +42,7 @@ namespace OpenTK.Graphics.ES11
             internal delegate void AccumxOES(OpenTK.Graphics.ES11.All op, int value);
             internal static AccumxOES glAccumxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ActiveTexture(OpenTK.Graphics.ES11.All texture);
+            internal delegate void ActiveTexture(OpenTK.Graphics.ES11.TextureUnit texture);
             internal static ActiveTexture glActiveTexture;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void AlphaFunc(OpenTK.Graphics.ES11.AlphaFunction func, Single @ref);
@@ -129,7 +129,7 @@ namespace OpenTK.Graphics.ES11
             internal delegate void ClearStencil(Int32 s);
             internal static ClearStencil glClearStencil;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ClientActiveTexture(OpenTK.Graphics.ES11.All texture);
+            internal delegate void ClientActiveTexture(OpenTK.Graphics.ES11.TextureUnit texture);
             internal static ClientActiveTexture glClientActiveTexture;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate OpenTK.Graphics.ES11.All ClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
@@ -771,7 +771,7 @@ namespace OpenTK.Graphics.ES11
             internal unsafe delegate void MultiTexCoord4bvOES(OpenTK.Graphics.ES11.All texture, SByte* coords);
             internal unsafe static MultiTexCoord4bvOES glMultiTexCoord4bvOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MultiTexCoord4f(OpenTK.Graphics.ES11.All target, Single s, Single t, Single r, Single q);
+            internal delegate void MultiTexCoord4f(OpenTK.Graphics.ES11.TextureUnit target, Single s, Single t, Single r, Single q);
             internal static MultiTexCoord4f glMultiTexCoord4f;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void MultiTexCoord4x(OpenTK.Graphics.ES11.All texture, int s, int t, int r, int q);

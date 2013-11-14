@@ -34549,7 +34549,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.FogCoordPointer, GL.Ext.VertexArrayFogCoordOffset
+    /// Used in GL.FogCoordPointer, GL.Ext.VertexArrayFogCoordOffset and 1 other function
     /// </summary>
     public enum FogPointerType : int
     {
@@ -38933,7 +38933,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ibm.FogCoordPointerList, GL.Ibm.SecondaryColorPointerList
+    /// Used in GL.Ibm.SecondaryColorPointerList
     /// </summary>
     public enum IbmVertexArrayLists : int
     {

@@ -44,7 +44,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static void AccumxOES(OpenTK.Graphics.ES11.All op, int value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glActiveTexture", ExactSpelling = true)]
-            internal extern static void ActiveTexture(OpenTK.Graphics.ES11.All texture);
+            internal extern static void ActiveTexture(OpenTK.Graphics.ES11.TextureUnit texture);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glAlphaFunc", ExactSpelling = true)]
             internal extern static void AlphaFunc(OpenTK.Graphics.ES11.AlphaFunction func, Single @ref);
@@ -131,7 +131,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static void ClearStencil(Int32 s);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClientActiveTexture", ExactSpelling = true)]
-            internal extern static void ClientActiveTexture(OpenTK.Graphics.ES11.All texture);
+            internal extern static void ClientActiveTexture(OpenTK.Graphics.ES11.TextureUnit texture);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glClientWaitSyncAPPLE", ExactSpelling = true)]
             internal extern static OpenTK.Graphics.ES11.All ClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
@@ -773,7 +773,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static unsafe void MultiTexCoord4bvOES(OpenTK.Graphics.ES11.All texture, SByte* coords);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord4f", ExactSpelling = true)]
-            internal extern static void MultiTexCoord4f(OpenTK.Graphics.ES11.All target, Single s, Single t, Single r, Single q);
+            internal extern static void MultiTexCoord4f(OpenTK.Graphics.ES11.TextureUnit target, Single s, Single t, Single r, Single q);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiTexCoord4x", ExactSpelling = true)]
             internal extern static void MultiTexCoord4x(OpenTK.Graphics.ES11.All texture, int s, int t, int r, int q);
