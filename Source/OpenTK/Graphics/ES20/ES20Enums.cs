@@ -13941,6 +13941,53 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
+    /// Used in GL.GetProgram
+    /// </summary>
+    public enum GetProgramParameterName : int
+    {
+        /// <summary>
+        /// Original was GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257
+        /// </summary>
+        ProgramBinaryRetrievableHint = ((int)0x8257)        ,
+        /// <summary>
+        /// Original was GL_DELETE_STATUS = 0x8B80
+        /// </summary>
+        DeleteStatus = ((int)0x8B80)        ,
+        /// <summary>
+        /// Original was GL_LINK_STATUS = 0x8B82
+        /// </summary>
+        LinkStatus = ((int)0x8B82)        ,
+        /// <summary>
+        /// Original was GL_VALIDATE_STATUS = 0x8B83
+        /// </summary>
+        ValidateStatus = ((int)0x8B83)        ,
+        /// <summary>
+        /// Original was GL_INFO_LOG_LENGTH = 0x8B84
+        /// </summary>
+        InfoLogLength = ((int)0x8B84)        ,
+        /// <summary>
+        /// Original was GL_ATTACHED_SHADERS = 0x8B85
+        /// </summary>
+        AttachedShaders = ((int)0x8B85)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORMS = 0x8B86
+        /// </summary>
+        ActiveUniforms = ((int)0x8B86)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORM_MAX_LENGTH = 0x8B87
+        /// </summary>
+        ActiveUniformMaxLength = ((int)0x8B87)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_ATTRIBUTES = 0x8B89
+        /// </summary>
+        ActiveAttributes = ((int)0x8B89)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8B8A
+        /// </summary>
+        ActiveAttributeMaxLength = ((int)0x8B8A)        ,
+    }
+
+    /// <summary>
     /// Used in GL.Ext.GetQueryObject
     /// </summary>
     public enum GetQueryObjectParam : int
@@ -18573,93 +18620,14 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.GetProgram
-    /// </summary>
-    public enum ProgramParameter : int
-    {
-        /// <summary>
-        /// Original was GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257
-        /// </summary>
-        ProgramBinaryRetrievableHint = ((int)0x8257)        ,
-        /// <summary>
-        /// Original was GL_DELETE_STATUS = 0x8B80
-        /// </summary>
-        DeleteStatus = ((int)0x8B80)        ,
-        /// <summary>
-        /// Original was GL_LINK_STATUS = 0x8B82
-        /// </summary>
-        LinkStatus = ((int)0x8B82)        ,
-        /// <summary>
-        /// Original was GL_VALIDATE_STATUS = 0x8B83
-        /// </summary>
-        ValidateStatus = ((int)0x8B83)        ,
-        /// <summary>
-        /// Original was GL_INFO_LOG_LENGTH = 0x8B84
-        /// </summary>
-        InfoLogLength = ((int)0x8B84)        ,
-        /// <summary>
-        /// Original was GL_ATTACHED_SHADERS = 0x8B85
-        /// </summary>
-        AttachedShaders = ((int)0x8B85)        ,
-        /// <summary>
-        /// Original was GL_ACTIVE_UNIFORMS = 0x8B86
-        /// </summary>
-        ActiveUniforms = ((int)0x8B86)        ,
-        /// <summary>
-        /// Original was GL_ACTIVE_UNIFORM_MAX_LENGTH = 0x8B87
-        /// </summary>
-        ActiveUniformMaxLength = ((int)0x8B87)        ,
-        /// <summary>
-        /// Original was GL_ACTIVE_ATTRIBUTES = 0x8B89
-        /// </summary>
-        ActiveAttributes = ((int)0x8B89)        ,
-        /// <summary>
-        /// Original was GL_ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8B8A
-        /// </summary>
-        ActiveAttributeMaxLength = ((int)0x8B8A)        ,
-    }
-
-    /// <summary>
     /// Used in GL.Ext.ProgramParameter
     /// </summary>
     public enum ProgramParameterName : int
     {
         /// <summary>
-        /// Original was GL_DeleteStatus = 0X8b80
+        /// Original was GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257
         /// </summary>
-        DeleteStatus = ((int)0X8b80)        ,
-        /// <summary>
-        /// Original was GL_LinkStatus = 0X8b82
-        /// </summary>
-        LinkStatus = ((int)0X8b82)        ,
-        /// <summary>
-        /// Original was GL_ValidateStatus = 0X8b83
-        /// </summary>
-        ValidateStatus = ((int)0X8b83)        ,
-        /// <summary>
-        /// Original was GL_InfoLogLength = 0X8b84
-        /// </summary>
-        InfoLogLength = ((int)0X8b84)        ,
-        /// <summary>
-        /// Original was GL_AttachedShaders = 0X8b85
-        /// </summary>
-        AttachedShaders = ((int)0X8b85)        ,
-        /// <summary>
-        /// Original was GL_ActiveUniforms = 0X8b86
-        /// </summary>
-        ActiveUniforms = ((int)0X8b86)        ,
-        /// <summary>
-        /// Original was GL_ActiveUniformMaxLength = 0X8b87
-        /// </summary>
-        ActiveUniformMaxLength = ((int)0X8b87)        ,
-        /// <summary>
-        /// Original was GL_ActiveAttributes = 0X8b89
-        /// </summary>
-        ActiveAttributes = ((int)0X8b89)        ,
-        /// <summary>
-        /// Original was GL_ActiveAttributeMaxLength = 0X8b8a
-        /// </summary>
-        ActiveAttributeMaxLength = ((int)0X8b8a)        ,
+        ProgramBinaryRetrievableHint = ((int)0x8257)        ,
     }
 
     /// <summary>

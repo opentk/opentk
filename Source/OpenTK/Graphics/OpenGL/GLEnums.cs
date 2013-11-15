@@ -57,7 +57,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetActiveAttrib
+    /// Used in GL.GetActiveAttrib, GL.GetTransformFeedbackVarying and 1 other function
     /// </summary>
     public enum ActiveAttribType : int
     {
@@ -736,7 +736,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetProgramEnvParameter, GL.Arb.GetProgramLocalParameter and 10 other functions
+    /// Used in GL.Arb.GetProgramEnvParameter, GL.Arb.GetProgramLocalParameter and 8 other functions
     /// </summary>
     public enum All : int
     {
@@ -20810,7 +20810,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.BlendEquation, GL.Arb.BlendEquationSeparate and 2 other functions
+    /// Used in GL.Arb.BlendEquation, GL.Arb.BlendEquationSeparate and 4 other functions
     /// </summary>
     public enum ArbDrawBuffersBlend : int
     {
@@ -24426,7 +24426,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.FenceSync, GL.GetSync
     /// </summary>
     public enum ArbSync : int
     {
@@ -27958,7 +27958,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.DrawElementsInstanced, GL.Begin and 14 other functions
+    /// Used in GL.Arb.DrawArraysInstanced, GL.Arb.DrawElementsInstanced and 17 other functions
     /// </summary>
     public enum BeginMode : int
     {
@@ -28032,7 +28032,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BlendEquation, GL.BlendEquationSeparate
+    /// Used in GL.Arb.BlendEquation, GL.BlendEquation and 2 other functions
     /// </summary>
     public enum BlendEquationMode : int
     {
@@ -28130,6 +28130,18 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_ONE_MINUS_DST_ALPHA = 0x0305
         /// </summary>
         OneMinusDstAlpha = ((int)0x0305)        ,
+        /// <summary>
+        /// Original was GL_DST_COLOR = 0x0306
+        /// </summary>
+        DstColor = ((int)0x0306)        ,
+        /// <summary>
+        /// Original was GL_ONE_MINUS_DST_COLOR = 0x0307
+        /// </summary>
+        OneMinusDstColor = ((int)0x0307)        ,
+        /// <summary>
+        /// Original was GL_SRC_ALPHA_SATURATE = 0x0308
+        /// </summary>
+        SrcAlphaSaturate = ((int)0x0308)        ,
         /// <summary>
         /// Original was GL_CONSTANT_COLOR = 0x8001
         /// </summary>
@@ -28545,7 +28557,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Apple.BufferParameter, GL.Apple.FlushMappedBufferRange and 14 other functions
+    /// Used in GL.Apple.BufferParameter, GL.Apple.FlushMappedBufferRange and 20 other functions
     /// </summary>
     public enum BufferTarget : int
     {
@@ -30670,7 +30682,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ext.BlendEquation
+    /// Not used directly.
     /// </summary>
     public enum ExtBlendMinmax : int
     {
@@ -38051,6 +38063,121 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_SECONDARY_COLOR_ARRAY_POINTER = 0x845D
         /// </summary>
         SecondaryColorArrayPointer = ((int)0x845D)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetProgram
+    /// </summary>
+    public enum GetProgramParameterName : int
+    {
+        /// <summary>
+        /// Original was GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257
+        /// </summary>
+        ProgramBinaryRetrievableHint = ((int)0x8257)        ,
+        /// <summary>
+        /// Original was GL_PROGRAM_SEPARABLE = 0x8258
+        /// </summary>
+        ProgramSeparable = ((int)0x8258)        ,
+        /// <summary>
+        /// Original was GL_GEOMETRY_SHADER_INVOCATIONS = 0x887F
+        /// </summary>
+        GeometryShaderInvocations = ((int)0x887F)        ,
+        /// <summary>
+        /// Original was GL_GEOMETRY_VERTICES_OUT = 0x8916
+        /// </summary>
+        GeometryVerticesOut = ((int)0x8916)        ,
+        /// <summary>
+        /// Original was GL_GEOMETRY_INPUT_TYPE = 0x8917
+        /// </summary>
+        GeometryInputType = ((int)0x8917)        ,
+        /// <summary>
+        /// Original was GL_GEOMETRY_OUTPUT_TYPE = 0x8918
+        /// </summary>
+        GeometryOutputType = ((int)0x8918)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH = 0x8A35
+        /// </summary>
+        ActiveUniformBlockMaxNameLength = ((int)0x8A35)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORM_BLOCKS = 0x8A36
+        /// </summary>
+        ActiveUniformBlocks = ((int)0x8A36)        ,
+        /// <summary>
+        /// Original was GL_DELETE_STATUS = 0x8B80
+        /// </summary>
+        DeleteStatus = ((int)0x8B80)        ,
+        /// <summary>
+        /// Original was GL_LINK_STATUS = 0x8B82
+        /// </summary>
+        LinkStatus = ((int)0x8B82)        ,
+        /// <summary>
+        /// Original was GL_VALIDATE_STATUS = 0x8B83
+        /// </summary>
+        ValidateStatus = ((int)0x8B83)        ,
+        /// <summary>
+        /// Original was GL_INFO_LOG_LENGTH = 0x8B84
+        /// </summary>
+        InfoLogLength = ((int)0x8B84)        ,
+        /// <summary>
+        /// Original was GL_ATTACHED_SHADERS = 0x8B85
+        /// </summary>
+        AttachedShaders = ((int)0x8B85)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORMS = 0x8B86
+        /// </summary>
+        ActiveUniforms = ((int)0x8B86)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORM_MAX_LENGTH = 0x8B87
+        /// </summary>
+        ActiveUniformMaxLength = ((int)0x8B87)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_ATTRIBUTES = 0x8B89
+        /// </summary>
+        ActiveAttributes = ((int)0x8B89)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8B8A
+        /// </summary>
+        ActiveAttributeMaxLength = ((int)0x8B8A)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH = 0x8C76
+        /// </summary>
+        TransformFeedbackVaryingMaxLength = ((int)0x8C76)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_MODE = 0x8C7F
+        /// </summary>
+        TransformFeedbackBufferMode = ((int)0x8C7F)        ,
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_VARYINGS = 0x8C83
+        /// </summary>
+        TransformFeedbackVaryings = ((int)0x8C83)        ,
+        /// <summary>
+        /// Original was GL_TESS_CONTROL_OUTPUT_VERTICES = 0x8E75
+        /// </summary>
+        TessControlOutputVertices = ((int)0x8E75)        ,
+        /// <summary>
+        /// Original was GL_TESS_GEN_MODE = 0x8E76
+        /// </summary>
+        TessGenMode = ((int)0x8E76)        ,
+        /// <summary>
+        /// Original was GL_TESS_GEN_SPACING = 0x8E77
+        /// </summary>
+        TessGenSpacing = ((int)0x8E77)        ,
+        /// <summary>
+        /// Original was GL_TESS_GEN_VERTEX_ORDER = 0x8E78
+        /// </summary>
+        TessGenVertexOrder = ((int)0x8E78)        ,
+        /// <summary>
+        /// Original was GL_TESS_GEN_POINT_MODE = 0x8E79
+        /// </summary>
+        TessGenPointMode = ((int)0x8E79)        ,
+        /// <summary>
+        /// Original was GL_MAX_COMPUTE_WORK_GROUP_SIZE = 0x91BF
+        /// </summary>
+        MaxComputeWorkGroupSize = ((int)0x91BF)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_ATOMIC_COUNTER_BUFFERS = 0x92D9
+        /// </summary>
+        ActiveAtomicCounterBuffers = ((int)0x92D9)        ,
     }
 
     /// <summary>
@@ -47334,6 +47461,21 @@ namespace OpenTK.Graphics.OpenGL
     /// <summary>
     /// Used in GL.ProgramParameter
     /// </summary>
+    public enum ProgramParameterName : int
+    {
+        /// <summary>
+        /// Original was GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257
+        /// </summary>
+        ProgramBinaryRetrievableHint = ((int)0x8257)        ,
+        /// <summary>
+        /// Original was GL_PROGRAM_SEPARABLE = 0x8258
+        /// </summary>
+        ProgramSeparable = ((int)0x8258)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum ProgramParameterPName : int
     {
         /// <summary>
@@ -48281,9 +48423,64 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetSamplerParameter, GL.SamplerParameter
+    /// Not used directly.
     /// </summary>
     public enum SamplerParameter : int
+    {
+        /// <summary>
+        /// Original was GL_TextureBorderColor = 0x1004
+        /// </summary>
+        TextureBorderColor = ((int)0x1004)        ,
+        /// <summary>
+        /// Original was GL_TextureMagFilter = 0x2800
+        /// </summary>
+        TextureMagFilter = ((int)0x2800)        ,
+        /// <summary>
+        /// Original was GL_TextureMinFilter = 0x2801
+        /// </summary>
+        TextureMinFilter = ((int)0x2801)        ,
+        /// <summary>
+        /// Original was GL_TextureWrapS = 0x2802
+        /// </summary>
+        TextureWrapS = ((int)0x2802)        ,
+        /// <summary>
+        /// Original was GL_TextureWrapT = 0x2803
+        /// </summary>
+        TextureWrapT = ((int)0x2803)        ,
+        /// <summary>
+        /// Original was GL_TextureWrapR = 0x8072
+        /// </summary>
+        TextureWrapR = ((int)0x8072)        ,
+        /// <summary>
+        /// Original was GL_TextureMinLod = 0x813A
+        /// </summary>
+        TextureMinLod = ((int)0x813A)        ,
+        /// <summary>
+        /// Original was GL_TextureMaxLod = 0x813B
+        /// </summary>
+        TextureMaxLod = ((int)0x813B)        ,
+        /// <summary>
+        /// Original was GL_TextureMaxAnisotropyExt = 0x84FE
+        /// </summary>
+        TextureMaxAnisotropyExt = ((int)0x84FE)        ,
+        /// <summary>
+        /// Original was GL_TextureLodBias = 0x8501
+        /// </summary>
+        TextureLodBias = ((int)0x8501)        ,
+        /// <summary>
+        /// Original was GL_TextureCompareMode = 0x884C
+        /// </summary>
+        TextureCompareMode = ((int)0x884C)        ,
+        /// <summary>
+        /// Original was GL_TextureCompareFunc = 0x884D
+        /// </summary>
+        TextureCompareFunc = ((int)0x884D)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetSamplerParameter, GL.SamplerParameter and 1 other function
+    /// </summary>
+    public enum SamplerParameterName : int
     {
         /// <summary>
         /// Original was GL_TextureBorderColor = 0x1004
@@ -49862,7 +50059,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BindImageTexture, GL.TexBuffer and 6 other functions
+    /// Used in GL.BindImageTexture, GL.GetInternalformat and 7 other functions
     /// </summary>
     public enum SizedInternalFormat : int
     {
@@ -54670,7 +54867,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.BlendFuncSeparate
     /// </summary>
     public enum Version14 : int
     {
@@ -56648,7 +56845,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.GetInteger, GL.ProgramParameter
     /// </summary>
     public enum Version32 : int
     {
@@ -56982,7 +57179,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BlendEquation, GL.BlendFunc and 1 other function
+    /// Used in GL.BlendFunc
     /// </summary>
     public enum Version40 : int
     {

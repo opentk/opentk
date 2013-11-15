@@ -357,13 +357,13 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void BlendEquation(OpenTK.Graphics.OpenGL.BlendEquationMode mode);
             internal static BlendEquation glBlendEquation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendEquationEXT(OpenTK.Graphics.OpenGL.ExtBlendMinmax mode);
+            internal delegate void BlendEquationEXT(OpenTK.Graphics.OpenGL.BlendEquationMode mode);
             internal static BlendEquationEXT glBlendEquationEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendEquationi(UInt32 buf, OpenTK.Graphics.OpenGL.Version40 mode);
+            internal delegate void BlendEquationi(UInt32 buf, OpenTK.Graphics.OpenGL.BlendEquationMode mode);
             internal static BlendEquationi glBlendEquationi;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendEquationiARB(UInt32 buf, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend mode);
+            internal delegate void BlendEquationiARB(UInt32 buf, OpenTK.Graphics.OpenGL.BlendEquationMode mode);
             internal static BlendEquationiARB glBlendEquationiARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendEquationIndexedAMD(UInt32 buf, OpenTK.Graphics.OpenGL.AmdDrawBuffersBlend mode);
@@ -387,7 +387,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void BlendFunc(OpenTK.Graphics.OpenGL.BlendingFactorSrc sfactor, OpenTK.Graphics.OpenGL.BlendingFactorDest dfactor);
             internal static BlendFunc glBlendFunc;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL.Version40 src, OpenTK.Graphics.OpenGL.Version40 dst);
+            internal delegate void BlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL.BlendingFactorSrc src, OpenTK.Graphics.OpenGL.Version40 dst);
             internal static BlendFunci glBlendFunci;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFunciARB(UInt32 buf, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend src, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend dst);
@@ -396,13 +396,13 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void BlendFuncIndexedAMD(UInt32 buf, OpenTK.Graphics.OpenGL.AmdDrawBuffersBlend src, OpenTK.Graphics.OpenGL.AmdDrawBuffersBlend dst);
             internal static BlendFuncIndexedAMD glBlendFuncIndexedAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendFuncSeparate(OpenTK.Graphics.OpenGL.BlendingFactorSrc sfactorRGB, OpenTK.Graphics.OpenGL.BlendingFactorDest dfactorRGB, OpenTK.Graphics.OpenGL.BlendingFactorSrc sfactorAlpha, OpenTK.Graphics.OpenGL.BlendingFactorDest dfactorAlpha);
+            internal delegate void BlendFuncSeparate(OpenTK.Graphics.OpenGL.Version14 sfactorRGB, OpenTK.Graphics.OpenGL.Version14 dfactorRGB, OpenTK.Graphics.OpenGL.Version14 sfactorAlpha, OpenTK.Graphics.OpenGL.Version14 dfactorAlpha);
             internal static BlendFuncSeparate glBlendFuncSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFuncSeparateEXT(OpenTK.Graphics.OpenGL.ExtBlendFuncSeparate sfactorRGB, OpenTK.Graphics.OpenGL.ExtBlendFuncSeparate dfactorRGB, OpenTK.Graphics.OpenGL.ExtBlendFuncSeparate sfactorAlpha, OpenTK.Graphics.OpenGL.ExtBlendFuncSeparate dfactorAlpha);
             internal static BlendFuncSeparateEXT glBlendFuncSeparateEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendFuncSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL.Version40 srcRGB, OpenTK.Graphics.OpenGL.Version40 dstRGB, OpenTK.Graphics.OpenGL.Version40 srcAlpha, OpenTK.Graphics.OpenGL.Version40 dstAlpha);
+            internal delegate void BlendFuncSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL.BlendingFactorSrc srcRGB, OpenTK.Graphics.OpenGL.BlendingFactorDest dstRGB, OpenTK.Graphics.OpenGL.BlendingFactorSrc srcAlpha, OpenTK.Graphics.OpenGL.BlendingFactorDest dstAlpha);
             internal static BlendFuncSeparatei glBlendFuncSeparatei;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFuncSeparateiARB(UInt32 buf, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend srcRGB, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend dstRGB, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend srcAlpha, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend dstAlpha);
@@ -2247,10 +2247,10 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetIntegerv(OpenTK.Graphics.OpenGL.GetPName pname, [OutAttribute] Int32* data);
             internal unsafe static GetIntegerv glGetIntegerv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetInternalformati64v(OpenTK.Graphics.OpenGL.ImageTarget target, OpenTK.Graphics.OpenGL.All internalformat, OpenTK.Graphics.OpenGL.InternalFormatParameter pname, Int32 bufSize, [OutAttribute] Int64* @params);
+            internal unsafe delegate void GetInternalformati64v(OpenTK.Graphics.OpenGL.ImageTarget target, OpenTK.Graphics.OpenGL.SizedInternalFormat internalformat, OpenTK.Graphics.OpenGL.InternalFormatParameter pname, Int32 bufSize, [OutAttribute] Int64* @params);
             internal unsafe static GetInternalformati64v glGetInternalformati64v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetInternalformativ(OpenTK.Graphics.OpenGL.ImageTarget target, OpenTK.Graphics.OpenGL.All internalformat, OpenTK.Graphics.OpenGL.InternalFormatParameter pname, Int32 bufSize, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetInternalformativ(OpenTK.Graphics.OpenGL.ImageTarget target, OpenTK.Graphics.OpenGL.SizedInternalFormat internalformat, OpenTK.Graphics.OpenGL.InternalFormatParameter pname, Int32 bufSize, [OutAttribute] Int32* @params);
             internal unsafe static GetInternalformativ glGetInternalformativ;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetInvariantBooleanvEXT(UInt32 id, OpenTK.Graphics.OpenGL.ExtVertexShader value, [OutAttribute] bool* data);
@@ -2643,7 +2643,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetProgramInterfaceiv(UInt32 program, OpenTK.Graphics.OpenGL.ProgramInterface programInterface, OpenTK.Graphics.OpenGL.ProgramInterfaceParameter pname, [OutAttribute] Int32* @params);
             internal unsafe static GetProgramInterfaceiv glGetProgramInterfaceiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetProgramiv(UInt32 program, OpenTK.Graphics.OpenGL.ProgramParameter pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetProgramiv(UInt32 program, OpenTK.Graphics.OpenGL.GetProgramParameterName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetProgramiv glGetProgramiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetProgramivARB(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, OpenTK.Graphics.OpenGL.AssemblyProgramParameterArb pname, [OutAttribute] Int32* @params);
@@ -2754,7 +2754,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetRenderbufferParameterivEXT(OpenTK.Graphics.OpenGL.RenderbufferTarget target, OpenTK.Graphics.OpenGL.RenderbufferParameterName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetRenderbufferParameterivEXT glGetRenderbufferParameterivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetSamplerParameterfv(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameter pname, [OutAttribute] Single* @params);
+            internal unsafe delegate void GetSamplerParameterfv(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameterName pname, [OutAttribute] Single* @params);
             internal unsafe static GetSamplerParameterfv glGetSamplerParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetSamplerParameterIiv(UInt32 sampler, OpenTK.Graphics.OpenGL.All pname, [OutAttribute] Int32* @params);
@@ -2763,7 +2763,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetSamplerParameterIuiv(UInt32 sampler, OpenTK.Graphics.OpenGL.All pname, [OutAttribute] UInt32* @params);
             internal unsafe static GetSamplerParameterIuiv glGetSamplerParameterIuiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetSamplerParameteriv(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameter pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetSamplerParameteriv(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameterName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetSamplerParameteriv glGetSamplerParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void GetSeparableFilter(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [OutAttribute] IntPtr column, [OutAttribute] IntPtr span);
@@ -4725,7 +4725,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void ProgramParameter4fvNV(OpenTK.Graphics.OpenGL.AssemblyProgramTargetArb target, UInt32 index, Single* v);
             internal unsafe static ProgramParameter4fvNV glProgramParameter4fvNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ProgramParameteri(UInt32 program, OpenTK.Graphics.OpenGL.ProgramParameterPName pname, Int32 value);
+            internal delegate void ProgramParameteri(UInt32 program, OpenTK.Graphics.OpenGL.ProgramParameterName pname, Int32 value);
             internal static ProgramParameteri glProgramParameteri;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ProgramParameteriARB(UInt32 program, OpenTK.Graphics.OpenGL.AssemblyProgramParameterArb pname, Int32 value);
@@ -5442,22 +5442,22 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void SamplePatternSGIS(OpenTK.Graphics.OpenGL.SgisMultisample pattern);
             internal static SamplePatternSGIS glSamplePatternSGIS;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void SamplerParameterf(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameter pname, Single param);
+            internal delegate void SamplerParameterf(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameterName pname, Single param);
             internal static SamplerParameterf glSamplerParameterf;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void SamplerParameterfv(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameter pname, Single* param);
+            internal unsafe delegate void SamplerParameterfv(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameterName pname, Single* param);
             internal unsafe static SamplerParameterfv glSamplerParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void SamplerParameteri(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameter pname, Int32 param);
+            internal delegate void SamplerParameteri(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameterName pname, Int32 param);
             internal static SamplerParameteri glSamplerParameteri;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void SamplerParameterIiv(UInt32 sampler, OpenTK.Graphics.OpenGL.All pname, Int32* param);
+            internal unsafe delegate void SamplerParameterIiv(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameterName pname, Int32* param);
             internal unsafe static SamplerParameterIiv glSamplerParameterIiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void SamplerParameterIuiv(UInt32 sampler, OpenTK.Graphics.OpenGL.All pname, UInt32* param);
+            internal unsafe delegate void SamplerParameterIuiv(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameterName pname, UInt32* param);
             internal unsafe static SamplerParameterIuiv glSamplerParameterIuiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void SamplerParameteriv(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameter pname, Int32* param);
+            internal unsafe delegate void SamplerParameteriv(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameterName pname, Int32* param);
             internal unsafe static SamplerParameteriv glSamplerParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Scaled(Double x, Double y, Double z);

@@ -180,7 +180,7 @@ namespace OpenTK.Graphics.ES20
         public static string GetActiveAttrib(int program, int index, out int size, out ActiveAttribType type)
         {
             int length;
-            GetProgram(program, ProgramParameter.ActiveAttributeMaxLength, out length);
+			GetProgram(program, GetProgramParameterName.ActiveAttributeMaxLength, out length);
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
 
             GetActiveAttrib(program, index, sb.Capacity, out length, out size, out type, sb);
@@ -194,7 +194,7 @@ namespace OpenTK.Graphics.ES20
         public static string GetActiveUniform(int program, int uniformIndex, out int size, out ActiveUniformType type)
         {
             int length;
-            GetProgram(program, ProgramParameter.ActiveUniformMaxLength, out length);
+			GetProgram(program, GetProgramParameterName.ActiveUniformMaxLength, out length);
 
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length);
             GetActiveUniform(program, uniformIndex, sb.Capacity, out length, out size, out type, sb);
@@ -266,7 +266,7 @@ namespace OpenTK.Graphics.ES20
             unsafe
             {
                 int length;
-                GL.GetProgram(program, ProgramParameter.InfoLogLength, out length); if (length == 0)
+				GL.GetProgram(program, GetProgramParameterName.InfoLogLength, out length); if (length == 0)
                 {
                     info = String.Empty;
                     return;

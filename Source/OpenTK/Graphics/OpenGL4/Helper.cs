@@ -180,7 +180,7 @@ namespace OpenTK.Graphics.OpenGL4
         public static string GetActiveAttrib(int program, int index, out int size, out ActiveAttribType type)
         {
             int length;
-            GetProgram(program, OpenGL4.ProgramParameter.ActiveAttributeMaxLength, out length);
+			GetProgram(program, OpenGL4.GetProgramParameterName.ActiveAttributeMaxLength, out length);
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
 
             GetActiveAttrib(program, index, sb.Capacity, out length, out size, out type, sb);
@@ -194,7 +194,7 @@ namespace OpenTK.Graphics.OpenGL4
         public static string GetActiveUniform(int program, int uniformIndex, out int size, out ActiveUniformType type)
         {
             int length;
-            GetProgram(program, OpenGL4.ProgramParameter.ActiveUniformMaxLength, out length);
+			GetProgram(program, OpenGL4.GetProgramParameterName.ActiveUniformMaxLength, out length);
 
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length);
             GetActiveUniform(program, uniformIndex, sb.Capacity, out length, out size, out type, sb);
@@ -266,7 +266,7 @@ namespace OpenTK.Graphics.OpenGL4
             unsafe
             {
                 int length;
-                GL.GetProgram(program, OpenGL4.ProgramParameter.InfoLogLength, out length); if (length == 0)
+				GL.GetProgram(program, OpenGL4.GetProgramParameterName.InfoLogLength, out length); if (length == 0)
                 {
                     info = String.Empty;
                     return;

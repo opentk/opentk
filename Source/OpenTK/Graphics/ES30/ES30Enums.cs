@@ -17242,6 +17242,53 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
+    /// Used in GL.GetProgram
+    /// </summary>
+    public enum GetProgramParameterName : int
+    {
+        /// <summary>
+        /// Original was GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257
+        /// </summary>
+        ProgramBinaryRetrievableHint = ((int)0x8257)        ,
+        /// <summary>
+        /// Original was GL_DELETE_STATUS = 0x8B80
+        /// </summary>
+        DeleteStatus = ((int)0x8B80)        ,
+        /// <summary>
+        /// Original was GL_LINK_STATUS = 0x8B82
+        /// </summary>
+        LinkStatus = ((int)0x8B82)        ,
+        /// <summary>
+        /// Original was GL_VALIDATE_STATUS = 0x8B83
+        /// </summary>
+        ValidateStatus = ((int)0x8B83)        ,
+        /// <summary>
+        /// Original was GL_INFO_LOG_LENGTH = 0x8B84
+        /// </summary>
+        InfoLogLength = ((int)0x8B84)        ,
+        /// <summary>
+        /// Original was GL_ATTACHED_SHADERS = 0x8B85
+        /// </summary>
+        AttachedShaders = ((int)0x8B85)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORMS = 0x8B86
+        /// </summary>
+        ActiveUniforms = ((int)0x8B86)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORM_MAX_LENGTH = 0x8B87
+        /// </summary>
+        ActiveUniformMaxLength = ((int)0x8B87)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_ATTRIBUTES = 0x8B89
+        /// </summary>
+        ActiveAttributes = ((int)0x8B89)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8B8A
+        /// </summary>
+        ActiveAttributeMaxLength = ((int)0x8B8A)        ,
+    }
+
+    /// <summary>
     /// Used in GL.GetQueryObject, GL.Ext.GetQueryObject
     /// </summary>
     public enum GetQueryObjectParam : int
@@ -17840,6 +17887,17 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_PROXY_HISTOGRAM_EXT = 0x8025
         /// </summary>
         ProxyHistogramExt = ((int)0x8025)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.GetInternalformat
+    /// </summary>
+    public enum ImageTarget : int
+    {
+        /// <summary>
+        /// Original was GL_RENDERBUFFER = 0X8d41
+        /// </summary>
+        Renderbuffer = ((int)0X8d41)        ,
     }
 
     /// <summary>
@@ -22009,9 +22067,9 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetProgram
+    /// Used in GL.ProgramParameter, GL.Ext.ProgramParameter
     /// </summary>
-    public enum ProgramParameter : int
+    public enum ProgramParameterName : int
     {
         /// <summary>
         /// Original was GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257
@@ -22073,49 +22131,6 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_TRANSFORM_FEEDBACK_VARYINGS = 0x8C83
         /// </summary>
         TransformFeedbackVaryings = ((int)0x8C83)        ,
-    }
-
-    /// <summary>
-    /// Used in GL.ProgramParameter, GL.Ext.ProgramParameter
-    /// </summary>
-    public enum ProgramParameterName : int
-    {
-        /// <summary>
-        /// Original was GL_DeleteStatus = 0X8b80
-        /// </summary>
-        DeleteStatus = ((int)0X8b80)        ,
-        /// <summary>
-        /// Original was GL_LinkStatus = 0X8b82
-        /// </summary>
-        LinkStatus = ((int)0X8b82)        ,
-        /// <summary>
-        /// Original was GL_ValidateStatus = 0X8b83
-        /// </summary>
-        ValidateStatus = ((int)0X8b83)        ,
-        /// <summary>
-        /// Original was GL_InfoLogLength = 0X8b84
-        /// </summary>
-        InfoLogLength = ((int)0X8b84)        ,
-        /// <summary>
-        /// Original was GL_AttachedShaders = 0X8b85
-        /// </summary>
-        AttachedShaders = ((int)0X8b85)        ,
-        /// <summary>
-        /// Original was GL_ActiveUniforms = 0X8b86
-        /// </summary>
-        ActiveUniforms = ((int)0X8b86)        ,
-        /// <summary>
-        /// Original was GL_ActiveUniformMaxLength = 0X8b87
-        /// </summary>
-        ActiveUniformMaxLength = ((int)0X8b87)        ,
-        /// <summary>
-        /// Original was GL_ActiveAttributes = 0X8b89
-        /// </summary>
-        ActiveAttributes = ((int)0X8b89)        ,
-        /// <summary>
-        /// Original was GL_ActiveAttributeMaxLength = 0X8b8a
-        /// </summary>
-        ActiveAttributeMaxLength = ((int)0X8b8a)        ,
     }
 
     /// <summary>
@@ -22548,7 +22563,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Angle.RenderbufferStorageMultisample, GL.Apple.RenderbufferStorageMultisample and 6 other functions
+    /// Used in GL.Angle.RenderbufferStorageMultisample, GL.Apple.RenderbufferStorageMultisample and 5 other functions
     /// </summary>
     public enum RenderbufferInternalFormat : int
     {
@@ -22822,7 +22837,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.Angle.RenderbufferStorageMultisample, GL.Apple.RenderbufferStorageMultisample and 9 other functions
+    /// Used in GL.Angle.RenderbufferStorageMultisample, GL.Apple.RenderbufferStorageMultisample and 8 other functions
     /// </summary>
     public enum RenderbufferTarget : int
     {
@@ -23298,7 +23313,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.TexStorage2D, GL.TexStorage3D and 2 other functions
+    /// Used in GL.GetInternalformat, GL.TexStorage2D and 3 other functions
     /// </summary>
     public enum SizedInternalFormat : int
     {

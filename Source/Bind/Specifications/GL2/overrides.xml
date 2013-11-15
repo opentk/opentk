@@ -42,19 +42,16 @@
       </param>
     </function>
 
+    <function name="BlendFunc" extension="Core">
+      <param name="src"><type>BlendingFactorSrc</type></param>
+      <param name="src"><type>BlendingFactorDest</type></param>
+    </function>
+
     <function name="BlendFuncSeparate" extension="Core">
-      <param name="sfactorRGB">
-        <type>BlendingFactorSrc</type>
-      </param>
-      <param name="dfactorRGB">
-        <type>BlendingFactorDest</type>
-      </param>
-      <param name="sfactorAlpha">
-        <type>BlendingFactorSrc</type>
-      </param>
-      <param name="dfactorAlpha">
-        <type>BlendingFactorDest</type>
-      </param>
+      <param name="srcRGB"><type>BlendingFactorSrc</type></param>
+      <param name="dstRGB"><type>BlendingFactorDest</type></param>
+      <param name="srcAlpha"><type>BlendingFactorSrc</type></param>
+      <param name="dstAlpha"><type>BlendingFactorDest</type></param>
     </function>
 
     <function name="FogCoordPointer" extension="Core">
@@ -235,9 +232,7 @@
     </function>
 
     <function name="GetProgram" extension="Core">
-      <param name="pname">
-        <type>ProgramParameter</type>
-      </param>
+      <param name="pname"><type>GetProgramParameterName</type></param>
     </function>
 
     <function name="GetVertexAttrib" extension="Core">
@@ -504,6 +499,13 @@
         <type>PrimitiveType</type>
       </param>
     </function>
+
+    <function name="GetInteger64v" extension="Core">
+      <param name="target"><type>GetPName</type></param>
+    </function>
+    <function name="GetInteger64i_v" extension="Core">
+      <param name="target"><type>GetIndexedPName</type></param>
+    </function>
     
     <function name="MultiDrawElementsBaseVertex" extension="Core">
       <version>3.2</version>
@@ -560,15 +562,14 @@
     <!-- Version 3.3 -->
     
     <function name="SamplerParameter" extension="Core">
-      <param name="pname">
-        <type>SamplerParameter</type>
-      </param>
+      <param name="pname"><type>SamplerParameterName</type></param>
+    </function>
+    <function name="SamplerParameterI" extension="Core">
+      <param name="pname"><type>SamplerParameterName</type></param>
     </function>
 
     <function name="GetSamplerParameter" extension="Core">
-      <param name="pname">
-        <type>SamplerParameter</type>
-      </param>
+      <param name="pname"><type>SamplerParameterName</type></param>
     </function>
 
     <function name="QueryCounter" extension="Core">
@@ -714,6 +715,10 @@
       </param>
     </function>
 
+    <function name="BlendEquation">
+      <param name="mode"><type>BlendEquationMode</type></param>
+    </function>
+
     <function name="EndQueryIndexed" extension="Core">
       <param name="target">
         <type>QueryTarget</type>
@@ -856,7 +861,7 @@
     <!-- also found Arb and Ext flavors -->
     <function name="ProgramParameteri" extension="Core">
       <param name="pname">
-        <type>ProgramParameterPName</type>
+        <type>ProgramParameterName</type>
       </param>
     </function>
 
@@ -1051,15 +1056,9 @@
     </function>
     
     <function name="GetInternalformat" extension="Core">
-      <param name="target">
-        <type>ImageTarget</type>
-      </param>
-      <param name="internalformat">
-        <type>All</type>
-      </param>
-      <param name="pname">
-        <type>InternalFormatParameter</type>
-      </param>
+      <param name="target"><type>ImageTarget</type></param>
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+      <param name="pname"><type>InternalFormatParameter</type></param>
     </function>
     
     <function name="GetDebugMessageLog" extension="Core">
@@ -1640,12 +1639,51 @@
   </replace>
   
   <overload name="gl">
-    <!-- Khronos renamed a few enum types between GL 4.3 and GL4.4 -->
+    <!-- Khronos renamed a few enum types between GL 4.3 and GL4.4. We did the same. -->
+
+    <!-- ActiveAttribType <=> TransformFeedbackType -->
+    <function name="GetTransformFeedbackVarying">
+      <param name="type"><type>ActiveAttribType</type></param>
+    </function>
+
+    <!-- ArbDrawBuffersBlend <=> BlendEquationMode -->
+    <function name="BlendEquation">
+      <param name="mode"><type>ArbDrawBuffersBlend</type></param>
+    </function>
+    <function name="BlendEquationSeparate">
+      <param name="mode"><type>ArbDrawBuffersBlend</type></param>
+    </function>
+    <!-- ArbDrawBuffersBlend <=> BlendingFactorDest|Src -->
+    <function name="BlendFunc">
+      <param name="mode"><type>ArbDrawBuffersBlend</type></param>
+    </function>
+    <function name="BlendFuncSeparate">
+      <param name="mode"><type>ArbDrawBuffersBlend</type></param>
+    </function>
+
+    <!-- ArbSync <=> SyncCondition -->
+    <function name="FenceSync">
+      <param name="condition"><type>ArbSync</type></param>
+      <param name="flags"><type>uint</type></param>
+    </function>
+    <!-- ArbSync <=> SyncParametereName -->
+    <function name="GetSync">
+      <param name="pname"><type>ArbSync</type></param>
+    </function>
+
+    <!-- GetString <=> GetStringIndexed -->
+    <function name="GetStringi">
+      <param name="name"><type>StringName</type></param>
+    </function>
+
     <!-- PrimitiveType <=> BeginMode overloads for backwards compatibility -->
     <function name="Begin" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
     <function name="DrawArrays" obsolete="Use PrimitiveType overload instead">
+      <param name="mode"><type>BeginMode</type></param>
+    </function>
+    <function name="DrawArraysInstanced" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
     <function name="DrawElements" obsolete="Use PrimitiveType overload instead">
@@ -1672,6 +1710,27 @@
     <function name="MultiDrawElements" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
+
+    <!-- BeginFeedbackMode <=> TransformFeedbackPrimitiveType -->
+    <function name="BeginTransformFeedback" obsolete="Use TransformFeedbackPrimitiveType overload instead">
+      <param name="mode"><type>BeginFeedbackMode</type></param>
+    </function>
+
+    <!-- BufferTarget <=> BufferRangeTarget -->
+    <function name="BindBufferBase" obsolete="Use BufferRangeTarget instead">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+    <function name="BindBufferRange" obsolete="Use BufferRangeTarget instead">
+      <param name="target"><type>BufferTarget</type></param>
+    </function>
+
+    <!-- ProgramParameterPName <=> ProgramParameterName -->
+    <function name="GetProgram" extension="Core" obsolete="Use GetProgramParameterName instead">
+      <param name="pname"><type>ProgramParameter</type></param>
+    </function>
+    <function name="ProgramParameteri" extension="Core" obsolete="Use ProgramParameterName instead">
+      <param name="pname"><type>Version32</type></param>
+    </function>
     
     <!-- StencilFace <=> CullFaceMode -->
     <function name="StencilFuncSeparate" obsolete="Use StencilFace overload instead" extension="Core">
@@ -1688,7 +1747,25 @@
     <function name="StencilFuncSeparate" obsolete="Use StencilFace overload instead" extension="Core">
       <param name="face"><type>Version20</type></param>
     </function>
-    
+
+    <!-- Version32 <=> GetPName -->
+    <function name="GetInteger64" extension="Core">
+      <param name="target"><type>ArbSync</type></param>
+    </function>
+    <function name="GetInteger64i_v" extension="Core">
+      <param name="target"><type>Version32</type></param>
+    </function>
+
+    <!-- VertexAttribIPointerType <=> VertexAttribIntegerType -->
+    <function name="VertexAttribIPointer">
+      <param name="pname"><type>VertexAttribIPointerType</type></param>
+    </function>
+
+    <!-- WaitSync -->
+    <function name="WaitSync" extension="Core">
+      <param name="flags"><type>uint</type></param>
+    </function>
+
     <!--
     <function name="TexImage1D" category="VERSION_1_0" extension="Core" version="1.0">
       <param name="target" type="TextureTarget" flow="in" />
@@ -2031,19 +2108,29 @@
       <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_ALPHA" />
       <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_COLOR" />
     </enum>
+    <enum name="BlendingFactorDest">
+      <use token="ZERO" />
+      <use token="ONE" />
+      <use token="SRC_ALPHA_SATURATE" />
+      <use token="SRC_COLOR" />
+      <use token="SRC_ALPHA" />
+      <use token="SRC1_COLOR" />
+      <use token="SRC1_ALPHA" />
+      <use token="DST_COLOR" />
+      <use token="DST_ALPHA" />
+      <use token="CONSTANT_COLOR" />
+      <use token="CONSTANT_ALPHA" />
+      <use token="ONE_MINUS_SRC_COLOR" />
+      <use token="ONE_MINUS_SRC_ALPHA" />
+      <use token="ONE_MINUS_SRC1_COLOR" />
+      <use token="ONE_MINUS_SRC1_ALPHA" />
+      <use token="ONE_MINUS_DST_COLOR" />
+      <use token="ONE_MINUS_DST_ALPHA" />
+      <use token="ONE_MINUS_CONSTANT_COLOR" />
+      <use token="ONE_MINUS_CONSTANT_ALPHA" />
+    </enum>
     <enum name="BlendingFactorSrc">
-      <token name="CONSTANT_ALPHA" value="0x8003" />
-      <token name="CONSTANT_COLOR" value="0x8001" />
-      <token name="ONE_MINUS_CONSTANT_ALPHA" value="0x8004" />
-      <token name="ONE_MINUS_CONSTANT_COLOR" value="0x8002" />
-      <use enum="VERSION_1_1" token="SRC_COLOR" />
-      <use enum="VERSION_1_1" token="SRC_ALPHA" />
-      <use enum="VERSION_1_1" token="ONE_MINUS_SRC_ALPHA" />
-      <use enum="VERSION_1_1" token="ONE_MINUS_SRC_COLOR" />
-      <use enum="VERSION_3_3" token="SRC1_ALPHA" />
-      <use enum="VERSION_3_3" token="SRC1_COLOR" />
-      <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_ALPHA" />
-      <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_COLOR" />
+      <reuse enum="BlendingFactorDest" />
     </enum>
     <enum name="BlitFramebufferFilter">
       <use enum="TextureMagFilter" token="LINEAR" />
@@ -2809,6 +2896,9 @@
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
       <token name="SECONDARY_COLOR_ARRAY_POINTER" value="0x845D" />
     </enum>
+    <enum name="GetProgramParameterName">
+      <reuse enum="ProgramParameter" />
+    </enum>
     <enum name="GetQueryObjectParam">
       <token name="QUERY_RESULT" value="0x8866" />
       <token name="QUERY_RESULT_AVAILABLE" value="0x8867" />
@@ -3392,6 +3482,9 @@
       <use enum="VERSION_4_1" token="PROGRAM_SEPARABLE" />
       <use enum="VERSION_4_1" token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
     </enum>
+    <enum name="ProgramParameterName">
+      <reuse enum="ProgramParameterPName" />
+    </enum>
     <enum name="ProgramPipelineParameter">
       <use enum="VERSION_4_1" token="ACTIVE_PROGRAM" />
       <use enum="VERSION_2_0" token="VALIDATE_STATUS" />
@@ -3600,6 +3693,9 @@
       <token name="TextureCompareMode" value = "0x884C" />
       <token name="TextureCompareFunc" value = "0x884D" />
       <token name="TextureMaxAnisotropyExt" value = "0x84FE" />
+    </enum>
+    <enum name="SamplerParameterName">
+      <reuse enum="SamplerParameter" />
     </enum>
     <enum name="SeparableTarget">
       <token name="SEPARABLE_2D" value="0x8012" />
@@ -4658,7 +4754,7 @@
     
     <!-- Program Queries [6.1.12] -->
     <function name="GetProgram">
-      <param name="pname"><type>ProgramParameter</type></param>
+      <param name="pname"><type>GetProgramParameterName</type></param>
     </function>
     
     <!-- Texturing [3.8] -->
@@ -4911,8 +5007,8 @@
       <param name="pname"><type>FramebufferParameterName</type></param>
     </function>
     <function name="GetInternalformat">
-      <param name="target"><type>RenderbufferTarget</type></param>
-      <param name="internalformat"><type>RenderbufferInternalFormat</type></param>
+      <param name="target"><type>ImageTarget</type></param>
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
       <param name="pname"><type>InternalFormatParameter</type></param>
     </function>
 
@@ -5451,7 +5547,7 @@
       <use token="VERTEX_ARRAY" />
     </enum>
     
-    <enum name="ProgramParameter">
+    <enum name="GetProgramParameterName">
       <use token="DELETE_STATUS" />
       <use token="LINK_STATUS" />
       <use token="VALIDATE_STATUS" />
@@ -5465,15 +5561,7 @@
     </enum>
      
     <enum name="ProgramParameterName">
-      <token name="DeleteStatus" value="0X8b80" />
-      <token name="LinkStatus" value="0X8b82" />
-      <token name="ValidateStatus" value="0X8b83" />
-      <token name="InfoLogLength" value="0X8b84" />
-      <token name="AttachedShaders" value="0X8b85" />
-      <token name="ActiveAttributes" value="0X8b89" />
-      <token name="ActiveAttributeMaxLength" value="0X8b8a" />
-      <token name="ActiveUniforms" value="0X8b86" />
-      <token name="ActiveUniformMaxLength" value="0X8b87" />
+      <use token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
     </enum>
      
     <enum name="ShaderParameter">
@@ -6327,6 +6415,9 @@
       <use token="COPY_READ_BUFFER_BINDING" />
       <use token="COPY_WRITE_BUFFER_BINDING" />
     </enum>
+    <enum name="GetProgramParameterName">
+      <use token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
+    </enum>
     <enum name="GetQueryObjectParam">
       <use token="QUERY_RESULT" />
       <use token="QUERY_RESULT_AVAILABLE" />
@@ -6347,6 +6438,9 @@
     <enum name="HintTarget">
       <use token="GENERATE_MIPMAP_HINT" />
       <use token="FRAGMENT_SHADER_DERIVATIVE_HINT" />
+    </enum>
+    <enum name="ImageTarget">
+      <use token="RENDERBUFFER" />
     </enum>
     <enum name="InternalFormatParameter">
       <use token="NUM_SAMPLE_COUNTS" />
@@ -6412,7 +6506,7 @@
       <use token="UNSIGNED_INT_5_9_9_9_REV" />
       <use token="FLOAT_32_UNSIGNED_INT_24_8_REV" />
     </enum>
-    <enum name="ProgramParameter">
+    <enum name="ProgramParameterName">
       <use token="DELETE_STATUS" />
       <use token="LINK_STATUS" />
       <use token="VALIDATE_STATUS" />
