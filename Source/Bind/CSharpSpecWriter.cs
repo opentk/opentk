@@ -503,6 +503,24 @@ namespace Bind
                     sw.Indent();
                 }
 
+                // Build a dictionary of which functions use which enums
+                var enum_counts = new Dictionary<Enum, List<Function>>();
+                foreach (var e in enums.Values)
+                {
+                    // Initialize the dictionary
+                    enum_counts.Add(e, new List<Function>());
+                }
+                foreach (var wrapper in wrappers.Values.SelectMany(w => w))
+                {
+                    // Add every function to every enum parameter it references
+                    foreach (var parameter in wrapper.Parameters.Where(p => p.IsEnum))
+                    {
+                        var e = enums[parameter.CurrentType];
+                        var list = enum_counts[e];
+                        list.Add(wrapper);
+                    }
+                }
+
                 int current = 0;
                 foreach (Enum @enum in enums.Values)
                 {
@@ -512,12 +530,8 @@ namespace Bind
                     if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
                     {
                         // Document which functions use this enum.
-                        var functions =
-                            (from wrapper in wrappers
-                            from function in wrapper.Value
-                            from param in function.Parameters
-                            where param.CurrentType == @enum.Name
-                            select Settings.GLClass + (function.Extension != "Core" ? ("." + function.Extension) : "") + "." + function.TrimmedName)
+                        var functions = enum_counts[@enum]
+                            .Select(w => Settings.GLClass + (w.Extension != "Core" ? ("." + w.Extension) : "") + "." + w.TrimmedName)
                             .Distinct();
 
                         sw.WriteLine("/// <summary>");
