@@ -19,6 +19,8 @@ GLclampf,           Single
 GLdouble,           Double
 GLclampd,           Double
 GLstring,           String
+int,                Int32
+uint,               UInt32
 
 PixelInternalFormat,    PixelInternalFormat
 
@@ -72,8 +74,7 @@ UINT,           UInt32
 USHORT,         UInt16
 VOID,           void
 VoidPointer,    void*
-float,          float
-int,            int
+float,          Single
 #void,           *
 
 # Glu types.
