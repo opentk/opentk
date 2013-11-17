@@ -14601,7 +14601,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetFramebufferAttachmentParameter, GL.InvalidateFramebuffer and 1 other function
+    /// Used in GL.FramebufferRenderbuffer, GL.FramebufferTexture2D and 4 other functions
     /// </summary>
     public enum FramebufferAttachment : int
     {
@@ -14782,7 +14782,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.FramebufferRenderbuffer, GL.FramebufferTexture2D and 1 other function
+    /// Not used directly.
     /// </summary>
     public enum FramebufferSlot : int
     {
@@ -22067,6 +22067,53 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ProgramParameter : int
+    {
+        /// <summary>
+        /// Original was GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257
+        /// </summary>
+        ProgramBinaryRetrievableHint = ((int)0x8257)        ,
+        /// <summary>
+        /// Original was GL_DELETE_STATUS = 0x8B80
+        /// </summary>
+        DeleteStatus = ((int)0x8B80)        ,
+        /// <summary>
+        /// Original was GL_LINK_STATUS = 0x8B82
+        /// </summary>
+        LinkStatus = ((int)0x8B82)        ,
+        /// <summary>
+        /// Original was GL_VALIDATE_STATUS = 0x8B83
+        /// </summary>
+        ValidateStatus = ((int)0x8B83)        ,
+        /// <summary>
+        /// Original was GL_INFO_LOG_LENGTH = 0x8B84
+        /// </summary>
+        InfoLogLength = ((int)0x8B84)        ,
+        /// <summary>
+        /// Original was GL_ATTACHED_SHADERS = 0x8B85
+        /// </summary>
+        AttachedShaders = ((int)0x8B85)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORMS = 0x8B86
+        /// </summary>
+        ActiveUniforms = ((int)0x8B86)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORM_MAX_LENGTH = 0x8B87
+        /// </summary>
+        ActiveUniformMaxLength = ((int)0x8B87)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_ATTRIBUTES = 0x8B89
+        /// </summary>
+        ActiveAttributes = ((int)0x8B89)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8B8A
+        /// </summary>
+        ActiveAttributeMaxLength = ((int)0x8B8A)        ,
+    }
+
+    /// <summary>
     /// Used in GL.ProgramParameter, GL.Ext.ProgramParameter
     /// </summary>
     public enum ProgramParameterName : int
@@ -23865,9 +23912,25 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         LuminanceAlpha = ((int)0x190A)        ,
         /// <summary>
+        /// Original was GL_ALPHA8_EXT = 0x803C
+        /// </summary>
+        Alpha8Ext = ((int)0x803C)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE8_EXT = 0x8040
+        /// </summary>
+        Luminance8Ext = ((int)0x8040)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE8_ALPHA8_EXT = 0x8045
+        /// </summary>
+        Luminance8Alpha8Ext = ((int)0x8045)        ,
+        /// <summary>
         /// Original was GL_RGB8 = 0x8051
         /// </summary>
         Rgb8 = ((int)0x8051)        ,
+        /// <summary>
+        /// Original was GL_RGB10_EXT = 0x8052
+        /// </summary>
+        Rgb10Ext = ((int)0x8052)        ,
         /// <summary>
         /// Original was GL_RGBA4 = 0X8056
         /// </summary>
@@ -23885,6 +23948,10 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         Rgb10A2 = ((int)0x8059)        ,
         /// <summary>
+        /// Original was GL_RGB10_A2_EXT = 0x8059
+        /// </summary>
+        Rgb10A2Ext = ((int)0x8059)        ,
+        /// <summary>
         /// Original was GL_DEPTH_COMPONENT16 = 0x81A5
         /// </summary>
         DepthComponent16 = ((int)0x81A5)        ,
@@ -23897,25 +23964,49 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         R8 = ((int)0x8229)        ,
         /// <summary>
+        /// Original was GL_R8_EXT = 0x8229
+        /// </summary>
+        R8Ext = ((int)0x8229)        ,
+        /// <summary>
         /// Original was GL_RG8 = 0x822B
         /// </summary>
         Rg8 = ((int)0x822B)        ,
+        /// <summary>
+        /// Original was GL_RG8_EXT = 0x822B
+        /// </summary>
+        Rg8Ext = ((int)0x822B)        ,
         /// <summary>
         /// Original was GL_R16F = 0x822D
         /// </summary>
         R16f = ((int)0x822D)        ,
         /// <summary>
+        /// Original was GL_R16F_EXT = 0x822D
+        /// </summary>
+        R16fExt = ((int)0x822D)        ,
+        /// <summary>
         /// Original was GL_R32F = 0x822E
         /// </summary>
         R32f = ((int)0x822E)        ,
+        /// <summary>
+        /// Original was GL_R32F_EXT = 0x822E
+        /// </summary>
+        R32fExt = ((int)0x822E)        ,
         /// <summary>
         /// Original was GL_RG16F = 0x822F
         /// </summary>
         Rg16f = ((int)0x822F)        ,
         /// <summary>
+        /// Original was GL_RG16F_EXT = 0x822F
+        /// </summary>
+        Rg16fExt = ((int)0x822F)        ,
+        /// <summary>
         /// Original was GL_RG32F = 0x8230
         /// </summary>
         Rg32f = ((int)0x8230)        ,
+        /// <summary>
+        /// Original was GL_RG32F_EXT = 0x8230
+        /// </summary>
+        Rg32fExt = ((int)0x8230)        ,
         /// <summary>
         /// Original was GL_R8I = 0x8231
         /// </summary>
@@ -23969,21 +24060,65 @@ namespace OpenTK.Graphics.ES30
         /// </summary>
         Rgba32f = ((int)0x8814)        ,
         /// <summary>
+        /// Original was GL_RGBA32F_EXT = 0x8814
+        /// </summary>
+        Rgba32fExt = ((int)0x8814)        ,
+        /// <summary>
         /// Original was GL_RGB32F = 0x8815
         /// </summary>
         Rgb32f = ((int)0x8815)        ,
+        /// <summary>
+        /// Original was GL_RGB32F_EXT = 0x8815
+        /// </summary>
+        Rgb32fExt = ((int)0x8815)        ,
+        /// <summary>
+        /// Original was GL_ALPHA32F_EXT = 0x8816
+        /// </summary>
+        Alpha32fExt = ((int)0x8816)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE32F_EXT = 0x8818
+        /// </summary>
+        Luminance32fExt = ((int)0x8818)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE_ALPHA32F_EXT = 0x8819
+        /// </summary>
+        LuminanceAlpha32fExt = ((int)0x8819)        ,
         /// <summary>
         /// Original was GL_RGBA16F = 0x881A
         /// </summary>
         Rgba16f = ((int)0x881A)        ,
         /// <summary>
+        /// Original was GL_RGBA16F_EXT = 0x881A
+        /// </summary>
+        Rgba16fExt = ((int)0x881A)        ,
+        /// <summary>
         /// Original was GL_RGB16F = 0x881B
         /// </summary>
         Rgb16f = ((int)0x881B)        ,
         /// <summary>
+        /// Original was GL_RGB16F_EXT = 0x881B
+        /// </summary>
+        Rgb16fExt = ((int)0x881B)        ,
+        /// <summary>
+        /// Original was GL_ALPHA16F_EXT = 0x881C
+        /// </summary>
+        Alpha16fExt = ((int)0x881C)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE16F_EXT = 0x881E
+        /// </summary>
+        Luminance16fExt = ((int)0x881E)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE_ALPHA16F_EXT = 0x881F
+        /// </summary>
+        LuminanceAlpha16fExt = ((int)0x881F)        ,
+        /// <summary>
         /// Original was GL_DEPTH24_STENCIL8 = 0x88F0
         /// </summary>
         Depth24Stencil8 = ((int)0x88F0)        ,
+        /// <summary>
+        /// Original was GL_RGB_RAW_422_APPLE = 0x8A51
+        /// </summary>
+        RgbRaw422Apple = ((int)0x8A51)        ,
         /// <summary>
         /// Original was GL_R11F_G11F_B10F = 0x8C3A
         /// </summary>
@@ -24080,6 +24215,10 @@ namespace OpenTK.Graphics.ES30
         /// Original was GL_RGB10_A2UI = 0x906F
         /// </summary>
         Rgb10A2ui = ((int)0x906F)        ,
+        /// <summary>
+        /// Original was GL_BGRA8_EXT = 0x93A1
+        /// </summary>
+        Bgra8Ext = ((int)0x93A1)        ,
     }
 
     /// <summary>
@@ -24891,7 +25030,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.CompressedTexImage2D, GL.CompressedTexSubImage2D and 9 other functions
+    /// Used in GL.CompressedTexImage2D, GL.CompressedTexSubImage2D and 7 other functions
     /// </summary>
     public enum TextureTarget2d : int
     {
@@ -24926,7 +25065,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.CompressedTexImage3D, GL.CompressedTexSubImage3D and 8 other functions
+    /// Used in GL.CompressedTexImage3D, GL.CompressedTexSubImage3D and 10 other functions
     /// </summary>
     public enum TextureTarget3d : int
     {

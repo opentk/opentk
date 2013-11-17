@@ -465,10 +465,10 @@ namespace OpenTK.Graphics.ES30
             internal delegate void FlushMappedBufferRangeEXT(OpenTK.Graphics.ES30.BufferTarget target, IntPtr offset, IntPtr length);
             internal static FlushMappedBufferRangeEXT glFlushMappedBufferRangeEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FramebufferRenderbuffer(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferSlot attachment, OpenTK.Graphics.ES30.RenderbufferTarget renderbuffertarget, UInt32 renderbuffer);
+            internal delegate void FramebufferRenderbuffer(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferAttachment attachment, OpenTK.Graphics.ES30.RenderbufferTarget renderbuffertarget, UInt32 renderbuffer);
             internal static FramebufferRenderbuffer glFramebufferRenderbuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FramebufferTexture2D(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferSlot attachment, OpenTK.Graphics.ES30.TextureTarget2d textarget, UInt32 texture, Int32 level);
+            internal delegate void FramebufferTexture2D(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferAttachment attachment, OpenTK.Graphics.ES30.TextureTarget2d textarget, UInt32 texture, Int32 level);
             internal static FramebufferTexture2D glFramebufferTexture2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FramebufferTexture2DMultisampleEXT(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All attachment, OpenTK.Graphics.ES30.All textarget, UInt32 texture, Int32 level, Int32 samples);
@@ -480,7 +480,7 @@ namespace OpenTK.Graphics.ES30
             internal delegate void FramebufferTexture3DOES(OpenTK.Graphics.ES30.All target, OpenTK.Graphics.ES30.All attachment, OpenTK.Graphics.ES30.All textarget, UInt32 texture, Int32 level, Int32 zoffset);
             internal static FramebufferTexture3DOES glFramebufferTexture3DOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FramebufferTextureLayer(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferSlot attachment, UInt32 texture, Int32 level, Int32 layer);
+            internal delegate void FramebufferTextureLayer(OpenTK.Graphics.ES30.FramebufferTarget target, OpenTK.Graphics.ES30.FramebufferAttachment attachment, UInt32 texture, Int32 level, Int32 layer);
             internal static FramebufferTextureLayer glFramebufferTextureLayer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FrontFace(OpenTK.Graphics.ES30.FrontFaceDirection mode);
@@ -1146,10 +1146,10 @@ namespace OpenTK.Graphics.ES30
             internal delegate void TexStorage2DEXT(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 levels, OpenTK.Graphics.ES30.SizedInternalFormat internalformat, Int32 width, Int32 height);
             internal static TexStorage2DEXT glTexStorage2DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexStorage3D(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 levels, OpenTK.Graphics.ES30.SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth);
+            internal delegate void TexStorage3D(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 levels, OpenTK.Graphics.ES30.SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth);
             internal static TexStorage3D glTexStorage3D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexStorage3DEXT(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 levels, OpenTK.Graphics.ES30.SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth);
+            internal delegate void TexStorage3DEXT(OpenTK.Graphics.ES30.TextureTarget3d target, Int32 levels, OpenTK.Graphics.ES30.SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth);
             internal static TexStorage3DEXT glTexStorage3DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexSubImage2D(OpenTK.Graphics.ES30.TextureTarget2d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES30.PixelFormat format, OpenTK.Graphics.ES30.PixelType type, IntPtr pixels);
