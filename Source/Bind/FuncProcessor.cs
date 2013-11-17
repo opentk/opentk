@@ -352,9 +352,6 @@ namespace Bind
             string extension = d.Extension;
             string trimmed_name = GetTrimmedExtension(name, extension);
 
-            if (name.Contains("GetInteger64"))
-                ;//System.Diagnostics.Debugger.Break();
-
             // Note: some endings should not be trimmed, for example: 'b' from Attrib.
             // Check the endingsNotToTrim regex for details.
             Match m = EndingsNotToTrim.Match(trimmed_name);
