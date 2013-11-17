@@ -44,10 +44,16 @@
 
     <function name="BlendFunc" extension="Core">
       <param name="src"><type>BlendingFactorSrc</type></param>
-      <param name="src"><type>BlendingFactorDest</type></param>
+      <param name="dst"><type>BlendingFactorDest</type></param>
     </function>
 
     <function name="BlendFuncSeparate" extension="Core">
+      <param name="sfactorRGB"><type>BlendingFactorSrc</type></param>
+      <param name="dfactorRGB"><type>BlendingFactorDest</type></param>
+      <param name="sfactorAlpha"><type>BlendingFactorSrc</type></param>
+      <param name="dfactorAlpha"><type>BlendingFactorDest</type></param>
+    </function>
+    <function name="BlendFuncSeparatei" extension="Core">
       <param name="srcRGB"><type>BlendingFactorSrc</type></param>
       <param name="dstRGB"><type>BlendingFactorDest</type></param>
       <param name="srcAlpha"><type>BlendingFactorSrc</type></param>
@@ -501,7 +507,7 @@
     </function>
 
     <function name="GetInteger64v" extension="Core">
-      <param name="target"><type>GetPName</type></param>
+      <param name="pname"><type>GetPName</type></param>
     </function>
     <function name="GetInteger64i_v" extension="Core">
       <param name="target"><type>GetIndexedPName</type></param>
@@ -1637,174 +1643,207 @@
     </function>
 
   </replace>
-  
+
   <overload name="gl">
-    <!-- Khronos renamed a few enum types between GL 4.3 and GL4.4. We did the same. -->
-
-    <!-- ActiveAttribType <=> TransformFeedbackType -->
-    <function name="GetTransformFeedbackVarying">
-      <param name="type"><type>ActiveAttribType</type></param>
-    </function>
-
-    <!-- ArbDrawBuffersBlend <=> BlendEquationMode -->
-    <function name="BlendEquation">
-      <param name="mode"><type>ArbDrawBuffersBlend</type></param>
-    </function>
-    <function name="BlendEquationSeparate">
-      <param name="mode"><type>ArbDrawBuffersBlend</type></param>
-    </function>
-    <!-- ArbDrawBuffersBlend <=> BlendingFactorDest|Src -->
-    <function name="BlendFunc">
-      <param name="mode"><type>ArbDrawBuffersBlend</type></param>
-    </function>
-    <function name="BlendFuncSeparate">
-      <param name="mode"><type>ArbDrawBuffersBlend</type></param>
-    </function>
-
-    <!-- ArbSync <=> SyncCondition -->
-    <function name="FenceSync">
-      <param name="condition"><type>ArbSync</type></param>
-      <param name="flags"><type>uint</type></param>
-    </function>
-    <!-- ArbSync <=> SyncParametereName -->
-    <function name="GetSync">
-      <param name="pname"><type>ArbSync</type></param>
-    </function>
-
-    <!-- GetString <=> GetStringIndexed -->
-    <function name="GetStringi">
-      <param name="name"><type>StringName</type></param>
-    </function>
-
-    <!-- PrimitiveType <=> BeginMode overloads for backwards compatibility -->
+    <!-- generated from apitest -->
     <function name="Begin" obsolete="Use PrimitiveType overload instead">
-      <param name="mode"><type>BeginMode</type></param>
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="BeginTransformFeedback" obsolete="Use TransformFeedbackPrimitiveType overload instead">
+      <param name="primitiveMode">
+        <type>BeginFeedbackMode</type>
+      </param>
+    </function>
+    <function name="BindBufferBase" obsolete="Use BufferRangeTarget overload instead">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+    </function>
+    <function name="BindBufferRange" obsolete="Use BufferRangeTarget overload instead">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+    </function>
+    <function name="BlendEquation" obsolete="Use BlendEquationMode overload instead">
+      <param name="mode">
+        <type>ArbDrawBuffersBlend</type>
+      </param>
+    </function>
+    <function name="BlendFuncSeparatei" obsolete="Use BlendingFactorSrc overload instead">
+      <param name="dstRGB">
+        <type>ArbDrawBuffersBlend</type>
+      </param>
+      <param name="srcRGB">
+        <type>ArbDrawBuffersBlend</type>
+      </param>
+      <param name="dstAlpha">
+        <type>ArbDrawBuffersBlend</type>
+      </param>
+      <param name="srcAlpha">
+        <type>ArbDrawBuffersBlend</type>
+      </param>
+    </function>
+    <function name="BlendFunc" obsolete="Use BlendingFactorSrc overload instead">
+      <param name="src">
+        <type>ArbDrawBuffersBlend</type>
+      </param>
+      <param name="dst">
+        <type>ArbDrawBuffersBlend</type>
+      </param>
+    </function>
+    <function name="ClearBuffer" obsolete="Use ClearBufferCombined overload instead">
+      <param name="buffer">
+        <type>ClearBuffer</type>
+      </param>
+    </function>
+    <function name="ClientWaitSync" obsolete="Use ClientWaitSyncFlags overload instead">
+      <param name="flags">
+        <type>int</type>
+      </param>
+    </function>
+    <function name="ClientWaitSync" obsolete="Use ClientWaitSyncFlags overload instead">
+      <param name="flags">
+        <type>uint</type>
+      </param>
     </function>
     <function name="DrawArrays" obsolete="Use PrimitiveType overload instead">
-      <param name="mode"><type>BeginMode</type></param>
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
     </function>
     <function name="DrawArraysInstanced" obsolete="Use PrimitiveType overload instead">
-      <param name="mode"><type>BeginMode</type></param>
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
     </function>
     <function name="DrawElements" obsolete="Use PrimitiveType overload instead">
-      <param name="mode"><type>BeginMode</type></param>
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
     </function>
     <function name="DrawElementsBaseVertex" obsolete="Use PrimitiveType overload instead">
-      <param name="mode"><type>BeginMode</type></param>
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
     </function>
     <function name="DrawElementsInstanced" obsolete="Use PrimitiveType overload instead">
-      <param name="mode"><type>BeginMode</type></param>
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
     </function>
     <function name="DrawElementsInstancedBaseVertex" obsolete="Use PrimitiveType overload instead">
-      <param name="mode"><type>BeginMode</type></param>
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
     </function>
     <function name="DrawRangeElements" obsolete="Use PrimitiveType overload instead">
-      <param name="mode"><type>BeginMode</type></param>
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
     </function>
     <function name="DrawRangeElementsBaseVertex" obsolete="Use PrimitiveType overload instead">
-      <param name="mode"><type>BeginMode</type></param>
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="FenceSync" obsolete="Use SyncCondition overload instead">
+      <param name="condition">
+        <type>ArbSync</type>
+      </param>
+      <param name="flags">
+        <type>uint</type>
+      </param>
+    </function>
+    <function name="GetInteger64v" obsolete="Use GetPName overload instead">
+      <param name="pname">
+        <type>ArbSync</type>
+      </param>
+    </function>
+    <function name="GetInteger64i_v" obsolete="Use GetIndexedPName overload instead">
+      <param name="target">
+        <type>Version32</type>
+      </param>
+    </function>
+    <function name="GetProgram" obsolete="Use GetProgramParameterName overload instead">
+      <param name="pname">
+        <type>ProgramParameter</type>
+      </param>
+    </function>
+    <function name="GetString" obsolete="Use StringNameIndexed overload instead">
+      <param name="name">
+        <type>StringName</type>
+      </param>
+    </function>
+    <function name="GetSync" obsolete="Use SyncParameterName overload instead">
+      <param name="pname">
+        <type>ArbSync</type>
+      </param>
     </function>
     <function name="MultiDrawArrays" obsolete="Use PrimitiveType overload instead">
-      <param name="mode"><type>BeginMode</type></param>
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
     </function>
     <function name="MultiDrawElements" obsolete="Use PrimitiveType overload instead">
-      <param name="mode"><type>BeginMode</type></param>
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="MultiDrawElementsBaseVertex" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="ProgramParameter" obsolete="Use ProgramParameterName overload instead">
+      <param name="pname">
+        <type>Version32</type>
+      </param>
+    </function>
+    <function name="VertexAttribIPointer" obsolete="Use VertexAttribIntegerType overload instead">
+      <param name="type">
+        <type>VertexAttribIPointerType</type>
+      </param>
+    </function>
+    <function name="WaitSync" obsolete="Use WaitSyncFlags overload instead">
+      <param name="flags">
+        <type>int</type>
+      </param>
+    </function>
+    <function name="WaitSync" obsolete="Use WaitSyncFlags overload instead">
+      <param name="flags">
+        <type>uint</type>
+      </param>
+    </function>
+    <function name="DrawElements" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
     </function>
 
-    <!-- BeginFeedbackMode <=> TransformFeedbackPrimitiveType -->
-    <function name="BeginTransformFeedback" obsolete="Use TransformFeedbackPrimitiveType overload instead">
-      <param name="mode"><type>BeginFeedbackMode</type></param>
+    <!-- added manually -->
+    <function name="DrawElements">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+      <param name="indices">
+        <type>int</type>
+      </param>
     </function>
-
-    <!-- BufferTarget <=> BufferRangeTarget -->
-    <function name="BindBufferBase" obsolete="Use BufferRangeTarget instead">
-      <param name="target"><type>BufferTarget</type></param>
+    <function name="DrawElements">
+      <param name="mode">
+        <type>PrimitiveType</type>
+      </param>
+      <param name="indices">
+        <type>int</type>
+      </param>
     </function>
-    <function name="BindBufferRange" obsolete="Use BufferRangeTarget instead">
-      <param name="target"><type>BufferTarget</type></param>
+    <function name="GetTransformFeedbackVarying">
+      <param name="type">
+        <type>ActiveAttribType</type>
+      </param>
     </function>
-
-    <!-- ProgramParameterPName <=> ProgramParameterName -->
-    <function name="GetProgram" extension="Core" obsolete="Use GetProgramParameterName instead">
-      <param name="pname"><type>ProgramParameter</type></param>
-    </function>
-    <function name="ProgramParameteri" extension="Core" obsolete="Use ProgramParameterName instead">
-      <param name="pname"><type>Version32</type></param>
-    </function>
-    
-    <!-- StencilFace <=> CullFaceMode -->
-    <function name="StencilFuncSeparate" obsolete="Use StencilFace overload instead" extension="Core">
-      <param name="face"><type>CullFaceMode</type></param>
-    </function>
-    <function name="StencilMaskSeparate" obsolete="Use StencilFace overload instead" extension="Core">
-      <param name="face"><type>CullFaceMode</type></param>
-    </function>
-    <function name="StencilOpSeparate" obsolete="Use StencilFace overload instead" extension="Core">
-      <param name="face"><type>CullFaceMode</type></param>
-    </function>
-    
-    <!-- StencilFace <=> Version20 -->
-    <function name="StencilFuncSeparate" obsolete="Use StencilFace overload instead" extension="Core">
-      <param name="face"><type>Version20</type></param>
-    </function>
-
-    <!-- Version32 <=> GetPName -->
-    <function name="GetInteger64" extension="Core">
-      <param name="target"><type>ArbSync</type></param>
-    </function>
-    <function name="GetInteger64i_v" extension="Core">
-      <param name="target"><type>Version32</type></param>
-    </function>
-
-    <!-- VertexAttribIPointerType <=> VertexAttribIntegerType -->
-    <function name="VertexAttribIPointer">
-      <param name="pname"><type>VertexAttribIPointerType</type></param>
-    </function>
-
-    <!-- WaitSync -->
-    <function name="WaitSync" extension="Core">
-      <param name="flags"><type>uint</type></param>
-    </function>
-
-    <!--
-    <function name="TexImage1D" category="VERSION_1_0" extension="Core" version="1.0">
-      <param name="target" type="TextureTarget" flow="in" />
-      <param name="level" type="CheckedInt32" flow="in" />
-      <param name="internalformat" type="PixelInternalFormat" flow="in" />
-      <param name="width" type="GLsizei" flow="in" />
-      <param name="border" type="CheckedInt32" flow="in" />
-      <param name="format" type="PixelFormat" flow="in" />
-      <param name="type" type="PixelType" flow="in" />
-      <param name="pixels" type="void *" flow="in" count="COMPSIZE(format,type,width)" />
-      <returns type="void" />
-    </function>
-    <function name="TexImage2D" category="VERSION_1_0" extension="Core" version="1.0">
-      <param name="target" type="TextureTarget" flow="in" />
-      <param name="level" type="CheckedInt32" flow="in" />
-      <param name="internalformat" type="PixelInternalFormat" flow="in" />
-      <param name="width" type="GLsizei" flow="in" />
-      <param name="height" type="GLsizei" flow="in" />
-      <param name="border" type="CheckedInt32" flow="in" />
-      <param name="format" type="PixelFormat" flow="in" />
-      <param name="type" type="PixelType" flow="in" />
-      <param name="pixels" type="void *" flow="in" count="COMPSIZE(format,type,width,height)" />
-      <returns type="void" />
-    </function>
-    <function name="TexImage3D" category="VERSION_1_2" extension="Core" version="1.2">
-      <param name="target" type="TextureTarget" flow="in" />
-      <param name="level" type="CheckedInt32" flow="in" />
-      <param name="internalformat" type="PixelInternalFormat" flow="in" />
-      <param name="width" type="GLsizei" flow="in" />
-      <param name="height" type="GLsizei" flow="in" />
-      <param name="depth" type="GLsizei" flow="in" />
-      <param name="border" type="CheckedInt32" flow="in" />
-      <param name="format" type="PixelFormat" flow="in" />
-      <param name="type" type="PixelType" flow="in" />
-      <param name="pixels" type="void *" flow="in" count="COMPSIZE(format,type,width,height,depth)" />
-      <returns type="void" />
-    </function>
-    -->
-
   </overload>
 
   <add name="gl|glcore">
