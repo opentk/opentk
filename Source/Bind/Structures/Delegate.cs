@@ -304,7 +304,7 @@ namespace Bind.Structures
             else
             {
                 var list = Delegates[d.Name];
-                var index = list.IndexOf(d);
+                var index = list.FindIndex(w => w.CompareTo(d) == 0);
                 if (index < 0)
                 {
                     // Function not defined - add it!
