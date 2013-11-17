@@ -646,6 +646,12 @@ namespace Bind
                     Debug.Print("Profile override not yet implemented");
                 }
 
+                var name_override = function_override.SelectSingleNode("name");
+                if (name_override != null)
+                {
+                    d.Name = name_override.Value;
+                }
+
                 var obsolete = function_override.GetAttribute("obsolete", String.Empty);
                 if (!String.IsNullOrEmpty(obsolete))
                 {
