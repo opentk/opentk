@@ -43,10 +43,15 @@ namespace Bind
 
     class FuncProcessor
     {
-        static readonly Regex Endings =
-            new Regex(@"((((d|f|fi)|(L?(u?i?64)?u?[isb]))_?(64)?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
-        static readonly Regex EndingsNotToTrim =
-            new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Attrib|Access|Coord|Feedbacks|Flag|Queries|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs|Uniforms)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+        static readonly Regex Endings = new Regex(
+            @"([hfd]v?|u?[isb](64)?v?|v|i_v|fi)$",
+            RegexOptions.Compiled);
+        static readonly Regex EndingsNotToTrim = new Regex(
+            "([st]h|ib|[tdrey]s|[eE]n[vd]|bled" +
+            "|Attrib|Access|Boolean|Coord|Feedbacks|Finish|Flag" +
+            "|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Uniforms|" +
+            "Varyings)$",
+            RegexOptions.Compiled);
         static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
 
         string Overrides { get; set; }
@@ -346,6 +351,9 @@ namespace Bind
             string name = d.Name;
             string extension = d.Extension;
             string trimmed_name = GetTrimmedExtension(name, extension);
+
+            if (name.Contains("GetInteger64"))
+                ;//System.Diagnostics.Debugger.Break();
 
             // Note: some endings should not be trimmed, for example: 'b' from Attrib.
             // Check the endingsNotToTrim regex for details.
