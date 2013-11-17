@@ -149,13 +149,13 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static void BlendFunc(OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactor, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactor);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFunci", ExactSpelling = true)]
-            internal extern static void BlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL4.BlendingFactorSrc src, OpenTK.Graphics.OpenGL4.All dst);
+            internal extern static void BlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL4.BlendingFactorSrc src, OpenTK.Graphics.OpenGL4.BlendingFactorDest dst);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFunciARB", ExactSpelling = true)]
             internal extern static void BlendFunciARB(UInt32 buf, OpenTK.Graphics.OpenGL4.All src, OpenTK.Graphics.OpenGL4.All dst);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFuncSeparate", ExactSpelling = true)]
-            internal extern static void BlendFuncSeparate(OpenTK.Graphics.OpenGL4.All sfactorRGB, OpenTK.Graphics.OpenGL4.All dfactorRGB, OpenTK.Graphics.OpenGL4.All sfactorAlpha, OpenTK.Graphics.OpenGL4.All dfactorAlpha);
+            internal extern static void BlendFuncSeparate(OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactorRGB, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactorRGB, OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactorAlpha, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactorAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFuncSeparatei", ExactSpelling = true)]
             internal extern static void BlendFuncSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL4.BlendingFactorSrc srcRGB, OpenTK.Graphics.OpenGL4.BlendingFactorDest dstRGB, OpenTK.Graphics.OpenGL4.BlendingFactorSrc srcAlpha, OpenTK.Graphics.OpenGL4.BlendingFactorDest dstAlpha);
@@ -722,7 +722,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal extern static unsafe void GetInteger64i_v(OpenTK.Graphics.OpenGL4.GetIndexedPName target, UInt32 index, [OutAttribute] Int64* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetInteger64v", ExactSpelling = true)]
-            internal extern static unsafe void GetInteger64v(OpenTK.Graphics.OpenGL4.All pname, [OutAttribute] Int64* data);
+            internal extern static unsafe void GetInteger64v(OpenTK.Graphics.OpenGL4.GetPName pname, [OutAttribute] Int64* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetIntegeri_v", ExactSpelling = true)]
             internal extern static unsafe void GetIntegeri_v(OpenTK.Graphics.OpenGL4.GetIndexedPName target, UInt32 index, [OutAttribute] Int32* data);

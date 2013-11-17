@@ -15024,7 +15024,7 @@ namespace OpenTK.Graphics.ES30
     }
 
     /// <summary>
-    /// Used in GL.GetInteger, GL.Ext.GetInteger
+    /// Used in GL.GetInteger64, GL.GetInteger and 1 other function
     /// </summary>
     public enum GetIndexedPName : int
     {

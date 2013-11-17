@@ -716,7 +716,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.BlendEquationSeparate, GL.Arb.BlendFunc and 36 other functions
+    /// Used in GL.Arb.BlendEquationSeparate, GL.Arb.BlendFunc and 33 other functions
     /// </summary>
     public enum All : int
     {
@@ -17681,7 +17681,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.GetBoolean, GL.GetDouble and 2 other functions
+    /// Used in GL.GetBoolean, GL.GetDouble and 3 other functions
     /// </summary>
     public enum GetIndexedPName : int
     {
@@ -17795,7 +17795,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.GetBoolean, GL.GetDouble and 2 other functions
+    /// Used in GL.GetBoolean, GL.GetDouble and 3 other functions
     /// </summary>
     public enum GetPName : int
     {
@@ -33093,7 +33093,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetVertexAttrib
+    /// Used in GL.Arb.GetVertexAttribL
     /// </summary>
     public enum VertexAttribParameterArb : int
     {

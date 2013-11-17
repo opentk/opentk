@@ -736,7 +736,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetProgramEnvParameter, GL.Arb.GetProgramLocalParameter and 8 other functions
+    /// Used in GL.Arb.GetProgramEnvParameter, GL.Arb.GetProgramLocalParameter and 7 other functions
     /// </summary>
     public enum All : int
     {
@@ -20810,7 +20810,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.BlendEquation, GL.Arb.BlendEquationSeparate and 4 other functions
+    /// Used in GL.Arb.BlendEquation, GL.Arb.BlendEquationSeparate and 6 other functions
     /// </summary>
     public enum ArbDrawBuffersBlend : int
     {
@@ -24426,7 +24426,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.FenceSync, GL.GetSync
+    /// Used in GL.FenceSync, GL.GetInteger64 and 1 other function
     /// </summary>
     public enum ArbSync : int
     {
@@ -27939,7 +27939,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.BeginTransformFeedback, GL.Ext.BeginTransformFeedback and 1 other function
     /// </summary>
     public enum BeginFeedbackMode : int
     {
@@ -27958,7 +27958,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.DrawArraysInstanced, GL.Arb.DrawElementsInstanced and 17 other functions
+    /// Used in GL.Arb.DrawArraysInstanced, GL.Arb.DrawElementsInstanced and 18 other functions
     /// </summary>
     public enum BeginMode : int
     {
@@ -29341,7 +29341,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.CullFace, GL.StencilFuncSeparate and 2 other functions
+    /// Used in GL.CullFace
     /// </summary>
     public enum CullFaceMode : int
     {
@@ -35410,7 +35410,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetBoolean, GL.GetDouble and 3 other functions
+    /// Used in GL.GetBoolean, GL.GetDouble and 4 other functions
     /// </summary>
     public enum GetIndexedPName : int
     {
@@ -35576,7 +35576,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetBoolean, GL.GetDouble and 2 other functions
+    /// Used in GL.GetBoolean, GL.GetDouble and 3 other functions
     /// </summary>
     public enum GetPName : int
     {
@@ -44431,7 +44431,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.NV.GetVertexAttrib, GL.NV.VertexAttribLFormat
+    /// Used in GL.NV.GetVertexAttribL, GL.NV.VertexAttribLFormat
     /// </summary>
     public enum NvVertexAttribInteger64bit : int
     {
@@ -47344,7 +47344,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetProgram
+    /// Used in GL.Arb.GetProgram, GL.GetProgram and 1 other function
     /// </summary>
     public enum ProgramParameter : int
     {
@@ -54867,7 +54867,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BlendFuncSeparate
+    /// Not used directly.
     /// </summary>
     public enum Version14 : int
     {
@@ -55273,7 +55273,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.StencilFuncSeparate
+    /// Not used directly.
     /// </summary>
     public enum Version20 : int
     {
@@ -56845,7 +56845,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.GetInteger, GL.ProgramParameter
+    /// Used in GL.Arb.ProgramParameter, GL.GetInteger64 and 2 other functions
     /// </summary>
     public enum Version32 : int
     {
@@ -57179,7 +57179,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BlendFunc
+    /// Not used directly.
     /// </summary>
     public enum Version40 : int
     {
@@ -59275,7 +59275,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.VertexAttribIPointer, GL.Ext.VertexAttribIPointer
     /// </summary>
     public enum VertexAttribIPointerType : int
     {
@@ -59345,7 +59345,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetVertexAttrib, GL.NV.VertexAttribPointer
+    /// Used in GL.Arb.GetVertexAttrib, GL.Arb.GetVertexAttribL and 1 other function
     /// </summary>
     public enum VertexAttribParameterArb : int
     {

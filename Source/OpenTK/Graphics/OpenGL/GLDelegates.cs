@@ -387,7 +387,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void BlendFunc(OpenTK.Graphics.OpenGL.BlendingFactorSrc sfactor, OpenTK.Graphics.OpenGL.BlendingFactorDest dfactor);
             internal static BlendFunc glBlendFunc;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL.BlendingFactorSrc src, OpenTK.Graphics.OpenGL.Version40 dst);
+            internal delegate void BlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL.BlendingFactorSrc src, OpenTK.Graphics.OpenGL.BlendingFactorDest dst);
             internal static BlendFunci glBlendFunci;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFunciARB(UInt32 buf, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend src, OpenTK.Graphics.OpenGL.ArbDrawBuffersBlend dst);
@@ -396,7 +396,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void BlendFuncIndexedAMD(UInt32 buf, OpenTK.Graphics.OpenGL.AmdDrawBuffersBlend src, OpenTK.Graphics.OpenGL.AmdDrawBuffersBlend dst);
             internal static BlendFuncIndexedAMD glBlendFuncIndexedAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendFuncSeparate(OpenTK.Graphics.OpenGL.Version14 sfactorRGB, OpenTK.Graphics.OpenGL.Version14 dfactorRGB, OpenTK.Graphics.OpenGL.Version14 sfactorAlpha, OpenTK.Graphics.OpenGL.Version14 dfactorAlpha);
+            internal delegate void BlendFuncSeparate(OpenTK.Graphics.OpenGL.BlendingFactorSrc sfactorRGB, OpenTK.Graphics.OpenGL.BlendingFactorDest dfactorRGB, OpenTK.Graphics.OpenGL.BlendingFactorSrc sfactorAlpha, OpenTK.Graphics.OpenGL.BlendingFactorDest dfactorAlpha);
             internal static BlendFuncSeparate glBlendFuncSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFuncSeparateEXT(OpenTK.Graphics.OpenGL.ExtBlendFuncSeparate sfactorRGB, OpenTK.Graphics.OpenGL.ExtBlendFuncSeparate dfactorRGB, OpenTK.Graphics.OpenGL.ExtBlendFuncSeparate sfactorAlpha, OpenTK.Graphics.OpenGL.ExtBlendFuncSeparate dfactorAlpha);
@@ -2229,7 +2229,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetInteger64i_v(OpenTK.Graphics.OpenGL.GetIndexedPName target, UInt32 index, [OutAttribute] Int64* data);
             internal unsafe static GetInteger64i_v glGetInteger64i_v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetInteger64v(OpenTK.Graphics.OpenGL.All pname, [OutAttribute] Int64* data);
+            internal unsafe delegate void GetInteger64v(OpenTK.Graphics.OpenGL.GetPName pname, [OutAttribute] Int64* data);
             internal unsafe static GetInteger64v glGetInteger64v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetIntegeri_v(OpenTK.Graphics.OpenGL.GetIndexedPName target, UInt32 index, [OutAttribute] Int32* data);

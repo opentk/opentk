@@ -663,7 +663,7 @@ namespace OpenTK.Graphics.OpenGL
         public static string GetActiveAttrib(int program, int index, out int size, out ActiveAttribType type)
         {
             int length;
-            GetProgram(program, OpenTK.Graphics.OpenGL.ProgramParameter.ActiveAttributeMaxLength, out length);
+            GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveAttributeMaxLength, out length);
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
 
             GetActiveAttrib(program, index, sb.Capacity, out length, out size, out type, sb);
@@ -677,7 +677,7 @@ namespace OpenTK.Graphics.OpenGL
         public static string GetActiveUniform(int program, int uniformIndex, out int size, out ActiveUniformType type)
         {
             int length;
-            GetProgram(program, OpenTK.Graphics.OpenGL.ProgramParameter.ActiveUniformMaxLength, out length);
+            GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveUniformMaxLength, out length);
 
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length);
             GetActiveUniform(program, uniformIndex, sb.Capacity, out length, out size, out type, sb);
@@ -691,7 +691,7 @@ namespace OpenTK.Graphics.OpenGL
         public static string GetActiveUniformName(int program, int uniformIndex)
         {
             int length;
-            GetProgram(program, OpenTK.Graphics.OpenGL.ProgramParameter.ActiveUniformMaxLength, out length);
+            GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveUniformMaxLength, out length);
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
 
             GetActiveUniformName(program, uniformIndex, sb.Capacity, out length, sb);
@@ -705,7 +705,7 @@ namespace OpenTK.Graphics.OpenGL
         public static string GetActiveUniformBlockName(int program, int uniformIndex)
         {
             int length;
-            GetProgram(program, OpenTK.Graphics.OpenGL.ProgramParameter.ActiveUniformBlockMaxNameLength, out length);
+            GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveUniformBlockMaxNameLength, out length);
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
 
             GetActiveUniformBlockName(program, uniformIndex, sb.Capacity, out length, sb);
@@ -777,7 +777,7 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 int length;
-                GL.GetProgram(program, OpenTK.Graphics.OpenGL.ProgramParameter.InfoLogLength, out length); if (length == 0)
+                GL.GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.InfoLogLength, out length); if (length == 0)
                 {
                     info = String.Empty;
                     return;
@@ -978,15 +978,6 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region DrawElements
-
-        public static void DrawElements(PrimitiveType mode, int count, DrawElementsType type, int offset)
-        {
-            DrawElements(mode, count, type, new IntPtr(offset));
-        }
-
-        #endregion
-
         #region Get[Float|Double]
 
         public static void GetFloat(GetPName pname, out Vector2 vector)
@@ -1175,23 +1166,42 @@ namespace OpenTK.Graphics.OpenGL
             GetActiveUniforms(program, uniformCount, uniformIndices, (ActiveUniformParameter)pname, @params);
         }
 
-		[Obsolete("Use strongly-typed overload instead")]
-		void GetBufferParameteri64(Version32 target, Version32 pname, [OutAttribute] Int64[] @params)
-		{
-			GL.GetBufferParameter((BufferTarget)target, (BufferParameterName)pname, @params);
-		}
+        [Obsolete("Use strongly-typed overload instead")]
+		public static void GetBufferParameteri64(Version32 target, Version32 pname, [OutAttribute] Int64[] @params)
+        {
+            GL.GetBufferParameter((BufferTarget)target, (BufferParameterName)pname, @params);
+        }
 
-		[Obsolete("Use strongly-typed overload instead")]
-		void GetBufferParameteri64(Version32 target, Version32 pname, out Int64 @params)
-		{
-			GL.GetBufferParameter((BufferTarget)target, (BufferParameterName)pname, out @params);
-		}
+        [Obsolete("Use strongly-typed overload instead")]
+		public static void GetBufferParameteri64(Version32 target, Version32 pname, out Int64 @params)
+        {
+            GL.GetBufferParameter((BufferTarget)target, (BufferParameterName)pname, out @params);
+        }
 
-		[Obsolete("Use strongly-typed overload instead")]
-		unsafe void GetBufferParameteri64(Version32 target, Version32 pname, [OutAttribute] Int64* @params)
-		{
-			GL.GetBufferParameter((BufferTarget)target, (BufferParameterName)pname, @params);
-		}
+        [Obsolete("Use strongly-typed overload instead")]
+		[CLSCompliant(false)]
+		public static unsafe void GetBufferParameteri64(Version32 target, Version32 pname, [OutAttribute] Int64* @params)
+        {
+            GL.GetBufferParameter((BufferTarget)target, (BufferParameterName)pname, @params);
+        }
+
+        [Obsolete("Use GL.Arb.FramebufferTextureFace instead (OpenGL spec bug)")]
+		public static void FramebufferTextureFace(Version32 target, Version32 attachment,
+            int texture, int level, Version32 face)
+        {
+            Arb.FramebufferTextureFace((FramebufferTarget)target,
+                (FramebufferAttachment)attachment, texture, level, (TextureTarget)face);
+        }
+
+        [Obsolete("Use GL.Arb.FramebufferTextureFace instead (OpenGL spec bug)")]
+		[CLSCompliant(false)]
+		public static void FramebufferTextureFace(Version32 target, Version32 attachment,
+			uint texture, int level, Version32 face)
+        {
+            Arb.FramebufferTextureFace((FramebufferTarget)target,
+                (FramebufferAttachment)attachment, texture, level, (TextureTarget)face);
+        }
+
 
         public static partial class Arb
         {

@@ -147,13 +147,13 @@ namespace OpenTK.Graphics.OpenGL4
             internal delegate void BlendFunc(OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactor, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactor);
             internal static BlendFunc glBlendFunc;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL4.BlendingFactorSrc src, OpenTK.Graphics.OpenGL4.All dst);
+            internal delegate void BlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL4.BlendingFactorSrc src, OpenTK.Graphics.OpenGL4.BlendingFactorDest dst);
             internal static BlendFunci glBlendFunci;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFunciARB(UInt32 buf, OpenTK.Graphics.OpenGL4.All src, OpenTK.Graphics.OpenGL4.All dst);
             internal static BlendFunciARB glBlendFunciARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendFuncSeparate(OpenTK.Graphics.OpenGL4.All sfactorRGB, OpenTK.Graphics.OpenGL4.All dfactorRGB, OpenTK.Graphics.OpenGL4.All sfactorAlpha, OpenTK.Graphics.OpenGL4.All dfactorAlpha);
+            internal delegate void BlendFuncSeparate(OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactorRGB, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactorRGB, OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactorAlpha, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactorAlpha);
             internal static BlendFuncSeparate glBlendFuncSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFuncSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL4.BlendingFactorSrc srcRGB, OpenTK.Graphics.OpenGL4.BlendingFactorDest dstRGB, OpenTK.Graphics.OpenGL4.BlendingFactorSrc srcAlpha, OpenTK.Graphics.OpenGL4.BlendingFactorDest dstAlpha);
@@ -720,7 +720,7 @@ namespace OpenTK.Graphics.OpenGL4
             internal unsafe delegate void GetInteger64i_v(OpenTK.Graphics.OpenGL4.GetIndexedPName target, UInt32 index, [OutAttribute] Int64* data);
             internal unsafe static GetInteger64i_v glGetInteger64i_v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetInteger64v(OpenTK.Graphics.OpenGL4.All pname, [OutAttribute] Int64* data);
+            internal unsafe delegate void GetInteger64v(OpenTK.Graphics.OpenGL4.GetPName pname, [OutAttribute] Int64* data);
             internal unsafe static GetInteger64v glGetInteger64v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetIntegeri_v(OpenTK.Graphics.OpenGL4.GetIndexedPName target, UInt32 index, [OutAttribute] Int32* data);
