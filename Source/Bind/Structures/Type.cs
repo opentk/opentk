@@ -313,8 +313,9 @@ namespace Bind.Structures
         public int CompareTo(Type other)
         {
             // Make sure that Pointer parameters are sorted last to avoid bug [#1098].
-            // The rest of the comparisons are not important, but they are there to
-            // guarantee a stable order between program executions.
+            // The rest of the comparisons help maintain a stable order (useful for source control).
+            // Note that CompareTo is stricter than Equals and that there is code in
+            // DelegateCollection.Add that depends on this fact.
             int result = this.CurrentType.CompareTo(other.CurrentType);
             if (result == 0)
                 result = Pointer.CompareTo(other.Pointer); // Must come after array/ref, see issue [#1098]
@@ -322,6 +323,10 @@ namespace Bind.Structures
                 result = Reference.CompareTo(other.Reference);
             if (result == 0)
                 result = Array.CompareTo(other.Array);
+            // Note: CLS-compliance and element counts
+            // are used for comparison calculations, in order
+            // to maintain a stable sorting order, even though
+            // they are not used in equality calculations.
             if (result == 0)
                 result = CLSCompliant.CompareTo(other.CLSCompliant);
             if (result == 0)
@@ -335,7 +340,18 @@ namespace Bind.Structures
 
         public bool Equals(Type other)
         {
-            return CompareTo(other) == 0;
+            bool result =
+                CurrentType.Equals(other.CurrentType) &&
+                Pointer.Equals(other.Pointer) &&
+                Reference.Equals(other.Reference) &&
+                Array.Equals(other.Array);
+            // Note: CLS-compliance and element count do not factor
+            // factor into the equality calculations, i.e.
+            //  Foo(single[]) == Foo(single[]) -> true
+            // even if these types have different element counts.
+            // This is necessary because otherwise we'd get
+            // redefinition errors in the generated bindings.
+            return result;
         }
 
         #endregion
