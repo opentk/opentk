@@ -1646,32 +1646,54 @@
 
   <overload name="gl">
     <!-- generated from apitest -->
-    <function name="Begin" obsolete="Use PrimitiveType overload instead">
+    <function name="Begin" extension="Core" obsolete="Use PrimitiveType overload instead">
       <param name="mode">
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="BeginTransformFeedback" obsolete="Use TransformFeedbackPrimitiveType overload instead">
+    <function name="BeginTransformFeedback" extension="Core" obsolete="Use TransformFeedbackPrimitiveType overload instead">
       <param name="primitiveMode">
         <type>BeginFeedbackMode</type>
       </param>
     </function>
-    <function name="BindBufferBase" obsolete="Use BufferRangeTarget overload instead">
+    <function name="BindBufferBase" extension="Core" obsolete="Use BufferRangeTarget overload instead">
       <param name="target">
         <type>BufferTarget</type>
       </param>
     </function>
-    <function name="BindBufferRange" obsolete="Use BufferRangeTarget overload instead">
+    <function name="BindBufferRange" extension="Core" obsolete="Use BufferRangeTarget overload instead">
       <param name="target">
         <type>BufferTarget</type>
       </param>
     </function>
-    <function name="BlendEquation" obsolete="Use BlendEquationMode overload instead">
+    <function name="BlendEquation" extension="Core" obsolete="Use BlendEquationMode overload instead">
       <param name="mode">
         <type>ArbDrawBuffersBlend</type>
       </param>
     </function>
-    <function name="BlendFuncSeparatei" obsolete="Use BlendingFactorSrc overload instead">
+    <function name="BlendFunc" extension="Core" obsolete="Use BlendingFactorSrc overload instead">
+      <param name="dst">
+        <type>ArbDrawBuffersBlend</type>
+      </param>
+      <param name="src">
+        <type>ArbDrawBuffersBlend</type>
+      </param>
+    </function>
+    <function name="BlendFuncSeparate" extension="Core" obsolete="Use BlendingFactorSrc overload instead">
+      <param name="dfactorRGB">
+        <type>ArbDrawBuffersBlend</type>
+      </param>
+      <param name="sfactorRGB">
+        <type>ArbDrawBuffersBlend</type>
+      </param>
+      <param name="dfactorAlpha">
+        <type>ArbDrawBuffersBlend</type>
+      </param>
+      <param name="sfactorAlpha">
+        <type>ArbDrawBuffersBlend</type>
+      </param>
+    </function>
+        <function name="BlendFuncSeparatei" extension="Core" obsolete="Use BlendingFactorSrc overload instead">
       <param name="dstRGB">
         <type>ArbDrawBuffersBlend</type>
       </param>
@@ -1685,70 +1707,67 @@
         <type>ArbDrawBuffersBlend</type>
       </param>
     </function>
-    <function name="BlendFunc" obsolete="Use BlendingFactorSrc overload instead">
-      <param name="src">
-        <type>ArbDrawBuffersBlend</type>
-      </param>
-      <param name="dst">
-        <type>ArbDrawBuffersBlend</type>
-      </param>
-    </function>
-    <function name="ClearBuffer" obsolete="Use ClearBufferCombined overload instead">
+    <function name="ClearBuffer" extension="Core" obsolete="Use ClearBufferCombined overload instead">
       <param name="buffer">
         <type>ClearBuffer</type>
       </param>
     </function>
-    <function name="ClientWaitSync" obsolete="Use ClientWaitSyncFlags overload instead">
+    <function name="ClientWaitSync" extension="Core" obsolete="Use ClientWaitSyncFlags overload instead">
       <param name="flags">
         <type>int</type>
       </param>
     </function>
-    <function name="ClientWaitSync" obsolete="Use ClientWaitSyncFlags overload instead">
+    <function name="ClientWaitSync" extension="Core" obsolete="Use ClientWaitSyncFlags overload instead">
       <param name="flags">
         <type>uint</type>
       </param>
     </function>
-    <function name="DrawArrays" obsolete="Use PrimitiveType overload instead">
+    <function name="DrawArrays" extension="Core" obsolete="Use PrimitiveType overload instead">
       <param name="mode">
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="DrawArraysInstanced" obsolete="Use PrimitiveType overload instead">
+    <function name="DrawArraysInstanced" extension="Core" obsolete="Use PrimitiveType overload instead">
       <param name="mode">
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="DrawElements" obsolete="Use PrimitiveType overload instead">
+    <function name="DrawElements" extension="Core" obsolete="Use int overload instead">
+      <param name="indices">
+        <type>IntPtr</type>
+      </param>
+    </function>
+    <function name="DrawElements" extension="Core" obsolete="Use PrimitiveType overload instead">
       <param name="mode">
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="DrawElementsBaseVertex" obsolete="Use PrimitiveType overload instead">
+    <function name="DrawElementsBaseVertex" extension="Core" obsolete="Use PrimitiveType overload instead">
       <param name="mode">
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="DrawElementsInstanced" obsolete="Use PrimitiveType overload instead">
+    <function name="DrawElementsInstanced" extension="Core" obsolete="Use PrimitiveType overload instead">
       <param name="mode">
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="DrawElementsInstancedBaseVertex" obsolete="Use PrimitiveType overload instead">
+    <function name="DrawElementsInstancedBaseVertex" extension="Core" obsolete="Use PrimitiveType overload instead">
       <param name="mode">
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="DrawRangeElements" obsolete="Use PrimitiveType overload instead">
+    <function name="DrawRangeElements" extension="Core" obsolete="Use PrimitiveType overload instead">
       <param name="mode">
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="DrawRangeElementsBaseVertex" obsolete="Use PrimitiveType overload instead">
+    <function name="DrawRangeElementsBaseVertex" extension="Core" obsolete="Use PrimitiveType overload instead">
       <param name="mode">
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="FenceSync" obsolete="Use SyncCondition overload instead">
+    <function name="FenceSync" extension="Core" obsolete="Use SyncCondition overload instead">
       <param name="condition">
         <type>ArbSync</type>
       </param>
@@ -1756,67 +1775,279 @@
         <type>uint</type>
       </param>
     </function>
-    <function name="GetInteger64v" obsolete="Use GetPName overload instead">
-      <param name="pname">
-        <type>ArbSync</type>
-      </param>
-    </function>
-    <function name="GetInteger64i_v" obsolete="Use GetIndexedPName overload instead">
+    <function name="GetInteger64i_v" extension="Core" obsolete="Use GetIndexedPName overload instead">
       <param name="target">
         <type>Version32</type>
       </param>
     </function>
-    <function name="GetProgram" obsolete="Use GetProgramParameterName overload instead">
-      <param name="pname">
-        <type>ProgramParameter</type>
-      </param>
-    </function>
-    <function name="GetString" obsolete="Use StringNameIndexed overload instead">
-      <param name="name">
-        <type>StringName</type>
-      </param>
-    </function>
-    <function name="GetSync" obsolete="Use SyncParameterName overload instead">
+    <function name="GetInteger64v" extension="Core" obsolete="Use GetPName overload instead">
       <param name="pname">
         <type>ArbSync</type>
       </param>
     </function>
-    <function name="MultiDrawArrays" obsolete="Use PrimitiveType overload instead">
+    <function name="GetProgram" extension="Core" obsolete="Use GetProgramParameterName overload instead">
+      <param name="pname">
+        <type>ProgramParameter</type>
+      </param>
+    </function>
+    <function name="GetString" extension="Core" obsolete="Use StringNameIndexed overload instead">
+      <param name="name">
+        <type>StringName</type>
+      </param>
+    </function>
+    <function name="GetSync" extension="Core" obsolete="Use SyncParameterName overload instead">
+      <param name="pname">
+        <type>ArbSync</type>
+      </param>
+    </function>
+    <function name="MultiDrawArrays" extension="Core" obsolete="Use PrimitiveType overload instead">
       <param name="mode">
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="MultiDrawElements" obsolete="Use PrimitiveType overload instead">
+    <function name="MultiDrawElements" extension="Core" obsolete="Use PrimitiveType overload instead">
       <param name="mode">
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="MultiDrawElementsBaseVertex" obsolete="Use PrimitiveType overload instead">
+    <function name="MultiDrawElementsBaseVertex" extension="Core" obsolete="Use PrimitiveType overload instead">
       <param name="mode">
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="ProgramParameter" obsolete="Use ProgramParameterName overload instead">
+    <function name="ProgramParameter" extension="Core" obsolete="Use ProgramParameterName overload instead">
       <param name="pname">
         <type>Version32</type>
       </param>
     </function>
-    <function name="VertexAttribIPointer" obsolete="Use VertexAttribIntegerType overload instead">
+    <function name="VertexAttribIPointer" extension="Core" obsolete="Use VertexAttribIntegerType overload instead">
       <param name="type">
         <type>VertexAttribIPointerType</type>
       </param>
     </function>
-    <function name="WaitSync" obsolete="Use WaitSyncFlags overload instead">
+    <function name="WaitSync" extension="Core" obsolete="Use WaitSyncFlags overload instead">
       <param name="flags">
         <type>int</type>
       </param>
     </function>
-    <function name="WaitSync" obsolete="Use WaitSyncFlags overload instead">
+    <function name="WaitSync" extension="Core" obsolete="Use WaitSyncFlags overload instead">
       <param name="flags">
         <type>uint</type>
       </param>
     </function>
-    <function name="DrawElements" obsolete="Use PrimitiveType overload instead">
+    <function name="DrawMeshArrays" extension="Sun" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="IglooInterface" extension="Sgix" obsolete="Use SgixIglooInterface overload instead">
+      <param name="pname">
+        <type>All</type>
+      </param>
+    </function>
+    <function name="DrawTransformFeedback" extension="NV" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>NvTransformFeedback2</type>
+      </param>
+    </function>
+    <function name="ProgramParameters4" extension="NV" obsolete="Use int overload instead">
+      <param name="count">
+        <type>uint</type>
+      </param>
+    </function>
+    <function name="BlendFuncSeparate" extension="Ingr" obsolete="Use IngrBlendFuncSeparate overload instead">
+      <param name="dfactorRGB">
+        <type>All</type>
+      </param>
+      <param name="sfactorRGB">
+        <type>All</type>
+      </param>
+      <param name="dfactorAlpha">
+        <type>All</type>
+      </param>
+      <param name="sfactorAlpha">
+        <type>All</type>
+      </param>
+    </function>
+    <function name="FogCoordPointerList" extension="Ibm" obsolete="Use FogPointerType overload instead">
+      <param name="type">
+        <type>IbmVertexArrayLists</type>
+      </param>
+    </function>
+    <function name="BlendEquation" extension="Ext" obsolete="Use BlendEquationMode overload instead">
+      <param name="mode">
+        <type>ExtBlendMinmax</type>
+      </param>
+    </function>
+    <function name="BlitFramebuffer" extension="Ext" obsolete="Use BlitFramebufferFilter overload instead">
+      <param name="filter">
+        <type>ExtFramebufferBlit</type>
+      </param>
+    </function>
+    <function name="DisableClientStateIndexed" extension="Ext" obsolete="Use ArrayCap overload instead">
+      <param name="array">
+        <type>EnableCap</type>
+      </param>
+    </function>
+    <function name="DisableIndexed" extension="Ext" obsolete="Use IndexedEnableCap overload instead">
+      <param name="target">
+        <type>ExtDrawBuffers2</type>
+      </param>
+    </function>
+    <function name="DrawArrays" extension="Ext" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="DrawArraysInstanced" extension="Ext" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="DrawElementsInstanced" extension="Ext" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="DrawRangeElements" extension="Ext" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="EnableClientStateIndexed" extension="Ext" obsolete="Use ArrayCap overload instead">
+      <param name="array">
+        <type>EnableCap</type>
+      </param>
+    </function>
+    <function name="EnableIndexed" extension="Ext" obsolete="Use IndexedEnableCap overload instead">
+      <param name="target">
+        <type>ExtDrawBuffers2</type>
+      </param>
+    </function>
+    <function name="GetBooleanIndexed" extension="Ext" obsolete="Use All overload instead">
+      <param name="target">
+        <type>ExtDrawBuffers2</type>
+      </param>
+    </function>
+    <function name="GetIntegerIndexed" extension="Ext" obsolete="Use GetIndexedPName overload instead">
+      <param name="target">
+        <type>ExtDrawBuffers2</type>
+      </param>
+    </function>
+    <function name="GetNamedProgram" extension="Ext" obsolete="Use ProgramProperty overload instead">
+      <param name="pname">
+        <type>ExtDirectStateAccess</type>
+      </param>
+    </function>
+    <function name="IsEnabledIndexed" extension="Ext" obsolete="Use IndexedEnableCap overload instead">
+      <param name="target">
+        <type>ExtDrawBuffers2</type>
+      </param>
+    </function>
+    <function name="MultiDrawArrays" extension="Ext" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="MultiDrawElements" extension="Ext" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="MultiTexImage1D" extension="Ext" obsolete="Use int overload instead">
+      <param name="internalformat">
+        <type>ExtDirectStateAccess</type>
+      </param>
+    </function>
+    <function name="MultiTexImage2D" extension="Ext" obsolete="Use int overload instead">
+      <param name="internalformat">
+        <type>ExtDirectStateAccess</type>
+      </param>
+    </function>
+    <function name="MultiTexImage3D" extension="Ext" obsolete="Use int overload instead">
+      <param name="internalformat">
+        <type>ExtDirectStateAccess</type>
+      </param>
+    </function>
+    <function name="RenderbufferStorageMultisample" extension="Ext" obsolete="Use RenderbufferTarget overload instead">
+      <param name="target">
+        <type>ExtFramebufferMultisample</type>
+      </param>
+      <param name="internalformat">
+        <type>ExtFramebufferMultisample</type>
+      </param>
+    </function>
+    <function name="TextureImage1D" extension="Ext" obsolete="Use int overload instead">
+      <param name="internalformat">
+        <type>ExtDirectStateAccess</type>
+      </param>
+    </function>
+    <function name="TextureImage2D" extension="Ext" obsolete="Use int overload instead">
+      <param name="internalformat">
+        <type>ExtDirectStateAccess</type>
+      </param>
+    </function>
+    <function name="TextureImage3D" extension="Ext" obsolete="Use int overload instead">
+      <param name="internalformat">
+        <type>ExtDirectStateAccess</type>
+      </param>
+    </function>
+    <function name="DrawElementArray" extension="Ati" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="DrawRangeElementArray" extension="Ati" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="VertexAttribArrayObject" extension="Ati" obsolete="Use VertexAttribPointerType overload instead">
+      <param name="type">
+        <type>AtiVertexAttribArrayObject</type>
+      </param>
+    </function>
+    <function name="DrawArraysInstanced" extension="Arb" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="DrawElementsInstanced" extension="Arb" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="GetProgramEnvParameter" extension="Arb" obsolete="Use All overload instead">
+      <param name="target">
+        <type>ArbVertexProgram</type>
+      </param>
+    </function>
+    <function name="GetProgramLocalParameter" extension="Arb" obsolete="Use All overload instead">
+      <param name="target">
+        <type>ArbVertexProgram</type>
+      </param>
+    </function>
+    <function name="ProgramString" extension="Arb" obsolete="Use All overload instead">
+      <param name="format">
+        <type>ArbVertexProgram</type>
+      </param>
+    </function>
+    <function name="DrawElementArray" extension="Apple" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="DrawRangeElementArray" extension="Apple" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="MultiDrawElementArray" extension="Apple" obsolete="Use PrimitiveType overload instead">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="MultiDrawRangeElementArray" extension="Apple" obsolete="Use PrimitiveType overload instead">
       <param name="mode">
         <type>BeginMode</type>
       </param>

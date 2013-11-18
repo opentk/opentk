@@ -736,7 +736,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetProgramEnvParameter, GL.Arb.GetProgramLocalParameter and 7 other functions
+    /// Used in GL.Arb.GetProgramEnvParameter, GL.Arb.GetProgramLocalParameter and 9 other functions
     /// </summary>
     public enum All : int
     {
@@ -20810,7 +20810,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.BlendEquation, GL.Arb.BlendEquationSeparate and 6 other functions
+    /// Used in GL.Arb.BlendEquationSeparate, GL.Arb.BlendFunc and 4 other functions
     /// </summary>
     public enum ArbDrawBuffersBlend : int
     {
@@ -26143,7 +26143,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Arb.GetProgramEnvParameter, GL.Arb.GetProgramLocalParameter and 1 other function
     /// </summary>
     public enum ArbVertexProgram : int
     {
@@ -27730,7 +27730,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ati.GetVertexAttribArrayObject
+    /// Used in GL.Ati.GetVertexAttribArrayObject, GL.Ati.VertexAttribArrayObject
     /// </summary>
     public enum AtiVertexAttribArrayObject : int
     {
@@ -27939,7 +27939,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.BeginTransformFeedback, GL.Ext.BeginTransformFeedback and 1 other function
+    /// Used in GL.BeginTransformFeedback
     /// </summary>
     public enum BeginFeedbackMode : int
     {
@@ -27958,7 +27958,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.DrawArraysInstanced, GL.Arb.DrawElementsInstanced and 18 other functions
+    /// Used in GL.Apple.DrawElementArray, GL.Apple.DrawRangeElementArray and 25 other functions
     /// </summary>
     public enum BeginMode : int
     {
@@ -28557,7 +28557,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Apple.BufferParameter, GL.Apple.FlushMappedBufferRange and 20 other functions
+    /// Used in GL.Apple.BufferParameter, GL.Apple.FlushMappedBufferRange and 16 other functions
     /// </summary>
     public enum BufferTarget : int
     {
@@ -29884,7 +29884,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ati.ArrayObject, GL.Ati.GetArrayObject and 5 other functions
+    /// Used in GL.Ati.ArrayObject, GL.Ati.GetArrayObject and 7 other functions
     /// </summary>
     public enum EnableCap : int
     {
@@ -30682,7 +30682,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.BlendEquation
     /// </summary>
     public enum ExtBlendMinmax : int
     {
@@ -31013,7 +31013,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ext.ClearNamedBufferData, GL.Ext.ClearNamedBufferSubData and 48 other functions
+    /// Used in GL.Ext.ClearNamedBufferData, GL.Ext.ClearNamedBufferSubData and 54 other functions
     /// </summary>
     public enum ExtDirectStateAccess : int
     {
@@ -31032,7 +31032,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.DisableIndexed, GL.Ext.EnableIndexed and 3 other functions
     /// </summary>
     public enum ExtDrawBuffers2 : int
     {
@@ -31100,7 +31100,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.BlitFramebuffer
     /// </summary>
     public enum ExtFramebufferBlit : int
     {
@@ -31123,7 +31123,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.RenderbufferStorageMultisample
     /// </summary>
     public enum ExtFramebufferMultisample : int
     {
@@ -39060,7 +39060,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ibm.SecondaryColorPointerList
+    /// Used in GL.Ibm.FogCoordPointerList, GL.Ibm.SecondaryColorPointerList
     /// </summary>
     public enum IbmVertexArrayLists : int
     {
@@ -44347,7 +44347,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.NV.BindTransformFeedback
+    /// Used in GL.NV.BindTransformFeedback, GL.NV.DrawTransformFeedback
     /// </summary>
     public enum NvTransformFeedback2 : int
     {
@@ -47344,7 +47344,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetProgram, GL.GetProgram and 1 other function
+    /// Used in GL.GetProgram
     /// </summary>
     public enum ProgramParameter : int
     {
@@ -56845,7 +56845,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.ProgramParameter, GL.GetInteger64 and 2 other functions
+    /// Used in GL.GetInteger64, GL.ProgramParameter
     /// </summary>
     public enum Version32 : int
     {
@@ -59275,7 +59275,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.VertexAttribIPointer, GL.Ext.VertexAttribIPointer
+    /// Used in GL.VertexAttribIPointer
     /// </summary>
     public enum VertexAttribIPointerType : int
     {
