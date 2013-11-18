@@ -8649,6 +8649,34 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         DoubleVec4 = ((int)0x8FFE)        ,
         /// <summary>
+        /// Original was GL_SAMPLER_BUFFER_AMD = 0x9001
+        /// </summary>
+        SamplerBufferAmd = ((int)0x9001)        ,
+        /// <summary>
+        /// Original was GL_INT_SAMPLER_BUFFER_AMD = 0x9002
+        /// </summary>
+        IntSamplerBufferAmd = ((int)0x9002)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_SAMPLER_BUFFER_AMD = 0x9003
+        /// </summary>
+        UnsignedIntSamplerBufferAmd = ((int)0x9003)        ,
+        /// <summary>
+        /// Original was GL_TESSELLATION_MODE_AMD = 0x9004
+        /// </summary>
+        TessellationModeAmd = ((int)0x9004)        ,
+        /// <summary>
+        /// Original was GL_TESSELLATION_FACTOR_AMD = 0x9005
+        /// </summary>
+        TessellationFactorAmd = ((int)0x9005)        ,
+        /// <summary>
+        /// Original was GL_DISCRETE_AMD = 0x9006
+        /// </summary>
+        DiscreteAmd = ((int)0x9006)        ,
+        /// <summary>
+        /// Original was GL_CONTINUOUS_AMD = 0x9007
+        /// </summary>
+        ContinuousAmd = ((int)0x9007)        ,
+        /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_ARRAY = 0x9009
         /// </summary>
         TextureCubeMapArray = ((int)0x9009)        ,
@@ -9947,6 +9975,76 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_ALWAYS = 0x0207
         /// </summary>
         Always = ((int)0x0207)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum AmdVertexShaderTesselator : int
+    {
+        /// <summary>
+        /// Original was GL_SAMPLER_BUFFER_AMD = 0x9001
+        /// </summary>
+        SamplerBufferAmd = ((int)0x9001)        ,
+        /// <summary>
+        /// Original was GL_INT_SAMPLER_BUFFER_AMD = 0x9002
+        /// </summary>
+        IntSamplerBufferAmd = ((int)0x9002)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_SAMPLER_BUFFER_AMD = 0x9003
+        /// </summary>
+        UnsignedIntSamplerBufferAmd = ((int)0x9003)        ,
+        /// <summary>
+        /// Original was GL_TESSELLATION_MODE_AMD = 0x9004
+        /// </summary>
+        TessellationModeAmd = ((int)0x9004)        ,
+        /// <summary>
+        /// Original was GL_TESSELLATION_FACTOR_AMD = 0x9005
+        /// </summary>
+        TessellationFactorAmd = ((int)0x9005)        ,
+        /// <summary>
+        /// Original was GL_DISCRETE_AMD = 0x9006
+        /// </summary>
+        DiscreteAmd = ((int)0x9006)        ,
+        /// <summary>
+        /// Original was GL_CONTINUOUS_AMD = 0x9007
+        /// </summary>
+        ContinuousAmd = ((int)0x9007)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum AmdVertexShaderTessellator : int
+    {
+        /// <summary>
+        /// Original was GL_SAMPLER_BUFFER_AMD = 0x9001
+        /// </summary>
+        SamplerBufferAmd = ((int)0x9001)        ,
+        /// <summary>
+        /// Original was GL_INT_SAMPLER_BUFFER_AMD = 0x9002
+        /// </summary>
+        IntSamplerBufferAmd = ((int)0x9002)        ,
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT_SAMPLER_BUFFER_AMD = 0x9003
+        /// </summary>
+        UnsignedIntSamplerBufferAmd = ((int)0x9003)        ,
+        /// <summary>
+        /// Original was GL_TESSELLATION_MODE_AMD = 0x9004
+        /// </summary>
+        TessellationModeAmd = ((int)0x9004)        ,
+        /// <summary>
+        /// Original was GL_TESSELLATION_FACTOR_AMD = 0x9005
+        /// </summary>
+        TessellationFactorAmd = ((int)0x9005)        ,
+        /// <summary>
+        /// Original was GL_DISCRETE_AMD = 0x9006
+        /// </summary>
+        DiscreteAmd = ((int)0x9006)        ,
+        /// <summary>
+        /// Original was GL_CONTINUOUS_AMD = 0x9007
+        /// </summary>
+        ContinuousAmd = ((int)0x9007)        ,
     }
 
     /// <summary>
