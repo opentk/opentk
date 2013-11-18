@@ -2,7 +2,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2010 the Open Toolkit library.
+// Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -47,10 +47,10 @@ namespace Bind
             @"([hfd]v?|u?[isb](64)?v?|v|i_v|fi)$",
             RegexOptions.Compiled);
         static readonly Regex EndingsNotToTrim = new Regex(
-            "([st]h|ib|[tdrey]s|[eE]n[vd]|bled" +
-            "|Attrib|Access|Boolean|Coord|Feedbacks|Finish|Flag" +
-            "|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Uniforms|" +
-            "Varyings)$",
+            "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
+            "|Attrib|Access|Boolean|Coord|Depth|Feedbacks|Finish|Flag" +
+            "|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
+            "|Uniforms|Varyings|Weight|Width)$",
             RegexOptions.Compiled);
         static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
 
@@ -452,7 +452,10 @@ namespace Bind
             {
                 for (int i = 0; i < d.Parameters.Count; i++)
                 {
-                    XPathNavigator param_override = function_override.SelectSingleNode(String.Format("param[@name='{0}']", d.Parameters[i].RawName));
+                    XPathNavigator param_override = function_override.SelectSingleNode(String.Format(
+                        "param[@name='{0}' or @index='{1}']",
+                        d.Parameters[i].RawName,
+                        i));
                     if (param_override != null)
                     {
                         foreach (XPathNavigator node in param_override.SelectChildren(XPathNodeType.Element))
