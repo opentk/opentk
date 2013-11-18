@@ -11845,7 +11845,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.FramebufferRenderbuffer, GL.FramebufferTexture2D
+    /// Used in GL.FramebufferRenderbuffer, GL.FramebufferTexture2D and 1 other function
     /// </summary>
     public enum FramebufferSlot : int
     {
@@ -14018,7 +14018,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.GetTexParameter
     /// </summary>
     public enum GetTextureParameter : int
     {
@@ -18620,6 +18620,53 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
+    /// Used in GL.GetProgram
+    /// </summary>
+    public enum ProgramParameter : int
+    {
+        /// <summary>
+        /// Original was GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257
+        /// </summary>
+        ProgramBinaryRetrievableHint = ((int)0x8257)        ,
+        /// <summary>
+        /// Original was GL_DELETE_STATUS = 0x8B80
+        /// </summary>
+        DeleteStatus = ((int)0x8B80)        ,
+        /// <summary>
+        /// Original was GL_LINK_STATUS = 0x8B82
+        /// </summary>
+        LinkStatus = ((int)0x8B82)        ,
+        /// <summary>
+        /// Original was GL_VALIDATE_STATUS = 0x8B83
+        /// </summary>
+        ValidateStatus = ((int)0x8B83)        ,
+        /// <summary>
+        /// Original was GL_INFO_LOG_LENGTH = 0x8B84
+        /// </summary>
+        InfoLogLength = ((int)0x8B84)        ,
+        /// <summary>
+        /// Original was GL_ATTACHED_SHADERS = 0x8B85
+        /// </summary>
+        AttachedShaders = ((int)0x8B85)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORMS = 0x8B86
+        /// </summary>
+        ActiveUniforms = ((int)0x8B86)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_UNIFORM_MAX_LENGTH = 0x8B87
+        /// </summary>
+        ActiveUniformMaxLength = ((int)0x8B87)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_ATTRIBUTES = 0x8B89
+        /// </summary>
+        ActiveAttributes = ((int)0x8B89)        ,
+        /// <summary>
+        /// Original was GL_ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8B8A
+        /// </summary>
+        ActiveAttributeMaxLength = ((int)0x8B8A)        ,
+    }
+
+    /// <summary>
     /// Used in GL.Ext.ProgramParameter
     /// </summary>
     public enum ProgramParameterName : int
@@ -19533,6 +19580,125 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
+    /// Used in GL.TexImage2D, GL.Oes.TexImage3D
+    /// </summary>
+    public enum TextureComponentCount : int
+    {
+        /// <summary>
+        /// Original was GL_ALPHA = 0X1906
+        /// </summary>
+        Alpha = ((int)0X1906)        ,
+        /// <summary>
+        /// Original was GL_RGB = 0X1907
+        /// </summary>
+        Rgb = ((int)0X1907)        ,
+        /// <summary>
+        /// Original was GL_RGBA = 0X1908
+        /// </summary>
+        Rgba = ((int)0X1908)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE = 0X1909
+        /// </summary>
+        Luminance = ((int)0X1909)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE_ALPHA = 0x190A
+        /// </summary>
+        LuminanceAlpha = ((int)0x190A)        ,
+        /// <summary>
+        /// Original was GL_ALPHA8_EXT = 0x803C
+        /// </summary>
+        Alpha8Ext = ((int)0x803C)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE8_EXT = 0x8040
+        /// </summary>
+        Luminance8Ext = ((int)0x8040)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE8_ALPHA8_EXT = 0x8045
+        /// </summary>
+        Luminance8Alpha8Ext = ((int)0x8045)        ,
+        /// <summary>
+        /// Original was GL_RGB10_EXT = 0x8052
+        /// </summary>
+        Rgb10Ext = ((int)0x8052)        ,
+        /// <summary>
+        /// Original was GL_RGB10_A2_EXT = 0x8059
+        /// </summary>
+        Rgb10A2Ext = ((int)0x8059)        ,
+        /// <summary>
+        /// Original was GL_R8_EXT = 0x8229
+        /// </summary>
+        R8Ext = ((int)0x8229)        ,
+        /// <summary>
+        /// Original was GL_RG8_EXT = 0x822B
+        /// </summary>
+        Rg8Ext = ((int)0x822B)        ,
+        /// <summary>
+        /// Original was GL_R16F_EXT = 0x822D
+        /// </summary>
+        R16fExt = ((int)0x822D)        ,
+        /// <summary>
+        /// Original was GL_R32F_EXT = 0x822E
+        /// </summary>
+        R32fExt = ((int)0x822E)        ,
+        /// <summary>
+        /// Original was GL_RG16F_EXT = 0x822F
+        /// </summary>
+        Rg16fExt = ((int)0x822F)        ,
+        /// <summary>
+        /// Original was GL_RG32F_EXT = 0x8230
+        /// </summary>
+        Rg32fExt = ((int)0x8230)        ,
+        /// <summary>
+        /// Original was GL_RGBA32F_EXT = 0x8814
+        /// </summary>
+        Rgba32fExt = ((int)0x8814)        ,
+        /// <summary>
+        /// Original was GL_RGB32F_EXT = 0x8815
+        /// </summary>
+        Rgb32fExt = ((int)0x8815)        ,
+        /// <summary>
+        /// Original was GL_ALPHA32F_EXT = 0x8816
+        /// </summary>
+        Alpha32fExt = ((int)0x8816)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE32F_EXT = 0x8818
+        /// </summary>
+        Luminance32fExt = ((int)0x8818)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE_ALPHA32F_EXT = 0x8819
+        /// </summary>
+        LuminanceAlpha32fExt = ((int)0x8819)        ,
+        /// <summary>
+        /// Original was GL_RGBA16F_EXT = 0x881A
+        /// </summary>
+        Rgba16fExt = ((int)0x881A)        ,
+        /// <summary>
+        /// Original was GL_RGB16F_EXT = 0x881B
+        /// </summary>
+        Rgb16fExt = ((int)0x881B)        ,
+        /// <summary>
+        /// Original was GL_ALPHA16F_EXT = 0x881C
+        /// </summary>
+        Alpha16fExt = ((int)0x881C)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE16F_EXT = 0x881E
+        /// </summary>
+        Luminance16fExt = ((int)0x881E)        ,
+        /// <summary>
+        /// Original was GL_LUMINANCE_ALPHA16F_EXT = 0x881F
+        /// </summary>
+        LuminanceAlpha16fExt = ((int)0x881F)        ,
+        /// <summary>
+        /// Original was GL_RGB_RAW_422_APPLE = 0x8A51
+        /// </summary>
+        RgbRaw422Apple = ((int)0x8A51)        ,
+        /// <summary>
+        /// Original was GL_BGRA8_EXT = 0x93A1
+        /// </summary>
+        Bgra8Ext = ((int)0x93A1)        ,
+    }
+
+    /// <summary>
     /// Not used directly.
     /// </summary>
     public enum TextureCoordName : int
@@ -20101,7 +20267,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.CompressedTexImage2D, GL.CompressedTexSubImage2D and 7 other functions
+    /// Used in GL.CompressedTexImage2D, GL.CompressedTexSubImage2D and 6 other functions
     /// </summary>
     public enum TextureTarget2d : int
     {
@@ -20136,7 +20302,7 @@ namespace OpenTK.Graphics.ES20
     }
 
     /// <summary>
-    /// Used in GL.Oes.CompressedTexImage3D, GL.Oes.CompressedTexSubImage3D and 3 other functions
+    /// Used in GL.Ext.TexStorage3D, GL.Oes.CompressedTexImage3D and 4 other functions
     /// </summary>
     public enum TextureTarget3d : int
     {
