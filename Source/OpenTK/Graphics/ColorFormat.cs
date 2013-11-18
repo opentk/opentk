@@ -36,7 +36,7 @@ namespace OpenTK.Graphics
     /// <para>A ColorFormat contains Red, Green, Blue and Alpha components that descibe
     /// the allocated bits per pixel for the corresponding color.</para>
     /// </remarks>
-    public struct ColorFormat : IComparable<ColorFormat>
+    public struct ColorFormat : IComparable<ColorFormat>, IEquatable<ColorFormat>
     {
         byte red, green, blue, alpha;
         bool isIndexed;
@@ -181,6 +181,19 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region IEquatable<ColorFormat> Members
+
+        public bool Equals(ColorFormat other)
+        {
+            return
+                Red == other.Red &&
+                Green == other.Green &&
+                Blue == other.Blue &&
+                Alpha == other.Alpha;
+        }
+
+        #endregion
+
         #region Overrides
 
         /// <summary>
@@ -190,7 +203,7 @@ namespace OpenTK.Graphics
         /// <returns>True if this instance is equal to obj; false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            return (obj is ColorFormat) ? (this == (ColorFormat)obj) : false;
+            return (obj is ColorFormat) ? this.Equals((ColorFormat)obj) : false;
         }
 
         /// <summary>
@@ -201,17 +214,7 @@ namespace OpenTK.Graphics
         /// <returns>True if both instances are equal; false otherwise.</returns>
         public static bool operator ==(ColorFormat left, ColorFormat right)
         {
-            if ((object)left == (object)null && (object)right != (object)null ||
-                (object)left != (object)null && (object)right == (object)null)
-                return false;
-
-            if ((object)left == (object)null && (object)right == (object)null)
-                return true;
-
-            return left.Red == right.Red &&
-                   left.Green == right.Green &&
-                   left.Blue == right.Blue &&
-                   left.Alpha == right.Alpha;
+            return left.Equals(right);
         }
 
         /// <summary>
