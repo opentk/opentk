@@ -44,7 +44,7 @@ namespace Bind
     class FuncProcessor
     {
         static readonly Regex Endings = new Regex(
-            @"([hfd]v?|u?[isb](64)?v?|v|i_v|fi)$",
+            @"([fd]v?|u?[isb](64)?v?|v|i_v|fi)$",
             RegexOptions.Compiled);
         static readonly Regex EndingsNotToTrim = new Regex(
             "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
