@@ -65,8 +65,6 @@ namespace OpenTK.Platform.SDL2
 
         public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
-            // Unfortunately, SDL does not provide a GetContext function
-            // so we need to implement our own.
             return (GraphicsContext.GetCurrentContextDelegate)delegate
             {
                 return Sdl2GraphicsContext.GetCurrentContext();
