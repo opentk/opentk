@@ -312,6 +312,7 @@ namespace OpenTK.Platform.SDL2
 
             if (window.Handle != IntPtr.Zero)
             {
+                CursorVisible = true;
                 lock (SDL.Sync)
                 {
                     SDL.DelEventWatch(EventFilterDelegate, window.Handle);
