@@ -68,9 +68,11 @@ namespace OpenTK
         /// <code>
         /// static void Main()
         /// {
-        ///     OpenTK.Toolkit.Init();
-        ///     ...
-        ///  }
+        ///     using (OpenTK.Toolkit.Init())
+        ///     {
+        ///      ...
+        ///     }
+        /// }
         /// </code>
         /// </para>
         /// <para>
@@ -84,7 +86,7 @@ namespace OpenTK
         /// An IDisposable instance that you can use to dispose of the resources
         /// consumed by OpenTK.
         /// </returns>
-        public static IDisposable Init()
+        public static Toolkit Init()
         {
             return Init(ToolkitOptions.Default);
         }
@@ -101,9 +103,11 @@ namespace OpenTK
         /// <code>
         /// static void Main()
         /// {
-        ///     OpenTK.Toolkit.Init();
-        ///     ...
-        ///  }
+        ///     using (OpenTK.Toolkit.Init())
+        ///     {
+        ///      ...
+        ///     }
+        /// }
         /// </code>
         /// </para>
         /// <para>
@@ -119,7 +123,7 @@ namespace OpenTK
         /// An IDisposable instance that you can use to dispose of the resources
         /// consumed by OpenTK.
         /// </returns>
-        public static IDisposable Init(ToolkitOptions options)
+        public static Toolkit Init(ToolkitOptions options)
         {
             if (options == null)
                 throw new ArgumentNullException("options");
