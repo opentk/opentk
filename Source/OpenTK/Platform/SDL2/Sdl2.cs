@@ -84,6 +84,10 @@ namespace OpenTK.Platform.SDL2
         public static extern void AddEventWatch(EventFilter filter, IntPtr userdata);
 
         [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_AddEventWatch", ExactSpelling = true)]
+        public static extern void AddEventWatch(IntPtr filter, IntPtr userdata);
+
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateRGBSurfaceFrom", ExactSpelling = true)]
         public static extern IntPtr CreateRGBSurfaceFrom(IntPtr pixels,
             int width, int height, int depth, int pitch,
@@ -101,6 +105,10 @@ namespace OpenTK.Platform.SDL2
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_DelEventWatch", ExactSpelling = true)]
         public static extern void DelEventWatch(EventFilter filter, IntPtr userdata);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_DelEventWatch", ExactSpelling = true)]
+        public static extern void DelEventWatch(IntPtr filter, IntPtr userdata);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_DestroyWindow", ExactSpelling = true)]

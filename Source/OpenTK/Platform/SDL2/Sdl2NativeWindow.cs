@@ -59,7 +59,8 @@ namespace OpenTK.Platform.SDL2
 
         readonly IInputDriver input_driver = new Sdl2InputDriver();
 
-        readonly EventFilter EventFilterDelegate = FilterEvents;
+        readonly EventFilter EventFilterDelegate_GCUnsafe = FilterEvents;
+        readonly IntPtr EventFilterDelegate;
 
         static readonly Dictionary<uint, Sdl2NativeWindow> windows =
             new Dictionary<uint, Sdl2NativeWindow>();
@@ -85,6 +86,7 @@ namespace OpenTK.Platform.SDL2
                 IntPtr handle;
                 lock (SDL.Sync)
                 {
+                    EventFilterDelegate = Marshal.GetFunctionPointerForDelegate(EventFilterDelegate_GCUnsafe);
                     handle = SDL.CreateWindow(title, bounds.Left + x, bounds.Top + y, width, height, flags);
                     SDL.AddEventWatch(EventFilterDelegate, handle);
                     SDL.PumpEvents();

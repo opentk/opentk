@@ -45,7 +45,8 @@ namespace OpenTK.Platform.SDL2
         readonly Sdl2Mouse mouse_driver = new Sdl2Mouse();
         readonly Sdl2JoystickDriver joystick_driver = new Sdl2JoystickDriver();
 
-        readonly EventFilter EventFilterDelegate = FilterInputEvents;
+        readonly EventFilter EventFilterDelegate_GCUnsafe = FilterInputEvents;
+        readonly IntPtr EventFilterDelegate;
 
         static int count;
         bool disposed;
@@ -54,6 +55,7 @@ namespace OpenTK.Platform.SDL2
         {
             lock (SDL.Sync)
             {
+                EventFilterDelegate = Marshal.GetFunctionPointerForDelegate(EventFilterDelegate_GCUnsafe);
                 driver_handle = new IntPtr(count++);
                 DriverHandles.Add(driver_handle, this);
                 SDL.AddEventWatch(EventFilterDelegate, driver_handle);
@@ -188,7 +190,7 @@ namespace OpenTK.Platform.SDL2
                     joystick_driver.Dispose();
                     lock (SDL.Sync)
                     {
-                        SDL.DelEventWatch(EventFilterDelegate, IntPtr.Zero);
+                        SDL.DelEventWatch(EventFilterDelegate, driver_handle);
                     }
                     DriverHandles.Remove(driver_handle);
                 }
