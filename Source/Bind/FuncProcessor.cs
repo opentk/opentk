@@ -49,7 +49,7 @@ namespace Bind
         static readonly Regex EndingsNotToTrim = new Regex(
             "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
             "|Attrib|Access|Boolean|Coord|Depth|Feedbacks|Finish|Flag" +
-            "|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
+            "|Groups|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
             "|Uniforms|Varyings|Weight|Width)$",
             RegexOptions.Compiled);
         static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
