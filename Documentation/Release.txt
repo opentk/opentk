@@ -1,205 +1,150 @@
-The Open Toolkit 1.0 - 6 October 2010
+The Open Toolkit 1.1
+22 November 2013
 
 
 
 [Overview]
 
-This is the first release candidate for OpenTK 1.0. Notable changes:
-* New MSBuild-based build system with automated versioning, zip and nsis generation. Build.exe is no longer required.
-* Significantly improved nsis installation script.
-* Improved stability on Ati drivers.
-* Improved example browser and documentation.
-* Improved support for compilation on Mono.
-* Various smaller bugfixes.
+This is a beta release for OpenTK 1.1
 
-Visit http://www.opentk.com for the latest news and information on the Open Toolkit.
+New in OpenTK 1.1:
+- support for OpenGL 4.4 and OpenGL ES 3.0
+- strongly-typed enums for OpenGL ES 2.0 and 3.0
+- inline documentation for all OpenGL and OpenGL ES core functions
+- a new SDL2 backend for improved platform compatibility
+- a greatly expanded math library
+- numerous bugfixes for Mac OS X, Windows 8 and Linux
+- ANGLE support for Windows systems without OpenGL drivers
+- Support for Retina / high-DPI monitors
+
+All users are strongly encouraged to upgrade to OpenTK 1.1
+
+
+Visit http://www.opentk.com for the latest news and information on the Open Toolkit library
+
+Download the source code at https://github.com/opentk/opentk
 
 
 
 [Resolved issues]
 
-http://www.opentk.com/project/issues/opentk/
-
-[#1498]
-[#1585]
-[#1673]
-[#1680]
-[#1746]
-[#1765]
-[#1881]
-[#1874]
-[#1995]
-
-
-Please report any issues you encounter at http://www.opentk.com/node/add/project-issue/opentk
+Please refer to the following pages:
+- https://github.com/opentk/opentk/issues/closed
+- http://www.opentk.com/project/issues/opentk?sort=desc&order=Last+updated&text=&versions=1357%2C1395&states=2%2C7&submitted=&assigned=&participated=&form_token=a33a92f28934981edc50bea360f01762&form_id=project_issue_query
 
 
 
 [Known issues]
 
-* Visual Studio 2005 and 2008 are no longer supported. Please use Visual Studio 2010 or MonoDevelop 2.4 to edit OpenTK. The project can also be built from the commandline (see documentation).
+- [all] The size of OpenTK.dll can be reduced.
 
-* The Mac OS X port needs more testing. If you encounter a bug, please report it at http://www.opentk.com/node/add/project-issue/opentk.
+- [all] GamePad API throws NotImplementedException.
 
-* OpenGL 3.1 and 3.2 fucntions may be missing specific tokens. Please report any such issues at http://www.opentk.com/node/add/project-issue/opentk
-
-* Mono 2.2 and 2.4.0 fail to compile OpenTK due to a compiler bug (https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0, 2.4.2+ or use the supplied binaries instead.
-
-* XBuild <= 2.4.3 fails to build OpenTK. Please use XBuild 2.6.0 or newer.
-
-
-[API changes]
-
-Please note that binary compatibility is not preserved between beta releases.
-
-If you are upgrading from OpenTK 0.9.9-0 or earlier you can simplify the upgrade process by adding a reference to OpenTK.Compatibility.dll and OpenTK.GLControl.dll (if necessary). OpenTK.Compatibility contains code and APIs that have been deprecated and removed from the core library and supports applications written against the Tao framework (Tao.OpenGl, Tao.OpenAl and Tao.Platform.Windows.SimpleOpenGlControl).
-
-[1.0 - 6 October 2010]
-
-No API changes.
-
-
-[1.0 rc1]
-
-No API changes.
-
-
-[1.0 beta-3]
-
-No API changes.
-
-
-[1.0 beta-2]
-
-1. NormalPointer(..., int) and FogCoordPointer(..., int) overloads no longer specify a 'size' argument.
-Solution: this is the correct signature, the 'size' argument found in previous OpenTK versions was invalid. This bug is unlikely to appear in practice.
-
-
-[1.0 beta-1]
-
-1. Compiler errors in OpenTK.Graphics.ES20 about missing "All" enums.
-Solution: The ES20 namespace now contains proper, type-safe enums, similar to the OpenGL and OpenAL namespaces. Please replaces all instances of the All enum by the enums suggested by your compiler.
-
-2. DisplayDevice.AvailableDevices and AvailableResolutions now return IList<DisplayDevice> and IList<DisplayResolution> instead of DisplayDevice[] and DisplayResolution[], respectively.
-Solution: Please store the return value in an IList<T> variable, instead of T[] (where T may be DisplayDevice or DisplayResolution). This issue is unlikely to come up in practice.
-
-3. OpenGL|ES 1.0, 1.1 and OpenCL namespaces are missing.
-Solution: These namespaces were not finalized in time for OpenTK 1.0 will be distributed as separate libraries. Please upgrade to the latest 1.x-dev release in http://www.opentk.com/project/opentk.
-
-
-[0.9.9-3]
-
-1. OpenTK.Matrix4d no longer contains an [int, int] indexer.
-Solution: there is no solution at this time. If you were using this indexer, please file an issue report at http://www.opentk.com/node/add/project-issue
-
-2. OpenTK.Graphics.ES20.GetProgramInfoLog now takes a StringBuilder instead of an 'out string' parameter.
-Solution: the previous signature was incorrect. Please create and pass a StringBuilder to this method.
-
-3. A number of OpenTK.Graphics.OpenGL 3.2 methods now take strongly-typed enums instead of the 'All' enum.
-Solution: please replace the All enum by the correct one, as indicated by the compiler error.
-
- 4. GameWindow OnLoad and OnUnload methods are now protected instead of public.
- Solution: change the access qualifier to protected when overriding these methods.
- 
-
-[0.9.9-2]
-
-1. OpenTK.Utilities assembly no longer exists.
-Solution: add a reference to OpenTK.Compatibility.
-
-2. OpenTK.GLControl no longer exists in OpenTK.dll.
-Solution: add a reference to OpenTK.GLControl.
-
-3. OpenTK.Graphics.GL has been moved to OpenTK.Graphics.OpenGL.GL.
-Solution: add a reference to OpenTK.Compatibility or change the relevant qualifiers from OpenTK.Graphics to OpenTK.Graphics.OpenGL or add a using directive for OpenTK.Graphics.OpenGL.
-
-4. OpenTK.Audio.AL has been moved to OpenTK.Audio.OpenAL.AL.
-Solution: add a reference to OpenTK.Compatibility or change the relevant qualifiers from OpenTK.Audio to OpenTK.Audio.OpenAL or add a using directive for OpenTK.Audio.OpenAL.
-
- 5. GameWindow events are no longer raised if the relevant On* method is overriden.
- Solution: ensure that you call "base.On*" when you override one of the "On*" methods (e.g. OnLoad).
- 
- 6. GameWindow OnLoad and OnUnload methods are now protected instead of public.
- Solution: change the access qualifier to protected for overriding methods.
- 
- 7. DisplayResolution and DisplayDevice classes have been moved from OpenTK.Graphics into the root OpenTK namespace.
- Solution: change the relevant using directives and qualifiers from OpenTK.Graphics to OpenTK.
- 
- 8. TextPrinter is marked as deprecated.
- Solution: there is no solution at this time. The TextPrinter will continue to work as expected but is need of a dedicated maintainer.
- 
- 9. Tao.OpenGl, Tao.OpenAl and Tao.Platform.Windows.SimpleOpenGlControl are marked as deprecated.
- Solution: use core OpenTK classes if possible. The Tao namespaces are only offered for compatibility with existing applications and new projects should avoid using them.
-
-
-[0.9.9-1]
-
-1. The OpenTK.Math namespace no longer exists. Please replace all references by 'OpenTK'. This can be easily achieved with the following Search & Replace operations:
-
-'using OpenTK.Math;' -> 'using OpenTK;'
-'OpenTK.Math.' -> 'OpenTK.'
-
-2. OpenCL bitfields are now mapped to 'long' instead of 'int'. Casts from [Flags] enums to 'int' may now fail. Please avoid such casts or use 'long' instead.
-
-
-[0.9.9]
-
-1. GameWindow.Resize and GameWindow.OnResize have changed signatures:
-
-ResizeEventHandler Resize(object, ResizeEventArgs) -> EventHandler<EventArgs> Resize(object, EventArgs)
-OnResize(ResizeEventArgs) -> OnResize(EventArgs)
-
-Please replace all instances of "ResizeEventHandler" by "EventHandler<EventArgs> and replace "e.Width" / "e.Height" by "this.Width" and "this.Height".
-
-2. All GameWindow.On* functions are now 'protected' instead of 'public'.
-
-Please mark all relevant overrides as 'protected'.
-
-3. Glu is now marked as deprecated.
-
-Please use OpenTK instead.
-
-4. OpenTK.Input.[Keyboard|Mouse|Joystick]Device are marked as obsolete.
-
-Please continue using these classes normally. A future update will provide a much more versatile input API.
-
-
-[0.9.8-1]
-
-1. Parameters of OpenTK.Graphics.GL.GetShaderSource have been changed: you should now pass a single StringBuilder instead of a StringBuilder[] array.
-
-2. Parameters of OpenTK.Graphics.GL.GetUniformIndices have been changed: you should now pass a string[] array instead of a single string.
-
-2. Parameters of OpenTK.Graphics.GL.TransformFeedbackVaryings have been changed: you should now pass a string[] array instead of a single string.
-
-
-[0.9.8-1]
-
-This release renames GL.GetBoolea to the correct GL.GetBoolean.
-
-
-
-[0.9.8]
-
-1. OpenTK 0.9.8 replaces several instances of the "All" and "Version*" enums with strongly-typed equivalents. This is a breaking change. If you are affected by this change, replace these enums with the ones suggested by your compiler.
-
-The 'v' suffix has been removed from several OpenTK.Graphics.GL functions. Please search and replace any of the following functions (list non-inclusive):
-
-Uniform1v -> Uniform1
-Materialv -> Material
-Lightv    -> Light
-
-
-2. Several instances of the "Version12" enum have been replaced with strongly-typed equivalents. This is a breaking change that affects programs using the imaging subset of OpenGL 1.2.
-
-If you are affected by this change, please replace all relevant instances of "Version12" with the correct enum, as indicated by your compiler.
-
-
-3. OpenTK 0.9.8 removes several OpenGL overloads that take arrays of a single item. This is a breaking change. If you are affected by this change, please use the 'ref' or 'out' overload for the relevant function.
-
-
-[0.9.7]
-
-OpenTK 0.9.7 replaces several instances of the "All" and "Version30" enums with strongly-typed equivalents. This is a breaking change that potentially affects programs using OpenGL 3.0 functionality. If you are affected by this change, please replace the relevant instances of "All" or "Version30" with the correct enum, as reported by your IDE.
-
-OpenTK 0.9.7 also fixes the naming of several core and extension functions ending in "Instanced", "Indexed" or "Varyings". If you are affected by this change, please add the missing 'd' or 's' to the relevant functions.
+- [all] Keyboard API exposes ushort parameter.
+
+- [SDL] does not support ChangeResolution API.
+
+- [SDL] does not support multiple keyboards/mice.
+
+- [SDL] does not support GLControl.
+
+- [Mac/Carbon] does not support Retina resolutions. Please use the SDL backend instead.
+
+
+
+[Report an issue]
+If you encounter an issue, please report it at:
+https://github.com/opentk/opentk/issues
+
+Highest priority will be given to regressions from OpenTK 1.0
+
+
+
+[API compatibility]
+
+The vast majority of projects will be able to upgrade to OpenTK 1.1 without any modifications. However, due to updates in the official OpenGL specification and due to bugfixes in the binding generator, a number of OpenGL signatures have changed between OpenTK 1.0 and 1.1. 
+
+Modified signatures have been marked with the [Obsolete] attribute. A warning message will be generated with instructions on a suggested replacement.
+
+In a small number of cases, using the original signature would lead to incorrect results or a crash. These cases will generate a compiler error now. If you use any of the following signatures, please apply the suggested modification:
+
+Namespace OpenTK.Graphics.OpenGL
+Change signature:
+- GL.MultiDrawArrays (“out” -> “ref”)
+- GL.Amd.DeletePerfMonitors (“out” -> “ref”)
+
+Change signature (may cause crash): 
+- GL.Apple.ObjectPurgeable (returns “AppleObjectPurgeable” instead of “IntPtr”)
+- GL.Ext.SeparableFilter2D
+- GL.Ibm.EdgeFlagPointerList (“bool[]” -> “bool*[]”)
+- GL.NV.TransformFeedbackVaryings (“string[]” -> “int[]”)
+
+Change return type:
+- GL.WaitSync (returns “WaitSyncFlags” instead of “ArbSync”)
+
+
+Namespace OpenTK.Graphics.ES11
+Change return type:
+- GL.GetError (“ErrorCode” instead of “All”)
+
+Change “ref” parameters to “out”:
+- GL.GenBuffers
+- GL.GenTextures
+- GL.GetBoolean
+- GL.GetBufferParameter
+- GL.GetClipPlane
+- GL.GetClipPlanex
+- GL.GetFixed
+- GL.GetFloat
+- GL.GetInteger
+- GL.GetLight
+- GL.GetLightx
+- GL.GetMaterial
+- GL.GetMaterialx
+- GL.GetTexEnv
+- GL.GetTexEnvx
+- GL.GetTexParameter
+- GL.GetTexParameterx
+- GL.Oes.GenFramebuffers
+- GL.Oes.GetClipPlane
+- GL.Oes.GetClipPlanex
+- GL.Oes.GetFixed
+- GL.Oes.GetFramebufferAttachmentParameter
+- GL.Oes.GetLightx
+- GL.Oes.GetMaterialx
+- GL.Oes.GetRenderbufferParameter
+- GL.Oes.GetTexEnvx
+- GL.Oes.GetTexGen
+- GL.Oes.GetTexGenx
+- GL.Oes.GetTexParameterx
+- GL.Oes.QueryMatrixx
+- GL.NV.GenFences
+- GL.NV.GetFence
+
+Change namespace:
+- GL.ClipPlanefIMG -> GL.Img.ClipPlane
+- GL.DisableDriverControlQCOM -> GL.Qcom.DisableDriverControl
+
+
+Namespace OpenTK.Graphics.ES20.GL
+Change signature (may cause crash):
+- GL.NV.GetFence now takes three parameters instead of two
+
+Change “ref” parameters to “out”:
+- GL.GetActiveAttrib
+- GL.GetActiveUniform
+- GL.GetAttachedShaders
+- GL.GetProgramInfoLog
+- GL.GetShaderInfoLog
+- GL.GetShaderSource
+- GL.Amd.GetPerfMonitorCounterData
+- GL.Amd.GetPerfMonitorCounters
+- GL.Amd.GetPerfMonitorCounterString
+- GL.Amd.GetPerfMonitorGroup
+- GL.Amd.GetPerfMonitorGroupString
+- GL.Amd.SelectPerfMonitorCounters
+
+Change namespace:
+- GL.DisableDriverControlQCOM -> GL.Qcom.DisableDriverControl
+- GL.GetDriverControlsQCOM -> GL.Qcom.GetDriverControls
+- GL.GetDriverControlStringQCOM -> GL.Qcom.GetDriverControlString
