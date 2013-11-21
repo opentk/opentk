@@ -1,64 +1,19 @@
-[Immediate]
-- Make a release from trunk.
-
-[Short term]
-- Move Documentation generation to obj directory.
-- Completely clean bin and obj directories on Clean command?
-- Automate uploads of nightly builds.
-- Modify buildbot to generate zip package from the nsis installer.
-- Implement GL3.3 and 4.1.
-- Clean up site and example documentation.
-- Update contributors list.
-
-[Mid term]
+[Easy]
 - Clean up warnings.
-- Embed Example data into the executable?
-- Remove System.Windows.Forms reference from OpenTK.dll.
-- Add mouse cursor visibility to NativeWindow.
-- Add mouse cursor capture to NativeWindow.
-- Add joystick support to Mac OS X.
-- Fix GraphicsMode on Mac OS X.
-- Implement the new input system.
+- Remove Example Browser in favor of separate projects.
+- Add Nuget packages.
+- Speed up matrix Inverse() functions. (Patch exists in mono/opentk).
+
+[Moderate]
+- Implement new joystick API.
+- Implement touch input API.
 - Fix external GraphicsContexts.
-- Move OpenAL bindings to the generator.
+- Add Portable Class Library (PCL) target.
+- Reduce library size for the PCL target. 
+- Split various APIs in different modules. This will be in addition to the monolithic OpenTK.dll.
+
+[Hard]
 - Remove DllImports/GetDelegateForFunctionPointer in favor of LCG calli instructions.
-- Remove #if DEBUG statements in favor of LCG.
-- Evaluate IKVM.Reflection for speed improvement.
-- Evaluate possibility of separate OpenGL profiles.
-
-[Long term]
-- Release gloo.
-- Release aloo.
-- Release demo.
-- Make the example launcher pretty.
-- Add nunit tests.
-- Clean up the generator.
-
----
-
-[General]
-+ Change all public APIs to conform to the class library interface guidelines.
-+ Revisit all classes and make sure IDisposable is correctly implemented.
-+ Remove System.Windows.Forms dependency.
-
-[OpenTK.Graphics.OpenGL]
-+ Improve performance for functions that return StringBuilders.
-+ Improve performance for functions that take generic arrays.
-+ Fix documentation - parameter mismatches.
-
-[OpenTK.Compute]
-[OpenTK.Graphics.ES*]
-+ Improve the API.
-
-[OpenTK.Graphics.GraphicsContext]
-+ Implement GL3 support on Mac OS X.
-+ Improve API for context sharing (add a sharedContext parameter to the context constructor).
-
-[OpenTK.GLControl]
-+ Improve the designer interface.
-
-[OpenTK.Input]
-+ Implement joystick support on Mac OS X.
-+ Implement GameWindow-independent input drivers.
-+ Implement support for multiple mice and keyboards.
-
+- Merge updates from mono/opentk.
+- Add Cocoa backend for Mac OS X.
+- Add support for international text input.
