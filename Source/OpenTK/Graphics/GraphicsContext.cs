@@ -66,7 +66,7 @@ namespace OpenTK.Graphics
 
             lock (SyncRoot)
             {
-                available_contexts.Add((implementation as IGraphicsContextInternal).Context, new WeakReference(this));
+                AddContext(this);
             }
         }
         
@@ -145,7 +145,7 @@ namespace OpenTK.Graphics
                         implementation = factory.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags);
                     }
 
-                    available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
+                    AddContext(this);
                 }
                 finally
                 {
@@ -198,8 +198,7 @@ namespace OpenTK.Graphics
                     }
                 }
 
-                available_contexts.Add((implementation as IGraphicsContextInternal).Context, new WeakReference(this));
-
+                AddContext(this);
                 (this as IGraphicsContextInternal).LoadAll();
             }
         }
@@ -240,6 +239,34 @@ namespace OpenTK.Graphics
         #endregion
 
         #region Private Members
+
+        static void AddContext(IGraphicsContextInternal context)
+        {
+            ContextHandle ctx = context.Context;
+            if (!available_contexts.ContainsKey(ctx))
+            {
+                available_contexts.Add(ctx, new WeakReference(context));
+            }
+            else
+            {
+                Debug.Print("A GraphicsContext with handle {0} already exists.", ctx);
+                Debug.Print("Did you forget to call Dispose()?");
+                available_contexts[ctx] = new WeakReference(context);
+            }
+        }
+
+        static void RemoveContext(IGraphicsContextInternal context)
+        {
+            ContextHandle ctx = context.Context;
+            if (available_contexts.ContainsKey(ctx))
+            {
+                available_contexts.Remove(ctx);
+            }
+            else
+            {
+                Debug.Print("Tried to remove non-existent GraphicsContext handle {0}. Call Dispose() to avoid this error.", ctx);
+            }
+        }
 
         static IGraphicsContext FindSharedContext()
         {
@@ -394,29 +421,6 @@ namespace OpenTK.Graphics
             get { return check_errors; }
             set { check_errors = value; }
         }
-        /// <summary>
-        /// Creates an OpenGL context with the specified direct/indirect rendering mode and sharing state with the
-        /// specified IGraphicsContext.
-        /// </summary>
-        /// <param name="direct">Set to true for direct rendering or false otherwise.</param>
-        /// <param name="source">The source IGraphicsContext to share state from.</param>.
-        /// <remarks>
-        /// <para>
-        /// Direct rendering is the default rendering mode for OpenTK, since it can provide higher performance
-        /// in some circumastances.
-        /// </para>
-        /// <para>
-        /// The 'direct' parameter is a hint, and will ignored if the specified mode is not supported (e.g. setting
-        /// indirect rendering on Windows platforms).
-        /// </para>
-        /// </remarks>
-        void CreateContext(bool direct, IGraphicsContext source)
-        {
-            lock (SyncRoot)
-            {
-                available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
-            }
-        }
 
         /// <summary>
         /// Swaps buffers on a context. This presents the rendered scene to the user.
@@ -569,19 +573,31 @@ namespace OpenTK.Graphics
         {
             if (!IsDisposed)
             {
-                Debug.Print("Disposing context {0}.", (this as IGraphicsContextInternal).Context.ToString());
                 lock (SyncRoot)
                 {
-                    available_contexts.Remove((this as IGraphicsContextInternal).Context);
+                    RemoveContext(this);
                 }
 
+                // Note: we cannot dispose the implementation
+                // from a different thread. See wglDeleteContext.
+                // This is also known to crash GLX implementations.
                 if (manual && !IsExternal)
                 {
+                    Debug.Print("Disposing context {0}.", (this as IGraphicsContextInternal).Context.ToString());
                     if (implementation != null)
                         implementation.Dispose();
                 }
+                else
+                {
+                    Debug.WriteLine("GraphicsContext leaked, did you forget to call Dispose()?");
+                }
                 IsDisposed = true;
             }
+        }
+
+        ~GraphicsContext()
+        {
+            Dispose(false);
         }
 
         #endregion
