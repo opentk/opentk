@@ -50,6 +50,7 @@ namespace OpenTK.Platform.SDL2
         bool is_focused;
         bool is_cursor_visible = true;
         bool exists;
+        bool must_destroy;
         bool disposed;
         WindowState window_state = WindowState.Normal;
         WindowState previous_window_state = WindowState.Normal;
@@ -238,7 +239,7 @@ namespace OpenTK.Platform.SDL2
                     if (!close_args.Cancel)
                     {
                         window.Closed(window, EventArgs.Empty);
-                        //window.DestroyWindow();
+                        window.must_destroy = true;
                     }
                     break;
 
@@ -395,9 +396,9 @@ namespace OpenTK.Platform.SDL2
         {
             lock (sync)
             {
-                if (Exists)
+                if (Exists && !must_destroy)
                 {
-                    Debug.Print("SDL2 destroying window {0}", window.Handle);
+                    Debug.Print("SDL2 closing window {0}", window.Handle);
 
                     Event e = new Event();
                     e.Type = EventType.WINDOWEVENT;
@@ -418,6 +419,10 @@ namespace OpenTK.Platform.SDL2
                 if (Exists)
                 {
                     SDL.PumpEvents();
+                    if (must_destroy)
+                    {
+                        DestroyWindow();
+                    }
                 }
             }
         }
@@ -899,6 +904,15 @@ namespace OpenTK.Platform.SDL2
                     else
                     {
                         Debug.WriteLine("Sdl2NativeWindow leaked, did you forget to call Dispose()?");
+                        if (Exists)
+                        {
+                            // If the main loop is still running, send a close message.
+                            // This will raise the Closing/Closed events and then destroy
+                            // the window.
+                            // Todo: it is probably not safe to raise events once the
+                            // finalizer has run. Review this.
+                            Close();
+                        }
                     }
                     disposed = true;
                 }
