@@ -26,6 +26,7 @@
 #endregion
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Graphics
 {
@@ -55,6 +56,25 @@ namespace OpenTK.Graphics
             if (context == null)
                 throw new GraphicsContextMissingException();
             return context != null ? context.GetAddress(funcname) : IntPtr.Zero;
+        }
+
+        internal static Delegate GetExtensionDelegateStatic(string funcname, Type signature)
+        {
+            var context = GraphicsContext.CurrentContext as IGraphicsContextInternal;
+            if (context == null)
+                throw new GraphicsContextMissingException();
+
+            IntPtr address = context.GetAddress(funcname);
+            if (address == IntPtr.Zero ||
+                address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
+                address == new IntPtr(2))       // 1 or 2 instead of IntPtr.Zero for some extensions.
+            {
+                return null;
+            }
+            else
+            {
+                return Marshal.GetDelegateForFunctionPointer(address, signature);
+            }
         }
     }
 }
