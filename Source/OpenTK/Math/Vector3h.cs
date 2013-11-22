@@ -291,6 +291,51 @@ namespace OpenTK
 
         #endregion
 
+        #region Indexer
+
+        /// <summary>
+        /// Gets or sets the value at the index of the Vector.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <returns>The component of the vector at index.</returns>
+        public Half this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0:
+                        return X;
+                    case 1:
+                        return Y;
+                    case 2:
+                        return Z;
+                    default:
+                        throw new ArgumentOutOfRangeException("You tried to access this vector at index: " + index);
+                }
+            }
+
+            set
+            {
+                switch (index)
+                {
+                    case 0:
+                        X = value;
+                        break;
+                    case 1:
+                        Y = value;
+                        break;
+                    case 2:
+                        Z = value;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException("You tried to set this vector at index: " + index);
+                }
+            }
+        }
+
+        #endregion
+
         #region Half -> Single
 
         /// <summary>

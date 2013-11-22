@@ -110,20 +110,45 @@ namespace OpenTK
 
         #region Public Members
 
+        #region Indexer
+
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
-        public float this[int index] {
-            get{
-                if(index == 0) return X;
-                else if(index == 1) return Y;
-                throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
-            } set{
-                if(index == 0) X = value;
-                else if(index == 1) Y = value;
-                else throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+        /// <param name="index">The index.</param>
+        /// <returns>The component of the vector at index.</returns>
+        public float this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0:
+                        return X;
+                    case 1:
+                        return Y;
+                    default:
+                        throw new ArgumentOutOfRangeException("You tried to access this vector at index: " + index);
+                }
+            }
+
+            set
+            {
+                switch (index)
+                {
+                    case 0:
+                        X = value;
+                        break;
+                    case 1:
+                        Y = value;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException("You tried to set this vector at index: " + index);
+                }
             }
         }
+
+        #endregion
 
         #region Instance
 
@@ -299,6 +324,7 @@ namespace OpenTK
             v.Normalize();
             return v;
         }
+
         #region public void Normalize()
 
         /// <summary>
