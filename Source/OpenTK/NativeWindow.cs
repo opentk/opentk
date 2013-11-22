@@ -999,9 +999,21 @@ namespace OpenTK
 
         #endregion
 
+        #region OnKeyDownInternal
+
+        private void OnKeyDownInternal(object sender, KeyboardKeyEventArgs e) { OnKeyDown(e); }
+
+        #endregion
+
         #region OnKeyPressInternal
 
         private void OnKeyPressInternal(object sender, KeyPressEventArgs e) { OnKeyPress(e); }
+
+        #endregion
+
+        #region OnKeyUpInternal
+
+        private void OnKeyUpInternal(object sender, KeyboardKeyEventArgs e) { OnKeyUp(e); }
 
         #endregion
 
@@ -1074,7 +1086,9 @@ namespace OpenTK
                     implementation.Disposed += OnDisposedInternal;
                     implementation.FocusedChanged += OnFocusedChangedInternal;
                     implementation.IconChanged += OnIconChangedInternal;
+                    implementation.KeyDown += OnKeyDownInternal;
                     implementation.KeyPress += OnKeyPressInternal;
+                    implementation.KeyUp += OnKeyUpInternal;
                     implementation.MouseEnter += OnMouseEnterInternal;
                     implementation.MouseLeave += OnMouseLeaveInternal;
                     implementation.Move += OnMoveInternal;
@@ -1092,7 +1106,9 @@ namespace OpenTK
                     implementation.Disposed -= OnDisposedInternal;
                     implementation.FocusedChanged -= OnFocusedChangedInternal;
                     implementation.IconChanged -= OnIconChangedInternal;
+                    implementation.KeyDown -= OnKeyDownInternal;
                     implementation.KeyPress -= OnKeyPressInternal;
+                    implementation.KeyUp -= OnKeyUpInternal;
                     implementation.MouseEnter -= OnMouseEnterInternal;
                     implementation.MouseLeave -= OnMouseLeaveInternal;
                     implementation.Move -= OnMoveInternal;
