@@ -214,6 +214,15 @@ namespace OpenTK.Platform.SDL2
         {
             bool key_pressed = ev.Key.State == State.Pressed;
             var key = ev.Key.Keysym;
+            var args = new KeyboardKeyEventArgs() 
+            { 
+                Key = TranslateKey(key.Scancode),
+                ScanCode = (uint)key.Scancode
+            };
+            if (key_pressed)
+                window.KeyDown(window, args);
+            else
+                window.KeyUp(window, args);
             //window.keyboard.SetKey(TranslateKey(key.scancode), (uint)key.scancode, key_pressed);
         }
 
