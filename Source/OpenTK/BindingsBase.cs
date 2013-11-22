@@ -186,6 +186,27 @@ namespace OpenTK
 
         #endregion
 
+		#region GetExtensionDelegate
+
+		// Creates a System.Delegate that can be used to call a dynamically exported OpenGL function.
+		internal Delegate GetExtensionDelegate(string name, Type signature)
+		{
+			IntPtr address = GetAddress(name);
+
+			if (address == IntPtr.Zero ||
+				address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
+				address == new IntPtr(2))       // 1 or 2 instead of IntPtr.Zero for some extensions.
+			{
+				return null;
+			}
+			else
+			{
+				return Marshal.GetDelegateForFunctionPointer(address, signature);
+			}
+		}
+
+		#endregion
+
         #endregion
 
         #region Private Members
@@ -200,27 +221,6 @@ namespace OpenTK
                 GetExtensionDelegate(name, signature) ??
                 (CoreFunctionMap.TryGetValue((name.Substring(2)), out m) ?
                 Delegate.CreateDelegate(signature, m) : null);
-        }
-
-        #endregion
-
-        #region GetExtensionDelegate
-
-        // Creates a System.Delegate that can be used to call a dynamically exported OpenGL function.
-        internal Delegate GetExtensionDelegate(string name, Type signature)
-        {
-            IntPtr address = GetAddress(name);
-            
-            if (address == IntPtr.Zero ||
-                address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
-                address == new IntPtr(2))       // 1 or 2 instead of IntPtr.Zero for some extensions.
-            {
-                return null;
-            }
-            else
-            {
-                return Marshal.GetDelegateForFunctionPointer(address, signature);
-            }
         }
 
         #endregion
