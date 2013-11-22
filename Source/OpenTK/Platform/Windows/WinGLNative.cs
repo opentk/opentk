@@ -73,6 +73,7 @@ namespace OpenTK.Platform.Windows
         bool mouse_outside_window = true;
         bool invisible_since_creation; // Set by WindowsMessage.CREATE and consumed by Visible = true (calls BringWindowToFront).
         int suppress_resize; // Used in WindowBorder and WindowState in order to avoid rapid, consecutive resize events.
+        bool is_in_modal_loop; // set to true whenever we enter the modal resize/move event loop 
 
         Rectangle
             bounds = new Rectangle(),
@@ -262,14 +263,23 @@ namespace OpenTK.Platform.Windows
                     // Entering the modal size/move loop: we don't want rendering to
                     // stop during this time, so we register a timer callback to continue
                     // processing from time to time.
+                    is_in_modal_loop = true;
                     StartTimer(handle);
+
+                    if (!CursorVisible)
+                        UngrabCursor();
                     break;
 
                 case WindowMessage.EXITMENULOOP:
                 case WindowMessage.EXITSIZEMOVE:
-                    // ExitingmModal size/move loop: the timer callback is no longer
+                    // Exiting from Modal size/move loop: the timer callback is no longer
                     // necessary.
+                    is_in_modal_loop = false;
                     StopTimer(handle);
+
+                    // Ensure cursor remains grabbed
+                    if (!CursorVisible)
+                        GrabCursor();
                     break;
 
                 case WindowMessage.ERASEBKGND:
@@ -306,9 +316,14 @@ namespace OpenTK.Platform.Windows
                                     Resize(this, EventArgs.Empty);
                             }
 
-                            // Ensure cursor remains grabbed
-                            if (!CursorVisible)
-                                GrabCursor();
+                            if (!is_in_modal_loop)
+                            {
+                                // If we are in a modal resize/move loop, cursor grabbing is
+                                // handled inside [ENTER|EXIT]SIZEMOVE case above.
+                                // If not, then we have to handle cursor grabbing here.
+                                if (!CursorVisible)
+                                    GrabCursor();
+                            }
                         }
                     }
                     break;
@@ -351,11 +366,11 @@ namespace OpenTK.Platform.Windows
                     {
                         windowState = new_state;
                         WindowStateChanged(this, EventArgs.Empty);
-                    }
 
-                    // Ensure cursor remains grabbed
-                    if (!CursorVisible)
-                        GrabCursor();
+                        // Ensure cursor remains grabbed
+                        if (!CursorVisible)
+                            GrabCursor();
+                    }
 
                     break;
 
