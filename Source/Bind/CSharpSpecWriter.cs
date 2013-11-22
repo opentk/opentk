@@ -123,6 +123,7 @@ namespace Bind
                 sw.Indent();
 
                 sw.WriteLine("using System;");
+                sw.WriteLine("using System.Security;");
                 sw.WriteLine("using System.Text;");
                 sw.WriteLine("using System.Runtime.InteropServices;");
 
@@ -201,6 +202,29 @@ namespace Bind
             sw.WriteLine("{");
             sw.Indent();
 
+            // Write constructor to initialize entry points
+            sw.WriteLine("public {0}()", Settings.OutputClass);
+            sw.WriteLine("{");
+            sw.Indent();
+            sw.WriteLine("IGraphicsContextInternal context = GraphicsContext.CurrentContext as IGraphicsContextInternal;");
+            sw.WriteLine("if (context == null) throw new GraphicsContextMissingException();");
+            sw.WriteLine();
+
+            foreach (var overloads in delegates.Values)
+            {
+                var d = overloads.First();
+                sw.WriteLine("{0}{1}{2}{3} = ({0}{1}{3})GetExtensionDelegate(\"{2}{3}\", typeof({0}{1}{3}));",
+                    Settings.DelegatesClass,
+                    Settings.NamespaceSeparator,
+                    Settings.FunctionPrefix,
+                    d.Name);
+            }
+
+            sw.Unindent();
+            sw.WriteLine("}");
+            sw.WriteLine();
+
+            // Write internal class to hold entry points
             sw.WriteLine("internal static partial class {0}", Settings.DelegatesClass);
             sw.WriteLine("{");
             sw.Indent();
@@ -212,7 +236,7 @@ namespace Bind
                 // so ignore them.
                 var d = overloads.First();
 
-                sw.WriteLine("[System.Security.SuppressUnmanagedCodeSecurity()]");
+                sw.WriteLine("[SuppressUnmanagedCodeSecurity]");
                 sw.WriteLine("internal {0};", GetDeclarationString(d, true));
                 sw.WriteLine("internal {0}static {2} {1}{2};",   //  = null
                          d.Unsafe ? "unsafe " : "",
