@@ -222,9 +222,6 @@ namespace Bind
                          d.Name);
             }
 
-            sw.Unindent();
-            sw.WriteLine("}");
-
             foreach (var d in delegates.Values.Select(d => d.First()))
             {
                 var load_d = new Delegate(d);
@@ -246,6 +243,9 @@ namespace Bind
                 sw.Unindent();
                 sw.WriteLine("}");
             }
+
+            sw.Unindent();
+            sw.WriteLine("}");
 
             sw.Unindent();
             sw.WriteLine("}");
