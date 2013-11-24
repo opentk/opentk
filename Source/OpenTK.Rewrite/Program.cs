@@ -120,7 +120,7 @@ namespace OpenTK.Rewrite
         {
             var signature = new CallSite(reference.ReturnType)
             {
-                CallingConvention = MethodCallingConvention.StdCall,
+                CallingConvention = MethodCallingConvention.Default,
             };
             if (reference is GenericInstanceMethod)
             {
