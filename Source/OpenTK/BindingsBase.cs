@@ -125,7 +125,7 @@ namespace OpenTK
 
         #region LoadEntryPoints
 
-        internal void LoadEntryPoints()
+        internal virtual void LoadEntryPoints()
         {
             // Using reflection is more than 3 times faster than directly loading delegates on the first
             // run, probably due to code generation overhead. Subsequent runs are faster with direct loading
@@ -166,7 +166,7 @@ namespace OpenTK
 
         #region LoadEntryPoint
 
-        internal bool LoadEntryPoint(string function)
+        internal virtual bool LoadEntryPoint(string function)
         {
             FieldInfo f = DelegatesClass.GetField(function, BindingFlags.Static | BindingFlags.NonPublic);
             if (f == null)
@@ -189,7 +189,7 @@ namespace OpenTK
 		#region GetExtensionDelegate
 
 		// Creates a System.Delegate that can be used to call a dynamically exported OpenGL function.
-		internal Delegate GetExtensionDelegate(string name, Type signature)
+		internal virtual Delegate GetExtensionDelegate(string name, Type signature)
 		{
 			IntPtr address = GetAddress(name);
 
