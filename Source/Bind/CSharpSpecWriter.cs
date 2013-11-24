@@ -1149,14 +1149,15 @@ namespace Bind
                 }
                 sb.Append(">");
             }
-            sb.AppendFormat("(EntryPoints[{0}]", d.Slot);
 
+            sb.Append("(");
             var parameter_string = GetInvocationString(d.Parameters, respect_wrappers);
             if (!String.IsNullOrEmpty(parameter_string))
             {
-                sb.Append(", ");
                 sb.Append(parameter_string);
+                sb.Append(", ");
             }
+            sb.AppendFormat("EntryPoints[{0}]", d.Slot);
             sb.Append(")");
             
             return sb.ToString();
