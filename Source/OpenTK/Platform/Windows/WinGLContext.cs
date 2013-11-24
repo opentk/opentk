@@ -338,7 +338,22 @@ namespace OpenTK.Platform.Windows
 
         public override IntPtr GetAddress(string function_string)
         {
-            return Wgl.Imports.GetProcAddress(function_string);
+            IntPtr address = Wgl.Imports.GetProcAddress(function_string);
+            if (!IsValid(address))
+            {
+                address = Functions.GetProcAddress(opengl32Handle, function_string);
+            }
+            return address;
+        }
+
+        static bool IsValid(IntPtr address)
+        {
+            unsafe
+            {
+                // See https://www.opengl.org/wiki/Load_OpenGL_Functions
+                void* a = address.ToPointer();
+                return a < (void*)-1 || a > (void*)3;
+            }
         }
 
         #endregion
