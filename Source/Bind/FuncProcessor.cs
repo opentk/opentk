@@ -129,11 +129,27 @@ namespace Bind
             Console.WriteLine("Removing overloaded delegates.");
             RemoveOverloadedDelegates(delegates, wrappers);
 
+            Console.WriteLine("Generating address table.");
+            GenerateAddressTable(delegates);
+
             return wrappers;
         }
 
         #region Private Members
 
+        static void GenerateAddressTable(DelegateCollection delegates)
+        {
+            int slot = -1;
+            foreach (var list in delegates.Values)
+            {
+                slot++;
+                foreach (var d in list)
+                {
+                    d.Slot = slot;
+                }
+            }
+        }
+        
         // When we have a list of overloaded delegates, make sure that
         // all generated wrappers use the first (original) delegate, not
         // the overloaded ones. This allows us to reduce the amount

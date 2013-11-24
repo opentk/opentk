@@ -53,6 +53,7 @@ namespace Bind.Structures
             DeprecatedVersion = d.DeprecatedVersion;
             EntryPoint = d.EntryPoint;
             Obsolete = d.Obsolete;
+            Slot = d.Slot;
         }
 
         #endregion
@@ -241,6 +242,9 @@ namespace Bind.Structures
         public string DeprecatedVersion { get; set; }
         public string EntryPoint { get; set; }
         public string Obsolete { get; set; }
+
+        // Slot index in the address table
+        public int Slot { get; set; }
 
         #endregion
 
