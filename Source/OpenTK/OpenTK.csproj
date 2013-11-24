@@ -790,4 +790,8 @@
     </PostBuildEvent>
   </PropertyGroup>
   <ItemGroup />
+  <Target Name="AfterBuild">
+    <Exec Command="$(OutputPath)OpenTK.Rewrite.exe $(OutputPath)OpenTK.dll" Condition="$(OS) == 'Windows_NT'" />
+    <Exec Command="mono $(OutputPath)OpenTK.Rewrite.exe $(OutputPath)OpenTK.dll" Condition="$(OS) != 'Windows_NT'" />
+  </Target>
 </Project>
