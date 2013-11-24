@@ -164,7 +164,7 @@ namespace Bind
                 sw.WriteLine("using System.Text;");
                 sw.WriteLine("using System.Runtime.InteropServices;");
 
-                WriteWrappers(sw, wrappers, enums, Generator.CSTypes);
+                WriteWrappers(sw, wrappers, delegates, enums, Generator.CSTypes);
 
                 sw.Unindent();
                 sw.WriteLine("}");
@@ -295,7 +295,9 @@ namespace Bind
 
         #region WriteWrappers
 
-        void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers, EnumCollection enums, IDictionary<string, string> CSTypes)
+        void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers,
+            DelegateCollection delegates, EnumCollection enums,
+            IDictionary<string, string> CSTypes)
         {
             Trace.WriteLine(String.Format("Writing wrappers to:\t{0}.{1}", Settings.OutputNamespace, Settings.OutputClass));
 
@@ -307,9 +309,22 @@ namespace Bind
             sw.WriteLine();
             sw.WriteLine("partial class {0}", Settings.OutputClass);
             sw.WriteLine("{");
-
             sw.Indent();
-            //sw.WriteLine("static {0}() {1} {2}", className, "{", "}");    // Static init in GLHelper.cs
+            
+            // Write constructor
+            sw.WriteLine("static {0}()", Settings.OutputClass);
+            sw.WriteLine("{");
+            sw.Indent();
+            sw.WriteLine("EntryPointNames = new string[]", delegates.Count);
+            sw.WriteLine("{");
+            sw.Indent();
+            foreach (var d in delegates.Values.Select(d => d.First()))
+                sw.WriteLine("\"{0}{1}\",", Settings.FunctionPrefix, d.Name);
+            sw.Unindent();
+            sw.WriteLine("};");
+            sw.WriteLine("EntryPoints = new IntPtr[EntryPointNames.Length];");
+            sw.Unindent();
+            sw.WriteLine("}");
             sw.WriteLine();
 
             int current = 0;
@@ -1116,20 +1131,40 @@ namespace Bind
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(Settings.DelegatesClass);
-            sb.Append(Settings.NamespaceSeparator);
-            sb.Append(Settings.FunctionPrefix);
-            sb.Append(d.Name);
-            sb.Append(GetInvocationString(d.Parameters, respect_wrappers));
+            if (d.ReturnType.CurrentType == "void")
+            {
+                sb.AppendFormat("InteropHelper.Call");
+            }
+            else
+            {
+                sb.Append("InteropHelper.CallReturn<");
+                sb.Append(d.ReturnType.CurrentType != "String" ? d.ReturnType.CurrentType : "IntPtr");
+                if (d.Parameters.Count > 0)
+                {
+                    var parameters = String.Join(
+                        ", ",
+                        d.Parameters.Select(p => p.IndirectionLevel != 0 ? "IntPtr" : p.CurrentType).ToArray());
+                    sb.Append(", ");
+                    sb.Append(parameters);
+                }
+                sb.Append(">");
+            }
+            sb.AppendFormat("(EntryPoints[{0}]", d.Slot);
 
+            var parameter_string = GetInvocationString(d.Parameters, respect_wrappers);
+            if (!String.IsNullOrEmpty(parameter_string))
+            {
+                sb.Append(", ");
+                sb.Append(parameter_string);
+            }
+            sb.Append(")");
+            
             return sb.ToString();
         }
 
         string GetInvocationString(ParameterCollection parameters, bool respect_wrappers)
         {
             StringBuilder sb = new StringBuilder();
-
-            sb.Append("(");
 
             if (parameters.Count > 0)
             {
@@ -1147,20 +1182,7 @@ namespace Bind
                         }
                         else if (p.IndirectionLevel != 0)
                         {
-                            if (((Settings.Compatibility & Settings.Legacy.TurnVoidPointersToIntPtr) != Settings.Legacy.None) &&
-                                p.Pointer != 0 && p.CurrentType.Contains("void"))
-                            {
-                                sb.Append("(IntPtr)");
-                            }
-                            else
-                            {
-                                sb.Append("(");
-
-                                sb.Append(p.QualifiedType);
-                                for (int i = 0; i < p.IndirectionLevel; i++)
-                                    sb.Append("*");
-                                sb.Append(")");
-                            }
+                            sb.Append("(IntPtr)");
                         }
                         else
                         {
@@ -1207,11 +1229,7 @@ namespace Bind
 
                     sb.Append(", ");
                 }
-                sb.Replace(", ", ")", sb.Length - 2, 2);
-            }
-            else
-            {
-                sb.Append(")");
+                sb.Replace(", ", "", sb.Length - 2, 2);
             }
 
             return sb.ToString();
