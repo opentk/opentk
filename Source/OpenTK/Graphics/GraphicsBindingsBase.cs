@@ -36,6 +36,18 @@ namespace OpenTK.Graphics
     public abstract class GraphicsBindingsBase : BindingsBase
     {
         /// <summary>
+        /// Contains the list of API entry points (function pointers).
+        /// This field must be set by an inheriting class.
+        /// </summary>
+        protected IntPtr[] EntryPointsInstance;
+
+        /// <summary>
+        /// Contains the list of API entry point names.
+        /// This field must be set by an inheriting class.
+        /// </summary>
+        protected string[] EntryPointNamesInstance;
+
+        /// <summary>
         /// Retrieves an unmanaged function pointer to the specified function.
         /// </summary>
         /// <param name="funcname">
@@ -58,22 +70,20 @@ namespace OpenTK.Graphics
             return context != null ? context.GetAddress(funcname) : IntPtr.Zero;
         }
 
-        internal static Delegate GetExtensionDelegateStatic(string funcname, Type signature)
+        // Loads all available entry points for the current API.
+        // Note: we prefer IGraphicsContextInternal.GetAddress over
+        // this.GetAddress to improve loading performance (less
+        // validation necessary.)
+        internal override void LoadEntryPoints()
         {
-            var context = GraphicsContext.CurrentContext as IGraphicsContextInternal;
+            IGraphicsContext context = GraphicsContext.CurrentContext;
             if (context == null)
                 throw new GraphicsContextMissingException();
 
-            IntPtr address = context.GetAddress(funcname);
-            if (address == IntPtr.Zero ||
-                address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
-                address == new IntPtr(2))       // 1 or 2 instead of IntPtr.Zero for some extensions.
+            IGraphicsContextInternal context_internal = context as IGraphicsContextInternal;
+            for (int i = 0; i < EntryPointsInstance.Length; i++)
             {
-                return null;
-            }
-            else
-            {
-                return Marshal.GetDelegateForFunctionPointer(address, signature);
+                EntryPointsInstance[i] = context_internal.GetAddress(EntryPointNamesInstance[i]);
             }
         }
     }
