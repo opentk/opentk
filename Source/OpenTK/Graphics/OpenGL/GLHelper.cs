@@ -58,12 +58,20 @@ namespace OpenTK.Graphics.OpenGL
         static SortedList<string, bool> AvailableExtensions = new SortedList<string, bool>();
         static readonly object sync_root = new object();
 
+        static IntPtr[] EntryPoints;
+        static string[] EntryPointNames;
+
         #endregion
 
-        #region --- Constructor ---
+        #region Constructors
 
-        static GL()
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        public GL()
         {
+            EntryPointsInstance = EntryPoints;
+            EntryPointNamesInstance = EntryPointNames;
         }
 
         #endregion
