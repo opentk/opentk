@@ -457,7 +457,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<All, IntPtr, UInt32, UInt64>(EntryPoints[31], (IntPtr)sync, (UInt32)flags, (UInt64)timeout);
+                return InteropHelper.CallReturn<All, IntPtr, UInt32, UInt64>((IntPtr)sync, (UInt32)flags, (UInt64)timeout, EntryPoints[31]);
                 #if DEBUG
                 }
                 #endif
@@ -490,7 +490,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<All, IntPtr, UInt32, UInt64>(EntryPoints[31], (IntPtr)sync, (UInt32)flags, (UInt64)timeout);
+                return InteropHelper.CallReturn<All, IntPtr, UInt32, UInt64>((IntPtr)sync, (UInt32)flags, (UInt64)timeout, EntryPoints[31]);
                 #if DEBUG
                 }
                 #endif
@@ -505,7 +505,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[53], (UInt32)destinationTexture, (UInt32)sourceTexture, (Int32)sourceBaseLevel, (Int32)sourceLevelCount);
+                InteropHelper.Call((UInt32)destinationTexture, (UInt32)sourceTexture, (Int32)sourceBaseLevel, (Int32)sourceLevelCount, EntryPoints[53]);
                 #if DEBUG
                 }
                 #endif
@@ -521,7 +521,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[53], (UInt32)destinationTexture, (UInt32)sourceTexture, (Int32)sourceBaseLevel, (Int32)sourceLevelCount);
+                InteropHelper.Call((UInt32)destinationTexture, (UInt32)sourceTexture, (Int32)sourceBaseLevel, (Int32)sourceLevelCount, EntryPoints[53]);
                 #if DEBUG
                 }
                 #endif
@@ -543,7 +543,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[60], (IntPtr)sync);
+                InteropHelper.Call((IntPtr)sync, EntryPoints[60]);
                 #if DEBUG
                 }
                 #endif
@@ -570,7 +570,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<IntPtr, All, UInt32>(EntryPoints[106], (OpenTK.Graphics.ES11.All)condition, (UInt32)flags);
+                return InteropHelper.CallReturn<IntPtr, All, UInt32>((OpenTK.Graphics.ES11.All)condition, (UInt32)flags, EntryPoints[106]);
                 #if DEBUG
                 }
                 #endif
@@ -598,7 +598,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<IntPtr, All, UInt32>(EntryPoints[106], (OpenTK.Graphics.ES11.All)condition, (UInt32)flags);
+                return InteropHelper.CallReturn<IntPtr, All, UInt32>((OpenTK.Graphics.ES11.All)condition, (UInt32)flags, EntryPoints[106]);
                 #if DEBUG
                 }
                 #endif
@@ -617,7 +617,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     Int64 retval;
                     Int64* @params_ptr = &retval;
-                    InteropHelper.Call(EntryPoints[151], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[151]);
                     return retval;
                 }
                 #if DEBUG
@@ -638,7 +638,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int64* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[151], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[151]);
                     }
                 }
                 #if DEBUG
@@ -659,7 +659,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int64* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[151], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[151]);
                         @params = *@params_ptr;
                     }
                 }
@@ -678,7 +678,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[151], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[151]);
                 #if DEBUG
                 }
                 #endif
@@ -725,7 +725,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* length_ptr = length)
                     fixed (Int32* values_ptr = values)
                     {
-                        InteropHelper.Call(EntryPoints[168], (IntPtr)sync, (OpenTK.Graphics.ES11.All)pname, (Int32)bufSize, (IntPtr)length_ptr, (IntPtr)values_ptr);
+                        InteropHelper.Call((IntPtr)sync, (OpenTK.Graphics.ES11.All)pname, (Int32)bufSize, (IntPtr)length_ptr, (IntPtr)values_ptr, EntryPoints[168]);
                     }
                 }
                 #if DEBUG
@@ -774,7 +774,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* length_ptr = &length)
                     fixed (Int32* values_ptr = &values)
                     {
-                        InteropHelper.Call(EntryPoints[168], (IntPtr)sync, (OpenTK.Graphics.ES11.All)pname, (Int32)bufSize, (IntPtr)length_ptr, (IntPtr)values_ptr);
+                        InteropHelper.Call((IntPtr)sync, (OpenTK.Graphics.ES11.All)pname, (Int32)bufSize, (IntPtr)length_ptr, (IntPtr)values_ptr, EntryPoints[168]);
                         length = *length_ptr;
                         values = *values_ptr;
                     }
@@ -821,7 +821,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[168], (IntPtr)sync, (OpenTK.Graphics.ES11.All)pname, (Int32)bufSize, (IntPtr)length, (IntPtr)values);
+                InteropHelper.Call((IntPtr)sync, (OpenTK.Graphics.ES11.All)pname, (Int32)bufSize, (IntPtr)length, (IntPtr)values, EntryPoints[168]);
                 #if DEBUG
                 }
                 #endif
@@ -843,7 +843,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<bool, IntPtr>(EntryPoints[189], (IntPtr)sync);
+                return InteropHelper.CallReturn<bool, IntPtr>((IntPtr)sync, EntryPoints[189]);
                 #if DEBUG
                 }
                 #endif
@@ -885,7 +885,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[294], (OpenTK.Graphics.ES11.All)target, (Int32)samples, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)samples, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, EntryPoints[294]);
                 #if DEBUG
                 }
                 #endif
@@ -932,7 +932,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[382], (IntPtr)sync, (UInt32)flags, (UInt64)timeout);
+                InteropHelper.Call((IntPtr)sync, (UInt32)flags, (UInt64)timeout, EntryPoints[382]);
                 #if DEBUG
                 }
                 #endif
@@ -965,7 +965,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[382], (IntPtr)sync, (UInt32)flags, (UInt64)timeout);
+                InteropHelper.Call((IntPtr)sync, (UInt32)flags, (UInt64)timeout, EntryPoints[382]);
                 #if DEBUG
                 }
                 #endif
@@ -990,7 +990,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[1], (OpenTK.Graphics.ES11.TextureUnit)texture);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureUnit)texture, EntryPoints[1]);
             #if DEBUG
             }
             #endif
@@ -1012,7 +1012,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[1], (OpenTK.Graphics.ES11.TextureUnit)texture);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureUnit)texture, EntryPoints[1]);
             #if DEBUG
             }
             #endif
@@ -1040,7 +1040,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[2], (OpenTK.Graphics.ES11.AlphaFunction)func, (Single)@ref);
+            InteropHelper.Call((OpenTK.Graphics.ES11.AlphaFunction)func, (Single)@ref, EntryPoints[2]);
             #if DEBUG
             }
             #endif
@@ -1067,7 +1067,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[2], (OpenTK.Graphics.ES11.AlphaFunction)func, (Single)@ref);
+            InteropHelper.Call((OpenTK.Graphics.ES11.AlphaFunction)func, (Single)@ref, EntryPoints[2]);
             #if DEBUG
             }
             #endif
@@ -1082,7 +1082,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[3], (OpenTK.Graphics.ES11.All)func, (int)@ref);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)func, (int)@ref, EntryPoints[3]);
             #if DEBUG
             }
             #endif
@@ -1109,7 +1109,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[5], (OpenTK.Graphics.ES11.All)target, (UInt32)buffer);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (UInt32)buffer, EntryPoints[5]);
             #if DEBUG
             }
             #endif
@@ -1137,7 +1137,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[5], (OpenTK.Graphics.ES11.All)target, (UInt32)buffer);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (UInt32)buffer, EntryPoints[5]);
             #if DEBUG
             }
             #endif
@@ -1164,7 +1164,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[8], (OpenTK.Graphics.ES11.TextureTarget)target, (UInt32)texture);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (UInt32)texture, EntryPoints[8]);
             #if DEBUG
             }
             #endif
@@ -1193,7 +1193,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[8], (OpenTK.Graphics.ES11.TextureTarget)target, (UInt32)texture);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (UInt32)texture, EntryPoints[8]);
             #if DEBUG
             }
             #endif
@@ -1220,7 +1220,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[8], (OpenTK.Graphics.ES11.TextureTarget)target, (UInt32)texture);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (UInt32)texture, EntryPoints[8]);
             #if DEBUG
             }
             #endif
@@ -1248,7 +1248,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[8], (OpenTK.Graphics.ES11.TextureTarget)target, (UInt32)texture);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (UInt32)texture, EntryPoints[8]);
             #if DEBUG
             }
             #endif
@@ -1281,7 +1281,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[15], (OpenTK.Graphics.ES11.BlendingFactorSrc)sfactor, (OpenTK.Graphics.ES11.BlendingFactorDest)dfactor);
+            InteropHelper.Call((OpenTK.Graphics.ES11.BlendingFactorSrc)sfactor, (OpenTK.Graphics.ES11.BlendingFactorDest)dfactor, EntryPoints[15]);
             #if DEBUG
             }
             #endif
@@ -1313,7 +1313,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[15], (OpenTK.Graphics.ES11.BlendingFactorSrc)sfactor, (OpenTK.Graphics.ES11.BlendingFactorDest)dfactor);
+            InteropHelper.Call((OpenTK.Graphics.ES11.BlendingFactorSrc)sfactor, (OpenTK.Graphics.ES11.BlendingFactorDest)dfactor, EntryPoints[15]);
             #if DEBUG
             }
             #endif
@@ -1350,7 +1350,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[17], (OpenTK.Graphics.ES11.All)target, (IntPtr)size, (IntPtr)data, (OpenTK.Graphics.ES11.All)usage);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)size, (IntPtr)data, (OpenTK.Graphics.ES11.All)usage, EntryPoints[17]);
             #if DEBUG
             }
             #endif
@@ -1391,7 +1391,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[17], (OpenTK.Graphics.ES11.All)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES11.All)usage);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES11.All)usage, EntryPoints[17]);
             }
             finally
             {
@@ -1437,7 +1437,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[17], (OpenTK.Graphics.ES11.All)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES11.All)usage);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES11.All)usage, EntryPoints[17]);
             }
             finally
             {
@@ -1483,7 +1483,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[17], (OpenTK.Graphics.ES11.All)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES11.All)usage);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES11.All)usage, EntryPoints[17]);
             }
             finally
             {
@@ -1529,7 +1529,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[17], (OpenTK.Graphics.ES11.All)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES11.All)usage);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.Graphics.ES11.All)usage, EntryPoints[17]);
                 data = (T2)data_ptr.Target;
             }
             finally
@@ -1572,7 +1572,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[18], (OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data, EntryPoints[18]);
             #if DEBUG
             }
             #endif
@@ -1613,7 +1613,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[18], (OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[18]);
             }
             finally
             {
@@ -1659,7 +1659,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[18], (OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[18]);
             }
             finally
             {
@@ -1705,7 +1705,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[18], (OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[18]);
             }
             finally
             {
@@ -1751,7 +1751,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[18], (OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[18]);
                 data = (T3)data_ptr.Target;
             }
             finally
@@ -1780,7 +1780,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[20], (OpenTK.Graphics.ES11.ClearBufferMask)mask);
+            InteropHelper.Call((OpenTK.Graphics.ES11.ClearBufferMask)mask, EntryPoints[20]);
             #if DEBUG
             }
             #endif
@@ -1802,7 +1802,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[20], (OpenTK.Graphics.ES11.ClearBufferMask)mask);
+            InteropHelper.Call((OpenTK.Graphics.ES11.ClearBufferMask)mask, EntryPoints[20]);
             #if DEBUG
             }
             #endif
@@ -1825,7 +1825,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[20], (OpenTK.Graphics.ES11.ClearBufferMask)mask);
+            InteropHelper.Call((OpenTK.Graphics.ES11.ClearBufferMask)mask, EntryPoints[20]);
             #if DEBUG
             }
             #endif
@@ -1849,7 +1849,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[20], (OpenTK.Graphics.ES11.ClearBufferMask)mask);
+            InteropHelper.Call((OpenTK.Graphics.ES11.ClearBufferMask)mask, EntryPoints[20]);
             #if DEBUG
             }
             #endif
@@ -1871,7 +1871,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[22], (Single)red, (Single)green, (Single)blue, (Single)alpha);
+            InteropHelper.Call((Single)red, (Single)green, (Single)blue, (Single)alpha, EntryPoints[22]);
             #if DEBUG
             }
             #endif
@@ -1886,7 +1886,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[23], (int)red, (int)green, (int)blue, (int)alpha);
+            InteropHelper.Call((int)red, (int)green, (int)blue, (int)alpha, EntryPoints[23]);
             #if DEBUG
             }
             #endif
@@ -1908,7 +1908,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[25], (Single)d);
+            InteropHelper.Call((Single)d, EntryPoints[25]);
             #if DEBUG
             }
             #endif
@@ -1923,7 +1923,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[27], (int)depth);
+            InteropHelper.Call((int)depth, EntryPoints[27]);
             #if DEBUG
             }
             #endif
@@ -1945,7 +1945,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[29], (Int32)s);
+            InteropHelper.Call((Int32)s, EntryPoints[29]);
             #if DEBUG
             }
             #endif
@@ -1968,7 +1968,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[30], (OpenTK.Graphics.ES11.TextureUnit)texture);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureUnit)texture, EntryPoints[30]);
             #if DEBUG
             }
             #endif
@@ -1990,7 +1990,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[30], (OpenTK.Graphics.ES11.TextureUnit)texture);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureUnit)texture, EntryPoints[30]);
             #if DEBUG
             }
             #endif
@@ -2021,7 +2021,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* eqn_ptr = eqn)
                 {
-                    InteropHelper.Call(EntryPoints[32], (OpenTK.Graphics.ES11.All)p, (IntPtr)eqn_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)p, (IntPtr)eqn_ptr, EntryPoints[32]);
                 }
             }
             #if DEBUG
@@ -2054,7 +2054,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* eqn_ptr = &eqn)
                 {
-                    InteropHelper.Call(EntryPoints[32], (OpenTK.Graphics.ES11.All)p, (IntPtr)eqn_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)p, (IntPtr)eqn_ptr, EntryPoints[32]);
                 }
             }
             #if DEBUG
@@ -2084,7 +2084,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[32], (OpenTK.Graphics.ES11.All)p, (IntPtr)eqn);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)p, (IntPtr)eqn, EntryPoints[32]);
             #if DEBUG
             }
             #endif
@@ -2103,7 +2103,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* equation_ptr = equation)
                 {
-                    InteropHelper.Call(EntryPoints[35], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[35]);
                 }
             }
             #if DEBUG
@@ -2124,7 +2124,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* equation_ptr = &equation)
                 {
-                    InteropHelper.Call(EntryPoints[35], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[35]);
                 }
             }
             #if DEBUG
@@ -2142,7 +2142,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[35], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation, EntryPoints[35]);
             #if DEBUG
             }
             #endif
@@ -2169,7 +2169,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[40], (Single)red, (Single)green, (Single)blue, (Single)alpha);
+            InteropHelper.Call((Single)red, (Single)green, (Single)blue, (Single)alpha, EntryPoints[40]);
             #if DEBUG
             }
             #endif
@@ -2196,7 +2196,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[41], (Byte)red, (Byte)green, (Byte)blue, (Byte)alpha);
+            InteropHelper.Call((Byte)red, (Byte)green, (Byte)blue, (Byte)alpha, EntryPoints[41]);
             #if DEBUG
             }
             #endif
@@ -2211,7 +2211,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[42], (int)red, (int)green, (int)blue, (int)alpha);
+            InteropHelper.Call((int)red, (int)green, (int)blue, (int)alpha, EntryPoints[42]);
             #if DEBUG
             }
             #endif
@@ -2238,7 +2238,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[45], (bool)red, (bool)green, (bool)blue, (bool)alpha);
+            InteropHelper.Call((bool)red, (bool)green, (bool)blue, (bool)alpha, EntryPoints[45]);
             #if DEBUG
             }
             #endif
@@ -2276,7 +2276,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[46], (Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer);
+            InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer, EntryPoints[46]);
             #if DEBUG
             }
             #endif
@@ -2318,7 +2318,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[46], (Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[46]);
             }
             finally
             {
@@ -2365,7 +2365,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[46], (Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[46]);
             }
             finally
             {
@@ -2412,7 +2412,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[46], (Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[46]);
             }
             finally
             {
@@ -2459,7 +2459,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[46], (Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[46]);
                 pointer = (T3)pointer_ptr.Target;
             }
             finally
@@ -2502,7 +2502,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[46], (Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer);
+            InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer, EntryPoints[46]);
             #if DEBUG
             }
             #endif
@@ -2543,7 +2543,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[46], (Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[46]);
             }
             finally
             {
@@ -2589,7 +2589,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[46], (Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[46]);
             }
             finally
             {
@@ -2635,7 +2635,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[46], (Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[46]);
             }
             finally
             {
@@ -2681,7 +2681,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[46], (Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[46]);
                 pointer = (T3)pointer_ptr.Target;
             }
             finally
@@ -2745,7 +2745,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[47], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data, EntryPoints[47]);
             #if DEBUG
             }
             #endif
@@ -2807,7 +2807,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[47], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[47]);
             }
             finally
             {
@@ -2874,7 +2874,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[47], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[47]);
             }
             finally
             {
@@ -2941,7 +2941,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[47], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[47]);
             }
             finally
             {
@@ -3008,7 +3008,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[47], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[47]);
                 data = (T7)data_ptr.Target;
             }
             finally
@@ -3071,7 +3071,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[47], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data, EntryPoints[47]);
             #if DEBUG
             }
             #endif
@@ -3132,7 +3132,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[47], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[47]);
             }
             finally
             {
@@ -3198,7 +3198,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[47], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[47]);
             }
             finally
             {
@@ -3264,7 +3264,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[47], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[47]);
             }
             finally
             {
@@ -3330,7 +3330,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[47], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[47]);
                 data = (T7)data_ptr.Target;
             }
             finally
@@ -3399,7 +3399,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[48], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data, EntryPoints[48]);
             #if DEBUG
             }
             #endif
@@ -3466,7 +3466,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[48], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[48]);
             }
             finally
             {
@@ -3538,7 +3538,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[48], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[48]);
             }
             finally
             {
@@ -3610,7 +3610,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[48], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[48]);
             }
             finally
             {
@@ -3682,7 +3682,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[48], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[48]);
                 data = (T8)data_ptr.Target;
             }
             finally
@@ -3750,7 +3750,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[48], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data, EntryPoints[48]);
             #if DEBUG
             }
             #endif
@@ -3816,7 +3816,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[48], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[48]);
             }
             finally
             {
@@ -3887,7 +3887,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[48], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[48]);
             }
             finally
             {
@@ -3958,7 +3958,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[48], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[48]);
             }
             finally
             {
@@ -4029,7 +4029,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[48], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[48]);
                 data = (T8)data_ptr.Target;
             }
             finally
@@ -4088,7 +4088,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[51], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)x, (Int32)y, (Int32)width, (Int32)height, (Int32)border);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)x, (Int32)y, (Int32)width, (Int32)height, (Int32)border, EntryPoints[51]);
             #if DEBUG
             }
             #endif
@@ -4140,7 +4140,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[51], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)x, (Int32)y, (Int32)width, (Int32)height, (Int32)border);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (OpenTK.Graphics.ES11.All)internalformat, (Int32)x, (Int32)y, (Int32)width, (Int32)height, (Int32)border, EntryPoints[51]);
             #if DEBUG
             }
             #endif
@@ -4193,7 +4193,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[52], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)x, (Int32)y, (Int32)width, (Int32)height);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)x, (Int32)y, (Int32)width, (Int32)height, EntryPoints[52]);
             #if DEBUG
             }
             #endif
@@ -4245,7 +4245,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[52], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)x, (Int32)y, (Int32)width, (Int32)height);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)x, (Int32)y, (Int32)width, (Int32)height, EntryPoints[52]);
             #if DEBUG
             }
             #endif
@@ -4268,7 +4268,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[54], (OpenTK.Graphics.ES11.CullFaceMode)mode);
+            InteropHelper.Call((OpenTK.Graphics.ES11.CullFaceMode)mode, EntryPoints[54]);
             #if DEBUG
             }
             #endif
@@ -4290,7 +4290,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[54], (OpenTK.Graphics.ES11.CullFaceMode)mode);
+            InteropHelper.Call((OpenTK.Graphics.ES11.CullFaceMode)mode, EntryPoints[54]);
             #if DEBUG
             }
             #endif
@@ -4321,7 +4321,7 @@ namespace OpenTK.Graphics.ES11
             {
                 const Int32 n = 1;
                 UInt32* buffers_ptr = (UInt32*)&buffers;
-                InteropHelper.Call(EntryPoints[56], (Int32)n, (IntPtr)buffers_ptr);
+                InteropHelper.Call((Int32)n, (IntPtr)buffers_ptr, EntryPoints[56]);
             }
             #if DEBUG
             }
@@ -4354,7 +4354,7 @@ namespace OpenTK.Graphics.ES11
             {
                 const Int32 n = 1;
                 UInt32* buffers_ptr = (UInt32*)&buffers;
-                InteropHelper.Call(EntryPoints[56], (Int32)n, (IntPtr)buffers_ptr);
+                InteropHelper.Call((Int32)n, (IntPtr)buffers_ptr, EntryPoints[56]);
             }
             #if DEBUG
             }
@@ -4386,7 +4386,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* buffers_ptr = buffers)
                 {
-                    InteropHelper.Call(EntryPoints[56], (Int32)n, (IntPtr)buffers_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)buffers_ptr, EntryPoints[56]);
                 }
             }
             #if DEBUG
@@ -4419,7 +4419,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* buffers_ptr = &buffers)
                 {
-                    InteropHelper.Call(EntryPoints[56], (Int32)n, (IntPtr)buffers_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)buffers_ptr, EntryPoints[56]);
                 }
             }
             #if DEBUG
@@ -4449,7 +4449,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[56], (Int32)n, (IntPtr)buffers);
+            InteropHelper.Call((Int32)n, (IntPtr)buffers, EntryPoints[56]);
             #if DEBUG
             }
             #endif
@@ -4481,7 +4481,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (UInt32* buffers_ptr = buffers)
                 {
-                    InteropHelper.Call(EntryPoints[56], (Int32)n, (IntPtr)buffers_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)buffers_ptr, EntryPoints[56]);
                 }
             }
             #if DEBUG
@@ -4515,7 +4515,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (UInt32* buffers_ptr = &buffers)
                 {
-                    InteropHelper.Call(EntryPoints[56], (Int32)n, (IntPtr)buffers_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)buffers_ptr, EntryPoints[56]);
                 }
             }
             #if DEBUG
@@ -4545,7 +4545,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[56], (Int32)n, (IntPtr)buffers);
+            InteropHelper.Call((Int32)n, (IntPtr)buffers, EntryPoints[56]);
             #if DEBUG
             }
             #endif
@@ -4576,7 +4576,7 @@ namespace OpenTK.Graphics.ES11
             {
                 const Int32 n = 1;
                 UInt32* textures_ptr = (UInt32*)&textures;
-                InteropHelper.Call(EntryPoints[61], (Int32)n, (IntPtr)textures_ptr);
+                InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, EntryPoints[61]);
             }
             #if DEBUG
             }
@@ -4609,7 +4609,7 @@ namespace OpenTK.Graphics.ES11
             {
                 const Int32 n = 1;
                 UInt32* textures_ptr = (UInt32*)&textures;
-                InteropHelper.Call(EntryPoints[61], (Int32)n, (IntPtr)textures_ptr);
+                InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, EntryPoints[61]);
             }
             #if DEBUG
             }
@@ -4641,7 +4641,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* textures_ptr = textures)
                 {
-                    InteropHelper.Call(EntryPoints[61], (Int32)n, (IntPtr)textures_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, EntryPoints[61]);
                 }
             }
             #if DEBUG
@@ -4674,7 +4674,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* textures_ptr = &textures)
                 {
-                    InteropHelper.Call(EntryPoints[61], (Int32)n, (IntPtr)textures_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, EntryPoints[61]);
                 }
             }
             #if DEBUG
@@ -4704,7 +4704,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[61], (Int32)n, (IntPtr)textures);
+            InteropHelper.Call((Int32)n, (IntPtr)textures, EntryPoints[61]);
             #if DEBUG
             }
             #endif
@@ -4736,7 +4736,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (UInt32* textures_ptr = textures)
                 {
-                    InteropHelper.Call(EntryPoints[61], (Int32)n, (IntPtr)textures_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, EntryPoints[61]);
                 }
             }
             #if DEBUG
@@ -4770,7 +4770,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (UInt32* textures_ptr = &textures)
                 {
-                    InteropHelper.Call(EntryPoints[61], (Int32)n, (IntPtr)textures_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, EntryPoints[61]);
                 }
             }
             #if DEBUG
@@ -4800,7 +4800,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[61], (Int32)n, (IntPtr)textures);
+            InteropHelper.Call((Int32)n, (IntPtr)textures, EntryPoints[61]);
             #if DEBUG
             }
             #endif
@@ -4823,7 +4823,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[63], (OpenTK.Graphics.ES11.DepthFunction)func);
+            InteropHelper.Call((OpenTK.Graphics.ES11.DepthFunction)func, EntryPoints[63]);
             #if DEBUG
             }
             #endif
@@ -4845,7 +4845,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[63], (OpenTK.Graphics.ES11.DepthFunction)func);
+            InteropHelper.Call((OpenTK.Graphics.ES11.DepthFunction)func, EntryPoints[63]);
             #if DEBUG
             }
             #endif
@@ -4867,7 +4867,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[64], (bool)flag);
+            InteropHelper.Call((bool)flag, EntryPoints[64]);
             #if DEBUG
             }
             #endif
@@ -4894,7 +4894,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[65], (Single)n, (Single)f);
+            InteropHelper.Call((Single)n, (Single)f, EntryPoints[65]);
             #if DEBUG
             }
             #endif
@@ -4909,7 +4909,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[67], (int)n, (int)f);
+            InteropHelper.Call((int)n, (int)f, EntryPoints[67]);
             #if DEBUG
             }
             #endif
@@ -4925,7 +4925,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[69], (OpenTK.Graphics.ES11.EnableCap)cap);
+            InteropHelper.Call((OpenTK.Graphics.ES11.EnableCap)cap, EntryPoints[69]);
             #if DEBUG
             }
             #endif
@@ -4940,7 +4940,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[69], (OpenTK.Graphics.ES11.EnableCap)cap);
+            InteropHelper.Call((OpenTK.Graphics.ES11.EnableCap)cap, EntryPoints[69]);
             #if DEBUG
             }
             #endif
@@ -4956,7 +4956,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[70], (OpenTK.Graphics.ES11.EnableCap)array);
+            InteropHelper.Call((OpenTK.Graphics.ES11.EnableCap)array, EntryPoints[70]);
             #if DEBUG
             }
             #endif
@@ -4971,7 +4971,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[70], (OpenTK.Graphics.ES11.EnableCap)array);
+            InteropHelper.Call((OpenTK.Graphics.ES11.EnableCap)array, EntryPoints[70]);
             #if DEBUG
             }
             #endif
@@ -5004,7 +5004,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[73], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)first, (Int32)count);
+            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)first, (Int32)count, EntryPoints[73]);
             #if DEBUG
             }
             #endif
@@ -5037,7 +5037,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[73], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)first, (Int32)count);
+            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)first, (Int32)count, EntryPoints[73]);
             #if DEBUG
             }
             #endif
@@ -5069,7 +5069,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[73], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)first, (Int32)count);
+            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)first, (Int32)count, EntryPoints[73]);
             #if DEBUG
             }
             #endif
@@ -5107,7 +5107,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices);
+            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, EntryPoints[74]);
             #if DEBUG
             }
             #endif
@@ -5149,7 +5149,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), EntryPoints[74]);
             }
             finally
             {
@@ -5196,7 +5196,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), EntryPoints[74]);
             }
             finally
             {
@@ -5243,7 +5243,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), EntryPoints[74]);
             }
             finally
             {
@@ -5290,7 +5290,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), EntryPoints[74]);
                 indices = (T3)indices_ptr.Target;
             }
             finally
@@ -5334,7 +5334,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices);
+            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, EntryPoints[74]);
             #if DEBUG
             }
             #endif
@@ -5376,7 +5376,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), EntryPoints[74]);
             }
             finally
             {
@@ -5423,7 +5423,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), EntryPoints[74]);
             }
             finally
             {
@@ -5470,7 +5470,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), EntryPoints[74]);
             }
             finally
             {
@@ -5517,7 +5517,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), EntryPoints[74]);
                 indices = (T3)indices_ptr.Target;
             }
             finally
@@ -5560,7 +5560,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices);
+            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, EntryPoints[74]);
             #if DEBUG
             }
             #endif
@@ -5601,7 +5601,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), EntryPoints[74]);
             }
             finally
             {
@@ -5647,7 +5647,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), EntryPoints[74]);
             }
             finally
             {
@@ -5693,7 +5693,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), EntryPoints[74]);
             }
             finally
             {
@@ -5739,7 +5739,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[74], (OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (Int32)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), EntryPoints[74]);
                 indices = (T3)indices_ptr.Target;
             }
             finally
@@ -5773,7 +5773,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[85], (OpenTK.Graphics.ES11.EnableCap)cap);
+            InteropHelper.Call((OpenTK.Graphics.ES11.EnableCap)cap, EntryPoints[85]);
             #if DEBUG
             }
             #endif
@@ -5800,7 +5800,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[85], (OpenTK.Graphics.ES11.EnableCap)cap);
+            InteropHelper.Call((OpenTK.Graphics.ES11.EnableCap)cap, EntryPoints[85]);
             #if DEBUG
             }
             #endif
@@ -5823,7 +5823,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[86], (OpenTK.Graphics.ES11.EnableCap)array);
+            InteropHelper.Call((OpenTK.Graphics.ES11.EnableCap)array, EntryPoints[86]);
             #if DEBUG
             }
             #endif
@@ -5845,7 +5845,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[86], (OpenTK.Graphics.ES11.EnableCap)array);
+            InteropHelper.Call((OpenTK.Graphics.ES11.EnableCap)array, EntryPoints[86]);
             #if DEBUG
             }
             #endif
@@ -5907,7 +5907,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[111], (OpenTK.Graphics.ES11.FogParameter)pname, (Single)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.FogParameter)pname, (Single)param, EntryPoints[111]);
             #if DEBUG
             }
             #endif
@@ -5934,7 +5934,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[111], (OpenTK.Graphics.ES11.FogParameter)pname, (Single)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.FogParameter)pname, (Single)param, EntryPoints[111]);
             #if DEBUG
             }
             #endif
@@ -5966,7 +5966,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[112], (OpenTK.Graphics.ES11.FogParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.FogParameter)pname, (IntPtr)@params_ptr, EntryPoints[112]);
                 }
             }
             #if DEBUG
@@ -5997,7 +5997,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[112], (OpenTK.Graphics.ES11.FogParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.FogParameter)pname, (IntPtr)@params, EntryPoints[112]);
             #if DEBUG
             }
             #endif
@@ -6028,7 +6028,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[112], (OpenTK.Graphics.ES11.FogParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.FogParameter)pname, (IntPtr)@params_ptr, EntryPoints[112]);
                 }
             }
             #if DEBUG
@@ -6058,7 +6058,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[112], (OpenTK.Graphics.ES11.FogParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.FogParameter)pname, (IntPtr)@params, EntryPoints[112]);
             #if DEBUG
             }
             #endif
@@ -6073,7 +6073,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[113], (OpenTK.Graphics.ES11.All)pname, (int)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[113]);
             #if DEBUG
             }
             #endif
@@ -6092,7 +6092,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* param_ptr = param)
                 {
-                    InteropHelper.Call(EntryPoints[115], (OpenTK.Graphics.ES11.All)pname, (IntPtr)param_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)param_ptr, EntryPoints[115]);
                 }
             }
             #if DEBUG
@@ -6110,7 +6110,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[115], (OpenTK.Graphics.ES11.All)pname, (IntPtr)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)param, EntryPoints[115]);
             #if DEBUG
             }
             #endif
@@ -6133,7 +6133,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[121], (OpenTK.Graphics.ES11.FrontFaceDirection)mode);
+            InteropHelper.Call((OpenTK.Graphics.ES11.FrontFaceDirection)mode, EntryPoints[121]);
             #if DEBUG
             }
             #endif
@@ -6155,7 +6155,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[121], (OpenTK.Graphics.ES11.FrontFaceDirection)mode);
+            InteropHelper.Call((OpenTK.Graphics.ES11.FrontFaceDirection)mode, EntryPoints[121]);
             #if DEBUG
             }
             #endif
@@ -6187,7 +6187,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[122], (Single)l, (Single)r, (Single)b, (Single)t, (Single)n, (Single)f);
+            InteropHelper.Call((Single)l, (Single)r, (Single)b, (Single)t, (Single)n, (Single)f, EntryPoints[122]);
             #if DEBUG
             }
             #endif
@@ -6202,7 +6202,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[124], (int)l, (int)r, (int)b, (int)t, (int)n, (int)f);
+            InteropHelper.Call((int)l, (int)r, (int)b, (int)t, (int)n, (int)f, EntryPoints[124]);
             #if DEBUG
             }
             #endif
@@ -6234,7 +6234,7 @@ namespace OpenTK.Graphics.ES11
                 const Int32 n = 1;
                 Int32 retval;
                 Int32* buffers_ptr = &retval;
-                InteropHelper.Call(EntryPoints[126], (Int32)n, (IntPtr)buffers_ptr);
+                InteropHelper.Call((Int32)n, (IntPtr)buffers_ptr, EntryPoints[126]);
                 return retval;
             }
             #if DEBUG
@@ -6267,7 +6267,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* buffers_ptr = buffers)
                 {
-                    InteropHelper.Call(EntryPoints[126], (Int32)n, (IntPtr)buffers_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)buffers_ptr, EntryPoints[126]);
                 }
             }
             #if DEBUG
@@ -6300,7 +6300,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* buffers_ptr = &buffers)
                 {
-                    InteropHelper.Call(EntryPoints[126], (Int32)n, (IntPtr)buffers_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)buffers_ptr, EntryPoints[126]);
                     buffers = *buffers_ptr;
                 }
             }
@@ -6331,7 +6331,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[126], (Int32)n, (IntPtr)buffers);
+            InteropHelper.Call((Int32)n, (IntPtr)buffers, EntryPoints[126]);
             #if DEBUG
             }
             #endif
@@ -6363,7 +6363,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (UInt32* buffers_ptr = buffers)
                 {
-                    InteropHelper.Call(EntryPoints[126], (Int32)n, (IntPtr)buffers_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)buffers_ptr, EntryPoints[126]);
                 }
             }
             #if DEBUG
@@ -6397,7 +6397,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (UInt32* buffers_ptr = &buffers)
                 {
-                    InteropHelper.Call(EntryPoints[126], (Int32)n, (IntPtr)buffers_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)buffers_ptr, EntryPoints[126]);
                     buffers = *buffers_ptr;
                 }
             }
@@ -6428,7 +6428,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[126], (Int32)n, (IntPtr)buffers);
+            InteropHelper.Call((Int32)n, (IntPtr)buffers, EntryPoints[126]);
             #if DEBUG
             }
             #endif
@@ -6460,7 +6460,7 @@ namespace OpenTK.Graphics.ES11
                 const Int32 n = 1;
                 Int32 retval;
                 Int32* textures_ptr = &retval;
-                InteropHelper.Call(EntryPoints[131], (Int32)n, (IntPtr)textures_ptr);
+                InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, EntryPoints[131]);
                 return retval;
             }
             #if DEBUG
@@ -6493,7 +6493,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* textures_ptr = textures)
                 {
-                    InteropHelper.Call(EntryPoints[131], (Int32)n, (IntPtr)textures_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, EntryPoints[131]);
                 }
             }
             #if DEBUG
@@ -6526,7 +6526,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* textures_ptr = &textures)
                 {
-                    InteropHelper.Call(EntryPoints[131], (Int32)n, (IntPtr)textures_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, EntryPoints[131]);
                     textures = *textures_ptr;
                 }
             }
@@ -6557,7 +6557,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[131], (Int32)n, (IntPtr)textures);
+            InteropHelper.Call((Int32)n, (IntPtr)textures, EntryPoints[131]);
             #if DEBUG
             }
             #endif
@@ -6589,7 +6589,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (UInt32* textures_ptr = textures)
                 {
-                    InteropHelper.Call(EntryPoints[131], (Int32)n, (IntPtr)textures_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, EntryPoints[131]);
                 }
             }
             #if DEBUG
@@ -6623,7 +6623,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (UInt32* textures_ptr = &textures)
                 {
-                    InteropHelper.Call(EntryPoints[131], (Int32)n, (IntPtr)textures_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, EntryPoints[131]);
                     textures = *textures_ptr;
                 }
             }
@@ -6654,7 +6654,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[131], (Int32)n, (IntPtr)textures);
+            InteropHelper.Call((Int32)n, (IntPtr)textures, EntryPoints[131]);
             #if DEBUG
             }
             #endif
@@ -6674,7 +6674,7 @@ namespace OpenTK.Graphics.ES11
             {
                 bool retval;
                 bool* data_ptr = &retval;
-                InteropHelper.Call(EntryPoints[133], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[133]);
                 return retval;
             }
             #if DEBUG
@@ -6695,7 +6695,7 @@ namespace OpenTK.Graphics.ES11
             {
                 bool retval;
                 bool* data_ptr = &retval;
-                InteropHelper.Call(EntryPoints[133], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[133]);
                 return retval;
             }
             #if DEBUG
@@ -6717,7 +6717,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (bool* data_ptr = data)
                 {
-                    InteropHelper.Call(EntryPoints[133], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[133]);
                 }
             }
             #if DEBUG
@@ -6739,7 +6739,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (bool* data_ptr = &data)
                 {
-                    InteropHelper.Call(EntryPoints[133], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[133]);
                     data = *data_ptr;
                 }
             }
@@ -6759,7 +6759,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[133], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data);
+            InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data, EntryPoints[133]);
             #if DEBUG
             }
             #endif
@@ -6778,7 +6778,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (bool* data_ptr = data)
                 {
-                    InteropHelper.Call(EntryPoints[133], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[133]);
                 }
             }
             #if DEBUG
@@ -6799,7 +6799,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (bool* data_ptr = &data)
                 {
-                    InteropHelper.Call(EntryPoints[133], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[133]);
                     data = *data_ptr;
                 }
             }
@@ -6818,7 +6818,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[133], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data);
+            InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data, EntryPoints[133]);
             #if DEBUG
             }
             #endif
@@ -6854,7 +6854,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[134], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[134]);
                 }
             }
             #if DEBUG
@@ -6892,7 +6892,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[134], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[134]);
                     @params = *@params_ptr;
                 }
             }
@@ -6928,7 +6928,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[134], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[134]);
             #if DEBUG
             }
             #endif
@@ -6959,7 +6959,7 @@ namespace OpenTK.Graphics.ES11
             {
                 Single retval;
                 Single* equation_ptr = &retval;
-                InteropHelper.Call(EntryPoints[136], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[136]);
                 return retval;
             }
             #if DEBUG
@@ -6992,7 +6992,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* equation_ptr = equation)
                 {
-                    InteropHelper.Call(EntryPoints[136], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[136]);
                 }
             }
             #if DEBUG
@@ -7025,7 +7025,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* equation_ptr = &equation)
                 {
-                    InteropHelper.Call(EntryPoints[136], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[136]);
                     equation = *equation_ptr;
                 }
             }
@@ -7056,7 +7056,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[136], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation, EntryPoints[136]);
             #if DEBUG
             }
             #endif
@@ -7075,7 +7075,7 @@ namespace OpenTK.Graphics.ES11
             {
                 int retval;
                 int* equation_ptr = &retval;
-                InteropHelper.Call(EntryPoints[138], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[138]);
                 return retval;
             }
             #if DEBUG
@@ -7096,7 +7096,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* equation_ptr = equation)
                 {
-                    InteropHelper.Call(EntryPoints[138], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[138]);
                 }
             }
             #if DEBUG
@@ -7117,7 +7117,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* equation_ptr = &equation)
                 {
-                    InteropHelper.Call(EntryPoints[138], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[138]);
                     equation = *equation_ptr;
                 }
             }
@@ -7136,7 +7136,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[138], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation, EntryPoints[138]);
             #if DEBUG
             }
             #endif
@@ -7165,7 +7165,7 @@ namespace OpenTK.Graphics.ES11
             {
                 int retval;
                 int* @params_ptr = &retval;
-                InteropHelper.Call(EntryPoints[145], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[145]);
                 return retval;
             }
             #if DEBUG
@@ -7186,7 +7186,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[145], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[145]);
                 }
             }
             #if DEBUG
@@ -7207,7 +7207,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[145], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[145]);
                     @params = *@params_ptr;
                 }
             }
@@ -7226,7 +7226,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[145], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[145]);
             #if DEBUG
             }
             #endif
@@ -7246,7 +7246,7 @@ namespace OpenTK.Graphics.ES11
             {
                 Single retval;
                 Single* data_ptr = &retval;
-                InteropHelper.Call(EntryPoints[147], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[147]);
                 return retval;
             }
             #if DEBUG
@@ -7267,7 +7267,7 @@ namespace OpenTK.Graphics.ES11
             {
                 Single retval;
                 Single* data_ptr = &retval;
-                InteropHelper.Call(EntryPoints[147], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[147]);
                 return retval;
             }
             #if DEBUG
@@ -7289,7 +7289,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* data_ptr = data)
                 {
-                    InteropHelper.Call(EntryPoints[147], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[147]);
                 }
             }
             #if DEBUG
@@ -7311,7 +7311,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* data_ptr = &data)
                 {
-                    InteropHelper.Call(EntryPoints[147], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[147]);
                     data = *data_ptr;
                 }
             }
@@ -7331,7 +7331,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[147], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data);
+            InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data, EntryPoints[147]);
             #if DEBUG
             }
             #endif
@@ -7350,7 +7350,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* data_ptr = data)
                 {
-                    InteropHelper.Call(EntryPoints[147], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[147]);
                 }
             }
             #if DEBUG
@@ -7371,7 +7371,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* data_ptr = &data)
                 {
-                    InteropHelper.Call(EntryPoints[147], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[147]);
                     data = *data_ptr;
                 }
             }
@@ -7390,7 +7390,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[147], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data);
+            InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data, EntryPoints[147]);
             #if DEBUG
             }
             #endif
@@ -7410,7 +7410,7 @@ namespace OpenTK.Graphics.ES11
             {
                 Int32 retval;
                 Int32* data_ptr = &retval;
-                InteropHelper.Call(EntryPoints[152], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[152]);
                 return retval;
             }
             #if DEBUG
@@ -7431,7 +7431,7 @@ namespace OpenTK.Graphics.ES11
             {
                 Int32 retval;
                 Int32* data_ptr = &retval;
-                InteropHelper.Call(EntryPoints[152], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[152]);
                 return retval;
             }
             #if DEBUG
@@ -7453,7 +7453,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* data_ptr = data)
                 {
-                    InteropHelper.Call(EntryPoints[152], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[152]);
                 }
             }
             #if DEBUG
@@ -7475,7 +7475,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* data_ptr = &data)
                 {
-                    InteropHelper.Call(EntryPoints[152], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[152]);
                     data = *data_ptr;
                 }
             }
@@ -7495,7 +7495,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[152], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data);
+            InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data, EntryPoints[152]);
             #if DEBUG
             }
             #endif
@@ -7514,7 +7514,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* data_ptr = data)
                 {
-                    InteropHelper.Call(EntryPoints[152], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[152]);
                 }
             }
             #if DEBUG
@@ -7535,7 +7535,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* data_ptr = &data)
                 {
-                    InteropHelper.Call(EntryPoints[152], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data_ptr, EntryPoints[152]);
                     data = *data_ptr;
                 }
             }
@@ -7554,7 +7554,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[152], (OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data);
+            InteropHelper.Call((OpenTK.Graphics.ES11.GetPName)pname, (IntPtr)data, EntryPoints[152]);
             #if DEBUG
             }
             #endif
@@ -7591,7 +7591,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[153], (OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params_ptr, EntryPoints[153]);
                 }
             }
             #if DEBUG
@@ -7630,7 +7630,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[153], (OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params_ptr, EntryPoints[153]);
                     @params = *@params_ptr;
                 }
             }
@@ -7667,7 +7667,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[153], (OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params, EntryPoints[153]);
             #if DEBUG
             }
             #endif
@@ -7703,7 +7703,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[153], (OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params_ptr, EntryPoints[153]);
                 }
             }
             #if DEBUG
@@ -7741,7 +7741,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[153], (OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params_ptr, EntryPoints[153]);
                     @params = *@params_ptr;
                 }
             }
@@ -7777,7 +7777,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[153], (OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params, EntryPoints[153]);
             #if DEBUG
             }
             #endif
@@ -7796,7 +7796,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[155], (OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[155]);
                 }
             }
             #if DEBUG
@@ -7817,7 +7817,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[155], (OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[155]);
                     @params = *@params_ptr;
                 }
             }
@@ -7836,7 +7836,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[155], (OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[155]);
             #if DEBUG
             }
             #endif
@@ -7873,7 +7873,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[158], (OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params_ptr, EntryPoints[158]);
                 }
             }
             #if DEBUG
@@ -7912,7 +7912,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[158], (OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params_ptr, EntryPoints[158]);
                     @params = *@params_ptr;
                 }
             }
@@ -7949,7 +7949,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[158], (OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params, EntryPoints[158]);
             #if DEBUG
             }
             #endif
@@ -7985,7 +7985,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[158], (OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params_ptr, EntryPoints[158]);
                 }
             }
             #if DEBUG
@@ -8023,7 +8023,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[158], (OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params_ptr, EntryPoints[158]);
                     @params = *@params_ptr;
                 }
             }
@@ -8059,7 +8059,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[158], (OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params, EntryPoints[158]);
             #if DEBUG
             }
             #endif
@@ -8078,7 +8078,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[160], (OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[160]);
                 }
             }
             #if DEBUG
@@ -8099,7 +8099,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[160], (OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[160]);
                     @params = *@params_ptr;
                 }
             }
@@ -8118,7 +8118,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[160], (OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[160]);
             #if DEBUG
             }
             #endif
@@ -8137,7 +8137,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* values_ptr = values)
                 {
-                    InteropHelper.Call(EntryPoints[164], (OpenTK.Graphics.ES11.All)map, (Int32)size, (IntPtr)values_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)map, (Int32)size, (IntPtr)values_ptr, EntryPoints[164]);
                 }
             }
             #if DEBUG
@@ -8158,7 +8158,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* values_ptr = &values)
                 {
-                    InteropHelper.Call(EntryPoints[164], (OpenTK.Graphics.ES11.All)map, (Int32)size, (IntPtr)values_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)map, (Int32)size, (IntPtr)values_ptr, EntryPoints[164]);
                     values = *values_ptr;
                 }
             }
@@ -8177,7 +8177,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[164], (OpenTK.Graphics.ES11.All)map, (Int32)size, (IntPtr)values);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)map, (Int32)size, (IntPtr)values, EntryPoints[164]);
             #if DEBUG
             }
             #endif
@@ -8205,7 +8205,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[165], (OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params, EntryPoints[165]);
             #if DEBUG
             }
             #endif
@@ -8237,7 +8237,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[165], (OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[165]);
             }
             finally
             {
@@ -8274,7 +8274,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[165], (OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[165]);
             }
             finally
             {
@@ -8311,7 +8311,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[165], (OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[165]);
             }
             finally
             {
@@ -8348,7 +8348,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[165], (OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[165]);
                 @params = (T1)@params_ptr.Target;
             }
             finally
@@ -8381,7 +8381,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[165], (OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params, EntryPoints[165]);
             #if DEBUG
             }
             #endif
@@ -8412,7 +8412,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[165], (OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[165]);
             }
             finally
             {
@@ -8448,7 +8448,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[165], (OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[165]);
             }
             finally
             {
@@ -8484,7 +8484,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[165], (OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[165]);
             }
             finally
             {
@@ -8520,7 +8520,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[165], (OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[165]);
                 @params = (T1)@params_ptr.Target;
             }
             finally
@@ -8554,7 +8554,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            unsafe { return new string((sbyte*)InteropHelper.CallReturn<IntPtr, StringName>(EntryPoints[167], (OpenTK.Graphics.ES11.StringName)name)); }
+            unsafe { return new string((sbyte*)InteropHelper.CallReturn<IntPtr, StringName>((OpenTK.Graphics.ES11.StringName)name, EntryPoints[167])); }
             #if DEBUG
             }
             #endif
@@ -8581,7 +8581,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            unsafe { return new string((sbyte*)InteropHelper.CallReturn<IntPtr, StringName>(EntryPoints[167], (OpenTK.Graphics.ES11.StringName)name)); }
+            unsafe { return new string((sbyte*)InteropHelper.CallReturn<IntPtr, StringName>((OpenTK.Graphics.ES11.StringName)name, EntryPoints[167])); }
             #if DEBUG
             }
             #endif
@@ -8618,7 +8618,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[169], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr, EntryPoints[169]);
                 }
             }
             #if DEBUG
@@ -8657,7 +8657,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[169], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr, EntryPoints[169]);
                     @params = *@params_ptr;
                 }
             }
@@ -8694,7 +8694,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[169], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params, EntryPoints[169]);
             #if DEBUG
             }
             #endif
@@ -8730,7 +8730,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[169], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr, EntryPoints[169]);
                 }
             }
             #if DEBUG
@@ -8768,7 +8768,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[169], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr, EntryPoints[169]);
                     @params = *@params_ptr;
                 }
             }
@@ -8804,7 +8804,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[169], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params, EntryPoints[169]);
             #if DEBUG
             }
             #endif
@@ -8841,7 +8841,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[170], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr, EntryPoints[170]);
                 }
             }
             #if DEBUG
@@ -8880,7 +8880,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[170], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr, EntryPoints[170]);
                     @params = *@params_ptr;
                 }
             }
@@ -8917,7 +8917,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[170], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params, EntryPoints[170]);
             #if DEBUG
             }
             #endif
@@ -8953,7 +8953,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[170], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr, EntryPoints[170]);
                 }
             }
             #if DEBUG
@@ -8991,7 +8991,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[170], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr, EntryPoints[170]);
                     @params = *@params_ptr;
                 }
             }
@@ -9027,7 +9027,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[170], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params, EntryPoints[170]);
             #if DEBUG
             }
             #endif
@@ -9046,7 +9046,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[171], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[171]);
                 }
             }
             #if DEBUG
@@ -9067,7 +9067,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[171], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[171]);
                     @params = *@params_ptr;
                 }
             }
@@ -9086,7 +9086,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[171], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[171]);
             #if DEBUG
             }
             #endif
@@ -9123,7 +9123,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[177], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr, EntryPoints[177]);
                 }
             }
             #if DEBUG
@@ -9162,7 +9162,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[177], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr, EntryPoints[177]);
                     @params = *@params_ptr;
                 }
             }
@@ -9199,7 +9199,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[177], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params, EntryPoints[177]);
             #if DEBUG
             }
             #endif
@@ -9235,7 +9235,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[177], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr, EntryPoints[177]);
                 }
             }
             #if DEBUG
@@ -9273,7 +9273,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[177], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr, EntryPoints[177]);
                     @params = *@params_ptr;
                 }
             }
@@ -9309,7 +9309,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[177], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params, EntryPoints[177]);
             #if DEBUG
             }
             #endif
@@ -9346,7 +9346,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[178], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr, EntryPoints[178]);
                 }
             }
             #if DEBUG
@@ -9385,7 +9385,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[178], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr, EntryPoints[178]);
                     @params = *@params_ptr;
                 }
             }
@@ -9422,7 +9422,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[178], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params, EntryPoints[178]);
             #if DEBUG
             }
             #endif
@@ -9458,7 +9458,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[178], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr, EntryPoints[178]);
                 }
             }
             #if DEBUG
@@ -9496,7 +9496,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[178], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params_ptr, EntryPoints[178]);
                     @params = *@params_ptr;
                 }
             }
@@ -9532,7 +9532,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[178], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.GetTextureParameter)pname, (IntPtr)@params, EntryPoints[178]);
             #if DEBUG
             }
             #endif
@@ -9551,7 +9551,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[179], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[179]);
                 }
             }
             #if DEBUG
@@ -9572,7 +9572,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* @params_ptr = &@params)
                 {
-                    InteropHelper.Call(EntryPoints[179], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[179]);
                     @params = *@params_ptr;
                 }
             }
@@ -9591,7 +9591,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[179], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[179]);
             #if DEBUG
             }
             #endif
@@ -9619,7 +9619,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[181], (OpenTK.Graphics.ES11.HintTarget)target, (OpenTK.Graphics.ES11.HintMode)mode);
+            InteropHelper.Call((OpenTK.Graphics.ES11.HintTarget)target, (OpenTK.Graphics.ES11.HintMode)mode, EntryPoints[181]);
             #if DEBUG
             }
             #endif
@@ -9646,7 +9646,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[181], (OpenTK.Graphics.ES11.HintTarget)target, (OpenTK.Graphics.ES11.HintMode)mode);
+            InteropHelper.Call((OpenTK.Graphics.ES11.HintTarget)target, (OpenTK.Graphics.ES11.HintMode)mode, EntryPoints[181]);
             #if DEBUG
             }
             #endif
@@ -9668,7 +9668,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[184], (UInt32)buffer);
+            return InteropHelper.CallReturn<bool, UInt32>((UInt32)buffer, EntryPoints[184]);
             #if DEBUG
             }
             #endif
@@ -9691,7 +9691,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[184], (UInt32)buffer);
+            return InteropHelper.CallReturn<bool, UInt32>((UInt32)buffer, EntryPoints[184]);
             #if DEBUG
             }
             #endif
@@ -9719,7 +9719,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            return InteropHelper.CallReturn<bool, EnableCap>(EntryPoints[185], (OpenTK.Graphics.ES11.EnableCap)cap);
+            return InteropHelper.CallReturn<bool, EnableCap>((OpenTK.Graphics.ES11.EnableCap)cap, EntryPoints[185]);
             #if DEBUG
             }
             #endif
@@ -9746,7 +9746,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            return InteropHelper.CallReturn<bool, EnableCap>(EntryPoints[185], (OpenTK.Graphics.ES11.EnableCap)cap);
+            return InteropHelper.CallReturn<bool, EnableCap>((OpenTK.Graphics.ES11.EnableCap)cap, EntryPoints[185]);
             #if DEBUG
             }
             #endif
@@ -9768,7 +9768,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[190], (UInt32)texture);
+            return InteropHelper.CallReturn<bool, UInt32>((UInt32)texture, EntryPoints[190]);
             #if DEBUG
             }
             #endif
@@ -9791,7 +9791,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[190], (UInt32)texture);
+            return InteropHelper.CallReturn<bool, UInt32>((UInt32)texture, EntryPoints[190]);
             #if DEBUG
             }
             #endif
@@ -9824,7 +9824,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[192], (OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (Single)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (Single)param, EntryPoints[192]);
             #if DEBUG
             }
             #endif
@@ -9856,7 +9856,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[192], (OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (Single)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (Single)param, EntryPoints[192]);
             #if DEBUG
             }
             #endif
@@ -9893,7 +9893,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[193], (OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params_ptr, EntryPoints[193]);
                 }
             }
             #if DEBUG
@@ -9929,7 +9929,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[193], (OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params, EntryPoints[193]);
             #if DEBUG
             }
             #endif
@@ -9965,7 +9965,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[193], (OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params_ptr, EntryPoints[193]);
                 }
             }
             #if DEBUG
@@ -10000,7 +10000,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[193], (OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.LightName)light, (OpenTK.Graphics.ES11.LightParameter)pname, (IntPtr)@params, EntryPoints[193]);
             #if DEBUG
             }
             #endif
@@ -10028,7 +10028,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[194], (OpenTK.Graphics.ES11.LightModelParameter)pname, (Single)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.LightModelParameter)pname, (Single)param, EntryPoints[194]);
             #if DEBUG
             }
             #endif
@@ -10055,7 +10055,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[194], (OpenTK.Graphics.ES11.LightModelParameter)pname, (Single)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.LightModelParameter)pname, (Single)param, EntryPoints[194]);
             #if DEBUG
             }
             #endif
@@ -10087,7 +10087,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[195], (OpenTK.Graphics.ES11.LightModelParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.LightModelParameter)pname, (IntPtr)@params_ptr, EntryPoints[195]);
                 }
             }
             #if DEBUG
@@ -10118,7 +10118,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[195], (OpenTK.Graphics.ES11.LightModelParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.LightModelParameter)pname, (IntPtr)@params, EntryPoints[195]);
             #if DEBUG
             }
             #endif
@@ -10149,7 +10149,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[195], (OpenTK.Graphics.ES11.LightModelParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.LightModelParameter)pname, (IntPtr)@params_ptr, EntryPoints[195]);
                 }
             }
             #if DEBUG
@@ -10179,7 +10179,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[195], (OpenTK.Graphics.ES11.LightModelParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.LightModelParameter)pname, (IntPtr)@params, EntryPoints[195]);
             #if DEBUG
             }
             #endif
@@ -10194,7 +10194,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[196], (OpenTK.Graphics.ES11.All)pname, (int)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[196]);
             #if DEBUG
             }
             #endif
@@ -10213,7 +10213,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* param_ptr = param)
                 {
-                    InteropHelper.Call(EntryPoints[198], (OpenTK.Graphics.ES11.All)pname, (IntPtr)param_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)param_ptr, EntryPoints[198]);
                 }
             }
             #if DEBUG
@@ -10231,7 +10231,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[198], (OpenTK.Graphics.ES11.All)pname, (IntPtr)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)param, EntryPoints[198]);
             #if DEBUG
             }
             #endif
@@ -10246,7 +10246,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[200], (OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (int)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[200]);
             #if DEBUG
             }
             #endif
@@ -10265,7 +10265,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[202], (OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[202]);
                 }
             }
             #if DEBUG
@@ -10283,7 +10283,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[202], (OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[202]);
             #if DEBUG
             }
             #endif
@@ -10305,7 +10305,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[204], (Single)width);
+            InteropHelper.Call((Single)width, EntryPoints[204]);
             #if DEBUG
             }
             #endif
@@ -10320,7 +10320,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[205], (int)width);
+            InteropHelper.Call((int)width, EntryPoints[205]);
             #if DEBUG
             }
             #endif
@@ -10363,7 +10363,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* m_ptr = m)
                 {
-                    InteropHelper.Call(EntryPoints[208], (IntPtr)m_ptr);
+                    InteropHelper.Call((IntPtr)m_ptr, EntryPoints[208]);
                 }
             }
             #if DEBUG
@@ -10391,7 +10391,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* m_ptr = &m)
                 {
-                    InteropHelper.Call(EntryPoints[208], (IntPtr)m_ptr);
+                    InteropHelper.Call((IntPtr)m_ptr, EntryPoints[208]);
                 }
             }
             #if DEBUG
@@ -10416,7 +10416,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[208], (IntPtr)m);
+            InteropHelper.Call((IntPtr)m, EntryPoints[208]);
             #if DEBUG
             }
             #endif
@@ -10435,7 +10435,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* m_ptr = m)
                 {
-                    InteropHelper.Call(EntryPoints[209], (IntPtr)m_ptr);
+                    InteropHelper.Call((IntPtr)m_ptr, EntryPoints[209]);
                 }
             }
             #if DEBUG
@@ -10456,7 +10456,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* m_ptr = &m)
                 {
-                    InteropHelper.Call(EntryPoints[209], (IntPtr)m_ptr);
+                    InteropHelper.Call((IntPtr)m_ptr, EntryPoints[209]);
                 }
             }
             #if DEBUG
@@ -10474,7 +10474,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[209], (IntPtr)m);
+            InteropHelper.Call((IntPtr)m, EntryPoints[209]);
             #if DEBUG
             }
             #endif
@@ -10497,7 +10497,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[213], (OpenTK.Graphics.ES11.LogicOp)opcode);
+            InteropHelper.Call((OpenTK.Graphics.ES11.LogicOp)opcode, EntryPoints[213]);
             #if DEBUG
             }
             #endif
@@ -10519,7 +10519,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[213], (OpenTK.Graphics.ES11.LogicOp)opcode);
+            InteropHelper.Call((OpenTK.Graphics.ES11.LogicOp)opcode, EntryPoints[213]);
             #if DEBUG
             }
             #endif
@@ -10552,7 +10552,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[220], (OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (Single)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (Single)param, EntryPoints[220]);
             #if DEBUG
             }
             #endif
@@ -10584,7 +10584,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[220], (OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (Single)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (Single)param, EntryPoints[220]);
             #if DEBUG
             }
             #endif
@@ -10621,7 +10621,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[221], (OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params_ptr, EntryPoints[221]);
                 }
             }
             #if DEBUG
@@ -10657,7 +10657,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[221], (OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params, EntryPoints[221]);
             #if DEBUG
             }
             #endif
@@ -10693,7 +10693,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[221], (OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params_ptr, EntryPoints[221]);
                 }
             }
             #if DEBUG
@@ -10728,7 +10728,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[221], (OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.MaterialFace)face, (OpenTK.Graphics.ES11.MaterialParameter)pname, (IntPtr)@params, EntryPoints[221]);
             #if DEBUG
             }
             #endif
@@ -10743,7 +10743,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[222], (OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (int)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[222]);
             #if DEBUG
             }
             #endif
@@ -10762,7 +10762,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* param_ptr = param)
                 {
-                    InteropHelper.Call(EntryPoints[224], (OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)param_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)param_ptr, EntryPoints[224]);
                 }
             }
             #if DEBUG
@@ -10780,7 +10780,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[224], (OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)param, EntryPoints[224]);
             #if DEBUG
             }
             #endif
@@ -10803,7 +10803,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[227], (OpenTK.Graphics.ES11.MatrixMode)mode);
+            InteropHelper.Call((OpenTK.Graphics.ES11.MatrixMode)mode, EntryPoints[227]);
             #if DEBUG
             }
             #endif
@@ -10825,7 +10825,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[227], (OpenTK.Graphics.ES11.MatrixMode)mode);
+            InteropHelper.Call((OpenTK.Graphics.ES11.MatrixMode)mode, EntryPoints[227]);
             #if DEBUG
             }
             #endif
@@ -10853,7 +10853,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[244], (OpenTK.Graphics.ES11.TextureUnit)target, (Single)s, (Single)t, (Single)r, (Single)q);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureUnit)target, (Single)s, (Single)t, (Single)r, (Single)q, EntryPoints[244]);
             #if DEBUG
             }
             #endif
@@ -10880,7 +10880,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[244], (OpenTK.Graphics.ES11.TextureUnit)target, (Single)s, (Single)t, (Single)r, (Single)q);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureUnit)target, (Single)s, (Single)t, (Single)r, (Single)q, EntryPoints[244]);
             #if DEBUG
             }
             #endif
@@ -10895,7 +10895,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[245], (OpenTK.Graphics.ES11.All)texture, (int)s, (int)t, (int)r, (int)q);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (int)s, (int)t, (int)r, (int)q, EntryPoints[245]);
             #if DEBUG
             }
             #endif
@@ -10921,7 +10921,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* m_ptr = m)
                 {
-                    InteropHelper.Call(EntryPoints[248], (IntPtr)m_ptr);
+                    InteropHelper.Call((IntPtr)m_ptr, EntryPoints[248]);
                 }
             }
             #if DEBUG
@@ -10949,7 +10949,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* m_ptr = &m)
                 {
-                    InteropHelper.Call(EntryPoints[248], (IntPtr)m_ptr);
+                    InteropHelper.Call((IntPtr)m_ptr, EntryPoints[248]);
                 }
             }
             #if DEBUG
@@ -10974,7 +10974,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[248], (IntPtr)m);
+            InteropHelper.Call((IntPtr)m, EntryPoints[248]);
             #if DEBUG
             }
             #endif
@@ -10993,7 +10993,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* m_ptr = m)
                 {
-                    InteropHelper.Call(EntryPoints[249], (IntPtr)m_ptr);
+                    InteropHelper.Call((IntPtr)m_ptr, EntryPoints[249]);
                 }
             }
             #if DEBUG
@@ -11014,7 +11014,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* m_ptr = &m)
                 {
-                    InteropHelper.Call(EntryPoints[249], (IntPtr)m_ptr);
+                    InteropHelper.Call((IntPtr)m_ptr, EntryPoints[249]);
                 }
             }
             #if DEBUG
@@ -11032,7 +11032,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[249], (IntPtr)m);
+            InteropHelper.Call((IntPtr)m, EntryPoints[249]);
             #if DEBUG
             }
             #endif
@@ -11057,7 +11057,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[252], (Single)nx, (Single)ny, (Single)nz);
+            InteropHelper.Call((Single)nx, (Single)ny, (Single)nz, EntryPoints[252]);
             #if DEBUG
             }
             #endif
@@ -11072,7 +11072,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[253], (int)nx, (int)ny, (int)nz);
+            InteropHelper.Call((int)nx, (int)ny, (int)nz, EntryPoints[253]);
             #if DEBUG
             }
             #endif
@@ -11105,7 +11105,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[256], (OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer);
+            InteropHelper.Call((OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer, EntryPoints[256]);
             #if DEBUG
             }
             #endif
@@ -11142,7 +11142,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[256], (OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[256]);
             }
             finally
             {
@@ -11184,7 +11184,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[256], (OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[256]);
             }
             finally
             {
@@ -11226,7 +11226,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[256], (OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[256]);
             }
             finally
             {
@@ -11268,7 +11268,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[256], (OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[256]);
                 pointer = (T2)pointer_ptr.Target;
             }
             finally
@@ -11306,7 +11306,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[256], (OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer);
+            InteropHelper.Call((OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer, EntryPoints[256]);
             #if DEBUG
             }
             #endif
@@ -11342,7 +11342,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[256], (OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[256]);
             }
             finally
             {
@@ -11383,7 +11383,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[256], (OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[256]);
             }
             finally
             {
@@ -11424,7 +11424,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[256], (OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[256]);
             }
             finally
             {
@@ -11465,7 +11465,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[256], (OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[256]);
                 pointer = (T2)pointer_ptr.Target;
             }
             finally
@@ -11503,7 +11503,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[257], (Single)l, (Single)r, (Single)b, (Single)t, (Single)n, (Single)f);
+            InteropHelper.Call((Single)l, (Single)r, (Single)b, (Single)t, (Single)n, (Single)f, EntryPoints[257]);
             #if DEBUG
             }
             #endif
@@ -11518,7 +11518,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[259], (int)l, (int)r, (int)b, (int)t, (int)n, (int)f);
+            InteropHelper.Call((int)l, (int)r, (int)b, (int)t, (int)n, (int)f, EntryPoints[259]);
             #if DEBUG
             }
             #endif
@@ -11537,7 +11537,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* values_ptr = values)
                 {
-                    InteropHelper.Call(EntryPoints[262], (OpenTK.Graphics.ES11.All)map, (Int32)size, (IntPtr)values_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)map, (Int32)size, (IntPtr)values_ptr, EntryPoints[262]);
                 }
             }
             #if DEBUG
@@ -11558,7 +11558,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* values_ptr = &values)
                 {
-                    InteropHelper.Call(EntryPoints[262], (OpenTK.Graphics.ES11.All)map, (Int32)size, (IntPtr)values_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)map, (Int32)size, (IntPtr)values_ptr, EntryPoints[262]);
                 }
             }
             #if DEBUG
@@ -11576,7 +11576,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[262], (OpenTK.Graphics.ES11.All)map, (Int32)size, (IntPtr)values);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)map, (Int32)size, (IntPtr)values, EntryPoints[262]);
             #if DEBUG
             }
             #endif
@@ -11604,7 +11604,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[263], (OpenTK.Graphics.ES11.PixelStoreParameter)pname, (Int32)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.PixelStoreParameter)pname, (Int32)param, EntryPoints[263]);
             #if DEBUG
             }
             #endif
@@ -11631,7 +11631,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[263], (OpenTK.Graphics.ES11.PixelStoreParameter)pname, (Int32)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.PixelStoreParameter)pname, (Int32)param, EntryPoints[263]);
             #if DEBUG
             }
             #endif
@@ -11646,7 +11646,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[264], (OpenTK.Graphics.ES11.All)pname, (int)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[264]);
             #if DEBUG
             }
             #endif
@@ -11678,7 +11678,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[267], (OpenTK.Graphics.ES11.All)pname, (Single)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (Single)param, EntryPoints[267]);
             #if DEBUG
             }
             #endif
@@ -11714,7 +11714,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[268], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[268]);
                 }
             }
             #if DEBUG
@@ -11749,7 +11749,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[268], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[268]);
             #if DEBUG
             }
             #endif
@@ -11764,7 +11764,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[269], (OpenTK.Graphics.ES11.All)pname, (int)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[269]);
             #if DEBUG
             }
             #endif
@@ -11783,7 +11783,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[271], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[271]);
                 }
             }
             #if DEBUG
@@ -11801,7 +11801,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[271], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[271]);
             #if DEBUG
             }
             #endif
@@ -11823,7 +11823,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[273], (Single)size);
+            InteropHelper.Call((Single)size, EntryPoints[273]);
             #if DEBUG
             }
             #endif
@@ -11838,7 +11838,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[275], (int)size);
+            InteropHelper.Call((int)size, EntryPoints[275]);
             #if DEBUG
             }
             #endif
@@ -11865,7 +11865,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[277], (Single)factor, (Single)units);
+            InteropHelper.Call((Single)factor, (Single)units, EntryPoints[277]);
             #if DEBUG
             }
             #endif
@@ -11880,7 +11880,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[278], (int)factor, (int)units);
+            InteropHelper.Call((int)factor, (int)units, EntryPoints[278]);
             #if DEBUG
             }
             #endif
@@ -11955,7 +11955,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[291], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels);
+            InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels, EntryPoints[291]);
             #if DEBUG
             }
             #endif
@@ -12002,7 +12002,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[291], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[291]);
             }
             finally
             {
@@ -12054,7 +12054,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[291], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[291]);
             }
             finally
             {
@@ -12106,7 +12106,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[291], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[291]);
             }
             finally
             {
@@ -12158,7 +12158,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[291], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[291]);
                 pixels = (T6)pixels_ptr.Target;
             }
             finally
@@ -12206,7 +12206,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[291], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels);
+            InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels, EntryPoints[291]);
             #if DEBUG
             }
             #endif
@@ -12252,7 +12252,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[291], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[291]);
             }
             finally
             {
@@ -12303,7 +12303,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[291], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[291]);
             }
             finally
             {
@@ -12354,7 +12354,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[291], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[291]);
             }
             finally
             {
@@ -12405,7 +12405,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[291], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[291]);
                 pixels = (T6)pixels_ptr.Target;
             }
             finally
@@ -12438,7 +12438,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[299], (Single)angle, (Single)x, (Single)y, (Single)z);
+            InteropHelper.Call((Single)angle, (Single)x, (Single)y, (Single)z, EntryPoints[299]);
             #if DEBUG
             }
             #endif
@@ -12453,7 +12453,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[300], (int)angle, (int)x, (int)y, (int)z);
+            InteropHelper.Call((int)angle, (int)x, (int)y, (int)z, EntryPoints[300]);
             #if DEBUG
             }
             #endif
@@ -12480,7 +12480,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[302], (Single)value, (bool)invert);
+            InteropHelper.Call((Single)value, (bool)invert, EntryPoints[302]);
             #if DEBUG
             }
             #endif
@@ -12495,7 +12495,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[304], (int)value, (bool)invert);
+            InteropHelper.Call((int)value, (bool)invert, EntryPoints[304]);
             #if DEBUG
             }
             #endif
@@ -12517,7 +12517,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[306], (Single)x, (Single)y, (Single)z);
+            InteropHelper.Call((Single)x, (Single)y, (Single)z, EntryPoints[306]);
             #if DEBUG
             }
             #endif
@@ -12532,7 +12532,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[307], (int)x, (int)y, (int)z);
+            InteropHelper.Call((int)x, (int)y, (int)z, EntryPoints[307]);
             #if DEBUG
             }
             #endif
@@ -12559,7 +12559,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[309], (Int32)x, (Int32)y, (Int32)width, (Int32)height);
+            InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, EntryPoints[309]);
             #if DEBUG
             }
             #endif
@@ -12582,7 +12582,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[311], (OpenTK.Graphics.ES11.ShadingModel)mode);
+            InteropHelper.Call((OpenTK.Graphics.ES11.ShadingModel)mode, EntryPoints[311]);
             #if DEBUG
             }
             #endif
@@ -12604,7 +12604,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[311], (OpenTK.Graphics.ES11.ShadingModel)mode);
+            InteropHelper.Call((OpenTK.Graphics.ES11.ShadingModel)mode, EntryPoints[311]);
             #if DEBUG
             }
             #endif
@@ -12636,7 +12636,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[313], (OpenTK.Graphics.ES11.StencilFunction)func, (Int32)@ref, (UInt32)mask);
+            InteropHelper.Call((OpenTK.Graphics.ES11.StencilFunction)func, (Int32)@ref, (UInt32)mask, EntryPoints[313]);
             #if DEBUG
             }
             #endif
@@ -12670,7 +12670,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[313], (OpenTK.Graphics.ES11.StencilFunction)func, (Int32)@ref, (UInt32)mask);
+            InteropHelper.Call((OpenTK.Graphics.ES11.StencilFunction)func, (Int32)@ref, (UInt32)mask, EntryPoints[313]);
             #if DEBUG
             }
             #endif
@@ -12702,7 +12702,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[313], (OpenTK.Graphics.ES11.StencilFunction)func, (Int32)@ref, (UInt32)mask);
+            InteropHelper.Call((OpenTK.Graphics.ES11.StencilFunction)func, (Int32)@ref, (UInt32)mask, EntryPoints[313]);
             #if DEBUG
             }
             #endif
@@ -12735,7 +12735,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[313], (OpenTK.Graphics.ES11.StencilFunction)func, (Int32)@ref, (UInt32)mask);
+            InteropHelper.Call((OpenTK.Graphics.ES11.StencilFunction)func, (Int32)@ref, (UInt32)mask, EntryPoints[313]);
             #if DEBUG
             }
             #endif
@@ -12757,7 +12757,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[314], (UInt32)mask);
+            InteropHelper.Call((UInt32)mask, EntryPoints[314]);
             #if DEBUG
             }
             #endif
@@ -12780,7 +12780,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[314], (UInt32)mask);
+            InteropHelper.Call((UInt32)mask, EntryPoints[314]);
             #if DEBUG
             }
             #endif
@@ -12813,7 +12813,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[315], (OpenTK.Graphics.ES11.StencilOp)fail, (OpenTK.Graphics.ES11.StencilOp)zfail, (OpenTK.Graphics.ES11.StencilOp)zpass);
+            InteropHelper.Call((OpenTK.Graphics.ES11.StencilOp)fail, (OpenTK.Graphics.ES11.StencilOp)zfail, (OpenTK.Graphics.ES11.StencilOp)zpass, EntryPoints[315]);
             #if DEBUG
             }
             #endif
@@ -12845,7 +12845,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[315], (OpenTK.Graphics.ES11.StencilOp)fail, (OpenTK.Graphics.ES11.StencilOp)zfail, (OpenTK.Graphics.ES11.StencilOp)zpass);
+            InteropHelper.Call((OpenTK.Graphics.ES11.StencilOp)fail, (OpenTK.Graphics.ES11.StencilOp)zfail, (OpenTK.Graphics.ES11.StencilOp)zpass, EntryPoints[315]);
             #if DEBUG
             }
             #endif
@@ -12883,7 +12883,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[333], (Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer);
+            InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer, EntryPoints[333]);
             #if DEBUG
             }
             #endif
@@ -12925,7 +12925,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[333], (Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[333]);
             }
             finally
             {
@@ -12972,7 +12972,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[333], (Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[333]);
             }
             finally
             {
@@ -13019,7 +13019,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[333], (Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[333]);
             }
             finally
             {
@@ -13066,7 +13066,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[333], (Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[333]);
                 pointer = (T3)pointer_ptr.Target;
             }
             finally
@@ -13109,7 +13109,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[333], (Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer);
+            InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer, EntryPoints[333]);
             #if DEBUG
             }
             #endif
@@ -13150,7 +13150,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[333], (Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[333]);
             }
             finally
             {
@@ -13196,7 +13196,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[333], (Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[333]);
             }
             finally
             {
@@ -13242,7 +13242,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[333], (Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[333]);
             }
             finally
             {
@@ -13288,7 +13288,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[333], (Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[333]);
                 pointer = (T3)pointer_ptr.Target;
             }
             finally
@@ -13327,7 +13327,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[334], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (Single)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (Single)param, EntryPoints[334]);
             #if DEBUG
             }
             #endif
@@ -13359,7 +13359,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[334], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (Single)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (Single)param, EntryPoints[334]);
             #if DEBUG
             }
             #endif
@@ -13396,7 +13396,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[335], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr, EntryPoints[335]);
                 }
             }
             #if DEBUG
@@ -13432,7 +13432,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[335], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params, EntryPoints[335]);
             #if DEBUG
             }
             #endif
@@ -13468,7 +13468,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[335], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr, EntryPoints[335]);
                 }
             }
             #if DEBUG
@@ -13503,7 +13503,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[335], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params, EntryPoints[335]);
             #if DEBUG
             }
             #endif
@@ -13536,7 +13536,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[336], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (Int32)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (Int32)param, EntryPoints[336]);
             #if DEBUG
             }
             #endif
@@ -13568,7 +13568,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[336], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (Int32)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (Int32)param, EntryPoints[336]);
             #if DEBUG
             }
             #endif
@@ -13605,7 +13605,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[337], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr, EntryPoints[337]);
                 }
             }
             #if DEBUG
@@ -13641,7 +13641,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[337], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params, EntryPoints[337]);
             #if DEBUG
             }
             #endif
@@ -13677,7 +13677,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[337], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params_ptr, EntryPoints[337]);
                 }
             }
             #if DEBUG
@@ -13712,7 +13712,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[337], (OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureEnvTarget)target, (OpenTK.Graphics.ES11.TextureEnvParameter)pname, (IntPtr)@params, EntryPoints[337]);
             #if DEBUG
             }
             #endif
@@ -13727,7 +13727,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[338], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (int)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[338]);
             #if DEBUG
             }
             #endif
@@ -13746,7 +13746,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[340], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[340]);
                 }
             }
             #if DEBUG
@@ -13764,7 +13764,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[340], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[340]);
             #if DEBUG
             }
             #endif
@@ -13827,7 +13827,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[348], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels, EntryPoints[348]);
             #if DEBUG
             }
             #endif
@@ -13894,7 +13894,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[348], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[348]);
             }
             finally
             {
@@ -13966,7 +13966,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[348], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[348]);
             }
             finally
             {
@@ -14038,7 +14038,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[348], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[348]);
             }
             finally
             {
@@ -14110,7 +14110,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[348], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[348]);
                 pixels = (T8)pixels_ptr.Target;
             }
             finally
@@ -14178,7 +14178,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[348], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels, EntryPoints[348]);
             #if DEBUG
             }
             #endif
@@ -14244,7 +14244,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[348], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[348]);
             }
             finally
             {
@@ -14315,7 +14315,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[348], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[348]);
             }
             finally
             {
@@ -14386,7 +14386,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[348], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[348]);
             }
             finally
             {
@@ -14457,7 +14457,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[348], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[348]);
                 pixels = (T8)pixels_ptr.Target;
             }
             finally
@@ -14504,7 +14504,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[349], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (Single)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (Single)param, EntryPoints[349]);
             #if DEBUG
             }
             #endif
@@ -14544,7 +14544,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[349], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (Single)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (Single)param, EntryPoints[349]);
             #if DEBUG
             }
             #endif
@@ -14589,7 +14589,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[350], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params_ptr, EntryPoints[350]);
                 }
             }
             #if DEBUG
@@ -14633,7 +14633,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[350], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params, EntryPoints[350]);
             #if DEBUG
             }
             #endif
@@ -14677,7 +14677,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[350], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params_ptr, EntryPoints[350]);
                 }
             }
             #if DEBUG
@@ -14720,7 +14720,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[350], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params, EntryPoints[350]);
             #if DEBUG
             }
             #endif
@@ -14761,7 +14761,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[351], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (Int32)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (Int32)param, EntryPoints[351]);
             #if DEBUG
             }
             #endif
@@ -14801,7 +14801,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[351], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (Int32)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (Int32)param, EntryPoints[351]);
             #if DEBUG
             }
             #endif
@@ -14846,7 +14846,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[352], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params_ptr, EntryPoints[352]);
                 }
             }
             #if DEBUG
@@ -14890,7 +14890,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[352], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params, EntryPoints[352]);
             #if DEBUG
             }
             #endif
@@ -14934,7 +14934,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (Int32* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[352], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params_ptr, EntryPoints[352]);
                 }
             }
             #if DEBUG
@@ -14977,7 +14977,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[352], (OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (OpenTK.Graphics.ES11.TextureParameterName)pname, (IntPtr)@params, EntryPoints[352]);
             #if DEBUG
             }
             #endif
@@ -14992,7 +14992,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[353], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (int)param);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[353]);
             #if DEBUG
             }
             #endif
@@ -15011,7 +15011,7 @@ namespace OpenTK.Graphics.ES11
             {
                 fixed (int* @params_ptr = @params)
                 {
-                    InteropHelper.Call(EntryPoints[355], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[355]);
                 }
             }
             #if DEBUG
@@ -15029,7 +15029,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[355], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+            InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[355]);
             #if DEBUG
             }
             #endif
@@ -15092,7 +15092,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[360], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels, EntryPoints[360]);
             #if DEBUG
             }
             #endif
@@ -15159,7 +15159,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[360], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[360]);
             }
             finally
             {
@@ -15231,7 +15231,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[360], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[360]);
             }
             finally
             {
@@ -15303,7 +15303,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[360], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[360]);
             }
             finally
             {
@@ -15375,7 +15375,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[360], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[360]);
                 pixels = (T8)pixels_ptr.Target;
             }
             finally
@@ -15443,7 +15443,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[360], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels);
+            InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels, EntryPoints[360]);
             #if DEBUG
             }
             #endif
@@ -15509,7 +15509,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[360], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[360]);
             }
             finally
             {
@@ -15580,7 +15580,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[360], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[360]);
             }
             finally
             {
@@ -15651,7 +15651,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[360], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[360]);
             }
             finally
             {
@@ -15722,7 +15722,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[360], (OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((OpenTK.Graphics.ES11.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.PixelFormat)format, (OpenTK.Graphics.ES11.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject(), EntryPoints[360]);
                 pixels = (T8)pixels_ptr.Target;
             }
             finally
@@ -15750,7 +15750,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[364], (Single)x, (Single)y, (Single)z);
+            InteropHelper.Call((Single)x, (Single)y, (Single)z, EntryPoints[364]);
             #if DEBUG
             }
             #endif
@@ -15765,7 +15765,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[365], (int)x, (int)y, (int)z);
+            InteropHelper.Call((int)x, (int)y, (int)z, EntryPoints[365]);
             #if DEBUG
             }
             #endif
@@ -15803,7 +15803,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[380], (Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer);
+            InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer, EntryPoints[380]);
             #if DEBUG
             }
             #endif
@@ -15845,7 +15845,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[380], (Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[380]);
             }
             finally
             {
@@ -15892,7 +15892,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[380], (Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[380]);
             }
             finally
             {
@@ -15939,7 +15939,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[380], (Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[380]);
             }
             finally
             {
@@ -15986,7 +15986,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[380], (Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[380]);
                 pointer = (T3)pointer_ptr.Target;
             }
             finally
@@ -16029,7 +16029,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[380], (Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer);
+            InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer, EntryPoints[380]);
             #if DEBUG
             }
             #endif
@@ -16070,7 +16070,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[380], (Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[380]);
             }
             finally
             {
@@ -16116,7 +16116,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[380], (Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[380]);
             }
             finally
             {
@@ -16162,7 +16162,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[380], (Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[380]);
             }
             finally
             {
@@ -16208,7 +16208,7 @@ namespace OpenTK.Graphics.ES11
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                InteropHelper.Call(EntryPoints[380], (Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[380]);
                 pointer = (T3)pointer_ptr.Target;
             }
             finally
@@ -16241,7 +16241,7 @@ namespace OpenTK.Graphics.ES11
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            InteropHelper.Call(EntryPoints[381], (Int32)x, (Int32)y, (Int32)width, (Int32)height);
+            InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, EntryPoints[381]);
             #if DEBUG
             }
             #endif
@@ -16270,7 +16270,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[12], (OpenTK.Graphics.ES11.All)mode);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)mode, EntryPoints[12]);
                 #if DEBUG
                 }
                 #endif
@@ -16289,7 +16289,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (OpenTK.Graphics.ES11.All* attachments_ptr = attachments)
                     {
-                        InteropHelper.Call(EntryPoints[72], (OpenTK.Graphics.ES11.All)target, (Int32)numAttachments, (IntPtr)attachments_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)numAttachments, (IntPtr)attachments_ptr, EntryPoints[72]);
                     }
                 }
                 #if DEBUG
@@ -16310,7 +16310,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (OpenTK.Graphics.ES11.All* attachments_ptr = &attachments)
                     {
-                        InteropHelper.Call(EntryPoints[72], (OpenTK.Graphics.ES11.All)target, (Int32)numAttachments, (IntPtr)attachments_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)numAttachments, (IntPtr)attachments_ptr, EntryPoints[72]);
                     }
                 }
                 #if DEBUG
@@ -16328,7 +16328,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[72], (OpenTK.Graphics.ES11.All)target, (Int32)numAttachments, (IntPtr)attachments);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)numAttachments, (IntPtr)attachments, EntryPoints[72]);
                 #if DEBUG
                 }
                 #endif
@@ -16360,7 +16360,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[110], (OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)length);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)length, EntryPoints[110]);
                 #if DEBUG
                 }
                 #endif
@@ -16375,7 +16375,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[118], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)textarget, (UInt32)texture, (Int32)level, (Int32)samples);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)textarget, (UInt32)texture, (Int32)level, (Int32)samples, EntryPoints[118]);
                 #if DEBUG
                 }
                 #endif
@@ -16391,7 +16391,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[118], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)textarget, (UInt32)texture, (Int32)level, (Int32)samples);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)textarget, (UInt32)texture, (Int32)level, (Int32)samples, EntryPoints[118]);
                 #if DEBUG
                 }
                 #endif
@@ -16425,7 +16425,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[162], (UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr, EntryPoints[162]);
                     }
                 }
                 #if DEBUG
@@ -16446,7 +16446,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[162], (UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr, EntryPoints[162]);
                         @params = *@params_ptr;
                     }
                 }
@@ -16465,7 +16465,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[162], (UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params);
+                InteropHelper.Call((UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params, EntryPoints[162]);
                 #if DEBUG
                 }
                 #endif
@@ -16485,7 +16485,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[162], (UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr, EntryPoints[162]);
                     }
                 }
                 #if DEBUG
@@ -16507,7 +16507,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[162], (UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr, EntryPoints[162]);
                         @params = *@params_ptr;
                     }
                 }
@@ -16526,7 +16526,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[162], (UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params);
+                InteropHelper.Call((UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params, EntryPoints[162]);
                 #if DEBUG
                 }
                 #endif
@@ -16545,7 +16545,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[163], (UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr, EntryPoints[163]);
                     }
                 }
                 #if DEBUG
@@ -16566,7 +16566,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[163], (UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr, EntryPoints[163]);
                         @params = *@params_ptr;
                     }
                 }
@@ -16585,7 +16585,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[163], (UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params);
+                InteropHelper.Call((UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params, EntryPoints[163]);
                 #if DEBUG
                 }
                 #endif
@@ -16605,7 +16605,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[163], (UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr, EntryPoints[163]);
                     }
                 }
                 #if DEBUG
@@ -16627,7 +16627,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[163], (UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params_ptr, EntryPoints[163]);
                         @params = *@params_ptr;
                     }
                 }
@@ -16646,7 +16646,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[163], (UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params);
+                InteropHelper.Call((UInt32)program, (Int32)location, (Int32)bufSize, (IntPtr)@params, EntryPoints[163]);
                 #if DEBUG
                 }
                 #endif
@@ -16683,7 +16683,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<IntPtr, All, IntPtr, IntPtr, UInt32>(EntryPoints[217], (OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)length, (UInt32)access);
+                return InteropHelper.CallReturn<IntPtr, All, IntPtr, IntPtr, UInt32>((OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)length, (UInt32)access, EntryPoints[217]);
                 #if DEBUG
                 }
                 #endif
@@ -16721,7 +16721,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<IntPtr, All, IntPtr, IntPtr, UInt32>(EntryPoints[217], (OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)length, (UInt32)access);
+                return InteropHelper.CallReturn<IntPtr, All, IntPtr, IntPtr, UInt32>((OpenTK.Graphics.ES11.All)target, (IntPtr)offset, (IntPtr)length, (UInt32)access, EntryPoints[217]);
                 #if DEBUG
                 }
                 #endif
@@ -16764,7 +16764,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* first_ptr = first)
                     fixed (Int32* count_ptr = count)
                     {
-                        InteropHelper.Call(EntryPoints[228], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)first_ptr, (IntPtr)count_ptr, (Int32)primcount);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)first_ptr, (IntPtr)count_ptr, (Int32)primcount, EntryPoints[228]);
                     }
                 }
                 #if DEBUG
@@ -16809,7 +16809,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* first_ptr = &first)
                     fixed (Int32* count_ptr = &count)
                     {
-                        InteropHelper.Call(EntryPoints[228], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)first_ptr, (IntPtr)count_ptr, (Int32)primcount);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)first_ptr, (IntPtr)count_ptr, (Int32)primcount, EntryPoints[228]);
                     }
                 }
                 #if DEBUG
@@ -16850,7 +16850,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[228], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)first, (IntPtr)count, (Int32)primcount);
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)first, (IntPtr)count, (Int32)primcount, EntryPoints[228]);
                 #if DEBUG
                 }
                 #endif
@@ -16892,7 +16892,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* first_ptr = first)
                     fixed (Int32* count_ptr = count)
                     {
-                        InteropHelper.Call(EntryPoints[228], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)first_ptr, (IntPtr)count_ptr, (Int32)primcount);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)first_ptr, (IntPtr)count_ptr, (Int32)primcount, EntryPoints[228]);
                     }
                 }
                 #if DEBUG
@@ -16936,7 +16936,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* first_ptr = &first)
                     fixed (Int32* count_ptr = &count)
                     {
-                        InteropHelper.Call(EntryPoints[228], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)first_ptr, (IntPtr)count_ptr, (Int32)primcount);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)first_ptr, (IntPtr)count_ptr, (Int32)primcount, EntryPoints[228]);
                     }
                 }
                 #if DEBUG
@@ -16976,7 +16976,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[228], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)first, (IntPtr)count, (Int32)primcount);
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)first, (IntPtr)count, (Int32)primcount, EntryPoints[228]);
                 #if DEBUG
                 }
                 #endif
@@ -17023,7 +17023,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* count_ptr = count)
                     {
-                        InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, (Int32)primcount);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, (Int32)primcount, EntryPoints[229]);
                     }
                 }
                 #if DEBUG
@@ -17076,7 +17076,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                         }
                         finally
                         {
@@ -17134,7 +17134,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                         }
                         finally
                         {
@@ -17192,7 +17192,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                         }
                         finally
                         {
@@ -17250,7 +17250,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                             indices = (T3)indices_ptr.Target;
                         }
                         finally
@@ -17305,7 +17305,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* count_ptr = &count)
                     {
-                        InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, (Int32)primcount);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, (Int32)primcount, EntryPoints[229]);
                     }
                 }
                 #if DEBUG
@@ -17358,7 +17358,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                         }
                         finally
                         {
@@ -17416,7 +17416,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                         }
                         finally
                         {
@@ -17474,7 +17474,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                         }
                         finally
                         {
@@ -17532,7 +17532,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                             indices = (T3)indices_ptr.Target;
                         }
                         finally
@@ -17584,7 +17584,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, (Int32)primcount);
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, (Int32)primcount, EntryPoints[229]);
                 #if DEBUG
                 }
                 #endif
@@ -17632,7 +17632,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                 }
                 finally
                 {
@@ -17685,7 +17685,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                 }
                 finally
                 {
@@ -17738,7 +17738,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                 }
                 finally
                 {
@@ -17791,7 +17791,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                     indices = (T3)indices_ptr.Target;
                 }
                 finally
@@ -17843,7 +17843,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* count_ptr = count)
                     {
-                        InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, (Int32)primcount);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, (Int32)primcount, EntryPoints[229]);
                     }
                 }
                 #if DEBUG
@@ -17895,7 +17895,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                         }
                         finally
                         {
@@ -17952,7 +17952,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                         }
                         finally
                         {
@@ -18009,7 +18009,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                         }
                         finally
                         {
@@ -18066,7 +18066,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                             indices = (T3)indices_ptr.Target;
                         }
                         finally
@@ -18120,7 +18120,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* count_ptr = &count)
                     {
-                        InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, (Int32)primcount);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, (Int32)primcount, EntryPoints[229]);
                     }
                 }
                 #if DEBUG
@@ -18172,7 +18172,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                         }
                         finally
                         {
@@ -18229,7 +18229,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                         }
                         finally
                         {
@@ -18286,7 +18286,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                         }
                         finally
                         {
@@ -18343,7 +18343,7 @@ namespace OpenTK.Graphics.ES11
                         GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                         try
                         {
-                            InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count_ptr, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                             indices = (T3)indices_ptr.Target;
                         }
                         finally
@@ -18394,7 +18394,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, (Int32)primcount);
+                InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices, (Int32)primcount, EntryPoints[229]);
                 #if DEBUG
                 }
                 #endif
@@ -18441,7 +18441,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                 }
                 finally
                 {
@@ -18493,7 +18493,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                 }
                 finally
                 {
@@ -18545,7 +18545,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                 }
                 finally
                 {
@@ -18597,7 +18597,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[229], (OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.PrimitiveType)mode, (IntPtr)count, (OpenTK.Graphics.ES11.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, EntryPoints[229]);
                     indices = (T3)indices_ptr.Target;
                 }
                 finally
@@ -18618,7 +18618,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[290], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (Int32)bufSize, (IntPtr)data);
+                InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (Int32)bufSize, (IntPtr)data, EntryPoints[290]);
                 #if DEBUG
                 }
                 #endif
@@ -18637,7 +18637,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[290], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (Int32)bufSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (Int32)bufSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[290]);
                 }
                 finally
                 {
@@ -18661,7 +18661,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[290], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (Int32)bufSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (Int32)bufSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[290]);
                 }
                 finally
                 {
@@ -18685,7 +18685,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[290], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (Int32)bufSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (Int32)bufSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[290]);
                 }
                 finally
                 {
@@ -18709,7 +18709,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[290], (Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (Int32)bufSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (Int32)bufSize, (IntPtr)data_ptr.AddrOfPinnedObject(), EntryPoints[290]);
                     data = (T7)data_ptr.Target;
                 }
                 finally
@@ -18757,7 +18757,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[295], (OpenTK.Graphics.ES11.All)target, (Int32)samples, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)samples, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, EntryPoints[295]);
                 #if DEBUG
                 }
                 #endif
@@ -18794,7 +18794,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[357], (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, EntryPoints[357]);
                 #if DEBUG
                 }
                 #endif
@@ -18836,7 +18836,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[358], (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, EntryPoints[358]);
                 #if DEBUG
                 }
                 #endif
@@ -18883,7 +18883,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[359], (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)depth);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)depth, EntryPoints[359]);
                 #if DEBUG
                 }
                 #endif
@@ -18898,7 +18898,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[361], (UInt32)texture, (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width);
+                InteropHelper.Call((UInt32)texture, (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, EntryPoints[361]);
                 #if DEBUG
                 }
                 #endif
@@ -18914,7 +18914,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[361], (UInt32)texture, (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width);
+                InteropHelper.Call((UInt32)texture, (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, EntryPoints[361]);
                 #if DEBUG
                 }
                 #endif
@@ -18929,7 +18929,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[362], (UInt32)texture, (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height);
+                InteropHelper.Call((UInt32)texture, (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, EntryPoints[362]);
                 #if DEBUG
                 }
                 #endif
@@ -18945,7 +18945,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[362], (UInt32)texture, (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height);
+                InteropHelper.Call((UInt32)texture, (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, EntryPoints[362]);
                 #if DEBUG
                 }
                 #endif
@@ -18960,7 +18960,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[363], (UInt32)texture, (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)depth);
+                InteropHelper.Call((UInt32)texture, (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)depth, EntryPoints[363]);
                 #if DEBUG
                 }
                 #endif
@@ -18976,7 +18976,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[363], (UInt32)texture, (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)depth);
+                InteropHelper.Call((UInt32)texture, (OpenTK.Graphics.ES11.All)target, (Int32)levels, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, (Int32)depth, EntryPoints[363]);
                 #if DEBUG
                 }
                 #endif
@@ -19011,7 +19011,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* eqn_ptr = eqn)
                     {
-                        InteropHelper.Call(EntryPoints[33], (OpenTK.Graphics.ES11.All)p, (IntPtr)eqn_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)p, (IntPtr)eqn_ptr, EntryPoints[33]);
                     }
                 }
                 #if DEBUG
@@ -19044,7 +19044,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* eqn_ptr = &eqn)
                     {
-                        InteropHelper.Call(EntryPoints[33], (OpenTK.Graphics.ES11.All)p, (IntPtr)eqn_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)p, (IntPtr)eqn_ptr, EntryPoints[33]);
                     }
                 }
                 #if DEBUG
@@ -19074,7 +19074,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[33], (OpenTK.Graphics.ES11.All)p, (IntPtr)eqn);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)p, (IntPtr)eqn, EntryPoints[33]);
                 #if DEBUG
                 }
                 #endif
@@ -19093,7 +19093,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* eqn_ptr = eqn)
                     {
-                        InteropHelper.Call(EntryPoints[36], (OpenTK.Graphics.ES11.All)p, (IntPtr)eqn_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)p, (IntPtr)eqn_ptr, EntryPoints[36]);
                     }
                 }
                 #if DEBUG
@@ -19114,7 +19114,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* eqn_ptr = &eqn)
                     {
-                        InteropHelper.Call(EntryPoints[36], (OpenTK.Graphics.ES11.All)p, (IntPtr)eqn_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)p, (IntPtr)eqn_ptr, EntryPoints[36]);
                     }
                 }
                 #if DEBUG
@@ -19132,7 +19132,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[36], (OpenTK.Graphics.ES11.All)p, (IntPtr)eqn);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)p, (IntPtr)eqn, EntryPoints[36]);
                 #if DEBUG
                 }
                 #endif
@@ -19147,7 +19147,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[119], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)textarget, (UInt32)texture, (Int32)level, (Int32)samples);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)textarget, (UInt32)texture, (Int32)level, (Int32)samples, EntryPoints[119]);
                 #if DEBUG
                 }
                 #endif
@@ -19163,7 +19163,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[119], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)textarget, (UInt32)texture, (Int32)level, (Int32)samples);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)textarget, (UInt32)texture, (Int32)level, (Int32)samples, EntryPoints[119]);
                 #if DEBUG
                 }
                 #endif
@@ -19205,7 +19205,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[296], (OpenTK.Graphics.ES11.All)target, (Int32)samples, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)samples, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, EntryPoints[296]);
                 #if DEBUG
                 }
                 #endif
@@ -19228,7 +19228,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     const Int32 n = 1;
                     UInt32* fences_ptr = (UInt32*)&fences;
-                    InteropHelper.Call(EntryPoints[57], (Int32)n, (IntPtr)fences_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)fences_ptr, EntryPoints[57]);
                 }
                 #if DEBUG
                 }
@@ -19249,7 +19249,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     const Int32 n = 1;
                     UInt32* fences_ptr = (UInt32*)&fences;
-                    InteropHelper.Call(EntryPoints[57], (Int32)n, (IntPtr)fences_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)fences_ptr, EntryPoints[57]);
                 }
                 #if DEBUG
                 }
@@ -19269,7 +19269,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* fences_ptr = fences)
                     {
-                        InteropHelper.Call(EntryPoints[57], (Int32)n, (IntPtr)fences_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)fences_ptr, EntryPoints[57]);
                     }
                 }
                 #if DEBUG
@@ -19290,7 +19290,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* fences_ptr = &fences)
                     {
-                        InteropHelper.Call(EntryPoints[57], (Int32)n, (IntPtr)fences_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)fences_ptr, EntryPoints[57]);
                     }
                 }
                 #if DEBUG
@@ -19308,7 +19308,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[57], (Int32)n, (IntPtr)fences);
+                InteropHelper.Call((Int32)n, (IntPtr)fences, EntryPoints[57]);
                 #if DEBUG
                 }
                 #endif
@@ -19328,7 +19328,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* fences_ptr = fences)
                     {
-                        InteropHelper.Call(EntryPoints[57], (Int32)n, (IntPtr)fences_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)fences_ptr, EntryPoints[57]);
                     }
                 }
                 #if DEBUG
@@ -19350,7 +19350,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* fences_ptr = &fences)
                     {
-                        InteropHelper.Call(EntryPoints[57], (Int32)n, (IntPtr)fences_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)fences_ptr, EntryPoints[57]);
                     }
                 }
                 #if DEBUG
@@ -19368,7 +19368,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[57], (Int32)n, (IntPtr)fences);
+                InteropHelper.Call((Int32)n, (IntPtr)fences, EntryPoints[57]);
                 #if DEBUG
                 }
                 #endif
@@ -19383,7 +19383,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[108], (UInt32)fence);
+                InteropHelper.Call((UInt32)fence, EntryPoints[108]);
                 #if DEBUG
                 }
                 #endif
@@ -19399,7 +19399,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[108], (UInt32)fence);
+                InteropHelper.Call((UInt32)fence, EntryPoints[108]);
                 #if DEBUG
                 }
                 #endif
@@ -19419,7 +19419,7 @@ namespace OpenTK.Graphics.ES11
                     const Int32 n = 1;
                     Int32 retval;
                     Int32* fences_ptr = &retval;
-                    InteropHelper.Call(EntryPoints[128], (Int32)n, (IntPtr)fences_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)fences_ptr, EntryPoints[128]);
                     return retval;
                 }
                 #if DEBUG
@@ -19440,7 +19440,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* fences_ptr = fences)
                     {
-                        InteropHelper.Call(EntryPoints[128], (Int32)n, (IntPtr)fences_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)fences_ptr, EntryPoints[128]);
                     }
                 }
                 #if DEBUG
@@ -19461,7 +19461,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* fences_ptr = &fences)
                     {
-                        InteropHelper.Call(EntryPoints[128], (Int32)n, (IntPtr)fences_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)fences_ptr, EntryPoints[128]);
                         fences = *fences_ptr;
                     }
                 }
@@ -19480,7 +19480,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[128], (Int32)n, (IntPtr)fences);
+                InteropHelper.Call((Int32)n, (IntPtr)fences, EntryPoints[128]);
                 #if DEBUG
                 }
                 #endif
@@ -19500,7 +19500,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* fences_ptr = fences)
                     {
-                        InteropHelper.Call(EntryPoints[128], (Int32)n, (IntPtr)fences_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)fences_ptr, EntryPoints[128]);
                     }
                 }
                 #if DEBUG
@@ -19522,7 +19522,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* fences_ptr = &fences)
                     {
-                        InteropHelper.Call(EntryPoints[128], (Int32)n, (IntPtr)fences_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)fences_ptr, EntryPoints[128]);
                         fences = *fences_ptr;
                     }
                 }
@@ -19541,7 +19541,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[128], (Int32)n, (IntPtr)fences);
+                InteropHelper.Call((Int32)n, (IntPtr)fences, EntryPoints[128]);
                 #if DEBUG
                 }
                 #endif
@@ -19560,7 +19560,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[144], (UInt32)fence, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)fence, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[144]);
                     }
                 }
                 #if DEBUG
@@ -19581,7 +19581,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[144], (UInt32)fence, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)fence, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[144]);
                         @params = *@params_ptr;
                     }
                 }
@@ -19600,7 +19600,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[144], (UInt32)fence, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((UInt32)fence, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[144]);
                 #if DEBUG
                 }
                 #endif
@@ -19620,7 +19620,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[144], (UInt32)fence, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)fence, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[144]);
                     }
                 }
                 #if DEBUG
@@ -19642,7 +19642,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[144], (UInt32)fence, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)fence, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[144]);
                         @params = *@params_ptr;
                     }
                 }
@@ -19661,7 +19661,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[144], (UInt32)fence, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((UInt32)fence, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[144]);
                 #if DEBUG
                 }
                 #endif
@@ -19676,7 +19676,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[186], (UInt32)fence);
+                return InteropHelper.CallReturn<bool, UInt32>((UInt32)fence, EntryPoints[186]);
                 #if DEBUG
                 }
                 #endif
@@ -19692,7 +19692,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[186], (UInt32)fence);
+                return InteropHelper.CallReturn<bool, UInt32>((UInt32)fence, EntryPoints[186]);
                 #if DEBUG
                 }
                 #endif
@@ -19707,7 +19707,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[310], (UInt32)fence, (OpenTK.Graphics.ES11.All)condition);
+                InteropHelper.Call((UInt32)fence, (OpenTK.Graphics.ES11.All)condition, EntryPoints[310]);
                 #if DEBUG
                 }
                 #endif
@@ -19723,7 +19723,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[310], (UInt32)fence, (OpenTK.Graphics.ES11.All)condition);
+                InteropHelper.Call((UInt32)fence, (OpenTK.Graphics.ES11.All)condition, EntryPoints[310]);
                 #if DEBUG
                 }
                 #endif
@@ -19738,7 +19738,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[316], (UInt32)fence);
+                return InteropHelper.CallReturn<bool, UInt32>((UInt32)fence, EntryPoints[316]);
                 #if DEBUG
                 }
                 #endif
@@ -19754,7 +19754,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[316], (UInt32)fence);
+                return InteropHelper.CallReturn<bool, UInt32>((UInt32)fence, EntryPoints[316]);
                 #if DEBUG
                 }
                 #endif
@@ -19773,7 +19773,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[0], (OpenTK.Graphics.ES11.All)op, (int)value);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)op, (int)value, EntryPoints[0]);
                 #if DEBUG
                 }
                 #endif
@@ -19788,7 +19788,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[4], (OpenTK.Graphics.ES11.All)func, (int)@ref);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)func, (int)@ref, EntryPoints[4]);
                 #if DEBUG
                 }
                 #endif
@@ -19815,7 +19815,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[6], (OpenTK.Graphics.ES11.All)target, (UInt32)framebuffer);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (UInt32)framebuffer, EntryPoints[6]);
                 #if DEBUG
                 }
                 #endif
@@ -19843,7 +19843,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[6], (OpenTK.Graphics.ES11.All)target, (UInt32)framebuffer);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (UInt32)framebuffer, EntryPoints[6]);
                 #if DEBUG
                 }
                 #endif
@@ -19870,7 +19870,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[7], (OpenTK.Graphics.ES11.All)target, (UInt32)renderbuffer);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (UInt32)renderbuffer, EntryPoints[7]);
                 #if DEBUG
                 }
                 #endif
@@ -19898,7 +19898,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[7], (OpenTK.Graphics.ES11.All)target, (UInt32)renderbuffer);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (UInt32)renderbuffer, EntryPoints[7]);
                 #if DEBUG
                 }
                 #endif
@@ -19920,7 +19920,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[9], (UInt32)array);
+                InteropHelper.Call((UInt32)array, EntryPoints[9]);
                 #if DEBUG
                 }
                 #endif
@@ -19943,7 +19943,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[9], (UInt32)array);
+                InteropHelper.Call((UInt32)array, EntryPoints[9]);
                 #if DEBUG
                 }
                 #endif
@@ -19962,7 +19962,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* bitmap_ptr = bitmap)
                     {
-                        InteropHelper.Call(EntryPoints[10], (Int32)width, (Int32)height, (int)xorig, (int)yorig, (int)xmove, (int)ymove, (IntPtr)bitmap_ptr);
+                        InteropHelper.Call((Int32)width, (Int32)height, (int)xorig, (int)yorig, (int)xmove, (int)ymove, (IntPtr)bitmap_ptr, EntryPoints[10]);
                     }
                 }
                 #if DEBUG
@@ -19983,7 +19983,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* bitmap_ptr = &bitmap)
                     {
-                        InteropHelper.Call(EntryPoints[10], (Int32)width, (Int32)height, (int)xorig, (int)yorig, (int)xmove, (int)ymove, (IntPtr)bitmap_ptr);
+                        InteropHelper.Call((Int32)width, (Int32)height, (int)xorig, (int)yorig, (int)xmove, (int)ymove, (IntPtr)bitmap_ptr, EntryPoints[10]);
                     }
                 }
                 #if DEBUG
@@ -20001,7 +20001,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[10], (Int32)width, (Int32)height, (int)xorig, (int)yorig, (int)xmove, (int)ymove, (IntPtr)bitmap);
+                InteropHelper.Call((Int32)width, (Int32)height, (int)xorig, (int)yorig, (int)xmove, (int)ymove, (IntPtr)bitmap, EntryPoints[10]);
                 #if DEBUG
                 }
                 #endif
@@ -20016,7 +20016,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[11], (int)red, (int)green, (int)blue, (int)alpha);
+                InteropHelper.Call((int)red, (int)green, (int)blue, (int)alpha, EntryPoints[11]);
                 #if DEBUG
                 }
                 #endif
@@ -20043,7 +20043,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[13], (OpenTK.Graphics.ES11.All)mode);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)mode, EntryPoints[13]);
                 #if DEBUG
                 }
                 #endif
@@ -20075,7 +20075,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[14], (OpenTK.Graphics.ES11.All)modeRGB, (OpenTK.Graphics.ES11.All)modeAlpha);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)modeRGB, (OpenTK.Graphics.ES11.All)modeAlpha, EntryPoints[14]);
                 #if DEBUG
                 }
                 #endif
@@ -20117,7 +20117,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[16], (OpenTK.Graphics.ES11.All)srcRGB, (OpenTK.Graphics.ES11.All)dstRGB, (OpenTK.Graphics.ES11.All)srcAlpha, (OpenTK.Graphics.ES11.All)dstAlpha);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)srcRGB, (OpenTK.Graphics.ES11.All)dstRGB, (OpenTK.Graphics.ES11.All)srcAlpha, (OpenTK.Graphics.ES11.All)dstAlpha, EntryPoints[16]);
                 #if DEBUG
                 }
                 #endif
@@ -20139,7 +20139,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<All, All>(EntryPoints[19], (OpenTK.Graphics.ES11.All)target);
+                return InteropHelper.CallReturn<All, All>((OpenTK.Graphics.ES11.All)target, EntryPoints[19]);
                 #if DEBUG
                 }
                 #endif
@@ -20154,7 +20154,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[21], (int)red, (int)green, (int)blue, (int)alpha);
+                InteropHelper.Call((int)red, (int)green, (int)blue, (int)alpha, EntryPoints[21]);
                 #if DEBUG
                 }
                 #endif
@@ -20169,7 +20169,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[24], (int)red, (int)green, (int)blue, (int)alpha);
+                InteropHelper.Call((int)red, (int)green, (int)blue, (int)alpha, EntryPoints[24]);
                 #if DEBUG
                 }
                 #endif
@@ -20191,7 +20191,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[26], (Single)depth);
+                InteropHelper.Call((Single)depth, EntryPoints[26]);
                 #if DEBUG
                 }
                 #endif
@@ -20206,7 +20206,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[28], (int)depth);
+                InteropHelper.Call((int)depth, EntryPoints[28]);
                 #if DEBUG
                 }
                 #endif
@@ -20237,7 +20237,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* equation_ptr = equation)
                     {
-                        InteropHelper.Call(EntryPoints[34], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[34]);
                     }
                 }
                 #if DEBUG
@@ -20270,7 +20270,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* equation_ptr = &equation)
                     {
-                        InteropHelper.Call(EntryPoints[34], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[34]);
                     }
                 }
                 #if DEBUG
@@ -20300,7 +20300,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[34], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation, EntryPoints[34]);
                 #if DEBUG
                 }
                 #endif
@@ -20319,7 +20319,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* equation_ptr = equation)
                     {
-                        InteropHelper.Call(EntryPoints[37], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[37]);
                     }
                 }
                 #if DEBUG
@@ -20340,7 +20340,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* equation_ptr = &equation)
                     {
-                        InteropHelper.Call(EntryPoints[37], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[37]);
                     }
                 }
                 #if DEBUG
@@ -20358,7 +20358,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[37], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation, EntryPoints[37]);
                 #if DEBUG
                 }
                 #endif
@@ -20373,7 +20373,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[38], (int)red, (int)green, (int)blue);
+                InteropHelper.Call((int)red, (int)green, (int)blue, EntryPoints[38]);
                 #if DEBUG
                 }
                 #endif
@@ -20392,7 +20392,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* components_ptr = components)
                     {
-                        InteropHelper.Call(EntryPoints[39], (IntPtr)components_ptr);
+                        InteropHelper.Call((IntPtr)components_ptr, EntryPoints[39]);
                     }
                 }
                 #if DEBUG
@@ -20413,7 +20413,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* components_ptr = &components)
                     {
-                        InteropHelper.Call(EntryPoints[39], (IntPtr)components_ptr);
+                        InteropHelper.Call((IntPtr)components_ptr, EntryPoints[39]);
                     }
                 }
                 #if DEBUG
@@ -20431,7 +20431,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[39], (IntPtr)components);
+                InteropHelper.Call((IntPtr)components, EntryPoints[39]);
                 #if DEBUG
                 }
                 #endif
@@ -20446,7 +20446,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[43], (int)red, (int)green, (int)blue, (int)alpha);
+                InteropHelper.Call((int)red, (int)green, (int)blue, (int)alpha, EntryPoints[43]);
                 #if DEBUG
                 }
                 #endif
@@ -20465,7 +20465,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* components_ptr = components)
                     {
-                        InteropHelper.Call(EntryPoints[44], (IntPtr)components_ptr);
+                        InteropHelper.Call((IntPtr)components_ptr, EntryPoints[44]);
                     }
                 }
                 #if DEBUG
@@ -20486,7 +20486,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* components_ptr = &components)
                     {
-                        InteropHelper.Call(EntryPoints[44], (IntPtr)components_ptr);
+                        InteropHelper.Call((IntPtr)components_ptr, EntryPoints[44]);
                     }
                 }
                 #if DEBUG
@@ -20504,7 +20504,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[44], (IntPtr)components);
+                InteropHelper.Call((IntPtr)components, EntryPoints[44]);
                 #if DEBUG
                 }
                 #endif
@@ -20519,7 +20519,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[49], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (int)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[49]);
                 #if DEBUG
                 }
                 #endif
@@ -20538,7 +20538,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[50], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[50]);
                     }
                 }
                 #if DEBUG
@@ -20556,7 +20556,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[50], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[50]);
                 #if DEBUG
                 }
                 #endif
@@ -20571,7 +20571,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[55], (UInt32)matrixpaletteindex);
+                InteropHelper.Call((UInt32)matrixpaletteindex, EntryPoints[55]);
                 #if DEBUG
                 }
                 #endif
@@ -20587,7 +20587,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[55], (UInt32)matrixpaletteindex);
+                InteropHelper.Call((UInt32)matrixpaletteindex, EntryPoints[55]);
                 #if DEBUG
                 }
                 #endif
@@ -20606,7 +20606,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     const Int32 n = 1;
                     UInt32* framebuffers_ptr = (UInt32*)&framebuffers;
-                    InteropHelper.Call(EntryPoints[58], (Int32)n, (IntPtr)framebuffers_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)framebuffers_ptr, EntryPoints[58]);
                 }
                 #if DEBUG
                 }
@@ -20627,7 +20627,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     const Int32 n = 1;
                     UInt32* framebuffers_ptr = (UInt32*)&framebuffers;
-                    InteropHelper.Call(EntryPoints[58], (Int32)n, (IntPtr)framebuffers_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)framebuffers_ptr, EntryPoints[58]);
                 }
                 #if DEBUG
                 }
@@ -20659,7 +20659,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* framebuffers_ptr = framebuffers)
                     {
-                        InteropHelper.Call(EntryPoints[58], (Int32)n, (IntPtr)framebuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)framebuffers_ptr, EntryPoints[58]);
                     }
                 }
                 #if DEBUG
@@ -20692,7 +20692,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* framebuffers_ptr = &framebuffers)
                     {
-                        InteropHelper.Call(EntryPoints[58], (Int32)n, (IntPtr)framebuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)framebuffers_ptr, EntryPoints[58]);
                     }
                 }
                 #if DEBUG
@@ -20722,7 +20722,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[58], (Int32)n, (IntPtr)framebuffers);
+                InteropHelper.Call((Int32)n, (IntPtr)framebuffers, EntryPoints[58]);
                 #if DEBUG
                 }
                 #endif
@@ -20754,7 +20754,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* framebuffers_ptr = framebuffers)
                     {
-                        InteropHelper.Call(EntryPoints[58], (Int32)n, (IntPtr)framebuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)framebuffers_ptr, EntryPoints[58]);
                     }
                 }
                 #if DEBUG
@@ -20788,7 +20788,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* framebuffers_ptr = &framebuffers)
                     {
-                        InteropHelper.Call(EntryPoints[58], (Int32)n, (IntPtr)framebuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)framebuffers_ptr, EntryPoints[58]);
                     }
                 }
                 #if DEBUG
@@ -20818,7 +20818,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[58], (Int32)n, (IntPtr)framebuffers);
+                InteropHelper.Call((Int32)n, (IntPtr)framebuffers, EntryPoints[58]);
                 #if DEBUG
                 }
                 #endif
@@ -20837,7 +20837,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     const Int32 n = 1;
                     UInt32* renderbuffers_ptr = (UInt32*)&renderbuffers;
-                    InteropHelper.Call(EntryPoints[59], (Int32)n, (IntPtr)renderbuffers_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)renderbuffers_ptr, EntryPoints[59]);
                 }
                 #if DEBUG
                 }
@@ -20858,7 +20858,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     const Int32 n = 1;
                     UInt32* renderbuffers_ptr = (UInt32*)&renderbuffers;
-                    InteropHelper.Call(EntryPoints[59], (Int32)n, (IntPtr)renderbuffers_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)renderbuffers_ptr, EntryPoints[59]);
                 }
                 #if DEBUG
                 }
@@ -20890,7 +20890,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* renderbuffers_ptr = renderbuffers)
                     {
-                        InteropHelper.Call(EntryPoints[59], (Int32)n, (IntPtr)renderbuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)renderbuffers_ptr, EntryPoints[59]);
                     }
                 }
                 #if DEBUG
@@ -20923,7 +20923,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* renderbuffers_ptr = &renderbuffers)
                     {
-                        InteropHelper.Call(EntryPoints[59], (Int32)n, (IntPtr)renderbuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)renderbuffers_ptr, EntryPoints[59]);
                     }
                 }
                 #if DEBUG
@@ -20953,7 +20953,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[59], (Int32)n, (IntPtr)renderbuffers);
+                InteropHelper.Call((Int32)n, (IntPtr)renderbuffers, EntryPoints[59]);
                 #if DEBUG
                 }
                 #endif
@@ -20985,7 +20985,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* renderbuffers_ptr = renderbuffers)
                     {
-                        InteropHelper.Call(EntryPoints[59], (Int32)n, (IntPtr)renderbuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)renderbuffers_ptr, EntryPoints[59]);
                     }
                 }
                 #if DEBUG
@@ -21019,7 +21019,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* renderbuffers_ptr = &renderbuffers)
                     {
-                        InteropHelper.Call(EntryPoints[59], (Int32)n, (IntPtr)renderbuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)renderbuffers_ptr, EntryPoints[59]);
                     }
                 }
                 #if DEBUG
@@ -21049,7 +21049,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[59], (Int32)n, (IntPtr)renderbuffers);
+                InteropHelper.Call((Int32)n, (IntPtr)renderbuffers, EntryPoints[59]);
                 #if DEBUG
                 }
                 #endif
@@ -21068,7 +21068,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     const Int32 n = 1;
                     UInt32* arrays_ptr = (UInt32*)&arrays;
-                    InteropHelper.Call(EntryPoints[62], (Int32)n, (IntPtr)arrays_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)arrays_ptr, EntryPoints[62]);
                 }
                 #if DEBUG
                 }
@@ -21089,7 +21089,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     const Int32 n = 1;
                     UInt32* arrays_ptr = (UInt32*)&arrays;
-                    InteropHelper.Call(EntryPoints[62], (Int32)n, (IntPtr)arrays_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)arrays_ptr, EntryPoints[62]);
                 }
                 #if DEBUG
                 }
@@ -21121,7 +21121,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* arrays_ptr = arrays)
                     {
-                        InteropHelper.Call(EntryPoints[62], (Int32)n, (IntPtr)arrays_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)arrays_ptr, EntryPoints[62]);
                     }
                 }
                 #if DEBUG
@@ -21154,7 +21154,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* arrays_ptr = &arrays)
                     {
-                        InteropHelper.Call(EntryPoints[62], (Int32)n, (IntPtr)arrays_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)arrays_ptr, EntryPoints[62]);
                     }
                 }
                 #if DEBUG
@@ -21184,7 +21184,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[62], (Int32)n, (IntPtr)arrays);
+                InteropHelper.Call((Int32)n, (IntPtr)arrays, EntryPoints[62]);
                 #if DEBUG
                 }
                 #endif
@@ -21216,7 +21216,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* arrays_ptr = arrays)
                     {
-                        InteropHelper.Call(EntryPoints[62], (Int32)n, (IntPtr)arrays_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)arrays_ptr, EntryPoints[62]);
                     }
                 }
                 #if DEBUG
@@ -21250,7 +21250,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* arrays_ptr = &arrays)
                     {
-                        InteropHelper.Call(EntryPoints[62], (Int32)n, (IntPtr)arrays_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)arrays_ptr, EntryPoints[62]);
                     }
                 }
                 #if DEBUG
@@ -21280,7 +21280,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[62], (Int32)n, (IntPtr)arrays);
+                InteropHelper.Call((Int32)n, (IntPtr)arrays, EntryPoints[62]);
                 #if DEBUG
                 }
                 #endif
@@ -21307,7 +21307,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[66], (Single)n, (Single)f);
+                InteropHelper.Call((Single)n, (Single)f, EntryPoints[66]);
                 #if DEBUG
                 }
                 #endif
@@ -21322,7 +21322,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[68], (int)n, (int)f);
+                InteropHelper.Call((int)n, (int)f, EntryPoints[68]);
                 #if DEBUG
                 }
                 #endif
@@ -21337,7 +21337,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[75], (Single)x, (Single)y, (Single)z, (Single)width, (Single)height);
+                InteropHelper.Call((Single)x, (Single)y, (Single)z, (Single)width, (Single)height, EntryPoints[75]);
                 #if DEBUG
                 }
                 #endif
@@ -21356,7 +21356,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[76], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[76]);
                     }
                 }
                 #if DEBUG
@@ -21377,7 +21377,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[76], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[76]);
                     }
                 }
                 #if DEBUG
@@ -21395,7 +21395,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[76], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[76]);
                 #if DEBUG
                 }
                 #endif
@@ -21410,7 +21410,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[77], (Int32)x, (Int32)y, (Int32)z, (Int32)width, (Int32)height);
+                InteropHelper.Call((Int32)x, (Int32)y, (Int32)z, (Int32)width, (Int32)height, EntryPoints[77]);
                 #if DEBUG
                 }
                 #endif
@@ -21429,7 +21429,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[78], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[78]);
                     }
                 }
                 #if DEBUG
@@ -21450,7 +21450,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[78], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[78]);
                     }
                 }
                 #if DEBUG
@@ -21468,7 +21468,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[78], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[78]);
                 #if DEBUG
                 }
                 #endif
@@ -21483,7 +21483,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[79], (Int16)x, (Int16)y, (Int16)z, (Int16)width, (Int16)height);
+                InteropHelper.Call((Int16)x, (Int16)y, (Int16)z, (Int16)width, (Int16)height, EntryPoints[79]);
                 #if DEBUG
                 }
                 #endif
@@ -21502,7 +21502,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int16* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[80], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[80]);
                     }
                 }
                 #if DEBUG
@@ -21523,7 +21523,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int16* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[80], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[80]);
                     }
                 }
                 #if DEBUG
@@ -21541,7 +21541,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[80], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[80]);
                 #if DEBUG
                 }
                 #endif
@@ -21556,7 +21556,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[81], (int)x, (int)y, (int)z, (int)width, (int)height);
+                InteropHelper.Call((int)x, (int)y, (int)z, (int)width, (int)height, EntryPoints[81]);
                 #if DEBUG
                 }
                 #endif
@@ -21575,7 +21575,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[82], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[82]);
                     }
                 }
                 #if DEBUG
@@ -21596,7 +21596,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[82], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[82]);
                     }
                 }
                 #if DEBUG
@@ -21614,7 +21614,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[82], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[82]);
                 #if DEBUG
                 }
                 #endif
@@ -21629,7 +21629,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[83], (OpenTK.Graphics.ES11.All)target, (IntPtr)image);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)image, EntryPoints[83]);
                 #if DEBUG
                 }
                 #endif
@@ -21644,7 +21644,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[84], (OpenTK.Graphics.ES11.All)target, (IntPtr)image);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)image, EntryPoints[84]);
                 #if DEBUG
                 }
                 #endif
@@ -21659,7 +21659,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[89], (int)u);
+                InteropHelper.Call((int)u, EntryPoints[89]);
                 #if DEBUG
                 }
                 #endif
@@ -21675,7 +21675,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[90], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[90]);
                 #if DEBUG
                 }
                 #endif
@@ -21690,7 +21690,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[91], (int)u, (int)v);
+                InteropHelper.Call((int)u, (int)v, EntryPoints[91]);
                 #if DEBUG
                 }
                 #endif
@@ -21709,7 +21709,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[92], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[92]);
                     }
                 }
                 #if DEBUG
@@ -21730,7 +21730,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[92], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[92]);
                     }
                 }
                 #if DEBUG
@@ -21748,7 +21748,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[92], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[92]);
                 #if DEBUG
                 }
                 #endif
@@ -21767,7 +21767,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* buffer_ptr = buffer)
                     {
-                        InteropHelper.Call(EntryPoints[105], (Int32)n, (OpenTK.Graphics.ES11.All)type, (IntPtr)buffer_ptr);
+                        InteropHelper.Call((Int32)n, (OpenTK.Graphics.ES11.All)type, (IntPtr)buffer_ptr, EntryPoints[105]);
                     }
                 }
                 #if DEBUG
@@ -21788,7 +21788,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* buffer_ptr = &buffer)
                     {
-                        InteropHelper.Call(EntryPoints[105], (Int32)n, (OpenTK.Graphics.ES11.All)type, (IntPtr)buffer_ptr);
+                        InteropHelper.Call((Int32)n, (OpenTK.Graphics.ES11.All)type, (IntPtr)buffer_ptr, EntryPoints[105]);
                     }
                 }
                 #if DEBUG
@@ -21806,7 +21806,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[105], (Int32)n, (OpenTK.Graphics.ES11.All)type, (IntPtr)buffer);
+                InteropHelper.Call((Int32)n, (OpenTK.Graphics.ES11.All)type, (IntPtr)buffer, EntryPoints[105]);
                 #if DEBUG
                 }
                 #endif
@@ -21821,7 +21821,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[114], (OpenTK.Graphics.ES11.All)pname, (int)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[114]);
                 #if DEBUG
                 }
                 #endif
@@ -21840,7 +21840,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* param_ptr = param)
                     {
-                        InteropHelper.Call(EntryPoints[116], (OpenTK.Graphics.ES11.All)pname, (IntPtr)param_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)param_ptr, EntryPoints[116]);
                     }
                 }
                 #if DEBUG
@@ -21858,7 +21858,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[116], (OpenTK.Graphics.ES11.All)pname, (IntPtr)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)param, EntryPoints[116]);
                 #if DEBUG
                 }
                 #endif
@@ -21895,7 +21895,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[117], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)renderbuffertarget, (UInt32)renderbuffer);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)renderbuffertarget, (UInt32)renderbuffer, EntryPoints[117]);
                 #if DEBUG
                 }
                 #endif
@@ -21933,7 +21933,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[117], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)renderbuffertarget, (UInt32)renderbuffer);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)renderbuffertarget, (UInt32)renderbuffer, EntryPoints[117]);
                 #if DEBUG
                 }
                 #endif
@@ -21948,7 +21948,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[120], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)textarget, (UInt32)texture, (Int32)level);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)textarget, (UInt32)texture, (Int32)level, EntryPoints[120]);
                 #if DEBUG
                 }
                 #endif
@@ -21964,7 +21964,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[120], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)textarget, (UInt32)texture, (Int32)level);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)textarget, (UInt32)texture, (Int32)level, EntryPoints[120]);
                 #if DEBUG
                 }
                 #endif
@@ -21996,7 +21996,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[123], (Single)l, (Single)r, (Single)b, (Single)t, (Single)n, (Single)f);
+                InteropHelper.Call((Single)l, (Single)r, (Single)b, (Single)t, (Single)n, (Single)f, EntryPoints[123]);
                 #if DEBUG
                 }
                 #endif
@@ -22011,7 +22011,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[125], (int)l, (int)r, (int)b, (int)t, (int)n, (int)f);
+                InteropHelper.Call((int)l, (int)r, (int)b, (int)t, (int)n, (int)f, EntryPoints[125]);
                 #if DEBUG
                 }
                 #endif
@@ -22033,7 +22033,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[127], (OpenTK.Graphics.ES11.All)target);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, EntryPoints[127]);
                 #if DEBUG
                 }
                 #endif
@@ -22053,7 +22053,7 @@ namespace OpenTK.Graphics.ES11
                     const Int32 n = 1;
                     Int32 retval;
                     Int32* framebuffers_ptr = &retval;
-                    InteropHelper.Call(EntryPoints[129], (Int32)n, (IntPtr)framebuffers_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)framebuffers_ptr, EntryPoints[129]);
                     return retval;
                 }
                 #if DEBUG
@@ -22086,7 +22086,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* framebuffers_ptr = framebuffers)
                     {
-                        InteropHelper.Call(EntryPoints[129], (Int32)n, (IntPtr)framebuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)framebuffers_ptr, EntryPoints[129]);
                     }
                 }
                 #if DEBUG
@@ -22119,7 +22119,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* framebuffers_ptr = &framebuffers)
                     {
-                        InteropHelper.Call(EntryPoints[129], (Int32)n, (IntPtr)framebuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)framebuffers_ptr, EntryPoints[129]);
                         framebuffers = *framebuffers_ptr;
                     }
                 }
@@ -22150,7 +22150,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[129], (Int32)n, (IntPtr)framebuffers);
+                InteropHelper.Call((Int32)n, (IntPtr)framebuffers, EntryPoints[129]);
                 #if DEBUG
                 }
                 #endif
@@ -22182,7 +22182,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* framebuffers_ptr = framebuffers)
                     {
-                        InteropHelper.Call(EntryPoints[129], (Int32)n, (IntPtr)framebuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)framebuffers_ptr, EntryPoints[129]);
                     }
                 }
                 #if DEBUG
@@ -22216,7 +22216,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* framebuffers_ptr = &framebuffers)
                     {
-                        InteropHelper.Call(EntryPoints[129], (Int32)n, (IntPtr)framebuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)framebuffers_ptr, EntryPoints[129]);
                         framebuffers = *framebuffers_ptr;
                     }
                 }
@@ -22247,7 +22247,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[129], (Int32)n, (IntPtr)framebuffers);
+                InteropHelper.Call((Int32)n, (IntPtr)framebuffers, EntryPoints[129]);
                 #if DEBUG
                 }
                 #endif
@@ -22267,7 +22267,7 @@ namespace OpenTK.Graphics.ES11
                     const Int32 n = 1;
                     Int32 retval;
                     Int32* renderbuffers_ptr = &retval;
-                    InteropHelper.Call(EntryPoints[130], (Int32)n, (IntPtr)renderbuffers_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)renderbuffers_ptr, EntryPoints[130]);
                     return retval;
                 }
                 #if DEBUG
@@ -22300,7 +22300,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* renderbuffers_ptr = renderbuffers)
                     {
-                        InteropHelper.Call(EntryPoints[130], (Int32)n, (IntPtr)renderbuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)renderbuffers_ptr, EntryPoints[130]);
                     }
                 }
                 #if DEBUG
@@ -22333,7 +22333,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* renderbuffers_ptr = &renderbuffers)
                     {
-                        InteropHelper.Call(EntryPoints[130], (Int32)n, (IntPtr)renderbuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)renderbuffers_ptr, EntryPoints[130]);
                         renderbuffers = *renderbuffers_ptr;
                     }
                 }
@@ -22364,7 +22364,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[130], (Int32)n, (IntPtr)renderbuffers);
+                InteropHelper.Call((Int32)n, (IntPtr)renderbuffers, EntryPoints[130]);
                 #if DEBUG
                 }
                 #endif
@@ -22396,7 +22396,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* renderbuffers_ptr = renderbuffers)
                     {
-                        InteropHelper.Call(EntryPoints[130], (Int32)n, (IntPtr)renderbuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)renderbuffers_ptr, EntryPoints[130]);
                     }
                 }
                 #if DEBUG
@@ -22430,7 +22430,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* renderbuffers_ptr = &renderbuffers)
                     {
-                        InteropHelper.Call(EntryPoints[130], (Int32)n, (IntPtr)renderbuffers_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)renderbuffers_ptr, EntryPoints[130]);
                         renderbuffers = *renderbuffers_ptr;
                     }
                 }
@@ -22461,7 +22461,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[130], (Int32)n, (IntPtr)renderbuffers);
+                InteropHelper.Call((Int32)n, (IntPtr)renderbuffers, EntryPoints[130]);
                 #if DEBUG
                 }
                 #endif
@@ -22481,7 +22481,7 @@ namespace OpenTK.Graphics.ES11
                     const Int32 n = 1;
                     Int32 retval;
                     Int32* arrays_ptr = &retval;
-                    InteropHelper.Call(EntryPoints[132], (Int32)n, (IntPtr)arrays_ptr);
+                    InteropHelper.Call((Int32)n, (IntPtr)arrays_ptr, EntryPoints[132]);
                     return retval;
                 }
                 #if DEBUG
@@ -22514,7 +22514,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* arrays_ptr = arrays)
                     {
-                        InteropHelper.Call(EntryPoints[132], (Int32)n, (IntPtr)arrays_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)arrays_ptr, EntryPoints[132]);
                     }
                 }
                 #if DEBUG
@@ -22547,7 +22547,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* arrays_ptr = &arrays)
                     {
-                        InteropHelper.Call(EntryPoints[132], (Int32)n, (IntPtr)arrays_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)arrays_ptr, EntryPoints[132]);
                         arrays = *arrays_ptr;
                     }
                 }
@@ -22578,7 +22578,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[132], (Int32)n, (IntPtr)arrays);
+                InteropHelper.Call((Int32)n, (IntPtr)arrays, EntryPoints[132]);
                 #if DEBUG
                 }
                 #endif
@@ -22610,7 +22610,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* arrays_ptr = arrays)
                     {
-                        InteropHelper.Call(EntryPoints[132], (Int32)n, (IntPtr)arrays_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)arrays_ptr, EntryPoints[132]);
                     }
                 }
                 #if DEBUG
@@ -22644,7 +22644,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (UInt32* arrays_ptr = &arrays)
                     {
-                        InteropHelper.Call(EntryPoints[132], (Int32)n, (IntPtr)arrays_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)arrays_ptr, EntryPoints[132]);
                         arrays = *arrays_ptr;
                     }
                 }
@@ -22675,7 +22675,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[132], (Int32)n, (IntPtr)arrays);
+                InteropHelper.Call((Int32)n, (IntPtr)arrays, EntryPoints[132]);
                 #if DEBUG
                 }
                 #endif
@@ -22690,7 +22690,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[135], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[135]);
                 #if DEBUG
                 }
                 #endif
@@ -22709,7 +22709,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[135], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[135]);
                 }
                 finally
                 {
@@ -22733,7 +22733,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[135], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[135]);
                 }
                 finally
                 {
@@ -22757,7 +22757,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[135], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[135]);
                 }
                 finally
                 {
@@ -22781,7 +22781,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[135], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[135]);
                     @params = (T2)@params_ptr.Target;
                 }
                 finally
@@ -22818,7 +22818,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* equation_ptr = equation)
                     {
-                        InteropHelper.Call(EntryPoints[137], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[137]);
                     }
                 }
                 #if DEBUG
@@ -22851,7 +22851,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* equation_ptr = &equation)
                     {
-                        InteropHelper.Call(EntryPoints[137], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[137]);
                         equation = *equation_ptr;
                     }
                 }
@@ -22882,7 +22882,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[137], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation, EntryPoints[137]);
                 #if DEBUG
                 }
                 #endif
@@ -22901,7 +22901,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* equation_ptr = equation)
                     {
-                        InteropHelper.Call(EntryPoints[139], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[139]);
                     }
                 }
                 #if DEBUG
@@ -22922,7 +22922,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* equation_ptr = &equation)
                     {
-                        InteropHelper.Call(EntryPoints[139], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation_ptr, EntryPoints[139]);
                         equation = *equation_ptr;
                     }
                 }
@@ -22941,7 +22941,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[139], (OpenTK.Graphics.ES11.All)plane, (IntPtr)equation);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)plane, (IntPtr)equation, EntryPoints[139]);
                 #if DEBUG
                 }
                 #endif
@@ -22960,7 +22960,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[140], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[140]);
                     }
                 }
                 #if DEBUG
@@ -22981,7 +22981,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[140], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[140]);
                         @params = *@params_ptr;
                     }
                 }
@@ -23000,7 +23000,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[140], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[140]);
                 #if DEBUG
                 }
                 #endif
@@ -23019,7 +23019,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     int retval;
                     int* @params_ptr = &retval;
-                    InteropHelper.Call(EntryPoints[146], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[146]);
                     return retval;
                 }
                 #if DEBUG
@@ -23040,7 +23040,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[146], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[146]);
                     }
                 }
                 #if DEBUG
@@ -23061,7 +23061,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[146], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[146]);
                         @params = *@params_ptr;
                     }
                 }
@@ -23080,7 +23080,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[146], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[146]);
                 #if DEBUG
                 }
                 #endif
@@ -23121,7 +23121,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[148], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[148]);
                     }
                 }
                 #if DEBUG
@@ -23164,7 +23164,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[148], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[148]);
                         @params = *@params_ptr;
                     }
                 }
@@ -23205,7 +23205,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[148], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)attachment, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[148]);
                 #if DEBUG
                 }
                 #endif
@@ -23224,7 +23224,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[150], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[150]);
                     }
                 }
                 #if DEBUG
@@ -23245,7 +23245,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[150], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[150]);
                         @params = *@params_ptr;
                     }
                 }
@@ -23264,7 +23264,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[150], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[150]);
                 #if DEBUG
                 }
                 #endif
@@ -23283,7 +23283,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[154], (OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[154]);
                     }
                 }
                 #if DEBUG
@@ -23304,7 +23304,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[154], (OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[154]);
                         @params = *@params_ptr;
                     }
                 }
@@ -23323,7 +23323,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[154], (OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[154]);
                 #if DEBUG
                 }
                 #endif
@@ -23342,7 +23342,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* v_ptr = v)
                     {
-                        InteropHelper.Call(EntryPoints[157], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)query, (IntPtr)v_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)query, (IntPtr)v_ptr, EntryPoints[157]);
                     }
                 }
                 #if DEBUG
@@ -23363,7 +23363,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* v_ptr = &v)
                     {
-                        InteropHelper.Call(EntryPoints[157], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)query, (IntPtr)v_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)query, (IntPtr)v_ptr, EntryPoints[157]);
                         v = *v_ptr;
                     }
                 }
@@ -23382,7 +23382,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[157], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)query, (IntPtr)v);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)query, (IntPtr)v, EntryPoints[157]);
                 #if DEBUG
                 }
                 #endif
@@ -23397,7 +23397,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[159], (OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (int)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[159]);
                 #if DEBUG
                 }
                 #endif
@@ -23416,7 +23416,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[161], (OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[161]);
                     }
                 }
                 #if DEBUG
@@ -23434,7 +23434,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[161], (OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[161]);
                 #if DEBUG
                 }
                 #endif
@@ -23470,7 +23470,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[166], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[166]);
                     }
                 }
                 #if DEBUG
@@ -23508,7 +23508,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[166], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[166]);
                         @params = *@params_ptr;
                     }
                 }
@@ -23544,7 +23544,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[166], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[166]);
                 #if DEBUG
                 }
                 #endif
@@ -23563,7 +23563,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[172], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[172]);
                     }
                 }
                 #if DEBUG
@@ -23584,7 +23584,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[172], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[172]);
                         @params = *@params_ptr;
                     }
                 }
@@ -23603,7 +23603,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[172], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[172]);
                 #if DEBUG
                 }
                 #endif
@@ -23639,7 +23639,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[173], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[173]);
                     }
                 }
                 #if DEBUG
@@ -23677,7 +23677,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[173], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[173]);
                         @params = *@params_ptr;
                     }
                 }
@@ -23713,7 +23713,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[173], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[173]);
                 #if DEBUG
                 }
                 #endif
@@ -23749,7 +23749,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[174], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[174]);
                     }
                 }
                 #if DEBUG
@@ -23787,7 +23787,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[174], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[174]);
                         @params = *@params_ptr;
                     }
                 }
@@ -23823,7 +23823,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[174], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[174]);
                 #if DEBUG
                 }
                 #endif
@@ -23842,7 +23842,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[175], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[175]);
                     }
                 }
                 #if DEBUG
@@ -23863,7 +23863,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[175], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[175]);
                         @params = *@params_ptr;
                     }
                 }
@@ -23882,7 +23882,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[175], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[175]);
                 #if DEBUG
                 }
                 #endif
@@ -23901,7 +23901,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[176], (OpenTK.Graphics.ES11.All)target, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[176]);
                     }
                 }
                 #if DEBUG
@@ -23922,7 +23922,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[176], (OpenTK.Graphics.ES11.All)target, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[176]);
                         @params = *@params_ptr;
                     }
                 }
@@ -23941,7 +23941,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[176], (OpenTK.Graphics.ES11.All)target, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[176]);
                 #if DEBUG
                 }
                 #endif
@@ -23960,7 +23960,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[180], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[180]);
                     }
                 }
                 #if DEBUG
@@ -23981,7 +23981,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[180], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[180]);
                         @params = *@params_ptr;
                     }
                 }
@@ -24000,7 +24000,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[180], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[180]);
                 #if DEBUG
                 }
                 #endif
@@ -24015,7 +24015,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[182], (int)component);
+                InteropHelper.Call((int)component, EntryPoints[182]);
                 #if DEBUG
                 }
                 #endif
@@ -24031,7 +24031,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[183], (IntPtr)component);
+                InteropHelper.Call((IntPtr)component, EntryPoints[183]);
                 #if DEBUG
                 }
                 #endif
@@ -24053,7 +24053,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[187], (UInt32)framebuffer);
+                return InteropHelper.CallReturn<bool, UInt32>((UInt32)framebuffer, EntryPoints[187]);
                 #if DEBUG
                 }
                 #endif
@@ -24076,7 +24076,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[187], (UInt32)framebuffer);
+                return InteropHelper.CallReturn<bool, UInt32>((UInt32)framebuffer, EntryPoints[187]);
                 #if DEBUG
                 }
                 #endif
@@ -24098,7 +24098,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[188], (UInt32)renderbuffer);
+                return InteropHelper.CallReturn<bool, UInt32>((UInt32)renderbuffer, EntryPoints[188]);
                 #if DEBUG
                 }
                 #endif
@@ -24121,7 +24121,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[188], (UInt32)renderbuffer);
+                return InteropHelper.CallReturn<bool, UInt32>((UInt32)renderbuffer, EntryPoints[188]);
                 #if DEBUG
                 }
                 #endif
@@ -24143,7 +24143,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[191], (UInt32)array);
+                return InteropHelper.CallReturn<bool, UInt32>((UInt32)array, EntryPoints[191]);
                 #if DEBUG
                 }
                 #endif
@@ -24166,7 +24166,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[191], (UInt32)array);
+                return InteropHelper.CallReturn<bool, UInt32>((UInt32)array, EntryPoints[191]);
                 #if DEBUG
                 }
                 #endif
@@ -24181,7 +24181,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[197], (OpenTK.Graphics.ES11.All)pname, (int)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[197]);
                 #if DEBUG
                 }
                 #endif
@@ -24200,7 +24200,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* param_ptr = param)
                     {
-                        InteropHelper.Call(EntryPoints[199], (OpenTK.Graphics.ES11.All)pname, (IntPtr)param_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)param_ptr, EntryPoints[199]);
                     }
                 }
                 #if DEBUG
@@ -24218,7 +24218,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[199], (OpenTK.Graphics.ES11.All)pname, (IntPtr)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)param, EntryPoints[199]);
                 #if DEBUG
                 }
                 #endif
@@ -24233,7 +24233,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[201], (OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (int)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[201]);
                 #if DEBUG
                 }
                 #endif
@@ -24252,7 +24252,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[203], (OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[203]);
                     }
                 }
                 #if DEBUG
@@ -24270,7 +24270,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[203], (OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)light, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[203]);
                 #if DEBUG
                 }
                 #endif
@@ -24285,7 +24285,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[206], (int)width);
+                InteropHelper.Call((int)width, EntryPoints[206]);
                 #if DEBUG
                 }
                 #endif
@@ -24304,7 +24304,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* m_ptr = m)
                     {
-                        InteropHelper.Call(EntryPoints[210], (IntPtr)m_ptr);
+                        InteropHelper.Call((IntPtr)m_ptr, EntryPoints[210]);
                     }
                 }
                 #if DEBUG
@@ -24325,7 +24325,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* m_ptr = &m)
                     {
-                        InteropHelper.Call(EntryPoints[210], (IntPtr)m_ptr);
+                        InteropHelper.Call((IntPtr)m_ptr, EntryPoints[210]);
                     }
                 }
                 #if DEBUG
@@ -24343,7 +24343,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[210], (IntPtr)m);
+                InteropHelper.Call((IntPtr)m, EntryPoints[210]);
                 #if DEBUG
                 }
                 #endif
@@ -24377,7 +24377,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* m_ptr = m)
                     {
-                        InteropHelper.Call(EntryPoints[212], (IntPtr)m_ptr);
+                        InteropHelper.Call((IntPtr)m_ptr, EntryPoints[212]);
                     }
                 }
                 #if DEBUG
@@ -24398,7 +24398,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* m_ptr = &m)
                     {
-                        InteropHelper.Call(EntryPoints[212], (IntPtr)m_ptr);
+                        InteropHelper.Call((IntPtr)m_ptr, EntryPoints[212]);
                     }
                 }
                 #if DEBUG
@@ -24416,7 +24416,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[212], (IntPtr)m);
+                InteropHelper.Call((IntPtr)m, EntryPoints[212]);
                 #if DEBUG
                 }
                 #endif
@@ -24431,7 +24431,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[214], (OpenTK.Graphics.ES11.All)target, (int)u1, (int)u2, (Int32)stride, (Int32)order, (int)points);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (int)u1, (int)u2, (Int32)stride, (Int32)order, (int)points, EntryPoints[214]);
                 #if DEBUG
                 }
                 #endif
@@ -24446,7 +24446,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[215], (OpenTK.Graphics.ES11.All)target, (int)u1, (int)u2, (Int32)ustride, (Int32)uorder, (int)v1, (int)v2, (Int32)vstride, (Int32)vorder, (int)points);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (int)u1, (int)u2, (Int32)ustride, (Int32)uorder, (int)v1, (int)v2, (Int32)vstride, (Int32)vorder, (int)points, EntryPoints[215]);
                 #if DEBUG
                 }
                 #endif
@@ -24473,7 +24473,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<IntPtr, All, All>(EntryPoints[216], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)access);
+                return InteropHelper.CallReturn<IntPtr, All, All>((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)access, EntryPoints[216]);
                 #if DEBUG
                 }
                 #endif
@@ -24488,7 +24488,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[218], (Int32)n, (int)u1, (int)u2);
+                InteropHelper.Call((Int32)n, (int)u1, (int)u2, EntryPoints[218]);
                 #if DEBUG
                 }
                 #endif
@@ -24503,7 +24503,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[219], (Int32)n, (int)u1, (int)u2, (int)v1, (int)v2);
+                InteropHelper.Call((Int32)n, (int)u1, (int)u2, (int)v1, (int)v2, EntryPoints[219]);
                 #if DEBUG
                 }
                 #endif
@@ -24518,7 +24518,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[223], (OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (int)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[223]);
                 #if DEBUG
                 }
                 #endif
@@ -24537,7 +24537,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* param_ptr = param)
                     {
-                        InteropHelper.Call(EntryPoints[225], (OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)param_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)param_ptr, EntryPoints[225]);
                     }
                 }
                 #if DEBUG
@@ -24555,7 +24555,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[225], (OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)face, (OpenTK.Graphics.ES11.All)pname, (IntPtr)param, EntryPoints[225]);
                 #if DEBUG
                 }
                 #endif
@@ -24570,7 +24570,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[226], (Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer);
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer, EntryPoints[226]);
                 #if DEBUG
                 }
                 #endif
@@ -24589,7 +24589,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[226], (Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[226]);
                 }
                 finally
                 {
@@ -24613,7 +24613,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[226], (Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[226]);
                 }
                 finally
                 {
@@ -24637,7 +24637,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[226], (Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[226]);
                 }
                 finally
                 {
@@ -24661,7 +24661,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[226], (Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[226]);
                     pointer = (T3)pointer_ptr.Target;
                 }
                 finally
@@ -24694,7 +24694,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[230], (OpenTK.Graphics.ES11.All)texture, (SByte)s);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (SByte)s, EntryPoints[230]);
                 #if DEBUG
                 }
                 #endif
@@ -24722,7 +24722,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[230], (OpenTK.Graphics.ES11.All)texture, (SByte)s);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (SByte)s, EntryPoints[230]);
                 #if DEBUG
                 }
                 #endif
@@ -24750,7 +24750,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[231], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords, EntryPoints[231]);
                 #if DEBUG
                 }
                 #endif
@@ -24778,7 +24778,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[231], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords, EntryPoints[231]);
                 #if DEBUG
                 }
                 #endif
@@ -24793,7 +24793,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[232], (OpenTK.Graphics.ES11.All)texture, (int)s);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (int)s, EntryPoints[232]);
                 #if DEBUG
                 }
                 #endif
@@ -24809,7 +24809,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[233], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords, EntryPoints[233]);
                 #if DEBUG
                 }
                 #endif
@@ -24836,7 +24836,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[234], (OpenTK.Graphics.ES11.All)texture, (SByte)s, (SByte)t);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (SByte)s, (SByte)t, EntryPoints[234]);
                 #if DEBUG
                 }
                 #endif
@@ -24864,7 +24864,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[234], (OpenTK.Graphics.ES11.All)texture, (SByte)s, (SByte)t);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (SByte)s, (SByte)t, EntryPoints[234]);
                 #if DEBUG
                 }
                 #endif
@@ -24895,7 +24895,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[235], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[235]);
                     }
                 }
                 #if DEBUG
@@ -24928,7 +24928,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[235], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[235]);
                     }
                 }
                 #if DEBUG
@@ -24958,7 +24958,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[235], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords, EntryPoints[235]);
                 #if DEBUG
                 }
                 #endif
@@ -24990,7 +24990,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[235], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[235]);
                     }
                 }
                 #if DEBUG
@@ -25024,7 +25024,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[235], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[235]);
                     }
                 }
                 #if DEBUG
@@ -25054,7 +25054,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[235], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords, EntryPoints[235]);
                 #if DEBUG
                 }
                 #endif
@@ -25069,7 +25069,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[236], (OpenTK.Graphics.ES11.All)texture, (int)s, (int)t);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (int)s, (int)t, EntryPoints[236]);
                 #if DEBUG
                 }
                 #endif
@@ -25088,7 +25088,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[237], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[237]);
                     }
                 }
                 #if DEBUG
@@ -25109,7 +25109,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[237], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[237]);
                     }
                 }
                 #if DEBUG
@@ -25127,7 +25127,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[237], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords, EntryPoints[237]);
                 #if DEBUG
                 }
                 #endif
@@ -25154,7 +25154,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[238], (OpenTK.Graphics.ES11.All)texture, (SByte)s, (SByte)t, (SByte)r);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (SByte)s, (SByte)t, (SByte)r, EntryPoints[238]);
                 #if DEBUG
                 }
                 #endif
@@ -25182,7 +25182,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[238], (OpenTK.Graphics.ES11.All)texture, (SByte)s, (SByte)t, (SByte)r);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (SByte)s, (SByte)t, (SByte)r, EntryPoints[238]);
                 #if DEBUG
                 }
                 #endif
@@ -25213,7 +25213,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[239], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[239]);
                     }
                 }
                 #if DEBUG
@@ -25246,7 +25246,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[239], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[239]);
                     }
                 }
                 #if DEBUG
@@ -25276,7 +25276,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[239], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords, EntryPoints[239]);
                 #if DEBUG
                 }
                 #endif
@@ -25308,7 +25308,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[239], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[239]);
                     }
                 }
                 #if DEBUG
@@ -25342,7 +25342,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[239], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[239]);
                     }
                 }
                 #if DEBUG
@@ -25372,7 +25372,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[239], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords, EntryPoints[239]);
                 #if DEBUG
                 }
                 #endif
@@ -25387,7 +25387,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[240], (OpenTK.Graphics.ES11.All)texture, (int)s, (int)t, (int)r);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (int)s, (int)t, (int)r, EntryPoints[240]);
                 #if DEBUG
                 }
                 #endif
@@ -25406,7 +25406,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[241], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[241]);
                     }
                 }
                 #if DEBUG
@@ -25427,7 +25427,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[241], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[241]);
                     }
                 }
                 #if DEBUG
@@ -25445,7 +25445,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[241], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords, EntryPoints[241]);
                 #if DEBUG
                 }
                 #endif
@@ -25472,7 +25472,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[242], (OpenTK.Graphics.ES11.All)texture, (SByte)s, (SByte)t, (SByte)r, (SByte)q);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (SByte)s, (SByte)t, (SByte)r, (SByte)q, EntryPoints[242]);
                 #if DEBUG
                 }
                 #endif
@@ -25500,7 +25500,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[242], (OpenTK.Graphics.ES11.All)texture, (SByte)s, (SByte)t, (SByte)r, (SByte)q);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (SByte)s, (SByte)t, (SByte)r, (SByte)q, EntryPoints[242]);
                 #if DEBUG
                 }
                 #endif
@@ -25531,7 +25531,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[243], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[243]);
                     }
                 }
                 #if DEBUG
@@ -25564,7 +25564,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[243], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[243]);
                     }
                 }
                 #if DEBUG
@@ -25594,7 +25594,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[243], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords, EntryPoints[243]);
                 #if DEBUG
                 }
                 #endif
@@ -25626,7 +25626,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[243], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[243]);
                     }
                 }
                 #if DEBUG
@@ -25660,7 +25660,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[243], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[243]);
                     }
                 }
                 #if DEBUG
@@ -25690,7 +25690,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[243], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords, EntryPoints[243]);
                 #if DEBUG
                 }
                 #endif
@@ -25705,7 +25705,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[246], (OpenTK.Graphics.ES11.All)texture, (int)s, (int)t, (int)r, (int)q);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (int)s, (int)t, (int)r, (int)q, EntryPoints[246]);
                 #if DEBUG
                 }
                 #endif
@@ -25724,7 +25724,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[247], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[247]);
                     }
                 }
                 #if DEBUG
@@ -25745,7 +25745,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[247], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords_ptr, EntryPoints[247]);
                     }
                 }
                 #if DEBUG
@@ -25763,7 +25763,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[247], (OpenTK.Graphics.ES11.All)texture, (IntPtr)coords);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)texture, (IntPtr)coords, EntryPoints[247]);
                 #if DEBUG
                 }
                 #endif
@@ -25782,7 +25782,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* m_ptr = m)
                     {
-                        InteropHelper.Call(EntryPoints[250], (IntPtr)m_ptr);
+                        InteropHelper.Call((IntPtr)m_ptr, EntryPoints[250]);
                     }
                 }
                 #if DEBUG
@@ -25803,7 +25803,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* m_ptr = &m)
                     {
-                        InteropHelper.Call(EntryPoints[250], (IntPtr)m_ptr);
+                        InteropHelper.Call((IntPtr)m_ptr, EntryPoints[250]);
                     }
                 }
                 #if DEBUG
@@ -25821,7 +25821,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[250], (IntPtr)m);
+                InteropHelper.Call((IntPtr)m, EntryPoints[250]);
                 #if DEBUG
                 }
                 #endif
@@ -25840,7 +25840,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* m_ptr = m)
                     {
-                        InteropHelper.Call(EntryPoints[251], (IntPtr)m_ptr);
+                        InteropHelper.Call((IntPtr)m_ptr, EntryPoints[251]);
                     }
                 }
                 #if DEBUG
@@ -25861,7 +25861,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* m_ptr = &m)
                     {
-                        InteropHelper.Call(EntryPoints[251], (IntPtr)m_ptr);
+                        InteropHelper.Call((IntPtr)m_ptr, EntryPoints[251]);
                     }
                 }
                 #if DEBUG
@@ -25879,7 +25879,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[251], (IntPtr)m);
+                InteropHelper.Call((IntPtr)m, EntryPoints[251]);
                 #if DEBUG
                 }
                 #endif
@@ -25894,7 +25894,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[254], (int)nx, (int)ny, (int)nz);
+                InteropHelper.Call((int)nx, (int)ny, (int)nz, EntryPoints[254]);
                 #if DEBUG
                 }
                 #endif
@@ -25913,7 +25913,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[255], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[255]);
                     }
                 }
                 #if DEBUG
@@ -25934,7 +25934,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[255], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[255]);
                     }
                 }
                 #if DEBUG
@@ -25952,7 +25952,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[255], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[255]);
                 #if DEBUG
                 }
                 #endif
@@ -25984,7 +25984,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[258], (Single)l, (Single)r, (Single)b, (Single)t, (Single)n, (Single)f);
+                InteropHelper.Call((Single)l, (Single)r, (Single)b, (Single)t, (Single)n, (Single)f, EntryPoints[258]);
                 #if DEBUG
                 }
                 #endif
@@ -25999,7 +25999,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[260], (int)l, (int)r, (int)b, (int)t, (int)n, (int)f);
+                InteropHelper.Call((int)l, (int)r, (int)b, (int)t, (int)n, (int)f, EntryPoints[260]);
                 #if DEBUG
                 }
                 #endif
@@ -26014,7 +26014,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[261], (int)token);
+                InteropHelper.Call((int)token, EntryPoints[261]);
                 #if DEBUG
                 }
                 #endif
@@ -26029,7 +26029,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[265], (OpenTK.Graphics.ES11.All)pname, (int)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[265]);
                 #if DEBUG
                 }
                 #endif
@@ -26044,7 +26044,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[266], (int)xfactor, (int)yfactor);
+                InteropHelper.Call((int)xfactor, (int)yfactor, EntryPoints[266]);
                 #if DEBUG
                 }
                 #endif
@@ -26059,7 +26059,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[270], (OpenTK.Graphics.ES11.All)pname, (int)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[270]);
                 #if DEBUG
                 }
                 #endif
@@ -26078,7 +26078,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[272], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[272]);
                     }
                 }
                 #if DEBUG
@@ -26096,7 +26096,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[272], (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[272]);
                 #if DEBUG
                 }
                 #endif
@@ -26111,7 +26111,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[274], (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer, EntryPoints[274]);
                 #if DEBUG
                 }
                 #endif
@@ -26130,7 +26130,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[274], (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[274]);
                 }
                 finally
                 {
@@ -26154,7 +26154,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[274], (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[274]);
                 }
                 finally
                 {
@@ -26178,7 +26178,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[274], (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[274]);
                 }
                 finally
                 {
@@ -26202,7 +26202,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[274], (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[274]);
                     pointer = (T2)pointer_ptr.Target;
                 }
                 finally
@@ -26223,7 +26223,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[276], (int)size);
+                InteropHelper.Call((int)size, EntryPoints[276]);
                 #if DEBUG
                 }
                 #endif
@@ -26238,7 +26238,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[279], (int)factor, (int)units);
+                InteropHelper.Call((int)factor, (int)units, EntryPoints[279]);
                 #if DEBUG
                 }
                 #endif
@@ -26258,7 +26258,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* textures_ptr = textures)
                     fixed (int* priorities_ptr = priorities)
                     {
-                        InteropHelper.Call(EntryPoints[281], (Int32)n, (IntPtr)textures_ptr, (IntPtr)priorities_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, (IntPtr)priorities_ptr, EntryPoints[281]);
                     }
                 }
                 #if DEBUG
@@ -26280,7 +26280,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* textures_ptr = &textures)
                     fixed (int* priorities_ptr = &priorities)
                     {
-                        InteropHelper.Call(EntryPoints[281], (Int32)n, (IntPtr)textures_ptr, (IntPtr)priorities_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, (IntPtr)priorities_ptr, EntryPoints[281]);
                     }
                 }
                 #if DEBUG
@@ -26298,7 +26298,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[281], (Int32)n, (IntPtr)textures, (IntPtr)priorities);
+                InteropHelper.Call((Int32)n, (IntPtr)textures, (IntPtr)priorities, EntryPoints[281]);
                 #if DEBUG
                 }
                 #endif
@@ -26319,7 +26319,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (UInt32* textures_ptr = textures)
                     fixed (int* priorities_ptr = priorities)
                     {
-                        InteropHelper.Call(EntryPoints[281], (Int32)n, (IntPtr)textures_ptr, (IntPtr)priorities_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, (IntPtr)priorities_ptr, EntryPoints[281]);
                     }
                 }
                 #if DEBUG
@@ -26342,7 +26342,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (UInt32* textures_ptr = &textures)
                     fixed (int* priorities_ptr = &priorities)
                     {
-                        InteropHelper.Call(EntryPoints[281], (Int32)n, (IntPtr)textures_ptr, (IntPtr)priorities_ptr);
+                        InteropHelper.Call((Int32)n, (IntPtr)textures_ptr, (IntPtr)priorities_ptr, EntryPoints[281]);
                     }
                 }
                 #if DEBUG
@@ -26360,7 +26360,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[281], (Int32)n, (IntPtr)textures, (IntPtr)priorities);
+                InteropHelper.Call((Int32)n, (IntPtr)textures, (IntPtr)priorities, EntryPoints[281]);
                 #if DEBUG
                 }
                 #endif
@@ -26380,7 +26380,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (int* mantissa_ptr = mantissa)
                     fixed (Int32* exponent_ptr = exponent)
                     {
-                        return InteropHelper.CallReturn<Int32, IntPtr, IntPtr>(EntryPoints[283], (IntPtr)mantissa_ptr, (IntPtr)exponent_ptr);
+                        return InteropHelper.CallReturn<Int32, IntPtr, IntPtr>((IntPtr)mantissa_ptr, (IntPtr)exponent_ptr, EntryPoints[283]);
                     }
                 }
                 #if DEBUG
@@ -26402,7 +26402,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (int* mantissa_ptr = &mantissa)
                     fixed (Int32* exponent_ptr = &exponent)
                     {
-                        Int32 retval = InteropHelper.CallReturn<Int32, IntPtr, IntPtr>(EntryPoints[283], (IntPtr)mantissa_ptr, (IntPtr)exponent_ptr);
+                        Int32 retval = InteropHelper.CallReturn<Int32, IntPtr, IntPtr>((IntPtr)mantissa_ptr, (IntPtr)exponent_ptr, EntryPoints[283]);
                         mantissa = *mantissa_ptr;
                         exponent = *exponent_ptr;
                         return retval;
@@ -26423,7 +26423,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<Int32, IntPtr, IntPtr>(EntryPoints[283], (IntPtr)mantissa, (IntPtr)exponent);
+                return InteropHelper.CallReturn<Int32, IntPtr, IntPtr>((IntPtr)mantissa, (IntPtr)exponent, EntryPoints[283]);
                 #if DEBUG
                 }
                 #endif
@@ -26438,7 +26438,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[284], (int)x, (int)y);
+                InteropHelper.Call((int)x, (int)y, EntryPoints[284]);
                 #if DEBUG
                 }
                 #endif
@@ -26457,7 +26457,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[285], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[285]);
                     }
                 }
                 #if DEBUG
@@ -26478,7 +26478,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[285], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[285]);
                     }
                 }
                 #if DEBUG
@@ -26496,7 +26496,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[285], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[285]);
                 #if DEBUG
                 }
                 #endif
@@ -26511,7 +26511,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[286], (int)x, (int)y, (int)z);
+                InteropHelper.Call((int)x, (int)y, (int)z, EntryPoints[286]);
                 #if DEBUG
                 }
                 #endif
@@ -26530,7 +26530,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[287], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[287]);
                     }
                 }
                 #if DEBUG
@@ -26551,7 +26551,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[287], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[287]);
                     }
                 }
                 #if DEBUG
@@ -26569,7 +26569,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[287], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[287]);
                 #if DEBUG
                 }
                 #endif
@@ -26584,7 +26584,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[288], (int)x, (int)y, (int)z, (int)w);
+                InteropHelper.Call((int)x, (int)y, (int)z, (int)w, EntryPoints[288]);
                 #if DEBUG
                 }
                 #endif
@@ -26603,7 +26603,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[289], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[289]);
                     }
                 }
                 #if DEBUG
@@ -26624,7 +26624,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[289], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[289]);
                     }
                 }
                 #if DEBUG
@@ -26642,7 +26642,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[289], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[289]);
                 #if DEBUG
                 }
                 #endif
@@ -26657,7 +26657,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[292], (int)x1, (int)y1, (int)x2, (int)y2);
+                InteropHelper.Call((int)x1, (int)y1, (int)x2, (int)y2, EntryPoints[292]);
                 #if DEBUG
                 }
                 #endif
@@ -26677,7 +26677,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (int* v1_ptr = v1)
                     fixed (int* v2_ptr = v2)
                     {
-                        InteropHelper.Call(EntryPoints[293], (IntPtr)v1_ptr, (IntPtr)v2_ptr);
+                        InteropHelper.Call((IntPtr)v1_ptr, (IntPtr)v2_ptr, EntryPoints[293]);
                     }
                 }
                 #if DEBUG
@@ -26699,7 +26699,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (int* v1_ptr = &v1)
                     fixed (int* v2_ptr = &v2)
                     {
-                        InteropHelper.Call(EntryPoints[293], (IntPtr)v1_ptr, (IntPtr)v2_ptr);
+                        InteropHelper.Call((IntPtr)v1_ptr, (IntPtr)v2_ptr, EntryPoints[293]);
                     }
                 }
                 #if DEBUG
@@ -26717,7 +26717,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[293], (IntPtr)v1, (IntPtr)v2);
+                InteropHelper.Call((IntPtr)v1, (IntPtr)v2, EntryPoints[293]);
                 #if DEBUG
                 }
                 #endif
@@ -26754,7 +26754,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[297], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)internalformat, (Int32)width, (Int32)height, EntryPoints[297]);
                 #if DEBUG
                 }
                 #endif
@@ -26769,7 +26769,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[301], (int)angle, (int)x, (int)y, (int)z);
+                InteropHelper.Call((int)angle, (int)x, (int)y, (int)z, EntryPoints[301]);
                 #if DEBUG
                 }
                 #endif
@@ -26796,7 +26796,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[303], (int)value, (bool)invert);
+                InteropHelper.Call((int)value, (bool)invert, EntryPoints[303]);
                 #if DEBUG
                 }
                 #endif
@@ -26811,7 +26811,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[305], (int)value, (bool)invert);
+                InteropHelper.Call((int)value, (bool)invert, EntryPoints[305]);
                 #if DEBUG
                 }
                 #endif
@@ -26826,7 +26826,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[308], (int)x, (int)y, (int)z);
+                InteropHelper.Call((int)x, (int)y, (int)z, EntryPoints[308]);
                 #if DEBUG
                 }
                 #endif
@@ -26848,7 +26848,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[317], (SByte)s);
+                InteropHelper.Call((SByte)s, EntryPoints[317]);
                 #if DEBUG
                 }
                 #endif
@@ -26871,7 +26871,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[317], (SByte)s);
+                InteropHelper.Call((SByte)s, EntryPoints[317]);
                 #if DEBUG
                 }
                 #endif
@@ -26894,7 +26894,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[318], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[318]);
                 #if DEBUG
                 }
                 #endif
@@ -26917,7 +26917,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[318], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[318]);
                 #if DEBUG
                 }
                 #endif
@@ -26932,7 +26932,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[319], (int)s);
+                InteropHelper.Call((int)s, EntryPoints[319]);
                 #if DEBUG
                 }
                 #endif
@@ -26948,7 +26948,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[320], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[320]);
                 #if DEBUG
                 }
                 #endif
@@ -26970,7 +26970,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[321], (SByte)s, (SByte)t);
+                InteropHelper.Call((SByte)s, (SByte)t, EntryPoints[321]);
                 #if DEBUG
                 }
                 #endif
@@ -26993,7 +26993,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[321], (SByte)s, (SByte)t);
+                InteropHelper.Call((SByte)s, (SByte)t, EntryPoints[321]);
                 #if DEBUG
                 }
                 #endif
@@ -27019,7 +27019,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[322], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[322]);
                     }
                 }
                 #if DEBUG
@@ -27047,7 +27047,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[322], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[322]);
                     }
                 }
                 #if DEBUG
@@ -27072,7 +27072,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[322], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[322]);
                 #if DEBUG
                 }
                 #endif
@@ -27099,7 +27099,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[322], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[322]);
                     }
                 }
                 #if DEBUG
@@ -27128,7 +27128,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[322], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[322]);
                     }
                 }
                 #if DEBUG
@@ -27153,7 +27153,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[322], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[322]);
                 #if DEBUG
                 }
                 #endif
@@ -27168,7 +27168,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[323], (int)s, (int)t);
+                InteropHelper.Call((int)s, (int)t, EntryPoints[323]);
                 #if DEBUG
                 }
                 #endif
@@ -27187,7 +27187,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[324], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[324]);
                     }
                 }
                 #if DEBUG
@@ -27208,7 +27208,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[324], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[324]);
                     }
                 }
                 #if DEBUG
@@ -27226,7 +27226,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[324], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[324]);
                 #if DEBUG
                 }
                 #endif
@@ -27248,7 +27248,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[325], (SByte)s, (SByte)t, (SByte)r);
+                InteropHelper.Call((SByte)s, (SByte)t, (SByte)r, EntryPoints[325]);
                 #if DEBUG
                 }
                 #endif
@@ -27271,7 +27271,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[325], (SByte)s, (SByte)t, (SByte)r);
+                InteropHelper.Call((SByte)s, (SByte)t, (SByte)r, EntryPoints[325]);
                 #if DEBUG
                 }
                 #endif
@@ -27297,7 +27297,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[326], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[326]);
                     }
                 }
                 #if DEBUG
@@ -27325,7 +27325,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[326], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[326]);
                     }
                 }
                 #if DEBUG
@@ -27350,7 +27350,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[326], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[326]);
                 #if DEBUG
                 }
                 #endif
@@ -27377,7 +27377,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[326], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[326]);
                     }
                 }
                 #if DEBUG
@@ -27406,7 +27406,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[326], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[326]);
                     }
                 }
                 #if DEBUG
@@ -27431,7 +27431,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[326], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[326]);
                 #if DEBUG
                 }
                 #endif
@@ -27446,7 +27446,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[327], (int)s, (int)t, (int)r);
+                InteropHelper.Call((int)s, (int)t, (int)r, EntryPoints[327]);
                 #if DEBUG
                 }
                 #endif
@@ -27465,7 +27465,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[328], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[328]);
                     }
                 }
                 #if DEBUG
@@ -27486,7 +27486,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[328], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[328]);
                     }
                 }
                 #if DEBUG
@@ -27504,7 +27504,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[328], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[328]);
                 #if DEBUG
                 }
                 #endif
@@ -27526,7 +27526,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[329], (SByte)s, (SByte)t, (SByte)r, (SByte)q);
+                InteropHelper.Call((SByte)s, (SByte)t, (SByte)r, (SByte)q, EntryPoints[329]);
                 #if DEBUG
                 }
                 #endif
@@ -27549,7 +27549,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[329], (SByte)s, (SByte)t, (SByte)r, (SByte)q);
+                InteropHelper.Call((SByte)s, (SByte)t, (SByte)r, (SByte)q, EntryPoints[329]);
                 #if DEBUG
                 }
                 #endif
@@ -27575,7 +27575,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[330], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[330]);
                     }
                 }
                 #if DEBUG
@@ -27603,7 +27603,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[330], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[330]);
                     }
                 }
                 #if DEBUG
@@ -27628,7 +27628,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[330], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[330]);
                 #if DEBUG
                 }
                 #endif
@@ -27655,7 +27655,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[330], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[330]);
                     }
                 }
                 #if DEBUG
@@ -27684,7 +27684,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[330], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[330]);
                     }
                 }
                 #if DEBUG
@@ -27709,7 +27709,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[330], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[330]);
                 #if DEBUG
                 }
                 #endif
@@ -27724,7 +27724,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[331], (int)s, (int)t, (int)r, (int)q);
+                InteropHelper.Call((int)s, (int)t, (int)r, (int)q, EntryPoints[331]);
                 #if DEBUG
                 }
                 #endif
@@ -27743,7 +27743,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[332], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[332]);
                     }
                 }
                 #if DEBUG
@@ -27764,7 +27764,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[332], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[332]);
                     }
                 }
                 #if DEBUG
@@ -27782,7 +27782,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[332], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[332]);
                 #if DEBUG
                 }
                 #endif
@@ -27797,7 +27797,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[339], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (int)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[339]);
                 #if DEBUG
                 }
                 #endif
@@ -27816,7 +27816,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[341], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[341]);
                     }
                 }
                 #if DEBUG
@@ -27834,7 +27834,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[341], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[341]);
                 #if DEBUG
                 }
                 #endif
@@ -27866,7 +27866,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[342], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (Single)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (Single)param, EntryPoints[342]);
                 #if DEBUG
                 }
                 #endif
@@ -27902,7 +27902,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Single* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[343], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[343]);
                     }
                 }
                 #if DEBUG
@@ -27937,7 +27937,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[343], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[343]);
                 #if DEBUG
                 }
                 #endif
@@ -27969,7 +27969,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[344], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (Int32)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (Int32)param, EntryPoints[344]);
                 #if DEBUG
                 }
                 #endif
@@ -28005,7 +28005,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[345], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[345]);
                     }
                 }
                 #if DEBUG
@@ -28040,7 +28040,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[345], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[345]);
                 #if DEBUG
                 }
                 #endif
@@ -28055,7 +28055,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[346], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (int)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[346]);
                 #if DEBUG
                 }
                 #endif
@@ -28074,7 +28074,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[347], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[347]);
                     }
                 }
                 #if DEBUG
@@ -28092,7 +28092,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[347], (OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)coord, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[347]);
                 #if DEBUG
                 }
                 #endif
@@ -28107,7 +28107,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[354], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (int)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (int)param, EntryPoints[354]);
                 #if DEBUG
                 }
                 #endif
@@ -28126,7 +28126,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[356], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[356]);
                     }
                 }
                 #if DEBUG
@@ -28144,7 +28144,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[356], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[356]);
                 #if DEBUG
                 }
                 #endif
@@ -28159,7 +28159,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[366], (int)x, (int)y, (int)z);
+                InteropHelper.Call((int)x, (int)y, (int)z, EntryPoints[366]);
                 #if DEBUG
                 }
                 #endif
@@ -28174,7 +28174,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<bool, All>(EntryPoints[367], (OpenTK.Graphics.ES11.All)target);
+                return InteropHelper.CallReturn<bool, All>((OpenTK.Graphics.ES11.All)target, EntryPoints[367]);
                 #if DEBUG
                 }
                 #endif
@@ -28196,7 +28196,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[368], (SByte)x);
+                InteropHelper.Call((SByte)x, EntryPoints[368]);
                 #if DEBUG
                 }
                 #endif
@@ -28219,7 +28219,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[368], (SByte)x);
+                InteropHelper.Call((SByte)x, EntryPoints[368]);
                 #if DEBUG
                 }
                 #endif
@@ -28245,7 +28245,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[369], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[369]);
                     }
                 }
                 #if DEBUG
@@ -28270,7 +28270,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[369], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[369]);
                 #if DEBUG
                 }
                 #endif
@@ -28297,7 +28297,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[369], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[369]);
                     }
                 }
                 #if DEBUG
@@ -28322,7 +28322,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[369], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[369]);
                 #if DEBUG
                 }
                 #endif
@@ -28337,7 +28337,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[370], (int)x);
+                InteropHelper.Call((int)x, EntryPoints[370]);
                 #if DEBUG
                 }
                 #endif
@@ -28356,7 +28356,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[371], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[371]);
                     }
                 }
                 #if DEBUG
@@ -28374,7 +28374,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[371], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[371]);
                 #if DEBUG
                 }
                 #endif
@@ -28396,7 +28396,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[372], (SByte)x, (SByte)y);
+                InteropHelper.Call((SByte)x, (SByte)y, EntryPoints[372]);
                 #if DEBUG
                 }
                 #endif
@@ -28419,7 +28419,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[372], (SByte)x, (SByte)y);
+                InteropHelper.Call((SByte)x, (SByte)y, EntryPoints[372]);
                 #if DEBUG
                 }
                 #endif
@@ -28445,7 +28445,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[373], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[373]);
                     }
                 }
                 #if DEBUG
@@ -28473,7 +28473,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[373], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[373]);
                     }
                 }
                 #if DEBUG
@@ -28498,7 +28498,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[373], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[373]);
                 #if DEBUG
                 }
                 #endif
@@ -28525,7 +28525,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[373], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[373]);
                     }
                 }
                 #if DEBUG
@@ -28554,7 +28554,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[373], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[373]);
                     }
                 }
                 #if DEBUG
@@ -28579,7 +28579,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[373], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[373]);
                 #if DEBUG
                 }
                 #endif
@@ -28594,7 +28594,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[374], (int)x, (int)y);
+                InteropHelper.Call((int)x, (int)y, EntryPoints[374]);
                 #if DEBUG
                 }
                 #endif
@@ -28613,7 +28613,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[375], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[375]);
                     }
                 }
                 #if DEBUG
@@ -28634,7 +28634,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[375], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[375]);
                     }
                 }
                 #if DEBUG
@@ -28652,7 +28652,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[375], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[375]);
                 #if DEBUG
                 }
                 #endif
@@ -28674,7 +28674,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[376], (SByte)x, (SByte)y, (SByte)z);
+                InteropHelper.Call((SByte)x, (SByte)y, (SByte)z, EntryPoints[376]);
                 #if DEBUG
                 }
                 #endif
@@ -28697,7 +28697,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[376], (SByte)x, (SByte)y, (SByte)z);
+                InteropHelper.Call((SByte)x, (SByte)y, (SByte)z, EntryPoints[376]);
                 #if DEBUG
                 }
                 #endif
@@ -28723,7 +28723,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[377], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[377]);
                     }
                 }
                 #if DEBUG
@@ -28751,7 +28751,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Byte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[377], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[377]);
                     }
                 }
                 #if DEBUG
@@ -28776,7 +28776,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[377], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[377]);
                 #if DEBUG
                 }
                 #endif
@@ -28803,7 +28803,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[377], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[377]);
                     }
                 }
                 #if DEBUG
@@ -28832,7 +28832,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (SByte* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[377], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[377]);
                     }
                 }
                 #if DEBUG
@@ -28857,7 +28857,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[377], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[377]);
                 #if DEBUG
                 }
                 #endif
@@ -28872,7 +28872,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[378], (int)x, (int)y, (int)z);
+                InteropHelper.Call((int)x, (int)y, (int)z, EntryPoints[378]);
                 #if DEBUG
                 }
                 #endif
@@ -28891,7 +28891,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = coords)
                     {
-                        InteropHelper.Call(EntryPoints[379], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[379]);
                     }
                 }
                 #if DEBUG
@@ -28912,7 +28912,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (int* coords_ptr = &coords)
                     {
-                        InteropHelper.Call(EntryPoints[379], (IntPtr)coords_ptr);
+                        InteropHelper.Call((IntPtr)coords_ptr, EntryPoints[379]);
                     }
                 }
                 #if DEBUG
@@ -28930,7 +28930,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[379], (IntPtr)coords);
+                InteropHelper.Call((IntPtr)coords, EntryPoints[379]);
                 #if DEBUG
                 }
                 #endif
@@ -28945,7 +28945,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[383], (Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer);
+                InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer, EntryPoints[383]);
                 #if DEBUG
                 }
                 #endif
@@ -28964,7 +28964,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[383], (Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[383]);
                 }
                 finally
                 {
@@ -28988,7 +28988,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[383], (Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[383]);
                 }
                 finally
                 {
@@ -29012,7 +29012,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[383], (Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[383]);
                 }
                 finally
                 {
@@ -29036,7 +29036,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[383], (Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((Int32)size, (OpenTK.Graphics.ES11.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), EntryPoints[383]);
                     pointer = (T3)pointer_ptr.Target;
                 }
                 finally
@@ -29061,7 +29061,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[71], (UInt32)driverControl);
+                InteropHelper.Call((UInt32)driverControl, EntryPoints[71]);
                 #if DEBUG
                 }
                 #endif
@@ -29077,7 +29077,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[71], (UInt32)driverControl);
+                InteropHelper.Call((UInt32)driverControl, EntryPoints[71]);
                 #if DEBUG
                 }
                 #endif
@@ -29092,7 +29092,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[87], (UInt32)driverControl);
+                InteropHelper.Call((UInt32)driverControl, EntryPoints[87]);
                 #if DEBUG
                 }
                 #endif
@@ -29108,7 +29108,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[87], (UInt32)driverControl);
+                InteropHelper.Call((UInt32)driverControl, EntryPoints[87]);
                 #if DEBUG
                 }
                 #endif
@@ -29123,7 +29123,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[88], (UInt32)preserveMask);
+                InteropHelper.Call((UInt32)preserveMask, EntryPoints[88]);
                 #if DEBUG
                 }
                 #endif
@@ -29139,7 +29139,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[88], (UInt32)preserveMask);
+                InteropHelper.Call((UInt32)preserveMask, EntryPoints[88]);
                 #if DEBUG
                 }
                 #endif
@@ -29154,7 +29154,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[93], (OpenTK.Graphics.ES11.All)target, (IntPtr)@params);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)@params, EntryPoints[93]);
                 #if DEBUG
                 }
                 #endif
@@ -29173,7 +29173,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[93], (OpenTK.Graphics.ES11.All)target, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[93]);
                 }
                 finally
                 {
@@ -29197,7 +29197,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[93], (OpenTK.Graphics.ES11.All)target, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[93]);
                 }
                 finally
                 {
@@ -29221,7 +29221,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[93], (OpenTK.Graphics.ES11.All)target, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[93]);
                 }
                 finally
                 {
@@ -29245,7 +29245,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle @params_ptr = GCHandle.Alloc(@params, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[93], (OpenTK.Graphics.ES11.All)target, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (IntPtr)@params_ptr.AddrOfPinnedObject(), EntryPoints[93]);
                     @params = (T1)@params_ptr.Target;
                 }
                 finally
@@ -29271,7 +29271,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* buffers_ptr = buffers)
                     fixed (Int32* numBuffers_ptr = numBuffers)
                     {
-                        InteropHelper.Call(EntryPoints[94], (IntPtr)buffers_ptr, (Int32)maxBuffers, (IntPtr)numBuffers_ptr);
+                        InteropHelper.Call((IntPtr)buffers_ptr, (Int32)maxBuffers, (IntPtr)numBuffers_ptr, EntryPoints[94]);
                     }
                 }
                 #if DEBUG
@@ -29293,7 +29293,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* buffers_ptr = &buffers)
                     fixed (Int32* numBuffers_ptr = &numBuffers)
                     {
-                        InteropHelper.Call(EntryPoints[94], (IntPtr)buffers_ptr, (Int32)maxBuffers, (IntPtr)numBuffers_ptr);
+                        InteropHelper.Call((IntPtr)buffers_ptr, (Int32)maxBuffers, (IntPtr)numBuffers_ptr, EntryPoints[94]);
                         buffers = *buffers_ptr;
                         numBuffers = *numBuffers_ptr;
                     }
@@ -29313,7 +29313,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[94], (IntPtr)buffers, (Int32)maxBuffers, (IntPtr)numBuffers);
+                InteropHelper.Call((IntPtr)buffers, (Int32)maxBuffers, (IntPtr)numBuffers, EntryPoints[94]);
                 #if DEBUG
                 }
                 #endif
@@ -29334,7 +29334,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (UInt32* buffers_ptr = buffers)
                     fixed (Int32* numBuffers_ptr = numBuffers)
                     {
-                        InteropHelper.Call(EntryPoints[94], (IntPtr)buffers_ptr, (Int32)maxBuffers, (IntPtr)numBuffers_ptr);
+                        InteropHelper.Call((IntPtr)buffers_ptr, (Int32)maxBuffers, (IntPtr)numBuffers_ptr, EntryPoints[94]);
                     }
                 }
                 #if DEBUG
@@ -29357,7 +29357,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (UInt32* buffers_ptr = &buffers)
                     fixed (Int32* numBuffers_ptr = &numBuffers)
                     {
-                        InteropHelper.Call(EntryPoints[94], (IntPtr)buffers_ptr, (Int32)maxBuffers, (IntPtr)numBuffers_ptr);
+                        InteropHelper.Call((IntPtr)buffers_ptr, (Int32)maxBuffers, (IntPtr)numBuffers_ptr, EntryPoints[94]);
                         buffers = *buffers_ptr;
                         numBuffers = *numBuffers_ptr;
                     }
@@ -29377,7 +29377,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[94], (IntPtr)buffers, (Int32)maxBuffers, (IntPtr)numBuffers);
+                InteropHelper.Call((IntPtr)buffers, (Int32)maxBuffers, (IntPtr)numBuffers, EntryPoints[94]);
                 #if DEBUG
                 }
                 #endif
@@ -29397,7 +29397,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* framebuffers_ptr = framebuffers)
                     fixed (Int32* numFramebuffers_ptr = numFramebuffers)
                     {
-                        InteropHelper.Call(EntryPoints[95], (IntPtr)framebuffers_ptr, (Int32)maxFramebuffers, (IntPtr)numFramebuffers_ptr);
+                        InteropHelper.Call((IntPtr)framebuffers_ptr, (Int32)maxFramebuffers, (IntPtr)numFramebuffers_ptr, EntryPoints[95]);
                     }
                 }
                 #if DEBUG
@@ -29419,7 +29419,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* framebuffers_ptr = &framebuffers)
                     fixed (Int32* numFramebuffers_ptr = &numFramebuffers)
                     {
-                        InteropHelper.Call(EntryPoints[95], (IntPtr)framebuffers_ptr, (Int32)maxFramebuffers, (IntPtr)numFramebuffers_ptr);
+                        InteropHelper.Call((IntPtr)framebuffers_ptr, (Int32)maxFramebuffers, (IntPtr)numFramebuffers_ptr, EntryPoints[95]);
                         framebuffers = *framebuffers_ptr;
                         numFramebuffers = *numFramebuffers_ptr;
                     }
@@ -29439,7 +29439,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[95], (IntPtr)framebuffers, (Int32)maxFramebuffers, (IntPtr)numFramebuffers);
+                InteropHelper.Call((IntPtr)framebuffers, (Int32)maxFramebuffers, (IntPtr)numFramebuffers, EntryPoints[95]);
                 #if DEBUG
                 }
                 #endif
@@ -29460,7 +29460,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (UInt32* framebuffers_ptr = framebuffers)
                     fixed (Int32* numFramebuffers_ptr = numFramebuffers)
                     {
-                        InteropHelper.Call(EntryPoints[95], (IntPtr)framebuffers_ptr, (Int32)maxFramebuffers, (IntPtr)numFramebuffers_ptr);
+                        InteropHelper.Call((IntPtr)framebuffers_ptr, (Int32)maxFramebuffers, (IntPtr)numFramebuffers_ptr, EntryPoints[95]);
                     }
                 }
                 #if DEBUG
@@ -29483,7 +29483,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (UInt32* framebuffers_ptr = &framebuffers)
                     fixed (Int32* numFramebuffers_ptr = &numFramebuffers)
                     {
-                        InteropHelper.Call(EntryPoints[95], (IntPtr)framebuffers_ptr, (Int32)maxFramebuffers, (IntPtr)numFramebuffers_ptr);
+                        InteropHelper.Call((IntPtr)framebuffers_ptr, (Int32)maxFramebuffers, (IntPtr)numFramebuffers_ptr, EntryPoints[95]);
                         framebuffers = *framebuffers_ptr;
                         numFramebuffers = *numFramebuffers_ptr;
                     }
@@ -29503,7 +29503,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[95], (IntPtr)framebuffers, (Int32)maxFramebuffers, (IntPtr)numFramebuffers);
+                InteropHelper.Call((IntPtr)framebuffers, (Int32)maxFramebuffers, (IntPtr)numFramebuffers, EntryPoints[95]);
                 #if DEBUG
                 }
                 #endif
@@ -29522,7 +29522,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* length_ptr = length)
                     {
-                        InteropHelper.Call(EntryPoints[96], (UInt32)program, (OpenTK.Graphics.ES11.All)shadertype, (StringBuilder)source, (IntPtr)length_ptr);
+                        InteropHelper.Call((UInt32)program, (OpenTK.Graphics.ES11.All)shadertype, (StringBuilder)source, (IntPtr)length_ptr, EntryPoints[96]);
                     }
                 }
                 #if DEBUG
@@ -29543,7 +29543,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* length_ptr = &length)
                     {
-                        InteropHelper.Call(EntryPoints[96], (UInt32)program, (OpenTK.Graphics.ES11.All)shadertype, (StringBuilder)source, (IntPtr)length_ptr);
+                        InteropHelper.Call((UInt32)program, (OpenTK.Graphics.ES11.All)shadertype, (StringBuilder)source, (IntPtr)length_ptr, EntryPoints[96]);
                         length = *length_ptr;
                     }
                 }
@@ -29562,7 +29562,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[96], (UInt32)program, (OpenTK.Graphics.ES11.All)shadertype, (StringBuilder)source, (IntPtr)length);
+                InteropHelper.Call((UInt32)program, (OpenTK.Graphics.ES11.All)shadertype, (StringBuilder)source, (IntPtr)length, EntryPoints[96]);
                 #if DEBUG
                 }
                 #endif
@@ -29582,7 +29582,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* length_ptr = length)
                     {
-                        InteropHelper.Call(EntryPoints[96], (UInt32)program, (OpenTK.Graphics.ES11.All)shadertype, (StringBuilder)source, (IntPtr)length_ptr);
+                        InteropHelper.Call((UInt32)program, (OpenTK.Graphics.ES11.All)shadertype, (StringBuilder)source, (IntPtr)length_ptr, EntryPoints[96]);
                     }
                 }
                 #if DEBUG
@@ -29604,7 +29604,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* length_ptr = &length)
                     {
-                        InteropHelper.Call(EntryPoints[96], (UInt32)program, (OpenTK.Graphics.ES11.All)shadertype, (StringBuilder)source, (IntPtr)length_ptr);
+                        InteropHelper.Call((UInt32)program, (OpenTK.Graphics.ES11.All)shadertype, (StringBuilder)source, (IntPtr)length_ptr, EntryPoints[96]);
                         length = *length_ptr;
                     }
                 }
@@ -29623,7 +29623,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[96], (UInt32)program, (OpenTK.Graphics.ES11.All)shadertype, (StringBuilder)source, (IntPtr)length);
+                InteropHelper.Call((UInt32)program, (OpenTK.Graphics.ES11.All)shadertype, (StringBuilder)source, (IntPtr)length, EntryPoints[96]);
                 #if DEBUG
                 }
                 #endif
@@ -29643,7 +29643,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* programs_ptr = programs)
                     fixed (Int32* numPrograms_ptr = numPrograms)
                     {
-                        InteropHelper.Call(EntryPoints[97], (IntPtr)programs_ptr, (Int32)maxPrograms, (IntPtr)numPrograms_ptr);
+                        InteropHelper.Call((IntPtr)programs_ptr, (Int32)maxPrograms, (IntPtr)numPrograms_ptr, EntryPoints[97]);
                     }
                 }
                 #if DEBUG
@@ -29665,7 +29665,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* programs_ptr = &programs)
                     fixed (Int32* numPrograms_ptr = &numPrograms)
                     {
-                        InteropHelper.Call(EntryPoints[97], (IntPtr)programs_ptr, (Int32)maxPrograms, (IntPtr)numPrograms_ptr);
+                        InteropHelper.Call((IntPtr)programs_ptr, (Int32)maxPrograms, (IntPtr)numPrograms_ptr, EntryPoints[97]);
                         programs = *programs_ptr;
                         numPrograms = *numPrograms_ptr;
                     }
@@ -29685,7 +29685,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[97], (IntPtr)programs, (Int32)maxPrograms, (IntPtr)numPrograms);
+                InteropHelper.Call((IntPtr)programs, (Int32)maxPrograms, (IntPtr)numPrograms, EntryPoints[97]);
                 #if DEBUG
                 }
                 #endif
@@ -29706,7 +29706,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (UInt32* programs_ptr = programs)
                     fixed (Int32* numPrograms_ptr = numPrograms)
                     {
-                        InteropHelper.Call(EntryPoints[97], (IntPtr)programs_ptr, (Int32)maxPrograms, (IntPtr)numPrograms_ptr);
+                        InteropHelper.Call((IntPtr)programs_ptr, (Int32)maxPrograms, (IntPtr)numPrograms_ptr, EntryPoints[97]);
                     }
                 }
                 #if DEBUG
@@ -29729,7 +29729,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (UInt32* programs_ptr = &programs)
                     fixed (Int32* numPrograms_ptr = &numPrograms)
                     {
-                        InteropHelper.Call(EntryPoints[97], (IntPtr)programs_ptr, (Int32)maxPrograms, (IntPtr)numPrograms_ptr);
+                        InteropHelper.Call((IntPtr)programs_ptr, (Int32)maxPrograms, (IntPtr)numPrograms_ptr, EntryPoints[97]);
                         programs = *programs_ptr;
                         numPrograms = *numPrograms_ptr;
                     }
@@ -29749,7 +29749,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[97], (IntPtr)programs, (Int32)maxPrograms, (IntPtr)numPrograms);
+                InteropHelper.Call((IntPtr)programs, (Int32)maxPrograms, (IntPtr)numPrograms, EntryPoints[97]);
                 #if DEBUG
                 }
                 #endif
@@ -29769,7 +29769,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* renderbuffers_ptr = renderbuffers)
                     fixed (Int32* numRenderbuffers_ptr = numRenderbuffers)
                     {
-                        InteropHelper.Call(EntryPoints[98], (IntPtr)renderbuffers_ptr, (Int32)maxRenderbuffers, (IntPtr)numRenderbuffers_ptr);
+                        InteropHelper.Call((IntPtr)renderbuffers_ptr, (Int32)maxRenderbuffers, (IntPtr)numRenderbuffers_ptr, EntryPoints[98]);
                     }
                 }
                 #if DEBUG
@@ -29791,7 +29791,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* renderbuffers_ptr = &renderbuffers)
                     fixed (Int32* numRenderbuffers_ptr = &numRenderbuffers)
                     {
-                        InteropHelper.Call(EntryPoints[98], (IntPtr)renderbuffers_ptr, (Int32)maxRenderbuffers, (IntPtr)numRenderbuffers_ptr);
+                        InteropHelper.Call((IntPtr)renderbuffers_ptr, (Int32)maxRenderbuffers, (IntPtr)numRenderbuffers_ptr, EntryPoints[98]);
                         renderbuffers = *renderbuffers_ptr;
                         numRenderbuffers = *numRenderbuffers_ptr;
                     }
@@ -29811,7 +29811,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[98], (IntPtr)renderbuffers, (Int32)maxRenderbuffers, (IntPtr)numRenderbuffers);
+                InteropHelper.Call((IntPtr)renderbuffers, (Int32)maxRenderbuffers, (IntPtr)numRenderbuffers, EntryPoints[98]);
                 #if DEBUG
                 }
                 #endif
@@ -29832,7 +29832,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (UInt32* renderbuffers_ptr = renderbuffers)
                     fixed (Int32* numRenderbuffers_ptr = numRenderbuffers)
                     {
-                        InteropHelper.Call(EntryPoints[98], (IntPtr)renderbuffers_ptr, (Int32)maxRenderbuffers, (IntPtr)numRenderbuffers_ptr);
+                        InteropHelper.Call((IntPtr)renderbuffers_ptr, (Int32)maxRenderbuffers, (IntPtr)numRenderbuffers_ptr, EntryPoints[98]);
                     }
                 }
                 #if DEBUG
@@ -29855,7 +29855,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (UInt32* renderbuffers_ptr = &renderbuffers)
                     fixed (Int32* numRenderbuffers_ptr = &numRenderbuffers)
                     {
-                        InteropHelper.Call(EntryPoints[98], (IntPtr)renderbuffers_ptr, (Int32)maxRenderbuffers, (IntPtr)numRenderbuffers_ptr);
+                        InteropHelper.Call((IntPtr)renderbuffers_ptr, (Int32)maxRenderbuffers, (IntPtr)numRenderbuffers_ptr, EntryPoints[98]);
                         renderbuffers = *renderbuffers_ptr;
                         numRenderbuffers = *numRenderbuffers_ptr;
                     }
@@ -29875,7 +29875,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[98], (IntPtr)renderbuffers, (Int32)maxRenderbuffers, (IntPtr)numRenderbuffers);
+                InteropHelper.Call((IntPtr)renderbuffers, (Int32)maxRenderbuffers, (IntPtr)numRenderbuffers, EntryPoints[98]);
                 #if DEBUG
                 }
                 #endif
@@ -29895,7 +29895,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* shaders_ptr = shaders)
                     fixed (Int32* numShaders_ptr = numShaders)
                     {
-                        InteropHelper.Call(EntryPoints[99], (IntPtr)shaders_ptr, (Int32)maxShaders, (IntPtr)numShaders_ptr);
+                        InteropHelper.Call((IntPtr)shaders_ptr, (Int32)maxShaders, (IntPtr)numShaders_ptr, EntryPoints[99]);
                     }
                 }
                 #if DEBUG
@@ -29917,7 +29917,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* shaders_ptr = &shaders)
                     fixed (Int32* numShaders_ptr = &numShaders)
                     {
-                        InteropHelper.Call(EntryPoints[99], (IntPtr)shaders_ptr, (Int32)maxShaders, (IntPtr)numShaders_ptr);
+                        InteropHelper.Call((IntPtr)shaders_ptr, (Int32)maxShaders, (IntPtr)numShaders_ptr, EntryPoints[99]);
                         shaders = *shaders_ptr;
                         numShaders = *numShaders_ptr;
                     }
@@ -29937,7 +29937,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[99], (IntPtr)shaders, (Int32)maxShaders, (IntPtr)numShaders);
+                InteropHelper.Call((IntPtr)shaders, (Int32)maxShaders, (IntPtr)numShaders, EntryPoints[99]);
                 #if DEBUG
                 }
                 #endif
@@ -29958,7 +29958,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (UInt32* shaders_ptr = shaders)
                     fixed (Int32* numShaders_ptr = numShaders)
                     {
-                        InteropHelper.Call(EntryPoints[99], (IntPtr)shaders_ptr, (Int32)maxShaders, (IntPtr)numShaders_ptr);
+                        InteropHelper.Call((IntPtr)shaders_ptr, (Int32)maxShaders, (IntPtr)numShaders_ptr, EntryPoints[99]);
                     }
                 }
                 #if DEBUG
@@ -29981,7 +29981,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (UInt32* shaders_ptr = &shaders)
                     fixed (Int32* numShaders_ptr = &numShaders)
                     {
-                        InteropHelper.Call(EntryPoints[99], (IntPtr)shaders_ptr, (Int32)maxShaders, (IntPtr)numShaders_ptr);
+                        InteropHelper.Call((IntPtr)shaders_ptr, (Int32)maxShaders, (IntPtr)numShaders_ptr, EntryPoints[99]);
                         shaders = *shaders_ptr;
                         numShaders = *numShaders_ptr;
                     }
@@ -30001,7 +30001,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[99], (IntPtr)shaders, (Int32)maxShaders, (IntPtr)numShaders);
+                InteropHelper.Call((IntPtr)shaders, (Int32)maxShaders, (IntPtr)numShaders, EntryPoints[99]);
                 #if DEBUG
                 }
                 #endif
@@ -30020,7 +30020,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[100], (UInt32)texture, (OpenTK.Graphics.ES11.All)face, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)texture, (OpenTK.Graphics.ES11.All)face, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[100]);
                     }
                 }
                 #if DEBUG
@@ -30041,7 +30041,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[100], (UInt32)texture, (OpenTK.Graphics.ES11.All)face, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)texture, (OpenTK.Graphics.ES11.All)face, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[100]);
                         @params = *@params_ptr;
                     }
                 }
@@ -30060,7 +30060,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[100], (UInt32)texture, (OpenTK.Graphics.ES11.All)face, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((UInt32)texture, (OpenTK.Graphics.ES11.All)face, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[100]);
                 #if DEBUG
                 }
                 #endif
@@ -30080,7 +30080,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = @params)
                     {
-                        InteropHelper.Call(EntryPoints[100], (UInt32)texture, (OpenTK.Graphics.ES11.All)face, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)texture, (OpenTK.Graphics.ES11.All)face, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[100]);
                     }
                 }
                 #if DEBUG
@@ -30102,7 +30102,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* @params_ptr = &@params)
                     {
-                        InteropHelper.Call(EntryPoints[100], (UInt32)texture, (OpenTK.Graphics.ES11.All)face, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr);
+                        InteropHelper.Call((UInt32)texture, (OpenTK.Graphics.ES11.All)face, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params_ptr, EntryPoints[100]);
                         @params = *@params_ptr;
                     }
                 }
@@ -30121,7 +30121,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[100], (UInt32)texture, (OpenTK.Graphics.ES11.All)face, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params);
+                InteropHelper.Call((UInt32)texture, (OpenTK.Graphics.ES11.All)face, (Int32)level, (OpenTK.Graphics.ES11.All)pname, (IntPtr)@params, EntryPoints[100]);
                 #if DEBUG
                 }
                 #endif
@@ -30136,7 +30136,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[101], (OpenTK.Graphics.ES11.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (IntPtr)texels);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (IntPtr)texels, EntryPoints[101]);
                 #if DEBUG
                 }
                 #endif
@@ -30155,7 +30155,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle texels_ptr = GCHandle.Alloc(texels, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[101], (OpenTK.Graphics.ES11.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (IntPtr)texels_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (IntPtr)texels_ptr.AddrOfPinnedObject(), EntryPoints[101]);
                 }
                 finally
                 {
@@ -30179,7 +30179,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle texels_ptr = GCHandle.Alloc(texels, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[101], (OpenTK.Graphics.ES11.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (IntPtr)texels_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (IntPtr)texels_ptr.AddrOfPinnedObject(), EntryPoints[101]);
                 }
                 finally
                 {
@@ -30203,7 +30203,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle texels_ptr = GCHandle.Alloc(texels, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[101], (OpenTK.Graphics.ES11.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (IntPtr)texels_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (IntPtr)texels_ptr.AddrOfPinnedObject(), EntryPoints[101]);
                 }
                 finally
                 {
@@ -30227,7 +30227,7 @@ namespace OpenTK.Graphics.ES11
                 GCHandle texels_ptr = GCHandle.Alloc(texels, GCHandleType.Pinned);
                 try
                 {
-                    InteropHelper.Call(EntryPoints[101], (OpenTK.Graphics.ES11.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (IntPtr)texels_ptr.AddrOfPinnedObject());
+                    InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.Graphics.ES11.All)format, (OpenTK.Graphics.ES11.All)type, (IntPtr)texels_ptr.AddrOfPinnedObject(), EntryPoints[101]);
                     texels = (T10)texels_ptr.Target;
                 }
                 finally
@@ -30253,7 +30253,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* textures_ptr = textures)
                     fixed (Int32* numTextures_ptr = numTextures)
                     {
-                        InteropHelper.Call(EntryPoints[102], (IntPtr)textures_ptr, (Int32)maxTextures, (IntPtr)numTextures_ptr);
+                        InteropHelper.Call((IntPtr)textures_ptr, (Int32)maxTextures, (IntPtr)numTextures_ptr, EntryPoints[102]);
                     }
                 }
                 #if DEBUG
@@ -30275,7 +30275,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* textures_ptr = &textures)
                     fixed (Int32* numTextures_ptr = &numTextures)
                     {
-                        InteropHelper.Call(EntryPoints[102], (IntPtr)textures_ptr, (Int32)maxTextures, (IntPtr)numTextures_ptr);
+                        InteropHelper.Call((IntPtr)textures_ptr, (Int32)maxTextures, (IntPtr)numTextures_ptr, EntryPoints[102]);
                         textures = *textures_ptr;
                         numTextures = *numTextures_ptr;
                     }
@@ -30295,7 +30295,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[102], (IntPtr)textures, (Int32)maxTextures, (IntPtr)numTextures);
+                InteropHelper.Call((IntPtr)textures, (Int32)maxTextures, (IntPtr)numTextures, EntryPoints[102]);
                 #if DEBUG
                 }
                 #endif
@@ -30316,7 +30316,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (UInt32* textures_ptr = textures)
                     fixed (Int32* numTextures_ptr = numTextures)
                     {
-                        InteropHelper.Call(EntryPoints[102], (IntPtr)textures_ptr, (Int32)maxTextures, (IntPtr)numTextures_ptr);
+                        InteropHelper.Call((IntPtr)textures_ptr, (Int32)maxTextures, (IntPtr)numTextures_ptr, EntryPoints[102]);
                     }
                 }
                 #if DEBUG
@@ -30339,7 +30339,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (UInt32* textures_ptr = &textures)
                     fixed (Int32* numTextures_ptr = &numTextures)
                     {
-                        InteropHelper.Call(EntryPoints[102], (IntPtr)textures_ptr, (Int32)maxTextures, (IntPtr)numTextures_ptr);
+                        InteropHelper.Call((IntPtr)textures_ptr, (Int32)maxTextures, (IntPtr)numTextures_ptr, EntryPoints[102]);
                         textures = *textures_ptr;
                         numTextures = *numTextures_ptr;
                     }
@@ -30359,7 +30359,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[102], (IntPtr)textures, (Int32)maxTextures, (IntPtr)numTextures);
+                InteropHelper.Call((IntPtr)textures, (Int32)maxTextures, (IntPtr)numTextures, EntryPoints[102]);
                 #if DEBUG
                 }
                 #endif
@@ -30374,7 +30374,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[103], (UInt32)program);
+                return InteropHelper.CallReturn<bool, UInt32>((UInt32)program, EntryPoints[103]);
                 #if DEBUG
                 }
                 #endif
@@ -30390,7 +30390,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                return InteropHelper.CallReturn<bool, UInt32>(EntryPoints[103], (UInt32)program);
+                return InteropHelper.CallReturn<bool, UInt32>((UInt32)program, EntryPoints[103]);
                 #if DEBUG
                 }
                 #endif
@@ -30405,7 +30405,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[104], (OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (Int32)param);
+                InteropHelper.Call((OpenTK.Graphics.ES11.All)target, (OpenTK.Graphics.ES11.All)pname, (Int32)param, EntryPoints[104]);
                 #if DEBUG
                 }
                 #endif
@@ -30425,7 +30425,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* num_ptr = num)
                     fixed (Int32* driverControls_ptr = driverControls)
                     {
-                        InteropHelper.Call(EntryPoints[141], (IntPtr)num_ptr, (Int32)size, (IntPtr)driverControls_ptr);
+                        InteropHelper.Call((IntPtr)num_ptr, (Int32)size, (IntPtr)driverControls_ptr, EntryPoints[141]);
                     }
                 }
                 #if DEBUG
@@ -30448,7 +30448,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* num_ptr = num)
                     fixed (UInt32* driverControls_ptr = driverControls)
                     {
-                        InteropHelper.Call(EntryPoints[141], (IntPtr)num_ptr, (Int32)size, (IntPtr)driverControls_ptr);
+                        InteropHelper.Call((IntPtr)num_ptr, (Int32)size, (IntPtr)driverControls_ptr, EntryPoints[141]);
                     }
                 }
                 #if DEBUG
@@ -30470,7 +30470,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* num_ptr = &num)
                     fixed (Int32* driverControls_ptr = &driverControls)
                     {
-                        InteropHelper.Call(EntryPoints[141], (IntPtr)num_ptr, (Int32)size, (IntPtr)driverControls_ptr);
+                        InteropHelper.Call((IntPtr)num_ptr, (Int32)size, (IntPtr)driverControls_ptr, EntryPoints[141]);
                         num = *num_ptr;
                         driverControls = *driverControls_ptr;
                     }
@@ -30495,7 +30495,7 @@ namespace OpenTK.Graphics.ES11
                     fixed (Int32* num_ptr = &num)
                     fixed (UInt32* driverControls_ptr = &driverControls)
                     {
-                        InteropHelper.Call(EntryPoints[141], (IntPtr)num_ptr, (Int32)size, (IntPtr)driverControls_ptr);
+                        InteropHelper.Call((IntPtr)num_ptr, (Int32)size, (IntPtr)driverControls_ptr, EntryPoints[141]);
                         num = *num_ptr;
                         driverControls = *driverControls_ptr;
                     }
@@ -30515,7 +30515,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[141], (IntPtr)num, (Int32)size, (IntPtr)driverControls);
+                InteropHelper.Call((IntPtr)num, (Int32)size, (IntPtr)driverControls, EntryPoints[141]);
                 #if DEBUG
                 }
                 #endif
@@ -30531,7 +30531,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[141], (IntPtr)num, (Int32)size, (IntPtr)driverControls);
+                InteropHelper.Call((IntPtr)num, (Int32)size, (IntPtr)driverControls, EntryPoints[141]);
                 #if DEBUG
                 }
                 #endif
@@ -30550,7 +30550,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* length_ptr = length)
                     {
-                        InteropHelper.Call(EntryPoints[142], (UInt32)driverControl, (Int32)bufSize, (IntPtr)length_ptr, (StringBuilder)driverControlString);
+                        InteropHelper.Call((UInt32)driverControl, (Int32)bufSize, (IntPtr)length_ptr, (StringBuilder)driverControlString, EntryPoints[142]);
                     }
                 }
                 #if DEBUG
@@ -30571,7 +30571,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* length_ptr = &length)
                     {
-                        InteropHelper.Call(EntryPoints[142], (UInt32)driverControl, (Int32)bufSize, (IntPtr)length_ptr, (StringBuilder)driverControlString);
+                        InteropHelper.Call((UInt32)driverControl, (Int32)bufSize, (IntPtr)length_ptr, (StringBuilder)driverControlString, EntryPoints[142]);
                         length = *length_ptr;
                     }
                 }
@@ -30590,7 +30590,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[142], (UInt32)driverControl, (Int32)bufSize, (IntPtr)length, (StringBuilder)driverControlString);
+                InteropHelper.Call((UInt32)driverControl, (Int32)bufSize, (IntPtr)length, (StringBuilder)driverControlString, EntryPoints[142]);
                 #if DEBUG
                 }
                 #endif
@@ -30610,7 +30610,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* length_ptr = length)
                     {
-                        InteropHelper.Call(EntryPoints[142], (UInt32)driverControl, (Int32)bufSize, (IntPtr)length_ptr, (StringBuilder)driverControlString);
+                        InteropHelper.Call((UInt32)driverControl, (Int32)bufSize, (IntPtr)length_ptr, (StringBuilder)driverControlString, EntryPoints[142]);
                     }
                 }
                 #if DEBUG
@@ -30632,7 +30632,7 @@ namespace OpenTK.Graphics.ES11
                 {
                     fixed (Int32* length_ptr = &length)
                     {
-                        InteropHelper.Call(EntryPoints[142], (UInt32)driverControl, (Int32)bufSize, (IntPtr)length_ptr, (StringBuilder)driverControlString);
+                        InteropHelper.Call((UInt32)driverControl, (Int32)bufSize, (IntPtr)length_ptr, (StringBuilder)driverControlString, EntryPoints[142]);
                         length = *length_ptr;
                     }
                 }
@@ -30651,7 +30651,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[142], (UInt32)driverControl, (Int32)bufSize, (IntPtr)length, (StringBuilder)driverControlString);
+                InteropHelper.Call((UInt32)driverControl, (Int32)bufSize, (IntPtr)length, (StringBuilder)driverControlString, EntryPoints[142]);
                 #if DEBUG
                 }
                 #endif
@@ -30666,7 +30666,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[312], (UInt32)x, (UInt32)y, (UInt32)width, (UInt32)height, (UInt32)preserveMask);
+                InteropHelper.Call((UInt32)x, (UInt32)y, (UInt32)width, (UInt32)height, (UInt32)preserveMask, EntryPoints[312]);
                 #if DEBUG
                 }
                 #endif
@@ -30682,7 +30682,7 @@ namespace OpenTK.Graphics.ES11
                 using (new ErrorHelper(GraphicsContext.CurrentContext))
                 {
                 #endif
-                InteropHelper.Call(EntryPoints[312], (UInt32)x, (UInt32)y, (UInt32)width, (UInt32)height, (UInt32)preserveMask);
+                InteropHelper.Call((UInt32)x, (UInt32)y, (UInt32)width, (UInt32)height, (UInt32)preserveMask, EntryPoints[312]);
                 #if DEBUG
                 }
                 #endif
