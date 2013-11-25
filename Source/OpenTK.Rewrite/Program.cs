@@ -49,6 +49,7 @@ namespace OpenTK.Rewrite
             // We want to keep a valid symbols file (pdb or mdb)
             var read_params = new ReaderParameters();
             var write_params = new WriterParameters();
+#if false // Disabled because symbols file is locked during AfterBuild
             var pdb = Path.ChangeExtension(file, "pdb");
             var mdb = Path.ChangeExtension(file, "mdb");
             ISymbolReaderProvider provider = null;
@@ -63,13 +64,19 @@ namespace OpenTK.Rewrite
             read_params.SymbolReaderProvider = provider;
             read_params.ReadSymbols = true;
             write_params.WriteSymbols = true;
+#endif
 
-            if (!String.IsNullOrEmpty(keyfile))
+            if (!String.IsNullOrEmpty(keyfile) && File.Exists(keyfile))
             {
+                keyfile = Path.GetFullPath(keyfile);
                 var fs = new FileStream(keyfile, FileMode.Open);
                 var keypair = new System.Reflection.StrongNameKeyPair(fs);
                 fs.Close();
                 write_params.StrongNameKeyPair = keypair;
+            }
+            else
+            {
+                Console.Error.WriteLine("No keyfile specified or keyfile missing.");
             }
 
             // Load assembly and process all modules
