@@ -33,20 +33,47 @@ namespace OpenTK.Rewrite
         {
             if (args.Length == 0)
             {
-                Console.WriteLine("Usage: rewrite [file1] [file2] ...");
+                Console.WriteLine("Usage: rewrite [file.dll] [file.snk]");
                 return;
             }
 
             var program = new Program();
-            foreach (var file in args)
-            {
-                program.Rewrite(file);
-            }
+            var file = args[0];
+            var key = args.Length >= 2 ? args[1] : null;
+            program.Rewrite(file, key);
         }
 
-        void Rewrite(string file)
+        void Rewrite(string file, string keyfile)
         {
-            var assembly = AssemblyDefinition.ReadAssembly(file);
+            // Specify assembly read and write parameters
+            // We want to keep a valid symbols file (pdb or mdb)
+            var read_params = new ReaderParameters();
+            var write_params = new WriterParameters();
+            var pdb = Path.ChangeExtension(file, "pdb");
+            var mdb = Path.ChangeExtension(file, "mdb");
+            ISymbolReaderProvider provider = null;
+            if (File.Exists(pdb))
+            {
+                provider = new Mono.Cecil.Pdb.PdbReaderProvider();
+            }
+            else if (File.Exists(mdb))
+            {
+                provider = new Mono.Cecil.Mdb.MdbReaderProvider();
+            }
+            read_params.SymbolReaderProvider = provider;
+            read_params.ReadSymbols = true;
+            write_params.WriteSymbols = true;
+
+            if (!String.IsNullOrEmpty(keyfile))
+            {
+                var fs = new FileStream(keyfile, FileMode.Open);
+                var keypair = new System.Reflection.StrongNameKeyPair(fs);
+                fs.Close();
+                write_params.StrongNameKeyPair = keypair;
+            }
+
+            // Load assembly and process all modules
+            var assembly = AssemblyDefinition.ReadAssembly(file, read_params);
             foreach (var module in assembly.Modules)
             {
                 foreach (var reference in module.AssemblyReferences)
@@ -60,15 +87,8 @@ namespace OpenTK.Rewrite
                 }
             }
 
-            var fs = new FileStream("../../../OpenTK.snk", FileMode.Open);
-            var keypair = new System.Reflection.StrongNameKeyPair(fs);
-            fs.Close();
-            assembly.Write(
-                file,
-                new WriterParameters
-                {
-                    StrongNameKeyPair = keypair
-                });
+            // Save rewritten assembly
+            assembly.Write(file, write_params);
         }
 
         void Rewrite(TypeDefinition type)
@@ -122,17 +142,37 @@ namespace OpenTK.Rewrite
             {
                 CallingConvention = MethodCallingConvention.Default,
             };
+
             if (reference is GenericInstanceMethod)
             {
                 var greference = reference as GenericInstanceMethod;
-                foreach (var ptype in greference.GenericArguments)
+
+                if (reference.Name.EndsWith("Return"))
                 {
-                    var p = new ParameterDefinition(ptype);
-                    signature.Parameters.Add(p);
+                    // "TRet CallReturn<TRet, T0, ...>(T0 arg0, ..., IntPtr address)"
+                    // The first generic parameter is the return type
+                    // The rest are function parameters types
+                    // The entry point address is not in the generic arg list
+                    signature.ReturnType = greference.GenericArguments.First();
+                    foreach (var ptype in greference.GenericArguments.Skip(1))
+                    {
+                        signature.Parameters.Add(new ParameterDefinition(ptype));
+                    }
+                }
+                else
+                {
+                    // "void Call<T0, ...>(T0 arg0, ..., IntPtr address)"
+                    // The generic arguments define the function parameters
+                    // The entry point address is not in the generic arg list
+                    foreach (var ptype in greference.GenericArguments)
+                    {
+                        signature.Parameters.Add(new ParameterDefinition(ptype));
+                    }
                 }
             }
             else
             {
+                // Call(IntPtr address)
                 // The last parameter is the function address of this entry point.
                 // It is placed at the top of the stack (first parameter of calli)
                 // but is not actually part of the unmanaged signature, so we must
@@ -142,6 +182,9 @@ namespace OpenTK.Rewrite
                     signature.Parameters.Add(p);
                 }
             }
+
+            // Since the last parameter is always the entry point address,
+            // we do not need any special preparation before emiting calli.
             var call = il.Create(OpCodes.Calli, signature);
             il.Replace(inst, call);
         }
