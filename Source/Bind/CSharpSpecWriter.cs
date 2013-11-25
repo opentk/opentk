@@ -653,9 +653,7 @@ namespace Bind
             Function f = new Function(func);
             f.Body.Clear();
 
-            var handle_statements = new List<string>();
-            var handle_release_statements = new List<string>();
-            var fixed_statements = new List<string>();
+            var pin_statements = new List<string>();
             var assign_statements = new List<string>();
             var declaration_statements = new List<string>();
 
@@ -666,42 +664,31 @@ namespace Bind
                 index++;
                 if (p.NeedsPin)
                 {
-                    if (p.WrapperType == WrapperTypes.GenericParameter)
-                    {
-                        // Use GCHandle to obtain pointer to generic parameters and 'fixed' for arrays.
-                        // This is because fixed can only take the address of fields, not managed objects.
-                        handle_statements.Add(String.Format(
-                            "{0} {1}_ptr = {0}.Alloc({1}, GCHandleType.Pinned);",
-                            "GCHandle", p.Name));
-
-                        handle_release_statements.Add(String.Format("{0}_ptr.Free();", p.Name));
-
-                        // Due to the GCHandle-style pinning (which boxes value types), we need to assign the modified
-                        // value back to the reference parameter (but only if it has an out or in/out flow direction).
-                        if ((p.Flow == FlowDirection.Out || p.Flow == FlowDirection.Undefined) && p.Reference)
-                        {
-                            assign_statements.Add(String.Format(
-                                "{0} = ({1}){0}_ptr.Target;",
-                                p.Name, p.QualifiedType));
-                        }
-                    }
-                    else if (p.WrapperType == WrapperTypes.PointerParameter ||
+                    if (p.WrapperType == WrapperTypes.GenericParameter || 
+                        p.WrapperType == WrapperTypes.PointerParameter ||
                         p.WrapperType == WrapperTypes.ArrayParameter ||
                         p.WrapperType == WrapperTypes.ReferenceParameter)
                     {
-                        // A fixed statement is issued for all non-generic pointers, arrays and references.
-                        fixed_statements.Add(String.Format(
-                            "fixed ({0}{3} {1} = {2})",
-                            p.QualifiedType,
-                            p.Name + "_ptr",
-                            p.Array > 0 ? p.Name : "&" + p.Name,
-                            pointer_levels[p.IndirectionLevel]));
-
-                        // Arrays are not value types, so we don't need to do anything for them.
-                        // Pointers are passed directly by value, so we don't need to assign them back either (they don't change).
-                        if ((p.Flow == FlowDirection.Out || p.Flow == FlowDirection.Undefined) && p.Reference)
+                        if (f.Name.Contains("EdgeFlagPointerList"))
                         {
-                            assign_statements.Add(String.Format("{0} = *{0}_ptr;", p.Name));
+                            System.Diagnostics.Debugger.Break();
+                        }
+
+                        // Pin the parameter to obtain a pointer we can safely pass to unmanaged code
+                        if (p.Pointer > 0)
+                        {
+                            declaration_statements.Add(String.Format("IntPtr {0}_ptr = new IntPtr({0});", p.Name));
+                        }
+                        pin_statements.Add(String.Format(
+                            "{2}{0}_ptr = InteropHelper.Pin({1}{0});",
+                            p.Name,
+                            p.Reference ? "ref " : "",
+                            p.Pointer == 0 ? "IntPtr " : ""));
+
+                        // We also need to initialize out parameters, in order to make the compiler happy
+                        if (p.Flow == FlowDirection.Out && p.Reference)
+                        {
+                            declaration_statements.Add(String.Format("{0} = default({1});", p.Name, p.QualifiedType));
                         }
                     }
                     else if (p.WrapperType == WrapperTypes.None)
@@ -769,8 +756,8 @@ namespace Bind
                 }
             }
 
-            bool add_unsafe = !f.Unsafe &&
-                (fixed_statements.Count > 0 || declaration_statements.Count > 0);
+            // Mark the body as unsafe if necessary
+            bool add_unsafe = !f.Unsafe && declaration_statements.Count > 0;
             if (add_unsafe)
             {
                 f.Body.Add("unsafe");
@@ -783,19 +770,9 @@ namespace Bind
                 f.Body.AddRange(declaration_statements);
             } 
 
-            if (fixed_statements.Count > 0)
+            if (pin_statements.Count > 0)
             {
-                f.Body.AddRange(fixed_statements);
-                f.Body.Add("{");
-                f.Body.Indent();
-            }
-
-            if (handle_statements.Count > 0)
-            {
-                f.Body.AddRange(handle_statements);
-                f.Body.Add("try");
-                f.Body.Add("{");
-                f.Body.Indent();
+                f.Body.AddRange(pin_statements);
             }
 
             // Hack: When creating untyped enum wrappers, it is possible that the wrapper uses an "All"
@@ -901,28 +878,7 @@ namespace Bind
                 }
             }
 
-            // Free all allocated GCHandles
-            if (handle_statements.Count > 0)
-            {
-                f.Body.Unindent();
-                f.Body.Add("}");
-                f.Body.Add("finally");
-                f.Body.Add("{");
-                f.Body.Indent();
-
-                f.Body.AddRange(handle_release_statements);
-
-                f.Body.Unindent();
-                f.Body.Add("}");
-            }
-
             if (add_unsafe)
-            {
-                f.Body.Unindent();
-                f.Body.Add("}");
-            }
-
-            if (fixed_statements.Count > 0)
             {
                 f.Body.Unindent();
                 f.Body.Add("}");
@@ -1197,15 +1153,10 @@ namespace Bind
                         switch (p.WrapperType)
                         {
                             case WrapperTypes.GenericParameter:
+                                sb.Append(p.Name);
                                 if (p.Generic)
                                 {
-                                    sb.Append("(IntPtr)");
-                                    sb.Append(p.Name);
-                                    sb.Append("_ptr.AddrOfPinnedObject()");
-                                }
-                                else
-                                {
-                                    sb.Append(p.Name);
+                                    sb.Append("_ptr");
                                 }
                                 break;
 

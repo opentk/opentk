@@ -162,5 +162,25 @@ namespace OpenTK
         {
             throw new NotImplementedException();
         }
+
+        public static IntPtr Pin<T>(T[] arg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IntPtr Pin<T>(T[,] arg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IntPtr Pin<T>(T[,,] arg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IntPtr Pin<T>(ref T arg)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

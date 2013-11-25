@@ -137,6 +137,10 @@ namespace OpenTK.Rewrite
                             case "CallReturn":
                                 RewriteCall(il, inst, reference);
                                 break;
+
+                            case "Pin":
+                                RewritePin(il, inst, reference);
+                                break;
                         }
                     }
                 }
@@ -195,6 +199,16 @@ namespace OpenTK.Rewrite
             var call = il.Create(OpCodes.Calli, signature);
             il.Replace(inst, call);
         }
-        
+
+        // IntPtr Pin<T>({ref} T{[];[,];[,,]} arg)
+        // Pin the parameter and return an unmanaged pointer
+        static void RewritePin(ILProcessor il, Instruction inst, MethodReference reference)
+        {
+            var greference = reference as GenericInstanceMethod;
+            if (greference == null)
+                throw new InvalidOperationException("reference must match generic method Pin<T>");
+
+            var ptype = greference.GenericArguments.First();
+        }
     }
 }
