@@ -52,6 +52,9 @@
     <Reference Include="Mono.Cecil.Pdb">
       <HintPath>Dependencies\Mono.Cecil.Pdb.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>Dependencies\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -60,16 +63,14 @@
   <ItemGroup>
     <Content Include="Dependencies\Mono.Cecil.dll" />
     <Content Include="Dependencies\Mono.Cecil.Mdb.dll" />
-    <Content Include="Dependencies\Mono.Cecil.Mdb.pdb" />
-    <Content Include="Dependencies\Mono.Cecil.pdb" />
     <Content Include="Dependencies\Mono.Cecil.Pdb.dll" />
-    <Content Include="Dependencies\Mono.Cecil.Pdb.pdb" />
     <Content Include="Dependencies\IKVM.Reflection.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
     </None>
+    <None Include="Dependencies\Mono.Cecil.Rocks.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -22,6 +22,7 @@ using System.Text;
 
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
 
 namespace OpenTK.Rewrite
 {
@@ -81,17 +82,28 @@ namespace OpenTK.Rewrite
 
             // Load assembly and process all modules
             var assembly = AssemblyDefinition.ReadAssembly(file, read_params);
-            foreach (var module in assembly.Modules)
+            var rewritten = assembly.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "RewrittenAttribute");
+            if (rewritten == null)
             {
-                foreach (var reference in module.AssemblyReferences)
+                foreach (var module in assembly.Modules)
                 {
-                    module.AssemblyResolver.Resolve(reference);
-                }
+                    if (rewritten == null)
+                    {
+                        foreach (var reference in module.AssemblyReferences)
+                        {
+                            module.AssemblyResolver.Resolve(reference);
+                        }
 
-                foreach (var type in module.Types)
-                {
-                    Rewrite(type);
+                        foreach (var type in module.Types)
+                        {
+                            Rewrite(type);
+                        }
+                    }
                 }
+            }
+            else
+            {
+                Console.Error.WriteLine("Error: assembly has already been rewritten");
             }
 
             // Save rewritten assembly
@@ -110,6 +122,13 @@ namespace OpenTK.Rewrite
                         ProcessMethod(method, entry_points);
                     }
                 }
+            }
+
+            if (type.Name == "RewrittenAttribute")
+            {
+                var rewritten_constructor = type.GetConstructors().First();
+                var rewritten = new CustomAttribute(rewritten_constructor, BitConverter.GetBytes(true));
+                type.Module.Assembly.CustomAttributes.Add(rewritten);
             }
         }
 
@@ -138,6 +157,8 @@ namespace OpenTK.Rewrite
 
             // return
             il.Emit(OpCodes.Ret);
+
+            body.OptimizeMacros();
         }
 
         static void EmitParameters(MethodDefinition method, TypeReference nint, MethodBody body, ILProcessor il)
@@ -145,51 +166,14 @@ namespace OpenTK.Rewrite
             for (int i = 0; i < method.Parameters.Count; i++)
             {
                 var p = method.Parameters[i];
-                switch (i)
-                {
-                    case 0:
-                        il.Emit(OpCodes.Ldarg_0);
-                        break;
-                    case 1:
-                        il.Emit(OpCodes.Ldarg_1);
-                        break;
-                    case 2:
-                        il.Emit(OpCodes.Ldarg_2);
-                        break;
-                    case 3:
-                        il.Emit(OpCodes.Ldarg_3);
-                        break;
-                    default:
-                        il.Emit(OpCodes.Ldarg_S, (byte)i);
-                        break;
-                }
+                il.Emit(OpCodes.Ldarg, i);
+
                 if (p.ParameterType.IsArray || p.ParameterType.IsByReference)
                 {
                     body.Variables.Add(new VariableDefinition(new PinnedType(nint)));
                     var index = body.Variables.Count - 1;
-                    switch (index)
-                    {
-                        case 0:
-                            il.Emit(OpCodes.Stloc_0);
-                            il.Emit(OpCodes.Ldloc_0);
-                            break;
-                        case 1:
-                            il.Emit(OpCodes.Stloc_1);
-                            il.Emit(OpCodes.Ldloc_1);
-                            break;
-                        case 2:
-                            il.Emit(OpCodes.Stloc_2);
-                            il.Emit(OpCodes.Ldloc_2);
-                            break;
-                        case 3:
-                            il.Emit(OpCodes.Stloc_3);
-                            il.Emit(OpCodes.Ldloc_3);
-                            break;
-                        default:
-                            il.Emit(OpCodes.Stloc_S, (byte)index);
-                            il.Emit(OpCodes.Ldloc_S, (byte)index);
-                            break;
-                    }
+                    il.Emit(OpCodes.Stloc, index);
+                    il.Emit(OpCodes.Ldloc, index);
                     //il.Emit(OpCodes.Conv_I);
                 }
             }
@@ -198,42 +182,7 @@ namespace OpenTK.Rewrite
         static void EmitEntryPoint(FieldDefinition entry_points, ILProcessor il, int slot)
         {
             il.Emit(OpCodes.Ldsfld, entry_points);
-            switch (slot)
-            {
-                case 0:
-                    il.Emit(OpCodes.Ldc_I4_0);
-                    break;
-                case 1:
-                    il.Emit(OpCodes.Ldc_I4_1);
-                    break;
-                case 2:
-                    il.Emit(OpCodes.Ldc_I4_2);
-                    break;
-                case 3:
-                    il.Emit(OpCodes.Ldc_I4_3);
-                    break;
-                case 4:
-                    il.Emit(OpCodes.Ldc_I4_4);
-                    break;
-                case 5:
-                    il.Emit(OpCodes.Ldc_I4_5);
-                    break;
-                case 6:
-                    il.Emit(OpCodes.Ldc_I4_6);
-                    break;
-                case 7:
-                    il.Emit(OpCodes.Ldc_I4_7);
-                    break;
-                case 8:
-                    il.Emit(OpCodes.Ldc_I4_8);
-                    break;
-                default:
-                    if (slot < 128)
-                        il.Emit(OpCodes.Ldc_I4_S, (byte)slot);
-                    else
-                        il.Emit(OpCodes.Ldc_I4, slot);
-                    break;
-            }
+            il.Emit(OpCodes.Ldc_I4, slot);
             il.Emit(OpCodes.Ldelem_I);
         }
 
