@@ -2,7 +2,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2010 the Open Toolkit library, except where noted.
+// Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit library
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ namespace OpenTK
 		/// <summary>
 		/// Defines the slot index for a wrapper function.
 		/// </summary>
-		internal int Slot { get; set; }
+		internal int Slot;
 
 		/// <summary>
 		/// Constructs a new instance.
