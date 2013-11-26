@@ -782,6 +782,7 @@
     <Compile Include="Graphics\ES11\ES11.cs" />
     <Compile Include="Graphics\ES11\ES11Enums.cs" />
     <Compile Include="SlotAttribute.cs" />
+    <Compile Include="RewrittenAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -792,7 +793,7 @@
   </PropertyGroup>
   <ItemGroup />
   <Target Name="AfterBuild">
-    <!---<Exec Command="$(OutputPath)OpenTK.Rewrite.exe $(OutputPath)OpenTK.dll $(OutputPath)../../../OpenTK.snk" Condition="$(OS) == 'Windows_NT'" />
-    <Exec Command="mono $(OutputPath)OpenTK.Rewrite.exe $(OutputPath)OpenTK.dll $(OutputPath)../../../OpenTK.snk" Condition="$(OS) != 'Windows_NT'" />-->
+    <Exec Command="$(OutputPath)OpenTK.Rewrite.exe $(OutputPath)OpenTK.dll ../../../OpenTK.snk" Condition="$(OS) == 'Windows_NT'" />
+    <Exec Command="mono $(OutputPath)OpenTK.Rewrite.exe $(OutputPath)OpenTK.dll ../../../OpenTK.snk" Condition="$(OS) != 'Windows_NT'" />
   </Target>
 </Project>
