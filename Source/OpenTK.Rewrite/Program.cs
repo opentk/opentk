@@ -1,4 +1,4 @@
-﻿// OpenTK.Rewrite: IL rewriter for OpenTK.dll
+// OpenTK.Rewrite: IL rewriter for OpenTK.dll
 // Copyright (C) 2013 Stefanos Apostolopoulos
 //
 // This program is free software: you can redistribute it and/or modify
@@ -100,104 +100,158 @@ namespace OpenTK.Rewrite
 
         void Rewrite(TypeDefinition type)
         {
-            foreach (var method in type.Methods)
+            var entry_points = type.Fields.FirstOrDefault(f => f.Name == "EntryPoints");
+            if (entry_points != null)
             {
-                if (method.HasBody)
+                foreach (var method in type.Methods)
                 {
-                    ProcessMethodBody(method.Body);
-                }
-            }
-        }
-
-        // Search the instruction stream for calls
-        // to methods we need to rewrite.
-        static void ProcessMethodBody(MethodBody body)
-        {
-            var instructions = body.Instructions;
-            var il = body.GetILProcessor();
-
-            Instruction inst1 = instructions[0];
-            Instruction inst2 = instructions[0];
-
-            for (int i = 1; i < instructions.Count; i++)
-            {
-                var inst = instructions[i];
-                if ((inst.OpCode == OpCodes.Call || inst.OpCode == OpCodes.Callvirt) &&
-                    inst.Operand is MethodReference)
-                {
-                    var reference = inst.Operand as MethodReference;
-
-                    // Make sure we are rewriting OpenTK.InteropHelper methods
-                    // and not random methods that happen to have similar names.
-                    if (reference.DeclaringType.Name == "InteropHelper")
+                    if (method.CustomAttributes.Any(a => a.AttributeType.Name == "SlotAttribute"))
                     {
-                        switch (reference.Name)
-                        {
-                            case "Call":
-                            case "CallReturn":
-                                RewriteCall(il, inst, reference);
-                                break;
-
-                            case "Pin":
-                                RewritePin(il, inst, reference);
-                                break;
-                        }
+                        ProcessMethod(method, entry_points);
                     }
                 }
             }
         }
 
-        static void RewriteCall(ILProcessor il, Instruction inst, MethodReference reference)
+        // Create body for method
+        static void ProcessMethod(MethodDefinition method, FieldDefinition entry_points)
+        {
+            var nint = method.DeclaringType.Module.Import(typeof(IntPtr));
+            var body = method.Body;
+            var instructions = body.Instructions;
+            var il = body.GetILProcessor();
+            var slot_attribute = method.CustomAttributes
+                .First(a => a.AttributeType.Name == "SlotAttribute");
+            var slot = (int)slot_attribute.ConstructorArguments.First().Value;
+
+            instructions.Clear();
+
+            // Declare pinned variables for every reference and array parameter
+            // and push each parameter on the stack
+            EmitParameters(method, nint, body, il);
+
+            // push the entry point address on the stack
+            EmitEntryPoint(entry_points, il, slot);
+
+            // issue calli
+            EmitCall(il, method);
+
+            // return
+            il.Emit(OpCodes.Ret);
+        }
+
+        static void EmitParameters(MethodDefinition method, TypeReference nint, MethodBody body, ILProcessor il)
+        {
+            for (int i = 0; i < method.Parameters.Count; i++)
+            {
+                var p = method.Parameters[i];
+                switch (i)
+                {
+                    case 0:
+                        il.Emit(OpCodes.Ldarg_0);
+                        break;
+                    case 1:
+                        il.Emit(OpCodes.Ldarg_1);
+                        break;
+                    case 2:
+                        il.Emit(OpCodes.Ldarg_2);
+                        break;
+                    case 3:
+                        il.Emit(OpCodes.Ldarg_3);
+                        break;
+                    default:
+                        il.Emit(OpCodes.Ldarg_S, (byte)i);
+                        break;
+                }
+                if (p.ParameterType.IsArray || p.ParameterType.IsByReference)
+                {
+                    body.Variables.Add(new VariableDefinition(new PinnedType(nint)));
+                    var index = body.Variables.Count - 1;
+                    switch (index)
+                    {
+                        case 0:
+                            il.Emit(OpCodes.Stloc_0);
+                            il.Emit(OpCodes.Ldloc_0);
+                            break;
+                        case 1:
+                            il.Emit(OpCodes.Stloc_1);
+                            il.Emit(OpCodes.Ldloc_1);
+                            break;
+                        case 2:
+                            il.Emit(OpCodes.Stloc_2);
+                            il.Emit(OpCodes.Ldloc_2);
+                            break;
+                        case 3:
+                            il.Emit(OpCodes.Stloc_3);
+                            il.Emit(OpCodes.Ldloc_3);
+                            break;
+                        default:
+                            il.Emit(OpCodes.Stloc_S, (byte)index);
+                            il.Emit(OpCodes.Ldloc_S, (byte)index);
+                            break;
+                    }
+                    //il.Emit(OpCodes.Conv_I);
+                }
+            }
+        }
+
+        static void EmitEntryPoint(FieldDefinition entry_points, ILProcessor il, int slot)
+        {
+            il.Emit(OpCodes.Ldsfld, entry_points);
+            switch (slot)
+            {
+                case 0:
+                    il.Emit(OpCodes.Ldc_I4_0);
+                    break;
+                case 1:
+                    il.Emit(OpCodes.Ldc_I4_1);
+                    break;
+                case 2:
+                    il.Emit(OpCodes.Ldc_I4_2);
+                    break;
+                case 3:
+                    il.Emit(OpCodes.Ldc_I4_3);
+                    break;
+                case 4:
+                    il.Emit(OpCodes.Ldc_I4_4);
+                    break;
+                case 5:
+                    il.Emit(OpCodes.Ldc_I4_5);
+                    break;
+                case 6:
+                    il.Emit(OpCodes.Ldc_I4_6);
+                    break;
+                case 7:
+                    il.Emit(OpCodes.Ldc_I4_7);
+                    break;
+                case 8:
+                    il.Emit(OpCodes.Ldc_I4_8);
+                    break;
+                default:
+                    if (slot < 128)
+                        il.Emit(OpCodes.Ldc_I4_S, (byte)slot);
+                    else
+                        il.Emit(OpCodes.Ldc_I4, slot);
+                    break;
+            }
+            il.Emit(OpCodes.Ldelem_I);
+        }
+
+        static void EmitCall(ILProcessor il, MethodReference reference)
         {
             var signature = new CallSite(reference.ReturnType)
             {
                 CallingConvention = MethodCallingConvention.Default,
             };
 
-            if (reference is GenericInstanceMethod)
+            foreach (var p in reference.Parameters)
             {
-                var greference = reference as GenericInstanceMethod;
-
-                if (reference.Name.EndsWith("Return"))
-                {
-                    // "TRet CallReturn<TRet, T0, ...>(T0 arg0, ..., IntPtr address)"
-                    // The first generic parameter is the return type
-                    // The rest are function parameters types
-                    // The entry point address is not in the generic arg list
-                    signature.ReturnType = greference.GenericArguments.First();
-                    foreach (var ptype in greference.GenericArguments.Skip(1))
-                    {
-                        signature.Parameters.Add(new ParameterDefinition(ptype));
-                    }
-                }
-                else
-                {
-                    // "void Call<T0, ...>(T0 arg0, ..., IntPtr address)"
-                    // The generic arguments define the function parameters
-                    // The entry point address is not in the generic arg list
-                    foreach (var ptype in greference.GenericArguments)
-                    {
-                        signature.Parameters.Add(new ParameterDefinition(ptype));
-                    }
-                }
-            }
-            else
-            {
-                // Call(IntPtr address)
-                // The last parameter is the function address of this entry point.
-                // It is placed at the top of the stack (first parameter of calli)
-                // but is not actually part of the unmanaged signature, so we must
-                // not add it to the signature parameters.
-                foreach (var p in reference.Parameters.Take(reference.Parameters.Count - 1))
-                {
-                    signature.Parameters.Add(p);
-                }
+                signature.Parameters.Add(p);
             }
 
             // Since the last parameter is always the entry point address,
             // we do not need any special preparation before emiting calli.
-            var call = il.Create(OpCodes.Calli, signature);
-            il.Replace(inst, call);
+            il.Emit(OpCodes.Calli, signature);
         }
 
         // IntPtr Pin<T>({ref} T{[];[,];[,,]} arg)
