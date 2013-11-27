@@ -348,12 +348,10 @@ namespace OpenTK.Platform.Windows
 
         static bool IsValid(IntPtr address)
         {
-            unsafe
-            {
-                // See https://www.opengl.org/wiki/Load_OpenGL_Functions
-                void* a = address.ToPointer();
-                return a < (void*)-1 || a > (void*)3;
-            }
+            // See https://www.opengl.org/wiki/Load_OpenGL_Functions
+            long a = address.ToInt64();
+            bool is_valid = (a < -1 )|| (a > 3);
+            return is_valid;
         }
 
         #endregion
