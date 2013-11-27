@@ -140,7 +140,9 @@ namespace OpenTK.Rewrite
             if (type.Name == "RewrittenAttribute")
             {
                 var rewritten_constructor = type.GetConstructors().First();
-                var rewritten = new CustomAttribute(rewritten_constructor, BitConverter.GetBytes(true));
+                var rewritten = new CustomAttribute(rewritten_constructor);
+                rewritten.ConstructorArguments.Add(new CustomAttributeArgument(
+                    type.Module.Import(typeof(bool)), true));
                 type.Module.Assembly.CustomAttributes.Add(rewritten);
             }
         }
