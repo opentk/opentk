@@ -251,7 +251,7 @@ namespace OpenTK.Rewrite
                     //   GetBooleanv(pname, &result);
                     //   return result;
                     // }
-                    body.Variables.Add(new VariableDefinition(native.ReturnType));
+                    body.Variables.Add(new VariableDefinition(wrapper.ReturnType));
                     il.Emit(OpCodes.Ldloca, body.Variables.Count - 1);
                 }
                 else if (difference == 1 && wrapper.ReturnType.Name == "Void")
