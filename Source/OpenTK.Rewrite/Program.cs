@@ -324,6 +324,12 @@ namespace OpenTK.Rewrite
             // return
             il.Emit(OpCodes.Ret);
 
+            if (body.Variables.Count > 0)
+            {
+                // Required for verifiable executables
+                // (otherwise peverify complains bitterly)
+                body.InitLocals = true;
+            }
             body.OptimizeMacros();
         }
 
