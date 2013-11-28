@@ -357,9 +357,6 @@
     <Compile Include="Platform\Windows\Bindings\WglDelegates.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\Windows\Bindings\WglCore.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\Windows\Bindings\WglEnums.cs">
       <SubType>Code</SubType>
     </Compile>
