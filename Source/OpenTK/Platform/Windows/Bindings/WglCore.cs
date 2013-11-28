@@ -33,7 +33,7 @@ namespace OpenTK.Platform.Windows
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglGetCurrentDC", ExactSpelling = true, SetLastError = true)]
             internal extern static IntPtr GetCurrentDC();
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglGetDefaultProcAddress", ExactSpelling = true, SetLastError = true)]
+            [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglGetProcAddress", ExactSpelling = true, SetLastError = true)]
             internal extern static IntPtr GetProcAddress(String lpszProc);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglGetPixelFormat", ExactSpelling = true, SetLastError = true)]
