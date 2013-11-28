@@ -468,8 +468,12 @@ namespace OpenTK.Platform.MacOS
 
         [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
         private static extern bool NSIsSymbolNameDefined(string s);
+        [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
+        private static extern bool NSIsSymbolNameDefined(IntPtr s);
         [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
         private static extern IntPtr NSLookupAndBindSymbol(string s);
+        [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
+        private static extern IntPtr NSLookupAndBindSymbol(IntPtr s);
         [DllImport(Library, EntryPoint = "NSAddressOfSymbol")]
         private static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
 
@@ -483,6 +487,18 @@ namespace OpenTK.Platform.MacOS
             if (symbol != IntPtr.Zero)
                 symbol = NSAddressOfSymbol(symbol);
             
+            return symbol;
+        }
+
+        public override IntPtr GetAddress(IntPtr function)
+        {
+            if (!NSIsSymbolNameDefined(function))
+                return IntPtr.Zero;
+
+            IntPtr symbol = NSLookupAndBindSymbol(function);
+            if (symbol != IntPtr.Zero)
+                symbol = NSAddressOfSymbol(symbol);
+
             return symbol;
         }
         

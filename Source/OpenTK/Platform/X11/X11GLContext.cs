@@ -376,18 +376,6 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region GetAddress
-
-        public override IntPtr GetAddress(string function)
-        {
-            using (new XLock(Display))
-            {
-                return Glx.GetProcAddress(function);
-            }
-        }
-
-        #endregion
-
         #region LoadAll
 
         public override void LoadAll()
@@ -403,11 +391,25 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region --- IGLContextInternal Members ---
+        #region --- IGraphicsContextInternal Members ---
 
-         #region IWindowInfo IGLContextInternal.Info
+        #region GetAddress
 
-        //IWindowInfo IGraphicsContextInternal.Info { get { return window; } }
+        public override IntPtr GetAddress(string function)
+        {
+            using (new XLock(Display))
+            {
+                return Glx.GetProcAddress(function);
+            }
+        }
+
+        public override IntPtr GetAddress(IntPtr function)
+        {
+            using (new XLock(Display))
+            {
+                return Glx.GetProcAddress(function);
+            }
+        }
 
         #endregion
 

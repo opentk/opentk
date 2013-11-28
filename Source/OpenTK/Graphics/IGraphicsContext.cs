@@ -121,5 +121,20 @@ namespace OpenTK.Graphics
         /// depends on the underlying platform.
         /// </returns>
         IntPtr GetAddress(string function);
+
+        /// <summary>
+        /// Retrieves the implementation-defined address of an OpenGL function.
+        /// </summary>
+        /// <param name="function">
+        /// A pointer to a null-terminated buffer
+        /// containing the name of the OpenGL function.
+        /// </param>
+        /// <returns>
+        /// A pointer to the specified function or an invalid pointer if the function is not
+        /// available in the current OpenGL context. The return value and calling convention
+        /// depends on the underlying platform.
+        /// </returns>
+        /// <remarks><seealso cref="GetAddress(string)"/></remarks>
+        IntPtr GetAddress(IntPtr function);
     }
 }

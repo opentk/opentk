@@ -544,14 +544,32 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Gets the address of an OpenGL extension function.
+        /// Retrieves the implementation-defined address of an OpenGL function.
         /// </summary>
         /// <param name="function">The name of the OpenGL function (e.g. "glGetString")</param>
         /// <returns>
-        /// A pointer to the specified function or IntPtr.Zero if the function isn't
-        /// available in the current opengl context.
+        /// A pointer to the specified function or an invalid pointer if the function is not
+        /// available in the current OpenGL context. The return value and calling convention
+        /// depends on the underlying platform.
         /// </returns>
         IntPtr IGraphicsContextInternal.GetAddress(string function)
+        {
+            return (implementation as IGraphicsContextInternal).GetAddress(function);
+        }
+
+        /// <summary>
+        /// Retrieves the implementation-defined address of an OpenGL function.
+        /// </summary>
+        /// <param name="function">
+        /// A pointer to a null-terminated buffer
+        /// containing the name of the OpenGL function.
+        /// </param>
+        /// <returns>
+        /// A pointer to the specified function or an invalid pointer if the function is not
+        /// available in the current OpenGL context. The return value and calling convention
+        /// depends on the underlying platform.
+        /// </returns>
+        IntPtr IGraphicsContextInternal.GetAddress(IntPtr function)
         {
             return (implementation as IGraphicsContextInternal).GetAddress(function);
         }

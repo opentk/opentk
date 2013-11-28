@@ -143,6 +143,11 @@ namespace OpenTK.Platform.Egl
             return Egl.GetProcAddress(function);
         }
 
+        public override IntPtr GetAddress(IntPtr function)
+        {
+            return Egl.GetProcAddress(function);
+        }
+
         #endregion
 
         #region IDisposable Members

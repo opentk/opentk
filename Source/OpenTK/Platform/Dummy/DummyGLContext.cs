@@ -83,6 +83,8 @@ namespace OpenTK.Platform.Dummy
 
         public override IntPtr GetAddress(string function) { return IntPtr.Zero; }
 
+        public override IntPtr GetAddress(IntPtr function) { return IntPtr.Zero; }
+
         public override int SwapInterval
         {
             get

@@ -294,6 +294,11 @@ namespace OpenTK.Platform.SDL2
             return SDL.GL.GetProcAddress(function);
         }
 
+        public override IntPtr GetAddress(IntPtr function)
+        {
+            return SDL.GL.GetProcAddress(function);
+        }
+
         public override bool IsCurrent
         {
             get

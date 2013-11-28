@@ -94,6 +94,8 @@ namespace OpenTK.Graphics
 
         public abstract IntPtr GetAddress(string function);
 
+        public abstract IntPtr GetAddress(IntPtr function);
+
         #endregion
 
         #region IDisposable Members
