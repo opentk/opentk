@@ -212,7 +212,6 @@ namespace OpenTK.Rewrite
         static void ProcessMethod(MethodDefinition wrapper, MethodDefinition native, int slot, FieldDefinition entry_points)
         {
             var nint = wrapper.DeclaringType.Module.Import(mscorlib.MainModule.GetType("System.IntPtr"));
-            //var nint = new TypeReference("System", "IntPtr", wrapper.DeclaringType.Module, null);
             var body = wrapper.Body;
             var il = body.GetILProcessor();
             var instructions = body.Instructions;
@@ -227,48 +226,7 @@ namespace OpenTK.Rewrite
             {
                 int parameter_count = EmitParameters(wrapper, nint, body, il);
                 int difference = native.Parameters.Count - parameter_count;
-
-                if (difference == 2)
-                {
-                    // Convert sized out-array/reference to return value, for example:
-                    // void GenTextures(int n, int[] textures) -> int GenTexture()
-                    // {
-                    //  const int n = 1;
-                    //  int buffers;
-                    //  calli GenTextures(n, &textures);
-                    //  return result;
-                    // }
-                    body.Variables.Add(new VariableDefinition(native.Parameters.Last().ParameterType));
-                    il.Emit(OpCodes.Ldc_I4, 1); // const int n = 1
-                    il.Emit(OpCodes.Ldloca, body.Variables.Count - 1); // &buffers
-                }
-                else if (difference == 1 && wrapper.ReturnType.Name != "Void")
-                {
-                    // Convert unsized out-array/reference to return value, for example:
-                    // void GetBoolean(GetPName pname, out bool data) -> bool GetBoolean(GetPName pname)
-                    // {
-                    //   bool result;
-                    //   GetBooleanv(pname, &result);
-                    //   return result;
-                    // }
-                    body.Variables.Add(new VariableDefinition(wrapper.ReturnType));
-                    il.Emit(OpCodes.Ldloca, body.Variables.Count - 1);
-                }
-                else if (difference == 1 && wrapper.ReturnType.Name == "Void")
-                {
-                    // Convert in-array/reference to single element, for example:
-                    // void DeleteTextures(int n, ref int textures) -> void DeleteTexture(int texture)
-                    // {
-                    //   const int n = 1;
-                    //   calli DeleteTextures(n, &textures);
-                    // }
-                    il.Emit(OpCodes.Ldc_I4, 1); // const int n = 1
-                    il.Emit(OpCodes.Ldarga, wrapper.Parameters.Last()); // &textures
-                }
-                else
-                {
-                    Console.Error.WriteLine("Unknown wrapper type for ({0})", native.Name);
-                }
+                EmitConvenienceWrapper(wrapper, native, difference, body, il);
             }
 
             // push the entry point address on the stack
@@ -279,46 +237,7 @@ namespace OpenTK.Rewrite
 
             if (wrapper.ReturnType.Name != "Void")
             {
-                if (wrapper.Parameters.Count < native.Parameters.Count)
-                {
-                    // Convenience wrapper. The result is stored in the last local variable
-                    il.Emit(OpCodes.Ldloc, body.Variables.Count - 1);
-                }
-                else if (wrapper.ReturnType != native.ReturnType)
-                {
-                    if (wrapper.ReturnType.Name == "String")
-                    {
-                        // String return-type wrapper
-                        // return new string((sbyte*)((void*)GetString()));
-
-                        var intptr_to_voidpointer = wrapper.Module.Import(typeof(IntPtr).GetMethods()
-                            .First(m =>
-                            {
-                                return
-                                    m.Name == "op_Explicit" &&
-                                    m.ReturnType.Name == "Void*";
-                            }));
-
-                        var string_constructor = wrapper.Module.Import(typeof(string).GetConstructors()
-                            .First(m =>
-                                {
-                                    var p = m.GetParameters(); 
-                                    return p.Length > 0 && p[0].ParameterType.Name == "SByte*";
-                                }));
-
-                        il.Emit(OpCodes.Call, intptr_to_voidpointer);
-                        il.Emit(OpCodes.Newobj, string_constructor);
-                    }
-                    else
-                    {
-                        Console.Error.WriteLine("Return wrappers not implemented yet ({0})", native.Name);
-                    }
-                }
-                else
-                {
-                    // nothing to do, the native call leaves the return value
-                    // on the stack and we return that unmodified to the caller.
-                }
+                EmitReturnTypeWrapper(wrapper, native, body, il);
             }
 
             // return
@@ -333,6 +252,96 @@ namespace OpenTK.Rewrite
             body.OptimizeMacros();
         }
 
+        private static void EmitReturnTypeWrapper(MethodDefinition wrapper, MethodDefinition native, MethodBody body, ILProcessor il)
+        {
+            if (wrapper.Parameters.Count < native.Parameters.Count)
+            {
+                // Convenience wrapper. The result is stored in the last local variable
+                il.Emit(OpCodes.Ldloc, body.Variables.Count - 1);
+            }
+            else if (wrapper.ReturnType != native.ReturnType)
+            {
+                if (wrapper.ReturnType.Name == "String")
+                {
+                    // String return-type wrapper
+                    // return new string((sbyte*)((void*)GetString()));
+
+                    var intptr_to_voidpointer = wrapper.Module.Import(typeof(IntPtr).GetMethods()
+                        .First(m =>
+                        {
+                            return
+                                m.Name == "op_Explicit" &&
+                                m.ReturnType.Name == "Void*";
+                        }));
+
+                    var string_constructor = wrapper.Module.Import(typeof(string).GetConstructors()
+                        .First(m =>
+                        {
+                            var p = m.GetParameters();
+                            return p.Length > 0 && p[0].ParameterType.Name == "SByte*";
+                        }));
+
+                    il.Emit(OpCodes.Call, intptr_to_voidpointer);
+                    il.Emit(OpCodes.Newobj, string_constructor);
+                }
+                else
+                {
+                    Console.Error.WriteLine("Return wrappers not implemented yet ({0})", native.Name);
+                }
+            }
+            else
+            {
+                // nothing to do, the native call leaves the return value
+                // on the stack and we return that unmodified to the caller.
+            }
+        }
+
+        private static void EmitConvenienceWrapper(MethodDefinition wrapper,
+            MethodDefinition native, int difference, MethodBody body, ILProcessor il)
+        {
+            if (difference == 2)
+            {
+                // Convert sized out-array/reference to return value, for example:
+                // void GenTextures(int n, int[] textures) -> int GenTexture()
+                // {
+                //  const int n = 1;
+                //  int buffers;
+                //  calli GenTextures(n, &textures);
+                //  return result;
+                // }
+                body.Variables.Add(new VariableDefinition(native.Parameters.Last().ParameterType));
+                il.Emit(OpCodes.Ldc_I4, 1); // const int n = 1
+                il.Emit(OpCodes.Ldloca, body.Variables.Count - 1); // &buffers
+            }
+            else if (difference == 1 && wrapper.ReturnType.Name != "Void")
+            {
+                // Convert unsized out-array/reference to return value, for example:
+                // void GetBoolean(GetPName pname, out bool data) -> bool GetBoolean(GetPName pname)
+                // {
+                //   bool result;
+                //   GetBooleanv(pname, &result);
+                //   return result;
+                // }
+                body.Variables.Add(new VariableDefinition(wrapper.ReturnType));
+                il.Emit(OpCodes.Ldloca, body.Variables.Count - 1);
+            }
+            else if (difference == 1 && wrapper.ReturnType.Name == "Void")
+            {
+                // Convert in-array/reference to single element, for example:
+                // void DeleteTextures(int n, ref int textures) -> void DeleteTexture(int texture)
+                // {
+                //   const int n = 1;
+                //   calli DeleteTextures(n, &textures);
+                // }
+                il.Emit(OpCodes.Ldc_I4, 1); // const int n = 1
+                il.Emit(OpCodes.Ldarga, wrapper.Parameters.Last()); // &textures
+            }
+            else
+            {
+                Console.Error.WriteLine("Unknown wrapper type for ({0})", native.Name);
+            }
+        }
+
         static int EmitParameters(MethodDefinition method, TypeReference nint, MethodBody body, ILProcessor il)
         {
             int i;
@@ -341,13 +350,16 @@ namespace OpenTK.Rewrite
                 var p = method.Parameters[i];
                 il.Emit(OpCodes.Ldarg, i);
 
-                if (p.ParameterType.IsArray || p.ParameterType.IsByReference)
+                if (p.ParameterType.IsGenericInstance)
+                {
+
+                }
+                else if (p.ParameterType.IsArray || p.ParameterType.IsByReference)
                 {
                     body.Variables.Add(new VariableDefinition(new PinnedType(nint)));
                     var index = body.Variables.Count - 1;
                     il.Emit(OpCodes.Stloc, index);
                     il.Emit(OpCodes.Ldloc, index);
-                    //il.Emit(OpCodes.Conv_I);
                 }
             }
             return i;
