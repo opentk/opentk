@@ -364,7 +364,7 @@ namespace OpenTK.Rewrite
         {
             var signature = new CallSite(reference.ReturnType)
             {
-                CallingConvention = MethodCallingConvention.Default,
+                CallingConvention = MethodCallingConvention.StdCall,
             };
 
             foreach (var p in reference.Parameters)
