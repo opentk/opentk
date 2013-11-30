@@ -350,16 +350,57 @@ namespace OpenTK.Rewrite
                 var p = method.Parameters[i];
                 il.Emit(OpCodes.Ldarg, i);
 
-                if (p.ParameterType.IsGenericInstance)
+                if (p.ParameterType.IsByReference)
                 {
-
-                }
-                else if (p.ParameterType.IsArray || p.ParameterType.IsByReference)
-                {
-                    body.Variables.Add(new VariableDefinition(new PinnedType(nint)));
+                    body.Variables.Add(new VariableDefinition(new PinnedType(p.ParameterType)));
                     var index = body.Variables.Count - 1;
                     il.Emit(OpCodes.Stloc, index);
                     il.Emit(OpCodes.Ldloc, index);
+                    il.Emit(OpCodes.Conv_I);
+                }
+                else if (p.ParameterType.IsArray)
+                {
+                    if (p.ParameterType.Name != method.Module.Import(typeof(string[])).Name)
+                    {
+                        // Pin the array and pass the address
+                        // of its first element.
+                        var element_type = p.ParameterType.GetElementType();
+                        body.Variables.Add(new VariableDefinition(new PinnedType(new ByReferenceType(element_type))));
+                        int pinned_index = body.Variables.Count - 1;
+
+                        var empty = il.Create(OpCodes.Ldc_I4, 0);
+                        var pin = il.Create(OpCodes.Ldarg, i);
+                        var end = il.Create(OpCodes.Stloc, pinned_index);
+                        
+                        // if (array == null) goto empty
+                        il.Emit(OpCodes.Brfalse, empty);
+
+                        // else if (array.Length != 0) goto pin
+                        il.Emit(OpCodes.Ldarg, i);
+                        il.Emit(OpCodes.Ldlen);
+                        il.Emit(OpCodes.Conv_I4);
+                        il.Emit(OpCodes.Brtrue, pin);
+
+                        // empty: IntPtr ptr = IntPtr.Zero
+                        il.Append(empty);
+                        il.Emit(OpCodes.Conv_U);
+                        il.Emit(OpCodes.Br, end);
+
+                        // pin: &array[0]
+                        il.Append(pin);
+                        il.Emit(OpCodes.Ldc_I4, 0);
+                        il.Emit(OpCodes.Ldelema, element_type);
+
+                        // end: fixed (IntPtr ptr = &array[0])
+                        il.Append(end);
+                        il.Emit(OpCodes.Ldloc, pinned_index);
+                        il.Emit(OpCodes.Conv_I);
+                    }
+                    else
+                    {
+                        // String[] requires special marshalling.
+                        // Let the runtime handle this for now.
+                    }
                 }
             }
             return i;
