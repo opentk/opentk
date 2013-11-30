@@ -142,7 +142,7 @@ namespace OpenTK.Rewrite
                 var rewritten_constructor = type.GetConstructors().First();
                 var rewritten = new CustomAttribute(rewritten_constructor);
                 rewritten.ConstructorArguments.Add(new CustomAttributeArgument(
-                    type.Module.Import(typeof(bool)), true));
+                    type.Module.Import(mscorlib.MainModule.GetType("System.Boolean")), true));
                 type.Module.Assembly.CustomAttributes.Add(rewritten);
             }
         }
@@ -266,7 +266,7 @@ namespace OpenTK.Rewrite
                     // String return-type wrapper
                     // return new string((sbyte*)((void*)GetString()));
 
-                    var intptr_to_voidpointer = wrapper.Module.Import(typeof(IntPtr).GetMethods()
+                    var intptr_to_voidpointer = wrapper.Module.Import(mscorlib.MainModule.GetType("System.IntPtr").GetMethods()
                         .First(m =>
                         {
                             return
@@ -274,11 +274,11 @@ namespace OpenTK.Rewrite
                                 m.ReturnType.Name == "Void*";
                         }));
 
-                    var string_constructor = wrapper.Module.Import(typeof(string).GetConstructors()
+                    var string_constructor = wrapper.Module.Import(mscorlib.MainModule.GetType("System.String").GetConstructors()
                         .First(m =>
                         {
-                            var p = m.GetParameters();
-                            return p.Length > 0 && p[0].ParameterType.Name == "SByte*";
+                            var p = m.Parameters;
+                            return p.Count > 0 && p[0].ParameterType.Name == "SByte*";
                         }));
 
                     il.Emit(OpCodes.Call, intptr_to_voidpointer);
