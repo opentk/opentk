@@ -38427,9 +38427,9 @@ namespace OpenTK.Graphics.ES20
         [Slot(122)]
         static extern unsafe void glGenPerfMonitorsAMD(Int32 n, [OutAttribute] UInt32* monitors);
         [Slot(154)]
-        static extern unsafe void glGetPerfMonitorCounterDataAMD(UInt32 monitor, OpenTK.Graphics.ES20.All pname, Int32 dataSize, [OutAttribute] UInt32* data, [OutAttribute] Int32* bytesWritten);
+        static extern unsafe void glGetPerfMonitorCounterDataAMD(UInt32 monitor, System.Int32 pname, Int32 dataSize, [OutAttribute] UInt32* data, [OutAttribute] Int32* bytesWritten);
         [Slot(155)]
-        static extern void glGetPerfMonitorCounterInfoAMD(UInt32 group, UInt32 counter, OpenTK.Graphics.ES20.All pname, [OutAttribute] IntPtr data);
+        static extern void glGetPerfMonitorCounterInfoAMD(UInt32 group, UInt32 counter, System.Int32 pname, [OutAttribute] IntPtr data);
         [Slot(156)]
         static extern unsafe void glGetPerfMonitorCountersAMD(UInt32 group, [OutAttribute] Int32* numCounters, [OutAttribute] Int32* maxActiveCounters, Int32 counterSize, [OutAttribute] UInt32* counters);
         [Slot(157)]
@@ -38441,69 +38441,69 @@ namespace OpenTK.Graphics.ES20
         [Slot(271)]
         static extern unsafe void glSelectPerfMonitorCountersAMD(UInt32 monitor, bool enable, UInt32 group, Int32 numCounters, [OutAttribute] UInt32* counterList);
         [Slot(22)]
-        static extern void glBlitFramebufferANGLE(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, OpenTK.Graphics.ES20.ClearBufferMask mask, OpenTK.Graphics.ES20.BlitFramebufferFilter filter);
+        static extern void glBlitFramebufferANGLE(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, System.Int32 mask, System.Int32 filter);
         [Slot(77)]
-        static extern void glDrawArraysInstancedANGLE(OpenTK.Graphics.ES20.PrimitiveType mode, Int32 first, Int32 count, Int32 primcount);
+        static extern void glDrawArraysInstancedANGLE(System.Int32 mode, Int32 first, Int32 count, Int32 primcount);
         [Slot(84)]
-        static extern void glDrawElementsInstancedANGLE(OpenTK.Graphics.ES20.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES20.DrawElementsType type, IntPtr indices, Int32 primcount);
+        static extern void glDrawElementsInstancedANGLE(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 primcount);
         [Slot(181)]
         static extern unsafe void glGetTranslatedShaderSourceANGLE(UInt32 shader, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder source);
         [Slot(263)]
-        static extern void glRenderbufferStorageMultisampleANGLE(OpenTK.Graphics.ES20.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES20.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
+        static extern void glRenderbufferStorageMultisampleANGLE(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(336)]
         static extern void glVertexAttribDivisorANGLE(UInt32 index, UInt32 divisor);
         [Slot(31)]
-        static extern OpenTK.Graphics.ES20.WaitSyncStatus glClientWaitSyncAPPLE(IntPtr sync, OpenTK.Graphics.ES20.ClientWaitSyncFlags flags, UInt64 timeout);
+        static extern System.Int32 glClientWaitSyncAPPLE(IntPtr sync, System.Int32 flags, UInt64 timeout);
         [Slot(42)]
         static extern void glCopyTextureLevelsAPPLE(UInt32 destinationTexture, UInt32 sourceTexture, Int32 sourceBaseLevel, Int32 sourceLevelCount);
         [Slot(65)]
         static extern void glDeleteSyncAPPLE(IntPtr sync);
         [Slot(107)]
-        static extern IntPtr glFenceSyncAPPLE(OpenTK.Graphics.ES20.SyncCondition condition, OpenTK.Graphics.ES20.WaitSyncFlags flags);
+        static extern IntPtr glFenceSyncAPPLE(System.Int32 condition, System.Int32 flags);
         [Slot(144)]
-        static extern unsafe void glGetInteger64vAPPLE(OpenTK.Graphics.ES20.GetPName pname, [OutAttribute] Int64* @params);
+        static extern unsafe void glGetInteger64vAPPLE(System.Int32 pname, [OutAttribute] Int64* @params);
         [Slot(178)]
-        static extern unsafe void glGetSyncivAPPLE(IntPtr sync, OpenTK.Graphics.ES20.SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+        static extern unsafe void glGetSyncivAPPLE(IntPtr sync, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
         [Slot(199)]
         static extern bool glIsSyncAPPLE(IntPtr sync);
         [Slot(264)]
-        static extern void glRenderbufferStorageMultisampleAPPLE(OpenTK.Graphics.ES20.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES20.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
+        static extern void glRenderbufferStorageMultisampleAPPLE(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(268)]
         static extern void glResolveMultisampleFramebufferAPPLE();
         [Slot(341)]
-        static extern void glWaitSyncAPPLE(IntPtr sync, OpenTK.Graphics.ES20.WaitSyncFlags flags, UInt64 timeout);
+        static extern void glWaitSyncAPPLE(IntPtr sync, System.Int32 flags, UInt64 timeout);
         [Slot(2)]
-        static extern void glActiveTexture(OpenTK.Graphics.ES20.TextureUnit texture);
+        static extern void glActiveTexture(System.Int32 texture);
         [Slot(4)]
         static extern void glAttachShader(UInt32 program, UInt32 shader);
         [Slot(7)]
         static extern void glBindAttribLocation(UInt32 program, UInt32 index, String name);
         [Slot(8)]
-        static extern void glBindBuffer(OpenTK.Graphics.ES20.BufferTarget target, UInt32 buffer);
+        static extern void glBindBuffer(System.Int32 target, UInt32 buffer);
         [Slot(9)]
-        static extern void glBindFramebuffer(OpenTK.Graphics.ES20.FramebufferTarget target, UInt32 framebuffer);
+        static extern void glBindFramebuffer(System.Int32 target, UInt32 framebuffer);
         [Slot(11)]
-        static extern void glBindRenderbuffer(OpenTK.Graphics.ES20.RenderbufferTarget target, UInt32 renderbuffer);
+        static extern void glBindRenderbuffer(System.Int32 target, UInt32 renderbuffer);
         [Slot(12)]
-        static extern void glBindTexture(OpenTK.Graphics.ES20.TextureTarget target, UInt32 texture);
+        static extern void glBindTexture(System.Int32 target, UInt32 texture);
         [Slot(15)]
         static extern void glBlendColor(Single red, Single green, Single blue, Single alpha);
         [Slot(16)]
-        static extern void glBlendEquation(OpenTK.Graphics.ES20.BlendEquationMode mode);
+        static extern void glBlendEquation(System.Int32 mode);
         [Slot(18)]
-        static extern void glBlendEquationSeparate(OpenTK.Graphics.ES20.BlendEquationMode modeRGB, OpenTK.Graphics.ES20.BlendEquationMode modeAlpha);
+        static extern void glBlendEquationSeparate(System.Int32 modeRGB, System.Int32 modeAlpha);
         [Slot(19)]
-        static extern void glBlendFunc(OpenTK.Graphics.ES20.BlendingFactorSrc sfactor, OpenTK.Graphics.ES20.BlendingFactorDest dfactor);
+        static extern void glBlendFunc(System.Int32 sfactor, System.Int32 dfactor);
         [Slot(20)]
-        static extern void glBlendFuncSeparate(OpenTK.Graphics.ES20.BlendingFactorSrc sfactorRGB, OpenTK.Graphics.ES20.BlendingFactorDest dfactorRGB, OpenTK.Graphics.ES20.BlendingFactorSrc sfactorAlpha, OpenTK.Graphics.ES20.BlendingFactorDest dfactorAlpha);
+        static extern void glBlendFuncSeparate(System.Int32 sfactorRGB, System.Int32 dfactorRGB, System.Int32 sfactorAlpha, System.Int32 dfactorAlpha);
         [Slot(24)]
-        static extern void glBufferData(OpenTK.Graphics.ES20.BufferTarget target, IntPtr size, IntPtr data, OpenTK.Graphics.ES20.BufferUsageHint usage);
+        static extern void glBufferData(System.Int32 target, IntPtr size, IntPtr data, System.Int32 usage);
         [Slot(25)]
-        static extern void glBufferSubData(OpenTK.Graphics.ES20.BufferTarget target, IntPtr offset, IntPtr size, IntPtr data);
+        static extern void glBufferSubData(System.Int32 target, IntPtr offset, IntPtr size, IntPtr data);
         [Slot(26)]
-        static extern OpenTK.Graphics.ES20.FramebufferErrorCode glCheckFramebufferStatus(OpenTK.Graphics.ES20.FramebufferTarget target);
+        static extern System.Int32 glCheckFramebufferStatus(System.Int32 target);
         [Slot(27)]
-        static extern void glClear(OpenTK.Graphics.ES20.ClearBufferMask mask);
+        static extern void glClear(System.Int32 mask);
         [Slot(28)]
         static extern void glClearColor(Single red, Single green, Single blue, Single alpha);
         [Slot(29)]
@@ -38515,25 +38515,25 @@ namespace OpenTK.Graphics.ES20
         [Slot(33)]
         static extern void glCompileShader(UInt32 shader);
         [Slot(34)]
-        static extern void glCompressedTexImage2D(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 level, OpenTK.Graphics.ES20.CompressedInternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
+        static extern void glCompressedTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
         [Slot(36)]
-        static extern void glCompressedTexSubImage2D(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, Int32 imageSize, IntPtr data);
+        static extern void glCompressedTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, Int32 imageSize, IntPtr data);
         [Slot(39)]
-        static extern void glCopyTexImage2D(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 level, OpenTK.Graphics.ES20.TextureCopyComponentCount internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
+        static extern void glCopyTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
         [Slot(40)]
-        static extern void glCopyTexSubImage2D(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+        static extern void glCopyTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(45)]
         static extern Int32 glCreateProgram();
         [Slot(46)]
-        static extern Int32 glCreateShader(OpenTK.Graphics.ES20.ShaderType type);
+        static extern Int32 glCreateShader(System.Int32 type);
         [Slot(49)]
-        static extern void glCullFace(OpenTK.Graphics.ES20.CullFaceMode mode);
+        static extern void glCullFace(System.Int32 mode);
         [Slot(50)]
         static extern void glDebugMessageCallback(DebugProc callback, IntPtr userParam);
         [Slot(52)]
-        static extern unsafe void glDebugMessageControl(OpenTK.Graphics.ES20.DebugSourceControl source, OpenTK.Graphics.ES20.DebugTypeControl type, OpenTK.Graphics.ES20.DebugSeverityControl severity, Int32 count, UInt32* ids, bool enabled);
+        static extern unsafe void glDebugMessageControl(System.Int32 source, System.Int32 type, System.Int32 severity, Int32 count, UInt32* ids, bool enabled);
         [Slot(54)]
-        static extern void glDebugMessageInsert(OpenTK.Graphics.ES20.DebugSourceExternal source, OpenTK.Graphics.ES20.DebugType type, UInt32 id, OpenTK.Graphics.ES20.DebugSeverity severity, Int32 length, String buf);
+        static extern void glDebugMessageInsert(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, String buf);
         [Slot(56)]
         static extern unsafe void glDeleteBuffers(Int32 n, UInt32* buffers);
         [Slot(58)]
@@ -38547,7 +38547,7 @@ namespace OpenTK.Graphics.ES20
         [Slot(66)]
         static extern unsafe void glDeleteTextures(Int32 n, UInt32* textures);
         [Slot(68)]
-        static extern void glDepthFunc(OpenTK.Graphics.ES20.DepthFunction func);
+        static extern void glDepthFunc(System.Int32 func);
         [Slot(69)]
         static extern void glDepthMask(bool flag);
         [Slot(70)]
@@ -38555,15 +38555,15 @@ namespace OpenTK.Graphics.ES20
         [Slot(71)]
         static extern void glDetachShader(UInt32 program, UInt32 shader);
         [Slot(72)]
-        static extern void glDisable(OpenTK.Graphics.ES20.EnableCap cap);
+        static extern void glDisable(System.Int32 cap);
         [Slot(74)]
         static extern void glDisableVertexAttribArray(UInt32 index);
         [Slot(76)]
-        static extern void glDrawArrays(OpenTK.Graphics.ES20.PrimitiveType mode, Int32 first, Int32 count);
+        static extern void glDrawArrays(System.Int32 mode, Int32 first, Int32 count);
         [Slot(83)]
-        static extern void glDrawElements(OpenTK.Graphics.ES20.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES20.DrawElementsType type, IntPtr indices);
+        static extern void glDrawElements(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices);
         [Slot(89)]
-        static extern void glEnable(OpenTK.Graphics.ES20.EnableCap cap);
+        static extern void glEnable(System.Int32 cap);
         [Slot(91)]
         static extern void glEnableVertexAttribArray(UInt32 index);
         [Slot(108)]
@@ -38571,15 +38571,15 @@ namespace OpenTK.Graphics.ES20
         [Slot(110)]
         static extern void glFlush();
         [Slot(112)]
-        static extern void glFramebufferRenderbuffer(OpenTK.Graphics.ES20.FramebufferTarget target, OpenTK.Graphics.ES20.All attachment, OpenTK.Graphics.ES20.RenderbufferTarget renderbuffertarget, UInt32 renderbuffer);
+        static extern void glFramebufferRenderbuffer(System.Int32 target, System.Int32 attachment, System.Int32 renderbuffertarget, UInt32 renderbuffer);
         [Slot(113)]
-        static extern void glFramebufferTexture2D(OpenTK.Graphics.ES20.FramebufferTarget target, OpenTK.Graphics.ES20.All attachment, OpenTK.Graphics.ES20.TextureTarget2d textarget, UInt32 texture, Int32 level);
+        static extern void glFramebufferTexture2D(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level);
         [Slot(117)]
-        static extern void glFrontFace(OpenTK.Graphics.ES20.FrontFaceDirection mode);
+        static extern void glFrontFace(System.Int32 mode);
         [Slot(118)]
         static extern unsafe void glGenBuffers(Int32 n, [OutAttribute] UInt32* buffers);
         [Slot(119)]
-        static extern void glGenerateMipmap(OpenTK.Graphics.ES20.TextureTarget target);
+        static extern void glGenerateMipmap(System.Int32 target);
         [Slot(121)]
         static extern unsafe void glGenFramebuffers(Int32 n, [OutAttribute] UInt32* framebuffers);
         [Slot(125)]
@@ -38587,53 +38587,53 @@ namespace OpenTK.Graphics.ES20
         [Slot(126)]
         static extern unsafe void glGenTextures(Int32 n, [OutAttribute] UInt32* textures);
         [Slot(128)]
-        static extern unsafe void glGetActiveAttrib(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.ES20.ActiveAttribType* type, [OutAttribute] StringBuilder name);
+        static extern unsafe void glGetActiveAttrib(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] System.Int32* type, [OutAttribute] StringBuilder name);
         [Slot(129)]
-        static extern unsafe void glGetActiveUniform(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.ES20.ActiveUniformType* type, [OutAttribute] StringBuilder name);
+        static extern unsafe void glGetActiveUniform(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] System.Int32* type, [OutAttribute] StringBuilder name);
         [Slot(130)]
         static extern unsafe void glGetAttachedShaders(UInt32 program, Int32 maxCount, [OutAttribute] Int32* count, [OutAttribute] UInt32* shaders);
         [Slot(131)]
         static extern Int32 glGetAttribLocation(UInt32 program, String name);
         [Slot(132)]
-        static extern unsafe void glGetBooleanv(OpenTK.Graphics.ES20.GetPName pname, [OutAttribute] bool* data);
+        static extern unsafe void glGetBooleanv(System.Int32 pname, [OutAttribute] bool* data);
         [Slot(133)]
-        static extern unsafe void glGetBufferParameteriv(OpenTK.Graphics.ES20.BufferTarget target, OpenTK.Graphics.ES20.BufferParameterName pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetBufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(135)]
-        static extern unsafe Int32 glGetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.ES20.DebugSourceExternal* sources, [OutAttribute] OpenTK.Graphics.ES20.DebugType* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.ES20.DebugSeverity* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+        static extern unsafe Int32 glGetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] System.Int32* sources, [OutAttribute] System.Int32* types, [OutAttribute] UInt32* ids, [OutAttribute] System.Int32* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
         [Slot(139)]
-        static extern OpenTK.Graphics.ES20.ErrorCode glGetError();
+        static extern System.Int32 glGetError();
         [Slot(141)]
-        static extern unsafe void glGetFloatv(OpenTK.Graphics.ES20.GetPName pname, [OutAttribute] Single* data);
+        static extern unsafe void glGetFloatv(System.Int32 pname, [OutAttribute] Single* data);
         [Slot(142)]
-        static extern unsafe void glGetFramebufferAttachmentParameteriv(OpenTK.Graphics.ES20.FramebufferTarget target, OpenTK.Graphics.ES20.All attachment, OpenTK.Graphics.ES20.FramebufferParameterName pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetFramebufferAttachmentParameteriv(System.Int32 target, System.Int32 attachment, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(146)]
-        static extern unsafe void glGetIntegerv(OpenTK.Graphics.ES20.GetPName pname, [OutAttribute] Int32* data);
+        static extern unsafe void glGetIntegerv(System.Int32 pname, [OutAttribute] Int32* data);
         [Slot(149)]
-        static extern unsafe void glGetObjectLabel(OpenTK.Graphics.ES20.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
+        static extern unsafe void glGetObjectLabel(System.Int32 identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
         [Slot(152)]
         static extern unsafe void glGetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
         [Slot(160)]
-        static extern void glGetPointerv(OpenTK.Graphics.ES20.GetPointervPName pname, [OutAttribute] IntPtr @params);
+        static extern void glGetPointerv(System.Int32 pname, [OutAttribute] IntPtr @params);
         [Slot(163)]
         static extern unsafe void glGetProgramInfoLog(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infoLog);
         [Slot(164)]
-        static extern unsafe void glGetProgramiv(UInt32 program, OpenTK.Graphics.ES20.GetProgramParameterName pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetProgramiv(UInt32 program, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(172)]
-        static extern unsafe void glGetRenderbufferParameteriv(OpenTK.Graphics.ES20.RenderbufferTarget target, OpenTK.Graphics.ES20.RenderbufferParameterName pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetRenderbufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(173)]
         static extern unsafe void glGetShaderInfoLog(UInt32 shader, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infoLog);
         [Slot(174)]
-        static extern unsafe void glGetShaderiv(UInt32 shader, OpenTK.Graphics.ES20.ShaderParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetShaderiv(UInt32 shader, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(175)]
-        static extern unsafe void glGetShaderPrecisionFormat(OpenTK.Graphics.ES20.ShaderType shadertype, OpenTK.Graphics.ES20.ShaderPrecision precisiontype, [OutAttribute] Int32* range, [OutAttribute] Int32* precision);
+        static extern unsafe void glGetShaderPrecisionFormat(System.Int32 shadertype, System.Int32 precisiontype, [OutAttribute] Int32* range, [OutAttribute] Int32* precision);
         [Slot(176)]
         static extern unsafe void glGetShaderSource(UInt32 shader, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder source);
         [Slot(177)]
-        static extern IntPtr glGetString(OpenTK.Graphics.ES20.StringName name);
+        static extern IntPtr glGetString(System.Int32 name);
         [Slot(179)]
-        static extern unsafe void glGetTexParameterfv(OpenTK.Graphics.ES20.TextureTarget target, OpenTK.Graphics.ES20.GetTextureParameterName pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetTexParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(180)]
-        static extern unsafe void glGetTexParameteriv(OpenTK.Graphics.ES20.TextureTarget target, OpenTK.Graphics.ES20.GetTextureParameterName pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetTexParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(182)]
         static extern unsafe void glGetUniformfv(UInt32 program, Int32 location, [OutAttribute] Single* @params);
         [Slot(183)]
@@ -38641,17 +38641,17 @@ namespace OpenTK.Graphics.ES20
         [Slot(184)]
         static extern Int32 glGetUniformLocation(UInt32 program, String name);
         [Slot(185)]
-        static extern unsafe void glGetVertexAttribfv(UInt32 index, OpenTK.Graphics.ES20.VertexAttribParameter pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetVertexAttribfv(UInt32 index, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(186)]
-        static extern unsafe void glGetVertexAttribiv(UInt32 index, OpenTK.Graphics.ES20.VertexAttribParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetVertexAttribiv(UInt32 index, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(187)]
-        static extern void glGetVertexAttribPointerv(UInt32 index, OpenTK.Graphics.ES20.VertexAttribPointerParameter pname, [OutAttribute] IntPtr pointer);
+        static extern void glGetVertexAttribPointerv(UInt32 index, System.Int32 pname, [OutAttribute] IntPtr pointer);
         [Slot(188)]
-        static extern void glHint(OpenTK.Graphics.ES20.HintTarget target, OpenTK.Graphics.ES20.HintMode mode);
+        static extern void glHint(System.Int32 target, System.Int32 mode);
         [Slot(190)]
         static extern bool glIsBuffer(UInt32 buffer);
         [Slot(191)]
-        static extern bool glIsEnabled(OpenTK.Graphics.ES20.EnableCap cap);
+        static extern bool glIsEnabled(System.Int32 cap);
         [Slot(193)]
         static extern bool glIsFramebuffer(UInt32 framebuffer);
         [Slot(194)]
@@ -38667,55 +38667,55 @@ namespace OpenTK.Graphics.ES20
         [Slot(204)]
         static extern void glLinkProgram(UInt32 program);
         [Slot(209)]
-        static extern void glObjectLabel(OpenTK.Graphics.ES20.ObjectLabelIdentifier identifier, UInt32 name, Int32 length, String label);
+        static extern void glObjectLabel(System.Int32 identifier, UInt32 name, Int32 length, String label);
         [Slot(211)]
         static extern void glObjectPtrLabel(IntPtr ptr, Int32 length, String label);
         [Slot(213)]
-        static extern void glPixelStorei(OpenTK.Graphics.ES20.PixelStoreParameter pname, Int32 param);
+        static extern void glPixelStorei(System.Int32 pname, Int32 param);
         [Slot(214)]
         static extern void glPolygonOffset(Single factor, Single units);
         [Slot(215)]
         static extern void glPopDebugGroup();
         [Slot(253)]
-        static extern void glPushDebugGroup(OpenTK.Graphics.ES20.All source, UInt32 id, Int32 length, String message);
+        static extern void glPushDebugGroup(System.Int32 source, UInt32 id, Int32 length, String message);
         [Slot(260)]
-        static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, [OutAttribute] IntPtr pixels);
+        static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr pixels);
         [Slot(261)]
         static extern void glReleaseShaderCompiler();
         [Slot(262)]
-        static extern void glRenderbufferStorage(OpenTK.Graphics.ES20.RenderbufferTarget target, OpenTK.Graphics.ES20.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
+        static extern void glRenderbufferStorage(System.Int32 target, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(269)]
         static extern void glSampleCoverage(Single value, bool invert);
         [Slot(270)]
         static extern void glScissor(Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(273)]
-        static extern unsafe void glShaderBinary(Int32 count, UInt32* shaders, OpenTK.Graphics.ES20.ShaderBinaryFormat binaryformat, IntPtr binary, Int32 length);
+        static extern unsafe void glShaderBinary(Int32 count, UInt32* shaders, System.Int32 binaryformat, IntPtr binary, Int32 length);
         [Slot(274)]
         static extern unsafe void glShaderSource(UInt32 shader, Int32 count, String[] @string, Int32* length);
         [Slot(276)]
-        static extern void glStencilFunc(OpenTK.Graphics.ES20.StencilFunction func, Int32 @ref, UInt32 mask);
+        static extern void glStencilFunc(System.Int32 func, Int32 @ref, UInt32 mask);
         [Slot(277)]
-        static extern void glStencilFuncSeparate(OpenTK.Graphics.ES20.StencilFace face, OpenTK.Graphics.ES20.StencilFunction func, Int32 @ref, UInt32 mask);
+        static extern void glStencilFuncSeparate(System.Int32 face, System.Int32 func, Int32 @ref, UInt32 mask);
         [Slot(278)]
         static extern void glStencilMask(UInt32 mask);
         [Slot(279)]
-        static extern void glStencilMaskSeparate(OpenTK.Graphics.ES20.StencilFace face, UInt32 mask);
+        static extern void glStencilMaskSeparate(System.Int32 face, UInt32 mask);
         [Slot(280)]
-        static extern void glStencilOp(OpenTK.Graphics.ES20.StencilOp fail, OpenTK.Graphics.ES20.StencilOp zfail, OpenTK.Graphics.ES20.StencilOp zpass);
+        static extern void glStencilOp(System.Int32 fail, System.Int32 zfail, System.Int32 zpass);
         [Slot(281)]
-        static extern void glStencilOpSeparate(OpenTK.Graphics.ES20.StencilFace face, OpenTK.Graphics.ES20.StencilOp sfail, OpenTK.Graphics.ES20.StencilOp dpfail, OpenTK.Graphics.ES20.StencilOp dppass);
+        static extern void glStencilOpSeparate(System.Int32 face, System.Int32 sfail, System.Int32 dpfail, System.Int32 dppass);
         [Slot(283)]
-        static extern void glTexImage2D(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 level, OpenTK.Graphics.ES20.TextureComponentCount internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, IntPtr pixels);
+        static extern void glTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(285)]
-        static extern void glTexParameterf(OpenTK.Graphics.ES20.TextureTarget target, OpenTK.Graphics.ES20.TextureParameterName pname, Single param);
+        static extern void glTexParameterf(System.Int32 target, System.Int32 pname, Single param);
         [Slot(286)]
-        static extern unsafe void glTexParameterfv(OpenTK.Graphics.ES20.TextureTarget target, OpenTK.Graphics.ES20.TextureParameterName pname, Single* @params);
+        static extern unsafe void glTexParameterfv(System.Int32 target, System.Int32 pname, Single* @params);
         [Slot(287)]
-        static extern void glTexParameteri(OpenTK.Graphics.ES20.TextureTarget target, OpenTK.Graphics.ES20.TextureParameterName pname, Int32 param);
+        static extern void glTexParameteri(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(288)]
-        static extern unsafe void glTexParameteriv(OpenTK.Graphics.ES20.TextureTarget target, OpenTK.Graphics.ES20.TextureParameterName pname, Int32* @params);
+        static extern unsafe void glTexParameteriv(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(292)]
-        static extern void glTexSubImage2D(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, IntPtr pixels);
+        static extern void glTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(297)]
         static extern void glUniform1f(Int32 location, Single v0);
         [Slot(298)]
@@ -38775,7 +38775,7 @@ namespace OpenTK.Graphics.ES20
         [Slot(335)]
         static extern unsafe void glVertexAttrib4fv(UInt32 index, Single* v);
         [Slot(339)]
-        static extern void glVertexAttribPointer(UInt32 index, Int32 size, OpenTK.Graphics.ES20.VertexAttribPointerType type, bool normalized, Int32 stride, IntPtr pointer);
+        static extern void glVertexAttribPointer(UInt32 index, Int32 size, System.Int32 type, bool normalized, Int32 stride, IntPtr pointer);
         [Slot(340)]
         static extern void glViewport(Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(0)]
@@ -38783,63 +38783,63 @@ namespace OpenTK.Graphics.ES20
         [Slot(1)]
         static extern void glActiveShaderProgramEXT(UInt32 pipeline, UInt32 program);
         [Slot(6)]
-        static extern void glBeginQueryEXT(OpenTK.Graphics.ES20.QueryTarget target, UInt32 id);
+        static extern void glBeginQueryEXT(System.Int32 target, UInt32 id);
         [Slot(10)]
         static extern void glBindProgramPipelineEXT(UInt32 pipeline);
         [Slot(17)]
-        static extern void glBlendEquationEXT(OpenTK.Graphics.ES20.BlendEquationMode mode);
+        static extern void glBlendEquationEXT(System.Int32 mode);
         [Slot(47)]
-        static extern Int32 glCreateShaderProgramEXT(OpenTK.Graphics.ES20.All type, String @string);
+        static extern Int32 glCreateShaderProgramEXT(System.Int32 type, String @string);
         [Slot(48)]
-        static extern Int32 glCreateShaderProgramvEXT(OpenTK.Graphics.ES20.All type, Int32 count, String[] strings);
+        static extern Int32 glCreateShaderProgramvEXT(System.Int32 type, Int32 count, String[] strings);
         [Slot(61)]
         static extern unsafe void glDeleteProgramPipelinesEXT(Int32 n, UInt32* pipelines);
         [Slot(62)]
         static extern unsafe void glDeleteQueriesEXT(Int32 n, UInt32* ids);
         [Slot(75)]
-        static extern unsafe void glDiscardFramebufferEXT(OpenTK.Graphics.ES20.All target, Int32 numAttachments, OpenTK.Graphics.ES20.All* attachments);
+        static extern unsafe void glDiscardFramebufferEXT(System.Int32 target, Int32 numAttachments, System.Int32* attachments);
         [Slot(78)]
-        static extern void glDrawArraysInstancedEXT(OpenTK.Graphics.ES20.PrimitiveType mode, Int32 start, Int32 count, Int32 primcount);
+        static extern void glDrawArraysInstancedEXT(System.Int32 mode, Int32 start, Int32 count, Int32 primcount);
         [Slot(80)]
-        static extern unsafe void glDrawBuffersEXT(Int32 n, OpenTK.Graphics.ES20.DrawBufferMode* bufs);
+        static extern unsafe void glDrawBuffersEXT(Int32 n, System.Int32* bufs);
         [Slot(81)]
-        static extern unsafe void glDrawBuffersIndexedEXT(Int32 n, OpenTK.Graphics.ES20.All* location, Int32* indices);
+        static extern unsafe void glDrawBuffersIndexedEXT(Int32 n, System.Int32* location, Int32* indices);
         [Slot(85)]
-        static extern void glDrawElementsInstancedEXT(OpenTK.Graphics.ES20.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES20.DrawElementsType type, IntPtr indices, Int32 primcount);
+        static extern void glDrawElementsInstancedEXT(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 primcount);
         [Slot(93)]
-        static extern void glEndQueryEXT(OpenTK.Graphics.ES20.QueryTarget target);
+        static extern void glEndQueryEXT(System.Int32 target);
         [Slot(111)]
-        static extern void glFlushMappedBufferRangeEXT(OpenTK.Graphics.ES20.BufferTarget target, IntPtr offset, IntPtr length);
+        static extern void glFlushMappedBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length);
         [Slot(114)]
-        static extern void glFramebufferTexture2DMultisampleEXT(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All attachment, OpenTK.Graphics.ES20.All textarget, UInt32 texture, Int32 level, Int32 samples);
+        static extern void glFramebufferTexture2DMultisampleEXT(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
         [Slot(123)]
         static extern unsafe void glGenProgramPipelinesEXT(Int32 n, [OutAttribute] UInt32* pipelines);
         [Slot(124)]
         static extern unsafe void glGenQueriesEXT(Int32 n, [OutAttribute] UInt32* ids);
         [Slot(143)]
-        static extern OpenTK.Graphics.ES20.All glGetGraphicsResetStatusEXT();
+        static extern System.Int32 glGetGraphicsResetStatusEXT();
         [Slot(145)]
-        static extern unsafe void glGetIntegeri_vEXT(OpenTK.Graphics.ES20.GetIndexedPName target, UInt32 index, [OutAttribute] Int32* data);
+        static extern unsafe void glGetIntegeri_vEXT(System.Int32 target, UInt32 index, [OutAttribute] Int32* data);
         [Slot(147)]
         static extern unsafe void glGetnUniformfvEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
         [Slot(148)]
         static extern unsafe void glGetnUniformivEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
         [Slot(150)]
-        static extern unsafe void glGetObjectLabelEXT(OpenTK.Graphics.ES20.All type, UInt32 @object, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
+        static extern unsafe void glGetObjectLabelEXT(System.Int32 type, UInt32 @object, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
         [Slot(165)]
         static extern unsafe void glGetProgramPipelineInfoLogEXT(UInt32 pipeline, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infoLog);
         [Slot(166)]
-        static extern unsafe void glGetProgramPipelineivEXT(UInt32 pipeline, OpenTK.Graphics.ES20.All pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetProgramPipelineivEXT(UInt32 pipeline, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(167)]
-        static extern unsafe void glGetQueryivEXT(OpenTK.Graphics.ES20.QueryTarget target, OpenTK.Graphics.ES20.GetQueryParam pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetQueryivEXT(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(168)]
-        static extern unsafe void glGetQueryObjecti64vEXT(UInt32 id, OpenTK.Graphics.ES20.GetQueryObjectParam pname, [OutAttribute] Int64* @params);
+        static extern unsafe void glGetQueryObjecti64vEXT(UInt32 id, System.Int32 pname, [OutAttribute] Int64* @params);
         [Slot(169)]
-        static extern unsafe void glGetQueryObjectivEXT(UInt32 id, OpenTK.Graphics.ES20.GetQueryObjectParam pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetQueryObjectivEXT(UInt32 id, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(170)]
-        static extern unsafe void glGetQueryObjectui64vEXT(UInt32 id, OpenTK.Graphics.ES20.GetQueryObjectParam pname, [OutAttribute] UInt64* @params);
+        static extern unsafe void glGetQueryObjectui64vEXT(UInt32 id, System.Int32 pname, [OutAttribute] UInt64* @params);
         [Slot(171)]
-        static extern unsafe void glGetQueryObjectuivEXT(UInt32 id, OpenTK.Graphics.ES20.GetQueryObjectParam pname, [OutAttribute] UInt32* @params);
+        static extern unsafe void glGetQueryObjectuivEXT(UInt32 id, System.Int32 pname, [OutAttribute] UInt32* @params);
         [Slot(189)]
         static extern void glInsertEventMarkerEXT(Int32 length, String marker);
         [Slot(195)]
@@ -38847,17 +38847,17 @@ namespace OpenTK.Graphics.ES20
         [Slot(196)]
         static extern bool glIsQueryEXT(UInt32 id);
         [Slot(202)]
-        static extern void glLabelObjectEXT(OpenTK.Graphics.ES20.All type, UInt32 @object, Int32 length, String label);
+        static extern void glLabelObjectEXT(System.Int32 type, UInt32 @object, Int32 length, String label);
         [Slot(206)]
-        static extern IntPtr glMapBufferRangeEXT(OpenTK.Graphics.ES20.BufferTarget target, IntPtr offset, IntPtr length, UInt32 access);
+        static extern IntPtr glMapBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length, UInt32 access);
         [Slot(207)]
-        static extern unsafe void glMultiDrawArraysEXT(OpenTK.Graphics.ES20.PrimitiveType mode, Int32* first, Int32* count, Int32 primcount);
+        static extern unsafe void glMultiDrawArraysEXT(System.Int32 mode, Int32* first, Int32* count, Int32 primcount);
         [Slot(208)]
-        static extern unsafe void glMultiDrawElementsEXT(OpenTK.Graphics.ES20.PrimitiveType mode, Int32* count, OpenTK.Graphics.ES20.DrawElementsType type, IntPtr indices, Int32 primcount);
+        static extern unsafe void glMultiDrawElementsEXT(System.Int32 mode, Int32* count, System.Int32 type, IntPtr indices, Int32 primcount);
         [Slot(217)]
         static extern void glPopGroupMarkerEXT();
         [Slot(219)]
-        static extern void glProgramParameteriEXT(UInt32 program, OpenTK.Graphics.ES20.ProgramParameterName pname, Int32 value);
+        static extern void glProgramParameteriEXT(UInt32 program, System.Int32 pname, Int32 value);
         [Slot(220)]
         static extern void glProgramUniform1fEXT(UInt32 program, Int32 location, Single v0);
         [Slot(221)]
@@ -38927,93 +38927,93 @@ namespace OpenTK.Graphics.ES20
         [Slot(255)]
         static extern void glPushGroupMarkerEXT(Int32 length, String marker);
         [Slot(256)]
-        static extern void glQueryCounterEXT(UInt32 id, OpenTK.Graphics.ES20.All target);
+        static extern void glQueryCounterEXT(UInt32 id, System.Int32 target);
         [Slot(257)]
-        static extern void glReadBufferIndexedEXT(OpenTK.Graphics.ES20.All src, Int32 index);
+        static extern void glReadBufferIndexedEXT(System.Int32 src, Int32 index);
         [Slot(259)]
-        static extern void glReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, Int32 bufSize, [OutAttribute] IntPtr data);
+        static extern void glReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr data);
         [Slot(265)]
-        static extern void glRenderbufferStorageMultisampleEXT(OpenTK.Graphics.ES20.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES20.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
+        static extern void glRenderbufferStorageMultisampleEXT(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(289)]
-        static extern void glTexStorage1DEXT(OpenTK.Graphics.ES20.All target, Int32 levels, OpenTK.Graphics.ES20.All internalformat, Int32 width);
+        static extern void glTexStorage1DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
         [Slot(290)]
-        static extern void glTexStorage2DEXT(OpenTK.Graphics.ES20.TextureTarget2d target, Int32 levels, OpenTK.Graphics.ES20.SizedInternalFormat internalformat, Int32 width, Int32 height);
+        static extern void glTexStorage2DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(291)]
-        static extern void glTexStorage3DEXT(OpenTK.Graphics.ES20.TextureTarget3d target, Int32 levels, OpenTK.Graphics.ES20.SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth);
+        static extern void glTexStorage3DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
         [Slot(294)]
-        static extern void glTextureStorage1DEXT(UInt32 texture, OpenTK.Graphics.ES20.All target, Int32 levels, OpenTK.Graphics.ES20.All internalformat, Int32 width);
+        static extern void glTextureStorage1DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
         [Slot(295)]
-        static extern void glTextureStorage2DEXT(UInt32 texture, OpenTK.Graphics.ES20.All target, Int32 levels, OpenTK.Graphics.ES20.All internalformat, Int32 width, Int32 height);
+        static extern void glTextureStorage2DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(296)]
-        static extern void glTextureStorage3DEXT(UInt32 texture, OpenTK.Graphics.ES20.All target, Int32 levels, OpenTK.Graphics.ES20.All internalformat, Int32 width, Int32 height, Int32 depth);
+        static extern void glTextureStorage3DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
         [Slot(324)]
         static extern void glUseProgramStagesEXT(UInt32 pipeline, UInt32 stages, UInt32 program);
         [Slot(325)]
-        static extern void glUseShaderProgramEXT(OpenTK.Graphics.ES20.All type, UInt32 program);
+        static extern void glUseShaderProgramEXT(System.Int32 type, UInt32 program);
         [Slot(327)]
         static extern void glValidateProgramPipelineEXT(UInt32 pipeline);
         [Slot(337)]
         static extern void glVertexAttribDivisorEXT(UInt32 index, UInt32 divisor);
         [Slot(115)]
-        static extern void glFramebufferTexture2DMultisampleIMG(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All attachment, OpenTK.Graphics.ES20.All textarget, UInt32 texture, Int32 level, Int32 samples);
+        static extern void glFramebufferTexture2DMultisampleIMG(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
         [Slot(266)]
-        static extern void glRenderbufferStorageMultisampleIMG(OpenTK.Graphics.ES20.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES20.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
+        static extern void glRenderbufferStorageMultisampleIMG(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(51)]
         static extern void glDebugMessageCallbackKHR(DebugProcKhr callback, IntPtr userParam);
         [Slot(53)]
-        static extern unsafe void glDebugMessageControlKHR(OpenTK.Graphics.ES20.DebugSourceControl source, OpenTK.Graphics.ES20.DebugTypeControl type, OpenTK.Graphics.ES20.DebugSeverityControl severity, Int32 count, UInt32* ids, bool enabled);
+        static extern unsafe void glDebugMessageControlKHR(System.Int32 source, System.Int32 type, System.Int32 severity, Int32 count, UInt32* ids, bool enabled);
         [Slot(55)]
-        static extern void glDebugMessageInsertKHR(OpenTK.Graphics.ES20.DebugSourceExternal source, OpenTK.Graphics.ES20.DebugType type, UInt32 id, OpenTK.Graphics.ES20.DebugSeverity severity, Int32 length, String buf);
+        static extern void glDebugMessageInsertKHR(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, String buf);
         [Slot(136)]
-        static extern unsafe Int32 glGetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.ES20.DebugSourceExternal* sources, [OutAttribute] OpenTK.Graphics.ES20.DebugType* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.ES20.DebugSeverity* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+        static extern unsafe Int32 glGetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] System.Int32* sources, [OutAttribute] System.Int32* types, [OutAttribute] UInt32* ids, [OutAttribute] System.Int32* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
         [Slot(151)]
-        static extern unsafe void glGetObjectLabelKHR(OpenTK.Graphics.ES20.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
+        static extern unsafe void glGetObjectLabelKHR(System.Int32 identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
         [Slot(153)]
         static extern unsafe void glGetObjectPtrLabelKHR(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
         [Slot(161)]
-        static extern void glGetPointervKHR(OpenTK.Graphics.ES20.All pname, [OutAttribute] IntPtr @params);
+        static extern void glGetPointervKHR(System.Int32 pname, [OutAttribute] IntPtr @params);
         [Slot(210)]
-        static extern void glObjectLabelKHR(OpenTK.Graphics.ES20.ObjectLabelIdentifier identifier, UInt32 name, Int32 length, String label);
+        static extern void glObjectLabelKHR(System.Int32 identifier, UInt32 name, Int32 length, String label);
         [Slot(212)]
         static extern void glObjectPtrLabelKHR(IntPtr ptr, Int32 length, String label);
         [Slot(216)]
         static extern void glPopDebugGroupKHR();
         [Slot(254)]
-        static extern void glPushDebugGroupKHR(OpenTK.Graphics.ES20.All source, UInt32 id, Int32 length, String message);
+        static extern void glPushDebugGroupKHR(System.Int32 source, UInt32 id, Int32 length, String message);
         [Slot(14)]
         static extern void glBlendBarrierNV();
         [Slot(21)]
-        static extern void glBlendParameteriNV(OpenTK.Graphics.ES20.All pname, Int32 value);
+        static extern void glBlendParameteriNV(System.Int32 pname, Int32 value);
         [Slot(23)]
-        static extern void glBlitFramebufferNV(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, OpenTK.Graphics.ES20.ClearBufferMask mask, OpenTK.Graphics.ES20.BlitFramebufferFilter filter);
+        static extern void glBlitFramebufferNV(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, System.Int32 mask, System.Int32 filter);
         [Slot(38)]
-        static extern void glCopyBufferSubDataNV(OpenTK.Graphics.ES20.BufferTarget readTarget, OpenTK.Graphics.ES20.BufferTarget writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
+        static extern void glCopyBufferSubDataNV(System.Int32 readTarget, System.Int32 writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
         [Slot(43)]
         static extern void glCoverageMaskNV(bool mask);
         [Slot(44)]
-        static extern void glCoverageOperationNV(OpenTK.Graphics.ES20.All operation);
+        static extern void glCoverageOperationNV(System.Int32 operation);
         [Slot(57)]
         static extern unsafe void glDeleteFencesNV(Int32 n, UInt32* fences);
         [Slot(79)]
-        static extern void glDrawArraysInstancedNV(OpenTK.Graphics.ES20.PrimitiveType mode, Int32 first, Int32 count, Int32 primcount);
+        static extern void glDrawArraysInstancedNV(System.Int32 mode, Int32 first, Int32 count, Int32 primcount);
         [Slot(82)]
-        static extern unsafe void glDrawBuffersNV(Int32 n, OpenTK.Graphics.ES20.DrawBufferMode* bufs);
+        static extern unsafe void glDrawBuffersNV(Int32 n, System.Int32* bufs);
         [Slot(86)]
-        static extern void glDrawElementsInstancedNV(OpenTK.Graphics.ES20.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES20.DrawElementsType type, IntPtr indices, Int32 primcount);
+        static extern void glDrawElementsInstancedNV(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 primcount);
         [Slot(109)]
         static extern void glFinishFenceNV(UInt32 fence);
         [Slot(120)]
         static extern unsafe void glGenFencesNV(Int32 n, [OutAttribute] UInt32* fences);
         [Slot(140)]
-        static extern unsafe void glGetFenceivNV(UInt32 fence, OpenTK.Graphics.ES20.All pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetFenceivNV(UInt32 fence, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(192)]
         static extern bool glIsFenceNV(UInt32 fence);
         [Slot(258)]
-        static extern void glReadBufferNV(OpenTK.Graphics.ES20.All mode);
+        static extern void glReadBufferNV(System.Int32 mode);
         [Slot(267)]
-        static extern void glRenderbufferStorageMultisampleNV(OpenTK.Graphics.ES20.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES20.RenderbufferInternalFormat internalformat, Int32 width, Int32 height);
+        static extern void glRenderbufferStorageMultisampleNV(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(272)]
-        static extern void glSetFenceNV(UInt32 fence, OpenTK.Graphics.ES20.All condition);
+        static extern void glSetFenceNV(UInt32 fence, System.Int32 condition);
         [Slot(282)]
         static extern bool glTestFenceNV(UInt32 fence);
         [Slot(314)]
@@ -39033,39 +39033,39 @@ namespace OpenTK.Graphics.ES20
         [Slot(13)]
         static extern void glBindVertexArrayOES(UInt32 array);
         [Slot(35)]
-        static extern void glCompressedTexImage3DOES(OpenTK.Graphics.ES20.TextureTarget3d target, Int32 level, OpenTK.Graphics.ES20.CompressedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
+        static extern void glCompressedTexImage3DOES(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
         [Slot(37)]
-        static extern void glCompressedTexSubImage3DOES(OpenTK.Graphics.ES20.TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES20.All format, Int32 imageSize, IntPtr data);
+        static extern void glCompressedTexSubImage3DOES(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, Int32 imageSize, IntPtr data);
         [Slot(41)]
-        static extern void glCopyTexSubImage3DOES(OpenTK.Graphics.ES20.TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+        static extern void glCopyTexSubImage3DOES(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(67)]
         static extern unsafe void glDeleteVertexArraysOES(Int32 n, UInt32* arrays);
         [Slot(87)]
-        static extern void glEGLImageTargetRenderbufferStorageOES(OpenTK.Graphics.ES20.All target, IntPtr image);
+        static extern void glEGLImageTargetRenderbufferStorageOES(System.Int32 target, IntPtr image);
         [Slot(88)]
-        static extern void glEGLImageTargetTexture2DOES(OpenTK.Graphics.ES20.All target, IntPtr image);
+        static extern void glEGLImageTargetTexture2DOES(System.Int32 target, IntPtr image);
         [Slot(116)]
-        static extern void glFramebufferTexture3DOES(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All attachment, OpenTK.Graphics.ES20.All textarget, UInt32 texture, Int32 level, Int32 zoffset);
+        static extern void glFramebufferTexture3DOES(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 zoffset);
         [Slot(127)]
         static extern unsafe void glGenVertexArraysOES(Int32 n, [OutAttribute] UInt32* arrays);
         [Slot(134)]
-        static extern void glGetBufferPointervOES(OpenTK.Graphics.ES20.BufferTarget target, OpenTK.Graphics.ES20.BufferPointer pname, [OutAttribute] IntPtr @params);
+        static extern void glGetBufferPointervOES(System.Int32 target, System.Int32 pname, [OutAttribute] IntPtr @params);
         [Slot(162)]
-        static extern unsafe void glGetProgramBinaryOES(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.ES20.All* binaryFormat, [OutAttribute] IntPtr binary);
+        static extern unsafe void glGetProgramBinaryOES(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] System.Int32* binaryFormat, [OutAttribute] IntPtr binary);
         [Slot(201)]
         static extern bool glIsVertexArrayOES(UInt32 array);
         [Slot(205)]
-        static extern IntPtr glMapBufferOES(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All access);
+        static extern IntPtr glMapBufferOES(System.Int32 target, System.Int32 access);
         [Slot(218)]
-        static extern void glProgramBinaryOES(UInt32 program, OpenTK.Graphics.ES20.All binaryFormat, IntPtr binary, Int32 length);
+        static extern void glProgramBinaryOES(UInt32 program, System.Int32 binaryFormat, IntPtr binary, Int32 length);
         [Slot(284)]
-        static extern void glTexImage3DOES(OpenTK.Graphics.ES20.TextureTarget3d target, Int32 level, OpenTK.Graphics.ES20.TextureComponentCount internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.ES20.PixelFormat format, OpenTK.Graphics.ES20.PixelType type, IntPtr pixels);
+        static extern void glTexImage3DOES(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(293)]
-        static extern void glTexSubImage3DOES(OpenTK.Graphics.ES20.TextureTarget3d target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, IntPtr pixels);
+        static extern void glTexSubImage3DOES(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(322)]
-        static extern bool glUnmapBufferOES(OpenTK.Graphics.ES20.BufferTarget target);
+        static extern bool glUnmapBufferOES(System.Int32 target);
         [Slot(3)]
-        static extern void glAlphaFuncQCOM(OpenTK.Graphics.ES20.All func, Single @ref);
+        static extern void glAlphaFuncQCOM(System.Int32 func, Single @ref);
         [Slot(73)]
         static extern void glDisableDriverControlQCOM(UInt32 driverControl);
         [Slot(90)]
@@ -39073,13 +39073,13 @@ namespace OpenTK.Graphics.ES20
         [Slot(94)]
         static extern void glEndTilingQCOM(UInt32 preserveMask);
         [Slot(95)]
-        static extern void glExtGetBufferPointervQCOM(OpenTK.Graphics.ES20.All target, [OutAttribute] IntPtr @params);
+        static extern void glExtGetBufferPointervQCOM(System.Int32 target, [OutAttribute] IntPtr @params);
         [Slot(96)]
         static extern unsafe void glExtGetBuffersQCOM([OutAttribute] UInt32* buffers, Int32 maxBuffers, [OutAttribute] Int32* numBuffers);
         [Slot(97)]
         static extern unsafe void glExtGetFramebuffersQCOM([OutAttribute] UInt32* framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32* numFramebuffers);
         [Slot(98)]
-        static extern unsafe void glExtGetProgramBinarySourceQCOM(UInt32 program, OpenTK.Graphics.ES20.All shadertype, [OutAttribute] StringBuilder source, [OutAttribute] Int32* length);
+        static extern unsafe void glExtGetProgramBinarySourceQCOM(UInt32 program, System.Int32 shadertype, [OutAttribute] StringBuilder source, [OutAttribute] Int32* length);
         [Slot(99)]
         static extern unsafe void glExtGetProgramsQCOM([OutAttribute] UInt32* programs, Int32 maxPrograms, [OutAttribute] Int32* numPrograms);
         [Slot(100)]
@@ -39087,15 +39087,15 @@ namespace OpenTK.Graphics.ES20
         [Slot(101)]
         static extern unsafe void glExtGetShadersQCOM([OutAttribute] UInt32* shaders, Int32 maxShaders, [OutAttribute] Int32* numShaders);
         [Slot(102)]
-        static extern unsafe void glExtGetTexLevelParameterivQCOM(UInt32 texture, OpenTK.Graphics.ES20.All face, Int32 level, OpenTK.Graphics.ES20.All pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glExtGetTexLevelParameterivQCOM(UInt32 texture, System.Int32 face, Int32 level, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(103)]
-        static extern void glExtGetTexSubImageQCOM(OpenTK.Graphics.ES20.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES20.All format, OpenTK.Graphics.ES20.All type, [OutAttribute] IntPtr texels);
+        static extern void glExtGetTexSubImageQCOM(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr texels);
         [Slot(104)]
         static extern unsafe void glExtGetTexturesQCOM([OutAttribute] UInt32* textures, Int32 maxTextures, [OutAttribute] Int32* numTextures);
         [Slot(105)]
         static extern bool glExtIsProgramBinaryQCOM(UInt32 program);
         [Slot(106)]
-        static extern void glExtTexObjectStateOverrideiQCOM(OpenTK.Graphics.ES20.All target, OpenTK.Graphics.ES20.All pname, Int32 param);
+        static extern void glExtTexObjectStateOverrideiQCOM(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(137)]
         static extern unsafe void glGetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls);
         [Slot(138)]

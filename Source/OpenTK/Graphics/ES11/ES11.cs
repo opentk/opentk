@@ -15382,43 +15382,43 @@ namespace OpenTK.Graphics.ES11
         }
 
         [Slot(31)]
-        static extern OpenTK.Graphics.ES11.All glClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
+        static extern System.Int32 glClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
         [Slot(53)]
         static extern void glCopyTextureLevelsAPPLE(UInt32 destinationTexture, UInt32 sourceTexture, Int32 sourceBaseLevel, Int32 sourceLevelCount);
         [Slot(60)]
         static extern void glDeleteSyncAPPLE(IntPtr sync);
         [Slot(106)]
-        static extern IntPtr glFenceSyncAPPLE(OpenTK.Graphics.ES11.All condition, UInt32 flags);
+        static extern IntPtr glFenceSyncAPPLE(System.Int32 condition, UInt32 flags);
         [Slot(151)]
-        static extern unsafe void glGetInteger64vAPPLE(OpenTK.Graphics.ES11.All pname, [OutAttribute] Int64* @params);
+        static extern unsafe void glGetInteger64vAPPLE(System.Int32 pname, [OutAttribute] Int64* @params);
         [Slot(168)]
-        static extern unsafe void glGetSyncivAPPLE(IntPtr sync, OpenTK.Graphics.ES11.All pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+        static extern unsafe void glGetSyncivAPPLE(IntPtr sync, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
         [Slot(189)]
         static extern bool glIsSyncAPPLE(IntPtr sync);
         [Slot(294)]
-        static extern void glRenderbufferStorageMultisampleAPPLE(OpenTK.Graphics.ES11.All target, Int32 samples, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
+        static extern void glRenderbufferStorageMultisampleAPPLE(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(298)]
         static extern void glResolveMultisampleFramebufferAPPLE();
         [Slot(382)]
         static extern void glWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
         [Slot(1)]
-        static extern void glActiveTexture(OpenTK.Graphics.ES11.TextureUnit texture);
+        static extern void glActiveTexture(System.Int32 texture);
         [Slot(2)]
-        static extern void glAlphaFunc(OpenTK.Graphics.ES11.AlphaFunction func, Single @ref);
+        static extern void glAlphaFunc(System.Int32 func, Single @ref);
         [Slot(3)]
-        static extern void glAlphaFuncx(OpenTK.Graphics.ES11.All func, int @ref);
+        static extern void glAlphaFuncx(System.Int32 func, int @ref);
         [Slot(5)]
-        static extern void glBindBuffer(OpenTK.Graphics.ES11.All target, UInt32 buffer);
+        static extern void glBindBuffer(System.Int32 target, UInt32 buffer);
         [Slot(8)]
-        static extern void glBindTexture(OpenTK.Graphics.ES11.TextureTarget target, UInt32 texture);
+        static extern void glBindTexture(System.Int32 target, UInt32 texture);
         [Slot(15)]
-        static extern void glBlendFunc(OpenTK.Graphics.ES11.BlendingFactorSrc sfactor, OpenTK.Graphics.ES11.BlendingFactorDest dfactor);
+        static extern void glBlendFunc(System.Int32 sfactor, System.Int32 dfactor);
         [Slot(17)]
-        static extern void glBufferData(OpenTK.Graphics.ES11.All target, IntPtr size, IntPtr data, OpenTK.Graphics.ES11.All usage);
+        static extern void glBufferData(System.Int32 target, IntPtr size, IntPtr data, System.Int32 usage);
         [Slot(18)]
-        static extern void glBufferSubData(OpenTK.Graphics.ES11.All target, IntPtr offset, IntPtr size, IntPtr data);
+        static extern void glBufferSubData(System.Int32 target, IntPtr offset, IntPtr size, IntPtr data);
         [Slot(20)]
-        static extern void glClear(OpenTK.Graphics.ES11.ClearBufferMask mask);
+        static extern void glClear(System.Int32 mask);
         [Slot(22)]
         static extern void glClearColor(Single red, Single green, Single blue, Single alpha);
         [Slot(23)]
@@ -15430,11 +15430,11 @@ namespace OpenTK.Graphics.ES11
         [Slot(29)]
         static extern void glClearStencil(Int32 s);
         [Slot(30)]
-        static extern void glClientActiveTexture(OpenTK.Graphics.ES11.TextureUnit texture);
+        static extern void glClientActiveTexture(System.Int32 texture);
         [Slot(32)]
-        static extern unsafe void glClipPlanef(OpenTK.Graphics.ES11.All p, Single* eqn);
+        static extern unsafe void glClipPlanef(System.Int32 p, Single* eqn);
         [Slot(35)]
-        static extern unsafe void glClipPlanex(OpenTK.Graphics.ES11.All plane, int* equation);
+        static extern unsafe void glClipPlanex(System.Int32 plane, int* equation);
         [Slot(40)]
         static extern void glColor4f(Single red, Single green, Single blue, Single alpha);
         [Slot(41)]
@@ -15444,23 +15444,23 @@ namespace OpenTK.Graphics.ES11
         [Slot(45)]
         static extern void glColorMask(bool red, bool green, bool blue, bool alpha);
         [Slot(46)]
-        static extern void glColorPointer(Int32 size, OpenTK.Graphics.ES11.ColorPointerType type, Int32 stride, IntPtr pointer);
+        static extern void glColorPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(47)]
-        static extern void glCompressedTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
+        static extern void glCompressedTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
         [Slot(48)]
-        static extern void glCompressedTexSubImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES11.PixelFormat format, Int32 imageSize, IntPtr data);
+        static extern void glCompressedTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, Int32 imageSize, IntPtr data);
         [Slot(51)]
-        static extern void glCopyTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
+        static extern void glCopyTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
         [Slot(52)]
-        static extern void glCopyTexSubImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+        static extern void glCopyTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(54)]
-        static extern void glCullFace(OpenTK.Graphics.ES11.CullFaceMode mode);
+        static extern void glCullFace(System.Int32 mode);
         [Slot(56)]
         static extern unsafe void glDeleteBuffers(Int32 n, UInt32* buffers);
         [Slot(61)]
         static extern unsafe void glDeleteTextures(Int32 n, UInt32* textures);
         [Slot(63)]
-        static extern void glDepthFunc(OpenTK.Graphics.ES11.DepthFunction func);
+        static extern void glDepthFunc(System.Int32 func);
         [Slot(64)]
         static extern void glDepthMask(bool flag);
         [Slot(65)]
@@ -15468,31 +15468,31 @@ namespace OpenTK.Graphics.ES11
         [Slot(67)]
         static extern void glDepthRangex(int n, int f);
         [Slot(69)]
-        static extern void glDisable(OpenTK.Graphics.ES11.EnableCap cap);
+        static extern void glDisable(System.Int32 cap);
         [Slot(70)]
-        static extern void glDisableClientState(OpenTK.Graphics.ES11.EnableCap array);
+        static extern void glDisableClientState(System.Int32 array);
         [Slot(73)]
-        static extern void glDrawArrays(OpenTK.Graphics.ES11.PrimitiveType mode, Int32 first, Int32 count);
+        static extern void glDrawArrays(System.Int32 mode, Int32 first, Int32 count);
         [Slot(74)]
-        static extern void glDrawElements(OpenTK.Graphics.ES11.PrimitiveType mode, Int32 count, OpenTK.Graphics.ES11.All type, IntPtr indices);
+        static extern void glDrawElements(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices);
         [Slot(85)]
-        static extern void glEnable(OpenTK.Graphics.ES11.EnableCap cap);
+        static extern void glEnable(System.Int32 cap);
         [Slot(86)]
-        static extern void glEnableClientState(OpenTK.Graphics.ES11.EnableCap array);
+        static extern void glEnableClientState(System.Int32 array);
         [Slot(107)]
         static extern void glFinish();
         [Slot(109)]
         static extern void glFlush();
         [Slot(111)]
-        static extern void glFogf(OpenTK.Graphics.ES11.FogParameter pname, Single param);
+        static extern void glFogf(System.Int32 pname, Single param);
         [Slot(112)]
-        static extern unsafe void glFogfv(OpenTK.Graphics.ES11.FogParameter pname, Single* @params);
+        static extern unsafe void glFogfv(System.Int32 pname, Single* @params);
         [Slot(113)]
-        static extern void glFogx(OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glFogx(System.Int32 pname, int param);
         [Slot(115)]
-        static extern unsafe void glFogxv(OpenTK.Graphics.ES11.All pname, int* param);
+        static extern unsafe void glFogxv(System.Int32 pname, int* param);
         [Slot(121)]
-        static extern void glFrontFace(OpenTK.Graphics.ES11.FrontFaceDirection mode);
+        static extern void glFrontFace(System.Int32 mode);
         [Slot(122)]
         static extern void glFrustumf(Single l, Single r, Single b, Single t, Single n, Single f);
         [Slot(124)]
@@ -15502,71 +15502,71 @@ namespace OpenTK.Graphics.ES11
         [Slot(131)]
         static extern unsafe void glGenTextures(Int32 n, [OutAttribute] UInt32* textures);
         [Slot(133)]
-        static extern unsafe void glGetBooleanv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] bool* data);
+        static extern unsafe void glGetBooleanv(System.Int32 pname, [OutAttribute] bool* data);
         [Slot(134)]
-        static extern unsafe void glGetBufferParameteriv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetBufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(136)]
-        static extern unsafe void glGetClipPlanef(OpenTK.Graphics.ES11.All plane, [OutAttribute] Single* equation);
+        static extern unsafe void glGetClipPlanef(System.Int32 plane, [OutAttribute] Single* equation);
         [Slot(138)]
-        static extern unsafe void glGetClipPlanex(OpenTK.Graphics.ES11.All plane, [OutAttribute] int* equation);
+        static extern unsafe void glGetClipPlanex(System.Int32 plane, [OutAttribute] int* equation);
         [Slot(143)]
-        static extern OpenTK.Graphics.ES11.ErrorCode glGetError();
+        static extern System.Int32 glGetError();
         [Slot(145)]
-        static extern unsafe void glGetFixedv(OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetFixedv(System.Int32 pname, [OutAttribute] int* @params);
         [Slot(147)]
-        static extern unsafe void glGetFloatv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Single* data);
+        static extern unsafe void glGetFloatv(System.Int32 pname, [OutAttribute] Single* data);
         [Slot(152)]
-        static extern unsafe void glGetIntegerv(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Int32* data);
+        static extern unsafe void glGetIntegerv(System.Int32 pname, [OutAttribute] Int32* data);
         [Slot(153)]
-        static extern unsafe void glGetLightfv(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetLightfv(System.Int32 light, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(155)]
-        static extern unsafe void glGetLightxv(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetLightxv(System.Int32 light, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(158)]
-        static extern unsafe void glGetMaterialfv(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetMaterialfv(System.Int32 face, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(160)]
-        static extern unsafe void glGetMaterialxv(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetMaterialxv(System.Int32 face, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(164)]
-        static extern unsafe void glGetPixelMapxv(OpenTK.Graphics.ES11.All map, Int32 size, [OutAttribute] int* values);
+        static extern unsafe void glGetPixelMapxv(System.Int32 map, Int32 size, [OutAttribute] int* values);
         [Slot(165)]
-        static extern void glGetPointerv(OpenTK.Graphics.ES11.GetPointervPName pname, [OutAttribute] IntPtr @params);
+        static extern void glGetPointerv(System.Int32 pname, [OutAttribute] IntPtr @params);
         [Slot(167)]
-        static extern IntPtr glGetString(OpenTK.Graphics.ES11.StringName name);
+        static extern IntPtr glGetString(System.Int32 name);
         [Slot(169)]
-        static extern unsafe void glGetTexEnvfv(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetTexEnvfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(170)]
-        static extern unsafe void glGetTexEnviv(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetTexEnviv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(171)]
-        static extern unsafe void glGetTexEnvxv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetTexEnvxv(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(177)]
-        static extern unsafe void glGetTexParameterfv(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetTexParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(178)]
-        static extern unsafe void glGetTexParameteriv(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetTexParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(179)]
-        static extern unsafe void glGetTexParameterxv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetTexParameterxv(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(181)]
-        static extern void glHint(OpenTK.Graphics.ES11.HintTarget target, OpenTK.Graphics.ES11.HintMode mode);
+        static extern void glHint(System.Int32 target, System.Int32 mode);
         [Slot(184)]
         static extern bool glIsBuffer(UInt32 buffer);
         [Slot(185)]
-        static extern bool glIsEnabled(OpenTK.Graphics.ES11.EnableCap cap);
+        static extern bool glIsEnabled(System.Int32 cap);
         [Slot(190)]
         static extern bool glIsTexture(UInt32 texture);
         [Slot(192)]
-        static extern void glLightf(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, Single param);
+        static extern void glLightf(System.Int32 light, System.Int32 pname, Single param);
         [Slot(193)]
-        static extern unsafe void glLightfv(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, Single* @params);
+        static extern unsafe void glLightfv(System.Int32 light, System.Int32 pname, Single* @params);
         [Slot(194)]
-        static extern void glLightModelf(OpenTK.Graphics.ES11.LightModelParameter pname, Single param);
+        static extern void glLightModelf(System.Int32 pname, Single param);
         [Slot(195)]
-        static extern unsafe void glLightModelfv(OpenTK.Graphics.ES11.LightModelParameter pname, Single* @params);
+        static extern unsafe void glLightModelfv(System.Int32 pname, Single* @params);
         [Slot(196)]
-        static extern void glLightModelx(OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glLightModelx(System.Int32 pname, int param);
         [Slot(198)]
-        static extern unsafe void glLightModelxv(OpenTK.Graphics.ES11.All pname, int* param);
+        static extern unsafe void glLightModelxv(System.Int32 pname, int* param);
         [Slot(200)]
-        static extern void glLightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glLightx(System.Int32 light, System.Int32 pname, int param);
         [Slot(202)]
-        static extern unsafe void glLightxv(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, int* @params);
+        static extern unsafe void glLightxv(System.Int32 light, System.Int32 pname, int* @params);
         [Slot(204)]
         static extern void glLineWidth(Single width);
         [Slot(205)]
@@ -15578,21 +15578,21 @@ namespace OpenTK.Graphics.ES11
         [Slot(209)]
         static extern unsafe void glLoadMatrixx(int* m);
         [Slot(213)]
-        static extern void glLogicOp(OpenTK.Graphics.ES11.LogicOp opcode);
+        static extern void glLogicOp(System.Int32 opcode);
         [Slot(220)]
-        static extern void glMaterialf(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, Single param);
+        static extern void glMaterialf(System.Int32 face, System.Int32 pname, Single param);
         [Slot(221)]
-        static extern unsafe void glMaterialfv(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, Single* @params);
+        static extern unsafe void glMaterialfv(System.Int32 face, System.Int32 pname, Single* @params);
         [Slot(222)]
-        static extern void glMaterialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glMaterialx(System.Int32 face, System.Int32 pname, int param);
         [Slot(224)]
-        static extern unsafe void glMaterialxv(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int* param);
+        static extern unsafe void glMaterialxv(System.Int32 face, System.Int32 pname, int* param);
         [Slot(227)]
-        static extern void glMatrixMode(OpenTK.Graphics.ES11.MatrixMode mode);
+        static extern void glMatrixMode(System.Int32 mode);
         [Slot(244)]
-        static extern void glMultiTexCoord4f(OpenTK.Graphics.ES11.TextureUnit target, Single s, Single t, Single r, Single q);
+        static extern void glMultiTexCoord4f(System.Int32 target, Single s, Single t, Single r, Single q);
         [Slot(245)]
-        static extern void glMultiTexCoord4x(OpenTK.Graphics.ES11.All texture, int s, int t, int r, int q);
+        static extern void glMultiTexCoord4x(System.Int32 texture, int s, int t, int r, int q);
         [Slot(248)]
         static extern unsafe void glMultMatrixf(Single* m);
         [Slot(249)]
@@ -15602,25 +15602,25 @@ namespace OpenTK.Graphics.ES11
         [Slot(253)]
         static extern void glNormal3x(int nx, int ny, int nz);
         [Slot(256)]
-        static extern void glNormalPointer(OpenTK.Graphics.ES11.NormalPointerType type, Int32 stride, IntPtr pointer);
+        static extern void glNormalPointer(System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(257)]
         static extern void glOrthof(Single l, Single r, Single b, Single t, Single n, Single f);
         [Slot(259)]
         static extern void glOrthox(int l, int r, int b, int t, int n, int f);
         [Slot(262)]
-        static extern unsafe void glPixelMapx(OpenTK.Graphics.ES11.All map, Int32 size, int* values);
+        static extern unsafe void glPixelMapx(System.Int32 map, Int32 size, int* values);
         [Slot(263)]
-        static extern void glPixelStorei(OpenTK.Graphics.ES11.PixelStoreParameter pname, Int32 param);
+        static extern void glPixelStorei(System.Int32 pname, Int32 param);
         [Slot(264)]
-        static extern void glPixelStorex(OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glPixelStorex(System.Int32 pname, int param);
         [Slot(267)]
-        static extern void glPointParameterf(OpenTK.Graphics.ES11.All pname, Single param);
+        static extern void glPointParameterf(System.Int32 pname, Single param);
         [Slot(268)]
-        static extern unsafe void glPointParameterfv(OpenTK.Graphics.ES11.All pname, Single* @params);
+        static extern unsafe void glPointParameterfv(System.Int32 pname, Single* @params);
         [Slot(269)]
-        static extern void glPointParameterx(OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glPointParameterx(System.Int32 pname, int param);
         [Slot(271)]
-        static extern unsafe void glPointParameterxv(OpenTK.Graphics.ES11.All pname, int* @params);
+        static extern unsafe void glPointParameterxv(System.Int32 pname, int* @params);
         [Slot(273)]
         static extern void glPointSize(Single size);
         [Slot(275)]
@@ -15634,7 +15634,7 @@ namespace OpenTK.Graphics.ES11
         [Slot(282)]
         static extern void glPushMatrix();
         [Slot(291)]
-        static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [OutAttribute] IntPtr pixels);
+        static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr pixels);
         [Slot(299)]
         static extern void glRotatef(Single angle, Single x, Single y, Single z);
         [Slot(300)]
@@ -15650,95 +15650,95 @@ namespace OpenTK.Graphics.ES11
         [Slot(309)]
         static extern void glScissor(Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(311)]
-        static extern void glShadeModel(OpenTK.Graphics.ES11.ShadingModel mode);
+        static extern void glShadeModel(System.Int32 mode);
         [Slot(313)]
-        static extern void glStencilFunc(OpenTK.Graphics.ES11.StencilFunction func, Int32 @ref, UInt32 mask);
+        static extern void glStencilFunc(System.Int32 func, Int32 @ref, UInt32 mask);
         [Slot(314)]
         static extern void glStencilMask(UInt32 mask);
         [Slot(315)]
-        static extern void glStencilOp(OpenTK.Graphics.ES11.StencilOp fail, OpenTK.Graphics.ES11.StencilOp zfail, OpenTK.Graphics.ES11.StencilOp zpass);
+        static extern void glStencilOp(System.Int32 fail, System.Int32 zfail, System.Int32 zpass);
         [Slot(333)]
-        static extern void glTexCoordPointer(Int32 size, OpenTK.Graphics.ES11.TexCoordPointerType type, Int32 stride, IntPtr pointer);
+        static extern void glTexCoordPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(334)]
-        static extern void glTexEnvf(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, Single param);
+        static extern void glTexEnvf(System.Int32 target, System.Int32 pname, Single param);
         [Slot(335)]
-        static extern unsafe void glTexEnvfv(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, Single* @params);
+        static extern unsafe void glTexEnvfv(System.Int32 target, System.Int32 pname, Single* @params);
         [Slot(336)]
-        static extern void glTexEnvi(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, Int32 param);
+        static extern void glTexEnvi(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(337)]
-        static extern unsafe void glTexEnviv(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, Int32* @params);
+        static extern unsafe void glTexEnviv(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(338)]
-        static extern void glTexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glTexEnvx(System.Int32 target, System.Int32 pname, int param);
         [Slot(340)]
-        static extern unsafe void glTexEnvxv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
+        static extern unsafe void glTexEnvxv(System.Int32 target, System.Int32 pname, int* @params);
         [Slot(348)]
-        static extern void glTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, IntPtr pixels);
+        static extern void glTexImage2D(System.Int32 target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(349)]
-        static extern void glTexParameterf(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.TextureParameterName pname, Single param);
+        static extern void glTexParameterf(System.Int32 target, System.Int32 pname, Single param);
         [Slot(350)]
-        static extern unsafe void glTexParameterfv(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.TextureParameterName pname, Single* @params);
+        static extern unsafe void glTexParameterfv(System.Int32 target, System.Int32 pname, Single* @params);
         [Slot(351)]
-        static extern void glTexParameteri(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.TextureParameterName pname, Int32 param);
+        static extern void glTexParameteri(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(352)]
-        static extern unsafe void glTexParameteriv(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.TextureParameterName pname, Int32* @params);
+        static extern unsafe void glTexParameteriv(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(353)]
-        static extern void glTexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glTexParameterx(System.Int32 target, System.Int32 pname, int param);
         [Slot(355)]
-        static extern unsafe void glTexParameterxv(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
+        static extern unsafe void glTexParameterxv(System.Int32 target, System.Int32 pname, int* @params);
         [Slot(360)]
-        static extern void glTexSubImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, IntPtr pixels);
+        static extern void glTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(364)]
         static extern void glTranslatef(Single x, Single y, Single z);
         [Slot(365)]
         static extern void glTranslatex(int x, int y, int z);
         [Slot(380)]
-        static extern void glVertexPointer(Int32 size, OpenTK.Graphics.ES11.VertexPointerType type, Int32 stride, IntPtr pointer);
+        static extern void glVertexPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(381)]
         static extern void glViewport(Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(12)]
-        static extern void glBlendEquationEXT(OpenTK.Graphics.ES11.All mode);
+        static extern void glBlendEquationEXT(System.Int32 mode);
         [Slot(72)]
-        static extern unsafe void glDiscardFramebufferEXT(OpenTK.Graphics.ES11.All target, Int32 numAttachments, OpenTK.Graphics.ES11.All* attachments);
+        static extern unsafe void glDiscardFramebufferEXT(System.Int32 target, Int32 numAttachments, System.Int32* attachments);
         [Slot(110)]
-        static extern void glFlushMappedBufferRangeEXT(OpenTK.Graphics.ES11.All target, IntPtr offset, IntPtr length);
+        static extern void glFlushMappedBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length);
         [Slot(118)]
-        static extern void glFramebufferTexture2DMultisampleEXT(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, UInt32 texture, Int32 level, Int32 samples);
+        static extern void glFramebufferTexture2DMultisampleEXT(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
         [Slot(149)]
-        static extern OpenTK.Graphics.ES11.All glGetGraphicsResetStatusEXT();
+        static extern System.Int32 glGetGraphicsResetStatusEXT();
         [Slot(162)]
         static extern unsafe void glGetnUniformfvEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
         [Slot(163)]
         static extern unsafe void glGetnUniformivEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
         [Slot(217)]
-        static extern IntPtr glMapBufferRangeEXT(OpenTK.Graphics.ES11.All target, IntPtr offset, IntPtr length, UInt32 access);
+        static extern IntPtr glMapBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length, UInt32 access);
         [Slot(228)]
-        static extern unsafe void glMultiDrawArraysEXT(OpenTK.Graphics.ES11.PrimitiveType mode, Int32* first, Int32* count, Int32 primcount);
+        static extern unsafe void glMultiDrawArraysEXT(System.Int32 mode, Int32* first, Int32* count, Int32 primcount);
         [Slot(229)]
-        static extern unsafe void glMultiDrawElementsEXT(OpenTK.Graphics.ES11.PrimitiveType mode, Int32* count, OpenTK.Graphics.ES11.All type, IntPtr indices, Int32 primcount);
+        static extern unsafe void glMultiDrawElementsEXT(System.Int32 mode, Int32* count, System.Int32 type, IntPtr indices, Int32 primcount);
         [Slot(290)]
-        static extern void glReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, Int32 bufSize, [OutAttribute] IntPtr data);
+        static extern void glReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr data);
         [Slot(295)]
-        static extern void glRenderbufferStorageMultisampleEXT(OpenTK.Graphics.ES11.All target, Int32 samples, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
+        static extern void glRenderbufferStorageMultisampleEXT(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(357)]
-        static extern void glTexStorage1DEXT(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width);
+        static extern void glTexStorage1DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
         [Slot(358)]
-        static extern void glTexStorage2DEXT(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
+        static extern void glTexStorage2DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(359)]
-        static extern void glTexStorage3DEXT(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 depth);
+        static extern void glTexStorage3DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
         [Slot(361)]
-        static extern void glTextureStorage1DEXT(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width);
+        static extern void glTextureStorage1DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
         [Slot(362)]
-        static extern void glTextureStorage2DEXT(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
+        static extern void glTextureStorage2DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(363)]
-        static extern void glTextureStorage3DEXT(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 depth);
+        static extern void glTextureStorage3DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
         [Slot(33)]
-        static extern unsafe void glClipPlanefIMG(OpenTK.Graphics.ES11.All p, Single* eqn);
+        static extern unsafe void glClipPlanefIMG(System.Int32 p, Single* eqn);
         [Slot(36)]
-        static extern unsafe void glClipPlanexIMG(OpenTK.Graphics.ES11.All p, int* eqn);
+        static extern unsafe void glClipPlanexIMG(System.Int32 p, int* eqn);
         [Slot(119)]
-        static extern void glFramebufferTexture2DMultisampleIMG(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, UInt32 texture, Int32 level, Int32 samples);
+        static extern void glFramebufferTexture2DMultisampleIMG(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
         [Slot(296)]
-        static extern void glRenderbufferStorageMultisampleIMG(OpenTK.Graphics.ES11.All target, Int32 samples, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
+        static extern void glRenderbufferStorageMultisampleIMG(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(57)]
         static extern unsafe void glDeleteFencesNV(Int32 n, UInt32* fences);
         [Slot(108)]
@@ -15746,21 +15746,21 @@ namespace OpenTK.Graphics.ES11
         [Slot(128)]
         static extern unsafe void glGenFencesNV(Int32 n, [OutAttribute] UInt32* fences);
         [Slot(144)]
-        static extern unsafe void glGetFenceivNV(UInt32 fence, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetFenceivNV(UInt32 fence, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(186)]
         static extern bool glIsFenceNV(UInt32 fence);
         [Slot(310)]
-        static extern void glSetFenceNV(UInt32 fence, OpenTK.Graphics.ES11.All condition);
+        static extern void glSetFenceNV(UInt32 fence, System.Int32 condition);
         [Slot(316)]
         static extern bool glTestFenceNV(UInt32 fence);
         [Slot(0)]
-        static extern void glAccumxOES(OpenTK.Graphics.ES11.All op, int value);
+        static extern void glAccumxOES(System.Int32 op, int value);
         [Slot(4)]
-        static extern void glAlphaFuncxOES(OpenTK.Graphics.ES11.All func, int @ref);
+        static extern void glAlphaFuncxOES(System.Int32 func, int @ref);
         [Slot(6)]
-        static extern void glBindFramebufferOES(OpenTK.Graphics.ES11.All target, UInt32 framebuffer);
+        static extern void glBindFramebufferOES(System.Int32 target, UInt32 framebuffer);
         [Slot(7)]
-        static extern void glBindRenderbufferOES(OpenTK.Graphics.ES11.All target, UInt32 renderbuffer);
+        static extern void glBindRenderbufferOES(System.Int32 target, UInt32 renderbuffer);
         [Slot(9)]
         static extern void glBindVertexArrayOES(UInt32 array);
         [Slot(10)]
@@ -15768,13 +15768,13 @@ namespace OpenTK.Graphics.ES11
         [Slot(11)]
         static extern void glBlendColorxOES(int red, int green, int blue, int alpha);
         [Slot(13)]
-        static extern void glBlendEquationOES(OpenTK.Graphics.ES11.All mode);
+        static extern void glBlendEquationOES(System.Int32 mode);
         [Slot(14)]
-        static extern void glBlendEquationSeparateOES(OpenTK.Graphics.ES11.All modeRGB, OpenTK.Graphics.ES11.All modeAlpha);
+        static extern void glBlendEquationSeparateOES(System.Int32 modeRGB, System.Int32 modeAlpha);
         [Slot(16)]
-        static extern void glBlendFuncSeparateOES(OpenTK.Graphics.ES11.All srcRGB, OpenTK.Graphics.ES11.All dstRGB, OpenTK.Graphics.ES11.All srcAlpha, OpenTK.Graphics.ES11.All dstAlpha);
+        static extern void glBlendFuncSeparateOES(System.Int32 srcRGB, System.Int32 dstRGB, System.Int32 srcAlpha, System.Int32 dstAlpha);
         [Slot(19)]
-        static extern OpenTK.Graphics.ES11.All glCheckFramebufferStatusOES(OpenTK.Graphics.ES11.All target);
+        static extern System.Int32 glCheckFramebufferStatusOES(System.Int32 target);
         [Slot(21)]
         static extern void glClearAccumxOES(int red, int green, int blue, int alpha);
         [Slot(24)]
@@ -15784,9 +15784,9 @@ namespace OpenTK.Graphics.ES11
         [Slot(28)]
         static extern void glClearDepthxOES(int depth);
         [Slot(34)]
-        static extern unsafe void glClipPlanefOES(OpenTK.Graphics.ES11.All plane, Single* equation);
+        static extern unsafe void glClipPlanefOES(System.Int32 plane, Single* equation);
         [Slot(37)]
-        static extern unsafe void glClipPlanexOES(OpenTK.Graphics.ES11.All plane, int* equation);
+        static extern unsafe void glClipPlanexOES(System.Int32 plane, int* equation);
         [Slot(38)]
         static extern void glColor3xOES(int red, int green, int blue);
         [Slot(39)]
@@ -15796,9 +15796,9 @@ namespace OpenTK.Graphics.ES11
         [Slot(44)]
         static extern unsafe void glColor4xvOES(int* components);
         [Slot(49)]
-        static extern void glConvolutionParameterxOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glConvolutionParameterxOES(System.Int32 target, System.Int32 pname, int param);
         [Slot(50)]
-        static extern unsafe void glConvolutionParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
+        static extern unsafe void glConvolutionParameterxvOES(System.Int32 target, System.Int32 pname, int* @params);
         [Slot(55)]
         static extern void glCurrentPaletteMatrixOES(UInt32 matrixpaletteindex);
         [Slot(58)]
@@ -15828,9 +15828,9 @@ namespace OpenTK.Graphics.ES11
         [Slot(82)]
         static extern unsafe void glDrawTexxvOES(int* coords);
         [Slot(83)]
-        static extern void glEGLImageTargetRenderbufferStorageOES(OpenTK.Graphics.ES11.All target, IntPtr image);
+        static extern void glEGLImageTargetRenderbufferStorageOES(System.Int32 target, IntPtr image);
         [Slot(84)]
-        static extern void glEGLImageTargetTexture2DOES(OpenTK.Graphics.ES11.All target, IntPtr image);
+        static extern void glEGLImageTargetTexture2DOES(System.Int32 target, IntPtr image);
         [Slot(89)]
         static extern void glEvalCoord1xOES(int u);
         [Slot(90)]
@@ -15840,21 +15840,21 @@ namespace OpenTK.Graphics.ES11
         [Slot(92)]
         static extern unsafe void glEvalCoord2xvOES(int* coords);
         [Slot(105)]
-        static extern unsafe void glFeedbackBufferxOES(Int32 n, OpenTK.Graphics.ES11.All type, int* buffer);
+        static extern unsafe void glFeedbackBufferxOES(Int32 n, System.Int32 type, int* buffer);
         [Slot(114)]
-        static extern void glFogxOES(OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glFogxOES(System.Int32 pname, int param);
         [Slot(116)]
-        static extern unsafe void glFogxvOES(OpenTK.Graphics.ES11.All pname, int* param);
+        static extern unsafe void glFogxvOES(System.Int32 pname, int* param);
         [Slot(117)]
-        static extern void glFramebufferRenderbufferOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All renderbuffertarget, UInt32 renderbuffer);
+        static extern void glFramebufferRenderbufferOES(System.Int32 target, System.Int32 attachment, System.Int32 renderbuffertarget, UInt32 renderbuffer);
         [Slot(120)]
-        static extern void glFramebufferTexture2DOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, UInt32 texture, Int32 level);
+        static extern void glFramebufferTexture2DOES(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level);
         [Slot(123)]
         static extern void glFrustumfOES(Single l, Single r, Single b, Single t, Single n, Single f);
         [Slot(125)]
         static extern void glFrustumxOES(int l, int r, int b, int t, int n, int f);
         [Slot(127)]
-        static extern void glGenerateMipmapOES(OpenTK.Graphics.ES11.All target);
+        static extern void glGenerateMipmapOES(System.Int32 target);
         [Slot(129)]
         static extern unsafe void glGenFramebuffersOES(Int32 n, [OutAttribute] UInt32* framebuffers);
         [Slot(130)]
@@ -15862,41 +15862,41 @@ namespace OpenTK.Graphics.ES11
         [Slot(132)]
         static extern unsafe void glGenVertexArraysOES(Int32 n, [OutAttribute] UInt32* arrays);
         [Slot(135)]
-        static extern void glGetBufferPointervOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] IntPtr @params);
+        static extern void glGetBufferPointervOES(System.Int32 target, System.Int32 pname, [OutAttribute] IntPtr @params);
         [Slot(137)]
-        static extern unsafe void glGetClipPlanefOES(OpenTK.Graphics.ES11.All plane, [OutAttribute] Single* equation);
+        static extern unsafe void glGetClipPlanefOES(System.Int32 plane, [OutAttribute] Single* equation);
         [Slot(139)]
-        static extern unsafe void glGetClipPlanexOES(OpenTK.Graphics.ES11.All plane, [OutAttribute] int* equation);
+        static extern unsafe void glGetClipPlanexOES(System.Int32 plane, [OutAttribute] int* equation);
         [Slot(140)]
-        static extern unsafe void glGetConvolutionParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetConvolutionParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(146)]
-        static extern unsafe void glGetFixedvOES(OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetFixedvOES(System.Int32 pname, [OutAttribute] int* @params);
         [Slot(148)]
-        static extern unsafe void glGetFramebufferAttachmentParameterivOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetFramebufferAttachmentParameterivOES(System.Int32 target, System.Int32 attachment, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(150)]
-        static extern unsafe void glGetHistogramParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetHistogramParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(154)]
-        static extern unsafe void glGetLightxOES(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetLightxOES(System.Int32 light, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(157)]
-        static extern unsafe void glGetMapxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All query, [OutAttribute] int* v);
+        static extern unsafe void glGetMapxvOES(System.Int32 target, System.Int32 query, [OutAttribute] int* v);
         [Slot(159)]
-        static extern void glGetMaterialxOES(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glGetMaterialxOES(System.Int32 face, System.Int32 pname, int param);
         [Slot(161)]
-        static extern unsafe void glGetMaterialxvOES(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetMaterialxvOES(System.Int32 face, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(166)]
-        static extern unsafe void glGetRenderbufferParameterivOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetRenderbufferParameterivOES(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(172)]
-        static extern unsafe void glGetTexEnvxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetTexEnvxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(173)]
-        static extern unsafe void glGetTexGenfvOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetTexGenfvOES(System.Int32 coord, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(174)]
-        static extern unsafe void glGetTexGenivOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetTexGenivOES(System.Int32 coord, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(175)]
-        static extern unsafe void glGetTexGenxvOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetTexGenxvOES(System.Int32 coord, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(176)]
-        static extern unsafe void glGetTexLevelParameterxvOES(OpenTK.Graphics.ES11.All target, Int32 level, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetTexLevelParameterxvOES(System.Int32 target, Int32 level, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(180)]
-        static extern unsafe void glGetTexParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] int* @params);
+        static extern unsafe void glGetTexParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] int* @params);
         [Slot(182)]
         static extern void glIndexxOES(int component);
         [Slot(183)]
@@ -15908,13 +15908,13 @@ namespace OpenTK.Graphics.ES11
         [Slot(191)]
         static extern bool glIsVertexArrayOES(UInt32 array);
         [Slot(197)]
-        static extern void glLightModelxOES(OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glLightModelxOES(System.Int32 pname, int param);
         [Slot(199)]
-        static extern unsafe void glLightModelxvOES(OpenTK.Graphics.ES11.All pname, int* param);
+        static extern unsafe void glLightModelxvOES(System.Int32 pname, int* param);
         [Slot(201)]
-        static extern void glLightxOES(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glLightxOES(System.Int32 light, System.Int32 pname, int param);
         [Slot(203)]
-        static extern unsafe void glLightxvOES(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, int* @params);
+        static extern unsafe void glLightxvOES(System.Int32 light, System.Int32 pname, int* @params);
         [Slot(206)]
         static extern void glLineWidthxOES(int width);
         [Slot(210)]
@@ -15924,53 +15924,53 @@ namespace OpenTK.Graphics.ES11
         [Slot(212)]
         static extern unsafe void glLoadTransposeMatrixxOES(int* m);
         [Slot(214)]
-        static extern void glMap1xOES(OpenTK.Graphics.ES11.All target, int u1, int u2, Int32 stride, Int32 order, int points);
+        static extern void glMap1xOES(System.Int32 target, int u1, int u2, Int32 stride, Int32 order, int points);
         [Slot(215)]
-        static extern void glMap2xOES(OpenTK.Graphics.ES11.All target, int u1, int u2, Int32 ustride, Int32 uorder, int v1, int v2, Int32 vstride, Int32 vorder, int points);
+        static extern void glMap2xOES(System.Int32 target, int u1, int u2, Int32 ustride, Int32 uorder, int v1, int v2, Int32 vstride, Int32 vorder, int points);
         [Slot(216)]
-        static extern IntPtr glMapBufferOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All access);
+        static extern IntPtr glMapBufferOES(System.Int32 target, System.Int32 access);
         [Slot(218)]
         static extern void glMapGrid1xOES(Int32 n, int u1, int u2);
         [Slot(219)]
         static extern void glMapGrid2xOES(Int32 n, int u1, int u2, int v1, int v2);
         [Slot(223)]
-        static extern void glMaterialxOES(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glMaterialxOES(System.Int32 face, System.Int32 pname, int param);
         [Slot(225)]
-        static extern unsafe void glMaterialxvOES(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, int* param);
+        static extern unsafe void glMaterialxvOES(System.Int32 face, System.Int32 pname, int* param);
         [Slot(226)]
-        static extern void glMatrixIndexPointerOES(Int32 size, OpenTK.Graphics.ES11.All type, Int32 stride, IntPtr pointer);
+        static extern void glMatrixIndexPointerOES(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(230)]
-        static extern void glMultiTexCoord1bOES(OpenTK.Graphics.ES11.All texture, SByte s);
+        static extern void glMultiTexCoord1bOES(System.Int32 texture, SByte s);
         [Slot(231)]
-        static extern unsafe void glMultiTexCoord1bvOES(OpenTK.Graphics.ES11.All texture, SByte* coords);
+        static extern unsafe void glMultiTexCoord1bvOES(System.Int32 texture, SByte* coords);
         [Slot(232)]
-        static extern void glMultiTexCoord1xOES(OpenTK.Graphics.ES11.All texture, int s);
+        static extern void glMultiTexCoord1xOES(System.Int32 texture, int s);
         [Slot(233)]
-        static extern unsafe void glMultiTexCoord1xvOES(OpenTK.Graphics.ES11.All texture, int* coords);
+        static extern unsafe void glMultiTexCoord1xvOES(System.Int32 texture, int* coords);
         [Slot(234)]
-        static extern void glMultiTexCoord2bOES(OpenTK.Graphics.ES11.All texture, SByte s, SByte t);
+        static extern void glMultiTexCoord2bOES(System.Int32 texture, SByte s, SByte t);
         [Slot(235)]
-        static extern unsafe void glMultiTexCoord2bvOES(OpenTK.Graphics.ES11.All texture, SByte* coords);
+        static extern unsafe void glMultiTexCoord2bvOES(System.Int32 texture, SByte* coords);
         [Slot(236)]
-        static extern void glMultiTexCoord2xOES(OpenTK.Graphics.ES11.All texture, int s, int t);
+        static extern void glMultiTexCoord2xOES(System.Int32 texture, int s, int t);
         [Slot(237)]
-        static extern unsafe void glMultiTexCoord2xvOES(OpenTK.Graphics.ES11.All texture, int* coords);
+        static extern unsafe void glMultiTexCoord2xvOES(System.Int32 texture, int* coords);
         [Slot(238)]
-        static extern void glMultiTexCoord3bOES(OpenTK.Graphics.ES11.All texture, SByte s, SByte t, SByte r);
+        static extern void glMultiTexCoord3bOES(System.Int32 texture, SByte s, SByte t, SByte r);
         [Slot(239)]
-        static extern unsafe void glMultiTexCoord3bvOES(OpenTK.Graphics.ES11.All texture, SByte* coords);
+        static extern unsafe void glMultiTexCoord3bvOES(System.Int32 texture, SByte* coords);
         [Slot(240)]
-        static extern void glMultiTexCoord3xOES(OpenTK.Graphics.ES11.All texture, int s, int t, int r);
+        static extern void glMultiTexCoord3xOES(System.Int32 texture, int s, int t, int r);
         [Slot(241)]
-        static extern unsafe void glMultiTexCoord3xvOES(OpenTK.Graphics.ES11.All texture, int* coords);
+        static extern unsafe void glMultiTexCoord3xvOES(System.Int32 texture, int* coords);
         [Slot(242)]
-        static extern void glMultiTexCoord4bOES(OpenTK.Graphics.ES11.All texture, SByte s, SByte t, SByte r, SByte q);
+        static extern void glMultiTexCoord4bOES(System.Int32 texture, SByte s, SByte t, SByte r, SByte q);
         [Slot(243)]
-        static extern unsafe void glMultiTexCoord4bvOES(OpenTK.Graphics.ES11.All texture, SByte* coords);
+        static extern unsafe void glMultiTexCoord4bvOES(System.Int32 texture, SByte* coords);
         [Slot(246)]
-        static extern void glMultiTexCoord4xOES(OpenTK.Graphics.ES11.All texture, int s, int t, int r, int q);
+        static extern void glMultiTexCoord4xOES(System.Int32 texture, int s, int t, int r, int q);
         [Slot(247)]
-        static extern unsafe void glMultiTexCoord4xvOES(OpenTK.Graphics.ES11.All texture, int* coords);
+        static extern unsafe void glMultiTexCoord4xvOES(System.Int32 texture, int* coords);
         [Slot(250)]
         static extern unsafe void glMultMatrixxOES(int* m);
         [Slot(251)]
@@ -15986,15 +15986,15 @@ namespace OpenTK.Graphics.ES11
         [Slot(261)]
         static extern void glPassThroughxOES(int token);
         [Slot(265)]
-        static extern void glPixelTransferxOES(OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glPixelTransferxOES(System.Int32 pname, int param);
         [Slot(266)]
         static extern void glPixelZoomxOES(int xfactor, int yfactor);
         [Slot(270)]
-        static extern void glPointParameterxOES(OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glPointParameterxOES(System.Int32 pname, int param);
         [Slot(272)]
-        static extern unsafe void glPointParameterxvOES(OpenTK.Graphics.ES11.All pname, int* @params);
+        static extern unsafe void glPointParameterxvOES(System.Int32 pname, int* @params);
         [Slot(274)]
-        static extern void glPointSizePointerOES(OpenTK.Graphics.ES11.All type, Int32 stride, IntPtr pointer);
+        static extern void glPointSizePointerOES(System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(276)]
         static extern void glPointSizexOES(int size);
         [Slot(279)]
@@ -16020,7 +16020,7 @@ namespace OpenTK.Graphics.ES11
         [Slot(293)]
         static extern unsafe void glRectxvOES(int* v1, int* v2);
         [Slot(297)]
-        static extern void glRenderbufferStorageOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height);
+        static extern void glRenderbufferStorageOES(System.Int32 target, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(301)]
         static extern void glRotatexOES(int angle, int x, int y, int z);
         [Slot(303)]
@@ -16062,29 +16062,29 @@ namespace OpenTK.Graphics.ES11
         [Slot(332)]
         static extern unsafe void glTexCoord4xvOES(int* coords);
         [Slot(339)]
-        static extern void glTexEnvxOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glTexEnvxOES(System.Int32 target, System.Int32 pname, int param);
         [Slot(341)]
-        static extern unsafe void glTexEnvxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
+        static extern unsafe void glTexEnvxvOES(System.Int32 target, System.Int32 pname, int* @params);
         [Slot(342)]
-        static extern void glTexGenfOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Single param);
+        static extern void glTexGenfOES(System.Int32 coord, System.Int32 pname, Single param);
         [Slot(343)]
-        static extern unsafe void glTexGenfvOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Single* @params);
+        static extern unsafe void glTexGenfvOES(System.Int32 coord, System.Int32 pname, Single* @params);
         [Slot(344)]
-        static extern void glTexGeniOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Int32 param);
+        static extern void glTexGeniOES(System.Int32 coord, System.Int32 pname, Int32 param);
         [Slot(345)]
-        static extern unsafe void glTexGenivOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Int32* @params);
+        static extern unsafe void glTexGenivOES(System.Int32 coord, System.Int32 pname, Int32* @params);
         [Slot(346)]
-        static extern void glTexGenxOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glTexGenxOES(System.Int32 coord, System.Int32 pname, int param);
         [Slot(347)]
-        static extern unsafe void glTexGenxvOES(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, int* @params);
+        static extern unsafe void glTexGenxvOES(System.Int32 coord, System.Int32 pname, int* @params);
         [Slot(354)]
-        static extern void glTexParameterxOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int param);
+        static extern void glTexParameterxOES(System.Int32 target, System.Int32 pname, int param);
         [Slot(356)]
-        static extern unsafe void glTexParameterxvOES(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, int* @params);
+        static extern unsafe void glTexParameterxvOES(System.Int32 target, System.Int32 pname, int* @params);
         [Slot(366)]
         static extern void glTranslatexOES(int x, int y, int z);
         [Slot(367)]
-        static extern bool glUnmapBufferOES(OpenTK.Graphics.ES11.All target);
+        static extern bool glUnmapBufferOES(System.Int32 target);
         [Slot(368)]
         static extern void glVertex2bOES(SByte x);
         [Slot(369)]
@@ -16110,7 +16110,7 @@ namespace OpenTK.Graphics.ES11
         [Slot(379)]
         static extern unsafe void glVertex4xvOES(int* coords);
         [Slot(383)]
-        static extern void glWeightPointerOES(Int32 size, OpenTK.Graphics.ES11.All type, Int32 stride, IntPtr pointer);
+        static extern void glWeightPointerOES(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(71)]
         static extern void glDisableDriverControlQCOM(UInt32 driverControl);
         [Slot(87)]
@@ -16118,13 +16118,13 @@ namespace OpenTK.Graphics.ES11
         [Slot(88)]
         static extern void glEndTilingQCOM(UInt32 preserveMask);
         [Slot(93)]
-        static extern void glExtGetBufferPointervQCOM(OpenTK.Graphics.ES11.All target, [OutAttribute] IntPtr @params);
+        static extern void glExtGetBufferPointervQCOM(System.Int32 target, [OutAttribute] IntPtr @params);
         [Slot(94)]
         static extern unsafe void glExtGetBuffersQCOM([OutAttribute] UInt32* buffers, Int32 maxBuffers, [OutAttribute] Int32* numBuffers);
         [Slot(95)]
         static extern unsafe void glExtGetFramebuffersQCOM([OutAttribute] UInt32* framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32* numFramebuffers);
         [Slot(96)]
-        static extern unsafe void glExtGetProgramBinarySourceQCOM(UInt32 program, OpenTK.Graphics.ES11.All shadertype, [OutAttribute] StringBuilder source, [OutAttribute] Int32* length);
+        static extern unsafe void glExtGetProgramBinarySourceQCOM(UInt32 program, System.Int32 shadertype, [OutAttribute] StringBuilder source, [OutAttribute] Int32* length);
         [Slot(97)]
         static extern unsafe void glExtGetProgramsQCOM([OutAttribute] UInt32* programs, Int32 maxPrograms, [OutAttribute] Int32* numPrograms);
         [Slot(98)]
@@ -16132,15 +16132,15 @@ namespace OpenTK.Graphics.ES11
         [Slot(99)]
         static extern unsafe void glExtGetShadersQCOM([OutAttribute] UInt32* shaders, Int32 maxShaders, [OutAttribute] Int32* numShaders);
         [Slot(100)]
-        static extern unsafe void glExtGetTexLevelParameterivQCOM(UInt32 texture, OpenTK.Graphics.ES11.All face, Int32 level, OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glExtGetTexLevelParameterivQCOM(UInt32 texture, System.Int32 face, Int32 level, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(101)]
-        static extern void glExtGetTexSubImageQCOM(OpenTK.Graphics.ES11.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [OutAttribute] IntPtr texels);
+        static extern void glExtGetTexSubImageQCOM(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr texels);
         [Slot(102)]
         static extern unsafe void glExtGetTexturesQCOM([OutAttribute] UInt32* textures, Int32 maxTextures, [OutAttribute] Int32* numTextures);
         [Slot(103)]
         static extern bool glExtIsProgramBinaryQCOM(UInt32 program);
         [Slot(104)]
-        static extern void glExtTexObjectStateOverrideiQCOM(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, Int32 param);
+        static extern void glExtTexObjectStateOverrideiQCOM(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(141)]
         static extern unsafe void glGetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls);
         [Slot(142)]

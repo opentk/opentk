@@ -49623,13 +49623,13 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         [Slot(31)]
-        static extern void glBlendEquationiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.BlendEquationMode mode);
+        static extern void glBlendEquationiARB(UInt32 buf, System.Int32 mode);
         [Slot(34)]
-        static extern void glBlendEquationSeparateiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.All modeRGB, OpenTK.Graphics.OpenGL4.All modeAlpha);
+        static extern void glBlendEquationSeparateiARB(UInt32 buf, System.Int32 modeRGB, System.Int32 modeAlpha);
         [Slot(37)]
-        static extern void glBlendFunciARB(UInt32 buf, OpenTK.Graphics.OpenGL4.All src, OpenTK.Graphics.OpenGL4.All dst);
+        static extern void glBlendFunciARB(UInt32 buf, System.Int32 src, System.Int32 dst);
         [Slot(40)]
-        static extern void glBlendFuncSeparateiARB(UInt32 buf, OpenTK.Graphics.OpenGL4.All srcRGB, OpenTK.Graphics.OpenGL4.All dstRGB, OpenTK.Graphics.OpenGL4.All srcAlpha, OpenTK.Graphics.OpenGL4.All dstAlpha);
+        static extern void glBlendFuncSeparateiARB(UInt32 buf, System.Int32 srcRGB, System.Int32 dstRGB, System.Int32 srcAlpha, System.Int32 dstAlpha);
         [Slot(72)]
         static extern unsafe void glCompileShaderIncludeARB(UInt32 shader, Int32 count, String[] path, Int32* length);
         [Slot(99)]
@@ -49637,51 +49637,51 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(102)]
         static extern void glDebugMessageCallbackARB(DebugProcArb callback, IntPtr userParam);
         [Slot(105)]
-        static extern unsafe void glDebugMessageControlARB(OpenTK.Graphics.OpenGL4.All source, OpenTK.Graphics.OpenGL4.All type, OpenTK.Graphics.OpenGL4.All severity, Int32 count, UInt32* ids, bool enabled);
+        static extern unsafe void glDebugMessageControlARB(System.Int32 source, System.Int32 type, System.Int32 severity, Int32 count, UInt32* ids, bool enabled);
         [Slot(108)]
-        static extern void glDebugMessageInsertARB(OpenTK.Graphics.OpenGL4.All source, OpenTK.Graphics.OpenGL4.All type, UInt32 id, OpenTK.Graphics.OpenGL4.All severity, Int32 length, String buf);
+        static extern void glDebugMessageInsertARB(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, String buf);
         [Slot(112)]
         static extern void glDeleteNamedStringARB(Int32 namelen, String name);
         [Slot(134)]
         static extern void glDispatchComputeGroupSizeARB(UInt32 num_groups_x, UInt32 num_groups_y, UInt32 num_groups_z, UInt32 group_size_x, UInt32 group_size_y, UInt32 group_size_z);
         [Slot(210)]
-        static extern unsafe Int32 glGetDebugMessageLogARB(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.All* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+        static extern unsafe Int32 glGetDebugMessageLogARB(UInt32 count, Int32 bufSize, [OutAttribute] System.Int32* sources, [OutAttribute] System.Int32* types, [OutAttribute] UInt32* ids, [OutAttribute] System.Int32* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
         [Slot(221)]
-        static extern OpenTK.Graphics.OpenGL4.All glGetGraphicsResetStatusARB();
+        static extern System.Int32 glGetGraphicsResetStatusARB();
         [Slot(225)]
-        static extern Int64 glGetImageHandleARB(UInt32 texture, Int32 level, bool layered, Int32 layer, OpenTK.Graphics.OpenGL4.All format);
+        static extern Int64 glGetImageHandleARB(UInt32 texture, Int32 level, bool layered, Int32 layer, System.Int32 format);
         [Slot(236)]
         static extern unsafe void glGetNamedStringARB(Int32 namelen, String name, Int32 bufSize, [OutAttribute] Int32* stringlen, [OutAttribute] StringBuilder @string);
         [Slot(237)]
-        static extern unsafe void glGetNamedStringivARB(Int32 namelen, String name, OpenTK.Graphics.OpenGL4.All pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetNamedStringivARB(Int32 namelen, String name, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(238)]
-        static extern void glGetnColorTableARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr table);
+        static extern void glGetnColorTableARB(System.Int32 target, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr table);
         [Slot(239)]
-        static extern void glGetnCompressedTexImageARB(OpenTK.Graphics.OpenGL4.All target, Int32 lod, Int32 bufSize, [OutAttribute] IntPtr img);
+        static extern void glGetnCompressedTexImageARB(System.Int32 target, Int32 lod, Int32 bufSize, [OutAttribute] IntPtr img);
         [Slot(240)]
-        static extern void glGetnConvolutionFilterARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr image);
+        static extern void glGetnConvolutionFilterARB(System.Int32 target, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr image);
         [Slot(241)]
-        static extern void glGetnHistogramARB(OpenTK.Graphics.OpenGL4.All target, bool reset, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr values);
+        static extern void glGetnHistogramARB(System.Int32 target, bool reset, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr values);
         [Slot(242)]
-        static extern unsafe void glGetnMapdvARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All query, Int32 bufSize, [OutAttribute] Double* v);
+        static extern unsafe void glGetnMapdvARB(System.Int32 target, System.Int32 query, Int32 bufSize, [OutAttribute] Double* v);
         [Slot(243)]
-        static extern unsafe void glGetnMapfvARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All query, Int32 bufSize, [OutAttribute] Single* v);
+        static extern unsafe void glGetnMapfvARB(System.Int32 target, System.Int32 query, Int32 bufSize, [OutAttribute] Single* v);
         [Slot(244)]
-        static extern unsafe void glGetnMapivARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All query, Int32 bufSize, [OutAttribute] Int32* v);
+        static extern unsafe void glGetnMapivARB(System.Int32 target, System.Int32 query, Int32 bufSize, [OutAttribute] Int32* v);
         [Slot(245)]
-        static extern void glGetnMinmaxARB(OpenTK.Graphics.OpenGL4.All target, bool reset, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr values);
+        static extern void glGetnMinmaxARB(System.Int32 target, bool reset, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr values);
         [Slot(246)]
-        static extern unsafe void glGetnPixelMapfvARB(OpenTK.Graphics.OpenGL4.All map, Int32 bufSize, [OutAttribute] Single* values);
+        static extern unsafe void glGetnPixelMapfvARB(System.Int32 map, Int32 bufSize, [OutAttribute] Single* values);
         [Slot(247)]
-        static extern unsafe void glGetnPixelMapuivARB(OpenTK.Graphics.OpenGL4.All map, Int32 bufSize, [OutAttribute] UInt32* values);
+        static extern unsafe void glGetnPixelMapuivARB(System.Int32 map, Int32 bufSize, [OutAttribute] UInt32* values);
         [Slot(248)]
-        static extern unsafe void glGetnPixelMapusvARB(OpenTK.Graphics.OpenGL4.All map, Int32 bufSize, [OutAttribute] UInt16* values);
+        static extern unsafe void glGetnPixelMapusvARB(System.Int32 map, Int32 bufSize, [OutAttribute] UInt16* values);
         [Slot(249)]
         static extern unsafe void glGetnPolygonStippleARB(Int32 bufSize, [OutAttribute] Byte* pattern);
         [Slot(250)]
-        static extern void glGetnSeparableFilterARB(OpenTK.Graphics.OpenGL4.All target, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 rowBufSize, [OutAttribute] IntPtr row, Int32 columnBufSize, [OutAttribute] IntPtr column, [OutAttribute] IntPtr span);
+        static extern void glGetnSeparableFilterARB(System.Int32 target, System.Int32 format, System.Int32 type, Int32 rowBufSize, [OutAttribute] IntPtr row, Int32 columnBufSize, [OutAttribute] IntPtr column, [OutAttribute] IntPtr span);
         [Slot(251)]
-        static extern void glGetnTexImageARB(OpenTK.Graphics.OpenGL4.All target, Int32 level, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr img);
+        static extern void glGetnTexImageARB(System.Int32 target, Int32 level, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr img);
         [Slot(252)]
         static extern unsafe void glGetnUniformdvARB(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Double* @params);
         [Slot(253)]
@@ -49695,7 +49695,7 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(303)]
         static extern Int64 glGetTextureSamplerHandleARB(UInt32 texture, UInt32 sampler);
         [Slot(319)]
-        static extern unsafe void glGetVertexAttribLui64vARB(UInt32 index, OpenTK.Graphics.OpenGL4.VertexAttribParameterArb pname, [OutAttribute] UInt64* @params);
+        static extern unsafe void glGetVertexAttribLui64vARB(UInt32 index, System.Int32 pname, [OutAttribute] UInt64* @params);
         [Slot(333)]
         static extern bool glIsImageHandleResidentARB(UInt64 handle);
         [Slot(334)]
@@ -49705,7 +49705,7 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(349)]
         static extern void glMakeImageHandleNonResidentARB(UInt64 handle);
         [Slot(350)]
-        static extern void glMakeImageHandleResidentARB(UInt64 handle, OpenTK.Graphics.OpenGL4.All access);
+        static extern void glMakeImageHandleResidentARB(UInt64 handle, System.Int32 access);
         [Slot(351)]
         static extern void glMakeTextureHandleNonResidentARB(UInt64 handle);
         [Slot(352)]
@@ -49713,19 +49713,19 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(358)]
         static extern void glMinSampleShadingARB(Single value);
         [Slot(361)]
-        static extern void glMultiDrawArraysIndirectCountARB(OpenTK.Graphics.OpenGL4.All mode, IntPtr indirect, IntPtr drawcount, Int32 maxdrawcount, Int32 stride);
+        static extern void glMultiDrawArraysIndirectCountARB(System.Int32 mode, IntPtr indirect, IntPtr drawcount, Int32 maxdrawcount, Int32 stride);
         [Slot(365)]
-        static extern void glMultiDrawElementsIndirectCountARB(OpenTK.Graphics.OpenGL4.All mode, OpenTK.Graphics.OpenGL4.All type, IntPtr indirect, IntPtr drawcount, Int32 maxdrawcount, Int32 stride);
+        static extern void glMultiDrawElementsIndirectCountARB(System.Int32 mode, System.Int32 type, IntPtr indirect, IntPtr drawcount, Int32 maxdrawcount, Int32 stride);
         [Slot(374)]
-        static extern void glNamedStringARB(OpenTK.Graphics.OpenGL4.All type, Int32 namelen, String name, Int32 stringlen, String @string);
+        static extern void glNamedStringARB(System.Int32 type, Int32 namelen, String name, Int32 stringlen, String @string);
         [Slot(430)]
         static extern void glProgramUniformHandleui64ARB(UInt32 program, Int32 location, UInt64 value);
         [Slot(431)]
         static extern unsafe void glProgramUniformHandleui64vARB(UInt32 program, Int32 location, Int32 count, UInt64* values);
         [Slot(455)]
-        static extern void glReadnPixelsARB(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL4.All format, OpenTK.Graphics.OpenGL4.All type, Int32 bufSize, [OutAttribute] IntPtr data);
+        static extern void glReadnPixelsARB(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr data);
         [Slot(502)]
-        static extern void glTexPageCommitmentARB(OpenTK.Graphics.OpenGL4.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, bool resident);
+        static extern void glTexPageCommitmentARB(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, bool resident);
         [Slot(552)]
         static extern void glUniformHandleui64ARB(Int32 location, UInt64 value);
         [Slot(553)]
@@ -49737,53 +49737,53 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(0)]
         static extern void glActiveShaderProgram(UInt32 pipeline, UInt32 program);
         [Slot(1)]
-        static extern void glActiveTexture(OpenTK.Graphics.OpenGL4.TextureUnit texture);
+        static extern void glActiveTexture(System.Int32 texture);
         [Slot(2)]
         static extern void glAttachShader(UInt32 program, UInt32 shader);
         [Slot(3)]
-        static extern void glBeginConditionalRender(UInt32 id, OpenTK.Graphics.OpenGL4.ConditionalRenderType mode);
+        static extern void glBeginConditionalRender(UInt32 id, System.Int32 mode);
         [Slot(4)]
-        static extern void glBeginQuery(OpenTK.Graphics.OpenGL4.QueryTarget target, UInt32 id);
+        static extern void glBeginQuery(System.Int32 target, UInt32 id);
         [Slot(5)]
-        static extern void glBeginQueryIndexed(OpenTK.Graphics.OpenGL4.QueryTarget target, UInt32 index, UInt32 id);
+        static extern void glBeginQueryIndexed(System.Int32 target, UInt32 index, UInt32 id);
         [Slot(6)]
-        static extern void glBeginTransformFeedback(OpenTK.Graphics.OpenGL4.TransformFeedbackPrimitiveType primitiveMode);
+        static extern void glBeginTransformFeedback(System.Int32 primitiveMode);
         [Slot(7)]
         static extern void glBindAttribLocation(UInt32 program, UInt32 index, String name);
         [Slot(8)]
-        static extern void glBindBuffer(OpenTK.Graphics.OpenGL4.BufferTarget target, UInt32 buffer);
+        static extern void glBindBuffer(System.Int32 target, UInt32 buffer);
         [Slot(9)]
-        static extern void glBindBufferBase(OpenTK.Graphics.OpenGL4.BufferRangeTarget target, UInt32 index, UInt32 buffer);
+        static extern void glBindBufferBase(System.Int32 target, UInt32 index, UInt32 buffer);
         [Slot(10)]
-        static extern void glBindBufferRange(OpenTK.Graphics.OpenGL4.BufferRangeTarget target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
+        static extern void glBindBufferRange(System.Int32 target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
         [Slot(11)]
-        static extern unsafe void glBindBuffersBase(OpenTK.Graphics.OpenGL4.BufferRangeTarget target, UInt32 first, Int32 count, UInt32* buffers);
+        static extern unsafe void glBindBuffersBase(System.Int32 target, UInt32 first, Int32 count, UInt32* buffers);
         [Slot(12)]
-        static extern unsafe void glBindBuffersRange(OpenTK.Graphics.OpenGL4.BufferRangeTarget target, UInt32 first, Int32 count, UInt32* buffers, IntPtr* offsets, IntPtr* sizes);
+        static extern unsafe void glBindBuffersRange(System.Int32 target, UInt32 first, Int32 count, UInt32* buffers, IntPtr* offsets, IntPtr* sizes);
         [Slot(13)]
         static extern void glBindFragDataLocation(UInt32 program, UInt32 color, String name);
         [Slot(14)]
         static extern void glBindFragDataLocationIndexed(UInt32 program, UInt32 colorNumber, UInt32 index, String name);
         [Slot(15)]
-        static extern void glBindFramebuffer(OpenTK.Graphics.OpenGL4.FramebufferTarget target, UInt32 framebuffer);
+        static extern void glBindFramebuffer(System.Int32 target, UInt32 framebuffer);
         [Slot(16)]
-        static extern void glBindImageTexture(UInt32 unit, UInt32 texture, Int32 level, bool layered, Int32 layer, OpenTK.Graphics.OpenGL4.TextureAccess access, OpenTK.Graphics.OpenGL4.SizedInternalFormat format);
+        static extern void glBindImageTexture(UInt32 unit, UInt32 texture, Int32 level, bool layered, Int32 layer, System.Int32 access, System.Int32 format);
         [Slot(17)]
         static extern unsafe void glBindImageTextures(UInt32 first, Int32 count, UInt32* textures);
         [Slot(18)]
         static extern void glBindProgramPipeline(UInt32 pipeline);
         [Slot(19)]
-        static extern void glBindRenderbuffer(OpenTK.Graphics.OpenGL4.RenderbufferTarget target, UInt32 renderbuffer);
+        static extern void glBindRenderbuffer(System.Int32 target, UInt32 renderbuffer);
         [Slot(20)]
         static extern void glBindSampler(UInt32 unit, UInt32 sampler);
         [Slot(21)]
         static extern unsafe void glBindSamplers(UInt32 first, Int32 count, UInt32* samplers);
         [Slot(22)]
-        static extern void glBindTexture(OpenTK.Graphics.OpenGL4.TextureTarget target, UInt32 texture);
+        static extern void glBindTexture(System.Int32 target, UInt32 texture);
         [Slot(23)]
         static extern unsafe void glBindTextures(UInt32 first, Int32 count, UInt32* textures);
         [Slot(24)]
-        static extern void glBindTransformFeedback(OpenTK.Graphics.OpenGL4.TransformFeedbackTarget target, UInt32 id);
+        static extern void glBindTransformFeedback(System.Int32 target, UInt32 id);
         [Slot(25)]
         static extern void glBindVertexArray(UInt32 array);
         [Slot(26)]
@@ -49793,47 +49793,47 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(28)]
         static extern void glBlendColor(Single red, Single green, Single blue, Single alpha);
         [Slot(29)]
-        static extern void glBlendEquation(OpenTK.Graphics.OpenGL4.BlendEquationMode mode);
+        static extern void glBlendEquation(System.Int32 mode);
         [Slot(30)]
-        static extern void glBlendEquationi(UInt32 buf, OpenTK.Graphics.OpenGL4.BlendEquationMode mode);
+        static extern void glBlendEquationi(UInt32 buf, System.Int32 mode);
         [Slot(32)]
-        static extern void glBlendEquationSeparate(OpenTK.Graphics.OpenGL4.BlendEquationMode modeRGB, OpenTK.Graphics.OpenGL4.BlendEquationMode modeAlpha);
+        static extern void glBlendEquationSeparate(System.Int32 modeRGB, System.Int32 modeAlpha);
         [Slot(33)]
-        static extern void glBlendEquationSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL4.BlendEquationMode modeRGB, OpenTK.Graphics.OpenGL4.BlendEquationMode modeAlpha);
+        static extern void glBlendEquationSeparatei(UInt32 buf, System.Int32 modeRGB, System.Int32 modeAlpha);
         [Slot(35)]
-        static extern void glBlendFunc(OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactor, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactor);
+        static extern void glBlendFunc(System.Int32 sfactor, System.Int32 dfactor);
         [Slot(36)]
-        static extern void glBlendFunci(UInt32 buf, OpenTK.Graphics.OpenGL4.BlendingFactorSrc src, OpenTK.Graphics.OpenGL4.BlendingFactorDest dst);
+        static extern void glBlendFunci(UInt32 buf, System.Int32 src, System.Int32 dst);
         [Slot(38)]
-        static extern void glBlendFuncSeparate(OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactorRGB, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactorRGB, OpenTK.Graphics.OpenGL4.BlendingFactorSrc sfactorAlpha, OpenTK.Graphics.OpenGL4.BlendingFactorDest dfactorAlpha);
+        static extern void glBlendFuncSeparate(System.Int32 sfactorRGB, System.Int32 dfactorRGB, System.Int32 sfactorAlpha, System.Int32 dfactorAlpha);
         [Slot(39)]
-        static extern void glBlendFuncSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL4.BlendingFactorSrc srcRGB, OpenTK.Graphics.OpenGL4.BlendingFactorDest dstRGB, OpenTK.Graphics.OpenGL4.BlendingFactorSrc srcAlpha, OpenTK.Graphics.OpenGL4.BlendingFactorDest dstAlpha);
+        static extern void glBlendFuncSeparatei(UInt32 buf, System.Int32 srcRGB, System.Int32 dstRGB, System.Int32 srcAlpha, System.Int32 dstAlpha);
         [Slot(41)]
-        static extern void glBlitFramebuffer(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, OpenTK.Graphics.OpenGL4.ClearBufferMask mask, OpenTK.Graphics.OpenGL4.BlitFramebufferFilter filter);
+        static extern void glBlitFramebuffer(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, System.Int32 mask, System.Int32 filter);
         [Slot(42)]
-        static extern void glBufferData(OpenTK.Graphics.OpenGL4.BufferTarget target, IntPtr size, IntPtr data, OpenTK.Graphics.OpenGL4.BufferUsageHint usage);
+        static extern void glBufferData(System.Int32 target, IntPtr size, IntPtr data, System.Int32 usage);
         [Slot(43)]
-        static extern void glBufferStorage(OpenTK.Graphics.OpenGL4.BufferTarget target, IntPtr size, IntPtr data, OpenTK.Graphics.OpenGL4.BufferStorageFlags flags);
+        static extern void glBufferStorage(System.Int32 target, IntPtr size, IntPtr data, System.Int32 flags);
         [Slot(44)]
-        static extern void glBufferSubData(OpenTK.Graphics.OpenGL4.BufferTarget target, IntPtr offset, IntPtr size, IntPtr data);
+        static extern void glBufferSubData(System.Int32 target, IntPtr offset, IntPtr size, IntPtr data);
         [Slot(45)]
-        static extern OpenTK.Graphics.OpenGL4.FramebufferErrorCode glCheckFramebufferStatus(OpenTK.Graphics.OpenGL4.FramebufferTarget target);
+        static extern System.Int32 glCheckFramebufferStatus(System.Int32 target);
         [Slot(46)]
-        static extern void glClampColor(OpenTK.Graphics.OpenGL4.ClampColorTarget target, OpenTK.Graphics.OpenGL4.ClampColorMode clamp);
+        static extern void glClampColor(System.Int32 target, System.Int32 clamp);
         [Slot(47)]
-        static extern void glClear(OpenTK.Graphics.OpenGL4.ClearBufferMask mask);
+        static extern void glClear(System.Int32 mask);
         [Slot(48)]
-        static extern void glClearBufferData(OpenTK.Graphics.OpenGL4.BufferTarget target, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.All type, IntPtr data);
+        static extern void glClearBufferData(System.Int32 target, System.Int32 internalformat, System.Int32 format, System.Int32 type, IntPtr data);
         [Slot(49)]
-        static extern void glClearBufferfi(OpenTK.Graphics.OpenGL4.ClearBufferCombined buffer, Int32 drawbuffer, Single depth, Int32 stencil);
+        static extern void glClearBufferfi(System.Int32 buffer, Int32 drawbuffer, Single depth, Int32 stencil);
         [Slot(50)]
-        static extern unsafe void glClearBufferfv(OpenTK.Graphics.OpenGL4.ClearBuffer buffer, Int32 drawbuffer, Single* value);
+        static extern unsafe void glClearBufferfv(System.Int32 buffer, Int32 drawbuffer, Single* value);
         [Slot(51)]
-        static extern unsafe void glClearBufferiv(OpenTK.Graphics.OpenGL4.ClearBuffer buffer, Int32 drawbuffer, Int32* value);
+        static extern unsafe void glClearBufferiv(System.Int32 buffer, Int32 drawbuffer, Int32* value);
         [Slot(52)]
-        static extern void glClearBufferSubData(OpenTK.Graphics.OpenGL4.BufferTarget target, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, IntPtr offset, IntPtr size, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.All type, IntPtr data);
+        static extern void glClearBufferSubData(System.Int32 target, System.Int32 internalformat, IntPtr offset, IntPtr size, System.Int32 format, System.Int32 type, IntPtr data);
         [Slot(53)]
-        static extern unsafe void glClearBufferuiv(OpenTK.Graphics.OpenGL4.ClearBuffer buffer, Int32 drawbuffer, UInt32* value);
+        static extern unsafe void glClearBufferuiv(System.Int32 buffer, Int32 drawbuffer, UInt32* value);
         [Slot(54)]
         static extern void glClearColor(Single red, Single green, Single blue, Single alpha);
         [Slot(55)]
@@ -49843,93 +49843,93 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(57)]
         static extern void glClearStencil(Int32 s);
         [Slot(58)]
-        static extern void glClearTexImage(UInt32 texture, Int32 level, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr data);
+        static extern void glClearTexImage(UInt32 texture, Int32 level, System.Int32 format, System.Int32 type, IntPtr data);
         [Slot(59)]
-        static extern void glClearTexSubImage(UInt32 texture, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr data);
+        static extern void glClearTexSubImage(UInt32 texture, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, IntPtr data);
         [Slot(60)]
-        static extern OpenTK.Graphics.OpenGL4.WaitSyncStatus glClientWaitSync(IntPtr sync, OpenTK.Graphics.OpenGL4.ClientWaitSyncFlags flags, UInt64 timeout);
+        static extern System.Int32 glClientWaitSync(IntPtr sync, System.Int32 flags, UInt64 timeout);
         [Slot(61)]
         static extern void glColorMask(bool red, bool green, bool blue, bool alpha);
         [Slot(62)]
         static extern void glColorMaski(UInt32 index, bool r, bool g, bool b, bool a);
         [Slot(63)]
-        static extern void glColorP3ui(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 color);
+        static extern void glColorP3ui(System.Int32 type, UInt32 color);
         [Slot(64)]
-        static extern unsafe void glColorP3uiv(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* color);
+        static extern unsafe void glColorP3uiv(System.Int32 type, UInt32* color);
         [Slot(65)]
-        static extern void glColorP4ui(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 color);
+        static extern void glColorP4ui(System.Int32 type, UInt32 color);
         [Slot(66)]
-        static extern unsafe void glColorP4uiv(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* color);
+        static extern unsafe void glColorP4uiv(System.Int32 type, UInt32* color);
         [Slot(67)]
-        static extern void glColorSubTable(OpenTK.Graphics.OpenGL4.ColorTableTarget target, Int32 start, Int32 count, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr data);
+        static extern void glColorSubTable(System.Int32 target, Int32 start, Int32 count, System.Int32 format, System.Int32 type, IntPtr data);
         [Slot(68)]
-        static extern void glColorTable(OpenTK.Graphics.OpenGL4.ColorTableTarget target, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr table);
+        static extern void glColorTable(System.Int32 target, System.Int32 internalformat, Int32 width, System.Int32 format, System.Int32 type, IntPtr table);
         [Slot(69)]
-        static extern unsafe void glColorTableParameterfv(OpenTK.Graphics.OpenGL4.ColorTableTarget target, OpenTK.Graphics.OpenGL4.ColorTableParameterPName pname, Single* @params);
+        static extern unsafe void glColorTableParameterfv(System.Int32 target, System.Int32 pname, Single* @params);
         [Slot(70)]
-        static extern unsafe void glColorTableParameteriv(OpenTK.Graphics.OpenGL4.ColorTableTarget target, OpenTK.Graphics.OpenGL4.ColorTableParameterPName pname, Int32* @params);
+        static extern unsafe void glColorTableParameteriv(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(71)]
         static extern void glCompileShader(UInt32 shader);
         [Slot(73)]
-        static extern void glCompressedTexImage1D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 width, Int32 border, Int32 imageSize, IntPtr data);
+        static extern void glCompressedTexImage1D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 border, Int32 imageSize, IntPtr data);
         [Slot(74)]
-        static extern void glCompressedTexImage2D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
+        static extern void glCompressedTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
         [Slot(75)]
-        static extern void glCompressedTexImage3D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
+        static extern void glCompressedTexImage3D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data);
         [Slot(76)]
-        static extern void glCompressedTexSubImage1D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, Int32 xoffset, Int32 width, OpenTK.Graphics.OpenGL4.PixelFormat format, Int32 imageSize, IntPtr data);
+        static extern void glCompressedTexSubImage1D(System.Int32 target, Int32 level, Int32 xoffset, Int32 width, System.Int32 format, Int32 imageSize, IntPtr data);
         [Slot(77)]
-        static extern void glCompressedTexSubImage2D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.OpenGL4.PixelFormat format, Int32 imageSize, IntPtr data);
+        static extern void glCompressedTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, Int32 imageSize, IntPtr data);
         [Slot(78)]
-        static extern void glCompressedTexSubImage3D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.OpenGL4.PixelFormat format, Int32 imageSize, IntPtr data);
+        static extern void glCompressedTexSubImage3D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, Int32 imageSize, IntPtr data);
         [Slot(79)]
-        static extern void glConvolutionFilter1D(OpenTK.Graphics.OpenGL4.ConvolutionTarget target, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr image);
+        static extern void glConvolutionFilter1D(System.Int32 target, System.Int32 internalformat, Int32 width, System.Int32 format, System.Int32 type, IntPtr image);
         [Slot(80)]
-        static extern void glConvolutionFilter2D(OpenTK.Graphics.OpenGL4.ConvolutionTarget target, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr image);
+        static extern void glConvolutionFilter2D(System.Int32 target, System.Int32 internalformat, Int32 width, Int32 height, System.Int32 format, System.Int32 type, IntPtr image);
         [Slot(81)]
-        static extern void glConvolutionParameterf(OpenTK.Graphics.OpenGL4.ConvolutionTarget target, OpenTK.Graphics.OpenGL4.ConvolutionParameter pname, Single @params);
+        static extern void glConvolutionParameterf(System.Int32 target, System.Int32 pname, Single @params);
         [Slot(82)]
-        static extern unsafe void glConvolutionParameterfv(OpenTK.Graphics.OpenGL4.ConvolutionTarget target, OpenTK.Graphics.OpenGL4.ConvolutionParameter pname, Single* @params);
+        static extern unsafe void glConvolutionParameterfv(System.Int32 target, System.Int32 pname, Single* @params);
         [Slot(83)]
-        static extern void glConvolutionParameteri(OpenTK.Graphics.OpenGL4.ConvolutionTarget target, OpenTK.Graphics.OpenGL4.ConvolutionParameter pname, Int32 @params);
+        static extern void glConvolutionParameteri(System.Int32 target, System.Int32 pname, Int32 @params);
         [Slot(84)]
-        static extern unsafe void glConvolutionParameteriv(OpenTK.Graphics.OpenGL4.ConvolutionTarget target, OpenTK.Graphics.OpenGL4.ConvolutionParameter pname, Int32* @params);
+        static extern unsafe void glConvolutionParameteriv(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(85)]
-        static extern void glCopyBufferSubData(OpenTK.Graphics.OpenGL4.BufferTarget readTarget, OpenTK.Graphics.OpenGL4.BufferTarget writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
+        static extern void glCopyBufferSubData(System.Int32 readTarget, System.Int32 writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
         [Slot(86)]
-        static extern void glCopyColorSubTable(OpenTK.Graphics.OpenGL4.ColorTableTarget target, Int32 start, Int32 x, Int32 y, Int32 width);
+        static extern void glCopyColorSubTable(System.Int32 target, Int32 start, Int32 x, Int32 y, Int32 width);
         [Slot(87)]
-        static extern void glCopyColorTable(OpenTK.Graphics.OpenGL4.ColorTableTarget target, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
+        static extern void glCopyColorTable(System.Int32 target, System.Int32 internalformat, Int32 x, Int32 y, Int32 width);
         [Slot(88)]
-        static extern void glCopyConvolutionFilter1D(OpenTK.Graphics.OpenGL4.ConvolutionTarget target, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
+        static extern void glCopyConvolutionFilter1D(System.Int32 target, System.Int32 internalformat, Int32 x, Int32 y, Int32 width);
         [Slot(89)]
-        static extern void glCopyConvolutionFilter2D(OpenTK.Graphics.OpenGL4.ConvolutionTarget target, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height);
+        static extern void glCopyConvolutionFilter2D(System.Int32 target, System.Int32 internalformat, Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(90)]
-        static extern void glCopyImageSubData(UInt32 srcName, OpenTK.Graphics.OpenGL4.ImageTarget srcTarget, Int32 srcLevel, Int32 srcX, Int32 srcY, Int32 srcZ, UInt32 dstName, OpenTK.Graphics.OpenGL4.ImageTarget dstTarget, Int32 dstLevel, Int32 dstX, Int32 dstY, Int32 dstZ, Int32 srcWidth, Int32 srcHeight, Int32 srcDepth);
+        static extern void glCopyImageSubData(UInt32 srcName, System.Int32 srcTarget, Int32 srcLevel, Int32 srcX, Int32 srcY, Int32 srcZ, UInt32 dstName, System.Int32 dstTarget, Int32 dstLevel, Int32 dstX, Int32 dstY, Int32 dstZ, Int32 srcWidth, Int32 srcHeight, Int32 srcDepth);
         [Slot(91)]
-        static extern void glCopyTexImage1D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 border);
+        static extern void glCopyTexImage1D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 x, Int32 y, Int32 width, Int32 border);
         [Slot(92)]
-        static extern void glCopyTexImage2D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
+        static extern void glCopyTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
         [Slot(93)]
-        static extern void glCopyTexSubImage1D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, Int32 xoffset, Int32 x, Int32 y, Int32 width);
+        static extern void glCopyTexSubImage1D(System.Int32 target, Int32 level, Int32 xoffset, Int32 x, Int32 y, Int32 width);
         [Slot(94)]
-        static extern void glCopyTexSubImage2D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+        static extern void glCopyTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(95)]
-        static extern void glCopyTexSubImage3D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+        static extern void glCopyTexSubImage3D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(96)]
         static extern Int32 glCreateProgram();
         [Slot(97)]
-        static extern Int32 glCreateShader(OpenTK.Graphics.OpenGL4.ShaderType type);
+        static extern Int32 glCreateShader(System.Int32 type);
         [Slot(98)]
-        static extern Int32 glCreateShaderProgramv(OpenTK.Graphics.OpenGL4.ShaderType type, Int32 count, String[] strings);
+        static extern Int32 glCreateShaderProgramv(System.Int32 type, Int32 count, String[] strings);
         [Slot(100)]
-        static extern void glCullFace(OpenTK.Graphics.OpenGL4.CullFaceMode mode);
+        static extern void glCullFace(System.Int32 mode);
         [Slot(101)]
         static extern void glDebugMessageCallback(DebugProc callback, IntPtr userParam);
         [Slot(104)]
-        static extern unsafe void glDebugMessageControl(OpenTK.Graphics.OpenGL4.DebugSourceControl source, OpenTK.Graphics.OpenGL4.DebugTypeControl type, OpenTK.Graphics.OpenGL4.DebugSeverityControl severity, Int32 count, UInt32* ids, bool enabled);
+        static extern unsafe void glDebugMessageControl(System.Int32 source, System.Int32 type, System.Int32 severity, Int32 count, UInt32* ids, bool enabled);
         [Slot(107)]
-        static extern void glDebugMessageInsert(OpenTK.Graphics.OpenGL4.DebugSourceExternal source, OpenTK.Graphics.OpenGL4.DebugType type, UInt32 id, OpenTK.Graphics.OpenGL4.DebugSeverity severity, Int32 length, String buf);
+        static extern void glDebugMessageInsert(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, String buf);
         [Slot(110)]
         static extern unsafe void glDeleteBuffers(Int32 n, UInt32* buffers);
         [Slot(111)]
@@ -49955,7 +49955,7 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(122)]
         static extern unsafe void glDeleteVertexArrays(Int32 n, UInt32* arrays);
         [Slot(123)]
-        static extern void glDepthFunc(OpenTK.Graphics.OpenGL4.DepthFunction func);
+        static extern void glDepthFunc(System.Int32 func);
         [Slot(124)]
         static extern void glDepthMask(bool flag);
         [Slot(125)]
@@ -49969,9 +49969,9 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(129)]
         static extern void glDetachShader(UInt32 program, UInt32 shader);
         [Slot(130)]
-        static extern void glDisable(OpenTK.Graphics.OpenGL4.EnableCap cap);
+        static extern void glDisable(System.Int32 cap);
         [Slot(131)]
-        static extern void glDisablei(OpenTK.Graphics.OpenGL4.IndexedEnableCap target, UInt32 index);
+        static extern void glDisablei(System.Int32 target, UInt32 index);
         [Slot(132)]
         static extern void glDisableVertexAttribArray(UInt32 index);
         [Slot(133)]
@@ -49979,85 +49979,85 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(135)]
         static extern void glDispatchComputeIndirect(IntPtr indirect);
         [Slot(136)]
-        static extern void glDrawArrays(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 first, Int32 count);
+        static extern void glDrawArrays(System.Int32 mode, Int32 first, Int32 count);
         [Slot(137)]
-        static extern void glDrawArraysIndirect(OpenTK.Graphics.OpenGL4.PrimitiveType mode, IntPtr indirect);
+        static extern void glDrawArraysIndirect(System.Int32 mode, IntPtr indirect);
         [Slot(138)]
-        static extern void glDrawArraysInstanced(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 first, Int32 count, Int32 instancecount);
+        static extern void glDrawArraysInstanced(System.Int32 mode, Int32 first, Int32 count, Int32 instancecount);
         [Slot(139)]
-        static extern void glDrawArraysInstancedBaseInstance(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 first, Int32 count, Int32 instancecount, UInt32 baseinstance);
+        static extern void glDrawArraysInstancedBaseInstance(System.Int32 mode, Int32 first, Int32 count, Int32 instancecount, UInt32 baseinstance);
         [Slot(140)]
-        static extern void glDrawBuffer(OpenTK.Graphics.OpenGL4.DrawBufferMode mode);
+        static extern void glDrawBuffer(System.Int32 mode);
         [Slot(141)]
-        static extern unsafe void glDrawBuffers(Int32 n, OpenTK.Graphics.OpenGL4.DrawBuffersEnum* bufs);
+        static extern unsafe void glDrawBuffers(Int32 n, System.Int32* bufs);
         [Slot(142)]
-        static extern void glDrawElements(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices);
+        static extern void glDrawElements(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices);
         [Slot(143)]
-        static extern void glDrawElementsBaseVertex(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 basevertex);
+        static extern void glDrawElementsBaseVertex(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 basevertex);
         [Slot(144)]
-        static extern void glDrawElementsIndirect(OpenTK.Graphics.OpenGL4.PrimitiveType mode, OpenTK.Graphics.OpenGL4.All type, IntPtr indirect);
+        static extern void glDrawElementsIndirect(System.Int32 mode, System.Int32 type, IntPtr indirect);
         [Slot(145)]
-        static extern void glDrawElementsInstanced(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 instancecount);
+        static extern void glDrawElementsInstanced(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 instancecount);
         [Slot(146)]
-        static extern void glDrawElementsInstancedBaseInstance(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 instancecount, UInt32 baseinstance);
+        static extern void glDrawElementsInstancedBaseInstance(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 instancecount, UInt32 baseinstance);
         [Slot(147)]
-        static extern void glDrawElementsInstancedBaseVertex(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 instancecount, Int32 basevertex);
+        static extern void glDrawElementsInstancedBaseVertex(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 instancecount, Int32 basevertex);
         [Slot(148)]
-        static extern void glDrawElementsInstancedBaseVertexBaseInstance(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 instancecount, Int32 basevertex, UInt32 baseinstance);
+        static extern void glDrawElementsInstancedBaseVertexBaseInstance(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices, Int32 instancecount, Int32 basevertex, UInt32 baseinstance);
         [Slot(149)]
-        static extern void glDrawRangeElements(OpenTK.Graphics.OpenGL4.PrimitiveType mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices);
+        static extern void glDrawRangeElements(System.Int32 mode, UInt32 start, UInt32 end, Int32 count, System.Int32 type, IntPtr indices);
         [Slot(150)]
-        static extern void glDrawRangeElementsBaseVertex(OpenTK.Graphics.OpenGL4.PrimitiveType mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 basevertex);
+        static extern void glDrawRangeElementsBaseVertex(System.Int32 mode, UInt32 start, UInt32 end, Int32 count, System.Int32 type, IntPtr indices, Int32 basevertex);
         [Slot(151)]
-        static extern void glDrawTransformFeedback(OpenTK.Graphics.OpenGL4.PrimitiveType mode, UInt32 id);
+        static extern void glDrawTransformFeedback(System.Int32 mode, UInt32 id);
         [Slot(152)]
-        static extern void glDrawTransformFeedbackInstanced(OpenTK.Graphics.OpenGL4.PrimitiveType mode, UInt32 id, Int32 instancecount);
+        static extern void glDrawTransformFeedbackInstanced(System.Int32 mode, UInt32 id, Int32 instancecount);
         [Slot(153)]
-        static extern void glDrawTransformFeedbackStream(OpenTK.Graphics.OpenGL4.PrimitiveType mode, UInt32 id, UInt32 stream);
+        static extern void glDrawTransformFeedbackStream(System.Int32 mode, UInt32 id, UInt32 stream);
         [Slot(154)]
-        static extern void glDrawTransformFeedbackStreamInstanced(OpenTK.Graphics.OpenGL4.PrimitiveType mode, UInt32 id, UInt32 stream, Int32 instancecount);
+        static extern void glDrawTransformFeedbackStreamInstanced(System.Int32 mode, UInt32 id, UInt32 stream, Int32 instancecount);
         [Slot(155)]
-        static extern void glEnable(OpenTK.Graphics.OpenGL4.EnableCap cap);
+        static extern void glEnable(System.Int32 cap);
         [Slot(156)]
-        static extern void glEnablei(OpenTK.Graphics.OpenGL4.IndexedEnableCap target, UInt32 index);
+        static extern void glEnablei(System.Int32 target, UInt32 index);
         [Slot(157)]
         static extern void glEnableVertexAttribArray(UInt32 index);
         [Slot(158)]
         static extern void glEndConditionalRender();
         [Slot(159)]
-        static extern void glEndQuery(OpenTK.Graphics.OpenGL4.QueryTarget target);
+        static extern void glEndQuery(System.Int32 target);
         [Slot(160)]
-        static extern void glEndQueryIndexed(OpenTK.Graphics.OpenGL4.QueryTarget target, UInt32 index);
+        static extern void glEndQueryIndexed(System.Int32 target, UInt32 index);
         [Slot(161)]
         static extern void glEndTransformFeedback();
         [Slot(162)]
-        static extern IntPtr glFenceSync(OpenTK.Graphics.OpenGL4.SyncCondition condition, OpenTK.Graphics.OpenGL4.WaitSyncFlags flags);
+        static extern IntPtr glFenceSync(System.Int32 condition, System.Int32 flags);
         [Slot(163)]
         static extern void glFinish();
         [Slot(164)]
         static extern void glFlush();
         [Slot(165)]
-        static extern void glFlushMappedBufferRange(OpenTK.Graphics.OpenGL4.BufferTarget target, IntPtr offset, IntPtr length);
+        static extern void glFlushMappedBufferRange(System.Int32 target, IntPtr offset, IntPtr length);
         [Slot(166)]
-        static extern void glFramebufferParameteri(OpenTK.Graphics.OpenGL4.FramebufferTarget target, OpenTK.Graphics.OpenGL4.FramebufferDefaultParameter pname, Int32 param);
+        static extern void glFramebufferParameteri(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(167)]
-        static extern void glFramebufferRenderbuffer(OpenTK.Graphics.OpenGL4.FramebufferTarget target, OpenTK.Graphics.OpenGL4.FramebufferAttachment attachment, OpenTK.Graphics.OpenGL4.RenderbufferTarget renderbuffertarget, UInt32 renderbuffer);
+        static extern void glFramebufferRenderbuffer(System.Int32 target, System.Int32 attachment, System.Int32 renderbuffertarget, UInt32 renderbuffer);
         [Slot(168)]
-        static extern void glFramebufferTexture(OpenTK.Graphics.OpenGL4.FramebufferTarget target, OpenTK.Graphics.OpenGL4.FramebufferAttachment attachment, UInt32 texture, Int32 level);
+        static extern void glFramebufferTexture(System.Int32 target, System.Int32 attachment, UInt32 texture, Int32 level);
         [Slot(169)]
-        static extern void glFramebufferTexture1D(OpenTK.Graphics.OpenGL4.FramebufferTarget target, OpenTK.Graphics.OpenGL4.FramebufferAttachment attachment, OpenTK.Graphics.OpenGL4.TextureTarget textarget, UInt32 texture, Int32 level);
+        static extern void glFramebufferTexture1D(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level);
         [Slot(170)]
-        static extern void glFramebufferTexture2D(OpenTK.Graphics.OpenGL4.FramebufferTarget target, OpenTK.Graphics.OpenGL4.FramebufferAttachment attachment, OpenTK.Graphics.OpenGL4.TextureTarget textarget, UInt32 texture, Int32 level);
+        static extern void glFramebufferTexture2D(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level);
         [Slot(171)]
-        static extern void glFramebufferTexture3D(OpenTK.Graphics.OpenGL4.FramebufferTarget target, OpenTK.Graphics.OpenGL4.FramebufferAttachment attachment, OpenTK.Graphics.OpenGL4.TextureTarget textarget, UInt32 texture, Int32 level, Int32 zoffset);
+        static extern void glFramebufferTexture3D(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 zoffset);
         [Slot(172)]
-        static extern void glFramebufferTextureLayer(OpenTK.Graphics.OpenGL4.FramebufferTarget target, OpenTK.Graphics.OpenGL4.FramebufferAttachment attachment, UInt32 texture, Int32 level, Int32 layer);
+        static extern void glFramebufferTextureLayer(System.Int32 target, System.Int32 attachment, UInt32 texture, Int32 level, Int32 layer);
         [Slot(173)]
-        static extern void glFrontFace(OpenTK.Graphics.OpenGL4.FrontFaceDirection mode);
+        static extern void glFrontFace(System.Int32 mode);
         [Slot(174)]
         static extern unsafe void glGenBuffers(Int32 n, [OutAttribute] UInt32* buffers);
         [Slot(175)]
-        static extern void glGenerateMipmap(OpenTK.Graphics.OpenGL4.GenerateMipmapTarget target);
+        static extern void glGenerateMipmap(System.Int32 target);
         [Slot(176)]
         static extern unsafe void glGenFramebuffers(Int32 n, [OutAttribute] UInt32* framebuffers);
         [Slot(177)]
@@ -50075,189 +50075,189 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(183)]
         static extern unsafe void glGenVertexArrays(Int32 n, [OutAttribute] UInt32* arrays);
         [Slot(184)]
-        static extern unsafe void glGetActiveAtomicCounterBufferiv(UInt32 program, UInt32 bufferIndex, OpenTK.Graphics.OpenGL4.AtomicCounterBufferParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetActiveAtomicCounterBufferiv(UInt32 program, UInt32 bufferIndex, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(185)]
-        static extern unsafe void glGetActiveAttrib(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.OpenGL4.ActiveAttribType* type, [OutAttribute] StringBuilder name);
+        static extern unsafe void glGetActiveAttrib(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] System.Int32* type, [OutAttribute] StringBuilder name);
         [Slot(186)]
-        static extern unsafe void glGetActiveSubroutineName(UInt32 program, OpenTK.Graphics.OpenGL4.ShaderType shadertype, UInt32 index, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder name);
+        static extern unsafe void glGetActiveSubroutineName(UInt32 program, System.Int32 shadertype, UInt32 index, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder name);
         [Slot(187)]
-        static extern unsafe void glGetActiveSubroutineUniformiv(UInt32 program, OpenTK.Graphics.OpenGL4.ShaderType shadertype, UInt32 index, OpenTK.Graphics.OpenGL4.ActiveSubroutineUniformParameter pname, [OutAttribute] Int32* values);
+        static extern unsafe void glGetActiveSubroutineUniformiv(UInt32 program, System.Int32 shadertype, UInt32 index, System.Int32 pname, [OutAttribute] Int32* values);
         [Slot(188)]
-        static extern unsafe void glGetActiveSubroutineUniformName(UInt32 program, OpenTK.Graphics.OpenGL4.ShaderType shadertype, UInt32 index, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder name);
+        static extern unsafe void glGetActiveSubroutineUniformName(UInt32 program, System.Int32 shadertype, UInt32 index, Int32 bufsize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder name);
         [Slot(189)]
-        static extern unsafe void glGetActiveUniform(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.OpenGL4.ActiveUniformType* type, [OutAttribute] StringBuilder name);
+        static extern unsafe void glGetActiveUniform(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] System.Int32* type, [OutAttribute] StringBuilder name);
         [Slot(190)]
-        static extern unsafe void glGetActiveUniformBlockiv(UInt32 program, UInt32 uniformBlockIndex, OpenTK.Graphics.OpenGL4.ActiveUniformBlockParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetActiveUniformBlockiv(UInt32 program, UInt32 uniformBlockIndex, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(191)]
         static extern unsafe void glGetActiveUniformBlockName(UInt32 program, UInt32 uniformBlockIndex, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder uniformBlockName);
         [Slot(192)]
         static extern unsafe void glGetActiveUniformName(UInt32 program, UInt32 uniformIndex, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder uniformName);
         [Slot(193)]
-        static extern unsafe void glGetActiveUniformsiv(UInt32 program, Int32 uniformCount, UInt32* uniformIndices, OpenTK.Graphics.OpenGL4.ActiveUniformParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetActiveUniformsiv(UInt32 program, Int32 uniformCount, UInt32* uniformIndices, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(194)]
         static extern unsafe void glGetAttachedShaders(UInt32 program, Int32 maxCount, [OutAttribute] Int32* count, [OutAttribute] UInt32* shaders);
         [Slot(195)]
         static extern Int32 glGetAttribLocation(UInt32 program, String name);
         [Slot(196)]
-        static extern unsafe void glGetBooleani_v(OpenTK.Graphics.OpenGL4.GetIndexedPName target, UInt32 index, [OutAttribute] bool* data);
+        static extern unsafe void glGetBooleani_v(System.Int32 target, UInt32 index, [OutAttribute] bool* data);
         [Slot(197)]
-        static extern unsafe void glGetBooleanv(OpenTK.Graphics.OpenGL4.GetPName pname, [OutAttribute] bool* data);
+        static extern unsafe void glGetBooleanv(System.Int32 pname, [OutAttribute] bool* data);
         [Slot(198)]
-        static extern unsafe void glGetBufferParameteri64v(OpenTK.Graphics.OpenGL4.BufferTarget target, OpenTK.Graphics.OpenGL4.BufferParameterName pname, [OutAttribute] Int64* @params);
+        static extern unsafe void glGetBufferParameteri64v(System.Int32 target, System.Int32 pname, [OutAttribute] Int64* @params);
         [Slot(199)]
-        static extern unsafe void glGetBufferParameteriv(OpenTK.Graphics.OpenGL4.BufferTarget target, OpenTK.Graphics.OpenGL4.BufferParameterName pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetBufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(200)]
-        static extern void glGetBufferPointerv(OpenTK.Graphics.OpenGL4.BufferTarget target, OpenTK.Graphics.OpenGL4.BufferPointer pname, [OutAttribute] IntPtr @params);
+        static extern void glGetBufferPointerv(System.Int32 target, System.Int32 pname, [OutAttribute] IntPtr @params);
         [Slot(201)]
-        static extern void glGetBufferSubData(OpenTK.Graphics.OpenGL4.BufferTarget target, IntPtr offset, IntPtr size, [OutAttribute] IntPtr data);
+        static extern void glGetBufferSubData(System.Int32 target, IntPtr offset, IntPtr size, [OutAttribute] IntPtr data);
         [Slot(202)]
-        static extern void glGetColorTable(OpenTK.Graphics.OpenGL4.ColorTableTarget target, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [OutAttribute] IntPtr table);
+        static extern void glGetColorTable(System.Int32 target, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr table);
         [Slot(203)]
-        static extern unsafe void glGetColorTableParameterfv(OpenTK.Graphics.OpenGL4.ColorTableTarget target, OpenTK.Graphics.OpenGL4.GetColorTableParameterPName pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetColorTableParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(204)]
-        static extern unsafe void glGetColorTableParameteriv(OpenTK.Graphics.OpenGL4.ColorTableTarget target, OpenTK.Graphics.OpenGL4.GetColorTableParameterPName pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetColorTableParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(205)]
-        static extern void glGetCompressedTexImage(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, [OutAttribute] IntPtr img);
+        static extern void glGetCompressedTexImage(System.Int32 target, Int32 level, [OutAttribute] IntPtr img);
         [Slot(206)]
-        static extern void glGetConvolutionFilter(OpenTK.Graphics.OpenGL4.ConvolutionTarget target, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [OutAttribute] IntPtr image);
+        static extern void glGetConvolutionFilter(System.Int32 target, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr image);
         [Slot(207)]
-        static extern unsafe void glGetConvolutionParameterfv(OpenTK.Graphics.OpenGL4.ConvolutionTarget target, OpenTK.Graphics.OpenGL4.GetConvolutionParameterPName pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetConvolutionParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(208)]
-        static extern unsafe void glGetConvolutionParameteriv(OpenTK.Graphics.OpenGL4.ConvolutionTarget target, OpenTK.Graphics.OpenGL4.GetConvolutionParameterPName pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetConvolutionParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(209)]
-        static extern unsafe Int32 glGetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.DebugSource* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.DebugType* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.DebugSeverity* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+        static extern unsafe Int32 glGetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute] System.Int32* sources, [OutAttribute] System.Int32* types, [OutAttribute] UInt32* ids, [OutAttribute] System.Int32* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
         [Slot(212)]
-        static extern unsafe void glGetDoublei_v(OpenTK.Graphics.OpenGL4.GetIndexedPName target, UInt32 index, [OutAttribute] Double* data);
+        static extern unsafe void glGetDoublei_v(System.Int32 target, UInt32 index, [OutAttribute] Double* data);
         [Slot(213)]
-        static extern unsafe void glGetDoublev(OpenTK.Graphics.OpenGL4.GetPName pname, [OutAttribute] Double* data);
+        static extern unsafe void glGetDoublev(System.Int32 pname, [OutAttribute] Double* data);
         [Slot(214)]
-        static extern OpenTK.Graphics.OpenGL4.ErrorCode glGetError();
+        static extern System.Int32 glGetError();
         [Slot(215)]
-        static extern unsafe void glGetFloati_v(OpenTK.Graphics.OpenGL4.GetIndexedPName target, UInt32 index, [OutAttribute] Single* data);
+        static extern unsafe void glGetFloati_v(System.Int32 target, UInt32 index, [OutAttribute] Single* data);
         [Slot(216)]
-        static extern unsafe void glGetFloatv(OpenTK.Graphics.OpenGL4.GetPName pname, [OutAttribute] Single* data);
+        static extern unsafe void glGetFloatv(System.Int32 pname, [OutAttribute] Single* data);
         [Slot(217)]
         static extern Int32 glGetFragDataIndex(UInt32 program, String name);
         [Slot(218)]
         static extern Int32 glGetFragDataLocation(UInt32 program, String name);
         [Slot(219)]
-        static extern unsafe void glGetFramebufferAttachmentParameteriv(OpenTK.Graphics.OpenGL4.FramebufferTarget target, OpenTK.Graphics.OpenGL4.FramebufferAttachment attachment, OpenTK.Graphics.OpenGL4.FramebufferParameterName pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetFramebufferAttachmentParameteriv(System.Int32 target, System.Int32 attachment, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(220)]
-        static extern unsafe void glGetFramebufferParameteriv(OpenTK.Graphics.OpenGL4.FramebufferTarget target, OpenTK.Graphics.OpenGL4.FramebufferDefaultParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetFramebufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(222)]
-        static extern void glGetHistogram(OpenTK.Graphics.OpenGL4.HistogramTarget target, bool reset, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [OutAttribute] IntPtr values);
+        static extern void glGetHistogram(System.Int32 target, bool reset, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr values);
         [Slot(223)]
-        static extern unsafe void glGetHistogramParameterfv(OpenTK.Graphics.OpenGL4.HistogramTarget target, OpenTK.Graphics.OpenGL4.GetHistogramParameterPName pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetHistogramParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(224)]
-        static extern unsafe void glGetHistogramParameteriv(OpenTK.Graphics.OpenGL4.HistogramTarget target, OpenTK.Graphics.OpenGL4.GetHistogramParameterPName pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetHistogramParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(226)]
-        static extern unsafe void glGetInteger64i_v(OpenTK.Graphics.OpenGL4.GetIndexedPName target, UInt32 index, [OutAttribute] Int64* data);
+        static extern unsafe void glGetInteger64i_v(System.Int32 target, UInt32 index, [OutAttribute] Int64* data);
         [Slot(227)]
-        static extern unsafe void glGetInteger64v(OpenTK.Graphics.OpenGL4.GetPName pname, [OutAttribute] Int64* data);
+        static extern unsafe void glGetInteger64v(System.Int32 pname, [OutAttribute] Int64* data);
         [Slot(228)]
-        static extern unsafe void glGetIntegeri_v(OpenTK.Graphics.OpenGL4.GetIndexedPName target, UInt32 index, [OutAttribute] Int32* data);
+        static extern unsafe void glGetIntegeri_v(System.Int32 target, UInt32 index, [OutAttribute] Int32* data);
         [Slot(229)]
-        static extern unsafe void glGetIntegerv(OpenTK.Graphics.OpenGL4.GetPName pname, [OutAttribute] Int32* data);
+        static extern unsafe void glGetIntegerv(System.Int32 pname, [OutAttribute] Int32* data);
         [Slot(230)]
-        static extern unsafe void glGetInternalformati64v(OpenTK.Graphics.OpenGL4.ImageTarget target, OpenTK.Graphics.OpenGL4.SizedInternalFormat internalformat, OpenTK.Graphics.OpenGL4.InternalFormatParameter pname, Int32 bufSize, [OutAttribute] Int64* @params);
+        static extern unsafe void glGetInternalformati64v(System.Int32 target, System.Int32 internalformat, System.Int32 pname, Int32 bufSize, [OutAttribute] Int64* @params);
         [Slot(231)]
-        static extern unsafe void glGetInternalformativ(OpenTK.Graphics.OpenGL4.ImageTarget target, OpenTK.Graphics.OpenGL4.SizedInternalFormat internalformat, OpenTK.Graphics.OpenGL4.InternalFormatParameter pname, Int32 bufSize, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetInternalformativ(System.Int32 target, System.Int32 internalformat, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* @params);
         [Slot(232)]
-        static extern void glGetMinmax(OpenTK.Graphics.OpenGL4.MinmaxTarget target, bool reset, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [OutAttribute] IntPtr values);
+        static extern void glGetMinmax(System.Int32 target, bool reset, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr values);
         [Slot(233)]
-        static extern unsafe void glGetMinmaxParameterfv(OpenTK.Graphics.OpenGL4.MinmaxTarget target, OpenTK.Graphics.OpenGL4.GetMinmaxParameterPName pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetMinmaxParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(234)]
-        static extern unsafe void glGetMinmaxParameteriv(OpenTK.Graphics.OpenGL4.MinmaxTarget target, OpenTK.Graphics.OpenGL4.GetMinmaxParameterPName pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetMinmaxParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(235)]
-        static extern unsafe void glGetMultisamplefv(OpenTK.Graphics.OpenGL4.GetMultisamplePName pname, UInt32 index, [OutAttribute] Single* val);
+        static extern unsafe void glGetMultisamplefv(System.Int32 pname, UInt32 index, [OutAttribute] Single* val);
         [Slot(256)]
-        static extern unsafe void glGetObjectLabel(OpenTK.Graphics.OpenGL4.ObjectLabelIdentifier identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
+        static extern unsafe void glGetObjectLabel(System.Int32 identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
         [Slot(258)]
         static extern unsafe void glGetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
         [Slot(260)]
-        static extern void glGetPointerv(OpenTK.Graphics.OpenGL4.GetPointervPName pname, [OutAttribute] IntPtr @params);
+        static extern void glGetPointerv(System.Int32 pname, [OutAttribute] IntPtr @params);
         [Slot(262)]
-        static extern unsafe void glGetProgramBinary(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] OpenTK.Graphics.OpenGL4.BinaryFormat* binaryFormat, [OutAttribute] IntPtr binary);
+        static extern unsafe void glGetProgramBinary(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] System.Int32* binaryFormat, [OutAttribute] IntPtr binary);
         [Slot(263)]
         static extern unsafe void glGetProgramInfoLog(UInt32 program, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infoLog);
         [Slot(264)]
-        static extern unsafe void glGetProgramInterfaceiv(UInt32 program, OpenTK.Graphics.OpenGL4.ProgramInterface programInterface, OpenTK.Graphics.OpenGL4.ProgramInterfaceParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetProgramInterfaceiv(UInt32 program, System.Int32 programInterface, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(265)]
-        static extern unsafe void glGetProgramiv(UInt32 program, OpenTK.Graphics.OpenGL4.GetProgramParameterName pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetProgramiv(UInt32 program, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(266)]
         static extern unsafe void glGetProgramPipelineInfoLog(UInt32 pipeline, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infoLog);
         [Slot(267)]
-        static extern unsafe void glGetProgramPipelineiv(UInt32 pipeline, OpenTK.Graphics.OpenGL4.ProgramPipelineParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetProgramPipelineiv(UInt32 pipeline, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(268)]
-        static extern Int32 glGetProgramResourceIndex(UInt32 program, OpenTK.Graphics.OpenGL4.ProgramInterface programInterface, String name);
+        static extern Int32 glGetProgramResourceIndex(UInt32 program, System.Int32 programInterface, String name);
         [Slot(269)]
-        static extern unsafe void glGetProgramResourceiv(UInt32 program, OpenTK.Graphics.OpenGL4.ProgramInterface programInterface, UInt32 index, Int32 propCount, OpenTK.Graphics.OpenGL4.ProgramProperty* props, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetProgramResourceiv(UInt32 program, System.Int32 programInterface, UInt32 index, Int32 propCount, System.Int32* props, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* @params);
         [Slot(270)]
-        static extern Int32 glGetProgramResourceLocation(UInt32 program, OpenTK.Graphics.OpenGL4.ProgramInterface programInterface, String name);
+        static extern Int32 glGetProgramResourceLocation(UInt32 program, System.Int32 programInterface, String name);
         [Slot(271)]
-        static extern Int32 glGetProgramResourceLocationIndex(UInt32 program, OpenTK.Graphics.OpenGL4.ProgramInterface programInterface, String name);
+        static extern Int32 glGetProgramResourceLocationIndex(UInt32 program, System.Int32 programInterface, String name);
         [Slot(272)]
-        static extern unsafe void glGetProgramResourceName(UInt32 program, OpenTK.Graphics.OpenGL4.ProgramInterface programInterface, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder name);
+        static extern unsafe void glGetProgramResourceName(UInt32 program, System.Int32 programInterface, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder name);
         [Slot(273)]
-        static extern unsafe void glGetProgramStageiv(UInt32 program, OpenTK.Graphics.OpenGL4.ShaderType shadertype, OpenTK.Graphics.OpenGL4.ProgramStageParameter pname, [OutAttribute] Int32* values);
+        static extern unsafe void glGetProgramStageiv(UInt32 program, System.Int32 shadertype, System.Int32 pname, [OutAttribute] Int32* values);
         [Slot(274)]
-        static extern unsafe void glGetQueryIndexediv(OpenTK.Graphics.OpenGL4.QueryTarget target, UInt32 index, OpenTK.Graphics.OpenGL4.GetQueryParam pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetQueryIndexediv(System.Int32 target, UInt32 index, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(275)]
-        static extern unsafe void glGetQueryiv(OpenTK.Graphics.OpenGL4.QueryTarget target, OpenTK.Graphics.OpenGL4.GetQueryParam pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetQueryiv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(276)]
-        static extern unsafe void glGetQueryObjecti64v(UInt32 id, OpenTK.Graphics.OpenGL4.GetQueryObjectParam pname, [OutAttribute] Int64* @params);
+        static extern unsafe void glGetQueryObjecti64v(UInt32 id, System.Int32 pname, [OutAttribute] Int64* @params);
         [Slot(277)]
-        static extern unsafe void glGetQueryObjectiv(UInt32 id, OpenTK.Graphics.OpenGL4.GetQueryObjectParam pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetQueryObjectiv(UInt32 id, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(278)]
-        static extern unsafe void glGetQueryObjectui64v(UInt32 id, OpenTK.Graphics.OpenGL4.GetQueryObjectParam pname, [OutAttribute] UInt64* @params);
+        static extern unsafe void glGetQueryObjectui64v(UInt32 id, System.Int32 pname, [OutAttribute] UInt64* @params);
         [Slot(279)]
-        static extern unsafe void glGetQueryObjectuiv(UInt32 id, OpenTK.Graphics.OpenGL4.GetQueryObjectParam pname, [OutAttribute] UInt32* @params);
+        static extern unsafe void glGetQueryObjectuiv(UInt32 id, System.Int32 pname, [OutAttribute] UInt32* @params);
         [Slot(280)]
-        static extern unsafe void glGetRenderbufferParameteriv(OpenTK.Graphics.OpenGL4.RenderbufferTarget target, OpenTK.Graphics.OpenGL4.RenderbufferParameterName pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetRenderbufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(281)]
-        static extern unsafe void glGetSamplerParameterfv(UInt32 sampler, OpenTK.Graphics.OpenGL4.SamplerParameterName pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetSamplerParameterfv(UInt32 sampler, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(282)]
-        static extern unsafe void glGetSamplerParameterIiv(UInt32 sampler, OpenTK.Graphics.OpenGL4.All pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetSamplerParameterIiv(UInt32 sampler, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(283)]
-        static extern unsafe void glGetSamplerParameterIuiv(UInt32 sampler, OpenTK.Graphics.OpenGL4.All pname, [OutAttribute] UInt32* @params);
+        static extern unsafe void glGetSamplerParameterIuiv(UInt32 sampler, System.Int32 pname, [OutAttribute] UInt32* @params);
         [Slot(284)]
-        static extern unsafe void glGetSamplerParameteriv(UInt32 sampler, OpenTK.Graphics.OpenGL4.SamplerParameterName pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetSamplerParameteriv(UInt32 sampler, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(285)]
-        static extern void glGetSeparableFilter(OpenTK.Graphics.OpenGL4.SeparableTarget target, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [OutAttribute] IntPtr row, [OutAttribute] IntPtr column, [OutAttribute] IntPtr span);
+        static extern void glGetSeparableFilter(System.Int32 target, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr row, [OutAttribute] IntPtr column, [OutAttribute] IntPtr span);
         [Slot(286)]
         static extern unsafe void glGetShaderInfoLog(UInt32 shader, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infoLog);
         [Slot(287)]
-        static extern unsafe void glGetShaderiv(UInt32 shader, OpenTK.Graphics.OpenGL4.ShaderParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetShaderiv(UInt32 shader, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(288)]
-        static extern unsafe void glGetShaderPrecisionFormat(OpenTK.Graphics.OpenGL4.ShaderType shadertype, OpenTK.Graphics.OpenGL4.ShaderPrecision precisiontype, [OutAttribute] Int32* range, [OutAttribute] Int32* precision);
+        static extern unsafe void glGetShaderPrecisionFormat(System.Int32 shadertype, System.Int32 precisiontype, [OutAttribute] Int32* range, [OutAttribute] Int32* precision);
         [Slot(289)]
         static extern unsafe void glGetShaderSource(UInt32 shader, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder source);
         [Slot(290)]
-        static extern IntPtr glGetString(OpenTK.Graphics.OpenGL4.StringName name);
+        static extern IntPtr glGetString(System.Int32 name);
         [Slot(291)]
-        static extern IntPtr glGetStringi(OpenTK.Graphics.OpenGL4.StringNameIndexed name, UInt32 index);
+        static extern IntPtr glGetStringi(System.Int32 name, UInt32 index);
         [Slot(292)]
-        static extern Int32 glGetSubroutineIndex(UInt32 program, OpenTK.Graphics.OpenGL4.ShaderType shadertype, String name);
+        static extern Int32 glGetSubroutineIndex(UInt32 program, System.Int32 shadertype, String name);
         [Slot(293)]
-        static extern Int32 glGetSubroutineUniformLocation(UInt32 program, OpenTK.Graphics.OpenGL4.ShaderType shadertype, String name);
+        static extern Int32 glGetSubroutineUniformLocation(UInt32 program, System.Int32 shadertype, String name);
         [Slot(294)]
-        static extern unsafe void glGetSynciv(IntPtr sync, OpenTK.Graphics.OpenGL4.SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+        static extern unsafe void glGetSynciv(IntPtr sync, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
         [Slot(295)]
-        static extern void glGetTexImage(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [OutAttribute] IntPtr pixels);
+        static extern void glGetTexImage(System.Int32 target, Int32 level, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr pixels);
         [Slot(296)]
-        static extern unsafe void glGetTexLevelParameterfv(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL4.GetTextureParameter pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetTexLevelParameterfv(System.Int32 target, Int32 level, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(297)]
-        static extern unsafe void glGetTexLevelParameteriv(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL4.GetTextureParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetTexLevelParameteriv(System.Int32 target, Int32 level, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(298)]
-        static extern unsafe void glGetTexParameterfv(OpenTK.Graphics.OpenGL4.TextureTarget target, OpenTK.Graphics.OpenGL4.GetTextureParameter pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetTexParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(299)]
-        static extern unsafe void glGetTexParameterIiv(OpenTK.Graphics.OpenGL4.TextureTarget target, OpenTK.Graphics.OpenGL4.GetTextureParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetTexParameterIiv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(300)]
-        static extern unsafe void glGetTexParameterIuiv(OpenTK.Graphics.OpenGL4.TextureTarget target, OpenTK.Graphics.OpenGL4.GetTextureParameter pname, [OutAttribute] UInt32* @params);
+        static extern unsafe void glGetTexParameterIuiv(System.Int32 target, System.Int32 pname, [OutAttribute] UInt32* @params);
         [Slot(301)]
-        static extern unsafe void glGetTexParameteriv(OpenTK.Graphics.OpenGL4.TextureTarget target, OpenTK.Graphics.OpenGL4.GetTextureParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetTexParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(304)]
-        static extern unsafe void glGetTransformFeedbackVarying(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] OpenTK.Graphics.OpenGL4.TransformFeedbackType* type, [OutAttribute] StringBuilder name);
+        static extern unsafe void glGetTransformFeedbackVarying(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] System.Int32* type, [OutAttribute] StringBuilder name);
         [Slot(305)]
         static extern Int32 glGetUniformBlockIndex(UInt32 program, String uniformBlockName);
         [Slot(306)]
@@ -50271,35 +50271,35 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(310)]
         static extern Int32 glGetUniformLocation(UInt32 program, String name);
         [Slot(311)]
-        static extern unsafe void glGetUniformSubroutineuiv(OpenTK.Graphics.OpenGL4.ShaderType shadertype, Int32 location, [OutAttribute] UInt32* @params);
+        static extern unsafe void glGetUniformSubroutineuiv(System.Int32 shadertype, Int32 location, [OutAttribute] UInt32* @params);
         [Slot(312)]
         static extern unsafe void glGetUniformuiv(UInt32 program, Int32 location, [OutAttribute] UInt32* @params);
         [Slot(313)]
-        static extern unsafe void glGetVertexAttribdv(UInt32 index, OpenTK.Graphics.OpenGL4.VertexAttribParameter pname, [OutAttribute] Double* @params);
+        static extern unsafe void glGetVertexAttribdv(UInt32 index, System.Int32 pname, [OutAttribute] Double* @params);
         [Slot(314)]
-        static extern unsafe void glGetVertexAttribfv(UInt32 index, OpenTK.Graphics.OpenGL4.VertexAttribParameter pname, [OutAttribute] Single* @params);
+        static extern unsafe void glGetVertexAttribfv(UInt32 index, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(315)]
-        static extern unsafe void glGetVertexAttribIiv(UInt32 index, OpenTK.Graphics.OpenGL4.VertexAttribParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetVertexAttribIiv(UInt32 index, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(316)]
-        static extern unsafe void glGetVertexAttribIuiv(UInt32 index, OpenTK.Graphics.OpenGL4.VertexAttribParameter pname, [OutAttribute] UInt32* @params);
+        static extern unsafe void glGetVertexAttribIuiv(UInt32 index, System.Int32 pname, [OutAttribute] UInt32* @params);
         [Slot(317)]
-        static extern unsafe void glGetVertexAttribiv(UInt32 index, OpenTK.Graphics.OpenGL4.VertexAttribParameter pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetVertexAttribiv(UInt32 index, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(318)]
-        static extern unsafe void glGetVertexAttribLdv(UInt32 index, OpenTK.Graphics.OpenGL4.VertexAttribParameter pname, [OutAttribute] Double* @params);
+        static extern unsafe void glGetVertexAttribLdv(UInt32 index, System.Int32 pname, [OutAttribute] Double* @params);
         [Slot(320)]
-        static extern void glGetVertexAttribPointerv(UInt32 index, OpenTK.Graphics.OpenGL4.VertexAttribPointerParameter pname, [OutAttribute] IntPtr pointer);
+        static extern void glGetVertexAttribPointerv(UInt32 index, System.Int32 pname, [OutAttribute] IntPtr pointer);
         [Slot(321)]
-        static extern void glHint(OpenTK.Graphics.OpenGL4.HintTarget target, OpenTK.Graphics.OpenGL4.HintMode mode);
+        static extern void glHint(System.Int32 target, System.Int32 mode);
         [Slot(322)]
-        static extern void glHistogram(OpenTK.Graphics.OpenGL4.HistogramTarget target, Int32 width, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, bool sink);
+        static extern void glHistogram(System.Int32 target, Int32 width, System.Int32 internalformat, bool sink);
         [Slot(323)]
         static extern void glInvalidateBufferData(UInt32 buffer);
         [Slot(324)]
         static extern void glInvalidateBufferSubData(UInt32 buffer, IntPtr offset, IntPtr length);
         [Slot(325)]
-        static extern unsafe void glInvalidateFramebuffer(OpenTK.Graphics.OpenGL4.FramebufferTarget target, Int32 numAttachments, OpenTK.Graphics.OpenGL4.FramebufferAttachment* attachments);
+        static extern unsafe void glInvalidateFramebuffer(System.Int32 target, Int32 numAttachments, System.Int32* attachments);
         [Slot(326)]
-        static extern unsafe void glInvalidateSubFramebuffer(OpenTK.Graphics.OpenGL4.FramebufferTarget target, Int32 numAttachments, OpenTK.Graphics.OpenGL4.FramebufferAttachment* attachments, Int32 x, Int32 y, Int32 width, Int32 height);
+        static extern unsafe void glInvalidateSubFramebuffer(System.Int32 target, Int32 numAttachments, System.Int32* attachments, Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(327)]
         static extern void glInvalidateTexImage(UInt32 texture, Int32 level);
         [Slot(328)]
@@ -50307,9 +50307,9 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(329)]
         static extern bool glIsBuffer(UInt32 buffer);
         [Slot(330)]
-        static extern bool glIsEnabled(OpenTK.Graphics.OpenGL4.EnableCap cap);
+        static extern bool glIsEnabled(System.Int32 cap);
         [Slot(331)]
-        static extern bool glIsEnabledi(OpenTK.Graphics.OpenGL4.IndexedEnableCap target, UInt32 index);
+        static extern bool glIsEnabledi(System.Int32 target, UInt32 index);
         [Slot(332)]
         static extern bool glIsFramebuffer(UInt32 framebuffer);
         [Slot(335)]
@@ -50337,73 +50337,73 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(347)]
         static extern void glLinkProgram(UInt32 program);
         [Slot(348)]
-        static extern void glLogicOp(OpenTK.Graphics.OpenGL4.LogicOp opcode);
+        static extern void glLogicOp(System.Int32 opcode);
         [Slot(353)]
-        static extern IntPtr glMapBuffer(OpenTK.Graphics.OpenGL4.BufferTarget target, OpenTK.Graphics.OpenGL4.BufferAccess access);
+        static extern IntPtr glMapBuffer(System.Int32 target, System.Int32 access);
         [Slot(354)]
-        static extern IntPtr glMapBufferRange(OpenTK.Graphics.OpenGL4.BufferTarget target, IntPtr offset, IntPtr length, OpenTK.Graphics.OpenGL4.BufferAccessMask access);
+        static extern IntPtr glMapBufferRange(System.Int32 target, IntPtr offset, IntPtr length, System.Int32 access);
         [Slot(355)]
-        static extern void glMemoryBarrier(OpenTK.Graphics.OpenGL4.MemoryBarrierFlags barriers);
+        static extern void glMemoryBarrier(System.Int32 barriers);
         [Slot(356)]
-        static extern void glMinmax(OpenTK.Graphics.OpenGL4.MinmaxTarget target, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, bool sink);
+        static extern void glMinmax(System.Int32 target, System.Int32 internalformat, bool sink);
         [Slot(357)]
         static extern void glMinSampleShading(Single value);
         [Slot(359)]
-        static extern unsafe void glMultiDrawArrays(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32* first, Int32* count, Int32 drawcount);
+        static extern unsafe void glMultiDrawArrays(System.Int32 mode, Int32* first, Int32* count, Int32 drawcount);
         [Slot(360)]
-        static extern void glMultiDrawArraysIndirect(OpenTK.Graphics.OpenGL4.PrimitiveType mode, IntPtr indirect, Int32 drawcount, Int32 stride);
+        static extern void glMultiDrawArraysIndirect(System.Int32 mode, IntPtr indirect, Int32 drawcount, Int32 stride);
         [Slot(362)]
-        static extern unsafe void glMultiDrawElements(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32* count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 drawcount);
+        static extern unsafe void glMultiDrawElements(System.Int32 mode, Int32* count, System.Int32 type, IntPtr indices, Int32 drawcount);
         [Slot(363)]
-        static extern unsafe void glMultiDrawElementsBaseVertex(OpenTK.Graphics.OpenGL4.PrimitiveType mode, Int32* count, OpenTK.Graphics.OpenGL4.DrawElementsType type, IntPtr indices, Int32 drawcount, Int32* basevertex);
+        static extern unsafe void glMultiDrawElementsBaseVertex(System.Int32 mode, Int32* count, System.Int32 type, IntPtr indices, Int32 drawcount, Int32* basevertex);
         [Slot(364)]
-        static extern void glMultiDrawElementsIndirect(OpenTK.Graphics.OpenGL4.All mode, OpenTK.Graphics.OpenGL4.All type, IntPtr indirect, Int32 drawcount, Int32 stride);
+        static extern void glMultiDrawElementsIndirect(System.Int32 mode, System.Int32 type, IntPtr indirect, Int32 drawcount, Int32 stride);
         [Slot(366)]
-        static extern void glMultiTexCoordP1ui(OpenTK.Graphics.OpenGL4.TextureUnit texture, OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 coords);
+        static extern void glMultiTexCoordP1ui(System.Int32 texture, System.Int32 type, UInt32 coords);
         [Slot(367)]
-        static extern unsafe void glMultiTexCoordP1uiv(OpenTK.Graphics.OpenGL4.TextureUnit texture, OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* coords);
+        static extern unsafe void glMultiTexCoordP1uiv(System.Int32 texture, System.Int32 type, UInt32* coords);
         [Slot(368)]
-        static extern void glMultiTexCoordP2ui(OpenTK.Graphics.OpenGL4.TextureUnit texture, OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 coords);
+        static extern void glMultiTexCoordP2ui(System.Int32 texture, System.Int32 type, UInt32 coords);
         [Slot(369)]
-        static extern unsafe void glMultiTexCoordP2uiv(OpenTK.Graphics.OpenGL4.TextureUnit texture, OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* coords);
+        static extern unsafe void glMultiTexCoordP2uiv(System.Int32 texture, System.Int32 type, UInt32* coords);
         [Slot(370)]
-        static extern void glMultiTexCoordP3ui(OpenTK.Graphics.OpenGL4.TextureUnit texture, OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 coords);
+        static extern void glMultiTexCoordP3ui(System.Int32 texture, System.Int32 type, UInt32 coords);
         [Slot(371)]
-        static extern unsafe void glMultiTexCoordP3uiv(OpenTK.Graphics.OpenGL4.TextureUnit texture, OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* coords);
+        static extern unsafe void glMultiTexCoordP3uiv(System.Int32 texture, System.Int32 type, UInt32* coords);
         [Slot(372)]
-        static extern void glMultiTexCoordP4ui(OpenTK.Graphics.OpenGL4.TextureUnit texture, OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 coords);
+        static extern void glMultiTexCoordP4ui(System.Int32 texture, System.Int32 type, UInt32 coords);
         [Slot(373)]
-        static extern unsafe void glMultiTexCoordP4uiv(OpenTK.Graphics.OpenGL4.TextureUnit texture, OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* coords);
+        static extern unsafe void glMultiTexCoordP4uiv(System.Int32 texture, System.Int32 type, UInt32* coords);
         [Slot(375)]
-        static extern void glNormalP3ui(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 coords);
+        static extern void glNormalP3ui(System.Int32 type, UInt32 coords);
         [Slot(376)]
-        static extern unsafe void glNormalP3uiv(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* coords);
+        static extern unsafe void glNormalP3uiv(System.Int32 type, UInt32* coords);
         [Slot(377)]
-        static extern void glObjectLabel(OpenTK.Graphics.OpenGL4.ObjectLabelIdentifier identifier, UInt32 name, Int32 length, String label);
+        static extern void glObjectLabel(System.Int32 identifier, UInt32 name, Int32 length, String label);
         [Slot(379)]
         static extern void glObjectPtrLabel(IntPtr ptr, Int32 length, String label);
         [Slot(381)]
-        static extern unsafe void glPatchParameterfv(OpenTK.Graphics.OpenGL4.PatchParameterFloat pname, Single* values);
+        static extern unsafe void glPatchParameterfv(System.Int32 pname, Single* values);
         [Slot(382)]
-        static extern void glPatchParameteri(OpenTK.Graphics.OpenGL4.PatchParameterInt pname, Int32 value);
+        static extern void glPatchParameteri(System.Int32 pname, Int32 value);
         [Slot(383)]
         static extern void glPauseTransformFeedback();
         [Slot(384)]
-        static extern void glPixelStoref(OpenTK.Graphics.OpenGL4.PixelStoreParameter pname, Single param);
+        static extern void glPixelStoref(System.Int32 pname, Single param);
         [Slot(385)]
-        static extern void glPixelStorei(OpenTK.Graphics.OpenGL4.PixelStoreParameter pname, Int32 param);
+        static extern void glPixelStorei(System.Int32 pname, Int32 param);
         [Slot(386)]
-        static extern void glPointParameterf(OpenTK.Graphics.OpenGL4.PointParameterName pname, Single param);
+        static extern void glPointParameterf(System.Int32 pname, Single param);
         [Slot(387)]
-        static extern unsafe void glPointParameterfv(OpenTK.Graphics.OpenGL4.PointParameterName pname, Single* @params);
+        static extern unsafe void glPointParameterfv(System.Int32 pname, Single* @params);
         [Slot(388)]
-        static extern void glPointParameteri(OpenTK.Graphics.OpenGL4.PointParameterName pname, Int32 param);
+        static extern void glPointParameteri(System.Int32 pname, Int32 param);
         [Slot(389)]
-        static extern unsafe void glPointParameteriv(OpenTK.Graphics.OpenGL4.PointParameterName pname, Int32* @params);
+        static extern unsafe void glPointParameteriv(System.Int32 pname, Int32* @params);
         [Slot(390)]
         static extern void glPointSize(Single size);
         [Slot(391)]
-        static extern void glPolygonMode(OpenTK.Graphics.OpenGL4.MaterialFace face, OpenTK.Graphics.OpenGL4.PolygonMode mode);
+        static extern void glPolygonMode(System.Int32 face, System.Int32 mode);
         [Slot(392)]
         static extern void glPolygonOffset(Single factor, Single units);
         [Slot(393)]
@@ -50411,9 +50411,9 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(395)]
         static extern void glPrimitiveRestartIndex(UInt32 index);
         [Slot(396)]
-        static extern void glProgramBinary(UInt32 program, OpenTK.Graphics.OpenGL4.BinaryFormat binaryFormat, IntPtr binary, Int32 length);
+        static extern void glProgramBinary(UInt32 program, System.Int32 binaryFormat, IntPtr binary, Int32 length);
         [Slot(397)]
-        static extern void glProgramParameteri(UInt32 program, OpenTK.Graphics.OpenGL4.ProgramParameterName pname, Int32 value);
+        static extern void glProgramParameteri(UInt32 program, System.Int32 pname, Int32 value);
         [Slot(398)]
         static extern void glProgramUniform1d(UInt32 program, Int32 location, Double v0);
         [Slot(399)]
@@ -50515,25 +50515,25 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(449)]
         static extern unsafe void glProgramUniformMatrix4x3fv(UInt32 program, Int32 location, Int32 count, bool transpose, Single* value);
         [Slot(450)]
-        static extern void glProvokingVertex(OpenTK.Graphics.OpenGL4.ProvokingVertexMode mode);
+        static extern void glProvokingVertex(System.Int32 mode);
         [Slot(451)]
-        static extern void glPushDebugGroup(OpenTK.Graphics.OpenGL4.DebugSourceExternal source, UInt32 id, Int32 length, String message);
+        static extern void glPushDebugGroup(System.Int32 source, UInt32 id, Int32 length, String message);
         [Slot(453)]
-        static extern void glQueryCounter(UInt32 id, OpenTK.Graphics.OpenGL4.QueryCounterTarget target);
+        static extern void glQueryCounter(UInt32 id, System.Int32 target);
         [Slot(454)]
-        static extern void glReadBuffer(OpenTK.Graphics.OpenGL4.ReadBufferMode mode);
+        static extern void glReadBuffer(System.Int32 mode);
         [Slot(456)]
-        static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [OutAttribute] IntPtr pixels);
+        static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr pixels);
         [Slot(457)]
         static extern void glReleaseShaderCompiler();
         [Slot(458)]
-        static extern void glRenderbufferStorage(OpenTK.Graphics.OpenGL4.RenderbufferTarget target, OpenTK.Graphics.OpenGL4.RenderbufferStorage internalformat, Int32 width, Int32 height);
+        static extern void glRenderbufferStorage(System.Int32 target, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(459)]
-        static extern void glRenderbufferStorageMultisample(OpenTK.Graphics.OpenGL4.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.OpenGL4.RenderbufferStorage internalformat, Int32 width, Int32 height);
+        static extern void glRenderbufferStorageMultisample(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(460)]
-        static extern void glResetHistogram(OpenTK.Graphics.OpenGL4.HistogramTarget target);
+        static extern void glResetHistogram(System.Int32 target);
         [Slot(461)]
-        static extern void glResetMinmax(OpenTK.Graphics.OpenGL4.MinmaxTarget target);
+        static extern void glResetMinmax(System.Int32 target);
         [Slot(462)]
         static extern void glResumeTransformFeedback();
         [Slot(463)]
@@ -50541,17 +50541,17 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(464)]
         static extern void glSampleMaski(UInt32 index, UInt32 mask);
         [Slot(465)]
-        static extern void glSamplerParameterf(UInt32 sampler, OpenTK.Graphics.OpenGL4.SamplerParameterName pname, Single param);
+        static extern void glSamplerParameterf(UInt32 sampler, System.Int32 pname, Single param);
         [Slot(466)]
-        static extern unsafe void glSamplerParameterfv(UInt32 sampler, OpenTK.Graphics.OpenGL4.SamplerParameterName pname, Single* param);
+        static extern unsafe void glSamplerParameterfv(UInt32 sampler, System.Int32 pname, Single* param);
         [Slot(467)]
-        static extern void glSamplerParameteri(UInt32 sampler, OpenTK.Graphics.OpenGL4.SamplerParameterName pname, Int32 param);
+        static extern void glSamplerParameteri(UInt32 sampler, System.Int32 pname, Int32 param);
         [Slot(468)]
-        static extern unsafe void glSamplerParameterIiv(UInt32 sampler, OpenTK.Graphics.OpenGL4.SamplerParameterName pname, Int32* param);
+        static extern unsafe void glSamplerParameterIiv(UInt32 sampler, System.Int32 pname, Int32* param);
         [Slot(469)]
-        static extern unsafe void glSamplerParameterIuiv(UInt32 sampler, OpenTK.Graphics.OpenGL4.SamplerParameterName pname, UInt32* param);
+        static extern unsafe void glSamplerParameterIuiv(UInt32 sampler, System.Int32 pname, UInt32* param);
         [Slot(470)]
-        static extern unsafe void glSamplerParameteriv(UInt32 sampler, OpenTK.Graphics.OpenGL4.SamplerParameterName pname, Int32* param);
+        static extern unsafe void glSamplerParameteriv(UInt32 sampler, System.Int32 pname, Int32* param);
         [Slot(471)]
         static extern void glScissor(Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(472)]
@@ -50561,91 +50561,91 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(474)]
         static extern unsafe void glScissorIndexedv(UInt32 index, Int32* v);
         [Slot(475)]
-        static extern void glSecondaryColorP3ui(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 color);
+        static extern void glSecondaryColorP3ui(System.Int32 type, UInt32 color);
         [Slot(476)]
-        static extern unsafe void glSecondaryColorP3uiv(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* color);
+        static extern unsafe void glSecondaryColorP3uiv(System.Int32 type, UInt32* color);
         [Slot(477)]
-        static extern void glSeparableFilter2D(OpenTK.Graphics.OpenGL4.SeparableTarget target, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr row, IntPtr column);
+        static extern void glSeparableFilter2D(System.Int32 target, System.Int32 internalformat, Int32 width, Int32 height, System.Int32 format, System.Int32 type, IntPtr row, IntPtr column);
         [Slot(478)]
-        static extern unsafe void glShaderBinary(Int32 count, UInt32* shaders, OpenTK.Graphics.OpenGL4.BinaryFormat binaryformat, IntPtr binary, Int32 length);
+        static extern unsafe void glShaderBinary(Int32 count, UInt32* shaders, System.Int32 binaryformat, IntPtr binary, Int32 length);
         [Slot(479)]
         static extern unsafe void glShaderSource(UInt32 shader, Int32 count, String[] @string, Int32* length);
         [Slot(480)]
         static extern void glShaderStorageBlockBinding(UInt32 program, UInt32 storageBlockIndex, UInt32 storageBlockBinding);
         [Slot(481)]
-        static extern void glStencilFunc(OpenTK.Graphics.OpenGL4.StencilFunction func, Int32 @ref, UInt32 mask);
+        static extern void glStencilFunc(System.Int32 func, Int32 @ref, UInt32 mask);
         [Slot(482)]
-        static extern void glStencilFuncSeparate(OpenTK.Graphics.OpenGL4.StencilFace face, OpenTK.Graphics.OpenGL4.StencilFunction func, Int32 @ref, UInt32 mask);
+        static extern void glStencilFuncSeparate(System.Int32 face, System.Int32 func, Int32 @ref, UInt32 mask);
         [Slot(483)]
         static extern void glStencilMask(UInt32 mask);
         [Slot(484)]
-        static extern void glStencilMaskSeparate(OpenTK.Graphics.OpenGL4.StencilFace face, UInt32 mask);
+        static extern void glStencilMaskSeparate(System.Int32 face, UInt32 mask);
         [Slot(485)]
-        static extern void glStencilOp(OpenTK.Graphics.OpenGL4.StencilOp fail, OpenTK.Graphics.OpenGL4.StencilOp zfail, OpenTK.Graphics.OpenGL4.StencilOp zpass);
+        static extern void glStencilOp(System.Int32 fail, System.Int32 zfail, System.Int32 zpass);
         [Slot(486)]
-        static extern void glStencilOpSeparate(OpenTK.Graphics.OpenGL4.StencilFace face, OpenTK.Graphics.OpenGL4.StencilOp sfail, OpenTK.Graphics.OpenGL4.StencilOp dpfail, OpenTK.Graphics.OpenGL4.StencilOp dppass);
+        static extern void glStencilOpSeparate(System.Int32 face, System.Int32 sfail, System.Int32 dpfail, System.Int32 dppass);
         [Slot(487)]
-        static extern void glTexBuffer(OpenTK.Graphics.OpenGL4.TextureBufferTarget target, OpenTK.Graphics.OpenGL4.SizedInternalFormat internalformat, UInt32 buffer);
+        static extern void glTexBuffer(System.Int32 target, System.Int32 internalformat, UInt32 buffer);
         [Slot(488)]
-        static extern void glTexBufferRange(OpenTK.Graphics.OpenGL4.TextureBufferTarget target, OpenTK.Graphics.OpenGL4.SizedInternalFormat internalformat, UInt32 buffer, IntPtr offset, IntPtr size);
+        static extern void glTexBufferRange(System.Int32 target, System.Int32 internalformat, UInt32 buffer, IntPtr offset, IntPtr size);
         [Slot(489)]
-        static extern void glTexCoordP1ui(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 coords);
+        static extern void glTexCoordP1ui(System.Int32 type, UInt32 coords);
         [Slot(490)]
-        static extern unsafe void glTexCoordP1uiv(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* coords);
+        static extern unsafe void glTexCoordP1uiv(System.Int32 type, UInt32* coords);
         [Slot(491)]
-        static extern void glTexCoordP2ui(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 coords);
+        static extern void glTexCoordP2ui(System.Int32 type, UInt32 coords);
         [Slot(492)]
-        static extern unsafe void glTexCoordP2uiv(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* coords);
+        static extern unsafe void glTexCoordP2uiv(System.Int32 type, UInt32* coords);
         [Slot(493)]
-        static extern void glTexCoordP3ui(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 coords);
+        static extern void glTexCoordP3ui(System.Int32 type, UInt32 coords);
         [Slot(494)]
-        static extern unsafe void glTexCoordP3uiv(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* coords);
+        static extern unsafe void glTexCoordP3uiv(System.Int32 type, UInt32* coords);
         [Slot(495)]
-        static extern void glTexCoordP4ui(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 coords);
+        static extern void glTexCoordP4ui(System.Int32 type, UInt32 coords);
         [Slot(496)]
-        static extern unsafe void glTexCoordP4uiv(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* coords);
+        static extern unsafe void glTexCoordP4uiv(System.Int32 type, UInt32* coords);
         [Slot(497)]
-        static extern void glTexImage1D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 width, Int32 border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr pixels);
+        static extern void glTexImage1D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(498)]
-        static extern void glTexImage2D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr pixels);
+        static extern void glTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(499)]
-        static extern void glTexImage2DMultisample(OpenTK.Graphics.OpenGL4.TextureTargetMultisample target, Int32 samples, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 width, Int32 height, bool fixedsamplelocations);
+        static extern void glTexImage2DMultisample(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height, bool fixedsamplelocations);
         [Slot(500)]
-        static extern void glTexImage3D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr pixels);
+        static extern void glTexImage3D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(501)]
-        static extern void glTexImage3DMultisample(OpenTK.Graphics.OpenGL4.TextureTargetMultisample target, Int32 samples, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
+        static extern void glTexImage3DMultisample(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
         [Slot(503)]
-        static extern void glTexParameterf(OpenTK.Graphics.OpenGL4.TextureTarget target, OpenTK.Graphics.OpenGL4.TextureParameterName pname, Single param);
+        static extern void glTexParameterf(System.Int32 target, System.Int32 pname, Single param);
         [Slot(504)]
-        static extern unsafe void glTexParameterfv(OpenTK.Graphics.OpenGL4.TextureTarget target, OpenTK.Graphics.OpenGL4.TextureParameterName pname, Single* @params);
+        static extern unsafe void glTexParameterfv(System.Int32 target, System.Int32 pname, Single* @params);
         [Slot(505)]
-        static extern void glTexParameteri(OpenTK.Graphics.OpenGL4.TextureTarget target, OpenTK.Graphics.OpenGL4.TextureParameterName pname, Int32 param);
+        static extern void glTexParameteri(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(506)]
-        static extern unsafe void glTexParameterIiv(OpenTK.Graphics.OpenGL4.TextureTarget target, OpenTK.Graphics.OpenGL4.TextureParameterName pname, Int32* @params);
+        static extern unsafe void glTexParameterIiv(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(507)]
-        static extern unsafe void glTexParameterIuiv(OpenTK.Graphics.OpenGL4.TextureTarget target, OpenTK.Graphics.OpenGL4.TextureParameterName pname, UInt32* @params);
+        static extern unsafe void glTexParameterIuiv(System.Int32 target, System.Int32 pname, UInt32* @params);
         [Slot(508)]
-        static extern unsafe void glTexParameteriv(OpenTK.Graphics.OpenGL4.TextureTarget target, OpenTK.Graphics.OpenGL4.TextureParameterName pname, Int32* @params);
+        static extern unsafe void glTexParameteriv(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(509)]
-        static extern void glTexStorage1D(OpenTK.Graphics.OpenGL4.TextureTarget1d target, Int32 levels, OpenTK.Graphics.OpenGL4.SizedInternalFormat internalformat, Int32 width);
+        static extern void glTexStorage1D(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
         [Slot(510)]
-        static extern void glTexStorage2D(OpenTK.Graphics.OpenGL4.TextureTarget2d target, Int32 levels, OpenTK.Graphics.OpenGL4.SizedInternalFormat internalformat, Int32 width, Int32 height);
+        static extern void glTexStorage2D(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(511)]
-        static extern void glTexStorage2DMultisample(OpenTK.Graphics.OpenGL4.TextureTargetMultisample2d target, Int32 samples, OpenTK.Graphics.OpenGL4.SizedInternalFormat internalformat, Int32 width, Int32 height, bool fixedsamplelocations);
+        static extern void glTexStorage2DMultisample(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height, bool fixedsamplelocations);
         [Slot(512)]
-        static extern void glTexStorage3D(OpenTK.Graphics.OpenGL4.TextureTarget3d target, Int32 levels, OpenTK.Graphics.OpenGL4.SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth);
+        static extern void glTexStorage3D(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
         [Slot(513)]
-        static extern void glTexStorage3DMultisample(OpenTK.Graphics.OpenGL4.TextureTargetMultisample3d target, Int32 samples, OpenTK.Graphics.OpenGL4.SizedInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
+        static extern void glTexStorage3DMultisample(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
         [Slot(514)]
-        static extern void glTexSubImage1D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, Int32 xoffset, Int32 width, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr pixels);
+        static extern void glTexSubImage1D(System.Int32 target, Int32 level, Int32 xoffset, Int32 width, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(515)]
-        static extern void glTexSubImage2D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr pixels);
+        static extern void glTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(516)]
-        static extern void glTexSubImage3D(OpenTK.Graphics.OpenGL4.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, IntPtr pixels);
+        static extern void glTexSubImage3D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(517)]
-        static extern void glTextureView(UInt32 texture, OpenTK.Graphics.OpenGL4.TextureTarget target, UInt32 origtexture, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, UInt32 minlevel, UInt32 numlevels, UInt32 minlayer, UInt32 numlayers);
+        static extern void glTextureView(UInt32 texture, System.Int32 target, UInt32 origtexture, System.Int32 internalformat, UInt32 minlevel, UInt32 numlevels, UInt32 minlayer, UInt32 numlayers);
         [Slot(518)]
-        static extern void glTransformFeedbackVaryings(UInt32 program, Int32 count, String[] varyings, OpenTK.Graphics.OpenGL4.TransformFeedbackMode bufferMode);
+        static extern void glTransformFeedbackVaryings(UInt32 program, Int32 count, String[] varyings, System.Int32 bufferMode);
         [Slot(519)]
         static extern void glUniform1d(Int32 location, Double x);
         [Slot(520)]
@@ -50749,13 +50749,13 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(571)]
         static extern unsafe void glUniformMatrix4x3fv(Int32 location, Int32 count, bool transpose, Single* value);
         [Slot(572)]
-        static extern unsafe void glUniformSubroutinesuiv(OpenTK.Graphics.OpenGL4.ShaderType shadertype, Int32 count, UInt32* indices);
+        static extern unsafe void glUniformSubroutinesuiv(System.Int32 shadertype, Int32 count, UInt32* indices);
         [Slot(573)]
-        static extern bool glUnmapBuffer(OpenTK.Graphics.OpenGL4.BufferTarget target);
+        static extern bool glUnmapBuffer(System.Int32 target);
         [Slot(574)]
         static extern void glUseProgram(UInt32 program);
         [Slot(575)]
-        static extern void glUseProgramStages(UInt32 pipeline, OpenTK.Graphics.OpenGL4.ProgramStageMask stages, UInt32 program);
+        static extern void glUseProgramStages(UInt32 pipeline, System.Int32 stages, UInt32 program);
         [Slot(576)]
         static extern void glValidateProgram(UInt32 program);
         [Slot(577)]
@@ -50837,7 +50837,7 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(615)]
         static extern void glVertexAttribDivisor(UInt32 index, UInt32 divisor);
         [Slot(616)]
-        static extern void glVertexAttribFormat(UInt32 attribindex, Int32 size, OpenTK.Graphics.OpenGL4.VertexAttribType type, bool normalized, UInt32 relativeoffset);
+        static extern void glVertexAttribFormat(UInt32 attribindex, Int32 size, System.Int32 type, bool normalized, UInt32 relativeoffset);
         [Slot(617)]
         static extern void glVertexAttribI1i(UInt32 index, Int32 x);
         [Slot(618)]
@@ -50879,9 +50879,9 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(636)]
         static extern unsafe void glVertexAttribI4usv(UInt32 index, UInt16* v);
         [Slot(637)]
-        static extern void glVertexAttribIFormat(UInt32 attribindex, Int32 size, OpenTK.Graphics.OpenGL4.VertexAttribIntegerType type, UInt32 relativeoffset);
+        static extern void glVertexAttribIFormat(UInt32 attribindex, Int32 size, System.Int32 type, UInt32 relativeoffset);
         [Slot(638)]
-        static extern void glVertexAttribIPointer(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL4.VertexAttribIntegerType type, Int32 stride, IntPtr pointer);
+        static extern void glVertexAttribIPointer(UInt32 index, Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(639)]
         static extern void glVertexAttribL1d(UInt32 index, Double x);
         [Slot(640)]
@@ -50899,41 +50899,41 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(648)]
         static extern unsafe void glVertexAttribL4dv(UInt32 index, Double* v);
         [Slot(649)]
-        static extern void glVertexAttribLFormat(UInt32 attribindex, Int32 size, OpenTK.Graphics.OpenGL4.VertexAttribDoubleType type, UInt32 relativeoffset);
+        static extern void glVertexAttribLFormat(UInt32 attribindex, Int32 size, System.Int32 type, UInt32 relativeoffset);
         [Slot(650)]
-        static extern void glVertexAttribLPointer(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL4.VertexAttribDoubleType type, Int32 stride, IntPtr pointer);
+        static extern void glVertexAttribLPointer(UInt32 index, Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(651)]
-        static extern void glVertexAttribP1ui(UInt32 index, OpenTK.Graphics.OpenGL4.PackedPointerType type, bool normalized, UInt32 value);
+        static extern void glVertexAttribP1ui(UInt32 index, System.Int32 type, bool normalized, UInt32 value);
         [Slot(652)]
-        static extern unsafe void glVertexAttribP1uiv(UInt32 index, OpenTK.Graphics.OpenGL4.PackedPointerType type, bool normalized, UInt32* value);
+        static extern unsafe void glVertexAttribP1uiv(UInt32 index, System.Int32 type, bool normalized, UInt32* value);
         [Slot(653)]
-        static extern void glVertexAttribP2ui(UInt32 index, OpenTK.Graphics.OpenGL4.PackedPointerType type, bool normalized, UInt32 value);
+        static extern void glVertexAttribP2ui(UInt32 index, System.Int32 type, bool normalized, UInt32 value);
         [Slot(654)]
-        static extern unsafe void glVertexAttribP2uiv(UInt32 index, OpenTK.Graphics.OpenGL4.PackedPointerType type, bool normalized, UInt32* value);
+        static extern unsafe void glVertexAttribP2uiv(UInt32 index, System.Int32 type, bool normalized, UInt32* value);
         [Slot(655)]
-        static extern void glVertexAttribP3ui(UInt32 index, OpenTK.Graphics.OpenGL4.PackedPointerType type, bool normalized, UInt32 value);
+        static extern void glVertexAttribP3ui(UInt32 index, System.Int32 type, bool normalized, UInt32 value);
         [Slot(656)]
-        static extern unsafe void glVertexAttribP3uiv(UInt32 index, OpenTK.Graphics.OpenGL4.PackedPointerType type, bool normalized, UInt32* value);
+        static extern unsafe void glVertexAttribP3uiv(UInt32 index, System.Int32 type, bool normalized, UInt32* value);
         [Slot(657)]
-        static extern void glVertexAttribP4ui(UInt32 index, OpenTK.Graphics.OpenGL4.PackedPointerType type, bool normalized, UInt32 value);
+        static extern void glVertexAttribP4ui(UInt32 index, System.Int32 type, bool normalized, UInt32 value);
         [Slot(658)]
-        static extern unsafe void glVertexAttribP4uiv(UInt32 index, OpenTK.Graphics.OpenGL4.PackedPointerType type, bool normalized, UInt32* value);
+        static extern unsafe void glVertexAttribP4uiv(UInt32 index, System.Int32 type, bool normalized, UInt32* value);
         [Slot(659)]
-        static extern void glVertexAttribPointer(UInt32 index, Int32 size, OpenTK.Graphics.OpenGL4.VertexAttribPointerType type, bool normalized, Int32 stride, IntPtr pointer);
+        static extern void glVertexAttribPointer(UInt32 index, Int32 size, System.Int32 type, bool normalized, Int32 stride, IntPtr pointer);
         [Slot(660)]
         static extern void glVertexBindingDivisor(UInt32 bindingindex, UInt32 divisor);
         [Slot(661)]
-        static extern void glVertexP2ui(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 value);
+        static extern void glVertexP2ui(System.Int32 type, UInt32 value);
         [Slot(662)]
-        static extern unsafe void glVertexP2uiv(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* value);
+        static extern unsafe void glVertexP2uiv(System.Int32 type, UInt32* value);
         [Slot(663)]
-        static extern void glVertexP3ui(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 value);
+        static extern void glVertexP3ui(System.Int32 type, UInt32 value);
         [Slot(664)]
-        static extern unsafe void glVertexP3uiv(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* value);
+        static extern unsafe void glVertexP3uiv(System.Int32 type, UInt32* value);
         [Slot(665)]
-        static extern void glVertexP4ui(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32 value);
+        static extern void glVertexP4ui(System.Int32 type, UInt32 value);
         [Slot(666)]
-        static extern unsafe void glVertexP4uiv(OpenTK.Graphics.OpenGL4.PackedPointerType type, UInt32* value);
+        static extern unsafe void glVertexP4uiv(System.Int32 type, UInt32* value);
         [Slot(667)]
         static extern void glViewport(Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(668)]
@@ -50943,28 +50943,28 @@ namespace OpenTK.Graphics.OpenGL4
         [Slot(670)]
         static extern unsafe void glViewportIndexedfv(UInt32 index, Single* v);
         [Slot(671)]
-        static extern OpenTK.Graphics.OpenGL4.WaitSyncStatus glWaitSync(IntPtr sync, OpenTK.Graphics.OpenGL4.WaitSyncFlags flags, UInt64 timeout);
+        static extern System.Int32 glWaitSync(IntPtr sync, System.Int32 flags, UInt64 timeout);
         [Slot(103)]
         static extern void glDebugMessageCallbackKHR(DebugProcKhr callback, IntPtr userParam);
         [Slot(106)]
-        static extern unsafe void glDebugMessageControlKHR(OpenTK.Graphics.OpenGL4.All source, OpenTK.Graphics.OpenGL4.All type, OpenTK.Graphics.OpenGL4.All severity, Int32 count, UInt32* ids, bool enabled);
+        static extern unsafe void glDebugMessageControlKHR(System.Int32 source, System.Int32 type, System.Int32 severity, Int32 count, UInt32* ids, bool enabled);
         [Slot(109)]
-        static extern void glDebugMessageInsertKHR(OpenTK.Graphics.OpenGL4.All source, OpenTK.Graphics.OpenGL4.All type, UInt32 id, OpenTK.Graphics.OpenGL4.All severity, Int32 length, String buf);
+        static extern void glDebugMessageInsertKHR(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, String buf);
         [Slot(211)]
-        static extern unsafe Int32 glGetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] OpenTK.Graphics.OpenGL4.All* sources, [OutAttribute] OpenTK.Graphics.OpenGL4.All* types, [OutAttribute] UInt32* ids, [OutAttribute] OpenTK.Graphics.OpenGL4.All* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
+        static extern unsafe Int32 glGetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] System.Int32* sources, [OutAttribute] System.Int32* types, [OutAttribute] UInt32* ids, [OutAttribute] System.Int32* severities, [OutAttribute] Int32* lengths, [OutAttribute] StringBuilder messageLog);
         [Slot(257)]
-        static extern unsafe void glGetObjectLabelKHR(OpenTK.Graphics.OpenGL4.All identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
+        static extern unsafe void glGetObjectLabelKHR(System.Int32 identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
         [Slot(259)]
         static extern unsafe void glGetObjectPtrLabelKHR(IntPtr ptr, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder label);
         [Slot(261)]
-        static extern void glGetPointervKHR(OpenTK.Graphics.OpenGL4.All pname, [OutAttribute] IntPtr @params);
+        static extern void glGetPointervKHR(System.Int32 pname, [OutAttribute] IntPtr @params);
         [Slot(378)]
-        static extern void glObjectLabelKHR(OpenTK.Graphics.OpenGL4.All identifier, UInt32 name, Int32 length, String label);
+        static extern void glObjectLabelKHR(System.Int32 identifier, UInt32 name, Int32 length, String label);
         [Slot(380)]
         static extern void glObjectPtrLabelKHR(IntPtr ptr, Int32 length, String label);
         [Slot(394)]
         static extern void glPopDebugGroupKHR();
         [Slot(452)]
-        static extern void glPushDebugGroupKHR(OpenTK.Graphics.OpenGL4.All source, UInt32 id, Int32 length, String message);
+        static extern void glPushDebugGroupKHR(System.Int32 source, UInt32 id, Int32 length, String message);
     }
 }
