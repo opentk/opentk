@@ -1,4 +1,4 @@
-﻿﻿#region License
+﻿#region License
 //
 // The Open Toolkit Library License
 //
@@ -77,8 +77,6 @@ namespace Bind
                 Directory.CreateDirectory(Settings.OutputPath);
 
             string temp_enums_file = Path.GetTempFileName();
-            string temp_delegates_file = Path.GetTempFileName();
-            string temp_core_file = Path.GetTempFileName();
             string temp_wrappers_file = Path.GetTempFileName();
 
             // Enums
@@ -114,44 +112,6 @@ namespace Bind
                 sw.WriteLine("}");
             }
 
-            // Delegates
-            using (BindStreamWriter sw = new BindStreamWriter(temp_delegates_file))
-            {
-                WriteLicense(sw);
-                sw.WriteLine("namespace {0}", Settings.OutputNamespace);
-                sw.WriteLine("{");
-                sw.Indent();
-
-                sw.WriteLine("using System;");
-                sw.WriteLine("using System.Security;");
-                sw.WriteLine("using System.Text;");
-                sw.WriteLine("using System.Runtime.InteropServices;");
-
-                sw.WriteLine("#pragma warning disable 0649");
-                WriteDelegates(sw, delegates);
-
-                sw.Unindent();
-                sw.WriteLine("}");
-            }
-
-            // Core
-            using (BindStreamWriter sw = new BindStreamWriter(temp_core_file))
-            {
-                WriteLicense(sw);
-                sw.WriteLine("namespace {0}", Settings.OutputNamespace);
-                sw.WriteLine("{");
-                sw.Indent();
-                //specWriter.WriteTypes(sw, Bind.Structures.Type.CSTypes);
-                sw.WriteLine("using System;");
-                sw.WriteLine("using System.Text;");
-                sw.WriteLine("using System.Runtime.InteropServices;");
-
-                WriteImports(sw, delegates);
-
-                sw.Unindent();
-                sw.WriteLine("}");
-            }
-
             // Wrappers
             using (BindStreamWriter sw = new BindStreamWriter(temp_wrappers_file))
             {
@@ -181,114 +141,7 @@ namespace Bind
             if (File.Exists(output_wrappers)) File.Delete(output_wrappers);
 
             File.Move(temp_enums_file, output_enums);
-            File.Move(temp_delegates_file, output_delegates);
-            File.Move(temp_core_file, output_core);
             File.Move(temp_wrappers_file, output_wrappers);
-        }
-
-        #endregion
-
-        #region WriteDelegates
-
-        void WriteDelegates(BindStreamWriter sw, DelegateCollection delegates)
-        {
-            Trace.WriteLine(String.Format("Writing delegates to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.DelegatesClass));
-
-            sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
-            sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
-
-            sw.WriteLine();
-            sw.WriteLine("partial class {0}", Settings.OutputClass);
-            sw.WriteLine("{");
-            sw.Indent();
-
-            // Write internal class to hold entry points
-            sw.WriteLine("internal static partial class {0}", Settings.DelegatesClass);
-            sw.WriteLine("{");
-            sw.Indent();
-
-            foreach (var overloads in delegates.Values)
-            {
-                // Generate only one delegate per entry point..
-                // Overloads are only used for wrapper generation,
-                // so ignore them.
-                var d = overloads.First();
-
-                sw.WriteLine("[SuppressUnmanagedCodeSecurity]");
-                sw.WriteLine("internal {0};", GetDeclarationString(d, true));
-                sw.WriteLine("internal {0}static {2} {1}{2} = Load_{2};",
-                         d.Unsafe ? "unsafe " : "",
-                         Settings.FunctionPrefix,
-                         d.Name);
-            }
-
-            foreach (var d in delegates.Values.Select(d => d.First()))
-            {
-                var load_d = new Delegate(d);
-                load_d.Name = "Load_" + load_d.Name;
-
-                sw.WriteLine("internal static {0}", GetDeclarationString(load_d, false));
-                sw.WriteLine("{");
-                sw.Indent();
-
-                sw.WriteLine("{2}{3}{0}{1} = ({2}{3}{1})GetExtensionDelegateStatic(\"{0}{1}\", typeof({2}{3}{1}));",
-                    Settings.FunctionPrefix,
-                    d.Name,
-                    Settings.DelegatesClass,
-                    Settings.NamespaceSeparator);
-                sw.WriteLine("{0}{1};",
-                    d.ReturnType.CurrentType != "void" ? "return " : "",
-                    GetInvocationString(d, false));
-
-                sw.Unindent();
-                sw.WriteLine("}");
-            }
-
-            sw.Unindent();
-            sw.WriteLine("}");
-
-            sw.Unindent();
-            sw.WriteLine("}");
-        }
-
-        #endregion
-
-        #region WriteImports
-
-        public void WriteImports(BindStreamWriter sw, DelegateCollection delegates)
-        {
-            Trace.WriteLine(String.Format("Writing imports to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.ImportsClass));
-
-            sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
-            sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
-
-            sw.WriteLine();
-            sw.WriteLine("partial class {0}", Settings.OutputClass);
-            sw.WriteLine("{");
-            sw.Indent();
-            sw.WriteLine();
-            sw.WriteLine("internal static partial class {0}", Settings.ImportsClass);
-            sw.WriteLine("{");
-            sw.Indent();
-            //sw.WriteLine("static {0}() {1} {2}", Settings.ImportsClass, "{", "}");    // Disable BeforeFieldInit
-            sw.WriteLine();
-            foreach (var overloads in delegates.Values)
-            {
-                var d = overloads.First(); // generate only 1 DllImport per entry point
-                sw.WriteLine("[System.Security.SuppressUnmanagedCodeSecurity()]");
-                sw.WriteLine(
-                    "[System.Runtime.InteropServices.DllImport({0}.Library, EntryPoint = \"{1}{2}\"{3})]",
-                    Settings.OutputClass,
-                    Settings.FunctionPrefix,
-                    d.EntryPoint,
-                    d.EntryPoint.EndsWith("W") || d.EntryPoint.EndsWith("A") ? ", CharSet = CharSet.Auto" : ", ExactSpelling = true"
-                );
-                sw.WriteLine("internal extern static {0};", GetDeclarationString(d, false));
-            }
-            sw.Unindent();
-            sw.WriteLine("}");
-            sw.Unindent();
-            sw.WriteLine("}");
         }
 
         #endregion
@@ -367,6 +220,7 @@ namespace Bind
             foreach (var d in wrappers.Values.SelectMany(e => e).Select(w => w.WrappedDelegate).Distinct())
             {
                 sw.WriteLine("[Slot({0})]", d.Slot);
+                sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
                 sw.WriteLine("static extern {0};", GetDeclarationString(d, false));
                 current_signature++;
             }
