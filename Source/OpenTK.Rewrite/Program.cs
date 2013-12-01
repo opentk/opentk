@@ -52,7 +52,6 @@ namespace OpenTK.Rewrite
             // We want to keep a valid symbols file (pdb or mdb)
             var read_params = new ReaderParameters();
             var write_params = new WriterParameters();
-#if false // Disabled because symbols file is locked during AfterBuild
             var pdb = Path.ChangeExtension(file, "pdb");
             var mdb = Path.ChangeExtension(file, "mdb");
             ISymbolReaderProvider provider = null;
@@ -67,7 +66,6 @@ namespace OpenTK.Rewrite
             read_params.SymbolReaderProvider = provider;
             read_params.ReadSymbols = true;
             write_params.WriteSymbols = true;
-#endif
 
             if (!String.IsNullOrEmpty(keyfile) && File.Exists(keyfile))
             {
@@ -347,24 +345,24 @@ namespace OpenTK.Rewrite
             int i;
             for (i = 0; i < method.Parameters.Count; i++)
             {
-                var p = method.Parameters[i];
+                var p = method.Module.Import(method.Parameters[i].ParameterType);
                 il.Emit(OpCodes.Ldarg, i);
 
-                if (p.ParameterType.IsByReference)
+                if (p.IsByReference)
                 {
-                    body.Variables.Add(new VariableDefinition(new PinnedType(p.ParameterType)));
+                    body.Variables.Add(new VariableDefinition(new PinnedType(p)));
                     var index = body.Variables.Count - 1;
                     il.Emit(OpCodes.Stloc, index);
                     il.Emit(OpCodes.Ldloc, index);
                     il.Emit(OpCodes.Conv_I);
                 }
-                else if (p.ParameterType.IsArray)
+                else if (p.IsArray)
                 {
-                    if (p.ParameterType.Name != method.Module.Import(typeof(string[])).Name)
+                    if (p.Name != method.Module.Import(typeof(string[])).Name)
                     {
                         // Pin the array and pass the address
                         // of its first element.
-                        var element_type = p.ParameterType.GetElementType();
+                        var element_type = p.GetElementType();
                         body.Variables.Add(new VariableDefinition(new PinnedType(new ByReferenceType(element_type))));
                         int pinned_index = body.Variables.Count - 1;
 
