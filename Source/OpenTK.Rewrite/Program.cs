@@ -44,7 +44,15 @@ namespace OpenTK.Rewrite
             program.Rewrite(file, key);
         }
 
+        // mscorlib types
         static AssemblyDefinition mscorlib;
+        static TypeDefinition TypeMarshal;
+        static TypeDefinition TypeStringBuilder;
+        static TypeDefinition TypeVoid;
+        static TypeDefinition TypeIntPtr;
+
+        // OpenTK.BindingsBase
+        static TypeDefinition TypeBindingsBase;
 
         void Rewrite(string file, string keyfile)
         {
@@ -99,9 +107,15 @@ namespace OpenTK.Rewrite
 
                 if (mscorlib == null)
                 {
-                    Console.Error.WriteLine("Falied to locate mscorlib");
+                    Console.Error.WriteLine("Failed to locate mscorlib");
                     return;
                 }
+                TypeMarshal = mscorlib.MainModule.GetType("System.Runtime.InteropServices.Marshal");
+                TypeStringBuilder = mscorlib.MainModule.GetType("System.Text.StringBuilder");
+                TypeVoid = mscorlib.MainModule.GetType("System.Void");
+                TypeIntPtr = mscorlib.MainModule.GetType("System.IntPtr");
+
+                TypeBindingsBase = assembly.Modules.Select(m => m.GetType("OpenTK.BindingsBase")).First();
 
                 foreach (var module in assembly.Modules)
                 {
@@ -238,6 +252,11 @@ namespace OpenTK.Rewrite
                 EmitReturnTypeWrapper(wrapper, native, body, il);
             }
 
+            if (wrapper.Parameters.Any(p => p.ParameterType.Name == "StringBuilder"))
+            {
+                EmitStringBuilderEpilogue(wrapper, native, body, il);
+            }
+
             // return
             il.Emit(OpCodes.Ret);
 
@@ -266,31 +285,76 @@ namespace OpenTK.Rewrite
 
                     var intptr_to_voidpointer = wrapper.Module.Import(mscorlib.MainModule.GetType("System.IntPtr").GetMethods()
                         .First(m =>
-                        {
-                            return
+                    {
+                        return
                                 m.Name == "op_Explicit" &&
-                                m.ReturnType.Name == "Void*";
-                        }));
+                        m.ReturnType.Name == "Void*";
+                    }));
 
                     var string_constructor = wrapper.Module.Import(mscorlib.MainModule.GetType("System.String").GetConstructors()
                         .First(m =>
-                        {
-                            var p = m.Parameters;
-                            return p.Count > 0 && p[0].ParameterType.Name == "SByte*";
-                        }));
+                    {
+                        var p = m.Parameters;
+                        return p.Count > 0 && p[0].ParameterType.Name == "SByte*";
+                    }));
 
                     il.Emit(OpCodes.Call, intptr_to_voidpointer);
                     il.Emit(OpCodes.Newobj, string_constructor);
                 }
+                else if (wrapper.ReturnType.Resolve().IsEnum)
+                {
+                    // Nothing to do
+                }
                 else
                 {
-                    Console.Error.WriteLine("Return wrappers not implemented yet ({0})", native.Name);
+                    Console.Error.WriteLine("Return wrapper for '{1}' not implemented yet ({0})", native.Name, wrapper.ReturnType.Name);
                 }
             }
             else
             {
                 // nothing to do, the native call leaves the return value
                 // on the stack and we return that unmodified to the caller.
+            }
+        }
+
+        static void EmitStringBuilderEpilogue(MethodDefinition wrapper, MethodDefinition native, MethodBody body, ILProcessor il)
+        {
+            for (int i = 0; i < wrapper.Parameters.Count; i++)
+            {
+                var p = wrapper.Parameters[i].ParameterType;
+                if (p.Name == "StringBuilder")
+                {
+                    // void GetShaderInfoLog(..., StringBuilder foo)
+                    // try {
+                    //  foo_sb_ptr = Marshal.AllocHGlobal(sb.Capacity + 1); -- already emitted
+                    //  glGetShaderInfoLog(..., foo_sb_ptr); -- already emitted
+                    //  MarshalStringBuilder(foo_sb_ptr, foo);
+                    // }
+                    // finally {
+                    //  Marshal.FreeHGlobal(foo_sb_ptr);
+                    // }
+
+                    // Make sure we have imported BindingsBase::MasrhalPtrToStringBuilder and Marshal::FreeHGlobal
+                    var ptr_to_sb = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "MarshalPtrToStringBuilder"));
+                    var free_hglobal = wrapper.Module.Import(TypeMarshal.Methods.First(m => m.Name == "FreeHGlobal"));
+
+                    var block = new ExceptionHandler(ExceptionHandlerType.Finally);
+                    block.TryStart = body.Instructions[0];
+
+                    var variable_name = p.Name + " _sb_ptr";
+                    var v = body.Variables.First(m => m.Name == variable_name);
+                    il.Emit(OpCodes.Ldloc, v.Index);
+                    il.Emit(OpCodes.Ldarg, i);
+                    il.Emit(OpCodes.Call, ptr_to_sb);
+
+                    block.TryEnd = body.Instructions.Last();
+                    block.HandlerStart = body.Instructions.Last();
+
+                    il.Emit(OpCodes.Ldloc, v.Index);
+                    il.Emit(OpCodes.Call, free_hglobal);
+
+                    block.HandlerEnd = body.Instructions.Last();
+                }
             }
         }
 
@@ -348,7 +412,39 @@ namespace OpenTK.Rewrite
                 var p = method.Module.Import(method.Parameters[i].ParameterType);
                 il.Emit(OpCodes.Ldarg, i);
 
-                if (p.IsByReference)
+                if (p.Name == "StringBuilder")
+                {
+                    // void GetShaderInfoLog(..., StringBuilder foo)
+                    // IntPtr foo_sb_ptr;
+                    // try {
+                    //  foo_sb_ptr = Marshal.AllocHGlobal(sb.Capacity + 1);
+                    //  glGetShaderInfoLog(..., foo_sb_ptr);
+                    //  MarshalPtrToStringBuilder(foo_sb_ptr, sb);
+                    // }
+                    // finally {
+                    //  Marshal.FreeHGlobal(sb_ptr);
+                    // }
+
+                    // Make sure we have imported StringBuilder::Capacity and Marshal::AllocHGlobal
+                    var sb_get_capacity = method.Module.Import(TypeStringBuilder.Methods.First(m => m.Name == "get_Capacity"));
+                    var alloc_hglobal = method.Module.Import(TypeMarshal.Methods.First(m => m.Name == "AllocHGlobal"));
+
+                    // IntPtr ptr;
+                    var variable_name = p.Name + " _sb_ptr";
+                    body.Variables.Add(new VariableDefinition(variable_name, nint));
+                    int index = body.Variables.Count - 1;
+
+                    // ptr = Marshal.AllocHGlobal(sb.Capacity + 1);
+                    il.Emit(OpCodes.Ldarg, i);
+                    il.Emit(OpCodes.Callvirt, sb_get_capacity);
+                    il.Emit(OpCodes.Call, alloc_hglobal);
+                    il.Emit(OpCodes.Stloc, index);
+                    il.Emit(OpCodes.Ldloc, index);
+
+                    // We'll emit the try-finally block in the epilogue implementation,
+                    // because we haven't yet emitted all necessary instructions here.
+                }
+                else if (p.IsByReference)
                 {
                     body.Variables.Add(new VariableDefinition(new PinnedType(p)));
                     var index = body.Variables.Count - 1;
