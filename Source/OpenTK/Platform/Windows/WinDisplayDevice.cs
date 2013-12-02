@@ -124,10 +124,12 @@ namespace OpenTK.Platform.Windows
                     {
                         VerifyMode(dev1, monitor_mode);
 
+                        float scale = GetScale(ref monitor_mode);
                         opentk_dev_current_res = new DisplayResolution(
-                            monitor_mode.Position.X, monitor_mode.Position.Y,
-                            monitor_mode.PelsWidth, monitor_mode.PelsHeight,
+                            (int)(monitor_mode.Position.X / scale), (int)(monitor_mode.Position.Y / scale),
+                            (int)(monitor_mode.PelsWidth / scale), (int)(monitor_mode.PelsHeight / scale),
                             monitor_mode.BitsPerPel, monitor_mode.DisplayFrequency);
+
                         opentk_dev_primary =
                             (dev1.StateFlags & DisplayDeviceStateFlags.PrimaryDevice) != DisplayDeviceStateFlags.None;
                     }
@@ -138,9 +140,10 @@ namespace OpenTK.Platform.Windows
                     {
                         VerifyMode(dev1, monitor_mode);
 
+                        float scale = GetScale(ref monitor_mode);
                         DisplayResolution res = new DisplayResolution(
-                            monitor_mode.Position.X, monitor_mode.Position.Y,
-                            monitor_mode.PelsWidth, monitor_mode.PelsHeight,
+                            (int)(monitor_mode.Position.X / scale), (int)(monitor_mode.Position.Y / scale),
+                            (int)(monitor_mode.PelsWidth / scale), (int)(monitor_mode.PelsHeight / scale),
                             monitor_mode.BitsPerPel, monitor_mode.DisplayFrequency);
 
                         opentk_dev_available_res.Add(res);
@@ -167,6 +170,15 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        private float GetScale(ref DeviceMode monitor_mode)
+        {
+            float scale = 1.0f;
+            if ((monitor_mode.Fields & Constants.DM_LOGPIXELS) != 0)
+            {
+                scale = monitor_mode.LogPixels / 96.0f;
+            }
+            return scale;
+        }
 
         static void VerifyMode(WindowsDisplayDevice device, DeviceMode mode)
         {
