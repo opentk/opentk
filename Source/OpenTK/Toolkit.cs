@@ -134,6 +134,7 @@ namespace OpenTK
                 {
                     initialized = true;
                     Configuration.Init(options);
+                    Options = options;
 
                     // The actual initialization takes place in the
                     // platform-specific factory constructors.
@@ -142,6 +143,12 @@ namespace OpenTK
                 return toolkit;
             }
         }
+
+        #endregion
+
+        #region Internal Members
+
+        internal static ToolkitOptions Options { get; private set; }
 
         #endregion
 

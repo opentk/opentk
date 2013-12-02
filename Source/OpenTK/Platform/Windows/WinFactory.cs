@@ -50,10 +50,13 @@ namespace OpenTK.Platform.Windows
 
             if (System.Environment.OSVersion.Version.Major >= 6)
             {
-                // Enable high-dpi support
-                // Only available on Windows Vista and higher
-                bool result = Functions.SetProcessDPIAware();
-                Debug.Print("SetProcessDPIAware() returned {0}", result);
+                if (Toolkit.Options.EnableHighResolution)
+                {
+                    // Enable high-dpi support
+                    // Only available on Windows Vista and higher
+                    bool result = Functions.SetProcessDPIAware();
+                    Debug.Print("SetProcessDPIAware() returned {0}", result);
+                }
             }
         }
 

@@ -79,7 +79,10 @@ namespace OpenTK.Platform.SDL2
                 flags |= WindowFlags.OPENGL;
                 flags |= WindowFlags.RESIZABLE;
                 flags |= WindowFlags.HIDDEN;
-                flags |= WindowFlags.ALLOW_HIGHDPI;
+                if (Toolkit.Options.EnableHighResolution)
+                {
+                    flags |= WindowFlags.ALLOW_HIGHDPI;
+                }
 
                 if ((flags & WindowFlags.FULLSCREEN_DESKTOP) != 0 ||
                     (flags & WindowFlags.FULLSCREEN) != 0)

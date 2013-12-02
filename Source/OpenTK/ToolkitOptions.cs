@@ -68,6 +68,7 @@ namespace OpenTK
         static ToolkitOptions()
         {
             Default = new ToolkitOptions();
+            Default.EnableHighResolution = false;
         }
 
         /// <summary>
@@ -75,6 +76,16 @@ namespace OpenTK
         /// for the OpenTK.Platform implementation.
         /// </summary>
         public PlatformBackend Backend { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether high
+        /// resolution modes are supported on high-DPI
+        /// ("Retina") displays. Enabled by default.
+        /// Set to false for applications that are not
+        /// DPI-aware (e.g. WinForms.)
+        /// </summary>
+        /// <seealso cref="http://msdn.microsoft.com/en-us/library/windows/desktop/ee308410(v=vs.85).aspx"/>
+        public bool EnableHighResolution { get; set; }
 
         /// <summary>
         /// Gets a <c>ToolkitOptions</c> instance with
