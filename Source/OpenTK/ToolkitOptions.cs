@@ -68,7 +68,7 @@ namespace OpenTK
         static ToolkitOptions()
         {
             Default = new ToolkitOptions();
-            Default.EnableHighResolution = false;
+            Default.EnableHighResolution = true;
         }
 
         /// <summary>
