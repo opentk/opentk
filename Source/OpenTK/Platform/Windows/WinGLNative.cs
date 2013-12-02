@@ -124,23 +124,24 @@ namespace OpenTK.Platform.Windows
                 //        Move(this, EventArgs.Empty);
                 //};
 
-                // CreateWindow takes values in pixels.
-                // According to the high-dpi guidelines,
-                // we need to scale these values by the
-                // current DPI.
-                // Search MSDN for "How to Ensure That
-                // Your Application Displays Properly on
-                // High-DPI Displays"
-                int scale_width = ScaleX(width);
-                int scale_height = ScaleY(height);
+                int scale_width = width;
+                int scale_height = height;
                 int scale_x = x;
                 int scale_y = y;
-                // If width or height were scaled, re-calculate
-                // the x and y coordinates to compensate
-                if (width != scale_width)
-                    scale_x = x - UnscaleX(scale_width - width);
-                if (height != scale_height)
-                    scale_y = y - UnscaleY(scale_height - height);
+                if (Toolkit.Options.EnableHighResolution)
+                {
+                    // CreateWindow takes values in pixels.
+                    // According to the high-dpi guidelines,
+                    // we need to scale these values by the
+                    // current DPI.
+                    // Search MSDN for "How to Ensure That
+                    // Your Application Displays Properly on
+                    // High-DPI Displays"
+                    scale_width = ScaleX(width);
+                    scale_height = ScaleY(height);
+                    scale_x = ScaleX(x);
+                    scale_y = ScaleY(y);
+                }
 
                 // To avoid issues with Ati drivers on Windows 6+ with compositing enabled, the context will not be
                 // bound to the top-level window, but rather to a child window docked in the parent.
