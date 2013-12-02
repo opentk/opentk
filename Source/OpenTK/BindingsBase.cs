@@ -119,6 +119,31 @@ namespace OpenTK
         /// unique objects, but all instances of ES10.GL should return the same object.</remarks>
         protected abstract object SyncRoot { get; }
 
+		/// <summary>
+        /// Marshals a pointer to a null-terminated byte array to the specified <c>StringBuilder</c>.
+        /// This method supports OpenTK and is not intended to be called by user code.
+		/// </summary>
+        /// <param name="ptr">A pointer to a null-terminated byte array.</param>
+        /// <param name="sb">The StringBuilder to receive the contents of the pointer.</param>
+		protected static void MarshalPtrToStringBuilder(IntPtr ptr, StringBuilder sb)
+        {
+            if (ptr == IntPtr.Zero)
+                throw new ArgumentException("ptr");
+            if (sb == null)
+                throw new ArgumentNullException("sb");
+
+            sb.Length = 0;
+            for (int i = 0; i < sb.Capacity; i++)
+            {
+                byte b = Marshal.ReadByte(ptr, i);
+                if (b == 0)
+                {
+                    return;
+                }
+                sb.Append((char)b);
+            }
+        }
+
         #endregion
 
         #region Internal Members
