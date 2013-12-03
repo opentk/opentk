@@ -435,7 +435,6 @@ namespace OpenTK.Rewrite
                     int index = body.Variables.Count - 1;
 
                     // ptr = Marshal.AllocHGlobal(sb.Capacity + 1);
-                    il.Emit(OpCodes.Ldarg, i);
                     il.Emit(OpCodes.Callvirt, sb_get_capacity);
                     il.Emit(OpCodes.Call, alloc_hglobal);
                     il.Emit(OpCodes.Stloc, index);
