@@ -27,60 +27,68 @@ namespace Bind
         /// <summary>
         /// Function takes bool parameter - C uses Int for bools, so we have to marshal.
         /// </summary>
-        BoolParameter,
+        BoolParameter = 1 << 0,
         /// <summary>
         /// Function takes generic parameters - add ref/out generic and generic overloads.
         /// </summary>
-        GenericParameter,
+        GenericParameter = 1 << 1,
         /// <summary>
         /// Function takes arrays as parameters - add ref/out and ([Out]) array overloads.
         /// </summary>
-        ArrayParameter,
+        ArrayParameter = 1 << 2,
         /// <summary>
         /// Function with bitmask parameters. Bitmask parameters map to UInt, but since we can only use signed
         /// types (for CLS compliance), we must add the unchecked keyword.
         /// Usually found in bitmasks
         /// </summary>
-        UncheckedParameter,
+        UncheckedParameter = 1 << 3,
         /// <summary>
         /// Function that takes (in/ref/out) a naked pointer as a parameter - we pass an IntPtr.
         /// </summary>
-        PointerParameter,
+        PointerParameter = 1 << 4,
         /// <summary>
         /// Function that takes a reference to a struct.
         /// </summary>
-        ReferenceParameter,
+        ReferenceParameter = 1 << 5,
         /// <summary>
         /// Function returns string - needs manual marshalling through IntPtr to prevent the managed GC
         /// from freeing memory allocated on the unmanaged side (e.g. glGetString).
         /// </summary>
-        StringReturnType,
+        StringReturnType = 1 << 6,
         /// <summary>
         /// Function returns a void pointer - maps to IntPtr, and the user has to manually marshal the type.
         /// </summary>
-        GenericReturnType,
+        GenericReturnType = 1 << 7,
         /// <summary>
         /// Function returns a typed pointer - we have to copy the data to an array to protect it from the GC.
         /// </summary>
-        ArrayReturnType,
+        ArrayReturnType = 1 << 8,
         /// <summary>
         /// Function normally returns a value via an out parameter.
         /// This overload returns a single item directly.
         /// e.g. void GetIntegerv(enum pname, out int value) => int GetInteger(enum pname)
         /// </summary>
-        ConvenienceReturnType,
+        ConvenienceReturnType = 1 << 9,
         /// <summary>
         /// Function normally returns an array via an out parameter.
         /// This overload returns a single item directly.
         /// e.g. void GenBuffers(int count, int[] ids) => int GenBuffer()
         /// </summary>
-        ConvenienceArrayReturnType,
+        ConvenienceArrayReturnType = 1 << 10,
         /// <summary>
         /// Function normally takes an array in parameter.
         /// This overload takes a single item directly.
         /// e.g. void DeleteBuffers(int count, int[] ids) => DeleteBuffer(int id)
         /// </summary>
-        ConvenienceArrayType,
+        ConvenienceArrayType = 1 << 11,
+        /// <summary>
+        /// Function takes a String or StringBuilder parameter
+        /// </summary>
+        StringParameter = 1 << 12,
+        /// <summary>
+        /// Function takes a String[] parameter
+        /// </summary>
+        StringArrayParameter = 1 << 13,
     }
 
     #endregion
