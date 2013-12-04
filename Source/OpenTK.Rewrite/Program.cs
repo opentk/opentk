@@ -47,6 +47,7 @@ namespace OpenTK.Rewrite
         // mscorlib types
         static AssemblyDefinition mscorlib;
         static TypeDefinition TypeMarshal;
+        static TypeDefinition TypeStringArray;
         static TypeDefinition TypeStringBuilder;
         static TypeDefinition TypeVoid;
         static TypeDefinition TypeIntPtr;
@@ -111,6 +112,7 @@ namespace OpenTK.Rewrite
                     return;
                 }
                 TypeMarshal = mscorlib.MainModule.GetType("System.Runtime.InteropServices.Marshal");
+                TypeStringArray = mscorlib.MainModule.GetType("System.String").MakeArrayType().Resolve();
                 TypeStringBuilder = mscorlib.MainModule.GetType("System.Text.StringBuilder");
                 TypeVoid = mscorlib.MainModule.GetType("System.Void");
                 TypeIntPtr = mscorlib.MainModule.GetType("System.IntPtr");
@@ -328,7 +330,7 @@ namespace OpenTK.Rewrite
                     // try {
                     //  foo_sb_ptr = Marshal.AllocHGlobal(sb.Capacity + 1); -- already emitted
                     //  glGetShaderInfoLog(..., foo_sb_ptr); -- already emitted
-                    //  MarshalStringBuilder(foo_sb_ptr, foo);
+                    //  MarshalPtrToStringBuilder(foo_sb_ptr, foo);
                     // }
                     // finally {
                     //  Marshal.FreeHGlobal(foo_sb_ptr);
@@ -354,6 +356,52 @@ namespace OpenTK.Rewrite
                     il.Emit(OpCodes.Call, free_hglobal);
 
                     block.HandlerEnd = body.Instructions.Last();
+                }
+            }
+        }
+
+        static void EmitStringArrayParameter(MethodDefinition wrapper, TypeReference p, MethodBody body, ILProcessor il)
+        {
+            // string[] masrhaling:
+            // IntPtr ptr = MarshalStringArrayToPtr(strings);
+            // try {
+            //  calli
+            // }
+            // finally {
+            //  UnmarshalStringArray(ptr);
+            // }
+            var marshal_str_array_to_ptr = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "MarshalStringArrayToPtr"));
+
+            // IntPtr ptr;
+            var variable_name = p.Name + " _string_array_ptr";
+            body.Variables.Add(new VariableDefinition(variable_name, TypeIntPtr));
+            int index = body.Variables.Count - 1;
+
+            // ptr = MarshalStringArrayToPtr(strings);
+            il.Emit(OpCodes.Call, marshal_str_array_to_ptr);
+            il.Emit(OpCodes.Stloc, index);
+            il.Emit(OpCodes.Ldloc, index);
+
+            // The finally block will be emitted in the function epilogue
+        }
+
+        static void EmitStringArrayEpilogue(MethodDefinition wrapper, MethodDefinition native, MethodBody body, ILProcessor il)
+        {
+            for (int i = 0; i < wrapper.Parameters.Count; i++)
+            {
+                var p = wrapper.Parameters[i].ParameterType;
+                if (p.Name == "String" && p.IsArray)
+                {
+                    var free = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringArrayPtr"));
+                    var get_length = wrapper.Module.Import(TypeStringArray.Methods.First(m => m.Name == "get_Length"));
+
+                    // FreeStringArrayPtr(string_array_ptr, string_array.Length)
+                    var variable_name = p.Name + "_string_array_ptr";
+                    var v = body.Variables.First(m => m.Name == variable_name);
+                    il.Emit(OpCodes.Ldloc, v.Index);
+                    il.Emit(OpCodes.Ldarg, i);
+                    il.Emit(OpCodes.Callvirt, get_length);
+                    il.Emit(OpCodes.Call, free);
                 }
             }
         }
@@ -491,8 +539,7 @@ namespace OpenTK.Rewrite
                     }
                     else
                     {
-                        // String[] requires special marshalling.
-                        // Let the runtime handle this for now.
+                        EmitStringArrayParameter(method, p, body, il);
                     }
                 }
             }

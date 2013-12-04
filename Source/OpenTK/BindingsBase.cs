@@ -119,13 +119,13 @@ namespace OpenTK
         /// unique objects, but all instances of ES10.GL should return the same object.</remarks>
         protected abstract object SyncRoot { get; }
 
-		/// <summary>
+        /// <summary>
         /// Marshals a pointer to a null-terminated byte array to the specified <c>StringBuilder</c>.
         /// This method supports OpenTK and is not intended to be called by user code.
-		/// </summary>
+       /// </summary>
         /// <param name="ptr">A pointer to a null-terminated byte array.</param>
         /// <param name="sb">The StringBuilder to receive the contents of the pointer.</param>
-		protected static void MarshalPtrToStringBuilder(IntPtr ptr, StringBuilder sb)
+        protected static void MarshalPtrToStringBuilder(IntPtr ptr, StringBuilder sb)
         {
             if (ptr == IntPtr.Zero)
                 throw new ArgumentException("ptr");
@@ -142,6 +142,52 @@ namespace OpenTK
                 }
                 sb.Append((char)b);
             }
+        }
+
+        /// <summary>
+        /// Marshals a string array to unmanaged memory by calling
+        /// Marshal.AllocHGlobal for each element.
+        /// </summary>
+        /// <returns>An unmanaged pointer to an array of null-terminated strings</returns>
+        /// <param name="str_array">The string array to marshal.</param>
+        protected static IntPtr MarshalStringArrayToPtr(string[] str_array)
+        {
+            IntPtr ptr = IntPtr.Zero;
+            if (str_array != null && str_array.Length != 0)
+            {
+                ptr = Marshal.AllocHGlobal(str_array.Length * IntPtr.Size);
+                if (ptr == IntPtr.Zero)
+                {
+                    throw new OutOfMemoryException();
+                }
+
+                for (int i = 0; i < str_array.Length; i++)
+                {
+                    IntPtr str = Marshal.StringToHGlobalAnsi(str_array[i]);
+                    if (str == IntPtr.Zero)
+                    {
+                        throw new OutOfMemoryException();
+                    }
+
+                    Marshal.WriteIntPtr(ptr, i * IntPtr.Size, str);
+                }
+            }
+            return ptr;
+        }
+
+        /// <summary>
+        /// Frees a string array that has previously been
+        /// marshalled by <c>MarshalStringArrayToPtr</c>.
+        /// </summary>
+        /// <param name="ptr">An unmanaged pointer allocated by <c>MarshalStringArrayToPtr</c></param>
+        /// <param name="length">The length of the string array.</param>
+        protected static void FreeStringArrayPtr(IntPtr ptr, int length)
+        {
+            for (int i = 0; i < length; i++)
+            {
+                Marshal.FreeHGlobal(Marshal.ReadIntPtr(ptr, length * IntPtr.Size));
+            }
+            Marshal.FreeHGlobal(ptr);
         }
 
         #endregion
