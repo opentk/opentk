@@ -49636,7 +49636,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern void glBlendFuncSeparateiARB(UInt32 buf, System.Int32 srcRGB, System.Int32 dstRGB, System.Int32 srcAlpha, System.Int32 dstAlpha);
         [Slot(72)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glCompileShaderIncludeARB(UInt32 shader, Int32 count, String[] path, Int32* length);
+        static extern unsafe void glCompileShaderIncludeARB(UInt32 shader, Int32 count, IntPtr path, Int32* length);
         [Slot(99)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe IntPtr glCreateSyncFromCLeventARB([OutAttribute] IntPtr* context, [OutAttribute] IntPtr* @event, UInt32 flags);
@@ -50071,7 +50071,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern Int32 glCreateShader(System.Int32 type);
         [Slot(98)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glCreateShaderProgramv(System.Int32 type, Int32 count, String[] strings);
+        static extern Int32 glCreateShaderProgramv(System.Int32 type, Int32 count, IntPtr strings);
         [Slot(100)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glCullFace(System.Int32 mode);
@@ -50587,7 +50587,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern unsafe void glGetUniformfv(UInt32 program, Int32 location, [OutAttribute] Single* @params);
         [Slot(308)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetUniformIndices(UInt32 program, Int32 uniformCount, String[] uniformNames, [OutAttribute] UInt32* uniformIndices);
+        static extern unsafe void glGetUniformIndices(UInt32 program, Int32 uniformCount, IntPtr uniformNames, [OutAttribute] UInt32* uniformIndices);
         [Slot(309)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetUniformiv(UInt32 program, Int32 location, [OutAttribute] Int32* @params);
@@ -51043,7 +51043,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern unsafe void glShaderBinary(Int32 count, UInt32* shaders, System.Int32 binaryformat, IntPtr binary, Int32 length);
         [Slot(479)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glShaderSource(UInt32 shader, Int32 count, String[] @string, Int32* length);
+        static extern unsafe void glShaderSource(UInt32 shader, Int32 count, IntPtr @string, Int32* length);
         [Slot(480)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glShaderStorageBlockBinding(UInt32 program, UInt32 storageBlockIndex, UInt32 storageBlockBinding);
@@ -51157,7 +51157,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern void glTextureView(UInt32 texture, System.Int32 target, UInt32 origtexture, System.Int32 internalformat, UInt32 minlevel, UInt32 numlevels, UInt32 minlayer, UInt32 numlayers);
         [Slot(518)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTransformFeedbackVaryings(UInt32 program, Int32 count, String[] varyings, System.Int32 bufferMode);
+        static extern void glTransformFeedbackVaryings(UInt32 program, Int32 count, IntPtr varyings, System.Int32 bufferMode);
         [Slot(519)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glUniform1d(Int32 location, Double x);

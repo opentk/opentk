@@ -38828,7 +38828,7 @@ namespace OpenTK.Graphics.ES20
         static extern unsafe void glShaderBinary(Int32 count, UInt32* shaders, System.Int32 binaryformat, IntPtr binary, Int32 length);
         [Slot(274)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glShaderSource(UInt32 shader, Int32 count, String[] @string, Int32* length);
+        static extern unsafe void glShaderSource(UInt32 shader, Int32 count, IntPtr @string, Int32* length);
         [Slot(276)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glStencilFunc(System.Int32 func, Int32 @ref, UInt32 mask);
@@ -38978,7 +38978,7 @@ namespace OpenTK.Graphics.ES20
         static extern Int32 glCreateShaderProgramEXT(System.Int32 type, String @string);
         [Slot(48)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glCreateShaderProgramvEXT(System.Int32 type, Int32 count, String[] strings);
+        static extern Int32 glCreateShaderProgramvEXT(System.Int32 type, Int32 count, IntPtr strings);
         [Slot(61)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glDeleteProgramPipelinesEXT(Int32 n, UInt32* pipelines);

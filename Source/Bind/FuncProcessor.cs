@@ -638,9 +638,9 @@ namespace Bind
                     throw new NotSupportedException("String arrays with arity >= 2 are not currently supported.");
                 }
 
-                p.QualifiedType = "String";
+                p.QualifiedType = "IntPtr";
                 p.Pointer = 0;
-                p.Array = 1;
+                p.Array = 0;
                 p.WrapperType |= WrapperTypes.StringArrayParameter;
             }
 
@@ -1137,7 +1137,7 @@ namespace Bind
                         }
                         else
                         {
-                            p.QualifiedType = "String";
+                            p.QualifiedType = "String"; 
                         }
                     }
 
