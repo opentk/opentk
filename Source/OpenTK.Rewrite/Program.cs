@@ -258,11 +258,14 @@ namespace OpenTK.Rewrite
             {
                 EmitStringBuilderEpilogue(wrapper, native, body, il);
             }
-            if (wrapper.Parameters.Any(p => p.ParameterType.Name == "StringBuilder" && p.ParameterType.IsArray))
+            if (wrapper.Parameters.Any(p => p.ParameterType.Name == "String" && p.ParameterType.IsArray))
             {
-                EmitStringArrayEpilogue(wrapper, native, body, il);
+                EmitStringArrayEpilogue(wrapper, body, il);
             }
-            
+            if (wrapper.Parameters.Any(p => p.ParameterType.Name == "String" && !p.ParameterType.IsArray))
+            {
+                EmitStringEpilogue(wrapper, body, il);
+            }
 
             // return
             il.Emit(OpCodes.Ret);
@@ -365,16 +368,51 @@ namespace OpenTK.Rewrite
             }
         }
 
+        static void EmitStringParameter(MethodDefinition wrapper, TypeReference p, MethodBody body, ILProcessor il)
+        {
+            // string marshaling:
+            // IntPtr ptr = Marshal.StringToHGlobalAnsi(str);
+            // try { calli }
+            // finally { Marshal.FreeHGlobal(ptr); }
+            var marshal_str_to_ptr = wrapper.Module.Import(TypeMarshal.Methods.First(m => m.Name == "StringToHGlobalAnsi"));
+
+            // IntPtr ptr;
+            var variable_name = p.Name + "_string_ptr";
+            body.Variables.Add(new VariableDefinition(variable_name, TypeIntPtr));
+            int index = body.Variables.Count - 1;
+
+            // ptr = Marshal.StringToHGlobalAnsi(str);
+            il.Emit(OpCodes.Call, marshal_str_to_ptr);
+            il.Emit(OpCodes.Stloc, index);
+            il.Emit(OpCodes.Ldloc, index);
+
+            // The finally block will be emitted in the function epilogue
+        }
+
+        static void EmitStringEpilogue(MethodDefinition wrapper, MethodBody body, ILProcessor il)
+        {
+            for (int i = 0; i < wrapper.Parameters.Count; i++)
+            {
+                var p = wrapper.Parameters[i].ParameterType;
+                if (p.Name == "String" && !p.IsArray)
+                {
+                    var free = wrapper.Module.Import(TypeMarshal.Methods.First(m => m.Name == "FreeHGlobal"));
+
+                    // Marshal.FreeHGlobal(ptr)
+                    var variable_name = p.Name + "_string_ptr";
+                    var v = body.Variables.First(m => m.Name == variable_name);
+                    il.Emit(OpCodes.Ldloc, v.Index);
+                    il.Emit(OpCodes.Call, free);
+                }
+            }
+        }
+
         static void EmitStringArrayParameter(MethodDefinition wrapper, TypeReference p, MethodBody body, ILProcessor il)
         {
             // string[] masrhaling:
             // IntPtr ptr = MarshalStringArrayToPtr(strings);
-            // try {
-            //  calli
-            // }
-            // finally {
-            //  UnmarshalStringArray(ptr);
-            // }
+            // try { calli }
+            // finally { UnmarshalStringArray(ptr); }
             var marshal_str_array_to_ptr = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "MarshalStringArrayToPtr"));
 
             // IntPtr ptr;
@@ -390,7 +428,7 @@ namespace OpenTK.Rewrite
             // The finally block will be emitted in the function epilogue
         }
 
-        static void EmitStringArrayEpilogue(MethodDefinition wrapper, MethodDefinition native, MethodBody body, ILProcessor il)
+        static void EmitStringArrayEpilogue(MethodDefinition wrapper, MethodBody body, ILProcessor il)
         {
             for (int i = 0; i < wrapper.Parameters.Count; i++)
             {
@@ -510,6 +548,10 @@ namespace OpenTK.Rewrite
 
                     // We'll emit the try-finally block in the epilogue implementation,
                     // because we haven't yet emitted all necessary instructions here.
+                }
+                else if (p.Name == "String" && !p.IsArray)
+                {
+                    EmitStringParameter(method, p, body, il);
                 }
                 else if (p.IsByReference)
                 {

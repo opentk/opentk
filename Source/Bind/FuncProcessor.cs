@@ -606,21 +606,13 @@ namespace Bind
             // Find out the necessary wrapper types.
             if (p.CurrentType.ToLower() == "string" && p.Pointer == 0)
             {
-                // char* -> [In] String or [Out] StringBuilder
-                if (p.Flow == FlowDirection.Out)
-                {
-                    // Due to a bug in the Mono runtime, we need
-                    // to marshal out string parameters ourselves.
-                    // StringBuilder crashes at runtime.
-                    p.QualifiedType = "IntPtr";
-                }
-                else
-                {
-                    // in string parameters work fine on both
-                    // Mono and .Net.
-                    p.QualifiedType = "String";
-                }
-
+                // char* -> IntPtr
+                // Due to a bug in the Mono runtime, we need
+                // to marshal [out] string parameters ourselves.
+                // StringBuilder crashes at runtime.
+                // For symmetry, and to avoid potential runtime bugs,
+                // we will also marshal [in] string types manually.
+                p.QualifiedType = "IntPtr";
                 p.WrapperType |= WrapperTypes.StringParameter;
             }
 

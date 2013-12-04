@@ -49648,10 +49648,10 @@ namespace OpenTK.Graphics.OpenGL4
         static extern unsafe void glDebugMessageControlARB(System.Int32 source, System.Int32 type, System.Int32 severity, Int32 count, UInt32* ids, bool enabled);
         [Slot(108)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDebugMessageInsertARB(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, String buf);
+        static extern void glDebugMessageInsertARB(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, IntPtr buf);
         [Slot(112)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDeleteNamedStringARB(Int32 namelen, String name);
+        static extern void glDeleteNamedStringARB(Int32 namelen, IntPtr name);
         [Slot(134)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glDispatchComputeGroupSizeARB(UInt32 num_groups_x, UInt32 num_groups_y, UInt32 num_groups_z, UInt32 group_size_x, UInt32 group_size_y, UInt32 group_size_z);
@@ -49666,10 +49666,10 @@ namespace OpenTK.Graphics.OpenGL4
         static extern Int64 glGetImageHandleARB(UInt32 texture, Int32 level, bool layered, Int32 layer, System.Int32 format);
         [Slot(236)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetNamedStringARB(Int32 namelen, String name, Int32 bufSize, [OutAttribute] Int32* stringlen, [OutAttribute] IntPtr @string);
+        static extern unsafe void glGetNamedStringARB(Int32 namelen, IntPtr name, Int32 bufSize, [OutAttribute] Int32* stringlen, [OutAttribute] IntPtr @string);
         [Slot(237)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetNamedStringivARB(Int32 namelen, String name, System.Int32 pname, [OutAttribute] Int32* @params);
+        static extern unsafe void glGetNamedStringivARB(Int32 namelen, IntPtr name, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(238)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glGetnColorTableARB(System.Int32 target, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr table);
@@ -49738,7 +49738,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern bool glIsImageHandleResidentARB(UInt64 handle);
         [Slot(334)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool glIsNamedStringARB(Int32 namelen, String name);
+        static extern bool glIsNamedStringARB(Int32 namelen, IntPtr name);
         [Slot(343)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern bool glIsTextureHandleResidentARB(UInt64 handle);
@@ -49765,7 +49765,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern void glMultiDrawElementsIndirectCountARB(System.Int32 mode, System.Int32 type, IntPtr indirect, IntPtr drawcount, Int32 maxdrawcount, Int32 stride);
         [Slot(374)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glNamedStringARB(System.Int32 type, Int32 namelen, String name, Int32 stringlen, String @string);
+        static extern void glNamedStringARB(System.Int32 type, Int32 namelen, IntPtr name, Int32 stringlen, IntPtr @string);
         [Slot(430)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glProgramUniformHandleui64ARB(UInt32 program, Int32 location, UInt64 value);
@@ -49813,7 +49813,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern void glBeginTransformFeedback(System.Int32 primitiveMode);
         [Slot(7)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindAttribLocation(UInt32 program, UInt32 index, String name);
+        static extern void glBindAttribLocation(UInt32 program, UInt32 index, IntPtr name);
         [Slot(8)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBindBuffer(System.Int32 target, UInt32 buffer);
@@ -49831,10 +49831,10 @@ namespace OpenTK.Graphics.OpenGL4
         static extern unsafe void glBindBuffersRange(System.Int32 target, UInt32 first, Int32 count, UInt32* buffers, IntPtr* offsets, IntPtr* sizes);
         [Slot(13)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindFragDataLocation(UInt32 program, UInt32 color, String name);
+        static extern void glBindFragDataLocation(UInt32 program, UInt32 color, IntPtr name);
         [Slot(14)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindFragDataLocationIndexed(UInt32 program, UInt32 colorNumber, UInt32 index, String name);
+        static extern void glBindFragDataLocationIndexed(UInt32 program, UInt32 colorNumber, UInt32 index, IntPtr name);
         [Slot(15)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glBindFramebuffer(System.Int32 target, UInt32 framebuffer);
@@ -50083,7 +50083,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern unsafe void glDebugMessageControl(System.Int32 source, System.Int32 type, System.Int32 severity, Int32 count, UInt32* ids, bool enabled);
         [Slot(107)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDebugMessageInsert(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, String buf);
+        static extern void glDebugMessageInsert(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, IntPtr buf);
         [Slot(110)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glDeleteBuffers(Int32 n, UInt32* buffers);
@@ -50335,7 +50335,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern unsafe void glGetAttachedShaders(UInt32 program, Int32 maxCount, [OutAttribute] Int32* count, [OutAttribute] UInt32* shaders);
         [Slot(195)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glGetAttribLocation(UInt32 program, String name);
+        static extern Int32 glGetAttribLocation(UInt32 program, IntPtr name);
         [Slot(196)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetBooleani_v(System.Int32 target, UInt32 index, [OutAttribute] bool* data);
@@ -50395,10 +50395,10 @@ namespace OpenTK.Graphics.OpenGL4
         static extern unsafe void glGetFloatv(System.Int32 pname, [OutAttribute] Single* data);
         [Slot(217)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glGetFragDataIndex(UInt32 program, String name);
+        static extern Int32 glGetFragDataIndex(UInt32 program, IntPtr name);
         [Slot(218)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glGetFragDataLocation(UInt32 program, String name);
+        static extern Int32 glGetFragDataLocation(UInt32 program, IntPtr name);
         [Slot(219)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetFramebufferAttachmentParameteriv(System.Int32 target, System.Int32 attachment, System.Int32 pname, [OutAttribute] Int32* @params);
@@ -50473,16 +50473,16 @@ namespace OpenTK.Graphics.OpenGL4
         static extern unsafe void glGetProgramPipelineiv(UInt32 pipeline, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(268)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glGetProgramResourceIndex(UInt32 program, System.Int32 programInterface, String name);
+        static extern Int32 glGetProgramResourceIndex(UInt32 program, System.Int32 programInterface, IntPtr name);
         [Slot(269)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetProgramResourceiv(UInt32 program, System.Int32 programInterface, UInt32 index, Int32 propCount, System.Int32* props, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* @params);
         [Slot(270)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glGetProgramResourceLocation(UInt32 program, System.Int32 programInterface, String name);
+        static extern Int32 glGetProgramResourceLocation(UInt32 program, System.Int32 programInterface, IntPtr name);
         [Slot(271)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glGetProgramResourceLocationIndex(UInt32 program, System.Int32 programInterface, String name);
+        static extern Int32 glGetProgramResourceLocationIndex(UInt32 program, System.Int32 programInterface, IntPtr name);
         [Slot(272)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetProgramResourceName(UInt32 program, System.Int32 programInterface, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr name);
@@ -50545,10 +50545,10 @@ namespace OpenTK.Graphics.OpenGL4
         static extern IntPtr glGetStringi(System.Int32 name, UInt32 index);
         [Slot(292)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glGetSubroutineIndex(UInt32 program, System.Int32 shadertype, String name);
+        static extern Int32 glGetSubroutineIndex(UInt32 program, System.Int32 shadertype, IntPtr name);
         [Slot(293)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glGetSubroutineUniformLocation(UInt32 program, System.Int32 shadertype, String name);
+        static extern Int32 glGetSubroutineUniformLocation(UInt32 program, System.Int32 shadertype, IntPtr name);
         [Slot(294)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetSynciv(IntPtr sync, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
@@ -50578,7 +50578,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern unsafe void glGetTransformFeedbackVarying(UInt32 program, UInt32 index, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* size, [OutAttribute] System.Int32* type, [OutAttribute] IntPtr name);
         [Slot(305)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glGetUniformBlockIndex(UInt32 program, String uniformBlockName);
+        static extern Int32 glGetUniformBlockIndex(UInt32 program, IntPtr uniformBlockName);
         [Slot(306)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetUniformdv(UInt32 program, Int32 location, [OutAttribute] Double* @params);
@@ -50593,7 +50593,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern unsafe void glGetUniformiv(UInt32 program, Int32 location, [OutAttribute] Int32* @params);
         [Slot(310)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern Int32 glGetUniformLocation(UInt32 program, String name);
+        static extern Int32 glGetUniformLocation(UInt32 program, IntPtr name);
         [Slot(311)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glGetUniformSubroutineuiv(System.Int32 shadertype, Int32 location, [OutAttribute] UInt32* @params);
@@ -50758,10 +50758,10 @@ namespace OpenTK.Graphics.OpenGL4
         static extern unsafe void glNormalP3uiv(System.Int32 type, UInt32* coords);
         [Slot(377)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glObjectLabel(System.Int32 identifier, UInt32 name, Int32 length, String label);
+        static extern void glObjectLabel(System.Int32 identifier, UInt32 name, Int32 length, IntPtr label);
         [Slot(379)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glObjectPtrLabel(IntPtr ptr, Int32 length, String label);
+        static extern void glObjectPtrLabel(IntPtr ptr, Int32 length, IntPtr label);
         [Slot(381)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe void glPatchParameterfv(System.Int32 pname, Single* values);
@@ -50965,7 +50965,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern void glProvokingVertex(System.Int32 mode);
         [Slot(451)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPushDebugGroup(System.Int32 source, UInt32 id, Int32 length, String message);
+        static extern void glPushDebugGroup(System.Int32 source, UInt32 id, Int32 length, IntPtr message);
         [Slot(453)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glQueryCounter(UInt32 id, System.Int32 target);
@@ -51613,7 +51613,7 @@ namespace OpenTK.Graphics.OpenGL4
         static extern unsafe void glDebugMessageControlKHR(System.Int32 source, System.Int32 type, System.Int32 severity, Int32 count, UInt32* ids, bool enabled);
         [Slot(109)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDebugMessageInsertKHR(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, String buf);
+        static extern void glDebugMessageInsertKHR(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, IntPtr buf);
         [Slot(211)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern unsafe Int32 glGetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute] System.Int32* sources, [OutAttribute] System.Int32* types, [OutAttribute] UInt32* ids, [OutAttribute] System.Int32* severities, [OutAttribute] Int32* lengths, [OutAttribute] IntPtr messageLog);
@@ -51628,15 +51628,15 @@ namespace OpenTK.Graphics.OpenGL4
         static extern void glGetPointervKHR(System.Int32 pname, [OutAttribute] IntPtr @params);
         [Slot(378)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glObjectLabelKHR(System.Int32 identifier, UInt32 name, Int32 length, String label);
+        static extern void glObjectLabelKHR(System.Int32 identifier, UInt32 name, Int32 length, IntPtr label);
         [Slot(380)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glObjectPtrLabelKHR(IntPtr ptr, Int32 length, String label);
+        static extern void glObjectPtrLabelKHR(IntPtr ptr, Int32 length, IntPtr label);
         [Slot(394)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         static extern void glPopDebugGroupKHR();
         [Slot(452)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPushDebugGroupKHR(System.Int32 source, UInt32 id, Int32 length, String message);
+        static extern void glPushDebugGroupKHR(System.Int32 source, UInt32 id, Int32 length, IntPtr message);
     }
 }
