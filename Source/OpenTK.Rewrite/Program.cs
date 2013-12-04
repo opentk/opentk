@@ -225,7 +225,6 @@ namespace OpenTK.Rewrite
         // Create body for method
         static void ProcessMethod(MethodDefinition wrapper, MethodDefinition native, int slot, FieldDefinition entry_points)
         {
-            var nint = wrapper.DeclaringType.Module.Import(mscorlib.MainModule.GetType("System.IntPtr"));
             var body = wrapper.Body;
             var il = body.GetILProcessor();
             var instructions = body.Instructions;
@@ -233,13 +232,15 @@ namespace OpenTK.Rewrite
 
             // Declare pinned variables for every reference and array parameter
             // and push each parameter on the stack
-            EmitParameters(wrapper, nint, body, il);
 
             // Patch convenience wrappers
-            if (wrapper.Parameters.Count < native.Parameters.Count)
+            if (wrapper.Parameters.Count == native.Parameters.Count)
             {
-                int parameter_count = EmitParameters(wrapper, nint, body, il);
-                int difference = native.Parameters.Count - parameter_count;
+                EmitParameters(wrapper, body, il);
+            }
+            else
+            {
+                int difference = native.Parameters.Count - wrapper.Parameters.Count;
                 EmitConvenienceWrapper(wrapper, native, difference, body, il);
             }
 
@@ -253,11 +254,15 @@ namespace OpenTK.Rewrite
             {
                 EmitReturnTypeWrapper(wrapper, native, body, il);
             }
-
             if (wrapper.Parameters.Any(p => p.ParameterType.Name == "StringBuilder"))
             {
                 EmitStringBuilderEpilogue(wrapper, native, body, il);
             }
+            if (wrapper.Parameters.Any(p => p.ParameterType.Name == "StringBuilder" && p.ParameterType.IsArray))
+            {
+                EmitStringArrayEpilogue(wrapper, native, body, il);
+            }
+            
 
             // return
             il.Emit(OpCodes.Ret);
@@ -409,50 +414,65 @@ namespace OpenTK.Rewrite
         private static void EmitConvenienceWrapper(MethodDefinition wrapper,
             MethodDefinition native, int difference, MethodBody body, ILProcessor il)
         {
-            if (difference == 2)
+            if (wrapper.Parameters.Count > 1)
             {
-                // Convert sized out-array/reference to return value, for example:
-                // void GenTextures(int n, int[] textures) -> int GenTexture()
-                // {
-                //  const int n = 1;
-                //  int buffers;
-                //  calli GenTextures(n, &textures);
-                //  return result;
-                // }
-                body.Variables.Add(new VariableDefinition(native.Parameters.Last().ParameterType));
-                il.Emit(OpCodes.Ldc_I4, 1); // const int n = 1
-                il.Emit(OpCodes.Ldloca, body.Variables.Count - 1); // &buffers
+                EmitParameters(wrapper, body, il);
             }
-            else if (difference == 1 && wrapper.ReturnType.Name != "Void")
+
+            if (wrapper.ReturnType.Name != "Void")
             {
-                // Convert unsized out-array/reference to return value, for example:
-                // void GetBoolean(GetPName pname, out bool data) -> bool GetBoolean(GetPName pname)
-                // {
-                //   bool result;
-                //   GetBooleanv(pname, &result);
-                //   return result;
-                // }
-                body.Variables.Add(new VariableDefinition(wrapper.ReturnType));
-                il.Emit(OpCodes.Ldloca, body.Variables.Count - 1);
-            }
-            else if (difference == 1 && wrapper.ReturnType.Name == "Void")
-            {
-                // Convert in-array/reference to single element, for example:
-                // void DeleteTextures(int n, ref int textures) -> void DeleteTexture(int texture)
-                // {
-                //   const int n = 1;
-                //   calli DeleteTextures(n, &textures);
-                // }
-                il.Emit(OpCodes.Ldc_I4, 1); // const int n = 1
-                il.Emit(OpCodes.Ldarga, wrapper.Parameters.Last()); // &textures
+                if (difference == 2)
+                {
+                    // Convert sized out-array/reference to return value, for example:
+                    // void GenTextures(int n, int[] textures) -> int GenTexture()
+                    // {
+                    //  const int n = 1;
+                    //  int buffers;
+                    //  calli GenTextures(n, &textures);
+                    //  return result;
+                    // }
+                    body.Variables.Add(new VariableDefinition(wrapper.ReturnType));
+                    il.Emit(OpCodes.Ldc_I4, 1); // const int n = 1
+                    il.Emit(OpCodes.Ldloca, body.Variables.Count - 1); // &buffers
+                }
+                else if (difference == 1)
+                {
+                    // Convert unsized out-array/reference to return value, for example:
+                    // void GetBoolean(GetPName pname, out bool data) -> bool GetBoolean(GetPName pname)
+                    // {
+                    //   bool result;
+                    //   GetBooleanv(pname, &result);
+                    //   return result;
+                    // }
+                    body.Variables.Add(new VariableDefinition(wrapper.ReturnType));
+                    il.Emit(OpCodes.Ldloca, body.Variables.Count - 1);
+                }
+                else
+                {
+                    Console.Error.WriteLine("Unknown wrapper type for ({0})", native.Name);
+                }
             }
             else
             {
-                Console.Error.WriteLine("Unknown wrapper type for ({0})", native.Name);
+                if (difference == 1)
+                {
+                    // Convert in-array/reference to single element, for example:
+                    // void DeleteTextures(int n, ref int textures) -> void DeleteTexture(int texture)
+                    // {
+                    //   const int n = 1;
+                    //   calli DeleteTextures(n, &textures);
+                    // }
+                    il.Emit(OpCodes.Ldc_I4, 1); // const int n = 1
+                    il.Emit(OpCodes.Ldarga, wrapper.Parameters.Last()); // &textures
+                }
+                else
+                {
+                    Console.Error.WriteLine("Unknown wrapper type for ({0})", native.Name);
+                }
             }
         }
 
-        static int EmitParameters(MethodDefinition method, TypeReference nint, MethodBody body, ILProcessor il)
+        static int EmitParameters(MethodDefinition method, MethodBody body, ILProcessor il)
         {
             int i;
             for (i = 0; i < method.Parameters.Count; i++)
@@ -479,7 +499,7 @@ namespace OpenTK.Rewrite
 
                     // IntPtr ptr;
                     var variable_name = p.Name + " _sb_ptr";
-                    body.Variables.Add(new VariableDefinition(variable_name, nint));
+                    body.Variables.Add(new VariableDefinition(variable_name, TypeIntPtr));
                     int index = body.Variables.Count - 1;
 
                     // ptr = Marshal.AllocHGlobal(sb.Capacity + 1);
