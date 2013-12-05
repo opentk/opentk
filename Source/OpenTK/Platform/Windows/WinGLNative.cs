@@ -787,7 +787,6 @@ namespace OpenTK.Platform.Windows
                 WindowStyle style = (WindowStyle)Functions.GetWindowLong(window.Handle, GetWindowLongOffsets.STYLE);
                 Win32Rectangle rect = Win32Rectangle.From(value);
                 Functions.AdjustWindowRect(ref rect, style, false);
-                Location = new Point(rect.left, rect.top);
                 Size = new Size(rect.Width, rect.Height);
             }
         }
