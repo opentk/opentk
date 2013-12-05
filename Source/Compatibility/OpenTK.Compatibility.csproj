@@ -72,7 +72,8 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>0219, 0414, 0612, 0618, 1591, 3005, 3006</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DebugType>none</DebugType>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Documentation|AnyCPU'">
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
