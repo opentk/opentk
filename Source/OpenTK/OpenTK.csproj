@@ -783,8 +783,8 @@
   </PropertyGroup>
   <ItemGroup />
   <Target Name="AfterBuild">
-    <Exec Command="$(OutputPath)OpenTK.Rewrite.exe $(OutputPath)OpenTK.dll ../../../OpenTK.snk" Condition="$(OS) == 'Windows_NT'" />
-    <Exec Command="mono $(OutputPath)OpenTK.Rewrite.exe $(OutputPath)OpenTK.dll ../../../OpenTK.snk" Condition="$(OS) != 'Windows_NT'" />
+    <Exec Command="$(OutputPath)..\..\Tools\$(Configuration)\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT'" />
+    <Exec Command="mono $(OutputPath)..\..\Tools\$(Configuration)\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) != 'Windows_NT'" />
   </Target>
   <ProjectExtensions>
     <MonoDevelop>
