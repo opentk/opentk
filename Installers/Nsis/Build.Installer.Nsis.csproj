@@ -52,7 +52,7 @@
     <ReadLinesFromFile File="../../Version.txt">
       <Output TaskParameter="Lines" ItemName="Version" />
     </ReadLinesFromFile>
-    <Copy SourceFiles=".\opentk.exe" DestinationFiles="@(Version-&gt;'../../opentk-%(Identity).exe')" />
+    <Move SourceFiles=".\opentk.exe" DestinationFiles="@(Version-&gt;'../../opentk-%(Identity).exe')" />
   </Target>
   <Target Name="Clean">
     <CreateItem Include=".\opentk.exe;..\..\opentk-*.exe">
