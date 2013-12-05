@@ -37,6 +37,7 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Input;
+using System.Text;
 
 namespace OpenTK.Platform.SDL2
 {
@@ -78,7 +79,10 @@ namespace OpenTK.Platform.SDL2
                 flags |= WindowFlags.OPENGL;
                 flags |= WindowFlags.RESIZABLE;
                 flags |= WindowFlags.HIDDEN;
-                flags |= WindowFlags.ALLOW_HIGHDPI;
+                if (Toolkit.Options.EnableHighResolution)
+                {
+                    flags |= WindowFlags.ALLOW_HIGHDPI;
+                }
 
                 if ((flags & WindowFlags.FULLSCREEN_DESKTOP) != 0 ||
                     (flags & WindowFlags.FULLSCREEN) != 0)
@@ -150,6 +154,14 @@ namespace OpenTK.Platform.SDL2
                         }
                         break;
 
+                    case EventType.TEXTINPUT:
+                        if (windows.TryGetValue(ev.Text.WindowID, out window))
+                        {
+                            ProcessTextInputEvent(window, ev.Text);
+                            processed = true;
+                        }
+                        break;
+
                     case EventType.KEYDOWN:
                     case EventType.KEYUP:
                         if (windows.TryGetValue(ev.Key.WindowID, out window))
@@ -214,7 +226,40 @@ namespace OpenTK.Platform.SDL2
         {
             bool key_pressed = ev.Key.State == State.Pressed;
             var key = ev.Key.Keysym;
+            var args = new KeyboardKeyEventArgs() 
+            { 
+                Key = TranslateKey(key.Scancode),
+                ScanCode = (uint)key.Scancode
+            };
+            if (key_pressed)
+                window.KeyDown(window, args);
+            else
+                window.KeyUp(window, args);
             //window.keyboard.SetKey(TranslateKey(key.scancode), (uint)key.scancode, key_pressed);
+        }
+
+        static unsafe void ProcessTextInputEvent(Sdl2NativeWindow window, TextInputEvent ev)
+        {
+            var keyPress = window.KeyPress;
+            if (keyPress != null)
+            {
+                var length = 0;
+                byte* pText = ev.Text;
+                while (*pText != 0)
+                {
+                    length++;
+                    pText++;
+                }
+                using (var stream = new System.IO.UnmanagedMemoryStream(ev.Text, length))
+                using (var reader = new System.IO.StreamReader(stream, Encoding.UTF8))
+                {
+                    var text = reader.ReadToEnd();
+                    foreach (var c in text)
+                    {
+                        keyPress(window, new KeyPressEventArgs(c));
+                    }
+                }
+            }
         }
 
         static void ProcessMotionEvent(Sdl2NativeWindow window, Event ev)

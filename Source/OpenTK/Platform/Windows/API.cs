@@ -1623,6 +1623,7 @@ namespace OpenTK.Platform.Windows
             internal const byte PFD_UNDERLAY_PLANE = unchecked((byte)-1);
 
             // Device mode types (found in wingdi.h)
+            internal const int DM_LOGPIXELS = 0x00020000;
             internal const int DM_BITSPERPEL = 0x00040000;
             internal const int DM_PELSWIDTH = 0x00080000;
             internal const int DM_PELSHEIGHT = 0x00100000;

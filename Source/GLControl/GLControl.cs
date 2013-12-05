@@ -165,15 +165,12 @@ namespace OpenTK
                 const int CS_VREDRAW = 0x1;
                 const int CS_HREDRAW = 0x2;
                 const int CS_OWNDC = 0x20;
-                const int WS_CLIPCHILDREN = 0x02000000;
-                const int WS_CLIPSIBLINGS = 0x04000000;
 
                 CreateParams cp = base.CreateParams;
                 if (Configuration.RunningOnWindows)
                 {
                     // Setup necessary class style for OpenGL on windows
                     cp.ClassStyle |= CS_VREDRAW | CS_HREDRAW | CS_OWNDC;
-                    cp.Style |= WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
                 }
                 return cp;
             }

@@ -21,6 +21,7 @@ namespace Examples.Tests
     {
         static readonly Font TextFont = new Font(FontFamily.GenericSansSerif, 11);
         Bitmap TextBitmap = new Bitmap(1024, 1024);
+        StringBuilder TypedText = new StringBuilder();
         int texture;
         bool mouse_in_window = false;
         bool viewport_changed = true;
@@ -33,7 +34,8 @@ namespace Examples.Tests
         {
             VSync = VSyncMode.On;
             Keyboard.KeyRepeat = true;
-            Keyboard.KeyDown += KeyDownHandler;
+            KeyDown += KeyDownHandler;
+            KeyPress += KeyPressHandler;
             
             MouseEnter += delegate { mouse_in_window = true; };
             MouseLeave += delegate { mouse_in_window = false; };
@@ -52,6 +54,14 @@ namespace Examples.Tests
                 joystick.ButtonDown += delegate { refresh_text = true; };
                 joystick.ButtonUp += delegate { refresh_text = true; };
             }
+        }
+
+        private void KeyPressHandler(object sender, KeyPressEventArgs e)
+        {
+            if (TypedText.Length > 32)
+                TypedText.Remove(0, 1);
+
+            TypedText.Append(e.KeyChar);
         }
 
         void KeyDownHandler(object sender, KeyboardKeyEventArgs e)
@@ -222,10 +232,10 @@ namespace Examples.Tests
                     DrawString(gfx, String.Format("Window.Location: {0}, Size: {1}", Location, Size), line++);
                     DrawString(gfx, String.Format("Window: {{X={0},Y={1},Width={2},Height={3}}}", X, Y, Width, Height), line++);
                     DrawString(gfx, String.Format("Window.ClientRectangle: {0}", ClientRectangle), line++);
+                    DrawString(gfx, TypedText.ToString(), line++);
                     DrawKeyboard(gfx, keyboard, line++);
                     DrawMouse(gfx, mouse, line++);
                     DrawJoysticks(gfx, Joysticks, line++);
-
                 }
             }
 

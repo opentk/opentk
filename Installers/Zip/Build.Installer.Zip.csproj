@@ -15,7 +15,6 @@
   <PropertyGroup>
     <ProjectGuid>{ADC34399-7613-44D2-90B2-19250F06FE7B}</ProjectGuid>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <InputPath>..\..\</InputPath>
     <OutputPath>.\opentk\</OutputPath>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -50,12 +49,12 @@
   </PropertyGroup>
   <Target Name="Build">
     <!-- Zip the copy of the source tree -->
-    <Exec Command="7z a -tzip opentk.zip ../../* '-xr!opentk*.zip' '-xr!opentk*.exe' '-xr!.*' '-xr!obj' '-xr!Documentation/Source' '-xr!Automation' '-xr!*.suo' '-xr!*.pidb' '-xr!*.userprefs' '-xr!vshost*.exe'" />
+    <Exec Command="7z a -tzip opentk.zip ../../* -xr!opentk*.zip -xr!opentk*.exe -xr!.* -xr!obj -xr!bin -xr!Documentation/Source -xr!Automation -xr!*.suo -xr!*.pidb -xr!*.userprefs -xr!*vshost.exe* -xr!*.log" />
     <!-- Copy the zip file to the root directory and add a date stamp -->
     <ReadLinesFromFile File="../../Version.txt">
       <Output TaskParameter="Lines" ItemName="Version" />
     </ReadLinesFromFile>
-    <Copy SourceFiles=".\opentk.zip" DestinationFiles="@(Version-&gt;'..\..\opentk-%(Identity).zip')" />
+    <Move SourceFiles=".\opentk.zip" DestinationFiles="@(Version-&gt;'..\..\opentk-%(Identity).zip')" />
   </Target>
   <Target Name="Clean">
     <CreateItem Include=".\opentk.zip;..\..\opentk-*.zip">
