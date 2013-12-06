@@ -56,7 +56,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glActiveTexture((OpenTK.Graphics.ES10.All)texture);
+            Core.ActiveTexture((OpenTK.Graphics.ES10.All)texture);
             #if DEBUG
             }
             #endif
@@ -84,7 +84,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glAlphaFunc((OpenTK.Graphics.ES10.All)func, (Single)@ref);
+            Core.AlphaFunc((OpenTK.Graphics.ES10.All)func, (Single)@ref);
             #if DEBUG
             }
             #endif
@@ -99,7 +99,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glAlphaFuncx((OpenTK.Graphics.ES10.All)func, (int)@ref);
+            Core.AlphaFuncx((OpenTK.Graphics.ES10.All)func, (int)@ref);
             #if DEBUG
             }
             #endif
@@ -127,7 +127,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glBindTexture((OpenTK.Graphics.ES10.All)target, (UInt32)texture);
+            Core.BindTexture((OpenTK.Graphics.ES10.All)target, (UInt32)texture);
             #if DEBUG
             }
             #endif
@@ -156,7 +156,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glBindTexture((OpenTK.Graphics.ES10.All)target, (UInt32)texture);
+            Core.BindTexture((OpenTK.Graphics.ES10.All)target, (UInt32)texture);
             #if DEBUG
             }
             #endif
@@ -184,7 +184,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glBlendFunc((OpenTK.Graphics.ES10.All)sfactor, (OpenTK.Graphics.ES10.All)dfactor);
+            Core.BlendFunc((OpenTK.Graphics.ES10.All)sfactor, (OpenTK.Graphics.ES10.All)dfactor);
             #if DEBUG
             }
             #endif
@@ -207,7 +207,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glClear((UInt32)mask);
+            Core.Clear((UInt32)mask);
             #if DEBUG
             }
             #endif
@@ -231,7 +231,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glClear((UInt32)mask);
+            Core.Clear((UInt32)mask);
             #if DEBUG
             }
             #endif
@@ -254,7 +254,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glClearColor((Single)red, (Single)green, (Single)blue, (Single)alpha);
+            Core.ClearColor((Single)red, (Single)green, (Single)blue, (Single)alpha);
             #if DEBUG
             }
             #endif
@@ -269,7 +269,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glClearColorx((int)red, (int)green, (int)blue, (int)alpha);
+            Core.ClearColorx((int)red, (int)green, (int)blue, (int)alpha);
             #if DEBUG
             }
             #endif
@@ -292,7 +292,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glClearDepthf((Single)depth);
+            Core.ClearDepthf((Single)depth);
             #if DEBUG
             }
             #endif
@@ -307,7 +307,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glClearDepthx((int)depth);
+            Core.ClearDepthx((int)depth);
             #if DEBUG
             }
             #endif
@@ -330,7 +330,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glClearStencil((Int32)s);
+            Core.ClearStencil((Int32)s);
             #if DEBUG
             }
             #endif
@@ -353,7 +353,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glClientActiveTexture((OpenTK.Graphics.ES10.All)texture);
+            Core.ClientActiveTexture((OpenTK.Graphics.ES10.All)texture);
             #if DEBUG
             }
             #endif
@@ -381,7 +381,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glColor4f((Single)red, (Single)green, (Single)blue, (Single)alpha);
+            Core.Color4f((Single)red, (Single)green, (Single)blue, (Single)alpha);
             #if DEBUG
             }
             #endif
@@ -396,7 +396,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glColor4x((int)red, (int)green, (int)blue, (int)alpha);
+            Core.Color4x((int)red, (int)green, (int)blue, (int)alpha);
             #if DEBUG
             }
             #endif
@@ -419,7 +419,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glColorMask((bool)red, (bool)green, (bool)blue, (bool)alpha);
+            Core.ColorMask((bool)red, (bool)green, (bool)blue, (bool)alpha);
             #if DEBUG
             }
             #endif
@@ -457,7 +457,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glColorPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer);
+            Core.ColorPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer);
             #if DEBUG
             }
             #endif
@@ -499,7 +499,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glColorPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.ColorPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -546,7 +546,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glColorPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.ColorPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -593,7 +593,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glColorPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.ColorPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -640,7 +640,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glColorPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.ColorPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
                 pointer = (T3)pointer_ptr.Target;
             }
             finally
@@ -704,7 +704,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glCompressedTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (OpenTK.Graphics.ES10.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data);
+            Core.CompressedTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (OpenTK.Graphics.ES10.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data);
             #if DEBUG
             }
             #endif
@@ -766,7 +766,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (OpenTK.Graphics.ES10.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Core.CompressedTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (OpenTK.Graphics.ES10.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -833,7 +833,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (OpenTK.Graphics.ES10.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Core.CompressedTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (OpenTK.Graphics.ES10.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -900,7 +900,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (OpenTK.Graphics.ES10.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Core.CompressedTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (OpenTK.Graphics.ES10.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -967,7 +967,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (OpenTK.Graphics.ES10.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Core.CompressedTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (OpenTK.Graphics.ES10.All)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
                 data = (T7)data_ptr.Target;
             }
             finally
@@ -1036,7 +1036,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glCompressedTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (Int32)imageSize, (IntPtr)data);
+            Core.CompressedTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (Int32)imageSize, (IntPtr)data);
             #if DEBUG
             }
             #endif
@@ -1103,7 +1103,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Core.CompressedTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -1175,7 +1175,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Core.CompressedTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -1247,7 +1247,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Core.CompressedTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -1319,7 +1319,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle data_ptr = GCHandle.Alloc(data, GCHandleType.Pinned);
             try
             {
-                Delegates.glCompressedTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                Core.CompressedTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
                 data = (T8)data_ptr.Target;
             }
             finally
@@ -1378,7 +1378,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glCopyTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (OpenTK.Graphics.ES10.All)internalformat, (Int32)x, (Int32)y, (Int32)width, (Int32)height, (Int32)border);
+            Core.CopyTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (OpenTK.Graphics.ES10.All)internalformat, (Int32)x, (Int32)y, (Int32)width, (Int32)height, (Int32)border);
             #if DEBUG
             }
             #endif
@@ -1431,7 +1431,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glCopyTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)x, (Int32)y, (Int32)width, (Int32)height);
+            Core.CopyTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)x, (Int32)y, (Int32)width, (Int32)height);
             #if DEBUG
             }
             #endif
@@ -1454,7 +1454,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glCullFace((OpenTK.Graphics.ES10.All)mode);
+            Core.CullFace((OpenTK.Graphics.ES10.All)mode);
             #if DEBUG
             }
             #endif
@@ -1486,7 +1486,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Int32* textures_ptr = textures)
                 {
-                    Delegates.glDeleteTextures((Int32)n, (UInt32*)textures_ptr);
+                    Core.DeleteTextures((Int32)n, (UInt32*)textures_ptr);
                 }
             }
             #if DEBUG
@@ -1520,7 +1520,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Int32* textures_ptr = &textures)
                 {
-                    Delegates.glDeleteTextures((Int32)n, (UInt32*)textures_ptr);
+                    Core.DeleteTextures((Int32)n, (UInt32*)textures_ptr);
                 }
             }
             #if DEBUG
@@ -1551,7 +1551,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glDeleteTextures((Int32)n, (UInt32*)textures);
+            Core.DeleteTextures((Int32)n, (UInt32*)textures);
             #if DEBUG
             }
             #endif
@@ -1584,7 +1584,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (UInt32* textures_ptr = textures)
                 {
-                    Delegates.glDeleteTextures((Int32)n, (UInt32*)textures_ptr);
+                    Core.DeleteTextures((Int32)n, (UInt32*)textures_ptr);
                 }
             }
             #if DEBUG
@@ -1619,7 +1619,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (UInt32* textures_ptr = &textures)
                 {
-                    Delegates.glDeleteTextures((Int32)n, (UInt32*)textures_ptr);
+                    Core.DeleteTextures((Int32)n, (UInt32*)textures_ptr);
                 }
             }
             #if DEBUG
@@ -1650,7 +1650,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glDeleteTextures((Int32)n, (UInt32*)textures);
+            Core.DeleteTextures((Int32)n, (UInt32*)textures);
             #if DEBUG
             }
             #endif
@@ -1673,7 +1673,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glDepthFunc((OpenTK.Graphics.ES10.All)func);
+            Core.DepthFunc((OpenTK.Graphics.ES10.All)func);
             #if DEBUG
             }
             #endif
@@ -1696,7 +1696,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glDepthMask((bool)flag);
+            Core.DepthMask((bool)flag);
             #if DEBUG
             }
             #endif
@@ -1724,7 +1724,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glDepthRangef((Single)zNear, (Single)zFar);
+            Core.DepthRangef((Single)zNear, (Single)zFar);
             #if DEBUG
             }
             #endif
@@ -1739,7 +1739,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glDepthRangex((int)zNear, (int)zFar);
+            Core.DepthRangex((int)zNear, (int)zFar);
             #if DEBUG
             }
             #endif
@@ -1754,7 +1754,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glDisable((OpenTK.Graphics.ES10.All)cap);
+            Core.Disable((OpenTK.Graphics.ES10.All)cap);
             #if DEBUG
             }
             #endif
@@ -1769,7 +1769,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glDisableClientState((OpenTK.Graphics.ES10.All)array);
+            Core.DisableClientState((OpenTK.Graphics.ES10.All)array);
             #if DEBUG
             }
             #endif
@@ -1802,7 +1802,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glDrawArrays((OpenTK.Graphics.ES10.All)mode, (Int32)first, (Int32)count);
+            Core.DrawArrays((OpenTK.Graphics.ES10.All)mode, (Int32)first, (Int32)count);
             #if DEBUG
             }
             #endif
@@ -1840,7 +1840,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glDrawElements((OpenTK.Graphics.ES10.All)mode, (Int32)count, (OpenTK.Graphics.ES10.All)type, (IntPtr)indices);
+            Core.DrawElements((OpenTK.Graphics.ES10.All)mode, (Int32)count, (OpenTK.Graphics.ES10.All)type, (IntPtr)indices);
             #if DEBUG
             }
             #endif
@@ -1882,7 +1882,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                Delegates.glDrawElements((OpenTK.Graphics.ES10.All)mode, (Int32)count, (OpenTK.Graphics.ES10.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                Core.DrawElements((OpenTK.Graphics.ES10.All)mode, (Int32)count, (OpenTK.Graphics.ES10.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -1929,7 +1929,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                Delegates.glDrawElements((OpenTK.Graphics.ES10.All)mode, (Int32)count, (OpenTK.Graphics.ES10.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                Core.DrawElements((OpenTK.Graphics.ES10.All)mode, (Int32)count, (OpenTK.Graphics.ES10.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -1976,7 +1976,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                Delegates.glDrawElements((OpenTK.Graphics.ES10.All)mode, (Int32)count, (OpenTK.Graphics.ES10.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                Core.DrawElements((OpenTK.Graphics.ES10.All)mode, (Int32)count, (OpenTK.Graphics.ES10.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -2023,7 +2023,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle indices_ptr = GCHandle.Alloc(indices, GCHandleType.Pinned);
             try
             {
-                Delegates.glDrawElements((OpenTK.Graphics.ES10.All)mode, (Int32)count, (OpenTK.Graphics.ES10.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                Core.DrawElements((OpenTK.Graphics.ES10.All)mode, (Int32)count, (OpenTK.Graphics.ES10.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
                 indices = (T3)indices_ptr.Target;
             }
             finally
@@ -2052,7 +2052,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glEnable((OpenTK.Graphics.ES10.All)cap);
+            Core.Enable((OpenTK.Graphics.ES10.All)cap);
             #if DEBUG
             }
             #endif
@@ -2075,7 +2075,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glEnableClientState((OpenTK.Graphics.ES10.All)array);
+            Core.EnableClientState((OpenTK.Graphics.ES10.All)array);
             #if DEBUG
             }
             #endif
@@ -2093,7 +2093,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glFinish();
+            Core.Finish();
             #if DEBUG
             }
             #endif
@@ -2111,7 +2111,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glFlush();
+            Core.Flush();
             #if DEBUG
             }
             #endif
@@ -2139,7 +2139,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glFogf((OpenTK.Graphics.ES10.All)pname, (Single)param);
+            Core.Fogf((OpenTK.Graphics.ES10.All)pname, (Single)param);
             #if DEBUG
             }
             #endif
@@ -2171,7 +2171,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    Delegates.glFogfv((OpenTK.Graphics.ES10.All)pname, (Single*)@params_ptr);
+                    Core.Fogfv((OpenTK.Graphics.ES10.All)pname, (Single*)@params_ptr);
                 }
             }
             #if DEBUG
@@ -2202,7 +2202,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glFogfv((OpenTK.Graphics.ES10.All)pname, (Single*)@params);
+            Core.Fogfv((OpenTK.Graphics.ES10.All)pname, (Single*)@params);
             #if DEBUG
             }
             #endif
@@ -2217,7 +2217,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glFogx((OpenTK.Graphics.ES10.All)pname, (int)param);
+            Core.Fogx((OpenTK.Graphics.ES10.All)pname, (int)param);
             #if DEBUG
             }
             #endif
@@ -2236,7 +2236,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (int* @params_ptr = @params)
                 {
-                    Delegates.glFogxv((OpenTK.Graphics.ES10.All)pname, (int*)@params_ptr);
+                    Core.Fogxv((OpenTK.Graphics.ES10.All)pname, (int*)@params_ptr);
                 }
             }
             #if DEBUG
@@ -2254,7 +2254,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glFogxv((OpenTK.Graphics.ES10.All)pname, (int*)@params);
+            Core.Fogxv((OpenTK.Graphics.ES10.All)pname, (int*)@params);
             #if DEBUG
             }
             #endif
@@ -2277,7 +2277,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glFrontFace((OpenTK.Graphics.ES10.All)mode);
+            Core.FrontFace((OpenTK.Graphics.ES10.All)mode);
             #if DEBUG
             }
             #endif
@@ -2310,7 +2310,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glFrustumf((Single)left, (Single)right, (Single)bottom, (Single)top, (Single)zNear, (Single)zFar);
+            Core.Frustumf((Single)left, (Single)right, (Single)bottom, (Single)top, (Single)zNear, (Single)zFar);
             #if DEBUG
             }
             #endif
@@ -2325,7 +2325,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glFrustumx((int)left, (int)right, (int)bottom, (int)top, (int)zNear, (int)zFar);
+            Core.Frustumx((int)left, (int)right, (int)bottom, (int)top, (int)zNear, (int)zFar);
             #if DEBUG
             }
             #endif
@@ -2357,7 +2357,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Int32* textures_ptr = textures)
                 {
-                    Delegates.glGenTextures((Int32)n, (UInt32*)textures_ptr);
+                    Core.GenTextures((Int32)n, (UInt32*)textures_ptr);
                 }
             }
             #if DEBUG
@@ -2391,7 +2391,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Int32* textures_ptr = &textures)
                 {
-                    Delegates.glGenTextures((Int32)n, (UInt32*)textures_ptr);
+                    Core.GenTextures((Int32)n, (UInt32*)textures_ptr);
                 }
             }
             #if DEBUG
@@ -2422,7 +2422,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glGenTextures((Int32)n, (UInt32*)textures);
+            Core.GenTextures((Int32)n, (UInt32*)textures);
             #if DEBUG
             }
             #endif
@@ -2455,7 +2455,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (UInt32* textures_ptr = textures)
                 {
-                    Delegates.glGenTextures((Int32)n, (UInt32*)textures_ptr);
+                    Core.GenTextures((Int32)n, (UInt32*)textures_ptr);
                 }
             }
             #if DEBUG
@@ -2490,7 +2490,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (UInt32* textures_ptr = &textures)
                 {
-                    Delegates.glGenTextures((Int32)n, (UInt32*)textures_ptr);
+                    Core.GenTextures((Int32)n, (UInt32*)textures_ptr);
                 }
             }
             #if DEBUG
@@ -2521,7 +2521,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glGenTextures((Int32)n, (UInt32*)textures);
+            Core.GenTextures((Int32)n, (UInt32*)textures);
             #if DEBUG
             }
             #endif
@@ -2535,7 +2535,7 @@ namespace OpenTK.Graphics.ES10
         public static 
         OpenTK.Graphics.ES10.All GetError()
         {
-            return Delegates.glGetError();
+            return Core.GetError();
         }
 
         /// <summary>[requires: v1.0 and 1.0]</summary>
@@ -2551,7 +2551,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Int32* @params_ptr = @params)
                 {
-                    Delegates.glGetIntegerv((OpenTK.Graphics.ES10.All)pname, (Int32*)@params_ptr);
+                    Core.GetIntegerv((OpenTK.Graphics.ES10.All)pname, (Int32*)@params_ptr);
                 }
             }
             #if DEBUG
@@ -2572,7 +2572,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Int32* @params_ptr = &@params)
                 {
-                    Delegates.glGetIntegerv((OpenTK.Graphics.ES10.All)pname, (Int32*)@params_ptr);
+                    Core.GetIntegerv((OpenTK.Graphics.ES10.All)pname, (Int32*)@params_ptr);
                 }
             }
             #if DEBUG
@@ -2590,7 +2590,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glGetIntegerv((OpenTK.Graphics.ES10.All)pname, (Int32*)@params);
+            Core.GetIntegerv((OpenTK.Graphics.ES10.All)pname, (Int32*)@params);
             #if DEBUG
             }
             #endif
@@ -2619,7 +2619,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            unsafe { return new string((sbyte*)Delegates.glGetString((OpenTK.Graphics.ES10.All)name)); }
+            unsafe { return new string((sbyte*)Core.GetString((OpenTK.Graphics.ES10.All)name)); }
             #if DEBUG
             }
             #endif
@@ -2647,7 +2647,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glHint((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)mode);
+            Core.Hint((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)mode);
             #if DEBUG
             }
             #endif
@@ -2680,7 +2680,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glLightf((OpenTK.Graphics.ES10.All)light, (OpenTK.Graphics.ES10.All)pname, (Single)param);
+            Core.Lightf((OpenTK.Graphics.ES10.All)light, (OpenTK.Graphics.ES10.All)pname, (Single)param);
             #if DEBUG
             }
             #endif
@@ -2717,7 +2717,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    Delegates.glLightfv((OpenTK.Graphics.ES10.All)light, (OpenTK.Graphics.ES10.All)pname, (Single*)@params_ptr);
+                    Core.Lightfv((OpenTK.Graphics.ES10.All)light, (OpenTK.Graphics.ES10.All)pname, (Single*)@params_ptr);
                 }
             }
             #if DEBUG
@@ -2753,7 +2753,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glLightfv((OpenTK.Graphics.ES10.All)light, (OpenTK.Graphics.ES10.All)pname, (Single*)@params);
+            Core.Lightfv((OpenTK.Graphics.ES10.All)light, (OpenTK.Graphics.ES10.All)pname, (Single*)@params);
             #if DEBUG
             }
             #endif
@@ -2781,7 +2781,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glLightModelf((OpenTK.Graphics.ES10.All)pname, (Single)param);
+            Core.LightModelf((OpenTK.Graphics.ES10.All)pname, (Single)param);
             #if DEBUG
             }
             #endif
@@ -2813,7 +2813,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    Delegates.glLightModelfv((OpenTK.Graphics.ES10.All)pname, (Single*)@params_ptr);
+                    Core.LightModelfv((OpenTK.Graphics.ES10.All)pname, (Single*)@params_ptr);
                 }
             }
             #if DEBUG
@@ -2844,7 +2844,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glLightModelfv((OpenTK.Graphics.ES10.All)pname, (Single*)@params);
+            Core.LightModelfv((OpenTK.Graphics.ES10.All)pname, (Single*)@params);
             #if DEBUG
             }
             #endif
@@ -2859,7 +2859,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glLightModelx((OpenTK.Graphics.ES10.All)pname, (int)param);
+            Core.LightModelx((OpenTK.Graphics.ES10.All)pname, (int)param);
             #if DEBUG
             }
             #endif
@@ -2878,7 +2878,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (int* @params_ptr = @params)
                 {
-                    Delegates.glLightModelxv((OpenTK.Graphics.ES10.All)pname, (int*)@params_ptr);
+                    Core.LightModelxv((OpenTK.Graphics.ES10.All)pname, (int*)@params_ptr);
                 }
             }
             #if DEBUG
@@ -2896,7 +2896,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glLightModelxv((OpenTK.Graphics.ES10.All)pname, (int*)@params);
+            Core.LightModelxv((OpenTK.Graphics.ES10.All)pname, (int*)@params);
             #if DEBUG
             }
             #endif
@@ -2911,7 +2911,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glLightx((OpenTK.Graphics.ES10.All)light, (OpenTK.Graphics.ES10.All)pname, (int)param);
+            Core.Lightx((OpenTK.Graphics.ES10.All)light, (OpenTK.Graphics.ES10.All)pname, (int)param);
             #if DEBUG
             }
             #endif
@@ -2930,7 +2930,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (int* @params_ptr = @params)
                 {
-                    Delegates.glLightxv((OpenTK.Graphics.ES10.All)light, (OpenTK.Graphics.ES10.All)pname, (int*)@params_ptr);
+                    Core.Lightxv((OpenTK.Graphics.ES10.All)light, (OpenTK.Graphics.ES10.All)pname, (int*)@params_ptr);
                 }
             }
             #if DEBUG
@@ -2948,7 +2948,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glLightxv((OpenTK.Graphics.ES10.All)light, (OpenTK.Graphics.ES10.All)pname, (int*)@params);
+            Core.Lightxv((OpenTK.Graphics.ES10.All)light, (OpenTK.Graphics.ES10.All)pname, (int*)@params);
             #if DEBUG
             }
             #endif
@@ -2971,7 +2971,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glLineWidth((Single)width);
+            Core.LineWidth((Single)width);
             #if DEBUG
             }
             #endif
@@ -2986,7 +2986,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glLineWidthx((int)width);
+            Core.LineWidthx((int)width);
             #if DEBUG
             }
             #endif
@@ -3004,7 +3004,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glLoadIdentity();
+            Core.LoadIdentity();
             #if DEBUG
             }
             #endif
@@ -3031,7 +3031,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Single* m_ptr = m)
                 {
-                    Delegates.glLoadMatrixf((Single*)m_ptr);
+                    Core.LoadMatrixf((Single*)m_ptr);
                 }
             }
             #if DEBUG
@@ -3060,7 +3060,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Single* m_ptr = &m)
                 {
-                    Delegates.glLoadMatrixf((Single*)m_ptr);
+                    Core.LoadMatrixf((Single*)m_ptr);
                 }
             }
             #if DEBUG
@@ -3086,7 +3086,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glLoadMatrixf((Single*)m);
+            Core.LoadMatrixf((Single*)m);
             #if DEBUG
             }
             #endif
@@ -3105,7 +3105,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (int* m_ptr = m)
                 {
-                    Delegates.glLoadMatrixx((int*)m_ptr);
+                    Core.LoadMatrixx((int*)m_ptr);
                 }
             }
             #if DEBUG
@@ -3126,7 +3126,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (int* m_ptr = &m)
                 {
-                    Delegates.glLoadMatrixx((int*)m_ptr);
+                    Core.LoadMatrixx((int*)m_ptr);
                 }
             }
             #if DEBUG
@@ -3144,7 +3144,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glLoadMatrixx((int*)m);
+            Core.LoadMatrixx((int*)m);
             #if DEBUG
             }
             #endif
@@ -3167,7 +3167,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glLogicOp((OpenTK.Graphics.ES10.All)opcode);
+            Core.LogicOp((OpenTK.Graphics.ES10.All)opcode);
             #if DEBUG
             }
             #endif
@@ -3200,7 +3200,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glMaterialf((OpenTK.Graphics.ES10.All)face, (OpenTK.Graphics.ES10.All)pname, (Single)param);
+            Core.Materialf((OpenTK.Graphics.ES10.All)face, (OpenTK.Graphics.ES10.All)pname, (Single)param);
             #if DEBUG
             }
             #endif
@@ -3237,7 +3237,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    Delegates.glMaterialfv((OpenTK.Graphics.ES10.All)face, (OpenTK.Graphics.ES10.All)pname, (Single*)@params_ptr);
+                    Core.Materialfv((OpenTK.Graphics.ES10.All)face, (OpenTK.Graphics.ES10.All)pname, (Single*)@params_ptr);
                 }
             }
             #if DEBUG
@@ -3273,7 +3273,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glMaterialfv((OpenTK.Graphics.ES10.All)face, (OpenTK.Graphics.ES10.All)pname, (Single*)@params);
+            Core.Materialfv((OpenTK.Graphics.ES10.All)face, (OpenTK.Graphics.ES10.All)pname, (Single*)@params);
             #if DEBUG
             }
             #endif
@@ -3288,7 +3288,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glMaterialx((OpenTK.Graphics.ES10.All)face, (OpenTK.Graphics.ES10.All)pname, (int)param);
+            Core.Materialx((OpenTK.Graphics.ES10.All)face, (OpenTK.Graphics.ES10.All)pname, (int)param);
             #if DEBUG
             }
             #endif
@@ -3307,7 +3307,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (int* @params_ptr = @params)
                 {
-                    Delegates.glMaterialxv((OpenTK.Graphics.ES10.All)face, (OpenTK.Graphics.ES10.All)pname, (int*)@params_ptr);
+                    Core.Materialxv((OpenTK.Graphics.ES10.All)face, (OpenTK.Graphics.ES10.All)pname, (int*)@params_ptr);
                 }
             }
             #if DEBUG
@@ -3325,7 +3325,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glMaterialxv((OpenTK.Graphics.ES10.All)face, (OpenTK.Graphics.ES10.All)pname, (int*)@params);
+            Core.Materialxv((OpenTK.Graphics.ES10.All)face, (OpenTK.Graphics.ES10.All)pname, (int*)@params);
             #if DEBUG
             }
             #endif
@@ -3348,7 +3348,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glMatrixMode((OpenTK.Graphics.ES10.All)mode);
+            Core.MatrixMode((OpenTK.Graphics.ES10.All)mode);
             #if DEBUG
             }
             #endif
@@ -3376,7 +3376,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glMultiTexCoord4f((OpenTK.Graphics.ES10.All)target, (Single)s, (Single)t, (Single)r, (Single)q);
+            Core.MultiTexCoord4f((OpenTK.Graphics.ES10.All)target, (Single)s, (Single)t, (Single)r, (Single)q);
             #if DEBUG
             }
             #endif
@@ -3391,7 +3391,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glMultiTexCoord4x((OpenTK.Graphics.ES10.All)target, (int)s, (int)t, (int)r, (int)q);
+            Core.MultiTexCoord4x((OpenTK.Graphics.ES10.All)target, (int)s, (int)t, (int)r, (int)q);
             #if DEBUG
             }
             #endif
@@ -3418,7 +3418,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Single* m_ptr = m)
                 {
-                    Delegates.glMultMatrixf((Single*)m_ptr);
+                    Core.MultMatrixf((Single*)m_ptr);
                 }
             }
             #if DEBUG
@@ -3447,7 +3447,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Single* m_ptr = &m)
                 {
-                    Delegates.glMultMatrixf((Single*)m_ptr);
+                    Core.MultMatrixf((Single*)m_ptr);
                 }
             }
             #if DEBUG
@@ -3473,7 +3473,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glMultMatrixf((Single*)m);
+            Core.MultMatrixf((Single*)m);
             #if DEBUG
             }
             #endif
@@ -3492,7 +3492,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (int* m_ptr = m)
                 {
-                    Delegates.glMultMatrixx((int*)m_ptr);
+                    Core.MultMatrixx((int*)m_ptr);
                 }
             }
             #if DEBUG
@@ -3513,7 +3513,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (int* m_ptr = &m)
                 {
-                    Delegates.glMultMatrixx((int*)m_ptr);
+                    Core.MultMatrixx((int*)m_ptr);
                 }
             }
             #if DEBUG
@@ -3531,7 +3531,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glMultMatrixx((int*)m);
+            Core.MultMatrixx((int*)m);
             #if DEBUG
             }
             #endif
@@ -3557,7 +3557,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glNormal3f((Single)nx, (Single)ny, (Single)nz);
+            Core.Normal3f((Single)nx, (Single)ny, (Single)nz);
             #if DEBUG
             }
             #endif
@@ -3572,7 +3572,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glNormal3x((int)nx, (int)ny, (int)nz);
+            Core.Normal3x((int)nx, (int)ny, (int)nz);
             #if DEBUG
             }
             #endif
@@ -3605,7 +3605,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glNormalPointer((OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer);
+            Core.NormalPointer((OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer);
             #if DEBUG
             }
             #endif
@@ -3642,7 +3642,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glNormalPointer((OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.NormalPointer((OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -3684,7 +3684,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glNormalPointer((OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.NormalPointer((OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -3726,7 +3726,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glNormalPointer((OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.NormalPointer((OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -3768,7 +3768,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glNormalPointer((OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.NormalPointer((OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
                 pointer = (T2)pointer_ptr.Target;
             }
             finally
@@ -3807,7 +3807,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glOrthof((Single)left, (Single)right, (Single)bottom, (Single)top, (Single)zNear, (Single)zFar);
+            Core.Orthof((Single)left, (Single)right, (Single)bottom, (Single)top, (Single)zNear, (Single)zFar);
             #if DEBUG
             }
             #endif
@@ -3822,7 +3822,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glOrthox((int)left, (int)right, (int)bottom, (int)top, (int)zNear, (int)zFar);
+            Core.Orthox((int)left, (int)right, (int)bottom, (int)top, (int)zNear, (int)zFar);
             #if DEBUG
             }
             #endif
@@ -3850,7 +3850,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glPixelStorei((OpenTK.Graphics.ES10.All)pname, (Int32)param);
+            Core.PixelStorei((OpenTK.Graphics.ES10.All)pname, (Int32)param);
             #if DEBUG
             }
             #endif
@@ -3873,7 +3873,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glPointSize((Single)size);
+            Core.PointSize((Single)size);
             #if DEBUG
             }
             #endif
@@ -3888,7 +3888,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glPointSizex((int)size);
+            Core.PointSizex((int)size);
             #if DEBUG
             }
             #endif
@@ -3916,7 +3916,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glPolygonOffset((Single)factor, (Single)units);
+            Core.PolygonOffset((Single)factor, (Single)units);
             #if DEBUG
             }
             #endif
@@ -3931,7 +3931,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glPolygonOffsetx((int)factor, (int)units);
+            Core.PolygonOffsetx((int)factor, (int)units);
             #if DEBUG
             }
             #endif
@@ -3946,7 +3946,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glPopMatrix();
+            Core.PopMatrix();
             #if DEBUG
             }
             #endif
@@ -3964,7 +3964,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glPushMatrix();
+            Core.PushMatrix();
             #if DEBUG
             }
             #endif
@@ -4007,7 +4007,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels);
+            Core.ReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels);
             #if DEBUG
             }
             #endif
@@ -4054,7 +4054,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Core.ReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -4106,7 +4106,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Core.ReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -4158,7 +4158,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Core.ReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -4210,7 +4210,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Core.ReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
                 pixels = (T6)pixels_ptr.Target;
             }
             finally
@@ -4244,7 +4244,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glRotatef((Single)angle, (Single)x, (Single)y, (Single)z);
+            Core.Rotatef((Single)angle, (Single)x, (Single)y, (Single)z);
             #if DEBUG
             }
             #endif
@@ -4259,7 +4259,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glRotatex((int)angle, (int)x, (int)y, (int)z);
+            Core.Rotatex((int)angle, (int)x, (int)y, (int)z);
             #if DEBUG
             }
             #endif
@@ -4287,7 +4287,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glSampleCoverage((Single)value, (bool)invert);
+            Core.SampleCoverage((Single)value, (bool)invert);
             #if DEBUG
             }
             #endif
@@ -4302,7 +4302,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glSampleCoveragex((int)value, (bool)invert);
+            Core.SampleCoveragex((int)value, (bool)invert);
             #if DEBUG
             }
             #endif
@@ -4325,7 +4325,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glScalef((Single)x, (Single)y, (Single)z);
+            Core.Scalef((Single)x, (Single)y, (Single)z);
             #if DEBUG
             }
             #endif
@@ -4340,7 +4340,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glScalex((int)x, (int)y, (int)z);
+            Core.Scalex((int)x, (int)y, (int)z);
             #if DEBUG
             }
             #endif
@@ -4368,7 +4368,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glScissor((Int32)x, (Int32)y, (Int32)width, (Int32)height);
+            Core.Scissor((Int32)x, (Int32)y, (Int32)width, (Int32)height);
             #if DEBUG
             }
             #endif
@@ -4391,7 +4391,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glShadeModel((OpenTK.Graphics.ES10.All)mode);
+            Core.ShadeModel((OpenTK.Graphics.ES10.All)mode);
             #if DEBUG
             }
             #endif
@@ -4424,7 +4424,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glStencilFunc((OpenTK.Graphics.ES10.All)func, (Int32)@ref, (UInt32)mask);
+            Core.StencilFunc((OpenTK.Graphics.ES10.All)func, (Int32)@ref, (UInt32)mask);
             #if DEBUG
             }
             #endif
@@ -4458,7 +4458,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glStencilFunc((OpenTK.Graphics.ES10.All)func, (Int32)@ref, (UInt32)mask);
+            Core.StencilFunc((OpenTK.Graphics.ES10.All)func, (Int32)@ref, (UInt32)mask);
             #if DEBUG
             }
             #endif
@@ -4481,7 +4481,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glStencilMask((UInt32)mask);
+            Core.StencilMask((UInt32)mask);
             #if DEBUG
             }
             #endif
@@ -4505,7 +4505,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glStencilMask((UInt32)mask);
+            Core.StencilMask((UInt32)mask);
             #if DEBUG
             }
             #endif
@@ -4538,7 +4538,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glStencilOp((OpenTK.Graphics.ES10.All)fail, (OpenTK.Graphics.ES10.All)zfail, (OpenTK.Graphics.ES10.All)zpass);
+            Core.StencilOp((OpenTK.Graphics.ES10.All)fail, (OpenTK.Graphics.ES10.All)zfail, (OpenTK.Graphics.ES10.All)zpass);
             #if DEBUG
             }
             #endif
@@ -4576,7 +4576,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glTexCoordPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer);
+            Core.TexCoordPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer);
             #if DEBUG
             }
             #endif
@@ -4618,7 +4618,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexCoordPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.TexCoordPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -4665,7 +4665,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexCoordPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.TexCoordPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -4712,7 +4712,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexCoordPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.TexCoordPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -4759,7 +4759,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexCoordPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.TexCoordPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
                 pointer = (T3)pointer_ptr.Target;
             }
             finally
@@ -4798,7 +4798,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glTexEnvf((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (Single)param);
+            Core.TexEnvf((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (Single)param);
             #if DEBUG
             }
             #endif
@@ -4835,7 +4835,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (Single* @params_ptr = @params)
                 {
-                    Delegates.glTexEnvfv((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (Single*)@params_ptr);
+                    Core.TexEnvfv((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (Single*)@params_ptr);
                 }
             }
             #if DEBUG
@@ -4871,7 +4871,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glTexEnvfv((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (Single*)@params);
+            Core.TexEnvfv((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (Single*)@params);
             #if DEBUG
             }
             #endif
@@ -4886,7 +4886,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glTexEnvx((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (int)param);
+            Core.TexEnvx((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (int)param);
             #if DEBUG
             }
             #endif
@@ -4905,7 +4905,7 @@ namespace OpenTK.Graphics.ES10
             {
                 fixed (int* @params_ptr = @params)
                 {
-                    Delegates.glTexEnvxv((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (int*)@params_ptr);
+                    Core.TexEnvxv((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (int*)@params_ptr);
                 }
             }
             #if DEBUG
@@ -4923,7 +4923,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glTexEnvxv((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (int*)@params);
+            Core.TexEnvxv((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (int*)@params);
             #if DEBUG
             }
             #endif
@@ -4986,7 +4986,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels);
+            Core.TexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels);
             #if DEBUG
             }
             #endif
@@ -5053,7 +5053,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Core.TexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -5125,7 +5125,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Core.TexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -5197,7 +5197,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Core.TexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -5269,7 +5269,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Core.TexImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
                 pixels = (T8)pixels_ptr.Target;
             }
             finally
@@ -5308,7 +5308,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glTexParameterf((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (Single)param);
+            Core.TexParameterf((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (Single)param);
             #if DEBUG
             }
             #endif
@@ -5323,7 +5323,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glTexParameterx((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (int)param);
+            Core.TexParameterx((OpenTK.Graphics.ES10.All)target, (OpenTK.Graphics.ES10.All)pname, (int)param);
             #if DEBUG
             }
             #endif
@@ -5386,7 +5386,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels);
+            Core.TexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels);
             #if DEBUG
             }
             #endif
@@ -5453,7 +5453,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Core.TexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -5525,7 +5525,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Core.TexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -5597,7 +5597,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Core.TexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -5669,7 +5669,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pixels_ptr = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             try
             {
-                Delegates.glTexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Core.TexSubImage2D((OpenTK.Graphics.ES10.All)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.Graphics.ES10.All)format, (OpenTK.Graphics.ES10.All)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
                 pixels = (T8)pixels_ptr.Target;
             }
             finally
@@ -5698,7 +5698,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glTranslatef((Single)x, (Single)y, (Single)z);
+            Core.Translatef((Single)x, (Single)y, (Single)z);
             #if DEBUG
             }
             #endif
@@ -5713,7 +5713,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glTranslatex((int)x, (int)y, (int)z);
+            Core.Translatex((int)x, (int)y, (int)z);
             #if DEBUG
             }
             #endif
@@ -5751,7 +5751,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glVertexPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer);
+            Core.VertexPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer);
             #if DEBUG
             }
             #endif
@@ -5793,7 +5793,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glVertexPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.VertexPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -5840,7 +5840,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glVertexPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.VertexPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -5887,7 +5887,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glVertexPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.VertexPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -5934,7 +5934,7 @@ namespace OpenTK.Graphics.ES10
             GCHandle pointer_ptr = GCHandle.Alloc(pointer, GCHandleType.Pinned);
             try
             {
-                Delegates.glVertexPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                Core.VertexPointer((Int32)size, (OpenTK.Graphics.ES10.All)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
                 pointer = (T3)pointer_ptr.Target;
             }
             finally
@@ -5968,7 +5968,7 @@ namespace OpenTK.Graphics.ES10
             using (new ErrorHelper(GraphicsContext.CurrentContext))
             {
             #endif
-            Delegates.glViewport((Int32)x, (Int32)y, (Int32)width, (Int32)height);
+            Core.Viewport((Int32)x, (Int32)y, (Int32)width, (Int32)height);
             #if DEBUG
             }
             #endif

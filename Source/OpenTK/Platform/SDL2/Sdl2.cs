@@ -336,7 +336,7 @@ namespace OpenTK.Platform.SDL2
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetProcAddress", ExactSpelling = true)]
-            static extern IntPtr GetProcAddress(IntPtr proc);
+            public static extern IntPtr GetProcAddress(IntPtr proc);
             public static IntPtr GetProcAddress(string proc)
             {
                 IntPtr p = Marshal.StringToHGlobalAnsi(proc);

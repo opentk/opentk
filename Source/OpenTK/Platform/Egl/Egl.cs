@@ -308,6 +308,9 @@ namespace OpenTK.Platform.Egl
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetProcAddress")]
         public static extern IntPtr GetProcAddress(string funcname);
 
+        [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetProcAddress")]
+        public static extern IntPtr GetProcAddress(IntPtr funcname);
+
         // Returns true if Egl drivers exist on the system.
         public static bool IsSupported
         {

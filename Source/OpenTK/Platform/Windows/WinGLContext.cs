@@ -68,7 +68,7 @@ namespace OpenTK.Platform.Windows
                     SetGraphicsModePFD(selector, GraphicsMode.Default, window);
 
                     // Then, construct a temporary context and load all wgl extensions
-                    ContextHandle temp_context = new ContextHandle(Wgl.Imports.CreateContext(window.DeviceContext));
+                    ContextHandle temp_context = new ContextHandle(Wgl.CreateContext(window.DeviceContext));
                     if (temp_context != ContextHandle.Zero)
                     {
 						// Make the context current.
@@ -79,7 +79,7 @@ namespace OpenTK.Platform.Windows
 						// Sigh...
 						for (int retry = 0; retry < 5; retry++)
 						{
-							bool success = Wgl.Imports.MakeCurrent(window.DeviceContext, temp_context.Handle);
+							bool success = Wgl.MakeCurrent(window.DeviceContext, temp_context.Handle);
 							if (!success)
 							{
 								Debug.Print("wglMakeCurrent failed with error: {0}. Retrying", Marshal.GetLastWin32Error());
@@ -94,8 +94,8 @@ namespace OpenTK.Platform.Windows
 
 						// Load wgl extensions and destroy temporary context
 						Wgl.LoadAll();
-                        Wgl.Imports.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
-                        Wgl.Imports.DeleteContext(temp_context.Handle);
+                        Wgl.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
+                        Wgl.DeleteContext(temp_context.Handle);
                     }
                     else
                     {
@@ -168,9 +168,9 @@ namespace OpenTK.Platform.Windows
                 {
                     // Failed to create GL3-level context, fall back to GL2.
                     Debug.Write("Falling back to GL2... ");
-                    Handle = new ContextHandle(Wgl.Imports.CreateContext(window.DeviceContext));
+                    Handle = new ContextHandle(Wgl.CreateContext(window.DeviceContext));
                     if (Handle == ContextHandle.Zero)
-                        Handle = new ContextHandle(Wgl.Imports.CreateContext(window.DeviceContext));
+                        Handle = new ContextHandle(Wgl.CreateContext(window.DeviceContext));
                     if (Handle == ContextHandle.Zero)
                         throw new GraphicsContextException(
                             String.Format("Context creation failed. Wgl.CreateContext() error: {0}.",
@@ -193,7 +193,7 @@ namespace OpenTK.Platform.Windows
                 {
                     Marshal.GetLastWin32Error();
                     Debug.Write(String.Format("Sharing state with context {0}: ", sharedContext));
-                    bool result = Wgl.Imports.ShareLists((sharedContext as IGraphicsContextInternal).Context.Handle, Handle.Handle);
+                    bool result = Wgl.ShareLists((sharedContext as IGraphicsContextInternal).Context.Handle, Handle.Handle);
                     Debug.WriteLine(result ? "success!" : "failed with win32 error " + Marshal.GetLastWin32Error());
                 }
             }
@@ -255,11 +255,11 @@ namespace OpenTK.Platform.Windows
                     if (wnd.Handle == IntPtr.Zero)
                         throw new ArgumentException("window", "Must point to a valid window.");
 
-                    success = Wgl.Imports.MakeCurrent(wnd.DeviceContext, Handle.Handle);
+                    success = Wgl.MakeCurrent(wnd.DeviceContext, Handle.Handle);
                 }
                 else
                 {
-                    success = Wgl.Imports.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
+                    success = Wgl.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
                 }
 
                 if (!success)
@@ -274,7 +274,7 @@ namespace OpenTK.Platform.Windows
 
         public override bool IsCurrent
         {
-            get { return Wgl.Imports.GetCurrentContext() == Handle.Handle; }
+            get { return Wgl.GetCurrentContext() == Handle.Handle; }
         }
 
         #endregion
@@ -338,7 +338,30 @@ namespace OpenTK.Platform.Windows
 
         public override IntPtr GetAddress(string function_string)
         {
-            return Wgl.Imports.GetProcAddress(function_string);
+            IntPtr address = Wgl.GetProcAddress(function_string);
+            if (!IsValid(address))
+            {
+                address = Functions.GetProcAddress(opengl32Handle, function_string);
+            }
+            return address;
+        }
+
+        public override IntPtr GetAddress(IntPtr function_string)
+        {
+            IntPtr address = Wgl.GetProcAddress(function_string);
+            if (!IsValid(address))
+            {
+                address = Functions.GetProcAddress(opengl32Handle, function_string);
+            }
+            return address;
+        }
+
+        static bool IsValid(IntPtr address)
+        {
+            // See https://www.opengl.org/wiki/Load_OpenGL_Functions
+            long a = address.ToInt64();
+            bool is_valid = (a < -1 )|| (a > 3);
+            return is_valid;
         }
 
         #endregion
@@ -390,7 +413,7 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                return Wgl.Imports.GetCurrentDC();
+                return Wgl.GetCurrentDC();
             }
         }
 
@@ -449,7 +472,7 @@ namespace OpenTK.Platform.Windows
                 try
                 {
                     // This will fail if the user calls Dispose() on thread X when the context is current on thread Y.
-                    if (!Wgl.Imports.DeleteContext(Handle.Handle))
+                    if (!Wgl.DeleteContext(Handle.Handle))
                         Debug.Print("Failed to destroy OpenGL context {0}. Error: {1}",
                             Handle.ToString(), Marshal.GetLastWin32Error());
                 }

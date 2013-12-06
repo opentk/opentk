@@ -26,6 +26,7 @@
 #endregion
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Graphics
 {
@@ -34,6 +35,18 @@ namespace OpenTK.Graphics
     /// </summary>
     public abstract class GraphicsBindingsBase : BindingsBase
     {
+        /// <summary>
+        /// Contains the list of API entry points (function pointers).
+        /// This field must be set by an inheriting class.
+        /// </summary>
+        protected IntPtr[] EntryPointsInstance;
+
+        /// <summary>
+        /// Contains the list of API entry point names.
+        /// This field must be set by an inheriting class.
+        /// </summary>
+        protected string[] EntryPointNamesInstance;
+
         /// <summary>
         /// Retrieves an unmanaged function pointer to the specified function.
         /// </summary>
@@ -55,6 +68,23 @@ namespace OpenTK.Graphics
             if (context == null)
                 throw new GraphicsContextMissingException();
             return context != null ? context.GetAddress(funcname) : IntPtr.Zero;
+        }
+
+        // Loads all available entry points for the current API.
+        // Note: we prefer IGraphicsContextInternal.GetAddress over
+        // this.GetAddress to improve loading performance (less
+        // validation necessary.)
+        internal override void LoadEntryPoints()
+        {
+            IGraphicsContext context = GraphicsContext.CurrentContext;
+            if (context == null)
+                throw new GraphicsContextMissingException();
+
+            IGraphicsContextInternal context_internal = context as IGraphicsContextInternal;
+            for (int i = 0; i < EntryPointsInstance.Length; i++)
+            {
+                EntryPointsInstance[i] = context_internal.GetAddress(EntryPointNamesInstance[i]);
+            }
         }
     }
 }

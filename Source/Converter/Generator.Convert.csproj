@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -45,12 +45,10 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
     <DebugSymbols>True</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <Optimize>False</Optimize>
-    <OutputPath>..\..\Binaries\OpenTK\Debug\</OutputPath>
+    <OutputPath>..\..\Binaries\Tools\Debug\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
@@ -63,11 +61,9 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
-    <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
+    <OutputPath>..\..\Binaries\Tools\Release\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
@@ -75,7 +71,7 @@
     <DebugType>none</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Documentation|AnyCPU'">
-    <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
+    <OutputPath>..\..\Binaries\Tools\Release\</OutputPath>
     <DebugType>none</DebugType>
     <WarningLevel>4</WarningLevel>
     <Optimize>True</Optimize>
@@ -86,11 +82,9 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
-    <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
+    <OutputPath>..\..\Binaries\Tools\Release\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
