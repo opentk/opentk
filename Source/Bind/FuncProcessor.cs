@@ -215,8 +215,11 @@ namespace Bind
             category = enum_processor.TranslateEnumName(category);
 
             // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
-            // Special case for Boolean - it is an enum, but it is dumb to use that instead of the 'bool' type.
-            bool normal = enums.TryGetValue(type.CurrentType, out @enum);
+            // Special case for Boolean which is there simply because C89 does not support bool types.
+            // We don't really need that in C#
+            bool normal =
+                enums.TryGetValue(type.CurrentType, out @enum) ||
+                enums.TryGetValue(enum_processor.TranslateEnumName(type.CurrentType), out @enum);
 
             // Translate enum types
             type.IsEnum = false;
@@ -233,7 +236,9 @@ namespace Bind
                     // Some functions and enums have the same names.
                     // Make sure we reference the enums rather than the functions.
                     if (normal)
-                        type.QualifiedType = type.CurrentType.Insert(0, String.Format("{0}.", Settings.EnumsOutput));
+                    {
+                        type.QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, @enum.Name);
+                    }
                 }
             }
             else if (Generator.GLTypes.TryGetValue(type.CurrentType, out s))
@@ -328,7 +333,7 @@ namespace Bind
             }
             return extension;
         }
-        
+
         void TranslateExtension(Delegate d)
         {
             d.Extension = TranslateExtension(d.Extension);
@@ -511,7 +516,7 @@ namespace Bind
         {
             ApplyReturnTypeReplacement(d, function_override);
 
-            TranslateType(d.ReturnType, function_override, nav, enum_processor,enums, d.Category, apiname);
+            TranslateType(d.ReturnType, function_override, nav, enum_processor, enums, d.Category, apiname);
 
             if (d.ReturnType.CurrentType.ToLower().Contains("void") && d.ReturnType.Pointer != 0)
             {
@@ -608,7 +613,7 @@ namespace Bind
                 }
                 else if (p.CurrentType.ToLower().Contains("void") ||
                     (!String.IsNullOrEmpty(p.PreviousType) && p.PreviousType.ToLower().Contains("void")))
-                    //|| CurrentType.Contains("IntPtr"))
+                //|| CurrentType.Contains("IntPtr"))
                 {
                     p.CurrentType = "IntPtr";
                     p.Pointer = 0;
