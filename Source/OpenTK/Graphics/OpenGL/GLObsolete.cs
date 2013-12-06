@@ -31,6 +31,7 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Graphics.OpenGL
 {
     #pragma warning disable 626
+    #pragma warning disable 1591
 
     partial class GL
     {
