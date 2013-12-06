@@ -773,6 +773,7 @@
     <Compile Include="Graphics\ES11\ES11Enums.cs" />
     <Compile Include="SlotAttribute.cs" />
     <Compile Include="RewrittenAttribute.cs" />
+    <Compile Include="Graphics\OpenGL\GLObsolete.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
