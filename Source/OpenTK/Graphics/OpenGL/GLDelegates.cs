@@ -279,7 +279,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void BindTransformFeedback(OpenTK.Graphics.OpenGL.TransformFeedbackTarget target, UInt32 id);
             internal static BindTransformFeedback glBindTransformFeedback;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindTransformFeedbackNV(OpenTK.Graphics.OpenGL.NvTransformFeedback2 target, UInt32 id);
+            internal delegate void BindTransformFeedbackNV(OpenTK.Graphics.OpenGL.BufferTargetArb target, UInt32 id);
             internal static BindTransformFeedbackNV glBindTransformFeedbackNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BindVertexArray(UInt32 array);
@@ -372,7 +372,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void BlendEquationSeparate(OpenTK.Graphics.OpenGL.BlendEquationMode modeRGB, OpenTK.Graphics.OpenGL.BlendEquationMode modeAlpha);
             internal static BlendEquationSeparate glBlendEquationSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendEquationSeparateEXT(OpenTK.Graphics.OpenGL.ExtBlendEquationSeparate modeRGB, OpenTK.Graphics.OpenGL.ExtBlendEquationSeparate modeAlpha);
+            internal delegate void BlendEquationSeparateEXT(OpenTK.Graphics.OpenGL.BlendEquationModeExt modeRGB, OpenTK.Graphics.OpenGL.BlendEquationModeExt modeAlpha);
             internal static BlendEquationSeparateEXT glBlendEquationSeparateEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendEquationSeparatei(UInt32 buf, OpenTK.Graphics.OpenGL.BlendEquationMode modeRGB, OpenTK.Graphics.OpenGL.BlendEquationMode modeAlpha);
@@ -768,16 +768,16 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void ColorTableParameterfv(OpenTK.Graphics.OpenGL.ColorTableTarget target, OpenTK.Graphics.OpenGL.ColorTableParameterPName pname, Single* @params);
             internal unsafe static ColorTableParameterfv glColorTableParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ColorTableParameterfvSGI(OpenTK.Graphics.OpenGL.SgiColorTable target, OpenTK.Graphics.OpenGL.SgiColorTable pname, Single* @params);
+            internal unsafe delegate void ColorTableParameterfvSGI(OpenTK.Graphics.OpenGL.ColorTableTargetSgi target, OpenTK.Graphics.OpenGL.ColorTableParameterPNameSgi pname, Single* @params);
             internal unsafe static ColorTableParameterfvSGI glColorTableParameterfvSGI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void ColorTableParameteriv(OpenTK.Graphics.OpenGL.ColorTableTarget target, OpenTK.Graphics.OpenGL.ColorTableParameterPName pname, Int32* @params);
             internal unsafe static ColorTableParameteriv glColorTableParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ColorTableParameterivSGI(OpenTK.Graphics.OpenGL.SgiColorTable target, OpenTK.Graphics.OpenGL.SgiColorTable pname, Int32* @params);
+            internal unsafe delegate void ColorTableParameterivSGI(OpenTK.Graphics.OpenGL.ColorTableTargetSgi target, OpenTK.Graphics.OpenGL.ColorTableParameterPNameSgi pname, Int32* @params);
             internal unsafe static ColorTableParameterivSGI glColorTableParameterivSGI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ColorTableSGI(OpenTK.Graphics.OpenGL.SgiColorTable target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr table);
+            internal delegate void ColorTableSGI(OpenTK.Graphics.OpenGL.ColorTableTargetSgi target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr table);
             internal static ColorTableSGI glColorTableSGI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void CombinerInputNV(OpenTK.Graphics.OpenGL.NvRegisterCombiners stage, OpenTK.Graphics.OpenGL.NvRegisterCombiners portion, OpenTK.Graphics.OpenGL.NvRegisterCombiners variable, OpenTK.Graphics.OpenGL.NvRegisterCombiners input, OpenTK.Graphics.OpenGL.NvRegisterCombiners mapping, OpenTK.Graphics.OpenGL.NvRegisterCombiners componentUsage);
@@ -885,37 +885,37 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void ConvolutionFilter1D(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr image);
             internal static ConvolutionFilter1D glConvolutionFilter1D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ConvolutionFilter1DEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr image);
+            internal delegate void ConvolutionFilter1DEXT(OpenTK.Graphics.OpenGL.ConvolutionTargetExt target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr image);
             internal static ConvolutionFilter1DEXT glConvolutionFilter1DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ConvolutionFilter2D(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr image);
             internal static ConvolutionFilter2D glConvolutionFilter2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ConvolutionFilter2DEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr image);
+            internal delegate void ConvolutionFilter2DEXT(OpenTK.Graphics.OpenGL.ConvolutionTargetExt target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr image);
             internal static ConvolutionFilter2DEXT glConvolutionFilter2DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ConvolutionParameterf(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.ConvolutionParameter pname, Single @params);
             internal static ConvolutionParameterf glConvolutionParameterf;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ConvolutionParameterfEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.ExtConvolution pname, Single @params);
+            internal delegate void ConvolutionParameterfEXT(OpenTK.Graphics.OpenGL.ConvolutionTargetExt target, OpenTK.Graphics.OpenGL.ConvolutionParameterExt pname, Single @params);
             internal static ConvolutionParameterfEXT glConvolutionParameterfEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void ConvolutionParameterfv(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.ConvolutionParameter pname, Single* @params);
             internal unsafe static ConvolutionParameterfv glConvolutionParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ConvolutionParameterfvEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.ExtConvolution pname, Single* @params);
+            internal unsafe delegate void ConvolutionParameterfvEXT(OpenTK.Graphics.OpenGL.ConvolutionTargetExt target, OpenTK.Graphics.OpenGL.ConvolutionParameterExt pname, Single* @params);
             internal unsafe static ConvolutionParameterfvEXT glConvolutionParameterfvEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ConvolutionParameteri(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.ConvolutionParameter pname, Int32 @params);
             internal static ConvolutionParameteri glConvolutionParameteri;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ConvolutionParameteriEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.ExtConvolution pname, Int32 @params);
+            internal delegate void ConvolutionParameteriEXT(OpenTK.Graphics.OpenGL.ConvolutionTargetExt target, OpenTK.Graphics.OpenGL.ConvolutionParameterExt pname, Int32 @params);
             internal static ConvolutionParameteriEXT glConvolutionParameteriEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void ConvolutionParameteriv(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.ConvolutionParameter pname, Int32* @params);
             internal unsafe static ConvolutionParameteriv glConvolutionParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ConvolutionParameterivEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.ExtConvolution pname, Int32* @params);
+            internal unsafe delegate void ConvolutionParameterivEXT(OpenTK.Graphics.OpenGL.ConvolutionTargetExt target, OpenTK.Graphics.OpenGL.ConvolutionParameterExt pname, Int32* @params);
             internal unsafe static ConvolutionParameterivEXT glConvolutionParameterivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ConvolutionParameterxOES(OpenTK.Graphics.OpenGL.OesFixedPoint target, OpenTK.Graphics.OpenGL.OesFixedPoint pname, int param);
@@ -936,19 +936,19 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void CopyColorTable(OpenTK.Graphics.OpenGL.ColorTableTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
             internal static CopyColorTable glCopyColorTable;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CopyColorTableSGI(OpenTK.Graphics.OpenGL.SgiColorTable target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
+            internal delegate void CopyColorTableSGI(OpenTK.Graphics.OpenGL.ColorTableTargetSgi target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
             internal static CopyColorTableSGI glCopyColorTableSGI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void CopyConvolutionFilter1D(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
             internal static CopyConvolutionFilter1D glCopyConvolutionFilter1D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CopyConvolutionFilter1DEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
+            internal delegate void CopyConvolutionFilter1DEXT(OpenTK.Graphics.OpenGL.ConvolutionTargetExt target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
             internal static CopyConvolutionFilter1DEXT glCopyConvolutionFilter1DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void CopyConvolutionFilter2D(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height);
             internal static CopyConvolutionFilter2D glCopyConvolutionFilter2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CopyConvolutionFilter2DEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height);
+            internal delegate void CopyConvolutionFilter2DEXT(OpenTK.Graphics.OpenGL.ConvolutionTargetExt target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height);
             internal static CopyConvolutionFilter2DEXT glCopyConvolutionFilter2DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void CopyImageSubData(UInt32 srcName, OpenTK.Graphics.OpenGL.ImageTarget srcTarget, Int32 srcLevel, Int32 srcX, Int32 srcY, Int32 srcZ, UInt32 dstName, OpenTK.Graphics.OpenGL.ImageTarget dstTarget, Int32 dstLevel, Int32 dstX, Int32 dstY, Int32 dstZ, Int32 srcWidth, Int32 srcHeight, Int32 srcDepth);
@@ -1107,13 +1107,13 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void DebugMessageInsertKHR(OpenTK.Graphics.OpenGL.KhrDebug source, OpenTK.Graphics.OpenGL.KhrDebug type, UInt32 id, OpenTK.Graphics.OpenGL.KhrDebug severity, Int32 length, String buf);
             internal static DebugMessageInsertKHR glDebugMessageInsertKHR;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void DeformationMap3dSGIX(OpenTK.Graphics.OpenGL.SgixPolynomialFfd target, Double u1, Double u2, Int32 ustride, Int32 uorder, Double v1, Double v2, Int32 vstride, Int32 vorder, Double w1, Double w2, Int32 wstride, Int32 worder, Double* points);
+            internal unsafe delegate void DeformationMap3dSGIX(OpenTK.Graphics.OpenGL.FfdTargetSgix target, Double u1, Double u2, Int32 ustride, Int32 uorder, Double v1, Double v2, Int32 vstride, Int32 vorder, Double w1, Double w2, Int32 wstride, Int32 worder, Double* points);
             internal unsafe static DeformationMap3dSGIX glDeformationMap3dSGIX;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void DeformationMap3fSGIX(OpenTK.Graphics.OpenGL.SgixPolynomialFfd target, Single u1, Single u2, Int32 ustride, Int32 uorder, Single v1, Single v2, Int32 vstride, Int32 vorder, Single w1, Single w2, Int32 wstride, Int32 worder, Single* points);
+            internal unsafe delegate void DeformationMap3fSGIX(OpenTK.Graphics.OpenGL.FfdTargetSgix target, Single u1, Single u2, Int32 ustride, Int32 uorder, Single v1, Single v2, Int32 vstride, Int32 vorder, Single w1, Single w2, Int32 wstride, Int32 worder, Single* points);
             internal unsafe static DeformationMap3fSGIX glDeformationMap3fSGIX;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DeformSGIX(UInt32 mask);
+            internal delegate void DeformSGIX(OpenTK.Graphics.OpenGL.FfdMaskSgix mask);
             internal static DeformSGIX glDeformSGIX;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DeleteAsyncMarkersSGIX(UInt32 marker, Int32 range);
@@ -1668,7 +1668,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void FogCoordPointer(OpenTK.Graphics.OpenGL.FogPointerType type, Int32 stride, IntPtr pointer);
             internal static FogCoordPointer glFogCoordPointer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FogCoordPointerEXT(OpenTK.Graphics.OpenGL.ExtFogCoord type, Int32 stride, IntPtr pointer);
+            internal delegate void FogCoordPointerEXT(OpenTK.Graphics.OpenGL.FogPointerTypeExt type, Int32 stride, IntPtr pointer);
             internal static FogCoordPointerEXT glFogCoordPointerEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FogCoordPointerListIBM(OpenTK.Graphics.OpenGL.FogPointerType type, Int32 stride, IntPtr pointer, Int32 ptrstride);
@@ -1710,16 +1710,16 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void FragmentLightivSGIX(OpenTK.Graphics.OpenGL.SgixFragmentLighting light, OpenTK.Graphics.OpenGL.SgixFragmentLighting pname, Int32* @params);
             internal unsafe static FragmentLightivSGIX glFragmentLightivSGIX;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FragmentLightModelfSGIX(OpenTK.Graphics.OpenGL.SgixFragmentLighting pname, Single param);
+            internal delegate void FragmentLightModelfSGIX(OpenTK.Graphics.OpenGL.FragmentLightModelParameterSgix pname, Single param);
             internal static FragmentLightModelfSGIX glFragmentLightModelfSGIX;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void FragmentLightModelfvSGIX(OpenTK.Graphics.OpenGL.SgixFragmentLighting pname, Single* @params);
+            internal unsafe delegate void FragmentLightModelfvSGIX(OpenTK.Graphics.OpenGL.FragmentLightModelParameterSgix pname, Single* @params);
             internal unsafe static FragmentLightModelfvSGIX glFragmentLightModelfvSGIX;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FragmentLightModeliSGIX(OpenTK.Graphics.OpenGL.SgixFragmentLighting pname, Int32 param);
+            internal delegate void FragmentLightModeliSGIX(OpenTK.Graphics.OpenGL.FragmentLightModelParameterSgix pname, Int32 param);
             internal static FragmentLightModeliSGIX glFragmentLightModeliSGIX;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void FragmentLightModelivSGIX(OpenTK.Graphics.OpenGL.SgixFragmentLighting pname, Int32* @params);
+            internal unsafe delegate void FragmentLightModelivSGIX(OpenTK.Graphics.OpenGL.FragmentLightModelParameterSgix pname, Int32* @params);
             internal unsafe static FragmentLightModelivSGIX glFragmentLightModelivSGIX;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FragmentMaterialfSGIX(OpenTK.Graphics.OpenGL.MaterialFace face, OpenTK.Graphics.OpenGL.MaterialParameter pname, Single param);
@@ -1989,7 +1989,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetBufferParameteriv(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.BufferParameterName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetBufferParameteriv glGetBufferParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetBufferParameterivARB(OpenTK.Graphics.OpenGL.ArbVertexBufferObject target, OpenTK.Graphics.OpenGL.BufferParameterNameArb pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetBufferParameterivARB(OpenTK.Graphics.OpenGL.BufferTargetArb target, OpenTK.Graphics.OpenGL.BufferParameterNameArb pname, [OutAttribute] Int32* @params);
             internal unsafe static GetBufferParameterivARB glGetBufferParameterivARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetBufferParameterui64vNV(OpenTK.Graphics.OpenGL.NvShaderBufferLoad target, OpenTK.Graphics.OpenGL.NvShaderBufferLoad pname, [OutAttribute] UInt64* @params);
@@ -1998,7 +1998,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void GetBufferPointerv(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.BufferPointer pname, [OutAttribute] IntPtr @params);
             internal static GetBufferPointerv glGetBufferPointerv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetBufferPointervARB(OpenTK.Graphics.OpenGL.ArbVertexBufferObject target, OpenTK.Graphics.OpenGL.BufferPointerNameArb pname, [OutAttribute] IntPtr @params);
+            internal delegate void GetBufferPointervARB(OpenTK.Graphics.OpenGL.BufferTargetArb target, OpenTK.Graphics.OpenGL.BufferPointerNameArb pname, [OutAttribute] IntPtr @params);
             internal static GetBufferPointervARB glGetBufferPointervARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void GetBufferSubData(OpenTK.Graphics.OpenGL.BufferTarget target, IntPtr offset, IntPtr size, [OutAttribute] IntPtr data);
@@ -2028,7 +2028,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetColorTableParameterfvEXT(OpenTK.Graphics.OpenGL.ColorTableTarget target, OpenTK.Graphics.OpenGL.GetColorTableParameterPName pname, [OutAttribute] Single* @params);
             internal unsafe static GetColorTableParameterfvEXT glGetColorTableParameterfvEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetColorTableParameterfvSGI(OpenTK.Graphics.OpenGL.SgiColorTable target, OpenTK.Graphics.OpenGL.SgiColorTable pname, [OutAttribute] Single* @params);
+            internal unsafe delegate void GetColorTableParameterfvSGI(OpenTK.Graphics.OpenGL.ColorTableTargetSgi target, OpenTK.Graphics.OpenGL.GetColorTableParameterPNameSgi pname, [OutAttribute] Single* @params);
             internal unsafe static GetColorTableParameterfvSGI glGetColorTableParameterfvSGI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetColorTableParameteriv(OpenTK.Graphics.OpenGL.ColorTableTarget target, OpenTK.Graphics.OpenGL.GetColorTableParameterPName pname, [OutAttribute] Int32* @params);
@@ -2037,10 +2037,10 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetColorTableParameterivEXT(OpenTK.Graphics.OpenGL.ColorTableTarget target, OpenTK.Graphics.OpenGL.GetColorTableParameterPName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetColorTableParameterivEXT glGetColorTableParameterivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetColorTableParameterivSGI(OpenTK.Graphics.OpenGL.SgiColorTable target, OpenTK.Graphics.OpenGL.SgiColorTable pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetColorTableParameterivSGI(OpenTK.Graphics.OpenGL.ColorTableTargetSgi target, OpenTK.Graphics.OpenGL.GetColorTableParameterPNameSgi pname, [OutAttribute] Int32* @params);
             internal unsafe static GetColorTableParameterivSGI glGetColorTableParameterivSGI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetColorTableSGI(OpenTK.Graphics.OpenGL.SgiColorTable target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr table);
+            internal delegate void GetColorTableSGI(OpenTK.Graphics.OpenGL.ColorTableTargetSgi target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr table);
             internal static GetColorTableSGI glGetColorTableSGI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetCombinerInputParameterfvNV(OpenTK.Graphics.OpenGL.NvRegisterCombiners stage, OpenTK.Graphics.OpenGL.NvRegisterCombiners portion, OpenTK.Graphics.OpenGL.NvRegisterCombiners variable, OpenTK.Graphics.OpenGL.NvRegisterCombiners pname, [OutAttribute] Single* @params);
@@ -2073,19 +2073,19 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void GetConvolutionFilter(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr image);
             internal static GetConvolutionFilter glGetConvolutionFilter;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetConvolutionFilterEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr image);
+            internal delegate void GetConvolutionFilterEXT(OpenTK.Graphics.OpenGL.ConvolutionTargetExt target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr image);
             internal static GetConvolutionFilterEXT glGetConvolutionFilterEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetConvolutionParameterfv(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.GetConvolutionParameterPName pname, [OutAttribute] Single* @params);
             internal unsafe static GetConvolutionParameterfv glGetConvolutionParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetConvolutionParameterfvEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.ExtConvolution pname, [OutAttribute] Single* @params);
+            internal unsafe delegate void GetConvolutionParameterfvEXT(OpenTK.Graphics.OpenGL.ConvolutionTargetExt target, OpenTK.Graphics.OpenGL.ConvolutionParameterExt pname, [OutAttribute] Single* @params);
             internal unsafe static GetConvolutionParameterfvEXT glGetConvolutionParameterfvEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetConvolutionParameteriv(OpenTK.Graphics.OpenGL.ConvolutionTarget target, OpenTK.Graphics.OpenGL.GetConvolutionParameterPName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetConvolutionParameteriv glGetConvolutionParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetConvolutionParameterivEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.ExtConvolution pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetConvolutionParameterivEXT(OpenTK.Graphics.OpenGL.ConvolutionTargetExt target, OpenTK.Graphics.OpenGL.ConvolutionParameterExt pname, [OutAttribute] Int32* @params);
             internal unsafe static GetConvolutionParameterivEXT glGetConvolutionParameterivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetConvolutionParameterxvOES(OpenTK.Graphics.OpenGL.OesFixedPoint target, OpenTK.Graphics.OpenGL.OesFixedPoint pname, [OutAttribute] int* @params);
@@ -2190,19 +2190,19 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void GetHistogram(OpenTK.Graphics.OpenGL.HistogramTarget target, bool reset, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr values);
             internal static GetHistogram glGetHistogram;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetHistogramEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, bool reset, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr values);
+            internal delegate void GetHistogramEXT(OpenTK.Graphics.OpenGL.HistogramTargetExt target, bool reset, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr values);
             internal static GetHistogramEXT glGetHistogramEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetHistogramParameterfv(OpenTK.Graphics.OpenGL.HistogramTarget target, OpenTK.Graphics.OpenGL.GetHistogramParameterPName pname, [OutAttribute] Single* @params);
             internal unsafe static GetHistogramParameterfv glGetHistogramParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetHistogramParameterfvEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, OpenTK.Graphics.OpenGL.ExtHistogram pname, [OutAttribute] Single* @params);
+            internal unsafe delegate void GetHistogramParameterfvEXT(OpenTK.Graphics.OpenGL.HistogramTargetExt target, OpenTK.Graphics.OpenGL.GetHistogramParameterPNameExt pname, [OutAttribute] Single* @params);
             internal unsafe static GetHistogramParameterfvEXT glGetHistogramParameterfvEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetHistogramParameteriv(OpenTK.Graphics.OpenGL.HistogramTarget target, OpenTK.Graphics.OpenGL.GetHistogramParameterPName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetHistogramParameteriv glGetHistogramParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetHistogramParameterivEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, OpenTK.Graphics.OpenGL.ExtHistogram pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetHistogramParameterivEXT(OpenTK.Graphics.OpenGL.HistogramTargetExt target, OpenTK.Graphics.OpenGL.GetHistogramParameterPNameExt pname, [OutAttribute] Int32* @params);
             internal unsafe static GetHistogramParameterivEXT glGetHistogramParameterivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetHistogramParameterxvOES(OpenTK.Graphics.OpenGL.OesFixedPoint target, OpenTK.Graphics.OpenGL.OesFixedPoint pname, [OutAttribute] int* @params);
@@ -2331,19 +2331,19 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void GetMinmax(OpenTK.Graphics.OpenGL.MinmaxTarget target, bool reset, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr values);
             internal static GetMinmax glGetMinmax;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetMinmaxEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, bool reset, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr values);
+            internal delegate void GetMinmaxEXT(OpenTK.Graphics.OpenGL.MinmaxTargetExt target, bool reset, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr values);
             internal static GetMinmaxEXT glGetMinmaxEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetMinmaxParameterfv(OpenTK.Graphics.OpenGL.MinmaxTarget target, OpenTK.Graphics.OpenGL.GetMinmaxParameterPName pname, [OutAttribute] Single* @params);
             internal unsafe static GetMinmaxParameterfv glGetMinmaxParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetMinmaxParameterfvEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, OpenTK.Graphics.OpenGL.ExtHistogram pname, [OutAttribute] Single* @params);
+            internal unsafe delegate void GetMinmaxParameterfvEXT(OpenTK.Graphics.OpenGL.MinmaxTargetExt target, OpenTK.Graphics.OpenGL.GetMinmaxParameterPNameExt pname, [OutAttribute] Single* @params);
             internal unsafe static GetMinmaxParameterfvEXT glGetMinmaxParameterfvEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetMinmaxParameteriv(OpenTK.Graphics.OpenGL.MinmaxTarget target, OpenTK.Graphics.OpenGL.GetMinmaxParameterPName pname, [OutAttribute] Int32* @params);
             internal unsafe static GetMinmaxParameteriv glGetMinmaxParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetMinmaxParameterivEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, OpenTK.Graphics.OpenGL.ExtHistogram pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetMinmaxParameterivEXT(OpenTK.Graphics.OpenGL.MinmaxTargetExt target, OpenTK.Graphics.OpenGL.GetMinmaxParameterPNameExt pname, [OutAttribute] Int32* @params);
             internal unsafe static GetMinmaxParameterivEXT glGetMinmaxParameterivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetMultisamplefv(OpenTK.Graphics.OpenGL.GetMultisamplePName pname, UInt32 index, [OutAttribute] Single* val);
@@ -2592,10 +2592,10 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void GetPixelMapxv(OpenTK.Graphics.OpenGL.OesFixedPoint map, Int32 size, [OutAttribute] int* values);
             internal unsafe static GetPixelMapxv glGetPixelMapxv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetPixelTexGenParameterfvSGIS(OpenTK.Graphics.OpenGL.SgisPixelTexture pname, [OutAttribute] Single* @params);
+            internal unsafe delegate void GetPixelTexGenParameterfvSGIS(OpenTK.Graphics.OpenGL.PixelTexGenParameterNameSgis pname, [OutAttribute] Single* @params);
             internal unsafe static GetPixelTexGenParameterfvSGIS glGetPixelTexGenParameterfvSGIS;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetPixelTexGenParameterivSGIS(OpenTK.Graphics.OpenGL.SgisPixelTexture pname, [OutAttribute] Int32* @params);
+            internal unsafe delegate void GetPixelTexGenParameterivSGIS(OpenTK.Graphics.OpenGL.PixelTexGenParameterNameSgis pname, [OutAttribute] Int32* @params);
             internal unsafe static GetPixelTexGenParameterivSGIS glGetPixelTexGenParameterivSGIS;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetPixelTransformParameterfvEXT(OpenTK.Graphics.OpenGL.ExtPixelTransform target, OpenTK.Graphics.OpenGL.ExtPixelTransform pname, [OutAttribute] Single* @params);
@@ -2769,7 +2769,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void GetSeparableFilter(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [OutAttribute] IntPtr column, [OutAttribute] IntPtr span);
             internal static GetSeparableFilter glGetSeparableFilter;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetSeparableFilterEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [OutAttribute] IntPtr column, [OutAttribute] IntPtr span);
+            internal delegate void GetSeparableFilterEXT(OpenTK.Graphics.OpenGL.SeparableTargetExt target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [OutAttribute] IntPtr column, [OutAttribute] IntPtr span);
             internal static GetSeparableFilterEXT glGetSeparableFilterEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetShaderInfoLog(UInt32 shader, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] StringBuilder infoLog);
@@ -3123,7 +3123,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void Histogram(OpenTK.Graphics.OpenGL.HistogramTarget target, Int32 width, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, bool sink);
             internal static Histogram glHistogram;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void HistogramEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, Int32 width, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, bool sink);
+            internal delegate void HistogramEXT(OpenTK.Graphics.OpenGL.HistogramTargetExt target, Int32 width, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, bool sink);
             internal static HistogramEXT glHistogramEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void IglooInterfaceSGIX(OpenTK.Graphics.OpenGL.SgixIglooInterface pname, IntPtr @params);
@@ -3372,7 +3372,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void LabelObjectEXT(OpenTK.Graphics.OpenGL.ExtDebugLabel type, UInt32 @object, Int32 length, String label);
             internal static LabelObjectEXT glLabelObjectEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void LightEnviSGIX(OpenTK.Graphics.OpenGL.SgixFragmentLighting pname, Int32 param);
+            internal delegate void LightEnviSGIX(OpenTK.Graphics.OpenGL.LightEnvParameterSgix pname, Int32 param);
             internal static LightEnviSGIX glLightEnviSGIX;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Lightf(OpenTK.Graphics.OpenGL.LightName light, OpenTK.Graphics.OpenGL.LightParameter pname, Single param);
@@ -3444,7 +3444,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void LoadIdentity();
             internal static LoadIdentity glLoadIdentity;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void LoadIdentityDeformationMapSGIX(UInt32 mask);
+            internal delegate void LoadIdentityDeformationMapSGIX(OpenTK.Graphics.OpenGL.FfdMaskSgix mask);
             internal static LoadIdentityDeformationMapSGIX glLoadIdentityDeformationMapSGIX;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void LoadMatrixd(Double* m);
@@ -3540,7 +3540,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate IntPtr MapBuffer(OpenTK.Graphics.OpenGL.BufferTarget target, OpenTK.Graphics.OpenGL.BufferAccess access);
             internal static MapBuffer glMapBuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr MapBufferARB(OpenTK.Graphics.OpenGL.BufferTargetArb target, OpenTK.Graphics.OpenGL.ArbVertexBufferObject access);
+            internal delegate IntPtr MapBufferARB(OpenTK.Graphics.OpenGL.BufferTargetArb target, OpenTK.Graphics.OpenGL.BufferAccessArb access);
             internal static MapBufferARB glMapBufferARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate IntPtr MapBufferRange(OpenTK.Graphics.OpenGL.BufferTarget target, IntPtr offset, IntPtr length, OpenTK.Graphics.OpenGL.BufferAccessMask access);
@@ -3696,7 +3696,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void Minmax(OpenTK.Graphics.OpenGL.MinmaxTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, bool sink);
             internal static Minmax glMinmax;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MinmaxEXT(OpenTK.Graphics.OpenGL.ExtHistogram target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, bool sink);
+            internal delegate void MinmaxEXT(OpenTK.Graphics.OpenGL.MinmaxTargetExt target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, bool sink);
             internal static MinmaxEXT glMinmaxEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void MinSampleShading(Single value);
@@ -4458,16 +4458,16 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void PixelStorex(OpenTK.Graphics.OpenGL.OesFixedPoint pname, int param);
             internal static PixelStorex glPixelStorex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void PixelTexGenParameterfSGIS(OpenTK.Graphics.OpenGL.SgisPixelTexture pname, Single param);
+            internal delegate void PixelTexGenParameterfSGIS(OpenTK.Graphics.OpenGL.PixelTexGenParameterNameSgis pname, Single param);
             internal static PixelTexGenParameterfSGIS glPixelTexGenParameterfSGIS;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void PixelTexGenParameterfvSGIS(OpenTK.Graphics.OpenGL.SgisPixelTexture pname, Single* @params);
+            internal unsafe delegate void PixelTexGenParameterfvSGIS(OpenTK.Graphics.OpenGL.PixelTexGenParameterNameSgis pname, Single* @params);
             internal unsafe static PixelTexGenParameterfvSGIS glPixelTexGenParameterfvSGIS;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void PixelTexGenParameteriSGIS(OpenTK.Graphics.OpenGL.SgisPixelTexture pname, Int32 param);
+            internal delegate void PixelTexGenParameteriSGIS(OpenTK.Graphics.OpenGL.PixelTexGenParameterNameSgis pname, Int32 param);
             internal static PixelTexGenParameteriSGIS glPixelTexGenParameteriSGIS;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void PixelTexGenParameterivSGIS(OpenTK.Graphics.OpenGL.SgisPixelTexture pname, Int32* @params);
+            internal unsafe delegate void PixelTexGenParameterivSGIS(OpenTK.Graphics.OpenGL.PixelTexGenParameterNameSgis pname, Int32* @params);
             internal unsafe static PixelTexGenParameterivSGIS glPixelTexGenParameterivSGIS;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void PixelTexGenSGIX(OpenTK.Graphics.OpenGL.SgixPixelTexture mode);
@@ -5151,6 +5151,9 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate Int32 QueryMatrixxOES([OutAttribute] int* mantissa, [OutAttribute] Int32* exponent);
             internal unsafe static QueryMatrixxOES glQueryMatrixxOES;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void QueryObjectParameteruiAMD(OpenTK.Graphics.OpenGL.AmdOcclusionQueryEvent target, UInt32 id, OpenTK.Graphics.OpenGL.AmdOcclusionQueryEvent pname, OpenTK.Graphics.OpenGL.OcclusionQueryEventMaskAmd param);
+            internal static QueryObjectParameteruiAMD glQueryObjectParameteruiAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void RasterPos2d(Double x, Double y);
             internal static RasterPos2d glRasterPos2d;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -5382,13 +5385,13 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void ResetHistogram(OpenTK.Graphics.OpenGL.HistogramTarget target);
             internal static ResetHistogram glResetHistogram;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ResetHistogramEXT(OpenTK.Graphics.OpenGL.ExtHistogram target);
+            internal delegate void ResetHistogramEXT(OpenTK.Graphics.OpenGL.HistogramTargetExt target);
             internal static ResetHistogramEXT glResetHistogramEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ResetMinmax(OpenTK.Graphics.OpenGL.MinmaxTarget target);
             internal static ResetMinmax glResetMinmax;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ResetMinmaxEXT(OpenTK.Graphics.OpenGL.ExtHistogram target);
+            internal delegate void ResetMinmaxEXT(OpenTK.Graphics.OpenGL.MinmaxTargetExt target);
             internal static ResetMinmaxEXT glResetMinmaxEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ResizeBuffersMESA();
@@ -5439,7 +5442,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void SamplePatternEXT(OpenTK.Graphics.OpenGL.ExtMultisample pattern);
             internal static SamplePatternEXT glSamplePatternEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void SamplePatternSGIS(OpenTK.Graphics.OpenGL.SgisMultisample pattern);
+            internal delegate void SamplePatternSGIS(OpenTK.Graphics.OpenGL.SamplePatternSgis pattern);
             internal static SamplePatternSGIS glSamplePatternSGIS;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void SamplerParameterf(UInt32 sampler, OpenTK.Graphics.OpenGL.SamplerParameterName pname, Single param);
@@ -5610,7 +5613,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void SeparableFilter2D(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr row, IntPtr column);
             internal static SeparableFilter2D glSeparableFilter2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void SeparableFilter2DEXT(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr row, IntPtr column);
+            internal delegate void SeparableFilter2DEXT(OpenTK.Graphics.OpenGL.SeparableTargetExt target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr row, IntPtr column);
             internal static SeparableFilter2DEXT glSeparableFilter2DEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void SetFenceAPPLE(UInt32 fence);

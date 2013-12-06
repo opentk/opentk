@@ -757,6 +757,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         ContextFlagForwardCompatibleBit = ((int)0x00000001)        ,
         /// <summary>
+        /// Original was GL_QUERY_DEPTH_PASS_EVENT_BIT_AMD = 0x00000001
+        /// </summary>
+        QueryDepthPassEventBitAmd = ((int)0x00000001)        ,
+        /// <summary>
         /// Original was GL_SYNC_FLUSH_COMMANDS_BIT = 0x00000001
         /// </summary>
         SyncFlushCommandsBit = ((int)0x00000001)        ,
@@ -805,6 +809,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         FragmentShaderBitExt = ((int)0x00000002)        ,
         /// <summary>
+        /// Original was GL_QUERY_DEPTH_FAIL_EVENT_BIT_AMD = 0x00000002
+        /// </summary>
+        QueryDepthFailEventBitAmd = ((int)0x00000002)        ,
+        /// <summary>
         /// Original was GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT_ARB = 0x00000004
         /// </summary>
         ContextFlagRobustAccessBitArb = ((int)0x00000004)        ,
@@ -813,6 +821,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         GeometryShaderBit = ((int)0x00000004)        ,
         /// <summary>
+        /// Original was GL_QUERY_STENCIL_FAIL_EVENT_BIT_AMD = 0x00000004
+        /// </summary>
+        QueryStencilFailEventBitAmd = ((int)0x00000004)        ,
+        /// <summary>
         /// Original was GL_UNIFORM_BARRIER_BIT = 0x00000004
         /// </summary>
         UniformBarrierBit = ((int)0x00000004)        ,
@@ -820,6 +832,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_UNIFORM_BARRIER_BIT_EXT = 0x00000004
         /// </summary>
         UniformBarrierBitExt = ((int)0x00000004)        ,
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD = 0x00000008
+        /// </summary>
+        QueryDepthBoundsFailEventBitAmd = ((int)0x00000008)        ,
         /// <summary>
         /// Original was GL_TESS_CONTROL_SHADER_BIT = 0x00000008
         /// </summary>
@@ -8477,17 +8493,33 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         MaxTessEvaluationUniformBlocks = ((int)0x8E8A)        ,
         /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_BPTC_UNORM = 0x8E8C
+        /// </summary>
+        CompressedRgbaBptcUnorm = ((int)0x8E8C)        ,
+        /// <summary>
         /// Original was GL_COMPRESSED_RGBA_BPTC_UNORM_ARB = 0x8E8C
         /// </summary>
         CompressedRgbaBptcUnormArb = ((int)0x8E8C)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM = 0x8E8D
+        /// </summary>
+        CompressedSrgbAlphaBptcUnorm = ((int)0x8E8D)        ,
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM_ARB = 0x8E8D
         /// </summary>
         CompressedSrgbAlphaBptcUnormArb = ((int)0x8E8D)        ,
         /// <summary>
+        /// Original was GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT = 0x8E8E
+        /// </summary>
+        CompressedRgbBptcSignedFloat = ((int)0x8E8E)        ,
+        /// <summary>
         /// Original was GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT_ARB = 0x8E8E
         /// </summary>
         CompressedRgbBptcSignedFloatArb = ((int)0x8E8E)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT = 0x8E8F
+        /// </summary>
+        CompressedRgbBptcUnsignedFloat = ((int)0x8E8F)        ,
         /// <summary>
         /// Original was GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT_ARB = 0x8E8F
         /// </summary>
@@ -9904,6 +9936,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_INVALID_INDEX = 0xFFFFFFFF
         /// </summary>
         InvalidIndex = unchecked((int)0xFFFFFFFF)        ,
+        /// <summary>
+        /// Original was GL_QUERY_ALL_EVENT_BITS_AMD = 0xFFFFFFFF
+        /// </summary>
+        QueryAllEventBitsAmd = unchecked((int)0xFFFFFFFF)        ,
         /// <summary>
         /// Original was GL_TIMEOUT_IGNORED = 0xFFFFFFFFFFFFFFFF
         /// </summary>
@@ -22771,6 +22807,34 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
+    /// Not used directly.
+    /// </summary>
+    [Flags]
+    public enum OcclusionQueryEventMaskAmd : int
+    {
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_PASS_EVENT_BIT_AMD = 0x00000001
+        /// </summary>
+        QueryDepthPassEventBitAmd = ((int)0x00000001)        ,
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_FAIL_EVENT_BIT_AMD = 0x00000002
+        /// </summary>
+        QueryDepthFailEventBitAmd = ((int)0x00000002)        ,
+        /// <summary>
+        /// Original was GL_QUERY_STENCIL_FAIL_EVENT_BIT_AMD = 0x00000004
+        /// </summary>
+        QueryStencilFailEventBitAmd = ((int)0x00000004)        ,
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD = 0x00000008
+        /// </summary>
+        QueryDepthBoundsFailEventBitAmd = ((int)0x00000008)        ,
+        /// <summary>
+        /// Original was GL_QUERY_ALL_EVENT_BITS_AMD = 0xFFFFFFFF
+        /// </summary>
+        QueryAllEventBitsAmd = unchecked((int)0xFFFFFFFF)        ,
+    }
+
+    /// <summary>
     /// Used in GL.ColorP3, GL.ColorP4 and 17 other functions
     /// </summary>
     public enum PackedPointerType : int
@@ -23538,6 +23602,18 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_COMPRESSED_SIGNED_RG_RGTC2 = 0x8DBE
         /// </summary>
         CompressedSignedRgRgtc2 = ((int)0x8DBE)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_BPTC_UNORM = 0x8E8C
+        /// </summary>
+        CompressedRgbaBptcUnorm = ((int)0x8E8C)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT = 0x8E8E
+        /// </summary>
+        CompressedRgbBptcSignedFloat = ((int)0x8E8E)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT = 0x8E8F
+        /// </summary>
+        CompressedRgbBptcUnsignedFloat = ((int)0x8E8F)        ,
         /// <summary>
         /// Original was GL_R8_SNORM = 0x8F94
         /// </summary>
@@ -31543,6 +31619,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_ATOMIC_COUNTER_BARRIER_BIT = 0x00001000
         /// </summary>
         AtomicCounterBarrierBit = ((int)0x00001000)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_BPTC_UNORM = 0x8E8C
+        /// </summary>
+        CompressedRgbaBptcUnorm = ((int)0x8E8C)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM = 0x8E8D
+        /// </summary>
+        CompressedSrgbAlphaBptcUnorm = ((int)0x8E8D)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT = 0x8E8E
+        /// </summary>
+        CompressedRgbBptcSignedFloat = ((int)0x8E8E)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT = 0x8E8F
+        /// </summary>
+        CompressedRgbBptcUnsignedFloat = ((int)0x8E8F)        ,
         /// <summary>
         /// Original was GL_MAX_IMAGE_UNITS = 0x8F38
         /// </summary>

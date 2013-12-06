@@ -220,6 +220,10 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         CurrentBit = ((int)0x00000001)        ,
         /// <summary>
+        /// Original was GL_QUERY_DEPTH_PASS_EVENT_BIT_AMD = 0x00000001
+        /// </summary>
+        QueryDepthPassEventBitAmd = ((int)0x00000001)        ,
+        /// <summary>
         /// Original was GL_SYNC_FLUSH_COMMANDS_BIT_APPLE = 0x00000001
         /// </summary>
         SyncFlushCommandsBitApple = ((int)0x00000001)        ,
@@ -280,6 +284,10 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         PointBit = ((int)0x00000002)        ,
         /// <summary>
+        /// Original was GL_QUERY_DEPTH_FAIL_EVENT_BIT_AMD = 0x00000002
+        /// </summary>
+        QueryDepthFailEventBitAmd = ((int)0x00000002)        ,
+        /// <summary>
         /// Original was GL_COLOR_BUFFER_BIT2_QCOM = 0x00000004
         /// </summary>
         ColorBufferBit2Qcom = ((int)0x00000004)        ,
@@ -296,6 +304,10 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         LineBit = ((int)0x00000004)        ,
         /// <summary>
+        /// Original was GL_QUERY_STENCIL_FAIL_EVENT_BIT_AMD = 0x00000004
+        /// </summary>
+        QueryStencilFailEventBitAmd = ((int)0x00000004)        ,
+        /// <summary>
         /// Original was GL_UNIFORM_BARRIER_BIT = 0x00000004
         /// </summary>
         UniformBarrierBit = ((int)0x00000004)        ,
@@ -311,6 +323,10 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_POLYGON_BIT = 0x00000008
         /// </summary>
         PolygonBit = ((int)0x00000008)        ,
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD = 0x00000008
+        /// </summary>
+        QueryDepthBoundsFailEventBitAmd = ((int)0x00000008)        ,
         /// <summary>
         /// Original was GL_TESS_CONTROL_SHADER_BIT = 0x00000008
         /// </summary>
@@ -7200,6 +7216,46 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         CompressedRgbaAstc12X12Khr = ((int)0x93BD)        ,
         /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_3x3x3_OES = 0x93C0
+        /// </summary>
+        CompressedRgbaAstc3X3x3Oes = ((int)0x93C0)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_4x3x3_OES = 0x93C1
+        /// </summary>
+        CompressedRgbaAstc4X3x3Oes = ((int)0x93C1)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_4x4x3_OES = 0x93C2
+        /// </summary>
+        CompressedRgbaAstc4X4x3Oes = ((int)0x93C2)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_4x4x4_OES = 0x93C3
+        /// </summary>
+        CompressedRgbaAstc4X4x4Oes = ((int)0x93C3)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_5x4x4_OES = 0x93C4
+        /// </summary>
+        CompressedRgbaAstc5X4x4Oes = ((int)0x93C4)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_5x5x4_OES = 0x93C5
+        /// </summary>
+        CompressedRgbaAstc5X5x4Oes = ((int)0x93C5)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_5x5x5_OES = 0x93C6
+        /// </summary>
+        CompressedRgbaAstc5X5x5Oes = ((int)0x93C6)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_6x5x5_OES = 0x93C7
+        /// </summary>
+        CompressedRgbaAstc6X5x5Oes = ((int)0x93C7)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_6x6x5_OES = 0x93C8
+        /// </summary>
+        CompressedRgbaAstc6X6x5Oes = ((int)0x93C8)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_6x6x6_OES = 0x93C9
+        /// </summary>
+        CompressedRgbaAstc6X6x6Oes = ((int)0x93C9)        ,
+        /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR = 0x93D0
         /// </summary>
         CompressedSrgb8Alpha8Astc4X4Khr = ((int)0x93D0)        ,
@@ -7256,6 +7312,46 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         CompressedSrgb8Alpha8Astc12X12Khr = ((int)0x93DD)        ,
         /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_3x3x3_OES = 0x93E0
+        /// </summary>
+        CompressedSrgb8Alpha8Astc3X3x3Oes = ((int)0x93E0)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x3x3_OES = 0x93E1
+        /// </summary>
+        CompressedSrgb8Alpha8Astc4X3x3Oes = ((int)0x93E1)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4x3_OES = 0x93E2
+        /// </summary>
+        CompressedSrgb8Alpha8Astc4X4x3Oes = ((int)0x93E2)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4x4_OES = 0x93E3
+        /// </summary>
+        CompressedSrgb8Alpha8Astc4X4x4Oes = ((int)0x93E3)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x4x4_OES = 0x93E4
+        /// </summary>
+        CompressedSrgb8Alpha8Astc5X4x4Oes = ((int)0x93E4)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5x4_OES = 0x93E5
+        /// </summary>
+        CompressedSrgb8Alpha8Astc5X5x4Oes = ((int)0x93E5)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5x5_OES = 0x93E6
+        /// </summary>
+        CompressedSrgb8Alpha8Astc5X5x5Oes = ((int)0x93E6)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x5x5_OES = 0x93E7
+        /// </summary>
+        CompressedSrgb8Alpha8Astc6X5x5Oes = ((int)0x93E7)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6x5_OES = 0x93E8
+        /// </summary>
+        CompressedSrgb8Alpha8Astc6X6x5Oes = ((int)0x93E8)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6x6_OES = 0x93E9
+        /// </summary>
+        CompressedSrgb8Alpha8Astc6X6x6Oes = ((int)0x93E9)        ,
+        /// <summary>
         /// Original was GL_ALL_ATTRIB_BITS = 0xFFFFFFFF
         /// </summary>
         AllAttribBits = unchecked((int)0xFFFFFFFF)        ,
@@ -7279,6 +7375,10 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_CLIENT_ALL_ATTRIB_BITS = 0xFFFFFFFF
         /// </summary>
         ClientAllAttribBits = unchecked((int)0xFFFFFFFF)        ,
+        /// <summary>
+        /// Original was GL_QUERY_ALL_EVENT_BITS_AMD = 0xFFFFFFFF
+        /// </summary>
+        QueryAllEventBitsAmd = unchecked((int)0xFFFFFFFF)        ,
         /// <summary>
         /// Original was GL_TIMEOUT_IGNORED_APPLE = 0xFFFFFFFFFFFFFFFF
         /// </summary>
@@ -11716,6 +11816,21 @@ namespace OpenTK.Graphics.ES20
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum FogCoordinatePointerType : int
+    {
+        /// <summary>
+        /// Original was GL_FLOAT = 0x1406
+        /// </summary>
+        Float = ((int)0x1406)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE = 0x140A
+        /// </summary>
+        Double = ((int)0x140A)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum FogMode : int
     {
         /// <summary>
@@ -11769,6 +11884,36 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_FOG_OFFSET_VALUE_SGIX = 0x8199
         /// </summary>
         FogOffsetValueSgix = ((int)0x8199)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum FogPointerTypeExt : int
+    {
+        /// <summary>
+        /// Original was GL_FLOAT = 0x1406
+        /// </summary>
+        Float = ((int)0x1406)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE = 0x140A
+        /// </summary>
+        Double = ((int)0x140A)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum FogPointerTypeIbm : int
+    {
+        /// <summary>
+        /// Original was GL_FLOAT = 0x1406
+        /// </summary>
+        Float = ((int)0x1406)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE = 0x140A
+        /// </summary>
+        Double = ((int)0x140A)        ,
     }
 
     /// <summary>
@@ -16319,10 +16464,6 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         Zero = ((int)0)        ,
         /// <summary>
-        /// Original was GL_XOR = 0x1506
-        /// </summary>
-        Xor = ((int)0x1506)        ,
-        /// <summary>
         /// Original was GL_XOR_NV = 0x1506
         /// </summary>
         XorNv = ((int)0x1506)        ,
@@ -16331,25 +16472,13 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         Invert = ((int)0x150A)        ,
         /// <summary>
-        /// Original was GL_RED = 0x1903
-        /// </summary>
-        Red = ((int)0x1903)        ,
-        /// <summary>
         /// Original was GL_RED_NV = 0x1903
         /// </summary>
         RedNv = ((int)0x1903)        ,
         /// <summary>
-        /// Original was GL_GREEN = 0x1904
-        /// </summary>
-        Green = ((int)0x1904)        ,
-        /// <summary>
         /// Original was GL_GREEN_NV = 0x1904
         /// </summary>
         GreenNv = ((int)0x1904)        ,
-        /// <summary>
-        /// Original was GL_BLUE = 0x1905
-        /// </summary>
-        Blue = ((int)0x1905)        ,
         /// <summary>
         /// Original was GL_BLUE_NV = 0x1905
         /// </summary>
@@ -17141,6 +17270,34 @@ namespace OpenTK.Graphics.ES20
     /// <summary>
     /// Not used directly.
     /// </summary>
+    [Flags]
+    public enum OcclusionQueryEventMaskAmd : int
+    {
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_PASS_EVENT_BIT_AMD = 0x00000001
+        /// </summary>
+        QueryDepthPassEventBitAmd = ((int)0x00000001)        ,
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_FAIL_EVENT_BIT_AMD = 0x00000002
+        /// </summary>
+        QueryDepthFailEventBitAmd = ((int)0x00000002)        ,
+        /// <summary>
+        /// Original was GL_QUERY_STENCIL_FAIL_EVENT_BIT_AMD = 0x00000004
+        /// </summary>
+        QueryStencilFailEventBitAmd = ((int)0x00000004)        ,
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD = 0x00000008
+        /// </summary>
+        QueryDepthBoundsFailEventBitAmd = ((int)0x00000008)        ,
+        /// <summary>
+        /// Original was GL_QUERY_ALL_EVENT_BITS_AMD = 0xFFFFFFFF
+        /// </summary>
+        QueryAllEventBitsAmd = unchecked((int)0xFFFFFFFF)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum OesCompressedEtc1Rgb8Texture : int
     {
         /// <summary>
@@ -17572,6 +17729,46 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         CompressedRgbaAstc12X12Khr = ((int)0x93BD)        ,
         /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_3x3x3_OES = 0x93C0
+        /// </summary>
+        CompressedRgbaAstc3X3x3Oes = ((int)0x93C0)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_4x3x3_OES = 0x93C1
+        /// </summary>
+        CompressedRgbaAstc4X3x3Oes = ((int)0x93C1)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_4x4x3_OES = 0x93C2
+        /// </summary>
+        CompressedRgbaAstc4X4x3Oes = ((int)0x93C2)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_4x4x4_OES = 0x93C3
+        /// </summary>
+        CompressedRgbaAstc4X4x4Oes = ((int)0x93C3)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_5x4x4_OES = 0x93C4
+        /// </summary>
+        CompressedRgbaAstc5X4x4Oes = ((int)0x93C4)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_5x5x4_OES = 0x93C5
+        /// </summary>
+        CompressedRgbaAstc5X5x4Oes = ((int)0x93C5)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_5x5x5_OES = 0x93C6
+        /// </summary>
+        CompressedRgbaAstc5X5x5Oes = ((int)0x93C6)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_6x5x5_OES = 0x93C7
+        /// </summary>
+        CompressedRgbaAstc6X5x5Oes = ((int)0x93C7)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_6x6x5_OES = 0x93C8
+        /// </summary>
+        CompressedRgbaAstc6X6x5Oes = ((int)0x93C8)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_ASTC_6x6x6_OES = 0x93C9
+        /// </summary>
+        CompressedRgbaAstc6X6x6Oes = ((int)0x93C9)        ,
+        /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR = 0x93D0
         /// </summary>
         CompressedSrgb8Alpha8Astc4X4Khr = ((int)0x93D0)        ,
@@ -17627,6 +17824,46 @@ namespace OpenTK.Graphics.ES20
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR = 0x93DD
         /// </summary>
         CompressedSrgb8Alpha8Astc12X12Khr = ((int)0x93DD)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_3x3x3_OES = 0x93E0
+        /// </summary>
+        CompressedSrgb8Alpha8Astc3X3x3Oes = ((int)0x93E0)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x3x3_OES = 0x93E1
+        /// </summary>
+        CompressedSrgb8Alpha8Astc4X3x3Oes = ((int)0x93E1)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4x3_OES = 0x93E2
+        /// </summary>
+        CompressedSrgb8Alpha8Astc4X4x3Oes = ((int)0x93E2)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4x4_OES = 0x93E3
+        /// </summary>
+        CompressedSrgb8Alpha8Astc4X4x4Oes = ((int)0x93E3)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x4x4_OES = 0x93E4
+        /// </summary>
+        CompressedSrgb8Alpha8Astc5X4x4Oes = ((int)0x93E4)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5x4_OES = 0x93E5
+        /// </summary>
+        CompressedSrgb8Alpha8Astc5X5x4Oes = ((int)0x93E5)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5x5_OES = 0x93E6
+        /// </summary>
+        CompressedSrgb8Alpha8Astc5X5x5Oes = ((int)0x93E6)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x5x5_OES = 0x93E7
+        /// </summary>
+        CompressedSrgb8Alpha8Astc6X5x5Oes = ((int)0x93E7)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6x5_OES = 0x93E8
+        /// </summary>
+        CompressedSrgb8Alpha8Astc6X6x5Oes = ((int)0x93E8)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6x6_OES = 0x93E9
+        /// </summary>
+        CompressedSrgb8Alpha8Astc6X6x6Oes = ((int)0x93E9)        ,
     }
 
     /// <summary>

@@ -1840,7 +1840,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle span_ptr = GCHandle.Alloc(span, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column, (IntPtr)span_ptr.AddrOfPinnedObject());
+						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column, (IntPtr)span_ptr.AddrOfPinnedObject());
 					}
 					finally
 					{
@@ -1898,7 +1898,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle span_ptr = GCHandle.Alloc(span, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column, (IntPtr)span_ptr.AddrOfPinnedObject());
+						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column, (IntPtr)span_ptr.AddrOfPinnedObject());
 					}
 					finally
 					{
@@ -1956,7 +1956,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle span_ptr = GCHandle.Alloc(span, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column, (IntPtr)span_ptr.AddrOfPinnedObject());
+						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column, (IntPtr)span_ptr.AddrOfPinnedObject());
 					}
 					finally
 					{
@@ -2013,7 +2013,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle span_ptr = GCHandle.Alloc(span, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column, (IntPtr)span_ptr.AddrOfPinnedObject());
+						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column, (IntPtr)span_ptr.AddrOfPinnedObject());
 						span = (T5)span_ptr.Target;
 					}
 					finally
@@ -2074,7 +2074,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle span_ptr = GCHandle.Alloc(span, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
+						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
 					}
 					finally
 					{
@@ -2135,7 +2135,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle span_ptr = GCHandle.Alloc(span, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
+						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
 					}
 					finally
 					{
@@ -2196,7 +2196,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle span_ptr = GCHandle.Alloc(span, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
+						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
 					}
 					finally
 					{
@@ -2257,7 +2257,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle span_ptr = GCHandle.Alloc(span, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
+						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
 						column = (T4)column_ptr.Target;
 					}
 					finally
@@ -2321,7 +2321,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle span_ptr = GCHandle.Alloc(span, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
+						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
 					}
 					finally
 					{
@@ -2385,7 +2385,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle span_ptr = GCHandle.Alloc(span, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
+						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
 					}
 					finally
 					{
@@ -2448,7 +2448,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle span_ptr = GCHandle.Alloc(span, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
+						Delegates.glGetSeparableFilterEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
 					}
 					finally
 					{
@@ -2517,7 +2517,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle column_ptr = GCHandle.Alloc(column, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glSeparableFilter2DEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject());
+						Delegates.glSeparableFilter2DEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject());
 					}
 					finally
 					{
@@ -2584,7 +2584,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle column_ptr = GCHandle.Alloc(column, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glSeparableFilter2DEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject());
+						Delegates.glSeparableFilter2DEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject());
 					}
 					finally
 					{
@@ -2651,7 +2651,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle column_ptr = GCHandle.Alloc(column, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glSeparableFilter2DEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject());
+						Delegates.glSeparableFilter2DEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject());
 					}
 					finally
 					{
@@ -2719,7 +2719,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle column_ptr = GCHandle.Alloc(column, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glSeparableFilter2DEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject());
+						Delegates.glSeparableFilter2DEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject());
 						column = (T7)column_ptr.Target;
 					}
 					finally
@@ -2790,7 +2790,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle column_ptr = GCHandle.Alloc(column, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glSeparableFilter2DEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject());
+						Delegates.glSeparableFilter2DEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject());
 					}
 					finally
 					{
@@ -2861,7 +2861,7 @@ namespace OpenTK.Graphics.OpenGL
 					GCHandle column_ptr = GCHandle.Alloc(column, GCHandleType.Pinned);
 					try
 					{
-						Delegates.glSeparableFilter2DEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject());
+						Delegates.glSeparableFilter2DEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject());
 					}
 					finally
 					{
@@ -2932,7 +2932,7 @@ namespace OpenTK.Graphics.OpenGL
 				GCHandle column_ptr = GCHandle.Alloc(column, GCHandleType.Pinned);
 				try
 				{
-					Delegates.glSeparableFilter2DEXT((OpenTK.Graphics.OpenGL.ExtConvolution)target, (OpenTK.Graphics.OpenGL.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject());
+					Delegates.glSeparableFilter2DEXT((OpenTK.Graphics.OpenGL.SeparableTargetExt)target, (OpenTK.Graphics.OpenGL.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelFormat)format, (OpenTK.Graphics.OpenGL.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject());
 					row = (T6)row_ptr.Target;
 				}
 				finally
