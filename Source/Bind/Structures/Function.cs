@@ -36,6 +36,7 @@ namespace Bind.Structures
             Parameters = new ParameterCollection(f.Parameters);
             ReturnType = new Type(f.ReturnType);
             TrimmedName = f.TrimmedName;
+            Obsolete = f.Obsolete;
             Body.AddRange(f.Body);
         }
 
