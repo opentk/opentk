@@ -85,7 +85,6 @@ namespace Bind
                     foreach (var d in signatures)
                     {
                         var replace = GetFuncOverride(nav, d, apiname, apiversion);
-
                         TranslateExtension(d);
                         TranslateReturnType(d, replace, nav, enum_processor, enums, apiname, version);
                         TranslateParameters(d, replace, nav, enum_processor, enums, apiname, version);
@@ -114,11 +113,11 @@ namespace Bind
                 }
             }
 
-            Console.WriteLine("Generating convenience overloads.");
-            delegates.AddRange(CreateConvenienceOverloads(delegates));
-
             Console.WriteLine("Generating wrappers.");
             var wrappers = CreateWrappers(delegates, enums);
+
+            Console.WriteLine("Generating convenience overloads.");
+            wrappers.AddRange(CreateConvenienceOverloads(wrappers));
 
             Console.WriteLine("Generating CLS compliant overloads.");
             wrappers = CreateCLSCompliantWrappers(wrappers, enums);
@@ -385,16 +384,6 @@ namespace Bind
                         }
                     }
                 }
-            }
-
-            // If we have a convenience overload, we should turn the name from
-            // plural into singular
-            if (d.ReturnType.WrapperType == WrapperTypes.ConvenienceReturnType ||
-                d.ReturnType.WrapperType == WrapperTypes.ConvenienceArrayReturnType ||
-                d.Parameters.Any(p => p.WrapperType == WrapperTypes.ConvenienceArrayType))
-            {
-                trimmed_name = trimmed_name.Replace("Queries", "Query");
-                trimmed_name = trimmed_name.TrimEnd('s');
             }
 
             return trimmed_name;
@@ -851,17 +840,17 @@ namespace Bind
             }
         }
 
-        IEnumerable<Delegate> CreateConvenienceOverloads(DelegateCollection delegates)
+        IEnumerable<Function> CreateConvenienceOverloads(FunctionCollection wrappers)
         {
-            foreach (var list in delegates.Values)
+            var convenience_wrappers = new List<Function>();
+            foreach (var d in wrappers.Values.SelectMany(w => w))
             {
-                var d = list.First();
                 if (d.Parameters.Count > 0 && d.Parameters.Count <= 2)
                 {
                     var p = d.Parameters.Last();
                     var r = d.ReturnType;
 
-                    var name = GetTrimmedName(d);
+                    var name = d.Name;
 
                     bool is_candidate = true;
                     is_candidate &=
@@ -874,28 +863,41 @@ namespace Bind
                     is_candidate &= p.ElementCount == 0 || p.ElementCount == 1;
                     is_candidate &= r.CurrentType == "void" && r.Pointer == 0;
 
+                    Function f = null;
                     if (is_candidate && p.Flow == FlowDirection.Out)
                     {
                         // Match Gen*|Get*|New*([Out] int[] names) methods
-                        var f = CreateReturnTypeConvenienceWrapper(d);
-                        yield return f;
+                        f = CreateReturnTypeConvenienceWrapper(d);
                     }
                     else if (is_candidate && p.Flow != FlowDirection.Out)
                     {
                         // Match *Delete(int count, int[] names) methods
                         if (d.Parameters.Count == 2)
                         {
-                            var f = CreateArrayReturnTypeConvencienceWrapper(d);
-                            yield return f;
+                            f = CreateArrayReturnTypeConvenienceWrapper(d);
                         }
+                    }
+
+                    if (f != null)
+                    {
+                        // If we have a convenience overload, we should turn its name from
+                        // plural into singular
+                        if (f.ReturnType.WrapperType == WrapperTypes.ConvenienceReturnType ||
+                            f.ReturnType.WrapperType == WrapperTypes.ConvenienceArrayReturnType ||
+                            f.Parameters.Any(t => t.WrapperType == WrapperTypes.ConvenienceArrayType))
+                        {
+                            f.TrimmedName = f.TrimmedName.Replace("Queries", "Query").TrimEnd('s');
+                        }
+                        convenience_wrappers.Add(f);
                     }
                 }
             }
+            return convenience_wrappers;
         }
 
-        static Delegate CreateReturnTypeConvenienceWrapper(Delegate d)
+        static Function CreateReturnTypeConvenienceWrapper(Function d)
         {
-            var f = new Delegate(d);
+            var f = new Function(d);
             f.ReturnType = new Type(f.Parameters.Last());
             f.ReturnType.Pointer = 0;
             f.Parameters.RemoveAt(f.Parameters.Count - 1);
@@ -913,9 +915,9 @@ namespace Bind
             return f;
         }
 
-        static Delegate CreateArrayReturnTypeConvencienceWrapper(Delegate d)
+        static Function CreateArrayReturnTypeConvenienceWrapper(Function d)
         {
-            var f = new Delegate(d);
+            var f = new Function(d);
             var p_array = f.Parameters.Last();
             var p_size = f.Parameters[f.Parameters.Count - 2];
             f.Parameters.RemoveAt(f.Parameters.Count - 2);
