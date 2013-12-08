@@ -110,6 +110,10 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         CurrentBit = ((int)0x00000001)        ,
         /// <summary>
+        /// Original was GL_QUERY_DEPTH_PASS_EVENT_BIT_AMD = 0x00000001
+        /// </summary>
+        QueryDepthPassEventBitAmd = ((int)0x00000001)        ,
+        /// <summary>
         /// Original was GL_SYNC_FLUSH_COMMANDS_BIT_APPLE = 0x00000001
         /// </summary>
         SyncFlushCommandsBitApple = ((int)0x00000001)        ,
@@ -170,6 +174,10 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         PointBit = ((int)0x00000002)        ,
         /// <summary>
+        /// Original was GL_QUERY_DEPTH_FAIL_EVENT_BIT_AMD = 0x00000002
+        /// </summary>
+        QueryDepthFailEventBitAmd = ((int)0x00000002)        ,
+        /// <summary>
         /// Original was GL_COLOR_BUFFER_BIT2_QCOM = 0x00000004
         /// </summary>
         ColorBufferBit2Qcom = ((int)0x00000004)        ,
@@ -186,6 +194,10 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         LineBit = ((int)0x00000004)        ,
         /// <summary>
+        /// Original was GL_QUERY_STENCIL_FAIL_EVENT_BIT_AMD = 0x00000004
+        /// </summary>
+        QueryStencilFailEventBitAmd = ((int)0x00000004)        ,
+        /// <summary>
         /// Original was GL_UNIFORM_BARRIER_BIT = 0x00000004
         /// </summary>
         UniformBarrierBit = ((int)0x00000004)        ,
@@ -201,6 +213,10 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_POLYGON_BIT = 0x00000008
         /// </summary>
         PolygonBit = ((int)0x00000008)        ,
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD = 0x00000008
+        /// </summary>
+        QueryDepthBoundsFailEventBitAmd = ((int)0x00000008)        ,
         /// <summary>
         /// Original was GL_TESS_CONTROL_SHADER_BIT = 0x00000008
         /// </summary>
@@ -5834,6 +5850,10 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         ClientAllAttribBits = unchecked((int)0xFFFFFFFF)        ,
         /// <summary>
+        /// Original was GL_QUERY_ALL_EVENT_BITS_AMD = 0xFFFFFFFF
+        /// </summary>
+        QueryAllEventBitsAmd = unchecked((int)0xFFFFFFFF)        ,
+        /// <summary>
         /// Original was GL_TIMEOUT_IGNORED_APPLE = 0xFFFFFFFFFFFFFFFF
         /// </summary>
         TimeoutIgnoredApple = unchecked((int)0xFFFFFFFFFFFFFFFF)        ,
@@ -6455,7 +6475,7 @@ namespace OpenTK.Graphics.ES11
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.BlendEquation
     /// </summary>
     public enum BlendEquationModeExt : int
     {
@@ -8159,6 +8179,21 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum FogCoordinatePointerType : int
+    {
+        /// <summary>
+        /// Original was GL_FLOAT = 0x1406
+        /// </summary>
+        Float = ((int)0x1406)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE = 0x140A
+        /// </summary>
+        Double = ((int)0x140A)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum FogMode : int
     {
         /// <summary>
@@ -8212,6 +8247,36 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_FOG_OFFSET_VALUE_SGIX = 0x8199
         /// </summary>
         FogOffsetValueSgix = ((int)0x8199)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum FogPointerTypeExt : int
+    {
+        /// <summary>
+        /// Original was GL_FLOAT = 0x1406
+        /// </summary>
+        Float = ((int)0x1406)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE = 0x140A
+        /// </summary>
+        Double = ((int)0x140A)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum FogPointerTypeIbm : int
+    {
+        /// <summary>
+        /// Original was GL_FLOAT = 0x1406
+        /// </summary>
+        Float = ((int)0x1406)        ,
+        /// <summary>
+        /// Original was GL_DOUBLE = 0x140A
+        /// </summary>
+        Double = ((int)0x140A)        ,
     }
 
     /// <summary>
@@ -11985,6 +12050,34 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_FENCE_CONDITION_NV = 0x84F4
         /// </summary>
         FenceConditionNv = ((int)0x84F4)        ,
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    [Flags]
+    public enum OcclusionQueryEventMaskAmd : int
+    {
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_PASS_EVENT_BIT_AMD = 0x00000001
+        /// </summary>
+        QueryDepthPassEventBitAmd = ((int)0x00000001)        ,
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_FAIL_EVENT_BIT_AMD = 0x00000002
+        /// </summary>
+        QueryDepthFailEventBitAmd = ((int)0x00000002)        ,
+        /// <summary>
+        /// Original was GL_QUERY_STENCIL_FAIL_EVENT_BIT_AMD = 0x00000004
+        /// </summary>
+        QueryStencilFailEventBitAmd = ((int)0x00000004)        ,
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD = 0x00000008
+        /// </summary>
+        QueryDepthBoundsFailEventBitAmd = ((int)0x00000008)        ,
+        /// <summary>
+        /// Original was GL_QUERY_ALL_EVENT_BITS_AMD = 0xFFFFFFFF
+        /// </summary>
+        QueryAllEventBitsAmd = unchecked((int)0xFFFFFFFF)        ,
     }
 
     /// <summary>

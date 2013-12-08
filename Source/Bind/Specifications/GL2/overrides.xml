@@ -1956,6 +1956,207 @@
         <type>BeginMode</type>
       </param>
     </function>
+    <function name="GetBufferParameter" extension="Arb" obsolete="Use BufferTargetArb overload instead">
+      <param name="target" index="0">
+        <type>ArbVertexBufferObject</type>
+      </param>
+    </function>
+    <function name="GetBufferPointer" extension="Arb" obsolete="Use BufferTargetArb overload instead">
+      <param name="target" index="0">
+        <type>ArbVertexBufferObject</type>
+      </param>
+    </function>
+    <function name="MapBuffer" extension="Arb" obsolete="Use BufferAccessArb overload instead">
+      <param name="access" index="1">
+        <type>ArbVertexBufferObject</type>
+      </param>
+    </function>
+    <function name="BlendEquationSeparate" extension="Ext" obsolete="Use BlendEquationModeExt overload instead">
+      <param name="modeRGB" index="0">
+        <type>ExtBlendEquationSeparate</type>
+      </param>
+      <param name="modeAlpha" index="1">
+        <type>ExtBlendEquationSeparate</type>
+      </param>
+    </function>
+    <function name="ConvolutionFilter1D" extension="Ext" obsolete="Use ConvolutionTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtConvolution</type>
+      </param>
+    </function>
+    <function name="ConvolutionFilter2D" extension="Ext" obsolete="Use ConvolutionTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtConvolution</type>
+      </param>
+    </function>
+    <function name="ConvolutionParameter" extension="Ext" obsolete="Use ConvolutionTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtConvolution</type>
+      </param>
+      <param name="pname" index="1">
+        <type>ExtConvolution</type>
+      </param>
+    </function>
+    <function name="CopyConvolutionFilter1D" extension="Ext" obsolete="Use ConvolutionTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtConvolution</type>
+      </param>
+    </function>
+    <function name="CopyConvolutionFilter2D" extension="Ext" obsolete="Use ConvolutionTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtConvolution</type>
+      </param>
+    </function>
+    <function name="FogCoordPointer" extension="Ext" obsolete="Use FogPointerTypeExt overload instead">
+      <param name="type" index="0">
+        <type>ExtFogCoord</type>
+      </param>
+    </function>
+    <function name="GetConvolutionFilter" extension="Ext" obsolete="Use ConvolutionTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtConvolution</type>
+      </param>
+    </function>
+    <function name="GetConvolutionParameter" extension="Ext" obsolete="Use ConvolutionTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtConvolution</type>
+      </param>
+      <param name="pname" index="1">
+        <type>ExtConvolution</type>
+      </param>
+    </function>
+    <function name="GetHistogram" extension="Ext" obsolete="Use HistogramTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtHistogram</type>
+      </param>
+    </function>
+    <function name="GetHistogramParameter" extension="Ext" obsolete="Use HistogramTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtHistogram</type>
+      </param>
+      <param name="pname" index="1">
+        <type>ExtHistogram</type>
+      </param>
+    </function>
+    <function name="GetMinmax" extension="Ext" obsolete="Use MinmaxTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtHistogram</type>
+      </param>
+    </function>
+    <function name="GetMinmaxParameter" extension="Ext" obsolete="Use MinmaxTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtHistogram</type>
+      </param>
+      <param name="pname" index="1">
+        <type>ExtHistogram</type>
+      </param>
+    </function>
+    <function name="Histogram" extension="Ext" obsolete="Use HistogramTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtHistogram</type>
+      </param>
+    </function>
+    <function name="Minmax" extension="Ext" obsolete="Use MinmaxTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtHistogram</type>
+      </param>
+    </function>
+    <function name="ResetHistogram" extension="Ext" obsolete="Use HistogramTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtHistogram</type>
+      </param>
+    </function>
+    <function name="ResetMinmax" extension="Ext" obsolete="Use MinmaxTargetExt overload instead">
+      <param name="target" index="0">
+        <type>ExtHistogram</type>
+      </param>
+    </function>
+    <function name="BindTransformFeedback" extension="NV" obsolete="Use BufferTargetArb overload instead">
+      <param name="target" index="0">
+        <type>NvTransformFeedback2</type>
+      </param>
+    </function>
+    <function name="ColorTable" extension="Sgi" obsolete="Use ColorTableTargetSgi overload instead">
+      <param name="target" index="0">
+        <type>SgiColorTable</type>
+      </param>
+    </function>
+    <function name="ColorTableParameter" extension="Sgi" obsolete="Use ColorTableTargetSgi overload instead">
+      <param name="target" index="0">
+        <type>SgiColorTable</type>
+      </param>
+      <param name="pname" index="1">
+        <type>SgiColorTable</type>
+      </param>
+    </function>
+    <function name="CopyColorTable" extension="Sgi" obsolete="Use ColorTableTargetSgi overload instead">
+      <param name="target" index="0">
+        <type>SgiColorTable</type>
+      </param>
+    </function>
+    <function name="GetColorTable" extension="Sgi" obsolete="Use ColorTableTargetSgi overload instead">
+      <param name="target" index="0">
+        <type>SgiColorTable</type>
+      </param>
+    </function>
+    <function name="GetColorTableParameter" extension="Sgi" obsolete="Use ColorTableTargetSgi overload instead">
+      <param name="target" index="0">
+        <type>SgiColorTable</type>
+      </param>
+      <param name="pname" index="1">
+        <type>SgiColorTable</type>
+      </param>
+    </function>
+    <function name="GetPixelTexGenParameter" extension="Sgis" obsolete="Use PixelTexGenParameterNameSgis overload instead">
+      <param name="pname" index="0">
+        <type>SgisPixelTexture</type>
+      </param>
+    </function>
+    <function name="PixelTexGenParameter" extension="Sgis" obsolete="Use PixelTexGenParameterNameSgis overload instead">
+      <param name="pname" index="0">
+        <type>SgisPixelTexture</type>
+      </param>
+    </function>
+    <function name="SamplePattern" extension="Sgis" obsolete="Use SamplePatternSgis overload instead">
+      <param name="pattern" index="0">
+        <type>SgisMultisample</type>
+      </param>
+    </function>
+    <function name="Deform" extension="Sgix" obsolete="Use FfdMaskSgix overload instead">
+      <param name="mask" index="0">
+        <type>int</type>
+      </param>
+    </function>
+    <function name="Deform" extension="Sgix" obsolete="Use FfdMaskSgix overload instead">
+      <param name="mask" index="0">
+        <type>uint</type>
+      </param>
+    </function>
+    <function name="DeformationMap3" extension="Sgix" obsolete="Use FfdTargetSgix overload instead">
+      <param name="target" index="0">
+        <type>SgixPolynomialFfd</type>
+      </param>
+    </function>
+    <function name="FragmentLightModel" extension="Sgix" obsolete="Use FragmentLightModelParameterSgix overload instead">
+      <param name="pname" index="0">
+        <type>SgixFragmentLighting</type>
+      </param>
+    </function>
+    <function name="LightEnv" extension="Sgix" obsolete="Use LightEnvParameterSgix overload instead">
+      <param name="pname" index="0">
+        <type>SgixFragmentLighting</type>
+      </param>
+    </function>
+    <function name="LoadIdentityDeformationMap" extension="Sgix" obsolete="Use FfdMaskSgix overload instead">
+      <param name="mask" index="0">
+        <type>int</type>
+      </param>
+    </function>
+    <function name="LoadIdentityDeformationMap" extension="Sgix" obsolete="Use FfdMaskSgix overload instead">
+      <param name="mask" index="0">
+        <type>uint</type>
+      </param>
+    </function>
 
     <!-- added manually -->
     <function name="BlendFunc" extension="Core" obsolete="Use BlendingFactorSrc overload instead">

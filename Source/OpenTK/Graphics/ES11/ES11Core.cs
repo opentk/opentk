@@ -77,7 +77,7 @@ namespace OpenTK.Graphics.ES11
             internal extern static void BlendColorxOES(int red, int green, int blue, int alpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationEXT", ExactSpelling = true)]
-            internal extern static void BlendEquationEXT(OpenTK.Graphics.ES11.All mode);
+            internal extern static void BlendEquationEXT(OpenTK.Graphics.ES11.BlendEquationModeExt mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationOES", ExactSpelling = true)]
             internal extern static void BlendEquationOES(OpenTK.Graphics.ES11.All mode);
