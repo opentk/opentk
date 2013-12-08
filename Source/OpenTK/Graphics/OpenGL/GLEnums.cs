@@ -26118,7 +26118,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Arb.GetBufferParameter, GL.Arb.GetBufferPointer and 1 other function
     /// </summary>
     public enum ArbVertexBufferObject : int
     {
@@ -30743,7 +30743,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.BlendEquationSeparate
     /// </summary>
     public enum ExtBlendEquationSeparate : int
     {
@@ -30882,7 +30882,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.ConvolutionFilter1D, GL.Ext.ConvolutionFilter2D and 5 other functions
     /// </summary>
     public enum ExtConvolution : int
     {
@@ -31167,7 +31167,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.FogCoordPointer
     /// </summary>
     public enum ExtFogCoord : int
     {
@@ -31702,7 +31702,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.GetHistogram, GL.Ext.GetHistogramParameter and 6 other functions
     /// </summary>
     public enum ExtHistogram : int
     {
@@ -44437,7 +44437,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.NV.DrawTransformFeedback
+    /// Used in GL.NV.BindTransformFeedback, GL.NV.DrawTransformFeedback
     /// </summary>
     public enum NvTransformFeedback2 : int
     {
@@ -48740,7 +48740,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Sgi.ColorTableParameter, GL.Sgi.ColorTable and 3 other functions
     /// </summary>
     public enum SgiColorTable : int
     {
@@ -48884,7 +48884,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Sgis.SamplePattern
     /// </summary>
     public enum SgisMultisample : int
     {
@@ -48955,7 +48955,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Sgis.GetPixelTexGenParameter, GL.Sgis.PixelTexGenParameter
     /// </summary>
     public enum SgisPixelTexture : int
     {
@@ -49489,7 +49489,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Sgix.FragmentLight, GL.Sgix.GetFragmentLight
+    /// Used in GL.Sgix.FragmentLight, GL.Sgix.FragmentLightModel and 2 other functions
     /// </summary>
     public enum SgixFragmentLighting : int
     {
@@ -49759,7 +49759,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Sgix.DeformationMap3
     /// </summary>
     public enum SgixPolynomialFfd : int
     {
