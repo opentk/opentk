@@ -306,7 +306,8 @@ namespace OpenTK
                     {
                         RunningOnSdl2 = DetectSdl2();
                     }
-                    else if (runningOnLinux || options.Backend == PlatformBackend.PreferX11)
+                    
+					if (runningOnLinux || options.Backend == PlatformBackend.PreferX11)
                     {
                         runningOnX11 = DetectX11();
                     }
