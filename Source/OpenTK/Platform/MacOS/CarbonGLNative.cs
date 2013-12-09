@@ -383,7 +383,10 @@ namespace OpenTK.Platform.MacOS
                 case KeyboardEventKind.RawKeyDown:
                     Keymap.TryGetValue(code, out key);
                     InputDriver.Keyboard[0].SetKey(key, (uint)code, true);
-                    OnKeyPress(mKeyPressArgs);
+                    if (!Char.IsControl(mKeyPressArgs.KeyChar))
+                    {
+                        OnKeyPress(mKeyPressArgs);
+                    }
                     return OSStatus.NoError;
 
                 case KeyboardEventKind.RawKeyUp:
