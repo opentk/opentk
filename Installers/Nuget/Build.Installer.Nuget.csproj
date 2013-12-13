@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)' == 'Documentation'">
+    <OutputPath>.\obj\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <OutputPath>.\obj\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <OutputPath>.\obj\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Nsis'">
+    <OutputPath>.\obj\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ProjectGuid>{ADC34399-7613-44D2-90B2-19250F12FE7B}</ProjectGuid>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <OutputPath>.\obj\</OutputPath>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Build.Installer.Nuget</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Documentation|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>obj\</OutputPath>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>obj\</OutputPath>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>obj\</OutputPath>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nsis|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>obj\</OutputPath>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Target Name="Build">
+    <!-- Copy built files to the tree format expected by nuget -->
+    <CreateItem Include="../../Binaries/OpenTK/Release/OpenTK*">
+      <Output TaskParameter="Include" ItemName="Binaries" />
+    </CreateItem>
+    <Copy SourceFiles="@(Binaries)" DestinationFolder="./lib/net20" />
+    <!-- Execute nuget script -->
+    <Exec Command="nuget.exe pack OpenTK.nuspec" Condition="$(OS) == 'Windows_NT'" />
+    <Exec Command="mono nuget.exe pack OpenTK.nuspec" Condition="$(OS) != 'Windows_NT'" />
+    <!-- Copy the nuget archive to the root directory and add a date stamp -->
+    <ReadLinesFromFile File="../../Version.txt">
+      <Output TaskParameter="Lines" ItemName="Version" />
+    </ReadLinesFromFile>
+    <Copy SourceFiles=".\OpenTK.1.1.nupkg" DestinationFiles="@(Version-&gt;'..\..\opentk-%(Identity).nupkg')" />
+  </Target>
+  <Target Name="Clean">
+    <CreateItem Include="OpenTK.1.1.nupkg;lib/**">
+      <Output TaskParameter="Include" ItemName="FilesToDelete" />
+    </CreateItem>
+    <Delete Files="@(FilesToDelete)" />
+  </Target>
+  <Target Name="Rebuild">
+    <CallTarget Targets="Clean" />
+    <CallTarget Targets="Build" />
+  </Target>
+  <ItemGroup>
+    <None Include="OpenTK.nuspec" />
+  </ItemGroup>
+</Project>
