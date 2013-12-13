@@ -10,8 +10,18 @@
     <iconUrl>file:///./logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The Open Toolkit library (OpenTK)</description>
-    <releaseNotes>ars</releaseNotes>
-    <copyright>Copyright 2006-2013</copyright>
+    <releaseNotes>
+    OpenTK is an open-source C# library that gives you fast low-level access to OpenGL and OpenAL.
+    Use it to create a game or embed accelerated graphics into your WinForms or WPF GUI.
+
+    OpenTK 1.1 adds support for OpenGL 4.4 and OpenGL 3.0, high-DPI (retina) displays
+    and improves platform compatibility through a brand-new SDL2 backend.
+
+    This is the official nuget package for the Open Toolkit library (OpenTK).
+    Visit http://www.opentk.com for more information or https://github.com/opentk/opentk
+    for the source code.
+    </releaseNotes>
+    <copyright>Copyright 2006-2013 Stefanos Apostolopoulos</copyright>
     <tags>OpenTK OpenAL OpenGL C# F# VB OpenTK.dll</tags>
     <references>
         <reference file="OpenTK.dll" />
