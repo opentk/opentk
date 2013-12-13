@@ -60,10 +60,13 @@
     <ReadLinesFromFile File="../../Version.txt">
       <Output TaskParameter="Lines" ItemName="Version" />
     </ReadLinesFromFile>
-    <Copy SourceFiles=".\OpenTK.1.1.nupkg" DestinationFiles="@(Version-&gt;'..\..\opentk-%(Identity).nupkg')" />
+    <CreateItem Include="OpenTK*.nupkg">
+      <Output TaskParameter="Include" ItemName="NugetPackage" />
+    </CreateItem>
+    <Copy SourceFiles="@(NugetPackage)" DestinationFiles="@(Version-&gt;'..\..\opentk-%(Identity).nupkg')" />
   </Target>
   <Target Name="Clean">
-    <CreateItem Include="OpenTK.1.1.nupkg;lib/**">
+    <CreateItem Include="OpenTK.*.nupkg;lib/**">
       <Output TaskParameter="Include" ItemName="FilesToDelete" />
     </CreateItem>
     <Delete Files="@(FilesToDelete)" />
