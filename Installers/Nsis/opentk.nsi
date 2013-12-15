@@ -162,6 +162,7 @@ Section "Core library" SEC01
   SetOutPath $INSTDIR
   File /r /x *.vshost.exe /x *.vshost.exe.manifest /x *.log ..\..\Binaries
   File /r /x .svn /x obj /x Source /x Source\*.* ..\..\Documentation
+  File /r ..\..\Dependencies
   SetOutPath $INSTDIR\Source\Examples
   File /r /x .svn /x obj /x *.snk /x *.user /x *.pidb /x html /x latex /x OpenTK*.xml ..\..\Source\Examples
 SectionEnd
@@ -172,7 +173,7 @@ Section "Source code" SEC02
   File /r /x .svn ..\..\*.csproj
   File ..\..\*.sln
   File ..\..\OpenTK.snk
-  File /r /x .svn /x obj /x opentk /x opentk-actual.* /x *.exe /x *.msi /x *.deb /x *.rpm /x *.zip ..\..\Installers
+  File /r /x .svn /x obj /x lib /x bin /x opentk /x opentk-actual.* /x *.exe /x *.msi /x *.deb /x *.rpm /x *.zip /x *.nupkg ..\..\Installers
 SectionEnd
 
 Section -AdditionalIcons
