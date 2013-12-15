@@ -122,8 +122,11 @@ namespace OpenTK.Platform.SDL2
             switch (flags)
             {
                 case GameWindowFlags.Fullscreen:
-                    return WindowFlags.FULLSCREEN_DESKTOP;
-                
+                    if (Sdl2Factory.UseFullscreenDesktop)
+                        return WindowFlags.FULLSCREEN_DESKTOP;
+                    else
+                        return WindowFlags.FULLSCREEN;
+
                 default:
                     return WindowFlags.Default;
             }
@@ -646,13 +649,15 @@ namespace OpenTK.Platform.SDL2
                             {
                                 case WindowState.Fullscreen:
                                     RestoreWindow();
-                                    if (SDL.SetWindowFullscreen(window.Handle, (uint)WindowFlags.FULLSCREEN_DESKTOP) < 0)
+                                    bool success = Sdl2Factory.UseFullscreenDesktop ?
+                                        SDL.SetWindowFullscreen(window.Handle, (uint)WindowFlags.FULLSCREEN_DESKTOP) < 0 :
+                                        SDL.SetWindowFullscreen(window.Handle, (uint)WindowFlags.FULLSCREEN) < 0;
+
+                                    if (!success)
                                     {
-                                        if (SDL.SetWindowFullscreen(window.Handle, (uint)WindowFlags.FULLSCREEN) < 0)
-                                        {
                                             Debug.Print("SDL2 failed to enter fullscreen mode: {0}", SDL.GetError());
-                                        }
                                     }
+
                                     SDL.RaiseWindow(window.Handle);
                                     // There is no "fullscreen" message in the event loop
                                     // so we have to mark that ourselves

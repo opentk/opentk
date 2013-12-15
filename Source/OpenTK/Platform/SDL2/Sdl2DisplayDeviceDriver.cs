@@ -94,24 +94,14 @@ namespace OpenTK.Platform.SDL2
 
         public override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
-            // Todo: we need a temporary window to change resolutions, most probably
-            Trace.WriteLine("SDL2 driver does not implement TryChangeResolution");
+            Sdl2Factory.UseFullscreenDesktop = false;
             return true;
-
-            //SDL2.SDL_DisplayMode desired, closest;
-            //desired.w = resolution.Width;
-            //desired.h = resolution.Height;
-            //desired.format = SDL.SDL_PIXELFORMAT_BGRA8888;
-
-            //SDL2.SDL_GetClosestDisplayMode((int)device.Id, ref desired, out closest);
-            //SDL2.SDL_SetWindowDisplayMode(IntPtr.Zero, ref closest);
         }
 
         public override bool TryRestoreResolution(DisplayDevice device)
         {
-            Trace.WriteLine("SDL2 driver does not support TryRestoreResolution");
+            Sdl2Factory.UseFullscreenDesktop = true;
             return true;
-            //throw new NotImplementedException();
         }
 
         #endregion
