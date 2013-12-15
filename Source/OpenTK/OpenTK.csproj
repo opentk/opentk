@@ -48,7 +48,6 @@
     </ConfigurationOverrideFile>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
     <DocumentationFile>..\..\Binaries\OpenTK\Debug\OpenTK.xml</DocumentationFile>
-    <DebugSymbols>True</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <Optimize>False</Optimize>
     <OutputPath>..\..\Binaries\OpenTK\Debug\</OutputPath>
@@ -56,6 +55,7 @@
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -72,11 +72,13 @@
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DebugType>none</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Documentation|AnyCPU'">
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
-    <DebugType>none</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
     <WarningLevel>4</WarningLevel>
     <Optimize>True</Optimize>
     <DefineConstants>TRACE;</DefineConstants>
@@ -96,7 +98,8 @@
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DebugType>none</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>True</SignAssembly>
