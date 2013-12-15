@@ -684,9 +684,9 @@ namespace OpenTK.Platform.MacOS.Carbon
                 char* codeAddr = &code;
 
                 OSStatus result = API.GetEventParameter(inEvent,
-                     EventParamName.KeyMacCharCode, EventParamType.typeChar, IntPtr.Zero,
-                     (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(char)), IntPtr.Zero,
-                     (IntPtr)codeAddr);
+                    EventParamName.KeyMacCharCode, EventParamType.typeChar, IntPtr.Zero,
+                    (uint)BlittableValueType<char>.Stride, IntPtr.Zero,
+                    (IntPtr)codeAddr);
 
                 if (result != OSStatus.NoError)
                 {

@@ -793,6 +793,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         Gl2XBitAti = ((int)0x00000001)        ,
         /// <summary>
+        /// Original was GL_QUERY_DEPTH_PASS_EVENT_BIT_AMD = 0x00000001
+        /// </summary>
+        QueryDepthPassEventBitAmd = ((int)0x00000001)        ,
+        /// <summary>
         /// Original was GL_RED_BIT_ATI = 0x00000001
         /// </summary>
         RedBitAti = ((int)0x00000001)        ,
@@ -877,6 +881,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         PointBit = ((int)0x00000002)        ,
         /// <summary>
+        /// Original was GL_QUERY_DEPTH_FAIL_EVENT_BIT_AMD = 0x00000002
+        /// </summary>
+        QueryDepthFailEventBitAmd = ((int)0x00000002)        ,
+        /// <summary>
         /// Original was GL_BLUE_BIT_ATI = 0x00000004
         /// </summary>
         BlueBitAti = ((int)0x00000004)        ,
@@ -901,6 +909,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         NegateBitAti = ((int)0x00000004)        ,
         /// <summary>
+        /// Original was GL_QUERY_STENCIL_FAIL_EVENT_BIT_AMD = 0x00000004
+        /// </summary>
+        QueryStencilFailEventBitAmd = ((int)0x00000004)        ,
+        /// <summary>
         /// Original was GL_UNIFORM_BARRIER_BIT = 0x00000004
         /// </summary>
         UniformBarrierBit = ((int)0x00000004)        ,
@@ -924,6 +936,10 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_POLYGON_BIT = 0x00000008
         /// </summary>
         PolygonBit = ((int)0x00000008)        ,
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD = 0x00000008
+        /// </summary>
+        QueryDepthBoundsFailEventBitAmd = ((int)0x00000008)        ,
         /// <summary>
         /// Original was GL_TESS_CONTROL_SHADER_BIT = 0x00000008
         /// </summary>
@@ -10517,6 +10533,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         VertexAttribArrayLong = ((int)0x874E)        ,
         /// <summary>
+        /// Original was GL_OCCLUSION_QUERY_EVENT_MASK_AMD = 0x874F
+        /// </summary>
+        OcclusionQueryEventMaskAmd = ((int)0x874F)        ,
+        /// <summary>
         /// Original was GL_YCBCR_MESA = 0x8757
         /// </summary>
         YcbcrMesa = ((int)0x8757)        ,
@@ -16537,17 +16557,33 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         MaxTessEvaluationUniformBlocks = ((int)0x8E8A)        ,
         /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_BPTC_UNORM = 0x8E8C
+        /// </summary>
+        CompressedRgbaBptcUnorm = ((int)0x8E8C)        ,
+        /// <summary>
         /// Original was GL_COMPRESSED_RGBA_BPTC_UNORM_ARB = 0x8E8C
         /// </summary>
         CompressedRgbaBptcUnormArb = ((int)0x8E8C)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM = 0x8E8D
+        /// </summary>
+        CompressedSrgbAlphaBptcUnorm = ((int)0x8E8D)        ,
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM_ARB = 0x8E8D
         /// </summary>
         CompressedSrgbAlphaBptcUnormArb = ((int)0x8E8D)        ,
         /// <summary>
+        /// Original was GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT = 0x8E8E
+        /// </summary>
+        CompressedRgbBptcSignedFloat = ((int)0x8E8E)        ,
+        /// <summary>
         /// Original was GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT_ARB = 0x8E8E
         /// </summary>
         CompressedRgbBptcSignedFloatArb = ((int)0x8E8E)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT = 0x8E8F
+        /// </summary>
+        CompressedRgbBptcUnsignedFloat = ((int)0x8E8F)        ,
         /// <summary>
         /// Original was GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT_ARB = 0x8E8F
         /// </summary>
@@ -19285,6 +19321,10 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         InvalidIndex = unchecked((int)0xFFFFFFFF)        ,
         /// <summary>
+        /// Original was GL_QUERY_ALL_EVENT_BITS_AMD = 0xFFFFFFFF
+        /// </summary>
+        QueryAllEventBitsAmd = unchecked((int)0xFFFFFFFF)        ,
+        /// <summary>
         /// Original was GL_TIMEOUT_IGNORED = 0xFFFFFFFFFFFFFFFF
         /// </summary>
         TimeoutIgnored = unchecked((int)0xFFFFFFFFFFFFFFFF)        ,
@@ -19635,6 +19675,37 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_SAMPLER_OBJECT_AMD = 0x9155
         /// </summary>
         SamplerObjectAmd = ((int)0x9155)        ,
+    }
+
+    /// <summary>
+    /// Used in GL.Amd.QueryObjectParameter
+    /// </summary>
+    public enum AmdOcclusionQueryEvent : int
+    {
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_PASS_EVENT_BIT_AMD = 0x00000001
+        /// </summary>
+        QueryDepthPassEventBitAmd = ((int)0x00000001)        ,
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_FAIL_EVENT_BIT_AMD = 0x00000002
+        /// </summary>
+        QueryDepthFailEventBitAmd = ((int)0x00000002)        ,
+        /// <summary>
+        /// Original was GL_QUERY_STENCIL_FAIL_EVENT_BIT_AMD = 0x00000004
+        /// </summary>
+        QueryStencilFailEventBitAmd = ((int)0x00000004)        ,
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD = 0x00000008
+        /// </summary>
+        QueryDepthBoundsFailEventBitAmd = ((int)0x00000008)        ,
+        /// <summary>
+        /// Original was GL_OCCLUSION_QUERY_EVENT_MASK_AMD = 0x874F
+        /// </summary>
+        OcclusionQueryEventMaskAmd = ((int)0x874F)        ,
+        /// <summary>
+        /// Original was GL_QUERY_ALL_EVENT_BITS_AMD = 0xFFFFFFFF
+        /// </summary>
+        QueryAllEventBitsAmd = unchecked((int)0xFFFFFFFF)        ,
     }
 
     /// <summary>
@@ -28094,7 +28165,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.BlendEquationSeparate
     /// </summary>
     public enum BlendEquationModeExt : int
     {
@@ -28380,7 +28451,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Arb.MapBuffer
     /// </summary>
     public enum BufferAccessArb : int
     {
@@ -28655,7 +28726,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.BindBuffer, GL.Arb.BufferData and 4 other functions
+    /// Used in GL.Arb.BindBuffer, GL.Arb.BufferData and 7 other functions
     /// </summary>
     public enum BufferTargetArb : int
     {
@@ -29070,7 +29141,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Sgi.ColorTableParameter
     /// </summary>
     public enum ColorTableParameterPNameSgi : int
     {
@@ -29124,7 +29195,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Sgi.ColorTableParameter, GL.Sgi.ColorTable and 3 other functions
     /// </summary>
     public enum ColorTableTargetSgi : int
     {
@@ -29284,7 +29355,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.ConvolutionParameter, GL.Ext.GetConvolutionParameter
     /// </summary>
     public enum ConvolutionParameterExt : int
     {
@@ -29353,7 +29424,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.ConvolutionFilter1D, GL.Ext.ConvolutionFilter2D and 5 other functions
     /// </summary>
     public enum ConvolutionTargetExt : int
     {
@@ -30811,7 +30882,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ext.ConvolutionFilter1D, GL.Ext.ConvolutionFilter2D and 7 other functions
+    /// Used in GL.Ext.ConvolutionFilter1D, GL.Ext.ConvolutionFilter2D and 5 other functions
     /// </summary>
     public enum ExtConvolution : int
     {
@@ -34484,7 +34555,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Sgix.Deform, GL.Sgix.LoadIdentityDeformationMap
     /// </summary>
     [Flags]
     public enum FfdMaskSgix : int
@@ -34492,7 +34563,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Sgix.DeformationMap3
     /// </summary>
     public enum FfdTargetSgix : int
     {
@@ -34615,7 +34686,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.FogCoordPointer
     /// </summary>
     public enum FogPointerTypeExt : int
     {
@@ -34653,7 +34724,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Sgix.FragmentLightModel
     /// </summary>
     public enum FragmentLightModelParameterSgix : int
     {
@@ -35238,7 +35309,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Sgi.GetColorTableParameter
     /// </summary>
     public enum GetColorTableParameterPNameSgi : int
     {
@@ -35406,7 +35477,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.GetHistogramParameter
     /// </summary>
     public enum GetHistogramParameterPNameExt : int
     {
@@ -35530,7 +35601,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.GetMinmaxParameter
     /// </summary>
     public enum GetMinmaxParameterPNameExt : int
     {
@@ -38893,7 +38964,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.GetHistogram, GL.Ext.GetHistogramParameter and 2 other functions
     /// </summary>
     public enum HistogramTargetExt : int
     {
@@ -40546,7 +40617,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Sgix.LightEnv
     /// </summary>
     public enum LightEnvParameterSgix : int
     {
@@ -41598,7 +41669,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.GetMinmax, GL.Ext.GetMinmaxParameter and 2 other functions
     /// </summary>
     public enum MinmaxTargetExt : int
     {
@@ -41675,10 +41746,6 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         Zero = ((int)0)        ,
         /// <summary>
-        /// Original was GL_XOR = 0x1506
-        /// </summary>
-        Xor = ((int)0x1506)        ,
-        /// <summary>
         /// Original was GL_XOR_NV = 0x1506
         /// </summary>
         XorNv = ((int)0x1506)        ,
@@ -41687,25 +41754,13 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         Invert = ((int)0x150A)        ,
         /// <summary>
-        /// Original was GL_RED = 0x1903
-        /// </summary>
-        Red = ((int)0x1903)        ,
-        /// <summary>
         /// Original was GL_RED_NV = 0x1903
         /// </summary>
         RedNv = ((int)0x1903)        ,
         /// <summary>
-        /// Original was GL_GREEN = 0x1904
-        /// </summary>
-        Green = ((int)0x1904)        ,
-        /// <summary>
         /// Original was GL_GREEN_NV = 0x1904
         /// </summary>
         GreenNv = ((int)0x1904)        ,
-        /// <summary>
-        /// Original was GL_BLUE = 0x1905
-        /// </summary>
-        Blue = ((int)0x1905)        ,
         /// <summary>
         /// Original was GL_BLUE_NV = 0x1905
         /// </summary>
@@ -45159,6 +45214,34 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
+    /// Used in GL.Amd.QueryObjectParameter
+    /// </summary>
+    [Flags]
+    public enum OcclusionQueryEventMaskAmd : int
+    {
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_PASS_EVENT_BIT_AMD = 0x00000001
+        /// </summary>
+        QueryDepthPassEventBitAmd = ((int)0x00000001)        ,
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_FAIL_EVENT_BIT_AMD = 0x00000002
+        /// </summary>
+        QueryDepthFailEventBitAmd = ((int)0x00000002)        ,
+        /// <summary>
+        /// Original was GL_QUERY_STENCIL_FAIL_EVENT_BIT_AMD = 0x00000004
+        /// </summary>
+        QueryStencilFailEventBitAmd = ((int)0x00000004)        ,
+        /// <summary>
+        /// Original was GL_QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD = 0x00000008
+        /// </summary>
+        QueryDepthBoundsFailEventBitAmd = ((int)0x00000008)        ,
+        /// <summary>
+        /// Original was GL_QUERY_ALL_EVENT_BITS_AMD = 0xFFFFFFFF
+        /// </summary>
+        QueryAllEventBitsAmd = unchecked((int)0xFFFFFFFF)        ,
+    }
+
+    /// <summary>
     /// Used in GL.Oes.MultiTexCoord1, GL.Oes.MultiTexCoord2 and 2 other functions
     /// </summary>
     public enum OesByteCoordinates : int
@@ -46340,6 +46423,18 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         CompressedSignedRgRgtc2 = ((int)0x8DBE)        ,
         /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_BPTC_UNORM = 0x8E8C
+        /// </summary>
+        CompressedRgbaBptcUnorm = ((int)0x8E8C)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT = 0x8E8E
+        /// </summary>
+        CompressedRgbBptcSignedFloat = ((int)0x8E8E)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT = 0x8E8F
+        /// </summary>
+        CompressedRgbBptcUnsignedFloat = ((int)0x8E8F)        ,
+        /// <summary>
         /// Original was GL_R8_SNORM = 0x8F94
         /// </summary>
         R8Snorm = ((int)0x8F94)        ,
@@ -46701,7 +46796,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Sgis.GetPixelTexGenParameter, GL.Sgis.PixelTexGenParameter
     /// </summary>
     public enum PixelTexGenParameterNameSgis : int
     {
@@ -48395,7 +48490,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Sgis.SamplePattern
     /// </summary>
     public enum SamplePatternSgis : int
     {
@@ -48579,7 +48674,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.Ext.GetSeparableFilter, GL.Ext.SeparableFilter2D
     /// </summary>
     public enum SeparableTargetExt : int
     {
@@ -57732,6 +57827,22 @@ namespace OpenTK.Graphics.OpenGL
         /// Original was GL_ATOMIC_COUNTER_BARRIER_BIT = 0x00001000
         /// </summary>
         AtomicCounterBarrierBit = ((int)0x00001000)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGBA_BPTC_UNORM = 0x8E8C
+        /// </summary>
+        CompressedRgbaBptcUnorm = ((int)0x8E8C)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM = 0x8E8D
+        /// </summary>
+        CompressedSrgbAlphaBptcUnorm = ((int)0x8E8D)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT = 0x8E8E
+        /// </summary>
+        CompressedRgbBptcSignedFloat = ((int)0x8E8E)        ,
+        /// <summary>
+        /// Original was GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT = 0x8E8F
+        /// </summary>
+        CompressedRgbBptcUnsignedFloat = ((int)0x8E8F)        ,
         /// <summary>
         /// Original was GL_MAX_IMAGE_UNITS = 0x8F38
         /// </summary>

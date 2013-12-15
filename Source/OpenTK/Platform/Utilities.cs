@@ -212,7 +212,10 @@ namespace OpenTK.Platform
             window.Screen = screen;
             window.Handle = windowHandle;
             window.RootWindow = rootWindow;
-            window.VisualInfo = (X11.XVisualInfo)Marshal.PtrToStructure(visualInfo, typeof(X11.XVisualInfo));
+            if (visualInfo != IntPtr.Zero)
+            {
+                window.VisualInfo = (X11.XVisualInfo)Marshal.PtrToStructure(visualInfo, typeof(X11.XVisualInfo));
+            }
 
             return window;
         }

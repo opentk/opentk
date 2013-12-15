@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Commandlineparameters>OpenTK.dll ../../../OpenTK.snk</Commandlineparameters>
+    <Commandlineparameters>../../OpenTK/Debug/OpenTK.dll ../../../OpenTK.snk</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,7 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Commandlineparameters>OpenTK.dll ../../../OpenTK.snk</Commandlineparameters>
+    <Commandlineparameters>../../OpenTK/Release/OpenTK.dll ../../../OpenTK.snk</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>

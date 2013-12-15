@@ -74,6 +74,14 @@
       <token name="VERTEX_ARRAY_OBJECT_AMD" value="0x9154" />
       <token name="SAMPLER_OBJECT_AMD" value="0x9155" />
     </enum>
+    <enum name="AMD_occlusion_query_event">
+      <token name="OCCLUSION_QUERY_EVENT_MASK_AMD" value="0x874F" />
+      <token name="QUERY_DEPTH_PASS_EVENT_BIT_AMD" value="0x00000001" />
+      <token name="QUERY_DEPTH_FAIL_EVENT_BIT_AMD" value="0x00000002" />
+      <token name="QUERY_STENCIL_FAIL_EVENT_BIT_AMD" value="0x00000004" />
+      <token name="QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD" value="0x00000008" />
+      <token name="QUERY_ALL_EVENT_BITS_AMD" value="0xFFFFFFFF" />
+    </enum>
     <enum name="AMD_performance_monitor">
       <token name="COUNTER_TYPE_AMD" value="0x8BC0" />
       <token name="COUNTER_RANGE_AMD" value="0x8BC1" />
@@ -3370,6 +3378,10 @@
       <token name="GEOMETRY_DEFORMATION_SGIX" value="0x8194" />
       <token name="TEXTURE_DEFORMATION_SGIX" value="0x8195" />
     </enum>
+    <enum name="FogCoordinatePointerType">
+      <token name="FLOAT" value="0x1406" />
+      <token name="DOUBLE" value="0x140A" />
+    </enum>
     <enum name="FogMode">
       <token name="EXP" value="0x0800" deprecated="3.2" />
       <token name="EXP2" value="0x0801" deprecated="3.2" />
@@ -3384,6 +3396,14 @@
       <token name="FOG_MODE" value="0x0B65" deprecated="3.2" />
       <token name="FOG_OFFSET_VALUE_SGIX" value="0x8199" />
       <token name="FOG_START" value="0x0B63" deprecated="3.2" />
+    </enum>
+    <enum name="FogPointerTypeEXT">
+      <token name="FLOAT" value="0x1406" />
+      <token name="DOUBLE" value="0x140A" />
+    </enum>
+    <enum name="FogPointerTypeIBM">
+      <token name="FLOAT" value="0x1406" />
+      <token name="DOUBLE" value="0x140A" />
     </enum>
     <enum name="FragmentLightModelParameterSGIX">
       <token name="FRAGMENT_LIGHT_MODEL_AMBIENT_SGIX" value="0x840A" />
@@ -4519,16 +4539,9 @@
     <enum name="NV_bindless_multi_draw_indirect" />
     <enum name="NV_bindless_texture" />
     <enum name="NV_blend_equation_advanced">
-      <token name="BLUE_NV" value="0x1905" />
-      <token name="GREEN_NV" value="0x1904" />
-      <token name="RED_NV" value="0x1903" />
-      <token name="XOR_NV" value="0x1506" />
-      <token name="BLUE" value="0x1905" />
-      <token name="GREEN" value="0x1904" />
-      <token name="RED" value="0x1903" />
-      <token name="XOR" value="0x1506" />
       <token name="BLEND_OVERLAP_NV" value="0x9281" />
       <token name="BLEND_PREMULTIPLIED_SRC_NV" value="0x9280" />
+      <token name="BLUE_NV" value="0x1905" />
       <token name="COLORBURN_NV" value="0x929A" />
       <token name="COLORDODGE_NV" value="0x9299" />
       <token name="CONJOINT_NV" value="0x9284" />
@@ -4542,6 +4555,7 @@
       <token name="DST_OUT_NV" value="0x928D" />
       <token name="DST_OVER_NV" value="0x9289" />
       <token name="EXCLUSION_NV" value="0x92A0" />
+      <token name="GREEN_NV" value="0x1904" />
       <token name="HARDLIGHT_NV" value="0x929B" />
       <token name="HARDMIX_NV" value="0x92A9" />
       <token name="HSL_COLOR_NV" value="0x92AF" />
@@ -4564,6 +4578,7 @@
       <token name="PLUS_CLAMPED_NV" value="0x92B1" />
       <token name="PLUS_DARKER_NV" value="0x9292" />
       <token name="PLUS_NV" value="0x9291" />
+      <token name="RED_NV" value="0x1903" />
       <token name="SCREEN_NV" value="0x9295" />
       <token name="SOFTLIGHT_NV" value="0x929C" />
       <token name="SRC_ATOP_NV" value="0x928E" />
@@ -4573,6 +4588,7 @@
       <token name="SRC_OVER_NV" value="0x9288" />
       <token name="UNCORRELATED_NV" value="0x9282" />
       <token name="VIVIDLIGHT_NV" value="0x92A6" />
+      <token name="XOR_NV" value="0x1506" />
       <token name="ZERO" value="0" />
     </enum>
     <enum name="NV_blend_equation_advanced_coherent">
@@ -5381,6 +5397,13 @@
       <token name="VIDEO_CAPTURE_SURFACE_ORIGIN_NV" value="0x903C" />
     </enum>
     <enum name="NVX_conditional_render" />
+    <enum name="OcclusionQueryEventMaskAMD">
+      <token name="QUERY_DEPTH_PASS_EVENT_BIT_AMD" value="0x00000001" />
+      <token name="QUERY_DEPTH_FAIL_EVENT_BIT_AMD" value="0x00000002" />
+      <token name="QUERY_STENCIL_FAIL_EVENT_BIT_AMD" value="0x00000004" />
+      <token name="QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD" value="0x00000008" />
+      <token name="QUERY_ALL_EVENT_BITS_AMD" value="0xFFFFFFFF" />
+    </enum>
     <enum name="OES_byte_coordinates" />
     <enum name="OES_compressed_paletted_texture">
       <token name="PALETTE4_RGB8_OES" value="0x8B90" />
@@ -15065,6 +15088,13 @@
       <param name="mantissa" type="GLfixed *" flow="out" count="16" />
       <param name="exponent" type="GLint *" flow="out" count="16" />
       <returns type="GLbitfield" />
+    </function>
+    <function name="QueryObjectParameteruiAMD" category="AMD_occlusion_query_event" extension="AMD">
+      <param name="target" type="GLenum" flow="in" />
+      <param name="id" type="GLuint" flow="in" />
+      <param name="pname" type="GLenum" flow="in" />
+      <param name="param" type="OcclusionQueryEventMaskAMD" flow="in" />
+      <returns type="void" />
     </function>
     <function name="RasterPos2xOES" category="OES_fixed_point" extension="OES">
       <param name="x" type="GLfixed" flow="in" />
@@ -25725,6 +25755,10 @@
       <token name="MAX_GEOMETRY_IMAGE_UNIFORMS" value="0x90CD" />
       <token name="MAX_FRAGMENT_IMAGE_UNIFORMS" value="0x90CE" />
       <token name="MAX_COMBINED_IMAGE_UNIFORMS" value="0x90CF" />
+      <token name="COMPRESSED_RGBA_BPTC_UNORM" value="0x8E8C" />
+      <token name="COMPRESSED_SRGB_ALPHA_BPTC_UNORM" value="0x8E8D" />
+      <token name="COMPRESSED_RGB_BPTC_SIGNED_FLOAT" value="0x8E8E" />
+      <token name="COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT" value="0x8E8F" />
       <token name="TEXTURE_IMMUTABLE_FORMAT" value="0x912F" />
     </enum>
     <function name="BindImageTexture" category="VERSION_4_2" extension="Core" version="4.2">
@@ -27802,12 +27836,24 @@
       <token name="GEOMETRY_DEFORMATION_SGIX" value="0x8194" />
       <token name="TEXTURE_DEFORMATION_SGIX" value="0x8195" />
     </enum>
+    <enum name="FogCoordinatePointerType">
+      <token name="FLOAT" value="0x1406" />
+      <token name="DOUBLE" value="0x140A" />
+    </enum>
     <enum name="FogMode">
       <token name="FOG_FUNC_SGIS" value="0x812A" />
       <token name="LINEAR" value="0x2601" />
     </enum>
     <enum name="FogParameter">
       <token name="FOG_OFFSET_VALUE_SGIX" value="0x8199" />
+    </enum>
+    <enum name="FogPointerTypeEXT">
+      <token name="FLOAT" value="0x1406" />
+      <token name="DOUBLE" value="0x140A" />
+    </enum>
+    <enum name="FogPointerTypeIBM">
+      <token name="FLOAT" value="0x1406" />
+      <token name="DOUBLE" value="0x140A" />
     </enum>
     <enum name="FragmentLightModelParameterSGIX">
       <token name="FRAGMENT_LIGHT_MODEL_AMBIENT_SGIX" value="0x840A" />
@@ -28628,6 +28674,13 @@
       <token name="FLOAT" value="0x1406" />
       <token name="INT" value="0x1404" />
       <token name="SHORT" value="0x1402" />
+    </enum>
+    <enum name="OcclusionQueryEventMaskAMD">
+      <token name="QUERY_DEPTH_PASS_EVENT_BIT_AMD" value="0x00000001" />
+      <token name="QUERY_DEPTH_FAIL_EVENT_BIT_AMD" value="0x00000002" />
+      <token name="QUERY_STENCIL_FAIL_EVENT_BIT_AMD" value="0x00000004" />
+      <token name="QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD" value="0x00000008" />
+      <token name="QUERY_ALL_EVENT_BITS_AMD" value="0xFFFFFFFF" />
     </enum>
     <enum name="PixelCopyType">
       <token name="COLOR" value="0x1800" />
@@ -35931,6 +35984,10 @@
       <token name="MAX_GEOMETRY_IMAGE_UNIFORMS" value="0x90CD" />
       <token name="MAX_FRAGMENT_IMAGE_UNIFORMS" value="0x90CE" />
       <token name="MAX_COMBINED_IMAGE_UNIFORMS" value="0x90CF" />
+      <token name="COMPRESSED_RGBA_BPTC_UNORM" value="0x8E8C" />
+      <token name="COMPRESSED_SRGB_ALPHA_BPTC_UNORM" value="0x8E8D" />
+      <token name="COMPRESSED_RGB_BPTC_SIGNED_FLOAT" value="0x8E8E" />
+      <token name="COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT" value="0x8E8F" />
       <token name="TEXTURE_IMMUTABLE_FORMAT" value="0x912F" />
     </enum>
     <function name="BindImageTexture" category="VERSION_4_2" extension="Core" version="4.2">
@@ -37219,6 +37276,10 @@
       <token name="GEOMETRY_DEFORMATION_SGIX" value="0x8194" />
       <token name="TEXTURE_DEFORMATION_SGIX" value="0x8195" />
     </enum>
+    <enum name="FogCoordinatePointerType">
+      <token name="FLOAT" value="0x1406" />
+      <token name="DOUBLE" value="0x140A" />
+    </enum>
     <enum name="FogMode">
       <token name="EXP" value="0x0800" deprecated="3.2" />
       <token name="EXP2" value="0x0801" deprecated="3.2" />
@@ -37233,6 +37294,14 @@
       <token name="FOG_MODE" value="0x0B65" deprecated="3.2" />
       <token name="FOG_OFFSET_VALUE_SGIX" value="0x8199" />
       <token name="FOG_START" value="0x0B63" deprecated="3.2" />
+    </enum>
+    <enum name="FogPointerTypeEXT">
+      <token name="FLOAT" value="0x1406" />
+      <token name="DOUBLE" value="0x140A" />
+    </enum>
+    <enum name="FogPointerTypeIBM">
+      <token name="FLOAT" value="0x1406" />
+      <token name="DOUBLE" value="0x140A" />
     </enum>
     <enum name="FragmentLightModelParameterSGIX">
       <token name="FRAGMENT_LIGHT_MODEL_AMBIENT_SGIX" value="0x840A" />
@@ -38149,6 +38218,13 @@
       <token name="ALL_COMPLETED_NV" value="0x84F2" />
       <token name="FENCE_STATUS_NV" value="0x84F3" />
       <token name="FENCE_CONDITION_NV" value="0x84F4" />
+    </enum>
+    <enum name="OcclusionQueryEventMaskAMD">
+      <token name="QUERY_DEPTH_PASS_EVENT_BIT_AMD" value="0x00000001" />
+      <token name="QUERY_DEPTH_FAIL_EVENT_BIT_AMD" value="0x00000002" />
+      <token name="QUERY_STENCIL_FAIL_EVENT_BIT_AMD" value="0x00000004" />
+      <token name="QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD" value="0x00000008" />
+      <token name="QUERY_ALL_EVENT_BITS_AMD" value="0xFFFFFFFF" />
     </enum>
     <enum name="OES_blend_equation_separate">
       <token name="BLEND_EQUATION_RGB_OES" value="0x8009" />
@@ -42081,6 +42157,10 @@
     <enum name="FJ_shader_binary_GCCSO">
       <token name="GCCSO_SHADER_BINARY_FJ" value="0x9260" />
     </enum>
+    <enum name="FogCoordinatePointerType">
+      <token name="FLOAT" value="0x1406" />
+      <token name="DOUBLE" value="0x140A" />
+    </enum>
     <enum name="FogMode">
       <token name="EXP" value="0x0800" deprecated="3.2" />
       <token name="EXP2" value="0x0801" deprecated="3.2" />
@@ -42095,6 +42175,14 @@
       <token name="FOG_MODE" value="0x0B65" deprecated="3.2" />
       <token name="FOG_OFFSET_VALUE_SGIX" value="0x8199" />
       <token name="FOG_START" value="0x0B63" deprecated="3.2" />
+    </enum>
+    <enum name="FogPointerTypeEXT">
+      <token name="FLOAT" value="0x1406" />
+      <token name="DOUBLE" value="0x140A" />
+    </enum>
+    <enum name="FogPointerTypeIBM">
+      <token name="FLOAT" value="0x1406" />
+      <token name="DOUBLE" value="0x140A" />
     </enum>
     <enum name="FragmentLightModelParameterSGIX">
       <token name="FRAGMENT_LIGHT_MODEL_AMBIENT_SGIX" value="0x840A" />
@@ -43142,16 +43230,9 @@
       <token name="SHORT" value="0x1402" />
     </enum>
     <enum name="NV_blend_equation_advanced">
-      <token name="BLUE_NV" value="0x1905" />
-      <token name="GREEN_NV" value="0x1904" />
-      <token name="RED_NV" value="0x1903" />
-      <token name="XOR_NV" value="0x1506" />
-      <token name="BLUE" value="0x1905" />
-      <token name="GREEN" value="0x1904" />
-      <token name="RED" value="0x1903" />
-      <token name="XOR" value="0x1506" />
       <token name="BLEND_OVERLAP_NV" value="0x9281" />
       <token name="BLEND_PREMULTIPLIED_SRC_NV" value="0x9280" />
+      <token name="BLUE_NV" value="0x1905" />
       <token name="COLORBURN_NV" value="0x929A" />
       <token name="COLORDODGE_NV" value="0x9299" />
       <token name="CONJOINT_NV" value="0x9284" />
@@ -43165,6 +43246,7 @@
       <token name="DST_OUT_NV" value="0x928D" />
       <token name="DST_OVER_NV" value="0x9289" />
       <token name="EXCLUSION_NV" value="0x92A0" />
+      <token name="GREEN_NV" value="0x1904" />
       <token name="HARDLIGHT_NV" value="0x929B" />
       <token name="HARDMIX_NV" value="0x92A9" />
       <token name="HSL_COLOR_NV" value="0x92AF" />
@@ -43187,6 +43269,7 @@
       <token name="PLUS_CLAMPED_NV" value="0x92B1" />
       <token name="PLUS_DARKER_NV" value="0x9292" />
       <token name="PLUS_NV" value="0x9291" />
+      <token name="RED_NV" value="0x1903" />
       <token name="SCREEN_NV" value="0x9295" />
       <token name="SOFTLIGHT_NV" value="0x929C" />
       <token name="SRC_ATOP_NV" value="0x928E" />
@@ -43196,6 +43279,7 @@
       <token name="SRC_OVER_NV" value="0x9288" />
       <token name="UNCORRELATED_NV" value="0x9282" />
       <token name="VIVIDLIGHT_NV" value="0x92A6" />
+      <token name="XOR_NV" value="0x1506" />
       <token name="ZERO" value="0" />
     </enum>
     <enum name="NV_blend_equation_advanced_coherent">
@@ -43334,6 +43418,13 @@
     </enum>
     <enum name="NV_texture_compression_s3tc_update" />
     <enum name="NV_texture_npot_2D_mipmap" />
+    <enum name="OcclusionQueryEventMaskAMD">
+      <token name="QUERY_DEPTH_PASS_EVENT_BIT_AMD" value="0x00000001" />
+      <token name="QUERY_DEPTH_FAIL_EVENT_BIT_AMD" value="0x00000002" />
+      <token name="QUERY_STENCIL_FAIL_EVENT_BIT_AMD" value="0x00000004" />
+      <token name="QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD" value="0x00000008" />
+      <token name="QUERY_ALL_EVENT_BITS_AMD" value="0xFFFFFFFF" />
+    </enum>
     <enum name="OES_compressed_ETC1_RGB8_texture">
       <token name="ETC1_RGB8_OES" value="0x8D64" />
     </enum>
@@ -43458,6 +43549,26 @@
       <token name="COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR" value="0x93DB" />
       <token name="COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR" value="0x93DC" />
       <token name="COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR" value="0x93DD" />
+      <token name="COMPRESSED_RGBA_ASTC_3x3x3_OES" value="0x93C0" />
+      <token name="COMPRESSED_RGBA_ASTC_4x3x3_OES" value="0x93C1" />
+      <token name="COMPRESSED_RGBA_ASTC_4x4x3_OES" value="0x93C2" />
+      <token name="COMPRESSED_RGBA_ASTC_4x4x4_OES" value="0x93C3" />
+      <token name="COMPRESSED_RGBA_ASTC_5x4x4_OES" value="0x93C4" />
+      <token name="COMPRESSED_RGBA_ASTC_5x5x4_OES" value="0x93C5" />
+      <token name="COMPRESSED_RGBA_ASTC_5x5x5_OES" value="0x93C6" />
+      <token name="COMPRESSED_RGBA_ASTC_6x5x5_OES" value="0x93C7" />
+      <token name="COMPRESSED_RGBA_ASTC_6x6x5_OES" value="0x93C8" />
+      <token name="COMPRESSED_RGBA_ASTC_6x6x6_OES" value="0x93C9" />
+      <token name="COMPRESSED_SRGB8_ALPHA8_ASTC_3x3x3_OES" value="0x93E0" />
+      <token name="COMPRESSED_SRGB8_ALPHA8_ASTC_4x3x3_OES" value="0x93E1" />
+      <token name="COMPRESSED_SRGB8_ALPHA8_ASTC_4x4x3_OES" value="0x93E2" />
+      <token name="COMPRESSED_SRGB8_ALPHA8_ASTC_4x4x4_OES" value="0x93E3" />
+      <token name="COMPRESSED_SRGB8_ALPHA8_ASTC_5x4x4_OES" value="0x93E4" />
+      <token name="COMPRESSED_SRGB8_ALPHA8_ASTC_5x5x4_OES" value="0x93E5" />
+      <token name="COMPRESSED_SRGB8_ALPHA8_ASTC_5x5x5_OES" value="0x93E6" />
+      <token name="COMPRESSED_SRGB8_ALPHA8_ASTC_6x5x5_OES" value="0x93E7" />
+      <token name="COMPRESSED_SRGB8_ALPHA8_ASTC_6x6x5_OES" value="0x93E8" />
+      <token name="COMPRESSED_SRGB8_ALPHA8_ASTC_6x6x6_OES" value="0x93E9" />
     </enum>
     <enum name="OES_texture_float">
       <token name="FLOAT" value="0x1406" />
