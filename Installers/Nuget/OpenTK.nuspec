@@ -16,7 +16,12 @@
             The Open Toolkit library (OpenTK) is an advanced, low-level C# wrapper for OpenGL, OpenGL ES and OpenAL.
             It is suitable for games, scientific visualizations and projects that require 3d graphics, audio or compute functionality.
 
-            OpenTK applications run on Windows, Linux, Mac OS X, Android and iPhone.
+            Features
+            - Create cutting-edge graphics with OpenGL 4.4 and OpenGL ES 3.0
+            - Integrate 3d graphics into your Windows.Forms, WPF or GTK# applications
+            - Write once run everywhere: Windows, Mac OS X, Linux, Android and iOS
+            - Use the .Net/Mono language of your choice: C#, F#, VB.Net, Boo, IronPython, IronRuby
+            - Develop faster with inline documentation and strongly-typed enumerations for all OpenGL and OpenAL functions
 
             This is the official nuget package from http://www.opentk.com
             The source code can be found at https://github.com/opentk/opentk
@@ -25,7 +30,7 @@
             http://www.opentk.com/news
         </releaseNotes>
         <copyright>Copyright 2006-2013 Stefanos Apostolopoulos</copyright>
-        <tags>OpenTK OpenAL OpenGL C# F# VB OpenTK.dll</tags>
+        <tags>OpenTK OpenGL OpenGLES OpenAL C# F# VB .Net Mono</tags>
         <references>
             <reference file="OpenTK.dll" />
         </references>
