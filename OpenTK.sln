@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK", "Source\OpenTK\OpenTK.csproj", "{A37A7E14-0000-0000-0000-000000000000}"
+	ProjectSection(ProjectDependencies) = postProject
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Compatibility", "Source\Compatibility\OpenTK.Compatibility.csproj", "{62C0DB35-0000-0000-0000-000000000000}"
 EndProject
