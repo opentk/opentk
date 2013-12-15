@@ -49,7 +49,7 @@
   </ItemGroup>
   <Target Name="Build">
     <Exec Command="makensis opentk.nsi" />
-    <ReadLinesFromFile File="../../Version.txt">
+    <ReadLinesFromFile File="../../Timestamp.txt">
       <Output TaskParameter="Lines" ItemName="Version" />
     </ReadLinesFromFile>
     <Move SourceFiles=".\opentk.exe" DestinationFiles="@(Version-&gt;'../../opentk-%(Identity).exe')" />

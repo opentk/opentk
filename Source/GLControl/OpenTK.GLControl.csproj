@@ -47,7 +47,7 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
-    <DocumentationFile>OpenTK.GLControl.xml</DocumentationFile>
+    <DocumentationFile>..\..\Binaries\OpenTK\Debug\OpenTK.GLControl.xml</DocumentationFile>
     <DebugSymbols>True</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <Optimize>False</Optimize>
@@ -64,7 +64,7 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;</DefineConstants>
-    <DocumentationFile>OpenTK.GLControl.xml</DocumentationFile>
+    <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.GLControl.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
@@ -80,6 +80,8 @@
     <WarningLevel>4</WarningLevel>
     <Optimize>True</Optimize>
     <DefineConstants>TRACE;</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.GLControl.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Nsis|AnyCPU'">
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -87,7 +89,7 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;</DefineConstants>
-    <DocumentationFile>OpenTK.GLControl.xml</DocumentationFile>
+    <DocumentationFile>..\..\Binaries\OpenTK\Release\OpenTK.GLControl.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>

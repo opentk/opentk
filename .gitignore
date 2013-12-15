@@ -3,11 +3,15 @@ Binaries/
 OpenTK.userprefs
 Source/GlobalAssemblyInfo.cs
 Version.txt
+Build.txt
+Timestamp.txt
 Source/OpenTK/OpenTK.xml
 Source/GLControl/OpenTK.GLControl.xml
 Documentation/Source
 opentk*.exe
 opentk*.zip
+opentk*.nupkg
+Installers/Nuget/lib
 
 # OpenTK Resource files that seem like they should be ignored:
 Source/Compatibility/Properties/Resources.resources

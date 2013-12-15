@@ -59,6 +59,16 @@ namespace OpenTK.Platform.SDL2
         Icon icon;
         string window_title;
 
+        // Used in KeyPress event to decode SDL UTF8 text strings
+        // to .Net UTF16 strings 
+        char[] DecodeTextBuffer = new char[32];
+
+        // Argument for KeyPress event (allocated once to avoid runtime allocations)
+        readonly KeyPressEventArgs keypress_args = new KeyPressEventArgs('\0');
+
+        // Argument for KeyDown and KeyUp events (allocated once to avoid runtime allocations)
+        readonly KeyboardKeyEventArgs key_args = new KeyboardKeyEventArgs();
+
         readonly IInputDriver input_driver = new Sdl2InputDriver();
 
         readonly EventFilter EventFilterDelegate_GCUnsafe = FilterEvents;
@@ -226,39 +236,49 @@ namespace OpenTK.Platform.SDL2
         {
             bool key_pressed = ev.Key.State == State.Pressed;
             var key = ev.Key.Keysym;
-            var args = new KeyboardKeyEventArgs() 
-            { 
-                Key = TranslateKey(key.Scancode),
-                ScanCode = (uint)key.Scancode
-            };
+            window.key_args.Key = TranslateKey(key.Scancode);
+            window.key_args.ScanCode = (uint)key.Scancode;
             if (key_pressed)
-                window.KeyDown(window, args);
+            {
+                window.KeyDown(window, window.key_args);
+            }
             else
-                window.KeyUp(window, args);
+            {
+                window.KeyUp(window, window.key_args);
+            }
             //window.keyboard.SetKey(TranslateKey(key.scancode), (uint)key.scancode, key_pressed);
         }
 
         static unsafe void ProcessTextInputEvent(Sdl2NativeWindow window, TextInputEvent ev)
         {
-            var keyPress = window.KeyPress;
-            if (keyPress != null)
+            // Calculate the length of the typed text string
+            int length;
+            for (length = 0; length < TextInputEvent.TextSize && ev.Text[length] != '\0'; length++)
+                ;
+
+            // Make sure we have enough space to decode this string
+            int decoded_length = Encoding.UTF8.GetCharCount(ev.Text, length);
+            if (window.DecodeTextBuffer.Length < decoded_length)
             {
-                var length = 0;
-                byte* pText = ev.Text;
-                while (*pText != 0)
-                {
-                    length++;
-                    pText++;
-                }
-                using (var stream = new System.IO.UnmanagedMemoryStream(ev.Text, length))
-                using (var reader = new System.IO.StreamReader(stream, Encoding.UTF8))
-                {
-                    var text = reader.ReadToEnd();
-                    foreach (var c in text)
-                    {
-                        keyPress(window, new KeyPressEventArgs(c));
-                    }
-                }
+                Array.Resize(
+                    ref window.DecodeTextBuffer,
+                    2 * Math.Max(decoded_length, window.DecodeTextBuffer.Length));
+            }
+
+            // Decode the string from UTF8 to .Net UTF16
+            fixed (char* pBuffer = window.DecodeTextBuffer)
+            {
+                decoded_length = System.Text.Encoding.UTF8.GetChars(
+                    ev.Text,
+                    length,
+                    pBuffer,
+                    window.DecodeTextBuffer.Length);
+            }
+
+            for (int i = 0; i < decoded_length; i++)
+            {
+                window.keypress_args.KeyChar = window.DecodeTextBuffer[i];
+                window.KeyPress(window, window.keypress_args);
             }
         }
 
