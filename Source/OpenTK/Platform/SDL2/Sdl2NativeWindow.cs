@@ -344,14 +344,13 @@ namespace OpenTK.Platform.SDL2
                     break;
 
                 case WindowEventID.MAXIMIZED:
-                    window.previous_window_state = window.window_state;
-                    window.window_state = OpenTK.WindowState.Maximized;
+                    window.window_state = WindowState.Maximized;
                     window.WindowStateChanged(window, EventArgs.Empty);
                     break;
 
                 case WindowEventID.MINIMIZED:
                     window.previous_window_state = window.window_state;
-                    window.window_state = OpenTK.WindowState.Minimized;
+                    window.window_state = WindowState.Minimized;
                     window.WindowStateChanged(window, EventArgs.Empty);
                     break;
 
@@ -667,11 +666,12 @@ namespace OpenTK.Platform.SDL2
                                 case WindowState.Maximized:
                                     RestoreWindow();
                                     SDL.MaximizeWindow(window.Handle);
-                                    HideShowWindowHack();
+                                    window_state = WindowState.Maximized;
                                     break;
 
                                 case WindowState.Minimized:
                                     SDL.MinimizeWindow(window.Handle);
+                                    window_state = WindowState.Minimized;
                                     break;
 
                                 case WindowState.Normal:
