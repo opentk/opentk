@@ -37,6 +37,7 @@ namespace Bind.Structures
             ReturnType = new Type(f.ReturnType);
             TrimmedName = f.TrimmedName;
             Obsolete = f.Obsolete;
+            CLSCompliant = f.CLSCompliant;
             Body.AddRange(f.Body);
         }
 

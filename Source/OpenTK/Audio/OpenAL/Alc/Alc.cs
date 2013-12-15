@@ -409,6 +409,7 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="device">a pointer to a capture device.</param>
         /// <param name="buffer">a buffer, which must be large enough to accommodate the number of samples.</param>
         /// <param name="samples">the number of samples to be retrieved.</param>
+        [CLSCompliant(false)]
         public static void CaptureSamples<T>(IntPtr device, T[] buffer, int samples)
             where T : struct
         {
@@ -419,6 +420,7 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="device">a pointer to a capture device.</param>
         /// <param name="buffer">a buffer, which must be large enough to accommodate the number of samples.</param>
         /// <param name="samples">the number of samples to be retrieved.</param>
+        [CLSCompliant(false)]
         public static void CaptureSamples<T>(IntPtr device, T[,] buffer, int samples)
             where T : struct
         {
@@ -429,6 +431,7 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="device">a pointer to a capture device.</param>
         /// <param name="buffer">a buffer, which must be large enough to accommodate the number of samples.</param>
         /// <param name="samples">the number of samples to be retrieved.</param>
+        [CLSCompliant(false)]
         public static void CaptureSamples<T>(IntPtr device, T[, ,] buffer, int samples)
             where T : struct
         {

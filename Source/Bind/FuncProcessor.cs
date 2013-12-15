@@ -1,4 +1,4 @@
-﻿﻿#region License
+﻿#region License
 //
 // The Open Toolkit Library License
 //
@@ -1034,9 +1034,9 @@ namespace Bind
                     }
 
                     if (parameter.WrapperType == 0 ||
-                    (parameter.WrapperType & WrapperTypes.ConvenienceArrayType) != 0 ||
-                    (parameter.WrapperType & WrapperTypes.ConvenienceReturnType) != 0 ||
-                    (parameter.WrapperType & WrapperTypes.ConvenienceArrayReturnType) != 0)
+                        (parameter.WrapperType & WrapperTypes.ConvenienceArrayType) != 0 ||
+                        (parameter.WrapperType & WrapperTypes.ConvenienceReturnType) != 0 ||
+                        (parameter.WrapperType & WrapperTypes.ConvenienceArrayReturnType) != 0)
                     {
                         // We don't need to do anything, just add this function directly
                         // to the list of wrappers.
@@ -1091,6 +1091,11 @@ namespace Bind
                         if ((parameter.WrapperType & WrapperTypes.GenericParameter) != 0)
                         {
                             generic_wrapper = generic_wrapper ?? new Function(wrapper);
+                            if (arity > 0)
+                            {
+                                // Overloading on array arity is not CLS-compliant
+                                generic_wrapper.CLSCompliant = false;
+                            }
                             var p = generic_wrapper.Parameters[i];
 
                             p.Reference = false;

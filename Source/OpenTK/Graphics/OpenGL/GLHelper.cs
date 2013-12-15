@@ -938,11 +938,13 @@ namespace OpenTK.Graphics.OpenGL
 
         #region Rect
 
+        [CLSCompliant(false)]
         public static void Rect(RectangleF rect)
         {
             GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
         }
 
+        [CLSCompliant(false)]
         public static void Rect(Rectangle rect)
         {
             GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
