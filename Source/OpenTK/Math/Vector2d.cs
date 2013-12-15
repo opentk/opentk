@@ -114,6 +114,7 @@ namespace OpenTK
 
         /// <summary>Add the Vector passed as parameter to this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
+        [CLSCompliant(false)]
         [Obsolete("Use static Add() method instead.")]
         public void Add(Vector2d right)
         {
@@ -137,6 +138,7 @@ namespace OpenTK
 
         /// <summary>Subtract the Vector passed as parameter from this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
+        [CLSCompliant(false)]
         [Obsolete("Use static Subtract() method instead.")]
         public void Sub(Vector2d right)
         {
@@ -290,6 +292,7 @@ namespace OpenTK
 
         /// <summary>Scales this instance by the given parameter.</summary>
         /// <param name="scale">The scaling of the individual components.</param>
+        [CLSCompliant(false)]
         [Obsolete("Use static Multiply() method instead.")]
         public void Scale(Vector2d scale)
         {

@@ -181,6 +181,7 @@ namespace OpenTK
         /// The new Half4 instance will convert the Vector4d into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector4d</param>
+        [CLSCompliant(false)]
         public Vector4h(Vector4d v)
         {
             X = new Half(v.X);
@@ -194,6 +195,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="v">OpenTK.Vector4d</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
+        [CLSCompliant(false)]
         public Vector4h(Vector4d v, bool throwOnError)
         {
             X = new Half(v.X, throwOnError);

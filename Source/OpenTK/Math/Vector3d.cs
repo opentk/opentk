@@ -141,6 +141,7 @@ namespace OpenTK
 
         /// <summary>Add the Vector passed as parameter to this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
+        [CLSCompliant(false)]
         [Obsolete("Use static Add() method instead.")]
         public void Add(Vector3d right)
         {
@@ -166,6 +167,7 @@ namespace OpenTK
 
         /// <summary>Subtract the Vector passed as parameter from this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
+        [CLSCompliant(false)]
         [Obsolete("Use static Subtract() method instead.")]
         public void Sub(Vector3d right)
         {
@@ -335,6 +337,7 @@ namespace OpenTK
         /// <summary>Scales this instance by the given parameter.</summary>
         /// <param name="scale">The scaling of the individual components.</param>
         [Obsolete("Use static Multiply() method instead.")]
+        [CLSCompliant(false)]
         public void Scale(Vector3d scale)
         {
             this.X *= scale.X;
@@ -344,8 +347,8 @@ namespace OpenTK
 
         /// <summary>Scales this instance by the given parameter.</summary>
         /// <param name="scale">The scaling of the individual components.</param>
-        [CLSCompliant(false)]
         [Obsolete("Use static Multiply() method instead.")]
+        [CLSCompliant(false)]
         public void Scale(ref Vector3d scale)
         {
             this.X *= scale.X;
