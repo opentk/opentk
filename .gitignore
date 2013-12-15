@@ -3,6 +3,8 @@ Binaries/
 OpenTK.userprefs
 Source/GlobalAssemblyInfo.cs
 Version.txt
+Build.txt
+Timestamp.txt
 Source/OpenTK/OpenTK.xml
 Source/GLControl/OpenTK.GLControl.xml
 Documentation/Source
