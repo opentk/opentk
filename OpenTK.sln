@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK", "Source\OpenTK\OpenTK.csproj", "{A37A7E14-0000-0000-0000-000000000000}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Compatibility", "Source\Compatibility\OpenTK.Compatibility.csproj", "{62C0DB35-0000-0000-0000-000000000000}"
@@ -22,6 +24,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build.Installer.Zip", "Installers\Zip\Build.Installer.Zip.csproj", "{ADC34399-7613-44D2-90B2-19250F06FE7B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build.Installer.Nuget", "Installers\Nuget\Build.Installer.Nuget.csproj", "{ADC34399-7613-44D2-90B2-19250F12FE7B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A37A7E14-0000-0000-0000-000000000000} = {A37A7E14-0000-0000-0000-000000000000}
+		{A625BE88-0000-0000-0000-000000000000} = {A625BE88-0000-0000-0000-000000000000}
+		{75DC22B1-113F-4A66-96B9-2FF8208C10E8} = {75DC22B1-113F-4A66-96B9-2FF8208C10E8}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +38,47 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A37A7E14-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A37A7E14-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Documentation|Any CPU.Build.0 = Documentation|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62C0DB35-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Documentation|Any CPU.Build.0 = Documentation|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{868E37B3-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A625BE88-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
+		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Documentation|Any CPU.Build.0 = Documentation|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
+		{650C6F3D-33B5-4216-9536-956AB42C0624}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31D19132-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{31D19132-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31D19132-0000-0000-0000-000000000000}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
@@ -47,20 +95,6 @@ Global
 		{5FDFF4B6-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
 		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62C0DB35-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62C0DB35-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62C0DB35-0000-0000-0000-000000000000}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
-		{62C0DB35-0000-0000-0000-000000000000}.Documentation|Any CPU.Build.0 = Documentation|Any CPU
-		{62C0DB35-0000-0000-0000-000000000000}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
-		{62C0DB35-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
-		{62C0DB35-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62C0DB35-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{650C6F3D-33B5-4216-9536-956AB42C0624}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{650C6F3D-33B5-4216-9536-956AB42C0624}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
-		{650C6F3D-33B5-4216-9536-956AB42C0624}.Documentation|Any CPU.Build.0 = Documentation|Any CPU
-		{650C6F3D-33B5-4216-9536-956AB42C0624}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
-		{650C6F3D-33B5-4216-9536-956AB42C0624}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
-		{650C6F3D-33B5-4216-9536-956AB42C0624}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
@@ -69,33 +103,6 @@ Global
 		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
 		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75DC22B1-113F-4A66-96B9-2FF8208C10E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{868E37B3-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{868E37B3-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{868E37B3-0000-0000-0000-000000000000}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
-		{868E37B3-0000-0000-0000-000000000000}.Documentation|Any CPU.Build.0 = Documentation|Any CPU
-		{868E37B3-0000-0000-0000-000000000000}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
-		{868E37B3-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
-		{868E37B3-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{868E37B3-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A37A7E14-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A37A7E14-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A37A7E14-0000-0000-0000-000000000000}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
-		{A37A7E14-0000-0000-0000-000000000000}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
-		{A37A7E14-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
-		{A37A7E14-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A37A7E14-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A625BE88-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A625BE88-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A625BE88-0000-0000-0000-000000000000}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
-		{A625BE88-0000-0000-0000-000000000000}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
-		{A625BE88-0000-0000-0000-000000000000}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
-		{A625BE88-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A625BE88-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
-		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
-		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
-		{ADC34399-7613-44D2-90B2-19250F06FE7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADC34399-7613-44D2-90B2-19250F06FE7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ADC34399-7613-44D2-90B2-19250F06FE7B}.Documentation|Any CPU.ActiveCfg = Documentation|Any CPU
 		{ADC34399-7613-44D2-90B2-19250F06FE7B}.Nsis|Any CPU.ActiveCfg = Nsis|Any CPU
@@ -107,10 +114,10 @@ Global
 		{ADC34399-7613-44D2-90B2-19250F12FE7B}.Nsis|Any CPU.Build.0 = Nsis|Any CPU
 		{ADC34399-7613-44D2-90B2-19250F12FE7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Source\Examples\OpenTK.Examples.csproj
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Source\Examples\OpenTK.Examples.csproj
 	EndGlobalSection
 EndGlobal
