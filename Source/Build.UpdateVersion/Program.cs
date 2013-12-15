@@ -56,44 +56,41 @@ namespace Build.UpdateVersion
             }
 
             DateTime now = DateTime.UtcNow;
-            GenerateVersionInfo(now, Path.Combine(RootDirectory, "Version.txt"));
-            GenerateAssemblyInfo(now, Path.Combine(SourceDirectory, "GlobalAssemblyInfo.cs"));
-        }
-
-        static void GenerateVersionInfo(DateTime now, string file)
-        {
-            string version = null;
-
-            if (System.IO.File.Exists(file))
-            {
-                string[] lines = System.IO.File.ReadAllLines(file);
-                if (lines.Length > 0 && !String.IsNullOrEmpty(lines[0]))
-                {
-                    version = lines[0];
-                }
-            }
-
-            // If the file does not exist, create it.
-            if (version == null)
-            {
-                version = now.ToString("u").Split(' ')[0];
-                System.IO.File.WriteAllLines(file, new string[] { version });
-            }
-        }
-
-        static void GenerateAssemblyInfo(DateTime now, string file)
-        {
+            string timestamp = now.ToString("u").Split(' ')[0];
             // Build number is defined as the number of days since 1/1/2010.
-            // Revision number is defined as the fraction of the current day, expressed in seconds.
             double timespan = now.Subtract(new DateTime(2010, 1, 1)).TotalDays;
             string build = ((int)timespan).ToString();
+            // Revision number is defined as the number of (git/svn/bzr) commits,
+            // or as the fraction of the current day, expressed in seconds, in case the
+            // working directory is not under source control.
+            string revision = RetrieveRevisionNumber(now);
 
-            string revision = RetrieveGitRevision() ?? RetrieveSvnRevision() ?? RetrieveBzrRevision() ?? RetrieveSeconds(timespan);
-            revision = revision.Trim();
-            
-            Console.WriteLine("Build timestamp was: " + build);
-            Console.WriteLine("Revision detected was: " + revision);
+            string major = Major;
+            string minor = Minor;
 
+            // Version is defined as {Major}.{Minor}.{Build}.{Revision}
+            string version = String.Format("{0}.{1}.{2}.{3}", major, minor, build, revision);
+
+            Console.WriteLine("API compatibility key: {0}.{1}", major, minor);
+            Console.WriteLine("Build date: {0}", timestamp);
+
+            GenerateTimestamp(timestamp, Path.Combine(RootDirectory, "Timestamp.txt"));
+            GenerateVersion(version, Path.Combine(RootDirectory, "Version.txt"));
+            GenerateAssemblyInfo(major, minor, version, Path.Combine(SourceDirectory, "GlobalAssemblyInfo.cs"));
+        }
+
+        static void GenerateTimestamp(string timestamp, string file)
+        {
+            System.IO.File.WriteAllLines(file, new string[] { timestamp });
+        }
+
+        static void GenerateVersion(string version, string file)
+        {
+            File.WriteAllLines(file, new string[] { version });
+        }
+
+        static void GenerateAssemblyInfo(string major, string minor, string version, string file)
+        {
             File.WriteAllLines(file, new string[]
             {
                 "// This file is auto-generated through Source/Build.Tasks/GenerateAssemblyInfo.cs.",
@@ -109,9 +106,17 @@ namespace Build.UpdateVersion
                 "[assembly: AssemblyProduct(\"The Open Toolkit Library\")]",
                 "[assembly: AssemblyCopyright(\"Copyright © 2006 - 2013 the Open Toolkit Library\")]",
                 "[assembly: AssemblyTrademark(\"OpenTK\")]",
-                String.Format("[assembly: AssemblyVersion(\"{0}.{1}.0.0\")]", Major, Minor),
-                String.Format("[assembly: AssemblyFileVersion(\"{0}.{1}.{2}.{3}\")]", Major, Minor, build, revision),
+                String.Format("[assembly: AssemblyVersion(\"{0}.{1}.0.0\")]", major, minor),
+                String.Format("[assembly: AssemblyFileVersion(\"{0}\")]", version),
             });
+        }
+
+        static string RetrieveRevisionNumber(DateTime now)
+        {
+            double timespan = now.Subtract(new DateTime(2010, 1, 1)).TotalDays;
+            string revision = RetrieveGitRevision() ?? RetrieveSvnRevision() ?? RetrieveBzrRevision() ?? RetrieveSeconds(timespan);
+            revision = revision.Trim();
+            return revision;
         }
 
         static string RetrieveSeconds(double timespan)

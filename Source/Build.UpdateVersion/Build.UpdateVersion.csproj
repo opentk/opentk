@@ -62,6 +62,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <Target Name="BeforeBuild">
+    <Delete Files="..\..\Timestamp.txt" />
     <Delete Files="..\..\Version.txt" />
   </Target>
   <Target Name="AfterBuild">
