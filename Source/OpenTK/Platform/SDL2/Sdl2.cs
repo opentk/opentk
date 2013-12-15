@@ -206,7 +206,14 @@ namespace OpenTK.Platform.SDL2
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickName", ExactSpelling = true)]
-        public static extern string JoystickName(IntPtr joystick);
+        static extern IntPtr JoystickNameInternal(IntPtr joystick);
+        public static string JoystickName(IntPtr joystick)
+        {
+            unsafe
+            {
+                return new string((sbyte*)JoystickNameInternal(joystick));
+            }
+        }
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickNumAxes", ExactSpelling = true)]
