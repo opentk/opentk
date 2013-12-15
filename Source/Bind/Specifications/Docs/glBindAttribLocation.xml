@@ -84,8 +84,8 @@
 
     <para>This command makes it possible for vertex shaders to use
     descriptive names for attribute variables rather than generic
-    variables that are numbered from 0 to
-    <constant>GL_MAX_VERTEX_ATTRIBS</constant> -1. The values sent
+    variables that are numbered from zero to the value of
+    <constant>GL_MAX_VERTEX_ATTRIBS</constant> minus one. The values sent
     to each generic attribute index are part of current state.
     If a different program object is made current by calling
     <citerefentry><refentrytitle>glUseProgram</refentrytitle></citerefentry>,

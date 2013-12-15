@@ -7,6 +7,10 @@
             <year>1991-2006</year>
             <holder>Silicon Graphics, Inc.</holder>
         </copyright>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
     </refentryinfo>
     <refmeta>
         <refentrytitle>glActiveTexture</refentrytitle>
@@ -31,12 +35,15 @@
             <listitem>
                 <para>
                     Specifies which texture unit to make active. The number
-                    of texture units is implementation dependent, but must be at least
-                    80. <parameter>texture</parameter> must be one of
+                    of texture units is implementation dependent, but must
+                    be at least 80. <parameter>texture</parameter> must be
+                    one of
                     <constant>GL_TEXTURE</constant><emphasis>i</emphasis>,
-                    where
-                    <emphasis>i</emphasis> ranges from 0 (<constant>GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS</constant> - 1).
-                    The initial value is <constant>GL_TEXTURE0</constant>.
+                    where <emphasis>i</emphasis> ranges from zero to the value
+                    of
+                    <constant>GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS</constant>
+                    minus one. The initial value is
+                    <constant>GL_TEXTURE0</constant>.
                 </para>
             </listitem>
         </varlistentry>
@@ -51,9 +58,12 @@
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>
         <para>
-            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>texture</parameter> is not one of
-            <constant>GL_TEXTURE</constant><emphasis>i</emphasis>,
-            where <emphasis>i</emphasis> ranges from 0 to (<constant>GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS</constant> - 1).
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>texture</parameter> is not one of
+            <constant>GL_TEXTURE</constant><emphasis>i</emphasis>, where
+            <emphasis>i</emphasis> ranges from zero to the value of
+            <constant>GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS</constant> minus
+            one.
         </para>
     </refsect1>
     <refsect1 id="associatedgets"><title>Associated Gets</title>
@@ -91,9 +101,10 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
-            Free Software B License. For details, see
+            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>
     </refsect1>

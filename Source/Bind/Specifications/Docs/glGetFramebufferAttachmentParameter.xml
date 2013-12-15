@@ -77,10 +77,16 @@
             or <constant>GL_STENCIL</constant>, identifying the stencil buffer.
         </para>
         <para>
-            If a framebuffer object is bound, then <parameter>attachment</parameter> must be one of <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>,
-            <constant>GL_DEPTH_ATTACHMENT</constant>, <constant>GL_STENCIL_ATTACHMENT</constant>, or <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant>.
-            <emphasis>i</emphasis> in <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis> must be in the range zero to the value of
-            <constant>GL_MAX_COLOR_ATTACHMENTS</constant> - 1.
+            If a framebuffer object is bound, then
+            <parameter>attachment</parameter> must be one of
+            <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>,
+            <constant>GL_DEPTH_ATTACHMENT</constant>,
+            <constant>GL_STENCIL_ATTACHMENT</constant>, or
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant>.
+            <emphasis>i</emphasis> in
+            <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>
+            must be in the range zero to the value of
+            <constant>GL_MAX_COLOR_ATTACHMENTS</constant> minus one.
         </para>
         <para>
             If <parameter>attachment</parameter> is <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant> and different objects are bound

@@ -168,7 +168,7 @@
                 <mml:math><mml:mi mathvariant="italic">hb</mml:mi></mml:math>
             </inlineequation>, and
             <inlineequation>
-                <mml:math><mml:mi mathvariant="italic">db</mml:mi></mml:math> 
+                <mml:math><mml:mi mathvariant="italic">db</mml:mi></mml:math>
             </inlineequation> to be
             the specified <parameter>width</parameter>, <parameter>height</parameter>, <parameter>depth</parameter>, and the border width, border height, and border
             depth of the texel array and taking
@@ -188,7 +188,7 @@
                 <mml:math><mml:mi mathvariant="italic">h</mml:mi></mml:math>
             </inlineequation>, and
             <inlineequation>
-                <mml:math><mml:mi mathvariant="italic">d</mml:mi></mml:math> 
+                <mml:math><mml:mi mathvariant="italic">d</mml:mi></mml:math>
             </inlineequation>
             to be the <parameter>xoffset</parameter>, <parameter>yoffset</parameter>,
             <parameter>zoffset</parameter>, <parameter>width</parameter>, <parameter>height</parameter>, and <parameter>depth</parameter> argument values,
@@ -398,7 +398,7 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 2013 Khronos Group.
-            This material may be distributed subject to the terms and conditions set forth in 
+            This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
         </para>

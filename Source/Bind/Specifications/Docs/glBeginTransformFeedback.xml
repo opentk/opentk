@@ -55,45 +55,49 @@
             <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry> must match those specified
             in the following table:
         </para>
-        <informaltable frame="topbot">
+        <informaltable>
             <tgroup cols="2" align="left">
                 <colspec colwidth="1.1*" />
                 <colspec colwidth="1*" />
                 <thead>
                     <row>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        Transform Feedback <parameter>primitiveMode</parameter>
-                        </emphasis></entry>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        Allowed Render Primitive <parameter>modes</parameter>
-                        </emphasis></entry>
+                        <entry>
+                            <emphasis role="bold"> 
+                                Transform Feedback <parameter>primitiveMode</parameter>
+                            </emphasis>
+                        </entry> 
+                        <entry>
+                            <emphasis role="bold"> 
+                                Allowed Render Primitive <parameter>modes</parameter>
+                            </emphasis>
+                        </entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
-                        <entry align="left">
-                        <constant>GL_POINTS</constant>
-                        </entry>
-                        <entry align="left">
-                        <constant>GL_POINTS</constant>
+                        <entry> <constant>GL_POINTS</constant> </entry>
+                        <entry> <constant>GL_POINTS</constant> </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_LINES</constant> </entry>
+                        <entry>
+                            <constant>GL_LINES</constant>,
+                            <constant>GL_LINE_LOOP</constant>,
+                            <constant>GL_LINE_STRIP</constant>,
+                            <constant>GL_LINES_ADJACENCY</constant>,
+                            <constant>GL_LINE_STRIP_ADJACENCY</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_LINES</constant>
+                        <entry>
+                            <constant>GL_TRIANGLES</constant>
                         </entry>
-                        <entry align="left">
-                        <constant>GL_LINES</constant>, <constant>GL_LINE_LOOP</constant>, <constant>GL_LINE_STRIP</constant>,
-                        <constant>GL_LINES_ADJACENCY</constant>, <constant>GL_LINE_STRIP_ADJACENCY</constant>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_TRIANGLES</constant>
-                        </entry>
-                        <entry align="left">
-                        <constant>GL_TRIANGLES</constant>, <constant>GL_TRIANGLE_STRIP</constant>, <constant>GL_TRIANGLE_FAN</constant>,
-                        <constant>GL_TRIANGLES_ADJACENCY</constant>, <constant>GL_TRIANGLE_STRIP_ADJACENCY</constant>
+                        <entry>
+                            <constant>GL_TRIANGLES</constant>, 
+                            <constant>GL_TRIANGLE_STRIP</constant>, 
+                            <constant>GL_TRIANGLE_FAN</constant>,
+                            <constant>GL_TRIANGLES_ADJACENCY</constant>, 
+                            <constant>GL_TRIANGLE_STRIP_ADJACENCY</constant>
                         </entry>
                     </row>
                 </tbody>
@@ -102,49 +106,41 @@
         <para>
             If a geometry shader is present, the output primitive type from the geometry shader must match those
             provided in the following table:
-        <informaltable frame="topbot">
+        </para>
+        <informaltable>
             <tgroup cols="2" align="left">
                 <colspec colwidth="1.1*" />
                 <colspec colwidth="1*" />
                 <thead>
                     <row>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        Transform Feedback <parameter>primitiveMode</parameter>
-                        </emphasis></entry>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        Allowed Geometry Shader Output Primitive Type
-                        </emphasis></entry>
+                        <entry>
+                            <emphasis role="bold">
+                                Transform Feedback <parameter>primitiveMode</parameter>
+                            </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold">
+                                Allowed Geometry Shader Output Primitive Type
+                            </emphasis>
+                        </entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
-                        <entry align="left">
-                        <constant>GL_POINTS</constant>
-                        </entry>
-                        <entry align="left">
-                        <constant>points</constant>
-                        </entry>
+                        <entry> <constant>GL_POINTS</constant> </entry>
+                        <entry> <constant>points</constant> </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_LINES</constant>
-                        </entry>
-                        <entry align="left">
-                        <constant>line_strip</constant>
-                        </entry>
+                        <entry> <constant>GL_LINES</constant> </entry>
+                        <entry> <constant>line_strip</constant> </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_TRIANGLES</constant>
-                        </entry>
-                        <entry align="left">
-                        <constant>triangle_strip</constant>
-                        </entry>
+                        <entry> <constant>GL_TRIANGLES</constant> </entry>
+                        <entry> <constant>triangle_strip</constant> </entry>
                     </row>
                 </tbody>
             </tgroup>
         </informaltable>
-        </para>
     </refsect1>
     <refsect1 id="notes"><title>Notes</title>
         <para>

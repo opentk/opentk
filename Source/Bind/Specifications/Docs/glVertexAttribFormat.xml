@@ -108,7 +108,7 @@
             <code>GLint</code>, <code>GLfixed</code>, <code>GLfloat</code>, <code>GLhalf</code>, and
             <code>GLdouble</code>, respectively; the values <constant>GL_UNSIGNED_BYTE</constant>,
             <constant>GL_UNSIGNED_SHORT</constant>, and <constant>GL_UNSIGNED_INT</constant> indicate types
-            <code>GLubyte</code>, <code>GLushort</code>, and <code>GLuint</code>, 
+            <code>GLubyte</code>, <code>GLushort</code>, and <code>GLuint</code>,
             respectively; the values <constant>GL_INT_2_10_10_10_REV</constant> and
             <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant> indicating respectively four signed or
             unsigned elements packed into a single <code>GLuint</code>; and the value
@@ -140,7 +140,7 @@
             layout for floating-point vertex attributes, <function>glVertexAttribIFormat</function>
             should be used to describe vertex attribute layout for integer vertex attribute
             and <function>glVertexAttribLFormat</function> should be used to describe the layout
-            for 64-bit vertex attributes. Data for an array specified by 
+            for 64-bit vertex attributes. Data for an array specified by
             <function>glVertexAttribIFormat</function> will always be left as integer values;
             such data are referred to as pure integers.
         </para>
@@ -192,8 +192,8 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2013 Khronos Group. 
-            This material may be distributed subject to the terms and conditions set forth in 
+            Copyright <trademark class="copyright"></trademark> 2013 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
         </para>

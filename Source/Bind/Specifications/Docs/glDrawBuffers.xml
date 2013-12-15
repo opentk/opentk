@@ -105,7 +105,7 @@
         <listitem>
             <para>The fragment shader output value is written into the
             <emphasis>n</emphasis>th color attachment of the current framebuffer.
-            <emphasis>n</emphasis> may range from 0 to the value of
+            <emphasis>n</emphasis> may range from zero to the value of
             <constant>GL_MAX_COLOR_ATTACHMENTS</constant>.</para>
         </listitem>
         </varlistentry>

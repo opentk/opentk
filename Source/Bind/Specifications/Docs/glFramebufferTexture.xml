@@ -111,14 +111,23 @@
             <constant>GL_FRAMEBUFFER</constant> is equivalent to <constant>GL_DRAW_FRAMEBUFFER</constant>.
         </para>
         <para>
-            <parameter>attachment</parameter> specifies the logical attachment of the framebuffer and must be
-            <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>, <constant>GL_DEPTH_ATTACHMENT</constant>,
-            <constant>GL_STENCIL_ATTACHMENT</constant> or <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant>.
-            <emphasis>i</emphasis> in <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis> may range from zero to
-            the value of <constant>GL_MAX_COLOR_ATTACHMENTS</constant> - 1. Attaching a level of a texture to
-            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant> is equivalent to attaching that level to both the
-            <constant>GL_DEPTH_ATTACHMENT</constant> <emphasis>and</emphasis> the <constant>GL_STENCIL_ATTACHMENT</constant>
-            attachment points simultaneously.
+            <parameter>attachment</parameter> specifies the logical
+            attachment of the framebuffer and must be
+            <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>,
+            <constant>GL_DEPTH_ATTACHMENT</constant>,
+            <constant>GL_STENCIL_ATTACHMENT</constant> or
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant>.
+            <emphasis>i</emphasis> in
+            <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>
+            may range from zero to the value of
+            <constant>GL_MAX_COLOR_ATTACHMENTS</constant> minus one.
+            Attaching a level of a texture to
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant> is equivalent
+            to attaching that level to both the
+            <constant>GL_DEPTH_ATTACHMENT</constant>
+            <emphasis>and</emphasis> the
+            <constant>GL_STENCIL_ATTACHMENT</constant> attachment points
+            simultaneously.
         </para>
         <para>
             <parameter>textarget</parameter> specifies what type of texture is named by <parameter>texture</parameter>, and for

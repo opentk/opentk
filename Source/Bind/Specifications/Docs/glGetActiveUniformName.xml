@@ -91,8 +91,11 @@
             the number of active uniforms exceeded the limit.
         </para>
         <para>
-            <parameter>uniformIndex</parameter> must be an active uniform index of the program <parameter>program</parameter>, in the range zero to
-            <constant>GL_ACTIVE_UNIFORMS</constant> - 1. The value of <constant>GL_ACTIVE_UNIFORMS</constant> can be queried with
+            <parameter>uniformIndex</parameter> must be an active uniform
+            index of the program <parameter>program</parameter>, in the
+            range zero to the value of
+            <constant>GL_ACTIVE_UNIFORMS</constant> minus one. The value of
+            <constant>GL_ACTIVE_UNIFORMS</constant> can be queried with
             <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>.
         </para>
     </refsect1>

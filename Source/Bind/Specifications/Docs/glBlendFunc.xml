@@ -7,6 +7,10 @@
             <year>1991-2006</year>
             <holder>Silicon Graphics, Inc.</holder>
         </copyright>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
     </refentryinfo>
     <refmeta>
         <refentrytitle>glBlendFunc</refentrytitle>
@@ -325,42 +329,42 @@
         </para>
         <para>
         </para>
-        <informaltable frame="topbot">
+        <informaltable>
             <tgroup cols="2" align="left">
                 <colspec/>
                 <colspec/>
                 <thead>
                     <row>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        Parameter
-                        </emphasis></entry>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        <inlineequation><mml:math>
-                            <!-- eqn: ( f sub R ,    f sub G ,    f sub B ,    f sub A ): -->
-                            <mml:mfenced open="(" close=")">
-                                <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
-                                <mml:mi mathvariant="italic">R</mml:mi>
-                                </mml:msub>
-                                <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
-                                <mml:mi mathvariant="italic">G</mml:mi>
-                                </mml:msub>
-                                <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
-                                <mml:mi mathvariant="italic">B</mml:mi>
-                                </mml:msub>
-                                <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
-                                <mml:mi mathvariant="italic">A</mml:mi>
-                                </mml:msub>
-                            </mml:mfenced>
-                        </mml:math></inlineequation>
-                        </emphasis></entry>
+                        <entry>
+                            <emphasis role="bold"> Parameter </emphasis>
+                        </entry>
+                        <entry>
+                            <inlineequation><mml:math>
+                                <!-- eqn: ( f sub R ,    f sub G ,    f sub B ,    f sub A ): -->
+                                <mml:mfenced open="(" close=")">
+                                    <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
+                                    <mml:mi mathvariant="italic">R</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
+                                    <mml:mi mathvariant="italic">G</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
+                                    <mml:mi mathvariant="italic">B</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:math></inlineequation>
+                        </entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
-                        <entry align="left">
-                        <constant>GL_ZERO</constant>
+                        <entry>
+                            <constant>GL_ZERO</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( 0,  0,  0,  0 ): -->
                             <mml:mfenced open="(" close=")">
@@ -373,10 +377,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_ONE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( 1,  1,  1,  1 ): -->
                             <mml:mfenced open="(" close=")">
@@ -389,10 +393,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_SRC_COLOR</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( R sub s0 / k sub R ,  G sub s0 / k sub G ,  B sub s0 / k sub B ,  A sub s0 / k sub A ): -->
                             <mml:mfenced open="(" close=")">
@@ -433,10 +437,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_ONE_MINUS_SRC_COLOR</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( 1,  1,  1,  1 )  -  (R sub s0 / k sub R ,  G sub s0 / k sub G ,  B sub s0 / k sub B ,  A sub s0 / k sub A ): -->
                             <mml:mrow>
@@ -486,10 +490,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_DST_COLOR</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( R sub d / k sub R ,  G sub d / k sub G ,  B sub d / k sub B ,  A sub d / k sub A ): -->
                             <mml:mfenced open="(" close=")">
@@ -530,10 +534,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_ONE_MINUS_DST_COLOR</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( 1,  1,  1,  1 )  -  (R sub d / k sub R ,  G sub d / k sub G ,  B sub d / k sub B ,  A sub d / k sub A ): -->
                             <mml:mrow>
@@ -583,10 +587,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_SRC_ALPHA</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( A sub s0 / k sub A ,  A sub s0 / k sub A ,  A sub s0 / k sub A ,  A sub s0 / k sub A ): -->
                             <mml:mfenced open="(" close=")">
@@ -627,10 +631,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_ONE_MINUS_SRC_ALPHA</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( 1,  1,  1,  1 )  -  (A sub s0 / k sub A ,  A sub s0 / k sub A ,  A sub s0 / k sub A ,  A sub s0 / k sub A ): -->
                             <mml:mrow>
@@ -680,10 +684,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_DST_ALPHA</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( A sub d / k sub A ,  A sub d / k sub A ,  A sub d / k sub A ,  A sub d / k sub A ): -->
                             <mml:mfenced open="(" close=")">
@@ -724,10 +728,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_ONE_MINUS_DST_ALPHA</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( 1,  1,  1,  1 )  -  ( A sub d / k sub A ,  A sub d / k sub A ,  A sub d / k sub A ,  A sub d / k sub A ): -->
                             <mml:mrow>
@@ -777,10 +781,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_CONSTANT_COLOR</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( R sub c, G sub c, B sub c, A sub c ): -->
                             <mml:mfenced open="(" close=")">
@@ -801,10 +805,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_ONE_MINUS_CONSTANT_COLOR</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( 1,  1,  1,  1 )  -  ( R sub c, G sub c, B sub c, A sub c ): -->
                             <mml:mrow>
@@ -834,10 +838,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_CONSTANT_ALPHA</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( A sub c, A sub c, A sub c, A sub c ): -->
                             <mml:mfenced open="(" close=")">
@@ -858,10 +862,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_ONE_MINUS_CONSTANT_ALPHA</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( 1,  1,  1,  1 )  -  ( A sub c, A sub c, A sub c, A sub c ): -->
                             <mml:mrow>
@@ -891,10 +895,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_SRC_ALPHA_SATURATE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( i,  i,  i,  1 ): -->
                             <mml:mfenced open="(" close=")">
@@ -907,10 +911,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_SRC1_COLOR</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( R sub s1 / k sub R ,  G sub s1 / k sub G ,  B sub s1 / k sub B ,  A sub s1 / k sub A ): -->
                             <mml:mfenced open="(" close=")">
@@ -951,10 +955,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_ONE_MINUS_SRC1_COLOR</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( 1,  1,  1,  1 )  -  (R sub s1 / k sub R ,  G sub s1 / k sub G ,  B sub s1 / k sub B ,  A sub s1 / k sub A ): -->
                             <mml:mrow>
@@ -1004,10 +1008,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_SRC1_ALPHA</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( A sub s1 / k sub A ,  A sub s1 / k sub A ,  A sub s1 / k sub A ,  A sub s1 / k sub A ): -->
                             <mml:mfenced open="(" close=")">
@@ -1048,10 +1052,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_ONE_MINUS_SRC1_ALPHA</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: ( 1,  1,  1,  1 )  -  (A sub s1 / k sub A ,  A sub s1 / k sub A ,  A sub s1 / k sub A ,  A sub s1 / k sub A ): -->
                             <mml:mrow>
@@ -1461,9 +1465,10 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
-            Free Software B License. For details, see
+            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>
     </refsect1>

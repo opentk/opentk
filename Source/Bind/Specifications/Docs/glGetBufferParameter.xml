@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
               "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
-<refentry id="glGetBufferParameteriv">
+<refentry id="glGetBufferParameter">
     <refentryinfo>
         <copyright>
             <year>2005</year>
@@ -136,7 +136,7 @@
             no change is made to the contents of <parameter>data</parameter>.
         </para>
         <para>
-            The <constant>GL_ATOMIC_COUNTER_BUFER</constant> target is available only if the GL version is 4.2 or greater.
+            The <constant>GL_ATOMIC_COUNTER_BUFFER</constant> target is available only if the GL version is 4.2 or greater.
         </para>
         <para>
             The <constant>GL_DISPATCH_INDIRECT_BUFFER</constant> and <constant>GL_SHADER_STORAGE_BUFFER</constant> targets are available only if the GL version is 4.3 or greater.

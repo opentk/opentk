@@ -83,7 +83,7 @@
         <para>Applications are responsible for providing the
         synchronization across API calls when objects are accessed from
         different execution threads.</para>
-        
+
         <para><constant>GL_COMPUTE_SHADER</constant> is available only if the GL version is 4.3 or higher.</para>
     </refsect1>
     <refsect1 id="errors"><title>Errors</title>

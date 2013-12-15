@@ -1016,310 +1016,310 @@
         </para>
         <para>
         </para>
-        <informaltable frame="topbot">
-            <tgroup cols="4" align="left">
-                <colspec colwidth="2.5*" />
-                <colspec colwidth="1*"  align="center"/>
-                <colspec colwidth="1*"  align="center"/>
-                <colspec colwidth="2*"  align="center"/>
+        <informaltable>
+            <tgroup cols="4">
+                <colspec colwidth="2.5*" align="left" />
+                <colspec colwidth="1*"  align="center" />
+                <colspec colwidth="1*"  align="center" />
+                <colspec colwidth="2*"  align="center" />
                 <thead>
                     <row>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        <parameter>pname</parameter>
-                        </emphasis></entry>
-                        <entry rowsep="1" align="center"><emphasis role="bold">
-                        Type
-                        </emphasis></entry>
-                        <entry rowsep="1" align="center"><emphasis role="bold">
-                        Initial Value
-                        </emphasis></entry>
-                        <entry rowsep="1" align="center"><emphasis role="bold">
-                        Valid Range
-                        </emphasis></entry>
+                        <entry>
+                            <emphasis role="bold"> <parameter>pname</parameter> </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> Type </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> Initial Value </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> Valid Range </emphasis>
+                        </entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_PACK_SWAP_BYTES</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         boolean
                         </entry>
-                        <entry align="center">
+                        <entry>
                         false
                         </entry>
-                        <entry align="center">
+                        <entry>
                         true or false
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_PACK_LSB_FIRST</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         boolean
                         </entry>
-                        <entry align="center">
+                        <entry>
                         false
                         </entry>
-                        <entry align="center">
+                        <entry>
                         true or false
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_PACK_ROW_LENGTH</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         integer
                         </entry>
-                        <entry align="center">
+                        <entry>
                         0
                         </entry>
-                        <entry align="center">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: left [ 0,\(if right ): -->
                             <mml:mfenced open="[" close=")">
                                 <mml:mn>0</mml:mn>
-                                <mml:infinity/>
+                                <mml:mn>&infin;</mml:mn>
                             </mml:mfenced>
                         </mml:math></inlineequation>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_PACK_IMAGE_HEIGHT</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         integer
                         </entry>
-                        <entry align="center">
+                        <entry>
                         0
                         </entry>
-                        <entry align="center">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: left [ 0, \(if right ): -->
                             <mml:mfenced open="[" close=")">
                                 <mml:mn>0</mml:mn>
-                                <mml:infinity/>
+                                <mml:mn>&infin;</mml:mn>
                             </mml:mfenced>
                         </mml:math></inlineequation>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_PACK_SKIP_ROWS</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         integer
                         </entry>
-                        <entry align="center">
+                        <entry>
                         0
                         </entry>
-                        <entry align="center">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: left [ 0,\(if right ): -->
                             <mml:mfenced open="[" close=")">
                                 <mml:mn>0</mml:mn>
-                                <mml:infinity/>
+                                <mml:mn>&infin;</mml:mn>
                             </mml:mfenced>
                         </mml:math></inlineequation>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_PACK_SKIP_PIXELS</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         integer
                         </entry>
-                        <entry align="center">
+                        <entry>
                         0
                         </entry>
-                        <entry align="center">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: left [ 0,\(if right ): -->
                             <mml:mfenced open="[" close=")">
                                 <mml:mn>0</mml:mn>
-                                <mml:infinity/>
+                                <mml:mn>&infin;</mml:mn>
                             </mml:mfenced>
                         </mml:math></inlineequation>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_PACK_SKIP_IMAGES</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         integer
                         </entry>
-                        <entry align="center">
+                        <entry>
                         0
                         </entry>
-                        <entry align="center">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: left [ 0,\(if right ): -->
                             <mml:mfenced open="[" close=")">
                                 <mml:mn>0</mml:mn>
-                                <mml:infinity/>
+                                <mml:mn>&infin;</mml:mn>
                             </mml:mfenced>
                         </mml:math></inlineequation>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_PACK_ALIGNMENT</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         integer
                         </entry>
-                        <entry align="center">
+                        <entry>
                         4
                         </entry>
-                        <entry align="center">
+                        <entry>
                         1, 2, 4, or 8
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_UNPACK_SWAP_BYTES</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         boolean
                         </entry>
-                        <entry align="center">
+                        <entry>
                         false
                         </entry>
-                        <entry align="center">
+                        <entry>
                         true or false
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_UNPACK_LSB_FIRST</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         boolean
                         </entry>
-                        <entry align="center">
+                        <entry>
                         false
                         </entry>
-                        <entry align="center">
+                        <entry>
                         true or false
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_UNPACK_ROW_LENGTH</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         integer
                         </entry>
-                        <entry align="center">
+                        <entry>
                         0
                         </entry>
-                        <entry align="center">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: left [ 0,\(if right ): -->
                             <mml:mfenced open="[" close=")">
                                 <mml:mn>0</mml:mn>
-                                <mml:infinity/>
+                                <mml:mn>&infin;</mml:mn>
                             </mml:mfenced>
                         </mml:math></inlineequation>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_UNPACK_IMAGE_HEIGHT</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         integer
                         </entry>
-                        <entry align="center">
+                        <entry>
                         0
                         </entry>
-                        <entry align="center">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: left [ 0,\(if right ): -->
                             <mml:mfenced open="[" close=")">
                                 <mml:mn>0</mml:mn>
-                                <mml:infinity/>
+                                <mml:mn>&infin;</mml:mn>
                             </mml:mfenced>
                         </mml:math></inlineequation>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_UNPACK_SKIP_ROWS</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         integer
                         </entry>
-                        <entry align="center">
+                        <entry>
                         0
                         </entry>
-                        <entry align="center">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: left [ 0,\(if right ): -->
                             <mml:mfenced open="[" close=")">
                                 <mml:mn>0</mml:mn>
-                                <mml:infinity/>
+                                <mml:mn>&infin;</mml:mn>
                             </mml:mfenced>
                         </mml:math></inlineequation>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_UNPACK_SKIP_PIXELS</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         integer
                         </entry>
-                        <entry align="center">
+                        <entry>
                         0
                         </entry>
-                        <entry align="center">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: left [ 0,\(if right ): -->
                             <mml:mfenced open="[" close=")">
                                 <mml:mn>0</mml:mn>
-                                <mml:infinity/>
+                                <mml:mn>&infin;</mml:mn>
                             </mml:mfenced>
                         </mml:math></inlineequation>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_UNPACK_SKIP_IMAGES</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         integer
                         </entry>
-                        <entry align="center">
+                        <entry>
                         0
                         </entry>
-                        <entry align="center">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: left [ 0,\(if right ): -->
                             <mml:mfenced open="[" close=")">
                                 <mml:mn>0</mml:mn>
-                                <mml:infinity/>
+                                <mml:mn>&infin;</mml:mn>
                             </mml:mfenced>
                         </mml:math></inlineequation>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_UNPACK_ALIGNMENT</constant>
                         </entry>
-                        <entry align="center">
+                        <entry>
                         integer
                         </entry>
-                        <entry align="center">
+                        <entry>
                         4
                         </entry>
-                        <entry align="center">
+                        <entry>
                         1, 2, 4, or 8
                         </entry>
                     </row>
@@ -1421,8 +1421,8 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc. 
-            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group. 
+            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
             This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.

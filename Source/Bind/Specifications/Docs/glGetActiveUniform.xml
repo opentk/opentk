@@ -100,8 +100,8 @@
     with the value <constant>GL_ACTIVE_UNIFORMS</constant>. A value
     of 0 for <parameter>index</parameter> selects the first active
     uniform variable. Permissible values for
-    <parameter>index</parameter> range from 0 to the number of
-    active uniform variables minus 1.</para>
+    <parameter>index</parameter> range from zero to the number of
+    active uniform variables minus one.</para>
 
     <para>Shaders may use either built-in uniform variables,
     user-defined uniform variables, or both. Built-in uniform
@@ -148,859 +148,859 @@
     argument will return a pointer to the uniform variable's data
     type. The symbolic constants returned for uniform types are shown in the
     table below.
-        <informaltable frame="topbot">
+        <informaltable>
             <tgroup cols="2" align="left">
                 <colspec colwidth="1.1*" />
                 <colspec colwidth="1*" />
                 <thead>
                     <row>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        Returned Symbolic Contant
-                        </emphasis></entry>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        Shader Uniform Type
-                        </emphasis></entry>
+                        <entry>
+                            <emphasis role="bold"> Returned Symbolic Contant </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> Shader Uniform Type </emphasis>
+                        </entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_FLOAT</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>float</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_FLOAT_VEC2</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>vec2</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_FLOAT_VEC3</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>vec3</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_FLOAT_VEC4</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>vec4</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_DOUBLE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>double</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_DOUBLE_VEC2</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>dvec2</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_DOUBLE_VEC3</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>dvec3</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_DOUBLE_VEC4</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>dvec4</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>int</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_VEC2</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>ivec2</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_VEC3</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>ivec3</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_VEC4</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>ivec4</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>unsigned int</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_VEC2</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>uvec2</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_VEC3</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>uvec3</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_VEC4</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>uvec4</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_BOOL</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>bool</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_BOOL_VEC2</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>bvec2</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_BOOL_VEC3</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>bvec3</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_BOOL_VEC4</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>bvec4</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_FLOAT_MAT2</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>mat2</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_FLOAT_MAT3</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>mat3</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_FLOAT_MAT4</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>mat4</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_FLOAT_MAT2x3</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>mat2x3</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_FLOAT_MAT2x4</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>mat2x4</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_FLOAT_MAT3x2</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>mat3x2</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_FLOAT_MAT3x4</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>mat3x4</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_FLOAT_MAT4x2</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>mat4x2</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_FLOAT_MAT4x3</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>mat4x3</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_DOUBLE_MAT2</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>dmat2</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_DOUBLE_MAT3</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>dmat3</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_DOUBLE_MAT4</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>dmat4</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_DOUBLE_MAT2x3</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>dmat2x3</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_DOUBLE_MAT2x4</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>dmat2x4</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_DOUBLE_MAT3x2</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>dmat3x2</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_DOUBLE_MAT3x4</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>dmat3x4</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_DOUBLE_MAT4x2</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>dmat4x2</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_DOUBLE_MAT4x3</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>dmat4x3</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_1D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>sampler1D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_2D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>sampler2D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_3D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>sampler3D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_CUBE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>samplerCube</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_1D_SHADOW</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>sampler1DShadow</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_2D_SHADOW</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>sampler2DShadow</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_1D_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>sampler1DArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_2D_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>sampler2DArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_1D_ARRAY_SHADOW</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>sampler1DArrayShadow</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_2D_ARRAY_SHADOW</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>sampler2DArrayShadow</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_2D_MULTISAMPLE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>sampler2DMS</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_2D_MULTISAMPLE_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>sampler2DMSArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_CUBE_SHADOW</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>samplerCubeShadow</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_BUFFER</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>samplerBuffer</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_2D_RECT</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>sampler2DRect</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_SAMPLER_2D_RECT_SHADOW</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>sampler2DRectShadow</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_SAMPLER_1D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>isampler1D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_SAMPLER_2D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>isampler2D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_SAMPLER_3D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>isampler3D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_SAMPLER_CUBE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>isamplerCube</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_SAMPLER_1D_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>isampler1DArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_SAMPLER_2D_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>isampler2DArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_SAMPLER_2D_MULTISAMPLE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>isampler2DMS</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_SAMPLER_2D_MULTISAMPLE_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>isampler2DMSArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_SAMPLER_BUFFER</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>isamplerBuffer</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_SAMPLER_2D_RECT</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>isampler2DRect</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_SAMPLER_1D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>usampler1D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_SAMPLER_2D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>usampler2D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_SAMPLER_3D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>usampler3D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_SAMPLER_CUBE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>usamplerCube</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_SAMPLER_1D_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>usampler2DArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_SAMPLER_2D_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>usampler2DArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>usampler2DMS</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>usampler2DMSArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_SAMPLER_BUFFER</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>usamplerBuffer</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_SAMPLER_2D_RECT</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>usampler2DRect</constant>
                         </entry>
                     </row>
 
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_IMAGE_1D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>image1D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_IMAGE_2D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>image2D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_IMAGE_3D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>image3D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_IMAGE_2D_RECT</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>image2DRect</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_IMAGE_CUBE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>imageCube</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_IMAGE_BUFFER</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>imageBuffer</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_IMAGE_1D_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>image1DArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_IMAGE_2D_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>image2DArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_IMAGE_2D_MULTISAMPLE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>image2DMS</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_IMAGE_2D_MULTISAMPLE_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>image2DMSArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_IMAGE_1D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>iimage1D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_IMAGE_2D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>iimage2D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_IMAGE_3D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>iimage3D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_IMAGE_2D_RECT</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>iimage2DRect</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_IMAGE_CUBE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>iimageCube</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_IMAGE_BUFFER</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>iimageBuffer</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_IMAGE_1D_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>iimage1DArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_IMAGE_2D_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>iimage2DArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_IMAGE_2D_MULTISAMPLE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>iimage2DMS</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_INT_IMAGE_2D_MULTISAMPLE_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>iimage2DMSArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_IMAGE_1D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>uimage1D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_IMAGE_2D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>uimage2D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_IMAGE_3D</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>uimage3D</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_IMAGE_2D_RECT</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>uimage2DRect</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_IMAGE_CUBE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>uimageCube</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_IMAGE_BUFFER</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>uimageBuffer</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_IMAGE_1D_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>uimage1DArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_IMAGE_2D_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>uimage2DArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>uimage2DMS</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE_ARRAY</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>uimage2DMSArray</constant>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                             <constant>GL_UNSIGNED_INT_ATOMIC_COUNTER</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <constant>atomic_uint</constant>
                         </entry>
                     </row>

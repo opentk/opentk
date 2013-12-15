@@ -7,6 +7,10 @@
             <year>1991-2006</year>
             <holder>Silicon Graphics, Inc.</holder>
         </copyright>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
     </refentryinfo>
     <refmeta>
         <refentrytitle>glLogicOp</refentrytitle>
@@ -67,147 +71,147 @@
         </para>
         <para>
         </para>
-        <informaltable frame="topbot">
-            <tgroup cols="2" align="left">
-                <colspec/>
-                <colspec/>
+        <informaltable>
+            <tgroup cols="2">
+                <colspec align="left" />
+                <colspec align="center" />
                 <thead>
                     <row>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        Opcode
-                        </emphasis></entry>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        Resulting Operation
-                        </emphasis></entry>
+                        <entry>
+                            <emphasis role="bold"> Opcode </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> Resulting Operation </emphasis>
+                        </entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
-                        <entry align="left">
-                        <constant>GL_CLEAR</constant>
+                        <entry>
+                            <constant>GL_CLEAR</constant>
                         </entry>
-                        <entry align="center">
-                        0
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_SET</constant>
-                        </entry>
-                        <entry align="center">
-                        1
+                        <entry>
+                            0
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_COPY</constant>
+                        <entry>
+                            <constant>GL_SET</constant>
                         </entry>
-                        <entry align="center">
-                        s
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_COPY_INVERTED</constant>
-                        </entry>
-                        <entry align="center">
-                        ~s
+                        <entry>
+                            1
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_NOOP</constant>
+                        <entry>
+                            <constant>GL_COPY</constant>
                         </entry>
-                        <entry align="center">
-                        d
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_INVERT</constant>
-                        </entry>
-                        <entry align="center">
-                        ~d
+                        <entry>
+                            s
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_AND</constant>
+                        <entry>
+                            <constant>GL_COPY_INVERTED</constant>
                         </entry>
-                        <entry align="center">
-                        s &amp; d
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_NAND</constant>
-                        </entry>
-                        <entry align="center">
-                        ~(s &amp; d)
+                        <entry>
+                            ~s
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_OR</constant>
+                        <entry>
+                            <constant>GL_NOOP</constant>
                         </entry>
-                        <entry align="center">
-                        s | d
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_NOR</constant>
-                        </entry>
-                        <entry align="center">
-                        ~(s | d)
+                        <entry>
+                            d
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_XOR</constant>
+                        <entry>
+                            <constant>GL_INVERT</constant>
                         </entry>
-                        <entry align="center">
-                        s ^ d
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_EQUIV</constant>
-                        </entry>
-                        <entry align="center">
-                        ~(s ^ d)
+                        <entry>
+                            ~d
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_AND_REVERSE</constant>
+                        <entry>
+                            <constant>GL_AND</constant>
                         </entry>
-                        <entry align="center">
-                        s &amp; ~d
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_AND_INVERTED</constant>
-                        </entry>
-                        <entry align="center">
-                        ~s &amp; d
+                        <entry>
+                            s &amp; d
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_OR_REVERSE</constant>
+                        <entry>
+                            <constant>GL_NAND</constant>
                         </entry>
-                        <entry align="center">
-                        s | ~d
+                        <entry>
+                            ~(s &amp; d)
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_OR_INVERTED</constant>
+                        <entry>
+                            <constant>GL_OR</constant>
                         </entry>
-                        <entry align="center">
-                        ~s | d
+                        <entry>
+                            s | d
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_NOR</constant>
+                        </entry>
+                        <entry>
+                            ~(s | d)
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_XOR</constant>
+                        </entry>
+                        <entry>
+                            s ^ d
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_EQUIV</constant>
+                        </entry>
+                        <entry>
+                            ~(s ^ d)
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_AND_REVERSE</constant>
+                        </entry>
+                        <entry>
+                            s &amp; ~d
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_AND_INVERTED</constant>
+                        </entry>
+                        <entry>
+                            ~s &amp; d
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_OR_REVERSE</constant>
+                        </entry>
+                        <entry>
+                            s | ~d
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_OR_INVERTED</constant>
+                        </entry>
+                        <entry>
+                            ~s | d
                         </entry>
                     </row>
                 </tbody>
@@ -260,9 +264,10 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
-            Free Software B License. For details, see
+            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>
     </refsect1>

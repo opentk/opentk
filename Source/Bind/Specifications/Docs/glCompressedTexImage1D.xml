@@ -121,7 +121,7 @@
             format using <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry>.
         </para>
         <para>
-            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target 
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target
             (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a texture image is
             specified, <parameter>data</parameter> is treated as a byte offset into the buffer object's data store.
         </para>
@@ -129,7 +129,7 @@
             If the compressed data are arranged into fixed-size blocks of texels, the pixel
             storage modes can be used to select a sub-rectangle from a larger containing rectangle.
             These pixel storage modes operate in the same way as they do for <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>.
-            In the following description, denote by 
+            In the following description, denote by
             <inlineequation>
                 <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:mrow></mml:math>
             </inlineequation>,
@@ -147,8 +147,8 @@
             and <constant>GL_UNPACK_COMPRESSED_BLOCK_DEPTH</constant>, respectively.
             <inlineequation>
                 <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:mrow></mml:math>
-            </inlineequation> 
-            is the compressed block size in bytes; 
+            </inlineequation>
+            is the compressed block size in bytes;
             <inlineequation>
                 <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:math>
             </inlineequation>,
@@ -156,8 +156,8 @@
                 <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>h</mml:mi></mml:msub></mml:mrow></mml:math>
             </inlineequation>, and
             <inlineequation>
-                <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>d</mml:mi></mml:msub></mml:mrow></mml:math> 
-            </inlineequation> 
+                <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>d</mml:mi></mml:msub></mml:mrow></mml:math>
+            </inlineequation>
             are the compressed block width, height, and depth in pixels.
         </para>
         <para>
@@ -165,21 +165,21 @@
             <constant>GL_UNPACK_SKIP_ROWS</constant>, <constant>GL_UNPACK_SKIP_PIXELS</constant>,
             <constant>GL_UNPACK_IMAGE_HEIGHT</constant> and <constant>GL_UNPACK_SKIP_IMAGES</constant>
             are ignored for compressed images. To enable <constant>GL_UNPACK_SKIP_PIXELS</constant>
-            and <constant>GL_UNPACK_ROW_LENGTH</constant>, 
+            and <constant>GL_UNPACK_ROW_LENGTH</constant>,
             <inlineequation>
                 <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:mrow></mml:math>
             </inlineequation>
-            and 
+            and
             <inlineequation>
-                <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:math> 
+                <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:math>
             </inlineequation>
             must both be non-zero.
             To also enable <constant>GL_UNPACK_SKIP_ROWS</constant> and <constant>GL_UNPACK_IMAGE_HEIGHT</constant>,
             <inlineequation>
-                <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>h</mml:mi></mml:msub></mml:mrow></mml:math> 
+                <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>h</mml:mi></mml:msub></mml:mrow></mml:math>
             </inlineequation>
             must be non-zero.
-            To also enable <constant>GL_UNPACK_SKIP_IMAGES</constant>, 
+            To also enable <constant>GL_UNPACK_SKIP_IMAGES</constant>,
             <inlineequation>
                 <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>d</mml:mi></mml:msub></mml:mrow></mml:math>
             </inlineequation>
@@ -190,7 +190,7 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        the value of <constant>GL_UNPACK_SKIP_PIXELS</constant> must be a multiple of 
+                        the value of <constant>GL_UNPACK_SKIP_PIXELS</constant> must be a multiple of
                         <inlineequation>
                             <mml:math><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:math>
                         </inlineequation>
@@ -254,7 +254,7 @@
         </para>
         <para>
             <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
-            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer 
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer
             object such that the memory reads required would exceed the data store size.
         </para>
         <para>
@@ -308,8 +308,8 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc. 
-            Copyright <trademark class="copyright"></trademark> 2011-2013 Khronos Group. 
+            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2011-2013 Khronos Group.
             This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.

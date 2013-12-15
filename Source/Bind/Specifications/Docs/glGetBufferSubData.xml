@@ -98,7 +98,7 @@
             no change is made to the contents of <parameter>data</parameter>.
         </para>
         <para>
-            The <constant>GL_ATOMIC_COUNTER_BUFER</constant> target is available only if the GL version is 4.2 or greater.
+            The <constant>GL_ATOMIC_COUNTER_BUFFER</constant> target is available only if the GL version is 4.2 or greater.
         </para>
         <para>
             The <constant>GL_DISPATCH_INDIRECT_BUFFER</constant> target is available only if the GL version is 4.3 or greater.

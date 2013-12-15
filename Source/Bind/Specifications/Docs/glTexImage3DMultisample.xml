@@ -88,10 +88,18 @@
             <function>glTexImage3DMultisample</function> establishes the data storage, format, dimensions and number of samples of a multisample texture's image.
         </para>
         <para>
-            <parameter>target</parameter> must be <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant> or <constant>GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.
-            <parameter>width</parameter> and <parameter>height</parameter>are the dimensions in texels of the texture, and must
-            be in the range zero to <constant>GL_MAX_TEXTURE_SIZE</constant> - 1. <parameter>depth</parameter> is the number of array slices in the array texture's image.
-            <parameter>samples</parameter> specifies the number of samples in the image and must be in the range zero to <constant>GL_MAX_SAMPLES</constant> - 1.
+            <parameter>target</parameter> must be
+            <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant> or
+            <constant>GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.
+            <parameter>width</parameter> and
+            <parameter>height</parameter>are the dimensions in texels of the
+            texture, and must be in the range zero to the value of
+            <constant>GL_MAX_TEXTURE_SIZE</constant> minus one.
+            <parameter>depth</parameter> is the number of array slices in
+            the array texture's image. <parameter>samples</parameter>
+            specifies the number of samples in the image and must be in the
+            range zero to the value of <constant>GL_MAX_SAMPLES</constant>
+            minus one.
         </para>
         <para>
             <parameter>internalformat</parameter> must be a color-renderable, depth-renderable, or stencil-renderable format.

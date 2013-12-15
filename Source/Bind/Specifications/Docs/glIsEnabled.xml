@@ -69,219 +69,223 @@
         </para>
         <para>
         </para>
-        <informaltable frame="topbot">
+        <informaltable>
             <tgroup cols="2" align="left">
                 <colspec/>
                 <colspec/>
                 <thead>
                     <row>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        Constant
-                        </emphasis></entry>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        See
-                        </emphasis></entry>
+                        <entry>
+                            <emphasis role="bold"> Constant </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> See </emphasis>
+                        </entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
-                        <entry align="left">
-                        <constant>GL_BLEND</constant>
+                        <entry>
+                            <constant>GL_BLEND</constant>
                         </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_CLIP_DISTANCE</constant><emphasis>i</emphasis>
-                        </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        <entry>
+                            <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>, 
+                            <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_COLOR_LOGIC_OP</constant>
+                        <entry>
+                            <constant>GL_CLIP_DISTANCE</constant><emphasis>i</emphasis>
                         </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_CULL_FACE</constant>
-                        </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glCullFace</refentrytitle></citerefentry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_DEPTH_CLAMP</constant>
+                        <entry>
+                            <constant>GL_COLOR_LOGIC_OP</constant>
                         </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_DEBUG_OUTPUT</constant>
-                        </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        <entry>
+                            <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_DEBUG_OUTPUT_SYNCHRONOUS</constant>
+                        <entry>
+                            <constant>GL_CULL_FACE</constant>
                         </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_DEPTH_TEST</constant>
-                        </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glDepthRange</refentrytitle></citerefentry>
+                        <entry>
+                            <citerefentry><refentrytitle>glCullFace</refentrytitle></citerefentry>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_DITHER</constant>
+                        <entry>
+                            <constant>GL_DEPTH_CLAMP</constant>
                         </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_FRAMEBUFFER_SRGB</constant>
-                        </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_LINE_SMOOTH</constant>
+                        <entry>
+                            <constant>GL_DEBUG_OUTPUT</constant>
                         </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glLineWidth</refentrytitle></citerefentry>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_MULTISAMPLE</constant>
-                        </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_POLYGON_SMOOTH</constant>
+                        <entry>
+                            <constant>GL_DEBUG_OUTPUT_SYNCHRONOUS</constant>
                         </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glPolygonMode</refentrytitle></citerefentry>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_POLYGON_OFFSET_FILL</constant>
-                        </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_POLYGON_OFFSET_LINE</constant>
+                        <entry>
+                            <constant>GL_DEPTH_TEST</constant>
                         </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_POLYGON_OFFSET_POINT</constant>
-                        </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>
+                        <entry>
+                            <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>, 
+                            <citerefentry><refentrytitle>glDepthRange</refentrytitle></citerefentry>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_PROGRAM_POINT_SIZE</constant>
+                        <entry>
+                            <constant>GL_DITHER</constant>
                         </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_PRIMITIVE_RESTART</constant>
-                        </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glPrimitiveRestartIndex</refentrytitle></citerefentry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_SAMPLE_ALPHA_TO_COVERAGE</constant>
+                        <entry>
+                            <constant>GL_FRAMEBUFFER_SRGB</constant>
                         </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_SAMPLE_ALPHA_TO_ONE</constant>
-                        </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_SAMPLE_COVERAGE</constant>
+                        <entry>
+                            <constant>GL_LINE_SMOOTH</constant>
                         </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_SAMPLE_MASK</constant>
-                        </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        <entry>
+                            <citerefentry><refentrytitle>glLineWidth</refentrytitle></citerefentry>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_SCISSOR_TEST</constant>
+                        <entry>
+                            <constant>GL_MULTISAMPLE</constant>
                         </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glScissor</refentrytitle></citerefentry>
-                        </entry>
-                    </row>
-                    <row>
-                        <entry align="left">
-                        <constant>GL_STENCIL_TEST</constant>
-                        </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>
+                        <entry>
+                            <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
-                        <constant>GL_TEXTURE_CUBE_MAP_SEAMLESS</constant>
+                        <entry>
+                            <constant>GL_POLYGON_SMOOTH</constant>
                         </entry>
-                        <entry align="left">
-                        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        <entry>
+                            <citerefentry><refentrytitle>glPolygonMode</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_POLYGON_OFFSET_FILL</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_POLYGON_OFFSET_LINE</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_POLYGON_OFFSET_POINT</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_PROGRAM_POINT_SIZE</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_PRIMITIVE_RESTART</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>, 
+                            <citerefentry><refentrytitle>glPrimitiveRestartIndex</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_SAMPLE_ALPHA_TO_COVERAGE</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_SAMPLE_ALPHA_TO_ONE</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_SAMPLE_COVERAGE</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_SAMPLE_MASK</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_SCISSOR_TEST</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glScissor</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_STENCIL_TEST</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>, 
+                            <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_TEXTURE_CUBE_MAP_SEAMLESS</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
                         </entry>
                     </row>
                 </tbody>
@@ -317,8 +321,8 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc. 
-            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group. 
+            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
             This document is licensed under the SGI
             Free Software B License. For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.

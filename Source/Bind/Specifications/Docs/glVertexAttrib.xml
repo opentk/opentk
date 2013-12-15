@@ -477,7 +477,7 @@
         </listitem>
         </varlistentry>
         <varlistentry>
-        <term><parameter>value</parameter></term> 
+        <term><parameter>value</parameter></term>
         <listitem>
             <para>
                 For the packed commands, specifies the new packed value to

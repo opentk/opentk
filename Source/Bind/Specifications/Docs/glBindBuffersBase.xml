@@ -19,7 +19,7 @@
     <refsynopsisdiv><title>C Specification</title>
         <funcsynopsis>
             <funcprototype>
-                <funcdef>void <function>glBindBufferBase</function></funcdef>
+                <funcdef>void <function>glBindBuffersBase</function></funcdef>
                 <paramdef>GLenum <parameter>target</parameter></paramdef>
                 <paramdef>GLuint <parameter>first</parameter></paramdef>
                 <paramdef>GLsizei <parameter>count</parameter></paramdef>

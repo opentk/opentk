@@ -7,6 +7,10 @@
             <year>1991-2006</year>
             <holder>Silicon Graphics, Inc.</holder>
         </copyright>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
     </refentryinfo>
     <refmeta>
         <refentrytitle>glBlendEquation</refentrytitle>
@@ -172,30 +176,30 @@
                 </mml:mfenced>
             </mml:math></inlineequation>.
 
-        <informaltable frame="topbot">
+        <informaltable>
             <tgroup cols="3" align="left">
                 <colspec colwidth="1.1*" />
                 <colspec colwidth="1*" />
                 <colspec colwidth="1*" />
                 <thead>
                     <row>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        Mode
-                        </emphasis></entry>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        RGB Components
-                        </emphasis></entry>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        Alpha Component
-                        </emphasis></entry>
+                        <entry>
+                            <emphasis role="bold"> Mode </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> RGB Components </emphasis>
+                        </entry> 
+                        <entry>
+                            <emphasis role="bold"> Alpha Component </emphasis>
+                        </entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_FUNC_ADD</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: Rr  =      R sub s s sub R  +  R sub d d sub R : -->
                             <mml:mrow>
@@ -269,7 +273,7 @@
                             </mml:mrow>
                         </mml:math></inlineequation>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: Ar  =    A sub s s sub A  +  A sub d d sub A : -->
                             <mml:mrow>
@@ -297,10 +301,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_FUNC_SUBTRACT</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: Rr  =      R sub s s sub R  -  R sub d d sub R : -->
                             <mml:mrow>
@@ -374,7 +378,7 @@
                             </mml:mrow>
                         </mml:math></inlineequation>
                         </entry>
-                        <entry align="left">
+                        <entry>
                         <inlineequation><mml:math>
                             <!-- eqn: Ar  =    A sub s s sub A  -  A sub d d sub A : -->
                             <mml:mrow>
@@ -402,10 +406,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_FUNC_REVERSE_SUBTRACT</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <inlineequation><mml:math>
                                 <!-- eqn: Rr  =      R sub d d sub R  -  R sub s s sub R : -->
                                 <mml:mrow>
@@ -479,7 +483,7 @@
                                 </mml:mrow>
                             </mml:math></inlineequation>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <inlineequation><mml:math>
                                 <!-- eqn: Ar  =    A sub d d sub A  -  A sub s s sub A : -->
                                 <mml:mrow>
@@ -507,10 +511,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_MIN</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <inlineequation><mml:math>
                                 <!-- eqn: Rr  =      min ( R sub s, R sub d): -->
                                 <mml:mrow>
@@ -581,7 +585,7 @@
                                 </mml:mrow>
                             </mml:math></inlineequation>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <inlineequation><mml:math>
                                 <!-- eqn: Ar  =      min ( A sub s, A sub d): -->
                                 <mml:mrow>
@@ -608,10 +612,10 @@
                         </entry>
                     </row>
                     <row>
-                        <entry align="left">
+                        <entry>
                         <constant>GL_MAX</constant>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <inlineequation><mml:math>
                                 <!-- eqn: Rr  =      max ( R sub s, R sub d): -->
                                 <mml:mrow>
@@ -682,7 +686,7 @@
                                 </mml:mrow>
                             </mml:math></inlineequation>
                         </entry>
-                        <entry align="left">
+                        <entry>
                             <inlineequation><mml:math>
                                 <!-- eqn: Ar  =      max ( A sub s, A sub d): -->
                                 <mml:mrow>
@@ -769,9 +773,10 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 1991-2006
-            Silicon Graphics, Inc. This document is licensed under the SGI
-            Free Software B License. For details, see
+            Copyright <trademark class="copyright"></trademark> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"></trademark> 2010-2013 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
             <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
         </para>
     </refsect1>

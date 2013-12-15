@@ -46,22 +46,21 @@
             <parameter>provokeMode</parameter> must be either <constant>GL_FIRST_VERTEX_CONVENTION</constant> or
             <constant>GL_LAST_VERTEX_CONVENTION</constant>, and controls the selection of the vertex whose values are assigned to flatshaded
             varying outputs. The interpretation of these values for the supported primitive types is:
-            <informaltable frame="topbot">
+            <informaltable>
                 <tgroup cols="3" align="left">
                     <colspec colwidth="1.1*" />
                     <colspec colwidth="1*" />
                     <colspec colwidth="1*" />
                     <thead>
                         <row>
-                            <entry rowsep="1" align="left"><emphasis role="bold">
-                            Primitive Type of Polygon <emphasis>i</emphasis>
-                            </emphasis></entry>
-                            <entry rowsep="1" align="left"><emphasis role="bold">
-                            First Vertex Convention
-                            </emphasis></entry>
-                            <entry rowsep="1" align="left"><emphasis role="bold">
-                            Last Vertex Convention
-                            </emphasis></entry>
+                            <entry>
+                                <emphasis role="bold"> Primitive Type of Polygon <emphasis>i</emphasis> </emphasis>
+                            </entry>
+                                <entry><emphasis role="bold"> First Vertex Convention </emphasis>
+                            </entry>
+                            <entry>
+                                <emphasis role="bold"> Last Vertex Convention </emphasis>
+                            </entry>
                         </row>
                     </thead>
                     <tbody>

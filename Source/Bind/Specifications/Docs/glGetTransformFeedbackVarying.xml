@@ -99,7 +99,8 @@
             variable selected by <parameter>index</parameter>. An <parameter>index</parameter> of 0 selects
             the first varying variable specified in the <parameter>varyings</parameter> array passed
             to <citerefentry><refentrytitle>glTransformFeedbackVaryings</refentrytitle></citerefentry>, and
-            an <parameter>index</parameter> of <constant>GL_TRANSFORM_FEEDBACK_VARYINGS</constant> - 1 selects
+            an <parameter>index</parameter> of the value of
+            <constant>GL_TRANSFORM_FEEDBACK_VARYINGS</constant> minus one selects
             the last such variable.
         </para>
         <para>

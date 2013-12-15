@@ -120,137 +120,177 @@
             be one of the formats listed in the following table.
         </para>
         <para>
-            <table frame="topbot"><title>Internal Image Formats</title>
+            <table>
+            <title>Internal Image Formats</title>
             <tgroup cols="2" align="left">
-                <colspec align="left"/>
-                <colspec align="left"/>
+                <colspec/>
+                <colspec/>
                 <thead>
                     <row>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        Image Unit Format
-                        </emphasis></entry>
-                        <entry rowsep="1" align="left"><emphasis role="bold">
-                        Format Qualifier
-                        </emphasis></entry>
+                        <entry>
+                            <emphasis role="bold"> Image Unit Format </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> Format Qualifier </emphasis>
+                        </entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
-                        <entry><constant>GL_RGBA32F</constant></entry><entry><code>rgba32f</code></entry>
+                        <entry><constant>GL_RGBA32F</constant></entry>
+                        <entry><code>rgba32f</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RGBA16F</constant></entry><entry><code>rgba16f</code></entry>
+                        <entry><constant>GL_RGBA16F</constant></entry>
+                        <entry><code>rgba16f</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RG32F</constant></entry><entry><code>rg32f</code></entry>
+                        <entry><constant>GL_RG32F</constant></entry>
+                        <entry><code>rg32f</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RG16F</constant></entry><entry><code>rg16f</code></entry>
+                        <entry><constant>GL_RG16F</constant></entry>
+                        <entry><code>rg16f</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_R11F_G11F_B10F</constant></entry><entry><code>r11f_g11f_b10f</code></entry>
+                        <entry><constant>GL_R11F_G11F_B10F</constant></entry>
+                        <entry><code>r11f_g11f_b10f</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_R32F</constant></entry><entry><code>r32f</code></entry>
+                        <entry><constant>GL_R32F</constant></entry>
+                        <entry><code>r32f</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_R16F</constant></entry><entry><code>r16f</code></entry>
+                        <entry><constant>GL_R16F</constant></entry>
+                        <entry><code>r16f</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RGBA32UI</constant></entry><entry><code>rgba32ui</code></entry>
+                        <entry><constant>GL_RGBA32UI</constant></entry>
+                        <entry><code>rgba32ui</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RGBA16UI</constant></entry><entry><code>rgba16ui</code></entry>
+                        <entry><constant>GL_RGBA16UI</constant></entry>
+                        <entry><code>rgba16ui</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RGB10_A2UI</constant></entry><entry><code>rgb10_a2ui</code></entry>
+                        <entry><constant>GL_RGB10_A2UI</constant></entry>
+                        <entry><code>rgb10_a2ui</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RGBA8UI</constant></entry><entry><code>rgba8ui</code></entry>
+                        <entry><constant>GL_RGBA8UI</constant></entry>
+                        <entry><code>rgba8ui</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RG32UI</constant></entry><entry><code>rg32ui</code></entry>
+                        <entry><constant>GL_RG32UI</constant></entry>
+                        <entry><code>rg32ui</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RG16UI</constant></entry><entry><code>rg16ui</code></entry>
+                        <entry><constant>GL_RG16UI</constant></entry>
+                        <entry><code>rg16ui</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RG8UI</constant></entry><entry><code>rg8ui</code></entry>
+                        <entry><constant>GL_RG8UI</constant></entry>
+                        <entry><code>rg8ui</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_R32UI</constant></entry><entry><code>r32ui</code></entry>
+                        <entry><constant>GL_R32UI</constant></entry>
+                        <entry><code>r32ui</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_R16UI</constant></entry><entry><code>r16ui</code></entry>
+                        <entry><constant>GL_R16UI</constant></entry>
+                        <entry><code>r16ui</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_R8UI</constant></entry><entry><code>r8ui</code></entry>
+                        <entry><constant>GL_R8UI</constant></entry>
+                        <entry><code>r8ui</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RGBA32I</constant></entry><entry><code>rgba32i</code></entry>
+                        <entry><constant>GL_RGBA32I</constant></entry>
+                        <entry><code>rgba32i</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RGBA16I</constant></entry><entry><code>rgba16i</code></entry>
+                        <entry><constant>GL_RGBA16I</constant></entry>
+                        <entry><code>rgba16i</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RGBA8I</constant></entry><entry><code>rgba8i</code></entry>
+                        <entry><constant>GL_RGBA8I</constant></entry>
+                        <entry><code>rgba8i</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RG32I</constant></entry><entry><code>rg32i</code></entry>
+                        <entry><constant>GL_RG32I</constant></entry>
+                        <entry><code>rg32i</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RG16I</constant></entry><entry><code>rg16i</code></entry>
+                        <entry><constant>GL_RG16I</constant></entry>
+                        <entry><code>rg16i</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RG8I</constant></entry><entry><code>rg8i</code></entry>
+                        <entry><constant>GL_RG8I</constant></entry>
+                        <entry><code>rg8i</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_R32I</constant></entry><entry><code>r32i</code></entry>
+                        <entry><constant>GL_R32I</constant></entry>
+                        <entry><code>r32i</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_R16I</constant></entry><entry><code>r16i</code></entry>
+                        <entry><constant>GL_R16I</constant></entry>
+                        <entry><code>r16i</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_R8I</constant></entry><entry><code>r8i</code></entry>
+                        <entry><constant>GL_R8I</constant></entry>
+                        <entry><code>r8i</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RGBA16</constant></entry><entry><code>rgba16</code></entry>
+                        <entry><constant>GL_RGBA16</constant></entry>
+                        <entry><code>rgba16</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RGB10_A2</constant></entry><entry><code>rgb10_a2</code></entry>
+                        <entry><constant>GL_RGB10_A2</constant></entry>
+                        <entry><code>rgb10_a2</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RGBA8</constant></entry><entry><code>rgba8</code></entry>
+                        <entry><constant>GL_RGBA8</constant></entry>
+                        <entry><code>rgba8</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RG16</constant></entry><entry><code>rg16</code></entry>
+                        <entry><constant>GL_RG16</constant></entry>
+                        <entry><code>rg16</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RG8</constant></entry><entry><code>rg8</code></entry>
+                        <entry><constant>GL_RG8</constant></entry>
+                        <entry><code>rg8</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_R16</constant></entry><entry><code>r16</code></entry>
+                        <entry><constant>GL_R16</constant></entry>
+                        <entry><code>r16</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_R8</constant></entry><entry><code>r8</code></entry>
+                        <entry><constant>GL_R8</constant></entry>
+                        <entry><code>r8</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RGBA16_SNORM</constant></entry><entry><code>rgba16_snorm</code></entry>
+                        <entry><constant>GL_RGBA16_SNORM</constant></entry>
+                        <entry><code>rgba16_snorm</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RGBA8_SNORM</constant></entry><entry><code>rgba8_snorm</code></entry>
+                        <entry><constant>GL_RGBA8_SNORM</constant></entry>
+                        <entry><code>rgba8_snorm</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RG16_SNORM</constant></entry><entry><code>rg16_snorm</code></entry>
+                        <entry><constant>GL_RG16_SNORM</constant></entry>
+                        <entry><code>rg16_snorm</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_RG8_SNORM</constant></entry><entry><code>rg8_snorm</code></entry>
+                        <entry><constant>GL_RG8_SNORM</constant></entry>
+                        <entry><code>rg8_snorm</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_R16_SNORM</constant></entry><entry><code>r16_snorm</code></entry>
+                        <entry><constant>GL_R16_SNORM</constant></entry>
+                        <entry><code>r16_snorm</code></entry>
                     </row>
                     <row>
-                        <entry><constant>GL_R8_SNORM</constant></entry><entry><code>r8_snorm</code></entry>
+                        <entry><constant>GL_R8_SNORM</constant></entry>
+                        <entry><code>r8_snorm</code></entry>
                     </row>
                 </tbody>
             </tgroup>

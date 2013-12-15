@@ -703,26 +703,26 @@
                     <para>
                         Specifies the comparison operator used when <constant>GL_TEXTURE_COMPARE_MODE</constant> is
                         set to <constant>GL_COMPARE_REF_TO_TEXTURE</constant>.  Permissible values are:
-                        <informaltable frame="topbot">
+                        <informaltable>
                             <tgroup cols="2" align="left">
                                 <colspec/>
                                 <colspec/>
                                 <thead>
                                     <row>
-                                        <entry rowsep="1" align="left"><emphasis role="bold">
-                                        Texture Comparison Function
-                                        </emphasis></entry>
-                                        <entry rowsep="1" align="left"><emphasis role="bold">
-                                        Computed result
-                                        </emphasis></entry>
+                                        <entry>
+                                            <emphasis role="bold"> Texture Comparison Function </emphasis>
+                                        </entry>
+                                        <entry>
+                                            <emphasis role="bold"> Computed result </emphasis>
+                                        </entry>
                                     </row>
                                 </thead>
                                 <tbody>
                                     <row>
-                                        <entry align="left">
+                                        <entry>
                                         <constant>GL_LEQUAL</constant>
                                         </entry>
-                                        <entry align="left">
+                                        <entry>
                                             <inlineequation><mml:math>
                                                 <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
                                                 <mml:mrow>
@@ -770,10 +770,10 @@
                                         </entry>
                                     </row>
                                     <row>
-                                        <entry align="left">
+                                        <entry>
                                         <constant>GL_GEQUAL</constant>
                                         </entry>
-                                        <entry align="left">
+                                        <entry>
                                             <inlineequation><mml:math>
                                                 <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
                                                 <mml:mrow>
@@ -821,10 +821,10 @@
                                         </entry>
                                     </row>
                                     <row>
-                                        <entry align="left">
+                                        <entry>
                                         <constant>GL_LESS</constant>
                                         </entry>
-                                        <entry align="left">
+                                        <entry>
                                             <inlineequation><mml:math>
                                                 <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
                                                 <mml:mrow>
@@ -872,10 +872,10 @@
                                         </entry>
                                     </row>
                                     <row>
-                                        <entry align="left">
+                                        <entry>
                                         <constant>GL_GREATER</constant>
                                         </entry>
-                                        <entry align="left">
+                                        <entry>
                                             <inlineequation><mml:math>
                                                 <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
                                                 <mml:mrow>
@@ -923,10 +923,10 @@
                                         </entry>
                                     </row>
                                     <row>
-                                        <entry align="left">
+                                        <entry>
                                         <constant>GL_EQUAL</constant>
                                         </entry>
-                                        <entry align="left">
+                                        <entry>
                                             <inlineequation><mml:math>
                                                 <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
                                                 <mml:mrow>
@@ -974,10 +974,10 @@
                                         </entry>
                                     </row>
                                     <row>
-                                        <entry align="left">
+                                        <entry>
                                         <constant>GL_NOTEQUAL</constant>
                                         </entry>
-                                        <entry align="left">
+                                        <entry>
                                             <inlineequation><mml:math>
                                                 <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
                                                 <mml:mrow>
@@ -1025,10 +1025,10 @@
                                         </entry>
                                     </row>
                                     <row>
-                                        <entry align="left">
+                                        <entry>
                                         <constant>GL_ALWAYS</constant>
                                         </entry>
-                                        <entry align="left">
+                                        <entry>
                                             <inlineequation>
                                                 <mml:math>
                                                 <mml:mrow>
@@ -1041,10 +1041,10 @@
                                         </entry>
                                     </row>
                                     <row>
-                                        <entry align="left">
+                                        <entry>
                                         <constant>GL_NEVER</constant>
                                         </entry>
-                                        <entry align="left">
+                                        <entry>
                                             <inlineequation>
                                                 <mml:math>
                                                 <mml:mrow>

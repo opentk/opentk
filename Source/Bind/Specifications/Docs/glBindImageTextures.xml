@@ -61,7 +61,7 @@
             objects whose names are stored in the array <parameter>textures</parameter>. That number
             of texture names are read from the array and bound to the <parameter>count</parameter> consecutive
             texture units starting from <parameter>first</parameter>.
-            
+
             If the name zero appears in the <parameter>textures</parameter> array, any existing binding
             to the image unit is reset. Any non-zero entry in <parameter>textures</parameter> must be the
             name of an existing texture object. When a non-zero entry in <parameter>textures</parameter> is
@@ -69,8 +69,8 @@
             layer set to zero, and the image is bound for read-write access. The image unit format
             parameter is taken from the internal format of the image at level zero of the texture object.
             For cube map textures, the internal format of the positive X image of level zero is used.
-            
-            
+
+
             If <parameter>textures</parameter> is <constant>NULL</constant> then it is as
             if an appropriately sized array containing only zeros had been specified.
         </para>
@@ -152,7 +152,7 @@
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
             Copyright <trademark class="copyright"></trademark> 2013 Khronos Group.
-            This material may be distributed subject to the terms and conditions set forth in 
+            This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
         </para>

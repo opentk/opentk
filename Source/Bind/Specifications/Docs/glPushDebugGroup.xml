@@ -70,7 +70,7 @@
             <parameter>id</parameter> specifies the ID of messages generated. The parameter
             <parameter>length</parameter> contains the number of characters in <parameter>message</parameter>.
             If <parameter>length</parameter> is negative, it is implied that <parameter>message</parameter>
-            contains a null terminated string. The message has the specified <parameter>source</parameter> 
+            contains a null terminated string. The message has the specified <parameter>source</parameter>
             and <parameter>id</parameter>, the <parameter>type</parameter> <constant>GL_DEBUG_TYPE_PUSH_GROUP</constant>, and <parameter>severity</parameter>
             <constant>GL_DEBUG_SEVERITY_NOTIFICATION</constant>. The GL will put a new debug group
             on top of the debug group stack which inherits the control of the
@@ -106,8 +106,8 @@
     </refsect1>
     <refsect1 id="Copyright"><title>Copyright</title>
         <para>
-            Copyright <trademark class="copyright"></trademark> 2013 Khronos Group. 
-            This material may be distributed subject to the terms and conditions set forth in 
+            Copyright <trademark class="copyright"></trademark> 2013 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
             the Open Publication License, v 1.0, 8 June 1999.
             <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
         </para>

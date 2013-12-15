@@ -85,7 +85,7 @@
         <para>If <parameter>program</parameter> is zero, then the current rendering
         state refers to an <emphasis>invalid</emphasis> program object and the
         results of shader execution are undefined. However, this is not an error.</para>
-        
+
         <para>If <parameter>program</parameter> does not
         contain shader objects of type <constant>GL_FRAGMENT_SHADER</constant>, an
         executable will be installed on the vertex, and possibly geometry processors,
@@ -115,7 +115,7 @@
         <para><constant>GL_INVALID_OPERATION</constant> is generated if
         <parameter>program</parameter> could not be made part of current
         state.</para>
-        
+
         <para><constant>GL_INVALID_OPERATION</constant> is generated if
         transform feedback mode is active.</para>
 
