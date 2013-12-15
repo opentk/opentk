@@ -373,7 +373,7 @@ namespace OpenTK.Graphics.ES20
 
         public static void DrawElements(BeginMode mode, int count, DrawElementsType type, int offset)
         {
-            DrawElements(mode, count, type, new IntPtr(offset));
+            DrawElements((PrimitiveType)mode, count, type, new IntPtr(offset));
         }
 
         #endregion
