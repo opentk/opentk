@@ -109,15 +109,9 @@ namespace OpenTK.Platform.Windows
 
         static int DescribePixelFormat(IntPtr hdc, int ipfd, int cjpfd, ref PixelFormatDescriptor pfd)
         {
-            unsafe
-            {
-                fixed (PixelFormatDescriptor* ppfd = &pfd)
-                {
-                    // Note: DescribePixelFormat found in gdi32 is extremely slow
-                    // on nvidia, for some reason.
-                    return Wgl.Imports.DescribePixelFormat(hdc, ipfd, (uint)cjpfd, ppfd);
-                }
-            }
+            // Note: DescribePixelFormat found in gdi32 is extremely slow
+            // on nvidia, for some reason.
+            return Wgl.DescribePixelFormat(hdc, ipfd, (uint)cjpfd, out pfd);
         }
 
         #endregion

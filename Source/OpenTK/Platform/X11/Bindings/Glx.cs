@@ -308,6 +308,9 @@ namespace OpenTK.Platform.X11
         [DllImport(Library, EntryPoint = "glXGetProcAddress")]
         public static extern IntPtr GetProcAddress([MarshalAs(UnmanagedType.LPTStr)] string procName);
 
+        [DllImport(Library, EntryPoint = "glXGetProcAddress")]
+        public static extern IntPtr GetProcAddress(IntPtr procName);
+
         [DllImport(Library, EntryPoint = "glXGetConfig")]
         public static extern int GetConfig(IntPtr dpy, ref XVisualInfo vis, GLXAttribute attrib, out int value);
 

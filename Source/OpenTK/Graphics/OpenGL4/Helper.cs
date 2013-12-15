@@ -42,6 +42,22 @@ namespace OpenTK.Graphics.OpenGL4
         const string Library = "opengl32.dll";
         static readonly object sync_root = new object();
 
+        static IntPtr[] EntryPoints;
+        static string[] EntryPointNames;
+
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        public GL()
+        {
+            EntryPointsInstance = EntryPoints;
+            EntryPointNamesInstance = EntryPointNames;
+        }
+
+        #endregion
+
         #region --- Protected Members ---
 
         /// <summary>

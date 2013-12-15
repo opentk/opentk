@@ -47,8 +47,6 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
     <DebugSymbols>True</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <Optimize>False</Optimize>
@@ -66,8 +64,6 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
@@ -76,7 +72,8 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>0219, 0414, 0612, 0618, 1591, 3005, 3006</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DebugType>none</DebugType>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Documentation|AnyCPU'">
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>
@@ -92,8 +89,6 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
     <OutputPath>..\..\Binaries\OpenTK\Release\</OutputPath>

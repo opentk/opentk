@@ -468,21 +468,57 @@ namespace OpenTK.Platform.MacOS
 
         [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
         private static extern bool NSIsSymbolNameDefined(string s);
+        [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
+        private static extern bool NSIsSymbolNameDefined(IntPtr s);
         [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
         private static extern IntPtr NSLookupAndBindSymbol(string s);
+        [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
+        private static extern IntPtr NSLookupAndBindSymbol(IntPtr s);
         [DllImport(Library, EntryPoint = "NSAddressOfSymbol")]
         private static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
 
         public override IntPtr GetAddress(string function)
         {
-            string fname = "_" + function;
-            if (!NSIsSymbolNameDefined(fname))
+            // Instead of allocating and combining strings in managed memory
+            // we do that directly in unmanaged memory. This way, we avoid
+            // 2 string allocations every time this function is called.
+
+            // must add a '_' prefix and null-terminate the function name,
+            // hence we allocate +2 bytes
+            IntPtr ptr = Marshal.AllocHGlobal(function.Length + 2);
+            try
+            {
+                Marshal.WriteByte(ptr, (byte)'_');
+                for (int i = 0; i < function.Length; i++)
+                {
+                    Marshal.WriteByte(ptr, i + 1, (byte)function[i]);
+                }
+                Marshal.WriteByte(ptr, function.Length + 1, 0); // null-terminate
+
+                IntPtr symbol = IntPtr.Zero;
+                if (NSIsSymbolNameDefined(ptr))
+                {
+                    symbol = NSLookupAndBindSymbol(ptr);
+                    if (symbol != IntPtr.Zero)
+                        symbol = NSAddressOfSymbol(symbol);
+                }
+                return symbol;
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(ptr);
+            }
+        }
+
+        public override IntPtr GetAddress(IntPtr function)
+        {
+            if (!NSIsSymbolNameDefined(function))
                 return IntPtr.Zero;
-            
-            IntPtr symbol = NSLookupAndBindSymbol(fname);
+
+            IntPtr symbol = NSLookupAndBindSymbol(function);
             if (symbol != IntPtr.Zero)
                 symbol = NSAddressOfSymbol(symbol);
-            
+
             return symbol;
         }
         

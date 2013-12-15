@@ -581,14 +581,12 @@ namespace OpenTK.Platform.Windows
 
         #region GetProcAddress
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="handle"></param>
-        /// <param name="funcname"></param>
-        /// <returns></returns>
         [DllImport("kernel32.dll")]
         internal static extern IntPtr GetProcAddress(IntPtr handle, string funcname);
+
+        [DllImport("kernel32.dll")]
+        internal static extern IntPtr GetProcAddress(IntPtr handle, IntPtr funcname);
+
 
         #endregion
 

@@ -22,7 +22,6 @@ namespace OpenTK.Platform.Windows
             assembly = Assembly.GetExecutingAssembly();
             wglClass = assembly.GetType("OpenTK.Platform.Windows.Wgl");
             delegatesClass = wglClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
-            importsClass = wglClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
 
             //// Ensure core entry points are ready prior to accessing any method.
             //// Resolves bug [#993]: "Possible bug in GraphicsContext.CreateDummyContext()" 
@@ -38,7 +37,6 @@ namespace OpenTK.Platform.Windows
         private static Assembly assembly;
         private static Type wglClass;
         private static Type delegatesClass;
-        private static Type importsClass;
 
         private static bool rebuildExtensionList = true;
 
@@ -59,16 +57,7 @@ namespace OpenTK.Platform.Windows
         /// </returns>
         static Delegate LoadDelegate(string name, Type signature)
         {
-            Delegate d;
-            string realName = name.StartsWith("wgl") ? name.Substring(3) : name;
-
-            if (importsClass.GetMethod(realName,
-                BindingFlags.NonPublic | BindingFlags.Static) != null)
-                d = GetExtensionDelegate(name, signature) ??
-                    Delegate.CreateDelegate(signature, typeof(Imports), realName);
-            else
-                d = GetExtensionDelegate(name, signature);
-
+            Delegate d = GetExtensionDelegate(name, signature);
             return d;
         }
 
@@ -87,7 +76,7 @@ namespace OpenTK.Platform.Windows
         /// </returns>
         private static Delegate GetExtensionDelegate(string name, Type signature)
         {
-            IntPtr address = Imports.GetProcAddress(name);
+            IntPtr address = GetProcAddress(name);
 
             if (address == IntPtr.Zero ||
                 address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
