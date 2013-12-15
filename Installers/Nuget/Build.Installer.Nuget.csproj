@@ -48,28 +48,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <Target Name="Build">
-
-      <!-- Copy built files to the tree format expected by nuget -->
+    <!-- Copy built files to the tree format expected by nuget -->
     <CreateItem Include="../../Binaries/OpenTK/Release/OpenTK*">
       <Output TaskParameter="Include" ItemName="Binaries" />
     </CreateItem>
     <Copy SourceFiles="@(Binaries)" DestinationFolder="./lib/net20" />
-
     <!-- Update version information -->
     <ReadLinesFromFile File="../../Version.txt">
       <Output TaskParameter="Lines" ItemName="Version" />
     </ReadLinesFromFile>
-
     <!-- Execute nuget script -->
     <Exec Command="nuget.exe	 pack OpenTK.nuspec -Version @(Version)" Condition="$(OS) == 'Windows_NT'" />
+    <Exec Command="nuget.exe   pack OpenTK.GLControl.nuspec -Version @(Version)" Condition="$(OS) == 'Windows_NT'" />
     <Exec Command="mono nuget.exe pack OpenTK.nuspec  -Version @(Version)" Condition="$(OS) != 'Windows_NT'" />
-
-    <!-- Copy the nuget archive to the root directory and add a date stamp -->
+    <Exec Command="mono nuget.exe pack OpenTK.GLControl.nuspec  -Version @(Version)" Condition="$(OS) != 'Windows_NT'" />
+        <!-- Copy the nuget archive to the root directory and add a date stamp -->
     <CreateItem Include="OpenTK*.nupkg">
       <Output TaskParameter="Include" ItemName="NugetPackage" />
     </CreateItem>
     <Copy SourceFiles="@(NugetPackage)" DestinationFolder="../../" />
-
   </Target>
   <Target Name="Clean">
     <CreateItem Include="OpenTK.*.nupkg;lib/**">
@@ -83,6 +80,7 @@
   </Target>
   <ItemGroup>
     <None Include="OpenTK.nuspec" />
+    <None Include="OpenTK.GLControl.nuspec" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
