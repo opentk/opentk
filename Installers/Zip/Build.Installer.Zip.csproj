@@ -49,7 +49,7 @@
   </PropertyGroup>
   <Target Name="Build">
     <!-- Zip the copy of the source tree -->
-    <Exec Command="7z a -tzip opentk.zip ../../* -xr!opentk*.zip -xr!opentk*.exe -xr!.* -xr!obj -xr!bin -xr!Documentation/Source -xr!Automation -xr!*.suo -xr!*.pidb -xr!*.userprefs -xr!*vshost.exe* -xr!*.log" />
+    <Exec Command="7z a -tzip opentk.zip ../../* -xr!opentk*.zip -xr!opentk*.exe -xr!.* -xr!obj -xr!bin -xr!lib -xr!Documentation/Source -xr!Automation -xr!*.suo -xr!*.pidb -xr!*.userprefs -xr!*vshost.exe* -xr!*.log -xr!*.nupkg" />
     <!-- Copy the zip file to the root directory and add a date stamp -->
     <ReadLinesFromFile File="../../Timestamp.txt">
       <Output TaskParameter="Lines" ItemName="Version" />
