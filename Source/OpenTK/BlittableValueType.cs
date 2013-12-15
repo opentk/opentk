@@ -178,6 +178,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
+        [CLSCompliant(false)]
         public static bool Check<T>(T[] type)
         {
             return BlittableValueType<T>.Check();
@@ -188,6 +189,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
+        [CLSCompliant(false)]
         public static bool Check<T>(T[,] type)
         {
             return BlittableValueType<T>.Check();
@@ -198,6 +200,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
+        [CLSCompliant(false)]
         public static bool Check<T>(T[, ,] type)
         {
             return BlittableValueType<T>.Check();
@@ -240,6 +243,7 @@ namespace OpenTK
         /// <param name="type">An instance of the value type.</param>
         /// <returns>An integer, specifying the size of the type in bytes.</returns>
         /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        [CLSCompliant(false)]
         public static int StrideOf<T>(T[] type)
         {
             if (!Check(type))
@@ -255,6 +259,7 @@ namespace OpenTK
         /// <param name="type">An instance of the value type.</param>
         /// <returns>An integer, specifying the size of the type in bytes.</returns>
         /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        [CLSCompliant(false)]
         public static int StrideOf<T>(T[,] type)
         {
             if (!Check(type))
@@ -270,6 +275,7 @@ namespace OpenTK
         /// <param name="type">An instance of the value type.</param>
         /// <returns>An integer, specifying the size of the type in bytes.</returns>
         /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        [CLSCompliant(false)]
         public static int StrideOf<T>(T[, ,] type)
         {
             if (!Check(type))
