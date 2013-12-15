@@ -1,32 +1,40 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
-  <metadata>
-    <id>OpenTK</id>
-    <version>1.1</version>
-    <authors>Stefanos Apostolopoulos</authors>
-    <owners>Stefanos Apostolopoulos</owners>
-    <licenseUrl>http://www.opentk.com/project/license</licenseUrl>
-    <projectUrl>http://www.opentk.com</projectUrl>
-    <iconUrl>file:///./logo.png</iconUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>The Open Toolkit library (OpenTK)</description>
-    <releaseNotes>
-    OpenTK is an open-source C# library that gives you fast low-level access to OpenGL and OpenAL.
-    Use it to create a game or embed accelerated graphics into your WinForms or WPF GUI.
+    <metadata>
+        <id>OpenTK</id>
+        <version>$version$</version>
+        <authors>Stefanos Apostolopoulos</authors>
+        <owners>Stefanos Apostolopoulos</owners>
+        <licenseUrl>http://www.opentk.com/project/license</licenseUrl>
+        <projectUrl>http://www.opentk.com</projectUrl>
+        <iconUrl>file:///./logo.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <summary>
+            The Open Toolkit library (OpenTK) is an advanced, low-level C# wrapper for OpenGL, OpenGL ES and OpenAL.
+        </summary>
+        <description>
+            The Open Toolkit library (OpenTK) is an advanced, low-level C# wrapper for OpenGL, OpenGL ES and OpenAL.
+            It is suitable for games, scientific visualizations and projects that require 3d graphics, audio or compute functionality.
 
-    OpenTK 1.1 adds support for OpenGL 4.4 and OpenGL 3.0, high-DPI (retina) displays
-    and improves platform compatibility through a brand-new SDL2 backend.
+            OpenTK applications run on Windows, Linux, Mac OS X, Android and iPhone.
 
-    This is the official nuget package for the Open Toolkit library (OpenTK).
-    Visit http://www.opentk.com for more information or https://github.com/opentk/opentk
-    for the source code.
-    </releaseNotes>
-    <copyright>Copyright 2006-2013 Stefanos Apostolopoulos</copyright>
-    <tags>OpenTK OpenAL OpenGL C# F# VB OpenTK.dll</tags>
-    <references>
-        <reference file="OpenTK.dll" />
-    </references>
-  </metadata>
+            This is the official nuget package from http://www.opentk.com
+            The source code can be found at https://github.com/opentk/opentk
+        </description>
+        <releaseNotes>
+            http://www.opentk.com/news
+        </releaseNotes>
+        <copyright>Copyright 2006-2013 Stefanos Apostolopoulos</copyright>
+        <tags>OpenTK OpenAL OpenGL C# F# VB OpenTK.dll</tags>
+        <references>
+            <reference file="OpenTK.dll" />
+        </references>
+        <frameworkAssemblies>
+            <frameworkAssembly assemblyName="System" />
+            <frameworkAssembly assemblyName="System.Drawing" />
+            <frameworkAssembly assemblyName="System.Xml" />
+        </frameworkAssemblies>
+	</metadata>
     <files>
         <file src="lib/net20/OpenTK.dll" target="lib/net20" />
         <file src="lib/net20/OpenTK.dll.config" target="lib/net20" />
