@@ -20916,7 +20916,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.BlendEquationSeparate, GL.Arb.BlendFunc and 4 other functions
+    /// Used in GL.Arb.BlendEquation, GL.Arb.BlendEquationSeparate and 5 other functions
     /// </summary>
     public enum ArbDrawBuffersBlend : int
     {
@@ -20930,7 +20930,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.DrawArraysIndirect, GL.DrawElementsIndirect
     /// </summary>
     public enum ArbDrawIndirect : int
     {
@@ -23601,7 +23601,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.GetSamplerParameterI, GL.SamplerParameterI
     /// </summary>
     public enum ArbSamplerObjects : int
     {
@@ -26825,7 +26825,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetProgram, GL.Arb.GetProgramString and 4 other functions
+    /// Used in GL.Arb.GetProgram, GL.Arb.GetProgramString and 5 other functions
     /// </summary>
     public enum AssemblyProgramParameterArb : int
     {
@@ -28064,7 +28064,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Apple.DrawElementArray, GL.Apple.DrawRangeElementArray and 25 other functions
+    /// Used in GL.Apple.DrawElementArray, GL.Apple.DrawRangeElementArray and 27 other functions
     /// </summary>
     public enum BeginMode : int
     {
@@ -33913,7 +33913,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.Ext.GetVertexAttribL, GL.Ext.VertexAttribLPointer
+    /// Used in GL.Ext.GetVertexAttribL, GL.Ext.VertexArrayVertexAttribLOffset and 1 other function
     /// </summary>
     public enum ExtVertexAttrib64bit : int
     {
@@ -44521,7 +44521,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Used in GL.NV.GetVertexAttribL, GL.NV.VertexAttribLFormat
+    /// Used in GL.NV.GetVertexAttrib, GL.NV.GetVertexAttribL and 1 other function
     /// </summary>
     public enum NvVertexAttribInteger64bit : int
     {
@@ -48553,7 +48553,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.GetSamplerParameter, GL.SamplerParameter
     /// </summary>
     public enum SamplerParameter : int
     {
@@ -55403,7 +55403,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.StencilFuncSeparate
     /// </summary>
     public enum Version20 : int
     {
@@ -57309,7 +57309,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.BlendEquation, GL.BlendFunc and 1 other function
     /// </summary>
     public enum Version40 : int
     {
@@ -59379,7 +59379,7 @@ namespace OpenTK.Graphics.OpenGL
     }
 
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.VertexAttribLPointer
     /// </summary>
     public enum VertexAttribDPointerType : int
     {

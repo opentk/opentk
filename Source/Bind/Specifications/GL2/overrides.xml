@@ -2157,6 +2157,93 @@
         <type>uint</type>
       </param>
     </function>
+    <!-- generated from apitest against svn r3127 -->
+        <function name="BlendEquation" extension="Arb" obsolete="Use BlendEquationMode overload instead">
+      <param name="mode" index="1">
+        <type>ArbDrawBuffersBlend</type>
+      </param>
+    </function>
+    <function name="BlendEquation" extension="Core" obsolete="Use ArbDrawBuffersBlend overload instead">
+      <param name="mode" index="1">
+        <type>Version40</type>
+      </param>
+    </function>
+    <function name="BlendFunc" extension="Core" obsolete="Use ArbDrawBuffersBlend overload instead">
+      <param name="dfactor" index="1">
+        <type>Version40</type>
+      </param>
+      <param name="dst" index="2">
+        <type>Version40</type>
+      </param>
+    </function>
+    <function name="DrawArraysIndirect" extension="Core" obsolete="Use PrimitiveType overload instead">
+      <param name="mode" index="0">
+        <type>ArbDrawIndirect</type>
+      </param>
+    </function>
+    <function name="DrawElementsIndirect" extension="Core" obsolete="Use PrimitiveType overload instead">
+      <param name="mode" index="0">
+        <type>ArbDrawIndirect</type>
+      </param>
+      <param name="type" index="1">
+        <type>ArbDrawIndirect</type>
+      </param>
+    </function>
+    <function name="DrawTransformFeedback" extension="Core" obsolete="Use PrimitiveType overload instead">
+      <param name="mode" index="0">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="DrawTransformFeedbackStream" extension="Core" obsolete="Use PrimitiveType overload instead">
+      <param name="mode" index="0">
+        <type>BeginMode</type>
+      </param>
+    </function>
+    <function name="GetSamplerParameter" extension="Core" obsolete="Use SamplerParameterName overload instead">
+      <param name="pname" index="1">
+        <type>SamplerParameter</type>
+      </param>
+    </function>
+    <function name="GetSamplerParameterI" extension="Core" obsolete="Use All overload instead">
+      <param name="pname" index="1">
+        <type>ArbSamplerObjects</type>
+      </param>
+    </function>
+    <function name="ProgramParameter" extension="Core" obsolete="Use ProgramParameterName overload instead">
+      <param name="pname" index="1">
+        <type>AssemblyProgramParameterArb</type>
+      </param>
+    </function>
+    <function name="SamplerParameter" extension="Core" obsolete="Use SamplerParameterName overload instead">
+      <param name="pname" index="1">
+        <type>SamplerParameter</type>
+      </param>
+    </function>
+    <function name="SamplerParameterI" extension="Core" obsolete="Use SamplerParameterName overload instead">
+      <param name="pname" index="1">
+        <type>ArbSamplerObjects</type>
+      </param>
+    </function>
+    <function name="StencilFuncSeparate" extension="Core" obsolete="Use StencilFace overload instead">
+      <param name="face" index="0">
+        <type>Version20</type>
+      </param>
+    </function>
+    <function name="VertexAttribLPointer" extension="Core" obsolete="Use VertexAttribDoubleType overload instead">
+      <param name="type" index="2">
+        <type>VertexAttribDPointerType</type>
+      </param>
+    </function>
+    <function name="VertexArrayVertexAttribLOffset" extension="Ext" obsolete="Use ExtDirectStateAccess overload instead">
+      <param name="type" index="4">
+        <type>ExtVertexAttrib64bit</type>
+      </param>
+    </function>
+    <function name="GetVertexAttrib" extension="NV" obsolete="Use NvVertexProgram overload instead">
+      <param name="pname" index="1">
+        <type>NvVertexAttribInteger64bit</type>
+      </param>
+    </function>
 
     <!-- added manually -->
     <function name="BlendFunc" extension="Core" obsolete="Use BlendingFactorSrc overload instead">
@@ -2182,6 +2269,20 @@
       </param>
     </function>
     <function name="BlendFuncSeparatei" extension="Core" obsolete="Use BlendingFactorSrc overload instead">
+      <param name="srcRGB">
+        <type>Version40</type>
+      </param>
+      <param name="dstRGB">
+        <type>Version40</type>
+      </param>
+      <param name="srcAlpha">
+        <type>Version40</type>
+      </param>
+      <param name="dstAlpha">
+        <type>Version40</type>
+      </param>
+    </function>
+    <function name="BlendFuncSeparatei" extension="Core" obsolete="Use BlendingFactorSrc overload instead">
       <param name="dstRGB">
         <type>ArbDrawBuffersBlend</type>
       </param>
@@ -2201,6 +2302,14 @@
       </param>
       <param name="flags">
         <type>uint</type>
+      </param>
+    </function>
+    <function name="FenceSync" extension="Core" obsolete="Use uint overload instead">
+      <param name="condition">
+        <type>ArbSync</type>
+      </param>
+      <param name="flags">
+        <type>int</type>
       </param>
     </function>
     <function name="GetInteger64i_v" extension="Core" obsolete="Use GetIndexedPName overload instead">
