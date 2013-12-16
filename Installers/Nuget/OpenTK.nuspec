@@ -3,8 +3,8 @@
     <metadata>
         <id>OpenTK</id>
         <version>$version$</version>
-        <authors>Stefanos Apostolopoulos</authors>
-        <owners>Stefanos Apostolopoulos</owners>
+        <authors>The Open Toolkit Team</authors>
+        <owners>The Open Toolkit Team</owners>
         <licenseUrl>http://www.opentk.com/project/license</licenseUrl>
         <projectUrl>http://www.opentk.com</projectUrl>
         <iconUrl>file:///./logo.png</iconUrl>
