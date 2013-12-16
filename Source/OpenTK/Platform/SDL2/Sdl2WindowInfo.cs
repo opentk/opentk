@@ -45,6 +45,11 @@ namespace OpenTK.Platform.SDL2
             Parent = parent;
         }
 
+        // For compatibility with whoever thought it would be
+        // a good idea to access internal APIs through reflection
+        // (e.g. MonoGame)
+        public IntPtr WindowHandle { get { return Handle; } set { Handle = value; } }
+
         #region IDisposable implementation
 
         public void Dispose()
