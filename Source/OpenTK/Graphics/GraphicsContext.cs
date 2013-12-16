@@ -48,12 +48,20 @@ namespace OpenTK.Graphics
         // context - we'll not destroy it manually.
         readonly bool IsExternal;
         bool check_errors = true;
+        // Cache for the context handle. We need this for RemoveContext()
+        // in case the user does not call Dispose(). When this happens,
+        // RemoveContext() is called by the finalizer, in which case
+        // the IGraphicsContext implementation may already be null
+        // (hence we cannot call implementation.Context to retrieve
+        // the handle.)
+        ContextHandle handle_cached;
 
         static bool share_contexts = true;
         static bool direct_rendering = true;
         readonly static object SyncRoot = new object();        
-        // Maps OS-specific context handles to GraphicsContext weak references.
-        readonly static Dictionary<ContextHandle, WeakReference> available_contexts = new Dictionary<ContextHandle, WeakReference>();
+        // Maps OS-specific context handles to GraphicsContext instances.
+        readonly static Dictionary<ContextHandle, IGraphicsContext> available_contexts =
+            new Dictionary<ContextHandle, IGraphicsContext>();
 
         #endregion
 
@@ -143,6 +151,7 @@ namespace OpenTK.Graphics
                         }
 
                         implementation = factory.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags);
+                        handle_cached = ((IGraphicsContextInternal)implementation).Context;
                     }
 
                     AddContext(this);
@@ -176,6 +185,7 @@ namespace OpenTK.Graphics
         /// <param name="flags">A bitwise combination of <see cref="GraphicsContextFlags"/> that describe this context.</param>
         /// <exception cref="GraphicsContextException">Occurs if handle is identical to a context already registered with OpenTK.</exception>
         public GraphicsContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, int major, int minor, GraphicsContextFlags flags)
+            : this(handle)
         {
             lock (SyncRoot)
             {
@@ -198,7 +208,6 @@ namespace OpenTK.Graphics
                     }
                 }
 
-                AddContext(this);
                 (this as IGraphicsContextInternal).LoadAll();
             }
         }
@@ -245,13 +254,13 @@ namespace OpenTK.Graphics
             ContextHandle ctx = context.Context;
             if (!available_contexts.ContainsKey(ctx))
             {
-                available_contexts.Add(ctx, new WeakReference(context));
+                available_contexts.Add(ctx, (IGraphicsContext)context);
             }
             else
             {
                 Debug.Print("A GraphicsContext with handle {0} already exists.", ctx);
                 Debug.Print("Did you forget to call Dispose()?");
-                available_contexts[ctx] = new WeakReference(context);
+                available_contexts[ctx] = (IGraphicsContext)context;
             }
         }
 
@@ -273,13 +282,12 @@ namespace OpenTK.Graphics
             if (GraphicsContext.ShareContexts)
             {
                 // A small hack to create a shared context with the first available context.
-                foreach (WeakReference r in GraphicsContext.available_contexts.Values)
+                foreach (IGraphicsContext target in GraphicsContext.available_contexts.Values)
                 {
                     // Fix for bug 1874: if a GraphicsContext gets finalized
                     // (but not disposed), it won't be removed from available_contexts
                     // making this return null even if another valid context exists.
                     // The workaround is to simply ignore null targets.
-                    IGraphicsContext target = r.Target as IGraphicsContext;
                     if (target != null)
                         return target;
                 }
@@ -364,7 +372,7 @@ namespace OpenTK.Graphics
                     {
                         ContextHandle handle = GetCurrentContext();
                         if (handle.Handle != IntPtr.Zero)
-                            return (GraphicsContext)available_contexts[handle].Target;
+                            return (IGraphicsContext)available_contexts[handle];
                     }
                     return null;
                 }
@@ -532,7 +540,14 @@ namespace OpenTK.Graphics
         /// </summary>
         ContextHandle IGraphicsContextInternal.Context
         {
-            get { return ((IGraphicsContextInternal)implementation).Context; }
+            get
+            {
+                if (implementation != null)
+                {
+                    handle_cached = ((IGraphicsContextInternal)implementation).Context;
+                }
+                return handle_cached;
+            }
         }
 
         /// <summary>
@@ -599,7 +614,7 @@ namespace OpenTK.Graphics
                 // Note: we cannot dispose the implementation
                 // from a different thread. See wglDeleteContext.
                 // This is also known to crash GLX implementations.
-                if (manual && !IsExternal)
+                if (manual)
                 {
                     Debug.Print("Disposing context {0}.", (this as IGraphicsContextInternal).Context.ToString());
                     if (implementation != null)
