@@ -53,6 +53,7 @@ namespace OpenTK.Platform.SDL2
         bool exists;
         bool must_destroy;
         bool disposed;
+        volatile bool is_in_closing_event;
         WindowState window_state = WindowState.Normal;
         WindowState previous_window_state = WindowState.Normal;
         WindowBorder window_border = WindowBorder.Resizable;
@@ -303,7 +304,16 @@ namespace OpenTK.Platform.SDL2
             {
                 case WindowEventID.CLOSE:
                     var close_args = new System.ComponentModel.CancelEventArgs();
-                    window.Closing(window, close_args);
+                    try
+                    {
+                        window.is_in_closing_event = true;
+                        window.Closing(window, close_args);
+                    }
+                    finally
+                    {
+                        window.is_in_closing_event = false;
+                    }
+
                     if (!close_args.Cancel)
                     {
                         window.Closed(window, EventArgs.Empty);
@@ -463,7 +473,7 @@ namespace OpenTK.Platform.SDL2
         {
             lock (sync)
             {
-                if (Exists && !must_destroy)
+                if (Exists && !must_destroy && !is_in_closing_event)
                 {
                     Debug.Print("SDL2 closing window {0}", window.Handle);
 
