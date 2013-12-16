@@ -121,7 +121,7 @@ namespace OpenTK.Platform
         {
             return default_implementation.CreateGraphicsMode();
         }
-#if !MOBILE
+#if !IPHONE
         public OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
         {
             return default_implementation.CreateKeyboardDriver();

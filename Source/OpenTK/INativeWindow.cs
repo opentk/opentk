@@ -129,17 +129,18 @@ namespace OpenTK
         /// </summary>
         Size ClientSize { get; set; }
 
-#if !IPHONE && !MOBILE
+#if !IPHONE
         /// <summary>
         /// This property is deprecated and should not be used.
         /// </summary>
         [Obsolete]
         OpenTK.Input.IInputDriver InputDriver { get; }
-
+#if !MOBILE
         /// <summary>
         /// Gets or sets a value, indicating whether the mouse cursor is visible.
         /// </summary>
         bool CursorVisible { get; set; }
+#endif
 #endif
 
 //        /// <summary>
@@ -253,6 +254,9 @@ namespace OpenTK
         /// </summary>
         event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown;
 
+#endif
+#if !IPHONE
+
         /// <summary>
         /// Occurs whenever the mouse cursor leaves the window <see cref="Bounds"/>.
         /// </summary>
@@ -262,18 +266,6 @@ namespace OpenTK
         /// Occurs whenever the mouse cursor enters the window <see cref="Bounds"/>.
         /// </summary>
         event EventHandler<EventArgs> MouseEnter;
-
-        //event EventHandler<MouseEventArgs> MouseMove;
-        //event EventHandler<MouseEventArgs> MouseWheel; 
-        //event EventHandler<MouseEventArgs> MouseDown;
-        //event EventHandler<MouseEventArgs> MouseUp;
-        //event EventHandler<MouseEventArgs> MouseClick;
-        //event EventHandler<MouseEventArgs> MouseDoubleClick;
-
-        //event EventHandler<DragEventArgs> DragDrop;
-        //event EventHandler<DragEventArgs> DragEnter;
-        //event EventHandler<DragEventArgs> DragOver;
-        //event EventHandler<EventArgs> DragLeave;
 #endif
     }
 }

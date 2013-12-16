@@ -326,7 +326,8 @@ namespace OpenTK
         }
 
         #endregion
-
+#endif
+#if !IPHONE
         #region InputDriver
 
         /// <summary>

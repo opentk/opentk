@@ -47,7 +47,7 @@ namespace OpenTK.Platform
         
         IGraphicsMode CreateGraphicsMode();
         
-#if !MOBILE
+#if !IPHONE
         OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver();
 
         OpenTK.Input.IMouseDriver2 CreateMouseDriver();
