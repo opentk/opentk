@@ -145,7 +145,57 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Marshals a string array to unmanaged memory by calling
+        /// Marshal a <c>System.String</c> to unmanaged memory.
+        /// The resulting string is encoded in UTF-8 and must be freed
+        /// with <c>FreeStringPtr</c>.
+        /// </summary>
+        /// <param name="str">The <c>System.String</c> to marshal.</param>
+        /// <returns>
+        /// An unmanaged pointer containing the marshalled string.
+        /// This pointer must be freed with <c>FreeStringPtr</c>
+        /// </returns>
+        protected static IntPtr MarshalStringToPtr(string str)
+        {
+            if (String.IsNullOrEmpty(str))
+            {
+                return IntPtr.Zero;
+            }
+
+            // Allocate a buffer big enough to hold the marshalled string.
+            // We use GetMaxByteCount() as it is faster than GetByteCount().
+            // The downside is that it may allocate up to 3x more memory than
+            // strictly necessary.
+            int max_count = Encoding.UTF8.GetMaxByteCount(str.Length) + 1;
+            IntPtr ptr = Marshal.AllocHGlobal(max_count);
+            if (ptr == IntPtr.Zero)
+            {
+                throw new OutOfMemoryException();
+            }
+
+            // Pin the managed string and convert it to UTF-8 using
+            // the pointer overload of System.Encoding.UTF8.GetBytes().
+            unsafe
+            {
+                fixed (char* pstr = str)
+                {
+                    int actual_count = Encoding.UTF8.GetBytes(pstr, str.Length, (byte*)ptr, max_count);
+                    Marshal.WriteByte(ptr, actual_count, 0); // Append '\0' at the end of the string
+                    return ptr;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Frees a marshalled string that allocated by <c>MarshalStringToPtr</c>.
+        /// </summary>
+        /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringToPtr</param>
+        protected static void FreeStringPtr(IntPtr ptr)
+        {
+            Marshal.FreeHGlobal(ptr);
+        }
+
+        /// <summary>
+        /// Marshals a <c>System.String</c> array to unmanaged memory by calling
         /// Marshal.AllocHGlobal for each element.
         /// </summary>
         /// <returns>An unmanaged pointer to an array of null-terminated strings</returns>
@@ -163,12 +213,7 @@ namespace OpenTK
 
                 for (int i = 0; i < str_array.Length; i++)
                 {
-                    IntPtr str = Marshal.StringToHGlobalAnsi(str_array[i]);
-                    if (str == IntPtr.Zero)
-                    {
-                        throw new OutOfMemoryException();
-                    }
-
+                    IntPtr str = MarshalStringToPtr(str_array[i]);
                     Marshal.WriteIntPtr(ptr, i * IntPtr.Size, str);
                 }
             }
@@ -176,10 +221,9 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Frees a string array that has previously been
-        /// marshalled by <c>MarshalStringArrayToPtr</c>.
+        /// Frees a marshalled string that allocated by <c>MarshalStringArrayToPtr</c>.
         /// </summary>
-        /// <param name="ptr">An unmanaged pointer allocated by <c>MarshalStringArrayToPtr</c></param>
+        /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringArrayToPtr</c></param>
         /// <param name="length">The length of the string array.</param>
         protected static void FreeStringArrayPtr(IntPtr ptr, int length)
         {
