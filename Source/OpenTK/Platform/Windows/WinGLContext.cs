@@ -30,9 +30,6 @@ namespace OpenTK.Platform.Windows
         static readonly object LoadLock = new object();
         static readonly object SyncRoot = new object();
 
-        static IntPtr opengl32Handle;
-        const string opengl32Name = "OPENGL32.DLL";
-
         bool vsync_supported;
 
         readonly WinGraphicsMode ModeSelector;
@@ -43,16 +40,6 @@ namespace OpenTK.Platform.Windows
         {
             lock (LoadLock)
             {
-                // Dynamically load opengl32.dll in order to use the extension loading capabilities of Wgl.
-                if (opengl32Handle == IntPtr.Zero)
-                {
-                    opengl32Handle = Functions.LoadLibrary(opengl32Name);
-                    if (opengl32Handle == IntPtr.Zero)
-                        throw new ApplicationException(String.Format("LoadLibrary(\"{0}\") call failed with code {1}",
-                                                                     opengl32Name, Marshal.GetLastWin32Error()));
-                    Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", opengl32Handle));
-                }
-
                 // We need to create a temp context in order to load
                 // wgl extensions (e.g. for multisampling or GL3).
                 // We cannot rely on OpenTK.Platform.Wgl until we
@@ -341,7 +328,7 @@ namespace OpenTK.Platform.Windows
             IntPtr address = Wgl.GetProcAddress(function_string);
             if (!IsValid(address))
             {
-                address = Functions.GetProcAddress(opengl32Handle, function_string);
+                address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
             }
             return address;
         }
@@ -351,7 +338,7 @@ namespace OpenTK.Platform.Windows
             IntPtr address = Wgl.GetProcAddress(function_string);
             if (!IsValid(address))
             {
-                address = Functions.GetProcAddress(opengl32Handle, function_string);
+                address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
             }
             return address;
         }
