@@ -105,17 +105,6 @@ namespace OpenTK.Platform.Windows
 
         #region Private Methods
 
-        #region DescribePixelFormat
-
-        static int DescribePixelFormat(IntPtr hdc, int ipfd, int cjpfd, ref PixelFormatDescriptor pfd)
-        {
-            // Note: DescribePixelFormat found in gdi32 is extremely slow
-            // on nvidia, for some reason.
-            return Wgl.DescribePixelFormat(hdc, ipfd, (uint)cjpfd, out pfd);
-        }
-
-        #endregion
-
         #region GetModesPFD
 
         IEnumerable<GraphicsMode> GetModesPFD(IntPtr device)
@@ -140,8 +129,9 @@ namespace OpenTK.Platform.Windows
             {
                 // Iterate through all accelerated formats first. Afterwards, iterate through non-accelerated formats.
                 // This should fix issue #2224, which causes OpenTK to fail on VMs without hardware acceleration.
+                // Note: DescribePixelFormat found in gdi32 is extremely slow on nvidia, for some reason.
                 int pixel = 0;
-                while (DescribePixelFormat(device, ++pixel, API.PixelFormatDescriptorSize, ref pfd) != 0)
+                while (Wgl.DescribePixelFormat(device, ++pixel, API.PixelFormatDescriptorSize, ref pfd) != 0)
                 {
                     // Ignore non-accelerated formats.
                     if (!generic_allowed && (pfd.Flags & PixelFormatDescriptorFlags.GENERIC_FORMAT) != 0)
