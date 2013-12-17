@@ -131,7 +131,7 @@ namespace OpenTK.Platform.Windows
                 // This should fix issue #2224, which causes OpenTK to fail on VMs without hardware acceleration.
                 // Note: DescribePixelFormat found in gdi32 is extremely slow on nvidia, for some reason.
                 int pixel = 0;
-                while (Wgl.DescribePixelFormat(device, ++pixel, API.PixelFormatDescriptorSize, ref pfd) != 0)
+                while (Functions.DescribePixelFormat(device, ++pixel, API.PixelFormatDescriptorSize, ref pfd) != 0)
                 {
                     // Ignore non-accelerated formats.
                     if (!generic_allowed && (pfd.Flags & PixelFormatDescriptorFlags.GENERIC_FORMAT) != 0)
