@@ -49,11 +49,11 @@ namespace OpenTK.Platform.Windows
         [DllImport(Wgl.Library, EntryPoint = "wglMakeCurrent", ExactSpelling = true, SetLastError = true)]
         internal extern static Boolean MakeCurrent(IntPtr hDc, IntPtr newContext);
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Wgl.Library, EntryPoint = "wglCopyContext", ExactSpelling = true, SetLastError = true)]
+        [DllImport(Wgl.Library, EntryPoint = "wglChoosePixelFormat", ExactSpelling = true, SetLastError = true)]
         internal extern static unsafe int ChoosePixelFormat(IntPtr hDc, ref PixelFormatDescriptor pPfd);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Wgl.Library, EntryPoint = "wglDescribePixelFormat", ExactSpelling = true, SetLastError = true)]
-        internal extern static unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, out PixelFormatDescriptor ppfd);
+        internal extern static unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, int cjpfd, ref PixelFormatDescriptor ppfd);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Wgl.Library, EntryPoint = "wglGetCurrentDC", ExactSpelling = true, SetLastError = true)]
         internal extern static IntPtr GetCurrentDC();
