@@ -34,6 +34,7 @@ namespace OpenTK.Platform.Windows
 {
     using Graphics;
     using OpenTK.Input;
+    using System.Runtime.InteropServices;
 
     class WinFactory : IPlatformFactory 
     {
@@ -41,12 +42,20 @@ namespace OpenTK.Platform.Windows
         readonly object SyncRoot = new object();
         IInputDriver2 inputDriver;
 
+        internal static IntPtr OpenGLHandle { get; private set; }
+        const string OpenGLName = "OPENGL32.DLL";
+
         public WinFactory()
         {
             if (System.Environment.OSVersion.Version.Major <= 4)
             {
                 throw new PlatformNotSupportedException("OpenTK requires Windows XP or higher");
             }
+
+            // Dynamically load opengl32.dll in order to use the extension loading capabilities of Wgl.
+            // Note: opengl32.dll must be loaded before gdi32.dll, otherwise strange failures may occur
+            // (such as "error: 2000" when calling wglSetPixelFormat or slowness/lag on specific GPUs).
+            LoadOpenGL();
 
             if (System.Environment.OSVersion.Version.Major >= 6)
             {
@@ -58,6 +67,17 @@ namespace OpenTK.Platform.Windows
                     Debug.Print("SetProcessDPIAware() returned {0}", result);
                 }
             }
+        }
+
+        static void LoadOpenGL()
+        {
+            OpenGLHandle = Functions.LoadLibrary(OpenGLName);
+            if (OpenGLHandle == IntPtr.Zero)
+            {
+                throw new ApplicationException(String.Format("LoadLibrary(\"{0}\") call failed with code {1}",
+                    OpenGLName, Marshal.GetLastWin32Error()));
+            }
+            Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", OpenGLHandle));
         }
 
         #region IPlatformFactory Members
