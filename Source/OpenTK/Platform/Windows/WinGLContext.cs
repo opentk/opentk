@@ -389,13 +389,13 @@ namespace OpenTK.Platform.Windows
             }
 
             PixelFormatDescriptor pfd = new PixelFormatDescriptor();
-            Functions.DescribePixelFormat(
+            Wgl.DescribePixelFormat(
                 window.DeviceContext, (int)mode.Index.Value,
                 API.PixelFormatDescriptorSize, ref pfd);
             
             Debug.WriteLine(mode.Index.ToString());
             
-            if (!Functions.SetPixelFormat(window.DeviceContext, (int)mode.Index.Value, ref pfd))
+            if (!Wgl.SetPixelFormat(window.DeviceContext, (int)mode.Index.Value, ref pfd))
             {
                 throw new GraphicsContextException(String.Format(
                     "Requested GraphicsMode not available. SetPixelFormat error: {0}",
