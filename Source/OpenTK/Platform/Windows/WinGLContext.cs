@@ -29,6 +29,7 @@ namespace OpenTK.Platform.Windows
     {
         static readonly object LoadLock = new object();
 
+        IntPtr device_context;
         bool vsync_supported;
 
         readonly WinGraphicsMode ModeSelector;
@@ -210,7 +211,7 @@ namespace OpenTK.Platform.Windows
             // side-effects (i.e. the old contexts can still be handled
             // using the new entry points.)
             // Sigh...
-            Wgl.MakeCurrent(window.DeviceContext, Handle.Handle);
+            MakeCurrent(window);
             Wgl.LoadAll();
 
             if (sharedContext != null)
@@ -284,9 +285,13 @@ namespace OpenTK.Platform.Windows
                     success = Wgl.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
                 }
 
+                device_context = wnd.DeviceContext;
+
                 if (!success)
+                {
                     throw new GraphicsContextException(String.Format(
                         "Failed to make context {0} current. Error: {1}", this, Marshal.GetLastWin32Error()));
+                }
             }
         }
 
@@ -435,10 +440,9 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                return Wgl.GetCurrentDC();
+                return device_context;
             }
         }
-
 
         #endregion
 
