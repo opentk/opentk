@@ -92,6 +92,42 @@ namespace OpenTK.Platform.SDL2
                         case EventType.MOUSEWHEEL:
                             driver.mouse_driver.ProcessWheelEvent(ev.Wheel);
                             break;
+
+                        case EventType.JOYDEVICEADDED:
+                        case EventType.JOYDEVICEREMOVED:
+                            driver.joystick_driver.ProcessJoystickEvent(ev.JoyDevice);
+                            break;
+
+                        case EventType.JOYAXISMOTION:
+                            driver.joystick_driver.ProcessJoystickEvent(ev.JoyAxis);
+                            break;
+
+                        case EventType.JOYBALLMOTION:
+                            driver.joystick_driver.ProcessJoystickEvent(ev.JoyBall);
+                            break;
+
+                        case EventType.JOYBUTTONDOWN:
+                        case EventType.JOYBUTTONUP:
+                            driver.joystick_driver.ProcessJoystickEvent(ev.JoyButton);
+                            break;
+
+                        case EventType.JOYHATMOTION:
+                            driver.joystick_driver.ProcessJoystickEvent(ev.JoyHat);
+                            break;
+
+                        case EventType.CONTROLLERDEVICEADDED:
+                        case EventType.CONTROLLERDEVICEREMOVED:
+                            driver.joystick_driver.ProcessControllerEvent(ev.ControllerDevice);
+                            break;
+
+                        case EventType.CONTROLLERAXISMOTION:
+                            driver.joystick_driver.ProcessControllerEvent(ev.ControllerAxis);
+                            break;
+
+                        case EventType.CONTROLLERBUTTONDOWN:
+                        case EventType.CONTROLLERBUTTONUP:
+                            driver.joystick_driver.ProcessControllerEvent(ev.ControllerButton);
+                            break;
                     }
                 }
             }
@@ -172,7 +208,7 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                throw new NotImplementedException();
+                return joystick_driver;
             }
         }
 
