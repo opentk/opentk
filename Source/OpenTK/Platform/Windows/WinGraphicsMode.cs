@@ -155,6 +155,11 @@ namespace OpenTK.Platform.Windows
 
         #region GetModesARB
 
+        // Queries pixel formats through the WGL_ARB_pixel_format extension
+        // This method only returns accelerated formats. If no format offers
+        // hardware acceleration (e.g. we are running in a VM or in a remote desktop
+        // connection), this method will return 0 formats and we will fall back to
+        // GetModesPFD.
         IEnumerable<GraphicsMode> GetModesARB(IntPtr device)
         {
             // See http://www.opengl.org/registry/specs/ARB/wgl_pixel_format.txt 
@@ -166,6 +171,10 @@ namespace OpenTK.Platform.Windows
                 yield break;
             }
 
+            // Define the list of attributes we are interested in.
+            // We will use  each available pixel format for these
+            // attributes using GetPixelFormatAttrib.
+            // The results will be stored in the 'values' array below.
             int[] attribs = new int[]
             {
                 (int)WGL_ARB_pixel_format.AccelerationArb,
@@ -193,46 +202,41 @@ namespace OpenTK.Platform.Windows
                 0
             };
 
+            // Allocate storage for the results of GetPixelFormatAttrib queries
             int[] values = new int[attribs.Length];
 
-            int[] attribs_values = new int[]
-            {
-                (int)WGL_ARB_pixel_format.AccelerationArb,
-                (int)WGL_ARB_pixel_format.FullAccelerationArb,
-                (int)WGL_ARB_pixel_format.SupportOpenglArb, 1,
-                (int)WGL_ARB_pixel_format.DrawToWindowArb, 1,
-                0, 0
-            };
-
-            int[] num_formats = new int[1];
             // Get the number of available formats
-            if (Wgl.Arb.ChoosePixelFormat(device, attribs_values, null, 0, null, num_formats))
+            int num_formats;
+            int num_formats_attrib = (int)WGL_ARB_pixel_format.NumberPixelFormatsArb;
+            if (Wgl.Arb.GetPixelFormatAttrib(device, 0, 0, 1, ref num_formats_attrib, out num_formats))
             {
-                // Create an array big enough to hold all available formats and get those formats
-                int[] pixel = new int[num_formats[0]];
-
-                if (Wgl.Arb.ChoosePixelFormat(device, attribs_values, null, pixel.Length, pixel, num_formats))
+                for (int p = 1; p < num_formats; p++)
                 {
-                    foreach (int p in pixel)
+                    // Get the format attributes for this pixel format
+                    if (!Wgl.Arb.GetPixelFormatAttrib(device, p, 0, attribs.Length - 1, attribs, values))
                     {
-                        // Find out what we really got as a format:
-                        if (!Wgl.Arb.GetPixelFormatAttrib(device, p, 0, attribs.Length - 1, attribs, values))
-                        {
-                            Debug.Print("[Warning] Failed to detect attributes for PixelFormat:{0}.", p);
-                            continue;
-                        }
-
-                        GraphicsMode mode = new GraphicsMode(new IntPtr(p),
-                            new ColorFormat(values[1], values[2], values[3], values[4]),
-                            values[6],
-                            values[7],
-                            values[8] != 0 ? values[9] : 0,
-                            new ColorFormat(values[10], values[11], values[12], values[13]),
-                            values[15] == 1 ? 2 : 1,
-                            values[16] == 1 ? true : false);
-
-                        yield return mode;
+                        Debug.Print("[Warning] Failed to detect attributes for PixelFormat:{0}.", p);
+                        continue;
                     }
+
+                    // Skip formats that don't offer full hardware acceleration
+                    WGL_ARB_pixel_format acceleration = (WGL_ARB_pixel_format)attribs[0];
+                    if (acceleration != WGL_ARB_pixel_format.FullAccelerationArb)
+                    {
+                        continue;
+                    }
+
+                    // Construct a new GraphicsMode to describe this format
+                    GraphicsMode mode = new GraphicsMode(new IntPtr(p),
+                        new ColorFormat(values[1], values[2], values[3], values[4]),
+                        values[6],
+                        values[7],
+                        values[8] != 0 ? values[9] : 0,
+                        new ColorFormat(values[10], values[11], values[12], values[13]),
+                        values[15] == 1 ? 2 : 1,
+                        values[16] == 1 ? true : false);
+
+                    yield return mode;
                 }
             }
         }
