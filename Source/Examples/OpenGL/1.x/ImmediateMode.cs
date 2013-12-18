@@ -34,7 +34,7 @@ namespace Examples.Tutorial
         #region --- Constructor ---
 
         public T03_Immediate_Mode_Cube()
-            : base(800, 600, new GraphicsMode(16, 16))
+            : base(800, 600)
         { }
 
         #endregion
