@@ -500,6 +500,53 @@ namespace OpenTK.Platform.SDL2
         LASTEVENT = 0xFFFF
     }
 
+    enum GameControllerAxis : byte
+    {
+        Invalid = 0xff,
+        LeftX = 0,
+        LeftY,
+        RightX,
+        RightY,
+        TriggerLeft,
+        TriggerRight,
+        Max
+    }
+
+    enum GameControllerButton : byte
+    {
+        INVALID = 0xff,
+        A = 0,
+        B,
+        X,
+        Y,
+        BACK,
+        GUIDE,
+        START,
+        LEFTSTICK,
+        RIGHTSTICK,
+        LEFTSHOULDER,
+        RIGHTSHOULDER,
+        DPAD_UP,
+        DPAD_DOWN,
+        DPAD_LEFT,
+        DPAD_RIGHT,
+        Max
+    }
+
+    [Flags]
+    enum HatPosition : byte
+    {
+        Centered = 0x00,
+        Up = 0x01,
+        Right = 0x02,
+        Down = 0x03,
+        Left = 0x04,
+        RightUp = Right | Up,
+        RightDown = Right | Down,
+        LeftUp = Left | Up,
+        LeftDown = Left | Down
+    }
+
     enum Keycode
     {
         UNKNOWN = 0,
@@ -1079,6 +1126,41 @@ namespace OpenTK.Platform.SDL2
 
     #region Structs
 
+    struct ControllerAxisEvent
+    {
+        public EventType Type;
+        public uint Timestamp;
+        public int Which;
+        public GameControllerAxis Axis;
+        byte padding1;
+        byte padding2;
+        byte padding3;
+        public short Value;
+        ushort padding4;
+    }
+
+    struct ControllerButtonEvent
+    {
+        public EventType Type;
+        public uint Timestamp;
+        public int Which;
+        public GameControllerButton Button;
+        public State State;
+        byte padding1;
+        byte padding2;
+    }
+
+    struct ControllerDeviceEvent
+    {
+        public EventType Type;
+        public uint Timestamp;
+
+        /// <summary>
+        /// The joystick device index for the ADDED event, instance id for the REMOVED or REMAPPED event
+        /// </summary>
+        public int Which;
+    }
+
     struct DisplayMode
     {
         public uint Format;
@@ -1109,21 +1191,21 @@ namespace OpenTK.Platform.SDL2
         public MouseWheelEvent Wheel;
         [FieldOffset(0)]
         public JoyAxisEvent JoyAxis;
+        [FieldOffset(0)]
+        public JoyBallEvent JoyBall;
+        [FieldOffset(0)]
+        public JoyHatEvent JoyHat;
+        [FieldOffset(0)]
+        public JoyButtonEvent JoyButton;
+        [FieldOffset(0)]
+        public JoyDeviceEvent JoyDevice;
+        [FieldOffset(0)]
+        public ControllerAxisEvent ControllerAxis;
+        [FieldOffset(0)]
+        public ControllerButtonEvent ControllerButton;
+        [FieldOffset(0)]
+        public ControllerDeviceEvent ControllerDevice;
 #if false
-        [FieldOffset(0)]
-        public JoyBallEvent jball;
-        [FieldOffset(0)]
-        public JoyHatEvent jhat;
-        [FieldOffset(0)]
-        public JoyButtonEvent jbutton;
-        [FieldOffset(0)]
-        public JoyDeviceEvent jdevice;
-        [FieldOffset(0)]
-        public ControllerAxisEvent caxis;
-        [FieldOffset(0)]
-        public ControllerButtonEvent cbutton;
-        [FieldOffset(0)]
-        public ControllerDeviceEvent cdevice;
         [FieldOffset(0)]
         public QuitEvent quit;
         [FieldOffset(0)]
@@ -1152,6 +1234,48 @@ namespace OpenTK.Platform.SDL2
         byte padding3;
         public Int16 Value;
         UInt16 padding4;
+    }
+
+    struct JoyBallEvent
+    {
+        public EventType Type;
+        public uint Timestamp;
+        public int Which;
+        public byte Ball;
+        byte padding1;
+        byte padding2;
+        byte padding3;
+        public short Xrel;
+        public short Yrel;
+    }
+
+    struct JoyButtonEvent
+    {
+        public EventType Type;
+        public uint Timestamp;
+        public int Which;
+        public byte Button;
+        public State State;
+        byte padding1;
+        byte padding2;
+    }
+
+    struct JoyDeviceEvent
+    {
+        public EventType Type;
+        public uint Timestamp;
+        public int Which;
+    }
+
+    struct JoyHatEvent
+    {
+        public EventType Type;
+        public uint Timestamp;
+        public int Which;
+        public byte Hat;
+        public HatPosition Value;
+        byte padding1;
+        byte padding2;
     }
 
     struct KeyboardEvent
