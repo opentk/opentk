@@ -23,8 +23,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-using System.Runtime.InteropServices;
-
 
 #endregion
 
@@ -119,6 +117,49 @@ namespace OpenTK.Platform.SDL2
         public static extern void FreeSurface(IntPtr surface);
 
         [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerName", ExactSpelling = true)]
+        static extern IntPtr GameControllerNameInternal(IntPtr gamecontroller);
+
+        /// <summary>
+        /// Return the name for an openend game controller instance.
+        /// </summary>
+        /// <returns>The name of the game controller name.</returns>
+        /// <param name="gamecontroller">Pointer to a game controller instance returned by <c>GameControllerOpen</c>.</param>
+        public static string GameControllerName(IntPtr gamecontroller)
+        {
+            unsafe
+            {
+                return new string((sbyte*)GameControllerNameInternal(gamecontroller));
+            }
+        }
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetAxis", ExactSpelling = true)]
+        public static extern short GameControllerGetAxis(IntPtr gamecontroller, GameControllerAxis axis);
+
+        /// <summary>>
+        /// Gets the current state of a button on a game controller.
+        /// </summary>
+        /// <param name="gamecontroller">A game controller handle previously opened with <c>GameControllerOpen</c>.</param>
+        /// <param name="button">A zero-based <c>GameControllerButton</c> value.</param>
+        /// <returns><c>true</c> if the specified button is pressed; <c>false</c> otherwise.</returns>
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetButton", ExactSpelling = true)]
+        public static extern bool GameControllerGetButton(IntPtr gamecontroller, GameControllerButton button);
+
+        /// <summary>
+        /// Opens a game controller for use.
+        /// </summary>
+        /// <param name="joystick_index">
+        /// A zero-based index for the game controller.
+        /// This index is the value which will identify this controller in future controller events.
+        /// </param>
+        /// <returns>A handle to the game controller instance, or IntPtr.Zero in case of error.</returns>
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerOpen", ExactSpelling = true)]
+        public static extern IntPtr GameControllerOpen(int joystick_index);
+
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetCurrentDisplayMode", ExactSpelling = true)]
         public static extern int GetCurrentDisplayMode(int displayIndex, out DisplayMode mode);
 
@@ -191,6 +232,15 @@ namespace OpenTK.Platform.SDL2
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_Init", ExactSpelling = true)]
         public static extern int Init(SystemFlags flags);
+
+        /// <summary>
+        /// Determines if the specified joystick is supported by the GameController API.
+        /// </summary>
+        /// <returns><c>true</c> if joystick_index is supported by the GameController API; <c>false</c> otherwise.</returns>
+        /// <param name="joystick_index">The index of the joystick to check.</param>
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_IsGameController", ExactSpelling = true)]
+        public static extern bool IsGameController(int joystick_index);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickClose", ExactSpelling = true)]
