@@ -1,10 +1,11 @@
+// #region License
 //
-// GamePadAxis.cs
+// GamePadCapabilities.cs
 //
 // Author:
-//       robert <${AuthorEmail}>
+//       Stefanos A. <stapostol@gmail.com>
 //
-// Copyright (c) 2012 robert
+// Copyright (c) 2006-2013 Stefanos Apostolopoulos
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,32 +24,44 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+//
+// #endregion
+
 using System;
 
 namespace OpenTK.Input
 {
-	public enum GamePadAxis
+
+    public struct GamePadCapabilities
     {
-        /// <summary>The first axis of the gamepad.</summary>
-        Axis0 = 0,
-        /// <summary>The second axis of the gamepad.</summary>
-        Axis1,
-        /// <summary>The third axis of the gamepad.</summary>
-        Axis2,
-        /// <summary>The fourth axis of the gamepad.</summary>
-        Axis3,
-        /// <summary>The fifth axis of the gamepad.</summary>
-        Axis4,
-        /// <summary>The sixth axis of the gamepad.</summary>
-        Axis5,
-        /// <summary>The seventh axis of the gamepad.</summary>
-        Axis6,
-        /// <summary>The eighth axis of the gamepad.</summary>
-        Axis7,
-        /// <summary>The ninth axis of the gamepad.</summary>
-        Axis8,
-        /// <summary>The tenth axis of the gamepad.</summary>
-        Axis9,
-	}
+        byte axis_count;
+        byte button_count;
+        byte dpad_count;
+        byte trackball_count;
+
+        public int AxisCount
+        {
+            get { return axis_count; }
+            internal set { axis_count = (byte)value; }
+        }
+
+        public int ButtonCount
+        {
+            get { return button_count; }
+            internal set { button_count = (byte)value; }
+        }
+
+        public int DPadCount
+        {
+            get { return dpad_count; }
+            internal set { dpad_count = (byte)value; }
+        }
+
+        public int TrackballCount
+        {
+            get { return trackball_count; }
+            internal set { trackball_count = (byte)value; }
+        }
+    }
 }
 

@@ -30,17 +30,39 @@ using System;
 namespace OpenTK.Input
 {
     /// <summary>
-    /// Provides access to GamePad devices. Note: this API is not implemented yet.
+    /// Provides access to GamePad devices.
     /// </summary>
     public class GamePad
     {
-        #region Constructors
+        internal const int MaxAxisCount = 10;
+        internal const int MaxButtonCount = 16; // if this grows over 32 then GamePadState.buttons must be modified
+        internal const int MaxDPadCount = 2;
 
-        static GamePad()
+        static readonly IGamePadDriver driver =
+            Platform.Factory.Default.CreateGamePadDriver();
+
+        /// <summary>
+        /// Retrieves a <c>GamePadCapabilities</c> structure describing the
+        /// capabilities of a gamepad device.
+        /// </summary>
+        /// <param name="index">The zero-based index of a gamepad device.</param>
+        /// <returns>A <c>GamePadCapabilities</c> structure describing the capabilities of the gamepad device.</returns>
+        public static GamePadCapabilities GetCapabilities(int index)
         {
-            throw new NotImplementedException();
+            if (index < 0)
+                throw new IndexOutOfRangeException();
+
+            return driver.GetCapabilities(index);
         }
 
-        #endregion
+        /// <summary>
+        /// Retrieves the <c>GamePadState</c> for the specified gamepad device.
+        /// </summary>
+        /// <param name="index">The zero-based index of a gamepad device.</param>
+        /// <returns>A <c>GamePadState</c> structure describing the state of the gamepad device.</returns>
+        public static GamePadState GetState(int index)
+        {
+            return driver.GetState(index);
+        }
     }
 }

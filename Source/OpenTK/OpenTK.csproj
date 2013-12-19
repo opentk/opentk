@@ -738,7 +738,6 @@
     </EmbeddedResource>
     <Compile Include="Platform\MacOS\HIDInput.cs" />
     <Compile Include="IntPtrEqualityComparer.cs" />
-    <Compile Include="Input\GamePadButton.cs" />
     <Compile Include="Input\GamePadAxis.cs" />
     <Compile Include="Platform\SDL2\Sdl2DisplayDeviceDriver.cs" />
     <Compile Include="Platform\SDL2\Sdl2Factory.cs" />
@@ -777,6 +776,10 @@
     <Compile Include="SlotAttribute.cs" />
     <Compile Include="RewrittenAttribute.cs" />
     <Compile Include="Graphics\OpenGL\GLObsolete.cs" />
+    <Compile Include="Input\GamePadCapabilities.cs" />
+    <Compile Include="Input\GamePadDPad.cs" />
+    <Compile Include="Input\GamePadButtons.cs" />
+    <Compile Include="Input\Buttons.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
