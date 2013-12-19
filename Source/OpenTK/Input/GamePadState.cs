@@ -34,6 +34,105 @@ namespace OpenTK.Input
     /// </summary>
     public struct GamePadState /*: IEquatable<GamePadState>*/
     {
+        const float RangeMultiplier = 1.0f / (short.MaxValue + 1);
 
+        Buttons buttons;
+        unsafe fixed short axes[GamePad.MaxAxisCount];
+        bool is_connected;
+
+        #region Public Members
+
+        public float GetAxis(GamePadAxis axis)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GamePadButtons Buttons
+        {
+            get { return new GamePadButtons(buttons); }
+        }
+
+        public GamePadDPad DPad
+        {
+            get { return new GamePadDPad(buttons); }
+        }
+
+        public bool IsConnected
+        {
+            get { return is_connected; }
+        }
+
+        #endregion
+
+        #region Internal Members
+
+        internal void SetAxis(GamePadAxis axis, short value)
+        {
+            if (IsAxisValid(axis))
+            {
+                int index = (int)axis;
+                unsafe
+                {
+                    fixed (short *paxes = axes)
+                    {
+                        *(paxes + index) = value;
+                    }
+                }
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("axis");
+            }
+        }
+
+        internal void SetButton(Buttons button, bool pressed)
+        {
+            if (IsButtonValid(button))
+            {
+                int index = (int)button;
+
+                Buttons mask = (Buttons)(1 << index);
+                if (pressed)
+                {
+                    buttons |= mask;
+                }
+                else
+                {
+                    buttons &= ~mask;
+                }
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("button");
+            }
+        }
+
+        internal void SetConnected(bool connected)
+        {
+            is_connected = connected;
+        }
+
+        #endregion
+
+        #region Private Members
+
+        bool IsAxisValid(GamePadAxis axis)
+        {
+            int index = (int)axis;
+            return index >= 0 && index < GamePad.MaxAxisCount;
+        }
+
+        bool IsButtonValid(Buttons button)
+        {
+            int index = (int)button;
+            return index >= 0 && index < GamePad.MaxButtonCount;
+        }
+
+        bool IsDPadValid(int index)
+        {
+            return index >= 0 && index < GamePad.MaxDPadCount;
+        }
+
+        #endregion
     }
 }
