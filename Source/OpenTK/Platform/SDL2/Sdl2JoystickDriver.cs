@@ -34,18 +34,32 @@ namespace OpenTK.Platform.SDL2
 {
     class Sdl2JoystickDriver : IJoystickDriver, IGamePadDriver, IDisposable
     {
+        const float RangeMultiplier =  1.0f / 32768.0f;
+
         struct Sdl2JoystickDetails
         {
             public IntPtr Handle { get; set; }
-            public float RangeMultiplier { get { return 1.0f / 32768.0f; } }
             public int HatCount { get; set; }
             public int BallCount { get; set; }
             public bool IsConnected { get; set; }
         }
 
+        class Sdl2GamePad
+        {
+            public IntPtr Handle { get; private set; }
+            public GamePadState State { get; set; }
+
+            public Sdl2GamePad(IntPtr handle)
+            {
+                Handle = handle;
+            }
+        }
+
         readonly List<JoystickDevice> joysticks = new List<JoystickDevice>();
+        readonly Dictionary<int, Sdl2GamePad> controllers = new Dictionary<int, Sdl2GamePad>();
+
         IList<JoystickDevice> joysticks_readonly;
-        bool disposed = false;
+        bool disposed;
 
         public Sdl2JoystickDriver()
         {
@@ -92,6 +106,11 @@ namespace OpenTK.Platform.SDL2
         bool IsJoystickValid(int id)
         {
             return id >= 0 && id < joysticks.Count;
+        }
+
+        bool IsControllerValid(int id)
+        {
+            return controllers.ContainsKey(id);
         }
 
         #endregion
@@ -145,7 +164,7 @@ namespace OpenTK.Platform.SDL2
             if (IsJoystickValid(id))
             {
                 JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[id];
-                float value = ev.Value * joystick.Details.RangeMultiplier;
+                float value = ev.Value * RangeMultiplier;
                 joystick.SetAxis((JoystickAxis)ev.Axis, value);
             }
             else
@@ -203,12 +222,27 @@ namespace OpenTK.Platform.SDL2
             switch (ev.Type)
             {
                 case EventType.CONTROLLERDEVICEADDED:
+                    if (SDL.IsGameController(id))
+                    {
+                        IntPtr handle = SDL.GameControllerOpen(id);
+                        if (handle != IntPtr.Zero)
+                        {
+                            Sdl2GamePad pad = new Sdl2GamePad(handle);
+                            pad.State.SetConnected(true);
+                            controllers.Add(id, pad);
+                        }
+                    }
                     break;
 
                 case EventType.CONTROLLERDEVICEREMOVED:
+                    if (IsControllerValid(id))
+                    {
+                        controllers[id].State.SetConnected(false);
+                    }
                     break;
 
                 case EventType.CONTROLLERDEVICEREMAPPED:
+                    // Todo: what should we do in this case?
                     break;
             }
          }
@@ -216,15 +250,27 @@ namespace OpenTK.Platform.SDL2
         public void ProcessControllerEvent(ControllerAxisEvent ev)
         {
             int id = ev.Which;
-
-
+            if (IsControllerValid(id))
+            {
+                controllers[id].State.SetAxis((GamePadAxis)ev.Axis, ev.Value);
+            }
+            else
+            {
+                Debug.Print("[SDL2] Invalid game controller handle {0} in {1}", id, ev.Type);
+            }
         }
 
         public void ProcessControllerEvent(ControllerButtonEvent ev)
         {
             int id = ev.Which;
-
-
+            if (IsControllerValid(id))
+            {
+                controllers[id].State.SetButton((Buttons)ev.Button, ev.State == State.Pressed);
+            }
+            else
+            {
+                Debug.Print("[SDL2] Invalid game controller handle {0} in {1}", id, ev.Type);
+            }
         }
 
         #endregion
@@ -248,9 +294,9 @@ namespace OpenTK.Platform.SDL2
 
         #region IGamePadDriver Members
 
-        public GamePadState GetState()
+        public GamePadCapabilities GetCapabilities(int index)
         {
-            return new GamePadState();
+            return new GamePadCapabilities();
         }
 
         public GamePadState GetState(int index)
@@ -263,7 +309,7 @@ namespace OpenTK.Platform.SDL2
             return new GamePadState();
         }
 
-        public string GetDeviceName(int index)
+        public string GetName(int index)
         {
             return String.Empty;
         }

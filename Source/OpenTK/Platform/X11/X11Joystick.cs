@@ -259,21 +259,23 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        //HACK implement
-        public GamePadState GetState()
+        #region IGamePadDriver Members
+
+        public GamePadCapabilities GetCapabilities(int index)
         {
             throw new NotImplementedException();
         }
 
         public GamePadState GetState(int index)
         {
-            Poll();
             throw new NotImplementedException();
         }
 
-        public string GetDeviceName(int index)
+        public string GetName(int index)
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

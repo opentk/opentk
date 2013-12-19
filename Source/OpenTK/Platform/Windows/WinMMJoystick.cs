@@ -428,8 +428,9 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        //HACK implement
-        public GamePadState GetState()
+        #region IGamePadDriver Members
+
+        public GamePadCapabilities GetCapabilities(int index)
         {
             throw new NotImplementedException();
         }
@@ -439,9 +440,11 @@ namespace OpenTK.Platform.Windows
             throw new NotImplementedException();
         }
 
-        public string GetDeviceName(int index)
+        public string GetName(int index)
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }
