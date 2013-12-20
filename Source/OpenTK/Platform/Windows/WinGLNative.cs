@@ -257,7 +257,7 @@ namespace OpenTK.Platform.Windows
 
                     if (new_focused_state != Focused)
                         FocusedChanged(this, EventArgs.Empty);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.ENTERMENULOOP:
                 case WindowMessage.ENTERSIZEMOVE:
@@ -269,7 +269,7 @@ namespace OpenTK.Platform.Windows
 
                     if (!CursorVisible)
                         UngrabCursor();
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.EXITMENULOOP:
                 case WindowMessage.EXITSIZEMOVE:
@@ -327,7 +327,7 @@ namespace OpenTK.Platform.Windows
                             }
                         }
                     }
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.STYLECHANGED:
                     unsafe
@@ -347,8 +347,8 @@ namespace OpenTK.Platform.Windows
                     // Ensure cursor remains grabbed
                     if (!CursorVisible)
                         GrabCursor();
-                    
-                    break;
+
+                    return IntPtr.Zero;
 
                 case WindowMessage.SIZE:
                     SizeMessage state = (SizeMessage)wParam.ToInt64();
@@ -373,7 +373,7 @@ namespace OpenTK.Platform.Windows
                             GrabCursor();
                     }
 
-                    break;
+                    return IntPtr.Zero;
 
                 #endregion
 
@@ -386,7 +386,7 @@ namespace OpenTK.Platform.Windows
                         key_press.KeyChar = (char)wParam.ToInt64();
 
                     KeyPress(this, key_press);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.MOUSEMOVE:
                     Point point = new Point(
@@ -403,62 +403,62 @@ namespace OpenTK.Platform.Windows
 
                         MouseEnter(this, EventArgs.Empty);
                     }
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.MOUSELEAVE:
                     mouse_outside_window = true;
                     // Mouse tracking is disabled automatically by the OS
 
                     MouseLeave(this, EventArgs.Empty);
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.MOUSEWHEEL:
                     // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
                     // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
                     mouse.WheelPrecise += ((long)wParam << 32 >> 48) / 120.0f;
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.LBUTTONDOWN:
                     Functions.SetCapture(window.Handle);
                     mouse[MouseButton.Left] = true;
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.MBUTTONDOWN:
                     Functions.SetCapture(window.Handle);
                     mouse[MouseButton.Middle] = true;
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.RBUTTONDOWN:
                     Functions.SetCapture(window.Handle);
                     mouse[MouseButton.Right] = true;
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.XBUTTONDOWN:
                     Functions.SetCapture(window.Handle);
                     mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) !=
                         (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = true;
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.LBUTTONUP:
                     Functions.ReleaseCapture();
                     mouse[MouseButton.Left] = false;
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.MBUTTONUP:
                     Functions.ReleaseCapture();
                     mouse[MouseButton.Middle] = false;
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.RBUTTONUP:
                     Functions.ReleaseCapture();
                     mouse[MouseButton.Right] = false;
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.XBUTTONUP:
                     Functions.ReleaseCapture();
                     mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) !=
                         (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = false;
-                    break;
+                    return IntPtr.Zero;
 
                 // Keyboard events:
                 case WindowMessage.KEYDOWN:
@@ -494,7 +494,7 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.KILLFOCUS:
                     keyboard.ClearKeys();
-                    break;
+                    return IntPtr.Zero;
 
                 #endregion
 
@@ -515,7 +515,7 @@ namespace OpenTK.Platform.Windows
 
                         invisible_since_creation = true;
                     }
-                    break;
+                    return IntPtr.Zero;
 
                 case WindowMessage.CLOSE:
                     System.ComponentModel.CancelEventArgs e = new System.ComponentModel.CancelEventArgs();
@@ -532,18 +532,16 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.DESTROY:
                     exists = false;
-
-                    Functions.UnregisterClass(ClassName, Instance);
-                    window.Dispose();
-                    child_window.Dispose();
-
                     Closed(this, EventArgs.Empty);
+                    return IntPtr.Zero;
 
+                case WindowMessage.GETICON:
                     break;
 
                 #endregion
             }
 
+            Debug.Print(message.ToString());
             return Functions.DefWindowProc(handle, message, wParam, lParam);
         }
 
@@ -854,8 +852,8 @@ namespace OpenTK.Platform.Windows
                     icon = value;
                     if (window.Handle != IntPtr.Zero)
                     {
-                        Functions.SendMessage(window.Handle, WindowMessage.SETICON, (IntPtr)0, icon == null ? IntPtr.Zero : value.Handle);
-                        Functions.SendMessage(window.Handle, WindowMessage.SETICON, (IntPtr)1, icon == null ? IntPtr.Zero : value.Handle);
+                        Functions.PostMessage(window.Handle, WindowMessage.SETICON, (IntPtr)0, icon == null ? IntPtr.Zero : value.Handle);
+                        Functions.PostMessage(window.Handle, WindowMessage.SETICON, (IntPtr)1, icon == null ? IntPtr.Zero : value.Handle);
                     }
                     IconChanged(this, EventArgs.Empty);
                 }
@@ -1207,7 +1205,7 @@ namespace OpenTK.Platform.Windows
         MSG msg;
         public void ProcessEvents()
         {
-            while (Functions.PeekMessage(ref msg, window.Handle, 0, 0, PeekMessageFlags.Remove))
+            while (Functions.PeekMessage(ref msg, IntPtr.Zero, 0, 0, PeekMessageFlags.Remove))
             {
                 Functions.TranslateMessage(ref msg);
                 Functions.DispatchMessage(ref msg);
@@ -1298,8 +1296,14 @@ namespace OpenTK.Platform.Windows
                 {
                     // Safe to clean managed resources
                     DestroyWindow();
+                    Functions.UnregisterClass(ClassName, Instance);
+                    window.Dispose();
+                    child_window.Dispose();
+
                     if (Icon != null)
                         Icon.Dispose();
+                    if (ClassName != IntPtr.Zero)
+                        Marshal.FreeHGlobal(ClassName);
                 }
                 else
                 {
