@@ -4313,6 +4313,8 @@ namespace OpenTK.Platform.Windows
 
     #region --- Callbacks ---
 
+    [SuppressUnmanagedCodeSecurity]
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     internal delegate IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam);
 
     #region Message
