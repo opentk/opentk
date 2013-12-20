@@ -1207,7 +1207,7 @@ namespace OpenTK.Platform.Windows
         MSG msg;
         public void ProcessEvents()
         {
-            while (Functions.PeekMessage(ref msg, window.Handle, 0, 0, PeekMessageFlags.Remove))
+            while (Functions.PeekMessage(ref msg, IntPtr.Zero, 0, 0, PeekMessageFlags.Remove))
             {
                 Functions.TranslateMessage(ref msg);
                 Functions.DispatchMessage(ref msg);
