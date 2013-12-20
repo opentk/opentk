@@ -583,19 +583,6 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region IsIdle
-
-        bool IsIdle
-        {
-            get
-            {
-                MSG message = new MSG();
-                return !Functions.PeekMessage(ref message, window.Handle, 0, 0, 0);
-            }
-        }
-
-        #endregion
-
         #region CreateWindow
 
         IntPtr CreateWindow(int x, int y, int width, int height, string title, GameWindowFlags options, DisplayDevice device, IntPtr parentHandle)
@@ -1217,20 +1204,11 @@ namespace OpenTK.Platform.Windows
 
         #region public void ProcessEvents()
 
-        private int ret;
         MSG msg;
         public void ProcessEvents()
         {
-            while (!IsIdle)
+            while (Functions.PeekMessage(ref msg, window.Handle, 0, 0, PeekMessageFlags.Remove))
             {
-                ret = Functions.GetMessage(ref msg, window.Handle, 0, 0);
-                if (ret == -1)
-                {
-                    throw new PlatformException(String.Format(
-                        "An error happened while processing the message queue. Windows error: {0}",
-                        Marshal.GetLastWin32Error()));
-                }
-
                 Functions.TranslateMessage(ref msg);
                 Functions.DispatchMessage(ref msg);
             }

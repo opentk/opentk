@@ -349,7 +349,7 @@ namespace OpenTK.Platform.Windows
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll"), CLSCompliant(false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, int flags);
+        internal static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, PeekMessageFlags flags);
 
         #endregion
 
@@ -4025,6 +4025,18 @@ namespace OpenTK.Platform.Windows
         BALLOONTIMEOUT = USER + 0x0004,
         BALLOONUSERCLICK = USER + 0x0005
     }        
+
+    #endregion
+
+    #region PeekMessageFlags
+
+    [Flags]
+    enum PeekMessageFlags : uint
+    {
+        NoRemove = 0,
+        Remove = 1,
+        NoYield = 2
+    }
 
     #endregion
 
