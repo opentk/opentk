@@ -98,6 +98,8 @@ namespace OpenTK.Platform.Windows
         public static readonly uint AltLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LMENU, 0);
         public static readonly uint AltRightScanCode = Functions.MapVirtualKey(VirtualKeys.RMENU, 0);
 
+        KeyboardKeyEventArgs key_down = new KeyboardKeyEventArgs();
+        KeyboardKeyEventArgs key_up = new KeyboardKeyEventArgs();
         KeyPressEventArgs key_press = new KeyPressEventArgs((char)0);
 
         int cursor_visible_count = 0;
@@ -485,6 +487,18 @@ namespace OpenTK.Platform.Windows
                     if (is_valid)
                     {
                         keyboard.SetKey(key, (byte)scancode, pressed);
+
+                        if (pressed)
+                        {
+                            key_down.Key = key;
+                            KeyDown(this, key_down);
+                        }
+                        else
+                        {
+                            key_up.Key = key;
+                            KeyUp(this, key_up);
+                        }
+
                     }
 
                     return IntPtr.Zero;
