@@ -191,7 +191,7 @@ namespace OpenTK.Platform.Windows
 
         #region ChoosePixelFormatPFD
 
-        GraphicsMode ChoosePixelFormatPFD(IntPtr Device, GraphicsMode mode, AccelerationType requested_acceleration_type)
+        GraphicsMode ChoosePixelFormatPFD(IntPtr device, GraphicsMode mode, AccelerationType requested_acceleration_type)
         {
             PixelFormatDescriptor pfd = new PixelFormatDescriptor();
             pfd.Size = (short)BlittableValueType<PixelFormatDescriptor>.Stride;
@@ -209,6 +209,10 @@ namespace OpenTK.Platform.Windows
             {
                 pfd.DepthBits = (byte)mode.Depth;
             }
+            else
+            {
+                pfd.Flags |= PixelFormatDescriptorFlags.DEPTH_DONTCARE;
+            }
 
             if (mode.Stencil > 0)
             {
@@ -224,9 +228,13 @@ namespace OpenTK.Platform.Windows
                 pfd.AccumBits = (byte)mode.AccumulatorFormat.BitsPerPixel;
             }
 
-            if (mode.Buffers > 0)
+            if (mode.Buffers > 1)
             {
                 pfd.Flags |= PixelFormatDescriptorFlags.DOUBLEBUFFER;
+            }
+            else if (mode.Buffers == 0)
+            {
+                pfd.Flags |= PixelFormatDescriptorFlags.DOUBLEBUFFER_DONTCARE;
             }
 
             if (mode.Stereo)
@@ -242,7 +250,7 @@ namespace OpenTK.Platform.Windows
             }
 
             GraphicsMode created_mode = null;
-            int pixelformat = Functions.ChoosePixelFormat(Device, ref pfd);
+            int pixelformat = Functions.ChoosePixelFormat(device, ref pfd);
             if (pixelformat > 0)
             {
                 AccelerationType acceleration_type = AccelerationType.ICD;
@@ -260,7 +268,7 @@ namespace OpenTK.Platform.Windows
 
                 if (acceleration_type == requested_acceleration_type)
                 {
-                    created_mode = DescribePixelFormatPFD(ref pfd, pixelformat);
+                    created_mode = DescribePixelFormatPFD(device, ref pfd, pixelformat);
                 }
             }
             return created_mode;
@@ -270,17 +278,22 @@ namespace OpenTK.Platform.Windows
 
         #region DescribePixelFormatPFD
 
-        static GraphicsMode DescribePixelFormatPFD(ref PixelFormatDescriptor pfd, int pixelformat)
+        static GraphicsMode DescribePixelFormatPFD(IntPtr device, ref PixelFormatDescriptor pfd, int pixelformat)
         {
-            return new GraphicsMode(
-                new IntPtr(pixelformat),
-                new ColorFormat(pfd.RedBits, pfd.GreenBits, pfd.BlueBits, pfd.AlphaBits),
-                pfd.DepthBits,
-                pfd.StencilBits,
-                0, // MSAA not supported
-                new ColorFormat(pfd.AccumRedBits, pfd.AccumGreenBits, pfd.AccumBlueBits, pfd.AccumAlphaBits),
-                (pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) != 0 ? 2 : 1,
-                (pfd.Flags & PixelFormatDescriptorFlags.STEREO) != 0);
+            GraphicsMode created_mode = null;
+            if (Functions.DescribePixelFormat(device, pixelformat, pfd.Size, ref pfd) > 0)
+            {
+                created_mode = new GraphicsMode(
+                    new IntPtr(pixelformat),
+                    new ColorFormat(pfd.RedBits, pfd.GreenBits, pfd.BlueBits, pfd.AlphaBits),
+                    pfd.DepthBits,
+                    pfd.StencilBits,
+                    0, // MSAA not supported when using PixelFormatDescriptor
+                    new ColorFormat(pfd.AccumRedBits, pfd.AccumGreenBits, pfd.AccumBlueBits, pfd.AccumAlphaBits),
+                    (pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) != 0 ? 2 : 1,
+                    (pfd.Flags & PixelFormatDescriptorFlags.STEREO) != 0);
+            }
+            return created_mode;
         }
 
         #endregion
