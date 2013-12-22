@@ -31,7 +31,7 @@ using System;
 namespace OpenTK.Input
 {
 
-    public struct GamePadDPad
+    public struct GamePadDPad : IEquatable<GamePadDPad>
     {
         [Flags]
         enum DPadButtons : byte
@@ -43,6 +43,8 @@ namespace OpenTK.Input
         }
 
         DPadButtons buttons;
+
+        #region Public Members
 
         internal GamePadDPad(Buttons state)
         {
@@ -75,6 +77,42 @@ namespace OpenTK.Input
             internal set { SetButton(DPadButtons.Right, value); }
         }
 
+        public static bool operator ==(GamePadDPad left, GamePadDPad right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(GamePadDPad left, GamePadDPad right)
+        {
+            return !left.Equals(right);
+        }
+
+        public override string ToString()
+        {
+            return String.Format(
+                "{{ULDR: {0}{1}{2}{3}}}",
+                IsUp ? "1" : "0",
+                IsLeft ? "1" : "0",
+                IsDown ? "1" : "0",
+                IsRight ? "1" : "0");
+        }
+
+        public override int GetHashCode()
+        {
+            return buttons.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return
+                obj is GamePadDPad &&
+                Equals((GamePadDPad)obj);
+        }
+
+        #endregion
+
+        #region Private Members
+
         void SetButton(DPadButtons button, bool value)
         {
             if (value)
@@ -86,5 +124,16 @@ namespace OpenTK.Input
                 buttons &= ~button;
             }
         }
+
+        #endregion
+
+        #region IEquatable<GamePadDPad> Members
+
+        public bool Equals(GamePadDPad other)
+        {
+            return buttons == other.buttons;
+        }
+
+        #endregion
     }
 }

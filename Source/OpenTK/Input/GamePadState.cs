@@ -32,7 +32,7 @@ namespace OpenTK.Input
     /// <summary>
     /// Encapsulates the state of a GamePad device.
     /// </summary>
-    public struct GamePadState /*: IEquatable<GamePadState>*/
+    public struct GamePadState : IEquatable<GamePadState>
     {
         const float RangeMultiplier = 1.0f / (short.MaxValue + 1);
 
@@ -60,6 +60,36 @@ namespace OpenTK.Input
         public bool IsConnected
         {
             get { return is_connected; }
+        }
+
+        public override string ToString()
+        {
+            return String.Format(
+                "{{Buttons: {0}; DPad: {1}; IsConnected: {2}",
+                Buttons, DPad, IsConnected);
+        }
+
+        public override int GetHashCode()
+        {
+            return Buttons.GetHashCode() ^ DPad.GetHashCode() ^ IsConnected.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return
+                obj is GamePadState &&
+                Equals((GamePadState)obj);
+        }
+
+        #endregion
+
+        #region IEquatable<GamePadState> Members
+        public bool Equals(GamePadState other)
+        {
+            return
+                Buttons == other.Buttons &&
+                DPad == other.DPad &&
+                IsConnected == other.IsConnected;
         }
 
         #endregion
