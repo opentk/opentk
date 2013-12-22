@@ -110,17 +110,17 @@ namespace OpenTK.Input
         public override string ToString()
         {
             return String.Format(
-                "{{ABXYLR: {0}{1}{2}{3}{4}{5}; Back: {6}; BigButton: {7}; LStick: {8}; RStick: {9}}}",
-                A == ButtonState.Pressed ? "1" : "0",
-                B == ButtonState.Pressed ? "1" : "0",
-                X == ButtonState.Pressed ? "1" : "0",
-                Y == ButtonState.Pressed ? "1" : "0",
-                LeftShoulder == ButtonState.Pressed ? "1" : "0",
-                RightShoulder == ButtonState.Pressed ? "1" : "0",
-                Back == ButtonState.Pressed ? "1" : "0",
-                BigButton == ButtonState.Pressed ? "1" : "0",
-                LeftStick == ButtonState.Pressed ? "1" : "0",
-                RightStick == ButtonState.Pressed ? "1" : "0");
+                "{{{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}}}",
+                A == ButtonState.Pressed ? "A" : String.Empty,
+                B == ButtonState.Pressed ? "B" : String.Empty,
+                X == ButtonState.Pressed ? "X" : String.Empty,
+                Y == ButtonState.Pressed ? "Y" : String.Empty,
+                LeftShoulder == ButtonState.Pressed ? "L" : String.Empty,
+                RightShoulder == ButtonState.Pressed ? "R" : String.Empty,
+                Back == ButtonState.Pressed ? " Back" : String.Empty,
+                BigButton == ButtonState.Pressed ? " Big" : String.Empty,
+                LeftStick == ButtonState.Pressed ? " LStick" : String.Empty,
+                RightStick == ButtonState.Pressed ? " RStick" : String.Empty);
         }
 
         public override int GetHashCode()
