@@ -70,7 +70,7 @@ namespace OpenTK.Platform.SDL2
         // Argument for KeyDown and KeyUp events (allocated once to avoid runtime allocations)
         readonly KeyboardKeyEventArgs key_args = new KeyboardKeyEventArgs();
 
-        readonly IInputDriver input_driver = new Sdl2InputDriver();
+        readonly IInputDriver input_driver;
 
         readonly EventFilter EventFilterDelegate_GCUnsafe = FilterEvents;
         readonly IntPtr EventFilterDelegate;
@@ -81,10 +81,13 @@ namespace OpenTK.Platform.SDL2
         static readonly Sdl2KeyMap map = new Sdl2KeyMap();
 
         public Sdl2NativeWindow(int x, int y, int width, int height,
-            string title, GameWindowFlags options, DisplayDevice device)
+            string title, GameWindowFlags options, DisplayDevice device,
+            IInputDriver input_driver)
         {
             lock (sync)
             {
+                this.input_driver = input_driver;
+
                 var bounds = device.Bounds;
                 var flags = TranslateFlags(options);
                 flags |= WindowFlags.OPENGL;

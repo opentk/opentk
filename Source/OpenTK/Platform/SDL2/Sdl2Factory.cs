@@ -34,7 +34,7 @@ namespace OpenTK.Platform.SDL2
 {
     class Sdl2Factory : IPlatformFactory
     {
-        readonly IInputDriver2 InputDriver = new Sdl2InputDriver();
+        readonly Sdl2InputDriver InputDriver = new Sdl2InputDriver();
         bool disposed;
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace OpenTK.Platform.SDL2
 
         public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
-            return new Sdl2NativeWindow(x, y, width, height, title, options, device);
+            return new Sdl2NativeWindow(x, y, width, height, title, options, device, InputDriver);
         }
 
         public IDisplayDeviceDriver CreateDisplayDeviceDriver()
