@@ -239,6 +239,8 @@ namespace Examples.Tests
                     DrawKeyboard(gfx, keyboard, line++);
                     DrawMouse(gfx, mouse, line++);
                     DrawJoysticks(gfx, Joysticks, line++);
+                    
+                    line = DrawGamePads(gfx, line);
                 }
             }
 
@@ -249,7 +251,19 @@ namespace Examples.Tests
                 PixelType.UnsignedByte, data.Scan0);
             TextBitmap.UnlockBits(data);
         }
-        
+
+        int DrawGamePads(Graphics gfx, int line)
+        {
+            DrawString(gfx, "GamePads:", line++);
+            for (int i = 0; i < 4; i++)
+            {
+                GamePadCapabilities caps = GamePad.GetCapabilities(i);
+                GamePadState state = GamePad.GetState(i);
+                DrawString(gfx, caps.ToString(), line++);
+                DrawString(gfx, state.ToString(), line++);
+            }
+            return line;
+        }
 
         protected override void OnLoad(EventArgs e)
         {
