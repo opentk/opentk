@@ -59,6 +59,7 @@ namespace OpenTK.Platform.SDL2
                 driver_handle = new IntPtr(count++);
                 DriverHandles.Add(driver_handle, this);
                 SDL.AddEventWatch(EventFilterDelegate, driver_handle);
+                SDL.InitSubSystem(SystemFlags.JOYSTICK | SystemFlags.GAMECONTROLLER);
             }
         }
 
