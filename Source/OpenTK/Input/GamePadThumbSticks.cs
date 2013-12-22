@@ -1,5 +1,4 @@
-﻿using System;
-// #region License
+﻿// #region License
 //
 // GamePadThumbSticks.cs
 //
@@ -29,8 +28,7 @@
 // #endregion
 
 
-using System.Collections.Generic;
-using System.Text;
+using System;
 
 namespace OpenTK.Input
 {
