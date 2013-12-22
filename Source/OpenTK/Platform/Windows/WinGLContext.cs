@@ -279,13 +279,13 @@ namespace OpenTK.Platform.Windows
                         throw new ArgumentException("window", "Must point to a valid window.");
 
                     success = Wgl.MakeCurrent(wnd.DeviceContext, Handle.Handle);
+                    device_context = wnd.DeviceContext;
                 }
                 else
                 {
                     success = Wgl.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
+                    device_context = IntPtr.Zero;
                 }
-
-                device_context = wnd.DeviceContext;
 
                 if (!success)
                 {
