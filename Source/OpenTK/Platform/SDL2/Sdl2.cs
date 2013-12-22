@@ -233,6 +233,10 @@ namespace OpenTK.Platform.SDL2
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_Init", ExactSpelling = true)]
         public static extern int Init(SystemFlags flags);
 
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_InitSubSystem", ExactSpelling = true)]
+        public static extern int InitSubSystem(SystemFlags flags);
+
         /// <summary>
         /// Determines if the specified joystick is supported by the GameController API.
         /// </summary>
