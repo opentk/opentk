@@ -37,14 +37,17 @@ namespace OpenTK.Input
         const float RangeMultiplier = 1.0f / (short.MaxValue + 1);
 
         Buttons buttons;
-        unsafe fixed short axes[GamePad.MaxAxisCount];
+        short left_stick_x;
+        short left_stick_y;
+        short right_stick_x;
+        short right_stick_y;
         bool is_connected;
 
         #region Public Members
 
-        public float GetAxis(GamePadAxis axis)
+        public GamePadThumbSticks ThumbSticks
         {
-            throw new NotImplementedException();
+            get { return new GamePadThumbSticks(left_stick_x, left_stick_y, right_stick_x, right_stick_y); }
         }
 
         public GamePadButtons Buttons
@@ -65,13 +68,15 @@ namespace OpenTK.Input
         public override string ToString()
         {
             return String.Format(
-                "{{Buttons: {0}; DPad: {1}; IsConnected: {2}",
-                Buttons, DPad, IsConnected);
+                "{{Sticks: {0}; Buttons: {1}; DPad: {2}; IsConnected: {3}",
+                ThumbSticks, Buttons, DPad, IsConnected);
         }
 
         public override int GetHashCode()
         {
-            return Buttons.GetHashCode() ^ DPad.GetHashCode() ^ IsConnected.GetHashCode();
+            return
+                ThumbSticks.GetHashCode() ^ Buttons.GetHashCode() ^
+                DPad.GetHashCode() ^ IsConnected.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -87,6 +92,7 @@ namespace OpenTK.Input
         public bool Equals(GamePadState other)
         {
             return
+                ThumbSticks == other.ThumbSticks &&
                 Buttons == other.Buttons &&
                 DPad == other.DPad &&
                 IsConnected == other.IsConnected;
@@ -98,20 +104,26 @@ namespace OpenTK.Input
 
         internal void SetAxis(GamePadAxis axis, short value)
         {
-            if (IsAxisValid(axis))
+            switch (axis)
             {
-                int index = (int)axis;
-                unsafe
-                {
-                    fixed (short *paxes = axes)
-                    {
-                        *(paxes + index) = value;
-                    }
-                }
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException("axis");
+                case GamePadAxis.LeftX:
+                    left_stick_x = value;
+                    break;
+
+                case GamePadAxis.LeftY:
+                    left_stick_y = value;
+                    break;
+
+                case GamePadAxis.RightX:
+                    right_stick_x = value;
+                    break;
+
+                case GamePadAxis.RightY:
+                    right_stick_x = value;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException("axis");
             }
         }
 
