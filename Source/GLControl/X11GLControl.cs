@@ -76,8 +76,6 @@ namespace OpenTK
                 throw new ArgumentNullException("mode");
             if (control == null)
                 throw new ArgumentNullException("control");
-            if (!mode.Index.HasValue)
-                throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
 
             this.mode = mode;
 
