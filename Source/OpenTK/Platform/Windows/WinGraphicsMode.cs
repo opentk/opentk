@@ -105,18 +105,28 @@ namespace OpenTK.Platform.Windows
                 attributes.Add((int)WGL_ARB_pixel_format.AccelerationArb);
                 attributes.Add((int)WGL_ARB_pixel_format.FullAccelerationArb);
 
-                if (mode.ColorFormat.BitsPerPixel > 0)
+                if (mode.ColorFormat.Red > 0)
                 {
                     attributes.Add((int)WGL_ARB_pixel_format.RedBitsArb);
                     attributes.Add(mode.ColorFormat.Red);
+                }
+
+                if (mode.ColorFormat.Green > 0)
+                {
                     attributes.Add((int)WGL_ARB_pixel_format.GreenBitsArb);
                     attributes.Add(mode.ColorFormat.Green);
+                }
+
+                if (mode.ColorFormat.Blue > 0)
+                {
                     attributes.Add((int)WGL_ARB_pixel_format.BlueBitsArb);
                     attributes.Add(mode.ColorFormat.Blue);
+                }
+
+                if (mode.ColorFormat.Alpha > 0)
+                {
                     attributes.Add((int)WGL_ARB_pixel_format.AlphaBitsArb);
                     attributes.Add(mode.ColorFormat.Alpha);
-                    attributes.Add((int)WGL_ARB_pixel_format.ColorBitsArb);
-                    attributes.Add(mode.ColorFormat.BitsPerPixel);
                 }
 
                 if (mode.Depth > 0)
@@ -131,18 +141,28 @@ namespace OpenTK.Platform.Windows
                     attributes.Add(mode.Stencil);
                 }
 
-                if (mode.AccumulatorFormat.BitsPerPixel > 0)
+                if (mode.AccumulatorFormat.Red > 0)
                 {
                     attributes.Add((int)WGL_ARB_pixel_format.AccumRedBitsArb);
                     attributes.Add(mode.AccumulatorFormat.Red);
+                }
+
+                if (mode.AccumulatorFormat.Green > 0)
+                {
                     attributes.Add((int)WGL_ARB_pixel_format.AccumGreenBitsArb);
                     attributes.Add(mode.AccumulatorFormat.Green);
+                }
+
+                if (mode.AccumulatorFormat.Blue > 0)
+                {
                     attributes.Add((int)WGL_ARB_pixel_format.AccumBlueBitsArb);
                     attributes.Add(mode.AccumulatorFormat.Blue);
+                }
+
+                if (mode.AccumulatorFormat.Alpha > 0)
+                {
                     attributes.Add((int)WGL_ARB_pixel_format.AccumAlphaBitsArb);
                     attributes.Add(mode.AccumulatorFormat.Alpha);
-                    attributes.Add((int)WGL_ARB_pixel_format.AccumBitsArb);
-                    attributes.Add(mode.AccumulatorFormat.BitsPerPixel);
                 }
 
                 if (mode.Samples > 0)
@@ -156,13 +176,11 @@ namespace OpenTK.Platform.Windows
                 if (mode.Buffers > 0)
                 {
                     attributes.Add((int)WGL_ARB_pixel_format.DoubleBufferArb);
-                    attributes.Add(mode.Buffers);
                 }
 
                 if (mode.Stereo)
                 {
                     attributes.Add((int)WGL_ARB_pixel_format.StereoArb);
-                    attributes.Add(1);
                 }
 
                 attributes.Add(0);
@@ -181,7 +199,7 @@ namespace OpenTK.Platform.Windows
             }
             else
             {
-                Debug.Print("[WGL] ChoosePixelFormatARB not supported");
+                Debug.WriteLine("[WGL] ChoosePixelFormatARB not supported on this context");
             }
 
             return created_mode;
@@ -191,94 +209,99 @@ namespace OpenTK.Platform.Windows
 
         #region ChoosePixelFormatPFD
 
-        GraphicsMode ChoosePixelFormatPFD(IntPtr device, GraphicsMode mode, AccelerationType requested_acceleration_type)
+        static bool Compare(int got, int requested, ref int distance)
         {
-            PixelFormatDescriptor pfd = new PixelFormatDescriptor();
-            pfd.Size = (short)BlittableValueType<PixelFormatDescriptor>.Stride;
-
-            if (mode.ColorFormat.BitsPerPixel > 0)
+            if (got < requested)
             {
-                pfd.RedBits = (byte)mode.ColorFormat.Red;
-                pfd.GreenBits = (byte)mode.ColorFormat.Green;
-                pfd.BlueBits = (byte)mode.ColorFormat.Blue;
-                pfd.AlphaBits = (byte)mode.ColorFormat.Alpha;
-                pfd.ColorBits = (byte)mode.ColorFormat.BitsPerPixel;
-            }
-
-            if (mode.Depth > 0)
-            {
-                pfd.DepthBits = (byte)mode.Depth;
+                return false;
             }
             else
             {
-                pfd.Flags |= PixelFormatDescriptorFlags.DEPTH_DONTCARE;
+                distance += got - requested;
+                return true;
             }
+        }
 
-            if (mode.Stencil > 0)
+        static AccelerationType GetAccelerationType(ref PixelFormatDescriptor pfd)
+        {
+            AccelerationType type = AccelerationType.ICD;
+            if ((pfd.Flags & PixelFormatDescriptorFlags.GENERIC_FORMAT) != 0)
             {
-                pfd.StencilBits = (byte)mode.Stencil;
+                if ((pfd.Flags & PixelFormatDescriptorFlags.GENERIC_ACCELERATED) != 0)
+                {
+                    type = AccelerationType.MCD;
+                }
+                else
+                {
+                    type = AccelerationType.None;
+                }
             }
+            return type;
+        }
 
-            if (mode.AccumulatorFormat.BitsPerPixel > 0)
-            {
-                pfd.AccumRedBits = (byte)mode.AccumulatorFormat.Red;
-                pfd.AccumGreenBits = (byte)mode.AccumulatorFormat.Green;
-                pfd.AccumBlueBits = (byte)mode.AccumulatorFormat.Blue;
-                pfd.AccumAlphaBits = (byte)mode.AccumulatorFormat.Alpha;
-                pfd.AccumBits = (byte)mode.AccumulatorFormat.BitsPerPixel;
-            }
-
-            if (mode.Buffers > 1)
-            {
-                pfd.Flags |= PixelFormatDescriptorFlags.DOUBLEBUFFER;
-            }
-            else if (mode.Buffers == 0)
-            {
-                pfd.Flags |= PixelFormatDescriptorFlags.DOUBLEBUFFER_DONTCARE;
-            }
+        GraphicsMode ChoosePixelFormatPFD(IntPtr device, GraphicsMode mode, AccelerationType requested_acceleration_type)
+        {
+            PixelFormatDescriptor pfd = new PixelFormatDescriptor();
+            PixelFormatDescriptorFlags flags = 0;
+            flags |= PixelFormatDescriptorFlags.DRAW_TO_WINDOW;
+            flags |= PixelFormatDescriptorFlags.SUPPORT_OPENGL;
 
             if (mode.Stereo)
             {
-                pfd.Flags |= PixelFormatDescriptorFlags.DRAW_TO_WINDOW;
-                pfd.Flags |= PixelFormatDescriptorFlags.SUPPORT_OPENGL;
+                flags |= PixelFormatDescriptorFlags.STEREO;
             }
-
-            // Make sure we don't turn off Aero on Vista and newer.
-            if (Environment.OSVersion.Version.Major >= 6)
+            if (mode.Buffers > 1)
             {
-                pfd.Flags |= PixelFormatDescriptorFlags.SUPPORT_COMPOSITION;
+                // On Win7 64bit + Nvidia 650M, no pixel format advertises DOUBLEBUFFER.
+                // Adding this check here causes mode selection to fail.
+                // Does not appear to be supported by DescribePixelFormat
+                //flags |= PixelFormatDescriptorFlags.DOUBLEBUFFER;
             }
-
-            GraphicsMode created_mode = null;
-            int pixelformat = Functions.ChoosePixelFormat(device, ref pfd);
-            if (pixelformat > 0)
+            if (System.Environment.OSVersion.Version.Major >= 6)
             {
-                AccelerationType acceleration_type = AccelerationType.ICD;
-                if ((pfd.Flags & PixelFormatDescriptorFlags.GENERIC_FORMAT) != 0)
-                {
-                    if ((pfd.Flags & PixelFormatDescriptorFlags.GENERIC_ACCELERATED) != 0)
-                    {
-                        acceleration_type = AccelerationType.MCD;
-                    }
-                    else
-                    {
-                        acceleration_type = AccelerationType.None;
-                    }
-                }
+                flags |= PixelFormatDescriptorFlags.SUPPORT_COMPOSITION;
+            }
 
-                if (acceleration_type == requested_acceleration_type)
+            int count = Functions.DescribePixelFormat(device, 1, API.PixelFormatDescriptorSize, ref pfd);
+
+            int best = 0;
+            int best_dist = int.MaxValue;
+            for (int index = 1; index <= count; index++)
+            {
+                int dist = 0;
+                bool valid = Functions.DescribePixelFormat(device, index, API.PixelFormatDescriptorSize, ref pfd) != 0;
+                valid &= GetAccelerationType(ref pfd) == requested_acceleration_type;
+                valid &= (pfd.Flags & flags) == flags;
+                valid &= pfd.PixelType == PixelType.RGBA; // indexed modes not currently supported
+                valid &= Compare(pfd.ColorBits, mode.ColorFormat.BitsPerPixel, ref dist);
+                valid &= Compare(pfd.RedBits, mode.ColorFormat.Red, ref dist);
+                valid &= Compare(pfd.GreenBits, mode.ColorFormat.Green, ref dist);
+                valid &= Compare(pfd.BlueBits, mode.ColorFormat.Blue, ref dist);
+                valid &= Compare(pfd.AlphaBits, mode.ColorFormat.Alpha, ref dist);
+                valid &= Compare(pfd.AccumBits, mode.AccumulatorFormat.BitsPerPixel, ref dist);
+                valid &= Compare(pfd.AccumRedBits, mode.AccumulatorFormat.Red, ref dist);
+                valid &= Compare(pfd.AccumGreenBits, mode.AccumulatorFormat.Green, ref dist);
+                valid &= Compare(pfd.AccumBlueBits, mode.AccumulatorFormat.Blue, ref dist);
+                valid &= Compare(pfd.AccumAlphaBits, mode.AccumulatorFormat.Alpha, ref dist);
+                valid &= Compare(pfd.DepthBits, mode.Depth, ref dist);
+                valid &= Compare(pfd.StencilBits, mode.Stencil, ref dist);
+
+                if (valid && dist < best_dist)
                 {
-                    created_mode = DescribePixelFormatPFD(device, ref pfd, pixelformat);
+                    best = index;
+                    best_dist = dist;
                 }
             }
-            return created_mode;
+
+            return DescribePixelFormatPFD(device, ref pfd, best);
         }
 
         #endregion
 
         #region DescribePixelFormatPFD
 
-        static GraphicsMode DescribePixelFormatPFD(IntPtr device, ref PixelFormatDescriptor pfd, int pixelformat)
+        static GraphicsMode DescribePixelFormatPFD(IntPtr device, ref PixelFormatDescriptor pfd,
+            int pixelformat)
         {
             GraphicsMode created_mode = null;
             if (Functions.DescribePixelFormat(device, pixelformat, pfd.Size, ref pfd) > 0)
@@ -345,7 +368,7 @@ namespace OpenTK.Platform.Windows
                 }
 
                 // Skip formats that don't offer full hardware acceleration
-                WGL_ARB_pixel_format acceleration = (WGL_ARB_pixel_format)attribs[0];
+                WGL_ARB_pixel_format acceleration = (WGL_ARB_pixel_format)values[0];
                 if (acceleration == WGL_ARB_pixel_format.FullAccelerationArb)
                 {
                     // Construct a new GraphicsMode to describe this format
