@@ -218,7 +218,10 @@ namespace Examples.Tests
 
                     gfx.Clear(Color.Black);
                     gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-                    
+
+                    DrawString(gfx, GL.GetString(StringName.Vendor), line++);
+                    DrawString(gfx, GL.GetString(StringName.Version), line++);
+                    DrawString(gfx, GL.GetString(StringName.Renderer), line++);
                     DrawString(gfx, Context.GraphicsMode.ToString(), line++);
 
                     DrawString(gfx, String.Format("[1 - 4]: change WindowState (current: {0}).", this.WindowState), line++);
