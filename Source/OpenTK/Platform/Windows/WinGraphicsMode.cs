@@ -104,6 +104,9 @@ namespace OpenTK.Platform.Windows
                 List<int> attributes = new List<int>();
                 attributes.Add((int)WGL_ARB_pixel_format.AccelerationArb);
                 attributes.Add((int)WGL_ARB_pixel_format.FullAccelerationArb);
+                
+                attributes.Add((int)WGL_ARB_pixel_format.DrawToWindowArb);
+                attributes.Add(1);
 
                 if (mode.ColorFormat.Red > 0)
                 {
@@ -176,11 +179,13 @@ namespace OpenTK.Platform.Windows
                 if (mode.Buffers > 0)
                 {
                     attributes.Add((int)WGL_ARB_pixel_format.DoubleBufferArb);
+                    attributes.Add(mode.Buffers > 1 ? 1 : 0);
                 }
 
                 if (mode.Stereo)
                 {
                     attributes.Add((int)WGL_ARB_pixel_format.StereoArb);
+                    attributes.Add(1);
                 }
 
                 attributes.Add(0);
