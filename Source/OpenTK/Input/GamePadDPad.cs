@@ -90,11 +90,11 @@ namespace OpenTK.Input
         public override string ToString()
         {
             return String.Format(
-                "{{ULDR: {0}{1}{2}{3}}}",
-                IsUp ? "1" : "0",
-                IsLeft ? "1" : "0",
-                IsDown ? "1" : "0",
-                IsRight ? "1" : "0");
+                "{{{0}{1}{2}{3}}}",
+                IsUp ? "U" : String.Empty,
+                IsLeft ? "L" : String.Empty,
+                IsDown ? "D" : String.Empty,
+                IsRight ? "R" : String.Empty);
         }
 
         public override int GetHashCode()
