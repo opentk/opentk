@@ -59,7 +59,14 @@ namespace OpenTK.Platform.SDL2
                 driver_handle = new IntPtr(count++);
                 DriverHandles.Add(driver_handle, this);
                 SDL.AddEventWatch(EventFilterDelegate, driver_handle);
-                SDL.InitSubSystem(SystemFlags.JOYSTICK | SystemFlags.GAMECONTROLLER);
+                if (SDL.InitSubSystem(SystemFlags.JOYSTICK) < 0)
+                {
+                    Debug.Print("[SDL2] InputDriver failed to init Joystick subsystem. Error: {0}", SDL.GetError());
+                }
+                if (SDL.InitSubSystem(SystemFlags.GAMECONTROLLER) < 0)
+                {
+                    Debug.Print("[SDL2] InputDriver failed to init GameController subsystem. Error: {0}", SDL.GetError());
+                }
             }
         }
 
