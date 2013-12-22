@@ -119,7 +119,7 @@ namespace OpenTK.Input
                     break;
 
                 case GamePadAxis.RightY:
-                    right_stick_x = value;
+                    right_stick_y = value;
                     break;
 
                 default:
