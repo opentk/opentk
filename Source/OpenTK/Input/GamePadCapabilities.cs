@@ -32,7 +32,7 @@ using System;
 namespace OpenTK.Input
 {
 
-    public struct GamePadCapabilities
+    public struct GamePadCapabilities : IEquatable<GamePadCapabilities>
     {
         byte axis_count;
         byte button_count;
@@ -62,6 +62,50 @@ namespace OpenTK.Input
             get { return trackball_count; }
             internal set { trackball_count = (byte)value; }
         }
+
+        public static bool operator ==(GamePadCapabilities left, GamePadCapabilities right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(GamePadCapabilities left, GamePadCapabilities right)
+        {
+            return !left.Equals(right);
+        }
+
+        public override string ToString()
+        {
+            return String.Format(
+                "{{Axes: {0}; Buttons: {1}; DPads: {2}; Trackballs: {3}}}",
+                AxisCount, ButtonCount, DPadCount, TrackballCount);
+        }
+
+        public override int GetHashCode()
+        {
+            return
+                AxisCount.GetHashCode() ^ ButtonCount.GetHashCode() ^
+                DPadCount.GetHashCode() ^ TrackballCount.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return
+                obj is GamePadCapabilities &&
+                Equals((GamePadCapabilities)obj);
+        }
+
+        #region IEquatable<GamePadCapabilities> Members
+
+        public bool Equals(GamePadCapabilities other)
+        {
+            return
+                AxisCount == other.AxisCount &&
+                ButtonCount == other.ButtonCount &&
+                DPadCount == other.DPadCount &&
+                TrackballCount == other.TrackballCount;
+        }
+
+        #endregion
     }
 }
 

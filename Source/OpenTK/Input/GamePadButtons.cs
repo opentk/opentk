@@ -107,9 +107,37 @@ namespace OpenTK.Input
             return !left.Equals(right);
         }
 
+        public override string ToString()
+        {
+            return String.Format(
+                "{{ABXYLR: {0}{1}{2}{3}{4}{5}; Back: {6}; BigButton: {7}; LStick: {8}; RStick: {9}}}",
+                A == ButtonState.Pressed ? "1" : "0",
+                B == ButtonState.Pressed ? "1" : "0",
+                X == ButtonState.Pressed ? "1" : "0",
+                Y == ButtonState.Pressed ? "1" : "0",
+                LeftShoulder == ButtonState.Pressed ? "1" : "0",
+                RightShoulder == ButtonState.Pressed ? "1" : "0",
+                Back == ButtonState.Pressed ? "1" : "0",
+                BigButton == ButtonState.Pressed ? "1" : "0",
+                LeftStick == ButtonState.Pressed ? "1" : "0",
+                RightStick == ButtonState.Pressed ? "1" : "0");
+        }
+
+        public override int GetHashCode()
+        {
+            return buttons.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return
+                obj is GamePadButtons &&
+                Equals((GamePadButtons)obj);
+        }
+
         #endregion
 
-        #region IEquatable Members
+        #region IEquatable<GamePadButtons> Members
 
         public bool Equals(GamePadButtons other)
         {
