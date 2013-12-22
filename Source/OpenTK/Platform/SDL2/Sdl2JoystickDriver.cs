@@ -55,7 +55,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        readonly List<JoystickDevice> joysticks = new List<JoystickDevice>();
+        readonly List<JoystickDevice> joysticks = new List<JoystickDevice>(4);
         readonly Dictionary<int, Sdl2GamePad> controllers = new Dictionary<int, Sdl2GamePad>();
 
         IList<JoystickDevice> joysticks_readonly;
@@ -131,16 +131,18 @@ namespace OpenTK.Platform.SDL2
                 case EventType.JOYDEVICEADDED:
                     {
                         // Make sure we have enough space to store this instance
-                        if (joysticks.Count <= id)
+                        if (joysticks.Capacity <= id)
                         {
-                            joysticks.Capacity = OpenTK.MathHelper.NextPowerOfTwo(id);
+                            joysticks.Capacity = OpenTK.MathHelper.NextPowerOfTwo(id + 1);
+                            for (int i = joysticks.Count; i < joysticks.Capacity; i++)
+                                joysticks.Add(null); // Expand the joysticks list
                         }
 
                         IntPtr handle = SDL.JoystickOpen(id);
                         if (handle != IntPtr.Zero)
                         {
                             JoystickDevice<Sdl2JoystickDetails> joystick = OpenJoystick(id);
-                            if (joysticks != null)
+                            if (joystick != null)
                             {
                                 joystick.Details.IsConnected = true;
                                 joysticks[id] = joystick;
