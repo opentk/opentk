@@ -133,6 +133,7 @@
     </Compile>
     <Compile Include="DisplayIndex.cs" />
     <Compile Include="Graphics\GraphicsModeComparer.cs" />
+    <Compile Include="Input\GamePadThumbSticks.cs" />
     <Compile Include="Input\IGamePadDriver.cs" />
     <Compile Include="Input\IInputDriver2.cs" />
     <Compile Include="Input\IKeyboardDriver2.cs" />

@@ -27,28 +27,12 @@ using System;
 
 namespace OpenTK.Input
 {
-	public enum GamePadAxis
+    internal enum GamePadAxis
     {
-        /// <summary>The first axis of the gamepad.</summary>
-        Axis0 = 0,
-        /// <summary>The second axis of the gamepad.</summary>
-        Axis1,
-        /// <summary>The third axis of the gamepad.</summary>
-        Axis2,
-        /// <summary>The fourth axis of the gamepad.</summary>
-        Axis3,
-        /// <summary>The fifth axis of the gamepad.</summary>
-        Axis4,
-        /// <summary>The sixth axis of the gamepad.</summary>
-        Axis5,
-        /// <summary>The seventh axis of the gamepad.</summary>
-        Axis6,
-        /// <summary>The eighth axis of the gamepad.</summary>
-        Axis7,
-        /// <summary>The ninth axis of the gamepad.</summary>
-        Axis8,
-        /// <summary>The tenth axis of the gamepad.</summary>
-        Axis9,
-	}
+        LeftX,
+        LeftY,
+        RightX,
+        RightY
+    }
 }
 
