@@ -26,6 +26,7 @@
 // THE SOFTWARE.
 //
 // #endregion
+
 using System;
 
 namespace OpenTK.Input
