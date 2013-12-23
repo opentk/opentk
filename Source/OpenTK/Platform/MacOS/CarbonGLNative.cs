@@ -379,13 +379,7 @@ namespace OpenTK.Platform.MacOS
             {
                 case KeyboardEventKind.RawKeyRepeat:
                     if (InputDriver.Keyboard[0].KeyRepeat)
-                    {
-                        // Repeat KeyPress events until KeyUp
-                        if (!Char.IsControl(mKeyPressArgs.KeyChar))
-                        {
-                            OnKeyPress(mKeyPressArgs);
-                        }
-                    }
+                        goto case KeyboardEventKind.RawKeyDown;
                     break;
 
                 case KeyboardEventKind.RawKeyDown:
