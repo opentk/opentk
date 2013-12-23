@@ -74,6 +74,8 @@ namespace OpenTK.Platform.MacOS
             new Dictionary<IntPtr, WeakReference>(new IntPtrEqualityComparer());
 
         KeyPressEventArgs mKeyPressArgs = new KeyPressEventArgs((char)0);
+        OpenTK.Input.KeyboardKeyEventArgs mKeyDownArgs = new OpenTK.Input.KeyboardKeyEventArgs();
+        OpenTK.Input.KeyboardKeyEventArgs mKeyUpArgs = new OpenTK.Input.KeyboardKeyEventArgs();
 
         bool mMouseIn = false;
         bool mIsActive = false;
@@ -377,12 +379,25 @@ namespace OpenTK.Platform.MacOS
             {
                 case KeyboardEventKind.RawKeyRepeat:
                     if (InputDriver.Keyboard[0].KeyRepeat)
-                        goto case KeyboardEventKind.RawKeyDown;
+                    {
+                        // Repeat KeyPress events until KeyUp
+                        if (!Char.IsControl(mKeyPressArgs.KeyChar))
+                        {
+                            OnKeyPress(mKeyPressArgs);
+                        }
+                    }
                     break;
 
                 case KeyboardEventKind.RawKeyDown:
                     Keymap.TryGetValue(code, out key);
+                    // Legacy keyboard API
                     InputDriver.Keyboard[0].SetKey(key, (uint)code, true);
+
+                    // Raise KeyDown for new keyboard API
+                    mKeyDownArgs.Key = key;
+                    KeyDown(this, mKeyDownArgs);
+
+                    // Raise KeyPress for new keyboard API
                     if (!Char.IsControl(mKeyPressArgs.KeyChar))
                     {
                         OnKeyPress(mKeyPressArgs);
@@ -391,7 +406,12 @@ namespace OpenTK.Platform.MacOS
 
                 case KeyboardEventKind.RawKeyUp:
                     Keymap.TryGetValue(code, out key);
+                    // Legacy keyboard API
                     InputDriver.Keyboard[0].SetKey(key, (uint)code, false);
+
+                    // Raise KeyUp for new keyboard API
+                    mKeyUpArgs.Key = key;
+                    KeyUp(this, mKeyUpArgs);
                     return OSStatus.NoError;
 
                 case KeyboardEventKind.RawKeyModifiersChanged:
