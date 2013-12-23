@@ -50,7 +50,7 @@ namespace OpenTK.Platform.MacOS
 
     // Requires Mac OS X 10.5 or higher.
     // Todo: create a driver for older installations. Maybe use CGGetLastMouseDelta for that?
-    class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2/*, IGamePadDriver*/
+    class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2, IGamePadDriver
     {
         #region Fields
 
@@ -291,7 +291,7 @@ namespace OpenTK.Platform.MacOS
 
         public IMouseDriver2 MouseDriver { get { return this; } }
         public IKeyboardDriver2 KeyboardDriver { get { return this; } }
-        public IGamePadDriver GamePadDriver { get { throw new NotImplementedException(); } }
+        public IGamePadDriver GamePadDriver { get { return this; } }
 
         #endregion
 
@@ -362,6 +362,25 @@ namespace OpenTK.Platform.MacOS
                 return String.Format("{0}:{1}", vendor_id, product_id);
             }
             return String.Empty;
+        }
+
+        #endregion
+
+        #region IGamePadDriver Members
+
+        public GamePadState GetState(int index)
+        {
+            return new GamePadState();
+        }
+
+        public GamePadCapabilities GetCapabilities(int index)
+        {
+            return new GamePadCapabilities();
+        }
+
+        public string GetName(int index)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
