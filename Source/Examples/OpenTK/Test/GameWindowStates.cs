@@ -25,9 +25,8 @@ namespace Examples.Tests
         int texture;
         bool mouse_in_window = false;
         bool viewport_changed = true;
-        bool refresh_text = true;
-        MouseState mouse, mouse_old;
-        KeyboardState keyboard, keyboard_old;
+        MouseState mouse;
+        KeyboardState keyboard;
 
         public GameWindowStates()
             : base(800, 600, GraphicsMode.Default)
@@ -197,52 +196,40 @@ namespace Examples.Tests
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
-        {;
+        {
             InputDriver.Poll();
 
             mouse = OpenTK.Input.Mouse.GetState();
-            if (mouse != mouse_old)
-                refresh_text = true;
-            mouse_old = mouse;
-
             keyboard = OpenTK.Input.Keyboard.GetState();
-            if (keyboard != keyboard_old)
-                refresh_text = true;
-            keyboard_old = keyboard;
 
-            if (refresh_text)
+            using (Graphics gfx = Graphics.FromImage(TextBitmap))
             {
-                refresh_text = false;
-                    
-                using (Graphics gfx = Graphics.FromImage(TextBitmap))
-                {
-                    int line = 0;
+                int line = 0;
 
-                    gfx.Clear(Color.Black);
-                    gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+                gfx.Clear(Color.Black);
+                gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
-                    DrawString(gfx, GL.GetString(StringName.Vendor), line++);
-                    DrawString(gfx, GL.GetString(StringName.Version), line++);
-                    DrawString(gfx, GL.GetString(StringName.Renderer), line++);
-                    DrawString(gfx, Context.GraphicsMode.ToString(), line++);
+                DrawString(gfx, GL.GetString(StringName.Vendor), line++);
+                DrawString(gfx, GL.GetString(StringName.Version), line++);
+                DrawString(gfx, GL.GetString(StringName.Renderer), line++);
+                DrawString(gfx, Context.GraphicsMode.ToString(), line++);
 
-                    DrawString(gfx, String.Format("[1 - 4]: change WindowState (current: {0}).", this.WindowState), line++);
-                    DrawString(gfx, String.Format("[5 - 7]: change WindowBorder (current: {0}).", this.WindowBorder), line++);
-                    DrawString(gfx, String.Format("Focused: {0}.", this.Focused), line++);
-                    DrawString(gfx, String.Format("Mouse {0} window.", mouse_in_window ? "inside" : "outside of"), line++);
-                    DrawString(gfx, String.Format("Mouse visible: {0}", CursorVisible), line++);
-                    DrawString(gfx, String.Format("Mouse position (absolute): {0}", new Vector3(Mouse.X, Mouse.Y, Mouse.Wheel)), line++);
-                    DrawString(gfx, String.Format("Mouse position (relative): {0}", new Vector3(mouse.X, mouse.Y, mouse.WheelPrecise)), line++);
-                    DrawString(gfx, String.Format("Window.Bounds: {0}", Bounds), line++);
-                    DrawString(gfx, String.Format("Window.Location: {0}, Size: {1}", Location, Size), line++);
-                    DrawString(gfx, String.Format("Window: {{X={0},Y={1},Width={2},Height={3}}}", X, Y, Width, Height), line++);
-                    DrawString(gfx, String.Format("Window.ClientRectangle: {0}", ClientRectangle), line++);
-                    DrawString(gfx, TypedText.ToString(), line++);
-                    DrawKeyboard(gfx, keyboard, line++);
-                    DrawMouse(gfx, mouse, line++);
-                    line = DrawJoysticks(gfx, Joysticks, line++);
-                    line = DrawGamePads(gfx, line++);
-                }
+                DrawString(gfx, String.Format("[1 - 4]: change WindowState (current: {0}).", this.WindowState), line++);
+                DrawString(gfx, String.Format("[5 - 7]: change WindowBorder (current: {0}).", this.WindowBorder), line++);
+                DrawString(gfx, String.Format("Focused: {0}.", this.Focused), line++);
+                DrawString(gfx, String.Format("Mouse {0} window.", mouse_in_window ? "inside" : "outside of"), line++);
+                DrawString(gfx, String.Format("Mouse visible: {0}", CursorVisible), line++);
+                DrawString(gfx, String.Format("Mouse position (absolute): {0}", new Vector3(Mouse.X, Mouse.Y, Mouse.Wheel)), line++);
+                DrawString(gfx, String.Format("Mouse position (relative): {0}", new Vector3(mouse.X, mouse.Y, mouse.WheelPrecise)), line++);
+                DrawString(gfx, String.Format("Window.Bounds: {0}", Bounds), line++);
+                DrawString(gfx, String.Format("Window.Location: {0}, Size: {1}", Location, Size), line++);
+                DrawString(gfx, String.Format("Window: {{X={0},Y={1},Width={2},Height={3}}}", X, Y, Width, Height), line++);
+                DrawString(gfx, String.Format("Window.ClientRectangle: {0}", ClientRectangle), line++);
+                DrawString(gfx, TypedText.ToString(), line++);
+                DrawKeyboard(gfx, keyboard, line++);
+                DrawMouse(gfx, mouse, line++);
+                line = DrawJoysticks(gfx, Joysticks, line++);
+                line = DrawGamePads(gfx, line++);
             }
 
             System.Drawing.Imaging.BitmapData data = TextBitmap.LockBits(
