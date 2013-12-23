@@ -39,28 +39,152 @@ namespace OpenTK.Input
         byte dpad_count;
         byte trackball_count;
 
-        public int AxisCount
+        Buttons buttons;
+        byte gamepad_type;
+        bool is_connected;
+
+        #region Constructors
+
+        public GamePadCapabilities(GamePadType type, Buttons buttons, bool is_connected)
+            : this()
         {
-            get { return axis_count; }
-            internal set { axis_count = (byte)value; }
+            gamepad_type = (byte)type;
+            this.buttons = buttons;
+            this.is_connected = is_connected;
         }
 
-        public int ButtonCount
+        #endregion
+
+        #region Public Members
+
+        public GamePadType GamePadType
         {
-            get { return button_count; }
-            internal set { button_count = (byte)value; }
+            get { return (GamePadType)gamepad_type; }
         }
 
-        public int DPadCount
+        public bool HasDPadUpButton
         {
-            get { return dpad_count; }
-            internal set { dpad_count = (byte)value; }
+            get { return (buttons & Buttons.DPadUp) != 0; }
         }
 
-        public int TrackballCount
+        public bool HasDPadLeftButton
         {
-            get { return trackball_count; }
-            internal set { trackball_count = (byte)value; }
+            get { return (buttons & Buttons.DPadLeft) != 0; }
+        }
+
+        public bool HasDPadDownButton
+        {
+            get { return (buttons & Buttons.DPadDown) != 0; }
+        }
+
+        public bool HasDPadRightButton
+        {
+            get { return (buttons & Buttons.DPadRight) != 0; }
+        }
+
+        public bool HasAButton
+        {
+            get { return (buttons & Buttons.A) != 0; }
+        }
+
+        public bool HasBButton
+        {
+            get { return (buttons & Buttons.B) != 0; }
+        }
+
+        public bool HasXButton
+        {
+            get { return (buttons & Buttons.X) != 0; }
+        }
+
+        public bool HasYButton
+        {
+            get { return (buttons & Buttons.Y) != 0; }
+        }
+
+        public bool HasLeftStickButton
+        {
+            get { return (buttons & Buttons.LeftStick) != 0; }
+        }
+
+        public bool HasRightStickButton
+        {
+            get { return (buttons & Buttons.RightStick) != 0; }
+        }
+
+        public bool HasLeftShoulderButton
+        {
+            get { return (buttons & Buttons.LeftShoulder) != 0; }
+        }
+
+        public bool HasRightShoulderButton
+        {
+            get { return (buttons & Buttons.RightShoulder) != 0; }
+        }
+
+        public bool HasBackButton
+        {
+            get { return (buttons & Buttons.Back) != 0; }
+        }
+
+        public bool HasBigButton
+        {
+            get { return (buttons & Buttons.BigButton) != 0; }
+        }
+
+        public bool HasStartButton
+        {
+            get { return (buttons & Buttons.Start) != 0; }
+        }
+
+        public bool HasLeftXThumbStick
+        {
+            get { return false; }
+        }
+
+        public bool HasLeftYThumbStick
+        {
+            get { return false; }
+        }
+
+        public bool HasRightXThumbStick
+        {
+            get { return false; }
+        }
+
+        public bool HasRightYThumbStick
+        {
+            get { return false; }
+        }
+
+        public bool HasLeftTrigger
+        {
+            get { return false; }
+        }
+
+        public bool HasRightTrigger
+        {
+            get { return false; }
+        }
+
+        public bool HasLeftVibrationMotor
+        {
+            get { return false; }
+        }
+
+        public bool HasRightVibrationMotor
+        {
+            get { return false; }
+        }
+
+        public bool HasVoiceSupport
+        {
+            get { return false; }
+        }
+
+        public bool IsConnected
+        {
+            get { return is_connected; }
         }
 
         public static bool operator ==(GamePadCapabilities left, GamePadCapabilities right)
@@ -76,15 +200,16 @@ namespace OpenTK.Input
         public override string ToString()
         {
             return String.Format(
-                "{{Axes: {0}; Buttons: {1}; DPads: {2}; Trackballs: {3}}}",
-                AxisCount, ButtonCount, DPadCount, TrackballCount);
+                "{{Type: {0}; Buttons: {1}; Connected: {2}}}",
+                GamePadType, Convert.ToString((int)buttons, 2), IsConnected);
         }
 
         public override int GetHashCode()
         {
             return
-                AxisCount.GetHashCode() ^ ButtonCount.GetHashCode() ^
-                DPadCount.GetHashCode() ^ TrackballCount.GetHashCode();
+                buttons.GetHashCode() ^
+                is_connected.GetHashCode() ^
+                gamepad_type.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -94,15 +219,44 @@ namespace OpenTK.Input
                 Equals((GamePadCapabilities)obj);
         }
 
+        #endregion
+
+        #region Internal Members
+
+        internal int AxisCount
+        {
+            get { return axis_count; }
+            set { axis_count = (byte)value; }
+        }
+
+        internal int ButtonCount
+        {
+            get { return button_count; }
+            set { button_count = (byte)value; }
+        }
+
+        internal int DPadCount
+        {
+            get { return dpad_count; }
+            set { dpad_count = (byte)value; }
+        }
+
+        internal int TrackballCount
+        {
+            get { return trackball_count; }
+            set { trackball_count = (byte)value; }
+        }
+
+        #endregion
+
         #region IEquatable<GamePadCapabilities> Members
 
         public bool Equals(GamePadCapabilities other)
         {
             return
-                AxisCount == other.AxisCount &&
-                ButtonCount == other.ButtonCount &&
-                DPadCount == other.DPadCount &&
-                TrackballCount == other.TrackballCount;
+                buttons == other.buttons &&
+                is_connected == other.is_connected &&
+                gamepad_type == other.gamepad_type;
         }
 
         #endregion
