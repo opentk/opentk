@@ -64,6 +64,11 @@ namespace OpenTK.Platform.MacOS.Carbon
         short bottom;
         short right;
 
+        internal Rect(int left, int top, int width, int height)
+            : this((short)left, (short)top, (short)width, (short)height)
+        {
+        }
+
         internal Rect(short _left, short _top, short _width, short _height)
         {
             top = _top;
@@ -529,6 +534,9 @@ namespace OpenTK.Platform.MacOS.Carbon
 
             return retval;
         }
+
+        [DllImport(carbon)]
+        internal static extern OSStatus SetWindowBounds(IntPtr Windows, WindowRegionCode WindowRegionCode, ref Rect globalBounds);
 
         //[DllImport(carbon)]
         //internal static extern void MoveWindow(IntPtr window, short hGlobal, short vGlobal, bool front);
