@@ -35,7 +35,6 @@ namespace OpenTK.Input
     public class GamePad
     {
         internal const int MaxAxisCount = 10;
-        internal const int MaxButtonCount = 16; // if this grows over 32 then GamePadState.buttons must be modified
         internal const int MaxDPadCount = 2;
 
         static readonly IGamePadDriver driver =

@@ -129,23 +129,13 @@ namespace OpenTK.Input
 
         internal void SetButton(Buttons button, bool pressed)
         {
-            if (IsButtonValid(button))
+            if (pressed)
             {
-                int index = (int)button;
-
-                Buttons mask = (Buttons)(1 << index);
-                if (pressed)
-                {
-                    buttons |= mask;
-                }
-                else
-                {
-                    buttons &= ~mask;
-                }
+                buttons |= button;
             }
             else
             {
-                throw new ArgumentOutOfRangeException("button");
+                buttons &= ~button;
             }
         }
 
@@ -162,12 +152,6 @@ namespace OpenTK.Input
         {
             int index = (int)axis;
             return index >= 0 && index < GamePad.MaxAxisCount;
-        }
-
-        bool IsButtonValid(Buttons button)
-        {
-            int index = (int)button;
-            return index >= 0 && index < GamePad.MaxButtonCount;
         }
 
         bool IsDPadValid(int index)
