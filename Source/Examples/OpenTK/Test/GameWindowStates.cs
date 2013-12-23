@@ -163,7 +163,7 @@ namespace Examples.Tests
             }
         }
 
-        static void DrawJoysticks(Graphics gfx, IList<JoystickDevice> joysticks, int line)
+        static int DrawJoysticks(Graphics gfx, IList<JoystickDevice> joysticks, int line)
         {
             float space = gfx.MeasureString(" ", TextFont).Width;
 
@@ -192,6 +192,8 @@ namespace Examples.Tests
 
                 line++;
             }
+
+            return line;
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
@@ -238,9 +240,8 @@ namespace Examples.Tests
                     DrawString(gfx, TypedText.ToString(), line++);
                     DrawKeyboard(gfx, keyboard, line++);
                     DrawMouse(gfx, mouse, line++);
-                    DrawJoysticks(gfx, Joysticks, line++);
-                    
-                    line = DrawGamePads(gfx, line);
+                    line = DrawJoysticks(gfx, Joysticks, line++);
+                    line = DrawGamePads(gfx, line++);
                 }
             }
 
