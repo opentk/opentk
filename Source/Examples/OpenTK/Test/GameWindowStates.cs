@@ -39,20 +39,9 @@ namespace Examples.Tests
             MouseEnter += delegate { mouse_in_window = true; };
             MouseLeave += delegate { mouse_in_window = false; };
             
-            Move += delegate { refresh_text = true; };
-            Resize += delegate { refresh_text = true; };
-            WindowBorderChanged += delegate { refresh_text = true; };
-            WindowStateChanged += delegate { refresh_text = true; };
-            FocusedChanged += delegate { refresh_text = true; };
             Mouse.Move += MouseMoveHandler;
             Mouse.ButtonDown += MouseButtonHandler;
             Mouse.ButtonUp += MouseButtonHandler;
-            foreach (var joystick in Joysticks)
-            {
-                joystick.Move += delegate { refresh_text = true; };
-                joystick.ButtonDown += delegate { refresh_text = true; };
-                joystick.ButtonUp += delegate { refresh_text = true; };
-            }
         }
 
         private void KeyPressHandler(object sender, KeyPressEventArgs e)
@@ -98,13 +87,10 @@ namespace Examples.Tests
 
         void MouseMoveHandler(object sender, MouseMoveEventArgs e)
         {
-            refresh_text = true;
         }
 
         void MouseButtonHandler(object sender, MouseButtonEventArgs e)
         {
-            refresh_text = true;
-
             if (e.Button == MouseButton.Left && e.IsPressed)
             {
                 CursorVisible = false;
