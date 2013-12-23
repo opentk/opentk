@@ -118,6 +118,7 @@ namespace OpenTK.Input
                 LeftShoulder == ButtonState.Pressed ? "L" : String.Empty,
                 RightShoulder == ButtonState.Pressed ? "R" : String.Empty,
                 Back == ButtonState.Pressed ? " Back" : String.Empty,
+                Start == ButtonState.Pressed ? " Start" : String.Empty,
                 BigButton == ButtonState.Pressed ? " Big" : String.Empty,
                 LeftStick == ButtonState.Pressed ? " LStick" : String.Empty,
                 RightStick == ButtonState.Pressed ? " RStick" : String.Empty);
