@@ -108,18 +108,6 @@ namespace OpenTK.Platform.MacOS
             Application.Initialize();
         }
 
-        CarbonGLNative() : this(WindowClass.Document,
-            WindowAttributes.StandardDocument | WindowAttributes.StandardHandler |
-            WindowAttributes.InWindowMenu | WindowAttributes.LiveResize)
-        {
-        }
-
-        CarbonGLNative(WindowClass @class, WindowAttributes attrib)
-        {
-            mWindowClass = @class;
-            mWindowAttrib = attrib;
-        }
-
         public CarbonGLNative(int x, int y, int width, int height, string title,
             GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
