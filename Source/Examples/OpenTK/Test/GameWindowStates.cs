@@ -228,14 +228,31 @@ namespace Examples.Tests
 
         int DrawGamePads(Graphics gfx, int line)
         {
+            line++;
             DrawString(gfx, "GamePads:", line++);
             for (int i = 0; i < 4; i++)
             {
                 GamePadCapabilities caps = GamePad.GetCapabilities(i);
                 GamePadState state = GamePad.GetState(i);
-                DrawString(gfx, caps.ToString(), line++);
-                DrawString(gfx, state.ToString(), line++);
+                if (state.IsConnected)
+                {
+                    DrawString(gfx, caps.ToString(), line++);
+                    DrawString(gfx, state.ToString(), line++);
+                }
             }
+            line++;
+            DrawString(gfx, "Joysticks:", line++);
+            for (int i = 0; i < 4; i++)
+            {
+                JoystickCapabilities caps = Joystick.GetCapabilities(i);
+                JoystickState state = Joystick.GetState(i);
+                if (state.IsConnected)
+                {
+                    DrawString(gfx, caps.ToString(), line++);
+                    DrawString(gfx, state.ToString(), line++);
+                }
+            }
+
             return line;
         }
 
