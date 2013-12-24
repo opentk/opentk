@@ -36,10 +36,18 @@ namespace OpenTK.Input
 {
     public struct JoystickState
     {
-        const int MaxAxes = 10; // JoystickAxis defines 10 axes
-        const float ConversionFactor = 1.0f / short.MaxValue;
+        // If we ever add more values to JoystickAxis or JoystickButton
+        // then we'll need to increase these limits.
+        internal const int MaxAxes = 10;
+        internal const int MaxButtons = 32;
+
+        const float ConversionFactor = 1.0f / (short.MaxValue + 1);
+
         unsafe fixed short axes[MaxAxes];
-        JoystickButton buttons;
+        int buttons;
+        bool is_connected;
+
+        #region Public Members
 
         public float GetAxis(JoystickAxis axis)
         {
@@ -66,14 +74,63 @@ namespace OpenTK.Input
             return value;
         }
 
+        public ButtonState GetButton(JoystickButton button)
+        {
+            return (buttons & (1 << (int)button)) != 0 ? ButtonState.Pressed : ButtonState.Released;
+        }
+
         public bool IsButtonDown(JoystickButton button)
         {
-            return (buttons & button) != 0;
+            return (buttons & (1 << (int)button)) != 0;
         }
 
         public bool IsButtonUp(JoystickButton button)
         {
-            return (buttons & button) == 0;
+            return (buttons & (1 << (int)button)) == 0;
         }
+
+        public bool IsConnected
+        {
+            get { return is_connected; }
+        }
+
+        #endregion
+
+        #region Internal Members
+
+        internal void SetAxis(JoystickAxis axis, short value)
+        {
+            int index = (int)axis;
+            if (index < 0 || index >= MaxAxes)
+                throw new ArgumentOutOfRangeException("axis");
+
+            unsafe
+            {
+                fixed (short* paxes = axes)
+                {
+                    *(paxes + index) = value;
+                }
+            }
+        }
+
+        internal void SetButton(JoystickButton button, bool value)
+        {
+            int index = 1 << (int)button;
+            if (value)
+            {
+                buttons |= index;
+            }
+            else
+            {
+                buttons &= ~index;
+            }
+        }
+
+        internal void SetIsConnected(bool value)
+        {
+            is_connected = value;
+        }
+
+        #endregion
     }
 }
