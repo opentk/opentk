@@ -38,20 +38,35 @@ namespace OpenTK.Input
         byte axis_count;
         byte button_count;
         byte dpad_count;
-        byte trackball_count;
+        bool is_connected;
+
+        #region Constructors
+
+        public JoystickCapabilities(int axis_count, int button_count, bool is_connected)
+        {
+            if (axis_count < 0 || axis_count >= JoystickState.MaxAxes)
+                throw new ArgumentOutOfRangeException("axis_count");
+            if (button_count < 0 || button_count >= JoystickState.MaxButtons)
+                throw new ArgumentOutOfRangeException("axis_count");
+
+            this.axis_count = (byte)axis_count;
+            this.button_count = (byte)button_count;
+            this.dpad_count = 0; // Todo: either remove dpad_count or add it as a parameter
+            this.is_connected = is_connected;
+        }
+
+        #endregion
 
         #region Public Members
 
         public int AxisCount
         {
             get { return axis_count; }
-            set { axis_count = (byte)value; }
         }
 
         public int ButtonCount
         {
             get { return button_count; }
-            set { button_count = (byte)value; }
         }
 
         #endregion
@@ -61,15 +76,14 @@ namespace OpenTK.Input
         int DPadCount
         {
             get { return dpad_count; }
-            set { dpad_count = (byte)value; }
-        }
-
-        int TrackballCount
-        {
-            get { return trackball_count; }
-            set { trackball_count = (byte)value; }
         }
 
         #endregion
+
+        public bool IsConnected
+        {
+            get { return is_connected; }
+        }
+
     }
 }
