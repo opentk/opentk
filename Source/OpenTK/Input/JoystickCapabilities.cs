@@ -1,6 +1,6 @@
 ﻿#region License
 //
-// GamePadType.cs
+// JoystickCapabilities.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
@@ -27,19 +27,49 @@
 //
 #endregion
 
+using System;
+using System.Collections.Generic;
+using System.Text;
+
 namespace OpenTK.Input
 {
-    public enum GamePadType
+    public struct JoystickCapabilities
     {
-        Unknown = 0,
-        ArcadeStick,
-        DancePad,
-        FlightStick,
-        Guitar,
-        Wheel,
-        AlternateGuitar,
-        BigButtonPad,
-        DrumKit,
-        GamePad,
+        byte axis_count;
+        byte button_count;
+        byte dpad_count;
+        byte trackball_count;
+
+        #region Public Members
+
+        public int AxisCount
+        {
+            get { return axis_count; }
+            set { axis_count = (byte)value; }
+        }
+
+        public int ButtonCount
+        {
+            get { return button_count; }
+            set { button_count = (byte)value; }
+        }
+
+        #endregion
+
+        #region Private Members
+
+        int DPadCount
+        {
+            get { return dpad_count; }
+            set { dpad_count = (byte)value; }
+        }
+
+        int TrackballCount
+        {
+            get { return trackball_count; }
+            set { trackball_count = (byte)value; }
+        }
+
+        #endregion
     }
 }

@@ -1,6 +1,6 @@
 ﻿#region License
 //
-// GamePadType.cs
+// JoystickState.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
@@ -27,19 +27,53 @@
 //
 #endregion
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
+
 namespace OpenTK.Input
 {
-    public enum GamePadType
+    public struct JoystickState
     {
-        Unknown = 0,
-        ArcadeStick,
-        DancePad,
-        FlightStick,
-        Guitar,
-        Wheel,
-        AlternateGuitar,
-        BigButtonPad,
-        DrumKit,
-        GamePad,
+        const int MaxAxes = 10; // JoystickAxis defines 10 axes
+        const float ConversionFactor = 1.0f / short.MaxValue;
+        unsafe fixed short axes[MaxAxes];
+        JoystickButton buttons;
+
+        public float GetAxis(JoystickAxis axis)
+        {
+            return GetAxis((int)axis);
+        }
+
+        public float GetAxis(int axis)
+        {
+            float value = 0.0f;
+            if (axis >= 0 && axis < MaxAxes)
+            {
+                unsafe
+                {
+                    fixed (short* paxis = axes)
+                    {
+                        value = *(paxis + axis) * ConversionFactor;
+                    }
+                }
+            }
+            else
+            {
+                Debug.Print("[Joystick] Invalid axis {0}", axis);
+            }
+            return value;
+        }
+
+        public bool IsButtonDown(JoystickButton button)
+        {
+            return (buttons & button) != 0;
+        }
+
+        public bool IsButtonUp(JoystickButton button)
+        {
+            return (buttons & button) == 0;
+        }
     }
 }

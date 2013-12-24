@@ -220,6 +220,14 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
+        public IJoystickDriver2 JoystickDriver
+        {
+            get
+            {
+                return joystick_driver;
+            }
+        }
+
         #endregion
 
         #region IDisposable Members

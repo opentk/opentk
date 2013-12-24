@@ -190,6 +190,11 @@ namespace OpenTK.Platform.Windows
             get { return joystick_driver; }
         }
 
+        public override IJoystickDriver2 JoystickDriver
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         #endregion
     }
 }

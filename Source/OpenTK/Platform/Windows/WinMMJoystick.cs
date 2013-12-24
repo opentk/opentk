@@ -445,10 +445,10 @@ namespace OpenTK.Platform.Windows
                 JoystickError result = UnsafeNativeMethods.joyGetDevCaps(index, out caps, JoyCaps.SizeInBytes);
                 if (result == JoystickError.NoError)
                 {
-                    gpcaps.AxisCount = caps.NumAxes;
-                    gpcaps.ButtonCount = caps.NumButtons;
-                    if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
-                        gpcaps.DPadCount++;
+                    //gpcaps.AxisCount = caps.NumAxes;
+                    //gpcaps.ButtonCount = caps.NumButtons;
+                    //if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
+                    //    gpcaps.DPadCount++;
                 }
             }
             else

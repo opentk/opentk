@@ -1,6 +1,6 @@
 ﻿#region License
 //
-// GamePadType.cs
+// IJoystickDriver2.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
@@ -27,19 +27,15 @@
 //
 #endregion
 
+using System;
+using System.Collections.Generic;
+using System.Text;
+
 namespace OpenTK.Input
 {
-    public enum GamePadType
+    interface IJoystickDriver2
     {
-        Unknown = 0,
-        ArcadeStick,
-        DancePad,
-        FlightStick,
-        Guitar,
-        Wheel,
-        AlternateGuitar,
-        BigButtonPad,
-        DrumKit,
-        GamePad,
+        JoystickState GetState(int index);
+        JoystickCapabilities GetCapabilities(int index);
     }
 }
