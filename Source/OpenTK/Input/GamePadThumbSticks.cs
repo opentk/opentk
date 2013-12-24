@@ -73,8 +73,8 @@ namespace OpenTK.Input
         public override string ToString()
         {
             return String.Format(
-                "{{Left: {0}; Right: {1}}}",
-                Left, Right);
+                "{{Left: ({0:f4}; {1:f4}); Right: ({2:f4}; {3:f4})}}",
+                Left.X, Left.Y, Right.X, Right.Y);
         }
 
         public override int GetHashCode()
