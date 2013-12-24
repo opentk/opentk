@@ -33,7 +33,7 @@ using System.Text;
 
 namespace OpenTK.Input
 {
-    public struct JoystickCapabilities
+    public struct JoystickCapabilities : IEquatable<JoystickCapabilities>
     {
         byte axis_count;
         byte button_count;
@@ -69,6 +69,33 @@ namespace OpenTK.Input
             get { return button_count; }
         }
 
+        public bool IsConnected
+        {
+            get { return is_connected; }
+        }
+
+        public override string ToString()
+        {
+            return String.Format(
+                "{{Axes: {0}; Buttons: {1}; IsConnected: {2}}}",
+                AxisCount, ButtonCount, IsConnected);
+        }
+
+        public override int GetHashCode()
+        {
+            return
+                AxisCount.GetHashCode() ^
+                ButtonCount.GetHashCode() ^
+                IsConnected.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return
+                obj is JoystickCapabilities &&
+                Equals((JoystickCapabilities)obj);
+        }
+
         #endregion
 
         #region Private Members
@@ -80,10 +107,16 @@ namespace OpenTK.Input
 
         #endregion
 
-        public bool IsConnected
+        #region IEquatable<JoystickCapabilities> Members
+
+        public bool Equals(JoystickCapabilities other)
         {
-            get { return is_connected; }
+            return
+                AxisCount == other.AxisCount &&
+                ButtonCount == other.ButtonCount &&
+                IsConnected == other.IsConnected;
         }
 
+        #endregion
     }
 }

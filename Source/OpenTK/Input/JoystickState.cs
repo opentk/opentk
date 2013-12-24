@@ -34,7 +34,7 @@ using System.Text;
 
 namespace OpenTK.Input
 {
-    public struct JoystickState
+    public struct JoystickState : IEquatable<JoystickState>
     {
         // If we ever add more values to JoystickAxis or JoystickButton
         // then we'll need to increase these limits.
@@ -59,13 +59,7 @@ namespace OpenTK.Input
             float value = 0.0f;
             if (axis >= 0 && axis < MaxAxes)
             {
-                unsafe
-                {
-                    fixed (short* paxis = axes)
-                    {
-                        value = *(paxis + axis) * ConversionFactor;
-                    }
-                }
+                value = GetAxisUnsafe(axis) * ConversionFactor;
             }
             else
             {
@@ -92,6 +86,38 @@ namespace OpenTK.Input
         public bool IsConnected
         {
             get { return is_connected; }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < MaxAxes; i++)
+            {
+                sb.Append(" ");
+                sb.Append(GetAxis(i));
+            }
+            return String.Format(
+                "{{Axes:{0}; Buttons: {1}; IsConnected: {2}}}",
+                sb.ToString(),
+                Convert.ToString((int)buttons, 2),
+                IsConnected);
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = buttons.GetHashCode() ^ IsConnected.GetHashCode();
+            for (int i = 0; i < MaxAxes; i++)
+            {
+                hash ^= GetAxisUnsafe(i).GetHashCode();
+            }
+            return hash;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return
+                obj is JoystickState &&
+                Equals((JoystickState)obj);
         }
 
         #endregion
@@ -129,6 +155,37 @@ namespace OpenTK.Input
         internal void SetIsConnected(bool value)
         {
             is_connected = value;
+        }
+
+        #endregion
+
+        #region Private Members
+
+        short GetAxisUnsafe(int index)
+        {
+            unsafe
+            {
+                fixed (short* paxis = axes)
+                {
+                    return *(paxis + index);
+                }
+            }
+        }
+
+        #endregion
+
+        #region IEquatable<JoystickState> Members
+
+        public bool Equals(JoystickState other)
+        {
+            bool equals =
+                buttons == other.buttons &&
+                IsConnected == other.IsConnected;
+            for (int i = 0; equals && i < MaxAxes; i++)
+            {
+                equals &= GetAxisUnsafe(i) == other.GetAxisUnsafe(i);
+            }
+            return equals;
         }
 
         #endregion
