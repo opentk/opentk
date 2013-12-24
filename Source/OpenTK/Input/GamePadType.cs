@@ -41,5 +41,7 @@ namespace OpenTK.Input
         BigButtonPad,
         DrumKit,
         GamePad,
+        ArcadePad,
+        BassGuitar,
     }
 }

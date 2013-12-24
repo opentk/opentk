@@ -62,6 +62,11 @@ namespace OpenTK.Input
             get { return new GamePadDPad(buttons); }
         }
 
+        public GamePadTriggers Triggers
+        {
+            get { return new GamePadTriggers(left_trigger, right_trigger); }
+        }
+
         public bool IsConnected
         {
             get { return is_connected; }
@@ -104,23 +109,23 @@ namespace OpenTK.Input
 
         #region Internal Members
 
-        internal void SetAxis(GamePadAxis axis, short value)
+        internal void SetAxis(GamePadAxes axis, short value)
         {
             switch (axis)
             {
-                case GamePadAxis.LeftX:
+                case GamePadAxes.LeftX:
                     left_stick_x = value;
                     break;
 
-                case GamePadAxis.LeftY:
+                case GamePadAxes.LeftY:
                     left_stick_y = value;
                     break;
 
-                case GamePadAxis.RightX:
+                case GamePadAxes.RightX:
                     right_stick_x = value;
                     break;
 
-                case GamePadAxis.RightY:
+                case GamePadAxes.RightY:
                     right_stick_y = value;
                     break;
 
@@ -146,11 +151,17 @@ namespace OpenTK.Input
             is_connected = connected;
         }
 
+        internal void SetTriggers(byte left, byte right)
+        {
+            left_trigger = left;
+            right_trigger = right;
+        }
+
         #endregion
 
         #region Private Members
 
-        bool IsAxisValid(GamePadAxis axis)
+        bool IsAxisValid(GamePadAxes axis)
         {
             int index = (int)axis;
             return index >= 0 && index < GamePad.MaxAxisCount;

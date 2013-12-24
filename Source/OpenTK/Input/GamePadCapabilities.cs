@@ -35,15 +35,17 @@ namespace OpenTK.Input
     public struct GamePadCapabilities : IEquatable<GamePadCapabilities>
     {
         Buttons buttons;
+        GamePadAxes axes;
         byte gamepad_type;
         bool is_connected;
 
         #region Constructors
 
-        public GamePadCapabilities(GamePadType type, Buttons buttons, bool is_connected)
+        internal GamePadCapabilities(GamePadType type, GamePadAxes axes, Buttons buttons, bool is_connected)
             : this()
         {
             gamepad_type = (byte)type;
+            this.axes = axes;
             this.buttons = buttons;
             this.is_connected = is_connected;
         }
@@ -134,32 +136,32 @@ namespace OpenTK.Input
 
         public bool HasLeftXThumbStick
         {
-            get { return false; }
+            get { return (axes & GamePadAxes.LeftX) != 0; }
         }
 
         public bool HasLeftYThumbStick
         {
-            get { return false; }
+            get { return (axes & GamePadAxes.LeftY) != 0; }
         }
 
         public bool HasRightXThumbStick
         {
-            get { return false; }
+            get { return (axes & GamePadAxes.RightX) != 0; }
         }
 
         public bool HasRightYThumbStick
         {
-            get { return false; }
+            get { return (axes & GamePadAxes.RightY) != 0; }
         }
 
         public bool HasLeftTrigger
         {
-            get { return false; }
+            get { return (axes & GamePadAxes.LeftTrigger) != 0; }
         }
 
         public bool HasRightTrigger
         {
-            get { return false; }
+            get { return (axes & GamePadAxes.RightTrigger) != 0; }
         }
 
         public bool HasLeftVibrationMotor
@@ -195,8 +197,11 @@ namespace OpenTK.Input
         public override string ToString()
         {
             return String.Format(
-                "{{Type: {0}; Buttons: {1}; Connected: {2}}}",
-                GamePadType, Convert.ToString((int)buttons, 2), IsConnected);
+                "{{Type: {0}; Axes: {1}; Buttons: {2}; Connected: {3}}}",
+                GamePadType,
+                Convert.ToString((int)axes, 2),
+                Convert.ToString((int)buttons, 2),
+                IsConnected);
         }
 
         public override int GetHashCode()

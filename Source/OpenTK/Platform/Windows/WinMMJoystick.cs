@@ -470,10 +470,10 @@ namespace OpenTK.Platform.Windows
                 info.Flags = JoystickFlags.All;
                 UnsafeNativeMethods.joyGetPosEx(index, ref info);
 
-                state.SetAxis(GamePadAxis.LeftX, (short)info.XPos);
-                state.SetAxis(GamePadAxis.LeftY, (short)info.YPos);
-                state.SetAxis(GamePadAxis.RightX, (short)info.ZPos);
-                state.SetAxis(GamePadAxis.RightY, (short)info.RPos);
+                state.SetAxis(GamePadAxes.LeftX, (short)info.XPos);
+                state.SetAxis(GamePadAxes.LeftY, (short)info.YPos);
+                state.SetAxis(GamePadAxes.RightX, (short)info.ZPos);
+                state.SetAxis(GamePadAxes.RightY, (short)info.RPos);
                 //state.SetAxis(GamePadAxis.RightX, (short)info.ZPos);
                 //state.SetAxis(GamePadAxis.RightY, (short)info.RPos);
 
