@@ -148,6 +148,12 @@ namespace OpenTK.Platform.Windows
             return index >= 0 && index < UnsafeNativeMethods.joyGetNumDevs();
         }
 
+        static short CalculateOffset(int pos, int min, int max)
+        {
+            int offset = (ushort.MaxValue * (pos - min)) / (max - min) - short.MaxValue;
+            return (short)offset;
+        }
+
         #endregion
 
         #region IJoystickDriver
@@ -294,28 +300,29 @@ namespace OpenTK.Platform.Windows
                 JoystickError result = UnsafeNativeMethods.joyGetPosEx(index, ref info);
                 if (result == JoystickError.NoError)
                 {
-                    state.SetAxis(JoystickAxis.Axis0, (short)info.XPos);
-                    state.SetAxis(JoystickAxis.Axis1, (short)info.YPos);
-                    state.SetAxis(JoystickAxis.Axis2, (short)info.ZPos);
-                    state.SetAxis(JoystickAxis.Axis3, (short)info.RPos);
-                    state.SetAxis(JoystickAxis.Axis4, (short)info.ZPos);
-                    state.SetAxis(JoystickAxis.Axis5, (short)info.RPos);
-
-                    for (int i = 0; i < 16; i++)
+                    JoyCaps caps;
+                    result = UnsafeNativeMethods.joyGetDevCaps(index, out caps, JoyCaps.SizeInBytes);
+                    if (result == JoystickError.NoError)
                     {
-                        state.SetButton(JoystickButton.Button0 + i, (info.Buttons & 1 << i) != 0);
-                    }
+                        state.SetAxis(JoystickAxis.Axis0, CalculateOffset(info.XPos, caps.XMin, caps.XMax));
+                        state.SetAxis(JoystickAxis.Axis1, CalculateOffset(info.YPos, caps.YMin, caps.YMax));
+                        state.SetAxis(JoystickAxis.Axis2, CalculateOffset(info.ZPos, caps.ZMin, caps.ZMax));
+                        state.SetAxis(JoystickAxis.Axis3, CalculateOffset(info.RPos, caps.RMin, caps.RMax));
+                        state.SetAxis(JoystickAxis.Axis4, CalculateOffset(info.UPos, caps.UMin, caps.UMax));
+                        state.SetAxis(JoystickAxis.Axis5, CalculateOffset(info.VPos, caps.VMin, caps.VMax));
 
-                    state.SetIsConnected(true);
+                        for (int i = 0; i < 16; i++)
+                        {
+                            state.SetButton(JoystickButton.Button0 + i, (info.Buttons & 1 << i) != 0);
+                        }
+
+                        state.SetIsConnected(true);
+                    }
                 }
-                else if (result == JoystickError.Unplugged)
+
+                if (result == JoystickError.Unplugged)
                 {
                     UnplugJoystick(index);
-                }
-                else
-                {
-                    // Joystick not existent or other error. No need to spam the log
-                    //Debug.Print("[Win] WinMM joyGetPosEx failed. Error: {0}", result);
                 }
             }
             else
