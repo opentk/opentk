@@ -36,7 +36,7 @@ using System.Diagnostics;
 
 namespace OpenTK.Platform.Windows
 {
-    sealed class WinMMJoystick : IJoystickDriver, IGamePadDriver
+    sealed class WinMMJoystick : IJoystickDriver, IJoystickDriver2
     {
         #region Fields
 
@@ -242,6 +242,64 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region IJoystickDriver2 Members
+
+        public JoystickCapabilities GetCapabilities(int index)
+        {
+            if (IsValid(index))
+            {
+                JoyCaps mmcaps;
+                JoystickError result = UnsafeNativeMethods.joyGetDevCaps(index, out mmcaps, JoyCaps.SizeInBytes);
+                if (result == JoystickError.NoError)
+                {
+                    JoystickCapabilities caps = new JoystickCapabilities(
+                        mmcaps.NumAxes, mmcaps.NumButtons, true);
+                    //if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
+                    //    gpcaps.DPadCount++;
+                    return caps;
+                }
+            }
+            else
+            {
+                Debug.Print("[Win] Invalid WinMM joystick device {0}", index);
+            }
+
+            return new JoystickCapabilities();
+        }
+
+        public JoystickState GetState(int index)
+        {
+            JoystickState state = new JoystickState();
+
+            if (IsValid(index))
+            {
+                JoyInfoEx info = new JoyInfoEx();
+                info.Size = JoyInfoEx.SizeInBytes;
+                info.Flags = JoystickFlags.All;
+                UnsafeNativeMethods.joyGetPosEx(index, ref info);
+
+                state.SetAxis(JoystickAxis.Axis0, (short)info.XPos);
+                state.SetAxis(JoystickAxis.Axis1, (short)info.YPos);
+                state.SetAxis(JoystickAxis.Axis2, (short)info.ZPos);
+                state.SetAxis(JoystickAxis.Axis3, (short)info.RPos);
+                state.SetAxis(JoystickAxis.Axis4, (short)info.ZPos);
+                state.SetAxis(JoystickAxis.Axis5, (short)info.RPos);
+
+                for (int i = 0; i < 16; i++)
+                {
+                    state.SetButton(JoystickButton.Button0 + i, (info.Buttons & 1 << i) != 0);
+                }
+            }
+            else
+            {
+                Debug.Print("[Win] Invalid WinMM joystick device {0}", index);
+            }
+
+            return state;
+        }
+
+        #endregion
+
         #region IDisposable
 
         public void Dispose()
@@ -429,77 +487,6 @@ namespace OpenTK.Platform.Windows
                 else
                     return offset;
             }
-        }
-
-        #endregion
-
-        #region IGamePadDriver Members
-
-        public GamePadCapabilities GetCapabilities(int index)
-        {
-            GamePadCapabilities gpcaps = new GamePadCapabilities();
-
-            if (IsValid(index))
-            {
-                JoyCaps caps;
-                JoystickError result = UnsafeNativeMethods.joyGetDevCaps(index, out caps, JoyCaps.SizeInBytes);
-                if (result == JoystickError.NoError)
-                {
-                    //gpcaps.AxisCount = caps.NumAxes;
-                    //gpcaps.ButtonCount = caps.NumButtons;
-                    //if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
-                    //    gpcaps.DPadCount++;
-                }
-            }
-            else
-            {
-                Debug.Print("[Win] Invalid WinMM joystick device {0}", index);
-            }
-
-            return gpcaps;
-        }
-
-        public GamePadState GetState(int index)
-        {
-            GamePadState state = new GamePadState();
-
-            if (IsValid(index))
-            {
-                JoyInfoEx info = new JoyInfoEx();
-                info.Size = JoyInfoEx.SizeInBytes;
-                info.Flags = JoystickFlags.All;
-                UnsafeNativeMethods.joyGetPosEx(index, ref info);
-
-                state.SetAxis(GamePadAxes.LeftX, (short)info.XPos);
-                state.SetAxis(GamePadAxes.LeftY, (short)info.YPos);
-                state.SetAxis(GamePadAxes.RightX, (short)info.ZPos);
-                state.SetAxis(GamePadAxes.RightY, (short)info.RPos);
-                //state.SetAxis(GamePadAxis.RightX, (short)info.ZPos);
-                //state.SetAxis(GamePadAxis.RightY, (short)info.RPos);
-
-                state.SetButton(Buttons.A, (info.Buttons & 1 << 0) != 0);
-                state.SetButton(Buttons.B, (info.Buttons & 1 << 1) != 0);
-                state.SetButton(Buttons.X, (info.Buttons & 1 << 2) != 0);
-                state.SetButton(Buttons.Y, (info.Buttons & 1 << 3) != 0);
-                state.SetButton(Buttons.LeftShoulder, (info.Buttons & 1 << 4) != 0);
-                state.SetButton(Buttons.RightShoulder, (info.Buttons & 1 << 5) != 0);
-                state.SetButton(Buttons.Back, (info.Buttons & 1 << 6) != 0);
-                state.SetButton(Buttons.Start, (info.Buttons & 1 << 7) != 0);
-                state.SetButton(Buttons.LeftStick, (info.Buttons & 1 << 8) != 0);
-                state.SetButton(Buttons.RightStick, (info.Buttons & 1 << 9) != 0);
-                state.SetButton(Buttons.BigButton, (info.Buttons & 1 << 10) != 0);
-            }
-            else
-            {
-                Debug.Print("[Win] Invalid WinMM joystick device {0}", index);
-            }
-
-            return state;
-        }
-
-        public string GetName(int index)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
