@@ -258,7 +258,7 @@ namespace OpenTK.Platform.SDL2
             int id = ev.Which;
             if (IsControllerValid(id))
             {
-                controllers[id].State.SetAxis((GamePadAxis)ev.Axis, ev.Value);
+                controllers[id].State.SetAxis((GamePadAxes)ev.Axis, ev.Value);
             }
             else
             {

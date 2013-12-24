@@ -33,41 +33,56 @@ using System.Text;
 using OpenTK.Input;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Diagnostics;
 
 namespace OpenTK.Platform.Windows
 {
-    class XInputJoystick : IGamePadDriver
+    class XInputJoystick : IGamePadDriver, IDisposable
     {
+        XInput xinput = new XInput();
+
         #region IGamePadDriver Members
 
         public GamePadState GetState(int index)
         {
             XInputState xstate;
-            XInput910.GetState((XInputUserIndex)index, out xstate);
+            XInputErrorCode error = xinput.GetState((XInputUserIndex)index, out xstate);
 
             GamePadState state = new GamePadState();
-            state.SetButton(Buttons.A, (xstate.GamePad.Buttons & XInputButtons.A) != 0);
-            state.SetButton(Buttons.B, (xstate.GamePad.Buttons & XInputButtons.B) != 0);
-            state.SetButton(Buttons.X, (xstate.GamePad.Buttons & XInputButtons.X) != 0);
-            state.SetButton(Buttons.Y, (xstate.GamePad.Buttons & XInputButtons.Y) != 0);
-            state.SetButton(Buttons.Start, (xstate.GamePad.Buttons & XInputButtons.Start) != 0);
-            state.SetButton(Buttons.Back, (xstate.GamePad.Buttons & XInputButtons.Back) != 0);
-            //state.SetButton(Buttons.BigButton, (xstate.GamePad.Buttons & XInputButtons.???) != 0);
-            state.SetButton(Buttons.LeftShoulder, (xstate.GamePad.Buttons & XInputButtons.LeftShoulder) != 0);
-            state.SetButton(Buttons.RightShoulder, (xstate.GamePad.Buttons & XInputButtons.RightShoulder) != 0);
-            state.SetButton(Buttons.LeftStick, (xstate.GamePad.Buttons & XInputButtons.LeftThumb) != 0);
-            state.SetButton(Buttons.RightStick, (xstate.GamePad.Buttons & XInputButtons.RightThumb) != 0);
-            state.SetButton(Buttons.DPadDown, (xstate.GamePad.Buttons & XInputButtons.DPadDown) != 0);
-            state.SetButton(Buttons.DPadUp, (xstate.GamePad.Buttons & XInputButtons.DPadUp) != 0);
-            state.SetButton(Buttons.DPadLeft, (xstate.GamePad.Buttons & XInputButtons.DPadLeft) != 0);
-            state.SetButton(Buttons.DPadRight, (xstate.GamePad.Buttons & XInputButtons.DPadRight) != 0);
+            if (error == XInputErrorCode.Success)
+            {
+                state.SetConnected(true);
+
+                state.SetAxis(GamePadAxes.LeftX, xstate.GamePad.ThumbLX);
+                state.SetAxis(GamePadAxes.LeftY, xstate.GamePad.ThumbLY);
+                state.SetAxis(GamePadAxes.RightX, xstate.GamePad.ThumbRX);
+                state.SetAxis(GamePadAxes.RightY, xstate.GamePad.ThumbRY);
+
+                state.SetTriggers(xstate.GamePad.LeftTrigger, xstate.GamePad.RightTrigger);
+
+                state.SetButton(TranslateButtons(xstate.GamePad.Buttons), true);
+            }
 
             return state;
         }
 
         public GamePadCapabilities GetCapabilities(int index)
         {
-            throw new NotImplementedException();
+            XInputDeviceCapabilities xcaps;
+            XInputErrorCode error = xinput.GetCapabilities(
+                (XInputUserIndex)index,
+                XInputCapabilitiesFlags.Default,
+                out xcaps);
+
+            if (error == XInputErrorCode.Success)
+            {
+                GamePadType type = TranslateSubType(xcaps.SubType);
+                Buttons buttons = TranslateButtons(xcaps.GamePad.Buttons);
+                GamePadAxes axes = TranslateAxes(ref xcaps.GamePad);
+
+                return new GamePadCapabilities(type, axes, buttons, true);
+            }
+            return new GamePadCapabilities();
         }
 
         public string GetName(int index)
@@ -78,6 +93,58 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region Private Members
+        GamePadAxes TranslateAxes(ref XInputGamePad pad)
+        {
+            GamePadAxes axes = 0;
+            axes |= pad.ThumbLX != 0 ? GamePadAxes.LeftX : 0;
+            axes |= pad.ThumbLY != 0 ? GamePadAxes.LeftY : 0;
+            axes |= pad.LeftTrigger != 0 ? GamePadAxes.LeftTrigger : 0;
+            axes |= pad.ThumbRX != 0 ? GamePadAxes.RightX : 0;
+            axes |= pad.ThumbRY != 0 ? GamePadAxes.RightY : 0;
+            axes |= pad.RightTrigger != 0 ? GamePadAxes.RightTrigger : 0;
+            return axes;
+        }
+
+        Buttons TranslateButtons(XInputButtons xbuttons)
+        {
+            Buttons buttons = 0;
+            buttons |= (xbuttons & XInputButtons.A) != 0 ? Buttons.A : 0;
+            buttons |= (xbuttons & XInputButtons.B) != 0 ? Buttons.B : 0;
+            buttons |= (xbuttons & XInputButtons.X) != 0 ? Buttons.X : 0;
+            buttons |= (xbuttons & XInputButtons.Y) != 0 ? Buttons.Y : 0;
+            buttons |= (xbuttons & XInputButtons.Start) != 0 ? Buttons.Start : 0;
+            buttons |= (xbuttons & XInputButtons.Back) != 0 ? Buttons.Back : 0;
+            //buttons |= (xbuttons & XInputButtons.BigButton) != 0 ? Buttons.BigButton : 0;
+            buttons |= (xbuttons & XInputButtons.LeftShoulder) != 0 ? Buttons.LeftShoulder : 0;
+            buttons |= (xbuttons & XInputButtons.RightShoulder) != 0 ? Buttons.RightShoulder : 0;
+            buttons |= (xbuttons & XInputButtons.LeftThumb) != 0 ? Buttons.LeftStick : 0;
+            buttons |= (xbuttons & XInputButtons.RightThumb) != 0 ? Buttons.RightStick : 0;
+            buttons |= (xbuttons & XInputButtons.DPadDown) != 0 ? Buttons.DPadDown : 0;
+            buttons |= (xbuttons & XInputButtons.DPadUp) != 0 ? Buttons.DPadUp : 0;
+            buttons |= (xbuttons & XInputButtons.DPadLeft) != 0 ? Buttons.DPadLeft : 0;
+            buttons |= (xbuttons & XInputButtons.DPadRight) != 0 ? Buttons.DPadRight : 0;
+            return buttons;
+        }
+
+        GamePadType TranslateSubType(XInputDeviceSubType xtype)
+        {
+            switch (xtype)
+            {
+                case XInputDeviceSubType.ArcadePad: return GamePadType.ArcadePad;
+                case XInputDeviceSubType.ArcadeStick: return GamePadType.ArcadeStick;
+                case XInputDeviceSubType.DancePad: return GamePadType.DancePad;
+                case XInputDeviceSubType.DrumKit: return GamePadType.DrumKit;
+                case XInputDeviceSubType.FlightStick: return GamePadType.FlightStick;
+                case XInputDeviceSubType.GamePad: return GamePadType.GamePad;
+                case XInputDeviceSubType.Guitar: return GamePadType.Guitar;
+                case XInputDeviceSubType.GuitarAlternate: return GamePadType.AlternateGuitar;
+                case XInputDeviceSubType.GuitarBass: return GamePadType.BassGuitar;
+                case XInputDeviceSubType.Wheel: return GamePadType.Wheel;
+                case XInputDeviceSubType.Unknown:
+                default:
+                    return GamePadType.Unknown;
+            }
+        }
 
         enum XInputErrorCode
         {
@@ -85,12 +152,12 @@ namespace OpenTK.Platform.Windows
             DeviceNotConnected
         }
 
-        enum XInputType
+        enum XInputDeviceType : byte
         {
             GamePad
         }
 
-        enum XInputSubType
+        enum XInputDeviceSubType : byte
         {
             Unknown = 0,
             GamePad = 1,
@@ -107,10 +174,10 @@ namespace OpenTK.Platform.Windows
 
         enum XInputCapabilities
         {
-            Ffb = 0x0001,
+            ForceFeedback = 0x0001,
             Wireless = 0x0002,
             Voice = 0x0004,
-            Pmd = 0x0008,
+            PluginModules = 0x0008,
             NoNavigation = 0x0010,
         }
 
@@ -197,8 +264,8 @@ namespace OpenTK.Platform.Windows
 
         struct XInputDeviceCapabilities
         {
-            public byte Type;
-            public byte SubType;
+            public XInputDeviceType Type;
+            public XInputDeviceSubType SubType;
             public short Flags;
             public XInputGamePad GamePad;
             public XInputVibration Vibration;
@@ -210,89 +277,123 @@ namespace OpenTK.Platform.Windows
             public XInputBatteryLevel Level;
         }
 
-        static class XInput910
+        class XInput : IDisposable
         {
-            const string dll = "XINPUT9_1_0";
+            IntPtr dll;
+
+            internal XInput()
+            {
+                // Try to load the newest XInput***.dll installed on the system
+                // The delegates below will be loaded dynamically from that dll
+                dll = Functions.LoadLibrary("XINPUT1_4");
+                if (dll == IntPtr.Zero)
+                    dll = Functions.LoadLibrary("XINPUT1_3");
+                if (dll == IntPtr.Zero)
+                    dll = Functions.LoadLibrary("XINPUT1_2");
+                if (dll == IntPtr.Zero)
+                    dll = Functions.LoadLibrary("XINPUT1_1");
+                if (dll == IntPtr.Zero)
+                    dll = Functions.LoadLibrary("XINPUT9_1_0");
+                if (dll == IntPtr.Zero)
+                    throw new NotSupportedException("XInput was not found on this platform");
+
+                // Load the entry points we are interested in from that dll
+                GetCapabilities = (XInputGetCapabilities)Load("XInputGetCapabilities", typeof(XInputGetCapabilities));
+                GetState = (XInputGetState)Load("XInputGetState", typeof(XInputGetState));
+                SetState = (XInputSetState)Load("XInputSetState", typeof(XInputSetState));
+            }
+
+            #region Private Members
+
+            Delegate Load(string name, Type type)
+            {
+                IntPtr pfunc = Functions.GetProcAddress(dll, name);
+                if (pfunc != IntPtr.Zero)
+                    return Marshal.GetDelegateForFunctionPointer(pfunc, type);
+                return null;
+            }
+
+            #endregion
+
+            #region Internal Members
+
+            internal XInputGetCapabilities GetCapabilities;
+            internal XInputGetState GetState;
+            internal XInputSetState SetState;
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport(dll, EntryPoint = "XInputGetCapabilities", ExactSpelling = true, SetLastError = false)]
-            public static extern XInputErrorCode GetCapabilities(
+            internal delegate XInputErrorCode XInputGetCapabilities(
                 XInputUserIndex dwUserIndex,
                 XInputCapabilitiesFlags dwFlags,
-                ref XInputDeviceCapabilities pCapabilities);
+                out XInputDeviceCapabilities pCapabilities);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport(dll, EntryPoint = "XInputGetState", ExactSpelling = true, SetLastError = false)]
-            public static extern XInputErrorCode GetState
+            internal delegate XInputErrorCode XInputGetState
             (
                 XInputUserIndex dwUserIndex,
                 out XInputState pState
             );
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport(dll, EntryPoint = "XInputSetState", ExactSpelling = true, SetLastError = false)]
-            public static extern XInputErrorCode SetState
+            internal delegate XInputErrorCode XInputSetState
             (
                 XInputUserIndex dwUserIndex,
                 ref XInputVibration pVibration
             );
+
+            #endregion
+
+            #region IDisposable Members
+
+            public void Dispose()
+            {
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            void Dispose(bool manual)
+            {
+                if (manual)
+                {
+                    if (dll != IntPtr.Zero)
+                    {
+                        Functions.FreeLibrary(dll);
+                        dll = IntPtr.Zero;
+                    }
+                }
+            }
+
+            #endregion
         }
 
-        static class XInput13
+        #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
         {
-            const string dll = "XINPUT1_3";
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(dll, EntryPoint = "XInputGetCapabilities", ExactSpelling = true, SetLastError = false)]
-            public static extern XInputErrorCode GetCapabilities(
-                XInputUserIndex dwUserIndex,
-                XInputCapabilitiesFlags dwFlags,
-                ref XInputDeviceCapabilities pCapabilities);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(dll, EntryPoint = "XInputGetState", ExactSpelling = true, SetLastError = false)]
-            public static extern XInputErrorCode GetState
-            (
-                XInputUserIndex dwUserIndex,
-                out XInputState pState
-            );
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(dll, EntryPoint = "XInputSetState", ExactSpelling = true, SetLastError = false)]
-            public static extern XInputErrorCode SetState
-            (
-                XInputUserIndex dwUserIndex,
-                ref XInputVibration pVibration
-            );
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        static class XInput14
+        void Dispose(bool manual)
         {
-            const string dll = "XINPUT1_4";
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(dll, EntryPoint = "XInputGetCapabilities", ExactSpelling = true, SetLastError = false)]
-            public static extern XInputErrorCode GetCapabilities(
-                XInputUserIndex dwUserIndex,
-                XInputCapabilitiesFlags dwFlags,
-                ref XInputDeviceCapabilities pCapabilities);
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(dll, EntryPoint = "XInputGetState", ExactSpelling = true, SetLastError = false)]
-            public static extern XInputErrorCode GetState
-            (
-                XInputUserIndex dwUserIndex,
-                out XInputState pState
-            );
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport(dll, EntryPoint = "XInputSetState", ExactSpelling = true, SetLastError = false)]
-            public static extern XInputErrorCode SetState
-            (
-                XInputUserIndex dwUserIndex,
-                ref XInputVibration pVibration
-            );
+            if (manual)
+            {
+                xinput.Dispose();
+            }
+            else
+            {
+                Debug.Print("{0} leaked, did you forget to call Dispose()?", typeof(XInputJoystick).Name);
+            }
         }
+
+#if DEBUG
+        ~XInputJoystick()
+        {
+            Dispose(false);
+        }
+#endif
 
         #endregion
     }
