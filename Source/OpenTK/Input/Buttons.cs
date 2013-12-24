@@ -27,6 +27,9 @@ using System;
 
 namespace OpenTK.Input
 {
+    /// <summary>
+    /// Enumerates available buttons for a canonical <c>GamePad</c> device.
+    /// </summary>
 	public enum Buttons
 	{
         /// <summary>
@@ -158,56 +161,5 @@ namespace OpenTK.Input
         /// Left stick right direction button
         /// </summary>
         LeftThumbstickRight = 1 << 30,
-
-        /// <summary>The first button of the gamepad.</summary>
-        Button0 = A,
-        /// <summary>The second button of the gamepad.</summary>
-        Button1 = B,
-        /// <summary>The third button of the gamepad.</summary>
-        Button2 = X,
-        /// <summary>The fourth button of the gamepad.</summary>
-        Button3 = Y,
-        /// <summary>The fifth button of the gamepad.</summary>
-        Button4 = Start,
-        /// <summary>The sixth button of the gamepad.</summary>
-        Button5 = Back,
-        /// <summary>The seventh button of the gamepad.</summary>
-        Button6 = LeftStick,
-        /// <summary>The eighth button of the gamepad.</summary>
-        Button7 = RightStick,
-        /// <summary>The ninth button of the gamepad.</summary>
-        Button8 = LeftShoulder,
-        /// <summary>The tenth button of the gamepad.</summary>
-        Button9 = RightShoulder,
-        /// <summary>The eleventh button of the gamepad.</summary>
-        Button10 = Home,
-        /// <summary>The twelfth button of the gamepad.</summary>
-        Button11 = DPadUp,
-        /// <summary>The thirteenth button of the gamepad.</summary>
-        Button12 = DPadDown,
-        /// <summary>The fourteenth button of the gamepad.</summary>
-        Button13 = DPadLeft,
-        /// <summary>The fifteenth button of the gamepad.</summary>
-        Button14 = DPadRight,
-        /// <summary>The sixteenth button of the gamepad.</summary>
-        Button15 = LeftTrigger,
-        /// <summary>The seventeenth button of the gamepad.</summary>
-        Button16 = RightTrigger,
-        /// <summary>The eighteenth button of the gamepad.</summary>
-        Button17 = LeftThumbstickUp,
-        /// <summary>The nineteenth button of the gamepad.</summary>
-        Button18 = LeftThumbstickDown,
-        /// <summary>The twentieth button of the gamepad.</summary>
-        Button19 = LeftThumbstickLeft,
-        /// <summary>The twentieth-one button of the gamepad.</summary>
-        Button20 = LeftThumbstickRight,
-        /// <summary>The twentieth-one button of the gamepad.</summary>
-        Button21 = RightThumbstickUp,
-        /// <summary>The twentieth-one button of the gamepad.</summary>
-        Button22 = RightThumbstickDown,
-        /// <summary>The twentieth-one button of the gamepad.</summary>
-        Button23 = RightThumbstickLeft,
-        /// <summary>The twentieth-one button of the gamepad.</summary>
-        Button24 = RightThumbstickRight,
     }
 }
