@@ -137,7 +137,28 @@ namespace OpenTK.Platform.SDL2
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetAxis", ExactSpelling = true)]
         public static extern short GameControllerGetAxis(IntPtr gamecontroller, GameControllerAxis axis);
 
-        /// <summary>>
+        /// <summary>
+        /// Gets the SDL joystick layer binding for the specified game controller axis
+        /// </summary>
+        /// <param name="gamecontroller">Pointer to a game controller instance returned by <c>GameControllerOpen</c>.</param>
+        /// <param name="axis">A value from the <c>GameControllerAxis</c> enumeration</param>
+        /// <returns>A GameControllerButtonBind instance describing the specified binding</returns>
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetBindForAxis", ExactSpelling = true)]
+        public static extern GameControllerButtonBind GameControllerGetBindForAxis(IntPtr gamecontroller, GameControllerAxis axis);
+
+        /// <summary>
+        /// Gets the SDL joystick layer binding for the specified game controller button
+        /// </summary>
+        /// <param name="gamecontroller">Pointer to a game controller instance returned by <c>GameControllerOpen</c>.</param>
+        /// <param name="axis">A value from the <c>GameControllerButton</c> enumeration</param>
+        /// <returns>A GameControllerButtonBind instance describing the specified binding</returns>
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetBindForButton", ExactSpelling = true)]
+        public static extern GameControllerButtonBind GameControllerGetBindForButton(
+            IntPtr gamecontroller, GameControllerButton button);
+
+        /// <summary>
         /// Gets the current state of a button on a game controller.
         /// </summary>
         /// <param name="gamecontroller">A game controller handle previously opened with <c>GameControllerOpen</c>.</param>
@@ -146,6 +167,15 @@ namespace OpenTK.Platform.SDL2
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetButton", ExactSpelling = true)]
         public static extern bool GameControllerGetButton(IntPtr gamecontroller, GameControllerButton button);
+
+        /// <summary>
+        /// Retrieve the joystick handle that corresponds to the specified game controller.
+        /// </summary>
+        /// <param name="gamecontroller">A game controller handle previously opened with <c>GameControllerOpen</c>.</param>
+        /// <returns>A handle to a joystick, or IntPtr.Zero in case of error. The pointer is owned by the callee. Use <c>SDL.GetError</c> to retrieve error information</returns>
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetJoystick", ExactSpelling = true)]
+        public static extern IntPtr GameControllerGetJoystick(IntPtr gamecontroller);
 
         /// <summary>
         /// Opens a game controller for use.
@@ -585,6 +615,14 @@ namespace OpenTK.Platform.SDL2
         DPAD_LEFT,
         DPAD_RIGHT,
         Max
+    }
+
+    enum GameControllerBindType : byte
+    {
+        None = 0,
+        Button,
+        Axis,
+        Hat
     }
 
     [Flags]
@@ -1275,6 +1313,21 @@ namespace OpenTK.Platform.SDL2
         [FieldOffset(0)]
         public DropEvent drop;
 #endif
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    struct GameControllerButtonBind
+    {
+        [FieldOffset(0)]
+        public GameControllerBindType BindType;
+        [FieldOffset(4)]
+        public Button Button;
+        [FieldOffset(4)]
+        public GameControllerAxis Axis;
+        [FieldOffset(4)]
+        public int Hat;
+        [FieldOffset(8)]
+        public int HatMask;
     }
 
     struct JoyAxisEvent
