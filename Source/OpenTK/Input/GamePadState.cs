@@ -41,6 +41,8 @@ namespace OpenTK.Input
         short left_stick_y;
         short right_stick_x;
         short right_stick_y;
+        byte left_trigger;
+        byte right_trigger;
         bool is_connected;
 
         #region Public Members
