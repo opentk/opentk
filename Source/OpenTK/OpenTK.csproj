@@ -158,6 +158,7 @@
     <Compile Include="Math\Matrix4x3d.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
+    <Compile Include="Platform\Windows\XInputJoystick.cs" />
     <Compile Include="ToolkitOptions.cs" />
     <Compile Include="WindowBorder.cs">
       <SubType>Code</SubType>
