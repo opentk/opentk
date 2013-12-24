@@ -48,6 +48,7 @@ namespace OpenTK.Platform.SDL2
         {
             public IntPtr Handle { get; private set; }
             public GamePadState State { get; set; }
+            public GamePadCapabilities Capabilities { get; set; }
 
             public Sdl2GamePad(IntPtr handle)
             {
@@ -112,6 +113,53 @@ namespace OpenTK.Platform.SDL2
         bool IsControllerValid(int id)
         {
             return controllers.ContainsKey(id);
+        }
+
+        GamePadAxes TranslateAxes(IntPtr gamecontroller)
+        {
+            GamePadAxes axes = 0;
+            axes |= IsAxisBind(gamecontroller, GameControllerAxis.LeftX) ? GamePadAxes.LeftX : 0;
+            axes |= IsAxisBind(gamecontroller, GameControllerAxis.LeftY) ? GamePadAxes.LeftY : 0;
+            axes |= IsAxisBind(gamecontroller, GameControllerAxis.RightX) ? GamePadAxes.RightX : 0;
+            axes |= IsAxisBind(gamecontroller, GameControllerAxis.RightY) ? GamePadAxes.RightY : 0;
+            axes |= IsAxisBind(gamecontroller, GameControllerAxis.TriggerLeft) ? GamePadAxes.LeftTrigger : 0;
+            axes |= IsAxisBind(gamecontroller, GameControllerAxis.TriggerRight) ? GamePadAxes.RightTrigger : 0;
+            return axes;
+        }
+
+        Buttons TranslateButtons(IntPtr gamecontroller)
+        {
+            Buttons buttons = 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.A) ? Buttons.A : 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.B) ? Buttons.B : 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.X) ? Buttons.X : 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.Y) ? Buttons.Y : 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.START) ? Buttons.Start : 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.BACK) ? Buttons.Back : 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.LEFTSHOULDER) ? Buttons.LeftShoulder : 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.RIGHTSHOULDER) ? Buttons.RightShoulder : 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.LEFTSTICK) ? Buttons.LeftStick : 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.RIGHTSTICK) ? Buttons.RightStick : 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.GUIDE) ? Buttons.BigButton : 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.DPAD_DOWN) ? Buttons.DPadDown : 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.DPAD_UP) ? Buttons.DPadUp : 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.DPAD_LEFT) ? Buttons.DPadLeft : 0;
+            buttons |= IsButtonBind(gamecontroller, GameControllerButton.DPAD_RIGHT) ? Buttons.DPadRight : 0;
+            return buttons;
+        }
+
+        bool IsAxisBind(IntPtr gamecontroller, GameControllerAxis axis)
+        {
+            GameControllerButtonBind bind =
+                SDL.GameControllerGetBindForAxis(gamecontroller, axis);
+            return bind.BindType == GameControllerBindType.Axis;
+        }
+
+        bool IsButtonBind(IntPtr gamecontroller, GameControllerButton button)
+        {
+            GameControllerButtonBind bind =
+                SDL.GameControllerGetBindForButton(gamecontroller, button);
+            return bind.BindType == GameControllerBindType.Axis;
         }
 
         #endregion
@@ -232,11 +280,27 @@ namespace OpenTK.Platform.SDL2
                     if (handle != IntPtr.Zero)
                     {
                         Sdl2GamePad pad = new Sdl2GamePad(handle);
-                        pad.State.SetConnected(true);
-                        // Check whether the device has ever been connected before
-                        if (!controllers.ContainsKey(id))
-                            controllers.Add(id, null);
-                        controllers[id] = pad;
+
+                        IntPtr joystick = SDL.GameControllerGetJoystick(handle);
+                        if (joystick != IntPtr.Zero)
+                        {
+                            SDL.JoystickNumAxes(joystick);
+                            pad.Capabilities = new GamePadCapabilities(
+                                GamePadType.GamePad,
+                                TranslateAxes(joystick),
+                                TranslateButtons(joystick),
+                                true);
+                            pad.State.SetConnected(true);
+
+                            // Check whether the device has ever been connected before
+                            if (!controllers.ContainsKey(id))
+                                controllers.Add(id, null);
+                            controllers[id] = pad;
+                        }
+                        else
+                        {
+                            Debug.Print("[SDL2] Failed to retrieve joystick from game controller. Error: {0}", SDL.GetError());
+                        }
                     }
                     break;
 
@@ -302,16 +366,19 @@ namespace OpenTK.Platform.SDL2
 
         public GamePadCapabilities GetCapabilities(int index)
         {
+            if (IsControllerValid(index))
+            {
+                return controllers[index].Capabilities;
+            }
             return new GamePadCapabilities();
         }
 
         public GamePadState GetState(int index)
         {
-            if (joysticks.Count >= index)
+            if (IsControllerValid(index))
             {
-
+                return controllers[index].State;
             }
-
             return new GamePadState();
         }
 
@@ -326,12 +393,41 @@ namespace OpenTK.Platform.SDL2
 
         JoystickState IJoystickDriver2.GetState(int index)
         {
-            throw new NotImplementedException();
+            JoystickState state = new JoystickState();
+            if (IsJoystickValid(index))
+            {
+                JoystickDevice<Sdl2JoystickDetails> joystick =
+                    (JoystickDevice<Sdl2JoystickDetails>)joysticks[sdl_joyid_to_joysticks[index]];
+
+                for (int i = 0; i < joystick.Axis.Count; i++)
+                {
+                    state.SetAxis(JoystickAxis.Axis0 + i, (short)(joystick.Axis[i] * short.MaxValue + 0.5f));
+                }
+
+                for (int i = 0; i < joystick.Button.Count; i++)
+                {
+                    state.SetButton(JoystickButton.Button0 + i, joystick.Button[i]);
+                }
+
+                state.SetIsConnected(true);
+            }
+
+            return state;
         }
 
         JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)
         {
-            throw new NotImplementedException();
+            if (IsJoystickValid(index))
+            {
+                JoystickDevice<Sdl2JoystickDetails> joystick =
+                    (JoystickDevice<Sdl2JoystickDetails>)joysticks[sdl_joyid_to_joysticks[index]];
+
+                return new JoystickCapabilities(
+                    joystick.Axis.Count,
+                    joystick.Button.Count,
+                    true);
+            }
+            return new JoystickCapabilities();
         }
 
         #endregion
