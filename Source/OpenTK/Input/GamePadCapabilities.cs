@@ -34,11 +34,6 @@ namespace OpenTK.Input
 
     public struct GamePadCapabilities : IEquatable<GamePadCapabilities>
     {
-        byte axis_count;
-        byte button_count;
-        byte dpad_count;
-        byte trackball_count;
-
         Buttons buttons;
         byte gamepad_type;
         bool is_connected;
@@ -217,34 +212,6 @@ namespace OpenTK.Input
             return
                 obj is GamePadCapabilities &&
                 Equals((GamePadCapabilities)obj);
-        }
-
-        #endregion
-
-        #region Internal Members
-
-        internal int AxisCount
-        {
-            get { return axis_count; }
-            set { axis_count = (byte)value; }
-        }
-
-        internal int ButtonCount
-        {
-            get { return button_count; }
-            set { button_count = (byte)value; }
-        }
-
-        internal int DPadCount
-        {
-            get { return dpad_count; }
-            set { dpad_count = (byte)value; }
-        }
-
-        internal int TrackballCount
-        {
-            get { return trackball_count; }
-            set { trackball_count = (byte)value; }
         }
 
         #endregion

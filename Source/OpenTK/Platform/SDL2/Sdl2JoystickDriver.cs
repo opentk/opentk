@@ -32,7 +32,7 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2JoystickDriver : IJoystickDriver, IGamePadDriver, IDisposable
+    class Sdl2JoystickDriver : IJoystickDriver, IJoystickDriver2, IGamePadDriver, IDisposable
     {
         const float RangeMultiplier =  1.0f / 32768.0f;
 
@@ -318,6 +318,20 @@ namespace OpenTK.Platform.SDL2
         public string GetName(int index)
         {
             return String.Empty;
+        }
+
+        #endregion
+
+        #region IJoystickDriver2 Members
+
+        JoystickState IJoystickDriver2.GetState(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

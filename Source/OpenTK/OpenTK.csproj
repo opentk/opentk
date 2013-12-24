@@ -138,8 +138,14 @@
     <Compile Include="Input\GamePadType.cs" />
     <Compile Include="Input\IGamePadDriver.cs" />
     <Compile Include="Input\IInputDriver2.cs" />
+    <Compile Include="Input\IJoystickDriver2.cs" />
     <Compile Include="Input\IKeyboardDriver2.cs" />
     <Compile Include="Input\IMouseDriver2.cs" />
+    <Compile Include="Input\Joystick.cs" />
+    <Compile Include="Input\JoystickAxis.cs" />
+    <Compile Include="Input\JoystickButton.cs" />
+    <Compile Include="Input\JoystickCapabilities.cs" />
+    <Compile Include="Input\JoystickState.cs" />
     <Compile Include="InteropHelper.cs" />
     <Compile Include="Math\Matrix2.cs" />
     <Compile Include="Math\Matrix2d.cs" />

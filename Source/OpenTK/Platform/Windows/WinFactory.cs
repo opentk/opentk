@@ -130,7 +130,12 @@ namespace OpenTK.Platform.Windows
         {
             return InputDriver.GamePadDriver;
         }
-        
+
+        public IJoystickDriver2 CreateJoystickDriver()
+        {
+            return InputDriver.JoystickDriver;
+        }
+
         #endregion
 
         IInputDriver2 InputDriver

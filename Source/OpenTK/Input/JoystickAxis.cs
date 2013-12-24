@@ -1,6 +1,6 @@
 ﻿#region License
 //
-// GamePadType.cs
+// JoystickAxis.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
@@ -27,19 +27,36 @@
 //
 #endregion
 
+using System;
+using System.Collections.Generic;
+using System.Text;
+
 namespace OpenTK.Input
 {
-    public enum GamePadType
+    /// <summary>
+    /// Defines available JoystickDevice axes.
+    /// </summary>
+    public enum JoystickAxis
     {
-        Unknown = 0,
-        ArcadeStick,
-        DancePad,
-        FlightStick,
-        Guitar,
-        Wheel,
-        AlternateGuitar,
-        BigButtonPad,
-        DrumKit,
-        GamePad,
+        /// <summary>The first axis of the JoystickDevice.</summary>
+        Axis0 = 0,
+        /// <summary>The second axis of the JoystickDevice.</summary>
+        Axis1,
+        /// <summary>The third axis of the JoystickDevice.</summary>
+        Axis2,
+        /// <summary>The fourth axis of the JoystickDevice.</summary>
+        Axis3,
+        /// <summary>The fifth axis of the JoystickDevice.</summary>
+        Axis4,
+        /// <summary>The sixth axis of the JoystickDevice.</summary>
+        Axis5,
+        /// <summary>The seventh axis of the JoystickDevice.</summary>
+        Axis6,
+        /// <summary>The eighth axis of the JoystickDevice.</summary>
+        Axis7,
+        /// <summary>The ninth axis of the JoystickDevice.</summary>
+        Axis8,
+        /// <summary>The tenth axis of the JoystickDevice.</summary>
+        Axis9,
     }
 }

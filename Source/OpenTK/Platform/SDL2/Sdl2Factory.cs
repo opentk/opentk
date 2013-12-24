@@ -104,6 +104,11 @@ namespace OpenTK.Platform.SDL2
             return InputDriver.GamePadDriver;
         }
 
+        public IJoystickDriver2 CreateJoystickDriver()
+        {
+            return InputDriver.JoystickDriver;
+        }
+
         #endregion
 
         #region IDisposable Members
