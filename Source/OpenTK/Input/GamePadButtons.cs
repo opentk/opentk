@@ -109,19 +109,7 @@ namespace OpenTK.Input
 
         public override string ToString()
         {
-            return String.Format(
-                "{{{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}}}",
-                A == ButtonState.Pressed ? "A" : String.Empty,
-                B == ButtonState.Pressed ? "B" : String.Empty,
-                X == ButtonState.Pressed ? "X" : String.Empty,
-                Y == ButtonState.Pressed ? "Y" : String.Empty,
-                LeftShoulder == ButtonState.Pressed ? "L" : String.Empty,
-                RightShoulder == ButtonState.Pressed ? "R" : String.Empty,
-                Back == ButtonState.Pressed ? " Back" : String.Empty,
-                Start == ButtonState.Pressed ? " Start" : String.Empty,
-                BigButton == ButtonState.Pressed ? " Big" : String.Empty,
-                LeftStick == ButtonState.Pressed ? " LStick" : String.Empty,
-                RightStick == ButtonState.Pressed ? " RStick" : String.Empty);
+            return Convert.ToString((int)buttons, 2).PadLeft(10, '0');
         }
 
         public override int GetHashCode()

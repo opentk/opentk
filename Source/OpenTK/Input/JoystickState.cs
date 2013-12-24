@@ -41,7 +41,7 @@ namespace OpenTK.Input
         internal const int MaxAxes = 10;
         internal const int MaxButtons = 32;
 
-        const float ConversionFactor = 1.0f / (short.MaxValue + 1);
+        const float ConversionFactor = 1.0f / (short.MaxValue + 0.5f);
 
         unsafe fixed short axes[MaxAxes];
         int buttons;
@@ -94,12 +94,12 @@ namespace OpenTK.Input
             for (int i = 0; i < MaxAxes; i++)
             {
                 sb.Append(" ");
-                sb.Append(GetAxis(i));
+                sb.Append(String.Format("{0:f4}", GetAxis(i)));
             }
             return String.Format(
                 "{{Axes:{0}; Buttons: {1}; IsConnected: {2}}}",
                 sb.ToString(),
-                Convert.ToString((int)buttons, 2),
+                Convert.ToString((int)buttons, 2).PadLeft(16, '0'),
                 IsConnected);
         }
 

@@ -47,5 +47,10 @@ namespace OpenTK.Input
         {
             return implementation.GetState(index);
         }
+
+        //public string GetName(int index)
+        //{
+        //    return implementation.GetName(index);
+        //}
     }
 }
