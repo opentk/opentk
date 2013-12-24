@@ -133,6 +133,7 @@
     </Compile>
     <Compile Include="DisplayIndex.cs" />
     <Compile Include="Graphics\GraphicsModeComparer.cs" />
+    <Compile Include="Input\GamePadMapping.cs" />
     <Compile Include="Input\GamePadThumbSticks.cs" />
     <Compile Include="Input\GamePadTriggers.cs" />
     <Compile Include="Input\GamePadType.cs" />
@@ -748,7 +749,7 @@
     </EmbeddedResource>
     <Compile Include="Platform\MacOS\HIDInput.cs" />
     <Compile Include="IntPtrEqualityComparer.cs" />
-    <Compile Include="Input\GamePadAxis.cs" />
+    <Compile Include="Input\GamePadAxes.cs" />
     <Compile Include="Platform\SDL2\Sdl2DisplayDeviceDriver.cs" />
     <Compile Include="Platform\SDL2\Sdl2Factory.cs" />
     <Compile Include="Platform\SDL2\Sdl2GraphicsContext.cs" />
