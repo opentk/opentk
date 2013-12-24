@@ -50,7 +50,7 @@ namespace OpenTK.Platform.MacOS
 
     // Requires Mac OS X 10.5 or higher.
     // Todo: create a driver for older installations. Maybe use CGGetLastMouseDelta for that?
-    class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2, IGamePadDriver, IJoystickDriver2
+    class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2, IJoystickDriver2
     {
         #region Fields
 
@@ -68,6 +68,8 @@ namespace OpenTK.Platform.MacOS
         readonly CFRunLoop RunLoop = CF.CFRunLoopGetMain();
         readonly CFString InputLoopMode = CF.RunLoopModeDefault;
         readonly CFDictionary DeviceTypes = new CFDictionary();
+
+        readonly MappedGamePadDriver mapped_gamepad = new MappedGamePadDriver();
 
         NativeMethods.IOHIDDeviceCallback HandleDeviceAdded;
         NativeMethods.IOHIDDeviceCallback HandleDeviceRemoved;
@@ -291,9 +293,8 @@ namespace OpenTK.Platform.MacOS
 
         public IMouseDriver2 MouseDriver { get { return this; } }
         public IKeyboardDriver2 KeyboardDriver { get { return this; } }
-        public IGamePadDriver GamePadDriver { get { return this; } }
+        public IGamePadDriver GamePadDriver { get { return mapped_gamepad; } }
         public IJoystickDriver2 JoystickDriver { get { return this; } }
-
 
         #endregion
 
@@ -368,35 +369,16 @@ namespace OpenTK.Platform.MacOS
 
         #endregion
 
-        #region IGamePadDriver Members
-
-        public GamePadState GetState(int index)
-        {
-            return new GamePadState();
-        }
-
-        public GamePadCapabilities GetCapabilities(int index)
-        {
-            return new GamePadCapabilities();
-        }
-
-        public string GetName(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
         #region IJoystickDriver2 Members
 
         JoystickState IJoystickDriver2.GetState(int index)
         {
-            throw new NotImplementedException();
+            return new JoystickState();
         }
 
         JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)
         {
-            throw new NotImplementedException();
+            return new JoystickCapabilities();
         }
 
         #endregion
