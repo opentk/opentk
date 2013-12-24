@@ -133,6 +133,16 @@ namespace OpenTK.Platform.Windows
             return stick;
         }
 
+        void UnplugJoystick(int index)
+        {
+            // Reset the system configuration. Without this,
+            // joysticks that are reconnected on different
+            // ports are given different ids, making it
+            // impossible to reconnect a disconnected user.
+            UnsafeNativeMethods.joyConfigChanged(0);
+            Debug.Print("[Win] WinMM joystick {0} unplugged", index);
+        }
+
         bool IsValid(int index)
         {
             return index >= 0 && index < UnsafeNativeMethods.joyGetNumDevs();
@@ -258,6 +268,10 @@ namespace OpenTK.Platform.Windows
                     //    gpcaps.DPadCount++;
                     return caps;
                 }
+                else if (result == JoystickError.Unplugged)
+                {
+                    UnplugJoystick(index);
+                }
             }
             else
             {
@@ -276,18 +290,32 @@ namespace OpenTK.Platform.Windows
                 JoyInfoEx info = new JoyInfoEx();
                 info.Size = JoyInfoEx.SizeInBytes;
                 info.Flags = JoystickFlags.All;
-                UnsafeNativeMethods.joyGetPosEx(index, ref info);
 
-                state.SetAxis(JoystickAxis.Axis0, (short)info.XPos);
-                state.SetAxis(JoystickAxis.Axis1, (short)info.YPos);
-                state.SetAxis(JoystickAxis.Axis2, (short)info.ZPos);
-                state.SetAxis(JoystickAxis.Axis3, (short)info.RPos);
-                state.SetAxis(JoystickAxis.Axis4, (short)info.ZPos);
-                state.SetAxis(JoystickAxis.Axis5, (short)info.RPos);
-
-                for (int i = 0; i < 16; i++)
+                JoystickError result = UnsafeNativeMethods.joyGetPosEx(index, ref info);
+                if (result == JoystickError.NoError)
                 {
-                    state.SetButton(JoystickButton.Button0 + i, (info.Buttons & 1 << i) != 0);
+                    state.SetAxis(JoystickAxis.Axis0, (short)info.XPos);
+                    state.SetAxis(JoystickAxis.Axis1, (short)info.YPos);
+                    state.SetAxis(JoystickAxis.Axis2, (short)info.ZPos);
+                    state.SetAxis(JoystickAxis.Axis3, (short)info.RPos);
+                    state.SetAxis(JoystickAxis.Axis4, (short)info.ZPos);
+                    state.SetAxis(JoystickAxis.Axis5, (short)info.RPos);
+
+                    for (int i = 0; i < 16; i++)
+                    {
+                        state.SetButton(JoystickButton.Button0 + i, (info.Buttons & 1 << i) != 0);
+                    }
+
+                    state.SetIsConnected(true);
+                }
+                else if (result == JoystickError.Unplugged)
+                {
+                    UnplugJoystick(index);
+                }
+                else
+                {
+                    // Joystick not existent or other error. No need to spam the log
+                    //Debug.Print("[Win] WinMM joyGetPosEx failed. Error: {0}", result);
                 }
             }
             else
@@ -441,9 +469,11 @@ namespace OpenTK.Platform.Windows
             [DllImport("Winmm.dll"), SuppressUnmanagedCodeSecurity]
             public static extern JoystickError joyGetDevCaps(int uJoyID, out JoyCaps pjc, int cbjc);
             [DllImport("Winmm.dll"), SuppressUnmanagedCodeSecurity]
-            public static extern uint joyGetPosEx(int uJoyID, ref JoyInfoEx pji);
+            public static extern JoystickError joyGetPosEx(int uJoyID, ref JoyInfoEx pji);
             [DllImport("Winmm.dll"), SuppressUnmanagedCodeSecurity]
             public static extern int joyGetNumDevs();
+            [DllImport("Winmm.dll"), SuppressUnmanagedCodeSecurity]
+            public static extern JoystickError joyConfigChanged(int flags);
         }
 
         #endregion
