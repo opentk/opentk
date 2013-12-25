@@ -805,8 +805,11 @@ namespace OpenTK.Platform.X11
                         {
                             for (int i = 0; i < status; i++)
                             {
-                                KPEventArgs.KeyChar = chars[i];
-                                key_press(this, KPEventArgs);
+                                if (!Char.IsControl(chars[i]))
+                                {
+                                    KPEventArgs.KeyChar = chars[i];
+                                    key_press(this, KPEventArgs);
+                                }
                             }
                         }
                         break;
