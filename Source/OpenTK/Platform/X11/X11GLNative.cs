@@ -59,6 +59,7 @@ namespace OpenTK.Platform.X11
 
         // Legacy input support
         X11Input driver;
+        KeyboardDevice keyboard;
         MouseDevice mouse;
 
         // Window manager hints for fullscreen windows.
@@ -119,6 +120,8 @@ namespace OpenTK.Platform.X11
         readonly byte[] ascii = new byte[16];
         readonly char[] chars = new char[16];
         readonly KeyPressEventArgs KPEventArgs = new KeyPressEventArgs('\0');
+        readonly KeyboardKeyEventArgs KeyDownEventArgs = new KeyboardKeyEventArgs();
+        readonly KeyboardKeyEventArgs KeyUpEventArgs = new KeyboardKeyEventArgs();
 
         readonly IntPtr EmptyCursor;
 
@@ -209,6 +212,7 @@ namespace OpenTK.Platform.X11
             RefreshWindowBounds(ref e);
 
             driver = new X11Input(window);
+            keyboard = driver.Keyboard[0];
             mouse = driver.Mouse[0];
 
             EmptyCursor = CreateEmptyCursor(window);
@@ -256,7 +260,7 @@ namespace OpenTK.Platform.X11
         #endregion
 
         #region Private Members
-        
+
         #region private void RegisterAtoms()
 
         /// <summary>
@@ -795,32 +799,50 @@ namespace OpenTK.Platform.X11
                         break;
 
                     case XEventName.KeyPress:
-                        driver.ProcessEvent(ref e);
-                        int status = 0;
-                        status = Functions.XLookupString(ref e.KeyEvent, ascii, ascii.Length, null, IntPtr.Zero);
-                        Encoding.Default.GetChars(ascii, 0, status, chars, 0);
-
-                        EventHandler<KeyPressEventArgs> key_press = KeyPress;
-                        if (key_press != null)
+                    case XEventName.KeyRelease:
+                        bool pressed = e.type == XEventName.KeyPress;
+                        Key key;
+                        if (driver.TranslateKey(ref e.KeyEvent, out key))
                         {
-                            for (int i = 0; i < status; i++)
+                            if (pressed)
                             {
-                                if (!Char.IsControl(chars[i]))
+                                // Raise KeyDown event
+                                KeyDownEventArgs.Key = key;
+                                KeyDownEventArgs.ScanCode = (uint)e.KeyEvent.keycode;
+                                KeyDown(this, KeyDownEventArgs);
+                            }
+                            else
+                            {
+                                // Raise KeyUp event
+                                KeyUpEventArgs.Key = key;
+                                KeyUpEventArgs.ScanCode = (uint)e.KeyEvent.keycode;
+                                KeyUp(this, KeyDownEventArgs);
+                            }
+
+                            // Update legacy GameWindow.Keyboard API:
+                            keyboard.SetKey(key, (uint)e.KeyEvent.keycode, pressed);
+
+                            if (pressed)
+                            {
+                                // Translate XKeyPress to characters and
+                                // raise KeyPress events
+                                int status = 0;
+                                status = Functions.XLookupString(
+                                    ref e.KeyEvent, ascii, ascii.Length, null, IntPtr.Zero);
+                                Encoding.Default.GetChars(ascii, 0, status, chars, 0);
+    
+                                for (int i = 0; i < status; i++)
                                 {
-                                    KPEventArgs.KeyChar = chars[i];
-                                    key_press(this, KPEventArgs);
+                                    if (!Char.IsControl(chars[i]))
+                                    {
+                                        KPEventArgs.KeyChar = chars[i];
+                                        KeyPress(this, KPEventArgs);
+                                    }
                                 }
                             }
                         }
                         break;
 
-                    case XEventName.KeyRelease:
-                        // Todo: raise KeyPress event. Use code from
-                        // http://anonsvn.mono-project.com/viewvc/trunk/mcs/class/Managed.Windows.Forms/System.Windows.Forms/X11Keyboard.cs?view=markup
-                        
-                        driver.ProcessEvent(ref e);
-                        break;
-                        
                     case XEventName.MotionNotify:
                     {
                         // Try to detect and ignore events from XWarpPointer, below.
