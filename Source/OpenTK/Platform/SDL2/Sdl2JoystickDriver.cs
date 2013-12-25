@@ -159,7 +159,7 @@ namespace OpenTK.Platform.SDL2
         {
             GameControllerButtonBind bind =
                 SDL.GameControllerGetBindForButton(gamecontroller, button);
-            return bind.BindType == GameControllerBindType.Axis;
+            return bind.BindType == GameControllerBindType.Button;
         }
 
         #endregion
