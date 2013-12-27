@@ -626,46 +626,63 @@ namespace OpenTK.Platform.X11
 
         bool RefreshWindowBorders()
         {
-            IntPtr atom, nitems, bytes_after, prop = IntPtr.Zero;
-            int format;
             bool borders_changed = false;
 
-            using (new XLock(window.Display))
+            if (IsWindowBorderHidden)
             {
-                Functions.XGetWindowProperty(window.Display, window.Handle,
-                    _atom_net_frame_extents, IntPtr.Zero, new IntPtr(16), false,
-                    (IntPtr)Atom.XA_CARDINAL, out atom, out format, out nitems, out bytes_after, ref prop);
+                borders_changed =
+                    border_left != 0 ||
+                    border_right != 0 ||
+                    border_top != 0 ||
+                    border_bottom != 0;
+                
+                border_left = 0;
+                border_right = 0;
+                border_top = 0;
+                border_bottom = 0;
             }
-
-            if ((prop != IntPtr.Zero))
+            else
             {
-                if ((long)nitems == 4)
-                {
-                    int new_border_left = Marshal.ReadIntPtr(prop, 0).ToInt32();
-                    int new_border_right = Marshal.ReadIntPtr(prop, IntPtr.Size).ToInt32();
-                    int new_border_top = Marshal.ReadIntPtr(prop, IntPtr.Size * 2).ToInt32();
-                    int new_border_bottom = Marshal.ReadIntPtr(prop, IntPtr.Size * 3).ToInt32();
-
-                    borders_changed =
-                        new_border_left != border_left ||
-                        new_border_right != border_right ||
-                        new_border_top != border_top ||
-                        new_border_bottom != border_bottom;
-
-                    border_left = new_border_left;
-                    border_right = new_border_right;
-                    border_top = new_border_top;
-                    border_bottom = new_border_bottom;
-
-                    //Debug.WriteLine(border_left);
-                    //Debug.WriteLine(border_right);
-                    //Debug.WriteLine(border_top);
-                    //Debug.WriteLine(border_bottom);
-                }
-
+                IntPtr atom, nitems, bytes_after, prop = IntPtr.Zero;
+                int format;
+    
                 using (new XLock(window.Display))
                 {
-                    Functions.XFree(prop);
+                    Functions.XGetWindowProperty(window.Display, window.Handle,
+                        _atom_net_frame_extents, IntPtr.Zero, new IntPtr(16), false,
+                        (IntPtr)Atom.XA_CARDINAL, out atom, out format, out nitems, out bytes_after, ref prop);
+                }
+    
+                if ((prop != IntPtr.Zero))
+                {
+                    if ((long)nitems == 4)
+                    {
+                        int new_border_left = Marshal.ReadIntPtr(prop, 0).ToInt32();
+                        int new_border_right = Marshal.ReadIntPtr(prop, IntPtr.Size).ToInt32();
+                        int new_border_top = Marshal.ReadIntPtr(prop, IntPtr.Size * 2).ToInt32();
+                        int new_border_bottom = Marshal.ReadIntPtr(prop, IntPtr.Size * 3).ToInt32();
+    
+                        borders_changed =
+                            new_border_left != border_left ||
+                            new_border_right != border_right ||
+                            new_border_top != border_top ||
+                            new_border_bottom != border_bottom;
+    
+                        border_left = new_border_left;
+                        border_right = new_border_right;
+                        border_top = new_border_top;
+                        border_bottom = new_border_bottom;
+    
+                        //Debug.WriteLine(border_left);
+                        //Debug.WriteLine(border_right);
+                        //Debug.WriteLine(border_top);
+                        //Debug.WriteLine(border_bottom);
+                    }
+    
+                    using (new XLock(window.Display))
+                    {
+                        Functions.XFree(prop);
+                    }
                 }
             }
 
@@ -718,8 +735,8 @@ namespace OpenTK.Platform.X11
 
                 Resize(this, EventArgs.Empty);
             }
-            
-            Debug.Print("[X11] Window bounds changed: {0}", bounds);
+
+            //Debug.Print("[X11] Window bounds changed: {0}", bounds);
         }
 
         static IntPtr CreateEmptyCursor(X11WindowInfo window)
