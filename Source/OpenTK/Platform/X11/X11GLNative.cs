@@ -314,6 +314,11 @@ namespace OpenTK.Platform.X11
         #endregion
 
         #region SetWindowMinMax
+        
+        void SetWindowMinMax(int min_width, int min_height, int max_width, int max_height)
+        {
+            SetWindowMinMax((short)min_width, (short)min_height, (short)max_width, (short)max_height);
+        }
 
         void SetWindowMinMax(short min_width, short min_height, short max_width, short max_height)
         {
@@ -671,9 +676,30 @@ namespace OpenTK.Platform.X11
         {
             RefreshWindowBorders();
 
+            // For whatever reason, the x/y coordinates
+            // of a configure event are global to the
+            // root window when it is a send_event but
+            // local when it is a regular event.
+            // I don't know who designed this, but this is
+            // utter nonsense.
+            int x, y;
+            IntPtr unused;
+            if (!e.ConfigureEvent.send_event)
+            {
+                Functions.XTranslateCoordinates(window.Display,
+                    window.Handle, window.RootWindow,
+                    0, 0, out x, out y, out unused);
+            }
+            else
+            {
+                x = e.ConfigureEvent.x;
+                y = e.ConfigureEvent.y;
+            }
+            
             Point new_location = new Point(
-                e.ConfigureEvent.x - border_left,
-                e.ConfigureEvent.y - border_top);
+                x - border_left,
+                y - border_top);
+
             if (Location != new_location)
             {
                 bounds.Location = new_location;
@@ -692,6 +718,8 @@ namespace OpenTK.Platform.X11
 
                 Resize(this, EventArgs.Empty);
             }
+            
+            Debug.Print("[X11] Window bounds changed: {0}", bounds);
         }
 
         static IntPtr CreateEmptyCursor(X11WindowInfo window)
@@ -951,17 +979,44 @@ namespace OpenTK.Platform.X11
 
         public Rectangle Bounds
         {
-            get { return bounds; }
+            get
+            {
+                return bounds;
+            }
             set
             {
+                bool is_location_changed = bounds.Location != value.Location;
+                bool is_size_changed = bounds.Size != value.Size;
+
+                int x = value.X;
+                int y = value.Y;
+                int width = value.Width - border_left - border_right;
+                int height = value.Height - border_top - border_bottom;
+
+                if (WindowBorder != WindowBorder.Resizable)
+                {
+                    SetWindowMinMax(width, height, width, height);
+                }
+
                 using (new XLock(window.Display))
                 {
-                    Functions.XMoveResizeWindow(window.Display, window.Handle,
-                        value.X,
-                        value.Y,
-                        value.Width - border_left - border_right,
-                        value.Height - border_top - border_bottom);
+                    if (is_location_changed && is_size_changed)
+                    {
+                        Functions.XMoveResizeWindow(window.Display, window.Handle,
+                            x, y, width, height);
+                    }
+                    else if (is_location_changed)
+                    {
+                        Functions.XMoveWindow(window.Display, window.Handle,
+                            x, y);
+                    }
+                    else if (is_size_changed)
+                    {
+                        Functions.XResizeWindow(window.Display, window.Handle,
+                            width, height);
+                    }
                 }
+
                 ProcessEvents();
             }
         }
@@ -975,11 +1030,7 @@ namespace OpenTK.Platform.X11
             get { return Bounds.Location; }
             set
             {
-                using (new XLock(window.Display))
-                {
-                    Functions.XMoveWindow(window.Display, window.Handle, value.X, value.Y);
-                }
-                ProcessEvents();
+                Bounds = new Rectangle(value, Bounds.Size);
             }
         }
 
@@ -992,16 +1043,7 @@ namespace OpenTK.Platform.X11
             get { return Bounds.Size; }
             set
             {
-                int width = value.Width - border_left - border_right;
-                int height = value.Height - border_top - border_bottom;
-                width = width <= 0 ? 1 : width;
-                height = height <= 0 ? 1 : height;
-                
-                using (new XLock(window.Display))
-                {
-                    Functions.XResizeWindow(window.Display, window.Handle, width, height);
-                }
-                ProcessEvents();
+                Bounds = new Rectangle(Bounds.Location, value);
             }
         }
 
