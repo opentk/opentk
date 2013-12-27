@@ -201,6 +201,10 @@ namespace OpenTK.Input
         {
             if (keys[(int)key] != state || KeyRepeat)
             {
+                // limit scancode to 8bits, otherwise the assignment
+                // below will crash randomly
+                scancode &= 0xff;
+
                 keys[(int)key] = scancodes[scancode] = state;
 
                 if (state && KeyDown != null)
