@@ -334,6 +334,7 @@ namespace OpenTK.Platform.SDL2
             [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetAttribute", ExactSpelling = true)]
             public static extern int GetAttribute(ContextAttribute attr, out int value);
 
+            [SuppressUnmanagedCodeSecurity]
             [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetCurrentContext", ExactSpelling = true)]
             public static extern IntPtr GetCurrentContext();
 
