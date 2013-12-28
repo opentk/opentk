@@ -777,6 +777,7 @@
     <Compile Include="SlotAttribute.cs" />
     <Compile Include="RewrittenAttribute.cs" />
     <Compile Include="Graphics\OpenGL\GLObsolete.cs" />
+    <Compile Include="Platform\MacOS\NS.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -70,7 +70,7 @@ namespace OpenTK.Platform.MacOS
         {
             return (GraphicsContext.GetCurrentContextDelegate)delegate
             {
-                return new ContextHandle(Agl.aglGetCurrentContext());
+                return new ContextHandle(Cgl.GetCurrentContext());
             };
         }
 
