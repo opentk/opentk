@@ -170,6 +170,32 @@ namespace OpenTK.Platform
 
         #endregion
 
+        #region CreateGetAddress
+
+        internal static GraphicsContext.GetAddressDelegate CreateGetAddress()
+        {
+            GraphicsContext.GetAddressDelegate loader = null;
+            if (Configuration.RunningOnWindows)
+            {
+                loader = Platform.Windows.Wgl.GetProcAddress;
+            }
+            else if (Configuration.RunningOnX11)
+            {
+                loader = Platform.X11.Glx.GetProcAddress;
+            }
+            else if (Configuration.RunningOnMacOS)
+            {
+                loader = Platform.MacOS.NS.GetAddress;
+            }
+            else
+            {
+                throw new PlatformNotSupportedException();
+            }
+            return loader;
+        }
+
+        #endregion
+
         #region --- Creating a Graphics Context ---
 
         /// <summary>
