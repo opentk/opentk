@@ -78,7 +78,6 @@ namespace OpenTK.Platform.X11
                 Marshal.PtrToStructure(keysym_ptr, keysyms);
                 API.Free(keysym_ptr);
     
-                KeyboardDevice kb = new KeyboardDevice();
                 keyboard.Description = "Default X11 keyboard";
                 keyboard.NumberOfKeys = lastKeyCode - firstKeyCode + 1;
                 keyboard.DeviceID = IntPtr.Zero;
