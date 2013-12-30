@@ -303,11 +303,13 @@ namespace OpenTK.Platform.SDL2
                 case EventType.JOYDEVICEREMOVED:
                     if (IsJoystickInstanceValid(id))
                     {
-                        int instance_id = sdl_instanceid_to_joysticks[id];
-                        sdl_instanceid_to_joysticks.Remove(id);
+                        int instance_id = id;
+                        int device_id = sdl_instanceid_to_joysticks[instance_id];
 
-                        JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[instance_id];
+                        JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[device_id];
                         joystick.Details.IsConnected = false;
+
+                        sdl_instanceid_to_joysticks.Remove(instance_id);
                     }
                     else
                     {
@@ -436,8 +438,11 @@ namespace OpenTK.Platform.SDL2
                 case EventType.CONTROLLERDEVICEREMOVED:
                     if (IsControllerInstanceValid(id))
                     {
-                        controllers[id].State.SetConnected(false);
-                        sdl_instanceid_to_controllers.Remove(id);
+                        int instance_id = id;
+                        int device_id = sdl_instanceid_to_controllers[instance_id];
+
+                        controllers[device_id].State.SetConnected(false);
+                        sdl_instanceid_to_controllers.Remove(device_id);
                     }
                     else
                     {
