@@ -116,22 +116,11 @@ namespace OpenTK.Platform.SDL2
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_FreeSurface", ExactSpelling = true)]
         public static extern void FreeSurface(IntPtr surface);
 
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerName", ExactSpelling = true)]
-        static extern IntPtr GameControllerNameInternal(IntPtr gamecontroller);
+        #region GameContoller
 
-        /// <summary>
-        /// Return the name for an openend game controller instance.
-        /// </summary>
-        /// <returns>The name of the game controller name.</returns>
-        /// <param name="gamecontroller">Pointer to a game controller instance returned by <c>GameControllerOpen</c>.</param>
-        public static string GameControllerName(IntPtr gamecontroller)
-        {
-            unsafe
-            {
-                return new string((sbyte*)GameControllerNameInternal(gamecontroller));
-            }
-        }
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerEventState", ExactSpelling = true)]
+        public static extern EventState GameControllerEventState(EventState state);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetAxis", ExactSpelling = true)]
@@ -177,6 +166,27 @@ namespace OpenTK.Platform.SDL2
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetJoystick", ExactSpelling = true)]
         public static extern IntPtr GameControllerGetJoystick(IntPtr gamecontroller);
 
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetCurrentDisplayMode", ExactSpelling = true)]
+        public static extern int GetCurrentDisplayMode(int displayIndex, out DisplayMode mode);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerName", ExactSpelling = true)]
+        static extern IntPtr GameControllerNameInternal(IntPtr gamecontroller);
+
+        /// <summary>
+        /// Return the name for an openend game controller instance.
+        /// </summary>
+        /// <returns>The name of the game controller name.</returns>
+        /// <param name="gamecontroller">Pointer to a game controller instance returned by <c>GameControllerOpen</c>.</param>
+        public static string GameControllerName(IntPtr gamecontroller)
+        {
+            unsafe
+            {
+                return new string((sbyte*)GameControllerNameInternal(gamecontroller));
+            }
+        }
+
         /// <summary>
         /// Opens a game controller for use.
         /// </summary>
@@ -189,9 +199,7 @@ namespace OpenTK.Platform.SDL2
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerOpen", ExactSpelling = true)]
         public static extern IntPtr GameControllerOpen(int joystick_index);
 
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetCurrentDisplayMode", ExactSpelling = true)]
-        public static extern int GetCurrentDisplayMode(int displayIndex, out DisplayMode mode);
+        #endregion
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetDisplayBounds", ExactSpelling = true)]
@@ -279,6 +287,10 @@ namespace OpenTK.Platform.SDL2
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickClose", ExactSpelling = true)]
         public static extern void JoystickClose(IntPtr joystick);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickEventState", ExactSpelling = true)]
+        public static extern EventState JoystickEventState(EventState enabled);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickGetAxis", ExactSpelling = true)]
@@ -543,6 +555,13 @@ namespace OpenTK.Platform.SDL2
         CORE = 0x0001,
         COMPATIBILITY = 0x0002,
         ES = 0x0004
+    }
+
+    enum EventState
+    {
+        Query = -1,
+        Ignore = 0,
+        Enable = 1
     }
 
     enum EventType

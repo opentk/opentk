@@ -55,6 +55,9 @@ namespace OpenTK.Platform.SDL2
         {
             lock (SDL.Sync)
             {
+                SDL.GameControllerEventState(EventState.Enable);
+                SDL.JoystickEventState(EventState.Enable);
+
                 EventFilterDelegate = Marshal.GetFunctionPointerForDelegate(EventFilterDelegate_GCUnsafe);
                 driver_handle = new IntPtr(count++);
                 DriverHandles.Add(driver_handle, this);
