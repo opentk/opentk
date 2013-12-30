@@ -111,26 +111,36 @@ namespace OpenTK.Input
 
         internal void SetAxis(GamePadAxes axis, short value)
         {
-            switch (axis)
+            if ((axis & GamePadAxes.LeftX) != 0)
             {
-                case GamePadAxes.LeftX:
-                    left_stick_x = value;
-                    break;
+                left_stick_x = value;
+            }
 
-                case GamePadAxes.LeftY:
-                    left_stick_y = value;
-                    break;
+            if ((axis & GamePadAxes.LeftY) != 0)
+            {
+                left_stick_y = value;
+            }
 
-                case GamePadAxes.RightX:
-                    right_stick_x = value;
-                    break;
+            if ((axis & GamePadAxes.RightX) != 0)
+            {
+                right_stick_x = value;
+            }
 
-                case GamePadAxes.RightY:
-                    right_stick_y = value;
-                    break;
+            if ((axis & GamePadAxes.RightY) != 0)
+            {
+                right_stick_y = value;
+            }
 
-                default:
-                    throw new ArgumentOutOfRangeException("axis");
+            if ((axis & GamePadAxes.LeftTrigger) != 0)
+            {
+                // Adjust from [-32768, 32767] to [0, 255]
+                left_trigger = (byte)((ev.Value - short.MinValue) >> 8);
+            }
+
+            if ((axis & GamePadAxes.RightTrigger) != 0)
+            {
+                // Adjust from [-32768, 32767] to [0, 255]
+                right_trigger = (byte)((ev.Value - short.MinValue) >> 8);
             }
         }
 
