@@ -30,8 +30,9 @@ namespace OpenTK.Input
     /// <summary>
     /// Enumerates available buttons for a canonical <c>GamePad</c> device.
     /// </summary>
-	public enum Buttons
-	{
+    [Flags]
+    public enum Buttons
+    {
         /// <summary>
         /// DPad up direction button
         /// </summary>
