@@ -56,9 +56,12 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
+        int last_controllers_instance = 0;
+
         readonly List<JoystickDevice> joysticks = new List<JoystickDevice>(4);
         readonly Dictionary<int, int> sdl_joyid_to_joysticks = new Dictionary<int, int>();
-        readonly Dictionary<int, Sdl2GamePad> controllers = new Dictionary<int, Sdl2GamePad>();
+        readonly List<Sdl2GamePad> controllers = new List<Sdl2GamePad>(4);
+        readonly Dictionary<int, int> sdl_instanceid_to_controllers = new Dictionary<int, int>();
 
         IList<JoystickDevice> joysticks_readonly;
         bool disposed;
@@ -112,7 +115,12 @@ namespace OpenTK.Platform.SDL2
 
         bool IsControllerValid(int id)
         {
-            return controllers.ContainsKey(id);
+            return id >= 0 && id < controllers.Count;
+        }
+
+        bool IsControllerInstanceValid(int instance_id)
+        {
+            return sdl_instanceid_to_controllers.ContainsKey(instance_id);
         }
 
         GamePadAxes GetBoundAxes(IntPtr gamecontroller)
@@ -306,12 +314,20 @@ namespace OpenTK.Platform.SDL2
                     IntPtr handle = SDL.GameControllerOpen(id);
                     if (handle != IntPtr.Zero)
                     {
+                        // The id variable here corresponds to a device_id between 0 and Sdl.NumJoysticks().
+                        // It is only used in the ADDED event. All other events use an instance_id which increases
+                        // monotonically in each ADDED event.
+                        // The idea is that device_id refers to the n-th connected joystick, whereas instance_id
+                        // refers to the actual hardware device behind the n-th joystick.
+                        // Yes, it's confusing.
+                        int device_id = id;
+                        int instance_id = last_controllers_instance++;
+
                         Sdl2GamePad pad = new Sdl2GamePad(handle);
 
                         IntPtr joystick = SDL.GameControllerGetJoystick(handle);
                         if (joystick != IntPtr.Zero)
                         {
-                            SDL.JoystickNumAxes(joystick);
                             pad.Capabilities = new GamePadCapabilities(
                                 GamePadType.GamePad,
                                 GetBoundAxes(joystick),
@@ -319,10 +335,17 @@ namespace OpenTK.Platform.SDL2
                                 true);
                             pad.State.SetConnected(true);
 
-                            // Check whether the device has ever been connected before
-                            if (!controllers.ContainsKey(id))
-                                controllers.Add(id, null);
-                            controllers[id] = pad;
+                            // Connect this device and add the relevant device index
+                            if (controllers.Count <= id)
+                            {
+                                controllers.Add(pad);
+                            }
+                            else
+                            {
+                                controllers[device_id] = pad;
+                            }
+
+                            sdl_instanceid_to_controllers.Add(instance_id, device_id);
                         }
                         else
                         {
@@ -332,11 +355,15 @@ namespace OpenTK.Platform.SDL2
                     break;
 
                 case EventType.CONTROLLERDEVICEREMOVED:
-                    if (IsControllerValid(id))
                     {
-                        controllers[id].State.SetConnected(false);
+                        int instance_id = id;
+                        if (IsControllerInstanceValid(id))
+                        {
+                            controllers[id].State.SetConnected(false);
+                            sdl_instanceid_to_controllers.Remove(instance_id);
+                        }
+                        break;
                     }
-                    break;
 
                 case EventType.CONTROLLERDEVICEREMAPPED:
                     // Todo: what should we do in this case?
@@ -346,27 +373,29 @@ namespace OpenTK.Platform.SDL2
 
         public void ProcessControllerEvent(ControllerAxisEvent ev)
         {
-            int id = ev.Which;
-            if (IsControllerValid(id))
+            int instance_id = ev.Which;
+            if (IsControllerInstanceValid(instance_id))
             {
-                    controllers[id].State.SetAxis(TranslateAxis(ev.Axis), ev.Value);
+                int id = sdl_instanceid_to_controllers[instance_id];
+                controllers[id].State.SetAxis(TranslateAxis(ev.Axis), ev.Value);
             }
             else
             {
-                Debug.Print("[SDL2] Invalid game controller handle {0} in {1}", id, ev.Type);
+                Debug.Print("[SDL2] Invalid game controller instance {0} in {1}", instance_id, ev.Type);
             }
         }
 
         public void ProcessControllerEvent(ControllerButtonEvent ev)
         {
-            int id = ev.Which;
-            if (IsControllerValid(id))
+            int instance_id = ev.Which;
+            if (IsControllerInstanceValid(instance_id))
             {
+                int id = sdl_instanceid_to_controllers[instance_id];
                 controllers[id].State.SetButton((Buttons)ev.Button, ev.State == State.Pressed);
             }
             else
             {
-                Debug.Print("[SDL2] Invalid game controller handle {0} in {1}", id, ev.Type);
+                Debug.Print("[SDL2] Invalid game controller instance {0} in {1}", instance_id, ev.Type);
             }
         }
 
