@@ -203,6 +203,61 @@ namespace OpenTK.Platform.SDL2
                         String.Format("[SDL] Unknown axis {0}", axis));
             }
         }
+
+        Buttons TranslateButton(GameControllerButton button)
+        {
+            switch (button)
+            {
+                case GameControllerButton.A:
+                    return Buttons.A;
+
+                case GameControllerButton.B:
+                    return Buttons.B;
+
+                case  GameControllerButton.X:
+                    return Buttons.X;
+
+                case GameControllerButton.Y:
+                    return Buttons.Y;
+
+                case GameControllerButton.LEFTSHOULDER:
+                    return Buttons.LeftShoulder;
+
+                case GameControllerButton.RIGHTSHOULDER:
+                    return Buttons.RightShoulder;
+
+                case GameControllerButton.LEFTSTICK:
+                    return Buttons.LeftStick;
+
+                case GameControllerButton.RIGHTSTICK:
+                    return Buttons.RightStick;
+
+                case GameControllerButton.DPAD_UP:
+                    return Buttons.DPadUp;
+
+                case GameControllerButton.DPAD_DOWN:
+                    return Buttons.DPadDown;
+
+                case GameControllerButton.DPAD_LEFT:
+                    return Buttons.DPadLeft;
+
+                case GameControllerButton.DPAD_RIGHT:
+                    return Buttons.DPadRight;
+
+                case GameControllerButton.BACK:
+                    return Buttons.Back;
+
+                case GameControllerButton.START:
+                    return Buttons.Start;
+
+                case GameControllerButton.GUIDE:
+                    return Buttons.BigButton;
+
+                default:
+                    Debug.Print("[SDL2] Unknown button {0}", button);
+                    return 0;
+            }
+        }
         #endregion
 
         #region Public Members
@@ -423,7 +478,7 @@ namespace OpenTK.Platform.SDL2
             if (IsControllerInstanceValid(instance_id))
             {
                 int id = sdl_instanceid_to_controllers[instance_id];
-                controllers[id].State.SetButton((Buttons)ev.Button, ev.State == State.Pressed);
+                controllers[id].State.SetButton(TranslateButton(ev.Button), ev.State == State.Pressed);
             }
             else
             {
