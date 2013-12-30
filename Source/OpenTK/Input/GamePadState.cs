@@ -75,7 +75,7 @@ namespace OpenTK.Input
         public override string ToString()
         {
             return String.Format(
-                "{{Sticks: {0}; Buttons: {1}; DPad: {2}; IsConnected: {3}",
+                "{{Sticks: {0}; Buttons: {1}; DPad: {2}; IsConnected: {3}}}",
                 ThumbSticks, Buttons, DPad, IsConnected);
         }
 
