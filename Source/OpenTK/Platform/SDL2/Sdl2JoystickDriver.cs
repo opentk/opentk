@@ -56,10 +56,11 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
+        int last_joystick_instance = 0;
         int last_controllers_instance = 0;
 
         readonly List<JoystickDevice> joysticks = new List<JoystickDevice>(4);
-        readonly Dictionary<int, int> sdl_joyid_to_joysticks = new Dictionary<int, int>();
+        readonly Dictionary<int, int> sdl_instanceid_to_joysticks = new Dictionary<int, int>();
         readonly List<Sdl2GamePad> controllers = new List<Sdl2GamePad>(4);
         readonly Dictionary<int, int> sdl_instanceid_to_controllers = new Dictionary<int, int>();
 
@@ -111,6 +112,11 @@ namespace OpenTK.Platform.SDL2
         bool IsJoystickValid(int id)
         {
             return id >= 0 && id < joysticks.Count;
+        }
+
+        bool IsJoystickInstanceValid(int instance_id)
+        {
+            return sdl_instanceid_to_joysticks.ContainsKey(instance_id);
         }
 
         bool IsControllerValid(int id)
@@ -217,27 +223,40 @@ namespace OpenTK.Platform.SDL2
                         IntPtr handle = SDL.JoystickOpen(id);
                         if (handle != IntPtr.Zero)
                         {
+                            int device_id = id;
+                            int instance_id = last_joystick_instance++;
+
                             JoystickDevice<Sdl2JoystickDetails> joystick = OpenJoystick(id);
                             if (joystick != null)
                             {
                                 joystick.Details.IsConnected = true;
-                                if (!sdl_joyid_to_joysticks.ContainsKey(id))
+                                if (device_id < joysticks.Count)
                                 {
-                                    sdl_joyid_to_joysticks.Add(id, joysticks.Count);
-                                    joysticks.Add(null);
+                                    joysticks[device_id] = joystick;
                                 }
-                                int index = sdl_joyid_to_joysticks[id];
-                                joysticks[index] = joystick;
+                                else
+                                {
+                                    joysticks.Add(joystick);
+                                }
+
+                                sdl_instanceid_to_joysticks.Add(instance_id, device_id);
                             }
                         }
                     }
                     break;
 
                 case EventType.JOYDEVICEREMOVED:
+                    if (IsJoystickInstanceValid(id))
                     {
-                        int index = sdl_joyid_to_joysticks[id];
-                        JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
+                        int instance_id = sdl_instanceid_to_joysticks[id];
+                        sdl_instanceid_to_joysticks.Remove(id);
+
+                        JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[instance_id];
                         joystick.Details.IsConnected = false;
+                    }
+                    else
+                    {
+                        Debug.Print("[SDL2] Invalid joystick id {0} in {1}", id, ev.Type);
                     }
                     break;
             }
@@ -246,9 +265,9 @@ namespace OpenTK.Platform.SDL2
         public void ProcessJoystickEvent(JoyAxisEvent ev)
         {
             int id = ev.Which;
-            if (IsJoystickValid(id))
+            if (IsJoystickInstanceValid(id))
             {
-                int index = sdl_joyid_to_joysticks[id];
+                int index = sdl_instanceid_to_joysticks[id];
                 JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
                 float value = ev.Value * RangeMultiplier;
                 joystick.SetAxis((JoystickAxis)ev.Axis, value);
@@ -262,9 +281,9 @@ namespace OpenTK.Platform.SDL2
         public void ProcessJoystickEvent(JoyBallEvent ev)
         {
             int id = ev.Which;
-            if (IsJoystickValid(id))
+            if (IsJoystickInstanceValid(id))
             {
-                int index = sdl_joyid_to_joysticks[id];
+                int index = sdl_instanceid_to_joysticks[id];
                 JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
                 // Todo: does it make sense to support balls?
             }
@@ -277,9 +296,9 @@ namespace OpenTK.Platform.SDL2
         public void ProcessJoystickEvent(JoyButtonEvent ev)
         {
             int id = ev.Which;
-            if (IsJoystickValid(id))
+            if (IsJoystickInstanceValid(id))
             {
-                int index = sdl_joyid_to_joysticks[id];
+                int index = sdl_instanceid_to_joysticks[id];
                 JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
                 joystick.SetButton((JoystickButton)ev.Button, ev.State == State.Pressed);
             }
@@ -292,9 +311,9 @@ namespace OpenTK.Platform.SDL2
         public void ProcessJoystickEvent(JoyHatEvent ev)
         {
             int id = ev.Which;
-            if (IsJoystickValid(id))
+            if (IsJoystickInstanceValid(id))
             {
-                int index = sdl_joyid_to_joysticks[id];
+                int index = sdl_instanceid_to_joysticks[id];
                 JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
                 // Todo: map hat to an extra axis
             }
@@ -307,6 +326,11 @@ namespace OpenTK.Platform.SDL2
         public void ProcessControllerEvent(ControllerDeviceEvent ev)
         {
             int id = ev.Which;
+            if (id < 0)
+            {
+                Debug.Print("[SDL2] Invalid controller id {0} in {1}", id, ev.Type);
+                return;
+            }
 
             switch (ev.Type)
             {
@@ -355,18 +379,26 @@ namespace OpenTK.Platform.SDL2
                     break;
 
                 case EventType.CONTROLLERDEVICEREMOVED:
+                    if (IsControllerInstanceValid(id))
                     {
-                        int instance_id = id;
-                        if (IsControllerInstanceValid(id))
-                        {
-                            controllers[id].State.SetConnected(false);
-                            sdl_instanceid_to_controllers.Remove(instance_id);
-                        }
-                        break;
+                        controllers[id].State.SetConnected(false);
+                        sdl_instanceid_to_controllers.Remove(id);
                     }
+                    else
+                    {
+                        Debug.Print("[SDL2] Invalid game controller instance {0} in {1}", id, ev.Type);
+                    }
+                    break;
 
                 case EventType.CONTROLLERDEVICEREMAPPED:
-                    // Todo: what should we do in this case?
+                    if (IsControllerInstanceValid(id))
+                    {
+                        // Todo: what should we do in this case?
+                    }
+                    else
+                    {
+                        Debug.Print("[SDL2] Invalid game controller instance {0} in {1}", id, ev.Type);
+                    }
                     break;
             }
          }
@@ -453,7 +485,7 @@ namespace OpenTK.Platform.SDL2
             if (IsJoystickValid(index))
             {
                 JoystickDevice<Sdl2JoystickDetails> joystick =
-                    (JoystickDevice<Sdl2JoystickDetails>)joysticks[sdl_joyid_to_joysticks[index]];
+                    (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
 
                 for (int i = 0; i < joystick.Axis.Count; i++)
                 {
@@ -465,7 +497,7 @@ namespace OpenTK.Platform.SDL2
                     state.SetButton(JoystickButton.Button0 + i, joystick.Button[i]);
                 }
 
-                state.SetIsConnected(true);
+                state.SetIsConnected(joystick.Details.IsConnected);
             }
 
             return state;
@@ -476,12 +508,12 @@ namespace OpenTK.Platform.SDL2
             if (IsJoystickValid(index))
             {
                 JoystickDevice<Sdl2JoystickDetails> joystick =
-                    (JoystickDevice<Sdl2JoystickDetails>)joysticks[sdl_joyid_to_joysticks[index]];
+                    (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
 
                 return new JoystickCapabilities(
                     joystick.Axis.Count,
                     joystick.Button.Count,
-                    true);
+                    joystick.Details.IsConnected);
             }
             return new JoystickCapabilities();
         }
