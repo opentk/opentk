@@ -47,8 +47,8 @@ namespace OpenTK.Platform.SDL2
         class Sdl2GamePad
         {
             public IntPtr Handle { get; private set; }
-            public GamePadState State { get; set; }
-            public GamePadCapabilities Capabilities { get; set; }
+            public GamePadState State;
+            public GamePadCapabilities Capabilities;
 
             public Sdl2GamePad(IntPtr handle)
             {
