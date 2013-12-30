@@ -115,7 +115,7 @@ namespace OpenTK.Platform.SDL2
             return controllers.ContainsKey(id);
         }
 
-        GamePadAxes TranslateAxes(IntPtr gamecontroller)
+        GamePadAxes GetBoundAxes(IntPtr gamecontroller)
         {
             GamePadAxes axes = 0;
             axes |= IsAxisBind(gamecontroller, GameControllerAxis.LeftX) ? GamePadAxes.LeftX : 0;
@@ -127,7 +127,7 @@ namespace OpenTK.Platform.SDL2
             return axes;
         }
 
-        Buttons TranslateButtons(IntPtr gamecontroller)
+        Buttons GetBoundButtons(IntPtr gamecontroller)
         {
             Buttons buttons = 0;
             buttons |= IsButtonBind(gamecontroller, GameControllerButton.A) ? Buttons.A : 0;
@@ -162,6 +162,33 @@ namespace OpenTK.Platform.SDL2
             return bind.BindType == GameControllerBindType.Button;
         }
 
+        GamePadAxes TranslateAxis(GameControllerAxis axis)
+        {
+            switch (axis)
+            {
+                case GameControllerAxis.LeftX:
+                    return GamePadAxes.LeftX;
+                
+                case GameControllerAxis.LeftY:
+                    return GamePadAxes.LeftY;
+
+                case GameControllerAxis.RightX:
+                    return GamePadAxes.RightX;
+
+                case GameControllerAxis.RightY:
+                    return GamePadAxes.RightY;
+
+                case GameControllerAxis.TriggerLeft:
+                    return GamePadAxes.LeftTrigger;
+
+                case GameControllerAxis.TriggerRight:
+                    return GamePadAxes.RightTrigger;
+
+                default:
+                    throw new ArgumentOutOfRangeException(
+                        String.Format("[SDL] Unknown axis {0}", axis));
+            }
+        }
         #endregion
 
         #region Public Members
@@ -287,8 +314,8 @@ namespace OpenTK.Platform.SDL2
                             SDL.JoystickNumAxes(joystick);
                             pad.Capabilities = new GamePadCapabilities(
                                 GamePadType.GamePad,
-                                TranslateAxes(joystick),
-                                TranslateButtons(joystick),
+                                GetBoundAxes(joystick),
+                                GetBoundButtons(joystick),
                                 true);
                             pad.State.SetConnected(true);
 
@@ -322,7 +349,7 @@ namespace OpenTK.Platform.SDL2
             int id = ev.Which;
             if (IsControllerValid(id))
             {
-                controllers[id].State.SetAxis((GamePadAxes)ev.Axis, ev.Value);
+                    controllers[id].State.SetAxis(TranslateAxis(ev.Axis), ev.Value);
             }
             else
             {
