@@ -134,13 +134,13 @@ namespace OpenTK.Input
             if ((axis & GamePadAxes.LeftTrigger) != 0)
             {
                 // Adjust from [-32768, 32767] to [0, 255]
-                left_trigger = (byte)((ev.Value - short.MinValue) >> 8);
+                left_trigger = (byte)((value - short.MinValue) >> 8);
             }
 
             if ((axis & GamePadAxes.RightTrigger) != 0)
             {
                 // Adjust from [-32768, 32767] to [0, 255]
-                right_trigger = (byte)((ev.Value - short.MinValue) >> 8);
+                right_trigger = (byte)((value - short.MinValue) >> 8);
             }
         }
 
