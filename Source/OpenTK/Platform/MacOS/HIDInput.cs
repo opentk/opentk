@@ -381,6 +381,11 @@ namespace OpenTK.Platform.MacOS
             return new JoystickCapabilities();
         }
 
+        Guid IJoystickDriver2.GetGuid(int index)
+        {
+            return new Guid();
+        }
+
         #endregion
 
         #region NativeMethods

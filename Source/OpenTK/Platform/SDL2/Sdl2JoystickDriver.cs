@@ -38,9 +38,10 @@ namespace OpenTK.Platform.SDL2
         readonly MappedGamePadDriver gamepad_driver = new MappedGamePadDriver();
         bool disposed;
 
-        struct Sdl2JoystickDetails
+        class Sdl2JoystickDetails
         {
             public IntPtr Handle { get; set; }
+            public Guid Guid { get; set; }
             public int HatCount { get; set; }
             public int BallCount { get; set; }
             public bool IsConnected { get; set; }
@@ -99,6 +100,7 @@ namespace OpenTK.Platform.SDL2
                 joystick = new JoystickDevice<Sdl2JoystickDetails>(id, num_axes, num_buttons);
                 joystick.Description = SDL.JoystickName(handle);
                 joystick.Details.Handle = handle;
+                joystick.Details.Guid = SDL.JoystickGetGUID(handle).ToGuid();
                 joystick.Details.HatCount = num_hats;
                 joystick.Details.BallCount = num_balls;
 
@@ -604,6 +606,19 @@ namespace OpenTK.Platform.SDL2
                     joystick.Details.IsConnected);
             }
             return new JoystickCapabilities();
+        }
+
+        Guid IJoystickDriver2.GetGuid(int index)
+        {
+            Guid guid = new Guid();
+            if (IsJoystickValid(index))
+            {
+                JoystickDevice<Sdl2JoystickDetails> joystick =
+                    (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
+
+                return joystick.Details.Guid;
+            }
+            return guid;
         }
 
         #endregion

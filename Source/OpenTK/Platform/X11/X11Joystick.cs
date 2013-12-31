@@ -290,6 +290,11 @@ namespace OpenTK.Platform.X11
             throw new NotImplementedException();
         }
 
+        Guid IJoystickDriver2.GetGuid(int index)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

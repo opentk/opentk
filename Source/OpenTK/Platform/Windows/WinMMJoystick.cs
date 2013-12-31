@@ -333,6 +333,18 @@ namespace OpenTK.Platform.Windows
             return state;
         }
 
+        public Guid GetGuid(int index)
+        {
+            Guid guid = new Guid();
+
+            if (IsValid(index))
+            {
+                // Todo: implement WinMM Guid retrieval
+            }
+
+            return guid;
+        }
+
         #endregion
 
         #region IDisposable

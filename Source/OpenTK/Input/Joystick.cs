@@ -48,6 +48,11 @@ namespace OpenTK.Input
             return implementation.GetState(index);
         }
 
+        internal static Guid GetGuid(int index)
+        {
+            return implementation.GetGuid(index);
+        }
+
         //public string GetName(int index)
         //{
         //    return implementation.GetName(index);
