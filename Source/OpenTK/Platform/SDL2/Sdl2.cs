@@ -301,6 +301,10 @@ namespace OpenTK.Platform.SDL2
         public static extern byte JoystickGetButton(IntPtr joystick, int button);
 
         [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickGetGuid", ExactSpelling = true)]
+        public static extern JoystickGuid JoystickGetGUID(IntPtr joystick);
+
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickName", ExactSpelling = true)]
         static extern IntPtr JoystickNameInternal(IntPtr joystick);
         public static string JoystickName(IntPtr joystick)
@@ -1402,6 +1406,26 @@ namespace OpenTK.Platform.SDL2
         public HatPosition Value;
         byte padding1;
         byte padding2;
+    }
+
+    struct JoystickGuid
+    {
+        unsafe fixed byte data[16];
+
+        public Guid ToGuid()
+        {
+            byte[] bytes = new byte[16];
+
+            unsafe
+            {
+                fixed (byte* pdata = data)
+                {
+                    Marshal.Copy(new IntPtr(pdata), bytes, 0, bytes.Length); 
+                }
+            }
+
+            return new Guid(bytes);
+        }
     }
 
     struct KeyboardEvent
