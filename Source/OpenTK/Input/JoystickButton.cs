@@ -33,8 +33,6 @@ using System.Text;
 
 namespace OpenTK.Input
 {
-    #region JoystickButton
-
     /// <summary>
     /// Defines available JoystickDevice buttons.
     /// </summary>
@@ -73,6 +71,4 @@ namespace OpenTK.Input
         /// <summary>The sixteenth button of the JoystickDevice.</summary>
         Button15,
     }
-
-    #endregion
 }
