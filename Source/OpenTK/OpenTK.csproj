@@ -133,7 +133,6 @@
     </Compile>
     <Compile Include="DisplayIndex.cs" />
     <Compile Include="Graphics\GraphicsModeComparer.cs" />
-    <Compile Include="Input\GamePadMapping.cs" />
     <Compile Include="Input\GamePadThumbSticks.cs" />
     <Compile Include="Input\GamePadTriggers.cs" />
     <Compile Include="Input\GamePadType.cs" />
@@ -792,6 +791,7 @@
     <Compile Include="Input\GamePadDPad.cs" />
     <Compile Include="Input\GamePadButtons.cs" />
     <Compile Include="Input\Buttons.cs" />
+    <Compile Include="Input\GamePadMap.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
