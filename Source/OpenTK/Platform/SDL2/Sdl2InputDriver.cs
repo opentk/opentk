@@ -126,6 +126,7 @@ namespace OpenTK.Platform.SDL2
                             driver.joystick_driver.ProcessJoystickEvent(ev.JoyHat);
                             break;
 
+#if USE_SDL2_GAMECONTROLLER
                         case EventType.CONTROLLERDEVICEADDED:
                         case EventType.CONTROLLERDEVICEREMOVED:
                             driver.joystick_driver.ProcessControllerEvent(ev.ControllerDevice);
@@ -139,6 +140,7 @@ namespace OpenTK.Platform.SDL2
                         case EventType.CONTROLLERBUTTONUP:
                             driver.joystick_driver.ProcessControllerEvent(ev.ControllerButton);
                             break;
+#endif
                     }
                 }
             }

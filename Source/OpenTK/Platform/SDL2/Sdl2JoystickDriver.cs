@@ -35,6 +35,8 @@ namespace OpenTK.Platform.SDL2
     class Sdl2JoystickDriver : IJoystickDriver, IJoystickDriver2, IGamePadDriver, IDisposable
     {
         const float RangeMultiplier =  1.0f / 32768.0f;
+        readonly MappedGamePadDriver gamepad_driver = new MappedGamePadDriver();
+        bool disposed;
 
         struct Sdl2JoystickDetails
         {
@@ -44,6 +46,15 @@ namespace OpenTK.Platform.SDL2
             public bool IsConnected { get; set; }
         }
 
+        // For IJoystickDriver2 implementation
+        int last_joystick_instance = 0;
+        readonly List<JoystickDevice> joysticks = new List<JoystickDevice>(4);
+        readonly Dictionary<int, int> sdl_instanceid_to_joysticks = new Dictionary<int, int>();
+
+        // For IJoystickDriver implementation
+        IList<JoystickDevice> joysticks_readonly;
+
+#if USE_SDL2_GAMECONTROLLER
         class Sdl2GamePad
         {
             public IntPtr Handle { get; private set; }
@@ -56,16 +67,11 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        int last_joystick_instance = 0;
         int last_controllers_instance = 0;
-
-        readonly List<JoystickDevice> joysticks = new List<JoystickDevice>(4);
-        readonly Dictionary<int, int> sdl_instanceid_to_joysticks = new Dictionary<int, int>();
         readonly List<Sdl2GamePad> controllers = new List<Sdl2GamePad>(4);
         readonly Dictionary<int, int> sdl_instanceid_to_controllers = new Dictionary<int, int>();
+#endif
 
-        IList<JoystickDevice> joysticks_readonly;
-        bool disposed;
 
         public Sdl2JoystickDriver()
         {
@@ -119,6 +125,7 @@ namespace OpenTK.Platform.SDL2
             return sdl_instanceid_to_joysticks.ContainsKey(instance_id);
         }
 
+#if USE_SDL2_GAMECONTROLLER
         bool IsControllerValid(int id)
         {
             return id >= 0 && id < controllers.Count;
@@ -258,6 +265,8 @@ namespace OpenTK.Platform.SDL2
                     return 0;
             }
         }
+#endif
+
         #endregion
 
         #region Public Members
@@ -380,6 +389,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
+#if USE_SDL2_GAMECONTROLLER
         public void ProcessControllerEvent(ControllerDeviceEvent ev)
         {
             int id = ev.Which;
@@ -490,6 +500,7 @@ namespace OpenTK.Platform.SDL2
                 Debug.Print("[SDL2] Invalid game controller instance {0} in {1}", instance_id, ev.Type);
             }
         }
+#endif
 
         #endregion
 
@@ -512,6 +523,7 @@ namespace OpenTK.Platform.SDL2
 
         #region IGamePadDriver Members
 
+#if USE_SDL2_GAMECONTOLLER
         public GamePadCapabilities GetCapabilities(int index)
         {
             if (IsControllerValid(index))
@@ -534,6 +546,22 @@ namespace OpenTK.Platform.SDL2
         {
             return String.Empty;
         }
+#else
+        public GamePadCapabilities GetCapabilities(int index)
+        {
+            return gamepad_driver.GetCapabilities(index);
+        }
+
+        public GamePadState GetState(int index)
+        {
+            return gamepad_driver.GetState(index);
+        }
+
+        public string GetName(int index)
+        {
+            return gamepad_driver.GetName(index);
+        }
+#endif
 
         #endregion
 
