@@ -301,7 +301,7 @@ namespace OpenTK.Platform.SDL2
         public static extern byte JoystickGetButton(IntPtr joystick, int button);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickGetGuid", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickGetGUID", ExactSpelling = true)]
         public static extern JoystickGuid JoystickGetGUID(IntPtr joystick);
 
         [SuppressUnmanagedCodeSecurity]
