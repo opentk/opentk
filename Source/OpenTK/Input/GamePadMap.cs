@@ -29,14 +29,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace OpenTK.Input
 {
     enum MapType
     {
-        Axis = 0,
-        Button = 1
+        Unmapped = 0,
+        Axis,
+        Button
     }
 
     class MapItem
@@ -44,6 +46,10 @@ namespace OpenTK.Input
         MapType map_type;
         Nullable<JoystickButton> map_button;
         Nullable<JoystickAxis> map_axis;
+
+        public MapItem()
+        {
+        }
 
         public MapItem(JoystickAxis axis)
         {
@@ -80,6 +86,8 @@ namespace OpenTK.Input
     {
         static readonly GamePadMap default_map;
 
+        Guid guid;
+        string name;
         MapItem a, b, x, y;
         MapItem lshoulder, rshoulder;
         MapItem lstick, rstick;
@@ -91,6 +99,8 @@ namespace OpenTK.Input
         MapItem dpad_u, dpad_d;
         MapItem dpad_l, dpad_r;
 
+        Guid Guid { get { return guid; } set { guid = value; } }
+        string Name { get { return name; } set { name = value; } }
         public MapItem A { get { return a; } set { a = value; } }
         public MapItem B { get { return b; } set { b = value; } }
         public MapItem X { get { return x; } set { x = value; } }
@@ -112,6 +122,14 @@ namespace OpenTK.Input
         public MapItem DPadDown { get { return dpad_d; } set { dpad_d = value; } }
         public MapItem DPadLeft { get { return dpad_l; } set { dpad_l = value; } }
         public MapItem DPadRight { get { return dpad_r; } set { dpad_r = value; } }
+
+        public GamePadMap()
+        {
+        }
+
+        public GamePadMap(string configuration)
+        {
+        }
 
         static GamePadMap()
         {
@@ -143,6 +161,179 @@ namespace OpenTK.Input
         public static GamePadMap Default
         {
             get { return default_map; }
+        }
+
+        public static GamePadMap GetConfiguration(Guid guid)
+        {
+            GamePadMap map = GamePadMap.Default;
+            if (GamePadConfigurationDatabase.Configurations.ContainsKey(guid))
+            {
+                map = ParseConfiguration(GamePadConfigurationDatabase.Configurations[guid]);
+            }
+            return map;
+        }
+
+        // Parses a GamePad configuration string. The string
+        // follows the rules for SDL2 GameController, outlined here:
+        // http://wiki.libsdl.org/SDL_GameControllerAddMapping
+        static GamePadMap ParseConfiguration(string configuration)
+        {
+            if (String.IsNullOrEmpty(configuration))
+            {
+                throw new ArgumentNullException();
+            }
+
+            // The mapping string has the format "GUID,name,config"
+            // - GUID is a unigue identifier returned by Joystick.GetGuid()
+            // - name is a human-readable name for the controller
+            // - config is a comma-separated list of configurations as follows:
+            //   - [gamepad axis or button name]:[joystick axis, button or hat number]
+            string[] items = configuration.Split(',');
+            if (items.Length < 3)
+            {
+                throw new ArgumentException();
+            }
+
+            GamePadMap map = new GamePadMap();
+            map.Guid = new Guid(items[0]);
+            map.Name = items[1];
+            for (int i = 2; i < items.Length; i++)
+            {
+                string[] config = items[i].Split(':');
+                MapItem map_item = ParseItem(config[1]);
+                switch (config[0])
+                {
+                    case "a":
+                        map.A = map_item;
+                        break;
+
+                    case "b":
+                        map.B = map_item;
+                        break;
+
+                    case "x":
+                        map.X = map_item;
+                        break;
+
+                    case "y":
+                        map.Y = map_item;
+                        break;
+
+                    case "start":
+                        map.Start = map_item;
+                        break;
+
+                    case "back":
+                        map.Back = map_item;
+                        break;
+
+                    case "guide":
+                        map.BigButton = map_item;
+                        break;
+
+                    case "dpup":
+                        map.DPadUp = map_item;
+                        break;
+
+                    case "dpdown":
+                        map.DPadDown = map_item;
+                        break;
+
+                    case "dpleft":
+                        map.DPadLeft = map_item;
+                        break;
+
+                    case "dpright":
+                        map.DPadRight = map_item;
+                        break;
+
+                    case "leftshoulder":
+                        map.LeftShoulder = map_item;
+                        break;
+
+                    case "rightshoulder":
+                        map.RightShoulder = map_item;
+                        break;
+
+                    case "leftstick":
+                        map.LeftStick = map_item;
+                        break;
+
+                    case "rightstick":
+                        map.RightStick = map_item;
+                        break;
+
+                    case "leftx":
+                        map.LeftAxisX = map_item;
+                        break;
+
+                    case "lefty":
+                        map.LeftAxisY = map_item;
+                        break;
+
+                    case "rightx":
+                        map.RightAxisX = map_item;
+                        break;
+
+                    case "righty":
+                        map.RightAxisY = map_item;
+                        break;
+
+                    case "lefttrigger":
+                        map.LeftTrigger = map_item;
+                        break;
+
+                    case "righttrigger":
+                        map.RightTrigger = map_item;
+                        break;
+
+                    default:
+                        Debug.Print("[Input] Invalid GamePad configuration name: {0}", items[i]);
+                        break;
+                }
+            }
+
+            return map;
+        }
+
+        static MapItem ParseItem(string item)
+        {
+            if (String.IsNullOrEmpty(item))
+            {
+                return new MapItem();
+            }
+
+            switch (item[0])
+            {
+                case 'a':
+                    return new MapItem(ParseAxis(item));
+
+                case 'b':
+                    return new MapItem(ParseButton(item));
+
+                case 'h':
+                    throw new NotImplementedException();
+                    //return new MapItem(ParseHat(item));
+
+                default:
+                    throw new InvalidOperationException("[Input] Invalid GamePad configuration value");
+            }
+        }
+
+        static JoystickAxis ParseAxis(string item)
+        {
+            // item is in the format "a#" where # a zero-based integer number
+            JoystickAxis axis = JoystickAxis.Axis0;
+            int id = Int32.Parse(item.Substring(1));
+            return axis + id;
+        }
+
+        static JoystickButton ParseButton(string item)
+        {
+            // item is in the format "b#" where # a zero-based integer nubmer
+            JoystickButton button = JoystickButton.Button0;
+            int id = Int32.Parse(item.Substring(1));
+            return button + id;
         }
     }
 }
