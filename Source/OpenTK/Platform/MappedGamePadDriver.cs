@@ -52,13 +52,18 @@ namespace OpenTK.Platform
     /// </remarks>
     class MappedGamePadDriver : IGamePadDriver
     {
+        readonly Dictionary<Guid, GamePadMap> configurations =
+            new Dictionary<Guid, GamePadMap>();
+
         public GamePadState GetState(int index)
         {
             JoystickState joy = Joystick.GetState(index);
             GamePadState pad = new GamePadState();
             if (joy.IsConnected)
             {
-                GamePadMapping mapping = new GamePadMapping();//GamePadMapping.Lookup()
+                GamePadMap map = GetConfiguration(Joystick.GetGuid(index));
+
+
                 // Todo: implement mapping
             }
             return pad;
@@ -67,10 +72,19 @@ namespace OpenTK.Platform
         public GamePadCapabilities GetCapabilities(int index)
         {
             JoystickCapabilities joy = Joystick.GetCapabilities(index);
-            GamePadCapabilities pad = new GamePadCapabilities();
+            GamePadCapabilities pad;
             if (joy.IsConnected)
             {
-                // Todo: implement mapping
+                GamePadMap map = GetConfiguration(Joystick.GetGuid(index));
+                pad = new GamePadCapabilities(
+                    GamePadType.GamePad, // Todo: detect different types
+                    TranslateAxes(map),
+                    TranslateButtons(map),
+                    true);
+            }
+            else
+            {
+                pad = new GamePadCapabilities();
             }
             return pad;
         }
@@ -79,5 +93,61 @@ namespace OpenTK.Platform
         {
             throw new NotImplementedException();
         }
+
+        #region Private Members
+
+        GamePadMap GetConfiguration(Guid guid)
+        {
+            if (!configurations.ContainsKey(guid))
+            {
+                GamePadMap map = GamePadMap.GetConfiguration(guid);
+                configurations.Add(guid, map);
+            }
+            return configurations[guid];
+        }
+
+        bool IsMapped(MapItem item)
+        {
+            return item.Type != MapType.Unmapped;
+        }
+
+        GamePadAxes TranslateAxes(GamePadMap map)
+        {
+            GamePadAxes axes = 0;
+            axes |= IsMapped(map.LeftAxisX) ? GamePadAxes.LeftX : 0;
+            axes |= IsMapped(map.LeftAxisY) ? GamePadAxes.LeftY : 0;
+            axes |= IsMapped(map.RightAxisX) ? GamePadAxes.RightX : 0;
+            axes |= IsMapped(map.RightAxisY) ? GamePadAxes.RightY : 0;
+            axes |= IsMapped(map.LeftTrigger) ? GamePadAxes.LeftTrigger : 0;
+            axes |= IsMapped(map.RightTrigger) ? GamePadAxes.RightTrigger : 0;
+            return axes;
+        }
+
+        Buttons TranslateButtons(GamePadMap map)
+        {
+            Buttons buttons = 0;
+            buttons |= IsMapped(map.A) ? Buttons.A : 0;
+            buttons |= IsMapped(map.B) ? Buttons.B : 0;
+            buttons |= IsMapped(map.X) ? Buttons.X : 0;
+            buttons |= IsMapped(map.Y) ? Buttons.Y : 0;
+            buttons |= IsMapped(map.Start) ? Buttons.Start : 0;
+            buttons |= IsMapped(map.Back) ? Buttons.Back : 0;
+            buttons |= IsMapped(map.BigButton) ? Buttons.BigButton : 0;
+            buttons |= IsMapped(map.LeftShoulder) ? Buttons.LeftShoulder : 0;
+            buttons |= IsMapped(map.RightShoulder) ? Buttons.RightShoulder : 0;
+            buttons |= IsMapped(map.LeftStick) ? Buttons.LeftStick : 0;
+            buttons |= IsMapped(map.RightStick) ? Buttons.RightStick : 0;
+            return buttons;
+        }
+
+//        bool TranslateDPad(GamePadMap map)
+//        {
+//            pad.HasDPadDownButton = IsMapped(map.DPadDown);
+//            pad.HasDPadUpButton = IsMapped(map.DPadUp);
+//            pad.HasDPadLeftButton = IsMapped(map.DPadLeft);
+//            pad.HasDPadRightButton = IsMapped(map.DPadRight);
+//        }
+
+        #endregion
     }
 }
