@@ -52,8 +52,8 @@ namespace OpenTK.Platform
     /// </remarks>
     class MappedGamePadDriver : IGamePadDriver
     {
-        readonly Dictionary<Guid, GamePadMap> configurations =
-            new Dictionary<Guid, GamePadMap>();
+        readonly Dictionary<Guid, GamePadConfiguration> configurations =
+            new Dictionary<Guid, GamePadConfiguration>();
 
         public GamePadState GetState(int index)
         {
@@ -61,7 +61,7 @@ namespace OpenTK.Platform
             GamePadState pad = new GamePadState();
             if (joy.IsConnected)
             {
-                GamePadMap map = GetConfiguration(Joystick.GetGuid(index));
+                GamePadConfiguration map = GetConfiguration(Joystick.GetGuid(index));
 
 
                 // Todo: implement mapping
@@ -75,7 +75,7 @@ namespace OpenTK.Platform
             GamePadCapabilities pad;
             if (joy.IsConnected)
             {
-                GamePadMap map = GetConfiguration(Joystick.GetGuid(index));
+                GamePadConfiguration map = GetConfiguration(Joystick.GetGuid(index));
                 pad = new GamePadCapabilities(
                     GamePadType.GamePad, // Todo: detect different types
                     TranslateAxes(map),
@@ -95,7 +95,7 @@ namespace OpenTK.Platform
             string name = String.Empty;
             if (joy.IsConnected)
             {
-                GamePadMap map = GetConfiguration(Joystick.GetGuid(index));
+                GamePadConfiguration map = GetConfiguration(Joystick.GetGuid(index));
                 name = map.Name;
             }
             return name;
@@ -103,22 +103,22 @@ namespace OpenTK.Platform
 
         #region Private Members
 
-        GamePadMap GetConfiguration(Guid guid)
+        GamePadConfiguration GetConfiguration(Guid guid)
         {
             if (!configurations.ContainsKey(guid))
             {
-                GamePadMap map = GamePadMap.GetConfiguration(guid);
+                GamePadConfiguration map = GamePadConfiguration.GetConfiguration(guid);
                 configurations.Add(guid, map);
             }
             return configurations[guid];
         }
 
-        bool IsMapped(MapItem item)
+        bool IsMapped(GamePadConfigurationItem item)
         {
-            return item.Type != MapType.Unmapped;
+            return item.Type != ConfigurationType.Unmapped;
         }
 
-        GamePadAxes TranslateAxes(GamePadMap map)
+        GamePadAxes TranslateAxes(GamePadConfiguration map)
         {
             GamePadAxes axes = 0;
             axes |= IsMapped(map.LeftAxisX) ? GamePadAxes.LeftX : 0;
@@ -130,7 +130,7 @@ namespace OpenTK.Platform
             return axes;
         }
 
-        Buttons TranslateButtons(GamePadMap map)
+        Buttons TranslateButtons(GamePadConfiguration map)
         {
             Buttons buttons = 0;
             buttons |= IsMapped(map.A) ? Buttons.A : 0;

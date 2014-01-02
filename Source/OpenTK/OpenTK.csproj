@@ -791,8 +791,9 @@
     <Compile Include="Input\GamePadDPad.cs" />
     <Compile Include="Input\GamePadButtons.cs" />
     <Compile Include="Input\Buttons.cs" />
-    <Compile Include="Input\GamePadMap.cs" />
     <Compile Include="Input\GamePadConfigurationDatabase.cs" />
+    <Compile Include="Input\GamePadConfiguration.cs" />
+    <Compile Include="Input\GamePadConfigurationItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
