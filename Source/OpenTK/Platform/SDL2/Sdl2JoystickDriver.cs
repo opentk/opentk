@@ -42,6 +42,7 @@ namespace OpenTK.Platform.SDL2
         {
             public IntPtr Handle { get; set; }
             public Guid Guid { get; set; }
+            public int PacketNumber { get; set; }
             public int HatCount { get; set; }
             public int BallCount { get; set; }
             public bool IsConnected { get; set; }
@@ -72,7 +73,6 @@ namespace OpenTK.Platform.SDL2
         readonly List<Sdl2GamePad> controllers = new List<Sdl2GamePad>(4);
         readonly Dictionary<int, int> sdl_instanceid_to_controllers = new Dictionary<int, int>();
 #endif
-
 
         public Sdl2JoystickDriver()
         {
@@ -339,6 +339,7 @@ namespace OpenTK.Platform.SDL2
                 JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
                 float value = ev.Value * RangeMultiplier;
                 joystick.SetAxis((JoystickAxis)ev.Axis, value);
+                joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
             else
             {
@@ -354,6 +355,7 @@ namespace OpenTK.Platform.SDL2
                 int index = sdl_instanceid_to_joysticks[id];
                 JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
                 // Todo: does it make sense to support balls?
+                joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
             else
             {
@@ -369,6 +371,7 @@ namespace OpenTK.Platform.SDL2
                 int index = sdl_instanceid_to_joysticks[id];
                 JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
                 joystick.SetButton((JoystickButton)ev.Button, ev.State == State.Pressed);
+                joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
             else
             {
@@ -384,6 +387,7 @@ namespace OpenTK.Platform.SDL2
                 int index = sdl_instanceid_to_joysticks[id];
                 JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
                 // Todo: map hat to an extra axis
+                joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
             else
             {
@@ -588,6 +592,7 @@ namespace OpenTK.Platform.SDL2
                 }
 
                 state.SetIsConnected(joystick.Details.IsConnected);
+                state.SetPacketNumber(joystick.Details.PacketNumber);
             }
 
             return state;
