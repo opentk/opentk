@@ -61,13 +61,59 @@ namespace OpenTK.Platform
         {
             JoystickState joy = Joystick.GetState(index);
             GamePadState pad = new GamePadState();
+
             if (joy.IsConnected)
             {
-                GamePadConfiguration map = GetConfiguration(Joystick.GetGuid(index));
+                pad.SetConnected(true);
+                GamePadConfiguration configuration = GetConfiguration(Joystick.GetGuid(index));
 
+                foreach (GamePadConfigurationItem map in configuration)
+                {
+                    switch (map.Source.Type)
+                    {
+                        case ConfigurationType.Axis:
+                            {
+                                // JoystickAxis -> Buttons/GamePadAxes mapping
+                                JoystickAxis source_axis = map.Source.Axis;
+                                GamePadAxes target_axis = map.Target.Axis;
+                                short value = joy.GetAxisRaw(source_axis);
 
-                // Todo: implement mapping
+                                switch (map.Target.Type)
+                                {
+                                    case ConfigurationType.Axis:
+                                        pad.SetAxis(target_axis, value);
+                                        break;
+
+                                    case ConfigurationType.Button:
+                                        throw new NotImplementedException();
+                                        break;
+                                }
+                            }
+                            break;
+
+                        case ConfigurationType.Button:
+                            {
+                                // JoystickButton -> Buttons/GamePadAxes mapping
+                                JoystickButton source_button = map.Source.Button;
+                                Buttons target_button = map.Target.Button;
+                                bool pressed = joy.GetButton(source_button) == ButtonState.Pressed;
+
+                                switch (map.Target.Type)
+                                {
+                                    case ConfigurationType.Axis:
+                                        throw new NotImplementedException();
+                                        break;
+
+                                    case ConfigurationType.Button:
+                                        pad.SetButton(target_button, pressed);
+                                        break;
+                                }
+                            }
+                            break;
+                    }
+                }
             }
+
             return pad;
         }
 
@@ -77,11 +123,28 @@ namespace OpenTK.Platform
             GamePadCapabilities pad;
             if (joy.IsConnected)
             {
-                GamePadConfiguration map = GetConfiguration(Joystick.GetGuid(index));
+                GamePadConfiguration configuration = GetConfiguration(Joystick.GetGuid(index));
+                GamePadAxes mapped_axes = 0;
+                Buttons mapped_buttons = 0;
+
+                foreach (GamePadConfigurationItem map in configuration)
+                {
+                    switch (map.Target.Type)
+                    {
+                        case ConfigurationType.Axis:
+                            mapped_axes |= map.Target.Axis;
+                            break;
+
+                        case ConfigurationType.Button:
+                            mapped_buttons |= map.Target.Button;
+                            break;
+                    }
+                }
+
                 pad = new GamePadCapabilities(
                     GamePadType.GamePad, // Todo: detect different types
-                    TranslateAxes(map),
-                    TranslateButtons(map),
+                    mapped_axes,
+                    mapped_buttons,
                     true);
             }
             else
@@ -116,47 +179,10 @@ namespace OpenTK.Platform
             return configurations[guid];
         }
 
-        bool IsMapped(GamePadConfigurationItem item)
+        bool IsMapped(GamePadConfigurationSource item)
         {
             return item.Type != ConfigurationType.Unmapped;
         }
-
-        GamePadAxes TranslateAxes(GamePadConfiguration map)
-        {
-            GamePadAxes axes = 0;
-            axes |= IsMapped(map.LeftAxisX) ? GamePadAxes.LeftX : 0;
-            axes |= IsMapped(map.LeftAxisY) ? GamePadAxes.LeftY : 0;
-            axes |= IsMapped(map.RightAxisX) ? GamePadAxes.RightX : 0;
-            axes |= IsMapped(map.RightAxisY) ? GamePadAxes.RightY : 0;
-            axes |= IsMapped(map.LeftTrigger) ? GamePadAxes.LeftTrigger : 0;
-            axes |= IsMapped(map.RightTrigger) ? GamePadAxes.RightTrigger : 0;
-            return axes;
-        }
-
-        Buttons TranslateButtons(GamePadConfiguration map)
-        {
-            Buttons buttons = 0;
-            buttons |= IsMapped(map.A) ? Buttons.A : 0;
-            buttons |= IsMapped(map.B) ? Buttons.B : 0;
-            buttons |= IsMapped(map.X) ? Buttons.X : 0;
-            buttons |= IsMapped(map.Y) ? Buttons.Y : 0;
-            buttons |= IsMapped(map.Start) ? Buttons.Start : 0;
-            buttons |= IsMapped(map.Back) ? Buttons.Back : 0;
-            buttons |= IsMapped(map.BigButton) ? Buttons.BigButton : 0;
-            buttons |= IsMapped(map.LeftShoulder) ? Buttons.LeftShoulder : 0;
-            buttons |= IsMapped(map.RightShoulder) ? Buttons.RightShoulder : 0;
-            buttons |= IsMapped(map.LeftStick) ? Buttons.LeftStick : 0;
-            buttons |= IsMapped(map.RightStick) ? Buttons.RightStick : 0;
-            return buttons;
-        }
-
-//        bool TranslateDPad(GamePadMap map)
-//        {
-//            pad.HasDPadDownButton = IsMapped(map.DPadDown);
-//            pad.HasDPadUpButton = IsMapped(map.DPadUp);
-//            pad.HasDPadLeftButton = IsMapped(map.DPadLeft);
-//            pad.HasDPadRightButton = IsMapped(map.DPadRight);
-//        }
 
         #endregion
     }
