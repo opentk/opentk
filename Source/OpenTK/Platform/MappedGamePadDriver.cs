@@ -52,6 +52,8 @@ namespace OpenTK.Platform
     /// </remarks>
     class MappedGamePadDriver : IGamePadDriver
     {
+        readonly GamePadConfigurationDatabase database =
+            new GamePadConfigurationDatabase();
         readonly Dictionary<Guid, GamePadConfiguration> configurations =
             new Dictionary<Guid, GamePadConfiguration>();
 
@@ -107,7 +109,8 @@ namespace OpenTK.Platform
         {
             if (!configurations.ContainsKey(guid))
             {
-                GamePadConfiguration map = GamePadConfiguration.GetConfiguration(guid);
+                string config = database[guid];
+                GamePadConfiguration map = new GamePadConfiguration(config);
                 configurations.Add(guid, map);
             }
             return configurations[guid];

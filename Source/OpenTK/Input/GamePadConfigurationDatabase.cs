@@ -32,11 +32,11 @@ using System.Collections.Generic;
 
 namespace OpenTK.Input
 {
-    static class GamePadConfigurationDatabase
+    class GamePadConfigurationDatabase
     {
-        internal static readonly Dictionary<Guid, string> Configurations = new Dictionary<Guid, string>();
+        readonly Dictionary<Guid, string> Configurations = new Dictionary<Guid, string>();
 
-        static GamePadConfigurationDatabase()
+        internal GamePadConfigurationDatabase()
         {
             // Configuration database copied from SDL
 
@@ -61,8 +61,10 @@ namespace OpenTK.Input
             // 3. This notice may not be removed or altered from any source distribution.
             #endregion
 
-            // Default configuration, used when no suitable configuration is available
-            Add("00000000000000000000000000000000,Unknown Controller,a:b1,b:b2,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b4,leftstick:b10,lefttrigger:b6,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:b7,rightx:a2,righty:a3,start:b9,x:b0,y:b3,");
+            // Default configuration, used when no suitable configuration is available.
+            // Add("00000000000000000000000000000000,Unknown Controller,a:b1,b:b2,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b4,leftstick:b10,lefttrigger:b6,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:b7,rightx:a2,righty:a3,start:b9,x:b0,y:b3,");
+            // Valid for all xinput devices on Windows:
+            Add("00000000000000000000000000000000,X360 Controller,a:b10,b:b11,back:b5,dpdown:b1,dpleft:b2,dpright:b3,dpup:b0,guide:b14,leftshoulder:b8,leftstick:b6,lefttrigger:a4,leftx:a0,lefty:a1,rightshoulder:b9,rightstick:b7,righttrigger:a5,rightx:a2,righty:a3,start:b4,x:b12,y:b13,");
 
             // Windows
             Add("341a3608000000000000504944564944,Afterglow PS3 Controller,a:b1,b:b2,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b4,leftstick:b10,lefttrigger:b6,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:b7,rightx:a2,righty:a3,start:b9,x:b0,y:b3,");
@@ -72,7 +74,6 @@ namespace OpenTK.Input
             Add("88880803000000000000504944564944,PS3 Controller,a:b2,b:b1,back:b8,dpdown:h0.8,dpleft:h0.4,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b4,leftstick:b9,lefttrigger:b6,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b10,righttrigger:b7,rightx:a3,righty:a4,start:b11,x:b0,y:b3,");
             Add("4c056802000000000000504944564944,PS3 Controller,a:b14,b:b13,back:b0,dpdown:b6,dpleft:b7,dpright:b5,dpup:b4,guide:b16,leftshoulder:b10,leftstick:b1,lefttrigger:b8,leftx:a0,lefty:a1,rightshoulder:b11,rightstick:b2,righttrigger:b9,rightx:a2,righty:a3,start:b3,x:b15,y:b12,");
             Add("25090500000000000000504944564944,PS3 DualShock,a:b2,b:b1,back:b9,dpdown:h0.8,dpleft:h0.4,dpright:h0.2,dpup:h0.1,guide:,leftshoulder:b6,leftstick:b10,lefttrigger:b4,leftx:a0,lefty:a1,rightshoulder:b7,rightstick:b11,righttrigger:b5,rightx:a2,righty:a3,start:b8,x:b0,y:b3,");
-            Add("xinput00000000000000000000000000,X360 Controller,a:b10,b:b11,back:b5,dpdown:b1,dpleft:b2,dpright:b3,dpup:b0,guide:b14,leftshoulder:b8,leftstick:b6,lefttrigger:a4,leftx:a0,lefty:a1,rightshoulder:b9,rightstick:b7,righttrigger:a5,rightx:a2,righty:a3,start:b4,x:b12,y:b13,");
 
             // Mac OS X
             Add("0500000047532047616d657061640000,GameStop Gamepad,a:b0,b:b1,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:,leftshoulder:b4,leftstick:b10,lefttrigger:b6,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:b7,rightx:a2,righty:a3,start:b9,x:b2,y:b3,");
@@ -99,11 +100,32 @@ namespace OpenTK.Input
             Add("030000005e0400009102000007010000,X360 Wireless Controller,a:b0,b:b1,back:b6,dpdown:b14,dpleft:b11,dpright:b12,dpup:b13,guide:b8,leftshoulder:b4,leftstick:b9,lefttrigger:a2,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b10,righttrigger:a5,rightx:a3,righty:a4,start:b7,x:b2,y:b3,");
         }
 
-        static void Add(string config)
+        internal void Add(string config)
         {
-            Configurations.Add(
-                new Guid(config.Substring(0, 32)),
-                config);
+            Guid guid = new Guid(config.Substring(0, 32));
+            if (!Configurations.ContainsKey(guid))
+            {
+                Configurations.Add(guid, config);
+            }
+            else
+            {
+                Configurations[guid] = config;
+            }
+        }
+
+        internal string this[Guid guid]
+        {
+            get
+            {
+                if (Configurations.ContainsKey(guid))
+                {
+                    return Configurations[guid];
+                }
+                else
+                {
+                    return Configurations[new Guid()]; // default configuration
+                }
+            }
         }
     }
 }
