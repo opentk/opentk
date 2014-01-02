@@ -34,101 +34,43 @@ using System.Text;
 
 namespace OpenTK.Input
 {
-    class GamePadConfiguration
+    sealed class GamePadConfiguration
     {
-        static readonly GamePadConfiguration default_map;
+        static readonly char[] ConfigurationSeparator = new char[] { ',' };
 
         Guid guid;
         string name;
-        GamePadConfigurationItem a, b, x, y;
-        GamePadConfigurationItem lshoulder, rshoulder;
-        GamePadConfigurationItem lstick, rstick;
-        GamePadConfigurationItem start, back;
-        GamePadConfigurationItem home;
-        GamePadConfigurationItem axis_lx, axis_ly;
-        GamePadConfigurationItem axis_rx, axis_ry;
-        GamePadConfigurationItem ltrigger, rtrigger;
-        GamePadConfigurationItem dpad_u, dpad_d;
-        GamePadConfigurationItem dpad_l, dpad_r;
+        readonly List<GamePadConfigurationItem> configuration_items =
+            new List<GamePadConfigurationItem>();
 
-        Guid Guid { get { return guid; } set { guid = value; } }
-        public string Name { get { return name; } set { name = value; } }
-        public GamePadConfigurationItem A { get { return a; } set { a = value; } }
-        public GamePadConfigurationItem B { get { return b; } set { b = value; } }
-        public GamePadConfigurationItem X { get { return x; } set { x = value; } }
-        public GamePadConfigurationItem Y { get { return y; } set { y = value; } }
-        public GamePadConfigurationItem LeftShoulder { get { return lshoulder; } set { lshoulder = value; } }
-        public GamePadConfigurationItem RightShoulder { get { return rshoulder; } set { rshoulder = value; } }
-        public GamePadConfigurationItem LeftStick { get { return lstick; } set { lstick = value; } }
-        public GamePadConfigurationItem RightStick { get { return rstick; } set { rstick = value; } }
-        public GamePadConfigurationItem Start { get { return start; } set { start = value; } }
-        public GamePadConfigurationItem Back { get { return back; } set { back = value; } }
-        public GamePadConfigurationItem BigButton { get { return home; } set { home = value; } }
-        public GamePadConfigurationItem LeftAxisX { get { return axis_lx; } set { axis_lx = value; } }
-        public GamePadConfigurationItem LeftAxisY { get { return axis_ly; } set { axis_ly = value; } }
-        public GamePadConfigurationItem RightAxisX { get { return axis_rx; } set { axis_rx = value; } }
-        public GamePadConfigurationItem RightAxisY { get { return axis_ry; } set { axis_ry = value; } }
-        public GamePadConfigurationItem LeftTrigger { get { return ltrigger; } set { ltrigger = value; } }
-        public GamePadConfigurationItem RightTrigger { get { return rtrigger; } set { rtrigger = value; } }
-        public GamePadConfigurationItem DPadUp { get { return dpad_u; } set { dpad_u = value; } }
-        public GamePadConfigurationItem DPadDown { get { return dpad_d; } set { dpad_d = value; } }
-        public GamePadConfigurationItem DPadLeft { get { return dpad_l; } set { dpad_l = value; } }
-        public GamePadConfigurationItem DPadRight { get { return dpad_r; } set { dpad_r = value; } }
-
-        public GamePadConfiguration()
+        public Guid Guid
         {
+            get { return guid; }
+            private set { guid = value; }
+        }
+
+        public string Name
+        {
+            get { return name; }
+            private set { name = value; }
         }
 
         public GamePadConfiguration(string configuration)
         {
+            ParseConfiguration(configuration);
         }
 
-        static GamePadConfiguration()
+        public List<GamePadConfigurationItem>.Enumerator GetEnumerator()
         {
-            GamePadConfiguration map = new GamePadConfiguration();
-            map.A = new GamePadConfigurationItem(JoystickButton.Button0);
-            map.B = new GamePadConfigurationItem(JoystickButton.Button1);
-            map.X = new GamePadConfigurationItem(JoystickButton.Button2);
-            map.Y = new GamePadConfigurationItem(JoystickButton.Button3);
-            map.LeftShoulder = new GamePadConfigurationItem(JoystickButton.Button4);
-            map.RightShoulder = new GamePadConfigurationItem(JoystickButton.Button5);
-            map.LeftStick = new GamePadConfigurationItem(JoystickButton.Button6);
-            map.RightStick = new GamePadConfigurationItem(JoystickButton.Button7);
-            map.Start = new GamePadConfigurationItem(JoystickButton.Button8);
-            map.Back = new GamePadConfigurationItem(JoystickButton.Button9);
-            map.BigButton = new GamePadConfigurationItem(JoystickButton.Button10);
-            map.DPadUp = new GamePadConfigurationItem(JoystickButton.Button11);
-            map.DPadDown = new GamePadConfigurationItem(JoystickButton.Button12);
-            map.DPadLeft = new GamePadConfigurationItem(JoystickButton.Button13);
-            map.DPadRight = new GamePadConfigurationItem(JoystickButton.Button14);
-            map.LeftAxisX = new GamePadConfigurationItem(JoystickAxis.Axis0);
-            map.LeftAxisY = new GamePadConfigurationItem(JoystickAxis.Axis1);
-            map.RightAxisX = new GamePadConfigurationItem(JoystickAxis.Axis2);
-            map.RightAxisY = new GamePadConfigurationItem(JoystickAxis.Axis3);
-            map.LeftTrigger = new GamePadConfigurationItem(JoystickAxis.Axis4);
-            map.RightTrigger = new GamePadConfigurationItem(JoystickAxis.Axis5);
-            default_map = map;
+            return configuration_items.GetEnumerator();
         }
 
-        public static GamePadConfiguration Default
-        {
-            get { return default_map; }
-        }
-
-        public static GamePadConfiguration GetConfiguration(Guid guid)
-        {
-            GamePadConfiguration map = GamePadConfiguration.Default;
-            if (GamePadConfigurationDatabase.Configurations.ContainsKey(guid))
-            {
-                map = ParseConfiguration(GamePadConfigurationDatabase.Configurations[guid]);
-            }
-            return map;
-        }
+        #region Private Members
 
         // Parses a GamePad configuration string. The string
         // follows the rules for SDL2 GameController, outlined here:
         // http://wiki.libsdl.org/SDL_GameControllerAddMapping
-        static GamePadConfiguration ParseConfiguration(string configuration)
+        void ParseConfiguration(string configuration)
         {
             if (String.IsNullOrEmpty(configuration))
             {
@@ -140,128 +82,97 @@ namespace OpenTK.Input
             // - name is a human-readable name for the controller
             // - config is a comma-separated list of configurations as follows:
             //   - [gamepad axis or button name]:[joystick axis, button or hat number]
-            string[] items = configuration.Split(',');
+            string[] items = configuration.Split(ConfigurationSeparator, StringSplitOptions.RemoveEmptyEntries);
             if (items.Length < 3)
             {
                 throw new ArgumentException();
             }
 
-            GamePadConfiguration map = new GamePadConfiguration();
+            GamePadConfiguration map = this;
             map.Guid = new Guid(items[0]);
             map.Name = items[1];
             for (int i = 2; i < items.Length; i++)
             {
                 string[] config = items[i].Split(':');
-                GamePadConfigurationItem map_item = ParseItem(config[1]);
-                switch (config[0])
-                {
-                    case "a":
-                        map.A = map_item;
-                        break;
-
-                    case "b":
-                        map.B = map_item;
-                        break;
-
-                    case "x":
-                        map.X = map_item;
-                        break;
-
-                    case "y":
-                        map.Y = map_item;
-                        break;
-
-                    case "start":
-                        map.Start = map_item;
-                        break;
-
-                    case "back":
-                        map.Back = map_item;
-                        break;
-
-                    case "guide":
-                        map.BigButton = map_item;
-                        break;
-
-                    case "dpup":
-                        map.DPadUp = map_item;
-                        break;
-
-                    case "dpdown":
-                        map.DPadDown = map_item;
-                        break;
-
-                    case "dpleft":
-                        map.DPadLeft = map_item;
-                        break;
-
-                    case "dpright":
-                        map.DPadRight = map_item;
-                        break;
-
-                    case "leftshoulder":
-                        map.LeftShoulder = map_item;
-                        break;
-
-                    case "rightshoulder":
-                        map.RightShoulder = map_item;
-                        break;
-
-                    case "leftstick":
-                        map.LeftStick = map_item;
-                        break;
-
-                    case "rightstick":
-                        map.RightStick = map_item;
-                        break;
-
-                    case "leftx":
-                        map.LeftAxisX = map_item;
-                        break;
-
-                    case "lefty":
-                        map.LeftAxisY = map_item;
-                        break;
-
-                    case "rightx":
-                        map.RightAxisX = map_item;
-                        break;
-
-                    case "righty":
-                        map.RightAxisY = map_item;
-                        break;
-
-                    case "lefttrigger":
-                        map.LeftTrigger = map_item;
-                        break;
-
-                    case "righttrigger":
-                        map.RightTrigger = map_item;
-                        break;
-
-                    default:
-                        Debug.Print("[Input] Invalid GamePad configuration name: {0}", items[i]);
-                        break;
-                }
+                GamePadConfigurationTarget target = ParseTarget(config[0]);
+                GamePadConfigurationSource source = ParseSource(config[1]);
+                configuration_items.Add(new GamePadConfigurationItem(source, target));
             }
-
-            return map;
         }
 
-        static GamePadConfigurationItem ParseItem(string item)
+        static GamePadConfigurationTarget ParseTarget(string target)
+        {
+            switch (target)
+            {
+                // Buttons
+                case "a":
+                    return new GamePadConfigurationTarget(Buttons.A);
+                case "b":
+                    return new GamePadConfigurationTarget(Buttons.B);
+                case "x":
+                    return new GamePadConfigurationTarget(Buttons.X);
+                case "y":
+                    return new GamePadConfigurationTarget(Buttons.Y);
+                case "start":
+                    return new GamePadConfigurationTarget(Buttons.Start);
+                case "back":
+                    return new GamePadConfigurationTarget(Buttons.Back);
+                case "guide":
+                    return new GamePadConfigurationTarget(Buttons.BigButton);
+                case "leftshoulder":
+                    return new GamePadConfigurationTarget(Buttons.LeftShoulder);
+                case "rightshoulder":
+                    return new GamePadConfigurationTarget(Buttons.RightShoulder);
+                case "leftstick":
+                    return new GamePadConfigurationTarget(Buttons.LeftStick);
+                case "rightstick":
+                    return new GamePadConfigurationTarget(Buttons.RightStick);
+                case "dpup":
+                    return new GamePadConfigurationTarget(Buttons.DPadUp);
+                case "dpdown":
+                    return new GamePadConfigurationTarget(Buttons.DPadDown);
+                case "dpleft":
+                    return new GamePadConfigurationTarget(Buttons.DPadLeft);
+                case "dpright":
+                    return new GamePadConfigurationTarget(Buttons.DPadRight);
+
+                // Axes
+                case "leftx":
+                    return new GamePadConfigurationTarget(GamePadAxes.LeftX);
+                case "lefty":
+                    return new GamePadConfigurationTarget(GamePadAxes.LeftY);
+                case "rightx":
+                    return new GamePadConfigurationTarget(GamePadAxes.RightX);
+                case "righty":
+                    return new GamePadConfigurationTarget(GamePadAxes.RightY);
+
+                // Triggers
+                case "lefttrigger":
+                    return new GamePadConfigurationTarget(GamePadAxes.LeftTrigger);
+                case "righttrigger":
+                    return new GamePadConfigurationTarget(GamePadAxes.RightTrigger);
+
+
+                // Unmapped
+                default:
+                    return new GamePadConfigurationTarget();
+            }
+        }
+
+        static GamePadConfigurationSource ParseSource(string item)
         {
             if (String.IsNullOrEmpty(item))
             {
-                return new GamePadConfigurationItem();
+                return new GamePadConfigurationSource();
             }
 
             switch (item[0])
             {
                 case 'a':
-                    return new GamePadConfigurationItem(ParseAxis(item));
+                    return new GamePadConfigurationSource(ParseAxis(item));
 
                 case 'b':
-                    return new GamePadConfigurationItem(ParseButton(item));
+                    return new GamePadConfigurationSource(ParseButton(item));
 
                 case 'h':
                     throw new NotImplementedException();
@@ -287,5 +198,7 @@ namespace OpenTK.Input
             int id = Int32.Parse(item.Substring(1));
             return button + id;
         }
+
+        #endregion
     }
 }
