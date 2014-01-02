@@ -37,6 +37,7 @@ namespace OpenTK.Input
         const float RangeMultiplier = 1.0f / (short.MaxValue + 1);
 
         Buttons buttons;
+        int packet_number;
         short left_stick_x;
         short left_stick_y;
         short right_stick_x;
@@ -70,6 +71,11 @@ namespace OpenTK.Input
         public bool IsConnected
         {
             get { return is_connected; }
+        }
+
+        public int PacketNumber
+        {
+            get { return packet_number; }
         }
 
         public override string ToString()
@@ -165,6 +171,11 @@ namespace OpenTK.Input
         {
             left_trigger = left;
             right_trigger = right;
+        }
+
+        internal void SetPacketNumber(int number)
+        {
+            packet_number = number;
         }
 
         #endregion

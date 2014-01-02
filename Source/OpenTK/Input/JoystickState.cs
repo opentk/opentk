@@ -45,6 +45,7 @@ namespace OpenTK.Input
 
         unsafe fixed short axes[MaxAxes];
         int buttons;
+        int packet_number;
         bool is_connected;
 
         #region Public Members
@@ -77,6 +78,11 @@ namespace OpenTK.Input
         public bool IsConnected
         {
             get { return is_connected; }
+        }
+
+        internal int PacketNumber
+        {
+            get { return packet_number; }
         }
 
         public override string ToString()
@@ -165,6 +171,11 @@ namespace OpenTK.Input
         internal void SetIsConnected(bool value)
         {
             is_connected = value;
+        }
+
+        internal void SetPacketNumber(int number)
+        {
+            packet_number = number;
         }
 
         #endregion

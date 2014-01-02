@@ -65,6 +65,8 @@ namespace OpenTK.Platform
             if (joy.IsConnected)
             {
                 pad.SetConnected(true);
+                pad.SetPacketNumber(joy.PacketNumber);
+
                 GamePadConfiguration configuration = GetConfiguration(Joystick.GetGuid(index));
 
                 foreach (GamePadConfigurationItem map in configuration)
