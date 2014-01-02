@@ -100,7 +100,7 @@ namespace OpenTK.Input
         MapItem dpad_l, dpad_r;
 
         Guid Guid { get { return guid; } set { guid = value; } }
-        string Name { get { return name; } set { name = value; } }
+        public string Name { get { return name; } set { name = value; } }
         public MapItem A { get { return a; } set { a = value; } }
         public MapItem B { get { return b; } set { b = value; } }
         public MapItem X { get { return x; } set { x = value; } }
