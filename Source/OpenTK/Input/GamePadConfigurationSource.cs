@@ -31,28 +31,42 @@ using System;
 
 namespace OpenTK.Input
 {
-    class GamePadConfigurationItem
+    struct GamePadConfigurationSource
     {
-        GamePadConfigurationSource source;
-        GamePadConfigurationTarget target;
+        ConfigurationType map_type;
+        Nullable<JoystickButton> map_button;
+        Nullable<JoystickAxis> map_axis;
 
-        public GamePadConfigurationItem(GamePadConfigurationSource source, GamePadConfigurationTarget target)
+        public GamePadConfigurationSource(JoystickAxis axis)
+            : this()
         {
-            Source = source;
-            Target = target;
+            Type = ConfigurationType.Axis;
+            Axis = axis;
         }
 
-        public GamePadConfigurationSource Source
+        public GamePadConfigurationSource(JoystickButton button)
+            : this()
         {
-            get { return source; }
-            private set { source = value; }
+            Type = ConfigurationType.Button;
+            Button = button;
         }
 
-        public GamePadConfigurationTarget Target
+        public ConfigurationType Type
         {
-            get { return target; }
-            private set { target = value; }
+            get { return map_type; }
+            private set { map_type = value; }
+        }
+
+        public JoystickAxis Axis
+        {
+            get { return map_axis.Value; }
+            private set { map_axis = value; }
+        }
+
+        public JoystickButton Button
+        {
+            get { return map_button.Value; }
+            private set { map_button = value; }
         }
     }
 }
-

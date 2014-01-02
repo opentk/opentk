@@ -1,6 +1,6 @@
 #region License
 //
-// GamePadConfigurationItem.cs
+// ConfigurationType.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
@@ -31,28 +31,11 @@ using System;
 
 namespace OpenTK.Input
 {
-    class GamePadConfigurationItem
+    enum ConfigurationType
     {
-        GamePadConfigurationSource source;
-        GamePadConfigurationTarget target;
-
-        public GamePadConfigurationItem(GamePadConfigurationSource source, GamePadConfigurationTarget target)
-        {
-            Source = source;
-            Target = target;
-        }
-
-        public GamePadConfigurationSource Source
-        {
-            get { return source; }
-            private set { source = value; }
-        }
-
-        public GamePadConfigurationTarget Target
-        {
-            get { return target; }
-            private set { target = value; }
-        }
+        Unmapped = 0,
+        Axis,
+        Button
     }
 }
 

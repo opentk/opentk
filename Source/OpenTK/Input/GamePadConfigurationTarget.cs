@@ -1,6 +1,6 @@
 #region License
 //
-// GamePadConfigurationItem.cs
+// GamePadConfigurationTarget.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
@@ -31,28 +31,42 @@ using System;
 
 namespace OpenTK.Input
 {
-    class GamePadConfigurationItem
+    struct GamePadConfigurationTarget
     {
-        GamePadConfigurationSource source;
-        GamePadConfigurationTarget target;
+        ConfigurationType map_type;
+        Nullable<Buttons> map_button;
+        Nullable<GamePadAxes> map_axis;
 
-        public GamePadConfigurationItem(GamePadConfigurationSource source, GamePadConfigurationTarget target)
+        public GamePadConfigurationTarget(Buttons button)
+            : this()
         {
-            Source = source;
-            Target = target;
+            Type = ConfigurationType.Button;
+            map_button = button;
         }
 
-        public GamePadConfigurationSource Source
+        public GamePadConfigurationTarget(GamePadAxes axis)
+            : this()
         {
-            get { return source; }
-            private set { source = value; }
+            Type = ConfigurationType.Axis;
+            map_axis = axis;
         }
 
-        public GamePadConfigurationTarget Target
+        public ConfigurationType Type
         {
-            get { return target; }
-            private set { target = value; }
+            get { return map_type; }
+            private set { map_type = value; }
+        }
+
+        public GamePadAxes Axis
+        {
+            get { return map_axis.Value; }
+            private set { map_axis = value; }
+        }
+
+        public Buttons Button
+        {
+            get { return map_button.Value; }
+            private set { map_button = value; }
         }
     }
 }
-
