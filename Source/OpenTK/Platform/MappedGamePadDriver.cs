@@ -91,7 +91,14 @@ namespace OpenTK.Platform
 
         public string GetName(int index)
         {
-            throw new NotImplementedException();
+            JoystickCapabilities joy = Joystick.GetCapabilities(index);
+            string name = String.Empty;
+            if (joy.IsConnected)
+            {
+                GamePadMap map = GetConfiguration(Joystick.GetGuid(index));
+                name = map.Name;
+            }
+            return name;
         }
 
         #region Private Members
