@@ -19,5 +19,7 @@ namespace OpenTK.Input
         /// <remarks>
         /// <para>If no device exists at the specified index, the return value is <see cref="System.String.Empty"/>.</para></remarks>
         string GetName(int index);
+
+        bool SetVibration(int index, float left, float right);
     }
 }

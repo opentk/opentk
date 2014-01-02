@@ -87,7 +87,12 @@ namespace OpenTK.Platform.Windows
 
         public string GetName(int index)
         {
-            throw new NotImplementedException();
+            return String.Empty;
+        }
+
+        public bool SetVibration(int index, float left, float right)
+        {
+            return false;
         }
 
         #endregion

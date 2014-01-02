@@ -263,17 +263,22 @@ namespace OpenTK.Platform.X11
 
         public GamePadCapabilities GetCapabilities(int index)
         {
-            throw new NotImplementedException();
+            return new GamePadCapabilities();
         }
 
         public GamePadState GetState(int index)
         {
-            throw new NotImplementedException();
+            return new GamePadState();
         }
 
         public string GetName(int index)
         {
-            throw new NotImplementedException();
+            return String.Empty;
+        }
+
+        public bool SetVibration(int index, float left, float right)
+        {
+            return false;
         }
 
         #endregion
@@ -282,17 +287,17 @@ namespace OpenTK.Platform.X11
 
         JoystickState IJoystickDriver2.GetState(int index)
         {
-            throw new NotImplementedException();
+            return new JoystickState();
         }
 
         JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)
         {
-            throw new NotImplementedException();
+            return new JoystickCapabilities();
         }
 
         Guid IJoystickDriver2.GetGuid(int index)
         {
-            throw new NotImplementedException();
+            return new Guid();
         }
 
         #endregion

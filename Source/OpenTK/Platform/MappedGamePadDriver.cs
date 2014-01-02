@@ -168,6 +168,11 @@ namespace OpenTK.Platform
             return name;
         }
 
+        public bool SetVibration(int index, float left, float right)
+        {
+            return false;
+        }
+
         #region Private Members
 
         GamePadConfiguration GetConfiguration(Guid guid)

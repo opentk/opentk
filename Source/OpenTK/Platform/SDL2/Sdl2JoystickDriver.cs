@@ -567,6 +567,11 @@ namespace OpenTK.Platform.SDL2
         {
             return gamepad_driver.GetName(index);
         }
+
+        public bool SetVibration(int index, float left, float right)
+        {
+            return false;
+        }
 #endif
 
         #endregion
