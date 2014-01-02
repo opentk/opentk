@@ -56,16 +56,7 @@ namespace OpenTK.Input
 
         public float GetAxis(int axis)
         {
-            float value = 0.0f;
-            if (axis >= 0 && axis < MaxAxes)
-            {
-                value = GetAxisUnsafe(axis) * ConversionFactor;
-            }
-            else
-            {
-                Debug.Print("[Joystick] Invalid axis {0}", axis);
-            }
-            return value;
+            return GetAxisRaw(axis) * ConversionFactor;
         }
 
         public ButtonState GetButton(JoystickButton button)
@@ -123,6 +114,25 @@ namespace OpenTK.Input
         #endregion
 
         #region Internal Members
+
+        internal short GetAxisRaw(JoystickAxis axis)
+        {
+            return GetAxisRaw((int)axis);
+        }
+
+        internal short GetAxisRaw(int axis)
+        {
+            short value = 0;
+            if (axis >= 0 && axis < MaxAxes)
+            {
+                value = GetAxisUnsafe(axis);
+            }
+            else
+            {
+                Debug.Print("[Joystick] Invalid axis {0}", axis);
+            }
+            return value;
+        }
 
         internal void SetAxis(JoystickAxis axis, short value)
         {
