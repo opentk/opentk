@@ -33,10 +33,12 @@ using System.Text;
 
 namespace OpenTK.Input
 {
-    public class Joystick
+    public sealed class Joystick
     {
         static readonly IJoystickDriver2 implementation =
             Platform.Factory.Default.CreateJoystickDriver();
+
+        private Joystick() { }
 
         public static JoystickCapabilities GetCapabilities(int index)
         {

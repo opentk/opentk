@@ -32,13 +32,15 @@ namespace OpenTK.Input
     /// <summary>
     /// Provides access to GamePad devices.
     /// </summary>
-    public class GamePad
+    public sealed class GamePad
     {
         internal const int MaxAxisCount = 10;
         internal const int MaxDPadCount = 2;
 
         static readonly IGamePadDriver driver =
             Platform.Factory.Default.CreateGamePadDriver();
+
+        private GamePad() { }
 
         /// <summary>
         /// Retrieves a <c>GamePadCapabilities</c> structure describing the
