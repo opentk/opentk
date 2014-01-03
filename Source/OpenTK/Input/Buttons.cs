@@ -28,7 +28,7 @@ using System;
 namespace OpenTK.Input
 {
     /// <summary>
-    /// Enumerates available buttons for a canonical <c>GamePad</c> device.
+    /// Enumerates available buttons for a <c>GamePad</c> device.
     /// </summary>
     [Flags]
     public enum Buttons

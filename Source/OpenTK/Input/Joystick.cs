@@ -33,6 +33,14 @@ using System.Text;
 
 namespace OpenTK.Input
 {
+    /// <summary>
+    /// Provides access to Joystick devices.
+    /// Joystick devices provide a varying number of axes and buttons.
+    /// Use <c>GetCapabilities</c> to retrieve the number of supported
+    /// axes and buttons on a given device.
+    /// Use <c>GetState</c> to retrieve the current state of a given device.
+    /// <seealso cref="GamePad"/>
+    /// </summary>
     public sealed class Joystick
     {
         static readonly IJoystickDriver2 implementation =
@@ -40,11 +48,32 @@ namespace OpenTK.Input
 
         private Joystick() { }
 
+        /// <summary>
+        /// Retrieves the <see cref="JoystickCapabilities"/> of the device connected
+        /// at the specified index.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="JoystickCapabilities"/> structure describing
+        /// the capabilities of the device at the specified index.
+        /// If no device is connected at the specified index, the <c>IsConnected</c>
+        /// property of the returned structure will be false.
+        /// </returns>
+        /// <param name="index">The zero-based index of the device to poll.</param>
         public static JoystickCapabilities GetCapabilities(int index)
         {
             return implementation.GetCapabilities(index);
         }
 
+        /// <summary>
+        /// Retrieves the <see cref="JoystickState"/> of the device connected
+        /// at the specified index.
+        /// </summary>
+        /// <returns>A <see cref="JoystickState"/> structure describing
+        /// the current state of the device at the specified index.
+        /// If no device is connected at this index, the <c>IsConnected</c>
+        /// property of the returned structure will be false.
+        /// </returns>
+        /// <param name="index">The zero-based index of the device to poll.</param>
         public static JoystickState GetState(int index)
         {
             return implementation.GetState(index);

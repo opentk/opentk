@@ -1,4 +1,4 @@
-﻿// #region License
+﻿#region License
 //
 // GamePadThumbSticks.cs
 //
@@ -25,13 +25,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-// #endregion
-
+#endregion
 
 using System;
 
 namespace OpenTK.Input
 {
+    /// <summary>
+    /// Describes the current thumb stick state of a <see cref="GamePad"/> device
+    /// </summary>
     public struct GamePadThumbSticks : IEquatable<GamePadThumbSticks>
     {
         const float ConversionFactor = 1.0f / short.MaxValue;
@@ -50,26 +52,40 @@ namespace OpenTK.Input
 
         #region Public Members
 
+        /// <summary>
+        /// Gets a <see cref="Vector2"/> describing the state of the left thumb stick.
+        /// </summary>
         public Vector2 Left
         {
             get { return new Vector2(left_x * ConversionFactor, left_y * ConversionFactor); }
         }
 
+        /// <summary>
+        /// Gets a <see cref="Vector2"/> describing the state of the right thumb stick.
+        /// </summary>
         public Vector2 Right
         {
             get { return new Vector2(right_x * ConversionFactor, right_y * ConversionFactor); }
         }
 
+        /// <param name="left">A <see cref="GamePadThumbSticks"/> instance to test for equality.</param>
+        /// <param name="right">A <see cref="GamePadThumbSticks"/> instance to test for equality.</param>
         public static bool operator ==(GamePadThumbSticks left, GamePadThumbSticks right)
         {
             return left.Equals(right);
         }
 
+        /// <param name="left">A <see cref="GamePadThumbSticks"/> instance to test for inequality.</param>
+        /// <param name="right">A <see cref="GamePadThumbSticks"/> instance to test for inequality.</param>
         public static bool operator !=(GamePadThumbSticks left, GamePadThumbSticks right)
         {
             return !left.Equals(right);
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadThumbSticks"/>.
+        /// </summary>
+        /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadThumbSticks"/>.</returns>
         public override string ToString()
         {
             return String.Format(
@@ -77,6 +93,11 @@ namespace OpenTK.Input
                 Left.X, Left.Y, Right.X, Right.Y);
         }
 
+        /// <summary>
+        /// Serves as a hash function for a <see cref="OpenTK.Input.GamePadThumbSticks"/> object.
+        /// </summary>
+        /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
+        /// hash table.</returns>
         public override int GetHashCode()
         {
             return
@@ -84,6 +105,12 @@ namespace OpenTK.Input
                 right_x.GetHashCode() ^ right_y.GetHashCode();
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="OpenTK.Input.GamePadThumbSticks"/>.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="OpenTK.Input.GamePadThumbSticks"/>.</param>
+        /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current
+        /// <see cref="OpenTK.Input.GamePadThumbSticks"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
             return
@@ -95,6 +122,12 @@ namespace OpenTK.Input
 
         #region IEquatable<GamePadThumbSticks> Members
 
+        /// <summary>
+        /// Determines whether the specified <see cref="OpenTK.Input.GamePadThumbSticks"/> is equal to the current <see cref="OpenTK.Input.GamePadThumbSticks"/>.
+        /// </summary>
+        /// <param name="other">The <see cref="OpenTK.Input.GamePadThumbSticks"/> to compare with the current <see cref="OpenTK.Input.GamePadThumbSticks"/>.</param>
+        /// <returns><c>true</c> if the specified <see cref="OpenTK.Input.GamePadThumbSticks"/> is equal to the current
+        /// <see cref="OpenTK.Input.GamePadThumbSticks"/>; otherwise, <c>false</c>.</returns>
         public bool Equals(GamePadThumbSticks other)
         {
             return
