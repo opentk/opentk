@@ -98,6 +98,8 @@ namespace OpenTK.Platform.Windows
         public static readonly uint AltLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LMENU, 0);
         public static readonly uint AltRightScanCode = Functions.MapVirtualKey(VirtualKeys.RMENU, 0);
 
+        KeyboardKeyEventArgs key_down = new KeyboardKeyEventArgs();
+        KeyboardKeyEventArgs key_up = new KeyboardKeyEventArgs();
         KeyPressEventArgs key_press = new KeyPressEventArgs((char)0);
 
         int cursor_visible_count = 0;
@@ -485,6 +487,18 @@ namespace OpenTK.Platform.Windows
                     if (is_valid)
                     {
                         keyboard.SetKey(key, (byte)scancode, pressed);
+
+                        if (pressed)
+                        {
+                            key_down.Key = key;
+                            KeyDown(this, key_down);
+                        }
+                        else
+                        {
+                            key_up.Key = key;
+                            KeyUp(this, key_up);
+                        }
+
                     }
 
                     return IntPtr.Zero;
@@ -578,19 +592,6 @@ namespace OpenTK.Platform.Windows
                     Debug.Print("[Warning] Failed to kill modal loop timer callback ({0}:{1}->{2}).",
                         GetType().Name, handle, Marshal.GetLastWin32Error());
                 timer_handle = UIntPtr.Zero;
-            }
-        }
-
-        #endregion
-
-        #region IsIdle
-
-        bool IsIdle
-        {
-            get
-            {
-                MSG message = new MSG();
-                return !Functions.PeekMessage(ref message, window.Handle, 0, 0, 0);
             }
         }
 
@@ -1217,20 +1218,11 @@ namespace OpenTK.Platform.Windows
 
         #region public void ProcessEvents()
 
-        private int ret;
         MSG msg;
         public void ProcessEvents()
         {
-            while (!IsIdle)
+            while (Functions.PeekMessage(ref msg, IntPtr.Zero, 0, 0, PeekMessageFlags.Remove))
             {
-                ret = Functions.GetMessage(ref msg, window.Handle, 0, 0);
-                if (ret == -1)
-                {
-                    throw new PlatformException(String.Format(
-                        "An error happened while processing the message queue. Windows error: {0}",
-                        Marshal.GetLastWin32Error()));
-                }
-
                 Functions.TranslateMessage(ref msg);
                 Functions.DispatchMessage(ref msg);
             }

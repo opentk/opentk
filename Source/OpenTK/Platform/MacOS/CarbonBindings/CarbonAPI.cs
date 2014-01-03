@@ -64,6 +64,11 @@ namespace OpenTK.Platform.MacOS.Carbon
         short bottom;
         short right;
 
+        internal Rect(int left, int top, int width, int height)
+            : this((short)left, (short)top, (short)width, (short)height)
+        {
+        }
+
         internal Rect(short _left, short _top, short _width, short _height)
         {
             top = _top;
@@ -236,6 +241,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         WindowClickProxyIconRgn = 38,
         WindowClose = 72,
         WindowClosed = 73,
+        WindowPaint = 1013,
     }
     internal enum MouseEventKind : int
     {
@@ -383,7 +389,35 @@ namespace OpenTK.Platform.MacOS.Carbon
         SideTitlebar         = (1u << 5),  /* window wants a titlebar on the side    (floating window class only)*/
         NoUpdates            = (1u << 16), /* this window receives no update events*/
         NoActivates          = (1u << 17), /* this window receives no activate events*/
-        NoBuffering          = (1u << 20), /* this window is not buffered (Mac OS X only)*/
+
+        /// <summary>
+        /// This window uses composited drawing. This means that the entire
+        /// window is comprised of HIViews, and can be treated thusly. This
+        /// attribute must be specified at window creation, and cannot be
+        /// changed later with ChangeWindows. In 64-bit mode, all windows must
+        /// be compositing, and you must always specify this attribute when
+        /// creating a window from code or designing a window in Interface
+        /// Builder. Available on Mac OS X 10.2 and later.
+        /// </summary>
+        Compositing          = (1u << 19),
+
+        /// <summary>
+        /// This window's context should be scaled to match the display scale
+        /// factor. This attribute can only be used when
+        /// kHIWindowBitCompositing is also enabled. When this attribute is
+        /// enabled, you may not draw with QuickDraw in the window. If this
+        /// attribute is enabled and if the scale factor is something other
+        /// than 1.0, the window's scale mode will be
+        /// kHIWindowScaleModeFrameworkScaled. You may only specify this
+        /// attribute at window creation time. Available for all windows in
+        /// Mac OS X 10.4 and later.
+        /// </summary>
+        FrameworkScaled = (1u << 20),
+
+        /// <summary>
+        /// This window has the standard Carbon window event handler
+        /// installed. Available for all windows.
+        /// </summary>
         StandardHandler      = (1u << 25),
         InWindowMenu         = (1u << 27),
         LiveResize           = (1u << 28),
@@ -529,6 +563,9 @@ namespace OpenTK.Platform.MacOS.Carbon
 
             return retval;
         }
+
+        [DllImport(carbon)]
+        internal static extern OSStatus SetWindowBounds(IntPtr Windows, WindowRegionCode WindowRegionCode, ref Rect globalBounds);
 
         //[DllImport(carbon)]
         //internal static extern void MoveWindow(IntPtr window, short hGlobal, short vGlobal, bool front);
@@ -1006,6 +1043,12 @@ namespace OpenTK.Platform.MacOS.Carbon
 
             return retval;
         }
+
+        //[DllImport(carbon)]
+        //static extern OSStatus HIWindowCreate(WindowClass class, int[] attributes,
+        //    ref WindowDefSpec defSpec, HICoordinateSpace space, ref HIRect bounds,
+        //    out IntPtr window);
+
         #region --- SetWindowTitle ---
 
         [DllImport(carbon)]

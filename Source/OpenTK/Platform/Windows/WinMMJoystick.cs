@@ -36,7 +36,7 @@ using System.Diagnostics;
 
 namespace OpenTK.Platform.Windows
 {
-    sealed class WinMMJoystick : IJoystickDriver, IGamePadDriver
+    sealed class WinMMJoystick : IJoystickDriver, IJoystickDriver2
     {
         #region Fields
 
@@ -131,6 +131,27 @@ namespace OpenTK.Platform.Windows
             if (stick != null)
                 Debug.Print("Found joystick on device number {0}", number);
             return stick;
+        }
+
+        void UnplugJoystick(int index)
+        {
+            // Reset the system configuration. Without this,
+            // joysticks that are reconnected on different
+            // ports are given different ids, making it
+            // impossible to reconnect a disconnected user.
+            UnsafeNativeMethods.joyConfigChanged(0);
+            Debug.Print("[Win] WinMM joystick {0} unplugged", index);
+        }
+
+        bool IsValid(int index)
+        {
+            return index >= 0 && index < UnsafeNativeMethods.joyGetNumDevs();
+        }
+
+        static short CalculateOffset(int pos, int min, int max)
+        {
+            int offset = (ushort.MaxValue * (pos - min)) / (max - min) - short.MaxValue;
+            return (short)offset;
         }
 
         #endregion
@@ -233,6 +254,95 @@ namespace OpenTK.Platform.Windows
                     button++;
                 }
             }
+        }
+
+        #endregion
+
+        #region IJoystickDriver2 Members
+
+        public JoystickCapabilities GetCapabilities(int index)
+        {
+            if (IsValid(index))
+            {
+                JoyCaps mmcaps;
+                JoystickError result = UnsafeNativeMethods.joyGetDevCaps(index, out mmcaps, JoyCaps.SizeInBytes);
+                if (result == JoystickError.NoError)
+                {
+                    JoystickCapabilities caps = new JoystickCapabilities(
+                        mmcaps.NumAxes, mmcaps.NumButtons, true);
+                    //if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
+                    //    gpcaps.DPadCount++;
+                    return caps;
+                }
+                else if (result == JoystickError.Unplugged)
+                {
+                    UnplugJoystick(index);
+                }
+            }
+            else
+            {
+                Debug.Print("[Win] Invalid WinMM joystick device {0}", index);
+            }
+
+            return new JoystickCapabilities();
+        }
+
+        public JoystickState GetState(int index)
+        {
+            JoystickState state = new JoystickState();
+
+            if (IsValid(index))
+            {
+                JoyInfoEx info = new JoyInfoEx();
+                info.Size = JoyInfoEx.SizeInBytes;
+                info.Flags = JoystickFlags.All;
+
+                JoystickError result = UnsafeNativeMethods.joyGetPosEx(index, ref info);
+                if (result == JoystickError.NoError)
+                {
+                    JoyCaps caps;
+                    result = UnsafeNativeMethods.joyGetDevCaps(index, out caps, JoyCaps.SizeInBytes);
+                    if (result == JoystickError.NoError)
+                    {
+                        state.SetAxis(JoystickAxis.Axis0, CalculateOffset(info.XPos, caps.XMin, caps.XMax));
+                        state.SetAxis(JoystickAxis.Axis1, CalculateOffset(info.YPos, caps.YMin, caps.YMax));
+                        state.SetAxis(JoystickAxis.Axis2, CalculateOffset(info.ZPos, caps.ZMin, caps.ZMax));
+                        state.SetAxis(JoystickAxis.Axis3, CalculateOffset(info.RPos, caps.RMin, caps.RMax));
+                        state.SetAxis(JoystickAxis.Axis4, CalculateOffset(info.UPos, caps.UMin, caps.UMax));
+                        state.SetAxis(JoystickAxis.Axis5, CalculateOffset(info.VPos, caps.VMin, caps.VMax));
+
+                        for (int i = 0; i < 16; i++)
+                        {
+                            state.SetButton(JoystickButton.Button0 + i, (info.Buttons & 1 << i) != 0);
+                        }
+
+                        state.SetIsConnected(true);
+                    }
+                }
+
+                if (result == JoystickError.Unplugged)
+                {
+                    UnplugJoystick(index);
+                }
+            }
+            else
+            {
+                Debug.Print("[Win] Invalid WinMM joystick device {0}", index);
+            }
+
+            return state;
+        }
+
+        public Guid GetGuid(int index)
+        {
+            Guid guid = new Guid();
+
+            if (IsValid(index))
+            {
+                // Todo: implement WinMM Guid retrieval
+            }
+
+            return guid;
         }
 
         #endregion
@@ -378,9 +488,11 @@ namespace OpenTK.Platform.Windows
             [DllImport("Winmm.dll"), SuppressUnmanagedCodeSecurity]
             public static extern JoystickError joyGetDevCaps(int uJoyID, out JoyCaps pjc, int cbjc);
             [DllImport("Winmm.dll"), SuppressUnmanagedCodeSecurity]
-            public static extern uint joyGetPosEx(int uJoyID, ref JoyInfoEx pji);
+            public static extern JoystickError joyGetPosEx(int uJoyID, ref JoyInfoEx pji);
             [DllImport("Winmm.dll"), SuppressUnmanagedCodeSecurity]
             public static extern int joyGetNumDevs();
+            [DllImport("Winmm.dll"), SuppressUnmanagedCodeSecurity]
+            public static extern JoystickError joyConfigChanged(int flags);
         }
 
         #endregion
@@ -427,21 +539,5 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion
-
-        //HACK implement
-        public GamePadState GetState()
-        {
-            throw new NotImplementedException();
-        }
-
-        public GamePadState GetState(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetDeviceName(int index)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

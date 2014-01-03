@@ -55,10 +55,21 @@ namespace OpenTK.Platform.SDL2
         {
             lock (SDL.Sync)
             {
+                SDL.GameControllerEventState(EventState.Enable);
+                SDL.JoystickEventState(EventState.Enable);
+
                 EventFilterDelegate = Marshal.GetFunctionPointerForDelegate(EventFilterDelegate_GCUnsafe);
                 driver_handle = new IntPtr(count++);
                 DriverHandles.Add(driver_handle, this);
                 SDL.AddEventWatch(EventFilterDelegate, driver_handle);
+                if (SDL.InitSubSystem(SystemFlags.JOYSTICK) < 0)
+                {
+                    Debug.Print("[SDL2] InputDriver failed to init Joystick subsystem. Error: {0}", SDL.GetError());
+                }
+                if (SDL.InitSubSystem(SystemFlags.GAMECONTROLLER) < 0)
+                {
+                    Debug.Print("[SDL2] InputDriver failed to init GameController subsystem. Error: {0}", SDL.GetError());
+                }
             }
         }
 
@@ -92,6 +103,44 @@ namespace OpenTK.Platform.SDL2
                         case EventType.MOUSEWHEEL:
                             driver.mouse_driver.ProcessWheelEvent(ev.Wheel);
                             break;
+
+                        case EventType.JOYDEVICEADDED:
+                        case EventType.JOYDEVICEREMOVED:
+                            driver.joystick_driver.ProcessJoystickEvent(ev.JoyDevice);
+                            break;
+
+                        case EventType.JOYAXISMOTION:
+                            driver.joystick_driver.ProcessJoystickEvent(ev.JoyAxis);
+                            break;
+
+                        case EventType.JOYBALLMOTION:
+                            driver.joystick_driver.ProcessJoystickEvent(ev.JoyBall);
+                            break;
+
+                        case EventType.JOYBUTTONDOWN:
+                        case EventType.JOYBUTTONUP:
+                            driver.joystick_driver.ProcessJoystickEvent(ev.JoyButton);
+                            break;
+
+                        case EventType.JOYHATMOTION:
+                            driver.joystick_driver.ProcessJoystickEvent(ev.JoyHat);
+                            break;
+
+#if USE_SDL2_GAMECONTROLLER
+                        case EventType.CONTROLLERDEVICEADDED:
+                        case EventType.CONTROLLERDEVICEREMOVED:
+                            driver.joystick_driver.ProcessControllerEvent(ev.ControllerDevice);
+                            break;
+
+                        case EventType.CONTROLLERAXISMOTION:
+                            driver.joystick_driver.ProcessControllerEvent(ev.ControllerAxis);
+                            break;
+
+                        case EventType.CONTROLLERBUTTONDOWN:
+                        case EventType.CONTROLLERBUTTONUP:
+                            driver.joystick_driver.ProcessControllerEvent(ev.ControllerButton);
+                            break;
+#endif
                     }
                 }
             }
@@ -172,7 +221,15 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                throw new NotImplementedException();
+                return joystick_driver;
+            }
+        }
+
+        public IJoystickDriver2 JoystickDriver
+        {
+            get
+            {
+                return joystick_driver;
             }
         }
 

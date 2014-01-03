@@ -70,7 +70,7 @@ namespace OpenTK.Platform.MacOS
         {
             return (GraphicsContext.GetCurrentContextDelegate)delegate
             {
-                return new ContextHandle(Agl.aglGetCurrentContext());
+                return new ContextHandle(Cgl.GetCurrentContext());
             };
         }
 
@@ -92,6 +92,11 @@ namespace OpenTK.Platform.MacOS
         public virtual OpenTK.Input.IGamePadDriver CreateGamePadDriver()
         {
             return InputDriver.GamePadDriver;
+        }
+
+        public IJoystickDriver2 CreateJoystickDriver()
+        {
+            return InputDriver.JoystickDriver;
         }
         
         #endregion

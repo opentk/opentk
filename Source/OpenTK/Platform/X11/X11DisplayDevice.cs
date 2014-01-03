@@ -221,7 +221,20 @@ namespace OpenTK.Platform.X11
                 int current_resolution_index = Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
 
                 if (dev.Bounds == Rectangle.Empty)
-                    dev.Bounds = new Rectangle(0, 0, available_res[current_resolution_index].Width, available_res[current_resolution_index].Height);
+                {
+                    // We have added depths.Length copies of each resolution
+                    // Adjust the return value of XRRGetScreenInfo to retrieve the correct resolution
+                    int index = current_resolution_index * depths.Length;
+                    
+                    // Make sure we are within the bounds of the available_res array
+                    if (index >= available_res.Count)
+                    {
+                        // If not, use the return value of XRRGetScreenInfo directly
+                        index = current_resolution_index;
+                    }
+                    DisplayResolution current_resolution = available_res[index];
+                    dev.Bounds = new Rectangle(0, 0, current_resolution.Width, current_resolution.Height);
+                }
                 dev.BitsPerPixel = current_depth;
                 dev.RefreshRate = current_refresh_rate;
                 dev.AvailableResolutions = available_res;

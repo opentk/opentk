@@ -25,9 +25,8 @@ namespace Examples.Tests
         int texture;
         bool mouse_in_window = false;
         bool viewport_changed = true;
-        bool refresh_text = true;
-        MouseState mouse, mouse_old;
-        KeyboardState keyboard, keyboard_old;
+        MouseState mouse;
+        KeyboardState keyboard;
 
         public GameWindowStates()
             : base(800, 600, GraphicsMode.Default)
@@ -40,20 +39,9 @@ namespace Examples.Tests
             MouseEnter += delegate { mouse_in_window = true; };
             MouseLeave += delegate { mouse_in_window = false; };
             
-            Move += delegate { refresh_text = true; };
-            Resize += delegate { refresh_text = true; };
-            WindowBorderChanged += delegate { refresh_text = true; };
-            WindowStateChanged += delegate { refresh_text = true; };
-            FocusedChanged += delegate { refresh_text = true; };
             Mouse.Move += MouseMoveHandler;
             Mouse.ButtonDown += MouseButtonHandler;
             Mouse.ButtonUp += MouseButtonHandler;
-            foreach (var joystick in Joysticks)
-            {
-                joystick.Move += delegate { refresh_text = true; };
-                joystick.ButtonDown += delegate { refresh_text = true; };
-                joystick.ButtonUp += delegate { refresh_text = true; };
-            }
         }
 
         private void KeyPressHandler(object sender, KeyPressEventArgs e)
@@ -99,13 +87,10 @@ namespace Examples.Tests
 
         void MouseMoveHandler(object sender, MouseMoveEventArgs e)
         {
-            refresh_text = true;
         }
 
         void MouseButtonHandler(object sender, MouseButtonEventArgs e)
         {
-            refresh_text = true;
-
             if (e.Button == MouseButton.Left && e.IsPressed)
             {
                 CursorVisible = false;
@@ -163,7 +148,7 @@ namespace Examples.Tests
             }
         }
 
-        static void DrawJoysticks(Graphics gfx, IList<JoystickDevice> joysticks, int line)
+        static int DrawJoysticks(Graphics gfx, IList<JoystickDevice> joysticks, int line)
         {
             float space = gfx.MeasureString(" ", TextFont).Width;
 
@@ -192,51 +177,45 @@ namespace Examples.Tests
 
                 line++;
             }
+
+            return line;
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
-        {;
+        {
             InputDriver.Poll();
 
             mouse = OpenTK.Input.Mouse.GetState();
-            if (mouse != mouse_old)
-                refresh_text = true;
-            mouse_old = mouse;
-
             keyboard = OpenTK.Input.Keyboard.GetState();
-            if (keyboard != keyboard_old)
-                refresh_text = true;
-            keyboard_old = keyboard;
 
-            if (refresh_text)
+            using (Graphics gfx = Graphics.FromImage(TextBitmap))
             {
-                refresh_text = false;
-                    
-                using (Graphics gfx = Graphics.FromImage(TextBitmap))
-                {
-                    int line = 0;
+                int line = 0;
 
-                    gfx.Clear(Color.Black);
-                    gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-                    
-                    DrawString(gfx, Context.GraphicsMode.ToString(), line++);
+                gfx.Clear(Color.Black);
+                gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
-                    DrawString(gfx, String.Format("[1 - 4]: change WindowState (current: {0}).", this.WindowState), line++);
-                    DrawString(gfx, String.Format("[5 - 7]: change WindowBorder (current: {0}).", this.WindowBorder), line++);
-                    DrawString(gfx, String.Format("Focused: {0}.", this.Focused), line++);
-                    DrawString(gfx, String.Format("Mouse {0} window.", mouse_in_window ? "inside" : "outside of"), line++);
-                    DrawString(gfx, String.Format("Mouse visible: {0}", CursorVisible), line++);
-                    DrawString(gfx, String.Format("Mouse position (absolute): {0}", new Vector3(Mouse.X, Mouse.Y, Mouse.Wheel)), line++);
-                    DrawString(gfx, String.Format("Mouse position (relative): {0}", new Vector3(mouse.X, mouse.Y, mouse.WheelPrecise)), line++);
-                    DrawString(gfx, String.Format("Window.Bounds: {0}", Bounds), line++);
-                    DrawString(gfx, String.Format("Window.Location: {0}, Size: {1}", Location, Size), line++);
-                    DrawString(gfx, String.Format("Window: {{X={0},Y={1},Width={2},Height={3}}}", X, Y, Width, Height), line++);
-                    DrawString(gfx, String.Format("Window.ClientRectangle: {0}", ClientRectangle), line++);
-                    DrawString(gfx, TypedText.ToString(), line++);
-                    DrawKeyboard(gfx, keyboard, line++);
-                    DrawMouse(gfx, mouse, line++);
-                    DrawJoysticks(gfx, Joysticks, line++);
-                }
+                DrawString(gfx, GL.GetString(StringName.Vendor), line++);
+                DrawString(gfx, GL.GetString(StringName.Version), line++);
+                DrawString(gfx, GL.GetString(StringName.Renderer), line++);
+                DrawString(gfx, Context.GraphicsMode.ToString(), line++);
+
+                DrawString(gfx, String.Format("[1 - 4]: change WindowState (current: {0}).", this.WindowState), line++);
+                DrawString(gfx, String.Format("[5 - 7]: change WindowBorder (current: {0}).", this.WindowBorder), line++);
+                DrawString(gfx, String.Format("Focused: {0}.", this.Focused), line++);
+                DrawString(gfx, String.Format("Mouse {0} window.", mouse_in_window ? "inside" : "outside of"), line++);
+                DrawString(gfx, String.Format("Mouse visible: {0}", CursorVisible), line++);
+                DrawString(gfx, String.Format("Mouse position (absolute): {0}", new Vector3(Mouse.X, Mouse.Y, Mouse.Wheel)), line++);
+                DrawString(gfx, String.Format("Mouse position (relative): {0}", new Vector3(mouse.X, mouse.Y, mouse.WheelPrecise)), line++);
+                DrawString(gfx, String.Format("Window.Bounds: {0}", Bounds), line++);
+                DrawString(gfx, String.Format("Window.Location: {0}, Size: {1}", Location, Size), line++);
+                DrawString(gfx, String.Format("Window: {{X={0},Y={1},Width={2},Height={3}}}", X, Y, Width, Height), line++);
+                DrawString(gfx, String.Format("Window.ClientRectangle: {0}", ClientRectangle), line++);
+                DrawString(gfx, TypedText.ToString(), line++);
+                DrawKeyboard(gfx, keyboard, line++);
+                DrawMouse(gfx, mouse, line++);
+                line = DrawJoysticks(gfx, Joysticks, line++);
+                line = DrawGamePads(gfx, line++);
             }
 
             System.Drawing.Imaging.BitmapData data = TextBitmap.LockBits(
@@ -246,7 +225,36 @@ namespace Examples.Tests
                 PixelType.UnsignedByte, data.Scan0);
             TextBitmap.UnlockBits(data);
         }
-        
+
+        int DrawGamePads(Graphics gfx, int line)
+        {
+            line++;
+            DrawString(gfx, "GamePads:", line++);
+            for (int i = 0; i < 4; i++)
+            {
+                GamePadCapabilities caps = GamePad.GetCapabilities(i);
+                GamePadState state = GamePad.GetState(i);
+                if (state.IsConnected)
+                {
+                    DrawString(gfx, caps.ToString(), line++);
+                    DrawString(gfx, state.ToString(), line++);
+                }
+            }
+            line++;
+            DrawString(gfx, "Joysticks:", line++);
+            for (int i = 0; i < 4; i++)
+            {
+                JoystickCapabilities caps = Joystick.GetCapabilities(i);
+                JoystickState state = Joystick.GetState(i);
+                if (state.IsConnected)
+                {
+                    DrawString(gfx, caps.ToString(), line++);
+                    DrawString(gfx, state.ToString(), line++);
+                }
+            }
+
+            return line;
+        }
 
         protected override void OnLoad(EventArgs e)
         {

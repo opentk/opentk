@@ -28,82 +28,78 @@ namespace OpenTK.Platform.Windows
     internal sealed class WinGLContext : DesktopGraphicsContext
     {
         static readonly object LoadLock = new object();
-        static readonly object SyncRoot = new object();
 
-        static IntPtr opengl32Handle;
-        const string opengl32Name = "OPENGL32.DLL";
-
+        IntPtr device_context;
         bool vsync_supported;
 
         readonly WinGraphicsMode ModeSelector;
 
-        #region --- Contructors ---
-
-        static WinGLContext()
+        // We need to create a temp context in order to load
+        // wgl extensions (e.g. for multisampling or GL3).
+        // We cannot rely on any WGL extensions before
+        // we load them with the temporary context.
+        class TemporaryContext : IDisposable
         {
-            lock (LoadLock)
+            public ContextHandle Context;
+
+            public TemporaryContext(INativeWindow native)
             {
-                // Dynamically load opengl32.dll in order to use the extension loading capabilities of Wgl.
-                if (opengl32Handle == IntPtr.Zero)
+                Debug.WriteLine("[WGL] Creating temporary context to load extensions");
+
+                if (native == null)
+                    throw new ArgumentNullException();
+
+                // Create temporary context and load WGL entry points
+                // First, set a compatible pixel format to the device context
+                // of the temp window
+                WinWindowInfo window = native.WindowInfo as WinWindowInfo;
+                WinGraphicsMode selector = new WinGraphicsMode(window.DeviceContext);
+                WinGLContext.SetGraphicsModePFD(selector, GraphicsMode.Default, window);
+
+                bool success = false;
+
+                // Then, construct a temporary context and load all wgl extensions
+                Context = new ContextHandle(Wgl.CreateContext(window.DeviceContext));
+                if (Context != ContextHandle.Zero)
                 {
-                    opengl32Handle = Functions.LoadLibrary(opengl32Name);
-                    if (opengl32Handle == IntPtr.Zero)
-                        throw new ApplicationException(String.Format("LoadLibrary(\"{0}\") call failed with code {1}",
-                                                                     opengl32Name, Marshal.GetLastWin32Error()));
-                    Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", opengl32Handle));
+                    // Make the context current.
+                    // Note: on some video cards and on some virtual machines, wglMakeCurrent
+                    // may fail with an errorcode of 6 (INVALID_HANDLE). The suggested workaround
+                    // is to call wglMakeCurrent in a loop until it succeeds.
+                    // See https://www.opengl.org/discussion_boards/showthread.php/171058-nVidia-wglMakeCurrent()-multiple-threads
+                    // Sigh...
+                    for (int retry = 0; retry < 5 && !success; retry++)
+                    {
+                        success = Wgl.MakeCurrent(window.DeviceContext, Context.Handle);
+                        if (!success)
+                        {
+                            Debug.Print("wglMakeCurrent failed with error: {0}. Retrying", Marshal.GetLastWin32Error());
+                            System.Threading.Thread.Sleep(10);
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.Print("[WGL] CreateContext failed with error: {0}", Marshal.GetLastWin32Error());
                 }
 
-                // We need to create a temp context in order to load
-                // wgl extensions (e.g. for multisampling or GL3).
-                // We cannot rely on OpenTK.Platform.Wgl until we
-                // create the context and call Wgl.LoadAll().
-                Debug.Print("Creating temporary context for wgl extensions.");
-                using (INativeWindow native = new NativeWindow())
+                if (!success)
                 {
-                    // Create temporary context and load WGL entry points
-                    // First, set a compatible pixel format to the device context
-                    // of the temp window
-                    WinWindowInfo window = native.WindowInfo as WinWindowInfo;
-                    WinGraphicsMode selector = new WinGraphicsMode(window.DeviceContext);
-                    SetGraphicsModePFD(selector, GraphicsMode.Default, window);
+                    Debug.WriteLine("[WGL] Failed to create temporary context");
+                }
+            }
 
-                    // Then, construct a temporary context and load all wgl extensions
-                    ContextHandle temp_context = new ContextHandle(Wgl.CreateContext(window.DeviceContext));
-                    if (temp_context != ContextHandle.Zero)
-                    {
-						// Make the context current.
-						// Note: on some video cards and on some virtual machines, wglMakeCurrent
-						// may fail with an errorcode of 6 (INVALID_HANDLE). The suggested workaround
-						// is to call wglMakeCurrent in a loop until it succeeds.
-						// See https://www.opengl.org/discussion_boards/showthread.php/171058-nVidia-wglMakeCurrent()-multiple-threads
-						// Sigh...
-						for (int retry = 0; retry < 5; retry++)
-						{
-							bool success = Wgl.MakeCurrent(window.DeviceContext, temp_context.Handle);
-							if (!success)
-							{
-								Debug.Print("wglMakeCurrent failed with error: {0}. Retrying", Marshal.GetLastWin32Error());
-								System.Threading.Thread.Sleep(10);
-							}
-							else
-							{
-								// wglMakeCurrent succeeded, we are done here!
-								break;
-							}
-						}
-
-						// Load wgl extensions and destroy temporary context
-						Wgl.LoadAll();
-                        Wgl.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
-                        Wgl.DeleteContext(temp_context.Handle);
-                    }
-                    else
-                    {
-                        Debug.Print("wglCreateContext failed with error: {0}", Marshal.GetLastWin32Error());
-                    }
+            public void Dispose()
+            {
+                if (Context != ContextHandle.Zero)
+                {
+                    Wgl.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
+                    Wgl.DeleteContext(Context.Handle);
                 }
             }
         }
+
+        #region --- Contructors ---
 
         public WinGLContext(GraphicsMode format, WinWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
@@ -111,18 +107,33 @@ namespace OpenTK.Platform.Windows
             // There are many ways this code can break when accessed by multiple threads. The biggest offender is
             // the sharedContext stuff, which will only become valid *after* this constructor returns.
             // The easiest solution is to serialize all context construction - hence the big lock, below.
-            lock (SyncRoot)
+            lock (LoadLock)
             {
                 if (window == null)
                     throw new ArgumentNullException("window", "Must point to a valid window.");
                 if (window.Handle == IntPtr.Zero)
                     throw new ArgumentException("window", "Must be a valid window.");
 
-                Debug.Print("OpenGL will be bound to window:{0} on thread:{1}", window.Handle,
-                    System.Threading.Thread.CurrentThread.ManagedThreadId);
-
-                lock (LoadLock)
+                IntPtr current_context = Wgl.GetCurrentContext();
+                INativeWindow temp_window = null;
+                TemporaryContext temp_context = null;
+                try
                 {
+                    if (current_context == IntPtr.Zero)
+                    {
+                        // Create temporary context to load WGL extensions
+                        temp_window = new NativeWindow();
+                        temp_context = new TemporaryContext(temp_window);
+                        current_context = Wgl.GetCurrentContext();
+                        if (current_context != IntPtr.Zero && current_context == temp_context.Context.Handle)
+                        {
+                            Wgl.LoadAll();
+                        }
+                    }
+
+                    Debug.Print("OpenGL will be bound to window:{0} on thread:{1}", window.Handle,
+                        System.Threading.Thread.CurrentThread.ManagedThreadId);
+
                     ModeSelector = new WinGraphicsMode(window.DeviceContext);
                     Mode = SetGraphicsModePFD(ModeSelector, format, (WinWindowInfo)window);
 
@@ -159,43 +170,56 @@ namespace OpenTK.Platform.Windows
                             if (Handle == ContextHandle.Zero)
                                 Debug.Print("failed. (Error: {0})", Marshal.GetLastWin32Error());
                         }
-                        catch (EntryPointNotFoundException e) { Debug.Print(e.ToString()); }
-                        catch (NullReferenceException e) { Debug.Print(e.ToString()); }
+                        catch (Exception e) { Debug.Print(e.ToString()); }
+                    }
+
+                    if (Handle == ContextHandle.Zero)
+                    {
+                        // Failed to create GL3-level context, fall back to GL2.
+                        Debug.Write("Falling back to GL2... ");
+                        Handle = new ContextHandle(Wgl.CreateContext(window.DeviceContext));
+                        if (Handle == ContextHandle.Zero)
+                            Handle = new ContextHandle(Wgl.CreateContext(window.DeviceContext));
+                        if (Handle == ContextHandle.Zero)
+                            throw new GraphicsContextException(
+                                String.Format("Context creation failed. Wgl.CreateContext() error: {0}.",
+                                    Marshal.GetLastWin32Error()));
+                    }
+
+                    Debug.WriteLine(String.Format("success! (id: {0})", Handle));
+                }
+                finally
+                {
+                    if (temp_context != null)
+                    {
+                        temp_context.Dispose();
+                        temp_context = null;
+                    }
+                    if (temp_window != null)
+                    {
+                        temp_window.Dispose();
+                        temp_window = null;
                     }
                 }
+            }
 
-                if (Handle == ContextHandle.Zero)
-                {
-                    // Failed to create GL3-level context, fall back to GL2.
-                    Debug.Write("Falling back to GL2... ");
-                    Handle = new ContextHandle(Wgl.CreateContext(window.DeviceContext));
-                    if (Handle == ContextHandle.Zero)
-                        Handle = new ContextHandle(Wgl.CreateContext(window.DeviceContext));
-                    if (Handle == ContextHandle.Zero)
-                        throw new GraphicsContextException(
-                            String.Format("Context creation failed. Wgl.CreateContext() error: {0}.",
-                                Marshal.GetLastWin32Error()));
-                }
+            // Todo: is this comment still true?
+            // On intel drivers, wgl entry points appear to change
+            // when creating multiple contexts. As a workaround,
+            // we reload Wgl entry points every time we create a
+            // new context - this solves the issue without any apparent
+            // side-effects (i.e. the old contexts can still be handled
+            // using the new entry points.)
+            // Sigh...
+            MakeCurrent(window);
+            Wgl.LoadAll();
 
-                Debug.WriteLine(String.Format("success! (id: {0})", Handle));
-
-                // Todo: is this comment still true?
-                // On intel drivers, wgl entry points appear to change
-                // when creating multiple contexts. As a workaround,
-                // we reload Wgl entry points every time we create a
-                // new context - this solves the issue without any apparent
-                // side-effects (i.e. the old contexts can still be handled
-                // using the new entry points.)
-                // Sigh...
-                Wgl.LoadAll();
-
-                if (sharedContext != null)
-                {
-                    Marshal.GetLastWin32Error();
-                    Debug.Write(String.Format("Sharing state with context {0}: ", sharedContext));
-                    bool result = Wgl.ShareLists((sharedContext as IGraphicsContextInternal).Context.Handle, Handle.Handle);
-                    Debug.WriteLine(result ? "success!" : "failed with win32 error " + Marshal.GetLastWin32Error());
-                }
+            if (sharedContext != null)
+            {
+                Marshal.GetLastWin32Error();
+                Debug.Write(String.Format("Sharing state with context {0}: ", sharedContext));
+                bool result = Wgl.ShareLists((sharedContext as IGraphicsContextInternal).Context.Handle, Handle.Handle);
+                Debug.WriteLine(result ? "success!" : "failed with win32 error " + Marshal.GetLastWin32Error());
             }
         }
 
@@ -244,7 +268,6 @@ namespace OpenTK.Platform.Windows
 
         public override void MakeCurrent(IWindowInfo window)
         {
-            lock (SyncRoot)
             lock (LoadLock)
             {
                 bool success;
@@ -256,15 +279,19 @@ namespace OpenTK.Platform.Windows
                         throw new ArgumentException("window", "Must point to a valid window.");
 
                     success = Wgl.MakeCurrent(wnd.DeviceContext, Handle.Handle);
+                    device_context = wnd.DeviceContext;
                 }
                 else
                 {
                     success = Wgl.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
+                    device_context = IntPtr.Zero;
                 }
 
                 if (!success)
+                {
                     throw new GraphicsContextException(String.Format(
                         "Failed to make context {0} current. Error: {1}", this, Marshal.GetLastWin32Error()));
+                }
             }
         }
 
@@ -341,7 +368,7 @@ namespace OpenTK.Platform.Windows
             IntPtr address = Wgl.GetProcAddress(function_string);
             if (!IsValid(address))
             {
-                address = Functions.GetProcAddress(opengl32Handle, function_string);
+                address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
             }
             return address;
         }
@@ -351,7 +378,7 @@ namespace OpenTK.Platform.Windows
             IntPtr address = Wgl.GetProcAddress(function_string);
             if (!IsValid(address))
             {
-                address = Functions.GetProcAddress(opengl32Handle, function_string);
+                address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
             }
             return address;
         }
@@ -360,7 +387,7 @@ namespace OpenTK.Platform.Windows
         {
             // See https://www.opengl.org/wiki/Load_OpenGL_Functions
             long a = address.ToInt64();
-            bool is_valid = (a < -1 )|| (a > 3);
+            bool is_valid = (a < -1) || (a > 3);
             return is_valid;
         }
 
@@ -392,9 +419,9 @@ namespace OpenTK.Platform.Windows
             Functions.DescribePixelFormat(
                 window.DeviceContext, (int)mode.Index.Value,
                 API.PixelFormatDescriptorSize, ref pfd);
-            
+
             Debug.WriteLine(mode.Index.ToString());
-            
+
             if (!Functions.SetPixelFormat(window.DeviceContext, (int)mode.Index.Value, ref pfd))
             {
                 throw new GraphicsContextException(String.Format(
@@ -413,10 +440,9 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                return Wgl.GetCurrentDC();
+                return device_context;
             }
         }
-
 
         #endregion
 

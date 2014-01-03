@@ -149,6 +149,11 @@ namespace OpenTK.Platform
             return default_implementation.CreateGamePadDriver();
         }
 
+        public Input.IJoystickDriver2 CreateJoystickDriver()
+        {
+            return default_implementation.CreateJoystickDriver();
+        }
+
         class UnsupportedPlatform : IPlatformFactory
         {
             #region Fields
@@ -206,6 +211,11 @@ namespace OpenTK.Platform
             }
 
             public OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+            {
+                throw new PlatformNotSupportedException(error_string);
+            }
+
+            public Input.IJoystickDriver2 CreateJoystickDriver()
             {
                 throw new PlatformNotSupportedException(error_string);
             }

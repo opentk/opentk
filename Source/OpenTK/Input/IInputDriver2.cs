@@ -37,5 +37,6 @@ namespace OpenTK.Input
         IMouseDriver2 MouseDriver { get; }
         IKeyboardDriver2 KeyboardDriver { get; }
         IGamePadDriver GamePadDriver { get; }
+        IJoystickDriver2 JoystickDriver { get; }
     }
 }

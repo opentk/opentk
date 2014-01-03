@@ -58,6 +58,7 @@ namespace OpenTK.Platform.Windows
             WndProc = WindowProcedure;
 
             InputThread = new Thread(ProcessEvents);
+            InputThread.SetApartmentState(ApartmentState.STA);
             InputThread.IsBackground = true;
             InputThread.Start();
 
@@ -162,6 +163,8 @@ namespace OpenTK.Platform.Windows
         public abstract IMouseDriver2 MouseDriver { get; }
         public abstract IKeyboardDriver2 KeyboardDriver { get; }
         public abstract IGamePadDriver GamePadDriver { get; }
+
+        public abstract IJoystickDriver2 JoystickDriver { get; }
 
         #endregion
 

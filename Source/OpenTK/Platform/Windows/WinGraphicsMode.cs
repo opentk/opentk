@@ -37,27 +37,28 @@ namespace OpenTK.Platform.Windows
 {
     class WinGraphicsMode : IGraphicsMode
     {
-        #region Fields
+        enum AccelerationType
+        {
+            // Software acceleration
+            None = 0,
+            // Partial acceleration (Direct3D emulation)
+            MCD,
+            // Full acceleration
+            ICD,
+        }
 
-        readonly List<GraphicsMode> modes = new List<GraphicsMode>();
         static readonly object SyncRoot = new object();
-
-        #endregion
+        readonly IntPtr Device;
+        readonly List<GraphicsMode> modes = new List<GraphicsMode>();
 
         #region Constructors
 
         public WinGraphicsMode(IntPtr device)
         {
-            lock (SyncRoot)
-            {
-                modes.AddRange(GetModesARB(device));
-                if (modes.Count == 0)
-                    modes.AddRange(GetModesPFD(device));
-                if (modes.Count == 0)
-                    throw new GraphicsModeException(
-                        "No GraphicsMode available. This should never happen, please report a bug at http://www.opentk.com");
-                modes.Sort(new GraphicsModeComparer());
-            }
+            if (device == IntPtr.Zero)
+                throw new ArgumentException();
+
+            Device = device;
         }
 
         #endregion
@@ -67,202 +68,326 @@ namespace OpenTK.Platform.Windows
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples,
             ColorFormat accum, int buffers, bool stereo)
         {
-            GraphicsMode mode = null;
-            do
+            GraphicsMode mode = new GraphicsMode(color, depth, stencil, samples,accum, buffers, stereo);
+            GraphicsMode created_mode = ChoosePixelFormatARB(Device, mode);
+
+            // If ChoosePixelFormatARB failed, iterate through all acceleration types in turn (ICD, MCD, None)
+            // This should fix issue #2224, which causes OpenTK to fail on VMs without hardware acceleration.
+            created_mode = created_mode ?? ChoosePixelFormatPFD(Device, mode, AccelerationType.ICD);
+            created_mode = created_mode ?? ChoosePixelFormatPFD(Device, mode, AccelerationType.MCD);
+            created_mode = created_mode ?? ChoosePixelFormatPFD(Device, mode, AccelerationType.None);
+
+            if (created_mode == null)
             {
-                mode = modes.Find(delegate(GraphicsMode current)
-                {
-                    return ModeSelector(current, color, depth, stencil, samples, accum, buffers, stereo);
-                });
-            } while (mode == null && RelaxParameters(
-                ref color, ref depth, ref stencil, ref samples, ref accum, ref buffers, ref stereo));
+                throw new GraphicsModeException("The requested GraphicsMode is not supported");
+            }
 
-            if (mode == null)
-                mode = modes[0];
-
-            return mode;
-        }
-
-        bool RelaxParameters(ref ColorFormat color, ref int depth, ref int stencil, ref int samples,
-            ref ColorFormat accum, ref int buffers, ref bool stereo)
-        {
-            if (stereo) { stereo = false; return true; }
-            if (buffers != 2) { buffers = 2; return true; }
-            if (accum != 0) { accum = 0; return true; }
-            if (samples != 0) { samples = 0; return true; }
-            if (depth < 16) { depth = 16; return true; }
-            if (depth != 24) { depth = 24; return true; }
-            if (stencil > 0 && stencil != 8) { stencil = 8; return true; }
-            if (stencil == 8) { stencil = 0; return true; }
-            if (color < 8) { color = 8; return true; }
-            if (color < 16) { color = 16; return true; }
-            if (color < 24) { color = 24; return true; }
-            if (color < 32 || color > 32) { color = 32; return true; }
-            return false; // We tried everything we could, no match found.
+            return created_mode;
         }
 
         #endregion
 
         #region Private Methods
 
-        #region DescribePixelFormat
+        #region ChoosePixelFormatARB
 
-        static int DescribePixelFormat(IntPtr hdc, int ipfd, int cjpfd, ref PixelFormatDescriptor pfd)
+        // Queries pixel formats through the WGL_ARB_pixel_format extension
+        // This method only returns accelerated formats. If no format offers
+        // hardware acceleration (e.g. we are running in a VM or in a remote desktop
+        // connection), this method will return 0 formats and we will fall back to
+        // ChoosePixelFormatPFD.
+        GraphicsMode ChoosePixelFormatARB(IntPtr device, GraphicsMode mode)
         {
-            // Note: DescribePixelFormat found in gdi32 is extremely slow
-            // on nvidia, for some reason.
-            return Wgl.DescribePixelFormat(hdc, ipfd, (uint)cjpfd, out pfd);
+            GraphicsMode created_mode = null;
+            if (Wgl.Delegates.wglChoosePixelFormatARB != null)
+            {
+                List<int> attributes = new List<int>();
+                attributes.Add((int)WGL_ARB_pixel_format.AccelerationArb);
+                attributes.Add((int)WGL_ARB_pixel_format.FullAccelerationArb);
+                
+                attributes.Add((int)WGL_ARB_pixel_format.DrawToWindowArb);
+                attributes.Add(1);
+
+                if (mode.ColorFormat.Red > 0)
+                {
+                    attributes.Add((int)WGL_ARB_pixel_format.RedBitsArb);
+                    attributes.Add(mode.ColorFormat.Red);
+                }
+
+                if (mode.ColorFormat.Green > 0)
+                {
+                    attributes.Add((int)WGL_ARB_pixel_format.GreenBitsArb);
+                    attributes.Add(mode.ColorFormat.Green);
+                }
+
+                if (mode.ColorFormat.Blue > 0)
+                {
+                    attributes.Add((int)WGL_ARB_pixel_format.BlueBitsArb);
+                    attributes.Add(mode.ColorFormat.Blue);
+                }
+
+                if (mode.ColorFormat.Alpha > 0)
+                {
+                    attributes.Add((int)WGL_ARB_pixel_format.AlphaBitsArb);
+                    attributes.Add(mode.ColorFormat.Alpha);
+                }
+
+                if (mode.Depth > 0)
+                {
+                    attributes.Add((int)WGL_ARB_pixel_format.DepthBitsArb);
+                    attributes.Add(mode.Depth);
+                }
+
+                if (mode.Stencil > 0)
+                {
+                    attributes.Add((int)WGL_ARB_pixel_format.StencilBitsArb);
+                    attributes.Add(mode.Stencil);
+                }
+
+                if (mode.AccumulatorFormat.Red > 0)
+                {
+                    attributes.Add((int)WGL_ARB_pixel_format.AccumRedBitsArb);
+                    attributes.Add(mode.AccumulatorFormat.Red);
+                }
+
+                if (mode.AccumulatorFormat.Green > 0)
+                {
+                    attributes.Add((int)WGL_ARB_pixel_format.AccumGreenBitsArb);
+                    attributes.Add(mode.AccumulatorFormat.Green);
+                }
+
+                if (mode.AccumulatorFormat.Blue > 0)
+                {
+                    attributes.Add((int)WGL_ARB_pixel_format.AccumBlueBitsArb);
+                    attributes.Add(mode.AccumulatorFormat.Blue);
+                }
+
+                if (mode.AccumulatorFormat.Alpha > 0)
+                {
+                    attributes.Add((int)WGL_ARB_pixel_format.AccumAlphaBitsArb);
+                    attributes.Add(mode.AccumulatorFormat.Alpha);
+                }
+
+                if (mode.Samples > 0)
+                {
+                    attributes.Add((int)WGL_ARB_multisample.SampleBuffersArb);
+                    attributes.Add(1);
+                    attributes.Add((int)WGL_ARB_multisample.SamplesArb);
+                    attributes.Add(mode.Samples);
+                }
+
+                if (mode.Buffers > 0)
+                {
+                    attributes.Add((int)WGL_ARB_pixel_format.DoubleBufferArb);
+                    attributes.Add(mode.Buffers > 1 ? 1 : 0);
+                }
+
+                if (mode.Stereo)
+                {
+                    attributes.Add((int)WGL_ARB_pixel_format.StereoArb);
+                    attributes.Add(1);
+                }
+
+                attributes.Add(0);
+                attributes.Add(0);
+
+                int[] format = new int[1];
+                int count;
+                if (Wgl.Arb.ChoosePixelFormat(device, attributes.ToArray(), null, format.Length, format, out count))
+                {
+                    created_mode = DescribePixelFormatARB(device, format[0]);
+                }
+                else
+                {
+                    Debug.Print("[WGL] ChoosePixelFormatARB failed with {0}", Marshal.GetLastWin32Error());
+                }
+            }
+            else
+            {
+                Debug.WriteLine("[WGL] ChoosePixelFormatARB not supported on this context");
+            }
+
+            return created_mode;
         }
 
         #endregion
 
-        #region GetModesPFD
+        #region ChoosePixelFormatPFD
 
-        IEnumerable<GraphicsMode> GetModesPFD(IntPtr device)
+        static bool Compare(int got, int requested, ref int distance)
         {
-            Debug.WriteLine(String.Format("Device context: {0}", device));
+            if (got < requested)
+            {
+                return false;
+            }
+            else
+            {
+                distance += got - requested;
+                return true;
+            }
+        }
 
-            Debug.WriteLine("Retrieving PFD pixel formats... ");
+        static AccelerationType GetAccelerationType(ref PixelFormatDescriptor pfd)
+        {
+            AccelerationType type = AccelerationType.ICD;
+            if ((pfd.Flags & PixelFormatDescriptorFlags.GENERIC_FORMAT) != 0)
+            {
+                if ((pfd.Flags & PixelFormatDescriptorFlags.GENERIC_ACCELERATED) != 0)
+                {
+                    type = AccelerationType.MCD;
+                }
+                else
+                {
+                    type = AccelerationType.None;
+                }
+            }
+            return type;
+        }
+
+        GraphicsMode ChoosePixelFormatPFD(IntPtr device, GraphicsMode mode, AccelerationType requested_acceleration_type)
+        {
             PixelFormatDescriptor pfd = new PixelFormatDescriptor();
-            pfd.Size = API.PixelFormatDescriptorSize;
-            pfd.Version = API.PixelFormatDescriptorVersion;
-            pfd.Flags =
-                PixelFormatDescriptorFlags.SUPPORT_OPENGL |
-                PixelFormatDescriptorFlags.DRAW_TO_WINDOW;
+            PixelFormatDescriptorFlags flags = 0;
+            flags |= PixelFormatDescriptorFlags.DRAW_TO_WINDOW;
+            flags |= PixelFormatDescriptorFlags.SUPPORT_OPENGL;
 
-            // Make sure we don't turn off Aero on Vista and newer.
-            if (Environment.OSVersion.Version.Major >= 6)
+            if (mode.Stereo)
             {
-                pfd.Flags |= PixelFormatDescriptorFlags.SUPPORT_COMPOSITION;
+                flags |= PixelFormatDescriptorFlags.STEREO;
+            }
+            if (mode.Buffers > 1)
+            {
+                // On Win7 64bit + Nvidia 650M, no pixel format advertises DOUBLEBUFFER.
+                // Adding this check here causes mode selection to fail.
+                // Does not appear to be supported by DescribePixelFormat
+                //flags |= PixelFormatDescriptorFlags.DOUBLEBUFFER;
+            }
+            if (System.Environment.OSVersion.Version.Major >= 6)
+            {
+                flags |= PixelFormatDescriptorFlags.SUPPORT_COMPOSITION;
             }
 
-            foreach (bool generic_allowed in new bool[] { false, true })
+            int count = Functions.DescribePixelFormat(device, 1, API.PixelFormatDescriptorSize, ref pfd);
+
+            int best = 0;
+            int best_dist = int.MaxValue;
+            for (int index = 1; index <= count; index++)
             {
-                // Iterate through all accelerated formats first. Afterwards, iterate through non-accelerated formats.
-                // This should fix issue #2224, which causes OpenTK to fail on VMs without hardware acceleration.
-                int pixel = 0;
-                while (DescribePixelFormat(device, ++pixel, API.PixelFormatDescriptorSize, ref pfd) != 0)
+                int dist = 0;
+                bool valid = Functions.DescribePixelFormat(device, index, API.PixelFormatDescriptorSize, ref pfd) != 0;
+                valid &= GetAccelerationType(ref pfd) == requested_acceleration_type;
+                valid &= (pfd.Flags & flags) == flags;
+                valid &= pfd.PixelType == PixelType.RGBA; // indexed modes not currently supported
+                valid &= Compare(pfd.ColorBits, mode.ColorFormat.BitsPerPixel, ref dist);
+                valid &= Compare(pfd.RedBits, mode.ColorFormat.Red, ref dist);
+                valid &= Compare(pfd.GreenBits, mode.ColorFormat.Green, ref dist);
+                valid &= Compare(pfd.BlueBits, mode.ColorFormat.Blue, ref dist);
+                valid &= Compare(pfd.AlphaBits, mode.ColorFormat.Alpha, ref dist);
+                valid &= Compare(pfd.AccumBits, mode.AccumulatorFormat.BitsPerPixel, ref dist);
+                valid &= Compare(pfd.AccumRedBits, mode.AccumulatorFormat.Red, ref dist);
+                valid &= Compare(pfd.AccumGreenBits, mode.AccumulatorFormat.Green, ref dist);
+                valid &= Compare(pfd.AccumBlueBits, mode.AccumulatorFormat.Blue, ref dist);
+                valid &= Compare(pfd.AccumAlphaBits, mode.AccumulatorFormat.Alpha, ref dist);
+                valid &= Compare(pfd.DepthBits, mode.Depth, ref dist);
+                valid &= Compare(pfd.StencilBits, mode.Stencil, ref dist);
+
+                if (valid && dist < best_dist)
                 {
-                    // Ignore non-accelerated formats.
-                    if (!generic_allowed && (pfd.Flags & PixelFormatDescriptorFlags.GENERIC_FORMAT) != 0)
-                        continue;
-
-                    GraphicsMode fmt = new GraphicsMode((IntPtr)pixel,
-                        new ColorFormat(pfd.RedBits, pfd.GreenBits, pfd.BlueBits, pfd.AlphaBits),
-                        pfd.DepthBits,
-                        pfd.StencilBits,
-                        0,
-                        new ColorFormat(pfd.AccumBits),
-                        (pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) != 0 ? 2 : 1,
-                        (pfd.Flags & PixelFormatDescriptorFlags.STEREO) != 0);
-
-                    yield return fmt;
+                    best = index;
+                    best_dist = dist;
                 }
             }
+
+            return DescribePixelFormatPFD(device, ref pfd, best);
         }
 
         #endregion
 
-        #region GetModesARB
+        #region DescribePixelFormatPFD
 
-        IEnumerable<GraphicsMode> GetModesARB(IntPtr device)
+        static GraphicsMode DescribePixelFormatPFD(IntPtr device, ref PixelFormatDescriptor pfd,
+            int pixelformat)
         {
-            // See http://www.opengl.org/registry/specs/ARB/wgl_pixel_format.txt 
-            // for more details
-            Debug.Write("Retrieving ARB pixel formats.... ");
-            if (Wgl.Delegates.wglChoosePixelFormatARB == null || Wgl.Delegates.wglGetPixelFormatAttribivARB == null)
+            GraphicsMode created_mode = null;
+            if (Functions.DescribePixelFormat(device, pixelformat, pfd.Size, ref pfd) > 0)
             {
-                Debug.WriteLine("failed.");
-                yield break;
+                created_mode = new GraphicsMode(
+                    new IntPtr(pixelformat),
+                    new ColorFormat(pfd.RedBits, pfd.GreenBits, pfd.BlueBits, pfd.AlphaBits),
+                    pfd.DepthBits,
+                    pfd.StencilBits,
+                    0, // MSAA not supported when using PixelFormatDescriptor
+                    new ColorFormat(pfd.AccumRedBits, pfd.AccumGreenBits, pfd.AccumBlueBits, pfd.AccumAlphaBits),
+                    (pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) != 0 ? 2 : 1,
+                    (pfd.Flags & PixelFormatDescriptorFlags.STEREO) != 0);
             }
-
-            int[] attribs = new int[]
-            {
-                (int)WGL_ARB_pixel_format.AccelerationArb,
-
-                (int)WGL_ARB_pixel_format.RedBitsArb,
-                (int)WGL_ARB_pixel_format.GreenBitsArb,
-                (int)WGL_ARB_pixel_format.BlueBitsArb,
-                (int)WGL_ARB_pixel_format.AlphaBitsArb,
-                (int)WGL_ARB_pixel_format.ColorBitsArb,
-                    
-                (int)WGL_ARB_pixel_format.DepthBitsArb,
-                (int)WGL_ARB_pixel_format.StencilBitsArb,
-                    
-                (int)WGL_ARB_multisample.SampleBuffersArb,
-                (int)WGL_ARB_multisample.SamplesArb,
-
-                (int)WGL_ARB_pixel_format.AccumRedBitsArb,
-                (int)WGL_ARB_pixel_format.AccumGreenBitsArb,
-                (int)WGL_ARB_pixel_format.AccumBlueBitsArb,
-                (int)WGL_ARB_pixel_format.AccumAlphaBitsArb,
-                (int)WGL_ARB_pixel_format.AccumBitsArb,
-
-                (int)WGL_ARB_pixel_format.DoubleBufferArb,
-                (int)WGL_ARB_pixel_format.StereoArb,
-                0
-            };
-
-            int[] values = new int[attribs.Length];
-
-            int[] attribs_values = new int[]
-            {
-                (int)WGL_ARB_pixel_format.AccelerationArb,
-                (int)WGL_ARB_pixel_format.FullAccelerationArb,
-                (int)WGL_ARB_pixel_format.SupportOpenglArb, 1,
-                (int)WGL_ARB_pixel_format.DrawToWindowArb, 1,
-                0, 0
-            };
-
-            int[] num_formats = new int[1];
-            // Get the number of available formats
-            if (Wgl.Arb.ChoosePixelFormat(device, attribs_values, null, 0, null, num_formats))
-            {
-                // Create an array big enough to hold all available formats and get those formats
-                int[] pixel = new int[num_formats[0]];
-
-                if (Wgl.Arb.ChoosePixelFormat(device, attribs_values, null, pixel.Length, pixel, num_formats))
-                {
-                    foreach (int p in pixel)
-                    {
-                        // Find out what we really got as a format:
-                        if (!Wgl.Arb.GetPixelFormatAttrib(device, p, 0, attribs.Length - 1, attribs, values))
-                        {
-                            Debug.Print("[Warning] Failed to detect attributes for PixelFormat:{0}.", p);
-                            continue;
-                        }
-
-                        GraphicsMode mode = new GraphicsMode(new IntPtr(p),
-                            new ColorFormat(values[1], values[2], values[3], values[4]),
-                            values[6],
-                            values[7],
-                            values[8] != 0 ? values[9] : 0,
-                            new ColorFormat(values[10], values[11], values[12], values[13]),
-                            values[15] == 1 ? 2 : 1,
-                            values[16] == 1 ? true : false);
-
-                        yield return mode;
-                    }
-                }
-            }
+            return created_mode;
         }
 
         #endregion
 
-        #region ModeSelector
+        #region DescribePixelFormatARB
 
-        bool ModeSelector(GraphicsMode current, ColorFormat color, int depth, int stencil, int samples,
-            ColorFormat accum, int buffers, bool stereo)
+        GraphicsMode DescribePixelFormatARB(IntPtr device, int pixelformat)
         {
-            bool result =
-                (color != ColorFormat.Empty ? current.ColorFormat >= color : true) &&
-                (depth != 0 ? current.Depth >= depth : true) &&
-                (stencil != 0 ? current.Stencil >= stencil : true) &&
-                (samples != 0 ? current.Samples >= samples : true) &&
-                (accum != ColorFormat.Empty ? current.AccumulatorFormat >= accum : true) &&
-                (buffers != 0 ? current.Buffers >= buffers : true) &&
-                current.Stereo == stereo;
-            return result;
+            GraphicsMode created_mode = null;
+            // See http://www.opengl.org/registry/specs/ARB/wgl_pixel_format.txt for more details
+            if (Wgl.Delegates.wglGetPixelFormatAttribivARB != null)
+            {
+                // Define the list of attributes we are interested in.
+                // The results will be stored in the 'values' array below.
+                int[] attribs = new int[]
+                {
+                    (int)WGL_ARB_pixel_format.AccelerationArb,
+
+                    (int)WGL_ARB_pixel_format.RedBitsArb,
+                    (int)WGL_ARB_pixel_format.GreenBitsArb,
+                    (int)WGL_ARB_pixel_format.BlueBitsArb,
+                    (int)WGL_ARB_pixel_format.AlphaBitsArb,
+                    (int)WGL_ARB_pixel_format.ColorBitsArb,
+                    
+                    (int)WGL_ARB_pixel_format.DepthBitsArb,
+                    (int)WGL_ARB_pixel_format.StencilBitsArb,
+                    
+                    (int)WGL_ARB_multisample.SampleBuffersArb,
+                    (int)WGL_ARB_multisample.SamplesArb,
+
+                    (int)WGL_ARB_pixel_format.AccumRedBitsArb,
+                    (int)WGL_ARB_pixel_format.AccumGreenBitsArb,
+                    (int)WGL_ARB_pixel_format.AccumBlueBitsArb,
+                    (int)WGL_ARB_pixel_format.AccumAlphaBitsArb,
+                    (int)WGL_ARB_pixel_format.AccumBitsArb,
+
+                    (int)WGL_ARB_pixel_format.DoubleBufferArb,
+                    (int)WGL_ARB_pixel_format.StereoArb,
+                    0
+                };
+
+                // Allocate storage for the results of GetPixelFormatAttrib queries
+                int[] values = new int[attribs.Length];
+
+                // Get the format attributes for this pixel format
+                if (!Wgl.Arb.GetPixelFormatAttrib(device, pixelformat, 0, attribs.Length - 1, attribs, values))
+                {
+                    Debug.Print("[Warning] Failed to detect attributes for PixelFormat: {0}.", pixelformat);
+                }
+
+                // Skip formats that don't offer full hardware acceleration
+                WGL_ARB_pixel_format acceleration = (WGL_ARB_pixel_format)values[0];
+                if (acceleration == WGL_ARB_pixel_format.FullAccelerationArb)
+                {
+                    // Construct a new GraphicsMode to describe this format
+                    created_mode = new GraphicsMode(new IntPtr(pixelformat),
+                        new ColorFormat(values[1], values[2], values[3], values[4]),
+                        values[6],
+                        values[7],
+                        values[8] != 0 ? values[9] : 0,
+                        new ColorFormat(values[10], values[11], values[12], values[13]),
+                        values[15] == 1 ? 2 : 1,
+                        values[16] == 1 ? true : false);
+                }
+            }
+            return created_mode;
         }
 
         #endregion

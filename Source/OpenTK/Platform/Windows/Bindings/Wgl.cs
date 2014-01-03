@@ -49,11 +49,11 @@ namespace OpenTK.Platform.Windows
         [DllImport(Wgl.Library, EntryPoint = "wglMakeCurrent", ExactSpelling = true, SetLastError = true)]
         internal extern static Boolean MakeCurrent(IntPtr hDc, IntPtr newContext);
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(Wgl.Library, EntryPoint = "wglCopyContext", ExactSpelling = true, SetLastError = true)]
+        [DllImport(Wgl.Library, EntryPoint = "wglChoosePixelFormat", ExactSpelling = true, SetLastError = true)]
         internal extern static unsafe int ChoosePixelFormat(IntPtr hDc, ref PixelFormatDescriptor pPfd);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Wgl.Library, EntryPoint = "wglDescribePixelFormat", ExactSpelling = true, SetLastError = true)]
-        internal extern static unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, out PixelFormatDescriptor ppfd);
+        internal extern static unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, int cjpfd, ref PixelFormatDescriptor ppfd);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Wgl.Library, EntryPoint = "wglGetCurrentDC", ExactSpelling = true, SetLastError = true)]
         internal extern static IntPtr GetCurrentDC();
@@ -202,14 +202,14 @@ namespace OpenTK.Platform.Windows
             }
 
             public static
-            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, out int nNumFormats)
             {
                 unsafe
                 {
                     fixed (int* piAttribIList_ptr = piAttribIList)
                     fixed (Single* pfAttribFList_ptr = pfAttribFList)
                     fixed (int* piFormats_ptr = piFormats)
-                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
                     {
                         return Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
                     }

@@ -113,5 +113,10 @@ namespace OpenTK.Platform.MacOS
                 throw new NotImplementedException();
             }
         }
+
+        public IJoystickDriver2 JoystickDriver
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

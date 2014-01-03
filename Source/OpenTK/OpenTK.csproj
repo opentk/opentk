@@ -133,10 +133,19 @@
     </Compile>
     <Compile Include="DisplayIndex.cs" />
     <Compile Include="Graphics\GraphicsModeComparer.cs" />
+    <Compile Include="Input\GamePadThumbSticks.cs" />
+    <Compile Include="Input\GamePadTriggers.cs" />
+    <Compile Include="Input\GamePadType.cs" />
     <Compile Include="Input\IGamePadDriver.cs" />
     <Compile Include="Input\IInputDriver2.cs" />
+    <Compile Include="Input\IJoystickDriver2.cs" />
     <Compile Include="Input\IKeyboardDriver2.cs" />
     <Compile Include="Input\IMouseDriver2.cs" />
+    <Compile Include="Input\Joystick.cs" />
+    <Compile Include="Input\JoystickAxis.cs" />
+    <Compile Include="Input\JoystickButton.cs" />
+    <Compile Include="Input\JoystickCapabilities.cs" />
+    <Compile Include="Input\JoystickState.cs" />
     <Compile Include="InteropHelper.cs" />
     <Compile Include="Math\Matrix2.cs" />
     <Compile Include="Math\Matrix2d.cs" />
@@ -154,7 +163,9 @@
     <Compile Include="Math\Matrix4x3.cs" />
     <Compile Include="Math\Matrix4x3d.cs" />
     <Compile Include="Platform\DisplayDeviceBase.cs" />
+    <Compile Include="Platform\MappedGamePadDriver.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
+    <Compile Include="Platform\Windows\XInputJoystick.cs" />
     <Compile Include="ToolkitOptions.cs" />
     <Compile Include="WindowBorder.cs">
       <SubType>Code</SubType>
@@ -738,8 +749,7 @@
     </EmbeddedResource>
     <Compile Include="Platform\MacOS\HIDInput.cs" />
     <Compile Include="IntPtrEqualityComparer.cs" />
-    <Compile Include="Input\GamePadButton.cs" />
-    <Compile Include="Input\GamePadAxis.cs" />
+    <Compile Include="Input\GamePadAxes.cs" />
     <Compile Include="Platform\SDL2\Sdl2DisplayDeviceDriver.cs" />
     <Compile Include="Platform\SDL2\Sdl2Factory.cs" />
     <Compile Include="Platform\SDL2\Sdl2GraphicsContext.cs" />
@@ -777,6 +787,17 @@
     <Compile Include="SlotAttribute.cs" />
     <Compile Include="RewrittenAttribute.cs" />
     <Compile Include="Graphics\OpenGL\GLObsolete.cs" />
+    <Compile Include="Platform\MacOS\NS.cs" />
+    <Compile Include="Input\GamePadCapabilities.cs" />
+    <Compile Include="Input\GamePadDPad.cs" />
+    <Compile Include="Input\GamePadButtons.cs" />
+    <Compile Include="Input\Buttons.cs" />
+    <Compile Include="Input\GamePadConfigurationDatabase.cs" />
+    <Compile Include="Input\GamePadConfiguration.cs" />
+    <Compile Include="Input\GamePadConfigurationTarget.cs" />
+    <Compile Include="Input\ConfigurationType.cs" />
+    <Compile Include="Input\GamePadConfigurationSource.cs" />
+    <Compile Include="Input\GamePadConfigurationItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

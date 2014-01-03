@@ -39,19 +39,68 @@ namespace OpenTK.Platform.X11
             // The actual GraphicsMode that will be selected.
             IntPtr visual = IntPtr.Zero;
             IntPtr display = API.DefaultDisplay;
-            
-            // Try to select a visual using Glx.ChooseFBConfig and Glx.GetVisualFromFBConfig.
-            // This is only supported on GLX 1.3 - if it fails, fall back to Glx.ChooseVisual.
-            visual = SelectVisualUsingFBConfig(color, depth, stencil, samples, accum, buffers, stereo);
-            
-            if (visual == IntPtr.Zero)
-                visual = SelectVisualUsingChooseVisual(color, depth, stencil, samples, accum, buffers, stereo);
-            
-            if (visual == IntPtr.Zero)
-                throw new GraphicsModeException("Requested GraphicsMode not available.");
-            
+
+            do
+            {
+                // Try to select a visual using Glx.ChooseFBConfig and Glx.GetVisualFromFBConfig.
+                // This is only supported on GLX 1.3 - if it fails, fall back to Glx.ChooseVisual.
+                visual = SelectVisualUsingFBConfig(color, depth, stencil, samples, accum, buffers, stereo);
+                
+                if (visual == IntPtr.Zero)
+                    visual = SelectVisualUsingChooseVisual(color, depth, stencil, samples, accum, buffers, stereo);
+                
+                if (visual == IntPtr.Zero)
+                {
+                    // Relax parameters and retry
+                    if (stereo)
+                    {
+                        stereo = false;
+                        continue;
+                    }
+
+                    if (accum != 0)
+                    {
+                        accum = 0;
+                        continue;
+                    }
+                    
+                    if (samples > 0)
+                    {
+                        samples = Math.Max(samples - 2, 0);
+                        continue;
+                    }
+                    
+                    if (stencil != 0)
+                    {
+                        stencil = 0;
+                        continue;
+                    }
+                    
+                    if (depth != 0)
+                    {
+                        depth = 0;
+                        continue;
+                    }
+                    
+                    if (color != 24)
+                    {
+                        color = 24;
+                        continue;
+                    }
+
+                    if (buffers != 0)
+                    {
+                        buffers = 0;
+                        continue;
+                    }
+
+                    throw new GraphicsModeException("Requested GraphicsMode not available.");
+                }
+            }
+            while (visual == IntPtr.Zero);
+
             XVisualInfo info = (XVisualInfo)Marshal.PtrToStructure(visual, typeof(XVisualInfo));
-            
+
             // See what we *really* got:
             int r, g, b, a;
             Glx.GetConfig(display, ref info, GLXAttribute.ALPHA_SIZE, out a);

@@ -304,9 +304,8 @@ namespace OpenTK.Graphics
                 {
                     if (defaultMode == null)
                     {
-                        Debug.Print("Creating default GraphicsMode ({0}, {1}, {2}).",
-                            32, 24, 8);
-                        defaultMode = new GraphicsMode(null, 32, 24, 8, 0, 0, 2, false);
+                        defaultMode = new GraphicsMode(null, 32, 16, 0, 0, 0, 2, false);
+                        Debug.Print("GraphicsMode.Default = {0}", defaultMode.ToString());
                     }
                     return defaultMode;
                 }

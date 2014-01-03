@@ -156,12 +156,13 @@ namespace OpenTK.Input
 
     // Provides platform-specific information about the relevant JoystickDevice.
     internal sealed class JoystickDevice<TDetail> : JoystickDevice
+        where TDetail : new()
     {
         internal JoystickDevice(int id, int axes, int buttons)
             : base(id, axes, buttons)
         { }
 
-        internal TDetail Details;
+        internal TDetail Details = new TDetail();
     }
 
     #endregion
@@ -271,49 +272,6 @@ namespace OpenTK.Input
 
     #endregion
 
-    #region JoystickButton
-
-    /// <summary>
-    /// Defines available JoystickDevice buttons.
-    /// </summary>
-    public enum JoystickButton
-    {
-        /// <summary>The first button of the JoystickDevice.</summary>
-        Button0 = 0,
-        /// <summary>The second button of the JoystickDevice.</summary>
-        Button1,
-        /// <summary>The third button of the JoystickDevice.</summary>
-        Button2,
-        /// <summary>The fourth button of the JoystickDevice.</summary>
-        Button3,
-        /// <summary>The fifth button of the JoystickDevice.</summary>
-        Button4,
-        /// <summary>The sixth button of the JoystickDevice.</summary>
-        Button5,
-        /// <summary>The seventh button of the JoystickDevice.</summary>
-        Button6,
-        /// <summary>The eighth button of the JoystickDevice.</summary>
-        Button7,
-        /// <summary>The ninth button of the JoystickDevice.</summary>
-        Button8,
-        /// <summary>The tenth button of the JoystickDevice.</summary>
-        Button9,
-        /// <summary>The eleventh button of the JoystickDevice.</summary>
-        Button10,
-        /// <summary>The twelfth button of the JoystickDevice.</summary>
-        Button11,
-        /// <summary>The thirteenth button of the JoystickDevice.</summary>
-        Button12,
-        /// <summary>The fourteenth button of the JoystickDevice.</summary>
-        Button13,
-        /// <summary>The fifteenth button of the JoystickDevice.</summary>
-        Button14,
-        /// <summary>The sixteenth button of the JoystickDevice.</summary>
-        Button15,
-    }
-
-    #endregion
-
     #region JoystickButtonCollection
 
     /// <summary>
@@ -372,37 +330,6 @@ namespace OpenTK.Input
         }
 
         #endregion
-    }
-
-    #endregion
-
-    #region JoystickAxis
-
-    /// <summary>
-    /// Defines available JoystickDevice axes.
-    /// </summary>
-    public enum JoystickAxis
-    {
-        /// <summary>The first axis of the JoystickDevice.</summary>
-        Axis0 = 0,
-        /// <summary>The second axis of the JoystickDevice.</summary>
-        Axis1,
-        /// <summary>The third axis of the JoystickDevice.</summary>
-        Axis2,
-        /// <summary>The fourth axis of the JoystickDevice.</summary>
-        Axis3,
-        /// <summary>The fifth axis of the JoystickDevice.</summary>
-        Axis4,
-        /// <summary>The sixth axis of the JoystickDevice.</summary>
-        Axis5,
-        /// <summary>The seventh axis of the JoystickDevice.</summary>
-        Axis6,
-        /// <summary>The eighth axis of the JoystickDevice.</summary>
-        Axis7,
-        /// <summary>The ninth axis of the JoystickDevice.</summary>
-        Axis8,
-        /// <summary>The tenth axis of the JoystickDevice.</summary>
-        Axis9,
     }
 
     #endregion
