@@ -98,6 +98,12 @@ namespace OpenTK.Platform.X11
             return new X11Joystick();
         }
 
+        public virtual OpenTK.Input.IJoystickDriver2 CreateJoystickDriver()
+        {
+            return new X11Joystick();
+        }
+
+
         #endregion
 
         #region IDisposable Members

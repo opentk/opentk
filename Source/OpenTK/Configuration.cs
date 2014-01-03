@@ -206,8 +206,8 @@ namespace OpenTK
             {
                 if (!OpenTK.Platform.SDL2.SDL.WasInit(0))
                 {
-                    var flags = OpenTK.Platform.SDL2.SystemFlags.EVERYTHING;
-                    flags &= ~OpenTK.Platform.SDL2.SystemFlags.AUDIO;
+                    var flags =
+                        OpenTK.Platform.SDL2.SystemFlags.VIDEO | Platform.SDL2.SystemFlags.TIMER;
                     if (OpenTK.Platform.SDL2.SDL.Init(flags) == 0)
                     {
                         supported = true;

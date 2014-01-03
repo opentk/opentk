@@ -84,7 +84,7 @@ namespace OpenTK
         /// Set to false for applications that are not
         /// DPI-aware (e.g. WinForms.)
         /// </summary>
-        /// <seealso cref="http://msdn.microsoft.com/en-us/library/windows/desktop/ee308410(v=vs.85).aspx"/>
+        /// See: http://msdn.microsoft.com/en-us/library/windows/desktop/ee308410(v=vs.85).aspx
         public bool EnableHighResolution { get; set; }
 
         /// <summary>
