@@ -140,7 +140,7 @@ namespace OpenTK.Platform.SDL2
         /// Gets the SDL joystick layer binding for the specified game controller button
         /// </summary>
         /// <param name="gamecontroller">Pointer to a game controller instance returned by <c>GameControllerOpen</c>.</param>
-        /// <param name="axis">A value from the <c>GameControllerButton</c> enumeration</param>
+        /// <param name="button">A value from the <c>GameControllerButton</c> enumeration</param>
         /// <returns>A GameControllerButtonBind instance describing the specified binding</returns>
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetBindForButton", ExactSpelling = true)]

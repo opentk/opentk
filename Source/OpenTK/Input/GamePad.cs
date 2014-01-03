@@ -1,6 +1,6 @@
 #region License
 //
-// GamePadButtons.cs
+// GamePad.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>

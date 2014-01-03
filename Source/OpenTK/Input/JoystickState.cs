@@ -5,7 +5,7 @@
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
 //
-// Copyright (c) 2006-2013 Stefanos Apostolopoulos
+// Copyright (c) 2006-2014 Stefanos Apostolopoulos
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
@@ -57,8 +56,8 @@ namespace OpenTK.Input
         /// Gets a value between -1.0 and 1.0 representing the current offset of the specified  <see cref="JoystickAxis"/>.
         /// </summary>
         /// <returns>
-        /// A value between -1.0 and 1.0 representing offset of the specified  <see cref="JoystickAxis"/.
-        /// If the specified axis does not exist, then the return value is 0.0. Use <see cref="JoystickDevice.GetCapabilities"/>
+        /// A value between -1.0 and 1.0 representing offset of the specified  <see cref="JoystickAxis"/>.
+        /// If the specified axis does not exist, then the return value is 0.0. Use <see cref="Joystick.GetCapabilities"/>
         /// to query the number of available axes.
         /// </returns>
         /// <param name="axis">The <see cref="JoystickAxis"/> to query.</param>
