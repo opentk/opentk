@@ -644,6 +644,11 @@ namespace OpenTK.Graphics
             }
         }
 
+        /// <summary>
+        /// Marks this context as deleted, but does not actually release unmanaged resources
+        /// due to the threading requirements of OpenGL. Use <see cref="GraphicsContext.Dispose"/>
+        /// instead.
+       /// </summary>
         ~GraphicsContext()
         {
             Dispose(false);
