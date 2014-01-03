@@ -34,6 +34,9 @@ using System.Text;
 
 namespace OpenTK.Input
 {
+    /// <summary>
+    /// Describes the current state of a <see cref="JoystickDevice"/>.
+    /// </summary>
     public struct JoystickState : IEquatable<JoystickState>
     {
         // If we ever add more values to JoystickAxis or JoystickButton
@@ -50,48 +53,70 @@ namespace OpenTK.Input
 
         #region Public Members
 
+        /// <summary>
+        /// Gets a value between -1.0 and 1.0 representing the current offset of the specified  <see cref="JoystickAxis"/>.
+        /// </summary>
+        /// <returns>
+        /// A value between -1.0 and 1.0 representing offset of the specified  <see cref="JoystickAxis"/.
+        /// If the specified axis does not exist, then the return value is 0.0. Use <see cref="JoystickDevice.GetCapabilities"/>
+        /// to query the number of available axes.
+        /// </returns>
+        /// <param name="axis">The <see cref="JoystickAxis"/> to query.</param>
         public float GetAxis(JoystickAxis axis)
-        {
-            return GetAxis((int)axis);
-        }
-
-        public float GetAxis(int axis)
         {
             return GetAxisRaw(axis) * ConversionFactor;
         }
 
+        /// <summary>
+        /// Gets the current <see cref="ButtonState"/> of the specified <see cref="JoystickButton"/>.
+        /// </summary>
+        /// <returns><see cref="ButtonState.Pressed"/> if the specified button is pressed; otherwise, <see cref="ButtonState.Released"/>.</returns>
+        /// <param name="button">The <see cref="JoystickButton"/> to query.</param>
         public ButtonState GetButton(JoystickButton button)
         {
             return (buttons & (1 << (int)button)) != 0 ? ButtonState.Pressed : ButtonState.Released;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the specified <see cref="JoystickButton"/> is currently pressed.
+        /// </summary>
+        /// <returns>true if the specified button is pressed; otherwise, false.</returns>
+        /// <param name="button">The <see cref="JoystickButton"/> to query.</param>
         public bool IsButtonDown(JoystickButton button)
         {
             return (buttons & (1 << (int)button)) != 0;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the specified <see cref="JoystickButton"/> is currently released.
+        /// </summary>
+        /// <returns>true if the specified button is released; otherwise, false.</returns>
+        /// <param name="button">The <see cref="JoystickButton"/> to query.</param>
         public bool IsButtonUp(JoystickButton button)
         {
             return (buttons & (1 << (int)button)) == 0;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is connected.
+        /// </summary>
+        /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
         public bool IsConnected
         {
             get { return is_connected; }
         }
 
-        internal int PacketNumber
-        {
-            get { return packet_number; }
-        }
-
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.JoystickState"/>.
+        /// </summary>
+        /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.JoystickState"/>.</returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < MaxAxes; i++)
             {
                 sb.Append(" ");
-                sb.Append(String.Format("{0:f4}", GetAxis(i)));
+                sb.Append(String.Format("{0:f4}", GetAxis(JoystickAxis.Axis0 + i)));
             }
             return String.Format(
                 "{{Axes:{0}; Buttons: {1}; IsConnected: {2}}}",
@@ -100,6 +125,11 @@ namespace OpenTK.Input
                 IsConnected);
         }
 
+        /// <summary>
+        /// Serves as a hash function for a <see cref="OpenTK.Input.JoystickState"/> object.
+        /// </summary>
+        /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
+        /// hash table.</returns>
         public override int GetHashCode()
         {
             int hash = buttons.GetHashCode() ^ IsConnected.GetHashCode();
@@ -110,6 +140,12 @@ namespace OpenTK.Input
             return hash;
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="OpenTK.Input.JoystickState"/>.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="OpenTK.Input.JoystickState"/>.</param>
+        /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current
+        /// <see cref="OpenTK.Input.JoystickState"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
             return
@@ -120,6 +156,11 @@ namespace OpenTK.Input
         #endregion
 
         #region Internal Members
+
+        internal int PacketNumber
+        {
+            get { return packet_number; }
+        }
 
         internal short GetAxisRaw(JoystickAxis axis)
         {
@@ -197,6 +238,12 @@ namespace OpenTK.Input
 
         #region IEquatable<JoystickState> Members
 
+        /// <summary>
+        /// Determines whether the specified <see cref="OpenTK.Input.JoystickState"/> is equal to the current <see cref="OpenTK.Input.JoystickState"/>.
+        /// </summary>
+        /// <param name="other">The <see cref="OpenTK.Input.JoystickState"/> to compare with the current <see cref="OpenTK.Input.JoystickState"/>.</param>
+        /// <returns><c>true</c> if the specified <see cref="OpenTK.Input.JoystickState"/> is equal to the current
+        /// <see cref="OpenTK.Input.JoystickState"/>; otherwise, <c>false</c>.</returns>
         public bool Equals(JoystickState other)
         {
             bool equals =
