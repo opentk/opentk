@@ -127,58 +127,74 @@ namespace OpenTK.Platform.MacOS
 
         void DeviceAdded(IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
         {
+            bool recognized = false;
+
             if (NativeMethods.IOHIDDeviceOpen(device, IOOptionBits.Zero) == IOReturn.Zero)
             {
                 if (NativeMethods.IOHIDDeviceConformsTo(device,
                         HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse))
                 {
                     AddMouse(sender, device);
+                    recognized = true;
                 }
 
                 if (NativeMethods.IOHIDDeviceConformsTo(device,
                         HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard))
                 {
                     AddKeyboard(sender, device);
+                    recognized = true;
                 }
 
                 if (NativeMethods.IOHIDDeviceConformsTo(device,
                     HIDPage.GenericDesktop, (int)HIDUsageGD.Joystick))
                 {
                     AddJoystick(sender, device);
+                    recognized = true;
                 }
 
-                // The device is not normally available in the InputValueCallback (HandleDeviceValueReceived), so we include
-                // the device identifier as the context variable, so we can identify it and figure out the device later.
-                // Thanks to Jase: http://www.opentk.com/node/2800
-                NativeMethods.IOHIDDeviceRegisterInputValueCallback(device,
-                    HandleDeviceValueReceived, device);
+                if (recognized)
+                {
+                    // The device is not normally available in the InputValueCallback (HandleDeviceValueReceived), so we include
+                    // the device identifier as the context variable, so we can identify it and figure out the device later.
+                    // Thanks to Jase: http://www.opentk.com/node/2800
+                    NativeMethods.IOHIDDeviceRegisterInputValueCallback(device,
+                        HandleDeviceValueReceived, device);
 
-                NativeMethods.IOHIDDeviceScheduleWithRunLoop(device, RunLoop, InputLoopMode);
+                    NativeMethods.IOHIDDeviceScheduleWithRunLoop(device, RunLoop, InputLoopMode);
+                }
             }
         }
 
         void DeviceRemoved(IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
         {
+            bool recognized = false;
+
             if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse) &&
                 MouseDevices.ContainsKey(device))
             {
                 RemoveMouse(sender, device);
+                recognized = true;
             }
 
             if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard) &&
                 KeyboardDevices.ContainsKey(device))
             {
                 RemoveKeyboard(sender, device);
+                recognized = true;
             }
 
             if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Joystick) &&
                 JoystickDevices.ContainsKey(device))
             {
                 RemoveJoystick(sender, device);
+                recognized = true;
             }
 
-            NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, IntPtr.Zero, IntPtr.Zero);
-            NativeMethods.IOHIDDeviceUnscheduleWithRunLoop(device, RunLoop, InputLoopMode);
+            if (recognized)
+            {
+                NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, IntPtr.Zero, IntPtr.Zero);
+                NativeMethods.IOHIDDeviceUnscheduleWithRunLoop(device, RunLoop, InputLoopMode);
+            }
         }
 
         void DeviceValueReceived(IntPtr context, IOReturn res, IntPtr sender, IOHIDValueRef val)
