@@ -335,12 +335,30 @@ namespace OpenTK.Platform.MacOS
 
         void AddJoystick(CFAllocatorRef sender, CFAllocatorRef device)
         {
-            throw new NotImplementedException();
+            if (!JoystickDevices.ContainsKey(device))
+            {
+                Debug.Print("Joystick device {0:x} discovered, sender is {1:x}", device, sender);
+                JoystickState state = new JoystickState();
+                state.SetIsConnected(true);
+                JoystickIndexToDevice.Add(KeyboardDevices.Count, device);
+                JoystickDevices.Add(device, state);
+            }
+            else
+            {
+                Debug.Print("Joystick device {0:x} reconnected, sender is {1:x}", device, sender);
+                JoystickState state = JoystickDevices[device];
+                state.SetIsConnected(true);
+                JoystickDevices[device] = state;
+            }
         }
 
         void RemoveJoystick(CFAllocatorRef sender, CFAllocatorRef device)
         {
-            throw new NotImplementedException();
+            Debug.Print("Joystick device {0:x} disconnected, sender is {1:x}", device, sender);
+            // Keep the device in case it comes back later on
+            JoystickState state = JoystickDevices[device];
+            state.SetIsConnected(false);
+            JoystickDevices[device] = state;
         }
 
         #endregion
