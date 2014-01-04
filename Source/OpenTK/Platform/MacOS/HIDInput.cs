@@ -54,6 +54,19 @@ namespace OpenTK.Platform.MacOS
     {
         #region Fields
 
+        class JoystickDetails
+        {
+            public JoystickState State;
+            public JoystickCapabilities Capabilities;
+        }
+
+        class MacJoystick : JoystickDevice<JoystickDetails>
+        {
+            internal MacJoystick(int id, int axes, int buttons)
+                : base(id, axes, buttons)
+            { }
+        }
+
         readonly IOHIDManagerRef hidmanager;
 
         readonly Dictionary<IntPtr, MouseState> MouseDevices =
@@ -66,8 +79,8 @@ namespace OpenTK.Platform.MacOS
         readonly Dictionary<int, IntPtr> KeyboardIndexToDevice =
             new Dictionary<int, IntPtr>();
 
-        readonly Dictionary<IntPtr, JoystickState> JoystickDevices =
-            new Dictionary<IntPtr, JoystickState>(new IntPtrEqualityComparer());
+        readonly Dictionary<IntPtr, MacJoystick> JoystickDevices =
+            new Dictionary<IntPtr, MacJoystick>(new IntPtrEqualityComparer());
         readonly Dictionary<int, IntPtr> JoystickIndexToDevice =
             new Dictionary<int, IntPtr>();
 
@@ -208,6 +221,7 @@ namespace OpenTK.Platform.MacOS
 
             MouseState mouse;
             KeyboardState keyboard;
+            MacJoystick joystick;
             if (MouseDevices.TryGetValue(context, out mouse))
             {
                 MouseDevices[context] = UpdateMouse(mouse, val);
@@ -215,7 +229,13 @@ namespace OpenTK.Platform.MacOS
             else if (KeyboardDevices.TryGetValue(context, out keyboard))
             {
                 KeyboardDevices[context] = UpdateKeyboard(keyboard, val);
-            }else{
+            }
+            else if (JoystickDevices.TryGetValue(context, out joystick))
+            {
+                JoystickDevices[context] = UpdateJoystick(joystick, val);
+            }
+            else
+            {
                 //Debug.Print ("Device {0:x} not found in list of keyboards or mice", sender);
             }
         }
@@ -349,22 +369,31 @@ namespace OpenTK.Platform.MacOS
 
         #region Joystick
 
+        MacJoystick CreateJoystick(CFAllocatorRef sender, CFAllocatorRef device)
+        {
+            MacJoystick joy = new MacJoystick(-1, 0, 0);
+            joy.Details.State.SetIsConnected(true);
+
+            // Todo: discover joystick capabilities
+            joy.Details.Capabilities = new JoystickCapabilities(0, 0, true);
+
+            return joy;
+        }
+
         void AddJoystick(CFAllocatorRef sender, CFAllocatorRef device)
         {
             if (!JoystickDevices.ContainsKey(device))
             {
                 Debug.Print("Joystick device {0:x} discovered, sender is {1:x}", device, sender);
-                JoystickState state = new JoystickState();
-                state.SetIsConnected(true);
-                JoystickIndexToDevice.Add(KeyboardDevices.Count, device);
-                JoystickDevices.Add(device, state);
+                MacJoystick joy = CreateJoystick(sender, device);
+                JoystickIndexToDevice.Add(JoystickDevices.Count, device);
+                JoystickDevices.Add(device, joy);
             }
             else
             {
                 Debug.Print("Joystick device {0:x} reconnected, sender is {1:x}", device, sender);
-                JoystickState state = JoystickDevices[device];
-                state.SetIsConnected(true);
-                JoystickDevices[device] = state;
+                JoystickDevices[device].Details.State.SetIsConnected(true);
+                //JoystickDevices[device].Details.Capabilities.SetIsConnected(true);
             }
         }
 
@@ -372,9 +401,24 @@ namespace OpenTK.Platform.MacOS
         {
             Debug.Print("Joystick device {0:x} disconnected, sender is {1:x}", device, sender);
             // Keep the device in case it comes back later on
-            JoystickState state = JoystickDevices[device];
-            state.SetIsConnected(false);
-            JoystickDevices[device] = state;
+            JoystickDevices[device].Details.State.SetIsConnected(false);
+            //JoystickDevices[device].Details.Capabilities.SetIsConnected(false);
+        }
+
+        static MacJoystick UpdateJoystick(MacJoystick state, IOHIDValueRef val)
+        {
+            //IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
+            //int v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
+            //HIDPage page = NativeMethods.IOHIDElementGetUsagePage(elem);
+            //int usage = NativeMethods.IOHIDElementGetUsage(elem);
+
+            //switch (page)
+            //{
+            //    case HIDPage.GenericDesktop:
+            //        break;
+            //}
+
+            return state;
         }
 
         #endregion
