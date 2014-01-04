@@ -60,9 +60,15 @@ namespace OpenTK.Platform.MacOS
             new Dictionary<IntPtr, MouseState>(new IntPtrEqualityComparer());
         readonly Dictionary<int, IntPtr> MouseIndexToDevice =
             new Dictionary<int, IntPtr>();
+
         readonly Dictionary<IntPtr, KeyboardState> KeyboardDevices =
             new Dictionary<IntPtr, KeyboardState>(new IntPtrEqualityComparer());
         readonly Dictionary<int, IntPtr> KeyboardIndexToDevice =
+            new Dictionary<int, IntPtr>();
+
+        readonly Dictionary<IntPtr, JoystickState> JoystickDevices =
+            new Dictionary<IntPtr, JoystickState>(new IntPtrEqualityComparer());
+        readonly Dictionary<int, IntPtr> JoystickIndexToDevice =
             new Dictionary<int, IntPtr>();
 
         readonly CFRunLoop RunLoop = CF.CFRunLoopGetMain();
@@ -126,41 +132,19 @@ namespace OpenTK.Platform.MacOS
                 if (NativeMethods.IOHIDDeviceConformsTo(device,
                         HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse))
                 {
-                    if (!MouseDevices.ContainsKey(device))
-                    {
-                        Debug.Print("Mouse device {0:x} discovered, sender is {1:x}", device, sender);
-                        MouseState state = new MouseState();
-                        state.IsConnected = true;
-                        MouseIndexToDevice.Add(MouseDevices.Count, device);
-                        MouseDevices.Add(device, state);
-                    }
-                    else
-                    {
-                        Debug.Print("Mouse device {0:x} reconnected, sender is {1:x}", device, sender);
-                        MouseState state = MouseDevices[device];
-                        state.IsConnected = true;
-                        MouseDevices[device] = state;
-                    }
+                    AddMouse(sender, device);
                 }
 
                 if (NativeMethods.IOHIDDeviceConformsTo(device,
                         HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard))
                 {
-                    if (!KeyboardDevices.ContainsKey(device))
-                    {
-                        Debug.Print("Keyboard device {0:x} discovered, sender is {1:x}", device, sender);
-                        KeyboardState state = new KeyboardState();
-                        state.IsConnected = true;
-                        KeyboardIndexToDevice.Add(KeyboardDevices.Count, device);
-                        KeyboardDevices.Add(device, state);
-                    }
-                    else
-                    {
-                        Debug.Print("Keyboard device {0:x} reconnected, sender is {1:x}", device, sender);
-                        KeyboardState state = KeyboardDevices[device];
-                        state.IsConnected = true;
-                        KeyboardDevices[device] = state;
-                    }
+                    AddKeyboard(sender, device);
+                }
+
+                if (NativeMethods.IOHIDDeviceConformsTo(device,
+                    HIDPage.GenericDesktop, (int)HIDUsageGD.Joystick))
+                {
+                    AddJoystick(sender, device);
                 }
 
                 // The device is not normally available in the InputValueCallback (HandleDeviceValueReceived), so we include
@@ -178,23 +162,19 @@ namespace OpenTK.Platform.MacOS
             if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse) &&
                 MouseDevices.ContainsKey(device))
             {
-                Debug.Print("Mouse device {0:x} disconnected, sender is {1:x}", device, sender);
-
-                // Keep the device in case it comes back later on
-                MouseState state = MouseDevices[device];
-                state.IsConnected = false;
-                MouseDevices[device] = state;
+                RemoveMouse(sender, device);
             }
 
             if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard) &&
                 KeyboardDevices.ContainsKey(device))
             {
-                Debug.Print("Keyboard device {0:x} disconnected, sender is {1:x}", device, sender);
+                RemoveKeyboard(sender, device);
+            }
 
-                // Keep the device in case it comes back later on
-                KeyboardState state = KeyboardDevices[device];
-                state.IsConnected = false;
-                KeyboardDevices[device] = state;
+            if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Joystick) &&
+                JoystickDevices.ContainsKey(device))
+            {
+                RemoveJoystick(sender, device);
             }
 
             NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, IntPtr.Zero, IntPtr.Zero);
@@ -222,6 +202,36 @@ namespace OpenTK.Platform.MacOS
             }else{
                 //Debug.Print ("Device {0:x} not found in list of keyboards or mice", sender);
             }
+        }
+
+        #region Mouse
+
+        void AddMouse(CFAllocatorRef sender, CFAllocatorRef device)
+        {
+            if (!MouseDevices.ContainsKey(device))
+            {
+                Debug.Print("Mouse device {0:x} discovered, sender is {1:x}", device, sender);
+                MouseState state = new MouseState();
+                state.IsConnected = true;
+                MouseIndexToDevice.Add(MouseDevices.Count, device);
+                MouseDevices.Add(device, state);
+            }
+            else
+            {
+                Debug.Print("Mouse device {0:x} reconnected, sender is {1:x}", device, sender);
+                MouseState state = MouseDevices[device];
+                state.IsConnected = true;
+                MouseDevices[device] = state;
+            }
+        }
+
+        void RemoveMouse(CFAllocatorRef sender, CFAllocatorRef device)
+        {
+            Debug.Print("Mouse device {0:x} disconnected, sender is {1:x}", device, sender);
+            // Keep the device in case it comes back later on
+            MouseState state = MouseDevices[device];
+            state.IsConnected = false;
+            MouseDevices[device] = state;
         }
 
         static MouseState UpdateMouse(MouseState state, IOHIDValueRef val)
@@ -260,6 +270,38 @@ namespace OpenTK.Platform.MacOS
             return state;
         }
 
+        #endregion
+
+        #region Keyboard
+
+        void AddKeyboard(CFAllocatorRef sender, CFAllocatorRef device)
+        {
+            if (!KeyboardDevices.ContainsKey(device))
+            {
+                Debug.Print("Keyboard device {0:x} discovered, sender is {1:x}", device, sender);
+                KeyboardState state = new KeyboardState();
+                state.IsConnected = true;
+                KeyboardIndexToDevice.Add(KeyboardDevices.Count, device);
+                KeyboardDevices.Add(device, state);
+            }
+            else
+            {
+                Debug.Print("Keyboard device {0:x} reconnected, sender is {1:x}", device, sender);
+                KeyboardState state = KeyboardDevices[device];
+                state.IsConnected = true;
+                KeyboardDevices[device] = state;
+            }
+        }
+
+        void RemoveKeyboard(CFAllocatorRef sender, CFAllocatorRef device)
+        {
+            Debug.Print("Keyboard device {0:x} disconnected, sender is {1:x}", device, sender);
+            // Keep the device in case it comes back later on
+            KeyboardState state = KeyboardDevices[device];
+            state.IsConnected = false;
+            KeyboardDevices[device] = state;
+        }
+
         static KeyboardState UpdateKeyboard(KeyboardState state, IOHIDValueRef val)
         {
             IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
@@ -286,6 +328,22 @@ namespace OpenTK.Platform.MacOS
 
             return state;
         }
+
+        #endregion
+
+        #region Joystick
+
+        void AddJoystick(CFAllocatorRef sender, CFAllocatorRef device)
+        {
+            throw new NotImplementedException();
+        }
+
+        void RemoveJoystick(CFAllocatorRef sender, CFAllocatorRef device)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
         #endregion
 
