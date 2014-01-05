@@ -40,8 +40,8 @@ namespace OpenTK.Input
     {
         // If we ever add more values to JoystickAxis or JoystickButton
         // then we'll need to increase these limits.
-        internal const int MaxAxes = 10;
-        internal const int MaxButtons = 32;
+        internal const int MaxAxes = (int)JoystickAxis.Last;
+        internal const int MaxButtons = (int)JoystickButton.Last;
 
         const float ConversionFactor = 1.0f / (short.MaxValue + 0.5f);
 

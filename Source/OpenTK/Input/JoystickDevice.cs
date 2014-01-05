@@ -155,7 +155,7 @@ namespace OpenTK.Input
     #region JoystickDevice<TDetail> : JoystickDevice
 
     // Provides platform-specific information about the relevant JoystickDevice.
-    internal sealed class JoystickDevice<TDetail> : JoystickDevice
+    internal class JoystickDevice<TDetail> : JoystickDevice
         where TDetail : new()
     {
         internal JoystickDevice(int id, int axes, int buttons)
