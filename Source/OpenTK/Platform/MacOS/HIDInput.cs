@@ -1545,14 +1545,17 @@ namespace OpenTK.Platform.MacOS
 
                     foreach (var device in MouseDevices.Keys)
                     {
-                        NativeMethods.IOHIDDeviceRegisterInputValueCallback(
-                            device, IntPtr.Zero, IntPtr.Zero);
+                        DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, device);
                     }
 
                     foreach (var device in KeyboardDevices.Keys)
                     {
-                        NativeMethods.IOHIDDeviceRegisterInputValueCallback(
-                            device, IntPtr.Zero, IntPtr.Zero);
+                        DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, device);
+                    }
+
+                    foreach (var device in JoystickDevices.Keys)
+                    {
+                        DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, device);
                     }
 
                     HandleDeviceAdded = null;
