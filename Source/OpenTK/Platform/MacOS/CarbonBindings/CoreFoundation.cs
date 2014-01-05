@@ -62,6 +62,7 @@ namespace OpenTK.Platform.MacOS.Carbon
             }
         }
     }
+
     struct CFDictionary
     {
         public CFDictionary(IntPtr reference)
@@ -79,18 +80,16 @@ namespace OpenTK.Platform.MacOS.Carbon
                 return CF.CFDictionaryGetCount(dictionaryRef);
             }
         }
+
         public double GetNumberValue(string key)
         {
-            unsafe
-            {
-                double retval;
-                IntPtr cfnum = CF.CFDictionaryGetValue(dictionaryRef,
-                    CF.CFSTR(key));
+            double retval;
+            IntPtr cfnum = CF.CFDictionaryGetValue(dictionaryRef,
+                CF.CFSTR(key));
 
-                CF.CFNumberGetValue(cfnum, CF.CFNumberType.kCFNumberDoubleType, &retval);
+            CF.CFNumberGetValue(cfnum, CF.CFNumberType.kCFNumberDoubleType, out retval);
 
-                return retval;
-            }
+            return retval;
         }
     }
     class CF
@@ -150,9 +149,11 @@ namespace OpenTK.Platform.MacOS.Carbon
         );
 
         [DllImport(appServices)]
-        internal unsafe static extern bool CFNumberGetValue (IntPtr number, CFNumberType theType, int* valuePtr);
+        internal static extern bool CFNumberGetValue (IntPtr number, CFNumberType theType, out int valuePtr);
         [DllImport(appServices)]
-        internal unsafe static extern bool CFNumberGetValue(IntPtr number, CFNumberType theType, double* valuePtr);
+        internal static extern bool CFNumberGetValue (IntPtr number, CFNumberType theType, out long valuePtr);
+        [DllImport(appServices)]
+        internal static extern bool CFNumberGetValue(IntPtr number, CFNumberType theType, out double valuePtr);
 
         internal enum CFNumberType
         {
