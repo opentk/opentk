@@ -210,7 +210,7 @@ namespace OpenTK.Platform.MacOS
             if (recognized)
             {
                 NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, IntPtr.Zero, IntPtr.Zero);
-                NativeMethods.IOHIDDeviceUnscheduleWithRunLoop(device, RunLoop, InputLoopMode);
+                NativeMethods.IOHIDDeviceUnscheduleFromRunLoop(device, RunLoop, InputLoopMode);
             }
         }
 
@@ -849,7 +849,7 @@ namespace OpenTK.Platform.MacOS
                 CFString inCFRunLoopMode);
 
             [DllImport(hid)]
-            public static extern void IOHIDDeviceUnscheduleWithRunLoop(
+            public static extern void IOHIDDeviceUnscheduleFromRunLoop(
                 IOHIDDeviceRef device,
                 CFRunLoop inCFRunLoop,
                 CFString inCFRunLoopMode);
