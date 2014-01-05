@@ -55,7 +55,17 @@ namespace OpenTK.Platform.MacOS
     {
         #region Fields
 
-        class JoystickDetails
+        class MouseData
+        {
+            public MouseState State;
+        }
+
+        class KeyboardData
+        {
+            public KeyboardState State;
+        }
+
+        class JoystickData
         {
             public string Name;
             public Guid Guid;
@@ -65,27 +75,20 @@ namespace OpenTK.Platform.MacOS
                 new Dictionary<int, JoystickButton>();
         }
 
-        class MacJoystick : JoystickDevice<JoystickDetails>
-        {
-            internal MacJoystick(int id, int axes, int buttons)
-                : base(id, axes, buttons)
-            { }
-        }
-
         readonly IOHIDManagerRef hidmanager;
 
-        readonly Dictionary<IntPtr, MouseState> MouseDevices =
-            new Dictionary<IntPtr, MouseState>(new IntPtrEqualityComparer());
+        readonly Dictionary<IntPtr, MouseData> MouseDevices =
+            new Dictionary<IntPtr, MouseData>(new IntPtrEqualityComparer());
         readonly Dictionary<int, IntPtr> MouseIndexToDevice =
             new Dictionary<int, IntPtr>();
 
-        readonly Dictionary<IntPtr, KeyboardState> KeyboardDevices =
-            new Dictionary<IntPtr, KeyboardState>(new IntPtrEqualityComparer());
+        readonly Dictionary<IntPtr, KeyboardData> KeyboardDevices =
+            new Dictionary<IntPtr, KeyboardData>(new IntPtrEqualityComparer());
         readonly Dictionary<int, IntPtr> KeyboardIndexToDevice =
             new Dictionary<int, IntPtr>();
 
-        readonly Dictionary<IntPtr, MacJoystick> JoystickDevices =
-            new Dictionary<IntPtr, MacJoystick>(new IntPtrEqualityComparer());
+        readonly Dictionary<IntPtr, JoystickData> JoystickDevices =
+            new Dictionary<IntPtr, JoystickData>(new IntPtrEqualityComparer());
         readonly Dictionary<int, IntPtr> JoystickIndexToDevice =
             new Dictionary<int, IntPtr>();
 
@@ -246,20 +249,20 @@ namespace OpenTK.Platform.MacOS
                     return;
                 }
 
-                MouseState mouse;
-                KeyboardState keyboard;
-                MacJoystick joystick;
+                MouseData mouse;
+                KeyboardData keyboard;
+                JoystickData joystick;
                 if (MouseDevices.TryGetValue(context, out mouse))
                 {
-                    MouseDevices[context] = UpdateMouse(mouse, val);
+                    UpdateMouse(mouse, val);
                 }
                 else if (KeyboardDevices.TryGetValue(context, out keyboard))
                 {
-                    KeyboardDevices[context] = UpdateKeyboard(keyboard, val);
+                    UpdateKeyboard(keyboard, val);
                 }
                 else if (JoystickDevices.TryGetValue(context, out joystick))
                 {
-                    JoystickDevices[context] = UpdateJoystick(joystick, val);
+                    UpdateJoystick(joystick, val);
                 }
                 else
                 {
@@ -279,30 +282,24 @@ namespace OpenTK.Platform.MacOS
             if (!MouseDevices.ContainsKey(device))
             {
                 Debug.Print("Mouse device {0:x} discovered, sender is {1:x}", device, sender);
-                MouseState state = new MouseState();
-                state.IsConnected = true;
                 MouseIndexToDevice.Add(MouseDevices.Count, device);
-                MouseDevices.Add(device, state);
+                MouseDevices.Add(device, new MouseData());
             }
             else
             {
                 Debug.Print("Mouse device {0:x} reconnected, sender is {1:x}", device, sender);
-                MouseState state = MouseDevices[device];
-                state.IsConnected = true;
-                MouseDevices[device] = state;
             }
+            MouseDevices[device].State.SetIsConnected(true);
         }
 
         void RemoveMouse(CFAllocatorRef sender, CFAllocatorRef device)
         {
             Debug.Print("Mouse device {0:x} disconnected, sender is {1:x}", device, sender);
             // Keep the device in case it comes back later on
-            MouseState state = MouseDevices[device];
-            state.IsConnected = false;
-            MouseDevices[device] = state;
+            MouseDevices[device].State.SetIsConnected(false);
         }
 
-        static MouseState UpdateMouse(MouseState state, IOHIDValueRef val)
+        static void UpdateMouse(MouseData mouse, IOHIDValueRef val)
         {
             IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
             int v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
@@ -317,25 +314,23 @@ namespace OpenTK.Platform.MacOS
                     switch ((HIDUsageGD)usage)
                     {
                         case HIDUsageGD.X:
-                            state.X += v_int;
+                            mouse.State.X += v_int;
                             break;
 
                         case HIDUsageGD.Y:
-                            state.Y += v_int;
+                            mouse.State.Y += v_int;
                             break;
 
                         case HIDUsageGD.Wheel:
-                            state.WheelPrecise += v_int;
+                            mouse.State.WheelPrecise += v_int;
                             break;
                     }
                     break;
 
                 case HIDPage.Button:
-                    state[OpenTK.Input.MouseButton.Left + usage - 1] = v_int == 1;
+                    mouse.State[OpenTK.Input.MouseButton.Left + usage - 1] = v_int == 1;
                     break;
             }
-
-            return state;
         }
 
         #endregion
@@ -347,30 +342,24 @@ namespace OpenTK.Platform.MacOS
             if (!KeyboardDevices.ContainsKey(device))
             {
                 Debug.Print("Keyboard device {0:x} discovered, sender is {1:x}", device, sender);
-                KeyboardState state = new KeyboardState();
-                state.IsConnected = true;
                 KeyboardIndexToDevice.Add(KeyboardDevices.Count, device);
-                KeyboardDevices.Add(device, state);
+                KeyboardDevices.Add(device, new KeyboardData());
             }
             else
             {
                 Debug.Print("Keyboard device {0:x} reconnected, sender is {1:x}", device, sender);
-                KeyboardState state = KeyboardDevices[device];
-                state.IsConnected = true;
-                KeyboardDevices[device] = state;
             }
+            KeyboardDevices[device].State.SetIsConnected(true);
         }
 
         void RemoveKeyboard(CFAllocatorRef sender, CFAllocatorRef device)
         {
             Debug.Print("Keyboard device {0:x} disconnected, sender is {1:x}", device, sender);
             // Keep the device in case it comes back later on
-            KeyboardState state = KeyboardDevices[device];
-            state.IsConnected = false;
-            KeyboardDevices[device] = state;
+            KeyboardDevices[device].State.SetIsConnected(false);
         }
 
-        static KeyboardState UpdateKeyboard(KeyboardState state, IOHIDValueRef val)
+        static void UpdateKeyboard(KeyboardData keyboard, IOHIDValueRef val)
         {
             IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
             int v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
@@ -379,22 +368,21 @@ namespace OpenTK.Platform.MacOS
  
             // This will supress the debug printing below. Seems like it generates a lot of -1s. 
             // Couldn't find any details in USB spec or Apple docs for this behavior.
-            if(usage < 0 ) return state;  
-
-            switch (page)
+            if (usage >= 0)
             {
-                case HIDPage.GenericDesktop:
-                case HIDPage.KeyboardOrKeypad:
-                    if (usage >= RawKeyMap.Length)
-                    {
-                        Debug.Print("[Warning] Key {0} not mapped.", usage);
-                        return state;
-                    }
-                    state.SetKeyState(RawKeyMap[usage], (byte)usage, v_int != 0);
-                    break;
-            }
 
-            return state;
+                switch (page)
+                {
+                    case HIDPage.GenericDesktop:
+                    case HIDPage.KeyboardOrKeypad:
+                        if (usage >= RawKeyMap.Length)
+                        {
+                            Debug.Print("[Warning] Key {0} not mapped.", usage);
+                        }
+                        keyboard.State.SetKeyState(RawKeyMap[usage], (byte)usage, v_int != 0);
+                        break;
+                }
+            }
         }
 
         #endregion
@@ -442,14 +430,15 @@ namespace OpenTK.Platform.MacOS
             return new Guid(guid_bytes.ToArray());
         }
 
-        MacJoystick CreateJoystick(IntPtr sender, IntPtr device)
+        JoystickData CreateJoystick(IntPtr sender, IntPtr device)
         {
-            MacJoystick joy = null;
+            JoystickData joy = null;
 
             // Retrieve all elements of this device
             CFArrayRef element_array_ref = NativeMethods.IOHIDDeviceCopyMatchingElements(device, IntPtr.Zero, IntPtr.Zero);
             if (element_array_ref != IntPtr.Zero)
             {
+                joy = new JoystickData();
                 int axes = 0;
                 int buttons = 0;
                 int dpads = 0;
@@ -507,16 +496,15 @@ namespace OpenTK.Platform.MacOS
                     }
                 }
 
-                joy = new MacJoystick(-1, axes, buttons);
-                joy.Details.Name = name;
-                joy.Details.Guid = guid;
-                joy.Details.State.SetIsConnected(true);
-                joy.Details.Capabilities = new JoystickCapabilities(axes, buttons, true);
+                joy.Name = name;
+                joy.Guid = guid;
+                joy.State.SetIsConnected(true);
+                joy.Capabilities = new JoystickCapabilities(axes, buttons, true);
 
                 // Map button elements to JoystickButtons
                 for (int button = 0; button < button_elements.Count; button++)
                 {
-                    joy.Details.ElementUsageToButton.Add(button_elements[button], JoystickButton.Button0 + button); 
+                    joy.ElementUsageToButton.Add(button_elements[button], JoystickButton.Button0 + button); 
                 }
             }
             CF.CFRelease(element_array_ref);
@@ -524,12 +512,12 @@ namespace OpenTK.Platform.MacOS
             return joy;
         }
 
-        MacJoystick GetJoystick(int index)
+        JoystickData GetJoystick(int index)
         {
             IntPtr device;
             if (JoystickIndexToDevice.TryGetValue(index, out device))
             {
-                MacJoystick joystick;
+                JoystickData joystick;
                 if (JoystickDevices.TryGetValue(device, out joystick))
                 {
                     return joystick;
@@ -541,7 +529,7 @@ namespace OpenTK.Platform.MacOS
         void AddJoystick(CFAllocatorRef sender, CFAllocatorRef device)
         {
             Debug.Print("Joystick device {0:x} discovered, sender is {1:x}", device, sender);
-            MacJoystick joy = CreateJoystick(sender, device);
+            JoystickData joy = CreateJoystick(sender, device);
             if (joy != null)
             {
                 // Add a device->joy lookup entry for this device.
@@ -564,7 +552,7 @@ namespace OpenTK.Platform.MacOS
                 for (i = 0; i < JoystickIndexToDevice.Count; i++)
                 {
                     IntPtr candidate = JoystickIndexToDevice[i];
-                    if (!JoystickDevices[candidate].Details.State.IsConnected)
+                    if (!JoystickDevices[candidate].State.IsConnected)
                     {
                         break;
                     }
@@ -587,11 +575,11 @@ namespace OpenTK.Platform.MacOS
         {
             Debug.Print("Joystick device {0:x} disconnected, sender is {1:x}", device, sender);
             // Keep the device in case it comes back later on
-            JoystickDevices[device].Details.State = new JoystickState();
-            JoystickDevices[device].Details.Capabilities = new JoystickCapabilities();
+            JoystickDevices[device].State = new JoystickState();
+            JoystickDevices[device].Capabilities = new JoystickCapabilities();
         }
 
-        static MacJoystick UpdateJoystick(MacJoystick joy, IOHIDValueRef val)
+        static void UpdateJoystick(JoystickData joy, IOHIDValueRef val)
         {
             IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
             HIDPage page = NativeMethods.IOHIDElementGetUsagePage(elem);
@@ -615,7 +603,7 @@ namespace OpenTK.Platform.MacOS
                             JoystickAxis axis = TranslateJoystickAxis(usage);
                             if (axis >= JoystickAxis.Axis0 && axis <= JoystickAxis.Last)
                             {
-                                joy.Details.State.SetAxis(axis, offset);
+                                joy.State.SetAxis(axis, offset);
                             }
                             break;
 
@@ -633,7 +621,7 @@ namespace OpenTK.Platform.MacOS
                             JoystickAxis axis = TranslateJoystickAxis(usage);
                             if (axis >= JoystickAxis.Axis0 && axis <= JoystickAxis.Last)
                             {
-                                joy.Details.State.SetAxis(axis, offset);
+                                joy.State.SetAxis(axis, offset);
                             }
                             break;
                     }
@@ -645,13 +633,11 @@ namespace OpenTK.Platform.MacOS
                         JoystickButton button = TranslateJoystickButton(joy, usage);
                         if (button >= JoystickButton.Button0 && button <= JoystickButton.Last)
                         {
-                            joy.Details.State.SetButton(button, pressed);
+                            joy.State.SetButton(button, pressed);
                         }
                     }
                     break;
             }
-
-            return joy;
         }
 
         static short GetJoystickAxis(IOHIDValueRef val, IOHIDElementRef element)
@@ -713,10 +699,10 @@ namespace OpenTK.Platform.MacOS
             return value >= 1;
         }
 
-        static JoystickButton TranslateJoystickButton(MacJoystick joy, int usage)
+        static JoystickButton TranslateJoystickButton(JoystickData joy, int usage)
         {
             JoystickButton button;
-            if (joy.Details.ElementUsageToButton.TryGetValue(usage, out button))
+            if (joy.ElementUsageToButton.TryGetValue(usage, out button))
             {
                 return button;
             }
@@ -741,9 +727,9 @@ namespace OpenTK.Platform.MacOS
         MouseState IMouseDriver2.GetState()
         {
             MouseState master = new MouseState();
-            foreach (KeyValuePair<IntPtr, MouseState> item in MouseDevices)
+            foreach (KeyValuePair<IntPtr, MouseData> item in MouseDevices)
             {
-                master.MergeBits(item.Value);
+                master.MergeBits(item.Value.State);
             }
 
             return master;
@@ -754,7 +740,7 @@ namespace OpenTK.Platform.MacOS
             IntPtr device;
             if (MouseIndexToDevice.TryGetValue(index, out device))
             {
-                return MouseDevices[device];
+                return MouseDevices[device].State;
             }
 
             return new MouseState();
@@ -773,9 +759,9 @@ namespace OpenTK.Platform.MacOS
         KeyboardState IKeyboardDriver2.GetState()
         {
             KeyboardState master = new KeyboardState();
-            foreach (KeyValuePair<IntPtr, KeyboardState> item in KeyboardDevices)
+            foreach (KeyValuePair<IntPtr, KeyboardData> item in KeyboardDevices)
             {
-                master.MergeBits(item.Value);
+                master.MergeBits(item.Value.State);
             }
 
             return master;
@@ -786,7 +772,7 @@ namespace OpenTK.Platform.MacOS
             IntPtr device;
             if (KeyboardIndexToDevice.TryGetValue(index, out device))
             {
-                return KeyboardDevices[device];
+                return KeyboardDevices[device].State;
             }
 
             return new KeyboardState();
@@ -811,30 +797,30 @@ namespace OpenTK.Platform.MacOS
 
         JoystickState IJoystickDriver2.GetState(int index)
         {
-            MacJoystick joystick = GetJoystick(index);
+            JoystickData joystick = GetJoystick(index);
             if (joystick != null)
             {
-                return joystick.Details.State;
+                return joystick.State;
             }
             return new JoystickState();
         }
 
         JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)
         {
-            MacJoystick joystick = GetJoystick(index);
+            JoystickData joystick = GetJoystick(index);
             if (joystick != null)
             {
-                return joystick.Details.Capabilities;
+                return joystick.Capabilities;
             }
             return new JoystickCapabilities();
         }
 
         Guid IJoystickDriver2.GetGuid(int index)
         {
-            MacJoystick joystick = GetJoystick(index);
+            JoystickData joystick = GetJoystick(index);
             if (joystick != null)
             {
-                return joystick.Details.Guid;
+                return joystick.Guid;
             }
             return new Guid();
         }
