@@ -144,103 +144,124 @@ namespace OpenTK.Platform.MacOS
 
         void DeviceAdded(IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
         {
-            bool recognized = false;
-
-            if (NativeMethods.IOHIDDeviceOpen(device, IOOptionBits.Zero) == IOReturn.Zero)
+            try
             {
-                if (NativeMethods.IOHIDDeviceConformsTo(device,
-                        HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse))
-                {
-                    AddMouse(sender, device);
-                    recognized = true;
-                }
+                bool recognized = false;
 
-                if (NativeMethods.IOHIDDeviceConformsTo(device,
-                        HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard))
+                if (NativeMethods.IOHIDDeviceOpen(device, IOOptionBits.Zero) == IOReturn.Zero)
                 {
-                    AddKeyboard(sender, device);
-                    recognized = true;
-                }
+                    if (NativeMethods.IOHIDDeviceConformsTo(device,
+                            HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse))
+                    {
+                        AddMouse(sender, device);
+                        recognized = true;
+                    }
 
-                if (NativeMethods.IOHIDDeviceConformsTo(device,
-                    HIDPage.GenericDesktop, (int)HIDUsageGD.Joystick))
-                {
-                    AddJoystick(sender, device);
-                    recognized = true;
-                }
+                    if (NativeMethods.IOHIDDeviceConformsTo(device,
+                            HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard))
+                    {
+                        AddKeyboard(sender, device);
+                        recognized = true;
+                    }
 
-                if (recognized)
-                {
-                    // The device is not normally available in the InputValueCallback (HandleDeviceValueReceived), so we include
-                    // the device identifier as the context variable, so we can identify it and figure out the device later.
-                    // Thanks to Jase: http://www.opentk.com/node/2800
-                    NativeMethods.IOHIDDeviceRegisterInputValueCallback(device,
-                        HandleDeviceValueReceived, device);
+                    if (NativeMethods.IOHIDDeviceConformsTo(device,
+                        HIDPage.GenericDesktop, (int)HIDUsageGD.Joystick))
+                    {
+                        AddJoystick(sender, device);
+                        recognized = true;
+                    }
 
-                    NativeMethods.IOHIDDeviceScheduleWithRunLoop(device, RunLoop, InputLoopMode);
+                    if (recognized)
+                    {
+                        // The device is not normally available in the InputValueCallback (HandleDeviceValueReceived), so we include
+                        // the device identifier as the context variable, so we can identify it and figure out the device later.
+                        // Thanks to Jase: http://www.opentk.com/node/2800
+                        NativeMethods.IOHIDDeviceRegisterInputValueCallback(device,
+                            HandleDeviceValueReceived, device);
+
+                        NativeMethods.IOHIDDeviceScheduleWithRunLoop(device, RunLoop, InputLoopMode);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Debug.Print("[Mac] Exception in managed callback: {0}", e);
             }
         }
 
         void DeviceRemoved(IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
         {
-            bool recognized = false;
-
-            if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse) &&
-                MouseDevices.ContainsKey(device))
+            try
             {
-                RemoveMouse(sender, device);
-                recognized = true;
+                bool recognized = false;
+
+                if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse) &&
+                    MouseDevices.ContainsKey(device))
+                {
+                    RemoveMouse(sender, device);
+                    recognized = true;
+                }
+
+                if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard) &&
+                    KeyboardDevices.ContainsKey(device))
+                {
+                    RemoveKeyboard(sender, device);
+                    recognized = true;
+                }
+
+                if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Joystick) &&
+                    JoystickDevices.ContainsKey(device))
+                {
+                    RemoveJoystick(sender, device);
+                    recognized = true;
+                }
+
+                if (recognized)
+                {
+                    NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, IntPtr.Zero, IntPtr.Zero);
+                    NativeMethods.IOHIDDeviceUnscheduleFromRunLoop(device, RunLoop, InputLoopMode);
+                }
             }
-
-            if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard) &&
-                KeyboardDevices.ContainsKey(device))
+            catch (Exception e)
             {
-                RemoveKeyboard(sender, device);
-                recognized = true;
-            }
-
-            if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Joystick) &&
-                JoystickDevices.ContainsKey(device))
-            {
-                RemoveJoystick(sender, device);
-                recognized = true;
-            }
-
-            if (recognized)
-            {
-                NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, IntPtr.Zero, IntPtr.Zero);
-                NativeMethods.IOHIDDeviceUnscheduleFromRunLoop(device, RunLoop, InputLoopMode);
+                Debug.Print("[Mac] Exception in managed callback: {0}", e);
             }
         }
 
         void DeviceValueReceived(IntPtr context, IOReturn res, IntPtr sender, IOHIDValueRef val)
         {
-            if (disposed)
+            try
             {
-                Debug.Print("DeviceValueReceived({0}, {1}, {2}, {3}) called on disposed {4}",
-                    context, res, sender, val, GetType());
-                return;
-            }
+                if (disposed)
+                {
+                    Debug.Print("DeviceValueReceived({0}, {1}, {2}, {3}) called on disposed {4}",
+                        context, res, sender, val, GetType());
+                    return;
+                }
 
-            MouseState mouse;
-            KeyboardState keyboard;
-            MacJoystick joystick;
-            if (MouseDevices.TryGetValue(context, out mouse))
-            {
-                MouseDevices[context] = UpdateMouse(mouse, val);
+                MouseState mouse;
+                KeyboardState keyboard;
+                MacJoystick joystick;
+                if (MouseDevices.TryGetValue(context, out mouse))
+                {
+                    MouseDevices[context] = UpdateMouse(mouse, val);
+                }
+                else if (KeyboardDevices.TryGetValue(context, out keyboard))
+                {
+                    KeyboardDevices[context] = UpdateKeyboard(keyboard, val);
+                }
+                else if (JoystickDevices.TryGetValue(context, out joystick))
+                {
+                    JoystickDevices[context] = UpdateJoystick(joystick, val);
+                }
+                else
+                {
+                    //Debug.Print ("Device {0:x} not found in list of keyboards or mice", sender);
+                }
             }
-            else if (KeyboardDevices.TryGetValue(context, out keyboard))
+            catch (Exception e)
             {
-                KeyboardDevices[context] = UpdateKeyboard(keyboard, val);
-            }
-            else if (JoystickDevices.TryGetValue(context, out joystick))
-            {
-                JoystickDevices[context] = UpdateJoystick(joystick, val);
-            }
-            else
-            {
-                //Debug.Print ("Device {0:x} not found in list of keyboards or mice", sender);
+                Debug.Print("[Mac] Exception in managed callback: {0}", e);
             }
         }
 
