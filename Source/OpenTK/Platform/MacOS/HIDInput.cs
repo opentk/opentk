@@ -819,7 +819,7 @@ namespace OpenTK.Platform.MacOS
                 CFString inCFRunLoopMode);
 
             [DllImport(hid)]
-            public static void IOHIDManagerUnscheduleFromRunLoop(
+            public static extern void IOHIDManagerUnscheduleFromRunLoop(
                 IOHIDManagerRef inIOHIDManagerRef,
                 CFRunLoop inCFRunLoop,
                 CFString inCFRunLoopMode);
