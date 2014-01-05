@@ -408,7 +408,6 @@ namespace OpenTK.Platform.MacOS
 
                 CFStringRef name_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductKey);
                 string name = CF.CFStringGetCString(name_ref);
-                CF.CFRelease(name_ref);
 
                 List<int> button_elements = new List<int>();
                 CFArray element_array = new CFArray(element_array_ref);
