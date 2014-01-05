@@ -35,6 +35,7 @@ namespace OpenTK.Platform.MacOS
 {
     using Carbon;
     using CFAllocatorRef = System.IntPtr;
+    using CFArrayRef = System.IntPtr;
     using CFDictionaryRef = System.IntPtr;
     using CFIndex = System.IntPtr;
     using CFRunLoop = System.IntPtr;
@@ -58,6 +59,7 @@ namespace OpenTK.Platform.MacOS
         {
             public JoystickState State;
             public JoystickCapabilities Capabilities;
+            public string Name;
         }
 
         class MacJoystick : JoystickDevice<JoystickDetails>
@@ -371,11 +373,24 @@ namespace OpenTK.Platform.MacOS
 
         MacJoystick CreateJoystick(CFAllocatorRef sender, CFAllocatorRef device)
         {
-            MacJoystick joy = new MacJoystick(-1, 0, 0);
-            joy.Details.State.SetIsConnected(true);
+            MacJoystick joy = null;
 
-            // Todo: discover joystick capabilities
-            joy.Details.Capabilities = new JoystickCapabilities(0, 0, true);
+            // Retrieve all elements of this device
+            CFArrayRef element_array = NativeMethods.IOHIDDeviceCopyMatchingElements(device, IntPtr.Zero, IntPtr.Zero);
+            if (element_array != IntPtr.Zero)
+            {
+                CFStringRef name_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductKey);
+                string name = CF.CFStringGetCString(name_ref);
+                CF.CFRelease(name_ref);
+
+                joy = new MacJoystick(-1, 0, 0);
+                joy.Details.Name = name;
+                joy.Details.State.SetIsConnected(true);
+                joy.Details.Capabilities = new JoystickCapabilities(0, 0, true);
+
+                //NativeMethods.IOHIDDeviceGetProperty(device, nativem
+            }
+            CF.CFRelease(element_array);
 
             return joy;
         }
@@ -386,8 +401,11 @@ namespace OpenTK.Platform.MacOS
             {
                 Debug.Print("Joystick device {0:x} discovered, sender is {1:x}", device, sender);
                 MacJoystick joy = CreateJoystick(sender, device);
-                JoystickIndexToDevice.Add(JoystickDevices.Count, device);
-                JoystickDevices.Add(device, joy);
+                if (joy != null)
+                {
+                    JoystickIndexToDevice.Add(JoystickDevices.Count, device);
+                    JoystickDevices.Add(device, joy);
+                }
             }
             else
             {
@@ -601,6 +619,13 @@ namespace OpenTK.Platform.MacOS
                 IOHIDDeviceRef inIOHIDDeviceRef,  // IOHIDDeviceRef for the HID device
                 HIDPage inUsagePage,      // the usage page to test conformance with
                 int inUsage);         // the usage to test conformance with
+
+            // return the HID elements that match the criteria contained in the matching dictionary
+            [DllImport(hid)]
+            public static extern CFArrayRef IOHIDDeviceCopyMatchingElements(
+                IOHIDDeviceRef  inIOHIDDeviceRef,       // IOHIDDeviceRef for the HID device
+                CFDictionaryRef inMatchingCFDictRef,    // the matching dictionary
+                IOOptionBits    inOptions);             // Option bits
 
             [DllImport(hid)]
             public static extern void IOHIDDeviceRegisterInputValueCallback(
