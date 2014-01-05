@@ -819,6 +819,12 @@ namespace OpenTK.Platform.MacOS
                 CFString inCFRunLoopMode);
 
             [DllImport(hid)]
+            public static void IOHIDManagerUnscheduleFromRunLoop(
+                IOHIDManagerRef inIOHIDManagerRef,
+                CFRunLoop inCFRunLoop,
+                CFString inCFRunLoopMode);
+
+            [DllImport(hid)]
             public static extern void IOHIDManagerSetDeviceMatching(
                 IOHIDManagerRef manager,
                 CFDictionaryRef matching) ;
@@ -1468,8 +1474,8 @@ namespace OpenTK.Platform.MacOS
                         hidmanager, IntPtr.Zero, IntPtr.Zero);
                     NativeMethods.IOHIDManagerRegisterDeviceRemovalCallback(
                         hidmanager, IntPtr.Zero, IntPtr.Zero);
-                    NativeMethods.IOHIDManagerScheduleWithRunLoop(
-                        hidmanager, IntPtr.Zero, IntPtr.Zero);
+                    NativeMethods.IOHIDManagerUnscheduleFromRunLoop(
+                        hidmanager, RunLoop, InputLoopMode);
 
                     foreach (var device in MouseDevices.Keys)
                     {
