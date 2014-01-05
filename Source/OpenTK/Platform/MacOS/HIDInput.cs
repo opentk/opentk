@@ -489,21 +489,46 @@ namespace OpenTK.Platform.MacOS
 
         void AddJoystick(CFAllocatorRef sender, CFAllocatorRef device)
         {
-            if (!JoystickDevices.ContainsKey(device))
+            Debug.Print("Joystick device {0:x} discovered, sender is {1:x}", device, sender);
+            MacJoystick joy = CreateJoystick(sender, device);
+            if (joy != null)
             {
-                Debug.Print("Joystick device {0:x} discovered, sender is {1:x}", device, sender);
-                MacJoystick joy = CreateJoystick(sender, device);
-                if (joy != null)
+                // Add a device->joy lookup entry for this device.
+                if (!JoystickDevices.ContainsKey(device))
                 {
-                    JoystickIndexToDevice.Add(JoystickDevices.Count, device);
+                    // First time we've seen this device.
                     JoystickDevices.Add(device, joy);
                 }
-            }
-            else
-            {
-                Debug.Print("Joystick device {0:x} reconnected, sender is {1:x}", device, sender);
-                JoystickDevices[device].Details.State.SetIsConnected(true);
-                //JoystickDevices[device].Details.Capabilities.SetIsConnected(true);
+                else
+                {
+                    // This is an old device that is replugged.
+                    // This branch does not appear to be executed, ever.
+                    JoystickDevices[device] = joy;
+                }
+
+                // Add an index->device lookup entry for this device.
+                // Use the first free (i.e. disconnected) index.
+                // If all indices are connected, append a new one.
+                int i;
+                for (i = 0; i < JoystickIndexToDevice.Count; i++)
+                {
+                    IntPtr candidate = JoystickIndexToDevice[i];
+                    if (!JoystickDevices[candidate].Details.State.IsConnected)
+                    {
+                        break;
+                    }
+                }
+
+                if (i == JoystickDevices.Count)
+                {
+                    // All indices connected, append a new one.
+                    JoystickIndexToDevice.Add(JoystickDevices.Count, device);
+                }
+                else
+                {
+                    // Replace joystick at that index
+                    JoystickIndexToDevice[i] = device;
+                }
             }
         }
 
@@ -511,8 +536,8 @@ namespace OpenTK.Platform.MacOS
         {
             Debug.Print("Joystick device {0:x} disconnected, sender is {1:x}", device, sender);
             // Keep the device in case it comes back later on
-            JoystickDevices[device].Details.State.SetIsConnected(false);
-            //JoystickDevices[device].Details.Capabilities.SetIsConnected(false);
+            JoystickDevices[device].Details.State = new JoystickState();
+            JoystickDevices[device].Details.Capabilities = new JoystickCapabilities();
         }
 
         static MacJoystick UpdateJoystick(MacJoystick joy, IOHIDValueRef val)
