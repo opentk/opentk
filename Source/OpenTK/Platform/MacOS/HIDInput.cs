@@ -196,22 +196,19 @@ namespace OpenTK.Platform.MacOS
             {
                 bool recognized = false;
 
-                if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse) &&
-                    MouseDevices.ContainsKey(device))
+                if (MouseDevices.ContainsKey(device))
                 {
                     RemoveMouse(sender, device);
                     recognized = true;
                 }
 
-                if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard) &&
-                    KeyboardDevices.ContainsKey(device))
+                if (KeyboardDevices.ContainsKey(device))
                 {
                     RemoveKeyboard(sender, device);
                     recognized = true;
                 }
 
-                if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Joystick) &&
-                    JoystickDevices.ContainsKey(device))
+                if (JoystickDevices.ContainsKey(device))
                 {
                     RemoveJoystick(sender, device);
                     recognized = true;
