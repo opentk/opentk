@@ -58,6 +58,7 @@ namespace OpenTK.Platform.MacOS
         class JoystickDetails
         {
             public string Name;
+            public Guid Guid;
             public JoystickState State;
             public JoystickCapabilities Capabilities;
             readonly public Dictionary<int, JoystickButton> ElementUsageToButton =
@@ -394,7 +395,30 @@ namespace OpenTK.Platform.MacOS
 
         #region Joystick
 
-        MacJoystick CreateJoystick(CFAllocatorRef sender, CFAllocatorRef device)
+        Guid CreateJoystickGuid(IntPtr device)
+        {
+            // Create a device guid from the product and vendor id keys
+            List<byte> guid_bytes = new List<byte>();
+            long vendor_id = 0;
+            long product_id = 0;
+
+            IntPtr vendor_id_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDVendorIDKey);
+            IntPtr product_id_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductIDKey);
+            if (vendor_id_ref != IntPtr.Zero)
+            {
+                CF.CFNumberGetValue(vendor_id_ref, CF.CFNumberType.kCFNumberLongType, out vendor_id);
+            }
+            if (product_id_ref != IntPtr.Zero)
+            {
+                CF.CFNumberGetValue(product_id_ref, CF.CFNumberType.kCFNumberLongType, out product_id);
+            }
+
+            guid_bytes.AddRange(BitConverter.GetBytes(vendor_id));
+            guid_bytes.AddRange(BitConverter.GetBytes(product_id));
+            return new Guid(guid_bytes.ToArray());
+        }
+
+        MacJoystick CreateJoystick(IntPtr sender, IntPtr device)
         {
             MacJoystick joy = null;
 
@@ -405,6 +429,8 @@ namespace OpenTK.Platform.MacOS
                 int axes = 0;
                 int buttons = 0;
                 int dpads = 0;
+
+                Guid guid = CreateJoystickGuid(device);
 
                 CFStringRef name_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductKey);
                 string name = CF.CFStringGetCString(name_ref);
@@ -459,6 +485,7 @@ namespace OpenTK.Platform.MacOS
 
                 joy = new MacJoystick(-1, axes, buttons);
                 joy.Details.Name = name;
+                joy.Details.Guid = guid;
                 joy.Details.State.SetIsConnected(true);
                 joy.Details.Capabilities = new JoystickCapabilities(axes, buttons, true);
 
@@ -783,7 +810,7 @@ namespace OpenTK.Platform.MacOS
             MacJoystick joystick = GetJoystick(index);
             if (joystick != null)
             {
-                //return joystick.Details.Capabilities;
+                return joystick.Details.Guid;
             }
             return new Guid();
         }
