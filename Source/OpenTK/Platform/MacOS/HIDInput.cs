@@ -488,20 +488,119 @@ namespace OpenTK.Platform.MacOS
             //JoystickDevices[device].Details.Capabilities.SetIsConnected(false);
         }
 
-        static MacJoystick UpdateJoystick(MacJoystick state, IOHIDValueRef val)
+        static MacJoystick UpdateJoystick(MacJoystick joy, IOHIDValueRef val)
         {
-            //IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
-            //int v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
-            //HIDPage page = NativeMethods.IOHIDElementGetUsagePage(elem);
-            //int usage = NativeMethods.IOHIDElementGetUsage(elem);
+            IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
+            HIDPage page = NativeMethods.IOHIDElementGetUsagePage(elem);
+            int usage = NativeMethods.IOHIDElementGetUsage(elem);
 
-            //switch (page)
-            //{
-            //    case HIDPage.GenericDesktop:
-            //        break;
-            //}
+            switch (page)
+            {
+                case HIDPage.GenericDesktop:
+                    switch ((HIDUsageGD)usage)
+                    {
+                        case HIDUsageGD.X:
+                        case HIDUsageGD.Y:
+                        case HIDUsageGD.Z:
+                        case HIDUsageGD.Rx:
+                        case HIDUsageGD.Ry:
+                        case HIDUsageGD.Rz:
+                        case HIDUsageGD.Slider:
+                        case HIDUsageGD.Dial:
+                        case HIDUsageGD.Wheel:
+                            short offset = GetJoystickAxis(val, elem);
+                            joy.Details.State.SetAxis(TranslateJoystickAxis(usage), offset);
+                            break;
 
-            return state;
+                        case HIDUsageGD.Hatswitch:
+                            break;
+                    }
+                    break;
+
+                case HIDPage.Simulation:
+                    switch ((HIDUsageSim)usage)
+                    {
+                        case HIDUsageSim.Rudder:
+                        case HIDUsageSim.Throttle:
+                            short offset = GetJoystickAxis(val, elem);
+                            joy.Details.State.SetAxis(TranslateJoystickAxis(usage), offset);
+                            break;
+                    }
+                    break;
+
+                case HIDPage.Button:
+                    {
+                        bool pressed = GetJoystickButton(val, elem);
+                        joy.Details.State.SetButton(TranslateJoystickButton(usage), value);
+                    }
+                    break;
+            }
+
+            return joy;
+        }
+
+        static short GetJoystickAxis(IOHIDValueRef val, IOHIDElementRef element)
+        {
+            int max = NativeMethods.IOHIDElementGetLogicalMax(element).ToInt32();
+            int min = NativeMethods.IOHIDElementGetLogicalMin(element).ToInt32();
+            int offset = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
+            if (offset < min)
+                offset = min;
+            if (offset > max)
+                offset = max;
+
+            const int range = short.MaxValue - short.MinValue + 1;
+            const int half_range = short.MaxValue + 1;
+            return (short)((offset - min) * range / (max - min) + half_range);
+        }
+
+        static JoystickAxis TranslateJoystickAxis(int usage)
+        {
+            switch (usage)
+            {
+                case (int)HIDUsageGD.X:
+                    return JoystickAxis.Axis0;
+                case (int)HIDUsageGD.Y:
+                    return JoystickAxis.Axis1;
+
+                case (int)HIDUsageGD.Z:
+                    return JoystickAxis.Axis2;
+                case (int)HIDUsageGD.Rz:
+                    return JoystickAxis.Axis3;
+
+                case (int)HIDUsageGD.Rx:
+                    return JoystickAxis.Axis4;
+                case (int)HIDUsageGD.Ry:
+                    return JoystickAxis.Axis5;
+
+                case (int)HIDUsageGD.Slider:
+                    return JoystickAxis.Axis6;
+                case (int)HIDUsageGD.Dial:
+                    return JoystickAxis.Axis7;
+                case (int)HIDUsageGD.Wheel:
+                    return JoystickAxis.Axis8;
+
+                case (int)HIDUsageSim.Rudder:
+                    return JoystickAxis.Axis9;
+                case (int)HIDUsageSim.Throttle:
+                    return JoystickAxis.Axis10;
+
+                default:
+                    Debug.Print("[Mac] Unknown axis with HID usage {0}", usage);
+                    return 0;
+            }
+        }
+
+        static bool GetJoystickButton(IOHIDValueRef val, IOHIDElementRef element)
+        {
+            // Todo: analogue buttons are transformed to digital
+            int value = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
+            return value >= 1;
+        }
+
+        static JoystickButton TranslateJoystickButton(int usage)
+        {
+
         }
 
         #endregion
@@ -751,6 +850,12 @@ namespace OpenTK.Platform.MacOS
 
             [DllImport(hid)]
             public static extern HIDPage IOHIDElementGetUsagePage(IOHIDElementRef elem);
+
+            [DllImport(hid)]
+            public static extern CFIndex IOHIDElementGetLogicalMax(IOHIDElementRef element);
+
+            [DllImport(hid)]
+            public static extern CFIndex IOHIDElementGetLogicalMin(IOHIDElementRef element);
 
             public delegate void IOHIDDeviceCallback(IntPtr ctx, IOReturn res, IntPtr sender, IOHIDDeviceRef device);
             public delegate void IOHIDValueCallback(IntPtr ctx, IOReturn res, IntPtr sender, IOHIDValueRef val);
