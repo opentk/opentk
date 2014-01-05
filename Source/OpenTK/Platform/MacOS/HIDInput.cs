@@ -57,9 +57,11 @@ namespace OpenTK.Platform.MacOS
 
         class JoystickDetails
         {
+            public string Name;
             public JoystickState State;
             public JoystickCapabilities Capabilities;
-            public string Name;
+            readonly public Dictionary<int, JoystickButton> ElementUsageToButton =
+                new Dictionary<int, JoystickButton>();
         }
 
         class MacJoystick : JoystickDevice<JoystickDetails>
@@ -387,6 +389,7 @@ namespace OpenTK.Platform.MacOS
                 string name = CF.CFStringGetCString(name_ref);
                 CF.CFRelease(name_ref);
 
+                List<int> button_elements = new List<int>();
                 CFArray element_array = new CFArray(element_array_ref);
                 for (int i = 0; i < element_array.Count; i++)
                 {
@@ -429,7 +432,7 @@ namespace OpenTK.Platform.MacOS
                             break;
 
                         case HIDPage.Button:
-                            buttons++;
+                            button_elements.Add(usage);
                             break;
                     }
                 }
@@ -439,7 +442,11 @@ namespace OpenTK.Platform.MacOS
                 joy.Details.State.SetIsConnected(true);
                 joy.Details.Capabilities = new JoystickCapabilities(axes, buttons, true);
 
-                //NativeMethods.IOHIDDeviceGetProperty(device, nativem
+                // Map button elements to JoystickButtons
+                for (int button = 0; button < button_elements.Count; button++)
+                {
+                    joy.Details.ElementUsageToButton.Add(button_elements[button], JoystickButton.Button0 + button); 
+                }
             }
             CF.CFRelease(element_array_ref);
 
@@ -509,7 +516,11 @@ namespace OpenTK.Platform.MacOS
                         case HIDUsageGD.Dial:
                         case HIDUsageGD.Wheel:
                             short offset = GetJoystickAxis(val, elem);
-                            joy.Details.State.SetAxis(TranslateJoystickAxis(usage), offset);
+                            JoystickAxis axis = TranslateJoystickAxis(usage);
+                            if (axis >= JoystickAxis.Axis0 && axis <= JoystickAxis.Last)
+                            {
+                                joy.Details.State.SetAxis(axis, offset);
+                            }
                             break;
 
                         case HIDUsageGD.Hatswitch:
@@ -523,7 +534,11 @@ namespace OpenTK.Platform.MacOS
                         case HIDUsageSim.Rudder:
                         case HIDUsageSim.Throttle:
                             short offset = GetJoystickAxis(val, elem);
-                            joy.Details.State.SetAxis(TranslateJoystickAxis(usage), offset);
+                            JoystickAxis axis = TranslateJoystickAxis(usage);
+                            if (axis >= JoystickAxis.Axis0 && axis <= JoystickAxis.Last)
+                            {
+                                joy.Details.State.SetAxis(axis, offset);
+                            }
                             break;
                     }
                     break;
@@ -531,7 +546,11 @@ namespace OpenTK.Platform.MacOS
                 case HIDPage.Button:
                     {
                         bool pressed = GetJoystickButton(val, elem);
-                        joy.Details.State.SetButton(TranslateJoystickButton(usage), value);
+                        JoystickButton button = TranslateJoystickButton(joy, usage);
+                        if (button >= JoystickButton.Button0 && button <= JoystickButton.Last)
+                        {
+                            joy.Details.State.SetButton(button, pressed);
+                        }
                     }
                     break;
             }
@@ -598,9 +617,14 @@ namespace OpenTK.Platform.MacOS
             return value >= 1;
         }
 
-        static JoystickButton TranslateJoystickButton(int usage)
+        static JoystickButton TranslateJoystickButton(MacJoystick joy, int usage)
         {
-
+            JoystickButton button;
+            if (joy.Details.ElementUsageToButton.TryGetValue(usage, out button))
+            {
+                return button;
+            }
+            return JoystickButton.Last + 1;
         }
 
         #endregion
