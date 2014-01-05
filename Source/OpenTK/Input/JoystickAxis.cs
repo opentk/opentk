@@ -5,7 +5,7 @@
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
 //
-// Copyright (c) 2006-2013 Stefanos Apostolopoulos
+// Copyright (c) 2006-2014 Stefanos Apostolopoulos
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -58,5 +58,9 @@ namespace OpenTK.Input
         Axis8,
         /// <summary>The tenth axis of the JoystickDevice.</summary>
         Axis9,
+        /// <summary>The eleventh axis of the JoystickDevice.</summary>
+        Axis10,
+        /// <summary>The highest supported axis of the JoystickDevice.</summary>
+        Last = Axis10,
     }
 }
