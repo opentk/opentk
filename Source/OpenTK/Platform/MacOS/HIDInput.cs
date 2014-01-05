@@ -165,8 +165,17 @@ namespace OpenTK.Platform.MacOS
                         recognized = true;
                     }
 
-                    if (NativeMethods.IOHIDDeviceConformsTo(device,
-                        HIDPage.GenericDesktop, (int)HIDUsageGD.Joystick))
+                    bool is_joystick = false;
+                    is_joystick |= NativeMethods.IOHIDDeviceConformsTo(device,
+                        HIDPage.GenericDesktop, (int)HIDUsageGD.Joystick);
+                    is_joystick |= NativeMethods.IOHIDDeviceConformsTo(device,
+                        HIDPage.GenericDesktop, (int)HIDUsageGD.GamePad);
+                    is_joystick |= NativeMethods.IOHIDDeviceConformsTo(device,
+                        HIDPage.GenericDesktop, (int)HIDUsageGD.MultiAxisController);
+                    is_joystick |= NativeMethods.IOHIDDeviceConformsTo(device,
+                        HIDPage.GenericDesktop, (int)HIDUsageGD.Wheel);
+                    // Todo: any other interesting devices under HIDPage.Simulation + HIDUsageSim?
+                    if (is_joystick)
                     {
                         AddJoystick(sender, device);
                         recognized = true;
