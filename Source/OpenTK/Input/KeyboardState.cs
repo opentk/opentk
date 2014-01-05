@@ -291,6 +291,11 @@ namespace OpenTK.Input
             IsConnected |= other.IsConnected;
         }
 
+        internal void SetIsConnected(bool value)
+        {
+            IsConnected = value;
+        }
+
         #endregion
 
         #region Private Members
