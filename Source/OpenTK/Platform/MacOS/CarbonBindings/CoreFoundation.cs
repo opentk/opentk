@@ -32,7 +32,10 @@ using System.Text;
 
 namespace OpenTK.Platform.MacOS.Carbon
 {
+    using CFIndex = System.IntPtr;
     using CFRunLoop = System.IntPtr;
+    using CFStringRef = System.IntPtr;
+    using CFTypeRef = System.IntPtr;
 
     struct CFArray
     {
@@ -106,6 +109,9 @@ namespace OpenTK.Platform.MacOS.Carbon
         [DllImport(appServices)]
         internal static extern IntPtr CFDictionaryGetValue(IntPtr theDictionary, IntPtr theKey);
 
+        [DllImport(appServices)]
+        internal static extern void CFRelease(CFTypeRef cf);
+
         // this mirrors the definition in CFString.h.
         // I don't know why, but __CFStringMakeConstantString is marked as "private and should not be used directly"
         // even though the CFSTR macro just calls it.
@@ -115,6 +121,33 @@ namespace OpenTK.Platform.MacOS.Carbon
         {
             return __CFStringMakeConstantString(cStr);
         }
+
+        [DllImport(appServices)]
+        internal static extern Boolean CFStringGetCString(
+            CFStringRef theString,
+            byte[] buffer,
+            CFIndex bufferSize,
+            CFStringEncoding encoding
+        );
+
+        internal static string CFStringGetCString(IntPtr cfstr)
+        {
+            CFIndex length = CFStringGetLength(cfstr);
+            if (length != IntPtr.Zero)
+            {
+                byte[] utf8_chars = new byte[length.ToInt32() + 1];
+                if (CFStringGetCString(cfstr, utf8_chars, new IntPtr(utf8_chars.Length), CFStringEncoding.UTF8))
+                {
+                    return Encoding.UTF8.GetString(utf8_chars);
+                }
+            }
+            return String.Empty;
+        }
+
+        [DllImport(appServices)]
+        internal static extern CFIndex CFStringGetLength(
+            CFStringRef theString
+        );
 
         [DllImport(appServices)]
         internal unsafe static extern bool CFNumberGetValue (IntPtr number, CFNumberType theType, int* valuePtr);
@@ -148,6 +181,25 @@ namespace OpenTK.Platform.MacOS.Carbon
             Stopped = 2,
             TimedOut = 3,
             HandledSource = 4
+        }
+
+        public enum CFStringEncoding
+        {
+            MacRoman = 0,
+            WindowsLatin1 = 0x0500,
+            ISOLatin1 = 0x0201,
+            NextStepLatin = 0x0B01,
+            ASCII = 0x0600,
+            Unicode = 0x0100,
+            UTF8 = 0x08000100,
+            NonLossyASCII = 0x0BFF,
+
+            UTF16 = 0x0100,
+            UTF16BE = 0x10000100,
+            UTF16LE = 0x14000100,
+            UTF32 = 0x0c000100,
+            UTF32BE = 0x18000100,
+            UTF32LE = 0x1c000100
         }
 
         public static readonly IntPtr RunLoopModeDefault = CF.CFSTR("kCFRunLoopDefaultMode");
