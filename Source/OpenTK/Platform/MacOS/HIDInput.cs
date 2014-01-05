@@ -395,7 +395,7 @@ namespace OpenTK.Platform.MacOS
 
         #region Joystick
 
-        Guid CreateJoystickGuid(IntPtr device)
+        Guid CreateJoystickGuid(IntPtr device, string name)
         {
             // Create a device guid from the product and vendor id keys
             List<byte> guid_bytes = new List<byte>();
@@ -413,8 +413,26 @@ namespace OpenTK.Platform.MacOS
                 CF.CFNumberGetValue(product_id_ref, CF.CFNumberType.kCFNumberLongType, out product_id);
             }
 
-            guid_bytes.AddRange(BitConverter.GetBytes(vendor_id));
-            guid_bytes.AddRange(BitConverter.GetBytes(product_id));
+            if (vendor_id != 0 && product_id != 0)
+            {
+                guid_bytes.AddRange(BitConverter.GetBytes(vendor_id));
+                guid_bytes.AddRange(BitConverter.GetBytes(product_id));
+            }
+            else
+            {
+                // Bluetooth devices don't have USB vendor/product id keys.
+                // Match SDL2 algorithm for compatibility.
+                guid_bytes.Add(0x05); // BUS_BLUETOOTH
+                guid_bytes.Add(0x00);
+                guid_bytes.Add(0x00);
+                guid_bytes.Add(0x00);
+
+                // Copy the first 12 bytes of the product name
+                byte[] name_bytes = new byte[12];
+                Array.Copy(System.Text.Encoding.UTF8.GetBytes(name), name_bytes, name_bytes.Length);
+                guid_bytes.AddRange(name_bytes);
+            }
+
             return new Guid(guid_bytes.ToArray());
         }
 
@@ -430,10 +448,10 @@ namespace OpenTK.Platform.MacOS
                 int buttons = 0;
                 int dpads = 0;
 
-                Guid guid = CreateJoystickGuid(device);
-
                 CFStringRef name_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductKey);
                 string name = CF.CFStringGetCString(name_ref);
+
+                Guid guid = CreateJoystickGuid(device, name);
 
                 List<int> button_elements = new List<int>();
                 CFArray element_array = new CFArray(element_array_ref);
