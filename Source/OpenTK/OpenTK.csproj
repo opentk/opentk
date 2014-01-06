@@ -799,6 +799,7 @@
     <Compile Include="Input\GamePadConfigurationSource.cs" />
     <Compile Include="Input\GamePadConfigurationItem.cs" />
     <Compile Include="Platform\LegacyJoystickDriver.cs" />
+    <Compile Include="Platform\PlatformFactoryBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
