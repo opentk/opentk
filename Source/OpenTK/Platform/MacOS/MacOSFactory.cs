@@ -35,38 +35,33 @@ namespace OpenTK.Platform.MacOS
 {
     using Graphics;
 
-    class MacOSFactory : IPlatformFactory
+    class MacOSFactory : PlatformFactoryBase
     {
-        #region Fields
-
-        bool disposed;
         readonly IInputDriver2 InputDriver = new HIDInput();
-
-        #endregion
 
         #region IPlatformFactory Members
 
-        public virtual INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
             return new CarbonGLNative(x, y, width, height, title, mode, options, device);
         }
 
-        public virtual IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new QuartzDisplayDeviceDriver();
         }
 
-        public virtual IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new AglContext(mode, window, shareContext);
         }
 
-        public virtual IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new AglContext(handle, window, shareContext);
         }
 
-        public virtual GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
+        public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
             return (GraphicsContext.GetCurrentContextDelegate)delegate
             {
@@ -74,27 +69,17 @@ namespace OpenTK.Platform.MacOS
             };
         }
 
-        public virtual IGraphicsMode CreateGraphicsMode()
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
+        public override IKeyboardDriver2 CreateKeyboardDriver()
         {
            return InputDriver.KeyboardDriver;
         }
 
-        public virtual OpenTK.Input.IMouseDriver2 CreateMouseDriver()
+        public override IMouseDriver2 CreateMouseDriver()
         {
             return InputDriver.MouseDriver;
         }
 
-        public virtual OpenTK.Input.IGamePadDriver CreateGamePadDriver()
-        {
-            return InputDriver.GamePadDriver;
-        }
-
-        public IJoystickDriver2 CreateJoystickDriver()
+        public override IJoystickDriver2 CreateJoystickDriver()
         {
             return InputDriver.JoystickDriver;
         }
@@ -103,31 +88,17 @@ namespace OpenTK.Platform.MacOS
 
         #region IDisposable Members
 
-        void Dispose(bool manual)
+        protected override void Dispose(bool manual)
         {
-            if (!disposed)
+            if (!IsDisposed)
             {
                 if (manual)
                 {
                     InputDriver.Dispose();
                 }
-                else
-                {
-                    Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
-                }
-                disposed = true;
+
+                base.Dispose(manual);
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        ~MacOSFactory()
-        {
-            Dispose(false);
         }
 
         #endregion
