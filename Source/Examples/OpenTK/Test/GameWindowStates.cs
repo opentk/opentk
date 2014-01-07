@@ -86,6 +86,11 @@ namespace Examples.Tests
                 case Key.V:
                     VSync = VSync == VSyncMode.On ? VSyncMode.Off : VSyncMode.On;
                     break;
+
+                case Key.BracketLeft: TargetUpdateFrequency--; break;
+                case Key.BracketRight: TargetUpdateFrequency++; break;
+                case Key.Comma: TargetRenderFrequency--; break;
+                case Key.Period: TargetRenderFrequency++; break;
             }
         }
 
@@ -356,7 +361,7 @@ namespace Examples.Tests
             using (GameWindowStates ex = new GameWindowStates())
             {
                 Utilities.SetWindowTitle(ex);
-				ex.Run(30.0);
+                ex.Run(30.0);
             }
         }
     }
