@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -75,7 +75,7 @@ namespace OpenTK
     {
         #region --- Fields ---
 
-        object exit_lock = new object();
+        readonly Stopwatch watch = new Stopwatch();
 
         IGraphicsContext glContext;
 
@@ -83,12 +83,15 @@ namespace OpenTK
 
         double update_period, render_period;
         double target_update_period, target_render_period;
-        // TODO: Implement these:
-        double update_time, render_time;
+        
+        double update_time; // length of last UpdateFrame event
+        double render_time; // length of last RenderFrame event
+
+        double update_timestamp; // timestamp of last UpdateFrame event
+        double render_timestamp; // timestamp of last RenderFrame event
+
         VSyncMode vsync;
 
-        Stopwatch update_watch = new Stopwatch(), render_watch = new Stopwatch();
-        double next_render = 0.0, next_update = 0.0;
         FrameEventArgs update_args = new FrameEventArgs();
         FrameEventArgs render_args = new FrameEventArgs();
 
@@ -404,8 +407,7 @@ namespace OpenTK
                 //Resize += DispatchUpdateAndRenderFrame;
 
                 Debug.Print("Entering main loop.");
-                update_watch.Start();
-                render_watch.Start();
+                watch.Start();
                 while (true)
                 {
                     ProcessEvents();
@@ -431,99 +433,61 @@ namespace OpenTK
 
         void DispatchUpdateAndRenderFrame(object sender, EventArgs e)
         {
-            RaiseUpdateFrame(update_watch, ref next_update, update_args);
-            RaiseRenderFrame(render_watch, ref next_render, render_args);
+            const int max_frameskip = 10;
+            int frameskip = 0;
+            double timestamp = watch.Elapsed.TotalSeconds;
+
+            do
+            {
+                // Raise UpdateFrame events until we catch up with our target update rate.
+                double update_elapsed = MathHelper.Clamp(timestamp - update_timestamp, 0.0, 1.0);
+                if (RaiseUpdateFrame(update_elapsed))
+                {
+                    update_period = update_elapsed;
+                    update_timestamp = timestamp;
+                    timestamp = watch.Elapsed.TotalSeconds;
+                    update_time = timestamp - update_timestamp;
+                }
+                else
+                {
+                    // We have executed enough UpdateFrame events to catch up.
+                    // Break and issue a RenderFrame event.
+                    break;
+                }
+            } while (++frameskip < max_frameskip);
+
+            timestamp = watch.Elapsed.TotalSeconds;
+            double render_elapsed = MathHelper.Clamp(timestamp - render_timestamp, 0.0, 1.0);
+            if (RaiseRenderFrame(render_elapsed))
+            {
+                render_period = render_elapsed;
+                render_timestamp = timestamp;
+                timestamp = watch.Elapsed.TotalSeconds;
+                render_time = timestamp - render_timestamp;
+            }
         }
 
-        void RaiseUpdateFrame(Stopwatch update_watch, ref double next_update, FrameEventArgs update_args)
+        bool RaiseUpdateFrame(double time)
         {
-            int num_updates = 0;
-            double total_update_time = 0;
-
-            // Cap the maximum time drift to 1 second (e.g. when the process is suspended).
-            double time = update_watch.Elapsed.TotalSeconds;
-            if (time <= 0)
+            if (time >= TargetUpdatePeriod)
             {
-                // Protect against negative Stopwatch.Elapsed values.
-                // See http://connect.microsoft.com/VisualStudio/feedback/details/94083/stopwatch-returns-negative-elapsed-time
-                update_watch.Reset();
-                update_watch.Start();
-                return;
-            }
-            if (time > 1.0)
-                time = 1.0;
-
-            // Raise UpdateFrame events until we catch up with our target update rate.
-            while (next_update - time <= 0 && time > 0)
-            {
-                next_update -= time;
                 update_args.Time = time;
                 OnUpdateFrameInternal(update_args);
-                time = update_time = Math.Max(update_watch.Elapsed.TotalSeconds, 0) - time;
-                // Stopwatches are not accurate over long time periods.
-                // We accumulate the total elapsed time into the time variable
-                // while reseting the Stopwatch frequently.
-                update_watch.Reset();
-                update_watch.Start();
-
-                // Don't schedule a new update more than 1 second in the future.
-                // Sometimes the hardware cannot keep up with updates
-                // (e.g. when the update rate is too high, or the UpdateFrame processing
-                // is too costly). This cap ensures  we can catch up in a reasonable time
-                // once the load becomes lighter.
-                next_update += TargetUpdatePeriod;
-                next_update = Math.Max(next_update, -1.0);
-
-                total_update_time += update_time;
-
-                // Allow up to 10 consecutive UpdateFrame events to prevent the
-                // application from "hanging" when the hardware cannot keep up
-                // with the requested update rate.
-                if (++num_updates >= 10 || TargetUpdateFrequency == 0.0)
-                    break;
+                return true;
             }
-
-            // Calculate statistics 
-            if (num_updates > 0)
-            {
-                update_period = total_update_time / (double)num_updates;
-            }
+            return false;
         }
 
-        void RaiseRenderFrame(Stopwatch render_watch, ref double next_render, FrameEventArgs render_args)
+
+        bool RaiseRenderFrame(double time)
         {
-            // Cap the maximum time drift to 1 second (e.g. when the process is suspended).
-            double time = render_watch.Elapsed.TotalSeconds;
-            if (time <= 0)
+            if (time >= TargetRenderPeriod)
             {
-                // Protect against negative Stopwatch.Elapsed values.
-                // See http://connect.microsoft.com/VisualStudio/feedback/details/94083/stopwatch-returns-negative-elapsed-time
-                render_watch.Reset();
-                render_watch.Start();
-                return;
+                render_args.Time = time;
+                OnRenderFrameInternal(render_args);
+                return true;
             }
-            if (time > 1.0)
-                time = 1.0;
-            double time_left = next_render - time;
-
-            if (time_left <= 0.0 && time > 0)
-            {
-                // Schedule next render event. The 1 second cap ensures
-                // the process does not appear to hang.
-                next_render = time_left + TargetRenderPeriod;
-                if (next_render < -1.0)
-                    next_render = -1.0;
-
-                render_watch.Reset();
-                render_watch.Start();
-
-                if (time > 0)
-                {
-                    render_period = render_args.Time = time;
-                    OnRenderFrameInternal(render_args);
-                    render_time = render_watch.Elapsed.TotalSeconds;
-                }
-            }
+            return false;
         }
 
         #endregion
