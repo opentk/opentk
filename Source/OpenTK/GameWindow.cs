@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -75,7 +75,7 @@ namespace OpenTK
     {
         #region --- Fields ---
 
-        object exit_lock = new object();
+        readonly Stopwatch watch = new Stopwatch();
 
         IGraphicsContext glContext;
 
@@ -83,6 +83,10 @@ namespace OpenTK
 
         double update_period, render_period;
         double target_update_period, target_render_period;
+
+        double update_timestamp; // timestamp of last UpdateFrame event
+        double render_timestamp; // timestamp of last RenderFrame event
+
         // TODO: Implement these:
         double update_time, render_time;
         VSyncMode vsync;
@@ -402,10 +406,6 @@ namespace OpenTK
                 //Move += DispatchUpdateAndRenderFrame;
                 //Resize += DispatchUpdateAndRenderFrame;
 
-                Debug.Print("Calibrating Stopwatch to account for drift");
-                CalibrateStopwatch();
-                Debug.Print("Stopwatch overhead: {0}", stopwatch_overhead);
-
                 Debug.Print("Entering main loop.");
                 watch.Start();
                 while (true)
@@ -431,95 +431,74 @@ namespace OpenTK
             }
         }
 
-        double stopwatch_overhead = 0;
-        void CalibrateStopwatch()
-        {
-            // Make sure everything is JITted
-            watch.Start();
-            stopwatch_overhead = watch.Elapsed.TotalSeconds;
-            watch.Stop();
-            watch.Reset();
-            // Measure stopwatch overhead
-            const int count = 10;
-            for (int i = 0; i < count; i++)
-            {
-                watch.Start();
-                double sample = watch.Elapsed.TotalSeconds;
-                if (sample < 0 || sample > 0.1)
-                {
-                    // calculation failed, repeat
-                    i--;
-                    continue;
-                }
-                stopwatch_overhead += sample;
-                watch.Stop();
-                watch.Reset();
-            }
-            stopwatch_overhead /= 10;
-        }
-
-        Stopwatch watch = new Stopwatch();
-        double update_timestamp = 0;
-        double render_timestamp = 0;
-        double update_elapsed = 0;
-        double render_elapsed = 0;
         void DispatchUpdateAndRenderFrame(object sender, EventArgs e)
         {
             const int max_frameskip = 10;
             int frameskip = 0;
-            double timestamp = 0;
+            double timestamp = watch.Elapsed.TotalSeconds;
 
             do
             {
                 // Raise UpdateFrame events until we catch up with our target update rate.
-                timestamp = watch.Elapsed.TotalSeconds;
-                update_elapsed = MathHelper.Clamp(timestamp - update_timestamp, 0.0, 1.0);
-                update_timestamp = timestamp;
-                RaiseUpdateFrame(update_elapsed, ref next_update);
-            } while (next_update > 0 && ++frameskip < max_frameskip);
-            // Calculate statistics 
-            //update_period = total_update_time / (double)num_updates;
-
-            timestamp = watch.Elapsed.TotalSeconds;
-            render_elapsed = MathHelper.Clamp(timestamp - render_timestamp, 0.0, 1.0);
-            render_timestamp = timestamp;
-            RaiseRenderFrame(render_elapsed, ref next_render);
-        }
-
-        void RaiseUpdateFrame(double time, ref double next_update)
-        {
-            double time_left = next_render - time;
-            if (time_left <= 0.0 && time > 0)
-            {
-                update_args.Time = time;
-                OnUpdateFrameInternal(update_args);
-
-                // Don't schedule a new update more than 1 second in the future.
-                // Sometimes the hardware cannot keep up with updates
-                // (e.g. when the update rate is too high, or the UpdateFrame processing
-                // is too costly). This cap ensures  we can catch up in a reasonable time
-                // once the load becomes lighter.
-                next_update = time_left + TargetUpdatePeriod;
-                next_update = Math.Max(next_update, -1.0);
-            }
-        }
-
-        void RaiseRenderFrame(double time, ref double next_render)
-        {
-            double time_left = next_render - time;
-            if (time_left <= 0.0 && time > 0)
-            {
-                if (time > 0)
+                double update_elapsed = MathHelper.Clamp(timestamp - update_timestamp, 0.0, 1.0);
+                if (RaiseUpdateFrame(update_elapsed, ref next_update))
                 {
-                    render_period = render_args.Time = time;
-                    OnRenderFrameInternal(render_args);
+                    update_timestamp = timestamp;
                 }
+                timestamp = watch.Elapsed.TotalSeconds;
+            } while (next_update <= 0 && ++frameskip < max_frameskip);
 
-                // Schedule next render event. The 1 second cap ensures
-                // the process does not appear to hang.
-                next_render = time_left + TargetRenderPeriod;
-                next_update = Math.Max(next_update, -1.0);
+            double render_elapsed = MathHelper.Clamp(timestamp - render_timestamp, 0.0, 1.0);
+            if (RaiseRenderFrame(render_elapsed, ref next_render))
+            {
+                render_timestamp = timestamp;
             }
+        }
+
+        bool RaiseUpdateFrame(double time, ref double next_update)
+        {
+            if (time > 0)
+            {
+                next_update -= time;
+                if (next_update <= 0.0)
+                {
+                    update_args.Time = time;
+                    OnUpdateFrameInternal(update_args);
+
+                    // Don't schedule a new update more than 1 second in the future.
+                    // Sometimes the hardware cannot keep up with updates
+                    // (e.g. when the update rate is too high, or the UpdateFrame processing
+                    // is too costly). This cap ensures  we can catch up in a reasonable time
+                    // once the load becomes lighter.
+                    next_update += TargetUpdatePeriod;
+                    next_update = Math.Max(next_update, -1.0);
+                    update_period = Math.Max(next_update, 0.0);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        bool RaiseRenderFrame(double time, ref double next_render)
+        {
+            if (time > 0)
+            {
+                next_render -= time;
+                if (next_render <= 0.0)
+                {
+                    render_args.Time = time;
+                    OnRenderFrameInternal(render_args);
+
+                    // Schedule next render event. The 1 second cap ensures
+                    // the process does not appear to hang.
+                    next_render += TargetRenderPeriod;
+                    next_render = Math.Max(next_render, -1.0);
+                    render_period = Math.Max(next_render, 0.0);
+                    return true;
+                }
+            }
+            return false;
         }
 
         #endregion
