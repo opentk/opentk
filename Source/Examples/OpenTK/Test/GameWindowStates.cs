@@ -25,6 +25,8 @@ namespace Examples.Tests
         int texture;
         bool mouse_in_window = false;
         bool viewport_changed = true;
+        Stopwatch watch = new Stopwatch();
+        double update_time, render_time;
 
         public GameWindowStates()
             : base(800, 600, GraphicsMode.Default)
@@ -204,6 +206,9 @@ namespace Examples.Tests
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
+            double clock_time = watch.Elapsed.TotalSeconds;
+            update_time += e.Time;
+
             using (Graphics gfx = Graphics.FromImage(TextBitmap))
             {
                 int line = 0;
@@ -226,7 +231,14 @@ namespace Examples.Tests
                 DrawString(gfx, String.Format("Mouse (absolute): {0}", new Vector3(Mouse.X, Mouse.Y, Mouse.WheelPrecise)), line++);
                 DrawString(gfx, String.Format("Bounds: {0}", Bounds), line++);
                 DrawString(gfx, String.Format("ClientRectangle: {0}", ClientRectangle), line++);
-                DrawString(gfx, TypedText.ToString(), line++);
+                DrawString(gfx, String.Format("Vsync: {0}", VSync), line++);
+                DrawString(gfx, String.Format("Frequency: Update ({0:f1}/{1:f1}); Render ({2:f1}/{3:f1})",
+                    UpdateFrequency, TargetUpdateFrequency, RenderFrequency, TargetRenderFrequency), line++);
+                DrawString(gfx, String.Format("Period: Update ({0:f1}/{1:f1}); Render ({2:f1}/{3:f1})",
+                    UpdatePeriod, TargetUpdatePeriod, RenderPeriod, TargetRenderPeriod), line++);
+                DrawString(gfx, String.Format("Time drift: Clock {0:f4}; Update {1:f4}; Render {2:f4}",
+                    clock_time, clock_time - update_time, clock_time - render_time), line++);
+                DrawString(gfx, String.Format("Text: {0}", TypedText.ToString()), line++);
 
                 line = DrawKeyboards(gfx, line);
                 line = DrawMice(gfx, line);
@@ -268,8 +280,8 @@ namespace Examples.Tests
 
         protected override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);
-            
+            watch.Start();
+
             GL.ClearColor(Color.MidnightBlue);
 
             GL.Enable(EnableCap.Texture2D);
@@ -292,7 +304,7 @@ namespace Examples.Tests
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            base.OnRenderFrame(e);
+            render_time += e.Time;
 
             System.Drawing.Imaging.BitmapData data = TextBitmap.LockBits(
                 new System.Drawing.Rectangle(0, 0, TextBitmap.Width, TextBitmap.Height),
