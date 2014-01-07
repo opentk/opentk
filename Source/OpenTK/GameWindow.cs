@@ -443,6 +443,7 @@ namespace OpenTK
                 double update_elapsed = MathHelper.Clamp(timestamp - update_timestamp, 0.0, 1.0);
                 if (RaiseUpdateFrame(update_elapsed, ref next_update))
                 {
+                    update_period = update_elapsed;
                     update_timestamp = timestamp;
                 }
                 timestamp = watch.Elapsed.TotalSeconds;
@@ -452,6 +453,7 @@ namespace OpenTK
             double render_elapsed = MathHelper.Clamp(timestamp - render_timestamp, 0.0, 1.0);
             if (RaiseRenderFrame(render_elapsed, ref next_render))
             {
+                render_period = render_elapsed;
                 render_timestamp = timestamp;
             }
             timestamp = watch.Elapsed.TotalSeconds;
@@ -475,7 +477,6 @@ namespace OpenTK
                     // once the load becomes lighter.
                     next_update += TargetUpdatePeriod;
                     next_update = Math.Max(next_update, -1.0);
-                    update_period = Math.Max(next_update, 0.0);
                     return true;
                 }
             }
@@ -497,7 +498,6 @@ namespace OpenTK
                     // the process does not appear to hang.
                     next_render += TargetRenderPeriod;
                     next_render = Math.Max(next_render, -1.0);
-                    render_period = Math.Max(next_render, 0.0);
                     return true;
                 }
             }
