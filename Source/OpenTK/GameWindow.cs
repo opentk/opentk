@@ -446,6 +446,7 @@ namespace OpenTK
                     update_timestamp = timestamp;
                 }
                 timestamp = watch.Elapsed.TotalSeconds;
+                update_time = timestamp - update_timestamp;
             } while (next_update <= 0 && ++frameskip < max_frameskip);
 
             double render_elapsed = MathHelper.Clamp(timestamp - render_timestamp, 0.0, 1.0);
@@ -453,6 +454,8 @@ namespace OpenTK
             {
                 render_timestamp = timestamp;
             }
+            timestamp = watch.Elapsed.TotalSeconds;
+            render_time = timestamp - render_timestamp;
         }
 
         bool RaiseUpdateFrame(double time, ref double next_update)
