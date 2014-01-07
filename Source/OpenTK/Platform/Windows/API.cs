@@ -241,9 +241,7 @@ namespace OpenTK.Platform.Windows
 
         #region CallWindowProc
 
-#if RELEASE
         [SuppressUnmanagedCodeSecurity]
-#endif
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern LRESULT CallWindowProc(WNDPROC lpPrevWndFunc, HWND hWnd, WindowMessage Msg,
             WPARAM wParam, LPARAM lParam);
@@ -283,28 +281,20 @@ namespace OpenTK.Platform.Windows
             return SetWindowLong(handle, GetWindowLongOffsets.WNDPROC, Marshal.GetFunctionPointerForDelegate(newValue));
         }
 
-#if RELASE
         [SuppressUnmanagedCodeSecurity]
-#endif
         [DllImport("user32.dll", SetLastError = true)]
         static extern LONG SetWindowLong(HWND hWnd, GetWindowLongOffsets nIndex, LONG dwNewLong);
 
-#if RELASE
         [SuppressUnmanagedCodeSecurity]
-#endif
         [DllImport("user32.dll", SetLastError = true)]
         static extern LONG_PTR SetWindowLongPtr(HWND hWnd, GetWindowLongOffsets nIndex, LONG_PTR dwNewLong);
 
-#if RELASE
         [SuppressUnmanagedCodeSecurity]
-#endif
         [DllImport("user32.dll", SetLastError = true)]
         static extern LONG SetWindowLong(HWND hWnd, GetWindowLongOffsets nIndex,
             [MarshalAs(UnmanagedType.FunctionPtr)]WindowProcedure dwNewLong);
 
-#if RELASE
         [SuppressUnmanagedCodeSecurity]
-#endif
         [DllImport("user32.dll", SetLastError = true)]
         static extern LONG_PTR SetWindowLongPtr(HWND hWnd, GetWindowLongOffsets nIndex,
             [MarshalAs(UnmanagedType.FunctionPtr)]WindowProcedure dwNewLong);
@@ -407,9 +397,7 @@ namespace OpenTK.Platform.Windows
 
         #region DispatchMessage
 
-#if RELEASE
-        [System.Security.SuppressUnmanagedCodeSecurity]
-#endif
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll"), CLSCompliant(false)]
         internal static extern LRESULT DispatchMessage(ref MSG msg);
 
@@ -417,9 +405,7 @@ namespace OpenTK.Platform.Windows
 
         #region TranslateMessage
 
-#if RELEASE
-        [System.Security.SuppressUnmanagedCodeSecurity]
-#endif
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll"), CLSCompliant(false)]
         internal static extern BOOL TranslateMessage(ref MSG lpMsg);
 
@@ -3752,7 +3738,7 @@ namespace OpenTK.Platform.Windows
 
     #region WindowMessage
 
-    internal enum WindowMessage : uint
+    internal enum WindowMessage : int
     {
         NULL = 0x0000,
         CREATE = 0x0001,
