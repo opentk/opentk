@@ -82,6 +82,10 @@ namespace Examples.Tests
 
                 case Key.KeypadMinus:
                 case Key.Minus: Size -= new Size(16, 16); break;
+
+                case Key.V:
+                    VSync = VSync == VSyncMode.On ? VSyncMode.Off : VSyncMode.On;
+                    break;
             }
         }
 
@@ -216,30 +220,39 @@ namespace Examples.Tests
                 gfx.Clear(Color.Black);
                 gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
+                // OpenGL information
                 DrawString(gfx, GL.GetString(StringName.Renderer), line++);
                 DrawString(gfx, GL.GetString(StringName.Version), line++);
                 DrawString(gfx, Context.GraphicsMode.ToString(), line++);
-                line++;
 
+                // GameWindow information
+                line++;
                 DrawString(gfx, "GameWindow:", line++);
-                DrawString(gfx, String.Format("[1 - 4]: change WindowState (current: {0}).", this.WindowState), line++);
-                DrawString(gfx, String.Format("[5 - 7]: change WindowBorder (current: {0}).", this.WindowBorder), line++);
+                DrawString(gfx, String.Format("[1 - 4]:[5 - 7]: WindowState.{0}:WindowBorder.{1}",
+                    this.WindowState, this.WindowBorder), line++);
+                DrawString(gfx, String.Format("[V]: VSync.{0}.", VSync), line++);
+                DrawString(gfx, String.Format("Bounds: {0}", Bounds), line++);
+                DrawString(gfx, String.Format("ClientRectangle: {0}", ClientRectangle), line++);
                 DrawString(gfx, String.Format("Mouse {0} and {1}. {2}.",
                     mouse_in_window ? "inside" : "outside",
                     CursorVisible ? "visible" : "hidden",
                     Focused ? "Focused" : "Not focused"), line++);
-                DrawString(gfx, String.Format("Mouse (absolute): {0}", new Vector3(Mouse.X, Mouse.Y, Mouse.WheelPrecise)), line++);
-                DrawString(gfx, String.Format("Bounds: {0}", Bounds), line++);
-                DrawString(gfx, String.Format("ClientRectangle: {0}", ClientRectangle), line++);
-                DrawString(gfx, String.Format("Vsync: {0}", VSync), line++);
-                DrawString(gfx, String.Format("Frequency: Update ({0:f1}/{1:f1}); Render ({2:f1}/{3:f1})",
+                DrawString(gfx, String.Format("Mouse coordinates: {0}", new Vector3(Mouse.X, Mouse.Y, Mouse.WheelPrecise)), line++);
+
+                // Timing information
+                line++;
+                DrawString(gfx, "Timing:", line++);
+                DrawString(gfx, String.Format("Frequency: update ({0:f2}/{1:f2}); render ({2:f2}/{3:f2})",
                     UpdateFrequency, TargetUpdateFrequency, RenderFrequency, TargetRenderFrequency), line++);
-                DrawString(gfx, String.Format("Period: Update ({0:f1}/{1:f1}); Render ({2:f1}/{3:f1})",
+                DrawString(gfx, String.Format("Period: update ({0:f4}/{1:f4}); render ({2:f4}/{3:f4})",
                     UpdatePeriod, TargetUpdatePeriod, RenderPeriod, TargetRenderPeriod), line++);
-                DrawString(gfx, String.Format("Time drift: Clock {0:f4}; Update {1:f4}; Render {2:f4}",
+                DrawString(gfx, String.Format("Time: update {0:f4}; render {1:f4}",
+                    UpdateTime, RenderTime), line++); 
+                DrawString(gfx, String.Format("Drift: clock {0:f4}; update {1:f4}; render {2:f4}",
                     clock_time, clock_time - update_time, clock_time - render_time), line++);
                 DrawString(gfx, String.Format("Text: {0}", TypedText.ToString()), line++);
 
+                // Input information
                 line = DrawKeyboards(gfx, line);
                 line = DrawMice(gfx, line);
                 line = DrawJoysticks(gfx, line);
@@ -343,7 +356,7 @@ namespace Examples.Tests
             using (GameWindowStates ex = new GameWindowStates())
             {
                 Utilities.SetWindowTitle(ex);
-                ex.Run(30.0);
+				ex.Run(30.0);
             }
         }
     }
