@@ -83,15 +83,15 @@ namespace OpenTK
 
         double update_period, render_period;
         double target_update_period, target_render_period;
+        
+        double update_time; // length of last UpdateFrame event
+        double render_time; // length of last RenderFrame event
 
         double update_timestamp; // timestamp of last UpdateFrame event
         double render_timestamp; // timestamp of last RenderFrame event
 
-        // TODO: Implement these:
-        double update_time, render_time;
         VSyncMode vsync;
 
-        double next_render = 0.0, next_update = 0.0;
         FrameEventArgs update_args = new FrameEventArgs();
         FrameEventArgs render_args = new FrameEventArgs();
 
@@ -441,7 +441,7 @@ namespace OpenTK
             {
                 // Raise UpdateFrame events until we catch up with our target update rate.
                 double update_elapsed = MathHelper.Clamp(timestamp - update_timestamp, 0.0, 1.0);
-                if (RaiseUpdateFrame(update_elapsed, ref next_update))
+                if (RaiseUpdateFrame(update_elapsed))
                 {
                     update_period = update_elapsed;
                     update_timestamp = timestamp;
@@ -450,12 +450,15 @@ namespace OpenTK
                 }
                 else
                 {
-                    timestamp = watch.Elapsed.TotalSeconds;
+                    // We have executed enough UpdateFrame events to catch up.
+                    // Break and issue a RenderFrame event.
+                    break;
                 }
-            } while (next_update <= 0 && ++frameskip < max_frameskip);
+            } while (++frameskip < max_frameskip);
 
+            timestamp = watch.Elapsed.TotalSeconds;
             double render_elapsed = MathHelper.Clamp(timestamp - render_timestamp, 0.0, 1.0);
-            if (RaiseRenderFrame(render_elapsed, ref next_render))
+            if (RaiseRenderFrame(render_elapsed))
             {
                 render_period = render_elapsed;
                 render_timestamp = timestamp;
@@ -464,46 +467,25 @@ namespace OpenTK
             }
         }
 
-        bool RaiseUpdateFrame(double time, ref double next_update)
+        bool RaiseUpdateFrame(double time)
         {
-            if (time > 0)
+            if (time >= TargetUpdatePeriod)
             {
-                next_update -= time;
-                if (next_update <= 0.0)
-                {
-                    update_args.Time = time;
-                    OnUpdateFrameInternal(update_args);
-
-                    // Don't schedule a new update more than 1 second in the future.
-                    // Sometimes the hardware cannot keep up with updates
-                    // (e.g. when the update rate is too high, or the UpdateFrame processing
-                    // is too costly). This cap ensures  we can catch up in a reasonable time
-                    // once the load becomes lighter.
-                    next_update += TargetUpdatePeriod;
-                    next_update = Math.Max(next_update, -1.0);
-                    return true;
-                }
+                update_args.Time = time;
+                OnUpdateFrameInternal(update_args);
+                return true;
             }
             return false;
         }
 
 
-        bool RaiseRenderFrame(double time, ref double next_render)
+        bool RaiseRenderFrame(double time)
         {
-            if (time > 0)
+            if (time >= TargetRenderPeriod)
             {
-                next_render -= time;
-                if (next_render <= 0.0)
-                {
-                    render_args.Time = time;
-                    OnRenderFrameInternal(render_args);
-
-                    // Schedule next render event. The 1 second cap ensures
-                    // the process does not appear to hang.
-                    next_render += TargetRenderPeriod;
-                    next_render = Math.Max(next_render, -1.0);
-                    return true;
-                }
+                render_args.Time = time;
+                OnRenderFrameInternal(render_args);
+                return true;
             }
             return false;
         }
