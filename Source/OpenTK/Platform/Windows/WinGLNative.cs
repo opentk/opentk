@@ -326,11 +326,13 @@ namespace OpenTK.Platform.Windows
 
         void HandleStyleChanged(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            WindowBorder new_border = windowBorder;
+            WindowBorder old_border = windowBorder;
+            WindowBorder new_border = old_border;
 
             unsafe
             {
-                if (wParam == new IntPtr((int)GWL.STYLE))
+                GWL get_window_style = (GWL)unchecked(wParam.ToInt32());
+                if ((get_window_style & (GWL.STYLE | GWL.EXSTYLE)) != 0)
                 {
                     WindowStyle style = ((StyleStruct*)lParam)->New;
                     if ((style & WindowStyle.Popup) != 0)
@@ -569,8 +571,6 @@ namespace OpenTK.Platform.Windows
 
         IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            Debug.WriteLine(message.ToString());
-
             switch (message)
             {
                 #region Size / Move / Style events
@@ -1249,34 +1249,35 @@ namespace OpenTK.Platform.Windows
                 WindowState state = WindowState;
                 ResetWindowState();
 
-                WindowStyle style = WindowStyle.ClipChildren | WindowStyle.ClipSiblings;
+                WindowStyle old_style = WindowStyle.ClipChildren | WindowStyle.ClipSiblings;
+                WindowStyle new_style = old_style;
 
                 switch (value)
                 {
                     case WindowBorder.Resizable:
-                        style |= WindowStyle.OverlappedWindow;
+                        new_style |= WindowStyle.OverlappedWindow;
                         break;
 
                     case WindowBorder.Fixed:
-                        style |= WindowStyle.OverlappedWindow &
+                        new_style |= WindowStyle.OverlappedWindow &
                             ~(WindowStyle.ThickFrame | WindowStyle.MaximizeBox | WindowStyle.SizeBox);
                         break;
 
                     case WindowBorder.Hidden:
-                        style |= WindowStyle.Popup;
+                        new_style |= WindowStyle.Popup;
                         break;
                 }
 
                 // Make sure client size doesn't change when changing the border style.
                 Size client_size = ClientSize;
                 Win32Rectangle rect = Win32Rectangle.From(client_size);
-                Functions.AdjustWindowRectEx(ref rect, style, false, ParentStyleEx);
+                Functions.AdjustWindowRectEx(ref rect, new_style, false, ParentStyleEx);
 
                 // This avoids leaving garbage on the background window.
                 if (was_visible)
                     Visible = false;
 
-                Functions.SetWindowLong(window.Handle, GetWindowLongOffsets.STYLE, (IntPtr)(int)style);
+                Functions.SetWindowLong(window.Handle, GetWindowLongOffsets.STYLE, (IntPtr)(int)new_style);
                 Functions.SetWindowPos(window.Handle, IntPtr.Zero, 0, 0, rect.Width, rect.Height,
                     SetWindowPosFlags.NOMOVE | SetWindowPosFlags.NOZORDER |
                     SetWindowPosFlags.FRAMECHANGED);
@@ -1288,6 +1289,24 @@ namespace OpenTK.Platform.Windows
                     Visible = true;
 
                 WindowState = state;
+
+                // Workaround for github issues #33 and #34,
+                // where WindowMessage.STYLECHANGED is not
+                // delivered when running on Mono/Windows.
+                if (Configuration.RunningOnMono)
+                {
+                    StyleStruct style = new StyleStruct();
+                    style.New = new_style;
+                    style.Old = old_style;
+                    unsafe
+                    {
+                        HandleStyleChanged(
+                            window.Handle,
+                            WindowMessage.STYLECHANGED,
+                            new IntPtr((int)(GWL.STYLE | GWL.EXSTYLE)),
+                            new IntPtr(&style));
+                    }
+                }
             }
         }
 
