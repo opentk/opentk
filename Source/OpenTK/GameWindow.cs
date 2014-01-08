@@ -469,7 +469,7 @@ namespace OpenTK
 
         bool RaiseUpdateFrame(double time)
         {
-            if (time >= TargetUpdatePeriod)
+            if (time > 0 && time >= TargetUpdatePeriod)
             {
                 update_args.Time = time;
                 OnUpdateFrameInternal(update_args);
@@ -481,7 +481,7 @@ namespace OpenTK
 
         bool RaiseRenderFrame(double time)
         {
-            if (time >= TargetRenderPeriod)
+            if (time > 0 && time >= TargetRenderPeriod)
             {
                 render_args.Time = time;
                 OnRenderFrameInternal(render_args);
