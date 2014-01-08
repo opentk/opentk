@@ -326,25 +326,31 @@ namespace OpenTK.Platform.Windows
 
         void HandleStyleChanged(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
+            WindowBorder new_border = windowBorder;
+
             unsafe
             {
-                Debug.WriteLine(wParam.ToString());
                 if (wParam == new IntPtr((int)GWL.STYLE))
                 {
                     WindowStyle style = ((StyleStruct*)lParam)->New;
-                    Debug.WriteLine(style.ToString());
                     if ((style & WindowStyle.Popup) != 0)
-                        windowBorder = WindowBorder.Hidden;
+                        new_border = WindowBorder.Hidden;
                     else if ((style & WindowStyle.ThickFrame) != 0)
-                        windowBorder = WindowBorder.Resizable;
+                        new_border = WindowBorder.Resizable;
                     else if ((style & ~(WindowStyle.ThickFrame | WindowStyle.MaximizeBox)) != 0)
-                        windowBorder = WindowBorder.Fixed;
+                        new_border = WindowBorder.Fixed;
                 }
             }
 
-            // Ensure cursor remains grabbed
-            if (!CursorVisible)
-                GrabCursor();
+            if (new_border != windowBorder)
+            {
+                // Ensure cursor remains grabbed
+                if (!CursorVisible)
+                    GrabCursor();
+
+                windowBorder = new_border;
+                WindowBorderChanged(this, EventArgs.Empty);
+            }
         }
 
         void HandleSize(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -353,11 +359,18 @@ namespace OpenTK.Platform.Windows
             WindowState new_state = windowState;
             switch (state)
             {
-                case SizeMessage.RESTORED: new_state = borderless_maximized_window_state ?
-                                                               WindowState.Maximized : WindowState.Normal; break;
-                case SizeMessage.MINIMIZED: new_state = WindowState.Minimized; break;
-                case SizeMessage.MAXIMIZED: new_state = WindowBorder == WindowBorder.Hidden ?
-                                                                WindowState.Fullscreen : WindowState.Maximized;
+                case SizeMessage.RESTORED:
+                    new_state = borderless_maximized_window_state ?
+                       WindowState.Maximized : WindowState.Normal;
+                    break;
+
+                case SizeMessage.MINIMIZED:
+                    new_state = WindowState.Minimized;
+                    break;
+
+                case SizeMessage.MAXIMIZED:
+                    new_state = WindowBorder == WindowBorder.Hidden ?
+                        WindowState.Fullscreen : WindowState.Maximized;
                     break;
             }
 
@@ -374,7 +387,6 @@ namespace OpenTK.Platform.Windows
 
         void HandleChar(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-
             if (IntPtr.Size == 4)
                 key_press.KeyChar = (char)wParam.ToInt32();
             else
@@ -541,7 +553,10 @@ namespace OpenTK.Platform.Windows
         {
             exists = false;
 
-            Functions.UnregisterClass(ClassName, Instance);
+            if (handle == window.Handle)
+            {
+                Functions.UnregisterClass(ClassName, Instance);
+            }
             window.Dispose();
             child_window.Dispose();
 
@@ -554,6 +569,8 @@ namespace OpenTK.Platform.Windows
 
         IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
+            Debug.WriteLine(message.ToString());
+
             switch (message)
             {
                 #region Size / Move / Style events
@@ -1271,8 +1288,6 @@ namespace OpenTK.Platform.Windows
                     Visible = true;
 
                 WindowState = state;
-
-                WindowBorderChanged(this, EventArgs.Empty);
             }
         }
 
