@@ -216,15 +216,31 @@ namespace OpenTK.Platform.Windows
 
         static bool Compare(int got, int requested, ref int distance)
         {
-            if (got < requested)
+            bool valid = true;
+            if (got == 0 && requested != 0)
             {
-                return false;
+                // mode does not support the requested feature.
+                valid = false;
+            }
+            else if (got >= requested)
+            {
+                // mode supports the requested feature,
+                // calculate the distance from an "ideal" mode
+                // that matches this feature exactly.
+                distance += got - requested;
             }
             else
             {
-                distance += got - requested;
-                return true;
+                // mode supports the requested feature,
+                // but at a suboptimal level. For example:
+                // - requsted AA = 8x, got 4x
+                // - requested color = 32bpp, got 16bpp
+                // We can still use this mode but only if
+                // no better mode exists.
+                const int penalty = 8;
+                distance += penalty * Math.Abs(got - requested);
             }
+            return valid;
         }
 
         static AccelerationType GetAccelerationType(ref PixelFormatDescriptor pfd)
@@ -262,8 +278,18 @@ namespace OpenTK.Platform.Windows
                 // Does not appear to be supported by DescribePixelFormat
                 //flags |= PixelFormatDescriptorFlags.DOUBLEBUFFER;
             }
-            if (System.Environment.OSVersion.Version.Major >= 6)
+
+            if (System.Environment.OSVersion.Version.Major >= 6 &&
+                requested_acceleration_type != AccelerationType.None)
             {
+                // Request a compositor-capable mode when running on
+                // Vista+ and using hardware acceleration. Without this,
+                // some modes will cause the compositor to turn off,
+                // which is very annoying to the user.
+                // Note: compositor-capable modes require hardware
+                // acceleration. Don't set this flag when running
+                // with software acceleration (e.g. over Remote Desktop
+                // as described in bug https://github.com/opentk/opentk/issues/35)
                 flags |= PixelFormatDescriptorFlags.SUPPORT_COMPOSITION;
             }
 
