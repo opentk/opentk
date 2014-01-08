@@ -110,11 +110,13 @@ namespace OpenTK.Platform.Windows
                         // This is a mouse or a USB mouse device. In the latter case, discover if it really is a
                         // mouse device by qeurying the registry.
                         RegistryKey regkey = FindRegistryKey(name);
-                        string deviceDesc = (string)regkey.GetValue("DeviceDesc");
+                        if (regkey == null)
+                            continue;
 
-                       
+                        string deviceDesc = (string)regkey.GetValue("DeviceDesc");
                         string deviceClass = (string)regkey.GetValue("Class") as string;
-                        if(deviceClass == null){
+                        if(deviceClass == null)
+                        {
                             // Added to address OpenTK issue 3198 with mouse on Windows 8
                             string deviceClassGUID = (string)regkey.GetValue("ClassGUID");
                             RegistryKey classGUIDKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
@@ -266,10 +268,15 @@ namespace OpenTK.Platform.Windows
 
         static RegistryKey FindRegistryKey(string name)
         {
+            if (name.Length < 4)
+                return null;
+
             // remove the \??\
             name = name.Substring(4);
 
             string[] split = name.Split('#');
+            if (split.Length < 3)
+                return null;
 
             string id_01 = split[0];    // ACPI (Class code)
             string id_02 = split[1];    // PNP0303 (SubClass code)
