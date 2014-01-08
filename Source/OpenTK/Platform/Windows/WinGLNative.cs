@@ -240,6 +240,333 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region Message Handlers
+
+        void HandleActivate(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            // See http://msdn.microsoft.com/en-us/library/ms646274(VS.85).aspx (WM_ACTIVATE notification):
+            // wParam: The low-order word specifies whether the window is being activated or deactivated.
+            bool new_focused_state = Focused;
+            if (IntPtr.Size == 4)
+                focused = (wParam.ToInt32() & 0xFFFF) != 0;
+            else
+                focused = (wParam.ToInt64() & 0xFFFF) != 0;
+
+            if (new_focused_state != Focused)
+                FocusedChanged(this, EventArgs.Empty);
+        }
+
+        void HandleEnterModalLoop(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            // Entering the modal size/move loop: we don't want rendering to
+            // stop during this time, so we register a timer callback to continue
+            // processing from time to time.
+            is_in_modal_loop = true;
+            StartTimer(handle);
+
+            if (!CursorVisible)
+                UngrabCursor();
+        }
+
+        void HandleExitModalLoop(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            // Exiting from Modal size/move loop: the timer callback is no longer
+            // necessary.
+            is_in_modal_loop = false;
+            StopTimer(handle);
+
+            // Ensure cursor remains grabbed
+            if (!CursorVisible)
+                GrabCursor();
+        }
+
+        void HandleWindowPositionChanged(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            unsafe
+            {
+                WindowPosition* pos = (WindowPosition*)lParam;
+                if (window != null && pos->hwnd == window.Handle)
+                {
+                    Point new_location = new Point(pos->x, pos->y);
+                    if (Location != new_location)
+                    {
+                        bounds.Location = new_location;
+                        Move(this, EventArgs.Empty);
+                    }
+
+                    Size new_size = new Size(pos->cx, pos->cy);
+                    if (Size != new_size)
+                    {
+                        bounds.Width = pos->cx;
+                        bounds.Height = pos->cy;
+
+                        Win32Rectangle rect;
+                        Functions.GetClientRect(handle, out rect);
+                        client_rectangle = rect.ToRectangle();
+
+                        Functions.SetWindowPos(child_window.Handle, IntPtr.Zero, 0, 0, ClientRectangle.Width, ClientRectangle.Height,
+                            SetWindowPosFlags.NOZORDER | SetWindowPosFlags.NOOWNERZORDER |
+                            SetWindowPosFlags.NOACTIVATE | SetWindowPosFlags.NOSENDCHANGING);
+
+                        if (suppress_resize <= 0)
+                            Resize(this, EventArgs.Empty);
+                    }
+
+                    if (!is_in_modal_loop)
+                    {
+                        // If we are in a modal resize/move loop, cursor grabbing is
+                        // handled inside [ENTER|EXIT]SIZEMOVE case above.
+                        // If not, then we have to handle cursor grabbing here.
+                        if (!CursorVisible)
+                            GrabCursor();
+                    }
+                }
+            }
+        }
+
+        void HandleStyleChanged(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            WindowBorder old_border = windowBorder;
+            WindowBorder new_border = old_border;
+
+            unsafe
+            {
+                GWL get_window_style = (GWL)unchecked(wParam.ToInt32());
+                if ((get_window_style & (GWL.STYLE | GWL.EXSTYLE)) != 0)
+                {
+                    WindowStyle style = ((StyleStruct*)lParam)->New;
+                    if ((style & WindowStyle.Popup) != 0)
+                        new_border = WindowBorder.Hidden;
+                    else if ((style & WindowStyle.ThickFrame) != 0)
+                        new_border = WindowBorder.Resizable;
+                    else if ((style & ~(WindowStyle.ThickFrame | WindowStyle.MaximizeBox)) != 0)
+                        new_border = WindowBorder.Fixed;
+                }
+            }
+
+            if (new_border != windowBorder)
+            {
+                // Ensure cursor remains grabbed
+                if (!CursorVisible)
+                    GrabCursor();
+
+                windowBorder = new_border;
+                WindowBorderChanged(this, EventArgs.Empty);
+            }
+        }
+
+        void HandleSize(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            SizeMessage state = (SizeMessage)wParam.ToInt64();
+            WindowState new_state = windowState;
+            switch (state)
+            {
+                case SizeMessage.RESTORED:
+                    new_state = borderless_maximized_window_state ?
+                       WindowState.Maximized : WindowState.Normal;
+                    break;
+
+                case SizeMessage.MINIMIZED:
+                    new_state = WindowState.Minimized;
+                    break;
+
+                case SizeMessage.MAXIMIZED:
+                    new_state = WindowBorder == WindowBorder.Hidden ?
+                        WindowState.Fullscreen : WindowState.Maximized;
+                    break;
+            }
+
+            if (new_state != windowState)
+            {
+                windowState = new_state;
+                WindowStateChanged(this, EventArgs.Empty);
+
+                // Ensure cursor remains grabbed
+                if (!CursorVisible)
+                    GrabCursor();
+            }
+        }
+
+        void HandleChar(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            if (IntPtr.Size == 4)
+                key_press.KeyChar = (char)wParam.ToInt32();
+            else
+                key_press.KeyChar = (char)wParam.ToInt64();
+
+            KeyPress(this, key_press);
+        }
+
+        void HandleMouseMove(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            Point point = new Point(
+                (short)((uint)lParam.ToInt32() & 0x0000FFFF),
+                (short)(((uint)lParam.ToInt32() & 0xFFFF0000) >> 16));
+            mouse.Position = point;
+
+            if (mouse_outside_window)
+            {
+                // Once we receive a mouse move event, it means that the mouse has
+                // re-entered the window.
+                mouse_outside_window = false;
+                EnableMouseTracking();
+
+                MouseEnter(this, EventArgs.Empty);
+            }
+        }
+
+        void HandleMouseLeave(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            mouse_outside_window = true;
+            // Mouse tracking is disabled automatically by the OS
+
+            MouseLeave(this, EventArgs.Empty);
+        }
+
+        void HandleMouseWheel(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
+            // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
+            mouse.WheelPrecise += ((long)wParam << 32 >> 48) / 120.0f;
+        }
+
+        void HandleLButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            Functions.SetCapture(window.Handle);
+            mouse[MouseButton.Left] = true;
+        }
+
+        void HandleMButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            Functions.SetCapture(window.Handle);
+            mouse[MouseButton.Middle] = true;
+        }
+
+        void HandleRButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            Functions.SetCapture(window.Handle);
+            mouse[MouseButton.Right] = true;
+        }
+
+        void HandleXButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            Functions.SetCapture(window.Handle);
+            mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) !=
+                (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = true;
+        }
+
+        void HandleLButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            Functions.ReleaseCapture();
+            mouse[MouseButton.Left] = false;
+        }
+
+        void HandleMButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            Functions.ReleaseCapture();
+            mouse[MouseButton.Middle] = false;
+        }
+
+        void HandleRButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            Functions.ReleaseCapture();
+            mouse[MouseButton.Right] = false;
+        }
+
+        void HandleXButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            Functions.ReleaseCapture();
+            mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) !=
+                (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = false;
+        }
+
+        void HandleKeyboard(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            bool pressed =
+                message == WindowMessage.KEYDOWN ||
+                message == WindowMessage.SYSKEYDOWN;
+
+            // Shift/Control/Alt behave strangely when e.g. ShiftRight is held down and ShiftLeft is pressed
+            // and released. It looks like neither key is released in this case, or that the wrong key is
+            // released in the case of Control and Alt.
+            // To combat this, we are going to release both keys when either is released. Hacky, but should work.
+            // Win95 does not distinguish left/right key constants (GetAsyncKeyState returns 0).
+            // In this case, both keys will be reported as pressed.
+
+            bool extended = (lParam.ToInt64() & ExtendedBit) != 0;
+            short scancode = (short)((lParam.ToInt64() >> 16) & 0xFF);
+            VirtualKeys vkey = (VirtualKeys)wParam;
+            bool is_valid;
+            Key key = KeyMap.TranslateKey(scancode, vkey, extended, false, out is_valid);
+
+            if (is_valid)
+            {
+                keyboard.SetKey(key, (byte)scancode, pressed);
+
+                if (pressed)
+                {
+                    key_down.Key = key;
+                    KeyDown(this, key_down);
+                }
+                else
+                {
+                    key_up.Key = key;
+                    KeyUp(this, key_up);
+                }
+            }
+        }
+
+        void HandleKillFocus(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            keyboard.ClearKeys();
+        }
+
+        void HandleCreate(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            CreateStruct cs = (CreateStruct)Marshal.PtrToStructure(lParam, typeof(CreateStruct));
+            if (cs.hwndParent == IntPtr.Zero)
+            {
+                bounds.X = cs.x;
+                bounds.Y = cs.y;
+                bounds.Width = cs.cx;
+                bounds.Height = cs.cy;
+
+                Win32Rectangle rect;
+                Functions.GetClientRect(handle, out rect);
+                client_rectangle = rect.ToRectangle();
+
+                invisible_since_creation = true;
+            }
+        }
+
+        void HandleClose(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            System.ComponentModel.CancelEventArgs e = new System.ComponentModel.CancelEventArgs();
+
+            Closing(this, e);
+
+            if (!e.Cancel)
+            {
+                DestroyWindow();
+            }
+        }
+
+        void HandleDestroy(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            exists = false;
+
+            if (handle == window.Handle)
+            {
+                Functions.UnregisterClass(ClassName, Instance);
+            }
+            window.Dispose();
+            child_window.Dispose();
+
+            Closed(this, EventArgs.Empty);
+        }
+
+        #endregion
+
         #region WindowProcedure
 
         IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -249,132 +576,32 @@ namespace OpenTK.Platform.Windows
                 #region Size / Move / Style events
 
                 case WindowMessage.ACTIVATE:
-                    // See http://msdn.microsoft.com/en-us/library/ms646274(VS.85).aspx (WM_ACTIVATE notification):
-                    // wParam: The low-order word specifies whether the window is being activated or deactivated.
-                    bool new_focused_state = Focused;
-                    if (IntPtr.Size == 4)
-                        focused = (wParam.ToInt32() & 0xFFFF) != 0;
-                    else
-                        focused = (wParam.ToInt64() & 0xFFFF) != 0;
-
-                    if (new_focused_state != Focused)
-                        FocusedChanged(this, EventArgs.Empty);
+                    HandleActivate(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.ENTERMENULOOP:
                 case WindowMessage.ENTERSIZEMOVE:
-                    // Entering the modal size/move loop: we don't want rendering to
-                    // stop during this time, so we register a timer callback to continue
-                    // processing from time to time.
-                    is_in_modal_loop = true;
-                    StartTimer(handle);
-
-                    if (!CursorVisible)
-                        UngrabCursor();
+                    HandleEnterModalLoop(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.EXITMENULOOP:
                 case WindowMessage.EXITSIZEMOVE:
-                    // Exiting from Modal size/move loop: the timer callback is no longer
-                    // necessary.
-                    is_in_modal_loop = false;
-                    StopTimer(handle);
-
-                    // Ensure cursor remains grabbed
-                    if (!CursorVisible)
-                        GrabCursor();
+                    HandleExitModalLoop(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.ERASEBKGND:
                     return new IntPtr(1);
 
                 case WindowMessage.WINDOWPOSCHANGED:
-                    unsafe
-                    {
-                        WindowPosition* pos = (WindowPosition*)lParam;
-                        if (window != null && pos->hwnd == window.Handle)
-                        {
-                            Point new_location = new Point(pos->x, pos->y);
-                            if (Location != new_location)
-                            {
-                                bounds.Location = new_location;
-                                Move(this, EventArgs.Empty);
-                            }
-
-                            Size new_size = new Size(pos->cx, pos->cy);
-                            if (Size != new_size)
-                            {
-                                bounds.Width = pos->cx;
-                                bounds.Height = pos->cy;
-
-                                Win32Rectangle rect;
-                                Functions.GetClientRect(handle, out rect);
-                                client_rectangle = rect.ToRectangle();
-
-                                Functions.SetWindowPos(child_window.Handle, IntPtr.Zero, 0, 0, ClientRectangle.Width, ClientRectangle.Height,
-                                    SetWindowPosFlags.NOZORDER | SetWindowPosFlags.NOOWNERZORDER |
-                                    SetWindowPosFlags.NOACTIVATE | SetWindowPosFlags.NOSENDCHANGING);
-
-                                if (suppress_resize <= 0)
-                                    Resize(this, EventArgs.Empty);
-                            }
-
-                            if (!is_in_modal_loop)
-                            {
-                                // If we are in a modal resize/move loop, cursor grabbing is
-                                // handled inside [ENTER|EXIT]SIZEMOVE case above.
-                                // If not, then we have to handle cursor grabbing here.
-                                if (!CursorVisible)
-                                    GrabCursor();
-                            }
-                        }
-                    }
+                    HandleWindowPositionChanged(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.STYLECHANGED:
-                    unsafe
-                    {
-                        if (wParam.ToInt64() == (long)GWL.STYLE)
-                        {
-                            WindowStyle style = ((StyleStruct*)lParam)->New;
-                            if ((style & WindowStyle.Popup) != 0)
-                                windowBorder = WindowBorder.Hidden;
-                            else if ((style & WindowStyle.ThickFrame) != 0)
-                                windowBorder = WindowBorder.Resizable;
-                            else if ((style & ~(WindowStyle.ThickFrame | WindowStyle.MaximizeBox)) != 0)
-                                windowBorder = WindowBorder.Fixed;
-                        }
-                    }
-
-                    // Ensure cursor remains grabbed
-                    if (!CursorVisible)
-                        GrabCursor();
-                    
+                    HandleStyleChanged(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.SIZE:
-                    SizeMessage state = (SizeMessage)wParam.ToInt64();
-                    WindowState new_state = windowState;
-                    switch (state)
-                    {
-                        case SizeMessage.RESTORED: new_state = borderless_maximized_window_state ?
-                            WindowState.Maximized : WindowState.Normal; break;
-                        case SizeMessage.MINIMIZED: new_state = WindowState.Minimized; break;
-                        case SizeMessage.MAXIMIZED: new_state = WindowBorder == WindowBorder.Hidden ?
-                            WindowState.Fullscreen : WindowState.Maximized;
-                            break;
-                    }
-
-                    if (new_state != windowState)
-                    {
-                        windowState = new_state;
-                        WindowStateChanged(this, EventArgs.Empty);
-
-                        // Ensure cursor remains grabbed
-                        if (!CursorVisible)
-                            GrabCursor();
-                    }
-
+                    HandleSize(handle, message, wParam, lParam);
                     break;
 
                 #endregion
@@ -382,84 +609,51 @@ namespace OpenTK.Platform.Windows
                 #region Input events
 
                 case WindowMessage.CHAR:
-                    if (IntPtr.Size == 4)
-                        key_press.KeyChar = (char)wParam.ToInt32();
-                    else
-                        key_press.KeyChar = (char)wParam.ToInt64();
-
-                    KeyPress(this, key_press);
+                    HandleChar(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.MOUSEMOVE:
-                    Point point = new Point(
-                        (short)((uint)lParam.ToInt32() & 0x0000FFFF),
-                        (short)(((uint)lParam.ToInt32() & 0xFFFF0000) >> 16));
-                    mouse.Position = point;
-
-                    if (mouse_outside_window)
-                    {
-                        // Once we receive a mouse move event, it means that the mouse has
-                        // re-entered the window.
-                        mouse_outside_window = false;
-                        EnableMouseTracking();
-
-                        MouseEnter(this, EventArgs.Empty);
-                    }
+                    HandleMouseMove(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.MOUSELEAVE:
-                    mouse_outside_window = true;
-                    // Mouse tracking is disabled automatically by the OS
-
-                    MouseLeave(this, EventArgs.Empty);
+                    HandleMouseLeave(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.MOUSEWHEEL:
-                    // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
-                    // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
-                    mouse.WheelPrecise += ((long)wParam << 32 >> 48) / 120.0f;
+                    HandleMouseWheel(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.LBUTTONDOWN:
-                    Functions.SetCapture(window.Handle);
-                    mouse[MouseButton.Left] = true;
+                    HandleLButtonDown(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.MBUTTONDOWN:
-                    Functions.SetCapture(window.Handle);
-                    mouse[MouseButton.Middle] = true;
+                    HandleMButtonDown(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.RBUTTONDOWN:
-                    Functions.SetCapture(window.Handle);
-                    mouse[MouseButton.Right] = true;
+                    HandleRButtonDown(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.XBUTTONDOWN:
-                    Functions.SetCapture(window.Handle);
-                    mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) !=
-                        (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = true;
+                    HandleXButtonDown(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.LBUTTONUP:
-                    Functions.ReleaseCapture();
-                    mouse[MouseButton.Left] = false;
+                    HandleLButtonUp(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.MBUTTONUP:
-                    Functions.ReleaseCapture();
-                    mouse[MouseButton.Middle] = false;
+                    HandleMButtonUp(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.RBUTTONUP:
-                    Functions.ReleaseCapture();
-                    mouse[MouseButton.Right] = false;
+                    HandleRButtonUp(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.XBUTTONUP:
-                    Functions.ReleaseCapture();
-                    mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) !=
-                        (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = false;
+                    HandleXButtonUp(handle, message, wParam, lParam);
                     break;
 
                 // Keyboard events:
@@ -467,47 +661,14 @@ namespace OpenTK.Platform.Windows
                 case WindowMessage.KEYUP:
                 case WindowMessage.SYSKEYDOWN:
                 case WindowMessage.SYSKEYUP:
-                    bool pressed =
-                        message == WindowMessage.KEYDOWN ||
-                        message == WindowMessage.SYSKEYDOWN;
-
-                    // Shift/Control/Alt behave strangely when e.g. ShiftRight is held down and ShiftLeft is pressed
-                    // and released. It looks like neither key is released in this case, or that the wrong key is
-                    // released in the case of Control and Alt.
-                    // To combat this, we are going to release both keys when either is released. Hacky, but should work.
-                    // Win95 does not distinguish left/right key constants (GetAsyncKeyState returns 0).
-                    // In this case, both keys will be reported as pressed.
-
-                    bool extended = (lParam.ToInt64() & ExtendedBit) != 0;
-                    short scancode = (short)((lParam.ToInt64() >> 16) & 0xFF);
-                    VirtualKeys vkey = (VirtualKeys)wParam;
-                    bool is_valid;
-                    Key key = KeyMap.TranslateKey(scancode, vkey, extended, false, out is_valid);
-
-                    if (is_valid)
-                    {
-                        keyboard.SetKey(key, (byte)scancode, pressed);
-
-                        if (pressed)
-                        {
-                            key_down.Key = key;
-                            KeyDown(this, key_down);
-                        }
-                        else
-                        {
-                            key_up.Key = key;
-                            KeyUp(this, key_up);
-                        }
-
-                    }
-
+                    HandleKeyboard(handle, message, wParam, lParam);
                     return IntPtr.Zero;
 
                 case WindowMessage.SYSCHAR:
                     return IntPtr.Zero;
 
                 case WindowMessage.KILLFOCUS:
-                    keyboard.ClearKeys();
+                    HandleKillFocus(handle, message, wParam, lParam);
                     break;
 
                 #endregion
@@ -515,44 +676,15 @@ namespace OpenTK.Platform.Windows
                 #region Creation / Destruction events
 
                 case WindowMessage.CREATE:
-                    CreateStruct cs = (CreateStruct)Marshal.PtrToStructure(lParam, typeof(CreateStruct));
-                    if (cs.hwndParent == IntPtr.Zero)
-                    {
-                        bounds.X = cs.x;
-                        bounds.Y = cs.y;
-                        bounds.Width = cs.cx;
-                        bounds.Height = cs.cy;
-
-                        Win32Rectangle rect;
-                        Functions.GetClientRect(handle, out rect);
-                        client_rectangle = rect.ToRectangle();
-
-                        invisible_since_creation = true;
-                    }
+                    HandleCreate(handle, message, wParam, lParam);
                     break;
 
                 case WindowMessage.CLOSE:
-                    System.ComponentModel.CancelEventArgs e = new System.ComponentModel.CancelEventArgs();
-
-                    Closing(this, e);
-
-                    if (!e.Cancel)
-                    {
-                        DestroyWindow();
-                        break;
-                    }
-
+                    HandleClose(handle, message, wParam, lParam);
                     return IntPtr.Zero;
 
                 case WindowMessage.DESTROY:
-                    exists = false;
-
-                    Functions.UnregisterClass(ClassName, Instance);
-                    window.Dispose();
-                    child_window.Dispose();
-
-                    Closed(this, EventArgs.Empty);
-
+                    HandleDestroy(handle, message, wParam, lParam);
                     break;
 
                 #endregion
@@ -1117,34 +1249,35 @@ namespace OpenTK.Platform.Windows
                 WindowState state = WindowState;
                 ResetWindowState();
 
-                WindowStyle style = WindowStyle.ClipChildren | WindowStyle.ClipSiblings;
+                WindowStyle old_style = WindowStyle.ClipChildren | WindowStyle.ClipSiblings;
+                WindowStyle new_style = old_style;
 
                 switch (value)
                 {
                     case WindowBorder.Resizable:
-                        style |= WindowStyle.OverlappedWindow;
+                        new_style |= WindowStyle.OverlappedWindow;
                         break;
 
                     case WindowBorder.Fixed:
-                        style |= WindowStyle.OverlappedWindow &
+                        new_style |= WindowStyle.OverlappedWindow &
                             ~(WindowStyle.ThickFrame | WindowStyle.MaximizeBox | WindowStyle.SizeBox);
                         break;
 
                     case WindowBorder.Hidden:
-                        style |= WindowStyle.Popup;
+                        new_style |= WindowStyle.Popup;
                         break;
                 }
 
                 // Make sure client size doesn't change when changing the border style.
                 Size client_size = ClientSize;
                 Win32Rectangle rect = Win32Rectangle.From(client_size);
-                Functions.AdjustWindowRectEx(ref rect, style, false, ParentStyleEx);
+                Functions.AdjustWindowRectEx(ref rect, new_style, false, ParentStyleEx);
 
                 // This avoids leaving garbage on the background window.
                 if (was_visible)
                     Visible = false;
 
-                Functions.SetWindowLong(window.Handle, GetWindowLongOffsets.STYLE, (IntPtr)(int)style);
+                Functions.SetWindowLong(window.Handle, GetWindowLongOffsets.STYLE, (IntPtr)(int)new_style);
                 Functions.SetWindowPos(window.Handle, IntPtr.Zero, 0, 0, rect.Width, rect.Height,
                     SetWindowPosFlags.NOMOVE | SetWindowPosFlags.NOZORDER |
                     SetWindowPosFlags.FRAMECHANGED);
@@ -1157,7 +1290,23 @@ namespace OpenTK.Platform.Windows
 
                 WindowState = state;
 
-                WindowBorderChanged(this, EventArgs.Empty);
+                // Workaround for github issues #33 and #34,
+                // where WindowMessage.STYLECHANGED is not
+                // delivered when running on Mono/Windows.
+                if (Configuration.RunningOnMono)
+                {
+                    StyleStruct style = new StyleStruct();
+                    style.New = new_style;
+                    style.Old = old_style;
+                    unsafe
+                    {
+                        HandleStyleChanged(
+                            window.Handle,
+                            WindowMessage.STYLECHANGED,
+                            new IntPtr((int)(GWL.STYLE | GWL.EXSTYLE)),
+                            new IntPtr(&style));
+                    }
+                }
             }
         }
 
