@@ -151,7 +151,12 @@ namespace OpenTK.Platform.Windows
         internal static extern BOOL AdjustWindowRect([In, Out] ref Win32Rectangle lpRect, WindowStyle dwStyle, BOOL bMenu);
 
         [DllImport("user32.dll", EntryPoint = "AdjustWindowRectEx", CallingConvention = CallingConvention.StdCall, SetLastError = true), SuppressUnmanagedCodeSecurity]
-        internal static extern bool AdjustWindowRectEx(ref Win32Rectangle lpRect, WindowStyle dwStyle, bool bMenu, ExtendedWindowStyle dwExStyle);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool AdjustWindowRectEx(
+            ref Win32Rectangle lpRect,
+            WindowStyle dwStyle,
+            [MarshalAs(UnmanagedType.Bool)] bool bMenu,
+            ExtendedWindowStyle dwExStyle);
 
         #endregion
 
@@ -262,9 +267,9 @@ namespace OpenTK.Platform.Windows
             SetLastError(0);
 
             if (IntPtr.Size == 4)
-                retval = new IntPtr(SetWindowLong(handle, item, newValue.ToInt32()));
+                retval = new IntPtr(SetWindowLongInternal(handle, item, newValue.ToInt32()));
             else
-                retval = SetWindowLongPtr(handle, item, newValue);
+                retval = SetWindowLongPtrInternal(handle, item, newValue);
 
             if (retval == IntPtr.Zero)
             {
@@ -282,21 +287,21 @@ namespace OpenTK.Platform.Windows
         }
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern LONG SetWindowLong(HWND hWnd, GetWindowLongOffsets nIndex, LONG dwNewLong);
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLong")]
+        static extern LONG SetWindowLongInternal(HWND hWnd, GetWindowLongOffsets nIndex, LONG dwNewLong);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern LONG_PTR SetWindowLongPtr(HWND hWnd, GetWindowLongOffsets nIndex, LONG_PTR dwNewLong);
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
+        static extern LONG_PTR SetWindowLongPtrInternal(HWND hWnd, GetWindowLongOffsets nIndex, LONG_PTR dwNewLong);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern LONG SetWindowLong(HWND hWnd, GetWindowLongOffsets nIndex,
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLong")]
+        static extern LONG SetWindowLongInternal(HWND hWnd, GetWindowLongOffsets nIndex,
             [MarshalAs(UnmanagedType.FunctionPtr)]WindowProcedure dwNewLong);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern LONG_PTR SetWindowLongPtr(HWND hWnd, GetWindowLongOffsets nIndex,
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
+        static extern LONG_PTR SetWindowLongPtrInternal(HWND hWnd, GetWindowLongOffsets nIndex,
             [MarshalAs(UnmanagedType.FunctionPtr)]WindowProcedure dwNewLong);
 
         #endregion
