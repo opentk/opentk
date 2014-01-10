@@ -94,7 +94,6 @@ namespace OpenTK.Platform.SDL2
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateWindow", ExactSpelling = true)]
         public static extern IntPtr CreateWindow(string title, int x, int y, int w, int h, WindowFlags flags);
-        //public static extern IntPtr SDL_CreateWindow(string title, int x, int y, int w, int h, WindowFlags flags);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateWindowFrom", ExactSpelling = true)]
@@ -419,6 +418,34 @@ namespace OpenTK.Platform.SDL2
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_WarpMouseInWindow", ExactSpelling = true)]
         public static extern void WarpMouseInWindow(IntPtr window, int x, int y);
+
+        #region SysWM
+
+        /// <summary>
+        /// Retrieves driver-dependent window information.
+        /// </summary>
+        /// <param name="window">
+        /// The window about which information is being requested.
+        /// </param>
+        /// <param name="info">
+        /// Returns driver-dependent information about the specified window.
+        /// </param>
+        /// <returns>
+        /// True, if the function is implemented and the version number of the info struct is valid;
+        /// false, otherwise.
+        /// </returns>
+        public static bool GetWindowWMInfo(IntPtr window, out SysWMInfo info)
+        {
+            info = new SysWMInfo();
+            info.Version = GetVersion();
+            return GetWindowWMInfoInternal(window, ref info);
+        }
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetWindowWMInfo", ExactSpelling = true)]
+        static extern bool GetWindowWMInfoInternal(IntPtr window, ref SysWMInfo info);
+
+        #endregion
 
         public partial class GL
         {
@@ -1200,6 +1227,17 @@ namespace OpenTK.Platform.SDL2
             JOYSTICK | HAPTIC | GAMECONTROLLER
     }
 
+    enum SysWMType
+    {
+        Unknown = 0,
+        Windows,
+        X11,
+        Wayland,
+        DirectFB,
+        Cocoa,
+        UIKit,
+    }
+
     enum WindowEventID : byte
     {
         NONE,
@@ -1515,6 +1553,65 @@ namespace OpenTK.Platform.SDL2
         public int Y;
         public int Width;
         public int Height;
+    }
+
+    struct SysWMInfo
+    {
+        public Version Version;
+        public SysWMType Subsystem;
+        public SysInfo Info;
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct SysInfo
+        {
+            [FieldOffset(0)]
+            public WindowsInfo Windows;
+            [FieldOffset(0)]
+            public X11Info X11;
+            [FieldOffset(0)]
+            public WaylandInfo Wayland;
+            [FieldOffset(0)]
+            public DirectFBInfo DirectFB;
+            [FieldOffset(0)]
+            public CocoaInfo Cocoa;
+            [FieldOffset(0)]
+            public UIKitInfo UIKit;
+
+            public struct WindowsInfo
+            {
+                public IntPtr Window;
+            }
+
+            public struct X11Info
+            {
+                public IntPtr Display;
+                public IntPtr Window;
+            }
+
+            public struct WaylandInfo
+            {
+                public IntPtr Display;
+                public IntPtr Surface;
+                public IntPtr ShellSurface;
+            }
+
+            public struct DirectFBInfo
+            {
+                public IntPtr Dfb;
+                public IntPtr Window;
+                public IntPtr Surface;
+            }
+
+            public struct CocoaInfo
+            {
+                public IntPtr Window;
+            }
+
+            public struct UIKitInfo
+            {
+                public IntPtr Window;
+            }
+        }
     }
 
     struct TextEditingEvent
