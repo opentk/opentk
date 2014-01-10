@@ -49,8 +49,6 @@ namespace OpenTK.Platform.Android
 		AndroidWindow windowInfo;
 		Object ticking = new Object ();
 		bool hasSurface = false;
-		bool createSurface = false;
-		bool lostContext = false;
 		bool stopped = true;
 		bool renderOn = false;
 		bool sizeChanged = false;
@@ -93,6 +91,11 @@ namespace OpenTK.Platform.Android
 
 			// Add callback to get the SurfaceCreated etc events
 			mHolder.AddCallback (this);
+			// Force the SurfaceType to be Gpu to API_11 and earlier
+			// it is ignored in later API's
+			mHolder.SetType (SurfaceType.Gpu);
+			windowInfo = new AndroidWindow (mHolder);
+			windowInfo.InitializeDisplay ();
 
 			pauseSignal = new ManualResetEvent (true);
 		}
@@ -101,9 +104,7 @@ namespace OpenTK.Platform.Android
 		{
 			log ("SurfaceCreated");
 
-			windowInfo = new AndroidWindow (mHolder);
-
-			hasSurface = true;
+			CreateSurface ();
 
 			// Surface size or format has changed
 			surfaceRect = holder.SurfaceFrame;
@@ -116,7 +117,7 @@ namespace OpenTK.Platform.Android
 		{
 			log ("SurfaceDestroyed");
 
-			hasSurface = false;
+			DestroySurface ();
 
 			UnloadInternal (EventArgs.Empty);
 		}
@@ -132,10 +133,10 @@ namespace OpenTK.Platform.Android
 			surfaceRect = holder.SurfaceFrame;
 			size = new Size (surfaceRect.Right - surfaceRect.Left, surfaceRect.Bottom - surfaceRect.Top);
 
-			GLCalls.Viewport (0, 0, size.Width, size.Height);
-			GLCalls.Scissor (0, 0, size.Width, size.Height);
-
-			GraphicsContext.Update (WindowInfo);
+			if (Context != null) {
+				GLCalls.Viewport (0, 0, size.Width, size.Height);
+				GLCalls.Scissor (0, 0, size.Width, size.Height);
+			}
 
 			OnResize (EventArgs.Empty);
 		}
@@ -143,7 +144,10 @@ namespace OpenTK.Platform.Android
 		public override void Close ()
 		{
 			EnsureUndisposed ();
+			Stop ();
 			base.Close ();
+			DestroyContext ();
+			windowInfo.TerminateDisplay ();
 		}
 
 		protected override void Dispose (bool disposing)
@@ -163,19 +167,47 @@ namespace OpenTK.Platform.Android
 
 		protected override void CreateFrameBuffer ()
 		{
-			CreateContext ();
+			if (Mode == null)
+#if OPENTK_0
+				GraphicsMode = new AndroidGraphicsMode (windowInfo.Display, (int)GLContextVersion, new ColorFormat (8, 8, 8, 8), 16, 0, 0, 0, false);
+			Mode.Initialize (windowInfo.Display, (int)GLContextVersion);
+#else
+				GraphicsMode = new AndroidGraphicsMode (windowInfo.Display, (int)ContextRenderingApi, new ColorFormat (8, 8, 8, 8), 16, 0, 0, 0, false);
+			Mode.Initialize (windowInfo.Display, (int)ContextRenderingApi);
+#endif
+			windowInfo.CreateSurface (Mode.Config);
+			hasSurface = true;
 		}
 
 		protected virtual void DestroyFrameBuffer ()
 		{
-			DestroyContext ();
+			// we dont need to destroy the context
+			DestroySurface ();
 		}
 
 		public override void MakeCurrent ()
 		{
 			EnsureUndisposed ();
+			if (Context == null)
+				CreateContext ();
 			AssertContext ();
+			try	{
+				GraphicsContext.MakeCurrent (WindowInfo);
+			}
+			catch (EglBadAllocException) {
+				log ("Bad Allocation");
+				OnContextLost (null);
+			}
+			catch (EglContextLostException)	{
+				log ("Context Lost");
+				OnContextLost (null);
+			}
+		}
 
+		protected override void OnContextLost (EventArgs e)
+		{
+			base.OnContextLost (e);
+			CreateContext ();
 			GraphicsContext.MakeCurrent (WindowInfo);
 		}
 
@@ -186,7 +218,7 @@ namespace OpenTK.Platform.Android
 
 			if (Context != null) {
 				if (!Context.Swap ()) {
-					CreateFrameBuffer ();
+					CreateContext ();
 				}
 			} else
 				GraphicsContext.SwapBuffers ();
@@ -239,7 +271,6 @@ namespace OpenTK.Platform.Android
 #region Private
 		void LoadInternal (EventArgs e)
 		{
-			CreateFrameBuffer ();
 			OnLoad (e);
 		}
 
@@ -308,6 +339,37 @@ namespace OpenTK.Platform.Android
 				throw new InvalidOperationException ("Operation requires a GraphicsContext, which hasn't been created yet.");
 		}
 
+		void CreateSurface()	{
+			if (!hasSurface) {
+				try	{
+					if (Mode == null || Mode.Config == null)	{
+						CreateFrameBuffer();
+					}	else	{
+#if OPENTK_0
+						Mode.Initialize(windowInfo.Display, (int)GLContextVersion);
+#else
+						Mode.Initialize(windowInfo.Display, (int)ContextRenderingApi);
+#endif
+						windowInfo.CreateSurface (Mode.Config);	
+						hasSurface = true;
+					}
+					MakeCurrent ();
+				}
+				catch(Exception)	{
+					hasSurface = false;
+				}
+			}
+		}
+
+		void DestroySurface()
+		{
+			if (hasSurface) {
+				log ("DestroySurface");
+				windowInfo.DestroySurface ();
+				hasSurface = false;
+			}
+		}
+
 		void CreateContext ()
 		{
 			log ("CreateContext");
@@ -327,8 +389,6 @@ namespace OpenTK.Platform.Android
 			if (GraphicsContext != null) {
 				GraphicsContext.Dispose ();
 				GraphicsContext = null;
-				createSurface = false;
-				lostContext = true;
 			}
 		}
 
@@ -470,11 +530,8 @@ namespace OpenTK.Platform.Android
 		{
 			global::Android.Util.Log.Debug ("AndroidGameView", String.Format("====== " + msg + " ======="));
 			global::Android.Util.Log.Debug ("AndroidGameView", String.Format("tid {0}", Java.Lang.Thread.CurrentThread().Id));
-			global::Android.Util.Log.Debug ("AndroidGameView", String.Format("context {0}", GraphicsContext));
 			global::Android.Util.Log.Debug ("AndroidGameView", String.Format("stopped {0}", stopped));
 			global::Android.Util.Log.Debug ("AndroidGameView", String.Format("hasSurface {0}", hasSurface));
-			global::Android.Util.Log.Debug ("AndroidGameView", String.Format("createSurface {0}", createSurface));
-			global::Android.Util.Log.Debug ("AndroidGameView", String.Format("lostContext {0}", lostContext));
 			global::Android.Util.Log.Debug ("AndroidGameView", String.Format("renderOn {0}", renderOn));
 			global::Android.Util.Log.Debug ("AndroidGameView", String.Format("GraphicsContext? {0}", GraphicsContext != null));
 			if (source != null)
@@ -505,6 +562,23 @@ namespace OpenTK.Platform.Android
 
 		public GraphicsMode GraphicsMode {
 			get; set;
+		}
+
+		private AndroidGraphicsMode Mode {
+			get { return (AndroidGraphicsMode)GraphicsMode; }
+		}
+
+		private Format surfaceFormat = Format.Rgb565;
+
+		public Format SurfaceFormat	{
+			get { return surfaceFormat;	}
+			set {
+				if (hasSurface) {
+					throw new InvalidOperationException("The Surface has already been created");
+				}
+				surfaceFormat = value;
+				mHolder.SetFormat(SurfaceFormat);
+			}
 		}
 
 #if OPENTK_0

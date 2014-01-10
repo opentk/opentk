@@ -130,8 +130,6 @@ namespace OpenTK.Platform.Android {
 			if (EGLContext == EGL10.EglNoContext)
 				throw EglException.GenerateException ("EglCreateContext == EGL10.EglNoContext", egl, null);
 
-			window.CreateSurface (EGLConfig);
-			MakeCurrent (window);
 		}
 
 		public bool Swap ()
@@ -141,7 +139,9 @@ namespace OpenTK.Platform.Android {
 				int err = egl.EglGetError();
 				switch (err) {
 					case EGL11.EglContextLost:
-					break;
+						throw EglContextLostException.GenerateException ("EglSwapBuffers", egl, err);
+					case EGL11.EglBadAlloc:
+						throw EglBadAllocException.GenerateException ("EglSwapBuffers", egl, err);
 					default:
 						throw EglException.GenerateException ("EglSwapBuffers", egl, err);
 				}
@@ -176,7 +176,9 @@ namespace OpenTK.Platform.Android {
 				int err = egl.EglGetError();
 				switch (err) {
 					case EGL11.EglContextLost:
-					break;
+						throw EglContextLostException.GenerateException ("MakeCurrent", egl, err);
+					case EGL11.EglBadAlloc :
+						throw EglBadAllocException.GenerateException ("MakeCurrent", egl, err);
 					default:
 						throw EglException.GenerateException ("MakeCurrent", egl, err);
 				}
@@ -219,7 +221,6 @@ namespace OpenTK.Platform.Android {
 			{
 				if (disposing) {
 					DestroyContext ();
-					window.Dispose ();
 					window = null;
 					disposed = true;
 				}
@@ -280,8 +281,20 @@ namespace OpenTK.Platform.Android {
 			return new EglException (String.Format ("{0} failed with error {1} (0x{1:x})", msg, error.Value));
 		}
 
-		public EglException (string msg) : base(msg)
+		public EglException (string msg) : base (msg)
 		{
+		}
+	}
+
+	class EglContextLostException : EglException
+	{
+		public EglContextLostException (string msg) : base (msg)	{
+		}
+	}
+
+	class EglBadAllocException : EglException
+	{
+		public EglBadAllocException (string msg) : base (msg) {
 		}
 	}
 
@@ -365,8 +378,13 @@ namespace OpenTK.Platform.Android {
 		{
 			if (eglSurface != EGL10.EglNoSurface) {
 				IEGL10 egl = EGLContext.EGL.JavaCast<IEGL10> ();
-				if (!egl.EglDestroySurface (eglDisplay, eglSurface))
-					Log.Warn ("AndroidWindow", "Failed to destroy surface {0}.", eglSurface);
+				try	{
+					if (!egl.EglDestroySurface (eglDisplay, eglSurface))
+						Log.Warn ("AndroidWindow", "Failed to destroy surface {0}.", eglSurface);
+				}
+				catch (Java.Lang.IllegalArgumentException)	{
+					Log.Warn ("AndroidWindow", "Failed to destroy surface {0}. Illegal Argument", eglSurface);
+				}
 				eglSurface = null;
 			}
 		}

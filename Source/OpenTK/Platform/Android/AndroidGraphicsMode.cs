@@ -90,9 +90,6 @@ namespace OpenTK.Platform.Android
 			this.Buffers = buffers;
 			this.Stereo = stereo;
 			this.Version = version;
-
-			if (display != null)
-				ChooseConfig (display);
 		}
 
 		void ChooseConfig (EGLDisplay display)
@@ -143,8 +140,11 @@ namespace OpenTK.Platform.Android
 				configSpec.Add (EGL11.EglStencilSize);
 				configSpec.Add (Stencil);
 			}
-
+			//http://code.google.com/p/gdc2011-android-opengl/source/browse/trunk/src/com/example/gdc11/MultisampleConfigChooser.java?r=5
 			if (Samples > 0) {
+				// Enable Multi Sampling if we can
+				configSpec.Add (EGL11.EglSampleBuffers);
+				configSpec.Add (1);
 				configSpec.Add (EGL11.EglSamples);
 				configSpec.Add (Samples);
 			}
@@ -153,6 +153,12 @@ namespace OpenTK.Platform.Android
 				configSpec.Add (EGL11.EglRenderableType);
 				configSpec.Add (4);
 			}
+
+			if (Buffers > 0) {
+				configSpec.Add (EGL11.EglRenderBuffer);
+				configSpec.Add (Buffers);
+			}
+
 			configSpec.Add (EGL11.EglNone);
 
 			int[] num_configs = new int[1];
@@ -194,10 +200,11 @@ namespace OpenTK.Platform.Android
 			var stencil = GetAttrib (egl, display, active_config, EGL11.EglStencilSize);
 			var s = GetAttrib (egl, display, active_config, EGL11.EglSampleBuffers);
 			var samples = GetAttrib (egl, display, active_config, EGL11.EglSamples);
+			var bufs = GetAttrib (egl, display, active_config, EGL11.EglRenderBuffer);
 
 #if LOGGING
-			Log.Verbose ("AndroidGraphicsMode", "Requested graphics mode with red {0} green {1} blue {2} alpha {3} depth {4} stencil {5} buffers {6}",
-					ColorFormat.Red, ColorFormat.Green, ColorFormat.Blue, ColorFormat.Alpha, Depth, Stencil, Buffers);
+			Log.Verbose ("AndroidGraphicsMode", "Requested graphics mode with red {0} green {1} blue {2} alpha {3} depth {4} stencil {5} buffers {6} samples {7}",
+					ColorFormat.Red, ColorFormat.Green, ColorFormat.Blue, ColorFormat.Alpha, Depth, Stencil, Buffers, Samples);
 #endif
 
 			this.Index = active_config.Handle;
@@ -206,10 +213,11 @@ namespace OpenTK.Platform.Android
 			this.Stencil = stencil;
 			this.Samples = s > 0 ? samples : 0;
 			this.Config = active_config;
+			this.Buffers = bufs;
 
 #if LOGGING
-			Log.Verbose ("AndroidGraphicsMode", "Selected  graphics mode with red {0} green {1} blue {2} alpha {3} depth {4} stencil {5} buffers {6}",
-					ColorFormat.Red, ColorFormat.Green, ColorFormat.Blue, ColorFormat.Alpha, Depth, Stencil, Buffers);
+			Log.Verbose ("AndroidGraphicsMode", "Selected  graphics mode with red {0} green {1} blue {2} alpha {3} depth {4} stencil {5} buffers {6}, samples {7}",
+					ColorFormat.Red, ColorFormat.Green, ColorFormat.Blue, ColorFormat.Alpha, Depth, Stencil, Buffers, Samples);
 #endif
 		}
 

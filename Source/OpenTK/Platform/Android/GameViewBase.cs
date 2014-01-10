@@ -69,6 +69,7 @@ namespace OpenTK
 			}
 			set {
 				ctx = value;
+				OnContextSet (null);
 			}
 		}
 
@@ -580,6 +581,80 @@ namespace OpenTK
 		{
 			if (Disposed != null)
 				Disposed (this, e);
+		}
+
+		/// <summary>
+		///   Occurs when the
+		///   <see cref="T:OpenTK.Platform.Android.AndroidGameView" />
+		///   detects that the <see cref="P:OpenTK.Platform.Android.AndroidGameView.GraphicsContext"> was lost.
+		/// </summary>
+		/// <remarks>
+		/// </remarks>
+		public event EventHandler<EventArgs> ContextLost;
+
+		/// <param name="e">
+		///   An <see cref="T:System.EventArgs" /> that contains the event data.
+		/// </param>
+		/// <summary>
+		///   Raises the
+		///   <see cref="E:OpenTK.Platform.Android.AndroidGameView.ContextLost" />
+		///   event.
+		/// </summary>
+		/// <remarks>
+		///   <para>
+		///     The <c>OnContextLost</c> method also allows derived classes to handle
+		///     the event without attaching a delegate.  This is the preferred
+		///     technique for handling the event in a derived class.
+		///   </para>
+		///   <block subset="none" type="overrides">
+		///     When overriding <c>OnContextLost</c> in a derived class, be sure to
+		///     call the base class's <c>OnContextLost</c> method so that registered
+		///     delegates receive the event.
+		///   </block>
+		/// </remarks>
+		protected virtual void OnContextLost (EventArgs e)
+		{
+			if (ContextLost != null)
+				ContextLost (this, e);
+		}
+
+		/// <summary>
+		///   Occurs when the
+		///   <see cref="P:OpenTK.Platform.Android.AndroidGameView.GraphicsContext" />
+		///   is created.
+		/// </summary>
+		/// <remarks>
+		/// </remarks>
+		public event EventHandler<EventArgs> ContextSet;
+
+		/// <param name="e">
+		///   An <see cref="T:System.EventArgs" /> that contains the event data.
+		/// </param>
+		/// <summary>
+		///   Raises the
+		///   <see cref="E:OpenTK.Platform.Android.AndroidGameView.ContextSet" />
+		///   event.
+		/// </summary>
+		/// <remarks>
+		///   <para>
+		///     The <c>OnContextSet</c> method also allows derived classes to handle
+		///     the event without attaching a delegate.  This is the preferred
+		///     technique for handling the event in a derived class.
+		///   </para>
+		///   <block subset="none" type="overrides">
+		///     When overriding <c>OnContextSet</c> in a derived class, be sure to
+		///     call the base class's <c>OnContextSet</c> method so that registered
+		///     delegates receive the event.
+		///   </block>
+		///   <block>
+		///   It is convenient place to create context related data, ie. load textures.
+		///   </block>
+		/// </remarks>
+		protected virtual void OnContextSet (EventArgs e)
+		{
+			MakeCurrent ();
+			if (ContextSet != null)
+				ContextSet (this, e);
 		}
 
 		/// <summary>
