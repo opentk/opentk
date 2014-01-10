@@ -8,6 +8,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Reflection;
 
@@ -33,6 +34,9 @@ namespace OpenTK.Platform.Windows
         #region --- Fields ---
 
         internal const string Library = "OPENGL32.DLL";
+
+        readonly static Dictionary<string, bool> extensions =
+            new Dictionary<string, bool>();
 
         private static Assembly assembly;
         private static Type wglClass;
@@ -121,43 +125,61 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public static partial class Arb
-
-        /// <summary>Contains ARB extensions for WGL.</summary>
-        public static partial class Arb
+        public static bool SupportsExtension(string name)
         {
-            /// <summary>
-            /// Checks if a Wgl extension is supported by the given context.
-            /// </summary>
-            /// <param name="context">The device context.</param>
-            /// <param name="ext">The extension to check.</param>
-            /// <returns>True if the extension is supported by the given context, false otherwise</returns>
-            public static bool SupportsExtension(WinGLContext context, string ext)
+            return SupportsExtension(Wgl.GetCurrentDC(), name);
+        }
+
+        /// <summary>
+        /// Checks if a Wgl extension is supported by the given context.
+        /// </summary>
+        /// <param name="context">The device context.</param>
+        /// <param name="ext">The extension to check.</param>
+        /// <returns>True if the extension is supported by the given context, false otherwise</returns>
+        public static bool SupportsExtension(IntPtr dc, string name)
+        {
+            if (extensions.Count == 0)
             {
                 // We cache this locally, as another thread might create a context which doesn't support  this method.
                 // The design is far from ideal, but there's no good solution to this issue as long as we are using
                 // static WGL/GL classes. Fortunately, this issue is extremely unlikely to arise in practice, as you'd
                 // have to create one accelerated and one non-accelerated context in the same application, with the
                 // non-accelerated context coming second.
-                Wgl.Delegates.GetExtensionsStringARB get = Wgl.Delegates.wglGetExtensionsStringARB;
+                Wgl.Delegates.GetExtensionsStringARB get_arb = Wgl.Delegates.wglGetExtensionsStringARB;
+                Wgl.Delegates.GetExtensionsStringEXT get_ext = Wgl.Delegates.wglGetExtensionsStringEXT;
+                IntPtr str_ptr =
+                    get_arb != null ? get_arb(dc) :
+                    get_ext != null ? get_ext() :
+                    IntPtr.Zero;
 
-                if (get != null)
+                if (str_ptr != IntPtr.Zero)
                 {
-                    string[] extensions = null;
+                    string str;
+
                     unsafe
                     {
-                        extensions = new string((sbyte*)get(context.DeviceContext))
-                            .Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        str = new string((sbyte*)str_ptr);
                     }
-                    if (extensions == null || extensions.Length == 0)
-                        return false;
 
-                    foreach (string s in extensions)
-                        if (s == ext)
-                            return true;
+                    foreach (string ext in str.Split(' '))
+                    {
+                        extensions.Add(ext, true);
+                    }
                 }
-                return false;
             }
+
+            if (extensions.Count > 0)
+            {
+                return extensions.ContainsKey(name);
+            }
+            return false;
+        }
+
+        #region public static partial class Arb
+
+        /// <summary>Contains ARB extensions for WGL.</summary>
+        public static partial class Arb
+        {
         }
 
         #endregion 
@@ -167,27 +189,6 @@ namespace OpenTK.Platform.Windows
         /// <summary>Contains EXT extensions for WGL.</summary>
         public static partial class Ext
         {
-            private static string[] extensions;
-            /// <summary>
-            /// Checks if a Wgl extension is supported by the given context.
-            /// </summary>
-            /// <param name="ext">The extension to check.</param>
-            /// <returns>True if the extension is supported by the given context, false otherwise</returns>
-            public static bool SupportsExtension(string ext)
-            {
-                if (Wgl.Delegates.wglGetExtensionsStringEXT != null)
-                {
-                    if (extensions == null || rebuildExtensionList)
-                    {
-                        extensions = Wgl.Ext.GetExtensionsString().Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        Array.Sort(extensions);
-                        rebuildExtensionList = false;
-                    }
-
-                    return Array.BinarySearch(extensions, ext) != -1;
-                }
-                return false;
-            }
         }
 
         #endregion
