@@ -441,20 +441,23 @@ namespace OpenTK
             {
                 // Raise UpdateFrame events until we catch up with our target update rate.
                 double update_elapsed = MathHelper.Clamp(timestamp - update_timestamp, 0.0, 1.0);
-                if (RaiseUpdateFrame(update_elapsed))
+                if (update_elapsed > 0)
                 {
-                    update_period = update_elapsed;
-                    update_timestamp = timestamp;
-                    timestamp = watch.Elapsed.TotalSeconds;
-                    update_time = timestamp - update_timestamp;
+                    if (RaiseUpdateFrame(update_elapsed))
+                    {
+                        update_period = update_elapsed;
+                        update_timestamp = timestamp;
+                        timestamp = watch.Elapsed.TotalSeconds;
+                        update_time = timestamp - update_timestamp;
+                    }
+                    else
+                    {
+                        // We have executed enough UpdateFrame events to catch up.
+                        // Break and issue a RenderFrame event.
+                        break;
+                    }
                 }
-                else
-                {
-                    // We have executed enough UpdateFrame events to catch up.
-                    // Break and issue a RenderFrame event.
-                    break;
-                }
-            } while (++frameskip < max_frameskip);
+            } while (TargetRenderFrequency > 0 && ++frameskip < max_frameskip);
 
             timestamp = watch.Elapsed.TotalSeconds;
             double render_elapsed = MathHelper.Clamp(timestamp - render_timestamp, 0.0, 1.0);
