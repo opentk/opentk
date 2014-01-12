@@ -457,7 +457,7 @@ namespace OpenTK
                         break;
                     }
                 }
-            } while (TargetRenderFrequency > 0 && ++frameskip < max_frameskip);
+            } while (TargetUpdateFrequency > 0 && ++frameskip < max_frameskip);
 
             timestamp = watch.Elapsed.TotalSeconds;
             double render_elapsed = MathHelper.Clamp(timestamp - render_timestamp, 0.0, 1.0);
