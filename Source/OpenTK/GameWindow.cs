@@ -431,10 +431,15 @@ namespace OpenTK
             }
         }
 
+        double ClampElapsed(double elapsed)
+        {
+            return MathHelper.Clamp(elapsed, 0.0, 1.0);
+        }
+
         void DispatchUpdateAndRenderFrame(object sender, EventArgs e)
         {
             double timestamp = watch.Elapsed.TotalSeconds;
-            double elapsed = MathHelper.Clamp(timestamp - update_timestamp, 0.0, 1.0);
+            double elapsed = ClampElapsed(timestamp - update_timestamp);
 
             // Calculate how many update events we need to execute in order to reach
             // our desired TargetUpdateFrequency
@@ -450,17 +455,15 @@ namespace OpenTK
                     RaiseUpdateFrame(elapsed, ref timestamp);
                     --update_count;
                 }
-                elapsed = MathHelper.Clamp(timestamp - update_timestamp, 0.0, 1.0);
+                elapsed = ClampElapsed(timestamp - update_timestamp);
             }
 
             //timestamp = watch.Elapsed.TotalSeconds;
-            elapsed = MathHelper.Clamp(timestamp - render_timestamp, 0.0, 1.0);
+            elapsed = ClampElapsed(timestamp - render_timestamp);
             if (elapsed > 0 && elapsed >= TargetRenderPeriod)
             {
                 RaiseRenderFrame(elapsed, ref timestamp);
             }
-
-            Thread.Sleep(1);
         }
 
         void RaiseUpdateFrame(double elapsed, ref double timestamp)
