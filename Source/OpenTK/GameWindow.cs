@@ -433,64 +433,65 @@ namespace OpenTK
 
         void DispatchUpdateAndRenderFrame(object sender, EventArgs e)
         {
-            const int max_frameskip = 10;
-            int frameskip = 0;
             double timestamp = watch.Elapsed.TotalSeconds;
+            double elapsed = MathHelper.Clamp(timestamp - update_timestamp, 0.0, 1.0);
 
-            do
+            // Calculate how many update events we need to execute in order to reach
+            // our desired TargetUpdateFrequency
+            int update_count = TargetUpdatePeriod != 0 ?
+                (int)(elapsed / TargetUpdatePeriod) :
+                1;
+
+            while (update_count > 0)
             {
                 // Raise UpdateFrame events until we catch up with our target update rate.
-                double update_elapsed = MathHelper.Clamp(timestamp - update_timestamp, 0.0, 1.0);
-                if (update_elapsed > 0)
+                if (elapsed > 0)
                 {
-                    if (RaiseUpdateFrame(update_elapsed))
-                    {
-                        update_period = update_elapsed;
-                        update_timestamp = timestamp;
-                        timestamp = watch.Elapsed.TotalSeconds;
-                        update_time = timestamp - update_timestamp;
-                    }
-                    else
-                    {
-                        // We have executed enough UpdateFrame events to catch up.
-                        // Break and issue a RenderFrame event.
-                        break;
-                    }
+                    RaiseUpdateFrame(elapsed, ref timestamp);
+                    --update_count;
                 }
-            } while (TargetUpdateFrequency > 0 && ++frameskip < max_frameskip);
+                elapsed = MathHelper.Clamp(timestamp - update_timestamp, 0.0, 1.0);
+            }
 
+            //timestamp = watch.Elapsed.TotalSeconds;
+            elapsed = MathHelper.Clamp(timestamp - render_timestamp, 0.0, 1.0);
+            if (elapsed > 0 && elapsed >= TargetRenderPeriod)
+            {
+                RaiseRenderFrame(elapsed, ref timestamp);
+            }
+
+            Thread.Sleep(1);
+        }
+
+        void RaiseUpdateFrame(double elapsed, ref double timestamp)
+        {
+            // Raise UpdateFrame event
+            update_args.Time = elapsed;
+            OnUpdateFrameInternal(update_args);
+
+            // Update UpdatePeriod/UpdateFrequency properties
+            update_period = elapsed;
+
+            // Update UpdateTime property
+            update_timestamp = timestamp;
             timestamp = watch.Elapsed.TotalSeconds;
-            double render_elapsed = MathHelper.Clamp(timestamp - render_timestamp, 0.0, 1.0);
-            if (RaiseRenderFrame(render_elapsed))
-            {
-                render_period = render_elapsed;
-                render_timestamp = timestamp;
-                timestamp = watch.Elapsed.TotalSeconds;
-                render_time = timestamp - render_timestamp;
-            }
-        }
-
-        bool RaiseUpdateFrame(double time)
-        {
-            if (time > 0 && time >= TargetUpdatePeriod)
-            {
-                update_args.Time = time;
-                OnUpdateFrameInternal(update_args);
-                return true;
-            }
-            return false;
+            update_time = timestamp - update_timestamp;
         }
 
 
-        bool RaiseRenderFrame(double time)
+        void RaiseRenderFrame(double elapsed, ref double timestamp)
         {
-            if (time > 0 && time >= TargetRenderPeriod)
-            {
-                render_args.Time = time;
-                OnRenderFrameInternal(render_args);
-                return true;
-            }
-            return false;
+            // Raise RenderFrame event
+            render_args.Time = elapsed;
+            OnRenderFrameInternal(render_args);
+
+            // Update RenderPeriod/UpdateFrequency properties
+            render_period = elapsed;
+
+            // Update RenderTime property
+            render_timestamp = timestamp;
+            timestamp = watch.Elapsed.TotalSeconds;
+            render_time = timestamp - render_timestamp;
         }
 
         #endregion
