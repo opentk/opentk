@@ -75,6 +75,8 @@ namespace OpenTK
     {
         #region --- Fields ---
 
+        const double MaxFrequency = 500.0; // Frequency cap for Update/RenderFrame events
+
         readonly Stopwatch watch = new Stopwatch();
 
         IGraphicsContext glContext;
@@ -681,7 +683,7 @@ namespace OpenTK
         /// </summary>
         /// <remarks>
         /// <para>A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
-        /// <para>Values lower than 1.0Hz are clamped to 1.0Hz. Values higher than 200.0Hz are clamped to 200.0Hz.</para>
+        /// <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 200.0Hz.</para>
         /// </remarks>
         public double TargetRenderFrequency
         {
@@ -699,11 +701,11 @@ namespace OpenTK
                 {
                     TargetRenderPeriod = 0.0;
                 }
-                else if (value <= 200.0)
+                else if (value <= MaxFrequency)
                 {
                     TargetRenderPeriod = 1.0 / value;
                 }
-                else Debug.Print("Target render frequency clamped to 200.0Hz."); // TODO: Where is it actually performed?
+                else Debug.Print("Target render frequency clamped to {0}Hz.", MaxFrequency);
             }
         }
 
@@ -716,7 +718,7 @@ namespace OpenTK
         /// </summary>
         /// <remarks>
         /// <para>A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
-        /// <para>Values lower than 0.005 seconds (200Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped to 1.0.</para>
+        /// <para>Values lower than 0.002 seconds (500Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped to 1.0.</para>
         /// </remarks>
         public double TargetRenderPeriod
         {
@@ -728,7 +730,7 @@ namespace OpenTK
             set
             {
                 EnsureUndisposed();
-                if (value <= 0.005)
+                if (value <= 1 / MaxFrequency)
                 {
                     target_render_period = 0.0;
                 }
@@ -749,7 +751,7 @@ namespace OpenTK
         /// </summary>
         /// <remarks>
         /// <para>A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
-        /// <para>Values lower than 1.0Hz are clamped to 1.0Hz. Values higher than 200.0Hz are clamped to 200.0Hz.</para>
+        /// <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 500.0Hz.</para>
         /// </remarks>
         public double TargetUpdateFrequency
         {
@@ -767,11 +769,11 @@ namespace OpenTK
                 {
                     TargetUpdatePeriod = 0.0;
                 }
-                else if (value <= 200.0)
+                else if (value <= MaxFrequency)
                 {
                     TargetUpdatePeriod = 1.0 / value;
                 }
-                else Debug.Print("Target update frequency clamped to 200.0Hz."); // TODO: Where is it actually performed?
+                else Debug.Print("Target render frequency clamped to {0}Hz.", MaxFrequency);
             }
         }
 
@@ -784,7 +786,7 @@ namespace OpenTK
         /// </summary>
         /// <remarks>
         /// <para>A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
-        /// <para>Values lower than 0.005 seconds (200Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped to 1.0.</para>
+        /// <para>Values lower than 0.002 seconds (500Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped to 1.0.</para>
         /// </remarks>
         public double TargetUpdatePeriod
         {
@@ -796,7 +798,7 @@ namespace OpenTK
             set
             {
                 EnsureUndisposed();
-                if (value <= 0.005)
+                if (value <= 1 / MaxFrequency)
                 {
                     target_update_period = 0.0;
                 }
@@ -804,7 +806,7 @@ namespace OpenTK
                 {
                     target_update_period = value;
                 }
-                else Debug.Print("Target update period clamped to 1.0 seconds."); // TODO: Where is it actually performed?
+                else Debug.Print("Target update period clamped to 1.0 seconds.");
             }
         }
 
