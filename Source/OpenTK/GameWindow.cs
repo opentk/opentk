@@ -90,6 +90,8 @@ namespace OpenTK
         double update_timestamp; // timestamp of last UpdateFrame event
         double render_timestamp; // timestamp of last RenderFrame event
 
+        double update_epsilon; // quantization error for UpdateFrame events
+
         VSyncMode vsync;
 
         FrameEventArgs update_args = new FrameEventArgs();
@@ -439,26 +441,22 @@ namespace OpenTK
         void DispatchUpdateAndRenderFrame(object sender, EventArgs e)
         {
             double timestamp = watch.Elapsed.TotalSeconds;
-            double elapsed = ClampElapsed(timestamp - update_timestamp);
+            double elapsed = 0;
 
-            // Calculate how many update events we need to execute in order to reach
-            // our desired TargetUpdateFrequency
-            int update_count = TargetUpdatePeriod != 0 ?
-                (int)(elapsed / TargetUpdatePeriod) :
-                1;
-
-            while (update_count > 0)
+            elapsed = ClampElapsed(timestamp - update_timestamp);
+            while (elapsed > 0 && elapsed + update_epsilon >= TargetUpdatePeriod)
             {
-                // Raise UpdateFrame events until we catch up with our target update rate.
-                if (elapsed > 0)
-                {
-                    RaiseUpdateFrame(elapsed, ref timestamp);
-                    --update_count;
-                }
+                RaiseUpdateFrame(elapsed, ref timestamp);
+                
+                // Calculate difference (positive or negative) between
+                // actual elapsed time and target elapsed time. We must
+                // compensate for this difference.
+                update_epsilon += elapsed - TargetUpdatePeriod;
+
+                // Prepare for next loop
                 elapsed = ClampElapsed(timestamp - update_timestamp);
             }
 
-            //timestamp = watch.Elapsed.TotalSeconds;
             elapsed = ClampElapsed(timestamp - render_timestamp);
             if (elapsed > 0 && elapsed >= TargetRenderPeriod)
             {
