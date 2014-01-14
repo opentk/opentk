@@ -37,7 +37,8 @@ namespace OpenTK.Platform.X11
 {
     struct X11JoyDetails
     {
-        public bool IsConnected;
+        public int FileDescriptor;
+        public JoystickState State;
     }
 
     sealed class X11Joystick : IJoystickDriver2
@@ -67,6 +68,8 @@ namespace OpenTK.Platform.X11
             watcher_legacy.Created += JoystickAdded;
             watcher_legacy.Deleted += JoystickRemoved;
             watcher_legacy.EnableRaisingEvents = true;
+
+            OpenJoysticks();
         }
 
         #endregion
@@ -75,27 +78,28 @@ namespace OpenTK.Platform.X11
 
         void OpenJoysticks()
         {
-            int number = 0, max_sticks = 25;
-            while (number < max_sticks)
+            lock (sync)
             {
-                JoystickDevice<X11JoyDetails> stick = OpenJoystick(JoystickPath, number++);
-                if (stick != null)
+                foreach (string file in Directory.GetFiles(JoystickPath))
                 {
-                    //stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
-                    //number, stick.Axis.Count, stick.Button.Count, JoystickPath);
-                    sticks.Add(stick);
+                    JoystickDevice<X11JoyDetails> stick = OpenJoystick(file);
+                    if (stick != null)
+                    {
+                        //stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
+                        //number, stick.Axis.Count, stick.Button.Count, JoystickPath);
+                        sticks.Add(stick);
+                    }
                 }
-            }
 
-            number = 0;
-            while (number < max_sticks)
-            {
-                JoystickDevice<X11JoyDetails> stick = OpenJoystick(JoystickPathLegacy, number++);
-                if (stick != null)
+                foreach (string file in Directory.GetFiles(JoystickPathLegacy))
                 {
-                    //stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
-                    //number, stick.Axis.Count, stick.Button.Count, JoystickPathLegacy);
-                    sticks.Add(stick);
+                    JoystickDevice<X11JoyDetails> stick = OpenJoystick(file);
+                    if (stick != null)
+                    {
+                        //stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
+                        //number, stick.Axis.Count, stick.Button.Count, JoystickPathLegacy);
+                        sticks.Add(stick);
+                    }
                 }
             }
         }
@@ -117,35 +121,7 @@ namespace OpenTK.Platform.X11
         {
             lock (sync)
             {
-                string file = Path.GetFileName(e.FullPath);
-                int number = GetJoystickNumber(file);
-                if (number != -1)
-                {
-                    JoystickDevice<X11JoyDetails> stick = OpenJoystick(e.FullPath, number);
-
-                    // Find the first disconnected joystick (if any)
-                    int i;
-                    for (i = 0; i < sticks.Count; i++)
-                    {
-                        if (!stick.Details.IsConnected)
-                        {
-                            break;
-                        }
-                    }
-
-                    // If no disconnected joystick exists, append a new slot
-                    if (i == sticks.Count)
-                    {
-                        sticks.Add(stick);
-                    }
-                    else
-                    {
-                        sticks[i] = stick;
-                    }
-
-                    // Map player index to joystick
-                    index_to_stick.Add(index_to_stick.Count, i);
-                }
+                OpenJoystick(e.FullPath);
             }
         }
 
@@ -173,8 +149,7 @@ namespace OpenTK.Platform.X11
                     }
                     else
                     {
-                        JoystickDevice<X11JoyDetails> stick = sticks[i];
-                        stick.Details.IsConnected = false;
+                        CloseJoystick(sticks[i]);
                     }
                 }
             }
@@ -182,84 +157,135 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        public void Poll()
+        #region Private Members
+
+        JoystickDevice<X11JoyDetails> OpenJoystick(string path)
+        {
+            JoystickDevice<X11JoyDetails> stick = null;
+
+            int number = GetJoystickNumber(Path.GetFileName(path));
+            if (number >= 0)
+            {
+                int fd = -1;
+                try
+                {
+                    fd = UnsafeNativeMethods.open(path, OpenFlags.NonBlock);
+                    if (fd == -1)
+                        return null;
+
+                    // Check joystick driver version (must be 1.0+)
+                    int driver_version = 0x00000800;
+                    UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Version, ref driver_version);
+                    if (driver_version < 0x00010000)
+                        return null;
+
+                    // Get number of joystick axes
+                    int axes = 0;
+                    UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Axes, ref axes);
+
+                    // Get number of joystick buttons
+                    int buttons = 0;
+                    UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Buttons, ref buttons);
+
+                    stick = new JoystickDevice<X11JoyDetails>(number, axes, buttons);
+
+                    StringBuilder sb = new StringBuilder(128);
+                    UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Name128, sb);
+                    stick.Description = sb.ToString();
+
+                    stick.Details.FileDescriptor = fd;
+                    stick.Details.State.SetIsConnected(true);
+                    //stick.Details.Guid = 
+                    
+                    // Find the first disconnected joystick (if any)
+                    int i;
+                    for (i = 0; i < sticks.Count; i++)
+                    {
+                        if (!sticks[i].Details.State.IsConnected)
+                        {
+                            break;
+                        }
+                    }
+
+                    // If no disconnected joystick exists, append a new slot
+                    if (i == sticks.Count)
+                    {
+                        sticks.Add(stick);
+                    }
+                    else
+                    {
+                        sticks[i] = stick;
+                    }
+
+                    // Map player index to joystick
+                    index_to_stick.Add(index_to_stick.Count, i);
+
+                    Debug.Print("Found joystick on path {0}", path);
+                }
+                finally
+                {
+                    if (stick == null && fd != -1)
+                        UnsafeNativeMethods.close(fd);
+                }
+            }
+
+            return stick;
+        }
+
+        void CloseJoystick(JoystickDevice<X11JoyDetails> js)
+        {
+            UnsafeNativeMethods.close(js.Details.FileDescriptor);
+            js.Details.State = new JoystickState(); // clear joystick state
+            js.Details.FileDescriptor = -1;
+            
+            // find and remove the joystick index from index_to_stick
+            int key = -1;
+            foreach (int i in index_to_stick.Keys)
+            {
+                if (sticks[index_to_stick[i]] == js)
+                {
+                    key = i;
+                    break;
+                }
+            }
+
+            if (index_to_stick.ContainsKey(key))
+            {
+                index_to_stick.Remove(key);
+            }
+        }
+
+        void PollJoystick(JoystickDevice<X11JoyDetails> js)
         {
             JoystickEvent e;
 
-            foreach (JoystickDevice js in sticks)
+            unsafe
             {
-                unsafe
+                while ((long)UnsafeNativeMethods.read(js.Details.FileDescriptor, (void*)&e, (UIntPtr)sizeof(JoystickEvent)) > 0)
                 {
-                    while ((long)UnsafeNativeMethods.read(js.Id, (void*)&e, (UIntPtr)sizeof(JoystickEvent)) > 0)
+                    e.Type &= ~JoystickEventType.Init;
+
+                    switch (e.Type)
                     {
-                        e.Type &= ~JoystickEventType.Init;
+                        case JoystickEventType.Axis:
+                            // Flip vertical axes so that +1 point up.
+                            if (e.Number % 2 == 0)
+                                js.Details.State.SetAxis((JoystickAxis)e.Number, e.Value);
+                            else
+                                js.Details.State.SetAxis((JoystickAxis)e.Number, unchecked((short)-e.Value));
+                            break;
 
-                        switch (e.Type)
-                        {
-                            case JoystickEventType.Axis:
-                                // Flip vertical axes so that +1 point up.
-                                if (e.Number % 2 == 0)
-                                    js.SetAxis((JoystickAxis)e.Number, e.Value / 32767.0f);
-                                else
-                                    js.SetAxis((JoystickAxis)e.Number, -e.Value / 32767.0f);
-                                break;
-
-                            case JoystickEventType.Button:
-                                js.SetButton((JoystickButton)e.Number, e.Value != 0);
-                                break;
-                        }
+                        case JoystickEventType.Button:
+                            js.Details.State.SetButton((JoystickButton)e.Number, e.Value != 0);
+                            break;
                     }
                 }
             }
         }
 
-        #region Private Members
-
-        JoystickDevice<X11JoyDetails> OpenJoystick(string base_path, int number)
+        bool IsValid(int index)
         {
-            string path = Path.Combine(base_path, "js" + number.ToString());
-            JoystickDevice<X11JoyDetails> stick = null;
-
-            int fd = -1;
-            try
-            {
-                fd = UnsafeNativeMethods.open(path, OpenFlags.NonBlock);
-                if (fd == -1)
-                    return null;
-
-                // Check joystick driver version (must be 1.0+)
-                int driver_version = 0x00000800;
-                UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Version, ref driver_version);
-                if (driver_version < 0x00010000)
-                    return null;
-
-                // Get number of joystick axes
-                int axes = 0;
-                UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Axes, ref axes);
-
-                // Get number of joystick buttons
-                int buttons = 0;
-                UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Buttons, ref buttons);
-
-                stick = new JoystickDevice<X11JoyDetails>(fd, axes, buttons);
-
-                StringBuilder sb = new StringBuilder(128);
-                UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Name128, sb);
-                stick.Description = sb.ToString();
-
-                stick.Id = number;
-
-                stick.Details.IsConnected = true;
-
-                Debug.Print("Found joystick on path {0}", path);
-            }
-            finally
-            {
-                if (stick == null && fd != -1)
-                    UnsafeNativeMethods.close(fd);
-            }
-
-            return stick;
+            return index_to_stick.ContainsKey(index);
         }
 
         #region UnsafeNativeMethods
@@ -335,9 +361,9 @@ namespace OpenTK.Platform.X11
                 {
                 }
 
-                foreach (JoystickDevice js in sticks)
+                foreach (JoystickDevice<X11JoyDetails> js in sticks)
                 {
-                    UnsafeNativeMethods.close(js.Id);
+                    CloseJoystick(js);
                 }
 
                 disposed = true;
@@ -355,12 +381,26 @@ namespace OpenTK.Platform.X11
 
         JoystickState IJoystickDriver2.GetState(int index)
         {
+            if (IsValid(index))
+            {
+                JoystickDevice<X11JoyDetails> js = 
+                    sticks[index_to_stick[index]];
+                PollJoystick(js);
+                return js.Details.State;
+            }
             return new JoystickState();
         }
 
         JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)
         {
-            return new JoystickCapabilities();
+            JoystickCapabilities caps = new JoystickCapabilities();
+            if (IsValid(index))
+            {
+                JoystickDevice<X11JoyDetails> js = sticks[index_to_stick[index]];
+                caps = new JoystickCapabilities(
+                    js.Axis.Count, js.Button.Count, js.Details.State.IsConnected);
+            }
+            return caps;
         }
 
         Guid IJoystickDriver2.GetGuid(int index)
