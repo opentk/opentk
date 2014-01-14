@@ -157,6 +157,8 @@ namespace OpenTK.Platform.SDL2
             int major, int minor,
             GraphicsContextFlags flags)
         {
+            ContextProfileFlags cpflags = 0;
+
             if (mode.AccumulatorFormat.BitsPerPixel > 0)
             {
                 SDL.GL.SetAttribute(ContextAttribute.ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha);
@@ -203,6 +205,15 @@ namespace OpenTK.Platform.SDL2
             {
                 SDL.GL.SetAttribute(ContextAttribute.CONTEXT_MAJOR_VERSION, major);
                 SDL.GL.SetAttribute(ContextAttribute.CONTEXT_MINOR_VERSION, minor);
+
+                // Workaround for https://github.com/opentk/opentk/issues/44
+                // Mac OS X desktop OpenGL 3.x/4.x contexts require require
+                // ContextProfileFlags.Core, otherwise they will fail to construct.
+                if (Configuration.RunningOnMacOS && major >= 3 &&
+                    (flags & GraphicsContextFlags.Embedded) == 0)
+                {
+                    cpflags |= ContextProfileFlags.CORE;
+                }
             }
 
             if ((flags & GraphicsContextFlags.Debug) != 0)
@@ -223,7 +234,6 @@ namespace OpenTK.Platform.SDL2
             */
 
             {
-                ContextProfileFlags cpflags = 0;
                 if ((flags & GraphicsContextFlags.Embedded) != 0)
                 {
                     cpflags |= ContextProfileFlags.ES;

@@ -75,6 +75,8 @@ namespace OpenTK
     {
         #region --- Fields ---
 
+        const double MaxFrequency = 500.0; // Frequency cap for Update/RenderFrame events
+
         readonly Stopwatch watch = new Stopwatch();
 
         IGraphicsContext glContext;
@@ -89,6 +91,10 @@ namespace OpenTK
 
         double update_timestamp; // timestamp of last UpdateFrame event
         double render_timestamp; // timestamp of last RenderFrame event
+
+        double update_epsilon; // quantization error for UpdateFrame events
+
+        bool is_running_slowly; // true, when UpdatePeriod cannot reach TargetUpdatePeriod
 
         VSyncMode vsync;
 
@@ -431,63 +437,84 @@ namespace OpenTK
             }
         }
 
+        double ClampElapsed(double elapsed)
+        {
+            return MathHelper.Clamp(elapsed, 0.0, 1.0);
+        }
+
         void DispatchUpdateAndRenderFrame(object sender, EventArgs e)
         {
-            const int max_frameskip = 10;
-            int frameskip = 0;
+            int is_running_slowly_retries = 4;
             double timestamp = watch.Elapsed.TotalSeconds;
+            double elapsed = 0;
 
-            do
+            elapsed = ClampElapsed(timestamp - update_timestamp);
+            while (elapsed > 0 && elapsed + update_epsilon >= TargetUpdatePeriod)
             {
-                // Raise UpdateFrame events until we catch up with our target update rate.
-                double update_elapsed = MathHelper.Clamp(timestamp - update_timestamp, 0.0, 1.0);
-                if (RaiseUpdateFrame(update_elapsed))
+                RaiseUpdateFrame(elapsed, ref timestamp);
+                
+                // Calculate difference (positive or negative) between
+                // actual elapsed time and target elapsed time. We must
+                // compensate for this difference.
+                update_epsilon += elapsed - TargetUpdatePeriod;
+
+                // Prepare for next loop
+                elapsed = ClampElapsed(timestamp - update_timestamp);
+
+                if (TargetUpdatePeriod <= Double.Epsilon)
                 {
-                    update_period = update_elapsed;
-                    update_timestamp = timestamp;
-                    timestamp = watch.Elapsed.TotalSeconds;
-                    update_time = timestamp - update_timestamp;
-                }
-                else
-                {
-                    // We have executed enough UpdateFrame events to catch up.
-                    // Break and issue a RenderFrame event.
+                    // According to the TargetUpdatePeriod documentation,
+                    // a TargetUpdatePeriod of zero means we will raise
+                    // UpdateFrame events as fast as possible (one event
+                    // per ProcessEvents() call)
                     break;
                 }
-            } while (++frameskip < max_frameskip);
 
+                is_running_slowly = update_epsilon >= TargetUpdatePeriod;
+                if (is_running_slowly && --is_running_slowly_retries == 0)
+                {
+                    // If UpdateFrame consistently takes longer than TargetUpdateFrame
+                    // stop raising events to avoid hanging inside the UpdateFrame loop.
+                    break;
+                }
+            }
+
+            elapsed = ClampElapsed(timestamp - render_timestamp);
+            if (elapsed > 0 && elapsed >= TargetRenderPeriod)
+            {
+                RaiseRenderFrame(elapsed, ref timestamp);
+            }
+        }
+
+        void RaiseUpdateFrame(double elapsed, ref double timestamp)
+        {
+            // Raise UpdateFrame event
+            update_args.Time = elapsed;
+            OnUpdateFrameInternal(update_args);
+
+            // Update UpdatePeriod/UpdateFrequency properties
+            update_period = elapsed;
+
+            // Update UpdateTime property
+            update_timestamp = timestamp;
             timestamp = watch.Elapsed.TotalSeconds;
-            double render_elapsed = MathHelper.Clamp(timestamp - render_timestamp, 0.0, 1.0);
-            if (RaiseRenderFrame(render_elapsed))
-            {
-                render_period = render_elapsed;
-                render_timestamp = timestamp;
-                timestamp = watch.Elapsed.TotalSeconds;
-                render_time = timestamp - render_timestamp;
-            }
-        }
-
-        bool RaiseUpdateFrame(double time)
-        {
-            if (time > 0 && time >= TargetUpdatePeriod)
-            {
-                update_args.Time = time;
-                OnUpdateFrameInternal(update_args);
-                return true;
-            }
-            return false;
+            update_time = timestamp - update_timestamp;
         }
 
 
-        bool RaiseRenderFrame(double time)
+        void RaiseRenderFrame(double elapsed, ref double timestamp)
         {
-            if (time > 0 && time >= TargetRenderPeriod)
-            {
-                render_args.Time = time;
-                OnRenderFrameInternal(render_args);
-                return true;
-            }
-            return false;
+            // Raise RenderFrame event
+            render_args.Time = elapsed;
+            OnRenderFrameInternal(render_args);
+
+            // Update RenderPeriod/UpdateFrequency properties
+            render_period = elapsed;
+
+            // Update RenderTime property
+            render_timestamp = timestamp;
+            timestamp = watch.Elapsed.TotalSeconds;
+            render_time = timestamp - render_timestamp;
         }
 
         #endregion
@@ -656,7 +683,7 @@ namespace OpenTK
         /// </summary>
         /// <remarks>
         /// <para>A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
-        /// <para>Values lower than 1.0Hz are clamped to 1.0Hz. Values higher than 200.0Hz are clamped to 200.0Hz.</para>
+        /// <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 200.0Hz.</para>
         /// </remarks>
         public double TargetRenderFrequency
         {
@@ -674,11 +701,11 @@ namespace OpenTK
                 {
                     TargetRenderPeriod = 0.0;
                 }
-                else if (value <= 200.0)
+                else if (value <= MaxFrequency)
                 {
                     TargetRenderPeriod = 1.0 / value;
                 }
-                else Debug.Print("Target render frequency clamped to 200.0Hz."); // TODO: Where is it actually performed?
+                else Debug.Print("Target render frequency clamped to {0}Hz.", MaxFrequency);
             }
         }
 
@@ -691,7 +718,7 @@ namespace OpenTK
         /// </summary>
         /// <remarks>
         /// <para>A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
-        /// <para>Values lower than 0.005 seconds (200Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped to 1.0.</para>
+        /// <para>Values lower than 0.002 seconds (500Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped to 1.0.</para>
         /// </remarks>
         public double TargetRenderPeriod
         {
@@ -703,7 +730,7 @@ namespace OpenTK
             set
             {
                 EnsureUndisposed();
-                if (value <= 0.005)
+                if (value <= 1 / MaxFrequency)
                 {
                     target_render_period = 0.0;
                 }
@@ -724,7 +751,7 @@ namespace OpenTK
         /// </summary>
         /// <remarks>
         /// <para>A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
-        /// <para>Values lower than 1.0Hz are clamped to 1.0Hz. Values higher than 200.0Hz are clamped to 200.0Hz.</para>
+        /// <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 500.0Hz.</para>
         /// </remarks>
         public double TargetUpdateFrequency
         {
@@ -742,11 +769,11 @@ namespace OpenTK
                 {
                     TargetUpdatePeriod = 0.0;
                 }
-                else if (value <= 200.0)
+                else if (value <= MaxFrequency)
                 {
                     TargetUpdatePeriod = 1.0 / value;
                 }
-                else Debug.Print("Target update frequency clamped to 200.0Hz."); // TODO: Where is it actually performed?
+                else Debug.Print("Target render frequency clamped to {0}Hz.", MaxFrequency);
             }
         }
 
@@ -759,7 +786,7 @@ namespace OpenTK
         /// </summary>
         /// <remarks>
         /// <para>A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
-        /// <para>Values lower than 0.005 seconds (200Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped to 1.0.</para>
+        /// <para>Values lower than 0.002 seconds (500Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped to 1.0.</para>
         /// </remarks>
         public double TargetUpdatePeriod
         {
@@ -771,7 +798,7 @@ namespace OpenTK
             set
             {
                 EnsureUndisposed();
-                if (value <= 0.005)
+                if (value <= 1 / MaxFrequency)
                 {
                     target_update_period = 0.0;
                 }
@@ -779,7 +806,7 @@ namespace OpenTK
                 {
                     target_update_period = value;
                 }
-                else Debug.Print("Target update period clamped to 1.0 seconds."); // TODO: Where is it actually performed?
+                else Debug.Print("Target update period clamped to 1.0 seconds.");
             }
         }
 
