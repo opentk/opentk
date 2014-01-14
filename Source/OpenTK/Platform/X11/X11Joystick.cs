@@ -28,20 +28,29 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    struct X11JoyDetails { }
+    struct X11JoyDetails
+    {
+        public bool IsConnected;
+    }
 
-    sealed class X11Joystick : IJoystickDriver, IJoystickDriver2, IGamePadDriver
+    sealed class X11Joystick : IJoystickDriver2
     {
         #region Fields
 
-        List<JoystickDevice> sticks = new List<JoystickDevice>();
-        IList<JoystickDevice> sticks_readonly;
+        readonly object sync = new object();
+
+        readonly FileSystemWatcher watcher = new FileSystemWatcher(JoystickPath);
+        readonly FileSystemWatcher watcher_legacy = new FileSystemWatcher(JoystickPathLegacy);
+
+        readonly Dictionary<int, int> index_to_stick = new Dictionary<int, int>();
+        List<JoystickDevice<X11JoyDetails>> sticks = new List<JoystickDevice<X11JoyDetails>>();
 
         bool disposed;
 
@@ -51,16 +60,29 @@ namespace OpenTK.Platform.X11
 
         public X11Joystick()
         {
-            sticks_readonly = sticks.AsReadOnly();
+            watcher.Created += JoystickAdded;
+            watcher.Deleted += JoystickRemoved;
+            watcher.EnableRaisingEvents = true;
 
+            watcher_legacy.Created += JoystickAdded;
+            watcher_legacy.Deleted += JoystickRemoved;
+            watcher_legacy.EnableRaisingEvents = true;
+        }
+
+        #endregion
+
+        #region Private Members
+
+        void OpenJoysticks()
+        {
             int number = 0, max_sticks = 25;
             while (number < max_sticks)
             {
-                JoystickDevice stick = OpenJoystick(JoystickPath, number++);
+                JoystickDevice<X11JoyDetails> stick = OpenJoystick(JoystickPath, number++);
                 if (stick != null)
                 {
                     //stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
-                        //number, stick.Axis.Count, stick.Button.Count, JoystickPath);
+                    //number, stick.Axis.Count, stick.Button.Count, JoystickPath);
                     sticks.Add(stick);
                 }
             }
@@ -68,29 +90,97 @@ namespace OpenTK.Platform.X11
             number = 0;
             while (number < max_sticks)
             {
-                JoystickDevice stick = OpenJoystick(JoystickPathLegacy, number++);
+                JoystickDevice<X11JoyDetails> stick = OpenJoystick(JoystickPathLegacy, number++);
                 if (stick != null)
                 {
                     //stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
-                        //number, stick.Axis.Count, stick.Button.Count, JoystickPathLegacy);
+                    //number, stick.Axis.Count, stick.Button.Count, JoystickPathLegacy);
                     sticks.Add(stick);
                 }
             }
         }
 
+        int GetJoystickNumber(string path)
+        {
+            if (path.StartsWith("js"))
+            {
+                int num;
+                if (Int32.TryParse(path.Substring(2), out num))
+                {
+                    return num;
+                }
+            }
+            return -1;
+        }
+
+        void JoystickAdded(object sender, FileSystemEventArgs e)
+        {
+            lock (sync)
+            {
+                string file = Path.GetFileName(e.FullPath);
+                int number = GetJoystickNumber(file);
+                if (number != -1)
+                {
+                    JoystickDevice<X11JoyDetails> stick = OpenJoystick(e.FullPath, number);
+
+                    // Find the first disconnected joystick (if any)
+                    int i;
+                    for (i = 0; i < sticks.Count; i++)
+                    {
+                        if (!stick.Details.IsConnected)
+                        {
+                            break;
+                        }
+                    }
+
+                    // If no disconnected joystick exists, append a new slot
+                    if (i == sticks.Count)
+                    {
+                        sticks.Add(stick);
+                    }
+                    else
+                    {
+                        sticks[i] = stick;
+                    }
+
+                    // Map player index to joystick
+                    index_to_stick.Add(index_to_stick.Count, i);
+                }
+            }
+        }
+
+        void JoystickRemoved(object sender, FileSystemEventArgs e)
+        {
+            lock (sync)
+            {
+                string file = Path.GetFileName(e.FullPath);
+                int number = GetJoystickNumber(file);
+                if (number != -1)
+                {
+                    // Find which joystick id matches this number
+                    int i;
+                    for (i = 0; i < sticks.Count; i++)
+                    {
+                        if (sticks[i].Id == number)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (i == sticks.Count)
+                    {
+                        Debug.Print("[Evdev] Joystick id {0} does not exist.", number);
+                    }
+                    else
+                    {
+                        JoystickDevice<X11JoyDetails> stick = sticks[i];
+                        stick.Details.IsConnected = false;
+                    }
+                }
+            }
+        }
+
         #endregion
-
-        #region IJoystickDriver
-
-        public int DeviceCount
-        {
-            get { return sticks.Count; }
-        }
-
-        public IList<JoystickDevice> Joysticks
-        {
-            get { Poll(); return sticks_readonly; }
-        }
 
         public void Poll()
         {
@@ -123,13 +213,11 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        #endregion
-
         #region Private Members
 
         JoystickDevice<X11JoyDetails> OpenJoystick(string base_path, int number)
         {
-            string path = base_path + number.ToString();
+            string path = Path.Combine(base_path, "js" + number.ToString());
             JoystickDevice<X11JoyDetails> stick = null;
 
             int fd = -1;
@@ -158,6 +246,10 @@ namespace OpenTK.Platform.X11
                 StringBuilder sb = new StringBuilder(128);
                 UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Name128, sb);
                 stick.Description = sb.ToString();
+
+                stick.Id = number;
+
+                stick.Details.IsConnected = true;
 
                 Debug.Print("Found joystick on path {0}", path);
             }
@@ -196,8 +288,8 @@ namespace OpenTK.Platform.X11
             Name128 = (2u << 30) | (0x6A << 8) | (0x13 << 0) | (128 << 16) //JSIOCGNAME(128), which is _IOC(_IO_READ, 'j', 0x13, len)
         }
 
-        static readonly string JoystickPath = "/dev/input/js";
-        static readonly string JoystickPathLegacy = "/dev/js";
+        static readonly string JoystickPath = "/dev/input";
+        static readonly string JoystickPathLegacy = "/dev";
 
         [Flags]
         enum OpenFlags
@@ -255,30 +347,6 @@ namespace OpenTK.Platform.X11
         ~X11Joystick()
         {
             Dispose(false);
-        }
-
-        #endregion
-
-        #region IGamePadDriver Members
-
-        public GamePadCapabilities GetCapabilities(int index)
-        {
-            return new GamePadCapabilities();
-        }
-
-        public GamePadState GetState(int index)
-        {
-            return new GamePadState();
-        }
-
-        public string GetName(int index)
-        {
-            return String.Empty;
-        }
-
-        public bool SetVibration(int index, float left, float right)
-        {
-            return false;
         }
 
         #endregion
