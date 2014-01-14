@@ -92,6 +92,8 @@ namespace OpenTK
 
         double update_epsilon; // quantization error for UpdateFrame events
 
+        bool is_running_slowly; // true, when UpdatePeriod cannot reach TargetUpdatePeriod
+
         VSyncMode vsync;
 
         FrameEventArgs update_args = new FrameEventArgs();
@@ -440,6 +442,7 @@ namespace OpenTK
 
         void DispatchUpdateAndRenderFrame(object sender, EventArgs e)
         {
+            int is_running_slowly_retries = 4;
             double timestamp = watch.Elapsed.TotalSeconds;
             double elapsed = 0;
 
@@ -462,6 +465,14 @@ namespace OpenTK
                     // a TargetUpdatePeriod of zero means we will raise
                     // UpdateFrame events as fast as possible (one event
                     // per ProcessEvents() call)
+                    break;
+                }
+
+                is_running_slowly = update_epsilon >= TargetUpdatePeriod;
+                if (is_running_slowly && --is_running_slowly_retries == 0)
+                {
+                    // If UpdateFrame consistently takes longer than TargetUpdateFrame
+                    // stop raising events to avoid hanging inside the UpdateFrame loop.
                     break;
                 }
             }
