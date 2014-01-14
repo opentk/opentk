@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
@@ -37,6 +37,7 @@ namespace OpenTK.Platform.X11
 {
     struct X11JoyDetails
     {
+        public Guid Guid;
         public int FileDescriptor;
         public JoystickState State;
     }
@@ -159,6 +160,72 @@ namespace OpenTK.Platform.X11
 
         #region Private Members
 
+        Guid CreateGuid(JoystickDevice<X11JoyDetails> js, string path, int number)
+        {
+            byte[] bytes = new byte[16];
+            for (int i = 0; i < Math.Min(bytes.Length, js.Description.Length); i++)
+            {
+                bytes[i] = (byte)js.Description[i];
+            }
+            return new Guid(bytes);
+   
+#if false // Todo: move to /dev/input/event* from /dev/input/js*
+            string evdev_path = Path.Combine(Path.GetDirectoryName(path), "event" + number);
+            if (!File.Exists(evdev_path))
+                return new Guid();
+
+            int event_fd = UnsafeNativeMethods.open(evdev_path, OpenFlags.NonBlock);
+            if (event_fd < 0)
+                return new Guid();
+
+            try
+            {
+                EventInputId id;
+                if (UnsafeNativeMethods.ioctl(event_fd, EvdevInputId.Id, out id) < 0)
+                    return new Guid();
+
+                int i = 0;
+                byte[] bus = BitConverter.GetBytes(id.BusType);
+                bytes[i++] = bus[0];
+                bytes[i++] = bus[1];
+                bytes[i++] = 0;
+                bytes[i++] = 0;
+
+                if (id.Vendor != 0 && id.Product != 0 && id.Version != 0)
+                {
+                    byte[] vendor = BitConverter.GetBytes(id.Vendor);
+                    byte[] product = BitConverter.GetBytes(id.Product);
+                    byte[] version = BitConverter.GetBytes(id.Version);
+                    bytes[i++] = vendor[0];
+                    bytes[i++] = vendor[1];
+                    bytes[i++] = 0;
+                    bytes[i++] = 0;
+                    bytes[i++] = product[0];
+                    bytes[i++] = product[1];
+                    bytes[i++] = 0;
+                    bytes[i++] = 0;
+                    bytes[i++] = version[0];
+                    bytes[i++] = version[1];
+                    bytes[i++] = 0;
+                    bytes[i++] = 0;
+                }
+                else
+                {
+                    for (; i < bytes.Length; i++)
+                    {
+                        bytes[i] = (byte)js.Description[i];
+                    }
+                }
+
+                return new Guid(bytes);
+            }
+            finally
+            {
+                UnsafeNativeMethods.close(event_fd);
+            }
+#endif
+        }
+        
         JoystickDevice<X11JoyDetails> OpenJoystick(string path)
         {
             JoystickDevice<X11JoyDetails> stick = null;
@@ -195,7 +262,7 @@ namespace OpenTK.Platform.X11
 
                     stick.Details.FileDescriptor = fd;
                     stick.Details.State.SetIsConnected(true);
-                    //stick.Details.Guid = 
+                    stick.Details.Guid = CreateGuid(stick, path, number);
                     
                     // Find the first disconnected joystick (if any)
                     int i;
@@ -290,6 +357,20 @@ namespace OpenTK.Platform.X11
 
         #region UnsafeNativeMethods
 
+        struct EvdevInputId
+        {
+            public ushort BusType;
+            public ushort Vendor;
+            public ushort Product;
+            public ushort Version;
+        }
+
+        enum EvdevIoctlCode : uint
+        {
+            Id = ((byte)'E' << 8) | (0x02 << 0) //EVIOCGID, which is _IOR('E', 0x02, struct input_id)
+        }
+ 
+
         struct JoystickEvent
         {
             public uint Time;    // (u32) event timestamp in milliseconds
@@ -330,6 +411,9 @@ namespace OpenTK.Platform.X11
 
             [DllImport("libc", SetLastError = true)]
             public static extern int ioctl(int d, JoystickIoctlCode request, StringBuilder data);
+
+            [DllImport("libc", SetLastError = true)]
+            public static extern int ioctl(int d, EvdevIoctlCode request, out EvdevInputId data);
 
             [DllImport("libc", SetLastError = true)]
             public static extern int open([MarshalAs(UnmanagedType.LPStr)]string pathname, OpenFlags flags);
@@ -405,6 +489,11 @@ namespace OpenTK.Platform.X11
 
         Guid IJoystickDriver2.GetGuid(int index)
         {
+            if (IsValid(index))
+            {
+                JoystickDevice<X11JoyDetails> js = sticks[index_to_stick[index]];
+                return js.Details.Guid; 
+            }
             return new Guid();
         }
 
