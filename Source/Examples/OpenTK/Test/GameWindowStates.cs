@@ -25,8 +25,22 @@ namespace Examples.Tests
         int texture;
         bool mouse_in_window = false;
         bool viewport_changed = true;
+
+        // time drift
         Stopwatch watch = new Stopwatch();
         double update_time, render_time;
+
+        // timing information
+        double timestamp;
+        int update_count;
+        int update_fps;
+        int render_count;
+        int render_fps;
+
+        // position of moving objects on screen
+        double variable_update_timestep_pos = -1;
+        double variable_refresh_timestep_pos = -1;
+        double fixed_update_timestep_pos = -1;
 
         public GameWindowStates()
             : base(800, 600, GraphicsMode.Default)
@@ -35,10 +49,10 @@ namespace Examples.Tests
             Keyboard.KeyRepeat = true;
             KeyDown += KeyDownHandler;
             KeyPress += KeyPressHandler;
-            
+
             MouseEnter += delegate { mouse_in_window = true; };
             MouseLeave += delegate { mouse_in_window = false; };
-            
+
             Mouse.Move += MouseMoveHandler;
             Mouse.ButtonDown += MouseButtonHandler;
             Mouse.ButtonUp += MouseButtonHandler;
@@ -110,7 +124,7 @@ namespace Examples.Tests
         {
             return val > max ? max : val < min ? min : val;
         }
-        
+
         static float DrawString(Graphics gfx, string str, int line)
         {
             return DrawString(gfx, str, line, 0);
@@ -217,6 +231,8 @@ namespace Examples.Tests
         {
             double clock_time = watch.Elapsed.TotalSeconds;
             update_time += e.Time;
+            timestamp += e.Time;
+            update_count++;
 
             using (Graphics gfx = Graphics.FromImage(TextBitmap))
             {
@@ -247,15 +263,33 @@ namespace Examples.Tests
                 // Timing information
                 line++;
                 DrawString(gfx, "Timing:", line++);
-                DrawString(gfx, String.Format("Frequency: update ({0:f2}/{1:f2}); render ({2:f2}/{3:f2})",
-                    UpdateFrequency, TargetUpdateFrequency, RenderFrequency, TargetRenderFrequency), line++);
-                DrawString(gfx, String.Format("Period: update ({0:f4}/{1:f4}); render ({2:f4}/{3:f4})",
-                    UpdatePeriod, TargetUpdatePeriod, RenderPeriod, TargetRenderPeriod), line++);
+                DrawString(gfx,
+                    String.Format("Frequency: update {4} ({0:f2}/{1:f2}); render {5} ({2:f2}/{3:f2})",
+                        UpdateFrequency, TargetUpdateFrequency,
+                        RenderFrequency, TargetRenderFrequency,
+                        update_fps, render_fps),
+                    line++);
+                DrawString(gfx,
+                    String.Format("Period: update {4:N4} ({0:f4}/{1:f4}); render {5:N4} ({2:f4}/{3:f4})",
+                        UpdatePeriod, TargetUpdatePeriod,
+                        RenderPeriod, TargetRenderPeriod,
+                        1.0 / update_fps, 1.0 / render_fps),
+                    line++);
                 DrawString(gfx, String.Format("Time: update {0:f4}; render {1:f4}",
-                    UpdateTime, RenderTime), line++); 
+                    UpdateTime, RenderTime), line++);
                 DrawString(gfx, String.Format("Drift: clock {0:f4}; update {1:f4}; render {2:f4}",
                     clock_time, clock_time - update_time, clock_time - render_time), line++);
                 DrawString(gfx, String.Format("Text: {0}", TypedText.ToString()), line++);
+
+                if (timestamp >= 1)
+                {
+                    timestamp -= 1;
+                    update_fps = update_count;
+                    render_fps = render_count;
+                    update_count = 0;
+                    render_count = 0;
+
+                }
 
                 // Input information
                 line = DrawKeyboards(gfx, line);
@@ -263,6 +297,13 @@ namespace Examples.Tests
                 line = DrawJoysticks(gfx, line);
                 line = DrawLegacyJoysticks(gfx, Joysticks, line);
             }
+
+            fixed_update_timestep_pos += TargetUpdatePeriod;
+            variable_update_timestep_pos += e.Time;
+            if (fixed_update_timestep_pos >= 1)
+                fixed_update_timestep_pos -= 2;
+            if (variable_update_timestep_pos >= 1)
+                variable_update_timestep_pos -= 2;
         }
 
         int DrawJoysticks(Graphics gfx, int line)
@@ -323,7 +364,31 @@ namespace Examples.Tests
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             render_time += e.Time;
+            render_count++;
 
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+
+            if (viewport_changed)
+            {
+                viewport_changed = false;
+                GL.Viewport(0, 0, Width, Height);
+            }
+
+            DrawText();
+
+            DrawMovingObjects();
+
+            variable_refresh_timestep_pos += e.Time;
+            if (variable_refresh_timestep_pos >= 1)
+                variable_refresh_timestep_pos -= 2;
+
+            SwapBuffers();
+        }
+
+        // Uploads our text Bitmap to an OpenGL texture
+        // and displays is to screen.
+        private void DrawText()
+        {
             System.Drawing.Imaging.BitmapData data = TextBitmap.LockBits(
                 new System.Drawing.Rectangle(0, 0, TextBitmap.Width, TextBitmap.Height),
                 System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -331,29 +396,63 @@ namespace Examples.Tests
                 PixelType.UnsignedByte, data.Scan0);
             TextBitmap.UnlockBits(data);
 
-            if (viewport_changed)
-            {
-                viewport_changed = false;
+            Matrix4 text_projection = Matrix4.CreateOrthographicOffCenter(0, Width, Height, 0, -1, 1);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref text_projection);
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
 
-                GL.Viewport(0, 0, Width, Height);
-
-                Matrix4 ortho_projection = Matrix4.CreateOrthographicOffCenter(0, Width, Height, 0, -1, 1);
-                GL.MatrixMode(MatrixMode.Projection);
-                GL.LoadMatrix(ref ortho_projection);
-            }
-
-            GL.Clear(ClearBufferMask.ColorBufferBit);
-
+            GL.Color4(Color4.White);
+            GL.Enable(EnableCap.Texture2D);
             GL.Begin(PrimitiveType.Quads);
-
             GL.TexCoord2(0, 0); GL.Vertex2(0, 0);
             GL.TexCoord2(1, 0); GL.Vertex2(TextBitmap.Width, 0);
             GL.TexCoord2(1, 1); GL.Vertex2(TextBitmap.Width, TextBitmap.Height);
             GL.TexCoord2(0, 1); GL.Vertex2(0, TextBitmap.Height);
-
             GL.End();
+            GL.Disable(EnableCap.Texture2D);
+        }
 
-            SwapBuffers();
+        // Draws three moving objects, using three different timing methods:
+        // 1. fixed framerate based on TargetUpdatePeriod
+        // 2. variable framerate based on UpdateFrame e.Time
+        // 3. variable framerate based on RenderFrame e.Time
+        // If the timing implementation is correct, all three objects
+        // should be moving at the same speed, regardless of the current
+        // UpdatePeriod and RenderPeriod.
+        void DrawMovingObjects()
+        {
+            Matrix4 thing_projection = Matrix4.CreateOrthographic(2, 2, -1, 1);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref thing_projection);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            GL.Translate(fixed_update_timestep_pos, -0.2, 0);
+            GL.Color4(Color4.Red);
+            DrawRectangle();
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            GL.Translate(variable_update_timestep_pos, -0.4, 0);
+            GL.Color4(Color4.DarkGoldenrod);
+            DrawRectangle();
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            GL.Translate(variable_refresh_timestep_pos, -0.8, 0);
+            GL.Color4(Color4.DarkGreen);
+            DrawRectangle();
+        }
+
+        private void DrawRectangle()
+        {
+            GL.Begin(PrimitiveType.Quads);
+            GL.Vertex2(-0.05, -0.05);
+            GL.Vertex2(+0.05, -0.05);
+            GL.Vertex2(+0.05, +0.05);
+            GL.Vertex2(-0.05, +0.05);
+            GL.End();
         }
 
         public static void Main()
