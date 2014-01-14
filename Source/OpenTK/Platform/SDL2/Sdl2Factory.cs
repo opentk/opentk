@@ -32,10 +32,9 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2Factory : IPlatformFactory
+    class Sdl2Factory : PlatformFactoryBase
     {
         readonly Sdl2InputDriver InputDriver = new Sdl2InputDriver();
-        bool disposed;
 
         /// <summary>
         /// Gets or sets a value indicating whether to use SDL2 fullscreen-desktop mode
@@ -56,27 +55,27 @@ namespace OpenTK.Platform.SDL2
 
         #region IPlatformFactory implementation
 
-        public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
             return new Sdl2NativeWindow(x, y, width, height, title, options, device, InputDriver);
         }
 
-        public IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new Sdl2DisplayDeviceDriver();
         }
 
-        virtual public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new Sdl2GraphicsContext(mode, window, shareContext, major, minor, flags);
         }
 
-        public IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             throw new NotImplementedException();
         }
 
-        public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
+        public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
             return (GraphicsContext.GetCurrentContextDelegate)delegate
             {
@@ -84,27 +83,17 @@ namespace OpenTK.Platform.SDL2
             };
         }
 
-        public IGraphicsMode CreateGraphicsMode()
-        {
-            return new Sdl2GraphicsMode();
-        }
-
-        public IKeyboardDriver2 CreateKeyboardDriver()
+        public override IKeyboardDriver2 CreateKeyboardDriver()
         {
             return InputDriver.KeyboardDriver;
         }
 
-        public IMouseDriver2 CreateMouseDriver()
+        public override IMouseDriver2 CreateMouseDriver()
         {
             return InputDriver.MouseDriver;
         }
 
-        public IGamePadDriver CreateGamePadDriver()
-        {
-            return InputDriver.GamePadDriver;
-        }
-
-        public IJoystickDriver2 CreateJoystickDriver()
+        public override IJoystickDriver2 CreateJoystickDriver()
         {
             return InputDriver.JoystickDriver;
         }
@@ -113,32 +102,17 @@ namespace OpenTK.Platform.SDL2
 
         #region IDisposable Members
 
-        void Dispose(bool manual)
+        protected override void Dispose(bool manual)
         {
-            if (!disposed)
+            if (!IsDisposed)
             {
                 if (manual)
                 {
-                    Debug.Print("Disposing {0}", GetType());
                     InputDriver.Dispose();
                 }
-                else
-                {
-                    Debug.WriteLine("Sdl2Factory leaked, did you forget to call Dispose()?");
-                }
-                disposed = true;
+
+                base.Dispose(manual);
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        ~Sdl2Factory()
-        {
-            Dispose(false);
         }
 
         #endregion
