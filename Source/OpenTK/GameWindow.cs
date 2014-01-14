@@ -455,6 +455,15 @@ namespace OpenTK
 
                 // Prepare for next loop
                 elapsed = ClampElapsed(timestamp - update_timestamp);
+
+                if (TargetUpdatePeriod <= Double.Epsilon)
+                {
+                    // According to the TargetUpdatePeriod documentation,
+                    // a TargetUpdatePeriod of zero means we will raise
+                    // UpdateFrame events as fast as possible (one event
+                    // per ProcessEvents() call)
+                    break;
+                }
             }
 
             elapsed = ClampElapsed(timestamp - render_timestamp);
