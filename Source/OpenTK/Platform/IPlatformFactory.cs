@@ -54,5 +54,7 @@ namespace OpenTK.Platform
         OpenTK.Input.IGamePadDriver CreateGamePadDriver();
 
         Input.IJoystickDriver2 CreateJoystickDriver();
+
+        Input.IJoystickDriver CreateLegacyJoystickDriver();
     }
 }

@@ -78,6 +78,8 @@ namespace OpenTK
         const double MaxFrequency = 500.0; // Frequency cap for Update/RenderFrame events
 
         readonly Stopwatch watch = new Stopwatch();
+        readonly IJoystickDriver LegacyJoystick =
+            Factory.Default.CreateLegacyJoystickDriver();
 
         IGraphicsContext glContext;
 
@@ -576,9 +578,10 @@ namespace OpenTK
         /// <summary>
         /// Gets a readonly IList containing all available OpenTK.Input.JoystickDevices.
         /// </summary>
+        [Obsolete("Use OpenTK.Input.Joystick and GamePad instead")]
         public IList<JoystickDevice> Joysticks
         {
-            get { return InputDriver.Joysticks; }
+            get { return LegacyJoystick.Joysticks; }
         }
 
         #endregion
