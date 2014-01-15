@@ -65,9 +65,10 @@ namespace OpenTK.Platform
                 if (caps.IsConnected && joysticks[i].Description == DisconnectedName)
                 {
                     // New joystick connected
-                    JoystickDevice device = new LegacyJoystickDevice(i, caps.AxisCount, caps.ButtonCount);
+                    joysticks[i] = new LegacyJoystickDevice(i, caps.AxisCount, caps.ButtonCount);
                     //device.Description = Joystick.GetName(i);
-                    device.Description = ConnectedName;
+                    joysticks[i].Description = ConnectedName;
+                    
                 }
                 else if (!caps.IsConnected && joysticks[i].Description != DisconnectedName)
                 {
@@ -77,12 +78,12 @@ namespace OpenTK.Platform
                 }
 
                 JoystickState state = Joystick.GetState(i);
-                for (int axis_index = 0; axis_index < (int)JoystickAxis.Last; axis_index++)
+                for (int axis_index = 0; axis_index < (int)caps.AxisCount; axis_index++)
                 {
                     JoystickAxis axis = JoystickAxis.Axis0 + axis_index;
                     joysticks[i].SetAxis(axis, state.GetAxis(axis));
                 }
-                for (int button_index = 0; button_index < (int)JoystickButton.Last; button_index++)
+                for (int button_index = 0; button_index < (int)caps.ButtonCount; button_index++)
                 {
                     JoystickButton button = JoystickButton.Button0 + button_index;
                     joysticks[i].SetButton(button, state.GetButton(button) == ButtonState.Pressed);
@@ -96,6 +97,7 @@ namespace OpenTK.Platform
         {
             get
             {
+                Poll();
                 return joysticks_readonly;
             }
         }
