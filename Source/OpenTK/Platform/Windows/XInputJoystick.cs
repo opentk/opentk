@@ -37,36 +37,55 @@ using System.Diagnostics;
 
 namespace OpenTK.Platform.Windows
 {
-    class XInputJoystick : IGamePadDriver, IDisposable
+    class XInputJoystick : IJoystickDriver2, IDisposable
     {
+        // All XInput devices use the same Guid
+        // (only one GamePadConfiguration entry required)
+        static readonly Guid guid =
+            new Guid("78696e70757400000000000000000000"); // equiv. to "xinput"
+
         XInput xinput = new XInput();
 
-        #region IGamePadDriver Members
+        #region IJoystickDriver2 Members
 
-        public GamePadState GetState(int index)
+        public JoystickState GetState(int index)
         {
             XInputState xstate;
             XInputErrorCode error = xinput.GetState((XInputUserIndex)index, out xstate);
 
-            GamePadState state = new GamePadState();
+            JoystickState state = new JoystickState();
             if (error == XInputErrorCode.Success)
             {
-                state.SetConnected(true);
+                state.SetIsConnected(true);
 
-                state.SetAxis(GamePadAxes.LeftX, xstate.GamePad.ThumbLX);
-                state.SetAxis(GamePadAxes.LeftY, xstate.GamePad.ThumbLY);
-                state.SetAxis(GamePadAxes.RightX, xstate.GamePad.ThumbRX);
-                state.SetAxis(GamePadAxes.RightY, xstate.GamePad.ThumbRY);
+                state.SetAxis(JoystickAxis.Axis0, xstate.GamePad.ThumbLX);
+                state.SetAxis(JoystickAxis.Axis1, xstate.GamePad.ThumbLY);
+                state.SetAxis(JoystickAxis.Axis2, xstate.GamePad.ThumbRX);
+                state.SetAxis(JoystickAxis.Axis3, xstate.GamePad.ThumbRY);
+                state.SetAxis(JoystickAxis.Axis4, xstate.GamePad.LeftTrigger);
+                state.SetAxis(JoystickAxis.Axis5, xstate.GamePad.RightTrigger);
 
-                state.SetTriggers(xstate.GamePad.LeftTrigger, xstate.GamePad.RightTrigger);
-
-                state.SetButton(TranslateButtons(xstate.GamePad.Buttons), true);
+                state.SetButton(JoystickButton.Button0, (xstate.GamePad.Buttons & XInputButtons.DPadUp) != 0);
+                state.SetButton(JoystickButton.Button1, (xstate.GamePad.Buttons & XInputButtons.DPadDown) != 0);
+                state.SetButton(JoystickButton.Button2, (xstate.GamePad.Buttons & XInputButtons.DPadLeft) != 0);
+                state.SetButton(JoystickButton.Button3, (xstate.GamePad.Buttons & XInputButtons.DPadRight) != 0);
+                state.SetButton(JoystickButton.Button4, (xstate.GamePad.Buttons & XInputButtons.Start) != 0);
+                state.SetButton(JoystickButton.Button5, (xstate.GamePad.Buttons & XInputButtons.Back) != 0);
+                state.SetButton(JoystickButton.Button6, (xstate.GamePad.Buttons & XInputButtons.LeftThumb) != 0);
+                state.SetButton(JoystickButton.Button7, (xstate.GamePad.Buttons & XInputButtons.RightThumb) != 0);
+                state.SetButton(JoystickButton.Button8, (xstate.GamePad.Buttons & XInputButtons.LeftShoulder) != 0);
+                state.SetButton(JoystickButton.Button9, (xstate.GamePad.Buttons & XInputButtons.RightShoulder) != 0);
+                state.SetButton(JoystickButton.Button10, (xstate.GamePad.Buttons & XInputButtons.A) != 0);
+                state.SetButton(JoystickButton.Button11, (xstate.GamePad.Buttons & XInputButtons.B) != 0);
+                state.SetButton(JoystickButton.Button12, (xstate.GamePad.Buttons & XInputButtons.X) != 0);
+                state.SetButton(JoystickButton.Button13, (xstate.GamePad.Buttons & XInputButtons.Y) != 0);
+                state.SetButton(JoystickButton.Button14, (xstate.GamePad.Buttons & XInputButtons.Guide) != 0);
             }
 
             return state;
         }
 
-        public GamePadCapabilities GetCapabilities(int index)
+        public JoystickCapabilities GetCapabilities(int index)
         {
             XInputDeviceCapabilities xcaps;
             XInputErrorCode error = xinput.GetCapabilities(
@@ -76,18 +95,23 @@ namespace OpenTK.Platform.Windows
 
             if (error == XInputErrorCode.Success)
             {
-                GamePadType type = TranslateSubType(xcaps.SubType);
-                Buttons buttons = TranslateButtons(xcaps.GamePad.Buttons);
-                GamePadAxes axes = TranslateAxes(ref xcaps.GamePad);
+                //GamePadType type = TranslateSubType(xcaps.SubType);
+                int buttons = TranslateButtons(xcaps.GamePad.Buttons);
+                int axes = TranslateAxes(ref xcaps.GamePad);
 
-                return new GamePadCapabilities(type, axes, buttons, true);
+                return new JoystickCapabilities(axes, buttons, true);
             }
-            return new GamePadCapabilities();
+            return new JoystickCapabilities();
         }
 
         public string GetName(int index)
         {
             return String.Empty;
+        }
+
+        public Guid GetGuid(int index)
+        {
+            return guid;
         }
 
         public bool SetVibration(int index, float left, float right)
@@ -98,39 +122,33 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region Private Members
-        GamePadAxes TranslateAxes(ref XInputGamePad pad)
+
+        int TranslateAxes(ref XInputGamePad pad)
         {
-            GamePadAxes axes = 0;
-            axes |= pad.ThumbLX != 0 ? GamePadAxes.LeftX : 0;
-            axes |= pad.ThumbLY != 0 ? GamePadAxes.LeftY : 0;
-            axes |= pad.LeftTrigger != 0 ? GamePadAxes.LeftTrigger : 0;
-            axes |= pad.ThumbRX != 0 ? GamePadAxes.RightX : 0;
-            axes |= pad.ThumbRY != 0 ? GamePadAxes.RightY : 0;
-            axes |= pad.RightTrigger != 0 ? GamePadAxes.RightTrigger : 0;
-            return axes;
+            int count = 0;
+            count += pad.ThumbLX != 0 ? 1 : 0;
+            count += pad.ThumbLY != 0 ? 1 : 0;
+            count += pad.ThumbRX != 0 ? 1 : 0;
+            count += pad.ThumbRY != 0 ? 1 : 0;
+            count += pad.LeftTrigger != 0 ? 1 : 0;
+            count += pad.RightTrigger != 0 ? 1 : 0;
+            return count;
         }
 
-        Buttons TranslateButtons(XInputButtons xbuttons)
+        int NumberOfSetBits(int i)
         {
-            Buttons buttons = 0;
-            buttons |= (xbuttons & XInputButtons.A) != 0 ? Buttons.A : 0;
-            buttons |= (xbuttons & XInputButtons.B) != 0 ? Buttons.B : 0;
-            buttons |= (xbuttons & XInputButtons.X) != 0 ? Buttons.X : 0;
-            buttons |= (xbuttons & XInputButtons.Y) != 0 ? Buttons.Y : 0;
-            buttons |= (xbuttons & XInputButtons.Start) != 0 ? Buttons.Start : 0;
-            buttons |= (xbuttons & XInputButtons.Back) != 0 ? Buttons.Back : 0;
-            //buttons |= (xbuttons & XInputButtons.BigButton) != 0 ? Buttons.BigButton : 0;
-            buttons |= (xbuttons & XInputButtons.LeftShoulder) != 0 ? Buttons.LeftShoulder : 0;
-            buttons |= (xbuttons & XInputButtons.RightShoulder) != 0 ? Buttons.RightShoulder : 0;
-            buttons |= (xbuttons & XInputButtons.LeftThumb) != 0 ? Buttons.LeftStick : 0;
-            buttons |= (xbuttons & XInputButtons.RightThumb) != 0 ? Buttons.RightStick : 0;
-            buttons |= (xbuttons & XInputButtons.DPadDown) != 0 ? Buttons.DPadDown : 0;
-            buttons |= (xbuttons & XInputButtons.DPadUp) != 0 ? Buttons.DPadUp : 0;
-            buttons |= (xbuttons & XInputButtons.DPadLeft) != 0 ? Buttons.DPadLeft : 0;
-            buttons |= (xbuttons & XInputButtons.DPadRight) != 0 ? Buttons.DPadRight : 0;
-            return buttons;
+            i = i - ((i >> 1) & 0x55555555);
+            i = (i & 0x33333333) + ((i >> 2) & 0x33333333);
+            return (((i + (i >> 4)) & 0x0F0F0F0F) * 0x01010101) >> 24;
         }
 
+        int TranslateButtons(XInputButtons xbuttons)
+        {
+            return NumberOfSetBits((int)xbuttons);
+        }
+
+#if false
+        // Todo: Implement JoystickType enumeration
         GamePadType TranslateSubType(XInputDeviceSubType xtype)
         {
             switch (xtype)
@@ -150,6 +168,7 @@ namespace OpenTK.Platform.Windows
                     return GamePadType.Unknown;
             }
         }
+#endif
 
         enum XInputErrorCode
         {
@@ -198,6 +217,7 @@ namespace OpenTK.Platform.Windows
             RightThumb = 0x0080,
             LeftShoulder = 0x0100,
             RightShoulder = 0x0200,
+            Guide = 0x0400, // Undocumented, requires XInputGetStateEx + XINPUT_1_3.dll or higher
             A = 0x1000,
             B = 0x2000,
             X = 0x4000,
@@ -306,7 +326,11 @@ namespace OpenTK.Platform.Windows
 
                 // Load the entry points we are interested in from that dll
                 GetCapabilities = (XInputGetCapabilities)Load("XInputGetCapabilities", typeof(XInputGetCapabilities));
-                GetState = (XInputGetState)Load("XInputGetState", typeof(XInputGetState));
+                GetState =
+                    // undocumented XInputGetStateEx with support for the "Guide" button (requires XINPUT_1_3+)
+                    (XInputGetState)Load("XInputGetStateEx", typeof(XInputGetState)) ??
+                    // documented XInputGetState (no support for the "Guide" button)
+                    (XInputGetState)Load("XInputGetState", typeof(XInputGetState));
                 SetState = (XInputSetState)Load("XInputSetState", typeof(XInputSetState));
             }
 
