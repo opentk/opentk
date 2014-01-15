@@ -42,8 +42,6 @@ namespace OpenTK.Platform.Windows
 
         WinRawKeyboard keyboard_driver;
         WinRawMouse mouse_driver;
-        IGamePadDriver gamepad_driver;
-        IJoystickDriver2 joystick_driver;
 
         IntPtr DevNotifyHandle;
         static readonly Guid DeviceInterfaceHid = new Guid("4D1E55B2-F16F-11CF-88CB-001111000030");
@@ -138,17 +136,6 @@ namespace OpenTK.Platform.Windows
         {
             keyboard_driver = new WinRawKeyboard(Parent.Handle);
             mouse_driver = new WinRawMouse(Parent.Handle);
-            joystick_driver = new WinMMJoystick();
-            try
-            {
-                gamepad_driver = new XInputJoystick();
-            }
-            catch (Exception)
-            {
-                Debug.Print("[Win] XInput driver not supported, falling back to WinMM");
-                gamepad_driver = new MappedGamePadDriver();
-            }
-
             DevNotifyHandle = RegisterForDeviceNotifications(Parent);
         }
 
@@ -181,10 +168,6 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #endregion
-
-        #region IInputDriver2 Members
-
         public override IKeyboardDriver2 KeyboardDriver
         {
             get { return keyboard_driver; }
@@ -193,16 +176,6 @@ namespace OpenTK.Platform.Windows
         public override IMouseDriver2 MouseDriver
         {
             get { return mouse_driver; }
-        }
-
-        public override IGamePadDriver GamePadDriver
-        {
-            get { return gamepad_driver; }
-        }
-
-        public override IJoystickDriver2 JoystickDriver
-        {
-            get { return joystick_driver; }
         }
 
         #endregion
