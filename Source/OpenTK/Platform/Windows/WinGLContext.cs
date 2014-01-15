@@ -31,6 +31,7 @@ namespace OpenTK.Platform.Windows
 
         IntPtr device_context;
         bool vsync_supported;
+        bool vsync_tear_supported;
 
         readonly WinGraphicsMode ModeSelector;
 
@@ -325,7 +326,13 @@ namespace OpenTK.Platform.Windows
                 lock (LoadLock)
                 {
                     if (vsync_supported)
+                    {
+                        if (value < 0 && !vsync_tear_supported)
+                        {
+                            value = 1;
+                        }
                         Wgl.Ext.SwapInterval(value);
+                    }
                 }
             }
         }
@@ -339,8 +346,11 @@ namespace OpenTK.Platform.Windows
             lock (LoadLock)
             {
                 Wgl.LoadAll();
-                vsync_supported = Wgl.Arb.SupportsExtension(this, "WGL_EXT_swap_control") &&
+                vsync_supported =
+                    Wgl.SupportsExtension(DeviceContext, "WGL_EXT_swap_control") &&
                     Wgl.Load("wglGetSwapIntervalEXT") && Wgl.Load("wglSwapIntervalEXT");
+                vsync_tear_supported =
+                    Wgl.SupportsExtension(DeviceContext, "WGL_EXT_swap_tear");
             }
 
             base.LoadAll();

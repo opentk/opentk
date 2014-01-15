@@ -166,6 +166,7 @@
     <Compile Include="Platform\MappedGamePadDriver.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
     <Compile Include="Platform\Windows\XInputJoystick.cs" />
+    <Compile Include="Platform\X11\Bindings\INotify.cs" />
     <Compile Include="ToolkitOptions.cs" />
     <Compile Include="WindowBorder.cs">
       <SubType>Code</SubType>
@@ -798,6 +799,8 @@
     <Compile Include="Input\ConfigurationType.cs" />
     <Compile Include="Input\GamePadConfigurationSource.cs" />
     <Compile Include="Input\GamePadConfigurationItem.cs" />
+    <Compile Include="Platform\LegacyJoystickDriver.cs" />
+    <Compile Include="Platform\PlatformFactoryBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

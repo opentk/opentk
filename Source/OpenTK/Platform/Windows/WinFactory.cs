@@ -37,9 +37,8 @@ using OpenTK.Input;
 namespace OpenTK.Platform.Windows
 {
 
-    class WinFactory : IPlatformFactory 
+    class WinFactory : PlatformFactoryBase
     {
-        bool disposed;
         readonly object SyncRoot = new object();
         IInputDriver2 inputDriver;
 
@@ -83,27 +82,27 @@ namespace OpenTK.Platform.Windows
 
         #region IPlatformFactory Members
 
-        public virtual INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
             return new WinGLNative(x, y, width, height, title, options, device);
         }
 
-        public virtual IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new WinDisplayDeviceDriver();
         }
 
-        public virtual IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new WinGLContext(mode, (WinWindowInfo)window, shareContext, major, minor, flags);
         }
 
-        public virtual IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new WinGLContext(handle, (WinWindowInfo)window, shareContext, major, minor, flags);
         }
 
-        public virtual GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
+        public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
             return (GraphicsContext.GetCurrentContextDelegate)delegate
             {
@@ -111,27 +110,22 @@ namespace OpenTK.Platform.Windows
             };
         }
 
-        public virtual IGraphicsMode CreateGraphicsMode()
-        {
-            throw new NotSupportedException();
-        }
-
-        public virtual OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
+        public override OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
         {
             return InputDriver.KeyboardDriver;
         }
 
-        public virtual OpenTK.Input.IMouseDriver2 CreateMouseDriver()
+        public override OpenTK.Input.IMouseDriver2 CreateMouseDriver()
         {
             return InputDriver.MouseDriver;
         }
 
-        public virtual OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+        public override OpenTK.Input.IGamePadDriver CreateGamePadDriver()
         {
             return InputDriver.GamePadDriver;
         }
 
-        public IJoystickDriver2 CreateJoystickDriver()
+        public override IJoystickDriver2 CreateJoystickDriver()
         {
             return InputDriver.JoystickDriver;
         }
@@ -155,31 +149,17 @@ namespace OpenTK.Platform.Windows
 
         #region IDisposable Members
 
-        void Dispose(bool manual)
+        protected override void Dispose(bool manual)
         {
-            if (!disposed)
+            if (!IsDisposed)
             {
                 if (manual)
                 {
                     InputDriver.Dispose();
                 }
-                else
-                {
-                    Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
-                }
-                disposed = true;
+
+                base.Dispose(manual);
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        ~WinFactory()
-        {
-            Dispose(false);
         }
 
         #endregion

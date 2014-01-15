@@ -130,22 +130,28 @@ namespace OpenTK.Input
 
         internal void SetAxis(JoystickAxis axis, float @value)
         {
-            move_args.Axis = axis;
-            move_args.Delta = move_args.Value - @value;
-            axis_collection[axis] = move_args.Value = @value;
-            Move(this, move_args);
+            if ((int)axis < axis_collection.Count)
+            {
+                move_args.Axis = axis;
+                move_args.Delta = move_args.Value - @value;
+                axis_collection[axis] = move_args.Value = @value;
+                Move(this, move_args);
+            }
         }
 
         internal void SetButton(JoystickButton button, bool @value)
         {
-            if (button_collection[button] != @value)
+            if ((int)button < button_collection.Count)
             {
-                button_args.Button = button;
-                button_collection[button] = button_args.Pressed = @value;
-                if (@value)
-                    ButtonDown(this, button_args);
-                else
-                    ButtonUp(this, button_args);
+                if (button_collection[button] != @value)
+                {
+                    button_args.Button = button;
+                    button_collection[button] = button_args.Pressed = @value;
+                    if (@value)
+                        ButtonDown(this, button_args);
+                    else
+                        ButtonUp(this, button_args);
+                }
             }
         }
 
@@ -155,7 +161,7 @@ namespace OpenTK.Input
     #region JoystickDevice<TDetail> : JoystickDevice
 
     // Provides platform-specific information about the relevant JoystickDevice.
-    internal sealed class JoystickDevice<TDetail> : JoystickDevice
+    internal class JoystickDevice<TDetail> : JoystickDevice
         where TDetail : new()
     {
         internal JoystickDevice(int id, int axes, int buttons)

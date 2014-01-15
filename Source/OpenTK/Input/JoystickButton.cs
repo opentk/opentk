@@ -70,5 +70,7 @@ namespace OpenTK.Input
         Button14,
         /// <summary>The sixteenth button of the JoystickDevice.</summary>
         Button15,
+        /// <summary>The last supported button of the JoystickDevice.</summary>
+        Last = Button15,
     }
 }

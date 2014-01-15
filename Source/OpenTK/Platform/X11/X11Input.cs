@@ -24,8 +24,6 @@ namespace OpenTK.Platform.X11
     /// </summary>
     internal sealed class X11Input : IInputDriver
     {
-        X11Joystick joystick_driver = new X11Joystick();
-        //X11WindowInfo window;
         KeyboardDevice keyboard = new KeyboardDevice();
         MouseDevice mouse = new MouseDevice();
         List<KeyboardDevice> dummy_keyboard_list = new List<KeyboardDevice>(1);
@@ -94,57 +92,6 @@ namespace OpenTK.Platform.X11
             Debug.Unindent();
         }
 
-        #endregion
-
-        #region private void InternalPoll()
-#if false
-        private void InternalPoll()
-        {
-            X11.XEvent e = new XEvent();
-            try
-            {
-                while (!disposed)
-                {
-                    Functions.XMaskEvent(window.Display,
-                        EventMask.PointerMotionMask | EventMask.PointerMotionHintMask |
-                        EventMask.ButtonPressMask | EventMask.ButtonReleaseMask |
-                        EventMask.KeyPressMask | EventMask.KeyReleaseMask |
-                        EventMask.StructureNotifyMask, ref e);
-
-                    if (disposed)
-                        return;
-
-                    switch (e.type)
-                    {
-                        case XEventName.KeyPress:
-                        case XEventName.KeyRelease:
-                            keyboardDriver.ProcessKeyboardEvent(ref e.KeyEvent);
-                            break;
-
-                        case XEventName.ButtonPress:
-                        case XEventName.ButtonRelease:
-                            mouseDriver.ProcessButton(ref e.ButtonEvent);
-                            break;
-
-                        case XEventName.MotionNotify:
-                            mouseDriver.ProcessMotion(ref e.MotionEvent);
-                            break;
-
-                        case XEventName.DestroyNotify:
-                            Functions.XPutBackEvent(window.Display, ref e);
-                            Functions.XAutoRepeatOn(window.Display);
-                            return;
-                    }
-                }
-            }
-            catch (ThreadAbortException expt)
-            {
-                Functions.XUnmapWindow(window.Display, window.Handle);
-                Functions.XDestroyWindow(window.Display, window.Handle);
-                return;
-            }
-        }
-#endif
         #endregion
 
         #region TranslateKey
@@ -242,11 +189,9 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region public IList<JoystickDevice> Joysticks
-
         public IList<JoystickDevice> Joysticks
         {
-            get { return joystick_driver.Joysticks; }
+            get { throw new NotImplementedException(); }
         }
 
         #endregion
@@ -258,10 +203,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         public void Poll()
         {
-            joystick_driver.Poll();
         }
-
-        #endregion
 
         #endregion
 

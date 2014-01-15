@@ -99,7 +99,8 @@ namespace OpenTK.Platform.Windows
         GraphicsMode ChoosePixelFormatARB(IntPtr device, GraphicsMode mode)
         {
             GraphicsMode created_mode = null;
-            if (Wgl.Delegates.wglChoosePixelFormatARB != null)
+            if (Wgl.SupportsExtension("WGL_ARB_pixel_format") &&
+                Wgl.Delegates.wglChoosePixelFormatARB != null)
             {
                 List<int> attributes = new List<int>();
                 attributes.Add((int)WGL_ARB_pixel_format.AccelerationArb);
@@ -168,7 +169,8 @@ namespace OpenTK.Platform.Windows
                     attributes.Add(mode.AccumulatorFormat.Alpha);
                 }
 
-                if (mode.Samples > 0)
+                if (mode.Samples > 0 &&
+                    Wgl.SupportsExtension("WGL_ARB_multisample"))
                 {
                     attributes.Add((int)WGL_ARB_multisample.SampleBuffersArb);
                     attributes.Add(1);
@@ -193,7 +195,8 @@ namespace OpenTK.Platform.Windows
 
                 int[] format = new int[1];
                 int count;
-                if (Wgl.Arb.ChoosePixelFormat(device, attributes.ToArray(), null, format.Length, format, out count))
+                if (Wgl.Arb.ChoosePixelFormat(device, attributes.ToArray(), null, format.Length, format, out count)
+                    && count > 0)
                 {
                     created_mode = DescribePixelFormatARB(device, format[0]);
                 }
@@ -216,15 +219,31 @@ namespace OpenTK.Platform.Windows
 
         static bool Compare(int got, int requested, ref int distance)
         {
-            if (got < requested)
+            bool valid = true;
+            if (got == 0 && requested != 0)
             {
-                return false;
+                // mode does not support the requested feature.
+                valid = false;
+            }
+            else if (got >= requested)
+            {
+                // mode supports the requested feature,
+                // calculate the distance from an "ideal" mode
+                // that matches this feature exactly.
+                distance += got - requested;
             }
             else
             {
-                distance += got - requested;
-                return true;
+                // mode supports the requested feature,
+                // but at a suboptimal level. For example:
+                // - requsted AA = 8x, got 4x
+                // - requested color = 32bpp, got 16bpp
+                // We can still use this mode but only if
+                // no better mode exists.
+                const int penalty = 8;
+                distance += penalty * Math.Abs(got - requested);
             }
+            return valid;
         }
 
         static AccelerationType GetAccelerationType(ref PixelFormatDescriptor pfd)
@@ -255,15 +274,18 @@ namespace OpenTK.Platform.Windows
             {
                 flags |= PixelFormatDescriptorFlags.STEREO;
             }
-            if (mode.Buffers > 1)
+
+            if (System.Environment.OSVersion.Version.Major >= 6 &&
+                requested_acceleration_type != AccelerationType.None)
             {
-                // On Win7 64bit + Nvidia 650M, no pixel format advertises DOUBLEBUFFER.
-                // Adding this check here causes mode selection to fail.
-                // Does not appear to be supported by DescribePixelFormat
-                //flags |= PixelFormatDescriptorFlags.DOUBLEBUFFER;
-            }
-            if (System.Environment.OSVersion.Version.Major >= 6)
-            {
+                // Request a compositor-capable mode when running on
+                // Vista+ and using hardware acceleration. Without this,
+                // some modes will cause the compositor to turn off,
+                // which is very annoying to the user.
+                // Note: compositor-capable modes require hardware
+                // acceleration. Don't set this flag when running
+                // with software acceleration (e.g. over Remote Desktop
+                // as described in bug https://github.com/opentk/opentk/issues/35)
                 flags |= PixelFormatDescriptorFlags.SUPPORT_COMPOSITION;
             }
 
@@ -278,6 +300,9 @@ namespace OpenTK.Platform.Windows
                 valid &= GetAccelerationType(ref pfd) == requested_acceleration_type;
                 valid &= (pfd.Flags & flags) == flags;
                 valid &= pfd.PixelType == PixelType.RGBA; // indexed modes not currently supported
+                // heavily penalize single-buffered modes when the user requests double buffering
+                if ((pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) == 0 && mode.Buffers > 1)
+                    dist += 1000;
                 valid &= Compare(pfd.ColorBits, mode.ColorFormat.BitsPerPixel, ref dist);
                 valid &= Compare(pfd.RedBits, mode.ColorFormat.Red, ref dist);
                 valid &= Compare(pfd.GreenBits, mode.ColorFormat.Green, ref dist);
