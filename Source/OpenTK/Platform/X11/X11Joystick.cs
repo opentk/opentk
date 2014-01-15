@@ -346,6 +346,8 @@ namespace OpenTK.Platform.X11
                             js.Details.State.SetButton((JoystickButton)e.Number, e.Value != 0);
                             break;
                     }
+
+                    js.Details.State.SetPacketNumber(unchecked((int)e.Time));
                 }
             }
         }
