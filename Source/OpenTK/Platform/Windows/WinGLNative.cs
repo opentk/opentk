@@ -82,6 +82,13 @@ namespace OpenTK.Platform.Windows
 
         const ClassStyle DefaultClassStyle = ClassStyle.OwnDC;
 
+        // Used for IInputDriver implementation
+        LegacyJoystickDriver joystick_driver = new LegacyJoystickDriver();
+        KeyboardDevice keyboard = new KeyboardDevice();
+        MouseDevice mouse = new MouseDevice();
+        IList<KeyboardDevice> keyboards = new List<KeyboardDevice>(1);
+        IList<MouseDevice> mice = new List<MouseDevice>(1);
+
         const long ExtendedBit = 1 << 24;           // Used to distinguish left and right control, alt and enter keys.
         
         public static readonly uint ShiftLeftScanCode = Functions.MapVirtualKey(VirtualKeys.LSHIFT, 0);

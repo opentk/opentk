@@ -50,6 +50,9 @@ namespace OpenTK.Platform.Windows
         readonly XInputJoystick xinput;
         readonly WinMMJoystick winmm;
 
+        readonly Dictionary<int, int> index_to_winmm =
+            new Dictionary<int, int>();
+
         #region Constructors
 
         public WinCombinedJoystick(XInputJoystick xinput, WinMMJoystick winmm)

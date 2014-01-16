@@ -101,6 +101,8 @@ namespace Examples
         public static void Main(string[] args)
         {
             Trace.Listeners.Add(new ConsoleTraceListener());
+            Tests.GameWindowStates.Main();
+            return;
 
             if (args.Length > 0)
             {
