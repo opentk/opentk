@@ -28,10 +28,11 @@
 using System;
 using System.Diagnostics;
 using OpenTK.Graphics;
+using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    class X11Factory : IPlatformFactory
+    class X11Factory : PlatformFactoryBase
     {
         bool disposed;
 
@@ -47,27 +48,27 @@ namespace OpenTK.Platform.X11
 
         #region IPlatformFactory Members
 
-        public virtual INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
             return new X11GLNative(x, y, width, height, title, mode, options, device);
         }
 
-        public virtual IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new X11DisplayDevice();
         }
 
-        public virtual IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new X11GLContext(mode, window, shareContext, directRendering, major, minor, flags);
         }
 
-        public virtual IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new X11GLContext(handle, window, shareContext, directRendering, major, minor, flags);
         }
 
-        public virtual GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
+        public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
             return (GraphicsContext.GetCurrentContextDelegate)delegate
             {
@@ -75,17 +76,17 @@ namespace OpenTK.Platform.X11
             };
         }
 
-        public virtual IGraphicsMode CreateGraphicsMode()
+        public override IGraphicsMode CreateGraphicsMode()
         {
             throw new NotSupportedException();
         }
 
-        public virtual OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
+        public override IKeyboardDriver2 CreateKeyboardDriver()
         {
             return new X11Keyboard();
         }
 
-        public virtual OpenTK.Input.IMouseDriver2 CreateMouseDriver()
+        public override IMouseDriver2 CreateMouseDriver()
         {
             if (XI2Mouse.IsSupported(IntPtr.Zero))
                 return new XI2Mouse(); // Requires xorg 1.7 or higher.
@@ -93,46 +94,9 @@ namespace OpenTK.Platform.X11
                 return new X11Mouse(); // Always supported.
         }
 
-        public virtual OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+        public override IJoystickDriver2 CreateJoystickDriver()
         {
             return new X11Joystick();
-        }
-
-        public virtual OpenTK.Input.IJoystickDriver2 CreateJoystickDriver()
-        {
-            return new X11Joystick();
-        }
-
-
-        #endregion
-
-        #region IDisposable Members
-
-        void Dispose(bool manual)
-        {
-            if (!disposed)
-            {
-                if (manual)
-                {
-                    // nothing to do
-                }
-                else
-                {
-                    Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
-                }
-                disposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        ~X11Factory()
-        {
-            Dispose(false);
         }
 
         #endregion

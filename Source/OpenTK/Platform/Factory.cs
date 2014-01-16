@@ -33,6 +33,7 @@ using System.Text;
 namespace OpenTK.Platform
 {
     using Graphics;
+    using Input;
 
     sealed class Factory : IPlatformFactory
     {
@@ -134,27 +135,32 @@ namespace OpenTK.Platform
             return default_implementation.CreateGraphicsMode();
         }
         
-        public OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
+        public IKeyboardDriver2 CreateKeyboardDriver()
         {
             return default_implementation.CreateKeyboardDriver();
         }
 
-        public OpenTK.Input.IMouseDriver2 CreateMouseDriver()
+        public IMouseDriver2 CreateMouseDriver()
         {
             return default_implementation.CreateMouseDriver();
         }
 
-        public OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+        public IGamePadDriver CreateGamePadDriver()
         {
             return default_implementation.CreateGamePadDriver();
         }
 
-        public Input.IJoystickDriver2 CreateJoystickDriver()
+        public IJoystickDriver2 CreateJoystickDriver()
         {
             return default_implementation.CreateJoystickDriver();
         }
 
-        class UnsupportedPlatform : IPlatformFactory
+        public IJoystickDriver CreateLegacyJoystickDriver()
+        {
+            return default_implementation.CreateLegacyJoystickDriver();
+        }
+
+        class UnsupportedPlatform : PlatformFactoryBase
         {
             #region Fields
 
@@ -165,90 +171,49 @@ namespace OpenTK.Platform
             
             #region IPlatformFactory Members
 
-            public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+            public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public IDisplayDeviceDriver CreateDisplayDeviceDriver()
+            public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+            public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+            public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public IGraphicsContext CreateESContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, int major, int minor, GraphicsContextFlags flags)
+            public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
+            public override IGraphicsMode CreateGraphicsMode()
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public IGraphicsMode CreateGraphicsMode()
+            public override IKeyboardDriver2 CreateKeyboardDriver()
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
+            public override IMouseDriver2 CreateMouseDriver()
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public OpenTK.Input.IMouseDriver2 CreateMouseDriver()
+            public override IJoystickDriver2 CreateJoystickDriver()
             {
                 throw new PlatformNotSupportedException(error_string);
-            }
-
-            public OpenTK.Input.IGamePadDriver CreateGamePadDriver()
-            {
-                throw new PlatformNotSupportedException(error_string);
-            }
-
-            public Input.IJoystickDriver2 CreateJoystickDriver()
-            {
-                throw new PlatformNotSupportedException(error_string);
-            }
-
-            #endregion
-
-            #region IDisposable Members
-
-            void Dispose(bool manual)
-            {
-                if (!disposed)
-                {
-                    if (manual)
-                    {
-                        // nothing to do
-                    }
-                    else
-                    {
-                        Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
-                    }
-                    disposed = true;
-                }
-            }
-
-            public void Dispose()
-            {
-                Dispose(true);
-                GC.SuppressFinalize(this);
-            }
-
-            ~UnsupportedPlatform()
-            {
-                Dispose(false);
             }
 
             #endregion
