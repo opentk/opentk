@@ -451,8 +451,8 @@ namespace OpenTK.Platform.Windows
         void HandleXButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.SetCapture(window.Handle);
-            mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) !=
-                (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = true;
+            mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) == 1 ?
+                MouseButton.Button1 : MouseButton.Button2] = true;
         }
 
         void HandleLButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -476,8 +476,8 @@ namespace OpenTK.Platform.Windows
         void HandleXButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.ReleaseCapture();
-            mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) !=
-                (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = false;
+            mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) == 1 ?
+                MouseButton.Button1 : MouseButton.Button2] = false;
         }
 
         void HandleKeyboard(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
