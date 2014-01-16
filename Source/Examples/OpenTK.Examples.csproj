@@ -565,6 +565,7 @@
     <None Include="..\..\Dependencies\x64\libSDL2.dylib">
       <Link>Dependencies\x64\libSDL2.dylib</Link>
     </None>
+    <Compile Include="OpenTK\Test\ExternalContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

@@ -35,6 +35,7 @@ namespace OpenTK.Platform.MacOS
 {
     using Carbon;
     using CFAllocatorRef = System.IntPtr;
+    using CFArrayRef = System.IntPtr;
     using CFDictionaryRef = System.IntPtr;
     using CFIndex = System.IntPtr;
     using CFRunLoop = System.IntPtr;
@@ -50,24 +51,52 @@ namespace OpenTK.Platform.MacOS
 
     // Requires Mac OS X 10.5 or higher.
     // Todo: create a driver for older installations. Maybe use CGGetLastMouseDelta for that?
-    class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2/*, IGamePadDriver*/
+    class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2, IJoystickDriver2
     {
         #region Fields
 
+        class MouseData
+        {
+            public MouseState State;
+        }
+
+        class KeyboardData
+        {
+            public KeyboardState State;
+        }
+
+        class JoystickData
+        {
+            public string Name;
+            public Guid Guid;
+            public JoystickState State;
+            public JoystickCapabilities Capabilities;
+            readonly public Dictionary<int, JoystickButton> ElementUsageToButton =
+                new Dictionary<int, JoystickButton>();
+        }
+
         readonly IOHIDManagerRef hidmanager;
 
-        readonly Dictionary<IntPtr, MouseState> MouseDevices =
-            new Dictionary<IntPtr, MouseState>(new IntPtrEqualityComparer());
+        readonly Dictionary<IntPtr, MouseData> MouseDevices =
+            new Dictionary<IntPtr, MouseData>(new IntPtrEqualityComparer());
         readonly Dictionary<int, IntPtr> MouseIndexToDevice =
             new Dictionary<int, IntPtr>();
-        readonly Dictionary<IntPtr, KeyboardState> KeyboardDevices =
-            new Dictionary<IntPtr, KeyboardState>(new IntPtrEqualityComparer());
+
+        readonly Dictionary<IntPtr, KeyboardData> KeyboardDevices =
+            new Dictionary<IntPtr, KeyboardData>(new IntPtrEqualityComparer());
         readonly Dictionary<int, IntPtr> KeyboardIndexToDevice =
+            new Dictionary<int, IntPtr>();
+
+        readonly Dictionary<IntPtr, JoystickData> JoystickDevices =
+            new Dictionary<IntPtr, JoystickData>(new IntPtrEqualityComparer());
+        readonly Dictionary<int, IntPtr> JoystickIndexToDevice =
             new Dictionary<int, IntPtr>();
 
         readonly CFRunLoop RunLoop = CF.CFRunLoopGetMain();
         readonly CFString InputLoopMode = CF.RunLoopModeDefault;
         readonly CFDictionary DeviceTypes = new CFDictionary();
+
+        readonly MappedGamePadDriver mapped_gamepad = new MappedGamePadDriver();
 
         NativeMethods.IOHIDDeviceCallback HandleDeviceAdded;
         NativeMethods.IOHIDDeviceCallback HandleDeviceRemoved;
@@ -93,7 +122,7 @@ namespace OpenTK.Platform.MacOS
 
         #endregion
 
-         #region Private Members
+        #region Private Members
 
         IOHIDManagerRef CreateHIDManager()
         {
@@ -119,110 +148,158 @@ namespace OpenTK.Platform.MacOS
 
         void DeviceAdded(IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
         {
-            if (NativeMethods.IOHIDDeviceOpen(device, IOOptionBits.Zero) == IOReturn.Zero)
+            try
             {
-                if (NativeMethods.IOHIDDeviceConformsTo(device,
-                        HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse))
+                bool recognized = false;
+
+                if (NativeMethods.IOHIDDeviceOpen(device, IOOptionBits.Zero) == IOReturn.Zero)
                 {
-                    if (!MouseDevices.ContainsKey(device))
+                    if (NativeMethods.IOHIDDeviceConformsTo(device,
+                            HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse))
                     {
-                        Debug.Print("Mouse device {0:x} discovered, sender is {1:x}", device, sender);
-                        MouseState state = new MouseState();
-                        state.IsConnected = true;
-                        MouseIndexToDevice.Add(MouseDevices.Count, device);
-                        MouseDevices.Add(device, state);
+                        AddMouse(sender, device);
+                        recognized = true;
                     }
-                    else
+
+                    if (NativeMethods.IOHIDDeviceConformsTo(device,
+                            HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard))
                     {
-                        Debug.Print("Mouse device {0:x} reconnected, sender is {1:x}", device, sender);
-                        MouseState state = MouseDevices[device];
-                        state.IsConnected = true;
-                        MouseDevices[device] = state;
+                        AddKeyboard(sender, device);
+                        recognized = true;
+                    }
+
+                    bool is_joystick = false;
+                    is_joystick |= NativeMethods.IOHIDDeviceConformsTo(device,
+                        HIDPage.GenericDesktop, (int)HIDUsageGD.Joystick);
+                    is_joystick |= NativeMethods.IOHIDDeviceConformsTo(device,
+                        HIDPage.GenericDesktop, (int)HIDUsageGD.GamePad);
+                    is_joystick |= NativeMethods.IOHIDDeviceConformsTo(device,
+                        HIDPage.GenericDesktop, (int)HIDUsageGD.MultiAxisController);
+                    is_joystick |= NativeMethods.IOHIDDeviceConformsTo(device,
+                        HIDPage.GenericDesktop, (int)HIDUsageGD.Wheel);
+                    // Todo: any other interesting devices under HIDPage.Simulation + HIDUsageSim?
+                    if (is_joystick)
+                    {
+                        AddJoystick(sender, device);
+                        recognized = true;
+                    }
+
+                    if (recognized)
+                    {
+                        // The device is not normally available in the InputValueCallback (HandleDeviceValueReceived), so we include
+                        // the device identifier as the context variable, so we can identify it and figure out the device later.
+                        // Thanks to Jase: http://www.opentk.com/node/2800
+                        NativeMethods.IOHIDDeviceRegisterInputValueCallback(device,
+                            HandleDeviceValueReceived, device);
+
+                        NativeMethods.IOHIDDeviceScheduleWithRunLoop(device, RunLoop, InputLoopMode);
                     }
                 }
-
-                if (NativeMethods.IOHIDDeviceConformsTo(device,
-                        HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard))
-                {
-                    if (!KeyboardDevices.ContainsKey(device))
-                    {
-                        Debug.Print("Keyboard device {0:x} discovered, sender is {1:x}", device, sender);
-                        KeyboardState state = new KeyboardState();
-                        state.IsConnected = true;
-                        KeyboardIndexToDevice.Add(KeyboardDevices.Count, device);
-                        KeyboardDevices.Add(device, state);
-                    }
-                    else
-                    {
-                        Debug.Print("Keyboard device {0:x} reconnected, sender is {1:x}", device, sender);
-                        KeyboardState state = KeyboardDevices[device];
-                        state.IsConnected = true;
-                        KeyboardDevices[device] = state;
-                    }
-                }
-
-                // The device is not normally available in the InputValueCallback (HandleDeviceValueReceived), so we include
-                // the device identifier as the context variable, so we can identify it and figure out the device later.
-                // Thanks to Jase: http://www.opentk.com/node/2800
-                NativeMethods.IOHIDDeviceRegisterInputValueCallback(device,
-                    HandleDeviceValueReceived, device);
-
-                NativeMethods.IOHIDDeviceScheduleWithRunLoop(device, RunLoop, InputLoopMode);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("[Mac] Exception in managed callback: {0}", e);
             }
         }
 
         void DeviceRemoved(IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
         {
-            if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Mouse) &&
-                MouseDevices.ContainsKey(device))
+            try
             {
-                Debug.Print("Mouse device {0:x} disconnected, sender is {1:x}", device, sender);
+                bool recognized = false;
 
-                // Keep the device in case it comes back later on
-                MouseState state = MouseDevices[device];
-                state.IsConnected = false;
-                MouseDevices[device] = state;
+                if (MouseDevices.ContainsKey(device))
+                {
+                    RemoveMouse(sender, device);
+                    recognized = true;
+                }
+
+                if (KeyboardDevices.ContainsKey(device))
+                {
+                    RemoveKeyboard(sender, device);
+                    recognized = true;
+                }
+
+                if (JoystickDevices.ContainsKey(device))
+                {
+                    RemoveJoystick(sender, device);
+                    recognized = true;
+                }
+
+                if (recognized)
+                {
+                    NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, IntPtr.Zero, IntPtr.Zero);
+                    NativeMethods.IOHIDDeviceUnscheduleFromRunLoop(device, RunLoop, InputLoopMode);
+                }
             }
-
-            if (NativeMethods.IOHIDDeviceConformsTo(device, HIDPage.GenericDesktop, (int)HIDUsageGD.Keyboard) &&
-                KeyboardDevices.ContainsKey(device))
+            catch (Exception e)
             {
-                Debug.Print("Keyboard device {0:x} disconnected, sender is {1:x}", device, sender);
-
-                // Keep the device in case it comes back later on
-                KeyboardState state = KeyboardDevices[device];
-                state.IsConnected = false;
-                KeyboardDevices[device] = state;
+                Debug.Print("[Mac] Exception in managed callback: {0}", e);
             }
-
-            NativeMethods.IOHIDDeviceRegisterInputValueCallback(device, IntPtr.Zero, IntPtr.Zero);
-            NativeMethods.IOHIDDeviceUnscheduleWithRunLoop(device, RunLoop, InputLoopMode);
         }
 
         void DeviceValueReceived(IntPtr context, IOReturn res, IntPtr sender, IOHIDValueRef val)
         {
-            if (disposed)
+            try
             {
-                Debug.Print("DeviceValueReceived({0}, {1}, {2}, {3}) called on disposed {4}",
-                    context, res, sender, val, GetType());
-                return;
-            }
+                if (disposed)
+                {
+                    Debug.Print("DeviceValueReceived({0}, {1}, {2}, {3}) called on disposed {4}",
+                        context, res, sender, val, GetType());
+                    return;
+                }
 
-            MouseState mouse;
-            KeyboardState keyboard;
-            if (MouseDevices.TryGetValue(context, out mouse))
-            {
-                MouseDevices[context] = UpdateMouse(mouse, val);
+                MouseData mouse;
+                KeyboardData keyboard;
+                JoystickData joystick;
+                if (MouseDevices.TryGetValue(context, out mouse))
+                {
+                    UpdateMouse(mouse, val);
+                }
+                else if (KeyboardDevices.TryGetValue(context, out keyboard))
+                {
+                    UpdateKeyboard(keyboard, val);
+                }
+                else if (JoystickDevices.TryGetValue(context, out joystick))
+                {
+                    UpdateJoystick(joystick, val);
+                }
+                else
+                {
+                    //Debug.Print ("Device {0:x} not found in list of keyboards or mice", sender);
+                }
             }
-            else if (KeyboardDevices.TryGetValue(context, out keyboard))
+            catch (Exception e)
             {
-                KeyboardDevices[context] = UpdateKeyboard(keyboard, val);
-            }else{
-                //Debug.Print ("Device {0:x} not found in list of keyboards or mice", sender);
+                Debug.Print("[Mac] Exception in managed callback: {0}", e);
             }
         }
 
-        static MouseState UpdateMouse(MouseState state, IOHIDValueRef val)
+        #region Mouse
+
+        void AddMouse(CFAllocatorRef sender, CFAllocatorRef device)
+        {
+            if (!MouseDevices.ContainsKey(device))
+            {
+                Debug.Print("Mouse device {0:x} discovered, sender is {1:x}", device, sender);
+                MouseIndexToDevice.Add(MouseDevices.Count, device);
+                MouseDevices.Add(device, new MouseData());
+            }
+            else
+            {
+                Debug.Print("Mouse device {0:x} reconnected, sender is {1:x}", device, sender);
+            }
+            MouseDevices[device].State.SetIsConnected(true);
+        }
+
+        void RemoveMouse(CFAllocatorRef sender, CFAllocatorRef device)
+        {
+            Debug.Print("Mouse device {0:x} disconnected, sender is {1:x}", device, sender);
+            // Keep the device in case it comes back later on
+            MouseDevices[device].State.SetIsConnected(false);
+        }
+
+        static void UpdateMouse(MouseData mouse, IOHIDValueRef val)
         {
             IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
             int v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
@@ -237,28 +314,52 @@ namespace OpenTK.Platform.MacOS
                     switch ((HIDUsageGD)usage)
                     {
                         case HIDUsageGD.X:
-                            state.X += v_int;
+                            mouse.State.X += v_int;
                             break;
 
                         case HIDUsageGD.Y:
-                            state.Y += v_int;
+                            mouse.State.Y += v_int;
                             break;
 
                         case HIDUsageGD.Wheel:
-                            state.WheelPrecise += v_int;
+                            mouse.State.WheelPrecise += v_int;
                             break;
                     }
                     break;
 
                 case HIDPage.Button:
-                    state[OpenTK.Input.MouseButton.Left + usage - 1] = v_int == 1;
+                    mouse.State[OpenTK.Input.MouseButton.Left + usage - 1] = v_int == 1;
                     break;
             }
-
-            return state;
         }
 
-        static KeyboardState UpdateKeyboard(KeyboardState state, IOHIDValueRef val)
+        #endregion
+
+        #region Keyboard
+
+        void AddKeyboard(CFAllocatorRef sender, CFAllocatorRef device)
+        {
+            if (!KeyboardDevices.ContainsKey(device))
+            {
+                Debug.Print("Keyboard device {0:x} discovered, sender is {1:x}", device, sender);
+                KeyboardIndexToDevice.Add(KeyboardDevices.Count, device);
+                KeyboardDevices.Add(device, new KeyboardData());
+            }
+            else
+            {
+                Debug.Print("Keyboard device {0:x} reconnected, sender is {1:x}", device, sender);
+            }
+            KeyboardDevices[device].State.SetIsConnected(true);
+        }
+
+        void RemoveKeyboard(CFAllocatorRef sender, CFAllocatorRef device)
+        {
+            Debug.Print("Keyboard device {0:x} disconnected, sender is {1:x}", device, sender);
+            // Keep the device in case it comes back later on
+            KeyboardDevices[device].State.SetIsConnected(false);
+        }
+
+        static void UpdateKeyboard(KeyboardData keyboard, IOHIDValueRef val)
         {
             IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
             int v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
@@ -267,23 +368,348 @@ namespace OpenTK.Platform.MacOS
  
             // This will supress the debug printing below. Seems like it generates a lot of -1s. 
             // Couldn't find any details in USB spec or Apple docs for this behavior.
-            if(usage < 0 ) return state;  
+            if (usage >= 0)
+            {
+
+                switch (page)
+                {
+                    case HIDPage.GenericDesktop:
+                    case HIDPage.KeyboardOrKeypad:
+                        if (usage >= RawKeyMap.Length)
+                        {
+                            Debug.Print("[Warning] Key {0} not mapped.", usage);
+                        }
+                        keyboard.State.SetKeyState(RawKeyMap[usage], (byte)usage, v_int != 0);
+                        break;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Joystick
+
+        Guid CreateJoystickGuid(IntPtr device, string name)
+        {
+            // Create a device guid from the product and vendor id keys
+            List<byte> guid_bytes = new List<byte>();
+            long vendor_id = 0;
+            long product_id = 0;
+
+            IntPtr vendor_id_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDVendorIDKey);
+            IntPtr product_id_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductIDKey);
+            if (vendor_id_ref != IntPtr.Zero)
+            {
+                CF.CFNumberGetValue(vendor_id_ref, CF.CFNumberType.kCFNumberLongType, out vendor_id);
+            }
+            if (product_id_ref != IntPtr.Zero)
+            {
+                CF.CFNumberGetValue(product_id_ref, CF.CFNumberType.kCFNumberLongType, out product_id);
+            }
+
+            if (vendor_id != 0 && product_id != 0)
+            {
+                guid_bytes.AddRange(BitConverter.GetBytes(vendor_id));
+                guid_bytes.AddRange(BitConverter.GetBytes(product_id));
+            }
+            else
+            {
+                // Bluetooth devices don't have USB vendor/product id keys.
+                // Match SDL2 algorithm for compatibility.
+                guid_bytes.Add(0x05); // BUS_BLUETOOTH
+                guid_bytes.Add(0x00);
+                guid_bytes.Add(0x00);
+                guid_bytes.Add(0x00);
+
+                // Copy the first 12 bytes of the product name
+                byte[] name_bytes = new byte[12];
+                Array.Copy(System.Text.Encoding.UTF8.GetBytes(name), name_bytes, name_bytes.Length);
+                guid_bytes.AddRange(name_bytes);
+            }
+
+            return new Guid(guid_bytes.ToArray());
+        }
+
+        JoystickData CreateJoystick(IntPtr sender, IntPtr device)
+        {
+            JoystickData joy = null;
+
+            // Retrieve all elements of this device
+            CFArrayRef element_array_ref = NativeMethods.IOHIDDeviceCopyMatchingElements(device, IntPtr.Zero, IntPtr.Zero);
+            if (element_array_ref != IntPtr.Zero)
+            {
+                joy = new JoystickData();
+                int axes = 0;
+                int buttons = 0;
+                int dpads = 0;
+
+                CFStringRef name_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductKey);
+                string name = CF.CFStringGetCString(name_ref);
+
+                Guid guid = CreateJoystickGuid(device, name);
+
+                List<int> button_elements = new List<int>();
+                CFArray element_array = new CFArray(element_array_ref);
+                for (int i = 0; i < element_array.Count; i++)
+                {
+                    IOHIDElementRef element_ref = element_array[i];
+                    IOHIDElementType type = NativeMethods.IOHIDElementGetType(element_ref);
+                    HIDPage page = NativeMethods.IOHIDElementGetUsagePage(element_ref);
+                    int usage = NativeMethods.IOHIDElementGetUsage(element_ref);
+
+                    switch (page)
+                    {
+                        case HIDPage.GenericDesktop:
+                            switch ((HIDUsageGD)usage)
+                            {
+                                case HIDUsageGD.X:
+                                case HIDUsageGD.Y:
+                                case HIDUsageGD.Z:
+                                case HIDUsageGD.Rx:
+                                case HIDUsageGD.Ry:
+                                case HIDUsageGD.Rz:
+                                case HIDUsageGD.Slider:
+                                case HIDUsageGD.Dial:
+                                case HIDUsageGD.Wheel:
+                                    axes++;
+                                    break;
+
+                                case HIDUsageGD.Hatswitch:
+                                    dpads++;
+                                    break;
+                            }
+                            break;
+
+                        case HIDPage.Simulation:
+                            switch ((HIDUsageSim)usage)
+                            {
+                                case HIDUsageSim.Rudder:
+                                case HIDUsageSim.Throttle:
+                                    axes++;
+                                    break;
+                            }
+                            break;
+
+                        case HIDPage.Button:
+                            button_elements.Add(usage);
+                            break;
+                    }
+                }
+
+                joy.Name = name;
+                joy.Guid = guid;
+                joy.State.SetIsConnected(true);
+                joy.Capabilities = new JoystickCapabilities(axes, buttons, true);
+
+                // Map button elements to JoystickButtons
+                for (int button = 0; button < button_elements.Count; button++)
+                {
+                    joy.ElementUsageToButton.Add(button_elements[button], JoystickButton.Button0 + button); 
+                }
+            }
+            CF.CFRelease(element_array_ref);
+
+            return joy;
+        }
+
+        JoystickData GetJoystick(int index)
+        {
+            IntPtr device;
+            if (JoystickIndexToDevice.TryGetValue(index, out device))
+            {
+                JoystickData joystick;
+                if (JoystickDevices.TryGetValue(device, out joystick))
+                {
+                    return joystick;
+                }
+            }
+            return null;
+        }
+
+        void AddJoystick(CFAllocatorRef sender, CFAllocatorRef device)
+        {
+            Debug.Print("Joystick device {0:x} discovered, sender is {1:x}", device, sender);
+            JoystickData joy = CreateJoystick(sender, device);
+            if (joy != null)
+            {
+                // Add a device->joy lookup entry for this device.
+                if (!JoystickDevices.ContainsKey(device))
+                {
+                    // First time we've seen this device.
+                    JoystickDevices.Add(device, joy);
+                }
+                else
+                {
+                    // This is an old device that is replugged.
+                    // This branch does not appear to be executed, ever.
+                    JoystickDevices[device] = joy;
+                }
+
+                // Add an index->device lookup entry for this device.
+                // Use the first free (i.e. disconnected) index.
+                // If all indices are connected, append a new one.
+                int i;
+                for (i = 0; i < JoystickIndexToDevice.Count; i++)
+                {
+                    IntPtr candidate = JoystickIndexToDevice[i];
+                    if (!JoystickDevices[candidate].State.IsConnected)
+                    {
+                        break;
+                    }
+                }
+
+                if (i == JoystickDevices.Count)
+                {
+                    // All indices connected, append a new one.
+                    JoystickIndexToDevice.Add(JoystickDevices.Count, device);
+                }
+                else
+                {
+                    // Replace joystick at that index
+                    JoystickIndexToDevice[i] = device;
+                }
+            }
+        }
+
+        void RemoveJoystick(CFAllocatorRef sender, CFAllocatorRef device)
+        {
+            Debug.Print("Joystick device {0:x} disconnected, sender is {1:x}", device, sender);
+            // Keep the device in case it comes back later on
+            JoystickDevices[device].State = new JoystickState();
+            JoystickDevices[device].Capabilities = new JoystickCapabilities();
+        }
+
+        static void UpdateJoystick(JoystickData joy, IOHIDValueRef val)
+        {
+            IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
+            HIDPage page = NativeMethods.IOHIDElementGetUsagePage(elem);
+            int usage = NativeMethods.IOHIDElementGetUsage(elem);
 
             switch (page)
             {
                 case HIDPage.GenericDesktop:
-                case HIDPage.KeyboardOrKeypad:
-                    if (usage >= RawKeyMap.Length)
+                    switch ((HIDUsageGD)usage)
                     {
-                        Debug.Print("[Warning] Key {0} not mapped.", usage);
-                        return state;
+                        case HIDUsageGD.X:
+                        case HIDUsageGD.Y:
+                        case HIDUsageGD.Z:
+                        case HIDUsageGD.Rx:
+                        case HIDUsageGD.Ry:
+                        case HIDUsageGD.Rz:
+                        case HIDUsageGD.Slider:
+                        case HIDUsageGD.Dial:
+                        case HIDUsageGD.Wheel:
+                            short offset = GetJoystickAxis(val, elem);
+                            JoystickAxis axis = TranslateJoystickAxis(usage);
+                            if (axis >= JoystickAxis.Axis0 && axis <= JoystickAxis.Last)
+                            {
+                                joy.State.SetAxis(axis, offset);
+                            }
+                            break;
+
+                        case HIDUsageGD.Hatswitch:
+                            break;
                     }
-                    state.SetKeyState(RawKeyMap[usage], (byte)usage, v_int != 0);
+                    break;
+
+                case HIDPage.Simulation:
+                    switch ((HIDUsageSim)usage)
+                    {
+                        case HIDUsageSim.Rudder:
+                        case HIDUsageSim.Throttle:
+                            short offset = GetJoystickAxis(val, elem);
+                            JoystickAxis axis = TranslateJoystickAxis(usage);
+                            if (axis >= JoystickAxis.Axis0 && axis <= JoystickAxis.Last)
+                            {
+                                joy.State.SetAxis(axis, offset);
+                            }
+                            break;
+                    }
+                    break;
+
+                case HIDPage.Button:
+                    {
+                        bool pressed = GetJoystickButton(val, elem);
+                        JoystickButton button = TranslateJoystickButton(joy, usage);
+                        if (button >= JoystickButton.Button0 && button <= JoystickButton.Last)
+                        {
+                            joy.State.SetButton(button, pressed);
+                        }
+                    }
                     break;
             }
-
-            return state;
         }
+
+        static short GetJoystickAxis(IOHIDValueRef val, IOHIDElementRef element)
+        {
+            int max = NativeMethods.IOHIDElementGetLogicalMax(element).ToInt32();
+            int min = NativeMethods.IOHIDElementGetLogicalMin(element).ToInt32();
+            int offset = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
+            if (offset < min)
+                offset = min;
+            if (offset > max)
+                offset = max;
+
+            const int range = short.MaxValue - short.MinValue + 1;
+            const int half_range = short.MaxValue + 1;
+            return (short)((offset - min) * range / (max - min) + half_range);
+        }
+
+        static JoystickAxis TranslateJoystickAxis(int usage)
+        {
+            switch (usage)
+            {
+                case (int)HIDUsageGD.X:
+                    return JoystickAxis.Axis0;
+                case (int)HIDUsageGD.Y:
+                    return JoystickAxis.Axis1;
+
+                case (int)HIDUsageGD.Z:
+                    return JoystickAxis.Axis2;
+                case (int)HIDUsageGD.Rz:
+                    return JoystickAxis.Axis3;
+
+                case (int)HIDUsageGD.Rx:
+                    return JoystickAxis.Axis4;
+                case (int)HIDUsageGD.Ry:
+                    return JoystickAxis.Axis5;
+
+                case (int)HIDUsageGD.Slider:
+                    return JoystickAxis.Axis6;
+                case (int)HIDUsageGD.Dial:
+                    return JoystickAxis.Axis7;
+                case (int)HIDUsageGD.Wheel:
+                    return JoystickAxis.Axis8;
+
+                case (int)HIDUsageSim.Rudder:
+                    return JoystickAxis.Axis9;
+                case (int)HIDUsageSim.Throttle:
+                    return JoystickAxis.Axis10;
+
+                default:
+                    Debug.Print("[Mac] Unknown axis with HID usage {0}", usage);
+                    return 0;
+            }
+        }
+
+        static bool GetJoystickButton(IOHIDValueRef val, IOHIDElementRef element)
+        {
+            // Todo: analogue buttons are transformed to digital
+            int value = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
+            return value >= 1;
+        }
+
+        static JoystickButton TranslateJoystickButton(JoystickData joy, int usage)
+        {
+            JoystickButton button;
+            if (joy.ElementUsageToButton.TryGetValue(usage, out button))
+            {
+                return button;
+            }
+            return JoystickButton.Last + 1;
+        }
+
+        #endregion
 
         #endregion
 
@@ -291,7 +717,8 @@ namespace OpenTK.Platform.MacOS
 
         public IMouseDriver2 MouseDriver { get { return this; } }
         public IKeyboardDriver2 KeyboardDriver { get { return this; } }
-        public IGamePadDriver GamePadDriver { get { throw new NotImplementedException(); } }
+        public IGamePadDriver GamePadDriver { get { return mapped_gamepad; } }
+        public IJoystickDriver2 JoystickDriver { get { return this; } }
 
         #endregion
 
@@ -300,9 +727,9 @@ namespace OpenTK.Platform.MacOS
         MouseState IMouseDriver2.GetState()
         {
             MouseState master = new MouseState();
-            foreach (KeyValuePair<IntPtr, MouseState> item in MouseDevices)
+            foreach (KeyValuePair<IntPtr, MouseData> item in MouseDevices)
             {
-                master.MergeBits(item.Value);
+                master.MergeBits(item.Value.State);
             }
 
             return master;
@@ -313,7 +740,7 @@ namespace OpenTK.Platform.MacOS
             IntPtr device;
             if (MouseIndexToDevice.TryGetValue(index, out device))
             {
-                return MouseDevices[device];
+                return MouseDevices[device].State;
             }
 
             return new MouseState();
@@ -332,9 +759,9 @@ namespace OpenTK.Platform.MacOS
         KeyboardState IKeyboardDriver2.GetState()
         {
             KeyboardState master = new KeyboardState();
-            foreach (KeyValuePair<IntPtr, KeyboardState> item in KeyboardDevices)
+            foreach (KeyValuePair<IntPtr, KeyboardData> item in KeyboardDevices)
             {
-                master.MergeBits(item.Value);
+                master.MergeBits(item.Value.State);
             }
 
             return master;
@@ -345,7 +772,7 @@ namespace OpenTK.Platform.MacOS
             IntPtr device;
             if (KeyboardIndexToDevice.TryGetValue(index, out device))
             {
-                return KeyboardDevices[device];
+                return KeyboardDevices[device].State;
             }
 
             return new KeyboardState();
@@ -362,6 +789,40 @@ namespace OpenTK.Platform.MacOS
                 return String.Format("{0}:{1}", vendor_id, product_id);
             }
             return String.Empty;
+        }
+
+        #endregion
+
+        #region IJoystickDriver2 Members
+
+        JoystickState IJoystickDriver2.GetState(int index)
+        {
+            JoystickData joystick = GetJoystick(index);
+            if (joystick != null)
+            {
+                return joystick.State;
+            }
+            return new JoystickState();
+        }
+
+        JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)
+        {
+            JoystickData joystick = GetJoystick(index);
+            if (joystick != null)
+            {
+                return joystick.Capabilities;
+            }
+            return new JoystickCapabilities();
+        }
+
+        Guid IJoystickDriver2.GetGuid(int index)
+        {
+            JoystickData joystick = GetJoystick(index);
+            if (joystick != null)
+            {
+                return joystick.Guid;
+            }
+            return new Guid();
         }
 
         #endregion
@@ -419,6 +880,12 @@ namespace OpenTK.Platform.MacOS
                 CFString inCFRunLoopMode);
 
             [DllImport(hid)]
+            public static extern void IOHIDManagerUnscheduleFromRunLoop(
+                IOHIDManagerRef inIOHIDManagerRef,
+                CFRunLoop inCFRunLoop,
+                CFString inCFRunLoopMode);
+
+            [DllImport(hid)]
             public static extern void IOHIDManagerSetDeviceMatching(
                 IOHIDManagerRef manager,
                 CFDictionaryRef matching) ;
@@ -444,6 +911,13 @@ namespace OpenTK.Platform.MacOS
                 HIDPage inUsagePage,      // the usage page to test conformance with
                 int inUsage);         // the usage to test conformance with
 
+            // return the HID elements that match the criteria contained in the matching dictionary
+            [DllImport(hid)]
+            public static extern CFArrayRef IOHIDDeviceCopyMatchingElements(
+                IOHIDDeviceRef  inIOHIDDeviceRef,       // IOHIDDeviceRef for the HID device
+                CFDictionaryRef inMatchingCFDictRef,    // the matching dictionary
+                IOOptionBits    inOptions);             // Option bits
+
             [DllImport(hid)]
             public static extern void IOHIDDeviceRegisterInputValueCallback(
                 IOHIDDeviceRef device,
@@ -463,7 +937,7 @@ namespace OpenTK.Platform.MacOS
                 CFString inCFRunLoopMode);
 
             [DllImport(hid)]
-            public static extern void IOHIDDeviceUnscheduleWithRunLoop(
+            public static extern void IOHIDDeviceUnscheduleFromRunLoop(
                 IOHIDDeviceRef device,
                 CFRunLoop inCFRunLoop,
                 CFString inCFRunLoopMode);
@@ -480,13 +954,34 @@ namespace OpenTK.Platform.MacOS
                 IOHIDValueScaleType type) ;
 
             [DllImport(hid)]
+            public static extern IOHIDElementType IOHIDElementGetType(
+                IOHIDElementRef element);
+
+            [DllImport(hid)]
             public static extern int IOHIDElementGetUsage(IOHIDElementRef elem);
 
             [DllImport(hid)]
             public static extern HIDPage IOHIDElementGetUsagePage(IOHIDElementRef elem);
 
+            [DllImport(hid)]
+            public static extern CFIndex IOHIDElementGetLogicalMax(IOHIDElementRef element);
+
+            [DllImport(hid)]
+            public static extern CFIndex IOHIDElementGetLogicalMin(IOHIDElementRef element);
+
             public delegate void IOHIDDeviceCallback(IntPtr ctx, IOReturn res, IntPtr sender, IOHIDDeviceRef device);
             public delegate void IOHIDValueCallback(IntPtr ctx, IOReturn res, IntPtr sender, IOHIDValueRef val);
+        }
+
+        enum IOHIDElementType
+        {
+            Input_Misc = 1,
+            Input_Button = 2,
+            Input_Axis = 3,
+            Input_ScanCodes = 4,
+            Output = 129,
+            Feature = 257,
+            Collection = 513
         }
 
         enum IOHIDValueScaleType
@@ -590,6 +1085,65 @@ namespace OpenTK.Platform.MacOS
             DPadRight  = 0x92, /* On/Off Control */
             DPadLeft   = 0x93, /* On/Off Control */
             /* 0x94 - 0xFFFF Reserved */
+            Reserved = 0xFFFF
+        }
+
+        enum HIDUsageSim
+        {
+            FlightSimulationDevice    = 0x01, /* Application Collection */
+            AutomobileSimulationDevice    = 0x02, /*             Application Collection */
+            TankSimulationDevice  = 0x03, /*             Application Collection */
+            SpaceshipSimulationDevice = 0x04, /*             Application Collection */
+            SubmarineSimulationDevice = 0x05, /*             Application Collection */
+            SailingSimulationDevice   = 0x06, /*             Application Collection */
+            MotorcycleSimulationDevice    = 0x07, /*             Application Collection */
+            SportsSimulationDevice    = 0x08, /*             Application Collection */
+            AirplaneSimulationDevice  = 0x09, /*             Application Collection */
+            HelicopterSimulationDevice    = 0x0A, /*             Application Collection */
+            MagicCarpetSimulationDevice   = 0x0B, /*             Application Collection */
+            BicycleSimulationDevice   = 0x0C, /*             Application Collection */
+            /* 0x0D - 0x1F Reserved */
+            FlightControlStick    = 0x20, /*             Application Collection */
+            FlightStick   = 0x21, /*             Application Collection */
+            CyclicControl = 0x22, /*             Physical Collection */
+            CyclicTrim    = 0x23, /*             Physical Collection */
+            FlightYoke    = 0x24, /*             Application Collection */
+            TrackControl  = 0x25, /*             Physical Collection */
+            /* 0x26 - 0xAF Reserved */
+            Aileron   = 0xB0, /*             Dynamic Value */
+            AileronTrim   = 0xB1, /*             Dynamic Value */
+            AntiTorqueControl = 0xB2, /*             Dynamic Value */
+            AutopilotEnable   = 0xB3, /*             On/Off Control */
+            ChaffRelease  = 0xB4, /*             One-Shot Control */
+            CollectiveControl = 0xB5, /*             Dynamic Value */
+            DiveBrake = 0xB6, /*             Dynamic Value */
+            ElectronicCountermeasures = 0xB7, /*             On/Off Control */
+            Elevator  = 0xB8, /*             Dynamic Value */
+            ElevatorTrim  = 0xB9, /*             Dynamic Value */
+            Rudder    = 0xBA, /*             Dynamic Value */
+            Throttle  = 0xBB, /*             Dynamic Value */
+            FlightCommunications  = 0xBC, /*             On/Off Control */
+            FlareRelease  = 0xBD, /*             One-Shot Control */
+            LandingGear   = 0xBE, /*             On/Off Control */
+            ToeBrake  = 0xBF, /*             Dynamic Value */
+            Trigger   = 0xC0, /*             Momentary Control */
+            WeaponsArm    = 0xC1, /*             On/Off Control */
+            Weapons   = 0xC2, /*             Selector */
+            WingFlaps = 0xC3, /*             Dynamic Value */
+            Accelerator   = 0xC4, /*             Dynamic Value */
+            Brake = 0xC5, /*             Dynamic Value */
+            Clutch    = 0xC6, /*             Dynamic Value */
+            Shifter   = 0xC7, /*             Dynamic Value */
+            Steering  = 0xC8, /*             Dynamic Value */
+            TurretDirection   = 0xC9, /*             Dynamic Value */
+            BarrelElevation   = 0xCA, /*             Dynamic Value */
+            DivePlane = 0xCB, /*             Dynamic Value */
+            Ballast   = 0xCC, /*             Dynamic Value */
+            BicycleCrank  = 0xCD, /*             Dynamic Value */
+            HandleBars    = 0xCE, /*             Dynamic Value */
+            FrontBrake    = 0xCF, /*             Dynamic Value */
+            RearBrake = 0xD0, /*             Dynamic Value */
+            /* 0xD1 - 0xFFFF Reserved */
             Reserved = 0xFFFF
         }
 
@@ -981,19 +1535,22 @@ namespace OpenTK.Platform.MacOS
                         hidmanager, IntPtr.Zero, IntPtr.Zero);
                     NativeMethods.IOHIDManagerRegisterDeviceRemovalCallback(
                         hidmanager, IntPtr.Zero, IntPtr.Zero);
-                    NativeMethods.IOHIDManagerScheduleWithRunLoop(
-                        hidmanager, IntPtr.Zero, IntPtr.Zero);
+                    NativeMethods.IOHIDManagerUnscheduleFromRunLoop(
+                        hidmanager, RunLoop, InputLoopMode);
 
                     foreach (var device in MouseDevices.Keys)
                     {
-                        NativeMethods.IOHIDDeviceRegisterInputValueCallback(
-                            device, IntPtr.Zero, IntPtr.Zero);
+                        DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, device);
                     }
 
                     foreach (var device in KeyboardDevices.Keys)
                     {
-                        NativeMethods.IOHIDDeviceRegisterInputValueCallback(
-                            device, IntPtr.Zero, IntPtr.Zero);
+                        DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, device);
+                    }
+
+                    foreach (var device in JoystickDevices.Keys)
+                    {
+                        DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, device);
                     }
 
                     HandleDeviceAdded = null;

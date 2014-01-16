@@ -74,6 +74,8 @@ namespace OpenTK.Platform.MacOS
             new Dictionary<IntPtr, WeakReference>(new IntPtrEqualityComparer());
 
         KeyPressEventArgs mKeyPressArgs = new KeyPressEventArgs((char)0);
+        OpenTK.Input.KeyboardKeyEventArgs mKeyDownArgs = new OpenTK.Input.KeyboardKeyEventArgs();
+        OpenTK.Input.KeyboardKeyEventArgs mKeyUpArgs = new OpenTK.Input.KeyboardKeyEventArgs();
 
         bool mMouseIn = false;
         bool mIsActive = false;
@@ -104,18 +106,6 @@ namespace OpenTK.Platform.MacOS
         static CarbonGLNative()
         {
             Application.Initialize();
-        }
-
-        CarbonGLNative() : this(WindowClass.Document,
-            WindowAttributes.StandardDocument | WindowAttributes.StandardHandler |
-            WindowAttributes.InWindowMenu | WindowAttributes.LiveResize)
-        {
-        }
-
-        CarbonGLNative(WindowClass @class, WindowAttributes attrib)
-        {
-            mWindowClass = @class;
-            mWindowAttrib = attrib;
         }
 
         public CarbonGLNative(int x, int y, int width, int height, string title,
@@ -382,7 +372,14 @@ namespace OpenTK.Platform.MacOS
 
                 case KeyboardEventKind.RawKeyDown:
                     Keymap.TryGetValue(code, out key);
+                    // Legacy keyboard API
                     InputDriver.Keyboard[0].SetKey(key, (uint)code, true);
+
+                    // Raise KeyDown for new keyboard API
+                    mKeyDownArgs.Key = key;
+                    KeyDown(this, mKeyDownArgs);
+
+                    // Raise KeyPress for new keyboard API
                     if (!Char.IsControl(mKeyPressArgs.KeyChar))
                     {
                         OnKeyPress(mKeyPressArgs);
@@ -391,7 +388,12 @@ namespace OpenTK.Platform.MacOS
 
                 case KeyboardEventKind.RawKeyUp:
                     Keymap.TryGetValue(code, out key);
+                    // Legacy keyboard API
                     InputDriver.Keyboard[0].SetKey(key, (uint)code, false);
+
+                    // Raise KeyUp for new keyboard API
+                    mKeyUpArgs.Key = key;
+                    KeyUp(this, mKeyUpArgs);
                     return OSStatus.NoError;
 
                 case KeyboardEventKind.RawKeyModifiersChanged:
@@ -640,52 +642,51 @@ namespace OpenTK.Platform.MacOS
             
         }
 
-        Rect GetRegion()
+        Rect GetClientSize()
         {
             Rect retval = API.GetWindowBounds(window.Handle, WindowRegionCode.ContentRegion);
-            
             return retval;
-        }
-
-        void SetLocation(short x, short y)
-        {
-            if (windowState == WindowState.Fullscreen)
-                return;
-            
-            API.MoveWindow(window.Handle, x, y, false);
-        }
-
-        void SetSize(short width, short height)
-        {
-            if (WindowState == WindowState.Fullscreen)
-                return;
-            
-            // The bounds of the window should be the size specified, but
-            // API.SizeWindow sets the content region size.  So
-            // we reduce the size to get the correct bounds.
-            width -= (short)(bounds.Width - clientRectangle.Width);
-            height -= (short)(bounds.Height - clientRectangle.Height);
-            
-            API.SizeWindow(window.Handle, width, height, true);
         }
 
         void SetClientSize(short width, short height)
         {
             if (WindowState == WindowState.Fullscreen)
                 return;
-            
-            API.SizeWindow(window.Handle, width, height, true);
+
+            Rect new_bounds = new Rect(Bounds.X, Bounds.Y, width, height);
+            API.SetWindowBounds(window.Handle, WindowRegionCode.ContentRegion, ref new_bounds);
+            LoadSize();
+        }
+
+        void SetLocation(short x, short y)
+        {
+            if (windowState == WindowState.Fullscreen)
+                return;
+
+            Rect new_bounds = new Rect(x, y, Bounds.Width, Bounds.Height);
+            API.SetWindowBounds(window.Handle, WindowRegionCode.StructureRegion, ref new_bounds);
+            LoadSize();
+        }
+
+        void SetSize(short width, short height)
+        {
+            if (WindowState == WindowState.Fullscreen)
+                return;
+
+            Rect new_bounds = new Rect(Bounds.X, Bounds.Y, width, height);
+            API.SetWindowBounds(window.Handle, WindowRegionCode.StructureRegion, ref new_bounds);
+            LoadSize();
         }
 
         private void LoadSize()
         {
             if (WindowState == WindowState.Fullscreen)
                 return;
-            
+
             Rect r = API.GetWindowBounds(window.Handle, WindowRegionCode.StructureRegion);
             bounds = new Rectangle(r.X, r.Y, r.Width, r.Height);
-            
-            r = API.GetWindowBounds(window.Handle, WindowRegionCode.GlobalPortRegion);
+
+            r = API.GetWindowBounds(window.Handle, WindowRegionCode.ContentRegion);
             clientRectangle = new Rectangle(0, 0, r.Width, r.Height);
         }
 
@@ -871,13 +872,13 @@ namespace OpenTK.Platform.MacOS
 
         public int X
         {
-            get { return ClientRectangle.X; }
+            get { return Bounds.X; }
             set { Location = new Point(value, Y); }
         }
 
         public int Y
         {
-            get { return ClientRectangle.Y; }
+            get { return Bounds.Y; }
             set { Location = new Point(X, value); }
         }
 

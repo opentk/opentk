@@ -103,10 +103,11 @@ namespace OpenTK.Platform.Windows
                         // This is a keyboard or USB keyboard device. In the latter case, discover if it really is a
                         // keyboard device by qeurying the registry.
                         RegistryKey regkey = GetRegistryKey(name);
-                        string deviceDesc = (string)regkey.GetValue("DeviceDesc");
+                        if (regkey == null)
+                            continue;
 
+                        string deviceDesc = (string)regkey.GetValue("DeviceDesc");
                         string deviceClass = (string)regkey.GetValue("Class");
-            
                         string deviceClassGUID = (string)regkey.GetValue("ClassGUID"); // for windows 8 support via OpenTK issue 3198
 
                         // making a guess at backwards compatability. Not sure what older windows returns in these cases...
@@ -205,10 +206,15 @@ namespace OpenTK.Platform.Windows
 
         static RegistryKey GetRegistryKey(string name)
         {
+            if (name.Length < 4)
+                return null;
+
             // remove the \??\
             name = name.Substring(4);
 
             string[] split = name.Split('#');
+            if (split.Length < 3)
+                return null;
 
             string id_01 = split[0];    // ACPI (Class code)
             string id_02 = split[1];    // PNP0303 (SubClass code)

@@ -170,6 +170,32 @@ namespace OpenTK.Platform
 
         #endregion
 
+        #region CreateGetAddress
+
+        internal static GraphicsContext.GetAddressDelegate CreateGetAddress()
+        {
+            GraphicsContext.GetAddressDelegate loader = null;
+            if (Configuration.RunningOnWindows)
+            {
+                loader = Platform.Windows.Wgl.GetProcAddress;
+            }
+            else if (Configuration.RunningOnX11)
+            {
+                loader = Platform.X11.Glx.GetProcAddress;
+            }
+            else if (Configuration.RunningOnMacOS)
+            {
+                loader = Platform.MacOS.NS.GetAddress;
+            }
+            else
+            {
+                throw new PlatformNotSupportedException();
+            }
+            return loader;
+        }
+
+        #endregion
+
         #region --- Creating a Graphics Context ---
 
         /// <summary>
@@ -275,7 +301,7 @@ namespace OpenTK.Platform
         public static IWindowInfo CreateSdl2WindowInfo(IntPtr windowHandle)
         {
             return new OpenTK.Platform.SDL2.Sdl2WindowInfo(
-                SDL2.SDL.CreateWindowFrom(windowHandle), null);
+                windowHandle, null);
         }
 
         #endregion

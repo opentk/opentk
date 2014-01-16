@@ -78,7 +78,6 @@ namespace OpenTK.Platform.X11
                 Marshal.PtrToStructure(keysym_ptr, keysyms);
                 API.Free(keysym_ptr);
     
-                KeyboardDevice kb = new KeyboardDevice();
                 keyboard.Description = "Default X11 keyboard";
                 keyboard.NumberOfKeys = lastKeyCode - firstKeyCode + 1;
                 keyboard.DeviceID = IntPtr.Zero;
@@ -148,29 +147,38 @@ namespace OpenTK.Platform.X11
 #endif
         #endregion
 
+        #region TranslateKey
+
+        internal bool TranslateKey(ref XKeyEvent e, out Key key)
+        {
+            XKey keysym = (XKey)API.LookupKeysym(ref e, 0);
+            XKey keysym2 = (XKey)API.LookupKeysym(ref e, 1);
+            key = Key.Unknown;
+
+            if (keymap.ContainsKey(keysym))
+            {
+                key = keymap[keysym];
+            }
+            else if (keymap.ContainsKey(keysym2))
+            {
+                key = keymap[keysym2];
+            }
+            else
+            {
+                Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.keycode, (XKey)keysym, (XKey)keysym2);
+            }
+
+            return key != Key.Unknown;
+        }
+
+        #endregion
+
         #region internal void ProcessEvent(ref XEvent e)
 
         internal void ProcessEvent(ref XEvent e)
         {
             switch (e.type)
             {
-                case XEventName.KeyPress:
-                case XEventName.KeyRelease:
-                    bool pressed = e.type == XEventName.KeyPress;
-                    XKey keysym = (XKey)API.LookupKeysym(ref e.KeyEvent, 0);
-                    XKey keysym2 = (XKey)API.LookupKeysym(ref e.KeyEvent, 1);
-                    Key key = Key.Unknown;
-
-                    if (keymap.ContainsKey(keysym))
-                        key = keymap[keysym];
-                    else if (keymap.ContainsKey(keysym2))
-                        key = keymap[keysym2];
-                    else
-                        Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.KeyEvent.keycode, (XKey)keysym, (XKey)keysym2);
-
-                    keyboard.SetKey(key, (uint)e.KeyEvent.keycode, pressed);
-                    break;
-
                 case XEventName.ButtonPress:
                     if (e.ButtonEvent.button == 1) mouse[OpenTK.Input.MouseButton.Left] = true;
                     else if (e.ButtonEvent.button == 2) mouse[OpenTK.Input.MouseButton.Middle] = true;

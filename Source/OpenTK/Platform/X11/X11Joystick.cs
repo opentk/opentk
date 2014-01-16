@@ -36,7 +36,7 @@ namespace OpenTK.Platform.X11
 {
     struct X11JoyDetails { }
 
-    sealed class X11Joystick : IJoystickDriver, IGamePadDriver
+    sealed class X11Joystick : IJoystickDriver, IJoystickDriver2, IGamePadDriver
     {
         #region Fields
 
@@ -259,21 +259,47 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        //HACK implement
-        public GamePadState GetState()
+        #region IGamePadDriver Members
+
+        public GamePadCapabilities GetCapabilities(int index)
         {
-            throw new NotImplementedException();
+            return new GamePadCapabilities();
         }
 
         public GamePadState GetState(int index)
         {
-            Poll();
-            throw new NotImplementedException();
+            return new GamePadState();
         }
 
-        public string GetDeviceName(int index)
+        public string GetName(int index)
         {
-            throw new NotImplementedException();
+            return String.Empty;
         }
+
+        public bool SetVibration(int index, float left, float right)
+        {
+            return false;
+        }
+
+        #endregion
+
+        #region IJoystickDriver2 Members
+
+        JoystickState IJoystickDriver2.GetState(int index)
+        {
+            return new JoystickState();
+        }
+
+        JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)
+        {
+            return new JoystickCapabilities();
+        }
+
+        Guid IJoystickDriver2.GetGuid(int index)
+        {
+            return new Guid();
+        }
+
+        #endregion
     }
 }

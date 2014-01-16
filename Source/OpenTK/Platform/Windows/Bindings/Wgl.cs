@@ -202,14 +202,14 @@ namespace OpenTK.Platform.Windows
             }
 
             public static
-            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, out int nNumFormats)
             {
                 unsafe
                 {
                     fixed (int* piAttribIList_ptr = piAttribIList)
                     fixed (Single* pfAttribFList_ptr = pfAttribFList)
                     fixed (int* piFormats_ptr = piFormats)
-                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
                     {
                         return Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
                     }
