@@ -116,7 +116,14 @@ namespace OpenTK.Platform.Windows
 
         public bool SetVibration(int index, float left, float right)
         {
-            return false;
+            left = MathHelper.Clamp(left, 0.0f, 1.0f);
+            right = MathHelper.Clamp(right, 0.0f, 1.0f);
+
+            XInputVibration vibration = new XInputVibration(
+                (ushort)(left * UInt16.MaxValue),
+                (ushort)(right * UInt16.MaxValue));
+
+            return xinput.SetState((XInputUserIndex)index, ref vibration) == XInputErrorCode.Success;
         }
 
         #endregion
@@ -285,8 +292,14 @@ namespace OpenTK.Platform.Windows
 
         struct XInputVibration
         {
-            public short LeftMotorSpeed;
-            public short RightMotorSpeed;
+            public ushort LeftMotorSpeed;
+            public ushort RightMotorSpeed;
+
+            public XInputVibration(ushort left, ushort right)
+            {
+                LeftMotorSpeed = left;
+                RightMotorSpeed = right;
+            }
         }
 
         struct XInputDeviceCapabilities
