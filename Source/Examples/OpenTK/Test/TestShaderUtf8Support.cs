@@ -12,8 +12,8 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Examples.Tutorial
 {
-    [Example("Shader Source With Japanese Comment Test", ExampleCategory.OpenGL, "4.x")]
-    public class ShaderSourceWithJapaneseCommentTest : GameWindow
+    [Example("Shader UTF8 support", ExampleCategory.OpenTK, "OpenGL")]
+    public class TestShaderUtf8Support : GameWindow
     {
         string vertexShaderSource = @"
 #version 130
@@ -91,10 +91,10 @@ void main(void)
 
         Matrix4 projectionMatrix, modelviewMatrix;
 
-        public ShaderSourceWithJapaneseCommentTest()
+        public TestShaderUtf8Support()
             : base(640, 480,
             new GraphicsMode(), "OpenGL 3 Example", 0,
-            DisplayDevice.Default, 4, 2,
+            DisplayDevice.Default, 3, 0,
             GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
         { }
         
@@ -227,7 +227,7 @@ void main(void)
         [STAThread]
         public static void Main()
         {
-            using (ShaderSourceWithJapaneseCommentTest example = new ShaderSourceWithJapaneseCommentTest())
+            using (TestShaderUtf8Support example = new TestShaderUtf8Support())
             {
                 Utilities.SetWindowTitle(example);
                 example.Run(30);
