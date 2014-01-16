@@ -146,7 +146,7 @@ namespace OpenTK
 
         /// <summary>
         /// Marshal a <c>System.String</c> to unmanaged memory.
-        /// The resulting string is encoded in UTF-8 and must be freed
+        /// The resulting string is encoded in ASCII and must be freed
         /// with <c>FreeStringPtr</c>.
         /// </summary>
         /// <param name="str">The <c>System.String</c> to marshal.</param>
@@ -162,23 +162,23 @@ namespace OpenTK
             }
 
             // Allocate a buffer big enough to hold the marshalled string.
-            // We use GetMaxByteCount() as it is faster than GetByteCount().
-            // The downside is that it may allocate up to 3x more memory than
-            // strictly necessary.
-            int max_count = Encoding.UTF8.GetMaxByteCount(str.Length) + 1;
+            // GetMaxByteCount() appears to allocate space for the final NUL
+            // character, but allocate an extra one just in case (who knows
+            // what old Mono version would do here.)
+            int max_count = Encoding.ASCII.GetMaxByteCount(str.Length) + 1;
             IntPtr ptr = Marshal.AllocHGlobal(max_count);
             if (ptr == IntPtr.Zero)
             {
                 throw new OutOfMemoryException();
             }
 
-            // Pin the managed string and convert it to UTF-8 using
-            // the pointer overload of System.Encoding.UTF8.GetBytes().
+            // Pin the managed string and convert it to ASCII using
+            // the pointer overload of System.Encoding.ASCII.GetBytes().
             unsafe
             {
                 fixed (char* pstr = str)
                 {
-                    int actual_count = Encoding.UTF8.GetBytes(pstr, str.Length, (byte*)ptr, max_count);
+                    int actual_count = Encoding.ASCII.GetBytes(pstr, str.Length, (byte*)ptr, max_count);
                     Marshal.WriteByte(ptr, actual_count, 0); // Append '\0' at the end of the string
                     return ptr;
                 }
