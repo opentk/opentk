@@ -1,11 +1,32 @@
-#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * Contributions from Erik Ylvisaker
- * See license.txt for license info
- */
+#region License
+//
+// WinRawJoystick.cs
+//
+// Author:
+//       Stefanos A. <stapostol@gmail.com>
+//
+// Copyright (c) 2006 Stefanos Apostolopoulos
+// Copyright (c) 2007 Erik Ylvisaker
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 #endregion
-
-#region --- Using Directives ---
 
 using System;
 #if !MINIMAL
@@ -14,8 +35,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Security;
-
-#endregion
+using OpenTK.Platform.Common;
 
 /* TODO: Update the description of TimeBeginPeriod and other native methods. Update Timer. */
 
@@ -2424,8 +2444,7 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Top level collection Usage page for the raw input device.
         /// </summary>
-        //internal USHORT UsagePage;
-        internal SHORT UsagePage;
+        internal HIDPage UsagePage;
         /// <summary>
         /// Top level collection Usage for the raw input device.
         /// </summary>
@@ -2442,6 +2461,22 @@ namespace OpenTK.Platform.Windows
         /// Handle to the target window. If NULL it follows the keyboard focus.
         /// </summary>
         internal HWND Target;
+
+        public RawInputDevice(HIDUsageGD usage, RawInputDeviceFlags flags, HWND target)
+        {
+            UsagePage = HIDPage.GenericDesktop;
+            Usage = (short)usage;
+            Flags = flags;
+            Target = target;
+        }
+
+        public RawInputDevice(HIDUsageSim usage, RawInputDeviceFlags flags, HWND target)
+        {
+            UsagePage = HIDPage.Simulation;
+            Usage = (short)usage;
+            Flags = flags;
+            Target = target;
+        }
 
         public override string ToString()
         {
@@ -2715,16 +2750,15 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Size, in bytes, of each HID input in bRawData.
         /// </summary>
-        internal DWORD SizeHid;
+        internal DWORD Size;
         /// <summary>
         /// Number of HID inputs in bRawData.
         /// </summary>
         internal DWORD Count;
-        // The RawData field must be marshalled manually.
-        ///// <summary>
-        ///// Raw input data as an array of bytes.
-        ///// </summary>
-        //internal IntPtr RawData;
+        /// <summary>
+        /// Raw input data as an array of bytes.
+        /// </summary>
+        internal IntPtr RawData;
     }
 
     #endregion

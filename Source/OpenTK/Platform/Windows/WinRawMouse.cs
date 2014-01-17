@@ -31,6 +31,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using OpenTK.Input;
+using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.Windows
 {
@@ -296,13 +297,10 @@ namespace OpenTK.Platform.Windows
 
         static void RegisterRawDevice(IntPtr window, string device)
         {
-            RawInputDevice[] rid = new RawInputDevice[1];
-            // Mouse is 1/2 (page/id). See http://www.microsoft.com/whdc/device/input/HID_HWID.mspx
-            rid[0] = new RawInputDevice();
-            rid[0].UsagePage = 1;
-            rid[0].Usage = 2;
-            rid[0].Flags = RawInputDeviceFlags.INPUTSINK;
-            rid[0].Target = window;
+            RawInputDevice[] rid = new RawInputDevice[]
+            {
+                new RawInputDevice(HIDUsageGD.Mouse, RawInputDeviceFlags.INPUTSINK, window)
+            };
 
             if (!Functions.RegisterRawInputDevices(rid, 1, API.RawInputDeviceSize))
             {
