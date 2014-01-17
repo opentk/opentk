@@ -2758,7 +2758,23 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Raw input data as an array of bytes.
         /// </summary>
-        internal IntPtr RawData;
+        internal byte RawData;
+
+        internal byte this[int index]
+        {
+            get
+            {
+                if (index < 0 || index > Size * Count)
+                    throw new ArgumentOutOfRangeException("index");
+                unsafe
+                {
+                    fixed (byte* data = &RawData)
+                    {
+                        return *(data + index);
+                    }
+                }
+            }
+        }
     }
 
     #endregion
