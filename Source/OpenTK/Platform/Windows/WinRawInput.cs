@@ -117,7 +117,7 @@ namespace OpenTK.Platform.Windows
                                 break;
 
                             case RawInputDeviceType.HID:
-                                if (((WinRawJoystick)JoystickDriver).ProcessEvent(ref *data))
+                                if (((WinRawJoystick)JoystickDriver).ProcessEvent(data))
                                     return IntPtr.Zero;
                                 break;
                         }
