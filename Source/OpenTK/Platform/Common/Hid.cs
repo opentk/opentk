@@ -41,152 +41,152 @@ namespace OpenTK.Platform.Common
         VR = 0x03,
         Sport = 0x04,
         Game = 0x05,
-        /* Reserved 0x06 */
-        KeyboardOrKeypad = 0x07, /* USB Device Class Definition for Human Interface Devices (HID). Note: the usage type for all key codes is Selector (Sel). */
+        // Reserved 0x06 
+        KeyboardOrKeypad = 0x07, // USB Device Class Definition for Human Interface Devices (HID). Note: the usage type for all key codes is Selector (Sel). 
         LEDs = 0x08,
         Button = 0x09,
         Ordinal = 0x0A,
         Telephony = 0x0B,
         Consumer = 0x0C,
         Digitizer = 0x0D,
-        /* Reserved 0x0E */
-        PID = 0x0F, /* USB Physical Interface Device definitions for force feedback and related devices. */
+        // Reserved 0x0E 
+        PID = 0x0F, // USB Physical Interface Device definitions for force feedback and related devices. 
         Unicode = 0x10,
-        /* Reserved 0x11 - 0x13 */
+        // Reserved 0x11 - 0x13 
         AlphanumericDisplay = 0x14,
-        /* Reserved 0x15 - 0x7F */
-        /* Monitor 0x80 - 0x83   USB Device Class Definition for Monitor Devices */
-        /* Power 0x84 - 0x87     USB Device Class Definition for Power Devices */
-        PowerDevice = 0x84,                /* Power Device Page */
-        BatterySystem = 0x85,              /* Battery System Page */
-        /* Reserved 0x88 - 0x8B */
-        BarCodeScanner = 0x8C, /* (Point of Sale) USB Device Class Definition for Bar Code Scanner Devices */
-        WeighingDevice = 0x8D, /* (Point of Sale) USB Device Class Definition for Weighing Devices */
-        Scale = 0x8D, /* (Point of Sale) USB Device Class Definition for Scale Devices */
+        // Reserved 0x15 - 0x7F 
+        // Monitor 0x80 - 0x83   USB Device Class Definition for Monitor Devices 
+        // Power 0x84 - 0x87     USB Device Class Definition for Power Devices 
+        PowerDevice = 0x84,                // Power Device Page 
+        BatterySystem = 0x85,              // Battery System Page 
+        // Reserved 0x88 - 0x8B 
+        BarCodeScanner = 0x8C, // (Point of Sale) USB Device Class Definition for Bar Code Scanner Devices 
+        WeighingDevice = 0x8D, // (Point of Sale) USB Device Class Definition for Weighing Devices 
+        Scale = 0x8D, // (Point of Sale) USB Device Class Definition for Scale Devices 
         MagneticStripeReader = 0x8E,
-        /* ReservedPointofSalepages 0x8F */
-        CameraControl = 0x90, /* USB Device Class Definition for Image Class Devices */
-        Arcade = 0x91, /* OAAF Definitions for arcade and coinop related Devices */
-        /* Reserved 0x92 - 0xFEFF */
-        /* VendorDefined 0xFF00 - 0xFFFF */
+        // ReservedPointofSalepages 0x8F 
+        CameraControl = 0x90, // USB Device Class Definition for Image Class Devices 
+        Arcade = 0x91, // OAAF Definitions for arcade and coinop related Devices 
+        // Reserved 0x92 - 0xFEFF 
+        // VendorDefined 0xFF00 - 0xFFFF 
         VendorDefinedStart = 0xFF00
     }
 
     // Generic desktop usage
     enum HIDUsageGD : ushort
     {
-        Pointer = 0x01, /* Physical Collection */
-        Mouse = 0x02, /* Application Collection */
-        /* 0x03 Reserved */
-        Joystick = 0x04, /* Application Collection */
-        GamePad = 0x05, /* Application Collection */
-        Keyboard = 0x06, /* Application Collection */
-        Keypad = 0x07, /* Application Collection */
-        MultiAxisController = 0x08, /* Application Collection */
-        /* 0x09 - 0x2F Reserved */
-        X = 0x30, /* Dynamic Value */
-        Y = 0x31, /* Dynamic Value */
-        Z = 0x32, /* Dynamic Value */
-        Rx = 0x33, /* Dynamic Value */
-        Ry = 0x34, /* Dynamic Value */
-        Rz = 0x35, /* Dynamic Value */
-        Slider = 0x36, /* Dynamic Value */
-        Dial = 0x37, /* Dynamic Value */
-        Wheel = 0x38, /* Dynamic Value */
-        Hatswitch = 0x39, /* Dynamic Value */
-        CountedBuffer = 0x3A, /* Logical Collection */
-        ByteCount = 0x3B, /* Dynamic Value */
-        MotionWakeup = 0x3C, /* One-Shot Control */
-        Start = 0x3D, /* On/Off Control */
-        Select = 0x3E, /* On/Off Control */
-        /* 0x3F Reserved */
-        Vx = 0x40, /* Dynamic Value */
-        Vy = 0x41, /* Dynamic Value */
-        Vz = 0x42, /* Dynamic Value */
-        Vbrx = 0x43, /* Dynamic Value */
-        Vbry = 0x44, /* Dynamic Value */
-        Vbrz = 0x45, /* Dynamic Value */
-        Vno = 0x46, /* Dynamic Value */
-        /* 0x47 - 0x7F Reserved */
-        SystemControl = 0x80, /* Application Collection */
-        SystemPowerDown = 0x81, /* One-Shot Control */
-        SystemSleep = 0x82, /* One-Shot Control */
-        SystemWakeUp = 0x83, /* One-Shot Control */
-        SystemContextMenu = 0x84, /* One-Shot Control */
-        SystemMainMenu = 0x85, /* One-Shot Control */
-        SystemAppMenu = 0x86, /* One-Shot Control */
-        SystemMenuHelp = 0x87, /* One-Shot Control */
-        SystemMenuExit = 0x88, /* One-Shot Control */
-        SystemMenu = 0x89, /* Selector */
-        SystemMenuRight = 0x8A, /* Re-Trigger Control */
-        SystemMenuLeft = 0x8B, /* Re-Trigger Control */
-        SystemMenuUp = 0x8C, /* Re-Trigger Control */
-        SystemMenuDown = 0x8D, /* Re-Trigger Control */
-        /* 0x8E - 0x8F Reserved */
-        DPadUp = 0x90, /* On/Off Control */
-        DPadDown = 0x91, /* On/Off Control */
-        DPadRight = 0x92, /* On/Off Control */
-        DPadLeft = 0x93, /* On/Off Control */
-        /* 0x94 - 0xFFFF Reserved */
+        Pointer = 0x01, // Physical Collection 
+        Mouse = 0x02, // Application Collection 
+        // 0x03 Reserved 
+        Joystick = 0x04, // Application Collection 
+        GamePad = 0x05, // Application Collection 
+        Keyboard = 0x06, // Application Collection 
+        Keypad = 0x07, // Application Collection 
+        MultiAxisController = 0x08, // Application Collection 
+        // 0x09 - 0x2F Reserved 
+        X = 0x30, // Dynamic Value 
+        Y = 0x31, // Dynamic Value 
+        Z = 0x32, // Dynamic Value 
+        Rx = 0x33, // Dynamic Value 
+        Ry = 0x34, // Dynamic Value 
+        Rz = 0x35, // Dynamic Value 
+        Slider = 0x36, // Dynamic Value 
+        Dial = 0x37, // Dynamic Value 
+        Wheel = 0x38, // Dynamic Value 
+        Hatswitch = 0x39, // Dynamic Value 
+        CountedBuffer = 0x3A, // Logical Collection 
+        ByteCount = 0x3B, // Dynamic Value 
+        MotionWakeup = 0x3C, // One-Shot Control 
+        Start = 0x3D, // On/Off Control 
+        Select = 0x3E, // On/Off Control 
+        // 0x3F Reserved 
+        Vx = 0x40, // Dynamic Value 
+        Vy = 0x41, // Dynamic Value 
+        Vz = 0x42, // Dynamic Value 
+        Vbrx = 0x43, // Dynamic Value 
+        Vbry = 0x44, // Dynamic Value 
+        Vbrz = 0x45, // Dynamic Value 
+        Vno = 0x46, // Dynamic Value 
+        // 0x47 - 0x7F Reserved 
+        SystemControl = 0x80, // Application Collection 
+        SystemPowerDown = 0x81, // One-Shot Control 
+        SystemSleep = 0x82, // One-Shot Control 
+        SystemWakeUp = 0x83, // One-Shot Control 
+        SystemContextMenu = 0x84, // One-Shot Control 
+        SystemMainMenu = 0x85, // One-Shot Control 
+        SystemAppMenu = 0x86, // One-Shot Control 
+        SystemMenuHelp = 0x87, // One-Shot Control 
+        SystemMenuExit = 0x88, // One-Shot Control 
+        SystemMenu = 0x89, // Selector 
+        SystemMenuRight = 0x8A, // Re-Trigger Control 
+        SystemMenuLeft = 0x8B, // Re-Trigger Control 
+        SystemMenuUp = 0x8C, // Re-Trigger Control 
+        SystemMenuDown = 0x8D, // Re-Trigger Control 
+        // 0x8E - 0x8F Reserved 
+        DPadUp = 0x90, // On/Off Control 
+        DPadDown = 0x91, // On/Off Control 
+        DPadRight = 0x92, // On/Off Control 
+        DPadLeft = 0x93, // On/Off Control 
+        // 0x94 - 0xFFFF Reserved 
         Reserved = 0xFFFF
     }
 
     enum HIDUsageSim : ushort
     {
-        FlightSimulationDevice = 0x01, /* Application Collection */
-        AutomobileSimulationDevice = 0x02, /*             Application Collection */
-        TankSimulationDevice = 0x03, /*             Application Collection */
-        SpaceshipSimulationDevice = 0x04, /*             Application Collection */
-        SubmarineSimulationDevice = 0x05, /*             Application Collection */
-        SailingSimulationDevice = 0x06, /*             Application Collection */
-        MotorcycleSimulationDevice = 0x07, /*             Application Collection */
-        SportsSimulationDevice = 0x08, /*             Application Collection */
-        AirplaneSimulationDevice = 0x09, /*             Application Collection */
-        HelicopterSimulationDevice = 0x0A, /*             Application Collection */
-        MagicCarpetSimulationDevice = 0x0B, /*             Application Collection */
-        BicycleSimulationDevice = 0x0C, /*             Application Collection */
-        /* 0x0D - 0x1F Reserved */
-        FlightControlStick = 0x20, /*             Application Collection */
-        FlightStick = 0x21, /*             Application Collection */
-        CyclicControl = 0x22, /*             Physical Collection */
-        CyclicTrim = 0x23, /*             Physical Collection */
-        FlightYoke = 0x24, /*             Application Collection */
-        TrackControl = 0x25, /*             Physical Collection */
-        /* 0x26 - 0xAF Reserved */
-        Aileron = 0xB0, /*             Dynamic Value */
-        AileronTrim = 0xB1, /*             Dynamic Value */
-        AntiTorqueControl = 0xB2, /*             Dynamic Value */
-        AutopilotEnable = 0xB3, /*             On/Off Control */
-        ChaffRelease = 0xB4, /*             One-Shot Control */
-        CollectiveControl = 0xB5, /*             Dynamic Value */
-        DiveBrake = 0xB6, /*             Dynamic Value */
-        ElectronicCountermeasures = 0xB7, /*             On/Off Control */
-        Elevator = 0xB8, /*             Dynamic Value */
-        ElevatorTrim = 0xB9, /*             Dynamic Value */
-        Rudder = 0xBA, /*             Dynamic Value */
-        Throttle = 0xBB, /*             Dynamic Value */
-        FlightCommunications = 0xBC, /*             On/Off Control */
-        FlareRelease = 0xBD, /*             One-Shot Control */
-        LandingGear = 0xBE, /*             On/Off Control */
-        ToeBrake = 0xBF, /*             Dynamic Value */
-        Trigger = 0xC0, /*             Momentary Control */
-        WeaponsArm = 0xC1, /*             On/Off Control */
-        Weapons = 0xC2, /*             Selector */
-        WingFlaps = 0xC3, /*             Dynamic Value */
-        Accelerator = 0xC4, /*             Dynamic Value */
-        Brake = 0xC5, /*             Dynamic Value */
-        Clutch = 0xC6, /*             Dynamic Value */
-        Shifter = 0xC7, /*             Dynamic Value */
-        Steering = 0xC8, /*             Dynamic Value */
-        TurretDirection = 0xC9, /*             Dynamic Value */
-        BarrelElevation = 0xCA, /*             Dynamic Value */
-        DivePlane = 0xCB, /*             Dynamic Value */
-        Ballast = 0xCC, /*             Dynamic Value */
-        BicycleCrank = 0xCD, /*             Dynamic Value */
-        HandleBars = 0xCE, /*             Dynamic Value */
-        FrontBrake = 0xCF, /*             Dynamic Value */
-        RearBrake = 0xD0, /*             Dynamic Value */
-        /* 0xD1 - 0xFFFF Reserved */
+        FlightSimulationDevice = 0x01, // Application Collection 
+        AutomobileSimulationDevice = 0x02, //             Application Collection 
+        TankSimulationDevice = 0x03, //             Application Collection 
+        SpaceshipSimulationDevice = 0x04, //             Application Collection 
+        SubmarineSimulationDevice = 0x05, //             Application Collection 
+        SailingSimulationDevice = 0x06, //             Application Collection 
+        MotorcycleSimulationDevice = 0x07, //             Application Collection 
+        SportsSimulationDevice = 0x08, //             Application Collection 
+        AirplaneSimulationDevice = 0x09, //             Application Collection 
+        HelicopterSimulationDevice = 0x0A, //             Application Collection 
+        MagicCarpetSimulationDevice = 0x0B, //             Application Collection 
+        BicycleSimulationDevice = 0x0C, //             Application Collection 
+        // 0x0D - 0x1F Reserved 
+        FlightControlStick = 0x20, //             Application Collection 
+        FlightStick = 0x21, //             Application Collection 
+        CyclicControl = 0x22, //             Physical Collection 
+        CyclicTrim = 0x23, //             Physical Collection 
+        FlightYoke = 0x24, //             Application Collection 
+        TrackControl = 0x25, //             Physical Collection 
+        // 0x26 - 0xAF Reserved 
+        Aileron = 0xB0, //             Dynamic Value 
+        AileronTrim = 0xB1, //             Dynamic Value 
+        AntiTorqueControl = 0xB2, //             Dynamic Value 
+        AutopilotEnable = 0xB3, //             On/Off Control 
+        ChaffRelease = 0xB4, //             One-Shot Control 
+        CollectiveControl = 0xB5, //             Dynamic Value 
+        DiveBrake = 0xB6, //             Dynamic Value 
+        ElectronicCountermeasures = 0xB7, //             On/Off Control 
+        Elevator = 0xB8, //             Dynamic Value 
+        ElevatorTrim = 0xB9, //             Dynamic Value 
+        Rudder = 0xBA, //             Dynamic Value 
+        Throttle = 0xBB, //             Dynamic Value 
+        FlightCommunications = 0xBC, //             On/Off Control 
+        FlareRelease = 0xBD, //             One-Shot Control 
+        LandingGear = 0xBE, //             On/Off Control 
+        ToeBrake = 0xBF, //             Dynamic Value 
+        Trigger = 0xC0, //             Momentary Control 
+        WeaponsArm = 0xC1, //             On/Off Control 
+        Weapons = 0xC2, //             Selector 
+        WingFlaps = 0xC3, //             Dynamic Value 
+        Accelerator = 0xC4, //             Dynamic Value 
+        Brake = 0xC5, //             Dynamic Value 
+        Clutch = 0xC6, //             Dynamic Value 
+        Shifter = 0xC7, //             Dynamic Value 
+        Steering = 0xC8, //             Dynamic Value 
+        TurretDirection = 0xC9, //             Dynamic Value 
+        BarrelElevation = 0xCA, //             Dynamic Value 
+        DivePlane = 0xCB, //             Dynamic Value 
+        Ballast = 0xCC, //             Dynamic Value 
+        BicycleCrank = 0xCD, //             Dynamic Value 
+        HandleBars = 0xCE, //             Dynamic Value 
+        FrontBrake = 0xCF, //             Dynamic Value 
+        RearBrake = 0xD0, //             Dynamic Value 
+        // 0xD1 - 0xFFFF Reserved 
         Reserved = 0xFFFF
     }
 }
