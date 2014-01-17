@@ -29,10 +29,83 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using OpenTK.Input;
 
 namespace OpenTK.Platform.Common
 {
+    class HidHelper
+    {
+        /// <summary>
+        /// Scales the specified value linearly between min and max.
+        /// </summary>
+        /// <param name="value">The value to scale</param>
+        /// <param name="value_min">The minimum expected value (inclusive)</param>
+        /// <param name="value_max">The maximum expected value (inclusive)</param>
+        /// <param name="result_min">The minimum output value (inclusive)</param>
+        /// <param name="result_max">The maximum output value (inclusive)</param>
+        /// <returns>The value, scaled linearly between min and max</returns>
+        public static int ScaleValue(int value, int value_min, int value_max,
+            int result_min, int result_max)
+        {
+            if (value_min >= value_max || result_min >= result_max)
+                throw new ArgumentOutOfRangeException();
+            MathHelper.Clamp(value, value_min, value_max);
+            
+            int range = result_max - result_min;
+            int half_range = range >> 1;
+            long temp = (value - value_min) * range; // need long to avoid overflow
+            return (int)(temp / (value_max - value_min) + half_range);
+        }
+
+        public static JoystickAxis TranslateJoystickAxis(HIDPage page, int usage)
+        {
+            switch (page)
+            {
+                case HIDPage.GenericDesktop:
+                    switch ((HIDUsageGD)usage)
+                    {
+                        case HIDUsageGD.X:
+                            return JoystickAxis.Axis0;
+                        case HIDUsageGD.Y:
+                            return JoystickAxis.Axis1;
+
+                        case HIDUsageGD.Z:
+                            return JoystickAxis.Axis2;
+                        case HIDUsageGD.Rz:
+                            return JoystickAxis.Axis3;
+
+                        case HIDUsageGD.Rx:
+                            return JoystickAxis.Axis4;
+                        case HIDUsageGD.Ry:
+                            return JoystickAxis.Axis5;
+
+                        case HIDUsageGD.Slider:
+                            return JoystickAxis.Axis6;
+                        case HIDUsageGD.Dial:
+                            return JoystickAxis.Axis7;
+                        case HIDUsageGD.Wheel:
+                            return JoystickAxis.Axis8;
+                    }
+                    break;
+
+                case HIDPage.Simulation:
+                    switch ((HIDUsageSim)usage)
+                    {
+                        case HIDUsageSim.Rudder:
+                            return JoystickAxis.Axis9;
+                        case HIDUsageSim.Throttle:
+                            return JoystickAxis.Axis10;
+                    }
+                    break;
+            }
+
+            Debug.Print("[Input] Unknown axis with HID page/usage {0}/{1}", page, usage);
+            return 0;
+        }
+    }
+
     enum HIDPage : ushort
     {
         Undefined = 0x00,
