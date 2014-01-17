@@ -80,14 +80,8 @@ namespace OpenTK.Platform.Windows
                     mice[i] = state;
                 }
 
-                int count = WinRawInput.DeviceCount;
-                RawInputDeviceList[] ridl = new RawInputDeviceList[count];
-                for (int i = 0; i < count; i++)
-                    ridl[i] = new RawInputDeviceList();
-                Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
-
                 // Discover mouse devices
-                foreach (RawInputDeviceList dev in ridl)
+                foreach (RawInputDeviceList dev in WinRawInput.GetDeviceList())
                 {
                     ContextHandle id = new ContextHandle(dev.Device);
                     if (rawids.ContainsKey(id))
