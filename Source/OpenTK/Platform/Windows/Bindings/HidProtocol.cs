@@ -50,15 +50,31 @@ namespace OpenTK.Platform.Windows
         public static extern HidProtocolStatus GetCaps(IntPtr preparsed_data, ref HidProtocolCaps capabilities);
 
         [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetData")]
+        public static extern HidProtocolStatus GetData(HidProtocolReportType type,
+            IntPtr data, ref int data_length,
+            IntPtr preparsed_data, IntPtr report, int report_length);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetScaledUsageValue")]
+        static public extern HidProtocolStatus GetScaledUsageValue(HidProtocolReportType type,
+            HIDPage usage_page, short link_collection, short usage, ref int usage_value,
+            IntPtr preparsed_data, IntPtr report, int report_length);
+
+        [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetUsageValue")]
         public static extern HidProtocolStatus GetUsageValue(HidProtocolReportType type,
-            HIDPage usage_page, int link_location, short usage, ref uint usage_value,
+            HIDPage usage_page, short link_collection, short usage, ref uint usage_value,
             IntPtr preparsed_data, IntPtr report, int report_length);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetValueCaps")]
         public static extern HidProtocolStatus GetValueCaps(HidProtocolReportType type, IntPtr caps,
             ref ushort caps_length, IntPtr preparsed_data);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, SetLastError = true, EntryPoint = "HidP_MaxDataListLength")]
+        public static extern int MaxDataListLength(HidProtocolReportType type, IntPtr preparsed_data);
     }
 
     enum HidProtocolReportType : ushort
@@ -76,7 +92,7 @@ namespace OpenTK.Platform.Windows
     [StructLayout(LayoutKind.Explicit)]
     struct HidProtocolButtonCaps
     {
-        [FieldOffset(0)] public short UsagePage;
+        [FieldOffset(0)] public HIDPage UsagePage;
         [FieldOffset(2)] public byte ReportID;
         [FieldOffset(3), MarshalAs(UnmanagedType.U1)] public bool IsAlias;
         [FieldOffset(4)] public short BitField;
@@ -110,7 +126,15 @@ namespace OpenTK.Platform.Windows
         public ushort NumberFeatureButtonCaps;
         public ushort NumberFeatureValueCaps;
         public ushort NumberFeatureDataIndices;
+    }
 
+    [StructLayout(LayoutKind.Explicit)]
+    public struct HidProtocolData
+    {
+        [FieldOffset(0)] public short DataIndex;
+        //[FieldOffset(2)] public short Reserved;
+        [FieldOffset(4)] public int RawValue;
+        [FieldOffset(4), MarshalAs(UnmanagedType.U1)] public bool On;
     }
 
     struct HidProtocolNotRange
