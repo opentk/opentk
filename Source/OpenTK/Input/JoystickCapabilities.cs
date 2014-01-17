@@ -95,6 +95,7 @@ namespace OpenTK.Input
         public bool IsConnected
         {
             get { return is_connected; }
+            private set { is_connected = value; }
         }
 
         /// <summary>
