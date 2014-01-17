@@ -38,10 +38,10 @@ namespace OpenTK.Platform.Windows
         #region Fields
 
         // Input event data.
-        static RawInput data = new RawInput();
 
         WinRawKeyboard keyboard_driver;
         WinRawMouse mouse_driver;
+        WinRawJoystick joystick_driver;
 
         IntPtr DevNotifyHandle;
         static readonly Guid DeviceInterfaceHid = new Guid("4D1E55B2-F16F-11CF-88CB-001111000030");
@@ -86,7 +86,7 @@ namespace OpenTK.Platform.Windows
         #region WindowProcedure
 
         // Processes the input Windows Message, routing the buffer to the correct Keyboard, Mouse or HID.
-        protected override IntPtr WindowProcedure(
+        protected unsafe override IntPtr WindowProcedure(
             IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             switch (message)
@@ -97,23 +97,28 @@ namespace OpenTK.Platform.Windows
                     Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
                         IntPtr.Zero, ref size, API.RawInputHeaderSize);
 
+                    void* data_ptr = stackalloc byte[size];
+                    RawInput* data = (RawInput*)data_ptr;
+
                     // Read the actual raw input structure
                     if (size == Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
-                        out data, ref size, API.RawInputHeaderSize))
+                        (IntPtr)data_ptr, ref size, API.RawInputHeaderSize))
                     {
-                        switch (data.Header.Type)
+                        switch (data->Header.Type)
                         {
                             case RawInputDeviceType.KEYBOARD:
-                                if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(data))
+                                if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(ref *data))
                                     return IntPtr.Zero;
                                 break;
 
                             case RawInputDeviceType.MOUSE:
-                                if (((WinRawMouse)MouseDriver).ProcessMouseEvent(data))
+                                if (((WinRawMouse)MouseDriver).ProcessMouseEvent(ref *data))
                                     return IntPtr.Zero;
                                 break;
 
                             case RawInputDeviceType.HID:
+                                if (((WinRawJoystick)JoystickDriver).ProcessEvent(ref *data))
+                                    return IntPtr.Zero;
                                 break;
                         }
                     }
@@ -122,7 +127,7 @@ namespace OpenTK.Platform.Windows
                 case WindowMessage.DEVICECHANGE:
                     ((WinRawKeyboard)KeyboardDriver).RefreshDevices();
                     ((WinRawMouse)MouseDriver).RefreshDevices();
-                    ((WinMMJoystick)JoystickDriver).RefreshDevices();
+                    ((WinRawJoystick)JoystickDriver).RefreshDevices();
                     break;
             }
             return base.WindowProcedure(handle, message, wParam, lParam);
@@ -136,6 +141,7 @@ namespace OpenTK.Platform.Windows
         {
             keyboard_driver = new WinRawKeyboard(Parent.Handle);
             mouse_driver = new WinRawMouse(Parent.Handle);
+            joystick_driver = new WinRawJoystick(Parent.Handle);
             DevNotifyHandle = RegisterForDeviceNotifications(Parent);
         }
 
@@ -176,6 +182,11 @@ namespace OpenTK.Platform.Windows
         public override IMouseDriver2 MouseDriver
         {
             get { return mouse_driver; }
+        }
+
+        public override IJoystickDriver2 JoystickDriver
+        {
+            get { return joystick_driver; }
         }
 
         #endregion

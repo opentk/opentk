@@ -164,6 +164,8 @@ namespace OpenTK.Platform.Windows
 
         public abstract IKeyboardDriver2 KeyboardDriver { get; }
 
+        public abstract IJoystickDriver2 JoystickDriver { get; }
+
         #endregion
 
         #region IDisposable Members

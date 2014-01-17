@@ -154,7 +154,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public bool ProcessMouseEvent(RawInput rin)
+        public bool ProcessMouseEvent(ref RawInput rin)
         {
             RawMouse raw = rin.Data.Mouse;
             ContextHandle handle = new ContextHandle(rin.Header.Device);
