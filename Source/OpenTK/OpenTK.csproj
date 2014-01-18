@@ -169,7 +169,6 @@
     <Compile Include="Platform\MappedGamePadDriver.cs" />
     <Compile Include="Platform\Windows\Bindings\HidProtocol.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
-    <Compile Include="Platform\Windows\WinCombinedJoystick.cs" />
     <Compile Include="Platform\Windows\WinRawJoystick.cs" />
     <Compile Include="Platform\Windows\XInputJoystick.cs" />
     <Compile Include="Platform\X11\Bindings\DL.cs" />
@@ -327,9 +326,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\Windows\WinGLContext.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\Windows\WinMMJoystick.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\Windows\WglHelper.cs">
