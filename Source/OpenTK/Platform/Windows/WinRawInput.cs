@@ -94,17 +94,10 @@ namespace OpenTK.Platform.Windows
                 switch (message)
                 {
                     case WindowMessage.INPUT:
-                        int size = 0;
-
-#if false
-                        // Get the size of the input buffer
-                        Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
-                            IntPtr.Zero, ref size, API.RawInputHeaderSize);
-
-                        void* data_ptr = stackalloc byte[size];
-                        RawInput* data = (RawInput*)data_ptr;
-#endif
+                        int size = BlittableValueType<RawInput>.Stride;
                         RawInput data;
+
+                        //RawInput data;
                         // Read the actual raw input structure
                         if (size == Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
                             out data, ref size, API.RawInputHeaderSize))
