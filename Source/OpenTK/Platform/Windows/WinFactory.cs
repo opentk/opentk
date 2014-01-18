@@ -45,7 +45,6 @@ namespace OpenTK.Platform.Windows
         // WinFactory constructor has finished running. The reason is
         // that they call WinFactory methods internally.
         WinRawInput rawinput_driver; // For keyboard and mouse input
-        WinCombinedJoystick joystick_driver; // For joystick input
 
         internal static IntPtr OpenGLHandle { get; private set; }
         const string OpenGLName = "OPENGL32.DLL";
@@ -132,7 +131,7 @@ namespace OpenTK.Platform.Windows
 
         public override IJoystickDriver2 CreateJoystickDriver()
         {
-            return CombinedJoystickDriver;
+            return RawInputDriver.JoystickDriver;
         }
 
         #endregion
@@ -154,22 +153,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        WinCombinedJoystick CombinedJoystickDriver
-        {
-            get
-            {
-                lock (SyncRoot)
-                {
-                    if (joystick_driver == null)
-                    {
-                        joystick_driver = new WinCombinedJoystick(
-                            new XInputJoystick(), new WinMMJoystick());
-                    }
-                    return joystick_driver;
-                }
-            }
-        }
-
         #endregion
 
         #region IDisposable Members
@@ -181,7 +164,6 @@ namespace OpenTK.Platform.Windows
                 if (manual)
                 {
                     rawinput_driver.Dispose();
-                    joystick_driver.Dispose();
                 }
 
                 base.Dispose(manual);

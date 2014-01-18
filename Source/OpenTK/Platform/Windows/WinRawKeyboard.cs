@@ -231,7 +231,7 @@ namespace OpenTK.Platform.Windows
 
         static string GetDeviceName(RawInputDeviceList dev)
         {
-            uint size = 0;
+            int size = 0;
             Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
             IntPtr name_ptr = Marshal.AllocHGlobal((IntPtr)size);
             Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, name_ptr, ref size);

@@ -76,6 +76,12 @@ namespace OpenTK.Platform.Windows
                 State.SetButton(button, value);
             }
 
+            public void SetConnected(bool value)
+            {
+                Capabilities.SetIsConnected(value);
+                State.SetIsConnected(value);
+            }
+
             public JoystickCapabilities GetCapabilities()
             {
                 return Capabilities;
@@ -134,6 +140,11 @@ namespace OpenTK.Platform.Windows
         readonly Dictionary<int, IntPtr> IndexToDevice =
             new Dictionary<int, IntPtr>();
 
+        byte[] PreparsedData = new byte[1024];
+        HidProtocolValueCaps[] AxisCaps = new HidProtocolValueCaps[4];
+        HidProtocolButtonCaps[] ButtonCaps = new HidProtocolButtonCaps[4];
+        HidProtocolData[] DataBuffer = new HidProtocolData[16];
+
         public WinRawJoystick(IntPtr window)
         {
             Debug.WriteLine("Using WinRawJoystick.");
@@ -148,6 +159,17 @@ namespace OpenTK.Platform.Windows
                 new RawInputDevice(HIDUsageGD.Joystick, RawInputDeviceFlags.INPUTSINK, window),
                 new RawInputDevice(HIDUsageGD.GamePad, RawInputDeviceFlags.INPUTSINK, window),
             };
+
+            if (!Functions.RegisterRawInputDevices(DeviceTypes, DeviceTypes.Length, API.RawInputDeviceSize))
+            {
+                Debug.Print("[Warning] Raw input registration failed with error: {0}.",
+                    Marshal.GetLastWin32Error());
+            }
+            else
+            {
+                Debug.Print("[WinRawJoystick] Registered for raw input");
+            }
+
             RefreshDevices();
 
             Debug.Unindent();
@@ -157,20 +179,34 @@ namespace OpenTK.Platform.Windows
 
         public void RefreshDevices()
         {
-            if (!Functions.RegisterRawInputDevices(DeviceTypes, DeviceTypes.Length, API.RawInputDeviceSize))
+            // Mark all devices as disconnected. We will check which of those
+            // are connected later on.
+            for (int i = 0; i < IndexToDevice.Count; i++)
             {
-                Debug.Print("[Warning] Raw input registration failed with error: {0}.",
-                    Marshal.GetLastWin32Error());
+                Devices[IndexToDevice[i]].SetConnected(false);
             }
-            else
+
+            foreach (RawInputDeviceList dev in WinRawInput.GetDeviceList())
             {
-                Debug.Print("Registered for raw joystick input");
+                if (dev.Type != RawInputDeviceType.HID)
+                    continue;
+
+                IntPtr handle = dev.Device;
+                Guid guid = GetDeviceGuid(handle);
+                JoystickCapabilities caps = GetDeviceCaps(handle);
+
+                if (!Devices.ContainsKey(handle))
+                    Devices.Add(handle, new Device(handle, guid, caps));
+                
+                Device stick = Devices[handle];
+                stick.SetConnected(true);
             }
+
         }
 
-        public unsafe bool ProcessEvent(RawInput* rin)
+        public unsafe bool ProcessEvent(ref RawInput rin)
         {
-            IntPtr handle = rin->Header.Device;
+            IntPtr handle = rin.Header.Device;
             Device stick = GetDevice(handle);
             if (stick == null)
             {
@@ -178,49 +214,20 @@ namespace OpenTK.Platform.Windows
                 return false;
             }
 
-            // Query the size of the _HIDP_PREPARSED_DATA structure for this event.
-            int preparsed_size = 0;
-            Functions.GetRawInputDeviceInfo(rin->Header.Device, RawInputDeviceInfoEnum.PREPARSEDDATA,
-                IntPtr.Zero, ref preparsed_size);
-            if (preparsed_size == 0)
-                return false;
-
-            // Allocate space for _HIDP_PREPARSED_DATA.
-            // This is an untyped blob of data.
-            void* preparsed_data_ptr = stackalloc byte[preparsed_size];
-            IntPtr preparsed_data = (IntPtr)preparsed_data_ptr;
-            if (Functions.GetRawInputDeviceInfo(rin->Header.Device, RawInputDeviceInfoEnum.PREPARSEDDATA,
-                preparsed_data, ref preparsed_size) < 0)
-                return false;
-
-            // Query joystick capabilities
-            HidProtocolCaps caps = new HidProtocolCaps();
-            if (HidProtocol.GetCaps(preparsed_data, ref caps) != HidProtocolStatus.Success)
-                return false;
-
-            // Axis capabilities
-            HidProtocolValueCaps* axes_caps = stackalloc HidProtocolValueCaps[caps.NumberInputValueCaps];
-            if (HidProtocol.GetValueCaps(HidProtocolReportType.Input,
-                (IntPtr)axes_caps, ref caps.NumberInputValueCaps, preparsed_data) !=
-                HidProtocolStatus.Success)
+            if (!GetPreparsedData(handle, ref PreparsedData))
             {
                 return false;
             }
 
-            // Button capabilities
-            HidProtocolButtonCaps* button_caps = stackalloc HidProtocolButtonCaps[caps.NumberInputButtonCaps];
-            if (HidProtocol.GetButtonCaps(HidProtocolReportType.Input,
-                (IntPtr)button_caps, ref caps.NumberInputButtonCaps, preparsed_data) !=
-                HidProtocolStatus.Success)
+            HidProtocolCaps caps;
+            if (!GetDeviceCaps(PreparsedData, out caps, ref AxisCaps, ref ButtonCaps))
             {
-                Debug.Print("[WinRawJoystick] HidProtocol.GetButtonCaps() failed with {0}",
-                    Marshal.GetLastWin32Error());
                 return false;
             }
 
             // Query current state
             // Allocate enough storage to hold the data of the current report
-            int size = HidProtocol.MaxDataListLength(HidProtocolReportType.Input, preparsed_data);
+            int size = HidProtocol.MaxDataListLength(HidProtocolReportType.Input, PreparsedData);
             if (size == 0)
             {
                 Debug.Print("[WinRawJoystick] HidProtocol.MaxDataListLength() failed with {0}",
@@ -229,37 +236,218 @@ namespace OpenTK.Platform.Windows
             }
 
             // Fill the data buffer
-            HidProtocolData* data = stackalloc HidProtocolData[size];
-            if (HidProtocol.GetData(HidProtocolReportType.Input,
-                (IntPtr)data, ref size, preparsed_data,
-                new IntPtr(&rin->Data.HID.RawData), rin->Data.HID.Size) != HidProtocolStatus.Success)
+            if (DataBuffer.Length < size)
             {
-                Debug.Print("[WinRawJoystick] HidProtocol.GetData() failed with {0}",
-                    Marshal.GetLastWin32Error());
-                return false;
+                Array.Resize(ref DataBuffer, size);
             }
 
-            UpdateAxes(stick, caps, axes_caps, data);
-            UpdateButtons(stick, caps, button_caps, data);
+            fixed (void* pdata = &rin.Data.HID.RawData)
+            {
+                if (HidProtocol.GetData(HidProtocolReportType.Input,
+                    DataBuffer, ref size, PreparsedData,
+                    (IntPtr)pdata, rin.Data.HID.Size) != HidProtocolStatus.Success)
+                {
+                    Debug.Print("[WinRawJoystick] HidProtocol.GetData() failed with {0}",
+                        Marshal.GetLastWin32Error());
+                    return false;
+                }
+            }
 
-#if false
-            // Button state
-            //g_NumberOfButtons = pButtonCaps->Range.UsageMax - pButtonCaps->Range.UsageMin + 1;
-#endif
+            UpdateAxes(stick, caps, AxisCaps, DataBuffer);
+            UpdateButtons(stick, caps, ButtonCaps, DataBuffer);
 
             return true;
         }
 
-        unsafe static void UpdateAxes(Device stick, HidProtocolCaps caps, HidProtocolValueCaps* axes_caps, HidProtocolData* data)
+        static bool GetPreparsedData(IntPtr handle, ref byte[] prepared_data)
+        {
+            // Query the size of the _HIDP_PREPARSED_DATA structure for this event.
+            int preparsed_size = 0;
+            Functions.GetRawInputDeviceInfo(handle, RawInputDeviceInfoEnum.PREPARSEDDATA,
+                IntPtr.Zero, ref preparsed_size);
+            if (preparsed_size == 0)
+            {
+                Debug.Print("[WinRawJoystick] Functions.GetRawInputDeviceInfo(PARSEDDATA) failed with {0}",
+                    Marshal.GetLastWin32Error());
+                return false;
+            }
+
+            // Allocate space for _HIDP_PREPARSED_DATA.
+            // This is an untyped blob of data.
+            if (prepared_data.Length < preparsed_size)
+            {
+                Array.Resize(ref prepared_data, preparsed_size);
+            }
+
+            if (Functions.GetRawInputDeviceInfo(handle, RawInputDeviceInfoEnum.PREPARSEDDATA,
+                prepared_data, ref preparsed_size) < 0)
+            {
+                Debug.Print("[WinRawJoystick] Functions.GetRawInputDeviceInfo(PARSEDDATA) failed with {0}",
+                    Marshal.GetLastWin32Error());
+                return false;
+            }
+
+            return true;
+        }
+
+        JoystickCapabilities GetDeviceCaps(IntPtr handle)
+        {
+            HidProtocolCaps caps;
+            if (GetPreparsedData(handle, ref PreparsedData) &&
+                GetDeviceCaps(PreparsedData, out caps, ref AxisCaps, ref ButtonCaps))
+            {
+                int axes = 0;
+                int dpads = 0;
+                int buttons = 0;
+                for (int i = 0; i < caps.NumberInputValueCaps; i++)
+                {
+                    if (AxisCaps[i].IsRange)
+                        continue; // Todo: range values not currently supported
+
+                    switch (AxisCaps[i].UsagePage)
+                    {
+                        case HIDPage.GenericDesktop:
+                            switch ((HIDUsageGD)AxisCaps[i].NotRange.Usage)
+                            {
+                                case HIDUsageGD.X:
+                                case HIDUsageGD.Y:
+                                case HIDUsageGD.Z:
+                                case HIDUsageGD.Rx:
+                                case HIDUsageGD.Ry:
+                                case HIDUsageGD.Rz:
+                                case HIDUsageGD.Slider:
+                                case HIDUsageGD.Dial:
+                                case HIDUsageGD.Wheel:
+                                    axes++;
+                                    break;
+
+                                case HIDUsageGD.Hatswitch:
+                                    dpads++;
+                                    break;
+                            }
+                            break;
+
+                        case HIDPage.Simulation:
+                            switch ((HIDUsageSim)AxisCaps[i].NotRange.Usage)
+                            {
+                                case HIDUsageSim.Rudder:
+                                case HIDUsageSim.Throttle:
+                                    axes++;
+                                    break;
+                            }
+                            break;
+
+                        case HIDPage.Button:
+                            buttons++;
+                            break;
+                    }
+                }
+
+                return new JoystickCapabilities(axes, buttons, true);
+            }
+            return new JoystickCapabilities();
+        }
+
+        static bool GetDeviceCaps(byte[] preparsed_data, out HidProtocolCaps caps,
+            ref HidProtocolValueCaps[] axes, ref HidProtocolButtonCaps[] buttons)
+        {
+            // Query joystick capabilities
+            caps = new HidProtocolCaps();
+            if (HidProtocol.GetCaps(preparsed_data, ref caps) != HidProtocolStatus.Success)
+            {
+                Debug.Print("[WinRawJoystick] HidProtocol.GetCaps() failed with {0}",
+                    Marshal.GetLastWin32Error());
+                return false;
+            }
+
+            // Make sure our caps arrays are big enough
+            if (axes.Length < caps.NumberInputValueCaps)
+            {
+                Array.Resize(ref axes, caps.NumberInputValueCaps);
+            }
+            if (buttons.Length < caps.NumberInputButtonCaps)
+            {
+                Array.Resize(ref buttons, caps.NumberInputButtonCaps);
+            }
+
+            // Axis capabilities
+            if (HidProtocol.GetValueCaps(HidProtocolReportType.Input,
+                axes, ref caps.NumberInputValueCaps, preparsed_data) !=
+                HidProtocolStatus.Success)
+            {
+                Debug.Print("[WinRawJoystick] HidProtocol.GetValueCaps() failed with {0}",
+                    Marshal.GetLastWin32Error());
+                return false;
+            }
+
+            // Button capabilities
+            if (HidProtocol.GetButtonCaps(HidProtocolReportType.Input,
+                buttons, ref caps.NumberInputButtonCaps, preparsed_data) !=
+                HidProtocolStatus.Success)
+            {
+                Debug.Print("[WinRawJoystick] HidProtocol.GetButtonCaps() failed with {0}",
+                    Marshal.GetLastWin32Error());
+                return false;
+            }
+
+            return true;
+        }
+
+        // Retrieves the GUID of a device, which is stored
+        // in the last part of the DEVICENAME string
+        Guid GetDeviceGuid(IntPtr handle)
+        {
+            Guid guid = new Guid();
+
+            unsafe
+            {
+                // Find out how much memory we need to allocate
+                // for the DEVICENAME string
+                int size = 0;
+                if (Functions.GetRawInputDeviceInfo(handle, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size) < 0 || size == 0)
+                {
+                    Debug.Print("[WinRawJoystick] Functions.GetRawInputDeviceInfo(DEVICENAME) failed with error {0}",
+                        Marshal.GetLastWin32Error());
+                    return guid;
+                }
+
+                // Allocate memory and retrieve the DEVICENAME string
+                char* pname = stackalloc char[size + 1];
+                if (Functions.GetRawInputDeviceInfo(handle, RawInputDeviceInfoEnum.DEVICENAME, (IntPtr)pname, ref size) < 0)
+                {
+                    Debug.Print("[WinRawJoystick] Functions.GetRawInputDeviceInfo(DEVICENAME) failed with error {0}",
+                        Marshal.GetLastWin32Error());
+                    return guid;
+                }
+
+                // Convert the buffer to a .Net string, and split it into parts
+                string name = new string(pname);
+                if (String.IsNullOrEmpty(name))
+                {
+                    Debug.Print("[WinRawJoystick] Failed to construct device name");
+                    return guid;
+                }
+
+                // The GUID is stored in the last part of the string
+                string[] parts = name.Split('#');
+                if (parts.Length >= 3)
+                {
+                    guid = new Guid(parts[2]);
+                }
+            }
+
+            return guid;
+        }
+
+        static void UpdateAxes(Device stick, HidProtocolCaps caps, HidProtocolValueCaps[] axes, HidProtocolData[] data)
         {
             // Use the data indices in the axis and button caps arrays to
             // access the data buffer we just filled.
             for (int i = 0; i < caps.NumberInputValueCaps; i++)
             {
-                HidProtocolValueCaps* axis = axes_caps + i;
-                if (!axis->IsRange)
+                if (!axes[i].IsRange)
                 {
-                    int index = axis->NotRange.DataIndex;
+                    int index = axes[i].NotRange.DataIndex;
                     if (index < 0 || index >= caps.NumberInputValueCaps)
                     {
                         // Should never happen
@@ -267,20 +455,19 @@ namespace OpenTK.Platform.Windows
                         continue;
                     }
 
-                    HidProtocolData* d = (data + index);
-                    if (d->DataIndex != index)
+                    if (data[i].DataIndex != index)
                     {
                         // Should also never happen
                         Debug.Print("[WinRawJoystick] DataIndex != index ({0} != {1})",
-                            d->DataIndex, index);
+                            data[i].DataIndex, index);
                         continue;
                     }
 
-                    short value = (short)HidHelper.ScaleValue(d->RawValue,
-                        axis->LogicalMin, axis->LogicalMax,
+                    short value = (short)HidHelper.ScaleValue(data[i].RawValue,
+                        axes[i].LogicalMin, axes[i].LogicalMax,
                         short.MinValue, short.MaxValue);
 
-                    stick.SetAxis(axis->UsagePage, axis->NotRange.Usage, value);
+                    stick.SetAxis(axes[i].UsagePage, axes[i].NotRange.Usage, value);
                 }
                 else
                 {
@@ -289,14 +476,13 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        unsafe static void UpdateButtons(Device stick, HidProtocolCaps caps, HidProtocolButtonCaps* button_caps, HidProtocolData* data)
+        unsafe static void UpdateButtons(Device stick, HidProtocolCaps caps, HidProtocolButtonCaps[] buttons, HidProtocolData[] data)
         {
             for (int i = 0; i < caps.NumberInputButtonCaps; i++)
             {
-                HidProtocolButtonCaps* button = button_caps + i;
-                if (!button->IsRange)
+                if (!buttons[i].IsRange)
                 {
-                    int index = button->NotRange.DataIndex;
+                    int index = buttons[i].NotRange.DataIndex;
                     if (index < 0 || index >= caps.NumberInputButtonCaps)
                     {
                         // Should never happen
@@ -304,18 +490,16 @@ namespace OpenTK.Platform.Windows
                         continue;
                     }
 
-                    HidProtocolData* d = (data + index);
-                    if (d->DataIndex != index)
+                    if (data[i].DataIndex != index)
                     {
                         // Should also never happen
                         Debug.Print("[WinRawJoystick] DataIndex != index ({0} != {1})",
-                            d->DataIndex, index);
+                            data[i].DataIndex, index);
                         continue;
                     }
 
-                    bool value = d->On;
-
-                    stick.SetButton(button->UsagePage, button->NotRange.Usage, value);
+                    bool value = data[i].On;
+                    stick.SetButton(buttons[i].UsagePage, buttons[i].NotRange.Usage, value);
                 }
                 else
                 {

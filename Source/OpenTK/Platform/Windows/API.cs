@@ -1500,22 +1500,22 @@ namespace OpenTK.Platform.Windows
         /// <para>If Data is not large enough for the data, the function returns -1. If Data is NULL, the function returns a value of zero. In both of these cases, Size is set to the minimum size required for the Data buffer.</para>
         /// <para>Call GetLastError to identify any other errors.</para>
         /// </returns>
-        [CLSCompliant(false)]
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
-        internal static extern UINT GetRawInputDeviceInfo(
-            HANDLE Device,
-            [MarshalAs(UnmanagedType.U4)] RawInputDeviceInfoEnum Command,
-            [In, Out] LPVOID Data,
-            [In, Out] ref UINT Size
-        );
-
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern INT GetRawInputDeviceInfo(
             HANDLE Device,
             [MarshalAs(UnmanagedType.U4)] RawInputDeviceInfoEnum Command,
             [In, Out] LPVOID Data,
+            [In, Out] ref INT Size
+        );
+
+        [CLSCompliant(false)]
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern INT GetRawInputDeviceInfo(
+            HANDLE Device,
+            [MarshalAs(UnmanagedType.U4)] RawInputDeviceInfoEnum Command,
+            [In, Out] byte[] Data,
             [In, Out] ref INT Size
         );
 
@@ -2791,7 +2791,7 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Size, in bytes, of the RawInputDeviceInfo structure.
         /// </summary>
-        DWORD Size = Marshal.SizeOf(typeof(RawInputDeviceInfo)); 
+        internal DWORD Size = Marshal.SizeOf(typeof(RawInputDeviceInfo)); 
         /// <summary>
         /// Type of raw input data.
         /// </summary>

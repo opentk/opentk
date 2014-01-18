@@ -89,48 +89,59 @@ namespace OpenTK.Platform.Windows
         protected unsafe override IntPtr WindowProcedure(
             IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            switch (message)
+            try
             {
-                case WindowMessage.INPUT:
-                    int size = 0;
-                    // Get the size of the input buffer
-                    Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
-                        IntPtr.Zero, ref size, API.RawInputHeaderSize);
+                switch (message)
+                {
+                    case WindowMessage.INPUT:
+                        int size = 0;
 
-                    void* data_ptr = stackalloc byte[size];
-                    RawInput* data = (RawInput*)data_ptr;
+#if false
+                        // Get the size of the input buffer
+                        Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
+                            IntPtr.Zero, ref size, API.RawInputHeaderSize);
 
-                    // Read the actual raw input structure
-                    if (size == Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
-                        (IntPtr)data_ptr, ref size, API.RawInputHeaderSize))
-                    {
-                        switch (data->Header.Type)
+                        void* data_ptr = stackalloc byte[size];
+                        RawInput* data = (RawInput*)data_ptr;
+#endif
+                        RawInput data;
+                        // Read the actual raw input structure
+                        if (size == Functions.GetRawInputData(lParam, GetRawInputDataEnum.INPUT,
+                            out data, ref size, API.RawInputHeaderSize))
                         {
-                            case RawInputDeviceType.KEYBOARD:
-                                if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(ref *data))
-                                    return IntPtr.Zero;
-                                break;
+                            switch (data.Header.Type)
+                            {
+                                case RawInputDeviceType.KEYBOARD:
+                                    if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(ref data))
+                                        return IntPtr.Zero;
+                                    break;
 
-                            case RawInputDeviceType.MOUSE:
-                                if (((WinRawMouse)MouseDriver).ProcessMouseEvent(ref *data))
-                                    return IntPtr.Zero;
-                                break;
+                                case RawInputDeviceType.MOUSE:
+                                    if (((WinRawMouse)MouseDriver).ProcessMouseEvent(ref data))
+                                        return IntPtr.Zero;
+                                    break;
 
-                            case RawInputDeviceType.HID:
-                                if (((WinRawJoystick)JoystickDriver).ProcessEvent(data))
-                                    return IntPtr.Zero;
-                                break;
+                                case RawInputDeviceType.HID:
+                                    if (((WinRawJoystick)JoystickDriver).ProcessEvent(ref data))
+                                        return IntPtr.Zero;
+                                    break;
+                            }
                         }
-                    }
-                    break;
+                        break;
 
-                case WindowMessage.DEVICECHANGE:
-                    ((WinRawKeyboard)KeyboardDriver).RefreshDevices();
-                    ((WinRawMouse)MouseDriver).RefreshDevices();
-                    ((WinRawJoystick)JoystickDriver).RefreshDevices();
-                    break;
+                    case WindowMessage.DEVICECHANGE:
+                        ((WinRawKeyboard)KeyboardDriver).RefreshDevices();
+                        ((WinRawMouse)MouseDriver).RefreshDevices();
+                        ((WinRawJoystick)JoystickDriver).RefreshDevices();
+                        break;
+                }
+                return base.WindowProcedure(handle, message, wParam, lParam);
             }
-            return base.WindowProcedure(handle, message, wParam, lParam);
+            catch (Exception e)
+            {
+                Debug.Print("[WinRawInput] Caught unhandled exception {0}", e);
+                return IntPtr.Zero;
+            }
         }
 
         #endregion
