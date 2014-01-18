@@ -259,6 +259,10 @@ namespace OpenTK.Platform.Windows
             return true;
         }
 
+        #endregion
+
+        #region Private Members
+
         static bool GetPreparsedData(IntPtr handle, ref byte[] prepared_data)
         {
             // Query the size of the _HIDP_PREPARSED_DATA structure for this event.
@@ -507,10 +511,6 @@ namespace OpenTK.Platform.Windows
                 }
             }
         }
-
-        #endregion
-
-        #region Private Members
 
         Device GetDevice(IntPtr handle)
         {
