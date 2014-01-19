@@ -47,7 +47,8 @@ namespace OpenTK
 
         bool primary;
         Rectangle bounds;
-        DisplayResolution current_resolution = new DisplayResolution(), original_resolution;
+        DisplayResolution current_resolution = new DisplayResolution();
+        internal DisplayResolution original_resolution;
         List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
         IList<DisplayResolution> available_resolutions_readonly;
         
