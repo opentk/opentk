@@ -53,6 +53,7 @@ namespace OpenTK.Platform.Android
 		bool renderOn = false;
 		bool sizeChanged = false;
 		bool requestRender = false;
+		bool autoSetContextOnRenderFrame = true;
 		CancellationTokenSource source;
 		Task renderThread;
 		ManualResetEvent pauseSignal;
@@ -287,6 +288,9 @@ namespace OpenTK.Platform.Android
 #endif
 			if (!ReadyToRender)
 				return;
+
+			if (autoSetContextOnRenderFrame)
+				MakeCurrent ();
 
 			OnRenderFrame (e);
 		}
@@ -542,6 +546,16 @@ namespace OpenTK.Platform.Android
 #endregion
 
 #region Properties
+
+
+		public bool AutoSetContextOnRenderFrame {
+			get {
+				return autoSetContextOnRenderFrame;
+			}
+			set {
+				autoSetContextOnRenderFrame = value;
+			}
+		}
 
 		GLCalls GLCalls {
 			get {
