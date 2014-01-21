@@ -48,25 +48,28 @@ namespace OpenTK.Platform.Windows
         /// <returns>True if the extension is supported by the given context, false otherwise</returns>
         public static bool SupportsExtension(IntPtr dc, string name)
         {
-            if (extensions.Count == 0)
+            lock (sync)
             {
-                // We cache this locally, as another thread might create a context which doesn't support  this method.
-                // The design is far from ideal, but there's no good solution to this issue as long as we are using
-                // static WGL/GL classes. Fortunately, this issue is extremely unlikely to arise in practice, as you'd
-                // have to create one accelerated and one non-accelerated context in the same application, with the
-                // non-accelerated context coming second.
-                bool get_arb = SupportsFunction("wglGetExtensionsStringARB");
-                bool get_ext = SupportsFunction("wglGetExtensionsStringEXT");
-                string str =
-                    get_arb ? Arb.GetExtensionsString(dc) :
-                    get_ext ? Ext.GetExtensionsString() :
-                    String.Empty;
-
-                if (!String.IsNullOrEmpty(str))
+                if (extensions.Count == 0)
                 {
-                    foreach (string ext in str.Split(' '))
+                    // We cache this locally, as another thread might create a context which doesn't support  this method.
+                    // The design is far from ideal, but there's no good solution to this issue as long as we are using
+                    // static WGL/GL classes. Fortunately, this issue is extremely unlikely to arise in practice, as you'd
+                    // have to create one accelerated and one non-accelerated context in the same application, with the
+                    // non-accelerated context coming second.
+                    bool get_arb = SupportsFunction("wglGetExtensionsStringARB");
+                    bool get_ext = SupportsFunction("wglGetExtensionsStringEXT");
+                    string str =
+                        get_arb ? Arb.GetExtensionsString(dc) :
+                        get_ext ? Ext.GetExtensionsString() :
+                        String.Empty;
+
+                    if (!String.IsNullOrEmpty(str))
                     {
-                        extensions.Add(ext, true);
+                        foreach (string ext in str.Split(' '))
+                        {
+                            extensions.Add(ext, true);
+                        }
                     }
                 }
             }
@@ -132,11 +135,15 @@ namespace OpenTK.Platform.Windows
 
         internal override void LoadEntryPoints()
         {
-            if (Wgl.GetCurrentContext() != IntPtr.Zero)
+            lock (SyncRoot)
             {
-                for (int i = 0; i < EntryPointsInstance.Length; i++)
+                if (Wgl.GetCurrentContext() != IntPtr.Zero)
                 {
-                    EntryPointsInstance[i] = GetAddress(EntryPointNamesInstance[i]);
+                    for (int i = 0; i < EntryPointsInstance.Length; i++)
+                    {
+                        EntryPointsInstance[i] = GetAddress(EntryPointNamesInstance[i]);
+                    }
+                    extensions.Clear();
                 }
             }
         }
