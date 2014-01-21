@@ -128,7 +128,7 @@ namespace OpenTK.Platform.Windows
                         current_context = Wgl.GetCurrentContext();
                         if (current_context != IntPtr.Zero && current_context == temp_context.Context.Handle)
                         {
-                            Wgl.LoadAll();
+                            new Wgl().LoadEntryPoints();
                         }
                     }
 
@@ -138,7 +138,7 @@ namespace OpenTK.Platform.Windows
                     ModeSelector = new WinGraphicsMode(window.DeviceContext);
                     Mode = SetGraphicsModePFD(ModeSelector, format, (WinWindowInfo)window);
 
-                    if (Wgl.Delegates.wglCreateContextAttribsARB != null)
+                    if (Wgl.SupportsFunction("wglCreateContextAttribsARB"))
                     {
                         try
                         {
@@ -213,7 +213,7 @@ namespace OpenTK.Platform.Windows
             // using the new entry points.)
             // Sigh...
             MakeCurrent(window);
-            Wgl.LoadAll();
+            new Wgl().LoadEntryPoints();
 
             if (sharedContext != null)
             {
@@ -345,10 +345,11 @@ namespace OpenTK.Platform.Windows
         {
             lock (LoadLock)
             {
-                Wgl.LoadAll();
+                new Wgl().LoadEntryPoints();
                 vsync_supported =
                     Wgl.SupportsExtension(DeviceContext, "WGL_EXT_swap_control") &&
-                    Wgl.Load("wglGetSwapIntervalEXT") && Wgl.Load("wglSwapIntervalEXT");
+                    Wgl.SupportsFunction("wglGetSwapIntervalEXT") &&
+                    Wgl.SupportsFunction("wglSwapIntervalEXT");
                 vsync_tear_supported =
                     Wgl.SupportsExtension(DeviceContext, "WGL_EXT_swap_tear");
             }

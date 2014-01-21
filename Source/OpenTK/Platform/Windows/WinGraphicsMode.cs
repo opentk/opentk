@@ -100,7 +100,7 @@ namespace OpenTK.Platform.Windows
         {
             GraphicsMode created_mode = null;
             if (Wgl.SupportsExtension("WGL_ARB_pixel_format") &&
-                Wgl.Delegates.wglChoosePixelFormatARB != null)
+                Wgl.SupportsFunction("wglChoosePixelFormatARB"))
             {
                 List<int> attributes = new List<int>();
                 attributes.Add((int)WGL_ARB_pixel_format.AccelerationArb);
@@ -357,7 +357,7 @@ namespace OpenTK.Platform.Windows
         {
             GraphicsMode created_mode = null;
             // See http://www.opengl.org/registry/specs/ARB/wgl_pixel_format.txt for more details
-            if (Wgl.Delegates.wglGetPixelFormatAttribivARB != null)
+            if (Wgl.SupportsFunction("wglGetPixelFormatAttribivARB"))
             {
                 // Define the list of attributes we are interested in.
                 // The results will be stored in the 'values' array below.
