@@ -52,8 +52,6 @@ namespace OpenTK.Platform.MacOS
         DisplayDevice device;
         bool mIsFullscreen = false;
 
-        readonly MacOSGraphicsMode ModeSelector = new MacOSGraphicsMode();
-
         public AglContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext)
         {
             Debug.Print("Context Type: {0}", shareContext);
@@ -103,6 +101,7 @@ namespace OpenTK.Platform.MacOS
             aglAttributes.Add((int)pixelFormatAttribute);
             aglAttributes.Add(value);
         }
+
         void CreateContext(GraphicsMode mode, CarbonWindowInfo carbonWindow, IntPtr shareContextRef, bool fullscreen)
         {
             Debug.Print("AGL pixel format attributes:");
@@ -110,51 +109,30 @@ namespace OpenTK.Platform.MacOS
             AGLPixelFormat myAGLPixelFormat;
             
             // Choose a pixel format with the attributes we specified.
-            if (fullscreen)
-            {
-                IntPtr gdevice;
-                IntPtr cgdevice = GetQuartzDevice(carbonWindow);
+            IntPtr gdevice;
+            IntPtr cgdevice = GetQuartzDevice(carbonWindow);
                 
-                if (cgdevice == IntPtr.Zero)
-                    cgdevice = (IntPtr)DisplayDevice.Default.Id;
+            if (cgdevice == IntPtr.Zero)
+                cgdevice = (IntPtr)DisplayDevice.Default.Id;
                 
-                OSStatus status = Carbon.API.DMGetGDeviceByDisplayID(cgdevice, out gdevice, false);
+            OSStatus status = Carbon.API.DMGetGDeviceByDisplayID(cgdevice, out gdevice, false);
                 
-                if (status != OSStatus.NoError)
-                    throw new MacOSException(status, "DMGetGDeviceByDisplayID failed.");
-                
-                myAGLPixelFormat = ModeSelector.SelectPixelFormat(
-                    mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
-                    mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
-                    true, gdevice);
-                
-                Agl.AglError err = Agl.GetError();
-                if (myAGLPixelFormat == IntPtr.Zero || err == Agl.AglError.BadPixelFormat)
-                {
-                    Debug.Print("Failed to create full screen pixel format.");
-                    Debug.Print("Trying again to create a non-fullscreen pixel format.");
-                    
-                    CreateContext(mode, carbonWindow, shareContextRef, false);
-                    return;
-                }
-            }
-            else
-            {
-                myAGLPixelFormat = ModeSelector.SelectPixelFormat(
-                    mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
-                    mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
-                    false, IntPtr.Zero);
-                MyAGLReportError("aglChoosePixelFormat");
-            }
-            
+            if (status != OSStatus.NoError)
+                throw new MacOSException(status, "DMGetGDeviceByDisplayID failed.");
+
+            IGraphicsMode selector = new MacOSGraphicsMode(gdevice);
+            Mode = selector.SelectGraphicsMode(
+                mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
+                mode.AccumulatorFormat, mode.Buffers, mode.Stereo);
+            MyAGLReportError("aglChoosePixelFormat");
+
             Debug.Print("Creating AGL context.  Sharing with {0}", shareContextRef);
-            
+            myAGLPixelFormat = Mode.Index.Value;
+
             // create the context and share it with the share reference.
             Handle = new ContextHandle(Agl.aglCreateContext(myAGLPixelFormat, shareContextRef));
             MyAGLReportError("aglCreateContext");
 
-            Mode = ModeSelector.GetGraphicsModeFromPixelFormat(myAGLPixelFormat);
-                        
             // Free the pixel format from memory.
             Agl.aglDestroyPixelFormat(myAGLPixelFormat);
             MyAGLReportError("aglDestroyPixelFormat");
