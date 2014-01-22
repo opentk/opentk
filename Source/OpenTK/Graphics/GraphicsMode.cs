@@ -43,7 +43,7 @@ namespace OpenTK.Graphics
         {
             if (depth < 0) throw new ArgumentOutOfRangeException("depth", "Must be greater than, or equal to zero.");
             if (stencil < 0) throw new ArgumentOutOfRangeException("stencil", "Must be greater than, or equal to zero.");
-            if (buffers <= 0) throw new ArgumentOutOfRangeException("buffers", "Must be greater than zero.");
+            if (buffers < 0) throw new ArgumentOutOfRangeException("buffers", "Must be greater than, or equal to zero.");
             if (samples < 0) throw new ArgumentOutOfRangeException("samples", "Must be greater than, or equal to zero.");
 
             this.Index = index;
