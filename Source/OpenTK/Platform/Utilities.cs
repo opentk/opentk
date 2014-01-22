@@ -376,7 +376,7 @@ namespace OpenTK.Platform
 
             if (samples > 0)
             {
-                samples = Math.Max(samples - 2, 0);
+                samples = Math.Max(samples - 1, 0);
                 return true;
             }
 
