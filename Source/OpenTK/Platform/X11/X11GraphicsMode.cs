@@ -52,49 +52,8 @@ namespace OpenTK.Platform.X11
                 if (visual == IntPtr.Zero)
                 {
                     // Relax parameters and retry
-                    if (stereo)
-                    {
-                        stereo = false;
-                        continue;
-                    }
-
-                    if (accum != 0)
-                    {
-                        accum = 0;
-                        continue;
-                    }
-                    
-                    if (samples > 0)
-                    {
-                        samples = Math.Max(samples - 2, 0);
-                        continue;
-                    }
-                    
-                    if (stencil != 0)
-                    {
-                        stencil = 0;
-                        continue;
-                    }
-                    
-                    if (depth != 0)
-                    {
-                        depth = 0;
-                        continue;
-                    }
-                    
-                    if (color != 24)
-                    {
-                        color = 24;
-                        continue;
-                    }
-
-                    if (buffers != 0)
-                    {
-                        buffers = 0;
-                        continue;
-                    }
-
-                    throw new GraphicsModeException("Requested GraphicsMode not available.");
+                    if (!Utilities.RelaxGraphicsMode(ref color, ref depth, ref stencil, ref samples, ref accum, ref buffers, ref stereo))
+                        throw new GraphicsModeException("Requested GraphicsMode not available.");
                 }
             }
             while (visual == IntPtr.Zero);
