@@ -254,7 +254,14 @@ namespace OpenTK.Graphics
             {
                 return samples;
             }
-            private set { samples = value; }
+            private set
+            {
+                // Clamp antialiasing samples to max 64x
+                // This protects against a potential DOS during
+                // mode selection, when the user requests an
+                // abnormally high AA level.
+                samples = MathHelper.Clamp(value, 0, 64);
+            }
         }
 
         #endregion
