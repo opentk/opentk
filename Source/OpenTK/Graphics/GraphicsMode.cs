@@ -22,7 +22,6 @@ namespace OpenTK.Graphics
         IntPtr? index = null;  // The id of the pixel format or visual.
 
         static GraphicsMode defaultMode;
-        static IGraphicsMode implementation;
         static readonly object SyncRoot = new object();
 
         #region Constructors
