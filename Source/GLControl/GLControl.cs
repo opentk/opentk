@@ -394,10 +394,13 @@ namespace OpenTK
             get
             {
                 if (!IsHandleCreated)
-                    return false;
+                {
+                    return initial_vsync_value.HasValue ?
+                        initial_vsync_value.Value : true;
+                }
 
                 ValidateState();
-                return Context.VSync;
+                return Context.SwapInterval != 0;
             }
             set
             {
@@ -412,7 +415,7 @@ namespace OpenTK
                 }
 
                 ValidateState();
-                Context.VSync = value;
+                Context.SwapInterval = value ? 1 : 0;
             }
         }
 
