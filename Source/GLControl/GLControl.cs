@@ -139,6 +139,15 @@ namespace OpenTK
             }
         }
 
+        [Conditional("DEBUG")]
+        void ValidateContext(string message)
+        {
+            if (!Context.IsCurrent)
+            {
+                Debug.Print("[GLControl] Attempted to access {0} on a non-current context. Results undefined.", message);
+            }
+        }
+
         void ValidateState()
         {
             if (IsDisposed)
@@ -400,6 +409,7 @@ namespace OpenTK
                 }
 
                 ValidateState();
+                ValidateContext("VSync");
                 return Context.SwapInterval != 0;
             }
             set
@@ -415,6 +425,7 @@ namespace OpenTK
                 }
 
                 ValidateState();
+                ValidateContext("VSync");
                 Context.SwapInterval = value ? 1 : 0;
             }
         }
@@ -468,6 +479,7 @@ namespace OpenTK
         public Bitmap GrabScreenshot()
         {
             ValidateState();
+            ValidateContext("GrabScreenshot()");
 
             Bitmap bmp = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
             System.Drawing.Imaging.BitmapData data =
