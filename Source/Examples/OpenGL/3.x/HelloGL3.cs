@@ -131,6 +131,9 @@ void main(void)
             GL.AttachShader(shaderProgramHandle, vertexShaderHandle);
             GL.AttachShader(shaderProgramHandle, fragmentShaderHandle);
 
+            GL.BindAttribLocation(shaderProgramHandle, 0, "in_position");
+            GL.BindAttribLocation(shaderProgramHandle, 1, "in_normal");
+
             GL.LinkProgram(shaderProgramHandle);
             Debug.WriteLine(GL.GetProgramInfoLog(shaderProgramHandle));
             GL.UseProgram(shaderProgramHandle);
@@ -183,12 +186,10 @@ void main(void)
             GL.EnableVertexAttribArray(0);
             GL.BindBuffer(BufferTarget.ArrayBuffer, positionVboHandle);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
-            GL.BindAttribLocation(shaderProgramHandle, 0, "in_position");
 
             GL.EnableVertexAttribArray(1);
             GL.BindBuffer(BufferTarget.ArrayBuffer, normalVboHandle);
             GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
-            GL.BindAttribLocation(shaderProgramHandle, 1, "in_normal");
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
 
