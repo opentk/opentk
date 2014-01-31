@@ -34,18 +34,44 @@ namespace OpenTK.Input
     /// <summary>
     /// Enumerates discrete positions for a joystick hat.
     /// </summary>
-    [Flags]
     public enum HatPosition : byte
     {
-        Centered = 0x00,
-        Up = 0x01,
-        Right = 0x02,
-        Down = 0x03,
-        Left = 0x04,
-        RightUp = Right | Up,
-        RightDown = Right | Down,
-        LeftUp = Left | Up,
-        LeftDown = Left | Down
+        /// <summary>
+        /// The hat is in its centered (neutral) position
+        /// </summary>
+        Centered = 0,
+        /// <summary>
+        /// The hat is in its top position.
+        /// </summary>
+        Up,
+        /// <summary>
+        /// The hat is in its top-right position.
+        /// </summary>
+        UpRight,
+        /// <summary>
+        /// The hat is in its right position.
+        /// </summary>
+        Right,
+        /// <summary>
+        /// The hat is in its bottom-right position.
+        /// </summary>
+        DownRight,
+        /// <summary>
+        /// The hat is in its bottom position.
+        /// </summary>
+        Down,
+        /// <summary>
+        /// The hat is in its bottom-left position.
+        /// </summary>
+        DownLeft,
+        /// <summary>
+        /// The hat is in its left position.
+        /// </summary>
+        Left,
+        /// <summary>
+        /// The hat is in its top-left position.
+        /// </summary>
+        UpLeft,
     }
 }
 
