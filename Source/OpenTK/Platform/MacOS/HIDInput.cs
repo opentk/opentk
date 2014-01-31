@@ -441,7 +441,7 @@ namespace OpenTK.Platform.MacOS
                 joy = new JoystickData();
                 int axes = 0;
                 int buttons = 0;
-                int dpads = 0;
+                int hats = 0;
 
                 CFStringRef name_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductKey);
                 string name = CF.CFStringGetCString(name_ref);
@@ -475,7 +475,7 @@ namespace OpenTK.Platform.MacOS
                                     break;
 
                                 case HIDUsageGD.Hatswitch:
-                                    dpads++;
+                                    hats++;
                                     break;
                             }
                             break;
@@ -499,7 +499,7 @@ namespace OpenTK.Platform.MacOS
                 joy.Name = name;
                 joy.Guid = guid;
                 joy.State.SetIsConnected(true);
-                joy.Capabilities = new JoystickCapabilities(axes, buttons, true);
+                joy.Capabilities = new JoystickCapabilities(axes, buttons, hats, true);
 
                 // Map button elements to JoystickButtons
                 for (int button = 0; button < button_elements.Count; button++)

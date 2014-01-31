@@ -269,7 +269,10 @@ namespace OpenTK.Platform.Windows
                 if (result == JoystickError.NoError)
                 {
                     JoystickCapabilities caps = new JoystickCapabilities(
-                        mmcaps.NumAxes, mmcaps.NumButtons, true);
+                        mmcaps.NumAxes,
+                        mmcaps.NumButtons,
+                        (mmcaps.Capabilities & JoystCapsFlags.HasPov) != 0 ? 1 : 0,
+                        true);
                     //if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
                     //    gpcaps.DPadCount++;
                     return caps;

@@ -656,6 +656,7 @@ namespace OpenTK.Platform.SDL2
                 return new JoystickCapabilities(
                     joystick.Axis.Count,
                     joystick.Button.Count,
+                    joystick.Details.HatCount,
                     joystick.Details.IsConnected);
             }
             return new JoystickCapabilities();
