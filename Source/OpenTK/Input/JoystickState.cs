@@ -244,12 +244,16 @@ namespace OpenTK.Input
             {
                 case JoystickHat.Hat0:
                     hat0 = value;
+                    break;
                 case JoystickHat.Hat1:
                     hat1 = value;
+                    break;
                 case JoystickHat.Hat2:
                     hat2 = value;
+                    break;
                 case JoystickHat.Hat3:
                     hat3 = value;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("hat");
             }
