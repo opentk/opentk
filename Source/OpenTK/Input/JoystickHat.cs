@@ -32,23 +32,29 @@ using System;
 namespace OpenTK.Input
 {
     /// <summary>
-    /// Describes the state of a joystick hat.
+    /// Defines available Joystick hats.
     /// </summary>
-    public struct JoystickHat
+    public enum JoystickHat
     {
-        HatPosition position;
-
-        internal JoystickHat(HatPosition pos)
-        {
-            position = pos;
-        }
-
         /// <summary>
-        /// Gets a <see cref="HatPosition"/> value indicating
-        /// the position of this hat. 
+        /// The first hat of the Joystick device.
         /// </summary>
-        /// <value>The position.</value>
-        public HatPosition Position { get { return position; } }
+        Hat0,
+        /// <summary>
+        /// The second hat of the Joystick device.
+        /// </summary>
+        Hat1,
+        /// <summary>
+        /// The third hat of the Joystick device.
+        /// </summary>
+        Hat2,
+        /// <summary>
+        /// The fourth hat of the Joystick device.
+        /// </summary>
+        Hat3,
+        /// <summary>
+        /// The last hat of the Joystick device.
+        /// </summary>
+        Last = Hat3
     }
 }
-
