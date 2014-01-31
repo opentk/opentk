@@ -224,17 +224,17 @@ namespace OpenTK.Input
 
         internal void SetButton(JoystickButton button, bool value)
         {
-            int index = 1 << (int)button;
+            int index = (int)button;
             if (index < 0 || index >= MaxButtons)
                 throw new ArgumentOutOfRangeException("button");
 
             if (value)
             {
-                buttons |= index;
+                buttons |= 1 << index;
             }
             else
             {
-                buttons &= ~index;
+                buttons &= ~(1 << index);
             }
         }
 
