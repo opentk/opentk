@@ -890,7 +890,34 @@ namespace OpenTK
         /// Build a rotation matrix from the specified quaternion.
         /// </summary>
         /// <param name="q">Quaternion to translate.</param>
+        /// <param name="result">Matrix result.</param>
+        public static void CreateFromQuaternion(ref Quaterniond q, out Matrix4d result)
+        {
+            Vector3d axis;
+            double angle;
+            q.ToAxisAngle(out axis, out angle);
+            CreateFromAxisAngle(axis, angle, out result);
+        }
+
+        /// <summary>
+        /// Builds a rotation matrix from a quaternion.
+        /// </summary>
+        /// <param name="q">The quaternion to rotate by.</param>
+        /// <returns>A matrix instance.</returns>
+        public static Matrix4d CreateFromQuaternion(Quaterniond q)
+        {
+            Matrix4d result;
+            CreateFromQuaternion(ref q, out result);
+            return result;
+        }
+        
+
+        /// <summary>
+        /// Build a rotation matrix from the specified quaternion.
+        /// </summary>
+        /// <param name="q">Quaternion to translate.</param>
         /// <param name="m">Matrix result.</param>
+        [Obsolete("Use double-precision overload instead")]
         public static void CreateFromQuaternion(ref Quaternion q,ref Matrix4 m)
         {
             m = Matrix4.Identity;
@@ -926,6 +953,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="q">Quaternion to translate.</param>
         /// <returns>A matrix instance.</returns>
+        [Obsolete("Use double-precision overload instead")]
         public static Matrix4 CreateFromQuaternion(ref Quaternion q)
         {
             Matrix4 result = Matrix4.Identity;
