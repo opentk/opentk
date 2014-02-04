@@ -452,9 +452,10 @@ namespace OpenTK.Rewrite
         private static void EmitConvenienceWrapper(MethodDefinition wrapper,
             MethodDefinition native, int difference, MethodBody body, ILProcessor il)
         {
-            if (wrapper.Parameters.Count > 1)
+            if (wrapper.Parameters.Count > 2)
             {
-                EmitParameters(wrapper, body, il);
+                // Todo: emit all parameters bar the last two
+                throw new NotImplementedException();
             }
 
             if (wrapper.ReturnType.Name != "Void")
@@ -483,6 +484,7 @@ namespace OpenTK.Rewrite
                     //   return result;
                     // }
                     body.Variables.Add(new VariableDefinition(wrapper.ReturnType));
+                    EmitParameters(wrapper, body, il);
                     il.Emit(OpCodes.Ldloca, body.Variables.Count - 1);
                 }
                 else
