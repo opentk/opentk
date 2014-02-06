@@ -500,16 +500,40 @@ namespace OpenTK
         /// <param name="result">A matrix instance.</param>
         public static void CreateFromAxisAngle(Vector3d axis, double angle, out Matrix4d result)
         {
+            // normalize and create a local copy of the vector.
+            axis.Normalize();
+            double axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
+
+            // calculate angles
             double cos = System.Math.Cos(-angle);
             double sin = System.Math.Sin(-angle);
-            double t = 1.0 - cos;
+            double t = 1.0f - cos;
 
-            axis.Normalize();
+            // do the conversion math once
+            double tXX = t * axisX * axisX,
+                tXY = t * axisX * axisY,
+                tXZ = t * axisX * axisZ,
+                tYY = t * axisY * axisY,
+                tYZ = t * axisY * axisZ,
+                tZZ = t * axisZ * axisZ;
 
-            result = new Matrix4d(t * axis.X * axis.X + cos, t * axis.X * axis.Y - sin * axis.Z, t * axis.X * axis.Z + sin * axis.Y, 0.0,
-                                 t * axis.X * axis.Y + sin * axis.Z, t * axis.Y * axis.Y + cos, t * axis.Y * axis.Z - sin * axis.X, 0.0,
-                                 t * axis.X * axis.Z - sin * axis.Y, t * axis.Y * axis.Z + sin * axis.X, t * axis.Z * axis.Z + cos, 0.0,
-                                 0, 0, 0, 1);
+            double sinX = sin * axisX,
+                sinY = sin * axisY,
+                sinZ = sin * axisZ;
+
+            result.Row0.X = tXX + cos;
+            result.Row0.Y = tXY - sinZ;
+            result.Row0.Z = tXZ + sinY;
+            result.Row0.W = 0;
+            result.Row1.X = tXY + sinZ;
+            result.Row1.Y = tYY + cos;
+            result.Row1.Z = tYZ - sinX;
+            result.Row1.W = 0;
+            result.Row2.X = tXZ - sinY;
+            result.Row2.Y = tYZ + sinX;
+            result.Row2.Z = tZZ + cos;
+            result.Row2.W = 0;
+            result.Row3 = Vector4d.UnitW;
         }
 
         /// <summary>
