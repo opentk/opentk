@@ -133,7 +133,7 @@ namespace OpenTK
                 throw new ArgumentNullException("sb");
 
             sb.Length = 0;
-            for (int i = 0; i < sb.Capacity; i++)
+            for (int i = 0; ; i++)
             {
                 byte b = Marshal.ReadByte(ptr, i);
                 if (b == 0)
