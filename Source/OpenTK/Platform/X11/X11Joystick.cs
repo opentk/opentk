@@ -484,7 +484,10 @@ namespace OpenTK.Platform.X11
             {
                 JoystickDevice<X11JoyDetails> js = sticks[index_to_stick[index]];
                 caps = new JoystickCapabilities(
-                    js.Axis.Count, js.Button.Count, js.Details.State.IsConnected);
+                    js.Axis.Count,
+                    js.Button.Count,
+                    0, // hats not supported by /dev/js
+                    js.Details.State.IsConnected);
             }
             return caps;
         }

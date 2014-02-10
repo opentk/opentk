@@ -84,7 +84,7 @@ namespace OpenTK.Platform.Windows
         const ClassStyle DefaultClassStyle = ClassStyle.OwnDC;
 
         // Used for IInputDriver implementation
-        WinMMJoystick joystick_driver = new WinMMJoystick();
+        IJoystickDriver joystick_driver = Factory.Default.CreateLegacyJoystickDriver();
         KeyboardDevice keyboard = new KeyboardDevice();
         MouseDevice mouse = new MouseDevice();
         IList<KeyboardDevice> keyboards = new List<KeyboardDevice>(1);
@@ -1403,7 +1403,8 @@ namespace OpenTK.Platform.Windows
 
         public void Poll()
         {
-            joystick_driver.Poll();
+            if (joystick_driver is WinMMJoystick)
+                (joystick_driver as WinMMJoystick).Poll();
         }
 
         #endregion

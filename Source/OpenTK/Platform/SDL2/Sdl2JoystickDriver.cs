@@ -46,6 +46,8 @@ namespace OpenTK.Platform.SDL2
             public int HatCount { get; set; }
             public int BallCount { get; set; }
             public bool IsConnected { get; set; }
+            public readonly JoystickHatState[] Hat =
+                new JoystickHatState[JoystickState.MaxHats];
         }
 
         // For IJoystickDriver2 implementation
@@ -125,6 +127,35 @@ namespace OpenTK.Platform.SDL2
         bool IsJoystickInstanceValid(int instance_id)
         {
             return sdl_instanceid_to_joysticks.ContainsKey(instance_id);
+        }
+
+        OpenTK.Input.HatPosition TranslateHat(HatPosition value)
+        {
+            if ((value & HatPosition.LeftUp) == value)
+                return OpenTK.Input.HatPosition.UpLeft;
+
+            if ((value & HatPosition.RightUp) == value)
+                return OpenTK.Input.HatPosition.UpRight;
+
+            if ((value & HatPosition.LeftDown) == value)
+                return OpenTK.Input.HatPosition.DownLeft;
+
+            if ((value & HatPosition.RightDown) == value)
+                return OpenTK.Input.HatPosition.DownRight;
+
+            if ((value & HatPosition.Up) == value)
+                return OpenTK.Input.HatPosition.Up;
+
+            if ((value & HatPosition.Right) == value)
+                return OpenTK.Input.HatPosition.Right;
+
+            if ((value & HatPosition.Down) == value)
+                return OpenTK.Input.HatPosition.Down;
+
+            if ((value & HatPosition.Left) == value)
+                return OpenTK.Input.HatPosition.Left;
+
+            return OpenTK.Input.HatPosition.Centered;
         }
 
 #if USE_SDL2_GAMECONTROLLER
@@ -386,7 +417,14 @@ namespace OpenTK.Platform.SDL2
             {
                 int index = sdl_instanceid_to_joysticks[id];
                 JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
-                // Todo: map hat to an extra axis
+                if (ev.Hat >= 0 && ev.Hat < JoystickState.MaxHats)
+                {
+                    joystick.Details.Hat[ev.Hat] = new JoystickHatState(TranslateHat(ev.Value));
+                }
+                else
+                {
+                    Debug.Print("[SDL2] Hat {0} out of range [0, {1}]", ev.Hat, JoystickState.MaxHats);
+                }
                 joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
             else
@@ -596,6 +634,11 @@ namespace OpenTK.Platform.SDL2
                     state.SetButton(JoystickButton.Button0 + i, joystick.Button[i]);
                 }
 
+                for (int i = 0; i < joystick.Details.HatCount; i++)
+                {
+                    state.SetHat(JoystickHat.Hat0 + i, joystick.Details.Hat[i]);
+                }
+
                 state.SetIsConnected(joystick.Details.IsConnected);
                 state.SetPacketNumber(joystick.Details.PacketNumber);
             }
@@ -613,6 +656,7 @@ namespace OpenTK.Platform.SDL2
                 return new JoystickCapabilities(
                     joystick.Axis.Count,
                     joystick.Button.Count,
+                    joystick.Details.HatCount,
                     joystick.Details.IsConnected);
             }
             return new JoystickCapabilities();
