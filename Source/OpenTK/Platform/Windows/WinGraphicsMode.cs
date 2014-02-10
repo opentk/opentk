@@ -96,114 +96,123 @@ namespace OpenTK.Platform.Windows
         // hardware acceleration (e.g. we are running in a VM or in a remote desktop
         // connection), this method will return 0 formats and we will fall back to
         // ChoosePixelFormatPFD.
-        GraphicsMode ChoosePixelFormatARB(IntPtr device, GraphicsMode mode)
+        GraphicsMode ChoosePixelFormatARB(IntPtr device, GraphicsMode desired_mode)
         {
             GraphicsMode created_mode = null;
+            GraphicsMode mode = new GraphicsMode(desired_mode);
             if (Wgl.SupportsExtension("WGL_ARB_pixel_format") &&
-                Wgl.Delegates.wglChoosePixelFormatARB != null)
+                Wgl.SupportsFunction("wglChoosePixelFormatARB"))
             {
-                List<int> attributes = new List<int>();
-                attributes.Add((int)WGL_ARB_pixel_format.AccelerationArb);
-                attributes.Add((int)WGL_ARB_pixel_format.FullAccelerationArb);
-                
-                attributes.Add((int)WGL_ARB_pixel_format.DrawToWindowArb);
-                attributes.Add(1);
-
-                if (mode.ColorFormat.Red > 0)
-                {
-                    attributes.Add((int)WGL_ARB_pixel_format.RedBitsArb);
-                    attributes.Add(mode.ColorFormat.Red);
-                }
-
-                if (mode.ColorFormat.Green > 0)
-                {
-                    attributes.Add((int)WGL_ARB_pixel_format.GreenBitsArb);
-                    attributes.Add(mode.ColorFormat.Green);
-                }
-
-                if (mode.ColorFormat.Blue > 0)
-                {
-                    attributes.Add((int)WGL_ARB_pixel_format.BlueBitsArb);
-                    attributes.Add(mode.ColorFormat.Blue);
-                }
-
-                if (mode.ColorFormat.Alpha > 0)
-                {
-                    attributes.Add((int)WGL_ARB_pixel_format.AlphaBitsArb);
-                    attributes.Add(mode.ColorFormat.Alpha);
-                }
-
-                if (mode.Depth > 0)
-                {
-                    attributes.Add((int)WGL_ARB_pixel_format.DepthBitsArb);
-                    attributes.Add(mode.Depth);
-                }
-
-                if (mode.Stencil > 0)
-                {
-                    attributes.Add((int)WGL_ARB_pixel_format.StencilBitsArb);
-                    attributes.Add(mode.Stencil);
-                }
-
-                if (mode.AccumulatorFormat.Red > 0)
-                {
-                    attributes.Add((int)WGL_ARB_pixel_format.AccumRedBitsArb);
-                    attributes.Add(mode.AccumulatorFormat.Red);
-                }
-
-                if (mode.AccumulatorFormat.Green > 0)
-                {
-                    attributes.Add((int)WGL_ARB_pixel_format.AccumGreenBitsArb);
-                    attributes.Add(mode.AccumulatorFormat.Green);
-                }
-
-                if (mode.AccumulatorFormat.Blue > 0)
-                {
-                    attributes.Add((int)WGL_ARB_pixel_format.AccumBlueBitsArb);
-                    attributes.Add(mode.AccumulatorFormat.Blue);
-                }
-
-                if (mode.AccumulatorFormat.Alpha > 0)
-                {
-                    attributes.Add((int)WGL_ARB_pixel_format.AccumAlphaBitsArb);
-                    attributes.Add(mode.AccumulatorFormat.Alpha);
-                }
-
-                if (mode.Samples > 0 &&
-                    Wgl.SupportsExtension("WGL_ARB_multisample"))
-                {
-                    attributes.Add((int)WGL_ARB_multisample.SampleBuffersArb);
-                    attributes.Add(1);
-                    attributes.Add((int)WGL_ARB_multisample.SamplesArb);
-                    attributes.Add(mode.Samples);
-                }
-
-                if (mode.Buffers > 0)
-                {
-                    attributes.Add((int)WGL_ARB_pixel_format.DoubleBufferArb);
-                    attributes.Add(mode.Buffers > 1 ? 1 : 0);
-                }
-
-                if (mode.Stereo)
-                {
-                    attributes.Add((int)WGL_ARB_pixel_format.StereoArb);
-                    attributes.Add(1);
-                }
-
-                attributes.Add(0);
-                attributes.Add(0);
-
                 int[] format = new int[1];
                 int count;
-                if (Wgl.Arb.ChoosePixelFormat(device, attributes.ToArray(), null, format.Length, format, out count)
-                    && count > 0)
+                List<int> attributes = new List<int>();
+                bool retry = false;
+
+                do
                 {
-                    created_mode = DescribePixelFormatARB(device, format[0]);
+                    attributes.Clear();
+                    attributes.Add((int)WGL_ARB_pixel_format.AccelerationArb);
+                    attributes.Add((int)WGL_ARB_pixel_format.FullAccelerationArb);
+                    attributes.Add((int)WGL_ARB_pixel_format.DrawToWindowArb);
+                    attributes.Add(1);
+
+                    if (mode.ColorFormat.Red > 0)
+                    {
+                        attributes.Add((int)WGL_ARB_pixel_format.RedBitsArb);
+                        attributes.Add(mode.ColorFormat.Red);
+                    }
+
+                    if (mode.ColorFormat.Green > 0)
+                    {
+                        attributes.Add((int)WGL_ARB_pixel_format.GreenBitsArb);
+                        attributes.Add(mode.ColorFormat.Green);
+                    }
+
+                    if (mode.ColorFormat.Blue > 0)
+                    {
+                        attributes.Add((int)WGL_ARB_pixel_format.BlueBitsArb);
+                        attributes.Add(mode.ColorFormat.Blue);
+                    }
+
+                    if (mode.ColorFormat.Alpha > 0)
+                    {
+                        attributes.Add((int)WGL_ARB_pixel_format.AlphaBitsArb);
+                        attributes.Add(mode.ColorFormat.Alpha);
+                    }
+
+                    if (mode.Depth > 0)
+                    {
+                        attributes.Add((int)WGL_ARB_pixel_format.DepthBitsArb);
+                        attributes.Add(mode.Depth);
+                    }
+
+                    if (mode.Stencil > 0)
+                    {
+                        attributes.Add((int)WGL_ARB_pixel_format.StencilBitsArb);
+                        attributes.Add(mode.Stencil);
+                    }
+
+                    if (mode.AccumulatorFormat.Red > 0)
+                    {
+                        attributes.Add((int)WGL_ARB_pixel_format.AccumRedBitsArb);
+                        attributes.Add(mode.AccumulatorFormat.Red);
+                    }
+
+                    if (mode.AccumulatorFormat.Green > 0)
+                    {
+                        attributes.Add((int)WGL_ARB_pixel_format.AccumGreenBitsArb);
+                        attributes.Add(mode.AccumulatorFormat.Green);
+                    }
+
+                    if (mode.AccumulatorFormat.Blue > 0)
+                    {
+                        attributes.Add((int)WGL_ARB_pixel_format.AccumBlueBitsArb);
+                        attributes.Add(mode.AccumulatorFormat.Blue);
+                    }
+
+                    if (mode.AccumulatorFormat.Alpha > 0)
+                    {
+                        attributes.Add((int)WGL_ARB_pixel_format.AccumAlphaBitsArb);
+                        attributes.Add(mode.AccumulatorFormat.Alpha);
+                    }
+
+                    if (mode.Samples > 0 &&
+                    Wgl.SupportsExtension("WGL_ARB_multisample"))
+                    {
+                        attributes.Add((int)WGL_ARB_multisample.SampleBuffersArb);
+                        attributes.Add(1);
+                        attributes.Add((int)WGL_ARB_multisample.SamplesArb);
+                        attributes.Add(mode.Samples);
+                    }
+
+                    if (mode.Buffers > 0)
+                    {
+                        attributes.Add((int)WGL_ARB_pixel_format.DoubleBufferArb);
+                        attributes.Add(mode.Buffers > 1 ? 1 : 0);
+                    }
+
+                    if (mode.Stereo)
+                    {
+                        attributes.Add((int)WGL_ARB_pixel_format.StereoArb);
+                        attributes.Add(1);
+                    }
+
+                    attributes.Add(0);
+                    attributes.Add(0);
+
+                    if (Wgl.Arb.ChoosePixelFormat(device, attributes.ToArray(), null, format.Length, format, out count)
+                        && count > 0)
+                    {
+                        created_mode = DescribePixelFormatARB(device, format[0]);
+                        retry = false;
+                    }
+                    else
+                    {
+                        Debug.Print("[WGL] ChoosePixelFormatARB failed with {0}", Marshal.GetLastWin32Error());
+                        retry = Utilities.RelaxGraphicsMode(ref mode);
+                    }
                 }
-                else
-                {
-                    Debug.Print("[WGL] ChoosePixelFormatARB failed with {0}", Marshal.GetLastWin32Error());
-                }
+                while (retry);
             }
             else
             {
@@ -357,7 +366,7 @@ namespace OpenTK.Platform.Windows
         {
             GraphicsMode created_mode = null;
             // See http://www.opengl.org/registry/specs/ARB/wgl_pixel_format.txt for more details
-            if (Wgl.Delegates.wglGetPixelFormatAttribivARB != null)
+            if (Wgl.SupportsFunction("wglGetPixelFormatAttribivARB"))
             {
                 // Define the list of attributes we are interested in.
                 // The results will be stored in the 'values' array below.

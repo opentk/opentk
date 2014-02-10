@@ -73,6 +73,8 @@ namespace OpenTK.Platform.MacOS
             public JoystickCapabilities Capabilities;
             readonly public Dictionary<int, JoystickButton> ElementUsageToButton =
                 new Dictionary<int, JoystickButton>();
+            readonly public Dictionary<IOHIDElementRef, JoystickHat> ElementToHat =
+                new Dictionary<IOHIDElementRef, JoystickHat>(new IntPtrEqualityComparer());
         }
 
         readonly IOHIDManagerRef hidmanager;
@@ -441,7 +443,7 @@ namespace OpenTK.Platform.MacOS
                 joy = new JoystickData();
                 int axes = 0;
                 int buttons = 0;
-                int dpads = 0;
+                int hats = 0;
 
                 CFStringRef name_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductKey);
                 string name = CF.CFStringGetCString(name_ref);
@@ -449,6 +451,7 @@ namespace OpenTK.Platform.MacOS
                 Guid guid = CreateJoystickGuid(device, name);
 
                 List<int> button_elements = new List<int>();
+                List<IOHIDElementRef> hat_elements = new List<CFAllocatorRef>();
                 CFArray element_array = new CFArray(element_array_ref);
                 for (int i = 0; i < element_array.Count; i++)
                 {
@@ -475,7 +478,8 @@ namespace OpenTK.Platform.MacOS
                                     break;
 
                                 case HIDUsageGD.Hatswitch:
-                                    dpads++;
+                                    hats++;
+                                    hat_elements.Add(element_ref);
                                     break;
                             }
                             break;
@@ -496,15 +500,39 @@ namespace OpenTK.Platform.MacOS
                     }
                 }
 
+                if (axes > JoystickState.MaxAxes)
+                {
+                    Debug.Print("[Mac] JoystickAxis limit reached ({0} > {1}), please report a bug at http://www.opentk.com",
+                        axes, JoystickState.MaxAxes);
+                    axes = JoystickState.MaxAxes;
+                }
+                if (buttons > JoystickState.MaxButtons)
+                {
+                    Debug.Print("[Mac] JoystickButton limit reached ({0} > {1}), please report a bug at http://www.opentk.com",
+                        buttons, JoystickState.MaxButtons);
+                    buttons = JoystickState.MaxButtons;
+                }
+                if (hats > JoystickState.MaxHats)
+                {
+                    Debug.Print("[Mac] JoystickHat limit reached ({0} > {1}), please report a bug at http://www.opentk.com",
+                        hats, JoystickState.MaxHats);
+                    hats = JoystickState.MaxHats;
+                }
+
                 joy.Name = name;
                 joy.Guid = guid;
                 joy.State.SetIsConnected(true);
-                joy.Capabilities = new JoystickCapabilities(axes, buttons, true);
+                joy.Capabilities = new JoystickCapabilities(axes, buttons, hats, true);
 
                 // Map button elements to JoystickButtons
                 for (int button = 0; button < button_elements.Count; button++)
                 {
                     joy.ElementUsageToButton.Add(button_elements[button], JoystickButton.Button0 + button); 
+                }
+
+                for (int hat = 0; hat < hat_elements.Count; hat++)
+                {
+                    joy.ElementToHat.Add(hat_elements[hat], JoystickHat.Hat0 + hat);
                 }
             }
             CF.CFRelease(element_array_ref);
@@ -608,6 +636,12 @@ namespace OpenTK.Platform.MacOS
                             break;
 
                         case HIDUsageGD.Hatswitch:
+                            HatPosition position = GetJoystickHat(val, elem);
+                            JoystickHat hat = TranslateJoystickHat(joy, elem);
+                            if (hat >= JoystickHat.Hat0 && hat <= JoystickHat.Last)
+                            {
+                                joy.State.SetHat(hat, new JoystickHatState(position));
+                            }
                             break;
                     }
                     break;
@@ -707,6 +741,50 @@ namespace OpenTK.Platform.MacOS
                 return button;
             }
             return JoystickButton.Last + 1;
+        }
+
+        static HatPosition GetJoystickHat(IOHIDValueRef val, IOHIDElementRef element)
+        {
+            HatPosition position = HatPosition.Centered;
+            int max = NativeMethods.IOHIDElementGetLogicalMax(element).ToInt32();
+            int min = NativeMethods.IOHIDElementGetLogicalMin(element).ToInt32();
+            int value = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32() - min;
+            int range = Math.Abs(max - min + 1);
+
+            if (value >= 0)
+            {
+                if (range == 4)
+                {
+                    // 4-position hat (no diagonals)
+                    // 0 = up; 1 = right; 2 = down; 3 = left
+                    // map to a 8-position hat (processed below)
+                    value *= 2;
+                }
+
+                if (range == 8)
+                {
+                    // 0 = up; 1 = up-right; 2 = right; 3 = right-down;
+                    // 4 = down; 5 = down-left; 6 = left; 7 = up-left
+                    // Our HatPosition enum 
+                    position = (HatPosition)value;
+                }
+                else
+                {
+                    // Todo: implement support for continuous hats
+                }
+            }
+
+            return position;
+        }
+
+        static JoystickHat TranslateJoystickHat(JoystickData joy, IOHIDElementRef elem)
+        {
+            JoystickHat hat;
+            if (joy.ElementToHat.TryGetValue(elem, out hat))
+            {
+                return hat;
+            }
+            return JoystickHat.Last + 1;
         }
 
         #endregion

@@ -40,21 +40,23 @@ namespace OpenTK.Input
     {
         byte axis_count;
         byte button_count;
-        byte dpad_count;
+        byte hat_count;
         bool is_connected;
 
         #region Constructors
 
-        internal JoystickCapabilities(int axis_count, int button_count, bool is_connected)
+        internal JoystickCapabilities(int axis_count, int button_count, int hat_count, bool is_connected)
         {
-            if (axis_count < 0 || axis_count >= JoystickState.MaxAxes)
+            if (axis_count < 0 || axis_count > JoystickState.MaxAxes)
                 throw new ArgumentOutOfRangeException("axis_count");
-            if (button_count < 0 || button_count >= JoystickState.MaxButtons)
+            if (button_count < 0 || button_count > JoystickState.MaxButtons)
                 throw new ArgumentOutOfRangeException("axis_count");
+            if (hat_count < 0 || hat_count > JoystickState.MaxHats)
+                throw new ArgumentOutOfRangeException("hat_count");
 
             this.axis_count = (byte)axis_count;
             this.button_count = (byte)button_count;
-            this.dpad_count = 0; // Todo: either remove dpad_count or add it as a parameter
+            this.hat_count = (byte)hat_count;
             this.is_connected = is_connected;
         }
 
@@ -79,6 +81,14 @@ namespace OpenTK.Input
         }
 
         /// <summary>
+        /// Gets the number of hats supported by this <see cref="JoystickDevice"/>.
+        /// </summary>
+        public int HatCount
+        {
+            get { return hat_count; }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether this <see cref="JoystickDevice"/> is connected.
         /// </summary>
         /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
@@ -94,8 +104,8 @@ namespace OpenTK.Input
         public override string ToString()
         {
             return String.Format(
-                "{{Axes: {0}; Buttons: {1}; IsConnected: {2}}}",
-                AxisCount, ButtonCount, IsConnected);
+                "{{Axes: {0}; Buttons: {1}; Hats: {2}; IsConnected: {2}}}",
+                AxisCount, ButtonCount, HatCount, IsConnected);
         }
 
         /// <summary>
@@ -108,6 +118,7 @@ namespace OpenTK.Input
             return
                 AxisCount.GetHashCode() ^
                 ButtonCount.GetHashCode() ^
+                HatCount.GetHashCode() ^
                 IsConnected.GetHashCode();
         }
 
@@ -126,15 +137,6 @@ namespace OpenTK.Input
 
         #endregion
 
-        #region Private Members
-
-        int DPadCount
-        {
-            get { return dpad_count; }
-        }
-
-        #endregion
-
         #region IEquatable<JoystickCapabilities> Members
 
         /// <summary>
@@ -148,6 +150,7 @@ namespace OpenTK.Input
             return
                 AxisCount == other.AxisCount &&
                 ButtonCount == other.ButtonCount &&
+                HatCount == other.HatCount &&
                 IsConnected == other.IsConnected;
         }
 

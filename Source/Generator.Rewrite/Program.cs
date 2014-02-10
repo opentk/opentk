@@ -371,10 +371,10 @@ namespace OpenTK.Rewrite
         static void EmitStringParameter(MethodDefinition wrapper, TypeReference p, MethodBody body, ILProcessor il)
         {
             // string marshaling:
-            // IntPtr ptr = Marshal.StringToHGlobalAnsi(str);
+            // IntPtr ptr = MarshalStringToPtr(str);
             // try { calli }
             // finally { Marshal.FreeHGlobal(ptr); }
-            var marshal_str_to_ptr = wrapper.Module.Import(TypeMarshal.Methods.First(m => m.Name == "StringToHGlobalAnsi"));
+            var marshal_str_to_ptr = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "MarshalStringToPtr"));
 
             // IntPtr ptr;
             var variable_name = p.Name + "_string_ptr";
@@ -396,9 +396,9 @@ namespace OpenTK.Rewrite
                 var p = wrapper.Parameters[i].ParameterType;
                 if (p.Name == "String" && !p.IsArray)
                 {
-                    var free = wrapper.Module.Import(TypeMarshal.Methods.First(m => m.Name == "FreeHGlobal"));
+                    var free = wrapper.Module.Import(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringPtr"));
 
-                    // Marshal.FreeHGlobal(ptr)
+                    // FreeStringPtr(ptr)
                     var variable_name = p.Name + "_string_ptr";
                     var v = body.Variables.First(m => m.Name == variable_name);
                     il.Emit(OpCodes.Ldloc, v.Index);
@@ -452,9 +452,10 @@ namespace OpenTK.Rewrite
         private static void EmitConvenienceWrapper(MethodDefinition wrapper,
             MethodDefinition native, int difference, MethodBody body, ILProcessor il)
         {
-            if (wrapper.Parameters.Count > 1)
+            if (wrapper.Parameters.Count > 2)
             {
-                EmitParameters(wrapper, body, il);
+                // Todo: emit all parameters bar the last two
+                throw new NotImplementedException();
             }
 
             if (wrapper.ReturnType.Name != "Void")
@@ -483,6 +484,7 @@ namespace OpenTK.Rewrite
                     //   return result;
                     // }
                     body.Variables.Add(new VariableDefinition(wrapper.ReturnType));
+                    EmitParameters(wrapper, body, il);
                     il.Emit(OpCodes.Ldloca, body.Variables.Count - 1);
                 }
                 else

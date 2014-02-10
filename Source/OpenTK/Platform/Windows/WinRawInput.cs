@@ -125,6 +125,7 @@ namespace OpenTK.Platform.Windows
                 case WindowMessage.DEVICECHANGE:
                     ((WinRawKeyboard)KeyboardDriver).RefreshDevices();
                     ((WinRawMouse)MouseDriver).RefreshDevices();
+                    ((WinMMJoystick)JoystickDriver).RefreshDevices();
                     break;
             }
             return base.WindowProcedure(handle, message, wParam, lParam);

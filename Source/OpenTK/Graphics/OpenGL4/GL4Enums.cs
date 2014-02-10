@@ -414,6 +414,10 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         FloatMat2x4 = ((int)0x8B66)        ,
         /// <summary>
+        /// Original was GL_FLOAT_MAT3x2 = 0x8B67
+        /// </summary>
+        FloatMat3x2 = ((int)0x8B67)        ,
+        /// <summary>
         /// Original was GL_FLOAT_MAT3x4 = 0x8B68
         /// </summary>
         FloatMat3x4 = ((int)0x8B68)        ,

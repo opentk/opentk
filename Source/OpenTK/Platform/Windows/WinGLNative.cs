@@ -84,7 +84,7 @@ namespace OpenTK.Platform.Windows
         const ClassStyle DefaultClassStyle = ClassStyle.OwnDC;
 
         // Used for IInputDriver implementation
-        WinMMJoystick joystick_driver = new WinMMJoystick();
+        IJoystickDriver joystick_driver = Factory.Default.CreateLegacyJoystickDriver();
         KeyboardDevice keyboard = new KeyboardDevice();
         MouseDevice mouse = new MouseDevice();
         IList<KeyboardDevice> keyboards = new List<KeyboardDevice>(1);
@@ -451,8 +451,8 @@ namespace OpenTK.Platform.Windows
         void HandleXButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.SetCapture(window.Handle);
-            mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) !=
-                (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = true;
+            mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) == 1 ?
+                MouseButton.Button1 : MouseButton.Button2] = true;
         }
 
         void HandleLButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -476,8 +476,8 @@ namespace OpenTK.Platform.Windows
         void HandleXButtonUp(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             Functions.ReleaseCapture();
-            mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) !=
-                (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = false;
+            mouse[((wParam.ToInt32() & 0xFFFF0000) >> 16) == 1 ?
+                MouseButton.Button1 : MouseButton.Button2] = false;
         }
 
         void HandleKeyboard(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -1403,7 +1403,8 @@ namespace OpenTK.Platform.Windows
 
         public void Poll()
         {
-            joystick_driver.Poll();
+            if (joystick_driver is WinMMJoystick)
+                (joystick_driver as WinMMJoystick).Poll();
         }
 
         #endregion

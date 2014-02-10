@@ -1267,20 +1267,24 @@ namespace OpenTK.Graphics.OpenGL
         #endregion
     }
 
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void DebugProcAmd(int id,
         AmdDebugOutput category, AmdDebugOutput severity,
         int length, IntPtr message, IntPtr userParam);
 
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void DebugProcArb(
         DebugSource source, DebugType type, int id,
         DebugSeverity severity, int length, IntPtr message,
         IntPtr userParam);
 
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void DebugProc(
         DebugSource source, DebugType type, int id,
         DebugSeverity severity, int length, IntPtr message,
         IntPtr userParam);
 
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void DebugProcKhr(
         DebugSource source, DebugType type, int id,
         DebugSeverity severity, int length, IntPtr message,

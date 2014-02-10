@@ -96,6 +96,10 @@ namespace OpenTK.Platform.Windows
         {
             lock (display_lock)
             {
+                // Store an array of the current available DisplayDevice objects.
+                // This is needed to preserve the original resolution.
+                DisplayDevice[] previousDevices = AvailableDevices.ToArray();
+
                 AvailableDevices.Clear();
 
                 // We save all necessary parameters in temporary variables
@@ -158,6 +162,11 @@ namespace OpenTK.Platform.Windows
                         opentk_dev_available_res,
                         opentk_dev_current_res.Bounds,
                         dev1.DeviceName);
+
+                    // Set the original resolution if the DisplayDevice was previously available.
+                    foreach (DisplayDevice existingDevice in previousDevices)
+                        if ((string)existingDevice.Id == (string)opentk_dev.Id)
+                            opentk_dev.OriginalResolution = existingDevice.OriginalResolution;
 
                     AvailableDevices.Add(opentk_dev);
 

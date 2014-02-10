@@ -1,4 +1,4 @@
-// This code was written for the OpenTK library and has been released
+﻿// This code was written for the OpenTK library and has been released
 // to the Public Domain.
 // It is provided "as is" without express or implied warranty of any kind.
 
@@ -12,13 +12,13 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Examples.Tutorial
 {
-    [Example("OpenGL 3.0", ExampleCategory.OpenGL, "3.x", Documentation="HelloGL3")]
-    public class HelloGL3 : GameWindow
+    [Example("Shader UTF8 support", ExampleCategory.OpenTK, "OpenGL")]
+    public class TestShaderUtf8Support : GameWindow
     {
         string vertexShaderSource = @"
 #version 130
 
-precision highp float;
+precision highp float;//日本語文字 Japanese Characters
 
 uniform mat4 projection_matrix;
 uniform mat4 modelview_matrix;
@@ -91,7 +91,7 @@ void main(void)
 
         Matrix4 projectionMatrix, modelviewMatrix;
 
-        public HelloGL3()
+        public TestShaderUtf8Support()
             : base(640, 480,
             new GraphicsMode(), "OpenGL 3 Example", 0,
             DisplayDevice.Default, 3, 0,
@@ -120,6 +120,10 @@ void main(void)
             GL.ShaderSource(fragmentShaderHandle, fragmentShaderSource);
 
             GL.CompileShader(vertexShaderHandle);
+            string log = GL.GetShaderInfoLog(vertexShaderHandle);
+			if (log.Length != 0) {
+				Debug.Print(log);
+			}
             GL.CompileShader(fragmentShaderHandle);
 
             Debug.WriteLine(GL.GetShaderInfoLog(vertexShaderHandle));
@@ -131,11 +135,10 @@ void main(void)
             GL.AttachShader(shaderProgramHandle, vertexShaderHandle);
             GL.AttachShader(shaderProgramHandle, fragmentShaderHandle);
 
-            GL.BindAttribLocation(shaderProgramHandle, 0, "in_position");
-            GL.BindAttribLocation(shaderProgramHandle, 1, "in_normal");
-
             GL.LinkProgram(shaderProgramHandle);
+
             Debug.WriteLine(GL.GetProgramInfoLog(shaderProgramHandle));
+
             GL.UseProgram(shaderProgramHandle);
 
             // Set uniforms
@@ -152,19 +155,19 @@ void main(void)
 
         void CreateVBOs()
         {
-            positionVboHandle = GL.GenBuffer();
+            GL.GenBuffers(1, out positionVboHandle);
             GL.BindBuffer(BufferTarget.ArrayBuffer, positionVboHandle);
             GL.BufferData<Vector3>(BufferTarget.ArrayBuffer,
                 new IntPtr(positionVboData.Length * Vector3.SizeInBytes),
                 positionVboData, BufferUsageHint.StaticDraw);
 
-            normalVboHandle = GL.GenBuffer();
+            GL.GenBuffers(1, out normalVboHandle);
             GL.BindBuffer(BufferTarget.ArrayBuffer, normalVboHandle);
             GL.BufferData<Vector3>(BufferTarget.ArrayBuffer,
                 new IntPtr(positionVboData.Length * Vector3.SizeInBytes),
                 positionVboData, BufferUsageHint.StaticDraw);
 
-            eboHandle = GL.GenBuffer();
+            GL.GenBuffers(1, out eboHandle);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
             GL.BufferData(BufferTarget.ElementArrayBuffer,
                 new IntPtr(sizeof(uint) * indicesVboData.Length),
@@ -180,16 +183,18 @@ void main(void)
             // This means we do not have to re-issue VertexAttribPointer calls
             // every time we try to use a different vertex layout - these calls are
             // stored in the VAO so we simply need to bind the correct VAO.
-            vaoHandle = GL.GenVertexArray();
+            GL.GenVertexArrays(1, out vaoHandle);
             GL.BindVertexArray(vaoHandle);
 
             GL.EnableVertexAttribArray(0);
             GL.BindBuffer(BufferTarget.ArrayBuffer, positionVboHandle);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
+            GL.BindAttribLocation(shaderProgramHandle, 0, "in_position");
 
             GL.EnableVertexAttribArray(1);
             GL.BindBuffer(BufferTarget.ArrayBuffer, normalVboHandle);
             GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
+            GL.BindAttribLocation(shaderProgramHandle, 1, "in_normal");
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
 
@@ -213,7 +218,7 @@ void main(void)
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.BindVertexArray(vaoHandle);
-            GL.DrawElements(PrimitiveType.Triangles, indicesVboData.Length,
+            GL.DrawElements(BeginMode.Triangles, indicesVboData.Length,
                 DrawElementsType.UnsignedInt, IntPtr.Zero);
 
             SwapBuffers();
@@ -222,7 +227,7 @@ void main(void)
         [STAThread]
         public static void Main()
         {
-            using (HelloGL3 example = new HelloGL3())
+            using (TestShaderUtf8Support example = new TestShaderUtf8Support())
             {
                 Utilities.SetWindowTitle(example);
                 example.Run(30);

@@ -307,5 +307,113 @@ namespace OpenTK.Platform
         #endregion
 
         #endregion
+
+        #region RelaxGraphicsMode
+
+        internal static bool RelaxGraphicsMode(ref GraphicsMode mode)
+        {
+            ColorFormat color = mode.ColorFormat;
+            int depth = mode.Depth;
+            int stencil = mode.Stencil;
+            int samples = mode.Samples;
+            ColorFormat accum = mode.AccumulatorFormat;
+            int buffers = mode.Buffers;
+            bool stereo = mode.Stereo;
+
+            bool success = RelaxGraphicsMode(
+                ref color, ref depth, ref stencil, ref samples,
+                ref accum, ref buffers, ref stereo);
+
+            mode = new GraphicsMode(
+                color, depth, stencil, samples,
+                accum, buffers, stereo);
+
+            return success;
+        }
+
+        /// \internal
+        /// <summary>
+        /// Relaxes graphics mode parameters. Use this function to increase compatibility
+        /// on systems that do not directly support a requested GraphicsMode. For example:
+        /// - user requested stereoscopic rendering, but GPU does not support stereo
+        /// - user requseted 16x antialiasing, but GPU only supports 4x
+        /// </summary>
+        /// <returns><c>true</c>, if a graphics mode parameter was relaxed, <c>false</c> otherwise.</returns>
+        /// <param name="color">Color bits.</param>
+        /// <param name="depth">Depth bits.</param>
+        /// <param name="stencil">Stencil bits.</param>
+        /// <param name="samples">Number of antialiasing samples.</param>
+        /// <param name="accum">Accumulator buffer bits.</param>
+        /// <param name="buffers">Number of rendering buffers (1 for single buffering, 2+ for double buffering, 0 for don't care).</param>
+        /// <param name="stereo">Stereoscopic rendering enabled/disabled.</param>
+        internal static bool RelaxGraphicsMode(ref ColorFormat color, ref int depth, ref int stencil, ref int samples, ref ColorFormat accum, ref int buffers, ref bool stereo)
+        {
+            // Parameters are relaxed in order of importance.
+            // - Accumulator buffers are way outdated as a concept,
+            // so they go first.
+            // - Triple+ buffering is generally not supported by the
+            // core WGL/GLX/AGL/CGL/EGL specs, so we clamp
+            // to double-buffering as a second step. (If this doesn't help
+            // we will also fall back to undefined single/double buffering
+            // as a last resort).
+            // - AA samples are an easy way to increase compatibility
+            // so they go next.
+            // - Stereoscopic is only supported on very few GPUs
+            // (Quadro/FirePro series) so it goes next.
+            // - The rest of the parameters then follow.
+
+            if (accum != 0)
+            {
+                accum = 0;
+                return true;
+            }
+
+            if (buffers > 2)
+            {
+                buffers = 2;
+                return true;
+            }
+
+            if (samples > 0)
+            {
+                samples = Math.Max(samples - 1, 0);
+                return true;
+            }
+
+            if (stereo)
+            {
+                stereo = false;
+                return true;
+            }
+
+            if (stencil != 0)
+            {
+                stencil = 0;
+                return true;
+            }
+
+            if (depth != 0)
+            {
+                depth = 0;
+                return true;
+            }
+
+            if (color != 24)
+            {
+                color = 24;
+                return true;
+            }
+
+            if (buffers != 0)
+            {
+                buffers = 0;
+                return true;
+            }
+
+            // no parameters left to relax, fail
+            return false;
+        }
+
+        #endregion
     }
 }

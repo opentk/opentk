@@ -22,7 +22,6 @@ namespace OpenTK.Graphics
         IntPtr? index = null;  // The id of the pixel format or visual.
 
         static GraphicsMode defaultMode;
-        static IGraphicsMode implementation;
         static readonly object SyncRoot = new object();
 
         #region Constructors
@@ -44,7 +43,7 @@ namespace OpenTK.Graphics
         {
             if (depth < 0) throw new ArgumentOutOfRangeException("depth", "Must be greater than, or equal to zero.");
             if (stencil < 0) throw new ArgumentOutOfRangeException("stencil", "Must be greater than, or equal to zero.");
-            if (buffers <= 0) throw new ArgumentOutOfRangeException("buffers", "Must be greater than zero.");
+            if (buffers < 0) throw new ArgumentOutOfRangeException("buffers", "Must be greater than, or equal to zero.");
             if (samples < 0) throw new ArgumentOutOfRangeException("samples", "Must be greater than, or equal to zero.");
 
             this.Index = index;
@@ -255,7 +254,14 @@ namespace OpenTK.Graphics
             {
                 return samples;
             }
-            private set { samples = value; }
+            private set
+            {
+                // Clamp antialiasing samples to max 64x
+                // This protects against a potential DOS during
+                // mode selection, when the user requests an
+                // abnormally high AA level.
+                samples = MathHelper.Clamp(value, 0, 64);
+            }
         }
 
         #endregion

@@ -70,7 +70,39 @@ namespace OpenTK.Input
         Button14,
         /// <summary>The sixteenth button of the JoystickDevice.</summary>
         Button15,
+        /// <summary>The seventeenth button of the JoystickDevice.</summary>
+        Button16,
+        /// <summary>The eighteenth button of the JoystickDevice.</summary>
+        Button17,
+        /// <summary>The nineteenth button of the JoystickDevice.</summary>
+        Button18,
+        /// <summary>The twentieth button of the JoystickDevice.</summary>
+        Button19,
+        /// <summary>The twentyfirst button of the JoystickDevice.</summary>
+        Button20,
+        /// <summary>The twentysecond button of the JoystickDevice.</summary>
+        Button21,
+        /// <summary>The twentythird button of the JoystickDevice.</summary>
+        Button22,
+        /// <summary>The twentyfourth button of the JoystickDevice.</summary>
+        Button23,
+        /// <summary>The twentyfifth button of the JoystickDevice.</summary>
+        Button24,
+        /// <summary>The twentysixth button of the JoystickDevice.</summary>
+        Button25,
+        /// <summary>The twentyseventh button of the JoystickDevice.</summary>
+        Button26,
+        /// <summary>The twentyeighth button of the JoystickDevice.</summary>
+        Button27,
+        /// <summary>The twentynineth button of the JoystickDevice.</summary>
+        Button28,
+        /// <summary>The thirtieth button of the JoystickDevice.</summary>
+        Button29,
+        /// <summary>The thirtyfirst button of the JoystickDevice.</summary>
+        Button30,
+        /// <summary>The thirtysecond button of the JoystickDevice.</summary>
+        Button31,
         /// <summary>The last supported button of the JoystickDevice.</summary>
-        Last = Button15,
+        Last = Button31,
     }
 }

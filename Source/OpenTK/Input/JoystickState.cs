@@ -40,14 +40,19 @@ namespace OpenTK.Input
     {
         // If we ever add more values to JoystickAxis or JoystickButton
         // then we'll need to increase these limits.
-        internal const int MaxAxes = (int)JoystickAxis.Last;
-        internal const int MaxButtons = (int)JoystickButton.Last;
+        internal const int MaxAxes = (int)JoystickAxis.Last + 1;
+        internal const int MaxButtons = (int)JoystickButton.Last + 1;
+        internal const int MaxHats = (int)JoystickHat.Last + 1;
 
         const float ConversionFactor = 1.0f / (short.MaxValue + 0.5f);
 
-        unsafe fixed short axes[MaxAxes];
-        int buttons;
         int packet_number;
+        int buttons;
+        unsafe fixed short axes[MaxAxes];
+        JoystickHatState hat0;
+        JoystickHatState hat1;
+        JoystickHatState hat2;
+        JoystickHatState hat3;
         bool is_connected;
 
         #region Public Members
@@ -74,6 +79,28 @@ namespace OpenTK.Input
         public ButtonState GetButton(JoystickButton button)
         {
             return (buttons & (1 << (int)button)) != 0 ? ButtonState.Pressed : ButtonState.Released;
+        }
+
+        /// <summary>
+        /// Gets the hat.
+        /// </summary>
+        /// <returns>The hat.</returns>
+        /// <param name="hat">Hat.</param>
+        public JoystickHatState GetHat(JoystickHat hat)
+        {
+            switch (hat)
+            {
+                case JoystickHat.Hat0:
+                    return hat0;
+                case JoystickHat.Hat1:
+                    return hat1;
+                case JoystickHat.Hat2:
+                    return hat2;
+                case JoystickHat.Hat3:
+                    return hat3;
+                default:
+                    return new JoystickHatState();
+            }
         }
 
         /// <summary>
@@ -197,14 +224,38 @@ namespace OpenTK.Input
 
         internal void SetButton(JoystickButton button, bool value)
         {
-            int index = 1 << (int)button;
+            int index = (int)button;
+            if (index < 0 || index >= MaxButtons)
+                throw new ArgumentOutOfRangeException("button");
+
             if (value)
             {
-                buttons |= index;
+                buttons |= 1 << index;
             }
             else
             {
-                buttons &= ~index;
+                buttons &= ~(1 << index);
+            }
+        }
+
+        internal void SetHat(JoystickHat hat, JoystickHatState value)
+        {
+            switch (hat)
+            {
+                case JoystickHat.Hat0:
+                    hat0 = value;
+                    break;
+                case JoystickHat.Hat1:
+                    hat1 = value;
+                    break;
+                case JoystickHat.Hat2:
+                    hat2 = value;
+                    break;
+                case JoystickHat.Hat3:
+                    hat3 = value;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("hat");
             }
         }
 

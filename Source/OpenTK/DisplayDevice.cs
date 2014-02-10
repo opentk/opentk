@@ -47,7 +47,8 @@ namespace OpenTK
 
         bool primary;
         Rectangle bounds;
-        DisplayResolution current_resolution = new DisplayResolution(), original_resolution;
+        DisplayResolution current_resolution = new DisplayResolution();
+        DisplayResolution original_resolution;
         List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
         IList<DisplayResolution> available_resolutions_readonly;
         
@@ -329,6 +330,23 @@ namespace OpenTK
         public static DisplayDevice GetDisplay(DisplayIndex index)
         {
             return implementation.GetDisplay(index);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region --- Internal Methods ---
+
+        #region internal DisplayResolution OriginalResolution
+
+        /// <summary>
+        /// Gets the original resolution of this instance.
+        /// </summary>
+        internal DisplayResolution OriginalResolution
+        {
+            get { return original_resolution; }
+            set { original_resolution = value; }
         }
 
         #endregion

@@ -27,12 +27,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Runtime.InteropServices;
-using OpenTK.Input;
-using System.Security;
-using Microsoft.Win32;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Security;
+using System.Text;
+using Microsoft.Win32;
+using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
@@ -40,8 +40,17 @@ namespace OpenTK.Platform.Windows
     {
         #region Fields
 
+        readonly object sync = new object();
+
         List<JoystickDevice> sticks = new List<JoystickDevice>();
         IList<JoystickDevice> sticks_readonly;
+
+        // Matches a WinMM device index to a specific stick above
+        readonly Dictionary<int, int> index_to_stick =
+            new Dictionary<int, int>();
+        // Matches a player index to a WinMM device index
+        readonly Dictionary<int, int> player_to_index =
+            new Dictionary<int, int>();
 
         // Todo: Read the joystick name from the registry.
         //static readonly string RegistryJoyConfig = @"Joystick%dConfiguration";
@@ -57,16 +66,24 @@ namespace OpenTK.Platform.Windows
         public WinMMJoystick()
         {
             sticks_readonly = sticks.AsReadOnly();
+            RefreshDevices();
+        }
+
+        #endregion
+
+        #region Internal Members
+
+        internal void RefreshDevices()
+        {
+            for (int i = 0; i < sticks.Count; i++)
+            {
+                CloseJoystick(i);
+            }
 
             // WinMM supports up to 16 joysticks.
-            int number = 0;
-            while (number < UnsafeNativeMethods.joyGetNumDevs())
+            for (int i = 0; i < UnsafeNativeMethods.joyGetNumDevs(); i++)
             {
-                JoystickDevice<WinMMJoyDetails> stick = OpenJoystick(number++);
-                if (stick != null)
-                {
-                    sticks.Add(stick);
-                }
+                OpenJoystick(i);
             }
         }
 
@@ -76,76 +93,123 @@ namespace OpenTK.Platform.Windows
 
         JoystickDevice<WinMMJoyDetails> OpenJoystick(int number)
         {
-            JoystickDevice<WinMMJoyDetails> stick = null;
-
-            JoyCaps caps;
-            JoystickError result = UnsafeNativeMethods.joyGetDevCaps(number, out caps, JoyCaps.SizeInBytes);
-            if (result != JoystickError.NoError)
-                return null;
-
-            int num_axes = caps.NumAxes;
-            if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
-                num_axes += 2;
-
-            stick = new JoystickDevice<WinMMJoyDetails>(number, num_axes, caps.NumButtons);
-            stick.Details = new WinMMJoyDetails(num_axes);
-
-            // Make sure to reverse the vertical axes, so that +1 points up and -1 points down.
-            int axis = 0;
-            if (axis < caps.NumAxes)
-            { stick.Details.Min[axis] = caps.XMin; stick.Details.Max[axis] = caps.XMax; axis++; }
-            if (axis < caps.NumAxes)
-            { stick.Details.Min[axis] = caps.YMax; stick.Details.Max[axis] = caps.YMin; axis++; }
-            if (axis < caps.NumAxes)
-            { stick.Details.Min[axis] = caps.ZMax; stick.Details.Max[axis] = caps.ZMin; axis++; }
-            if (axis < caps.NumAxes)
-            { stick.Details.Min[axis] = caps.RMin; stick.Details.Max[axis] = caps.RMax; axis++; }
-            if (axis < caps.NumAxes)
-            { stick.Details.Min[axis] = caps.UMin; stick.Details.Max[axis] = caps.UMax; axis++; }
-            if (axis < caps.NumAxes)
-            { stick.Details.Min[axis] = caps.VMax; stick.Details.Max[axis] = caps.VMin; axis++; }
-
-            if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
+            lock (sync)
             {
-                stick.Details.PovType = PovType.Exists;
-                if ((caps.Capabilities & JoystCapsFlags.HasPov4Dir) != 0)
-                    stick.Details.PovType |= PovType.Discrete;
-                if ((caps.Capabilities & JoystCapsFlags.HasPovContinuous) != 0)
-                    stick.Details.PovType |= PovType.Continuous;
+                JoystickDevice<WinMMJoyDetails> stick = null;
+
+                JoyCaps caps;
+                JoystickError result = UnsafeNativeMethods.joyGetDevCaps(number, out caps, JoyCaps.SizeInBytes);
+                if (result == JoystickError.NoError)
+                {
+                    if (caps.NumAxes > JoystickState.MaxAxes)
+                    {
+                        Debug.Print("[Input] Device has {0} axes, which is higher than OpenTK maximum {1}. Please report a bug at http://www.opentk.com",
+                            caps.NumAxes, JoystickState.MaxAxes);
+                        caps.NumAxes = JoystickState.MaxAxes;
+                    }
+
+                    if (caps.NumAxes > JoystickState.MaxButtons)
+                    {
+                        Debug.Print("[Input] Device has {0} buttons, which is higher than OpenTK maximum {1}. Please report a bug at http://www.opentk.com",
+                            caps.NumButtons, JoystickState.MaxButtons);
+                        caps.NumButtons = JoystickState.MaxButtons;
+                    }
+
+                    JoystickCapabilities joycaps = new JoystickCapabilities(
+                        caps.NumAxes,
+                        caps.NumButtons,
+                        (caps.Capabilities & JoystCapsFlags.HasPov) != 0 ? 1 : 0,
+                        true);
+
+                    int num_axes = caps.NumAxes;
+                    if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
+                        num_axes += 2;
+
+                    stick = new JoystickDevice<WinMMJoyDetails>(number, num_axes, caps.NumButtons);
+                    stick.Details = new WinMMJoyDetails(joycaps);
+
+                    // Make sure to reverse the vertical axes, so that +1 points up and -1 points down.
+                    for (int axis = 0; axis < caps.NumAxes; axis++)
+                    {
+                        stick.Details.Min[axis] = caps.GetMin(axis);
+                        stick.Details.Max[axis] = caps.GetMax(axis);
+                    }
+
+                    if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
+                    {
+                        stick.Details.PovType = PovType.Exists;
+                        if ((caps.Capabilities & JoystCapsFlags.HasPov4Dir) != 0)
+                            stick.Details.PovType |= PovType.Discrete;
+                        if ((caps.Capabilities & JoystCapsFlags.HasPovContinuous) != 0)
+                            stick.Details.PovType |= PovType.Continuous;
+                    }
+
+                    // Todo: Implement joystick name detection for WinMM.
+                    stick.Description = String.Format("Joystick/Joystick #{0} ({1} axes, {2} buttons)", number, stick.Axis.Count, stick.Button.Count);
+                    // Todo: Try to get the device name from the registry. Oh joy!
+                    //string key_path = String.Format("{0}\\{1}\\{2}", RegistryJoyConfig, caps.RegKey, RegstryJoyCurrent);
+                    //RegistryKey key = Registry.LocalMachine.OpenSubKey(key_path, false);
+                    //if (key == null)
+                    //    key = Registry.CurrentUser.OpenSubKey(key_path, false);
+                    //if (key == null)
+                    //    stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons)", number, stick.Axis.Count, stick.Button.Count);
+                    //else
+                    //{
+                    //    key.Close();
+                    //}
+
+                    Debug.Print("Found joystick on device number {0}", number);
+                    index_to_stick.Add(number, sticks.Count);
+                    player_to_index.Add(player_to_index.Count, number);
+                    sticks.Add(stick);
+                }
+
+                return stick;
             }
-
-#warning "Implement joystick name detection for WinMM."
-            stick.Description = String.Format("Joystick/Joystick #{0} ({1} axes, {2} buttons)", number, stick.Axis.Count, stick.Button.Count);
-            // Todo: Try to get the device name from the registry. Oh joy!
-            //string key_path = String.Format("{0}\\{1}\\{2}", RegistryJoyConfig, caps.RegKey, RegstryJoyCurrent);
-            //RegistryKey key = Registry.LocalMachine.OpenSubKey(key_path, false);
-            //if (key == null)
-            //    key = Registry.CurrentUser.OpenSubKey(key_path, false);
-            //if (key == null)
-            //    stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons)", number, stick.Axis.Count, stick.Button.Count);
-            //else
-            //{
-            //    key.Close();
-            //}
-
-            if (stick != null)
-                Debug.Print("Found joystick on device number {0}", number);
-            return stick;
         }
 
-        void UnplugJoystick(int index)
+        void UnplugJoystick(int player_index)
         {
             // Reset the system configuration. Without this,
             // joysticks that are reconnected on different
             // ports are given different ids, making it
             // impossible to reconnect a disconnected user.
             UnsafeNativeMethods.joyConfigChanged(0);
-            Debug.Print("[Win] WinMM joystick {0} unplugged", index);
+            Debug.Print("[Win] WinMM joystick {0} unplugged", player_index);
+            CloseJoystick(player_index);
         }
 
-        bool IsValid(int index)
+        void CloseJoystick(int player_index)
         {
-            return index >= 0 && index < UnsafeNativeMethods.joyGetNumDevs();
+            lock (sync)
+            {
+                if (IsValid(player_index))
+                {
+                    int device_index = player_to_index[player_index];
+
+                    JoystickDevice<WinMMJoyDetails> stick =
+                        sticks[index_to_stick[device_index]] as JoystickDevice<WinMMJoyDetails>;
+
+                    if (stick != null)
+                    {
+                        index_to_stick.Remove(device_index);
+                        player_to_index.Remove(player_index);
+                    }
+                }
+            }
+        }
+
+        bool IsValid(int player_index)
+        {
+            if (player_to_index.ContainsKey(player_index))
+            {
+                return true;
+            }
+            //else if (index >= 0 && index < UnsafeNativeMethods.joyGetNumDevs())
+            //{
+            //    return OpenJoystick(index) != null;
+            //}
+            return false;
         }
 
         static short CalculateOffset(int pos, int min, int max)
@@ -170,88 +234,91 @@ namespace OpenTK.Platform.Windows
 
         public void Poll()
         {
-            foreach (JoystickDevice<WinMMJoyDetails> js in sticks)
+            lock (sync)
             {
-                JoyInfoEx info = new JoyInfoEx();
-                info.Size = JoyInfoEx.SizeInBytes;
-                info.Flags = JoystickFlags.All;
-                UnsafeNativeMethods.joyGetPosEx(js.Id, ref info);
-
-                int num_axes = js.Axis.Count;
-                if ((js.Details.PovType & PovType.Exists) != 0)
-                    num_axes -= 2; // Because the last two axis are used for POV input.
-
-                int axis = 0;
-                if (axis < num_axes)
-                { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.XPos, axis)); axis++; }
-                if (axis < num_axes)
-                { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.YPos, axis)); axis++; }
-                if (axis < num_axes)
-                { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.ZPos, axis)); axis++; }
-                if (axis < num_axes)
-                { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.RPos, axis)); axis++; }
-                if (axis < num_axes)
-                { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.UPos, axis)); axis++; }
-                if (axis < num_axes)
-                { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.VPos, axis)); axis++; }
-
-                if ((js.Details.PovType & PovType.Exists) != 0)
+                foreach (JoystickDevice<WinMMJoyDetails> js in sticks)
                 {
-                    float x = 0, y = 0;
+                    JoyInfoEx info = new JoyInfoEx();
+                    info.Size = JoyInfoEx.SizeInBytes;
+                    info.Flags = JoystickFlags.All;
+                    UnsafeNativeMethods.joyGetPosEx(js.Id, ref info);
 
-                    // A discrete POV returns specific values for left, right, etc.
-                    // A continuous POV returns an integer indicating an angle in degrees * 100, e.g. 18000 == 180.00 degrees.
-                    // The vast majority of joysticks have discrete POVs, so we'll treat all of them as discrete for simplicity.
-                    if ((JoystickPovPosition)info.Pov != JoystickPovPosition.Centered)
+                    int num_axes = js.Axis.Count;
+                    if ((js.Details.PovType & PovType.Exists) != 0)
+                        num_axes -= 2; // Because the last two axis are used for POV input.
+
+                    int axis = 0;
+                    if (axis < num_axes)
+                    { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.XPos, axis)); axis++; }
+                    if (axis < num_axes)
+                    { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.YPos, axis)); axis++; }
+                    if (axis < num_axes)
+                    { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.ZPos, axis)); axis++; }
+                    if (axis < num_axes)
+                    { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.RPos, axis)); axis++; }
+                    if (axis < num_axes)
+                    { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.UPos, axis)); axis++; }
+                    if (axis < num_axes)
+                    { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.VPos, axis)); axis++; }
+
+                    if ((js.Details.PovType & PovType.Exists) != 0)
                     {
-                        if (info.Pov > (int)JoystickPovPosition.Left || info.Pov < (int)JoystickPovPosition.Right)
-                        { y = 1; }
-                        if ((info.Pov > (int)JoystickPovPosition.Forward) && (info.Pov < (int)JoystickPovPosition.Backward))
-                        { x = 1; }
-                        if ((info.Pov > (int)JoystickPovPosition.Right) && (info.Pov < (int)JoystickPovPosition.Left))
-                        { y = -1; }
-                        if (info.Pov > (int)JoystickPovPosition.Backward)
-                        { x = -1; }
-                    }  
-                    //if ((js.Details.PovType & PovType.Discrete) != 0)
-                    //{
-                    //    if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Centered)
-                    //    { x = 0; y = 0; }
-                    //    else if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Forward)
-                    //    { x = 0; y = -1; }
-                    //    else if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Left)
-                    //    { x = -1; y = 0; }
-                    //    else if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Backward)
-                    //    { x = 0; y = 1; }
-                    //    else if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Right)
-                    //    { x = 1; y = 0; }
-                    //}
-                    //else if ((js.Details.PovType & PovType.Continuous) != 0)
-                    //{
-                    //    if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Centered)
-                    //    {
-                    //        // This approach moves the hat on a circle, not a square as it should.
-                    //        float angle = (float)(System.Math.PI * info.Pov / 18000.0 + System.Math.PI / 2);
-                    //        x = (float)System.Math.Cos(angle);
-                    //        y = (float)System.Math.Sin(angle);
-                    //        if (x < 0.001)
-                    //            x = 0;
-                    //        if (y < 0.001)
-                    //            y = 0;
-                    //    }
-                    //}
-                    //else
-                    //    throw new NotImplementedException("Please post an issue report at http://www.opentk.com/issues");
+                        float x = 0, y = 0;
 
-                    js.SetAxis((JoystickAxis)axis++, x);
-                    js.SetAxis((JoystickAxis)axis++, y);
-                }
+                        // A discrete POV returns specific values for left, right, etc.
+                        // A continuous POV returns an integer indicating an angle in degrees * 100, e.g. 18000 == 180.00 degrees.
+                        // The vast majority of joysticks have discrete POVs, so we'll treat all of them as discrete for simplicity.
+                        if ((JoystickPovPosition)info.Pov != JoystickPovPosition.Centered)
+                        {
+                            if (info.Pov > (int)JoystickPovPosition.Left || info.Pov < (int)JoystickPovPosition.Right)
+                            { y = 1; }
+                            if ((info.Pov > (int)JoystickPovPosition.Forward) && (info.Pov < (int)JoystickPovPosition.Backward))
+                            { x = 1; }
+                            if ((info.Pov > (int)JoystickPovPosition.Right) && (info.Pov < (int)JoystickPovPosition.Left))
+                            { y = -1; }
+                            if (info.Pov > (int)JoystickPovPosition.Backward)
+                            { x = -1; }
+                        }
+                        //if ((js.Details.PovType & PovType.Discrete) != 0)
+                        //{
+                        //    if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Centered)
+                        //    { x = 0; y = 0; }
+                        //    else if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Forward)
+                        //    { x = 0; y = -1; }
+                        //    else if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Left)
+                        //    { x = -1; y = 0; }
+                        //    else if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Backward)
+                        //    { x = 0; y = 1; }
+                        //    else if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Right)
+                        //    { x = 1; y = 0; }
+                        //}
+                        //else if ((js.Details.PovType & PovType.Continuous) != 0)
+                        //{
+                        //    if ((JoystickPovPosition)info.Pov == JoystickPovPosition.Centered)
+                        //    {
+                        //        // This approach moves the hat on a circle, not a square as it should.
+                        //        float angle = (float)(System.Math.PI * info.Pov / 18000.0 + System.Math.PI / 2);
+                        //        x = (float)System.Math.Cos(angle);
+                        //        y = (float)System.Math.Sin(angle);
+                        //        if (x < 0.001)
+                        //            x = 0;
+                        //        if (y < 0.001)
+                        //            y = 0;
+                        //    }
+                        //}
+                        //else
+                        //    throw new NotImplementedException("Please post an issue report at http://www.opentk.com/issues");
 
-                int button = 0;
-                while (button < js.Button.Count)
-                {
-                    js.SetButton((JoystickButton)button, (info.Buttons & (1 << button)) != 0);
-                    button++;
+                        js.SetAxis((JoystickAxis)axis++, x);
+                        js.SetAxis((JoystickAxis)axis++, y);
+                    }
+
+                    int button = 0;
+                    while (button < js.Button.Count)
+                    {
+                        js.SetButton((JoystickButton)button, (info.Buttons & (1 << button)) != 0);
+                        button++;
+                    }
                 }
             }
         }
@@ -260,89 +327,111 @@ namespace OpenTK.Platform.Windows
 
         #region IJoystickDriver2 Members
 
-        public JoystickCapabilities GetCapabilities(int index)
+        public JoystickCapabilities GetCapabilities(int player_index)
         {
-            if (IsValid(index))
+            lock (sync)
             {
-                JoyCaps mmcaps;
-                JoystickError result = UnsafeNativeMethods.joyGetDevCaps(index, out mmcaps, JoyCaps.SizeInBytes);
-                if (result == JoystickError.NoError)
+                if (IsValid(player_index))
                 {
-                    JoystickCapabilities caps = new JoystickCapabilities(
-                        mmcaps.NumAxes, mmcaps.NumButtons, true);
-                    //if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
-                    //    gpcaps.DPadCount++;
-                    return caps;
-                }
-                else if (result == JoystickError.Unplugged)
-                {
-                    UnplugJoystick(index);
-                }
-            }
-            else
-            {
-                Debug.Print("[Win] Invalid WinMM joystick device {0}", index);
-            }
+                    int device_index = player_to_index[player_index];
+                    JoystickDevice<WinMMJoyDetails> stick =
+                        sticks[index_to_stick[device_index]] as JoystickDevice<WinMMJoyDetails>;
 
-            return new JoystickCapabilities();
+                    return stick.Details.Capabilities;
+                }
+
+                return new JoystickCapabilities();
+            }
         }
 
-        public JoystickState GetState(int index)
+        public JoystickState GetState(int player_index)
         {
-            JoystickState state = new JoystickState();
-
-            if (IsValid(index))
+            lock (sync)
             {
-                JoyInfoEx info = new JoyInfoEx();
-                info.Size = JoyInfoEx.SizeInBytes;
-                info.Flags = JoystickFlags.All;
+                JoystickState state = new JoystickState();
 
-                JoystickError result = UnsafeNativeMethods.joyGetPosEx(index, ref info);
-                if (result == JoystickError.NoError)
+                if (IsValid(player_index))
                 {
-                    JoyCaps caps;
-                    result = UnsafeNativeMethods.joyGetDevCaps(index, out caps, JoyCaps.SizeInBytes);
-                    if (result == JoystickError.NoError)
+                    int device_index = player_to_index[player_index];
+                    int index = index_to_stick[device_index];
+                    JoystickDevice<WinMMJoyDetails> stick =
+                        sticks[index] as JoystickDevice<WinMMJoyDetails>;
+
+                    // For joysticks with fewer than three axes or four buttons, we must
+                    // use joyGetPos; otherwise, joyGetPosEx. This is not just a cosmetic
+                    // difference, simple devices will return incorrect results if we use
+                    // joyGetPosEx on them.
+                    if (stick.Details.Capabilities.AxisCount <= 3 || stick.Details.Capabilities.ButtonCount <= 4)
                     {
-                        state.SetAxis(JoystickAxis.Axis0, CalculateOffset(info.XPos, caps.XMin, caps.XMax));
-                        state.SetAxis(JoystickAxis.Axis1, CalculateOffset(info.YPos, caps.YMin, caps.YMax));
-                        state.SetAxis(JoystickAxis.Axis2, CalculateOffset(info.ZPos, caps.ZMin, caps.ZMax));
-                        state.SetAxis(JoystickAxis.Axis3, CalculateOffset(info.RPos, caps.RMin, caps.RMax));
-                        state.SetAxis(JoystickAxis.Axis4, CalculateOffset(info.UPos, caps.UMin, caps.UMax));
-                        state.SetAxis(JoystickAxis.Axis5, CalculateOffset(info.VPos, caps.VMin, caps.VMax));
+                        // Use joyGetPos
+                        JoyInfo info = new JoyInfo();
 
-                        for (int i = 0; i < 16; i++)
+                        JoystickError result = UnsafeNativeMethods.joyGetPos(device_index, ref info);
+                        if (result == JoystickError.NoError)
                         {
-                            state.SetButton(JoystickButton.Button0 + i, (info.Buttons & 1 << i) != 0);
-                        }
+                            for (int i = 0; i < stick.Details.Capabilities.AxisCount; i++)
+                            {
+                                state.SetAxis(JoystickAxis.Axis0 + i, CalculateOffset(info.GetAxis(i), stick.Details.Min[i], stick.Details.Max[i]));
+                            }
 
-                        state.SetIsConnected(true);
+                            for (int i = 0; i < stick.Details.Capabilities.ButtonCount; i++)
+                            {
+                                state.SetButton(JoystickButton.Button0 + i, (info.Buttons & 1 << i) != 0);
+                            }
+
+                            state.SetIsConnected(true);
+                        }
+                        else if (result == JoystickError.Unplugged)
+                        {
+                            UnplugJoystick(player_index);
+                        }
+                    }
+                    else
+                    {
+                        // Use joyGetPosEx
+                        JoyInfoEx info = new JoyInfoEx();
+                        info.Size = JoyInfoEx.SizeInBytes;
+                        info.Flags = JoystickFlags.All;
+
+                        JoystickError result = UnsafeNativeMethods.joyGetPosEx(device_index, ref info);
+                        if (result == JoystickError.NoError)
+                        {
+                            for (int i = 0; i < stick.Details.Capabilities.AxisCount; i++)
+                            {
+                                state.SetAxis(JoystickAxis.Axis0 + i, CalculateOffset(info.GetAxis(i), stick.Details.Min[i], stick.Details.Max[i]));
+                            }
+
+                            for (int i = 0; i < stick.Details.Capabilities.ButtonCount; i++)
+                            {
+                                state.SetButton(JoystickButton.Button0 + i, (info.Buttons & 1 << i) != 0);
+                            }
+
+                            state.SetIsConnected(true);
+                        }
+                        else if (result == JoystickError.Unplugged)
+                        {
+                            UnplugJoystick(player_index);
+                        }
                     }
                 }
 
-                if (result == JoystickError.Unplugged)
-                {
-                    UnplugJoystick(index);
-                }
+                return state;
             }
-            else
-            {
-                Debug.Print("[Win] Invalid WinMM joystick device {0}", index);
-            }
-
-            return state;
         }
 
         public Guid GetGuid(int index)
         {
-            Guid guid = new Guid();
-
-            if (IsValid(index))
+            lock (sync)
             {
-                // Todo: implement WinMM Guid retrieval
-            }
+                Guid guid = new Guid();
 
-            return guid;
+                if (IsValid(index))
+                {
+                    // Todo: implement WinMM Guid retrieval
+                }
+
+                return guid;
+            }
         }
 
         #endregion
@@ -420,6 +509,7 @@ namespace OpenTK.Platform.Windows
             Backward = 18000,
             Left = 27000
         }
+
         struct JoyCaps
         {
             public ushort Mid;
@@ -456,6 +546,53 @@ namespace OpenTK.Platform.Windows
             {
                 SizeInBytes = Marshal.SizeOf(default(JoyCaps));
             }
+
+            public int GetMin(int i)
+            {
+                switch (i)
+                {
+                    case 0: return XMin;
+                    case 1: return YMin;
+                    case 2: return ZMin;
+                    case 3: return RMin;
+                    case 4: return UMin;
+                    case 5: return VMin;
+                    default: return 0;
+                }
+            }
+
+            public int GetMax(int i)
+            {
+                switch (i)
+                {
+                    case 0: return XMax;
+                    case 1: return YMax;
+                    case 2: return ZMax;
+                    case 3: return RMax;
+                    case 4: return UMax;
+                    case 5: return VMax;
+                    default: return 0;
+                }
+            }
+        }
+
+        struct JoyInfo
+        {
+            public int XPos;
+            public int YPos;
+            public int ZPos;
+            public uint Buttons;
+
+            public int GetAxis(int i)
+            {
+                switch (i)
+                {
+                    case 0: return XPos;
+                    case 1: return YPos;
+                    case 2: return ZPos;
+                    default: return 0;
+                }
+            }
         }
 
         struct JoyInfoEx
@@ -472,8 +609,10 @@ namespace OpenTK.Platform.Windows
             public uint Buttons;
             public uint ButtonNumber;
             public int Pov;
+            #pragma warning disable 0169
             uint Reserved1;
             uint Reserved2;
+            #pragma warning restore 0169
 
             public static readonly int SizeInBytes;
 
@@ -481,12 +620,28 @@ namespace OpenTK.Platform.Windows
             {
                 SizeInBytes = Marshal.SizeOf(default(JoyInfoEx));
             }
+
+            public int GetAxis(int i)
+            {
+                switch (i)
+                {
+                    case 0: return XPos;
+                    case 1: return YPos;
+                    case 2: return ZPos;
+                    case 3: return RPos;
+                    case 4: return UPos;
+                    case 5: return VPos;
+                    default: return 0;
+                }
+            }
         }
 
         static class UnsafeNativeMethods
         {
             [DllImport("Winmm.dll"), SuppressUnmanagedCodeSecurity]
             public static extern JoystickError joyGetDevCaps(int uJoyID, out JoyCaps pjc, int cbjc);
+            [DllImport("Winmm.dll"), SuppressUnmanagedCodeSecurity]
+            public static extern JoystickError joyGetPos(int uJoyID, ref JoyInfo pji);
             [DllImport("Winmm.dll"), SuppressUnmanagedCodeSecurity]
             public static extern JoystickError joyGetPosEx(int uJoyID, ref JoyInfoEx pji);
             [DllImport("Winmm.dll"), SuppressUnmanagedCodeSecurity]
@@ -514,14 +669,16 @@ namespace OpenTK.Platform.Windows
 
         struct WinMMJoyDetails
         {
-            public readonly float[] Min, Max; // Minimum and maximum offset of each axis.
+            public readonly int[] Min, Max; // Minimum and maximum offset of each axis.
             public PovType PovType;
+            public JoystickCapabilities Capabilities;
 
-            public WinMMJoyDetails(int num_axes)
+            public WinMMJoyDetails(JoystickCapabilities caps)
+                : this()
             {
-                Min = new float[num_axes];
-                Max = new float[num_axes];
-                PovType = PovType.None;
+                Min = new int[caps.AxisCount];
+                Max = new int[caps.AxisCount];
+                Capabilities = caps;
             }
 
             public float CalculateOffset(float pos, int axis)

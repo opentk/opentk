@@ -372,9 +372,6 @@
     <Compile Include="Platform\Windows\Bindings\Wgl.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\Windows\Bindings\WglDelegates.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Platform\Windows\Bindings\WglEnums.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -801,6 +798,9 @@
     <Compile Include="Input\GamePadConfigurationItem.cs" />
     <Compile Include="Platform\LegacyJoystickDriver.cs" />
     <Compile Include="Platform\PlatformFactoryBase.cs" />
+    <Compile Include="Input\JoystickHat.cs" />
+    <Compile Include="Input\HatPosition.cs" />
+    <Compile Include="Input\JoystickHatState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
