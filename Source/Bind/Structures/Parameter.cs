@@ -343,7 +343,7 @@ namespace Bind.Structures
 
         #region public bool HasGenericParameters
 
-        public bool HasGenericParameters
+        public bool HasGenericParameters
         {
             get
             {
