@@ -50,13 +50,13 @@ namespace OpenTK
         /// <param name="elapsed">The amount of time that has elapsed since the previous event, in seconds.</param>
         public FrameEventArgs(double elapsed)
         {
-            Time = elapsed;
+            ElapsedTime = elapsed;
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Double"/> that indicates how many seconds of time elapsed since the previous event.
+        /// Gets a <see cref="System.Double"/> that indicates how much time (in seconds) has elapsed since the previous event.
         /// </summary>
-        public double Time 
+        public double ElapsedTime 
         {
             get { return elapsed; }
             internal set

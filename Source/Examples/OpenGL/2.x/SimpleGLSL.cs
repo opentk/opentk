@@ -240,7 +240,7 @@ namespace Examples.Tutorial
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref lookat);
 
-            angle += rotation_speed * (float)e.Time;
+            angle += rotation_speed * (float)e.ElapsedTime;
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
             GL.EnableClientState(ArrayCap.VertexArray);

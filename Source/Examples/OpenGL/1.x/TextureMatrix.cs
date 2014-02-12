@@ -99,7 +99,7 @@ namespace Examples.Tutorial
                      ClearBufferMask.DepthBufferBit);
 
             GL.MatrixMode(MatrixMode.Texture);
-            GL.Translate(e.Time / 2, -e.Time, 0f);
+            GL.Translate(e.ElapsedTime / 2, -e.ElapsedTime, 0f);
 
             Matrix4 modelview = Matrix4.LookAt(Vector3.Zero, Vector3.UnitZ, Vector3.UnitY);
             GL.MatrixMode(MatrixMode.Modelview);

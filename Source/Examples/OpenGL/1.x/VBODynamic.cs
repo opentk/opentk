@@ -159,7 +159,7 @@ namespace Examples.Tutorial
                 else
                 {
                     ParticleAttributes[i].Age += (uint)Math.Max(ParticleAttributes[i].Direction.LengthFast * 10, 1);
-                    Vector3.Multiply(ref ParticleAttributes[i].Direction, (float)e.Time, out temp);
+                    Vector3.Multiply(ref ParticleAttributes[i].Direction, (float)e.ElapsedTime, out temp);
                     Vector3.Add(ref VBO[i].Position, ref temp, out VBO[i].Position);
                 }
             }
@@ -171,7 +171,7 @@ namespace Examples.Tutorial
         /// <param name="e">Contains timing information.</param>
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            this.Title = VisibleParticleCount + " Points. FPS: " + string.Format("{0:F}", 1.0 / e.Time);
+            this.Title = VisibleParticleCount + " Points. FPS: " + string.Format("{0:F}", 1.0 / e.ElapsedTime);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 

@@ -147,7 +147,7 @@ namespace Examples.Tutorial
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref lookat);
 
-            angle += rotation_speed * (float)e.Time;
+            angle += rotation_speed * (float)e.ElapsedTime;
 
             if (angle >= 360.0f)
                 angle -= 360.0f;

@@ -247,7 +247,7 @@ namespace Examples.Tutorial
             GL.Translate(0f, 0f, -3f);
             GL.Rotate(angle, Vector3.UnitX);
             GL.Rotate(angle, Vector3.UnitY);
-            angle += (float)e.Time * 3.0f;
+            angle += (float)e.ElapsedTime * 3.0f;
 
             // You may re-enable the shader, but it works perfectly without and will run on intel HW too
             // GL.UseProgram(ProgramObject);
