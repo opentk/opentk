@@ -389,12 +389,17 @@ namespace OpenTK.Platform.Windows
 
         void HandleChar(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
+            char c;
             if (IntPtr.Size == 4)
-                key_press.KeyChar = (char)wParam.ToInt32();
+                c = (char)wParam.ToInt32();
             else
-                key_press.KeyChar = (char)wParam.ToInt64();
+                c = (char)wParam.ToInt64();
 
-            KeyPress(this, key_press);
+            if (!Char.IsControl(c))
+            {
+                key_press.KeyChar = c;
+                KeyPress(this, key_press);
+            }
         }
 
         void HandleMouseMove(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
