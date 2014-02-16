@@ -643,14 +643,7 @@ EXCLUDE_SYMLINKS       = NO
 # for example use the pattern */test/*
 
 EXCLUDE_PATTERNS       = */.svn/* \
-                         */.git/* \
-                         */OpenTK/Graphics/OpenGL/* \
-                         */OpenTK/Graphics/OpenGL4/* \
-                         */OpenTK/Graphics/ES10/* \
-                         */OpenTK/Graphics/ES11/* \
-                         */OpenTK/Graphics/ES20/* \
-                         */OpenTK/Graphics/ES30/* \
-                         */OpenTK/Audio/OpenAL/*
+                         */.git/*
 
 # The EXCLUDE_SYMBOLS tag can be used to specify one or more symbol names 
 # (namespaces, classes, functions, etc.) that should be excluded from the 
