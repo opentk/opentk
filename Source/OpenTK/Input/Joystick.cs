@@ -39,8 +39,8 @@ namespace OpenTK.Input
     /// Use <c>GetCapabilities</c> to retrieve the number of supported
     /// axes and buttons on a given device.
     /// Use <c>GetState</c> to retrieve the current state of a given device.
-    /// <seealso cref="GamePad"/>
     /// </summary>
+    /// <seealso cref="GamePad"/>
     public sealed class Joystick
     {
         static readonly IJoystickDriver2 implementation =
