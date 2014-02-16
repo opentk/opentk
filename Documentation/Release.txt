@@ -1,28 +1,32 @@
 The Open Toolkit 1.1
-22 November 2013
+15 February 2014
 
+http://www.opentk.com
+https://github.com/opentk/opentk
 
 
 [Overview]
 
-This is a beta release for OpenTK 1.1
+This is the first stable release for OpenTK 1.1
 
-New in OpenTK 1.1:
-- support for OpenGL 4.4 and OpenGL ES 3.0
-- strongly-typed enums for OpenGL ES 2.0 and 3.0
-- inline documentation for all OpenGL and OpenGL ES core functions
-- a new SDL2 backend for improved platform compatibility
-- a greatly expanded math library
-- numerous bugfixes for Mac OS X, Windows 8 and Linux
-- ANGLE support for Windows systems without OpenGL drivers
-- Support for Retina / high-DPI monitors
+New features:
+1. support for OpenGL 4.4 and OpenGL ES 3.0
+2. strongly-typed enums for OpenGL ES 2.0 and 3.0
+3. new, faster OpenGL bindings based on hand-optimized IL
+4. a new SDL2 backend for improved platform compatibility
+5. new Joystick and GamePad APIs under OpenTK.Input
+6. improved startup time and reduced memory consumption
+7. inline documentation for all OpenGL and OpenGL ES core functions
+8. a greatly expanded math library
+9. numerous bugfixes for Mac OS X, Windows 8 and Linux
+10. ANGLE support for Windows systems without OpenGL drivers
+11. support for Retina / high-DPI monitors
+12. monolinker can now be used to reduce the size of OpenTK.dll
+13. precompiled binaries for optional dependencies (OpenAL, SDL2, monolinker)
 
-All users are strongly encouraged to upgrade to OpenTK 1.1
+Users of previous versions are strongly encouraged to upgrade to OpenTK 1.1
 
-
-Visit http://www.opentk.com for the latest news and information on the Open Toolkit library
-
-Download the source code at https://github.com/opentk/opentk
+Visit http://www.opentk.com for the latest news and information on the Open Toolkit library.
 
 
 
@@ -36,58 +40,52 @@ Please refer to the following pages:
 
 [Known issues]
 
-- [all] The size of OpenTK.dll can be reduced.
-
-- [all] GamePad API throws NotImplementedException.
-
 - [all] Keyboard API exposes ushort parameter.
 
-- [SDL] does not support ChangeResolution API.
+- [SDL2] does not support OpenTK.GLControl.
 
-- [SDL] does not support multiple keyboards/mice.
+- [Mac/Carbon] does not support Retina resolutions. Please use the SDL2 backend instead.
 
-- [SDL] does not support GLControl.
-
-- [Mac/Carbon] does not support Retina resolutions. Please use the SDL backend instead.
+- [Mac/Carbon] does not support OpenGL 3.x/4.x. Please use the SDL2 backend instead.
 
 
 
 [Report an issue]
-If you encounter an issue, please report it at:
-https://github.com/opentk/opentk/issues
 
-Highest priority will be given to regressions from OpenTK 1.0
+If you encounter an issue with OpenTK, please report it at https://github.com/opentk/opentk/issues
+
+DonÕt forget to mention your operating system and GPU! If possible, try to attach a small, self-contained test case that reproduces the bug.
 
 
 
 [API compatibility]
 
-The vast majority of projects will be able to upgrade to OpenTK 1.1 without any modifications. However, due to updates in the official OpenGL specification and due to bugfixes in the binding generator, a number of OpenGL signatures have changed between OpenTK 1.0 and 1.1. 
+Most projects will be able to upgrade to OpenTK 1.1 without any modifications. However, due to updates in the official OpenGL specification and due to bugfixes in the binding generator, a number of OpenGL signatures have changed between OpenTK 1.0 and 1.1. 
 
 Modified signatures have been marked with the [Obsolete] attribute. A warning message will be generated with instructions on a suggested replacement.
 
-In a small number of cases, using the original signature would lead to incorrect results or a crash. These cases will generate a compiler error now. If you use any of the following signatures, please apply the suggested modification:
+In a small number of cases, using the original signature would lead to incorrect results or a crash. These cases will generate a compile-time error now. If you use any of the following signatures, please apply the suggested modification:
 
 Namespace OpenTK.Graphics.OpenGL
 Change signature:
-- GL.MultiDrawArrays (“out” -> “ref”)
-- GL.Amd.DeletePerfMonitors (“out” -> “ref”)
+- GL.MultiDrawArrays (`out` -> `ref`)
+- GL.Amd.DeletePerfMonitors (`out` -> `ref`)
 
 Change signature (may cause crash): 
-- GL.Apple.ObjectPurgeable (returns “AppleObjectPurgeable” instead of “IntPtr”)
+- GL.Apple.ObjectPurgeable (returns `AppleObjectPurgeable` instead of `IntPtr`)
 - GL.Ext.SeparableFilter2D
-- GL.Ibm.EdgeFlagPointerList (“bool[]” -> “bool*[]”)
-- GL.NV.TransformFeedbackVaryings (“string[]” -> “int[]”)
+- GL.Ibm.EdgeFlagPointerList (`bool[]` -> `bool*[]`)
+- GL.NV.TransformFeedbackVaryings (`string[]` -> `int[]`)
 
 Change return type:
-- GL.WaitSync (returns “WaitSyncFlags” instead of “ArbSync”)
+- GL.WaitSync (returns `WaitSyncFlags` instead of `ArbSync`)
 
 
 Namespace OpenTK.Graphics.ES11
 Change return type:
-- GL.GetError (“ErrorCode” instead of “All”)
+- GL.GetError (`ErrorCode` instead of `All`)
 
-Change “ref” parameters to “out”:
+Change `ref` parameters to `out`:
 - GL.GenBuffers
 - GL.GenTextures
 - GL.GetBoolean
@@ -130,7 +128,7 @@ Namespace OpenTK.Graphics.ES20.GL
 Change signature (may cause crash):
 - GL.NV.GetFence now takes three parameters instead of two
 
-Change “ref” parameters to “out”:
+Change `ref` parameters to `out`:
 - GL.GetActiveAttrib
 - GL.GetActiveUniform
 - GL.GetAttachedShaders

@@ -19,12 +19,21 @@ For more details, refer to http://www.opentk.com/doc
 
 === Build instructions ===
 
-Use OpenTK.sln to build the library. You can use Visual Studio 2010+, SharpDevelop 3.0+, MonoDevelop 2.0+ or Xamarin Studio.
+Double-click OpenTK.sln to build using Visual Studio 2010+, SharpDevelop 3.0+, MonoDevelop 2.0+ or Xamarin Studio.
 
 You can also build from the commandline using:
-
+(.Net)
 msbuild OpenTK.sln /p:Configuration=Release
-- or -
+(Mono)
 xbuild OpenTK.sln /p:Configuration=Release
 
 The resulting binaries will be placed under the Binaries/OpenTK/[Release|Debug] folders.
+
+
+=== Troubleshooting ===
+
+When building with MonoDevelop you may encounter an issue regarding a missing “GlobalAssemblyInfo.cs” file. This file is normally generated as a pre-build event, via the “Build.UpdateVersion” project. There are two solutions to this issue:
+1. Configure MonoDevelop to use xbuild as its build system.
+2. Right-click and run “Build.UpdateVersion” manually.
+
+Older versions of xbuild may produce the same error when building from the commandline. In that case, simply execute xbuild twice - the second run should succeed.
