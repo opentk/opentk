@@ -72,9 +72,6 @@ namespace OpenTK.Platform.SDL2
 
         readonly IInputDriver input_driver;
 
-        readonly EventFilter EventFilterDelegate_GCUnsafe = FilterEvents;
-        readonly IntPtr EventFilterDelegate;
-
         static readonly Dictionary<uint, Sdl2NativeWindow> windows =
             new Dictionary<uint, Sdl2NativeWindow>();
 
@@ -105,17 +102,14 @@ namespace OpenTK.Platform.SDL2
                 IntPtr handle;
                 lock (SDL.Sync)
                 {
-                    EventFilterDelegate = Marshal.GetFunctionPointerForDelegate(EventFilterDelegate_GCUnsafe);
                     handle = SDL.CreateWindow(title, bounds.Left + x, bounds.Top + y, width, height, flags);
-                    SDL.AddEventWatch(EventFilterDelegate, handle);
-                    SDL.PumpEvents();
+                    exists = true;
                 }
+                ProcessEvents();
                 window = new Sdl2WindowInfo(handle, null);
                 window_id = SDL.GetWindowID(handle);
                 windows.Add(window_id, this);
                 window_title = title;
-
-                exists = true;
             }
         }
 
@@ -152,14 +146,13 @@ namespace OpenTK.Platform.SDL2
             return TranslateKey(scan);
         }
 
-        unsafe static int FilterEvents(IntPtr user_data, IntPtr e)
+        int ProcessEvent(ref Event ev)
         {
             bool processed = false;
 
             try
             {
                 Sdl2NativeWindow window = null;
-                Event ev = *(Event*)e;
 
                 switch (ev.Type)
                 {
@@ -245,6 +238,7 @@ namespace OpenTK.Platform.SDL2
             var key = ev.Key.Keysym;
             window.key_args.Key = TranslateKey(key.Scancode);
             window.key_args.ScanCode = (uint)key.Scancode;
+            window.key_args.Modifiers = window.input_driver.Keyboard[0].GetModifiers();
             if (key_pressed)
             {
                 window.KeyDown(window, window.key_args);
@@ -396,7 +390,6 @@ namespace OpenTK.Platform.SDL2
                 CursorVisible = true;
                 lock (SDL.Sync)
                 {
-                    SDL.DelEventWatch(EventFilterDelegate, window.Handle);
                     if (windows.ContainsKey(window_id))
                     {
                         windows.Remove(window_id);
@@ -499,6 +492,12 @@ namespace OpenTK.Platform.SDL2
                 if (Exists)
                 {
                     SDL.PumpEvents();
+                    Event e;
+                    while (SDL.PollEvent(out e) > 0)
+                    {
+                        ProcessEvent(ref e);
+                    }
+
                     if (must_destroy)
                     {
                         DestroyWindow();
