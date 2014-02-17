@@ -46,6 +46,7 @@ namespace OpenTK.Input
         #region Fields
 
         Key key;
+        KeyModifiers mods;
         uint scancode;
 
         #endregion
@@ -83,12 +84,50 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the scancode which generated this event.
         /// </summary>
+        [CLSCompliant(false)]
         public uint ScanCode
         {
             get { return scancode; }
             internal set { scancode = value; }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether <see cref="OpenTK.Input.KeyModifiers.Alt"/> is pressed.
+        /// </summary>
+        /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
+        public bool Alt
+        {
+            get { return (mods & KeyModifiers.Alt) != 0; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether <see cref="OpenTK.Input.KeyModifiers.Control"/> is pressed.
+        /// </summary>
+        /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
+        public bool Control
+        {
+            get { return (mods & KeyModifiers.Control) != 0; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether <see cref="OpenTK.Input.KeyModifiers.Shift"/> is pressed.
+        /// </summary>
+        /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
+        public bool Shift
+        {
+            get { return (mods & KeyModifiers.Shift) != 0; }
+        }
+
+        /// <summary>
+        /// Gets a bitwise combination representing the <see cref="OpenTK.Input.KeyModifiers"/>
+        /// that are currently pressed.
+        /// </summary>
+        /// <value>The modifiers.</value>
+        public KeyModifiers Modifiers
+        {
+            get { return mods; }
+            internal set { mods = value; }
+        }
 
         #endregion
     }
