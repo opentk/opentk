@@ -350,10 +350,46 @@ namespace OpenTK.Platform.SDL2
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_NumJoysticks", ExactSpelling = true)]
         public static extern int NumJoysticks();
 
+        public static int PeepEvents(ref Event e, EventAction action, EventType min, EventType max)
+        {
+            unsafe
+            {
+                fixed (Event* pe = &e)
+                {
+                    return PeepEvents(pe, 1, action, min, max);
+                }
+            }
+        }
+
+        public static int PeepEvents(Event[] e, int count, EventAction action, EventType min, EventType max)
+        {
+            if (e == null)
+                throw new ArgumentNullException();
+            if (count <= 0 || count > e.Length)
+                throw new ArgumentOutOfRangeException();
+
+            unsafe
+            {
+                fixed (Event *pe = e)
+                {
+                    return PeepEvents(pe, count, action, min, max);
+                }
+            }
+        }
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PeepEvents", ExactSpelling = true)]
+        unsafe static extern int PeepEvents(Event* e, int count, EventAction action, EventType min, EventType max);
+
+
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PixelFormatEnumToMasks", ExactSpelling = true)]
         public static extern bool PixelFormatEnumToMasks(uint format, out int bpp, 
             out uint rmask, out uint gmask, out uint bmask, out uint amask);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PollEvent", ExactSpelling = true)]
+        public static extern int PollEvent(out Event e);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PumpEvents", ExactSpelling = true)]
@@ -587,6 +623,13 @@ namespace OpenTK.Platform.SDL2
         CORE = 0x0001,
         COMPATIBILITY = 0x0002,
         ES = 0x0004
+    }
+
+    enum EventAction
+    {
+        Add,
+        Peek,
+        Get
     }
 
     enum EventState
