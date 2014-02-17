@@ -801,6 +801,7 @@
     <Compile Include="Input\JoystickHat.cs" />
     <Compile Include="Input\HatPosition.cs" />
     <Compile Include="Input\JoystickHatState.cs" />
+    <Compile Include="Input\KeyModifiers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
