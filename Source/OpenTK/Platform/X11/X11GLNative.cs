@@ -866,7 +866,7 @@ namespace OpenTK.Platform.X11
                                 KeyUpEventArgs.Key = key;
                                 KeyUpEventArgs.ScanCode = (uint)e.KeyEvent.keycode;
                                 KeyUpEventArgs.Modifiers = keyboard.GetModifiers();
-                                KeyUp(this, KeyDownEventArgs);
+                                KeyUp(this, KeyUpEventArgs);
                             }
 
                             if (pressed)
