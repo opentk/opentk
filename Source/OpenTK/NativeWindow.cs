@@ -259,6 +259,30 @@ namespace OpenTK
 
         #endregion
 
+        #region Cursor
+
+        /// <summary>
+        /// Gets or sets the <see cref="OpenTK.MouseCursor"/> for this window.
+        /// </summary>
+        public MouseCursor Cursor
+        {
+            get
+            {
+                EnsureUndisposed();
+                return implementation.Cursor;
+            }
+            set
+            {
+                EnsureUndisposed();
+                if (value == null)
+                    throw new ArgumentNullException();
+
+                implementation.Cursor = value;
+            }
+        }
+
+        #endregion
+
         #region Exists
 
         /// <summary>

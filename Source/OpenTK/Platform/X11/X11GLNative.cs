@@ -115,6 +115,8 @@ namespace OpenTK.Platform.X11
         bool isExiting;
 
         bool _decorations_hidden = false;
+
+        MouseCursor cursor = MouseCursor.Default;
         bool cursor_visible = true;
         int mouse_rel_x, mouse_rel_y;
 
@@ -1460,6 +1462,24 @@ namespace OpenTK.Platform.X11
         
         #endregion
 
+        #region Cursor
+
+        public MouseCursor Cursor
+        {
+            get
+            {
+                return cursor;
+            }
+            set
+            {
+                Debug.Print("[Warning] X11GLNative.Cursor property not implemented");
+            }
+        }
+
+        #endregion
+
+        #region CursorVisible
+
         public bool CursorVisible
         {
             get { return cursor_visible; }
@@ -1483,6 +1503,8 @@ namespace OpenTK.Platform.X11
                 }
             }
         }
+
+        #endregion
 
         #endregion
 
