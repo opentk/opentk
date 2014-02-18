@@ -33,6 +33,8 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.SDL2
 {
+    using Surface = IntPtr;
+    using Cursor = IntPtr;
 
     partial class SDL
     {
@@ -76,6 +78,26 @@ namespace OpenTK.Platform.SDL2
             //while (Marshal.ReadByte(ptr) != 0)
             //    strlen++;
         }
+
+        #region Cursor
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateColorCursor", ExactSpelling = true)]
+        public static extern Cursor CreateColorCursor(Surface surface, int w, int h, int hot_x, int hot_y);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_FreeCursor", ExactSpelling = true)]
+        public static extern void FreeCursor(Cursor cursor);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetDefaultCursor", ExactSpelling = true)]
+        public static extern IntPtr GetDefaultCursor();
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetCursor", ExactSpelling = true)]
+        public static extern void SetCursor(Cursor cursor);
+
+        #endregion
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_AddEventWatch", ExactSpelling = true)]
