@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -759,6 +759,7 @@
     <Compile Include="Input\JoystickHat.cs" />
     <Compile Include="Input\HatPosition.cs" />
     <Compile Include="Input\JoystickHatState.cs" />
+    <Compile Include="MouseCursor.cs" />
     <Compile Include="Input\KeyModifiers.cs" />
     <Compile Include="Platform\MacOS\CocoaContext.cs" />
     <Compile Include="Platform\MacOS\CocoaNativeWindow.cs" />
@@ -823,5 +824,4 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <ItemGroup />
 </Project>
