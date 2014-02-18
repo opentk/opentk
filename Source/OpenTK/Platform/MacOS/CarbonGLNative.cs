@@ -86,6 +86,8 @@ namespace OpenTK.Platform.MacOS
         float mouse_rel_x;
         float mouse_rel_y;
 
+        MouseCursor cursor = MouseCursor.Default;
+
         #endregion
 
         #region AGL Device Hack
@@ -898,6 +900,18 @@ namespace OpenTK.Platform.MacOS
                 API.SizeWindow(window.Handle, (short)value.Width, (short)value.Height, true);
                 LoadSize();
                 Resize(this, EventArgs.Empty);
+            }
+        }
+
+        public MouseCursor Cursor
+        {
+            get
+            {
+                return cursor;
+            }
+            set
+            {
+                Debug.Print("[Warning] CarbonGLNative.Cursor property not implemented");
             }
         }
 

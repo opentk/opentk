@@ -102,6 +102,7 @@ namespace OpenTK.Platform.Windows
         KeyboardKeyEventArgs key_up = new KeyboardKeyEventArgs();
         KeyPressEventArgs key_press = new KeyPressEventArgs((char)0);
 
+        MouseCursor cursor = MouseCursor.Default;
         int cursor_visible_count = 0;
 
         static readonly object SyncRoot = new object();
@@ -1087,7 +1088,23 @@ namespace OpenTK.Platform.Windows
         public bool Exists { get { return exists; } }
 
         #endregion
-        
+
+        #region Cursor
+
+        public MouseCursor Cursor
+        {
+            get
+            {
+                return cursor;
+            }
+            set
+            {
+                Debug.Print("[Warning] WinGLNative.Cursor property not implemented");
+            }
+        }
+
+        #endregion
+
         #region CursorVisible
         
         public bool CursorVisible
