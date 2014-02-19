@@ -168,6 +168,12 @@ namespace OpenTK.Platform.Android
 
 		protected override void CreateFrameBuffer ()
 		{
+			if (GraphicsMode != null && !(GraphicsMode is AndroidGraphicsMode))
+#if OPENTK_0
+				GraphicsMode = new AndroidGraphicsMode (windowInfo.Display, (int)GLContextVersion, GraphicsMode);
+#else
+				GraphicsMode = new AndroidGraphicsMode (windowInfo.Display, (int)ContextRenderingApi, GraphicsMode);
+#endif
 			if (Mode == null)
 #if OPENTK_0
 				GraphicsMode = new AndroidGraphicsMode (windowInfo.Display, (int)GLContextVersion, new ColorFormat (8, 8, 8, 8), 16, 0, 0, 0, false);

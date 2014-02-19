@@ -154,11 +154,6 @@ namespace OpenTK.Platform.Android
 				configSpec.Add (4);
 			}
 
-			if (Buffers > 0) {
-				configSpec.Add (EGL11.EglRenderBuffer);
-				configSpec.Add (Buffers);
-			}
-
 			configSpec.Add (EGL11.EglNone);
 
 			int[] num_configs = new int[1];
