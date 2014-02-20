@@ -841,6 +841,37 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region CreateIconIndirect
+
+        /// <summary>
+        /// Creates an icon or cursor from an IconInfo structure.
+        /// </summary>
+        /// <param name="iconInfo">
+        /// A pointer to an IconInfo structure the function uses to create the 
+        /// icon or cursor.
+        /// </param>
+        /// <returns>
+        /// If the function succeeds, the return value is a handle to the icon
+        /// or cursor that is created.
+        /// 
+        /// If the function fails, the return value is null. To get extended 
+        /// error information, call Marshal.GetLastWin32Error.
+        /// </returns>
+        /// <remarks>
+        /// The system copies the bitmaps in the IconInfo structure before 
+        /// creating the icon or cursor. Because the system may temporarily 
+        /// select the bitmaps in a device context, the hbmMask and hbmColor 
+        /// members of the IconInfo structure should not already be selected 
+        /// into a device context. The application must continue to manage the 
+        /// original bitmaps and delete them when they are no longer necessary.
+        /// When you are finished using the icon, destroy it using the 
+        /// DestroyIcon function.
+        /// </remarks>
+        [DllImport("user32.dll", SetLastError=true)]
+        public static extern HICON CreateIconIndirect(ref IconInfo iconInfo);
+
+        #endregion
+
         [DllImport("user32.dll", SetLastError = true)]
         public static extern BOOL SetForegroundWindow(HWND hWnd);
 
