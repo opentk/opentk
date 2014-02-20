@@ -872,6 +872,33 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region GetIconInfo
+
+        /// <summary>
+        /// Retrieves information about the specified icon or cursor.
+        /// </summary>
+        /// <param name="hIcon">A handle to the icon or cursor.</param>
+        /// <param name="pIconInfo">
+        /// A pointer to an IconInfo structure. The function fills in the 
+        /// structure's members.
+        /// </param>
+        /// <returns>
+        /// If the function succeeds, the return value is nonzero and the 
+        /// function fills in the members of the specified IconInfo structure.
+        /// 
+        /// If the function fails, the return value is zero. To get extended 
+        /// error information, call Marshal.GetLastWin32Error.
+        /// </returns>
+        /// <remarks>
+        /// GetIconInfo creates bitmaps for the hbmMask and hbmColor members 
+        /// of IconInfo. The calling application must manage these bitmaps and
+        /// delete them when they are no longer necessary.
+        /// </remarks>
+        [DllImport("user32.dll", SetLastError=true)]
+        public static extern BOOL GetIconInfo(HICON hIcon, out IconInfo pIconInfo);
+
+        #endregion
+
         [DllImport("user32.dll", SetLastError = true)]
         public static extern BOOL SetForegroundWindow(HWND hWnd);
 
