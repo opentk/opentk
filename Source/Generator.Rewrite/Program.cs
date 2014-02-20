@@ -34,14 +34,17 @@ namespace OpenTK.Rewrite
         {
             if (args.Length == 0)
             {
-                Console.WriteLine("Usage: rewrite [file.dll] [file.snk]");
+                Console.WriteLine("Usage: rewrite [file.dll] [file.snk] [options]");
+                Console.WriteLine("[options] is:");
+                Console.WriteLine("    -debug (enable calls to GL.GetError())");
                 return;
             }
 
             var program = new Program();
             var file = args[0];
-            var key = args.Length >= 2 ? args[1] : null;
-            program.Rewrite(file, key);
+            var key = args[1];
+            var options = args.Where(a => a.StartsWith("-") || a.StartsWith("/"));
+            program.Rewrite(file, key, options);
         }
 
         // mscorlib types
@@ -55,7 +58,7 @@ namespace OpenTK.Rewrite
         // OpenTK.BindingsBase
         static TypeDefinition TypeBindingsBase;
 
-        void Rewrite(string file, string keyfile)
+        void Rewrite(string file, string keyfile, IEnumerable<string> options)
         {
             // Specify assembly read and write parameters
             // We want to keep a valid symbols file (pdb or mdb)
@@ -123,7 +126,7 @@ namespace OpenTK.Rewrite
                 {
                     foreach (var type in module.Types)
                     {
-                        Rewrite(type);
+                        Rewrite(type, options);
                     }
                 }
             }
@@ -136,7 +139,7 @@ namespace OpenTK.Rewrite
             assembly.Write(file, write_params);
         }
 
-        void Rewrite(TypeDefinition type)
+        void Rewrite(TypeDefinition type, IEnumerable<string> options)
         {
             var entry_points = type.Fields.FirstOrDefault(f => f.Name == "EntryPoints");
             if (entry_points != null)
@@ -146,7 +149,7 @@ namespace OpenTK.Rewrite
                 entry_signatures.AddRange(type.Methods
                     .Where(t => t.CustomAttributes.Any(a => a.AttributeType.Name == "SlotAttribute")));
 
-                Rewrite(type, entry_points, entry_signatures);
+                Rewrite(type, entry_points, entry_signatures, options);
 
                 RemoveNativeSignatures(type, entry_signatures);
             }
@@ -162,7 +165,7 @@ namespace OpenTK.Rewrite
         }
 
         void Rewrite(TypeDefinition type, FieldDefinition entry_points,
-            List<MethodDefinition> entry_signatures)
+            List<MethodDefinition> entry_signatures, IEnumerable<string> options)
         {
             // Rewrite all wrapper methods
             var wrapper_signatures = new List<MethodDefinition>();
@@ -182,7 +185,7 @@ namespace OpenTK.Rewrite
                         .First(a => a.AttributeType.Name == "SlotAttribute")
                         .ConstructorArguments[0].Value;
 
-                    ProcessMethod(wrapper, signature, slot, entry_points);
+                    ProcessMethod(wrapper, signature, slot, entry_points, options);
                 }
             }
 
@@ -192,7 +195,7 @@ namespace OpenTK.Rewrite
             {
                 foreach (var nested_type in type.NestedTypes)
                 {
-                    Rewrite(nested_type, entry_points, entry_signatures);
+                    Rewrite(nested_type, entry_points, entry_signatures, options);
                 }
             }
         }
@@ -223,7 +226,8 @@ namespace OpenTK.Rewrite
         }
 
         // Create body for method
-        static void ProcessMethod(MethodDefinition wrapper, MethodDefinition native, int slot, FieldDefinition entry_points)
+        static void ProcessMethod(MethodDefinition wrapper, MethodDefinition native, int slot,
+                                  FieldDefinition entry_points, IEnumerable<string> options)
         {
             var body = wrapper.Body;
             var il = body.GetILProcessor();
@@ -242,6 +246,12 @@ namespace OpenTK.Rewrite
             {
                 int difference = native.Parameters.Count - wrapper.Parameters.Count;
                 EmitConvenienceWrapper(wrapper, native, difference, body, il);
+            }
+            
+            DebugVariables vars = null;
+            if (options.Contains("-debug"))
+            {
+                vars = EmitDebugPrologue(wrapper, il);
             }
 
             // push the entry point address on the stack
@@ -266,6 +276,11 @@ namespace OpenTK.Rewrite
             {
                 EmitStringEpilogue(wrapper, body, il);
             }
+            
+            if (options.Contains("-debug"))
+            {
+                EmitDebugEpilogue(wrapper, il, vars);
+            }
 
             // return
             il.Emit(OpCodes.Ret);
@@ -277,6 +292,136 @@ namespace OpenTK.Rewrite
                 body.InitLocals = true;
             }
             body.OptimizeMacros();
+        }
+
+        class DebugVariables
+        {
+            public TypeDefinition ErrorHelperType;
+            public VariableDefinition ErrorHelperLocal;
+            public MethodReference Get_CurrentContext;
+            public MethodReference Set_ErrorChecking;
+            public Instruction BeginTry;
+        }
+
+        static DebugVariables EmitDebugPrologue(MethodDefinition wrapper, ILProcessor il)
+        {
+
+            DebugVariables vars = null;
+            if (il.Body.Method.Name != "GetError")
+            {
+                // Pull out the namespace name, method fullname will look 
+                // something like "type namespace.class::method(type arg)"
+                var module = il.Body.Method.FullName;
+                module = module.Substring(module.IndexOf(' ') + 1);
+                module = module.Substring(0, module.IndexOf("::"));
+                module = module.Substring(0, module.LastIndexOf('.'));
+
+                // Only works for Graphics modules due to hardcoded use of
+                // OpenTK.Graphics.GraphicsContext
+                if (module == "OpenTK.Graphics.OpenGL4" ||
+                    module == "OpenTK.Graphics.OpenGL" ||
+                    module == "OpenTK.Graphics.ES10" ||
+                    module == "OpenTK.Graphics.ES11" ||
+                    module == "OpenTK.Graphics.ES20" ||
+                    module == "OpenTK.Graphics.ES30")
+                {
+                    var errorHelperType = wrapper.Module.Types.FirstOrDefault(
+                        type => type.FullName == string.Concat(module, "ErrorHelper"));
+
+                    if (errorHelperType != null)
+                    {
+                        vars = new DebugVariables();
+                        vars.ErrorHelperType = errorHelperType;
+
+                        // Get the constructor that has no parameters
+                        var ctor = vars.ErrorHelperType.GetConstructors().First(
+                            c => !c.HasParameters);
+
+                        var graphicsContext = wrapper.Module.Types.First(
+                            type => type.FullName == "OpenTK.Graphics.GraphicsContext");
+
+                        var iGraphicsContext = wrapper.Module.Types.First(
+                            type => type.FullName == "OpenTK.Graphics.GraphicsContext");
+
+                        vars.Get_CurrentContext = graphicsContext.Methods.First(
+                            method => method.Name == "get_CurrentContext");
+
+                        vars.Set_ErrorChecking = graphicsContext.Methods.First(
+                            method => method.Name == "set_ErrorChecking");
+
+                        vars.ErrorHelperLocal = new VariableDefinition(vars.ErrorHelperType);
+
+                        il.Body.Variables.Add(vars.ErrorHelperLocal);
+                        il.Emit(OpCodes.Call, vars.Get_CurrentContext);
+                        il.Emit(OpCodes.Newobj, ctor);
+                        il.Emit(OpCodes.Stloc, vars.ErrorHelperLocal);
+
+                        vars.BeginTry = Instruction.Create(OpCodes.Nop);
+                        il.Append(vars.BeginTry);
+
+                        // Special case Begin to turn off error checking.
+                        if (il.Body.Method.Name == "Begin")
+                        {
+                            il.Emit(OpCodes.Call, vars.Get_CurrentContext);
+                            il.Emit(OpCodes.Ldc_I4_0);
+                            il.Emit(OpCodes.Conv_I1);
+                            il.Emit(OpCodes.Call, vars.Set_ErrorChecking);
+                        }
+                    }
+                }
+            }
+
+            return vars;
+        }
+
+        static void EmitDebugEpilogue(MethodDefinition wrapper, ILProcessor il, DebugVariables vars)
+        {
+            if (vars != null)
+            {
+                   var disposeMethod = vars.ErrorHelperType.Methods.First(
+                    method => method.Name == "Dispose");
+
+                // Store then reload the result from the call
+                var resultLocal = new VariableDefinition(wrapper.ReturnType);
+                if (resultLocal.VariableType != Program.TypeVoid)
+                {
+                    il.Body.Variables.Add(resultLocal);
+                    il.Emit(OpCodes.Stloc, resultLocal);
+                }
+
+                // Special case End to turn on error checking.
+                if (il.Body.Method.Name == "End")
+                {
+                    il.Emit(OpCodes.Call, vars.Get_CurrentContext);
+                    il.Emit(OpCodes.Ldc_I4_1);
+                    il.Emit(OpCodes.Conv_I1);
+                    il.Emit(OpCodes.Call, vars.Set_ErrorChecking);
+                }
+
+                // We need a NOP to set up the finally handler range correctly.
+                var nopInstruction = Instruction.Create(OpCodes.Nop);
+                var loadInstruction = Instruction.Create(OpCodes.Ldloca, vars.ErrorHelperLocal);
+                var disposeInstruction = Instruction.Create(OpCodes.Call, disposeMethod);
+                var leaveInstruction = Instruction.Create(OpCodes.Leave, nopInstruction);
+
+                il.Append(loadInstruction);
+                il.Append(disposeInstruction);
+                il.Append(leaveInstruction);
+                il.Append(nopInstruction);
+
+                var finallyHandler = new ExceptionHandler(ExceptionHandlerType.Finally);
+                finallyHandler.TryStart = vars.BeginTry;
+                finallyHandler.TryEnd = loadInstruction;
+                finallyHandler.HandlerStart = loadInstruction;
+                finallyHandler.HandlerEnd = nopInstruction;
+
+                il.Body.ExceptionHandlers.Add(finallyHandler);
+
+                if (resultLocal.VariableType != Program.TypeVoid)
+                {
+                    il.Emit(OpCodes.Ldloc, resultLocal);
+                }
+            }
         }
 
         private static void EmitReturnTypeWrapper(MethodDefinition wrapper, MethodDefinition native, MethodBody body, ILProcessor il)
