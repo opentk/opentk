@@ -1138,6 +1138,16 @@ namespace OpenTK.Platform.Windows
         [DllImport("user32.dll")]
         public static extern HCURSOR SetCursor(HCURSOR hCursor);
 
+        /// <summary>
+        /// Retrieves a handle to the current cursor.
+        /// </summary>
+        /// <returns>
+        /// The return value is the handle to the current cursor. If there is 
+        /// no cursor, the return value is null.
+        /// </returns>
+        [DllImport("user32.dll")]
+        public static extern HCURSOR GetCursor();
+
         #region Async input
 
         #region GetCursorPos
