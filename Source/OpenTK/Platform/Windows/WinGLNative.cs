@@ -388,6 +388,17 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        private bool HandleSetCursor(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        {
+            if (cursor != MouseCursor.Default)
+            {
+                Functions.SetCursor(curson_handle);
+                return true;
+            }
+
+            return false;
+        }
+
         void HandleChar(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             char c;
@@ -484,11 +495,6 @@ namespace OpenTK.Platform.Windows
                     }
                 }
                 mouse_last_timestamp = timestamp;
-            }
-
-            if (cursor != MouseCursor.Default)
-            {
-                Functions.SetCursor(curson_handle);
             }
 
             if (mouse_outside_window)
@@ -660,6 +666,8 @@ namespace OpenTK.Platform.Windows
 
         IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
+            bool result = false;
+
             switch (message)
             {
                 #region Size / Move / Style events
@@ -691,6 +699,10 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.SIZE:
                     HandleSize(handle, message, wParam, lParam);
+                    break;
+
+                case WindowMessage.SETCURSOR:
+                    result = HandleSetCursor(handle, message, wParam, lParam);
                     break;
 
                 #endregion
@@ -779,7 +791,15 @@ namespace OpenTK.Platform.Windows
                 #endregion
             }
 
-            return Functions.DefWindowProc(handle, message, wParam, lParam);
+            if (result)
+            {
+                // Return TRUE
+                return new IntPtr(1);
+            }
+            else
+            {
+                return Functions.DefWindowProc(handle, message, wParam, lParam);
+            }
         }
 
         private void EnableMouseTracking()
