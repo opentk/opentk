@@ -36,10 +36,8 @@ namespace Examples.Tutorial
                 System.Runtime.InteropServices.Marshal.Copy(
                     offset, rgba, y * stride, stride);
             }
-
-            var cursor = new OpenTK.MouseCursor(rgba, bitmap.Width, bitmap.Height, 0, 0);
-
-            this.Cursor = cursor;
+            
+            this.Cursor = new OpenTK.MouseCursor(rgba, bitmap.Width, bitmap.Height, 0, 0);
         }
 
         #region Keyboard_KeyDown
