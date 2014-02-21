@@ -46,8 +46,19 @@ namespace OpenTK
             this.mode = mode;
             this.control = owner;
 
-            window_info = Utilities.CreateMacOSCarbonWindowInfo(control.Handle, false, true);
+			window_info = Utilities.CreateMacOSCarbonWindowInfo(control.Handle, false, true, GetXOffset, GetYOffset);
         }
+
+		private int GetXOffset(){
+			return control.Location.X;
+		}
+
+		private int GetYOffset(){
+			System.Drawing.Point offset = control.PointToScreen(control.Location);
+			System.Drawing.Point windowOffset = control.TopLevelControl.PointToScreen(System.Drawing.Point.Empty);
+			int relativeY = offset.Y-windowOffset.Y; //control.TopLevelControl.Location.Y is not the same as windowOffset.Y for some reason.
+			return control.TopLevelControl.ClientSize.Height - control.Bottom - relativeY;
+		}
 
         #region IGLControl Members
 
