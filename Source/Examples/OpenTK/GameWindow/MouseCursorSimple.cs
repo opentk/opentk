@@ -32,8 +32,9 @@ namespace Examples.Tutorial
             for (int y = 0; y < bitmap.Height; ++y)
             {
                 var offset = new IntPtr(data.Scan0.ToInt64() + (data.Stride * y));
+                var stride = bitmap.Width * 4;
                 System.Runtime.InteropServices.Marshal.Copy(
-                    offset, rgba, y * 4, bitmap.Width * 4);
+                    offset, rgba, y * stride, stride);
             }
 
             var cursor = new OpenTK.MouseCursor(rgba, bitmap.Width, bitmap.Height, 0, 0);
