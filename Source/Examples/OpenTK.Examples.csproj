@@ -549,6 +549,9 @@
     <None Include="Data\Audio\the_ring_that_fell.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+	<None Include="Data\Textures\cursor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <EmbeddedResource Include="OpenGL\1.x\OpenGLDiagnostics.rtf" />
     <EmbeddedResource Include="OpenGL\1.x\Anaglyph.rtf" />
     <EmbeddedResource Include="OpenGL\1.x\TextRendering.rtf" />
@@ -637,7 +640,6 @@
     <Content Include="..\..\Dependencies\x86\SDL2.dll">
       <Link>Dependencies\x86\SDL2.dll</Link>
     </Content>
-    <Content Include="Data\Textures\cursor.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
