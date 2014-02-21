@@ -21,7 +21,7 @@ namespace Examples.Tutorial
         {
             Keyboard.KeyDown += Keyboard_KeyDown;
 
-            Bitmap bitmap = new Bitmap("D:/VisualStudio/Projects/opentk/Source/Examples/Data/Textures/cursor.png");
+            Bitmap bitmap = new Bitmap("Data/Textures/cursor.png");
 
             var rgba = new byte[bitmap.Width * bitmap.Height * 4];
             var data = bitmap.LockBits(
