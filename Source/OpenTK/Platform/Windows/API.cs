@@ -899,6 +899,40 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region DestroyIcon
+
+        /// <summary>
+        /// Destroys an icon and frees any memory the icon occupied.
+        /// </summary>
+        /// <param name="hIcon">
+        /// A handle to the icon to be destroyed. The icon must not be in use.
+        /// </param>
+        /// <returns>
+        /// If the function succeeds, the return value is nonzero.
+        /// 
+        /// If the function fails, the return value is zero. To get extended 
+        /// error information, call Marshal.GetLastWin32Error.
+        /// </returns>
+        /// <remarks>
+        /// It is only necessary to call DestroyIcon for icons and cursors 
+        /// created with the following functions: CreateIconFromResourceEx 
+        /// (if called without the LR_SHARED flag), CreateIconIndirect, and 
+        /// CopyIcon. Do not use this function to destroy a shared icon. A 
+        /// shared icon is valid as long as the module from which it was loaded
+        /// remains in memory. The following functions obtain a shared icon.
+        /// 
+        /// LoadIcon
+        /// LoadImage (if you use the LR_SHARED flag)
+        /// CopyImage (if you use the LR_COPYRETURNORG flag and the hImage parameter is a shared icon)
+        /// CreateIconFromResource
+        /// CreateIconFromResourceEx (if you use the LR_SHARED flag)
+        /// </remarks>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern BOOL DestroyIcon(HICON hIcon);
+
+        #endregion
+
+
         [DllImport("user32.dll", SetLastError = true)]
         public static extern BOOL SetForegroundWindow(HWND hWnd);
 
