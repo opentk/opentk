@@ -183,6 +183,11 @@ namespace OpenTK.Graphics
 
         #region IEquatable<ColorFormat> Members
 
+        /// <summary>
+        /// Compares whether this ColorFormat structure is equal to the specified ColorFormat.
+        /// </summary>
+        /// <param name="other">The ColorFormat structure to compare to.</param>
+        /// <returns>True if both ColorFormat structures contain the same components; false otherwise.</returns>
         public bool Equals(ColorFormat other)
         {
             return

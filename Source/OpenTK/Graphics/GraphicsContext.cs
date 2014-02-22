@@ -39,7 +39,17 @@ namespace OpenTK.Graphics
     /// </summary>
     public sealed class GraphicsContext : IGraphicsContext, IGraphicsContextInternal
     {
+        /// <summary>
+        /// Used to retrive function pointers by name. 
+        /// </summary>
+        /// <param name="function">The function name.</param>
+        /// <returns>A function pointer to <paramref name="function"/>, or <c>IntPtr.Zero</c></returns>
         public delegate IntPtr GetAddressDelegate(string function);
+
+        /// <summary>
+        /// Used to return the handel of the current OpenGL context.
+        /// </summary>
+        /// <returns>The current OpenGL context, or <c>IntPtr.Zero</c> if no context is on the calling thread.</returns>
         public delegate ContextHandle GetCurrentContextDelegate();
 
         #region --- Fields ---
@@ -646,7 +656,7 @@ namespace OpenTK.Graphics
 
         /// <summary>
         /// Marks this context as deleted, but does not actually release unmanaged resources
-        /// due to the threading requirements of OpenGL. Use <see cref="GraphicsContext.Dispose"/>
+        /// due to the threading requirements of OpenGL. Use <see cref="GraphicsContext.Dispose()"/>
         /// instead.
        /// </summary>
         ~GraphicsContext()
