@@ -589,38 +589,38 @@ XF86VidModeGetGammaRampSize(
     [StructLayout(LayoutKind.Sequential)]
     unsafe struct XcursorImage
     {
-        XcursorUInt version;
-        XcursorDim size;
-        XcursorDim width;
-        XcursorDim height;
-        XcursorDim xhot;
-        XcursorDim yhot;
-        XcursorUInt delay;
-        XcursorPixel* pixels;
+        public XcursorUInt version;
+        public XcursorDim size;
+        public XcursorDim width;
+        public XcursorDim height;
+        public XcursorDim xhot;
+        public XcursorDim yhot;
+        public XcursorUInt delay;
+        public XcursorPixel* pixels;
     }
     
     [StructLayout(LayoutKind.Sequential)]
     unsafe struct XcursorImages 
     {
-        int nimage;
-        XcursorImage **images;
-        char *name;
+        public int nimage;
+        public XcursorImage **images;
+        public char *name;
     }
     
     [StructLayout(LayoutKind.Sequential)]
     unsafe struct XcursorCursors 
     {
-        Display *dpy;
-        int refcount;
-        int ncursor;
-        Cursor *cursors;
+        public Display dpy;
+        public int refcount;
+        public int ncursor;
+        public Cursor *cursors;
     }
     
     [StructLayout(LayoutKind.Sequential)]
     unsafe struct XcursorAnimate 
     {
-        XcursorCursors *cursors;
-        int sequence;
+        public XcursorCursors *cursors;
+        public int sequence;
     }
 
     #endregion
