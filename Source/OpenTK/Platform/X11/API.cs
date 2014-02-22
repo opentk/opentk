@@ -38,6 +38,11 @@ namespace OpenTK.Platform.X11
     using Display = System.IntPtr;
     using XPointer = System.IntPtr;
 
+    using XcursorBool = System.Int32;
+    using XcursorUInt = System.UInt32;
+    using XcursorDim = System.UInt32;
+    using XcursorPixel = System.UInt32;
+
     // Randr and Xrandr
     using Bool = System.Boolean;
     using XRRScreenConfiguration = System.IntPtr; // opaque datatype
@@ -578,6 +583,47 @@ XF86VidModeGetGammaRampSize(
     #endregion
 
     #region X11 Structures
+
+    #region Xcursor
+
+    [StructLayout(LayoutKind.Sequential)]
+    unsafe struct XcursorImage
+    {
+        XcursorUInt version;
+        XcursorDim size;
+        XcursorDim width;
+        XcursorDim height;
+        XcursorDim xhot;
+        XcursorDim yhot;
+        XcursorUInt delay;
+        XcursorPixel* pixels;
+    }
+    
+    [StructLayout(LayoutKind.Sequential)]
+    unsafe struct XcursorImages 
+    {
+        int nimage;
+        XcursorImage **images;
+        char *name;
+    }
+    
+    [StructLayout(LayoutKind.Sequential)]
+    unsafe struct XcursorCursors 
+    {
+        Display *dpy;
+        int refcount;
+        int ncursor;
+        Cursor *cursors;
+    }
+    
+    [StructLayout(LayoutKind.Sequential)]
+    unsafe struct XcursorAnimate 
+    {
+        XcursorCursors *cursors;
+        int sequence;
+    }
+
+    #endregion
 
     #region internal class XVisualInfo
 
