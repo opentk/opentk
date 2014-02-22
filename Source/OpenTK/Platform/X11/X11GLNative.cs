@@ -1472,7 +1472,23 @@ namespace OpenTK.Platform.X11
             }
             set
             {
-                Debug.Print("[Warning] X11GLNative.Cursor property not implemented");
+                unsafe
+                {
+                    using (new XLock(window.Display))
+                    {
+                      fixed(byte* pixels = value.Rgba)
+                      {
+                        var xcursorimage = Functions.XcursorImageCreate(32, 32);
+                        xcursorimage->xhot = (uint)value.X;
+                        xcursorimage->yhot = (uint)value.Y;
+                        xcursorimage->pixels = (uint*)pixels;
+                        xcursorimage->delay = 0;
+                        var xcursor = Functions.XcursorImageLoadCursor(window.Display, xcursorimage);
+                        Functions.XDefineCursor(window.Display, window.Handle, xcursor);
+                        Functions.XcursorImageDestroy(xcursorimage);
+                      }
+                    }
+                }
             }
         }
 
