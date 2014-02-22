@@ -24,7 +24,6 @@ namespace OpenTK.Platform.Dummy
     {
         readonly GraphicsContext.GetAddressDelegate Loader;
 
-        bool vsync;
         int swap_interval;
         static int handle_count;
         Thread current_thread;

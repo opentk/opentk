@@ -64,8 +64,6 @@ namespace OpenTK.Platform.MacOS
         bool mExists = true;
         DisplayDevice mDisplayDevice;
 
-        WindowAttributes mWindowAttrib;
-        WindowClass mWindowClass;
         WindowPositionMethod mPositionMethod = WindowPositionMethod.CenterOnMainScreen;
         int mTitlebarHeight;
         private WindowBorder windowBorder = WindowBorder.Resizable;
