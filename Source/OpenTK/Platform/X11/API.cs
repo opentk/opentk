@@ -1480,6 +1480,16 @@ XF86VidModeGetGammaRampSize(
 
         #endregion
 
+        #region Xcursor
+
+        [DllImport(X11Library)]
+        internal static unsafe extern XcursorImage* XcursorImageCreate(int width, int height);
+
+        [DllImport(X11Library)]
+        internal static unsafe extern void XcursorImageDestroy(XcursorImage* image);
+
+        #endregion
+
         #region XQueryKeymap
 
         /*
