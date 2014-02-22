@@ -172,13 +172,6 @@ namespace OpenTK.Platform.MacOS
             if (carbonWindow.IsControl == false)
                 return;
 
-            // Todo: See if there is a way around using WinForms.
-            //throw new NotImplementedException();
-            /*System.Windows.Forms.Control ctrl = Control.FromHandle(carbonWindow.WindowHandle);
-            
-            if (ctrl.TopLevelControl == null)
-                return;*/
-            
             Rect rect = API.GetControlBounds(carbonWindow.WindowHandle);
             
             Debug.Print("Setting buffer_rect for control.");
