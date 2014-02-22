@@ -1434,6 +1434,7 @@ XF86VidModeGetGammaRampSize(
     internal static partial class Functions
     {
         internal const string X11Library = "libX11";
+        internal const string XcursorLibrary = "libXcursor.so.1";
 
         #region XCreateWindow
 
@@ -1482,10 +1483,10 @@ XF86VidModeGetGammaRampSize(
 
         #region Xcursor
 
-        [DllImport(X11Library)]
+        [DllImport(XcursorLibrary)]
         internal static unsafe extern XcursorImage* XcursorImageCreate(int width, int height);
 
-        [DllImport(X11Library)]
+        [DllImport(XcursorLibrary)]
         internal static unsafe extern void XcursorImageDestroy(XcursorImage* image);
 
         #endregion
