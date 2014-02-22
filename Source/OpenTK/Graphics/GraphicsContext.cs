@@ -507,8 +507,10 @@ namespace OpenTK.Graphics
         [Obsolete("Use SwapInterval property instead.")]
         public bool VSync
         {
+#pragma warning disable 0612, 0618 // CS0612/CS0618: 'member' is obsolete
             get { return implementation.VSync; }
-            set { implementation.VSync = value;  }
+            set { implementation.VSync = value; }
+#pragma warning restore 0612, 0618
         }
 
         /// <summary>
