@@ -1489,6 +1489,9 @@ XF86VidModeGetGammaRampSize(
         [DllImport(XcursorLibrary)]
         internal static unsafe extern void XcursorImageDestroy(XcursorImage* image);
 
+        [DllImport(XcursorLibrary)]
+        internal static unsafe extern Cursor XcursorImageLoadCursor(Display dpy, XcursorImage* image); 
+
         #endregion
 
         #region XQueryKeymap
