@@ -389,15 +389,15 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        private bool HandleSetCursor(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        private IntPtr? HandleSetCursor(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             if (cursor != MouseCursor.Default)
             {
                 Functions.SetCursor(curson_handle);
-                return true;
+                return new IntPtr(1);
             }
 
-            return false;
+            return null;
         }
 
         void HandleChar(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -589,7 +589,7 @@ namespace OpenTK.Platform.Windows
 
         IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            bool result = false;
+            IntPtr? result = null;
 
             switch (message)
             {
@@ -714,10 +714,9 @@ namespace OpenTK.Platform.Windows
                 #endregion
             }
 
-            if (result)
+            if (result.HasValue)
             {
-                // Return TRUE
-                return new IntPtr(1);
+                return result.Value;
             }
             else
             {
