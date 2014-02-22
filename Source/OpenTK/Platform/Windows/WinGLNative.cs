@@ -58,7 +58,6 @@ namespace OpenTK.Platform.Windows
 
         readonly uint ModalLoopTimerPeriod = 1;
         UIntPtr timer_handle;
-        readonly Functions.TimerProc ModalLoopCallback;
 
         bool class_registered;
         bool disposed;
@@ -716,7 +715,7 @@ namespace OpenTK.Platform.Windows
         {
             if (timer_handle == UIntPtr.Zero)
             {
-                timer_handle = Functions.SetTimer(handle, new UIntPtr(1), ModalLoopTimerPeriod, ModalLoopCallback);
+                timer_handle = Functions.SetTimer(handle, new UIntPtr(1), ModalLoopTimerPeriod, null);
                 if (timer_handle == UIntPtr.Zero)
                     Debug.Print("[Warning] Failed to set modal loop timer callback ({0}:{1}->{2}).",
                         GetType().Name, handle, Marshal.GetLastWin32Error());
