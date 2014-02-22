@@ -145,7 +145,7 @@ namespace Examples.Tutorial
 
             #region Invert Operand B's Normals
             // only the inside of the operand is ever drawn to color buffers and lighting requires this.
-            BeginMode tempPrimMode;
+            PrimitiveType tempPrimMode;
             VertexT2dN3dV3d[] tempVertices;
             uint[] tempIndices;
 

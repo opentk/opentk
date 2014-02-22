@@ -40,7 +40,7 @@ namespace Examples.Shapes
         {
             double Diameter = radius;
 
-            PrimitiveMode = OpenTK.Graphics.OpenGL.BeginMode.Triangles;
+            PrimitiveMode = OpenTK.Graphics.OpenGL.PrimitiveType.Triangles;
 
             if ( sides[0] == eDir.All )
             {

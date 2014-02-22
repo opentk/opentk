@@ -158,11 +158,11 @@ namespace Examples.Tutorial
             }
             #endregion Textures
             
-            Keyboard.KeyUp += KeyUp;
+            Keyboard.KeyUp += Keyboard_KeyUp;
         }
 
         int i = 0;
-        void KeyUp(object sender, KeyboardKeyEventArgs e)
+        void Keyboard_KeyUp(object sender, KeyboardKeyEventArgs e)
         {
             if (e.Key == Key.F12)
             {
@@ -272,7 +272,7 @@ namespace Examples.Tutorial
             GL.Uniform1(GL.GetUniformLocation(ProgramObject, "OFFSETY"), UniformOffsetY);
 
             // Fullscreen quad. Using immediate mode, since this app is fragment shader limited anyways.
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
             {
                 GL.Vertex2(-1.0f, -1.0f);
                 GL.Vertex2(1.0f, -1.0f);

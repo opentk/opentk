@@ -153,7 +153,7 @@ namespace Examples.Tutorial
                 angle -= 360.0f;
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
-            GL.DrawElements(BeginMode.Triangles, shape.Indices.Length,
+            GL.DrawElements(PrimitiveType.Triangles, shape.Indices.Length,
                 DrawElementsType.UnsignedInt, shape.Indices);
 
             //GL.Begin(GL.Enums.BeginMode.TRIANGLES);
