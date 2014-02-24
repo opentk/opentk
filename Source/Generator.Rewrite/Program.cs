@@ -237,6 +237,12 @@ namespace OpenTK.Rewrite
             // Declare pinned variables for every reference and array parameter
             // and push each parameter on the stack
 
+            DebugVariables vars = null;
+            if (options.Contains("-debug"))
+            {
+                vars = EmitDebugPrologue(wrapper, il);
+            }
+
             // Patch convenience wrappers
             if (wrapper.Parameters.Count == native.Parameters.Count)
             {
@@ -246,12 +252,6 @@ namespace OpenTK.Rewrite
             {
                 int difference = native.Parameters.Count - wrapper.Parameters.Count;
                 EmitConvenienceWrapper(wrapper, native, difference, body, il);
-            }
-            
-            DebugVariables vars = null;
-            if (options.Contains("-debug"))
-            {
-                vars = EmitDebugPrologue(wrapper, il);
             }
 
             // push the entry point address on the stack
@@ -325,24 +325,36 @@ namespace OpenTK.Rewrite
                     module == "OpenTK.Graphics.ES20" ||
                     module == "OpenTK.Graphics.ES30")
                 {
-                    var errorHelperType = wrapper.Module.Types.FirstOrDefault(
-                        type => type.FullName == string.Concat(module, "ErrorHelper"));
+                    var errorHelperType = wrapper.Module.GetType(module, "ErrorHelper");
 
                     if (errorHelperType != null)
                     {
                         vars = new DebugVariables();
                         vars.ErrorHelperType = errorHelperType;
 
-                        // Get the constructor that has no parameters
-                        var ctor = vars.ErrorHelperType.GetConstructors().First(
-                            c => !c.HasParameters);
-
+                        // GraphicsContext type
                         var graphicsContext = wrapper.Module.Types.First(
                             type => type.FullName == "OpenTK.Graphics.GraphicsContext");
 
+                        // IGraphicsContext type
                         var iGraphicsContext = wrapper.Module.Types.First(
-                            type => type.FullName == "OpenTK.Graphics.GraphicsContext");
+                            type => type.FullName == "OpenTK.Graphics.IGraphicsContext");
 
+                        // Get the constructor that takes a GraphicsContext parameter
+                        var ctor = vars.ErrorHelperType.GetConstructors().FirstOrDefault(
+                            c => c.Parameters.Count == 1 &&
+                            c.Parameters[0].ParameterType.FullName == iGraphicsContext.FullName);
+
+                        if (ctor == null)
+                        {
+                            throw new InvalidOperationException(
+                                String.Format(
+                                    "{0} does needs a constructor taking {1}",
+                                    errorHelperType,
+                                    graphicsContext));
+                        }
+
+                        // GraphicsContext.CurrentContext property getter
                         vars.Get_CurrentContext = graphicsContext.Methods.First(
                             method => method.Name == "get_CurrentContext");
 
@@ -351,10 +363,11 @@ namespace OpenTK.Rewrite
 
                         vars.ErrorHelperLocal = new VariableDefinition(vars.ErrorHelperType);
 
+                        // var helper = new ErrorHelper(GraphicsContext.CurrentContext);
                         il.Body.Variables.Add(vars.ErrorHelperLocal);
+                        //il.Emit(OpCodes.Ldarga, vars.ErrorHelperLocal); // todo: fix this
                         il.Emit(OpCodes.Call, vars.Get_CurrentContext);
-                        il.Emit(OpCodes.Newobj, ctor);
-                        il.Emit(OpCodes.Stloc, vars.ErrorHelperLocal);
+                        il.Emit(OpCodes.Call, ctor);
 
                         vars.BeginTry = Instruction.Create(OpCodes.Nop);
                         il.Append(vars.BeginTry);
@@ -378,12 +391,12 @@ namespace OpenTK.Rewrite
         {
             if (vars != null)
             {
-                   var disposeMethod = vars.ErrorHelperType.Methods.First(
+                var disposeMethod = vars.ErrorHelperType.Methods.First(
                     method => method.Name == "Dispose");
 
                 // Store then reload the result from the call
                 var resultLocal = new VariableDefinition(wrapper.ReturnType);
-                if (resultLocal.VariableType != Program.TypeVoid)
+                if (resultLocal.VariableType.FullName != Program.TypeVoid.FullName)
                 {
                     il.Body.Variables.Add(resultLocal);
                     il.Emit(OpCodes.Stloc, resultLocal);
@@ -402,11 +415,13 @@ namespace OpenTK.Rewrite
                 var nopInstruction = Instruction.Create(OpCodes.Nop);
                 var loadInstruction = Instruction.Create(OpCodes.Ldloca, vars.ErrorHelperLocal);
                 var disposeInstruction = Instruction.Create(OpCodes.Call, disposeMethod);
-                var leaveInstruction = Instruction.Create(OpCodes.Leave, nopInstruction);
+                var endFinallyInstruction = Instruction.Create(OpCodes.Endfinally);
+                var endTryInstruction = Instruction.Create(OpCodes.Leave, nopInstruction);
 
+                il.Append(endTryInstruction);
                 il.Append(loadInstruction);
                 il.Append(disposeInstruction);
-                il.Append(leaveInstruction);
+                il.Append(endFinallyInstruction);
                 il.Append(nopInstruction);
 
                 var finallyHandler = new ExceptionHandler(ExceptionHandlerType.Finally);
@@ -417,7 +432,7 @@ namespace OpenTK.Rewrite
 
                 il.Body.ExceptionHandlers.Add(finallyHandler);
 
-                if (resultLocal.VariableType != Program.TypeVoid)
+                if (resultLocal.VariableType.FullName != Program.TypeVoid.FullName)
                 {
                     il.Emit(OpCodes.Ldloc, resultLocal);
                 }
