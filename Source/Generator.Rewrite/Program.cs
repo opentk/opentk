@@ -363,9 +363,9 @@ namespace OpenTK.Rewrite
 
                         vars.ErrorHelperLocal = new VariableDefinition(vars.ErrorHelperType);
 
-                        // var helper = new ErrorHelper(GraphicsContext.CurrentContext);
+                        // using (new ErrorHelper(GraphicsContext.CurrentContext)) { ...
                         il.Body.Variables.Add(vars.ErrorHelperLocal);
-                        //il.Emit(OpCodes.Ldarga, vars.ErrorHelperLocal); // todo: fix this
+                        il.Emit(OpCodes.Ldloca, vars.ErrorHelperLocal);
                         il.Emit(OpCodes.Call, vars.Get_CurrentContext);
                         il.Emit(OpCodes.Call, ctor);
 
