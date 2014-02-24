@@ -13,6 +13,7 @@
 *.tm text
 *.glsl text
 *.resx text
+*.yml text
 
 *.dll binary
 *.exe binary
