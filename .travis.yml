@@ -12,8 +12,7 @@ before_install:
  - hdid "MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.dmg" || true
  - sudo installer -pkg "/Volumes/Mono Framework MDK ${MONO_VER}/MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg" -target / || true
  - sudo installer -pkg "MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg" -target / || true
- - xbuild /p:Configuration=Release || true
 
 script:
- - xbuild /p:Configuration=Release
+ - xbuild && xbuild /p:Configuration=Release
 
