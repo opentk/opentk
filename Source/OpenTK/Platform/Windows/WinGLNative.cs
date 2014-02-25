@@ -511,11 +511,13 @@ namespace OpenTK.Platform.Windows
                 if (pressed)
                 {
                     key_down.Key = key;
+                    key_down.Modifiers = keyboard.GetModifiers();
                     KeyDown(this, key_down);
                 }
                 else
                 {
                     key_up.Key = key;
+                    key_up.Modifiers = keyboard.GetModifiers();
                     KeyUp(this, key_up);
                 }
             }

@@ -62,8 +62,8 @@ namespace OpenTK.Platform.SDL2
             Add(Code.CAPSLOCK, Key.CapsLock);
             Add(Code.LCTRL, Key.ControlLeft);
             Add(Code.LSHIFT, Key.ShiftLeft);
-            Add(Code.LALT, Key.WinLeft);
-            Add(Code.MENU, Key.AltLeft);
+            Add(Code.LALT, Key.AltLeft);
+            Add(Code.MENU, Key.WinLeft);
             Add(Code.SPACE, Key.Space);
             Add(Code.RALT, Key.AltRight);
             //Add(Code., Key.WinRight);
