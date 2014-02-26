@@ -170,20 +170,22 @@ namespace OpenTK.Platform.Android
 		{
 			if (GraphicsMode != null && !(GraphicsMode is AndroidGraphicsMode))
 #if OPENTK_0
-				GraphicsMode = new AndroidGraphicsMode (windowInfo.Display, (int)GLContextVersion, GraphicsMode);
+				GraphicsMode = new AndroidGraphicsMode (windowInfo.Display, (int)GLContextVersion - 1, GraphicsMode);
 #else
 				GraphicsMode = new AndroidGraphicsMode (windowInfo.Display, (int)ContextRenderingApi, GraphicsMode);
 #endif
 			if (Mode == null)
 #if OPENTK_0
-				GraphicsMode = new AndroidGraphicsMode (windowInfo.Display, (int)GLContextVersion, new ColorFormat (8, 8, 8, 8), 16, 0, 0, 0, false);
-			Mode.Initialize (windowInfo.Display, (int)GLContextVersion);
+				GraphicsMode = new AndroidGraphicsMode (windowInfo.Display, (int)GLContextVersion - 1, new GraphicsMode ());
+			Mode.Initialize (windowInfo.Display, (int)GLContextVersion - 1);
 #else
-				GraphicsMode = new AndroidGraphicsMode (windowInfo.Display, (int)ContextRenderingApi, new ColorFormat (8, 8, 8, 8), 16, 0, 0, 0, false);
+				GraphicsMode = new AndroidGraphicsMode (windowInfo.Display, (int)ContextRenderingApi, new GraphicsMode ());
 			Mode.Initialize (windowInfo.Display, (int)ContextRenderingApi);
 #endif
 			windowInfo.CreateSurface (Mode.Config);
 			hasSurface = true;
+
+			MakeCurrent ();
 		}
 
 		protected virtual void DestroyFrameBuffer ()
@@ -356,7 +358,7 @@ namespace OpenTK.Platform.Android
 						CreateFrameBuffer();
 					}	else	{
 #if OPENTK_0
-						Mode.Initialize(windowInfo.Display, (int)GLContextVersion);
+						Mode.Initialize(windowInfo.Display, (int)GLContextVersion - 1);
 #else
 						Mode.Initialize(windowInfo.Display, (int)ContextRenderingApi);
 #endif
