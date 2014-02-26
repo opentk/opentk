@@ -273,7 +273,7 @@ namespace OpenTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSCarbonWindowInfo(IntPtr windowHandle, bool ownHandle, bool isControl)
         {
-            return new OpenTK.Platform.MacOS.CarbonWindowInfo(windowHandle, false, isControl);
+            return CreateMacOSCarbonWindowInfo(windowHandle, ownHandle, isControl, null, null);
         }
 
         /// <summary>
