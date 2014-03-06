@@ -70,7 +70,9 @@ namespace CHeaderToXML
                                 else
                                     return t;
                         }
+#pragma warning disable 0162 //CS0162: Unreachable code detected
                         /* gmcs bug 336258 */ return "";
+#pragma warning restore 0162
                     }).ToArray();
 
                 Func<string[], string> get_name = tokens =>

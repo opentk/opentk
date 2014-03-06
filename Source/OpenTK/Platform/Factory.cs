@@ -164,7 +164,6 @@ namespace OpenTK.Platform
         {
             #region Fields
 
-            bool disposed;
             static readonly string error_string = "Please, refer to http://www.opentk.com for more information.";
             
             #endregion

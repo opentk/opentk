@@ -46,9 +46,9 @@ namespace Examples.Shapes
                 HoseSubDivs = 15;
                 break;
             }
-            PrimitiveMode = OpenTK.Graphics.OpenGL.BeginMode.Triangles;
+            PrimitiveMode = OpenTK.Graphics.OpenGL.PrimitiveType.Triangles;
 
-            OpenTK.Graphics.OpenGL.BeginMode TemporaryMode;
+            OpenTK.Graphics.OpenGL.PrimitiveType TemporaryMode;
             VertexT2dN3dV3d[] TemporaryVBO;
             uint[] TemporaryIBO;
 

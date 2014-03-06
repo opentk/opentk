@@ -143,7 +143,7 @@ namespace Examples.Tutorial
 
             GL.Rotate(x_angle, 0.0f, 1.0f, 0.0f);
 
-            GL.Begin(BeginMode.Triangles);
+            GL.Begin(PrimitiveType.Triangles);
             foreach (int index in shape.Indices)
             {
                 GL.Normal3(shape.Normals[index]);
