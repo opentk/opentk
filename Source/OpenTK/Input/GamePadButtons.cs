@@ -186,6 +186,11 @@ namespace OpenTK.Input
                 Equals((GamePadButtons)obj);
         }
 
+		public ButtonState GetButton(Buttons b)
+		{
+			return (buttons & b) != 0 ? ButtonState.Pressed : ButtonState.Released;
+		}
+
         #endregion
 
         #region IEquatable<GamePadButtons> Members
@@ -199,15 +204,6 @@ namespace OpenTK.Input
         public bool Equals(GamePadButtons other)
         {
             return buttons == other.buttons;
-        }
-
-        #endregion
-
-        #region Private Members
-
-        ButtonState GetButton(Buttons b)
-        {
-            return (buttons & b) != 0 ? ButtonState.Pressed : ButtonState.Released;
         }
 
         #endregion
