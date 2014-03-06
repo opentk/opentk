@@ -84,7 +84,7 @@ namespace OpenTK.Platform.Windows
         const ClassStyle DefaultClassStyle = ClassStyle.OwnDC;
 
         // Used for IInputDriver implementation
-        WinMMJoystick joystick_driver = new WinMMJoystick();
+        IJoystickDriver joystick_driver = Factory.Default.CreateLegacyJoystickDriver();
         KeyboardDevice keyboard = new KeyboardDevice();
         MouseDevice mouse = new MouseDevice();
         IList<KeyboardDevice> keyboards = new List<KeyboardDevice>(1);
@@ -389,12 +389,17 @@ namespace OpenTK.Platform.Windows
 
         void HandleChar(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
+            char c;
             if (IntPtr.Size == 4)
-                key_press.KeyChar = (char)wParam.ToInt32();
+                c = (char)wParam.ToInt32();
             else
-                key_press.KeyChar = (char)wParam.ToInt64();
+                c = (char)wParam.ToInt64();
 
-            KeyPress(this, key_press);
+            if (!Char.IsControl(c))
+            {
+                key_press.KeyChar = c;
+                KeyPress(this, key_press);
+            }
         }
 
         void HandleMouseMove(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -506,11 +511,13 @@ namespace OpenTK.Platform.Windows
                 if (pressed)
                 {
                     key_down.Key = key;
+                    key_down.Modifiers = keyboard.GetModifiers();
                     KeyDown(this, key_down);
                 }
                 else
                 {
                     key_up.Key = key;
+                    key_up.Modifiers = keyboard.GetModifiers();
                     KeyUp(this, key_up);
                 }
             }
@@ -1403,7 +1410,8 @@ namespace OpenTK.Platform.Windows
 
         public void Poll()
         {
-            joystick_driver.Poll();
+            if (joystick_driver is WinMMJoystick)
+                (joystick_driver as WinMMJoystick).Poll();
         }
 
         #endregion

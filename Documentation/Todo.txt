@@ -1,19 +1,13 @@
 [Easy]
 - Clean up warnings.
 - Remove Example Browser in favor of separate projects.
-- Add Nuget packages.
-- Speed up matrix Inverse() functions. (Patch exists in mono/opentk).
+- Speed up matrix Inverse() functions. (Patch exists in mono/opentk.)
 
 [Moderate]
-- Implement new joystick API.
 - Implement touch input API.
-- Fix external GraphicsContexts.
+- Implement force feedback API.
 - Add Portable Class Library (PCL) target.
-- Reduce library size for the PCL target. 
-- Split various APIs in different modules. This will be in addition to the monolithic OpenTK.dll.
 
 [Hard]
-- Remove DllImports/GetDelegateForFunctionPointer in favor of LCG calli instructions.
 - Merge updates from mono/opentk.
 - Add Cocoa backend for Mac OS X.
-- Add support for international text input.

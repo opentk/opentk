@@ -42,12 +42,15 @@ namespace Examples.Tests
         double variable_refresh_timestep_pos = -1;
         double fixed_update_timestep_pos = -1;
 
+        KeyModifiers modifiers;
+
         public GameWindowStates()
             : base(800, 600, GraphicsMode.Default)
         {
             VSync = VSyncMode.On;
             Keyboard.KeyRepeat = true;
             KeyDown += KeyDownHandler;
+            KeyUp += KeyUpHandler;
             KeyPress += KeyPressHandler;
 
             MouseEnter += delegate { mouse_in_window = true; };
@@ -106,6 +109,12 @@ namespace Examples.Tests
                 case Key.Comma: TargetRenderFrequency--; break;
                 case Key.Period: TargetRenderFrequency++; break;
             }
+            modifiers = e.Modifiers;
+        }
+
+        void KeyUpHandler(object sender, KeyboardKeyEventArgs e)
+        {
+            modifiers = e.Modifiers;
         }
 
         void MouseMoveHandler(object sender, MouseMoveEventArgs e)
@@ -136,10 +145,10 @@ namespace Examples.Tests
             return offset + gfx.MeasureString(str, TextFont).Width;
         }
 
-        static int DrawKeyboards(Graphics gfx, int line)
+        int DrawKeyboards(Graphics gfx, int line)
         {
             line++;
-            DrawString(gfx, "Keyboard:", line++);
+            DrawString(gfx, String.Format("Keyboard ({0}):", modifiers), line++);
             for (int i = 0; i < 4; i++)
             {
                 var state = OpenTK.Input.Keyboard.GetState(i);

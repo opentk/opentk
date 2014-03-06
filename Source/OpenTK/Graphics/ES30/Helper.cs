@@ -30,6 +30,7 @@ using System.Collections.Generic;
 #if !MINIMAL
 using System.Drawing;
 #endif
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace OpenTK.Graphics.ES30
@@ -446,11 +447,13 @@ namespace OpenTK.Graphics.ES30
         #endregion
     }
 
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void DebugProc(
         DebugSource source, DebugType type, int id,
         DebugSeverity severity, int length, IntPtr message,
         IntPtr userParam);
 
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void DebugProcKhr(
         DebugSource source, DebugType type, int id,
         DebugSeverity severity, int length, IntPtr message,

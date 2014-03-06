@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -465,13 +465,13 @@
     <Compile Include="Graphics\ColorFormat.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Graphics\OpenGL\GLHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Graphics\OpenGL\GLEnums.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Graphics\OpenGL\GL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\OpenGL\GLHelper.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Graphics\OpenGL\ErrorHelper.cs">
@@ -801,6 +801,10 @@
     <Compile Include="Input\GamePadConfigurationItem.cs" />
     <Compile Include="Platform\LegacyJoystickDriver.cs" />
     <Compile Include="Platform\PlatformFactoryBase.cs" />
+    <Compile Include="Input\JoystickHat.cs" />
+    <Compile Include="Input\HatPosition.cs" />
+    <Compile Include="Input\JoystickHatState.cs" />
+    <Compile Include="Input\KeyModifiers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -811,9 +815,9 @@
   </PropertyGroup>
   <ItemGroup />
   <Target Name="AfterBuild">
-    <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
+    <Exec Command="$(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
     <Exec Command="$(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) != 'Debug'" />
-    <Exec Command="mono $(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
+    <Exec Command="mono $(OutputPath)..\..\Tools\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
     <Exec Command="mono $(OutputPath)..\..\Tools\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) != 'Debug'" />
   </Target>
   <ProjectExtensions>

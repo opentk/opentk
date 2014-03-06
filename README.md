@@ -18,8 +18,11 @@ Features
  
 OpenTK is available on Windows, Linux, Mac OS X, *BSD, SteamOS, Android and iOS. It can be used standalone or integrated into a GUI (Windows.Forms, WPF, GTK+, Qt, VTK, ...)
  
-Binaries and NuGet packages available at http://www.opentk.com
- 
+Current Version 1.1 stable released 2014-Feb-10: http://www.opentk.com/news/opentk-1.1-stable-released
+
+Binaries available at http://www.opentk.com
+
+NuGet packages at http://www.nuget.org/packages/OpenTK/
  
 Roadmap
 =======
