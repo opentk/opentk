@@ -275,10 +275,10 @@ namespace OpenTK
         [Obsolete("Use static Divide() method instead.")]
         public void Div(int s)
         {
-			this.X /= s;
-			this.Y /= s;
-			this.Z /= s;
-			this.W /= s;
+            this.X /= s;
+            this.Y /= s;
+            this.Z /= s;
+            this.W /= s;
         }
 
         #endregion public void Div()
@@ -309,7 +309,7 @@ namespace OpenTK
         /// for comparisons.
         /// </remarks>
         /// <see cref="Length"/>
-		public double LengthSquared
+        public double LengthSquared
         {
             get
             {
@@ -334,35 +334,35 @@ namespace OpenTK
         /// <summary>
         /// Scales the Vector4i to unit length.
         /// </summary>
-		public void Normalize()
-		{
-			int AbsX = Math.Abs(X);
-			int AbsY = Math.Abs(Y);
-			int AbsZ = Math.Abs(Z);
-			int AbsW = Math.Abs(W);
+        public void Normalize()
+        {
+            int AbsX = Math.Abs(X);
+            int AbsY = Math.Abs(Y);
+            int AbsZ = Math.Abs(Z);
+            int AbsW = Math.Abs(W);
 
-			if (AbsX > AbsY && AbsX > AbsZ && AbsX > AbsW) {
-				X = 1;
-				Y = 0;
-				Z = 0;
-				W = 0;
-			} else if (AbsY > AbsX && AbsY > AbsZ && AbsY > AbsW) {
-				X = 0;
-				Y = 1;
-				Z = 0;
-				W = 0;
-			} else if (AbsZ > AbsY && AbsZ > AbsX && AbsZ > AbsW) {
-				X = 0;
-				Y = 0;
-				Z = 1;
-				W = 0;
-			} else {
-				X = 0;
-				Y = 0;
-				Z = 0;
-				W = 1;
-			}
-		}
+            if (AbsX > AbsY && AbsX > AbsZ && AbsX > AbsW) {
+                X = 1;
+                Y = 0;
+                Z = 0;
+                W = 0;
+            } else if (AbsY > AbsX && AbsY > AbsZ && AbsY > AbsW) {
+                X = 0;
+                Y = 1;
+                Z = 0;
+                W = 0;
+            } else if (AbsZ > AbsY && AbsZ > AbsX && AbsZ > AbsW) {
+                X = 0;
+                Y = 0;
+                Z = 1;
+                W = 0;
+            } else {
+                X = 0;
+                Y = 0;
+                Z = 0;
+                W = 1;
+            }
+        }
 
         #endregion
 
@@ -492,15 +492,15 @@ namespace OpenTK
         /// Divide a vector by a scalar
         /// </summary>
         /// <param name="a">Vector operand</param>
-		/// <param name="s">Scalar operand</param>
+        /// <param name="s">Scalar operand</param>
         /// <returns>Result of the division</returns>
         [Obsolete("Use static Divide() method instead.")]
         public static Vector4i Div(Vector4i a, int s)
         {
-			a.X /= s;
-			a.Y /= s;
-			a.Z /= s;
-			a.W /= s;
+            a.X /= s;
+            a.Y /= s;
+            a.Z /= s;
+            a.W /= s;
             return a;
         }
 
@@ -508,15 +508,15 @@ namespace OpenTK
         /// Divide a vector by a scalar
         /// </summary>
         /// <param name="a">Vector operand</param>
-		/// <param name="s">Scalar operand</param>
+        /// <param name="s">Scalar operand</param>
         /// <param name="result">Result of the division</param>
         [Obsolete("Use static Divide() method instead.")]
-		public static void Div(ref Vector4i a, int s, out Vector4i result)
+        public static void Div(ref Vector4i a, int s, out Vector4i result)
         {
-			result.X = a.X / s;
-			result.Y = a.Y / s;
-			result.Z = a.Z / s;
-			result.W = a.W / s;
+            result.X = a.X / s;
+            result.Y = a.Y / s;
+            result.Z = a.Z / s;
+            result.W = a.W / s;
         }
 
         #endregion
@@ -649,7 +649,7 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector4i vector, int scale, out Vector4i result)
         {
-			result = new Vector4i(vector.X / scale, vector.Y / scale, vector.Z / scale, vector.W / scale);
+            result = new Vector4i(vector.X / scale, vector.Y / scale, vector.Z / scale, vector.W / scale);
         }
 
         /// <summary>
@@ -787,7 +787,7 @@ namespace OpenTK
         /// <returns>The normalized vector</returns>
         public static Vector4i Normalize(Vector4i vec)
         {
-			return vec.Normalized();
+            return vec.Normalized();
         }
 
         /// <summary>
@@ -797,7 +797,7 @@ namespace OpenTK
         /// <param name="result">The normalized vector</param>
         public static void Normalize(ref Vector4i vec, out Vector4i result)
         {
-			result = vec.Normalized();
+            result = vec.Normalized();
         }
 
         #endregion
@@ -840,7 +840,7 @@ namespace OpenTK
         public static Vector4i Lerp(Vector4i a, Vector4i b, double blend)
         {
             a.X = (int)(blend * (b.X - a.X) + a.X);
-			a.Y = (int)(blend * (b.Y - a.Y) + a.Y);
+            a.Y = (int)(blend * (b.Y - a.Y) + a.Y);
             a.Z = (int)(blend * (b.Z - a.Z) + a.Z);
             a.W = (int)(blend * (b.W - a.W) + a.W);
             return a;
@@ -1383,10 +1383,10 @@ namespace OpenTK
         /// <returns>The result of the calculation.</returns>
         public static Vector4i operator /(Vector4i vec, int scale)
         {
-			vec.X /= scale;
-			vec.Y /= scale;
-			vec.Z /= scale;
-			vec.W /= scale;
+            vec.X /= scale;
+            vec.Y /= scale;
+            vec.Z /= scale;
+            vec.W /= scale;
             return vec;
         }
 

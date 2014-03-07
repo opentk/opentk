@@ -36,7 +36,7 @@ namespace OpenTK.Platform
     {
         public override void LoadAll()
         {
-			Stopwatch time = Stopwatch.StartNew();
+            Stopwatch time = Stopwatch.StartNew();
 
             new OpenTK.Graphics.OpenGL.GL().LoadEntryPoints();
             new OpenTK.Graphics.OpenGL4.GL().LoadEntryPoints();
@@ -45,7 +45,7 @@ namespace OpenTK.Platform
             new OpenTK.Graphics.ES20.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES30.GL().LoadEntryPoints();
 
-			Debug.Print("Bindings loaded in {0} ms.", time.Elapsed.TotalMilliseconds);
+            Debug.Print("Bindings loaded in {0} ms.", time.Elapsed.TotalMilliseconds);
         }
     }
 }

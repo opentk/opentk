@@ -268,13 +268,13 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-			if (Math.Abs(this.X) > Math.Abs(this.Y)) {
-				this.X = Math.Sign(this.X);
-				this.Y = 0;
-			} else {
-				this.X = 0;
-				this.Y = Math.Sign(this.X);
-			}
+            if (Math.Abs(this.X) > Math.Abs(this.Y)) {
+                this.X = Math.Sign(this.X);
+                this.Y = 0;
+            } else {
+                this.X = 0;
+                this.Y = Math.Sign(this.X);
+            }
         }
 
         #endregion
@@ -408,8 +408,8 @@ namespace OpenTK
         [Obsolete("Use static Divide() method instead.")]
         public static void Div(ref Vector2i a, int d, out Vector2i result)
         {
-			result.X = a.X / d;
-			result.Y = a.Y / d;
+            result.X = a.X / d;
+            result.Y = a.Y / d;
         }
 
         #endregion
@@ -542,7 +542,7 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector2i vector, int scale, out Vector2i result)
         {
-			result = new Vector2i(vector.X / scale, vector.Y / scale);
+            result = new Vector2i(vector.X / scale, vector.Y / scale);
         }
 
         /// <summary>
@@ -668,14 +668,14 @@ namespace OpenTK
         /// <returns>The normalized vector</returns>
         public static Vector2i Normalize(Vector2i vec)
         {
-			if (Math.Abs(vec.X) > Math.Abs(vec.Y)) {
-				vec.X = Math.Sign(vec.X);
-				vec.Y = 0;
-			} else {
-				vec.X = 0;
-				vec.Y = Math.Sign(vec.X);
-			}
-			return vec;
+            if (Math.Abs(vec.X) > Math.Abs(vec.Y)) {
+                vec.X = Math.Sign(vec.X);
+                vec.Y = 0;
+            } else {
+                vec.X = 0;
+                vec.Y = Math.Sign(vec.X);
+            }
+            return vec;
         }
 
         /// <summary>
@@ -685,13 +685,13 @@ namespace OpenTK
         /// <param name="result">The normalized vector</param>
         public static void Normalize(ref Vector2i vec, out Vector2i result)
         {
-			if (Math.Abs(vec.X) > Math.Abs(vec.Y)) {
-				result.X = Math.Sign(vec.X);
-				result.Y = 0;
-			} else {
-				result.X = 0;
-				result.Y = Math.Sign(vec.X);
-			}
+            if (Math.Abs(vec.X) > Math.Abs(vec.Y)) {
+                result.X = Math.Sign(vec.X);
+                result.Y = 0;
+            } else {
+                result.X = 0;
+                result.Y = Math.Sign(vec.X);
+            }
         }
 
         #endregion

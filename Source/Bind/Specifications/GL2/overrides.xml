@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <signatures version="2">
 
-	<!-- gl and glcore -->
+    <!-- gl and glcore -->
   <replace name="gl|glcore">
 
     <!-- Core and EXT_direct_state_access variants -->
@@ -5332,7 +5332,7 @@
       <param name="bufferMode"><type>TransformFeedbackMode</type></param>
     </function>
 
-	<!-- Shader Queries [6.1.12] -->
+    <!-- Shader Queries [6.1.12] -->
     <function name="GetShader">
       <param name="pname"><type>ShaderParameter</type></param> 
     </function>
@@ -7122,10 +7122,10 @@
       <use token="RGB_INTEGER" />
       <use token="RG_INTEGER" />
       <use token="RED_INTEGER" />
-	  <use token="DEPTH_COMPONENT" />
-	  <use token="DEPTH_STENCIL" />
-	  <use token="LUMINANCE_ALPHA" />
-	  <use token="LUMINANCE" />
+      <use token="DEPTH_COMPONENT" />
+      <use token="DEPTH_STENCIL" />
+      <use token="LUMINANCE_ALPHA" />
+      <use token="LUMINANCE" />
     </enum>
     <enum name="PixelStoreParameter">
       <use token="PACK_ROW_LENGTH" />
@@ -7509,7 +7509,7 @@
       <use token="FIXED" />
       <use token="FLOAT" />
       <use token="HALF_FLOAT" />
-	  <use token="INT_2_10_10_10_REV" />
+      <use token="INT_2_10_10_10_REV" />
       <use token="UNSIGNED_INT_2_10_10_10_REV" />
     </enum>
     <enum name="WaitSyncFlags">

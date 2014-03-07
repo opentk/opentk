@@ -156,7 +156,7 @@ namespace Examples.WinForms
 
         #endregion
 
-		#region private void DrawCube()
+        #region private void DrawCube()
 
         private void DrawCube()
         {

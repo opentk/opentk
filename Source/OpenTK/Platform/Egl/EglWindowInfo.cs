@@ -73,11 +73,11 @@ namespace OpenTK.Platform.Egl
         public void CreateWindowSurface(IntPtr config)
         {
             Surface = Egl.CreateWindowSurface(Display, config, Handle, null);
-			if (Surface==IntPtr.Zero)
-			{
+            if (Surface==IntPtr.Zero)
+            {
                 throw new GraphicsContextException(String.Format(
-					"[Error] Failed to create EGL window surface, error {0}.", Egl.GetError()));
-			}
+                    "[Error] Failed to create EGL window surface, error {0}.", Egl.GetError()));
+            }
         }
 
         //public void CreatePixmapSurface(EGLConfig config)

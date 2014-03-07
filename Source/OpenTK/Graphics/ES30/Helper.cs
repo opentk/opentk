@@ -197,10 +197,10 @@ namespace OpenTK.Graphics.ES30
         public static string GetActiveAttrib(int program, int index, out int size, out ActiveAttribType type)
         {
             int length;
-			GetProgram(program, ES30.GetProgramParameterName.ActiveAttributeMaxLength, out length);
+            GetProgram(program, ES30.GetProgramParameterName.ActiveAttributeMaxLength, out length);
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
 
-			GetActiveAttrib(program, index, sb.Capacity, out length, out size, out type, sb);
+            GetActiveAttrib(program, index, sb.Capacity, out length, out size, out type, sb);
             return sb.ToString();
         }
 
@@ -211,7 +211,7 @@ namespace OpenTK.Graphics.ES30
         public static string GetActiveUniform(int program, int uniformIndex, out int size, out ActiveUniformType type)
         {
             int length;
-			GetProgram(program, ES30.GetProgramParameterName.ActiveUniformMaxLength, out length);
+            GetProgram(program, ES30.GetProgramParameterName.ActiveUniformMaxLength, out length);
 
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length);
             GetActiveUniform(program, uniformIndex, sb.Capacity, out length, out size, out type, sb);
@@ -283,7 +283,7 @@ namespace OpenTK.Graphics.ES30
             unsafe
             {
                 int length;
-				GL.GetProgram(program, ES30.GetProgramParameterName.InfoLogLength, out length); if (length == 0)
+                GL.GetProgram(program, ES30.GetProgramParameterName.InfoLogLength, out length); if (length == 0)
                 {
                     info = String.Empty;
                     return;

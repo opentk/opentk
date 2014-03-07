@@ -121,9 +121,9 @@ void main(void)
 
             GL.CompileShader(vertexShaderHandle);
             string log = GL.GetShaderInfoLog(vertexShaderHandle);
-			if (log.Length != 0) {
-				Debug.Print(log);
-			}
+            if (log.Length != 0) {
+                Debug.Print(log);
+            }
             GL.CompileShader(fragmentShaderHandle);
 
             Debug.WriteLine(GL.GetShaderInfoLog(vertexShaderHandle));

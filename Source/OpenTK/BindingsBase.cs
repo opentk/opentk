@@ -122,7 +122,7 @@ namespace OpenTK
         /// <summary>
         /// Marshals a pointer to a null-terminated byte array to the specified <c>StringBuilder</c>.
         /// This method supports OpenTK and is not intended to be called by user code.
-       /// </summary>
+        /// </summary>
         /// <param name="ptr">A pointer to a null-terminated byte array.</param>
         /// <param name="sb">The StringBuilder to receive the contents of the pointer.</param>
         protected static void MarshalPtrToStringBuilder(IntPtr ptr, StringBuilder sb)
@@ -301,26 +301,26 @@ namespace OpenTK
 
         #endregion
 
-		#region GetExtensionDelegate
+        #region GetExtensionDelegate
 
-		// Creates a System.Delegate that can be used to call a dynamically exported OpenGL function.
-		internal virtual Delegate GetExtensionDelegate(string name, Type signature)
-		{
-			IntPtr address = GetAddress(name);
+        // Creates a System.Delegate that can be used to call a dynamically exported OpenGL function.
+        internal virtual Delegate GetExtensionDelegate(string name, Type signature)
+        {
+            IntPtr address = GetAddress(name);
 
-			if (address == IntPtr.Zero ||
-				address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
-				address == new IntPtr(2))       // 1 or 2 instead of IntPtr.Zero for some extensions.
-			{
-				return null;
-			}
-			else
-			{
-				return Marshal.GetDelegateForFunctionPointer(address, signature);
-			}
-		}
+            if (address == IntPtr.Zero ||
+                address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
+                address == new IntPtr(2))       // 1 or 2 instead of IntPtr.Zero for some extensions.
+            {
+                return null;
+            }
+            else
+            {
+                return Marshal.GetDelegateForFunctionPointer(address, signature);
+            }
+        }
 
-		#endregion
+        #endregion
 
         #endregion
 

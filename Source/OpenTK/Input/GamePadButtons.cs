@@ -186,10 +186,10 @@ namespace OpenTK.Input
                 Equals((GamePadButtons)obj);
         }
 
-		public ButtonState GetButton(Buttons b)
-		{
-			return (buttons & b) != 0 ? ButtonState.Pressed : ButtonState.Released;
-		}
+        public ButtonState GetButton(Buttons b)
+        {
+            return (buttons & b) != 0 ? ButtonState.Pressed : ButtonState.Released;
+        }
 
         #endregion
 

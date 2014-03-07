@@ -29,14 +29,14 @@ using System;
 
 namespace OpenTK
 {
-	[AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false, Inherited = false)]
-	class RewrittenAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false, Inherited = false)]
+    class RewrittenAttribute : Attribute
     {
-		internal bool Rewritten;
+        internal bool Rewritten;
 
-		public RewrittenAttribute(bool rewritten)
+        public RewrittenAttribute(bool rewritten)
         {
-			Rewritten = rewritten;
+            Rewritten = rewritten;
         }
     }
 }

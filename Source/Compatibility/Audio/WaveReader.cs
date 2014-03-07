@@ -16,27 +16,27 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Audio
 {
     internal sealed class WaveReader : AudioReader
-	{
+    {
         SoundData decoded_data;
 
-		//RIFF header
-		string signature;
-		int riff_chunck_size;
-		string format;
-			
-		//WAVE header
-		string format_signature;
-		int format_chunk_size;
-		short audio_format;
-		short channels;
-		int sample_rate;
-		int byte_rate;
-		short block_align;
-		short bits_per_sample;
-			
-		//DATA header
-		string data_signature;
-		int data_chunk_size;
+        //RIFF header
+        string signature;
+        int riff_chunck_size;
+        string format;
+            
+        //WAVE header
+        string format_signature;
+        int format_chunk_size;
+        short audio_format;
+        short channels;
+        int sample_rate;
+        int byte_rate;
+        short block_align;
+        short bits_per_sample;
+            
+        //DATA header
+        string data_signature;
+        int data_chunk_size;
 
         BinaryReader reader;
 
@@ -52,12 +52,12 @@ namespace OpenTK.Audio
         }
 
 #if false
-		/// <summary>
-		/// Writes the WaveSound's data to the specified OpenAL buffer in the correct format.
-		/// </summary>
-		/// <param name="bid">
-		/// A <see cref="System.UInt32"/>
-		/// </param>
+        /// <summary>
+        /// Writes the WaveSound's data to the specified OpenAL buffer in the correct format.
+        /// </summary>
+        /// <param name="bid">
+        /// A <see cref="System.UInt32"/>
+        /// </param>
         public void WriteToBuffer(uint bid)
         {
             unsafe
@@ -105,29 +105,29 @@ namespace OpenTK.Audio
             }
         }
 
-		/// <summary>
-		/// Writes all relevent information about the WaveSound to the console window.
-		/// </summary>
-		public void DumpParamsToConsole()
-		{			
-			Console.WriteLine("AudioFormat:" + AudioFormat);
-			Console.WriteLine("Channels:" + Channels);
-			Console.WriteLine("SampleRate:" + SampleRate);
-			Console.WriteLine("ByteRate:" + ByteRate);
-			Console.WriteLine("BlockAlign:" + BlockAlign);
-			Console.WriteLine("BitsPerSample:" + BitsPerSample);
-		}
-		
-		/// <value>
-		/// Returns the WaveSound's raw sound data as an array of bytes.
-		/// </value>
-		public byte[] Data
-		{
-			get
-			{
-				return _Data;
-			}
-		}
+        /// <summary>
+        /// Writes all relevent information about the WaveSound to the console window.
+        /// </summary>
+        public void DumpParamsToConsole()
+        {            
+            Console.WriteLine("AudioFormat:" + AudioFormat);
+            Console.WriteLine("Channels:" + Channels);
+            Console.WriteLine("SampleRate:" + SampleRate);
+            Console.WriteLine("ByteRate:" + ByteRate);
+            Console.WriteLine("BlockAlign:" + BlockAlign);
+            Console.WriteLine("BitsPerSample:" + BitsPerSample);
+        }
+        
+        /// <value>
+        /// Returns the WaveSound's raw sound data as an array of bytes.
+        /// </value>
+        public byte[] Data
+        {
+            get
+            {
+                return _Data;
+            }
+        }
 #endif
 
         #region --- Public Members ---

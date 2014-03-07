@@ -86,8 +86,8 @@
             <varlistentry>
                 <term><constant>GL_CONVOLUTION_BORDER_MODE</constant></term>
                 <listitem>
-			  <para>
-			  </para>
+              <para>
+              </para>
                     <para>
                         The convolution border mode.
                         See <citerefentry><refentrytitle>glConvolutionParameter</refentrytitle></citerefentry> for a list of border modes.
@@ -97,8 +97,8 @@
             <varlistentry>
                 <term><constant>GL_CONVOLUTION_BORDER_COLOR</constant></term>
                 <listitem>
-			  <para>
-			  </para>
+              <para>
+              </para>
                     <para>
                         The current convolution border color.
                         <parameter>params</parameter> must be a pointer to an array of four elements,
@@ -109,8 +109,8 @@
             <varlistentry>
                 <term><constant>GL_CONVOLUTION_FILTER_SCALE</constant></term>
                 <listitem>
-			  <para>
-			  </para>
+              <para>
+              </para>
                     <para>
                         The current filter scale factors.
                         <parameter>params</parameter> must be a pointer to an array of four elements,
@@ -122,8 +122,8 @@
             <varlistentry>
                 <term><constant>GL_CONVOLUTION_FILTER_BIAS</constant></term>
                 <listitem>
-			  <para>
-			  </para>
+              <para>
+              </para>
                     <para>
                         The current filter bias factors.
                         <parameter>params</parameter> must be a pointer to an array of four elements,
@@ -135,8 +135,8 @@
             <varlistentry>
                 <term><constant>GL_CONVOLUTION_FORMAT</constant></term>
                 <listitem>
-			  <para>
-			  </para>
+              <para>
+              </para>
                     <para>
                         The current internal format.
                         See <citerefentry><refentrytitle>glConvolutionFilter1D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glConvolutionFilter2D</refentrytitle></citerefentry>,
@@ -148,8 +148,8 @@
             <varlistentry>
                 <term><constant>GL_CONVOLUTION_WIDTH</constant></term>
                 <listitem>
-			  <para>
-			  </para>
+              <para>
+              </para>
                     <para>
                         The current filter image width.
                     </para>
@@ -158,8 +158,8 @@
             <varlistentry>
                 <term><constant>GL_CONVOLUTION_HEIGHT</constant></term>
                 <listitem>
-			  <para>
-			  </para>
+              <para>
+              </para>
                     <para>
                         The current filter image height.
                     </para>
@@ -168,8 +168,8 @@
             <varlistentry>
                 <term><constant>GL_MAX_CONVOLUTION_WIDTH</constant></term>
                 <listitem>
-			  <para>
-			  </para>
+              <para>
+              </para>
                     <para>
                         The maximum acceptable filter image width.
                     </para>
@@ -178,8 +178,8 @@
             <varlistentry>
                 <term><constant>GL_MAX_CONVOLUTION_HEIGHT</constant></term>
                 <listitem>
-			  <para>
-			  </para>
+              <para>
+              </para>
                     <para>
                         The maximum acceptable filter image height.
                     </para>

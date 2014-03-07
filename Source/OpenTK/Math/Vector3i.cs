@@ -210,16 +210,16 @@ namespace OpenTK
         [Obsolete("Use static Divide() method instead.")]
         public void Div(int s)
         {
-			this.X /= s;
-			this.Y /= s;
-			this.Z /= s;
+            this.X /= s;
+            this.Y /= s;
+            this.Z /= s;
         }
 
         #endregion public void Div()
 
-		#region public double Length
+        #region public double Length
 
-		/// <summary>
+        /// <summary>
         /// Gets the length (magnitude) of the vector.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
@@ -243,7 +243,7 @@ namespace OpenTK
         /// for comparisons.
         /// </remarks>
         /// <see cref="Length"/>
-		public double LengthSquared
+        public double LengthSquared
         {
             get
             {
@@ -271,19 +271,19 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-			if (Math.Abs(X) > Math.Abs(Y) && Math.Abs(X) > Math.Abs(Z)) {
-				X = 1;
-				Y = 0;
-				Z = 0;
-			} else if (Math.Abs(Y) > Math.Abs(X) && Math.Abs(Y) > Math.Abs(Z)) {
-				X = 0;
-				Y = 1;
-				Z = 0;
-			} else {
-				X = 0;
-				Y = 0;
-				Z = 1;
-			}
+            if (Math.Abs(X) > Math.Abs(Y) && Math.Abs(X) > Math.Abs(Z)) {
+                X = 1;
+                Y = 0;
+                Z = 0;
+            } else if (Math.Abs(Y) > Math.Abs(X) && Math.Abs(Y) > Math.Abs(Z)) {
+                X = 0;
+                Y = 1;
+                Z = 0;
+            } else {
+                X = 0;
+                Y = 0;
+                Z = 1;
+            }
         }
 
         #endregion
@@ -595,7 +595,7 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector3i vector, int scale, out Vector3i result)
         {
-			result = new Vector3i(vector.X / scale, vector.Y / scale, vector.Z / scale);
+            result = new Vector3i(vector.X / scale, vector.Y / scale, vector.Z / scale);
         }
 
         /// <summary>
@@ -757,7 +757,7 @@ namespace OpenTK
         /// <returns>The normalized vector</returns>
         public static Vector3i Normalize(Vector3i vec)
         {
-			return vec.Normalized();
+            return vec.Normalized();
         }
 
         /// <summary>
@@ -767,7 +767,7 @@ namespace OpenTK
         /// <param name="result">The normalized vector</param>
         public static void Normalize(ref Vector3i vec, out Vector3i result)
         {
-			result = vec.Normalized();
+            result = vec.Normalized();
         }
 
         #endregion
@@ -921,7 +921,7 @@ namespace OpenTK
         /// <param name="second">The second vector.</param>
         /// <param name="result">Angle (in radians) between the vectors.</param>
         /// <remarks>Note that the returned angle is never bigger than the constant Pi.</remarks>
-		public static void CalculateAngle(ref Vector3i first, ref Vector3i second, out double result)
+        public static void CalculateAngle(ref Vector3i first, ref Vector3i second, out double result)
         {
             int temp;
             Vector3i.Dot(ref first, ref second, out temp);
@@ -1089,9 +1089,9 @@ namespace OpenTK
         /// <returns>The result of the calculation.</returns>
         public static Vector3i operator /(Vector3i vec, int scale)
         {
-			vec.X /= scale;
-			vec.Y /= scale;
-			vec.Z /= scale;
+            vec.X /= scale;
+            vec.Y /= scale;
+            vec.Z /= scale;
             return vec;
         }
 
@@ -1122,7 +1122,7 @@ namespace OpenTK
         /// <returns>The resulting Vector3i.</returns>
         public static explicit operator Vector3i(Vector3 v3)
         {
-			return new Vector3i((int)v3.X, (int)v3.Y, (int)v3.Z);
+            return new Vector3i((int)v3.X, (int)v3.Y, (int)v3.Z);
         }
 
         /// <summary>Converts OpenTK.Vector3i to OpenTK.Vector3.</summary>

@@ -18,8 +18,8 @@ The line above will download the latest .spec files from the public Khronos repo
 Convert.exe -p:{PREFIX} -v:{VERSION} -t:{TYPE} -o:{OUT} {INPUT1} ... {INPUTn}
     {PREFIX} is a simple string that defines the a common prefix for functions and constants in this header. This prefix will be removed from the generated XML file.
     {VERSION} is a string that defines that version that will be used for functions in the generated XML file. Specific input files may override this setting.
-	{TYPE} can be either 'spec' or 'header' to indicate whether the input files are OpenGL .spec files or C headers.
-	{OUT} is the output filename (optional). If no output file is specified, output will be directed to the console.
+    {TYPE} can be either 'spec' or 'header' to indicate whether the input files are OpenGL .spec files or C headers.
+    {OUT} is the output filename (optional). If no output file is specified, output will be directed to the console.
     {INPUT1..n} is a space-separated list of input files (headers).
     
 Despite what the help says, all three parameters are necessary at the moment.

@@ -4,8 +4,8 @@ using OpenTK;
 
 namespace Examples.Shapes
 {
-	public sealed class SlicedHose : DrawableShape
-	{
+    public sealed class SlicedHose : DrawableShape
+    {
 
         public enum eSide:byte
         {
